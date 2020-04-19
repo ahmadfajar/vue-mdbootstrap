@@ -8,6 +8,18 @@ These components were build in the spirit of **Vue framework**, and utilize **Bo
 css framework. Long ago, I use them on all my VueJs projects. Now, I decide to publish 
 these components and hope it will be useful to anyone who wants to use it as an alternative of
 many Vue components out there. 
+
+## How to Install
+
+Use npm or yarn to install.
+
+```shell script
+npm install --save vue-mdbootstrap
+```
+or
+```shell script
+yarn add vue-mdbootstrap
+```
  
 ## Browser Support
 
