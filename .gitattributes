@@ -1,0 +1,26 @@
+## Set the default behavior for some known file types
+# Denote all files that are truly binary and should not be modified.
+*.png binary
+*.ico binary
+*.jpg binary
+*.gif binary
+*.jar binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+*.zip binary
+*.7z binary
+*.xls binary
+*.xlsx binary
+*.doc binary
+*.docx binary
+*.pdf binary
+*.flv binary
+*.mp4 binary
+*.mp3 binary
+
+# Declare files that will always have CRLF line endings on checkout.
+*.bat text eol=crlf
+*.sh text eol=lf
+*.lock text eol=lf

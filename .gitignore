@@ -1,0 +1,16 @@
+### Covers Operating resource files
+.DS_Store
+._.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+### Covers IDEs: JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
+/.idea/
+/.vscode
+
+
+### Covers project specific files
+/node_modules/
+npm-debug.log
+yarn-error.log

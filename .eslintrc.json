@@ -1,0 +1,164 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "es",
+        "vue"
+    ],
+    "extends": [
+        "eslint:recommended",
+        "plugin:vue/strongly-recommended"
+    ],
+    "rules": {
+        "constructor-super": "error",
+        "eol-last": "warn",
+        "guard-for-in": "error",
+        "no-console": "off",
+        "no-const-assign": "warn",
+        "no-constant-condition": "warn",
+        "no-dupe-args": "error",
+        "no-dupe-keys": "error",
+        "no-duplicate-case": "error",
+        "no-empty": "warn",
+        "no-empty-character-class": "error",
+        "no-eval": "warn",
+        "no-ex-assign": "error",
+        "no-extra-bind": "warn",
+        "no-extra-boolean-cast": "error",
+        "no-func-assign": "error",
+        "no-global-assign": "error",
+        "no-inner-declarations": "warn",
+        "no-invalid-regexp": "error",
+        "no-irregular-whitespace": "warn",
+        "no-labels": "warn",
+        "no-prototype-builtins": "off",
+        "no-obj-calls": "error",
+        "no-redeclare": "error",
+        "no-regex-spaces": "error",
+        "no-sparse-arrays": "warn",
+        "no-unreachable": "warn",
+        "no-unsafe-negation": "error",
+        "no-var": "error",
+        "space-infix-ops": "warn",
+        "use-isnan": "error",
+        "valid-jsdoc": "warn",
+        "valid-typeof": "warn",
+        "spaced-comment": [
+            "warn",
+            "always"
+        ],
+        "curly": [
+            "warn",
+            "all"
+        ],
+        "eqeqeq": [
+            "warn",
+            "smart"
+        ],
+        "yoda": [
+            "warn",
+            "never",
+            {}
+        ],
+        "arrow-spacing": [
+            "warn",
+            {
+                "before": true,
+                "after": true
+            }
+        ],
+        "comma-spacing": [
+            "warn",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "vue/html-closing-bracket-newline": [
+            "warn",
+            {
+                "singleline": "never",
+                "multiline": "never"
+            }
+        ],
+        "vue/html-closing-bracket-spacing": [
+            "warn",
+            {
+                "startTag": "never",
+                "endTag": "never",
+                "selfClosingTag": "always"
+            }
+        ],
+        "vue/html-self-closing": [
+            "warn",
+            {
+                "html": {
+                    "void": "always",
+                    "normal": "any",
+                    "component": "always"
+                },
+                "svg": "always",
+                "math": "always"
+            }
+        ],
+        "vue/max-attributes-per-line": [
+            "warn",
+            {
+                "singleline": 3,
+                "multiline": {
+                    "max": 1,
+                    "allowFirstLine": true
+                }
+            }
+        ],
+        "vue/singleline-html-element-content-newline": [
+            "warn",
+            {
+                "ignoreWhenNoAttributes": true,
+                "ignoreWhenEmpty": true,
+                "ignores": [
+                    "abbr",
+                    "audio",
+                    "b",
+                    "bdi",
+                    "bdo",
+                    "canvas",
+                    "cite",
+                    "code",
+                    "data",
+                    "del",
+                    "dfn",
+                    "em",
+                    "i",
+                    "iframe",
+                    "ins",
+                    "kbd",
+                    "map",
+                    "mark",
+                    "noscript",
+                    "object",
+                    "output",
+                    "picture",
+                    "q",
+                    "ruby",
+                    "s",
+                    "samp",
+                    "small",
+                    "span",
+                    "strong",
+                    "sub",
+                    "sup",
+                    "svg",
+                    "time",
+                    "u",
+                    "var",
+                    "video",
+                    "pre",
+                    "textarea"
+                ]
+            }
+        ]
+    }
+}

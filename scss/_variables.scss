@@ -1,0 +1,137 @@
+$body-bg:                     $white;
+
+// component prefix
+$prefix:                      'md' !default;
+
+// Fonts
+$font-weight-thin:            100;
+$font-weight-light:           300;
+$font-weight-normal:          400;
+$font-weight-bold:            500;
+$font-weight-bolder:          700;
+$font-weight-boldest:         900;
+
+// Shadows
+$z-depth-1:          0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 8px 0 rgba(0, 0, 0, 0.12) !default;
+$z-depth-1-half:     0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15) !default;
+$z-depth-2:          0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !default;
+$z-depth-3:          0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !default;
+$z-depth-4:          0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21) !default;
+$z-depth-5:          0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22) !default;
+
+$default-hover-bgcolor:             rgba($black, 0.045) !default;
+
+// Transitions
+$transition-basic:                  all .3s ease-in-out !default;
+$transition-hoverable:              all .55s ease-in-out !default;
+$transition-duration-base:          .45s !default;
+$transition-easeOut:                cubic-bezier(0.23, 1, 0.32, 1) !default;
+$transition-easeInOut:              cubic-bezier(0.445, 0.05, 0.55, 0.95) !default;
+
+/**
+ * The default transition, used when the element is visible
+ * since the beginning of the animation
+ */
+$md-transition-default-timing:      cubic-bezier(.4, 0, .2, 1);
+$md-transition-default-duration:    $transition-duration-base;
+$md-transition-default:             $md-transition-default-duration $md-transition-default-timing;
+$md-transition-easeOut:             $transition-duration-base $transition-easeOut;
+/**
+ * The enter transition, used when the element is not visible on the screen
+ * since the beginning of the animation and become visible
+ */
+$md-transition-enter-timing:        cubic-bezier(0, 0, .2, 1);
+$md-transition-enter-duration:      $transition-duration-base;
+$md-transition-enter:               $md-transition-enter-duration $md-transition-enter-timing;
+
+/**
+ * The leave transition, used when the element is visible on the screen
+ * since the beginning of the animation and is removed
+ */
+$md-transition-leave-timing:        cubic-bezier(.4, .0, 1, 1);
+$md-transition-leave-duration:      $transition-duration-base;
+$md-transition-leave:               $md-transition-leave-duration $md-transition-leave-timing;
+
+/**
+ * The stand transition, used when the element is going to accelerate,
+ * like movements from bottom to top
+ */
+$md-transition-stand-timing:        cubic-bezier(.25, .8, .50, 1);
+$md-transition-stand-duration:      $transition-duration-base;
+$md-transition-stand:               $md-transition-stand-duration $md-transition-stand-timing;
+
+/**
+ * The out transition, used when the element is going to deaccelerate,
+ * like movements from top to bottom
+ */
+$md-transition-drop-timing:         cubic-bezier(.55, 0, .55, .2);
+$md-transition-drop-duration:       $transition-duration-base;
+$md-transition-drop:                $md-transition-drop-duration $md-transition-drop-timing;
+
+// padding or margin
+$padding-base:                      1rem !default;
+$padding-sm:                        $padding-base - .5 !default;
+$padding-lg:                        $padding-base + .5 !default;
+$padding-xl:                        $padding-base * 2 !default;
+
+// Border radius
+$border-radius-base:                .125rem !default;
+$border-radius-circle:              50% !default;
+
+// Width of the `border` for generating carets that indicator dropdowns.
+$caret-width:                       .4rem;
+$caret-margin:                      .7rem;
+
+// Alerts
+$alert-bg-level:                    -10 !default;
+$alert-border-level:                -8 !default;
+$alert-color-level:                 6 !default;
+
+// Buttons
+$btn-border-radius:                 .125rem !default;
+$btn-border-radius-lg:              .3rem !default;
+$btn-border-radius-sm:              .125rem !default;
+$btn-margin-basic:                  .375rem !default;
+$btn-margin-lg:                     .5rem !default;
+$btn-color-basic:                   var(--white);
+$btn-transition:                    color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+
+// Controls
+$md-checkbox-size:                  20px !default;
+$md-checkbox-touch-size:            48px !default;
+$md-checkbox-margin:                16px 16px 0 0 !default;
+$md-radio-size:                     $md-checkbox-size !default;
+$md-radio-touch-size:               $md-checkbox-touch-size !default;
+$md-radio-margin:                   8px 16px 0 0 !default;
+$md-switch-width:                   34px !default;
+$md-switch-height:                  14px !default;
+$md-switch-size:                    $md-checkbox-size !default;
+$md-switch-touch-size:              $md-checkbox-touch-size !default;
+$md-switch-margin:                  1rem .25rem 0 0 !default;
+$md-switch-shadows:                 0 0 6px -1px rgba(#000, .1), 0 1px 1px 1px rgba(#000, .15), 0 1px 3px 0 rgba(#000, 0.12) !default;
+
+// Sidebar
+$sidebar-active-bgcolor:            $gray-400 !default;
+$sidebar-expanded-bgcolor:          rgba(50,50,50, .08) !default;
+$sidebar-hover-bgcolor:             $default-hover-bgcolor !default;
+$sidebar-hover-textcolor:           darken(map_get($theme-colors, "primary"), 15%) !default;
+$sidebar-item-padding:              1rem 0 1rem 1.2rem !default;
+$sidebar-item-active-bgcolor:       $mdb-color-lighten-3 !default;
+
+// Table
+$table-a-color:                     #212529 !default;
+$table-border-color:                rgba(#000, .1); //#ededed;
+$table-border-width:                1px !default;
+$table-cell-padding:                $padding-base - .4; // .6rem;
+$table-font-size:                   .9rem;
+$table-checkbox-selection-size:     floor(($table-font-size + $table-cell-padding) * 2);
+$table-header-color:                #878787;
+$table-header-bgcolor:              #f6f6f6;
+$table-hover-bgcolor:               $default-hover-bgcolor;
+$table-inverse-color-border:        $white;
+$table-text-color:                  $black;
+
+// Tabs
+$tab-padding-base:                  .5rem 1rem !default;
+$tab-material-padding:              1rem 1.5rem .8rem 1.5rem !default;
+$tab-modern-padding:                .5rem .7rem !default;

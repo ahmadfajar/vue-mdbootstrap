@@ -1,0 +1,105 @@
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "colors";
+@import "variables";
+@import "shared";
+@import "mixins";
+
+/* VueJs transition animation */
+@include enter-leave-active(".fade") {
+    @include transition(opacity $md-transition-easeOut);
+}
+
+@include enter-leaveto(".fade") {
+    @extend %opacity-0;
+}
+
+.slide-fade, .slide-fade-reverse {
+    &-enter-active {
+        @include transition(all .6s ease);
+    }
+    &-leave-active {
+        @include transition(all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0));
+    }
+    &-leave, &-leave-active, &-leave-to {
+        position: absolute !important;
+    }
+}
+
+@include enter-leaveto(".slide-fade") {
+    @include transform(translateX(100%));
+    @extend %opacity-0;
+}
+
+@include enter-leaveto(".slide-fade-reverse") {
+    @include transform(translateX(-100%));
+    @extend %opacity-0;
+}
+
+@include enter-leave-active(".popover") {
+    transition-duration: 300ms;
+    transition-property: opacity, transform;
+    backface-visibility: hidden;
+}
+
+@include enter-leaveactive(".popover") {
+    @extend %opacity-0;
+    transform: scale(0.6);
+}
+
+.picker-transition, .picker-transition-reverse {
+    &-enter-active, &-leave-active {
+        @include transition($md-transition-enter);
+    }
+    &-enter, &-leave-to {
+        @extend %opacity-0;
+    }
+    &-enter-to {
+        @include transition(translate(0, 0));
+    }
+    &-leave, &-leave-active, &-leave-to {
+        position: absolute !important;
+    }
+}
+
+.picker-transition {
+    &-enter {
+        @include transform(translate(0, 100%));
+    }
+    &-leave-to {
+        @include transform(translate(0, -100%));
+    }
+}
+.picker-transition-reverse {
+    &-enter {
+        @include transform(translate(0, -100%));
+    }
+    &-leave-to {
+        @include transform(translate(0, 100%));
+    }
+}
+
+.tab-transition {
+    &-enter {
+        @include transform(translate(100%, 0));
+    }
+    &-leave, &-leave-active {
+        position: absolute;
+        top: 0
+    }
+    &-leave-to {
+        @include transform(translate(-100%, 0));
+        position: absolute;
+    }
+}
+
+.tab-transition-reverse {
+    &-enter {
+        @include transform(translate(-100%, 0));
+    }
+    &-leave, &-leave-to {
+        @include transform(translate(100%, 0));
+        position: absolute;
+        top: 0;
+    }
+}
+

@@ -1,0 +1,94 @@
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "functions";
+@import "colors";
+@import "variables";
+@import "shared";
+
+.opacity-0 {
+    @extend %opacity-0;
+}
+
+.opacity-100 {
+    @extend %opacity-100;
+}
+
+.#{$prefix}-link {
+    @extend %cursor-pointer;
+}
+
+.#{$prefix}-disabled {
+    @include user-select(none);
+    color: rgba($black, .2) !important;
+    cursor: default !important;
+}
+
+.#{$prefix}-icon {
+    > .svg-inline {
+        display: inline;
+    }
+}
+
+// Colors classes
+@each $color_name, $color in $mdb-colors-1 {
+    @each $color_type, $color_value in $color {
+        @if $color_type == "base" {
+            .bg-#{$color_name}-base {
+                background-color: $color_value !important;
+            }
+            .text-#{$color_name} {
+                color: $color-value !important;
+            }
+            .rgba-#{$color_name}-slight,
+            .rgba-#{$color_name}-slight:after {
+                background-color: rgba($color_value, .1);
+            }
+            .rgba-#{$color_name}-light,
+            .rgba-#{$color_name}-light:after {
+                background-color: rgba($color_value, .3);
+            }
+            .rgba-#{$color_name}-strong,
+            .rgba-#{$color_name}-strong:after {
+                background-color: rgba($color_value, .7);
+            }
+        }
+        @else {
+            @if $enable_full_palette {
+                .bg-#{$color_name}.#{$color_type} {
+                    background-color: $color_value !important;
+                }
+            }
+        }
+    }
+}
+
+@each $color_name, $color in $material-colors {
+    .bg-#{$color_name} {
+        background-color: $color !important;
+    }
+}
+
+@each $color_name, $color in $grays {
+    .bg-grey-#{$color_name} {
+        background-color: $color !important;
+    }
+    .text-grey-#{$color_name} {
+        color: $color !important;
+    }
+}
+
+@each $color_name, $color in $theme-colors {
+    .bg-#{$color_name} {
+        background-color: $color !important;
+    }
+    .text-hover-#{$color_name} {
+        &:hover {
+            color: $color !important;
+        }
+    }
+    a.#{$color_name} {
+        &:hover {
+            background-color: darken($color, 10%);
+            color: set-notification-text-color($color);
+        }
+    }
+}
