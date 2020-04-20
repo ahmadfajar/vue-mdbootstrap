@@ -8,6 +8,7 @@ import BsStore from "./model/BsStore";
 import BsTreeStore from "./model/BsTreeStore";
 import BsArrayStore from "./model/BsArrayStore";
 import Helper from "./utils/Helper";
+import ScreenSize from "./mixins/ScreenSize";
 import registerPrototype from "./utils/CmpHelper";
 
 let VueMdb = Vue => {
@@ -28,12 +29,13 @@ if (typeof window !== 'undefined' && window.Vue) {
 export {
     AxiosPlugin,
     ProxyAdapter,
-    BsModel,
     AbstractStore,
+    BsModel,
     BsStore,
     BsTreeStore,
     BsArrayStore,
-    Helper
+    Helper,
+    ScreenSize
 };
 
 export default VueMdb;

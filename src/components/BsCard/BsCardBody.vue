@@ -1,7 +1,7 @@
 <template>
-    <div :is="tag" class="card-body">
-        <slot></slot>
-    </div>
+  <div :is="tag" class="card-body">
+    <slot></slot>
+  </div>
 </template>
 
 <script>

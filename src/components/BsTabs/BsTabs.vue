@@ -171,7 +171,7 @@ export default {
             }
             if (tab) {
                 this.tabs.forEach(el => el.active = false);
-                tab.active     = true;
+                tab.active = true;
                 this.activeTab = tab;
             }
         }
@@ -180,116 +180,116 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~bootstrap/scss/functions";
-  @import "~bootstrap/scss/variables";
-  @import "~bootstrap/scss/mixins/breakpoints";
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .nav {
+.nav {
     .nav-link {
-      cursor: pointer;
-      font-size: .95rem;
-      outline: 0 none;
-      padding: 0;
+        cursor: pointer;
+        font-size: .95rem;
+        outline: 0 none;
+        padding: 0;
 
-      > .#{$prefix}-ripple {
-        @include user-select(none);
-        padding: $tab-padding-base;
-      }
+        > .#{$prefix}-ripple {
+            @include user-select(none);
+            padding: $tab-padding-base;
+        }
     }
 
     &.nav-pills {
-      .nav-link {
-        &.active {
-          @include box-shadow($z-depth-1);
+        .nav-link {
+            &.active {
+                @include box-shadow($z-depth-1);
 
-          &:hover {
-            color: $white;
-          }
+                &:hover {
+                    color: $white;
+                }
+            }
         }
-      }
     }
 
     &.nav-material {
-      @include box-shadow(0px 1px 5px rgba(#000, .2), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12));
-      overflow-x: hidden;
-      position: relative;
+        @include box-shadow(0px 1px 5px rgba(#000, .2), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12));
+        overflow-x: hidden;
+        position: relative;
 
-      > .nav-link {
-        @include border-radius(0);
-        list-style: none;
-        background-color: transparent !important;
-        border-color: transparent;
-        border-style: solid;
-        border-width: 0;
-        border-bottom-width: 3px !important;
-        color: rgba($white, .6);
-        text-transform: uppercase;
+        > .nav-link {
+            @include border-radius(0);
+            list-style: none;
+            background-color: transparent !important;
+            border-color: transparent;
+            border-style: solid;
+            border-width: 0;
+            border-bottom-width: 3px !important;
+            color: rgba($white, .6);
+            text-transform: uppercase;
 
-        > .#{$prefix}-ripple {
-          padding: $tab-material-padding;
+            > .#{$prefix}-ripple {
+                padding: $tab-material-padding;
+            }
+
+            &:hover {
+                color: rgba($white, .6);
+            }
+
+            &.active {
+                color: var(--white);
+                border-bottom-color: var(--white);
+            }
+
+            @include media-breakpoint-up(lg) {
+                &:first-child {
+                    margin-left: $padding-base;
+                }
+                &:last-child {
+                    margin-right: $padding-base;
+                }
+            }
         }
-
-        &:hover {
-          color: rgba($white, .6);
-        }
-
-        &.active {
-          color: var(--white);
-          border-bottom-color: var(--white);
-        }
-
-        @include media-breakpoint-up(lg) {
-          &:first-child {
-            margin-left: $padding-base;
-          }
-          &:last-child {
-            margin-right: $padding-base;
-          }
-        }
-      }
     }
 
     &.nav-modern {
-      @include border-radius(.25rem);
-      @include box-shadow(0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15));
-      border-width: 0 !important;
-      padding: $tab-modern-padding;
-
-      .nav-link {
         @include border-radius(.25rem);
+        @include box-shadow(0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15));
         border-width: 0 !important;
-        color: rgba($white, .6);
+        padding: $tab-modern-padding;
 
-        &:hover {
-          color: rgba($white, .6);
-        }
+        .nav-link {
+            @include border-radius(.25rem);
+            border-width: 0 !important;
+            color: rgba($white, .6);
 
-        &.active {
-          background-color: rgba($black, .2);
-          color: var(--white);
+            &:hover {
+                color: rgba($white, .6);
+            }
+
+            &.active {
+                background-color: rgba($black, .2);
+                color: var(--white);
+            }
         }
-      }
     }
-  }
+}
 
-  .card {
+.card {
     &:not(.rounded-0) {
-      > .nav-material {
-        @include border-top-radius(.25rem);
-      }
+        > .nav-material {
+            @include border-top-radius(.25rem);
+        }
 
-      > .nav-modern {
-        @include border-bottom-radius(0);
-      }
+        > .nav-modern {
+            @include border-bottom-radius(0);
+        }
     }
 
     &.rounded-0 {
-      > .nav-modern {
-        @include border-radius(0);
-      }
+        > .nav-modern {
+            @include border-radius(0);
+        }
     }
-  }
+}
 </style>

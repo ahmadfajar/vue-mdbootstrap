@@ -1,5 +1,5 @@
 <template>
-  <div class="md-list-tile-avatar"
+  <div class="md-list-tile-leading"
        :class="imageClass"
        :style="imageSizeStyles">
     <slot></slot>
@@ -16,7 +16,7 @@ import BsAvatar from "../BsBasic/BsAvatar";
 import image from '../../mixins/Image';
 
 export default {
-    name: "BsListTileAvatar",
+    name: "BsListTileLeading",
     components: {BsAvatar},
     mixins: [image]
 }

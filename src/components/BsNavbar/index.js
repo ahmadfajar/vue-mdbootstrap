@@ -1,12 +1,12 @@
-import BsNavbar from "./BsNavbar";
-import BsNavbarItems from "./BsNavbarItems";
-import BsNavbarTitle from "./BsNavbarTitle";
+import BsAppbar from "./BsAppbar";
+import BsAppbarItems from "./BsAppbarItems";
+import BsAppbarTitle from "./BsAppbarTitle";
 import registerPrototype from "../../utils/CmpHelper";
 
 export default Vue => {
     registerPrototype(Vue);
 
-    Vue.component(BsNavbar.name, BsNavbar);
-    Vue.component(BsNavbarItems.name, BsNavbarItems);
-    Vue.component(BsNavbarTitle.name, BsNavbarTitle);
+    Vue.component(BsAppbar.name, BsAppbar);
+    Vue.component(BsAppbarItems.name, BsAppbarItems);
+    Vue.component(BsAppbarTitle.name, BsAppbarTitle);
 };

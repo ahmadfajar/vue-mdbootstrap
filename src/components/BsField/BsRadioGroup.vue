@@ -1,5 +1,5 @@
 <template>
-  <div class="md-field md-radio-group row" :class="classNames">
+  <div class="md-field md-radio-group row" :class="_classNames">
     <slot />
     <div class="d-flex flex-column flex-fill">
       <div class="md-field-inner">
@@ -83,7 +83,7 @@ export default {
          *
          * @return {Object} The collection of css classes
          */
-        classNames() {
+        _classNames() {
             return {
                 'md-disabled': this.disabled,
                 'md-readonly': this.readonly,

@@ -1,6 +1,6 @@
 <template>
   <div :is="tag"
-       :class="classNames"
+       :class="_classNames"
        class="md-list-tile-action"
        v-on="$listeners">
     <slot></slot>
@@ -18,7 +18,7 @@ export default {
         },
     },
     computed: {
-        classNames() {
+        _classNames() {
             return {
                 'md-action-stack': this.stack
             }

@@ -4,7 +4,7 @@ import ProxyAdapter from "./ProxyAdapter";
 import Helper from "../utils/Helper";
 
 /**
- * Class to make tree dateset from remote server easier.
+ * Class to make tree dataset from remote server easier.
  *
  * @author Ahmad Fajar
  * @since  15/03/2019 modified: 24/05/2019 2:26

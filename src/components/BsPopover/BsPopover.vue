@@ -2,8 +2,8 @@
   <transition :name="transition">
     <div v-show="open"
          class="md-popover"
-         :class="classNames"
-         :style="styles"
+         :class="_classNames"
+         :style="_styles"
          v-resize="setPosition"
          v-click-outside="clickOutSide"
          v-scroll="{target: trigger, callback: setPosition}"
@@ -73,12 +73,12 @@ export default {
         }
     },
     computed: {
-        classNames() {
+        _classNames() {
             return [
                 this.getTransitionName()
             ]
         },
-        styles() {
+        _styles() {
             return {
                 'z-index': this.zIndex
             }
@@ -100,7 +100,7 @@ export default {
             this.$emit('close', reason);
         },
         getLeftPosition(width, rect) {
-            let left      = 0;
+            let left = 0;
             const maxLeft = window.innerWidth - space - width;
 
             switch (this.placement) {
@@ -143,7 +143,7 @@ export default {
             return left;
         },
         getTopPosition(height, rect) {
-            let top      = 0;
+            let top = 0;
             const maxTop = window.innerHeight - space - height;
             const minTop = space;
 
@@ -198,18 +198,18 @@ export default {
                 return;
             }
 
-            const el        = this.$el;
+            const el = this.$el;
             const triggerEl = this.trigger;
-            const rect      = triggerEl.getBoundingClientRect();
+            const rect = triggerEl.getBoundingClientRect();
 
             if (rect.top < -rect.height || rect.top > window.innerHeight) {
                 this.close('overflow');
             }
 
-            const maxTop  = window.innerHeight - space - el.offsetHeight;
-            const top     = this.getTopPosition(el.offsetHeight, rect);
+            const maxTop = window.innerHeight - space - el.offsetHeight;
+            const top = this.getTopPosition(el.offsetHeight, rect);
             el.style.left = this.getLeftPosition(el.offsetWidth, rect) + 'px';
-            el.style.top  = top + 'px';
+            el.style.top = top + 'px';
 
             if (this.placement.startsWith('bottom') && maxTop < (rect.top + rect.height + this.space)) {
                 this.actualPlacement = this.placement.replace('bottom', 'top');
@@ -222,10 +222,10 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-popover {
+.#{$prefix}-popover {
     position: fixed;
     max-height: 100%;
     max-width: 80%;
@@ -233,61 +233,61 @@ export default {
     -webkit-overflow-scrolling: touch;
 
     &.transition-bottom-left {
-      transform-origin: left top;
+        transform-origin: left top;
     }
 
     &.transition-bottom {
-      transform-origin: center top;
+        transform-origin: center top;
 
-      &.popover-enter,
-      &.popover-leave-active {
-        transform: scaleY(.5);
-      }
+        &.popover-enter,
+        &.popover-leave-active {
+            transform: scaleY(.5);
+        }
     }
 
     &.transition-bottom-right {
-      transform-origin: right top;
+        transform-origin: right top;
     }
 
     &.transition-top-left {
-      transform-origin: left bottom;
+        transform-origin: left bottom;
     }
 
     &.transition-top {
-      transform-origin: center bottom;
+        transform-origin: center bottom;
 
-      &.popover-enter,
-      &.popover-leave-active {
-        transform: scaleY(.5);
-      }
+        &.popover-enter,
+        &.popover-leave-active {
+            transform: scaleY(.5);
+        }
     }
 
     &.transition-top-right {
-      transform-origin: right bottom;
+        transform-origin: right bottom;
     }
 
     &.transition-left-top {
-      transform-origin: right top;
+        transform-origin: right top;
     }
 
     &.transition-left {
-      transform-origin: right center;
+        transform-origin: right center;
     }
 
     &.transition-left-bottom {
-      transform-origin: right bottom;
+        transform-origin: right bottom;
     }
 
     &.transition-right-top {
-      transform-origin: left top;
+        transform-origin: left top;
     }
 
     &.transition-right {
-      transform-origin: left center;
+        transform-origin: left center;
     }
 
     &.transition-right-bottom {
-      transform-origin: left bottom;
+        transform-origin: left bottom;
     }
-  }
+}
 </style>

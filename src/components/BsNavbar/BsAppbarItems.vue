@@ -1,12 +1,12 @@
 <template>
-  <div class="md-navbar-items">
+  <div class="md-appbar-items">
     <slot></slot>
   </div>
 </template>
 
 <script>
 export default {
-    name: "BsNavbarItems"
+    name: "BsAppbarItems"
 }
 </script>
 

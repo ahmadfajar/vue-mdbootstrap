@@ -1,14 +1,14 @@
 const handleGesture = (wrapper) => {
     const {
-              touchstartX,
-              touchendX,
-              touchstartY,
-              touchendY
-          }           = wrapper;
-    const dirRatio    = 0.5;
+        touchstartX,
+        touchendX,
+        touchstartY,
+        touchendY
+    } = wrapper;
+    const dirRatio = 0.5;
     const minDistance = 16;
-    wrapper.offsetX   = touchendX - touchstartX;
-    wrapper.offsetY   = touchendY - touchstartY;
+    wrapper.offsetX = touchendX - touchstartX;
+    wrapper.offsetY = touchendY - touchstartY;
 
     if (Math.abs(wrapper.offsetY) < dirRatio * Math.abs(wrapper.offsetX)) {
         wrapper.left && (touchendX < touchstartX - minDistance) && wrapper.left(wrapper);
@@ -22,7 +22,7 @@ const handleGesture = (wrapper) => {
 };
 
 function touchstart(event, wrapper) {
-    const touch         = event.changedTouches[0];
+    const touch = event.changedTouches[0];
     wrapper.touchstartX = touch.clientX;
     wrapper.touchstartY = touch.clientY;
 
@@ -30,7 +30,7 @@ function touchstart(event, wrapper) {
 }
 
 function touchend(event, wrapper) {
-    const touch       = event.changedTouches[0];
+    const touch = event.changedTouches[0];
     wrapper.touchendX = touch.clientX;
     wrapper.touchendY = touch.clientY;
 
@@ -40,7 +40,7 @@ function touchend(event, wrapper) {
 }
 
 function touchmove(event, wrapper) {
-    const touch        = event.changedTouches[0];
+    const touch = event.changedTouches[0];
     wrapper.touchmoveX = touch.clientX;
     wrapper.touchmoveY = touch.clientY;
 
@@ -74,15 +74,17 @@ function createHandlers(value) {
 }
 
 function inserted(el, binding, vnode) {
-    const value   = binding.value;
-    const target  = value.parent ? el.parentElement : el;
+    const value = binding.value;
+    const target = value.parent ? el.parentElement : el;
     const options = value.options || {passive: true};
 
     // Needed to pass unit tests
-    if (!target) return;
+    if (!target) {
+        return;
+    }
 
-    const handlers                            = createHandlers(binding.value);
-    target._touchHandlers                     = Object(target._touchHandlers);
+    const handlers = createHandlers(binding.value);
+    target._touchHandlers = Object(target._touchHandlers);
     target._touchHandlers[vnode.context._uid] = handlers;
 
     Object.keys(handlers).forEach(eventName => {
@@ -92,7 +94,9 @@ function inserted(el, binding, vnode) {
 
 function unbind(el, binding, vnode) {
     const target = binding.value.parent ? el.parentElement : el;
-    if (!target || !target._touchHandlers) return;
+    if (!target || !target._touchHandlers) {
+        return;
+    }
 
     const handlers = target._touchHandlers[vnode.context._uid];
     Object.keys(handlers).forEach(eventName => {

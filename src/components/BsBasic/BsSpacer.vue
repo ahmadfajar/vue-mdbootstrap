@@ -22,7 +22,7 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {Object} Component css classes
+         * @return {{"flex-grow-1": boolean}} Component css classes
          * @private
          */
         _classNames() {

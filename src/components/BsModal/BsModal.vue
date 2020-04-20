@@ -141,7 +141,7 @@ export default {
                 return;
             }
 
-            let contentMaxHeight              = window.innerHeight - 2 * 64;
+            let contentMaxHeight = window.innerHeight - 2 * 64;
             const {titleEl, bodyEl, footerEl} = this.$refs;
 
             if (titleEl) {
@@ -169,11 +169,11 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-modal {
+.#{$prefix}-modal {
     @include flexbox((display: flex, align-items: center, justify-content: center));
     position: fixed;
     left: 0;
@@ -182,114 +182,114 @@ export default {
     bottom: 0;
 
     > .#{$prefix}-modal-inner {
-      @include box-shadow(0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12));
-      @include border-radius($border-radius-base);
-      background-color: $white;
-      font-size: inherit;
-      max-width: 75%;
-      padding: 0;
+        @include box-shadow(0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12));
+        @include border-radius($border-radius-base);
+        background-color: $white;
+        font-size: inherit;
+        max-width: 75%;
+        padding: 0;
 
-      &.#{$prefix}-modal-scrollable {
-        .#{$prefix}-modal-body {
-          overflow-x: hidden;
-          overflow-y: auto;
-          -webkit-overflow-scrolling: touch;
+        &.#{$prefix}-modal-scrollable {
+            .#{$prefix}-modal-body {
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
         }
-      }
 
-      &.#{$prefix}-modal-fullscreen {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        max-width: 100% !important;
-        width: 100% !important;
-        height: 100% !important;
-        max-height: 100% !important;
-        border-radius: 0;
+        &.#{$prefix}-modal-fullscreen {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            max-width: 100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            border-radius: 0;
 
-        .#{$prefix}-modal-body {
-          padding: 0;
+            .#{$prefix}-modal-body {
+                padding: 0;
+            }
         }
-      }
     }
 
     .#{$prefix}-modal-title {
-      @include flexbox((display: flex, align-items: center, justify-content: space-between));
-      color: darken($gray-900, 5%);
-      font-size: 22px;
-      font-weight: normal;
-      line-height: 32px;
-      margin: 0;
-      padding: $padding-lg $padding-lg 1.25rem;
+        @include flexbox((display: flex, align-items: center, justify-content: space-between));
+        color: darken($gray-900, 5%);
+        font-size: 22px;
+        font-weight: normal;
+        line-height: 32px;
+        margin: 0;
+        padding: $padding-lg $padding-lg 1.25rem;
 
-      + .#{$prefix}-modal-body {
-        padding-top: 0;
-      }
+        + .#{$prefix}-modal-body {
+            padding-top: 0;
+        }
     }
 
     .#{$prefix}-modal-body {
-      padding: $padding-lg $padding-lg 1.25rem;
-      //color: $gray-700;
+        padding: $padding-lg $padding-lg 1.25rem;
+        //color: $gray-700;
     }
 
     .#{$prefix}-modal-footer {
-      @include flexbox((display: flex, align-items: center, justify-content: flex-end));
-      min-height: 48px;
-      padding: 8px 12px 12px 8px;
+        @include flexbox((display: flex, align-items: center, justify-content: flex-end));
+        min-height: 48px;
+        padding: 8px 12px 12px 8px;
 
-      .btn + .btn {
-        margin-left: 10px;
-      }
+        .btn + .btn {
+            margin-left: 10px;
+        }
     }
-  }
+}
 
-  .bs-modal-enter-active,
-  .bs-modal-leave-active {
+.bs-modal-enter-active,
+.bs-modal-leave-active {
     @include transition();
     transition: opacity $transition-duration-base $transition-easeOut;
 
     .#{$prefix}-modal-inner {
-      &.md-slide-top,
-      &.md-slide-bottom,
-      &.md-slide-left,
-      &.md-slide-right,
-      &.md-scale {
-        transition: transform $transition-duration-base $transition-easeOut;
-      }
+        &.md-slide-top,
+        &.md-slide-bottom,
+        &.md-slide-left,
+        &.md-slide-right,
+        &.md-scale {
+            transition: transform $transition-duration-base $transition-easeOut;
+        }
     }
-  }
+}
 
-  .bs-modal-enter,
-  .bs-modal-leave-active {
+.bs-modal-enter,
+.bs-modal-leave-active {
     opacity: 0;
-  }
+}
 
-  .bs-modal-enter,
-  .bs-modal-leave-active {
+.bs-modal-enter,
+.bs-modal-leave-active {
     .#{$prefix}-modal-inner {
-      backface-visibility: hidden;
+        backface-visibility: hidden;
 
-      &.md-slide-top {
-        transform: translate3d(0, -100%, 0);
-      }
+        &.md-slide-top {
+            transform: translate3d(0, -100%, 0);
+        }
 
-      &.md-slide-bottom {
-        transform: translate3d(0, 100%, 0);
-      }
+        &.md-slide-bottom {
+            transform: translate3d(0, 100%, 0);
+        }
 
-      &.md-slide-right {
-        transform: translate3d(100%, 0, 0);
-      }
+        &.md-slide-right {
+            transform: translate3d(100%, 0, 0);
+        }
 
-      &.md-slide-left {
-        transform: translate3d(-100%, 0, 0);
-      }
+        &.md-slide-left {
+            transform: translate3d(-100%, 0, 0);
+        }
 
-      &.md-scale {
-        transform: scale(0.6);
-      }
+        &.md-scale {
+            transform: scale(0.6);
+        }
     }
-  }
+}
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <div class="md-menu" :class="classNames" @keydown="_changeListIndex">
+  <div class="md-menu" :class="_classNames" @keydown="_changeListIndex">
     <div class="md-menu-activator"
          ref="activator"
          @mouseenter="onMouseEnter"
@@ -57,7 +57,7 @@ export default {
         trigger: null
     }),
     computed: {
-        classNames() {
+        _classNames() {
             return {
                 'md-open': this.open,
                 'md-disabled': this.disabled
@@ -136,51 +136,51 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-menu {
+.#{$prefix}-menu {
     display: inline-block;
     position: relative;
     vertical-align: middle;
 
     .#{$prefix}-menu-activator {
-      @include align-items(center);
-      cursor: pointer;
-      height: 100%;
-      position: relative;
-
-      input[readonly] {
+        @include align-items(center);
         cursor: pointer;
-      }
+        height: 100%;
+        position: relative;
 
-      .disabled & {
-        cursor: default;
-        pointer-events: none;
-      }
+        input[readonly] {
+            cursor: pointer;
+        }
+
+        .disabled & {
+            cursor: default;
+            pointer-events: none;
+        }
     }
-  }
+}
 
-  .#{$prefix}-menu-popover {
+.#{$prefix}-menu-popover {
     background-color: $white;
     @include border-radius($border-radius-base);
 
     > .#{$prefix}-list {
-      @include border-radius($border-radius-base);
+        @include border-radius($border-radius-base);
 
-      .#{$prefix}-divider {
-        margin-bottom: 3px;
-        margin-top: 3px;
-      }
+        .#{$prefix}-divider {
+            margin-bottom: 3px;
+            margin-top: 3px;
+        }
     }
-  }
+}
 
-  .#{$prefix}-menu-toggle-icon {
+.#{$prefix}-menu-toggle-icon {
     transition: transform .3s cubic-bezier(.23, 1, .32, 1);
 
     .#{$prefix}-open & {
-      transform: rotate(180deg);
+        transform: rotate(180deg);
     }
-  }
+}
 </style>

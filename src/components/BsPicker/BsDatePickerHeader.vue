@@ -3,21 +3,21 @@
     <div class="md-datepicker-header-inner row">
       <div class="col-4 md-picker-year"
            :class="{ active: isYearActive }"
-           :style="styles"
+           :style="_styles"
            @click="yearClick">
         {{ year === '' ? '&nbsp;' : year }}
       </div>
       <div v-if="enableTime"
            class="col-8 md-picker-time text-right"
            :class="{ active: isTimeActive }"
-           :style="styles"
+           :style="_styles"
            @click="timeClick">
         {{ time === '' ? '&nbsp;' : time }}
       </div>
     </div>
     <div class="md-datepicker-header-inner md-picker-title"
          :class="{ active: isTitleActive }"
-         :style="styles"
+         :style="_styles"
          @click="titleClick">
       <transition :name="transitionName">
         <div :key="date" v-html="value"></div>
@@ -65,7 +65,7 @@ export default {
         reverse: false
     }),
     computed: {
-        styles() {
+        _styles() {
             return {
                 'pointer-events': this.readonly ? 'none' : null
             }
@@ -109,45 +109,45 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
-  @import "../../../scss/shared";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/shared";
 
-  .#{$prefix}-datepicker-header {
+.#{$prefix}-datepicker-header {
     display: block;
     line-height: 1;
 
     .#{$prefix}-picker-year,
     .#{$prefix}-picker-time,
     .#{$prefix}-picker-title {
-      &:not(.active) {
-        @include opacity(.6);
-        @extend %cursor-pointer;
+        &:not(.active) {
+            @include opacity(.6);
+            @extend %cursor-pointer;
 
-        &:hover {
-          @include opaque();
+            &:hover {
+                @include opaque();
+            }
         }
-      }
     }
 
     .#{$prefix}-datepicker-header-inner {
-      @include transition($md-transition-stand);
+        @include transition($md-transition-stand);
 
-      &.row {
-        font-size: 1.25rem;
-        font-weight: $font-weight-bold;
-        margin-bottom: $padding-base / 4;
-      }
+        &.row {
+            font-size: 1.25rem;
+            font-weight: $font-weight-bold;
+            margin-bottom: $padding-base / 4;
+        }
 
-      &.#{$prefix}-picker-title {
-        font-size: 2rem;
-        font-weight: $font-weight-bold;
-        line-height: 1.25;
-        position: relative;
-        overflow: hidden;
-        text-align: left;
-      }
+        &.#{$prefix}-picker-title {
+            font-size: 2rem;
+            font-weight: $font-weight-bold;
+            line-height: 1.25;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
     }
-  }
+}
 </style>

@@ -167,26 +167,11 @@ export default {
     }),
     computed: {
         /**
-         * Get computed binding's properties.
-         *
-         * @return {Object} The attributes to bind
-         */
-        attributes() {
-            return {
-                'role': 'button',
-                'href': this.href,
-                'class': this.classNames,
-                'type': this.buttonType,
-                'disabled': this.tagName !== 'a' && this.disabled,
-                'aria-disabled': this.disabled
-            };
-        },
-        /**
          * Get computed component's styles.
          *
          * @return {Object} The collection of css classes
          */
-        classNames() {
+        _classNames() {
             return [
                 this.mode === 'icon' ? 'btn-icon' : this.mode === 'floating' ? 'btn-floating' : 'btn',
                 this.outlined ? 'btn-outline-' + this.color : this.flat ? 'btn-flat-' + this.color :
@@ -198,6 +183,21 @@ export default {
                 this.active ? 'active' : '',
                 !this.ripple ? 'md-ripple-off' : ''
             ]
+        },
+        /**
+         * Get computed binding's properties.
+         *
+         * @return {Object} The attributes to bind
+         */
+        attributes() {
+            return {
+                'role': 'button',
+                'href': this.href,
+                'class': this._classNames,
+                'type': this.buttonType,
+                'disabled': this.tagName !== 'a' && this.disabled,
+                'aria-disabled': this.disabled
+            };
         },
         /**
          * Get icon binding's properties.
@@ -322,14 +322,14 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
-  @import "../../../scss/shared";
-  @import "../../../scss/functions";
-  @import "../../../scss/buttons";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/shared";
+@import "../../../scss/functions";
+@import "../../../scss/buttons";
 
-  .btn {
+.btn {
     @include border-radius($btn-border-radius);
     @include transition($btn-transition);
     border: 1px solid;
@@ -344,57 +344,57 @@ export default {
     &:hover,
     &:active,
     &:focus {
-      @include box-shadow($z-depth-1);
-      outline: 0;
+        @include box-shadow($z-depth-1);
+        outline: 0;
     }
 
     &:disabled, &.disabled {
-      @include box-shadow(none);
-      background-color: lighten($gray-500, 8%) !important;
-      border-color: lighten($gray-500, 8%) !important;
-      color: $gray-700 !important;
-      cursor: default;
+        @include box-shadow(none);
+        background-color: lighten($gray-500, 8%) !important;
+        border-color: lighten($gray-500, 8%) !important;
+        color: $gray-700 !important;
+        cursor: default;
     }
 
     &:not([disabled]):not(.disabled):active,
     &:not([disabled]):not(.disabled).active {
-      @include box-shadow($z-depth-1-half);
+        @include box-shadow($z-depth-1-half);
     }
 
     &.btn-xs {
-      font-size: .875rem;
-      @include border-radius($btn-border-radius-sm);
+        font-size: .875rem;
+        @include border-radius($btn-border-radius-sm);
     }
 
     &.btn-sm {
-      @include border-radius($btn-border-radius-sm);
+        @include border-radius($btn-border-radius-sm);
     }
 
     &.btn-lg {
-      @include border-radius($btn-border-radius-lg);
+        @include border-radius($btn-border-radius-lg);
     }
 
     &.btn-raised {
-      @include box-shadow($z-depth-1);
+        @include box-shadow($z-depth-1);
 
-      &:hover,
-      &:active,
-      &:focus {
-        @include box-shadow($z-depth-1-half);
-      }
-
-      &.disabled,
-      &:disabled {
+        &:hover,
         &:active,
-        &:focus,
-        &:hover {
-          @include box-shadow($z-depth-1);
+        &:focus {
+            @include box-shadow($z-depth-1-half);
         }
-      }
-    }
-  }
 
-  .btn-floating, .btn-icon {
+        &.disabled,
+        &:disabled {
+            &:active,
+            &:focus,
+            &:hover {
+                @include box-shadow($z-depth-1);
+            }
+        }
+    }
+}
+
+.btn-floating, .btn-icon {
     @include border-radius($border-radius-circle);
     @include transition($btn-transition);
     @include flexbox((display: inline-flex, flex: 0 0 auto));
@@ -407,93 +407,93 @@ export default {
 
     &:active,
     &:focus {
-      outline: 0;
+        outline: 0;
     }
 
     &:disabled, &.disabled {
-      @include box-shadow(none);
-      background-color: transparent;
-      border-color: transparent;
-      color: $gray-400 !important;
-      pointer-events: none;
+        @include box-shadow(none);
+        background-color: transparent;
+        border-color: transparent;
+        color: $gray-400 !important;
+        pointer-events: none;
     }
 
     .#{$prefix}-ripple {
-      @include border-radius($border-radius-circle);
-      width: 38px;
-      height: 38px;
+        @include border-radius($border-radius-circle);
+        width: 38px;
+        height: 38px;
     }
 
     &.btn-sm {
-      line-height: 32px;
+        line-height: 32px;
 
-      .#{$prefix}-ripple {
-        width: 32px;
-        height: 32px;
-      }
+        .#{$prefix}-ripple {
+            width: 32px;
+            height: 32px;
+        }
     }
 
     &.btn-lg {
-      line-height: 56px;
+        line-height: 56px;
 
-      .#{$prefix}-ripple {
-        width: 56px;
-        height: 56px;
-      }
+        .#{$prefix}-ripple {
+            width: 56px;
+            height: 56px;
+        }
     }
 
     .#{$prefix}-ripple-enter-active {
-      @include transition-duration(1.2s);
+        @include transition-duration(1.2s);
     }
-  }
+}
 
-  @each $btn_name, $color_value in $mdb-colors {
+@each $btn_name, $color_value in $mdb-colors {
     @include make-button($btn_name, $color_value);
     @include make-outline-button($btn_name, $color_value);
     @include make-flat-button($btn_name, $color_value);
-  }
+}
 
-  .btn, .btn-floating, .btn-icon {
+.btn, .btn-floating, .btn-icon {
     .#{$prefix}-ripple {
-      @include flexbox((display: flex, justify-content: center, align-items: center));
-      padding: 0;
+        @include flexbox((display: flex, justify-content: center, align-items: center));
+        padding: 0;
     }
 
     &:before {
-      @include transition($md-transition-default);
-      @extend %full-rect-absolute;
-      @extend %opacity-0;
-      content: " ";
-      will-change: background-color, opacity;
+        @include transition($md-transition-default);
+        @extend %full-rect-absolute;
+        @extend %opacity-0;
+        content: " ";
+        will-change: background-color, opacity;
     }
 
     &.btn-transparent {
-      background-color: transparent;
-      border-width: 0 !important;
-      color: rgba(255, 255, 255, .5) !important;
+        background-color: transparent;
+        border-width: 0 !important;
+        color: rgba(255, 255, 255, .5) !important;
 
-      &:hover,
-      &:active,
-      &:focus {
-        outline: 0;
-        background-color: rgba(25, 25, 25, .15);
-      }
+        &:hover,
+        &:active,
+        &:focus {
+            outline: 0;
+            background-color: rgba(25, 25, 25, .15);
+        }
 
-      &:not([disabled]):not(.disabled):active,
-      &:not([disabled]):not(.disabled):focus,
-      &:not([disabled]):not(.disabled).active {
-        color: rgba(255, 255, 255, .8) !important;
-      }
+        &:not([disabled]):not(.disabled):active,
+        &:not([disabled]):not(.disabled):focus,
+        &:not([disabled]):not(.disabled).active {
+            color: rgba(255, 255, 255, .8) !important;
+        }
     }
-  }
+}
 
-  .btn-floating {
+.btn-floating {
     position: absolute;
 
     &.btn-raised {
-      @include box-shadow($z-depth-1);
+        @include box-shadow($z-depth-1);
     }
-  }
+}
 
 </style>
 

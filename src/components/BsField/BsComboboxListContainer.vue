@@ -26,13 +26,13 @@
       </div>
       <template v-else>
         <template v-for="(item, index) in catchFilteredItems">
-          <bs-list-item :key="getUuid + index"
+          <bs-list-tile :key="getUuid + index"
                         :value="catchSelectedItems.indexOf(getItemValue(item)) !== -1"
                         :disabled="disabled === true ? disabled : objectPropertyValue(item, disableField)"
                         @mousedown="e => e.preventDefault()"
                         @click="onItemClick(item)">
             <slot v-bind="{ item, index }"></slot>
-          </bs-list-item>
+          </bs-list-tile>
           <bs-divider v-if="itemSeparator && (index + 1 < catchFilteredItems.length)"
                       :key="'div-' + index" />
         </template>
@@ -42,15 +42,15 @@
 </template>
 
 <script>
-import BsList from "../BsList/BsList";
-import BsListItem from "../BsList/BsListItem";
+import BsList from "../BsList/BsListView";
+import BsListTile from "../BsList/BsListTile";
 import BsDivider from "../BsBasic/BsDivider";
 import Util from "../../utils/Helper";
 
 export default {
     name: "BsComboboxListContainer",
     components: {
-        BsDivider, BsList, BsListItem
+        BsDivider, BsList, BsListTile
     },
     inject: ['getItemValue', 'getItemText'],
     props: {
@@ -148,7 +148,7 @@ export default {
         /**
          * Check if input search box will be displayed or not.
          *
-         * @return {boolean}
+         * @return {boolean} If true then search box will be displayed
          */
         showSearchBox() {
             return this.dataItems.length > this.minimumItemsForSearch;

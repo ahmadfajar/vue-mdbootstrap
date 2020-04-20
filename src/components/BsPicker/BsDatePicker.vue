@@ -300,7 +300,7 @@ export default {
         headerAttrs() {
             moment.locale(this.locale);
             const _date = !Helper.isEmpty(this.value) ? this.dateValue.format(PickerConst.shortISO) : null;
-            const _now  = moment();
+            const _now = moment();
 
             return {
                 readonly: this.readonly,
@@ -589,105 +589,105 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-datepicker {
+.#{$prefix}-datepicker {
     .#{$prefix}-datepicker-title,
     .#{$prefix}-picker-year,
     .#{$prefix}-picker-time {
-      @include transition($md-transition-stand);
+        @include transition($md-transition-stand);
     }
 
     .#{$prefix}-picker-body {
-      min-height: 260px;
-      padding-bottom: $padding-sm + .2;
+        min-height: 260px;
+        padding-bottom: $padding-sm + .2;
     }
 
     .#{$prefix}-datepicker-nav {
-      @include flexbox((display: flex, justify-content: space-between, align-items: center));
-      padding: ($padding-base / 4) $padding-base;
-      position: relative;
-      width: 100%;
-
-      > .#{$prefix}-datepicker-navtext {
-        @include flex(1);
-        cursor: pointer;
-        overflow: hidden;
+        @include flexbox((display: flex, justify-content: space-between, align-items: center));
+        padding: ($padding-base / 4) $padding-base;
         position: relative;
-        text-align: center;
+        width: 100%;
 
-        strong {
-          @include transition($md-transition-stand);
-          display: block;
-          width: 100%;
+        > .#{$prefix}-datepicker-navtext {
+            @include flex(1);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+
+            strong {
+                @include transition($md-transition-stand);
+                display: block;
+                width: 100%;
+            }
         }
-      }
     }
 
     .#{$prefix}-datepicker-body {
-      /*height: 252px;*/
-      padding: 0 12px;
-      position: relative;
+        /*height: 252px;*/
+        padding: 0 12px;
+        position: relative;
 
-      table {
-        @include transition($md-transition-stand);
-        table-layout: fixed;
-        width: 100%;
-        top: 0;
+        table {
+            @include transition($md-transition-stand);
+            table-layout: fixed;
+            width: 100%;
+            top: 0;
 
-        td, th {
-          position: relative;
-          text-align: center;
-        }
-      }
-
-      &.picker-day {
-        th {
-          color: $gray-500;
-          padding: $padding-sm 0;
-          pointer-events: none;
+            td, th {
+                position: relative;
+                text-align: center;
+            }
         }
 
-        td {
-          height: 36px;
-          vertical-align: middle;
+        &.picker-day {
+            th {
+                color: $gray-500;
+                padding: $padding-sm 0;
+                pointer-events: none;
+            }
+
+            td {
+                height: 36px;
+                vertical-align: middle;
+            }
+
         }
 
-      }
-
-      &.picker-month,
-      &.picker-year,
-      &.picker-times {
-        td {
-          padding: $padding-sm 0;
-        }
-      }
-
-      &.picker-times {
-        /*height: 288px;*/
-
-        .picker-times-number {
-          .btn-inner {
-            font-size: 1rem;
-            font-weight: $font-weight-bolder;
-          }
+        &.picker-month,
+        &.picker-year,
+        &.picker-times {
+            td {
+                padding: $padding-sm 0;
+            }
         }
 
-        .picker-hours {
-          margin-top: $padding-base;
+        &.picker-times {
+            /*height: 288px;*/
 
-          td {
-            padding: 4px 0;
-          }
+            .picker-times-number {
+                .btn-inner {
+                    font-size: 1rem;
+                    font-weight: $font-weight-bolder;
+                }
+            }
+
+            .picker-hours {
+                margin-top: $padding-base;
+
+                td {
+                    padding: 4px 0;
+                }
+            }
+
+            .picker-minutes, .picker-seconds {
+                margin-top: $padding-xl;
+            }
+
         }
-
-        .picker-minutes, .picker-seconds {
-          margin-top: $padding-xl;
-        }
-
-      }
     }
-  }
+}
 </style>

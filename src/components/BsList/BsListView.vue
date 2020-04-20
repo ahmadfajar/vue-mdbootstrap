@@ -1,5 +1,5 @@
 <template>
-  <div class="md-list" :class="classNames">
+  <div class="md-list" :class="_classNames">
     <slot></slot>
   </div>
 </template>
@@ -8,7 +8,7 @@
 import "../../../scss/_others.scss";
 
 export default {
-    name: "BsList",
+    name: "BsListView",
     props: {
         expand: Boolean,
         color: {
@@ -31,7 +31,7 @@ export default {
         }
     },
     computed: {
-        classNames() {
+        _classNames() {
             return [
                 'md-list-' + this.color
             ]
@@ -62,98 +62,104 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
-  @import "../../../scss/functions";
-  @import "../../../scss/mixins";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins";
 
-  .#{$prefix}-list {
+.#{$prefix}-list {
     @include transition(height .3s cubic-bezier(.4, 0, .2, 1));
     list-style-type: none;
+    overflow-x: hidden;
+    overflow-y: auto;
     padding: 8px 0;
+    height: 100%;
 
     .#{$prefix}-subheader {
-      @include user-select(none);
+        @include user-select(none);
     }
+}
 
-    .#{$prefix}-list-item {
-      @include transition($transition-hoverable);
-      @include user-select(none);
-      color: inherit;
-      margin: 0;
-      padding: $padding-sm $padding-base;
-      position: relative;
-      text-decoration: none;
+.#{$prefix}-list-tile {
+    @include transition($transition-hoverable);
+    @include user-select(none);
+    color: inherit;
+    margin: 0;
+    padding: $padding-sm $padding-base;
+    position: relative;
+    text-decoration: none;
 
-      a {
+    a {
         cursor: pointer;
         text-decoration: none;
-      }
+    }
 
-      .#{$prefix}-list-tile-action {
+    .#{$prefix}-list-tile-action {
         @include flexbox((display: flex, flex-direction: column, justify-content: center));
 
         &.#{$prefix}-action-stack {
-          @include justify-content(flex-end);
+            @include justify-content(flex-end);
         }
-      }
+    }
 
-      .#{$prefix}-list-tile-avatar {
+    .#{$prefix}-list-tile-leading {
         @include justify-content(flex-start);
-      }
+    }
 
-      .#{$prefix}-list-tile-title,
-      .#{$prefix}-list-tile-subtitle {
+    .#{$prefix}-list-tile-title,
+    .#{$prefix}-list-tile-subtitle {
         @include transition(.3s cubic-bezier(.25, .8, .5, 1));
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         width: 100%;
-      }
+    }
 
-      .#{$prefix}-list-tile-content {
+    .#{$prefix}-list-tile-content {
         @include flexbox((display: flex, flex: 1 1 auto, flex-direction: column, justify-content: center));
         overflow: hidden;
 
         > .#{$prefix}-list-tile-title {
-          font-size: 1rem;
-          font-weight: $font-weight-normal;
+            font-size: 1rem;
+            font-weight: $font-weight-normal;
         }
 
         > .#{$prefix}-list-tile-subtitle {
-          font-size: .88rem;
+            font-size: .88rem;
         }
 
         &.#{$prefix}-multiline {
-          > .#{$prefix}-list-tile-subtitle {
-            white-space: normal;
-          }
+            > .#{$prefix}-list-tile-subtitle {
+                white-space: normal;
+            }
         }
-      }
+    }
 
-      > div[class^="#{$prefix}-list-tile-"] {
+    > div[class^="#{$prefix}-list-tile-"] {
         &:nth-child(2),
         &:last-child:not(:first-child) {
-          margin-left: $padding-sm;
+            margin-left: $padding-sm;
         }
 
         &:first-child:not(:last-child) {
-          margin-right: $padding-sm;
+            margin-right: $padding-sm;
         }
-      }
     }
+}
 
-  }
-
-  @each $name, $color in $mdb-colors {
+@each $name, $color in $mdb-colors {
     @include bslist-variant($name, $color);
-  }
+}
 
-  .card {
+@each $name, $color in $material-colors {
+    @include bslist-variant($name, $color);
+}
+
+.card {
     > .#{$prefix}-list {
-      @include border-radius($border-radius-base * 2);
+        @include border-radius($border-radius-base * 2);
     }
-  }
+}
 
 </style>

@@ -65,7 +65,7 @@ export default {
             }
             if (item) {
                 this.items.forEach(el => el.active = false);
-                item.active     = true;
+                item.active = true;
                 this.activeItem = item;
             }
         },
@@ -82,8 +82,8 @@ export default {
 </script>
 
 <style lang="scss">
-  .tab-content {
+.tab-content {
     position: relative;
     overflow: hidden;
-  }
+}
 </style>

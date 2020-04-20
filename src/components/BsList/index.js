@@ -1,16 +1,16 @@
-import BsList from "./BsList";
-import BsListItem from "./BsListItem";
+import BsListView from "./BsListView";
+import BsListTile from "./BsListTile";
 import BsListTileAction from "./BsListTileAction";
-import BsListTileAvatar from "./BsListTileAvatar";
+import BsListTileLeading from "./BsListTileLeading";
 import BsListTileContent from "./BsListTileContent";
 import BsListTileTitle from "./BsListTileTitle";
 import BsListTileSubtitle from "./BsListTileSubtitle";
 
 export default Vue => {
-    Vue.component(BsList.name, BsList);
-    Vue.component(BsListItem.name, BsListItem);
+    Vue.component(BsListView.name, BsListView);
+    Vue.component(BsListTile.name, BsListTile);
     Vue.component(BsListTileAction.name, BsListTileAction);
-    Vue.component(BsListTileAvatar.name, BsListTileAvatar);
+    Vue.component(BsListTileLeading.name, BsListTileLeading);
     Vue.component(BsListTileContent.name, BsListTileContent);
     Vue.component(BsListTileTitle.name, BsListTileTitle);
     Vue.component(BsListTileSubtitle.name, BsListTileSubtitle);

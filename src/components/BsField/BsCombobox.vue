@@ -1,5 +1,5 @@
 <template>
-  <div class="md-combobox" :class="classNames">
+  <div class="md-combobox" :class="_classNames">
     <div class="md-combobox-inner row">
       <div v-if="floatingLabel === false"
            ref="label"
@@ -94,9 +94,9 @@
                              :color="checkboxColor"
                              @change="selected => selected ? _onSelectItem(item) : _onDeselectItem(item)" />
               </bs-list-tile-action>
-              <bs-list-tile-avatar v-if="showAvatar && hasProperty(item, imageField)"
-                                   :img-src="itemPropertyValue(item, imageField)"
-                                   size="36" />
+              <bs-list-tile-leading v-if="showAvatar && hasProperty(item, imageField)"
+                                    :img-src="itemPropertyValue(item, imageField)"
+                                    size="36" />
               <bs-list-tile-content>
                 <slot name="itemOptionText" v-bind="{ item, index }">
                   <bs-list-tile-title>{{ getItemText(item) }}</bs-list-tile-title>
@@ -110,9 +110,9 @@
               </bs-list-tile-action>
             </template>
             <template v-else>
-              <bs-list-tile-avatar size="36"
-                                   v-if="showAvatar && hasProperty(item, imageField)"
-                                   :img-src="itemPropertyValue(item, imageField)" />
+              <bs-list-tile-leading size="36"
+                                    v-if="showAvatar && hasProperty(item, imageField)"
+                                    :img-src="itemPropertyValue(item, imageField)" />
               <bs-list-tile-content>
                 <bs-list-tile-title>{{ getItemText(item) }}</bs-list-tile-title>
               </bs-list-tile-content>
@@ -129,7 +129,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsComboboxListContainer from "./BsComboboxListContainer";
 import BsListTileTitle from "../BsList/BsListTileTitle";
 import BsListTileAction from "../BsList/BsListTileAction";
-import BsListTileAvatar from "../BsList/BsListTileAvatar";
+import BsListTileLeading from "../BsList/BsListTileLeading";
 import BsListTileContent from "../BsList/BsListTileContent";
 import BsCheckbox from "./BsCheckbox";
 import BsIcon from "../BsIcon/BsIcon";
@@ -145,7 +145,7 @@ export default {
     name: "BsCombobox",
     components: {
         FontAwesomeIcon, BsComboboxListContainer, BsListTileContent, BsListTileAction,
-        BsListTileAvatar, BsListTileTitle, BsCheckbox, BsIcon, BsPopover
+        BsListTileLeading, BsListTileTitle, BsCheckbox, BsIcon, BsPopover
     },
     mixins: [Input, FieldValidation, MenuAble],
     props: {
@@ -261,6 +261,22 @@ export default {
     },
     computed: {
         /**
+         * Get computed component's styles.
+         *
+         * @return {Object} Collection of css classes
+         */
+        _classNames() {
+            return {
+                ...this.cmpAttrClasses,
+                'md-open': this.active,
+                'md-combobox-flat': this.flat,
+                'md-combobox-multiple': this.multiple,
+                'md-floating-active': this.floatingLabel,
+                'has-error': this.hasValidationError,
+                'has-success': this.wasValidated && !this.hasValidationError
+            };
+        },
+        /**
          * Get computed binding's properties.
          *
          * @return {Object} Attributes to bind
@@ -273,22 +289,6 @@ export default {
                 'multiple': this.multiple,
                 'aria-required': this.required,
                 'aria-disabled': this.disabled
-            };
-        },
-        /**
-         * Get computed component's styles.
-         *
-         * @return {Object} Collection of css classes
-         */
-        classNames() {
-            return {
-                ...this.cmpAttrClasses,
-                'md-open': this.active,
-                'md-combobox-flat': this.flat,
-                'md-combobox-multiple': this.multiple,
-                'md-floating-active': this.floatingLabel,
-                'has-error': this.hasValidationError,
-                'has-success': this.wasValidated && !this.hasValidationError
             };
         },
         /**
@@ -345,7 +345,7 @@ export default {
          *
          * @return {Number} Popover minimum width
          */
-        popoverMinwidth() {
+        popoverMinWidth() {
             if (this.trigger && (this.popoverWidth < this.trigger.offsetWidth)) {
                 return this.trigger.offsetWidth;
             }
@@ -359,7 +359,7 @@ export default {
          */
         popoverStyles() {
             return {
-                'min-width': this.trigger ? Helper.sizeUnit(this.popoverMinwidth) : '',
+                'min-width': this.trigger ? Helper.sizeUnit(this.popoverMinWidth) : '',
                 'max-height': Helper.sizeUnit(this.maxHeight)
             }
         },
@@ -488,10 +488,10 @@ export default {
     },
     beforeDestroy() {
         this.filteredBoolValues = [];
-        this.filteredItems      = [];
-        this.selectedItems      = [];
-        this.dataModel.items    = [];
-        this.dataModel          = null;
+        this.filteredItems = [];
+        this.selectedItems = [];
+        this.dataModel.items = [];
+        this.dataModel = null;
     },
     methods: {
         /**
@@ -581,7 +581,7 @@ export default {
                 text.push(this.getItemText(item));
             });
             // text.sort();
-            this.inputValue   = this.multiple ? values : values.length > 0 ? values[0] : null;
+            this.inputValue = this.multiple ? values : values.length > 0 ? values[0] : null;
             this.inputDisplay = text.join(', ');
         },
         /**
@@ -591,7 +591,7 @@ export default {
          * @private
          */
         _fetchData() {
-            const ds    = this.dataSource;
+            const ds = this.dataSource;
             let doFetch = false;
 
             if (!Helper.isEmpty(this.items) && !Helper.isEmpty(this.dataModel)) {
@@ -637,7 +637,7 @@ export default {
          * @private
          */
         _resetFilters() {
-            this.filteredItems      = this.dataItems;
+            this.filteredItems = this.dataItems;
             this.filteredBoolValues = this.filteredItems.map(item => this.selectedItems.includes(item));
         },
         /**
@@ -659,7 +659,7 @@ export default {
          * @private
          */
         _setSelectedItems() {
-            const items        = this.dataItems;
+            const items = this.dataItems;
             this.selectedItems = [];
 
             if (this.inputValue) {
@@ -691,8 +691,8 @@ export default {
             this.trigger = this.$refs.activator;
 
             if (!this.floatingLabel && this.$refs.label.children.length > 0) {
-                const elm     = this.$refs.label.children[0];
-                label         = this.$refs.label.querySelector('label');
+                const elm = this.$refs.label.children[0];
+                label = this.$refs.label.querySelector('label');
                 this.$refs.label.className += ' ' + elm.className;
                 elm.className = 'md-empty-class';
                 this._setLabelFor(label);
@@ -741,7 +741,7 @@ export default {
          * @private
          */
         _onDeselectItem(item) {
-            const ds  = this.selectedItems;
+            const ds = this.selectedItems;
             const idx = this.filteredItems.lastIndexOf(item);
 
             if (ds.includes(item)) {
@@ -775,7 +775,7 @@ export default {
          * @private
          */
         _onSelectItem(item) {
-            const ds  = this.selectedItems;
+            const ds = this.selectedItems;
             const idx = this.filteredItems.lastIndexOf(item);
 
             if (this.multiple) {
@@ -810,327 +810,327 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  $dropdown-checkbox-size: 16px;
-  $dropdown-checkbox-ripple-size: 40px;
+$dropdown-checkbox-size: 16px;
+$dropdown-checkbox-ripple-size: 40px;
 
-  .#{$prefix}-combobox {
+.#{$prefix}-combobox {
     position: relative;
     width: 100%;
 
     &.#{$prefix}-required {
-      .#{$prefix}-floating-label,
-      .#{$prefix}-combobox-label,
-      .col-form-label {
-        font-weight: bold;
-      }
+        .#{$prefix}-floating-label,
+        .#{$prefix}-combobox-label,
+        .col-form-label {
+            font-weight: bold;
+        }
     }
 
     > .#{$prefix}-combobox-inner {
-      .#{$prefix}-combobox-label {
-        @include user-select(none);
+        .#{$prefix}-combobox-label {
+            @include user-select(none);
 
-        label {
-          margin-bottom: 0;
-        }
-      }
-
-      .#{$prefix}-help-text {
-        display: block;
-        min-height: 10px;
-        margin: 4px 15px 0 15px;
-
-        > * {
-          font-size: 83% !important;
-        }
-      }
-
-      .#{$prefix}-combobox-control {
-        @include display-flex();
-        @include flex(1 1 auto);
-        margin-left: 15px;
-        margin-right: 15px;
-        padding-left: 0;
-        padding-right: 0;
-        position: relative;
-        width: auto;
-
-        > .#{$prefix}-floating-label {
-          @include transition(0.3s cubic-bezier(0.25, 0.8, 0.5, 1));
-          @include transform-origin(top left, false);
-          display: inline-block;
-          left: 0;
-          right: auto;
-          line-height: 1.2;
-          max-width: 90%;
-          min-height: .5rem;
-          overflow: hidden;
-          margin-left: .4rem;
-          padding-top: .3rem;
-          position: absolute;
-          pointer-events: none;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          z-index: 2;
-
-          &.#{$prefix}-active {
-            @include transform(translateY(-20px) scale(.9));
-            color: $gray-600;
-            margin-left: 0;
-            padding-top: 0;
-          }
-        }
-
-        > .#{$prefix}-combobox-control-inner {
-          @include transition(border .3s ease-in-out);
-          @include box-shadow(none);
-          outline: 0 none;
-          min-height: 2rem;
-          height: 100%;
-          border-bottom: 1px solid $gray-500;
-
-          &:after {
-            @include transition(all .3s ease-in-out);
-            background-color: $primary-color;
-            position: absolute;
-            content: '';
-            height: 2px;
-            left: 50%;
-            bottom: 0;
-            width: 0;
-          }
-
-          > .#{$prefix}-prepend-icon,
-          > .#{$prefix}-append-icon {
-            color: $gray-700;
-            display: inline;
-            font-size: 1rem;
-          }
-
-          > .#{$prefix}-prepend-icon {
-            margin-right: $padding-sm;
-          }
-
-          > .#{$prefix}-append-icon {
-            margin-left: .4rem;
-            margin-right: .3rem;
-          }
-
-          &:focus, &:active {
-            border-bottom-color: $primary-color;
-
-            &:after {
-              left: 0;
-              width: 100%;
+            label {
+                margin-bottom: 0;
             }
-          }
         }
 
-        .#{$prefix}-combobox-control-hidden {
-          background-color: transparent;
-          border: 0 none;
-          display: none;
-          outline: 0 none;
-          // height: 1px !important;
-          // width: 0 !important;
-          position: absolute;
-        }
+        .#{$prefix}-help-text {
+            display: block;
+            min-height: 10px;
+            margin: 4px 15px 0 15px;
 
-        .#{$prefix}-combobox-input {
-          @include flex(1 auto);
-          max-width: 100%;
-          min-height: 2rem;
-          // padding-bottom: 6px;
-
-          > input {
-            background-color: transparent;
-            border: 0 none;
-            outline: none;
-            flex: 1 1 auto;
-            margin: 0 0 0 4px;
-            min-height: 2rem;
-            pointer-events: none;
-          }
-
-          .#{$prefix}-input-tags {
-            margin: 4px 4px 4px 0;
-          }
-
-          .#{$prefix}-value {
-            pointer-events: none;
-          }
-        }
-
-        .#{$prefix}-action-icon {
-          cursor: pointer;
-          margin-left: $padding-sm;
-          // margin-right: $padding-sm;
-
-          .#{$prefix}-icon {
-            &.icon-clear {
-              color: $gray-500;
-              font-size: 1rem;
-
-              &:focus, &:active, &:hover, &:active:focus {
-                color: $red-base;
-              }
+            > * {
+                font-size: 83% !important;
             }
-          }
-
-          .caret {
-            @include transition(all 0.3s ease 0s);
-          }
         }
-      }
+
+        .#{$prefix}-combobox-control {
+            @include display-flex();
+            @include flex(1 1 auto);
+            margin-left: 15px;
+            margin-right: 15px;
+            padding-left: 0;
+            padding-right: 0;
+            position: relative;
+            width: auto;
+
+            > .#{$prefix}-floating-label {
+                @include transition(0.3s cubic-bezier(0.25, 0.8, 0.5, 1));
+                @include transform-origin(top left, false);
+                display: inline-block;
+                left: 0;
+                right: auto;
+                line-height: 1.2;
+                max-width: 90%;
+                min-height: .5rem;
+                overflow: hidden;
+                margin-left: .4rem;
+                padding-top: .3rem;
+                position: absolute;
+                pointer-events: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                z-index: 2;
+
+                &.#{$prefix}-active {
+                    @include transform(translateY(-20px) scale(.9));
+                    color: $gray-600;
+                    margin-left: 0;
+                    padding-top: 0;
+                }
+            }
+
+            > .#{$prefix}-combobox-control-inner {
+                @include transition(border .3s ease-in-out);
+                @include box-shadow(none);
+                outline: 0 none;
+                min-height: 2rem;
+                height: 100%;
+                border-bottom: 1px solid $gray-500;
+
+                &:after {
+                    @include transition(all .3s ease-in-out);
+                    background-color: $primary-color;
+                    position: absolute;
+                    content: '';
+                    height: 2px;
+                    left: 50%;
+                    bottom: 0;
+                    width: 0;
+                }
+
+                > .#{$prefix}-prepend-icon,
+                > .#{$prefix}-append-icon {
+                    color: $gray-700;
+                    display: inline;
+                    font-size: 1rem;
+                }
+
+                > .#{$prefix}-prepend-icon {
+                    margin-right: $padding-sm;
+                }
+
+                > .#{$prefix}-append-icon {
+                    margin-left: .4rem;
+                    margin-right: .3rem;
+                }
+
+                &:focus, &:active {
+                    border-bottom-color: $primary-color;
+
+                    &:after {
+                        left: 0;
+                        width: 100%;
+                    }
+                }
+            }
+
+            .#{$prefix}-combobox-control-hidden {
+                background-color: transparent;
+                border: 0 none;
+                display: none;
+                outline: 0 none;
+                // height: 1px !important;
+                // width: 0 !important;
+                position: absolute;
+            }
+
+            .#{$prefix}-combobox-input {
+                @include flex(1 auto);
+                max-width: 100%;
+                min-height: 2rem;
+                // padding-bottom: 6px;
+
+                > input {
+                    background-color: transparent;
+                    border: 0 none;
+                    outline: none;
+                    flex: 1 1 auto;
+                    margin: 0 0 0 4px;
+                    min-height: 2rem;
+                    pointer-events: none;
+                }
+
+                .#{$prefix}-input-tags {
+                    margin: 4px 4px 4px 0;
+                }
+
+                .#{$prefix}-value {
+                    pointer-events: none;
+                }
+            }
+
+            .#{$prefix}-action-icon {
+                cursor: pointer;
+                margin-left: $padding-sm;
+                // margin-right: $padding-sm;
+
+                .#{$prefix}-icon {
+                    &.icon-clear {
+                        color: $gray-500;
+                        font-size: 1rem;
+
+                        &:focus, &:active, &:hover, &:active:focus {
+                            color: $red-base;
+                        }
+                    }
+                }
+
+                .caret {
+                    @include transition(all 0.3s ease 0s);
+                }
+            }
+        }
     }
 
     &.has-error {
-      .#{$prefix}-floating-label, .col-form-label {
-        color: $danger-color-dark !important;
-      }
-
-      > .#{$prefix}-combobox-inner {
-        .#{$prefix}-combobox-control {
-          > .#{$prefix}-combobox-control-inner {
-            &:after {
-              background-color: $danger-color;
-            }
-          }
+        .#{$prefix}-floating-label, .col-form-label {
+            color: $danger-color-dark !important;
         }
-      }
+
+        > .#{$prefix}-combobox-inner {
+            .#{$prefix}-combobox-control {
+                > .#{$prefix}-combobox-control-inner {
+                    &:after {
+                        background-color: $danger-color;
+                    }
+                }
+            }
+        }
     }
 
     &.has-success {
-      .#{$prefix}-floating-label, .col-form-label {
-        color: $success-color-dark !important;
-      }
-
-      > .#{$prefix}-combobox-inner {
-        .#{$prefix}-combobox-control-inner {
-          border-bottom-color: $success-color-dark !important;
+        .#{$prefix}-floating-label, .col-form-label {
+            color: $success-color-dark !important;
         }
-      }
+
+        > .#{$prefix}-combobox-inner {
+            .#{$prefix}-combobox-control-inner {
+                border-bottom-color: $success-color-dark !important;
+            }
+        }
     }
 
     &.#{$prefix}-combobox-flat {
-      > .#{$prefix}-combobox-inner {
-        .#{$prefix}-combobox-control {
-          > .#{$prefix}-combobox-control-inner {
-            border-bottom-color: transparent;
-          }
+        > .#{$prefix}-combobox-inner {
+            .#{$prefix}-combobox-control {
+                > .#{$prefix}-combobox-control-inner {
+                    border-bottom-color: transparent;
+                }
+            }
         }
-      }
     }
 
     &.#{$prefix}-floating-active {
-      margin-top: 1.2rem;
+        margin-top: 1.2rem;
 
-      .#{$prefix}-combobox-control {
-        > .#{$prefix}-floating-label {
-          > .#{$prefix}-empty-class, label {
-            margin-bottom: 0;
-          }
+        .#{$prefix}-combobox-control {
+            > .#{$prefix}-floating-label {
+                > .#{$prefix}-empty-class, label {
+                    margin-bottom: 0;
+                }
 
-          &.#{$prefix}-prepend-icon:not(.#{$prefix}-active) {
-            margin-left: $padding-base + .5;
-          }
+                &.#{$prefix}-prepend-icon:not(.#{$prefix}-active) {
+                    margin-left: $padding-base + .5;
+                }
+            }
         }
-      }
     }
 
     &.#{$prefix}-active,
     &.#{$prefix}-focus,
     &.#{$prefix}-open {
-      .#{$prefix}-combobox-control-inner {
-        border-bottom-color: $primary-color !important;
+        .#{$prefix}-combobox-control-inner {
+            border-bottom-color: $primary-color !important;
 
-        &:after {
-          left: 0 !important;
-          width: 100% !important;
+            &:after {
+                left: 0 !important;
+                width: 100% !important;
+            }
         }
-      }
     }
 
     &.#{$prefix}-open {
-      .#{$prefix}-combobox-control-inner {
-        .caret {
-          @include transform(rotateZ(-180deg));
+        .#{$prefix}-combobox-control-inner {
+            .caret {
+                @include transform(rotateZ(-180deg));
+            }
         }
-      }
     }
-  }
+}
 
-  .#{$prefix}-combobox-popover {
+.#{$prefix}-combobox-popover {
     border: 1px solid rgba($black, 0.1) !important;
     border-right-width: 0 !important;
     overflow: hidden !important;
 
     > .#{$prefix}-combobox-list-container {
-      background-color: $white;
-      overflow: hidden;
+        background-color: $white;
+        overflow: hidden;
 
-      > .#{$prefix}-combobox-search-wrapper {
-        display: block;
-        padding: 6px;
-        margin: 0;
+        > .#{$prefix}-combobox-search-wrapper {
+            display: block;
+            padding: 6px;
+            margin: 0;
 
-        > .#{$prefix}-combobox-search {
-          border: 1px solid $gray-500;
-          color: $gray-800;
-          font-size: 14px;
-          outline: none;
-          padding: 6px 8px;
-          width: 100%;
-        }
-      }
-
-      > .#{$prefix}-list {
-        overflow-x: hidden;
-        overflow-y: auto;
-      }
-
-      .#{$prefix}-list-item {
-        padding: 5px 8px 5px 16px !important;
-
-        .#{$prefix}-list-tile-action + .#{$prefix}-list-tile-content {
-          margin-left: 4px !important;
+            > .#{$prefix}-combobox-search {
+                border: 1px solid $gray-500;
+                color: $gray-800;
+                font-size: 14px;
+                outline: none;
+                padding: 6px 8px;
+                width: 100%;
+            }
         }
 
-        &.#{$prefix}-active {
-          .#{$prefix}-list-tile-title, .#{$prefix}-list-tile-subtitle {
-            color: $primary-color-dark;
-          }
+        > .#{$prefix}-list {
+            overflow-x: hidden;
+            overflow-y: auto;
         }
-      }
 
-      .#{$prefix}-checkbox {
-        margin: 10px 10px 10px 0;
+        .#{$prefix}-list-item {
+            padding: 5px 8px 5px 16px !important;
 
-        > .#{$prefix}-checkbox-inner {
-          height: $dropdown-checkbox-size;
-          min-width: $dropdown-checkbox-size;
-          width: $dropdown-checkbox-size;
+            .#{$prefix}-list-tile-action + .#{$prefix}-list-tile-content {
+                margin-left: 4px !important;
+            }
 
-          &:before {
-            height: $dropdown-checkbox-ripple-size;
-            width: $dropdown-checkbox-ripple-size;
-          }
-
-          &:after {
-            height: 10px;
-            width: 6px;
-            left: 3px;
-          }
-
-          .#{$prefix}-ripple {
-            height: $dropdown-checkbox-ripple-size !important;
-            width: $dropdown-checkbox-ripple-size !important;
-          }
+            &.#{$prefix}-active {
+                .#{$prefix}-list-tile-title, .#{$prefix}-list-tile-subtitle {
+                    color: $primary-color-dark;
+                }
+            }
         }
-      }
+
+        .#{$prefix}-checkbox {
+            margin: 10px 10px 10px 0;
+
+            > .#{$prefix}-checkbox-inner {
+                height: $dropdown-checkbox-size;
+                min-width: $dropdown-checkbox-size;
+                width: $dropdown-checkbox-size;
+
+                &:before {
+                    height: $dropdown-checkbox-ripple-size;
+                    width: $dropdown-checkbox-ripple-size;
+                }
+
+                &:after {
+                    height: 10px;
+                    width: 6px;
+                    left: 3px;
+                }
+
+                .#{$prefix}-ripple {
+                    height: $dropdown-checkbox-ripple-size !important;
+                    width: $dropdown-checkbox-ripple-size !important;
+                }
+            }
+        }
     }
-  }
+}
 </style>

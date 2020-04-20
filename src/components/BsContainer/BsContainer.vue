@@ -37,13 +37,13 @@ export default {
          */
         _styles() {
             if (this.app) {
-                const {sidebarWidth, left, right} = this.$VueBs.application;
+                const {sideDrawerWidth, left, right} = this.$VueMdb.application;
 
                 return {
                     // paddingTop: `${top + navbarHeight}px`,
                     paddingRight: `${right}px`,
                     // paddingBottom: `${footer + insetFooter + bottom}px`,
-                    paddingLeft: this.isMobile ? `${left}px` : `${sidebarWidth + left}px`
+                    paddingLeft: this.isMobile ? `${left}px` : `${sideDrawerWidth + left}px`
                 };
             }
 

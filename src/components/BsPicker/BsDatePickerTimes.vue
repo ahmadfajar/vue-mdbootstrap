@@ -5,7 +5,7 @@
            :class="{ 'pt-5': backButton === false }">
         <div v-if="backButton === true"
              class="my-2">
-          <bs-button v-bind="buttonNavAttrs"
+          <bs-button v-bind="_buttonNavAttrs"
                      @click="!disabled && $emit('toggle:view')">
             <bs-icon icon="arrow_back" size="24" />
           </bs-button>
@@ -21,21 +21,21 @@
           <tbody>
             <tr>
               <td>
-                <bs-button v-bind="buttonNavAttrs"
+                <bs-button v-bind="_buttonNavAttrs"
                            @click="increase('h')">
                   <bs-icon icon="expand_less" size="24" />
                 </bs-button>
               </td>
               <td>&nbsp;</td>
               <td>
-                <bs-button v-bind="buttonNavAttrs"
+                <bs-button v-bind="_buttonNavAttrs"
                            @click="increase('m')">
                   <bs-icon icon="expand_less" size="24" />
                 </bs-button>
               </td>
               <td>&nbsp;</td>
               <td>
-                <bs-button v-bind="buttonNavAttrs"
+                <bs-button v-bind="_buttonNavAttrs"
                            @click="increase('s')">
                   <bs-icon icon="expand_less" size="24" />
                 </bs-button>
@@ -43,21 +43,21 @@
             </tr>
             <tr>
               <td class="picker-times-number">
-                <bs-button v-bind="defaultBtnAttrs"
+                <bs-button v-bind="_defaultBtnAttrs"
                            @click="changeView('HOUR')">
                   {{ dateValue.format('HH') }}
                 </bs-button>
               </td>
               <td>:</td>
               <td class="picker-times-number">
-                <bs-button v-bind="defaultBtnAttrs"
+                <bs-button v-bind="_defaultBtnAttrs"
                            @click="changeView('MINUTE')">
                   {{ dateValue.format('mm') }}
                 </bs-button>
               </td>
               <td>:</td>
               <td class="picker-times-number">
-                <bs-button v-bind="defaultBtnAttrs"
+                <bs-button v-bind="_defaultBtnAttrs"
                            @click="changeView('SECOND')">
                   {{ dateValue.format('ss') }}
                 </bs-button>
@@ -65,21 +65,21 @@
             </tr>
             <tr>
               <td>
-                <bs-button v-bind="buttonNavAttrs"
+                <bs-button v-bind="_buttonNavAttrs"
                            @click="decrease('h')">
                   <bs-icon icon="expand_more" size="24" />
                 </bs-button>
               </td>
               <td>&nbsp;</td>
               <td>
-                <bs-button v-bind="buttonNavAttrs"
+                <bs-button v-bind="_buttonNavAttrs"
                            @click="decrease('m')">
                   <bs-icon icon="expand_more" size="24" />
                 </bs-button>
               </td>
               <td>&nbsp;</td>
               <td>
-                <bs-button v-bind="buttonNavAttrs"
+                <bs-button v-bind="_buttonNavAttrs"
                            @click="decrease('s')">
                   <bs-icon icon="expand_more" size="24" />
                 </bs-button>
@@ -210,7 +210,7 @@ export default {
          *
          * @return {Object} The component's properties
          */
-        defaultBtnAttrs() {
+        _defaultBtnAttrs() {
             return {
                 color: 'dark',
                 flat: true,
@@ -222,9 +222,9 @@ export default {
          *
          * @return {Object} The component's properties
          */
-        buttonNavAttrs() {
+        _buttonNavAttrs() {
             return {
-                ...this.defaultBtnAttrs,
+                ...this._defaultBtnAttrs,
                 mode: 'icon'
             }
         },
@@ -344,7 +344,7 @@ export default {
          */
         createButtonAttrs(selected) {
             return {
-                ...this.defaultBtnAttrs,
+                ...this._defaultBtnAttrs,
                 color: selected ? this.color : 'dark',
                 flat: selected === false
             }

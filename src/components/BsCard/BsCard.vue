@@ -1,5 +1,5 @@
 <template>
-  <div :is="tag" :class="classNames">
+  <div :is="tag" :class="_classNames">
     <slot></slot>
   </div>
 </template>
@@ -18,7 +18,7 @@ export default {
         }
     },
     computed: {
-        classNames() {
+        _classNames() {
             return {
                 'card': true,
                 'rounded-0': this.flat,

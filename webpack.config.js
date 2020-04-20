@@ -151,16 +151,6 @@ const configs = [{
         libraryTarget: 'commonjs2',
         filename: '[name].cjs.js'
     }
-}, {
-    ...baseConfig,
-    externals: libExternals[1],
-    optimization: cfgOptimization,
-    plugins: plugins,
-    output: {
-        ...cfgOutput,
-        libraryTarget: 'umd',
-        filename: '[name].min.js'
-    }
 }];
 
 module.exports = configs;

@@ -1,14 +1,14 @@
 <template>
   <div class="md-datepicker-nav">
-    <bs-button v-bind="btnPrevAttrs" @click="btnPreviousClick">
+    <bs-button v-bind="_btnPrevAttrs" @click="btnPreviousClick">
       <bs-icon icon="chevron_left" size="32" />
     </bs-button>
-    <div class="md-datepicker-navtext" :class="headerClasses">
+    <div class="md-datepicker-navtext" :class="_headerClasses">
       <transition :name="transitionName">
         <strong :key="value.toISOString()" @click="toggleClick">{{ formatter(value) }}</strong>
       </transition>
     </div>
-    <bs-button v-bind="btnNextAttrs" @click="btnNextClick">
+    <bs-button v-bind="_btnNextAttrs" @click="btnNextClick">
       <bs-icon icon="chevron_right" size="32" />
     </bs-button>
   </div>
@@ -91,7 +91,7 @@ export default {
          *
          * @return {Object} The component's properties
          */
-        btnNextAttrs() {
+        _btnNextAttrs() {
             return {
                 ...this.btnAttrs,
                 'disabled': this.checkDisabled(1)
@@ -102,11 +102,21 @@ export default {
          *
          * @return {Object} The component's properties
          */
-        btnPrevAttrs() {
+        _btnPrevAttrs() {
             return {
                 ...this.btnAttrs,
                 'disabled': this.checkDisabled(-1)
             }
+        },
+        /**
+         * Get computed navigation text class names.
+         *
+         * @return {string[]} Css classes
+         */
+        _headerClasses() {
+            return [
+                this.disabled ? 'md-disabled' : `text-hover-${this.color}`
+            ];
         },
         /**
          * Format the given date value based on locale formatter and returns date string.
@@ -118,7 +128,7 @@ export default {
             if (this.activePicker === PickerConst.YEAR) {
                 return value => {
                     const start = value.getFullYear() - 4;
-                    const end   = value.getFullYear() + 7;
+                    const end = value.getFullYear() + 7;
                     return `${start} - ${end}`;
                 }
             } else if (this.activePicker === PickerConst.MONTH) {
@@ -130,16 +140,6 @@ export default {
                     timeZone: 'UTC'
                 }, {length: 7});
             }
-        },
-        /**
-         * Get computed navigation text class names.
-         *
-         * @return {string[]} Css classes
-         */
-        headerClasses() {
-            return [
-                this.disabled ? 'md-disabled' : `text-hover-${this.color}`
-            ];
         },
         /**
          * Get computed animation transition name.
@@ -211,7 +211,7 @@ export default {
          */
         calculateChange(value) {
             const _month = this.value.getMonth() + value;
-            let _date    = new Date(this.value.toISOString());
+            let _date = new Date(this.value.toISOString());
 
             if (_month < 0) {
                 _date.setFullYear(this.value.getFullYear() - 1);

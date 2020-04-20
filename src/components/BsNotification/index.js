@@ -11,8 +11,8 @@ BsNotification.install = function (Vue) {
 
     document.body.appendChild(component.$el);
     registerPrototype(Vue);
-    Vue.prototype.$VueBs.$notification = component.$refs.notification;
-    Vue.prototype.$notification = Vue.prototype.$VueBs.$notification;
+    Vue.prototype.$VueMdb.$notification = component.$refs.notification;
+    Vue.prototype.$notification = Vue.prototype.$VueMdb.$notification;
 
     Vue.component(BsNotification.name, BsNotification);
 };

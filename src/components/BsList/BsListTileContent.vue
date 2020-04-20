@@ -1,5 +1,5 @@
 <template>
-  <div :is="tag" class="md-list-tile-content" :class="classNames">
+  <div :is="tag" class="md-list-tile-content" :class="_classNames">
     <slot></slot>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
         },
     },
     computed: {
-        classNames() {
+        _classNames() {
             return {
                 'md-multiline': this.multiLine
             }

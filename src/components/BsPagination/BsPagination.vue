@@ -115,7 +115,7 @@ export default {
          */
         _pageInfo() {
             if (this.dataItems.length > 0) {
-                let msg  = this.configuration.messages.display;
+                let msg = this.configuration.messages.display;
                 const pg = this.currentPage - 1;
                 const nA = (pg * this.itemPerPage) + 1;
                 const nB = (pg * this.itemPerPage) + this.dataItems.length;
@@ -186,11 +186,11 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-pagination-wrapper {
+.#{$prefix}-pagination-wrapper {
     position: relative;
     overflow: hidden;
     padding-top: .8rem;
@@ -198,29 +198,29 @@ export default {
     width: 100%;
 
     .#{$prefix}-pagination-control {
-      font-size: 14px;
-      width: 44px;
+        font-size: 14px;
+        width: 44px;
     }
 
     .#{$prefix}-pagination-text {
-      color: $table-header-color;
+        color: $table-header-color;
     }
 
     .btn-icon {
-      margin-right: 0;
+        margin-right: 0;
     }
 
     .#{$prefix}-pagination-pager {
-      min-width: 160px;
+        min-width: 160px;
     }
 
     .#{$prefix}-combobox-control-inner {
-      > .#{$prefix}-combobox-input {
-        @include user-select(none);
-        cursor: pointer;
-        padding-bottom: 0 !important;
-        padding-left: 8px !important;
-      }
+        > .#{$prefix}-combobox-input {
+            @include user-select(none);
+            cursor: pointer;
+            padding-bottom: 0 !important;
+            padding-left: 8px !important;
+        }
     }
-  }
+}
 </style>

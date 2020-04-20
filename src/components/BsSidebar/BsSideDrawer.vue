@@ -3,8 +3,8 @@
          :class="_classNames"
          :style="_styles"
          v-resize="_resize"
-         class="md-sidebar">
-    <div class="md-sidebar-inner" :class="{'md-shadow': shadow}">
+         class="md-side-drawer">
+    <div class="md-side-drawer-inner" :class="{'md-shadow': shadow}">
       <slot></slot>
     </div>
   </aside>
@@ -18,7 +18,7 @@ import ScreenSize from "../../mixins/ScreenSize";
 import { getZIndex } from "../../mixins/Popup";
 
 export default {
-    name: 'BsSidebar',
+    name: 'BsSideDrawer',
     directives: {resize},
     mixins: [ScreenSize],
     props: {
@@ -55,6 +55,11 @@ export default {
             type: [Number, String],
             default: 55,
             validator: v => !isNaN(parseInt(v, 10))
+        },
+        modalWidth: {
+            type: [Number, String],
+            default: 300,
+            validator: v => !isNaN(parseInt(v, 10))
         }
     },
     data: () => ({
@@ -89,10 +94,10 @@ export default {
          * @private
          */
         _styles() {
-            const top        = this.$VueBs.application.top;
+            const top = this.$VueMdb.application.top;
             const properties = {
                 width: this.width ? Helper.sizeUnit(this.width) : null,
-                height: this.clipped ? 'calc(100% - ' + this.clipHeight + 'px)' : '100%',
+                height: this.isMobile ? '100%' : (this.clipped ? 'calc(100% - ' + this.clipHeight + 'px)' : '100%'),
                 transform: 'translateX(-' + (this.width ? Helper.sizeUnit(this.width) : '0px') + ')',
                 'z-index': this.clipped ? 1000 : null
             };
@@ -101,10 +106,11 @@ export default {
                 return {
                     ...properties,
                     height: '100%',
+                    width: Helper.sizeUnit(this.modalWidth),
                     transform: 'translateX(0px)',
                     'z-index': this.zIndex,
                 };
-            } else if (this.mini && this.miniWidth && this.open) {
+            } else if (this.mini && this.miniWidth) {
                 return {
                     ...properties,
                     width: Helper.sizeUnit(this.miniWidth),
@@ -127,7 +133,7 @@ export default {
          * @return {number} Tinggi area yang akan di cut/clipped
          */
         clipHeight() {
-            return this.$VueBs.application.top + this.$VueBs.application.navbarHeight;
+            return this.$VueMdb.application.top + this.$VueMdb.application.appbarHeight;
         }
     },
     watch: {
@@ -138,17 +144,17 @@ export default {
                     PopupManager.open(this);
                 }
 
-                this.$VueBs.application.sidebarWidth = this.width;
+                this.$VueMdb.application.sideDrawerWidth = this.width;
             } else {
                 PopupManager.close(this);
-                this.$VueBs.application.sidebarWidth = 0;
+                this.$VueMdb.application.sideDrawerWidth = 0;
             }
         },
         mini(value) {
             if (value) {
-                this.$VueBs.application.sidebarWidth = this.miniWidth;
+                this.$VueMdb.application.sideDrawerWidth = this.miniWidth;
             } else {
-                this.$VueBs.application.sidebarWidth = this.width;
+                this.$VueMdb.application.sideDrawerWidth = this.width;
             }
         }
     },
@@ -158,7 +164,7 @@ export default {
         }
     },
     created() {
-        this.$VueBs.application.sidebarWidth = this.width;
+        this.$VueMdb.application.sideDrawerWidth = this.width;
     },
     beforeDestroy() {
         if (this.isMobile) {
@@ -221,52 +227,50 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~bootstrap/scss/functions";
-  @import "~bootstrap/scss/variables";
-  @import "~bootstrap/scss/mixins/breakpoints";
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-sidebar {
+.#{$prefix}-side-drawer {
     @include box-sizing(border-box);
     @include box-shadow(0px 0px 10px 0 rgba(0, 0, 0, .6));
     @include transition($transition-duration-base $md-transition-default-timing);
-    border-right: 1px solid rgba(200, 200, 200, .25);
     margin: 0;
     padding: 0;
     position: fixed;
     z-index: $zindex-fixed;
 
     &.#{$prefix}-close {
-      @include box-shadow(none);
+        @include box-shadow(none);
     }
 
-    .#{$prefix}-sidebar-inner {
-      @include flexbox((display:flex, flex-direction: column));
-      padding-top: $padding-sm;
-      height: 100%;
-      overflow-x: hidden;
-      position: relative;
+    .#{$prefix}-side-drawer-inner {
+        @include flexbox((display:flex, flex-direction: column));
+        height: 100%;
+        overflow: hidden;
+        position: relative;
 
-      a {
-        color: inherit;
+        a {
+            color: inherit;
 
-        &:hover,
-        &:focus,
-        &:active {
-          color: $sidebar-hover-textcolor;
-          text-decoration: none;
+            &:hover,
+            &:focus,
+            &:active {
+                color: $sidebar-hover-textcolor;
+                text-decoration: none;
+            }
         }
-      }
     }
 
     .divider {
-      border-bottom: 1px solid rgba(200, 200, 200, 0.16);
+        border-bottom: 1px solid rgba(200, 200, 200, 0.16);
     }
 
     @include media-breakpoint-up(lg) {
-      @include box-shadow(none);
+        @include box-shadow(none);
     }
-  }
+}
 </style>

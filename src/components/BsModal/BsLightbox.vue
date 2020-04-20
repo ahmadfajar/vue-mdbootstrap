@@ -315,15 +315,15 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "~bootstrap/scss/functions";
-  @import "~bootstrap/scss/variables";
-  @import "~bootstrap/scss/mixins/breakpoints";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
-  @import "../../../scss/shared";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/shared";
 
-  .#{$prefix}-lightbox-wrap {
+.#{$prefix}-lightbox-wrap {
     height: 100%;
     width: 100%;
     left: 0;
@@ -331,121 +331,121 @@ export default {
     position: fixed;
 
     .#{$prefix}-lightbox-item-wrap {
-      @include flexbox((display: flex, flex-wrap: wrap, justify-content: center));
-      position: fixed;
-      left: 0;
-      top: 0;
-      right: 0;
-
-      .#{$prefix}-lightbox-item {
-        display: block;
-        height: 100%;
-        max-width: 95%;
-        position: relative;
-        overflow-x: hidden;
-      }
-
-      .#{$prefix}-lightbox-item-img {
-        @include flexbox((display: flex, align-items: center));
-        height: 100%;
-      }
-
-      .#{$prefix}-lightbox-item-title {
-        background: rgba(0, 0, 0, .3);
-        color: $gray-400;
-        bottom: 0;
+        @include flexbox((display: flex, flex-wrap: wrap, justify-content: center));
+        position: fixed;
         left: 0;
+        top: 0;
         right: 0;
-        line-height: 1;
-        padding: 12px;
-        font-size: 1.7rem;
-        position: absolute;
-      }
 
-      img {
-        max-width: 100%;
-        max-height: 100%;
-      }
+        .#{$prefix}-lightbox-item {
+            display: block;
+            height: 100%;
+            max-width: 95%;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .#{$prefix}-lightbox-item-img {
+            @include flexbox((display: flex, align-items: center));
+            height: 100%;
+        }
+
+        .#{$prefix}-lightbox-item-title {
+            background: rgba(0, 0, 0, .3);
+            color: $gray-400;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            line-height: 1;
+            padding: 12px;
+            font-size: 1.7rem;
+            position: absolute;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
     }
 
     > .#{$prefix}-lightbox-toolbar {
-      @include flexbox((display: flex, flex-wrap: wrap, justify-content: space-between));
-      background: rgba(0, 0, 0, .6);
-      left: 0;
-      top: 0;
-      width: 100%;
-      position: fixed;
-      padding: $padding-sm .3rem $padding-sm ($padding-base + ($padding-base / 4));
+        @include flexbox((display: flex, flex-wrap: wrap, justify-content: space-between));
+        background: rgba(0, 0, 0, .6);
+        left: 0;
+        top: 0;
+        width: 100%;
+        position: fixed;
+        padding: $padding-sm .3rem $padding-sm ($padding-base + ($padding-base / 4));
 
-      .#{$prefix}-counter,
-      .#{$prefix}-toolbar-items {
-        display: inline-flex;
-        min-width: 100px;
-      }
+        .#{$prefix}-counter,
+        .#{$prefix}-toolbar-items {
+            display: inline-flex;
+            min-width: 100px;
+        }
 
-      .#{$prefix}-counter {
-        color: $gray-400;
-        padding-top: $padding-sm;
-      }
+        .#{$prefix}-counter {
+            color: $gray-400;
+            padding-top: $padding-sm;
+        }
     }
 
     > .#{$prefix}-lightbox-controls {
-      > .#{$prefix}-control-prev, > .#{$prefix}-control-next {
-        @include flexbox((display: flex, align-items: center));
-        height: 100%;
-        position: fixed;
-      }
+        > .#{$prefix}-control-prev, > .#{$prefix}-control-next {
+            @include flexbox((display: flex, align-items: center));
+            height: 100%;
+            position: fixed;
+        }
 
-      > .#{$prefix}-control-prev {
-        left: 0;
-        padding-left: $padding-sm;
-      }
+        > .#{$prefix}-control-prev {
+            left: 0;
+            padding-left: $padding-sm;
+        }
 
-      > .#{$prefix}-control-next {
-        right: 0;
-        padding-right: $padding-sm;
-      }
+        > .#{$prefix}-control-next {
+            right: 0;
+            padding-right: $padding-sm;
+        }
 
     }
 
     > .#{$prefix}-lightbox-thumbnail-wrap {
-      background: rgba(0, 0, 0, .5);
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      position: fixed;
-      padding: 0 $padding-sm;
-      overflow-x: auto;
+        background: rgba(0, 0, 0, .5);
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        position: fixed;
+        padding: 0 $padding-sm;
+        overflow-x: auto;
 
-      > .#{$prefix}-lightbox-thumbnail-row {
-        @include flexbox((display:flex, flex-direction:row));
+        > .#{$prefix}-lightbox-thumbnail-row {
+            @include flexbox((display:flex, flex-direction:row));
 
-        > .#{$prefix}-lightbox-thumbnails {
-          @include flexbox((display: flex, flex-flow:row nowrap));
+            > .#{$prefix}-lightbox-thumbnails {
+                @include flexbox((display: flex, flex-flow:row nowrap));
 
-          .#{$prefix}-thumbnail-item {
-            @extend %cursor-pointer;
-            border: 1px solid rgba(0, 0, 0, .6);
-            display: inline-block;
-            opacity: .5;
+                .#{$prefix}-thumbnail-item {
+                    @extend %cursor-pointer;
+                    border: 1px solid rgba(0, 0, 0, .6);
+                    display: inline-block;
+                    opacity: .5;
 
-            &:hover {
-              opacity: 1;
+                    &:hover {
+                        opacity: 1;
+                    }
+
+                    &.#{$prefix}-active {
+                        border-color: $red-base;
+                        border-left-width: 2px;
+                        border-right-width: 2px;
+                        opacity: 1;
+                    }
+                }
             }
 
-            &.#{$prefix}-active {
-              border-color: $red-base;
-              border-left-width: 2px;
-              border-right-width: 2px;
-              opacity: 1;
+            @include media-breakpoint-up(xl) {
+                @include flexbox((justify-content: center));
             }
-          }
         }
-
-        @include media-breakpoint-up(xl) {
-          @include flexbox((justify-content: center));
-        }
-      }
     }
-  }
+}
 </style>

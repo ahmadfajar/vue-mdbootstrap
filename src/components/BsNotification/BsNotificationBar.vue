@@ -1,5 +1,5 @@
 <template>
-  <div class="md-notification-bar" :style="barStyle"></div>
+  <div class="md-notification-bar" :style="_barStyles"></div>
 </template>
 
 <script>
@@ -22,7 +22,7 @@ export default {
         width: 100
     }),
     computed: {
-        barStyle() {
+        _barStyles() {
             return {
                 width: this.width + '%'
             }

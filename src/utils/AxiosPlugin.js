@@ -78,6 +78,26 @@ export default (Vue, options) => {
             return service(axiosOpt)
         },
         /**
+         * Send HTTP PUT to the remote server.
+         *
+         * @param {string} url       API url
+         * @param {Object} data      The data to be send
+         * @param {Object} [options] The configuration options
+         * @return {Promise} Promise instance
+         */
+        put: (url, data, options) => {
+            let axiosOpt = {
+                ...options,
+                ...{
+                    method: 'put',
+                    url: url,
+                    data: data
+                }
+            };
+
+            return service(axiosOpt)
+        },
+        /**
          * Send HTTP DELETE to the remote server.
          *
          * @param {string} url      API url

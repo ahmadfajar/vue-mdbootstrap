@@ -1,5 +1,5 @@
 <template>
-  <div class="md-field row" :class="classNames">
+  <div class="md-field row" :class="_classNames">
     <slot v-if="floatingLabel === false" v-bind="{ id }" />
     <div class="flex-grow-1">
       <div class="md-field-inner align-items-center"
@@ -107,7 +107,7 @@ export default {
          *
          * @return {Object} Collection of css classes
          */
-        classNames() {
+        _classNames() {
             return {
                 ...this.cmpAttrClasses,
                 'md-field-flat': this.flat,
@@ -150,248 +150,248 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-field {
+.#{$prefix}-field {
     position: relative;
 
     &.#{$prefix}-required {
-      .#{$prefix}-floating-label,
-      .col-form-label {
-        font-weight: bold;
-      }
+        .#{$prefix}-floating-label,
+        .col-form-label {
+            font-weight: bold;
+        }
     }
 
     .#{$prefix}-help-text {
-      display: block;
-      min-height: 10px;
-      margin: 4px 15px 0 15px;
+        display: block;
+        min-height: 10px;
+        margin: 4px 15px 0 15px;
 
-      > * {
-        font-size: 83% !important;
-      }
+        > * {
+            font-size: 83% !important;
+        }
     }
 
     .#{$prefix}-field-inner {
-      @include display-flex();
-      @include flex(1 1 auto);
-      border-bottom: 1px solid $gray-500;
-      outline: 0 none;
-      min-height: 2rem;
-      margin-left: 15px;
-      margin-right: 15px;
-      padding-left: 0;
-      padding-right: 0;
-      position: relative;
-      width: auto;
-
-      &:after {
-        @include transition(all .3s ease-in-out);
-        background-color: $primary-color;
-        position: absolute;
-        content: '';
-        height: 2px;
-        bottom: -1px;
-        left: 50%;
-        width: 0;
-      }
-
-      > .#{$prefix}-action-icon,
-      > .#{$prefix}-prepend-icon,
-      > .#{$prefix}-append-icon {
-        color: $gray-700;
-        display: inline;
-        font-size: 1rem;
-
-        > .#{$prefix}-icon-text {
-          color: $gray-500;
-          font-size: .88rem;
-          white-space: nowrap;
-        }
-      }
-
-      > .#{$prefix}-prepend-icon {
-        margin-right: $padding-sm;
-      }
-
-      > .#{$prefix}-action-icon,
-      > .#{$prefix}-append-icon {
-        margin-left: .4rem;
-        margin-right: .3rem;
-      }
-
-      > .#{$prefix}-action-icon {
-        cursor: pointer;
-
-        > .icon-clear {
-          color: $gray-500;
-
-          &:focus, &:active, &:hover, &:active:focus {
-            color: $red-base;
-          }
-        }
-
-        > *:first-child:not(:last-child) {
-          padding-right: $padding-sm;
-        }
-      }
-
-      > input {
+        @include display-flex();
         @include flex(1 1 auto);
-        border-width: 0;
+        border-bottom: 1px solid $gray-500;
         outline: 0 none;
         min-height: 2rem;
-        width: 100%;
+        margin-left: 15px;
+        margin-right: 15px;
+        padding-left: 0;
+        padding-right: 0;
+        position: relative;
+        width: auto;
 
-        &::placeholder {
-          color: $gray-500;
-          font-size: .88rem;
-          font-weight: $font-weight-light;
+        &:after {
+            @include transition(all .3s ease-in-out);
+            background-color: $primary-color;
+            position: absolute;
+            content: '';
+            height: 2px;
+            bottom: -1px;
+            left: 50%;
+            width: 0;
         }
 
-        &::-moz-placeholder {
-          color: $gray-500;
-          font-size: .88rem;
-          font-weight: $font-weight-light;
+        > .#{$prefix}-action-icon,
+        > .#{$prefix}-prepend-icon,
+        > .#{$prefix}-append-icon {
+            color: $gray-700;
+            display: inline;
+            font-size: 1rem;
+
+            > .#{$prefix}-icon-text {
+                color: $gray-500;
+                font-size: .88rem;
+                white-space: nowrap;
+            }
         }
 
-        &::-webkit-input-placeholder {
-          color: $gray-500;
-          font-size: .88rem;
-          font-weight: $font-weight-light;
+        > .#{$prefix}-prepend-icon {
+            margin-right: $padding-sm;
         }
 
-        &:-ms-input-placeholder {
-          color: $gray-500;
-          font-size: .88rem;
-          font-weight: $font-weight-light;
+        > .#{$prefix}-action-icon,
+        > .#{$prefix}-append-icon {
+            margin-left: .4rem;
+            margin-right: .3rem;
         }
-      }
+
+        > .#{$prefix}-action-icon {
+            cursor: pointer;
+
+            > .icon-clear {
+                color: $gray-500;
+
+                &:focus, &:active, &:hover, &:active:focus {
+                    color: $red-base;
+                }
+            }
+
+            > *:first-child:not(:last-child) {
+                padding-right: $padding-sm;
+            }
+        }
+
+        > input {
+            @include flex(1 1 auto);
+            border-width: 0;
+            outline: 0 none;
+            min-height: 2rem;
+            width: 100%;
+
+            &::placeholder {
+                color: $gray-500;
+                font-size: .88rem;
+                font-weight: $font-weight-light;
+            }
+
+            &::-moz-placeholder {
+                color: $gray-500;
+                font-size: .88rem;
+                font-weight: $font-weight-light;
+            }
+
+            &::-webkit-input-placeholder {
+                color: $gray-500;
+                font-size: .88rem;
+                font-weight: $font-weight-light;
+            }
+
+            &:-ms-input-placeholder {
+                color: $gray-500;
+                font-size: .88rem;
+                font-weight: $font-weight-light;
+            }
+        }
     }
 
     &.#{$prefix}-field-flat {
-      .#{$prefix}-field-inner {
-        border-bottom-color: transparent;
-      }
+        .#{$prefix}-field-inner {
+            border-bottom-color: transparent;
+        }
     }
 
     &.#{$prefix}-floating-active {
-      margin-top: 1.2rem;
+        margin-top: 1.2rem;
 
-      .#{$prefix}-field-inner {
-        > .#{$prefix}-floating-label {
-          @include transition(0.3s cubic-bezier(0.25, 0.8, 0.5, 1));
-          @include transform-origin(top left, false);
-          display: inline-block;
-          left: 0;
-          right: auto;
-          line-height: 1.2;
-          max-width: 90%;
-          min-height: .5rem;
-          overflow: hidden;
-          margin-left: .4rem;
-          padding-top: .4rem;
-          position: absolute;
-          pointer-events: none;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          z-index: 2;
+        .#{$prefix}-field-inner {
+            > .#{$prefix}-floating-label {
+                @include transition(0.3s cubic-bezier(0.25, 0.8, 0.5, 1));
+                @include transform-origin(top left, false);
+                display: inline-block;
+                left: 0;
+                right: auto;
+                line-height: 1.2;
+                max-width: 90%;
+                min-height: .5rem;
+                overflow: hidden;
+                margin-left: .4rem;
+                padding-top: .4rem;
+                position: absolute;
+                pointer-events: none;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                z-index: 2;
 
-          > .#{$prefix}-empty-class, label {
-            margin-bottom: 0;
-          }
+                > .#{$prefix}-empty-class, label {
+                    margin-bottom: 0;
+                }
 
-          &.#{$prefix}-active {
-            @include transform(translateY(-20px) scale(.9));
-            color: $gray-600;
-            margin-left: 0;
-            padding-top: 0;
-          }
+                &.#{$prefix}-active {
+                    @include transform(translateY(-20px) scale(.9));
+                    color: $gray-600;
+                    margin-left: 0;
+                    padding-top: 0;
+                }
 
-          &.#{$prefix}-after-icon:not(.#{$prefix}-active) {
-            margin-left: $padding-base + .5;
-          }
+                &.#{$prefix}-after-icon:not(.#{$prefix}-active) {
+                    margin-left: $padding-base + .5;
+                }
+            }
         }
-      }
     }
 
     &.#{$prefix}-focused {
-      .#{$prefix}-field-inner {
-        &:after {
-          left: 0;
-          width: 100%;
-        }
+        .#{$prefix}-field-inner {
+            &:after {
+                left: 0;
+                width: 100%;
+            }
 
-        > .#{$prefix}-prepend-icon,
-        > .#{$prefix}-append-icon,
-        .#{$prefix}-toggle-icon {
-          color: $primary-color;
+            > .#{$prefix}-prepend-icon,
+            > .#{$prefix}-append-icon,
+            .#{$prefix}-toggle-icon {
+                color: $primary-color;
+            }
         }
-      }
     }
 
     &.has-error {
-      .col-form-label {
-        color: $danger-color-dark;
-      }
-
-      .#{$prefix}-field-inner {
-        .#{$prefix}-floating-label {
-          label {
+        .col-form-label {
             color: $danger-color-dark;
-          }
         }
 
-        > .#{$prefix}-prepend-icon,
-        > .#{$prefix}-append-icon,
-        .#{$prefix}-toggle-icon {
-          color: $danger-color-dark;
-        }
+        .#{$prefix}-field-inner {
+            .#{$prefix}-floating-label {
+                label {
+                    color: $danger-color-dark;
+                }
+            }
 
-        &:after {
-          background-color: $danger-color;
+            > .#{$prefix}-prepend-icon,
+            > .#{$prefix}-append-icon,
+            .#{$prefix}-toggle-icon {
+                color: $danger-color-dark;
+            }
+
+            &:after {
+                background-color: $danger-color;
+            }
         }
-      }
     }
 
     &.has-success {
-      .col-form-label {
-        color: $success-color-dark;
-      }
-
-      .#{$prefix}-field-inner {
-        border-bottom-color: $success-color-dark !important;
-
-        .#{$prefix}-floating-label {
-          label {
+        .col-form-label {
             color: $success-color-dark;
-          }
         }
 
-        > .#{$prefix}-prepend-icon,
-        > .#{$prefix}-append-icon,
-        .#{$prefix}-toggle-icon {
-          color: $success-color-dark;
+        .#{$prefix}-field-inner {
+            border-bottom-color: $success-color-dark !important;
+
+            .#{$prefix}-floating-label {
+                label {
+                    color: $success-color-dark;
+                }
+            }
+
+            > .#{$prefix}-prepend-icon,
+            > .#{$prefix}-append-icon,
+            .#{$prefix}-toggle-icon {
+                color: $success-color-dark;
+            }
         }
-      }
     }
 
     &.#{$prefix}-disabled {
-      .col-form-label {
-        color: $gray-600;
-      }
-
-      .#{$prefix}-field-inner {
-        > input {
-          color: rgba($black, .4);
-
-          &:disabled {
-            background-color: transparent;
-          }
+        .col-form-label {
+            color: $gray-600;
         }
-      }
+
+        .#{$prefix}-field-inner {
+            > input {
+                color: rgba($black, .4);
+
+                &:disabled {
+                    background-color: transparent;
+                }
+            }
+        }
     }
-  }
+}
 </style>

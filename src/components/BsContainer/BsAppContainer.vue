@@ -11,8 +11,8 @@ export default {
         if (this.$el) {
             const rect = this.$el.getBoundingClientRect();
 
-            this.$VueBs.application.left = rect.left;
-            this.$VueBs.application.top  = rect.top;
+            this.$VueMdb.application.left = rect.left;
+            this.$VueMdb.application.top  = rect.top;
         }
     }
 }

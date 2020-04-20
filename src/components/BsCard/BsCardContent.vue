@@ -1,14 +1,17 @@
 <template>
-    <div :is="tagName" :class="classNames">
-        <slot></slot>
-    </div>
+  <div :is="tagName" :class="_classNames">
+    <slot></slot>
+  </div>
 </template>
 
 <script>
     export default {
         name: "BsCardContent",
         props: {
-            tag: String,
+            tag: {
+                type: String,
+                default: undefined
+            },
             type: {
                 type: String,
                 default: 'text',
@@ -18,7 +21,7 @@
             }
         },
         computed: {
-            classNames() {
+            _classNames() {
                 return {
                     ['card-' + this.type]: this.tagName
                 }

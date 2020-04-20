@@ -35,149 +35,149 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
-  @import "../../../scss/controls";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/controls";
 
-  .#{$prefix}-checkbox {
+.#{$prefix}-checkbox {
     display: inline-flex;
     margin: $md-checkbox-margin;
     position: relative;
     width: auto;
 
     &:not(.#{$prefix}-disabled) {
-      cursor: pointer;
-
-      .#{$prefix}-checkbox-label {
         cursor: pointer;
-      }
+
+        .#{$prefix}-checkbox-label {
+            cursor: pointer;
+        }
     }
 
     > .#{$prefix}-checkbox-inner {
-      border: 2px solid rgba(#000, .54);
-      height: $md-checkbox-size;
-      min-width: $md-checkbox-size;
-      width: $md-checkbox-size;
-      position: relative;
-      @include border-radius(2px);
-      @include transition($md-transition-stand);
+        border: 2px solid rgba(#000, .54);
+        height: $md-checkbox-size;
+        min-width: $md-checkbox-size;
+        width: $md-checkbox-size;
+        position: relative;
+        @include border-radius(2px);
+        @include transition($md-transition-stand);
 
-      &:focus {
-        outline: none;
-      }
+        &:focus {
+            outline: none;
+        }
 
-      &:before,
-      &:after {
-        content: " ";
-        position: absolute;
-        @include transition($md-transition-drop);
-      }
+        &:before,
+        &:after {
+            content: " ";
+            position: absolute;
+            @include transition($md-transition-drop);
+        }
 
-      &:before {
-        height: $md-checkbox-touch-size;
-        width: $md-checkbox-touch-size;
-        left: 50%;
-        top: 50%;
-        z-index: 11;
-        @include border-radius($border-radius-circle);
-        @include transform(translate(-50%, -50%));
-      }
+        &:before {
+            height: $md-checkbox-touch-size;
+            width: $md-checkbox-touch-size;
+            left: 50%;
+            top: 50%;
+            z-index: 11;
+            @include border-radius($border-radius-circle);
+            @include transform(translate(-50%, -50%));
+        }
 
-      &:after {
-        border: 2px solid transparent;
-        border-top: 0;
-        border-left: 0;
-        height: 13px;
-        width: 6px;
-        left: 5px;
-        top: 0;
-        opacity: 0;
-        z-index: 12;
-        @include transform(rotate(45deg) scale3D(.15, .15, 1));
-      }
+        &:after {
+            border: 2px solid transparent;
+            border-top: 0;
+            border-left: 0;
+            height: 13px;
+            width: 6px;
+            left: 5px;
+            top: 0;
+            opacity: 0;
+            z-index: 12;
+            @include transform(rotate(45deg) scale3D(.15, .15, 1));
+        }
 
-      .#{$prefix}-ripple {
-        height: $md-checkbox-touch-size !important;
-        width: $md-checkbox-touch-size !important;
-        left: 50% !important;
-        top: 50% !important;
-        border-radius: 50%;
-        @include border-radius($border-radius-circle);
-        @include transform(translate(-50%, -50%));
-      }
+        .#{$prefix}-ripple {
+            height: $md-checkbox-touch-size !important;
+            width: $md-checkbox-touch-size !important;
+            left: 50% !important;
+            top: 50% !important;
+            border-radius: 50%;
+            @include border-radius($border-radius-circle);
+            @include transform(translate(-50%, -50%));
+        }
 
-      input {
-        left: -999em;
-        position: absolute;
-      }
+        input {
+            left: -999em;
+            position: absolute;
+        }
     }
 
     > .#{$prefix}-checkbox-label {
-      line-height: $md-checkbox-size;
-      height: $md-checkbox-size;
-      padding-left: 16px;
-      position: relative;
-      @include user-select(none);
+        line-height: $md-checkbox-size;
+        height: $md-checkbox-size;
+        padding-left: 16px;
+        position: relative;
+        @include user-select(none);
     }
 
     &.#{$prefix}-indeterminate {
-      > .#{$prefix}-checkbox-inner {
-        &:after {
-          border-style: solid;
-          border-width: 0 0 2px;
-          width: 12px;
-          height: 2px;
-          left: 50%;
-          top: 50%;
-          opacity: 0;
-          z-index: 7;
-          @include transform(translate(-50%, -50%) !important);
+        > .#{$prefix}-checkbox-inner {
+            &:after {
+                border-style: solid;
+                border-width: 0 0 2px;
+                width: 12px;
+                height: 2px;
+                left: 50%;
+                top: 50%;
+                opacity: 0;
+                z-index: 7;
+                @include transform(translate(-50%, -50%) !important);
+            }
         }
-      }
     }
 
     &.#{$prefix}-checked {
-      > .#{$prefix}-checkbox-inner {
-        &:after {
-          opacity: 1;
-          @include transform(rotate(45deg) scale3D(1, 1, 1));
-          @include transition($md-transition-stand);
+        > .#{$prefix}-checkbox-inner {
+            &:after {
+                opacity: 1;
+                @include transform(rotate(45deg) scale3D(1, 1, 1));
+                @include transition($md-transition-stand);
+            }
         }
-      }
     }
 
     &.#{$prefix}-disabled {
-      &.#{$prefix}-checked {
+        &.#{$prefix}-checked {
+            > .#{$prefix}-checkbox-inner {
+                border-color: transparent !important;
+            }
+        }
+
         > .#{$prefix}-checkbox-inner {
-          border-color: transparent !important;
-        }
-      }
+            background-color: rgba(#000, .26);
+            border-color: rgba(#000, .26);
 
-      > .#{$prefix}-checkbox-inner {
-        background-color: rgba(#000, .26);
-        border-color: rgba(#000, .26);
-
-        &:after {
-          border-color: $white;
+            &:after {
+                border-color: $white;
+            }
         }
-      }
     }
 
     &.#{$prefix}-required {
-      label:after {
-        position: absolute;
-        top: 2px;
-        right: 0;
-        transform: translateX(calc(100% + 2px));
-        content: "*";
-        line-height: 1em;
-        vertical-align: top;
-      }
+        label:after {
+            position: absolute;
+            top: 2px;
+            right: 0;
+            transform: translateX(calc(100% + 2px));
+            content: "*";
+            line-height: 1em;
+            vertical-align: top;
+        }
     }
-  }
+}
 
-  @each $name, $color in $theme-colors {
+@each $name, $color in $theme-colors {
     @include make-checkbox($name, $color);
-  }
+}
 </style>

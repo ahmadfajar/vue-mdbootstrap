@@ -141,12 +141,12 @@ export default {
                 return;
             }
 
-            const el        = this.$el;
+            const el = this.$el;
             const triggerEl = this.trigger;
             if (Helper.isFunction(el.getBoundingClientRect)) {
-                const elRect  = el.getBoundingClientRect();
-                const rect    = triggerEl.getBoundingClientRect();
-                el.style.top  = this.getTopPosition(elRect.height, rect) + 'px';
+                const elRect = el.getBoundingClientRect();
+                const rect = triggerEl.getBoundingClientRect();
+                el.style.top = this.getTopPosition(elRect.height, rect) + 'px';
                 el.style.left = this.getLeftPosition(elRect.width, rect) + 'px';
             }
         }
@@ -155,144 +155,144 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~bootstrap/scss/functions";
-  @import "~bootstrap/scss/variables";
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-tooltip {
+.#{$prefix}-tooltip {
     @include flexbox((display: flex, align-items: center, justify-content: center));
     margin: 0;
     position: fixed;
 
     .arrow {
-      position: absolute;
-      display: block;
-      width: $tooltip-arrow-width;
-      height: $tooltip-arrow-height;
-
-      &:before {
-        border-color: transparent;
-        border-style: solid;
-        content: "";
         position: absolute;
-      }
+        display: block;
+        width: $tooltip-arrow-width;
+        height: $tooltip-arrow-height;
+
+        &:before {
+            border-color: transparent;
+            border-style: solid;
+            content: "";
+            position: absolute;
+        }
     }
 
     > .#{$prefix}-tooltip-inner {
-      @include border-radius($tooltip-border-radius);
-      @include opacity(.9);
-      background-color: $tooltip-bg;
-      color: $white;
-      font-size: 12px;
-      line-height: 22px;
-      padding: 4px 10px;
-      pointer-events: none;
+        @include border-radius($tooltip-border-radius);
+        @include opacity(.9);
+        background-color: $tooltip-bg;
+        color: $white;
+        font-size: 12px;
+        line-height: 22px;
+        padding: 4px 10px;
+        pointer-events: none;
     }
-  }
+}
 
-  .#{$prefix}-tooltip-top {
+.#{$prefix}-tooltip-top {
     padding: $tooltip-arrow-height 0;
 
     .arrow {
-      bottom: 0;
-
-      &:before {
-        top: 0;
-        border-width: $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
-        border-top-color: rgba($tooltip-arrow-color, .9);
-      }
-    }
-  }
-
-  .#{$prefix}-tooltip-right {
-    padding: 0 $tooltip-arrow-height;
-
-    .arrow {
-      left: 0;
-      width: $tooltip-arrow-height;
-      height: $tooltip-arrow-width;
-
-      &:before {
-        right: 0;
-        border-width: ($tooltip-arrow-width / 2) $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
-        border-right-color: rgba($tooltip-arrow-color, .9);
-      }
-    }
-  }
-
-  .#{$prefix}-tooltip-bottom {
-    padding: $tooltip-arrow-height 0;
-
-    .arrow {
-      top: 0;
-
-      &::before {
         bottom: 0;
-        border-width: 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
-        border-bottom-color: rgba($tooltip-arrow-color, .9);
-      }
-    }
-  }
 
-  .#{$prefix}-tooltip-left {
+        &:before {
+            top: 0;
+            border-width: $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
+            border-top-color: rgba($tooltip-arrow-color, .9);
+        }
+    }
+}
+
+.#{$prefix}-tooltip-right {
     padding: 0 $tooltip-arrow-height;
 
     .arrow {
-      right: 0;
-      width: $tooltip-arrow-height;
-      height: $tooltip-arrow-width;
-
-      &::before {
         left: 0;
-        border-width: ($tooltip-arrow-width / 2) 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
-        border-left-color: rgba($tooltip-arrow-color, .9);
-      }
+        width: $tooltip-arrow-height;
+        height: $tooltip-arrow-width;
+
+        &:before {
+            right: 0;
+            border-width: ($tooltip-arrow-width / 2) $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
+            border-right-color: rgba($tooltip-arrow-color, .9);
+        }
     }
-  }
+}
 
-  .#{$prefix}-tooltip-top-enter-active,
-  .#{$prefix}-tooltip-top-leave-active {
+.#{$prefix}-tooltip-bottom {
+    padding: $tooltip-arrow-height 0;
+
+    .arrow {
+        top: 0;
+
+        &::before {
+            bottom: 0;
+            border-width: 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
+            border-bottom-color: rgba($tooltip-arrow-color, .9);
+        }
+    }
+}
+
+.#{$prefix}-tooltip-left {
+    padding: 0 $tooltip-arrow-height;
+
+    .arrow {
+        right: 0;
+        width: $tooltip-arrow-height;
+        height: $tooltip-arrow-width;
+
+        &::before {
+            left: 0;
+            border-width: ($tooltip-arrow-width / 2) 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
+            border-left-color: rgba($tooltip-arrow-color, .9);
+        }
+    }
+}
+
+.#{$prefix}-tooltip-top-enter-active,
+.#{$prefix}-tooltip-top-leave-active {
     transition: transform .3s $transition-easeOut, opacity .3s $transition-easeOut;
-  }
+}
 
-  .#{$prefix}-tooltip-top-enter,
-  .#{$prefix}-tooltip-top-leave-active {
+.#{$prefix}-tooltip-top-enter,
+.#{$prefix}-tooltip-top-leave-active {
     @include opacity(0);
     transform: translate3d(0, 15px, 0);
-  }
+}
 
-  .#{$prefix}-tooltip-bottom-enter-active,
-  .#{$prefix}-tooltip-bottom-leave-active {
+.#{$prefix}-tooltip-bottom-enter-active,
+.#{$prefix}-tooltip-bottom-leave-active {
     transition: transform .3s $transition-easeOut, opacity .3s $transition-easeOut;
-  }
+}
 
-  .#{$prefix}-tooltip-bottom-enter,
-  .#{$prefix}-tooltip-bottom-leave-active {
+.#{$prefix}-tooltip-bottom-enter,
+.#{$prefix}-tooltip-bottom-leave-active {
     @include opacity(0);
     transform: translate3d(0, -15px, 0);
-  }
+}
 
-  .#{$prefix}-tooltip-left-enter-active,
-  .#{$prefix}-tooltip-left-leave-active {
+.#{$prefix}-tooltip-left-enter-active,
+.#{$prefix}-tooltip-left-leave-active {
     transition: transform .3s $transition-easeOut, opacity .3s $transition-easeOut;
-  }
+}
 
-  .#{$prefix}-tooltip-left-enter,
-  .#{$prefix}-tooltip-left-leave-active {
+.#{$prefix}-tooltip-left-enter,
+.#{$prefix}-tooltip-left-leave-active {
     @include opacity(0);
     transform: translate3d(24px, 0, 0);
-  }
+}
 
-  .#{$prefix}-tooltip-right-enter-active,
-  .#{$prefix}-tooltip-right-leave-active {
+.#{$prefix}-tooltip-right-enter-active,
+.#{$prefix}-tooltip-right-leave-active {
     transition: transform .3s $transition-easeOut, opacity .3s $transition-easeOut;
-  }
+}
 
-  .#{$prefix}-tooltip-right-enter,
-  .#{$prefix}-tooltip-right-leave-active {
+.#{$prefix}-tooltip-right-enter,
+.#{$prefix}-tooltip-right-leave-active {
     @include opacity(0);
     transform: translate3d(-24px, 0, 0);
-  }
+}
 </style>

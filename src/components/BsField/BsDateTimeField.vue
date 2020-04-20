@@ -1,5 +1,5 @@
 <template>
-  <div class="md-field row" :class="classNames">
+  <div class="md-field row" :class="_classNames">
     <div v-if="floatingLabel === false" ref="label">
       <slot v-bind="{ id }" />
     </div>
@@ -204,6 +204,21 @@ export default {
     }),
     computed: {
         /**
+         * Get computed component's class names.
+         *
+         * @return {Object} Collection of css classes
+         */
+        _classNames() {
+            return {
+                ...this.cmpAttrClasses,
+                'md-field-flat': this.flat,
+                'md-focused': this.isFocused,
+                'md-floating-active': this.floatingLabel,
+                'has-error': this.hasValidationError,
+                'has-success': this.wasValidated && !this.hasValidationError
+            }
+        },
+        /**
          * Get input field computed binding's attributes.
          *
          * @return {Object} Attributes to bind
@@ -216,21 +231,6 @@ export default {
                 'type': 'text',
                 'readonly': true,
                 'aria-readonly': true
-            }
-        },
-        /**
-         * Get computed component's class names.
-         *
-         * @return {Object} Collection of css classes
-         */
-        classNames() {
-            return {
-                ...this.cmpAttrClasses,
-                'md-field-flat': this.flat,
-                'md-focused': this.isFocused,
-                'md-floating-active': this.floatingLabel,
-                'has-error': this.hasValidationError,
-                'has-success': this.wasValidated && !this.hasValidationError
             }
         },
         /**
@@ -275,7 +275,7 @@ export default {
             set(value) {
                 if (value.constructor.toString().match(/function (\w*)/)[1].toLowerCase() !== 'inputevent') {
                     this.$nextTick(() => {
-                        this.localValue   = value;
+                        this.localValue = value;
                         this.displayValue = moment(value).format(this.displayFormat || this.format);
                         this.$emit('input', value);
                     })
@@ -286,7 +286,7 @@ export default {
     watch: {
         value(newValue) {
             if (newValue === '' || newValue === null) {
-                this.localValue   = null;
+                this.localValue = null;
                 this.displayValue = null;
             } else {
                 this._updateValue(newValue);
@@ -335,10 +335,10 @@ export default {
             }
 
             if (date.isValid()) {
-                this.localValue   = date.format(this.format);
+                this.localValue = date.format(this.format);
                 this.displayValue = date.format(this.displayFormat || this.format);
             } else {
-                this.localValue   = 'Invalid Date';
+                this.localValue = 'Invalid Date';
                 this.displayValue = 'Invalid Date';
             }
 
