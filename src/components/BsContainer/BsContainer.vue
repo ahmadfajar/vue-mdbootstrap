@@ -59,20 +59,21 @@ export default {
          */
         _resize() {
             this.isMobile = !!this.screenMaxMd.matches;
+            this.$emit('resize', this.isMobile);
         }
     }
 }
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-container-wrap {
-    @include transition($transition-duration-base $md-transition-default-timing);
-    @include flexbox((display: flex, flex: 1 0 auto));
-    max-width: 100%;
-    position: relative;
-  }
+.#{$prefix}-container-wrap {
+  @include transition($transition-duration-base $md-transition-default-timing);
+  @include flexbox((display: flex, flex: 1 0 auto));
+  max-width: 100%;
+  position: relative;
+}
 </style>

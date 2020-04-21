@@ -1,18 +1,17 @@
 <template>
-  <svg :class="svgClasses"
+  <svg :class="_svgClasses"
        :height="height"
        :width="width"
        focusable="false"
        preserveAspectRatio="xMidYMid slice"
        role="img"
        xmlns="http://www.w3.org/2000/svg">
-    <title>Placeholder</title>
+    <title v-if="placeHolder">{{ placeHolder }}</title>
     <rect width="100%" height="100%" :fill="bgColor" />
     <text v-if="placeHolder && placeHolder !== ''"
-          :dy="textYPos"
           :fill="textColor"
-          x="50%"
-          y="50%">
+          :x="xPos"
+          :y="yPos">
       {{ placeHolder }}
     </text>
   </svg>
@@ -54,13 +53,17 @@ export default {
             type: String,
             default: '#dee2e6'
         },
-        textYPos: {
-            type: String,
-            default: '.3em'
+        xPos: {
+            type: [String, Number],
+            default: '15%'
+        },
+        yPos: {
+            type: [String, Number],
+            default: '50%'
         }
     },
     computed: {
-        svgClasses() {
+        _svgClasses() {
             return {
                 'mx-auto d-block': this.center,
                 'rounded-circle': this.circle && !this.rounded,

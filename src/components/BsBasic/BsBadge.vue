@@ -14,7 +14,7 @@ export default {
         },
         color: {
             type: String,
-            default: 'default-color'
+            default: 'default-color text-white'
         },
         type: {
             type: String,
@@ -46,24 +46,23 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .badge {
-    @include box-shadow(none);
-    color: $white !important;
-    font-weight: $font-weight-bold;
+.badge {
+  @include box-shadow(none);
+  font-weight: $font-weight-bold;
 
-    &.badge-label {
-      font-size: 85%;
-      font-weight: $font-weight-normal;
-      padding: .25rem .6rem;
-    }
-
-    &.badge-pill {
-      font-family: var(--font-family-sans-serif);
-      padding: .2rem .6rem .3rem .6rem;
-    }
+  &.badge-label {
+    font-size: 85%;
+    font-weight: $font-weight-normal;
+    padding: .25rem .6rem;
   }
+
+  &.badge-pill {
+    font-family: var(--font-family-sans-serif);
+    padding: .2rem .6rem .3rem .6rem;
+  }
+}
 </style>

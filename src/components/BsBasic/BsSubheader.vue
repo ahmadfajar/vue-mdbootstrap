@@ -27,23 +27,23 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-subheader {
-    @include flexbox((display: flex, align-items: center));
-    font-size: 1rem;
-    font-weight: normal;
-    height: 48px;
-    padding: 0 16px;
+.#{$prefix}-subheader {
+  @include flexbox((display: flex, align-items: center));
+  font-size: 1rem;
+  font-weight: normal;
+  height: 48px;
+  padding: 0 16px;
 
-    &.#{$prefix}-subheader--dark {
-      color: $white;
-    }
-
-    &.#{$prefix}-subheader--light {
-      color: $gray-600;
-    }
+  &.#{$prefix}-subheader--dark {
+    color: $white;
   }
+
+  &.#{$prefix}-subheader--light {
+    color: $gray-600;
+  }
+}
 </style>

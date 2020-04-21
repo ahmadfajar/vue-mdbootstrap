@@ -30,46 +30,46 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .btn, .btn-floating, .btn-icon {
-    .btn-inner {
-      position: relative;
+.btn, .btn-floating, .btn-icon {
+  .btn-inner {
+    position: relative;
+  }
+}
+
+.btn {
+  .btn-inner {
+    padding: $btn-margin-basic 1.5rem;
+
+    &.dropdown-toggle {
+      padding-right: .5rem;
+
+      &:after {
+        margin-left: .5em;
+      }
     }
   }
 
-  .btn {
+  &.btn-xs {
     .btn-inner {
-      padding: $btn-margin-basic 1.5rem;
-
-      &.dropdown-toggle {
-        padding-right: .5rem;
-
-        &:after {
-          margin-left: .5em;
-        }
-      }
-    }
-
-    &.btn-xs {
-      .btn-inner {
-        line-height: 1;
-        padding: .25rem $btn-margin-basic;
-      }
-    }
-
-    &.btn-sm {
-      .btn-inner {
-        line-height: 1;
-        padding: .4rem .5rem;
-      }
-    }
-
-    &.btn-lg {
-      .btn-inner {
-        padding: $btn-margin-lg 1.5rem;
-      }
+      line-height: 1;
+      padding: .25rem $btn-margin-basic;
     }
   }
+
+  &.btn-sm {
+    .btn-inner {
+      line-height: 1;
+      padding: .4rem .5rem;
+    }
+  }
+
+  &.btn-lg {
+    .btn-inner {
+      padding: $btn-margin-lg 1.5rem;
+    }
+  }
+}
 </style>

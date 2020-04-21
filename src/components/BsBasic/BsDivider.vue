@@ -25,24 +25,24 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-divider {
-    background-color: rgba($black, 0.12);
-    border: none;
-    display: block;
-    height: 1px;
-    min-height: 1px;
-    margin-bottom: 0;
-    margin-top: 0;
-    width: 100%;
-    flex: 1;
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
+.#{$prefix}-divider {
+  background-color: rgba($black, 0.12);
+  border: none;
+  display: block;
+  height: 1px;
+  min-height: 1px;
+  margin-bottom: 0;
+  margin-top: 0;
+  width: 100%;
+  flex: 1;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
 
-    &.#{$prefix}-divider--dark {
-      background-color: hsla(0, 0%, 100%, 0.12);
-    }
+  &.#{$prefix}-divider--dark {
+    background-color: hsla(0, 0%, 100%, 0.12);
   }
+}
 </style>

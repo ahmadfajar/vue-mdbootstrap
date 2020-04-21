@@ -2,11 +2,16 @@
 
 <p align="center">
   <a href="https://www.npmjs.com/package/vue-mdbootstrap">
-    <img src="https://img.shields.io/npm/dt/vue-mdbootstrap.svg" alt="Downloads">
+    <img src="https://flat.badgen.net/npm/v/vue-mdbootstrap" alt="NPM Release">
   </a>
-
+  <a href="https://github.com/ahmadfajar/vue-mdbootstrap">
+    <img src="https://flat.badgen.net/github/release/ahmadfajar/vue-mdbootstrap" alt="Release">
+  </a>
   <a href="https://www.npmjs.com/package/vue-mdbootstrap">
-    <img src="https://img.shields.io/npm/l/vue-mdbootstrap.svg" alt="License">
+    <img src="https://flat.badgen.net/npm/dt/vue-mdbootstrap" alt="Downloads">
+  </a>
+  <a href="https://www.npmjs.com/package/vue-mdbootstrap">
+    <img src="https://flat.badgen.net/github/license/ahmadfajar/vue-mdbootstrap" alt="License">
   </a>
 </p>
 

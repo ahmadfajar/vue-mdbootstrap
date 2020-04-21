@@ -144,7 +144,7 @@ export default {
                     PopupManager.open(this);
                 }
 
-                this.$VueMdb.application.sideDrawerWidth = this.width;
+                this.$VueMdb.application.sideDrawerWidth = parseInt(this.width, 10);
             } else {
                 PopupManager.close(this);
                 this.$VueMdb.application.sideDrawerWidth = 0;
@@ -152,9 +152,9 @@ export default {
         },
         mini(value) {
             if (value) {
-                this.$VueMdb.application.sideDrawerWidth = this.miniWidth;
+                this.$VueMdb.application.sideDrawerWidth = parseInt(this.miniWidth, 10);
             } else {
-                this.$VueMdb.application.sideDrawerWidth = this.width;
+                this.$VueMdb.application.sideDrawerWidth = parseInt(this.width, 10);
             }
         }
     },
@@ -164,7 +164,7 @@ export default {
         }
     },
     created() {
-        this.$VueMdb.application.sideDrawerWidth = this.width;
+        this.$VueMdb.application.sideDrawerWidth = parseInt(this.width, 10);
     },
     beforeDestroy() {
         if (this.isMobile) {

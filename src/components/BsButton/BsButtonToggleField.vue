@@ -97,28 +97,28 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-field {
-    &.#{$prefix}-button-toggle {
-      .#{$prefix}-field-inner {
-        border-bottom: 0;
+.#{$prefix}-field {
+  &.#{$prefix}-button-toggle {
+    .#{$prefix}-field-inner {
+      border-bottom: 0;
 
-        .btn {
-          font-size: .875rem;
-          margin-bottom: 0;
+      .btn {
+        font-size: .875rem;
+        margin-bottom: 0;
 
-          &.btn-sm {
-            font-size: 90%;
-            margin-top: $btn-margin-basic;
+        &.btn-sm {
+          font-size: 90%;
+          margin-top: $btn-margin-basic;
 
-            .btn-inner {
-              padding: $btn-margin-lg 1rem;
-            }
+          .btn-inner {
+            padding: $btn-margin-lg 1rem;
           }
         }
       }
     }
   }
+}
 </style>

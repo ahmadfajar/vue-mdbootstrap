@@ -95,39 +95,39 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "~bootstrap/scss/mixins/alert";
-  @import "~bootstrap/scss/mixins/gradients";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
-  @import "../../../scss/functions";
-  @import "../../../scss/mixins";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "~bootstrap/scss/mixins/alert";
+@import "~bootstrap/scss/mixins/gradients";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins";
 
-  .alert {
-    &.alert-dismissible {
-      padding-right: 3.3rem;
+.alert {
+  &.alert-dismissible {
+    padding-right: 3.3rem;
 
-      > .close {
-        padding: .5rem;
-      }
-    }
-
-    > .alert-icon {
-      font-size: 1.5rem;
+    > .close {
+      padding: .5rem;
     }
   }
 
-  @each $color, $value in $theme-colors {
-    .alert-#{$color} {
-      @include alert-variant(
-                  theme-color-level($theme-colors, $color, $alert-bg-level),
-                  theme-color-level($theme-colors, $color, $alert-border-level),
-                  theme-color-level($theme-colors, $color, $alert-color-level)
-      );
-    }
+  > .alert-icon {
+    font-size: 1.5rem;
   }
+}
 
-  @each $color_name, $color_value in $theme-colors {
-    @include make-outline-alert($color_name, $color_value);
+@each $color, $value in $theme-colors {
+  .alert-#{$color} {
+    @include alert-variant(
+        theme-color-level($theme-colors, $color, $alert-bg-level),
+        theme-color-level($theme-colors, $color, $alert-border-level),
+        theme-color-level($theme-colors, $color, $alert-color-level)
+    );
   }
+}
+
+@each $color_name, $color_value in $theme-colors {
+  @include make-outline-alert($color_name, $color_value);
+}
 </style>

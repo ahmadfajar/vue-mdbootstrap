@@ -14,7 +14,10 @@ export default {
             type: Boolean,
             default: false
         },
-        imgSrc: String,
+        imgSrc: {
+            type: String,
+            default: undefined
+        },
         size: {
             type: [Number, String, Object],
             default: 48

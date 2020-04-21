@@ -52,21 +52,21 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-mask-loader {
-    left: 0;
-    top: 0;
-    right: 0;
-    z-index: 100;
-    max-height: 100%;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    display: -ms-flexbox;
-    position: absolute;
-    justify-content: center;
-    -ms-flex-pack: center;
-  }
+.#{$prefix}-mask-loader {
+  left: 0;
+  top: 0;
+  right: 0;
+  z-index: 100;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  display: -ms-flexbox;
+  position: absolute;
+  justify-content: center;
+  -ms-flex-pack: center;
+}
 </style>

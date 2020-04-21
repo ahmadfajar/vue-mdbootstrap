@@ -6,7 +6,7 @@
     <svg v-if="iconData"
          :height="szHeight"
          :width="szWidth"
-         class="svg-inline"
+         class="svg-inline mx-auto"
          viewBox="0 0 24 24"
          xmlns="http://www.w3.org/2000/svg">
       <path v-for="(obj, k) in iconData.paths"

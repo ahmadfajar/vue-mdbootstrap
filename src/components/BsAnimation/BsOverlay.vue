@@ -64,17 +64,17 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-overlay {
-    background-color: $black;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    top: 0;
-    opacity: .4;
-    position: absolute;
-    z-index: 1000;
-  }
+.#{$prefix}-overlay {
+  background-color: $black;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  opacity: .4;
+  position: absolute;
+  z-index: 1000;
+}
 </style>

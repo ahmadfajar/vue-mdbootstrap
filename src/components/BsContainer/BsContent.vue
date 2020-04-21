@@ -31,8 +31,8 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-content-wrap {
-    @include flex(1 1 auto);
-    max-width: 100%;
-    position: relative;
+  @include flex(1 1 auto);
+  max-width: 100%;
+  position: relative;
 }
 </style>
