@@ -35,21 +35,21 @@ export default {
 
 .#{$prefix}-sidebar,
 .#{$prefix}-side-drawer {
-    > .#{$prefix}-side-drawer-inner,
-    > .#{$prefix}-sidebar-inner {
-        > .#{$prefix}-sidebar-nav {
-            @include flexbox((display: flex, flex: 1 1 auto, flex-direction: column));
-            @include transform(translate3d(0, 0, 0));
-            overflow-x: hidden;
-            overflow-y: auto;
+  > .#{$prefix}-side-drawer-inner,
+  > .#{$prefix}-sidebar-inner {
+    > .#{$prefix}-sidebar-nav {
+      @include flexbox((display: flex, flex: 1 1 auto, flex-direction: column));
+      @include transform(translate3d(0, 0, 0));
+      overflow-x: hidden;
+      overflow-y: auto;
 
-            .nav-child {
-                @include transition(all 0.6s);
-                padding-left: 0;
-                margin-bottom: 0;
-                list-style: none;
-            }
-        }
+      .nav-child {
+        @include transition(all 0.6s);
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+      }
     }
+  }
 }
 </style>

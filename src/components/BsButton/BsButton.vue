@@ -356,22 +356,22 @@ export default {
     cursor: default;
   }
 
-  &:not([disabled]):not(.disabled):active,
-  &:not([disabled]):not(.disabled).active {
-    @include box-shadow($z-depth-1-half);
-  }
-
   &.btn-xs {
-    font-size: .875rem;
-    @include border-radius($btn-border-radius-sm);
+    font-size: .75rem;
+    @include border-radius($btn-border-radius);
   }
 
   &.btn-sm {
-    @include border-radius($btn-border-radius-sm);
+    @include border-radius($btn-border-radius);
   }
 
   &.btn-lg {
-    @include border-radius($btn-border-radius-lg);
+    @include border-radius($btn-border-radius);
+
+    &.rounded,
+    &.rounded-lg {
+      @include border-radius($btn-border-radius-lg !important);
+    }
   }
 
   &.btn-raised {

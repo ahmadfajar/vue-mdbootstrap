@@ -1,10 +1,11 @@
 <template>
   <bs-ripple tag="span"
+             :class="{'dropdown-toggle': dropdownToggle && !iconMode}"
              :disabled="!ripple || disabled"
              :event-trigger="false"
              :active="rippleActive"
              @update:active="active => $emit('update:rippleActive', active)">
-    <span class="btn-inner" :class="{'dropdown-toggle': dropdownToggle && !iconMode}">
+    <span class="btn-inner">
       <slot />
     </span>
   </bs-ripple>
@@ -41,13 +42,18 @@ export default {
 
 .btn {
   .btn-inner {
+    width: 100%;
     padding: $btn-margin-basic 1.5rem;
+  }
 
+  .#{$prefix}-ripple {
     &.dropdown-toggle {
-      padding-right: .5rem;
+      &::after {
+        margin-right: $padding-base - .2;
+      }
 
-      &:after {
-        margin-left: .5em;
+      > .btn-inner {
+        padding: $btn-margin-basic ($padding-base - .2) $btn-margin-basic 1.5rem;
       }
     }
   }

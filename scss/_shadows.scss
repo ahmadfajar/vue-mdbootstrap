@@ -3,31 +3,31 @@
 @import "variables";
 
 .#{$prefix}-shadow {
-    border-width: 0 !important;
-    @include box-shadow(0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05) !important);
+  border-width: 0 !important;
+  @include box-shadow(0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05) !important);
 }
 
 .#{$prefix}-shadow-1 {
-    border-width: 0 !important;
-    @include box-shadow($z-depth-1-half !important);
+  border-width: 0 !important;
+  @include box-shadow($z-depth-1-half !important);
 }
 
 .#{$prefix}-shadow-2 {
-    border-width: 0 !important;
-    @include box-shadow($z-depth-2 !important);
+  border-width: 0 !important;
+  @include box-shadow($z-depth-2 !important);
 }
 
 .#{$prefix}-shadow-3 {
-    border-width: 0 !important;
-    @include box-shadow($z-depth-3 !important);
+  border-width: 0 !important;
+  @include box-shadow($z-depth-3 !important);
 }
 
 .#{$prefix}-shadow-4 {
-    border-width: 0 !important;
-    @include box-shadow($z-depth-4 !important);
+  border-width: 0 !important;
+  @include box-shadow($z-depth-4 !important);
 }
 
 .#{$prefix}-shadow-5 {
-    border-width: 0 !important;
-    @include box-shadow($z-depth-5 !important);
+  border-width: 0 !important;
+  @include box-shadow($z-depth-5 !important);
 }

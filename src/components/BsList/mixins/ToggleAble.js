@@ -1,20 +1,19 @@
 export default {
     model: {
-        prop: 'value',
+        prop: 'active',
         event: 'input'
     },
     props: {
-        value: Boolean
+        active: Boolean
     },
-    data: (vm) => ({
-        isActive: vm.value
-    }),
+    computed: {
+        isActive() {
+            return this.active;
+        }
+    },
     watch: {
-        value(value) {
-            this.isActive = value;
-        },
-        isActive(value) {
-            value === this.value && this.$emit('input', value);
+        active(value) {
+            this.$emit('input', value);
         }
     }
 }

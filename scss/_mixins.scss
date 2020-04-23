@@ -1,195 +1,202 @@
 /* BsAlert mixins */
 @mixin make-outline-alert($name, $color) {
-    .alert-outline-#{$name} {
-        color: darken($color, 10%);
-        border-color: lighten($color, 10%);
+  .alert-outline-#{$name} {
+    color: darken($color, 10%);
+    border-color: lighten($color, 10%);
 
-        hr {
-            border-top-color: lighten($color, 10%);
-        }
-
-        .alert-link {
-            color: darken($color, 15%);
-        }
+    hr {
+      border-top-color: lighten($color, 10%);
     }
+
+    .alert-link {
+      color: darken($color, 15%);
+    }
+  }
 }
 
 /* BsProgress mixins */
 @mixin progress-bar-indeterminate($color) {
-    background-color: rgba($color, .24);
+  background-color: rgba($color, .24);
 
-    .#{$prefix}-progress-bar-track,
-    .#{$prefix}-progress-bar-fill {
-        &:after {
-            background-color: $color;
-        }
+  .#{$prefix}-progress-bar-track,
+  .#{$prefix}-progress-bar-fill {
+    &:after {
+      background-color: $color;
     }
+  }
 }
 
 @mixin progress-bar-determinate($color) {
-    background-color: rgba($color, .24);
+  background-color: rgba($color, .24);
 
-    .#{$prefix}-progress-bar-fill {
-        background-color: $color;
-    }
+  .#{$prefix}-progress-bar-fill {
+    background-color: $color;
+  }
 }
 
 @mixin progress-bar-buffer($color) {
-    .#{$prefix}-progress-bar-fill {
-        background-color: $color;
-    }
+  .#{$prefix}-progress-bar-fill {
+    background-color: $color;
+  }
 
-    .#{$prefix}-progress-bar-track {
-        background-color: rgba($color, .38);
-    }
+  .#{$prefix}-progress-bar-track {
+    background-color: rgba($color, .38);
+  }
 
-    .#{$prefix}-progress-bar-buffer {
-        border-color: rgba($color, .38);
-    }
+  .#{$prefix}-progress-bar-buffer {
+    border-color: rgba($color, .38);
+  }
 }
 
 @mixin make-progress-bar($name, $color) {
-    .progress-bar-#{$name} {
-        &.#{$prefix}-indeterminate,
-        &.#{$prefix}-query {
-            @include progress-bar-indeterminate($color);
-        }
-
-        &.#{$prefix}-determinate {
-            @include progress-bar-determinate($color);
-        }
-
-        &.#{$prefix}-buffer {
-            @include progress-bar-buffer($color);
-        }
+  .progress-bar-#{$name} {
+    &.#{$prefix}-indeterminate,
+    &.#{$prefix}-query {
+      @include progress-bar-indeterminate($color);
     }
+
+    &.#{$prefix}-determinate {
+      @include progress-bar-determinate($color);
+    }
+
+    &.#{$prefix}-buffer {
+      @include progress-bar-buffer($color);
+    }
+  }
 }
 
 @mixin make-progress-spinner($name, $color) {
-    .spinner-#{$name} {
-        .#{$prefix}-progress-spinner-circle {
-            stroke: $color;
-        }
+  .spinner-#{$name} {
+    .#{$prefix}-progress-spinner-circle {
+      stroke: $color;
     }
+  }
 }
 
 /* BsGrid mixins */
 @mixin grid-rowstate-variant($name, $color) {
-    .#{$prefix}-state-#{$name} {
-        background-color: rgba($color, .08);
-    }
+  .#{$prefix}-state-#{$name} {
+    background-color: rgba($color, .08);
+  }
 }
 
 /* BsList mixins */
 @mixin bslist-variant($name, $color) {
-    .#{$prefix}-list-#{$name} {
-        background-color: $color;
+  .#{$prefix}-list-#{$name} {
+    background-color: $color;
 
-        .#{$prefix}-subheader {
-            @if (lightness($color) > 80) {
-                color: darken($gray-500, 5%);
-            } @else {
-                color: rgba($white-base, .8);
-            }
+    .#{$prefix}-divider {
+      @if (lightness($color) < 81) {
+      //  background-color: darken($gray-200, 5%);
+      //} @else {
+        background-color: rgba($white-base, .2);
+      }
+    }
+
+    .#{$prefix}-subheader {
+      @if (lightness($color) > 80) {
+        color: darken($gray-500, 5%);
+      } @else {
+        color: rgba($white-base, .8);
+      }
+    }
+
+    .#{$prefix}-list-tile {
+      &:not(.#{$prefix}-disabled) {
+        &.#{$prefix}-link:hover {
+          background-color: set-hoverable-bgcolor($color);
         }
 
-        .#{$prefix}-list-tile {
-            &:not(.#{$prefix}-disabled) {
-                &.#{$prefix}-link:hover {
-                    background-color: set-hoverable-bgcolor($color);
-                }
-
-                .#{$prefix}-list-tile-leading {
-                    color: set-disable-text-color($color);
-                }
-
-                &.active, &.#{$prefix}-active {
-                    background-color: set-hoverable-bgcolor($color, .28);
-
-                    .#{$prefix}-list-tile-leading {
-                        color: set-subtitle-text-color($color);
-                    }
-
-                    .#{$prefix}-list-tile-title {
-                        font-weight: $font-weight-bold;
-                    }
-                }
-            }
+        .#{$prefix}-list-tile-leading {
+          color: set-disable-text-color($color);
         }
 
-        .#{$prefix}-list-tile,
         .#{$prefix}-list-tile-title {
-            color: set-notification-text-color($color);
+          color: set-notification-text-color($color);
         }
 
         .#{$prefix}-list-tile-subtitle {
-            color: set-subtitle-text-color($color);
+          color: set-subtitle-text-color($color);
         }
 
-        .#{$prefix}-list-tile {
-            &.#{$prefix}-disabled {
-                color: set-disable-text-color($color) !important;
-            }
+        &.active, &.#{$prefix}-active {
+          background-color: set-hoverable-bgcolor($color, .28);
+
+          .#{$prefix}-list-tile-leading {
+            color: set-subtitle-text-color($color);
+          }
+
+          .#{$prefix}-list-tile-title {
+            font-weight: $font-weight-bold;
+          }
         }
+      }
     }
+
+    .#{$prefix}-list-tile {
+      &.#{$prefix}-disabled {
+        color: set-disable-text-color($color) !important;
+      }
+    }
+  }
 }
 
 /* Transition mixins */
 @mixin enter($parent) {
-    #{$parent}-enter {
-        @content;
-    }
+  #{$parent}-enter {
+    @content;
+  }
 }
 
 @mixin enter-to($parent) {
-    #{$parent}-enter-to {
-        @content;
-    }
+  #{$parent}-enter-to {
+    @content;
+  }
 }
 
 @mixin enter-active($parent) {
-    #{$parent}-enter-active {
-        @content;
-    }
+  #{$parent}-enter-active {
+    @content;
+  }
 }
 
 @mixin enter-leave-active($parent) {
-    #{$parent}-enter-active,
-    #{$parent}-leave-active {
-        @content;
-    }
+  #{$parent}-enter-active,
+  #{$parent}-leave-active {
+    @content;
+  }
 }
 
 @mixin enter-leaveactive($parent) {
-    #{$parent}-enter,
-    #{$parent}-leave-active {
-        @content;
-    }
+  #{$parent}-enter,
+  #{$parent}-leave-active {
+    @content;
+  }
 }
 
 @mixin enter-leaveto($parent) {
-    #{$parent}-enter,
-    #{$parent}-leave-to {
-        @content;
-    }
+  #{$parent}-enter,
+  #{$parent}-leave-to {
+    @content;
+  }
 }
 
 @mixin leave-active($parent) {
-    #{$parent}-leave-active {
-        @content;
-    }
+  #{$parent}-leave-active {
+    @content;
+  }
 }
 
 @mixin leave-to($parent) {
-    #{$parent}-leave-to {
-        @content;
-    }
+  #{$parent}-leave-to {
+    @content;
+  }
 }
 
 @mixin leave-active-to($parent) {
-    #{$parent}-leave,
-    #{$parent}-leave-active,
-    #{$parent}-leave-to {
-        @content;
-    }
+  #{$parent}-leave,
+  #{$parent}-leave-active,
+  #{$parent}-leave-to {
+    @content;
+  }
 }

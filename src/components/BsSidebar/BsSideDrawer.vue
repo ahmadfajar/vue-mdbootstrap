@@ -235,42 +235,48 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-side-drawer {
-    @include box-sizing(border-box);
-    @include box-shadow(0px 0px 10px 0 rgba(0, 0, 0, .6));
-    @include transition($transition-duration-base $md-transition-default-timing);
-    margin: 0;
-    padding: 0;
-    position: fixed;
-    z-index: $zindex-fixed;
+  @include box-sizing(border-box);
+  @include box-shadow(0px 0px 10px 0 rgba(0, 0, 0, .6));
+  @include transition($transition-duration-base $md-transition-default-timing);
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  z-index: $zindex-fixed;
 
-    &.#{$prefix}-close {
-        @include box-shadow(none);
+  &.#{$prefix}-close {
+    @include box-shadow(none);
+  }
+
+  > .#{$prefix}-side-drawer-inner {
+    @include flexbox((display:flex, flex-direction: column));
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+
+    > .#{$prefix}-list {
+      .#{$prefix}-list-tile-title {
+        font-size: .92rem;
+      }
     }
 
-    .#{$prefix}-side-drawer-inner {
-        @include flexbox((display:flex, flex-direction: column));
-        height: 100%;
-        overflow: hidden;
-        position: relative;
+    a {
+      color: inherit;
 
-        a {
-            color: inherit;
-
-            &:hover,
-            &:focus,
-            &:active {
-                color: $sidebar-hover-textcolor;
-                text-decoration: none;
-            }
-        }
+      &:hover,
+      &:focus,
+      &:active {
+        color: $sidebar-hover-textcolor;
+        text-decoration: none;
+      }
     }
+  }
 
-    .divider {
-        border-bottom: 1px solid rgba(200, 200, 200, 0.16);
-    }
+  .divider {
+    border-bottom: 1px solid rgba(200, 200, 200, 0.16);
+  }
 
-    @include media-breakpoint-up(lg) {
-        @include box-shadow(none);
-    }
+  @include media-breakpoint-up(lg) {
+    @include box-shadow(none);
+  }
 }
 </style>

@@ -8,6 +8,7 @@
       <slot></slot>
     </div>
     <bs-popover class="md-menu-popover md-shadow-1"
+                :class="{['bg-' + color] : color}"
                 :style="popoverStyles"
                 :cover="cover"
                 :open="active"
@@ -39,6 +40,10 @@ export default {
     },
     props: {
         cover: Boolean,
+        color: {
+            type: String,
+            default: 'white',
+        },
         placement: {
             type: String,
             default: BsPopover.props.placement.default
@@ -141,46 +146,45 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-menu {
-    display: inline-block;
+  display: inline-block;
+  position: relative;
+  vertical-align: middle;
+
+  .#{$prefix}-menu-activator {
+    @include align-items(center);
+    cursor: pointer;
+    height: 100%;
     position: relative;
-    vertical-align: middle;
 
-    .#{$prefix}-menu-activator {
-        @include align-items(center);
-        cursor: pointer;
-        height: 100%;
-        position: relative;
-
-        input[readonly] {
-            cursor: pointer;
-        }
-
-        .disabled & {
-            cursor: default;
-            pointer-events: none;
-        }
+    input[readonly] {
+      cursor: pointer;
     }
+
+    .disabled & {
+      cursor: default;
+      pointer-events: none;
+    }
+  }
 }
 
 .#{$prefix}-menu-popover {
-    background-color: $white;
+  @include border-radius($border-radius-base);
+
+  > .#{$prefix}-list {
     @include border-radius($border-radius-base);
 
-    > .#{$prefix}-list {
-        @include border-radius($border-radius-base);
-
-        .#{$prefix}-divider {
-            margin-bottom: 3px;
-            margin-top: 3px;
-        }
+    .#{$prefix}-divider {
+      margin-bottom: 3px;
+      margin-top: 3px;
     }
+  }
 }
 
 .#{$prefix}-menu-toggle-icon {
-    transition: transform .3s cubic-bezier(.23, 1, .32, 1);
+  transition: transform .3s cubic-bezier(.23, 1, .32, 1);
 
-    .#{$prefix}-open & {
-        transform: rotate(180deg);
-    }
+  .#{$prefix}-open & {
+    transform: rotate(180deg);
+  }
 }
 </style>

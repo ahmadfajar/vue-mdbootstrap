@@ -226,68 +226,68 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-popover {
-    position: fixed;
-    max-height: 100%;
-    max-width: 80%;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
+  position: fixed;
+  max-height: 100%;
+  max-width: 80%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 
-    &.transition-bottom-left {
-        transform-origin: left top;
+  &.transition-bottom-left {
+    transform-origin: left top;
+  }
+
+  &.transition-bottom {
+    transform-origin: center top;
+
+    &.popover-enter,
+    &.popover-leave-active {
+      transform: scaleY(.5);
     }
+  }
 
-    &.transition-bottom {
-        transform-origin: center top;
+  &.transition-bottom-right {
+    transform-origin: right top;
+  }
 
-        &.popover-enter,
-        &.popover-leave-active {
-            transform: scaleY(.5);
-        }
+  &.transition-top-left {
+    transform-origin: left bottom;
+  }
+
+  &.transition-top {
+    transform-origin: center bottom;
+
+    &.popover-enter,
+    &.popover-leave-active {
+      transform: scaleY(.5);
     }
+  }
 
-    &.transition-bottom-right {
-        transform-origin: right top;
-    }
+  &.transition-top-right {
+    transform-origin: right bottom;
+  }
 
-    &.transition-top-left {
-        transform-origin: left bottom;
-    }
+  &.transition-left-top {
+    transform-origin: right top;
+  }
 
-    &.transition-top {
-        transform-origin: center bottom;
+  &.transition-left {
+    transform-origin: right center;
+  }
 
-        &.popover-enter,
-        &.popover-leave-active {
-            transform: scaleY(.5);
-        }
-    }
+  &.transition-left-bottom {
+    transform-origin: right bottom;
+  }
 
-    &.transition-top-right {
-        transform-origin: right bottom;
-    }
+  &.transition-right-top {
+    transform-origin: left top;
+  }
 
-    &.transition-left-top {
-        transform-origin: right top;
-    }
+  &.transition-right {
+    transform-origin: left center;
+  }
 
-    &.transition-left {
-        transform-origin: right center;
-    }
-
-    &.transition-left-bottom {
-        transform-origin: right bottom;
-    }
-
-    &.transition-right-top {
-        transform-origin: left top;
-    }
-
-    &.transition-right {
-        transform-origin: left center;
-    }
-
-    &.transition-right-bottom {
-        transform-origin: left bottom;
-    }
+  &.transition-right-bottom {
+    transform-origin: left bottom;
+  }
 }
 </style>

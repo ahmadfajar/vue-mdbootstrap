@@ -217,119 +217,119 @@ export default {
 
 .#{$prefix}-sidebar,
 .#{$prefix}-side-drawer {
+  > .#{$prefix}-sidebar-inner,
+  > .#{$prefix}-side-drawer-inner {
+    > .#{$prefix}-sidebar-nav {
+      .nav-item {
+        position: relative;
+        white-space: nowrap;
+        width: 100%;
+
+        &:hover {
+          background-color: $sidebar-hover-bgcolor;
+        }
+
+        &.expanded {
+          background-color: $sidebar-expanded-bgcolor;
+        }
+
+        &.active {
+          > .nav-item-inner {
+            .display-name {
+              font-weight: $font-weight-bold;
+            }
+          }
+
+          &.parent:not(.expanded) {
+            background: $sidebar-active-bgcolor;
+          }
+
+          &:not(.parent) {
+            background-color: $sidebar-active-bgcolor;
+
+            &:before {
+              background: $sidebar-item-active-bgcolor;
+              content: " ";
+              display: block;
+              left: 0;
+              top: 0;
+              position: absolute;
+              height: 100%;
+              width: 5px;
+            }
+          }
+        }
+
+        > .nav-item-inner {
+          cursor: pointer;
+          outline: 0 none;
+
+          > .#{$prefix}-ripple {
+            height: 46px;
+            line-height: 1;
+            padding: $sidebar-item-padding;
+
+            > .display-name {
+              @include transition(opacity .8s);
+              opacity: 1;
+            }
+
+            > .fas, > svg {
+              margin-right: .5rem;
+            }
+          }
+
+          &:hover,
+          &:focus,
+          &:active {
+            text-decoration: none;
+          }
+        }
+
+        &.parent {
+          > .nav-child {
+            > .nav-item > .nav-item-inner > .#{$prefix}-ripple {
+              padding-left: 1.7rem;
+            }
+          }
+
+          .nav-item-inner .caret {
+            @include transition(all 0.3s ease 0s);
+            @include transform(rotateZ(0deg));
+            margin-left: auto;
+            margin-right: $caret-margin;
+          }
+
+          &.expanded {
+            .nav-item-inner .caret {
+              @include transition(all 0.3s ease 0s);
+              @include transform(rotateZ(90deg));
+            }
+          }
+        }
+
+        &.divider {
+          border-bottom: 1px solid var(--light);
+        }
+      }
+    }
+  }
+
+  &.#{$prefix}-mini {
     > .#{$prefix}-sidebar-inner,
     > .#{$prefix}-side-drawer-inner {
-        > .#{$prefix}-sidebar-nav {
-            .nav-item {
-                position: relative;
-                white-space: nowrap;
-                width: 100%;
-
-                &:hover {
-                    background-color: $sidebar-hover-bgcolor;
-                }
-
-                &.expanded {
-                    background-color: $sidebar-expanded-bgcolor;
-                }
-
-                &.active {
-                    > .nav-item-inner {
-                        .display-name {
-                            font-weight: $font-weight-bold;
-                        }
-                    }
-
-                    &.parent:not(.expanded) {
-                        background: $sidebar-active-bgcolor;
-                    }
-
-                    &:not(.parent) {
-                        background-color: $sidebar-active-bgcolor;
-
-                        &:before {
-                            background: $sidebar-item-active-bgcolor;
-                            content: " ";
-                            display: block;
-                            left: 0;
-                            top: 0;
-                            position: absolute;
-                            height: 100%;
-                            width: 5px;
-                        }
-                    }
-                }
-
-                > .nav-item-inner {
-                    cursor: pointer;
-                    outline: 0 none;
-
-                    > .#{$prefix}-ripple {
-                        height: 46px;
-                        line-height: 1;
-                        padding: $sidebar-item-padding;
-
-                        > .display-name {
-                            @include transition(opacity .8s);
-                            opacity: 1;
-                        }
-
-                        > .fas, > svg {
-                            margin-right: .5rem;
-                        }
-                    }
-
-                    &:hover,
-                    &:focus,
-                    &:active {
-                        text-decoration: none;
-                    }
-                }
-
-                &.parent {
-                    > .nav-child {
-                        > .nav-item > .nav-item-inner > .#{$prefix}-ripple {
-                            padding-left: 1.7rem;
-                        }
-                    }
-
-                    .nav-item-inner .caret {
-                        @include transition(all 0.3s ease 0s);
-                        @include transform(rotateZ(0deg));
-                        margin-left: auto;
-                        margin-right: $caret-margin;
-                    }
-
-                    &.expanded {
-                        .nav-item-inner .caret {
-                            @include transition(all 0.3s ease 0s);
-                            @include transform(rotateZ(90deg));
-                        }
-                    }
-                }
-
-                &.divider {
-                    border-bottom: 1px solid var(--light);
-                }
+      > .#{$prefix}-sidebar-nav {
+        .nav-item {
+          > .nav-item-inner {
+            > .#{$prefix}-ripple {
+              > .display-name {
+                opacity: 0;
+              }
             }
+          }
         }
+      }
     }
-
-    &.#{$prefix}-mini {
-        > .#{$prefix}-sidebar-inner,
-        > .#{$prefix}-side-drawer-inner {
-            > .#{$prefix}-sidebar-nav {
-                .nav-item {
-                    > .nav-item-inner {
-                        > .#{$prefix}-ripple {
-                            > .display-name {
-                                opacity: 0;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
+  }
 }
 </style>

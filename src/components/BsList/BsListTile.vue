@@ -9,10 +9,10 @@
     <slot></slot>
   </router-link>
   <a :is="tag"
-     v-else
      :class="_classNames"
      :href="url"
-     v-on="$listeners">
+     v-on="$listeners"
+     v-else>
     <slot></slot>
   </a>
 </template>

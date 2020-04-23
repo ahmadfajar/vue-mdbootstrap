@@ -1,68 +1,68 @@
 // Theme color function
 @function theme-color($theme, $key: "primary") {
-    @return map-get($theme, $key);
+  @return map-get($theme, $key);
 }
 
 @function theme-color-level($theme, $color-name: "primary", $level: 0) {
-    $color: theme-color($theme, $color-name);
-    $color-base: if($level > 0, $black, $white);
-    $level: abs($level);
+  $color: theme-color($theme, $color-name);
+  $color-base: if($level > 0, $black, $white);
+  $level: abs($level);
 
-    @return mix($color-base, $color, $level * $theme-color-interval);
+  @return mix($color-base, $color, $level * $theme-color-interval);
 }
 
 // Set the color of the Button, Badge, List
 @function set-notification-text-color($color) {
-    @if (lightness($color) > 80) {
-        @return $gray-900; // Lighter background, return dark color
-    } @else {
-        @return $white-base; // Darker background, return light color
-    }
+  @if (lightness($color) > 80) {
+    @return $gray-900; // Lighter background, return dark color
+  } @else {
+    @return $white-base; // Darker background, return light color
+  }
 }
 
 @function set-subtitle-text-color($color) {
-    @if (lightness($color) > 80) {
-        @return $gray-700;
-    } @else {
-        @return rgba($white-base, .8);
-    }
+  @if (lightness($color) > 80) {
+    @return $gray-700;
+  } @else {
+    @return rgba($white-base, .8);
+  }
 }
 
 @function set-disable-text-color($color) {
-    @if (lightness($color) > 80) {
-        @return $gray-500;
-    } @else {
-        @return rgba($white-base, .5);
-    }
+  @if (lightness($color) > 80) {
+    @return $gray-500;
+  } @else {
+    @return rgba($white-base, .5);
+  }
 }
 
 @function set-hoverable-bgcolor($color, $transparency: 0) {
-    @if (lightness($color) == 100) {
-        @if ($transparency > 0) {
-            @return rgba($black, $transparency);
-        } @else {
-            @return rgba($black, 0.08);
-        }
-    } @else if (lightness($color) > 80) {
-        @if ($transparency > 0) {
-            @return rgba($default-hover-bgcolor, $transparency);
-        } @else {
-            @return $default-hover-bgcolor;
-        }
+  @if (lightness($color) == 100) {
+    @if ($transparency > 0) {
+      @return rgba($black, $transparency);
     } @else {
-        @if ($transparency > 0) {
-            @return rgba(lighten($color, 30%), $transparency);
-        } @else {
-            @return rgba(lighten($color, 30%), .3);
-        }
+      @return rgba($black, 0.08);
     }
+  } @else if (lightness($color) > 80) {
+    @if ($transparency > 0) {
+      @return rgba($default-hover-bgcolor, $transparency);
+    } @else {
+      @return $default-hover-bgcolor;
+    }
+  } @else {
+    @if ($transparency > 0) {
+      @return rgba(lighten($color, 30%), $transparency);
+    } @else {
+      @return rgba(lighten($color, 30%), .3);
+    }
+  }
 }
 
 // Set the text color of the outlined or flat buttons
 @function set-outline-button-color($name, $color) {
-    @if ($name == 'light') {
-        @return $gray-900;
-    } @else {
-        @return $color
-    }
+  @if ($name == 'light') {
+    @return $gray-900;
+  } @else {
+    @return $color
+  }
 }

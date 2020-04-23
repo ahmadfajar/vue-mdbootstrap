@@ -1,12 +1,32 @@
 <template>
-  <hr class="md-divider" :class="_classNames" />
+  <hr class="md-divider" :class="_classNames" :style="_styles" />
 </template>
 
 <script>
+import Helper from "../../utils/Helper";
+
 export default {
     name: "BsDivider",
     props: {
-        dark: Boolean
+        dark: {
+            type: Boolean,
+            default: false
+        },
+        leftIndent: {
+            type: [String, Number],
+            default: undefined,
+            validator: v => !isNaN(parseInt(v, 10))
+        },
+        rightIndent: {
+            type: [String, Number],
+            default: undefined,
+            validator: v => !isNaN(parseInt(v, 10))
+        },
+        thickness: {
+            type: [String, Number],
+            default: undefined,
+            validator: v => !isNaN(parseInt(v, 10))
+        },
     },
     computed: {
         /**
@@ -19,6 +39,19 @@ export default {
             return [
                 this.dark ? 'md-divider--dark' : 'md-divider--light'
             ]
+        },
+        /**
+         * Get component's inline css styles.
+         *
+         * @return {Object} Inline css styles
+         * @private
+         */
+        _styles() {
+            return {
+                marginLeft: this.leftIndent ? Helper.sizeUnit(this.leftIndent) : null,
+                marginRight: this.rightIndent ? Helper.sizeUnit(this.rightIndent) : null,
+                height: this.thickness ? Helper.sizeUnit(this.thickness) : null,
+            }
         }
     }
 }
