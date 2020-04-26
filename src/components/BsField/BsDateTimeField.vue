@@ -132,7 +132,7 @@ export default {
             default: false
         },
         /**
-         * Define locale date formating, default "en-us"
+         * Define locale date formatting, default "en-us"
          * @type {String|*}
          */
         locale: {

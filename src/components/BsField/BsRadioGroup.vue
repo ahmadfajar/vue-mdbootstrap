@@ -50,7 +50,7 @@ export default {
     props: {
         color: {
             type: String,
-            default: 'primary'
+            default: 'default'
         },
         columns: {
             type: Number,
@@ -131,12 +131,12 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-radio-group {
-    .#{$prefix}-field-inner {
-      border-bottom: 0 !important;
-    }
+.#{$prefix}-radio-group {
+  .#{$prefix}-field-inner {
+    border-bottom: 0 !important;
   }
+}
 </style>

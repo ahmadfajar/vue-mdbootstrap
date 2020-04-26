@@ -38,7 +38,7 @@ export default {
         },
         color: {
             type: String,
-            default: 'primary'
+            default: 'default'
         },
         value: {
             type: [String, Number, Boolean],
@@ -133,118 +133,118 @@ export default {
 @import "../../../scss/controls";
 
 .#{$prefix}-radio {
-    display: inline-flex;
-    margin: $md-radio-margin;
+  display: inline-flex;
+  margin: $md-radio-margin;
+  position: relative;
+  width: auto;
+
+  &:not(.#{$prefix}-disabled) {
+    cursor: pointer;
+
+    .#{$prefix}-radio-label {
+      cursor: pointer;
+    }
+  }
+
+  > .#{$prefix}-radio-inner {
+    border: 2px solid rgba(#000, .54);
+    height: $md-radio-size;
+    min-width: $md-radio-size;
+    width: $md-radio-size;
     position: relative;
-    width: auto;
+    @include border-radius($border-radius-circle);
+    @include transition($md-transition-stand);
 
-    &:not(.#{$prefix}-disabled) {
-        cursor: pointer;
-
-        .#{$prefix}-radio-label {
-            cursor: pointer;
-        }
+    &:focus {
+      outline: none;
     }
 
-    > .#{$prefix}-radio-inner {
-        border: 2px solid rgba(#000, .54);
-        height: $md-radio-size;
-        min-width: $md-radio-size;
-        width: $md-radio-size;
-        position: relative;
-        @include border-radius($border-radius-circle);
+    &:before,
+    &:after {
+      content: " ";
+      position: absolute;
+      @include transition($md-transition-drop);
+    }
+
+    &:before {
+      height: $md-radio-touch-size;
+      width: $md-radio-touch-size;
+      left: 50%;
+      top: 50%;
+      z-index: 11;
+      @include border-radius($border-radius-circle);
+      @include transform(translate(-50%, -50%));
+    }
+
+    &:after {
+      content: " ";
+      bottom: 3px;
+      left: 3px;
+      right: 3px;
+      top: 3px;
+      opacity: 0;
+      position: absolute;
+      @include border-radius($border-radius-circle);
+      @include transform(scale3D(.38, .38, 1));
+    }
+
+    .#{$prefix}-ripple {
+      height: $md-radio-touch-size !important;
+      width: $md-radio-touch-size !important;
+      left: 50% !important;
+      top: 50% !important;
+      @include border-radius($border-radius-circle);
+      @include transform(translate(-50%, -50%));
+    }
+
+    input {
+      left: -999em;
+      position: absolute;
+    }
+  }
+
+  > .#{$prefix}-radio-label {
+    height: $md-radio-size;
+    line-height: $md-radio-size;
+    padding-left: 16px;
+    position: relative;
+    @include user-select(none);
+  }
+
+  &.#{$prefix}-checked {
+    .#{$prefix}-radio-inner {
+      &:after {
+        opacity: 1;
+        @include transform(scale3D(1, 1, 1));
         @include transition($md-transition-stand);
-
-        &:focus {
-            outline: none;
-        }
-
-        &:before,
-        &:after {
-            content: " ";
-            position: absolute;
-            @include transition($md-transition-drop);
-        }
-
-        &:before {
-            height: $md-radio-touch-size;
-            width: $md-radio-touch-size;
-            left: 50%;
-            top: 50%;
-            z-index: 11;
-            @include border-radius($border-radius-circle);
-            @include transform(translate(-50%, -50%));
-        }
-
-        &:after {
-            content: " ";
-            bottom: 3px;
-            left: 3px;
-            right: 3px;
-            top: 3px;
-            opacity: 0;
-            position: absolute;
-            @include border-radius($border-radius-circle);
-            @include transform(scale3D(.38, .38, 1));
-        }
-
-        .#{$prefix}-ripple {
-            height: $md-radio-touch-size !important;
-            width: $md-radio-touch-size !important;
-            left: 50% !important;
-            top: 50% !important;
-            @include border-radius($border-radius-circle);
-            @include transform(translate(-50%, -50%));
-        }
-
-        input {
-            left: -999em;
-            position: absolute;
-        }
+      }
     }
+  }
 
-    > .#{$prefix}-radio-label {
-        height: $md-radio-size;
-        line-height: $md-radio-size;
-        padding-left: 16px;
-        position: relative;
-        @include user-select(none);
+  &.#{$prefix}-required {
+    label:after {
+      content: "*";
+      line-height: 1em;
+      position: absolute;
+      right: 0;
+      top: 2px;
+      vertical-align: top;
+      @include transform(translateX(calc(100% + 2px)));
     }
+  }
 
-    &.#{$prefix}-checked {
-        .#{$prefix}-radio-inner {
-            &:after {
-                opacity: 1;
-                @include transform(scale3D(1, 1, 1));
-                @include transition($md-transition-stand);
-            }
-        }
+  &.#{$prefix}-disabled {
+    > .#{$prefix}-radio-inner {
+      border-color: rgba(#000, .26);
+
+      &:after {
+        background-color: rgba(#000, .26);
+      }
     }
-
-    &.#{$prefix}-required {
-        label:after {
-            content: "*";
-            line-height: 1em;
-            position: absolute;
-            right: 0;
-            top: 2px;
-            vertical-align: top;
-            @include transform(translateX(calc(100% + 2px)));
-        }
-    }
-
-    &.#{$prefix}-disabled {
-        > .#{$prefix}-radio-inner {
-            border-color: rgba(#000, .26);
-
-            &:after {
-                background-color: rgba(#000, .26);
-            }
-        }
-    }
+  }
 }
 
 @each $name, $color in $theme-colors {
-    @include make-radio($name, $color);
+  @include make-radio($name, $color);
 }
 </style>

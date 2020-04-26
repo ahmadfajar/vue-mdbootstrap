@@ -58,13 +58,18 @@
                    @click="_deleteClick">
           <bs-icon icon="trashcan" size="24" />
         </bs-button>
-        <bs-button v-if="toolbar['menubar']"
-                   color="light-grey"
-                   mode="icon"
-                   flat>
-          <bs-icon icon="MoreVert" size="24" />
-        </bs-button>
-        <div v-if="toolbar['close']" class="ml-3">
+        <bs-menu color="transparent" placement="bottom-right">
+          <bs-button v-if="toolbar['menubar']"
+                     color="light-grey"
+                     mode="icon"
+                     flat>
+            <bs-icon icon="MoreVert" size="24" />
+          </bs-button>
+          <template v-slot:content>
+            <slot name="menubar" />
+          </template>
+        </bs-menu>
+        <div v-if="toolbar['close']" class="ml-2">
           <bs-button color="light-grey"
                      mode="icon"
                      flat
@@ -75,9 +80,10 @@
       </div>
     </div>
 
-    <div class="md-lightbox-controls">
+    <div v-if="showNavControl" class="md-lightbox-controls">
       <div :style="_controlStyles" class="md-control-prev">
         <bs-button mode="icon"
+                   color="light-grey"
                    size="lg"
                    flat
                    @click="prevSlide">
@@ -88,6 +94,7 @@
       </div>
       <div :style="_controlStyles" class="md-control-next">
         <bs-button mode="icon"
+                   color="light-grey"
                    size="lg"
                    flat
                    @click="nextSlide">
@@ -98,15 +105,14 @@
       </div>
     </div>
 
-    <transition name="bs-modal">
-      <div v-if="open && itemIndex > -1"
-           :key="itemIndex"
-           :style="_imgWrapperStyles"
-           ref="imgWrapper"
-           class="md-lightbox-item-wrap"
-           @click="_onWrapperClick">
-        <div :class="_transitionClasses"
-             class="md-lightbox-item md-modal-inner">
+    <div :style="_imgWrapperStyles"
+         ref="imgWrapper"
+         class="md-lightbox-item-wrap"
+         @click="_onWrapperClick">
+      <transition :name="transition" :mode="transitionMode">
+        <div v-if="itemIndex > -1"
+             :key="'img-' + itemIndex"
+             class="md-lightbox-item">
           <div class="md-lightbox-item-img">
             <img :alt="activeItem.title"
                  :src="activeItem.imageFile" />
@@ -116,8 +122,8 @@
             {{ activeItem.title }}
           </div>
         </div>
-      </div>
-    </transition>
+      </transition>
+    </div>
 
     <div v-if="showThumbnail"
          :style="_toolbarStyles"
@@ -168,6 +174,10 @@ export default {
             type: Boolean,
             default: true
         },
+        showNavControl: {
+            type: Boolean,
+            default: true
+        },
         thumbnailHeight: {
             type: Number,
             default: 72,
@@ -187,9 +197,14 @@ export default {
         },
         transition: {
             type: String,
-            default: 'fade',
-            validator: v => ['slide-top', 'slide-bottom', 'slide-left', 'slide-right', 'fade', 'scale'].indexOf(v) !== -1
+            default: 'slide-fade',
+            validator: v => ['fade', 'popover', 'slide-fade', 'slide-fade-reverse', 'slide-bottom-top', 'slide-top-bottom'].indexOf(v) !== -1
         },
+        transitionMode: {
+            type: String,
+            default: undefined,
+            validator: v => ['out-in', 'in-out'].indexOf(v) !== -1
+        }
     },
     data: () => ({
         activeItem: undefined,
@@ -198,7 +213,7 @@ export default {
     computed: {
         _imgWrapperStyles() {
             return {
-                'height': 'calc(100% - ' + (this.thumbnailHeight + 2) + 'px)',
+                'height': this.showThumbnail ? 'calc(100% - ' + (this.thumbnailHeight + 2) + 'px)' : '100%',
                 'z-index': this.zIndex + 1
             }
         },
@@ -324,128 +339,125 @@ export default {
 @import "../../../scss/shared";
 
 .#{$prefix}-lightbox-wrap {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
+  left: 0;
+  top: 0;
+  position: fixed;
+
+  .#{$prefix}-lightbox-item-wrap {
+    @include flexbox((display: flex, align-items: center, justify-content: center));
+    position: relative;
+
+    .#{$prefix}-lightbox-item {
+      @include flexbox((display: flex, flex-direction: column));
+      background: rgba(0, 0, 0, .3);
+      max-width: 95%;
+      max-height: 99%;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .#{$prefix}-lightbox-item-img {
+      height: calc(100% - 51px);
+      display: block;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .#{$prefix}-lightbox-item-title {
+      color: $gray-400;
+      display: block;
+      line-height: 1;
+      padding: 12px;
+      font-size: 1.7rem;
+      position: relative;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
+  }
+
+  > .#{$prefix}-lightbox-toolbar {
+    @include flexbox((display: flex, flex-wrap: wrap, justify-content: space-between));
+    background: rgba(0, 0, 0, .6);
     left: 0;
     top: 0;
+    width: 100%;
     position: fixed;
+    padding: $padding-sm .3rem $padding-sm ($padding-base + ($padding-base / 4));
 
-    .#{$prefix}-lightbox-item-wrap {
-        @include flexbox((display: flex, flex-wrap: wrap, justify-content: center));
-        position: fixed;
-        left: 0;
-        top: 0;
-        right: 0;
-
-        .#{$prefix}-lightbox-item {
-            display: block;
-            height: 100%;
-            max-width: 95%;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .#{$prefix}-lightbox-item-img {
-            @include flexbox((display: flex, align-items: center));
-            height: 100%;
-        }
-
-        .#{$prefix}-lightbox-item-title {
-            background: rgba(0, 0, 0, .3);
-            color: $gray-400;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            line-height: 1;
-            padding: 12px;
-            font-size: 1.7rem;
-            position: absolute;
-        }
-
-        img {
-            max-width: 100%;
-            max-height: 100%;
-        }
+    .#{$prefix}-counter,
+    .#{$prefix}-toolbar-items {
+      display: inline-flex;
+      min-width: 100px;
     }
 
-    > .#{$prefix}-lightbox-toolbar {
-        @include flexbox((display: flex, flex-wrap: wrap, justify-content: space-between));
-        background: rgba(0, 0, 0, .6);
-        left: 0;
-        top: 0;
-        width: 100%;
-        position: fixed;
-        padding: $padding-sm .3rem $padding-sm ($padding-base + ($padding-base / 4));
+    .#{$prefix}-counter {
+      color: $gray-400;
+      padding-top: $padding-sm;
+    }
+  }
 
-        .#{$prefix}-counter,
-        .#{$prefix}-toolbar-items {
-            display: inline-flex;
-            min-width: 100px;
-        }
-
-        .#{$prefix}-counter {
-            color: $gray-400;
-            padding-top: $padding-sm;
-        }
+  > .#{$prefix}-lightbox-controls {
+    > .#{$prefix}-control-prev, > .#{$prefix}-control-next {
+      @include flexbox((display: flex, align-items: center));
+      height: 100%;
+      position: fixed;
     }
 
-    > .#{$prefix}-lightbox-controls {
-        > .#{$prefix}-control-prev, > .#{$prefix}-control-next {
-            @include flexbox((display: flex, align-items: center));
-            height: 100%;
-            position: fixed;
-        }
-
-        > .#{$prefix}-control-prev {
-            left: 0;
-            padding-left: $padding-sm;
-        }
-
-        > .#{$prefix}-control-next {
-            right: 0;
-            padding-right: $padding-sm;
-        }
-
+    > .#{$prefix}-control-prev {
+      left: 0;
+      padding-left: $padding-sm;
     }
 
-    > .#{$prefix}-lightbox-thumbnail-wrap {
-        background: rgba(0, 0, 0, .5);
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        position: fixed;
-        padding: 0 $padding-sm;
-        overflow-x: auto;
-
-        > .#{$prefix}-lightbox-thumbnail-row {
-            @include flexbox((display:flex, flex-direction:row));
-
-            > .#{$prefix}-lightbox-thumbnails {
-                @include flexbox((display: flex, flex-flow:row nowrap));
-
-                .#{$prefix}-thumbnail-item {
-                    @extend %cursor-pointer;
-                    border: 1px solid rgba(0, 0, 0, .6);
-                    display: inline-block;
-                    opacity: .5;
-
-                    &:hover {
-                        opacity: 1;
-                    }
-
-                    &.#{$prefix}-active {
-                        border-color: $red-base;
-                        border-left-width: 2px;
-                        border-right-width: 2px;
-                        opacity: 1;
-                    }
-                }
-            }
-
-            @include media-breakpoint-up(xl) {
-                @include flexbox((justify-content: center));
-            }
-        }
+    > .#{$prefix}-control-next {
+      right: 0;
+      padding-right: $padding-sm;
     }
+
+  }
+
+  > .#{$prefix}-lightbox-thumbnail-wrap {
+    background: rgba(0, 0, 0, .5);
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+    padding: 0 $padding-sm;
+    overflow-x: auto;
+
+    > .#{$prefix}-lightbox-thumbnail-row {
+      @include flexbox((display:flex, flex-direction:row));
+
+      > .#{$prefix}-lightbox-thumbnails {
+        @include flexbox((display: flex, flex-flow:row nowrap));
+
+        .#{$prefix}-thumbnail-item {
+          @extend %cursor-pointer;
+          border: 1px solid rgba(0, 0, 0, .6);
+          display: inline-block;
+          opacity: .5;
+
+          &:hover {
+            opacity: 1;
+          }
+
+          &.#{$prefix}-active {
+            border-color: $red-base;
+            border-left-width: 2px;
+            border-right-width: 2px;
+            opacity: 1;
+          }
+        }
+      }
+
+      @include media-breakpoint-up(xl) {
+        @include flexbox((justify-content: center));
+      }
+    }
+  }
 }
 </style>

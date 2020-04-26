@@ -44,6 +44,16 @@ export default {
   .btn-inner {
     width: 100%;
     padding: $btn-margin-basic 1.5rem;
+
+    > .svg-inline--fa {
+      &.#{$prefix}-icon-left {
+        margin-right: $btn-margin-basic;
+      }
+
+      &.#{$prefix}-icon-right {
+        margin-left: $btn-margin-basic;
+      }
+    }
   }
 
   .#{$prefix}-ripple {

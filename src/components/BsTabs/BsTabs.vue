@@ -102,10 +102,10 @@ export default {
                 'nav-' + this.variant,
                 this.align === 'justified' && this.orientation === 'horizontal' ?
                     (this.flex ? 'flex-column flex-sm-row' : 'nav-justified')
-                    : this.orientation === 'vertical' ? 'flex-column' : '',
+                    : (this.orientation === 'vertical' ? 'flex-column' : ''),
                 this.align === 'center' && this.orientation === 'horizontal' ? 'justify-content-center' : '',
                 this.align === 'right' && this.orientation === 'horizontal' ? 'justify-content-end' : '',
-                ['material', 'modern'].indexOf(this.variant) > -1 ? this.color : ''
+                ['material', 'modern'].indexOf(this.variant) > -1 ? 'bg-' + this.color : ''
             ]
         },
         /**

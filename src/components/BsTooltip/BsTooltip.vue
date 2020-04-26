@@ -32,10 +32,6 @@ export default {
             type: [String, Number],
             default: undefined,
             validator: v => !isNaN(parseInt(v, 10))
-        },
-        openOnHover: {
-            type: Boolean,
-            default: true
         }
     },
     data: () => ({
@@ -43,17 +39,21 @@ export default {
         timer: undefined,
         trigger: null
     }),
-    beforeCreate() {
+    created() {
         if (this.$isServer) {
             return;
         }
 
-        this.tooltipVM = new Vue({
-            data: {node: ''},
-            render() {
-                return this.node;
+        const TooltipCmp = Vue.extend(BsTooltipContent);
+        this.tooltipVM = new TooltipCmp({
+            propsData: {
+                placement: this.placement,
+                maxWidth: this.maxWidth,
+                width: this.width,
+                open: this.active,
+                trigger: this.trigger
             }
-        }).$mount();
+        });
     },
     beforeDestroy() {
         if (this.tooltipVM) {
@@ -63,38 +63,37 @@ export default {
     },
     mounted() {
         this.trigger = this.$el;
+        if (this.tooltipVM) {
+            this.tooltipVM.trigger = this.trigger;
+            this.tooltipVM.$mount();
+        }
     },
-    render(h) {
-        const content = (this.$slots.content && this.$slots.content.length > 0 ? this.$slots.content : this.content) || '';
-
-        this.tooltipVM.node = h(BsTooltipContent, {
-            class: this.tooltipClass,
-            props: {
-                placement: this.placement,
-                maxWidth: this.maxWidth,
-                width: this.width,
-                open: this.active,
-                trigger: this.trigger
-                // },
-                // nativeOn: {
-                //     mouseenter: () => this._showTooltip(),
-                //     mouseleave: () => this._hideTooltip()
-            }
-        }, content);
-
+    render() {
         const vnode = firstComponentChild(this.$slots.default);
 
         if (!vnode) {
             return vnode;
         }
+        if (this.tooltipVM) {
+            this.tooltipVM.$slots.default = [this.content];
 
-        vnode.data          = vnode.data || {};
-        const on            = vnode.data.on = vnode.data.on || {};
-        const nativeOn      = vnode.data.nativeOn = vnode.data.nativeOn || {};
-        nativeOn.mouseenter = on.mouseenter = this._addEventListener(on.mouseenter, this._showTooltip);
-        nativeOn.mouseleave = on.mouseleave = this._addEventListener(on.mouseleave, this._hideTooltip);
+            vnode.data = vnode.data || {};
+            const on = vnode.data.on = vnode.data.on || {};
+            const nativeOn = vnode.data.nativeOn = vnode.data.nativeOn || {};
+
+            nativeOn.mouseenter = on.mouseenter = this._addEventListener(on.mouseenter, this._showTooltip);
+            nativeOn.mouseleave = on.mouseleave = this._addEventListener(on.mouseleave, this._hideTooltip);
+        }
 
         return vnode;
+    },
+    watch: {
+        active(value) {
+            if (this.tooltipVM) {
+                this.$set(this.tooltipVM, 'open', value);
+                // console.log('open:', this.tooltipVM.open);
+            }
+        }
     },
     methods: {
         _addEventListener(old, fn) {
@@ -115,6 +114,7 @@ export default {
         _hideTooltip() {
             if (this.timer) {
                 clearTimeout(this.timer);
+                this.timer = null;
             }
             this.active = false;
         },
@@ -131,7 +131,7 @@ export default {
                 }
                 this.timer = setTimeout(() => {
                     this.active = true;
-                }, 400);
+                }, 200);
             }
         }
     }

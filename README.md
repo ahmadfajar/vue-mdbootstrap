@@ -40,7 +40,7 @@ yarn add vue-mdbootstrap
 ## How to Use
 On your primary javascript, use code below to load or initialize the components.
 
-```shell script
+```javascript
 import Vue from "vue";
 import VueMdb, { AxiosPlugin } from "vue-mdbootstrap";
 

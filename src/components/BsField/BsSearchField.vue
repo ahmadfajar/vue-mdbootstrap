@@ -275,88 +275,88 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-field-searchbox {
+  position: relative;
+  width: 100%;
+
+  .#{$prefix}-searchbox-inner {
+    @include transition(border-color $transition-basic, box-shadow $transition-basic);
+    @include flexbox((display: flex, align-items: center));
+    background-color: rgba($black, .015);
+    border: 1px solid rgba($black, .05);
+    border-radius: .36rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    padding: 4px 6px;
     position: relative;
     width: 100%;
 
-    .#{$prefix}-searchbox-inner {
-        @include transition(border-color $transition-basic, box-shadow $transition-basic);
-        @include flexbox((display: flex, align-items: center));
-        background-color: rgba($black, .015);
-        border: 1px solid rgba($black, .05);
-        border-radius: .36rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        padding: 4px 6px;
-        position: relative;
-        width: 100%;
+    &.#{$prefix}-focused {
+      @include box-shadow(0 0 0.1rem 0.2rem rgba(0, 123, 255, .25));
+      background-color: $white;
+      border-color: $info-color-dark;
+    }
 
-        &.#{$prefix}-focused {
-            @include box-shadow(0 0 0.1rem 0.2rem rgba(0, 123, 255, .25));
-            background-color: $white;
-            border-color: $info-color-dark;
-        }
+    label {
+      display: block;
+      margin: 0 0 0 4px;
+      padding: 0;
+      width: 100%;
+    }
 
-        label {
-            display: block;
-            margin: 0 0 0 4px;
-            padding: 0;
-            width: 100%;
-        }
+    input {
+      border: 0 transparent;
+      background: transparent;
+      color: $gray-600;
+      width: 100%;
+      outline: none;
+      padding-left: 2px;
+
+      &:focus {
+        outline: none;
+      }
+
+      &::placeholder {
+        color: $gray-500;
+        font-weight: $font-weight-light;
+      }
+
+      &::-moz-placeholder {
+        color: $gray-500;
+        font-weight: $font-weight-light;
+      }
+
+      &::-webkit-input-placeholder {
+        color: $gray-500;
+        font-weight: $font-weight-light;
+      }
+
+      &:-ms-input-placeholder {
+        color: $gray-500;
+        font-weight: $font-weight-light;
+      }
+    }
+
+    &.#{$prefix}-searchbox-dark {
+      background-color: rgba($black, .25);
+      border: 1px solid rgba($black, .085);
+
+      input {
+        color: $gray-500;
+      }
+
+      &.#{$prefix}-focused {
+        @include box-shadow(0 0 0.1rem 0.23rem rgba(100, 100, 100, 0.32));
+        background-color: rgba($black, 0.35);
+        border-color: rgba($black, 0.25);
 
         input {
-            border: 0 transparent;
-            background: transparent;
-            color: $gray-600;
-            width: 100%;
-            outline: none;
-            padding-left: 2px;
-
-            &:focus {
-                outline: none;
-            }
-
-            &::placeholder {
-                color: $gray-500;
-                font-weight: $font-weight-light;
-            }
-
-            &::-moz-placeholder {
-                color: $gray-500;
-                font-weight: $font-weight-light;
-            }
-
-            &::-webkit-input-placeholder {
-                color: $gray-500;
-                font-weight: $font-weight-light;
-            }
-
-            &:-ms-input-placeholder {
-                color: $gray-500;
-                font-weight: $font-weight-light;
-            }
+          &:focus {
+            color: $gray-200;
+          }
         }
-
-        &.#{$prefix}-searchbox-dark {
-            background-color: rgba($black, .25);
-            border: 1px solid rgba($black, .085);
-
-            input {
-                color: $gray-500;
-            }
-
-            &.#{$prefix}-focused {
-                @include box-shadow(0 0 0.1rem 0.23rem rgba(100, 100, 100, 0.32));
-                background-color: rgba($black, 0.35);
-                border-color: rgba($black, 0.25);
-
-                input {
-                    &:focus {
-                        color: $gray-200;
-                    }
-                }
-            }
-        }
+      }
     }
+  }
 }
 </style>

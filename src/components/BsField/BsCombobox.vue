@@ -818,319 +818,319 @@ $dropdown-checkbox-size: 16px;
 $dropdown-checkbox-ripple-size: 40px;
 
 .#{$prefix}-combobox {
-    position: relative;
-    width: 100%;
+  position: relative;
+  width: 100%;
 
-    &.#{$prefix}-required {
-        .#{$prefix}-floating-label,
-        .#{$prefix}-combobox-label,
-        .col-form-label {
-            font-weight: bold;
+  &.#{$prefix}-required {
+    .#{$prefix}-floating-label,
+    .#{$prefix}-combobox-label,
+    .col-form-label {
+      font-weight: bold;
+    }
+  }
+
+  > .#{$prefix}-combobox-inner {
+    .#{$prefix}-combobox-label {
+      @include user-select(none);
+
+      label {
+        margin-bottom: 0;
+      }
+    }
+
+    .#{$prefix}-help-text {
+      display: block;
+      min-height: 10px;
+      margin: 4px 15px 0 15px;
+
+      > * {
+        font-size: 83% !important;
+      }
+    }
+
+    .#{$prefix}-combobox-control {
+      @include display-flex();
+      @include flex(1 1 auto);
+      margin-left: 15px;
+      margin-right: 15px;
+      padding-left: 0;
+      padding-right: 0;
+      position: relative;
+      width: auto;
+
+      > .#{$prefix}-floating-label {
+        @include transition(0.3s cubic-bezier(0.25, 0.8, 0.5, 1));
+        @include transform-origin(top left, false);
+        display: inline-block;
+        left: 0;
+        right: auto;
+        line-height: 1.2;
+        max-width: 90%;
+        min-height: .5rem;
+        overflow: hidden;
+        margin-left: .4rem;
+        padding-top: .3rem;
+        position: absolute;
+        pointer-events: none;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        z-index: 2;
+
+        &.#{$prefix}-active {
+          @include transform(translateY(-20px) scale(.9));
+          color: $gray-600;
+          margin-left: 0;
+          padding-top: 0;
         }
+      }
+
+      > .#{$prefix}-combobox-control-inner {
+        @include transition(border .3s ease-in-out);
+        @include box-shadow(none);
+        outline: 0 none;
+        min-height: 2rem;
+        height: 100%;
+        border-bottom: 1px solid $gray-500;
+
+        &:after {
+          @include transition(all .3s ease-in-out);
+          background-color: $primary-color;
+          position: absolute;
+          content: '';
+          height: 2px;
+          left: 50%;
+          bottom: 0;
+          width: 0;
+        }
+
+        > .#{$prefix}-prepend-icon,
+        > .#{$prefix}-append-icon {
+          color: $gray-700;
+          display: inline;
+          font-size: 1rem;
+        }
+
+        > .#{$prefix}-prepend-icon {
+          margin-right: $padding-sm;
+        }
+
+        > .#{$prefix}-append-icon {
+          margin-left: .4rem;
+          margin-right: .3rem;
+        }
+
+        &:focus, &:active {
+          border-bottom-color: $primary-color;
+
+          &:after {
+            left: 0;
+            width: 100%;
+          }
+        }
+      }
+
+      .#{$prefix}-combobox-control-hidden {
+        background-color: transparent;
+        border: 0 none;
+        display: none;
+        outline: 0 none;
+        // height: 1px !important;
+        // width: 0 !important;
+        position: absolute;
+      }
+
+      .#{$prefix}-combobox-input {
+        @include flex(1 auto);
+        max-width: 100%;
+        min-height: 2rem;
+        // padding-bottom: 6px;
+
+        > input {
+          background-color: transparent;
+          border: 0 none;
+          outline: none;
+          flex: 1 1 auto;
+          margin: 0 0 0 4px;
+          min-height: 2rem;
+          pointer-events: none;
+        }
+
+        .#{$prefix}-input-tags {
+          margin: 4px 4px 4px 0;
+        }
+
+        .#{$prefix}-value {
+          pointer-events: none;
+        }
+      }
+
+      .#{$prefix}-action-icon {
+        cursor: pointer;
+        margin-left: $padding-sm;
+        // margin-right: $padding-sm;
+
+        .#{$prefix}-icon {
+          &.icon-clear {
+            color: $gray-500;
+            font-size: 1rem;
+
+            &:focus, &:active, &:hover, &:active:focus {
+              color: $red-base;
+            }
+          }
+        }
+
+        .caret {
+          @include transition(all 0.3s ease 0s);
+        }
+      }
+    }
+  }
+
+  &.has-error {
+    .#{$prefix}-floating-label, .col-form-label {
+      color: $danger-color-dark !important;
     }
 
     > .#{$prefix}-combobox-inner {
-        .#{$prefix}-combobox-label {
-            @include user-select(none);
-
-            label {
-                margin-bottom: 0;
-            }
+      .#{$prefix}-combobox-control {
+        > .#{$prefix}-combobox-control-inner {
+          &:after {
+            background-color: $danger-color;
+          }
         }
+      }
+    }
+  }
 
-        .#{$prefix}-help-text {
-            display: block;
-            min-height: 10px;
-            margin: 4px 15px 0 15px;
-
-            > * {
-                font-size: 83% !important;
-            }
-        }
-
-        .#{$prefix}-combobox-control {
-            @include display-flex();
-            @include flex(1 1 auto);
-            margin-left: 15px;
-            margin-right: 15px;
-            padding-left: 0;
-            padding-right: 0;
-            position: relative;
-            width: auto;
-
-            > .#{$prefix}-floating-label {
-                @include transition(0.3s cubic-bezier(0.25, 0.8, 0.5, 1));
-                @include transform-origin(top left, false);
-                display: inline-block;
-                left: 0;
-                right: auto;
-                line-height: 1.2;
-                max-width: 90%;
-                min-height: .5rem;
-                overflow: hidden;
-                margin-left: .4rem;
-                padding-top: .3rem;
-                position: absolute;
-                pointer-events: none;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                z-index: 2;
-
-                &.#{$prefix}-active {
-                    @include transform(translateY(-20px) scale(.9));
-                    color: $gray-600;
-                    margin-left: 0;
-                    padding-top: 0;
-                }
-            }
-
-            > .#{$prefix}-combobox-control-inner {
-                @include transition(border .3s ease-in-out);
-                @include box-shadow(none);
-                outline: 0 none;
-                min-height: 2rem;
-                height: 100%;
-                border-bottom: 1px solid $gray-500;
-
-                &:after {
-                    @include transition(all .3s ease-in-out);
-                    background-color: $primary-color;
-                    position: absolute;
-                    content: '';
-                    height: 2px;
-                    left: 50%;
-                    bottom: 0;
-                    width: 0;
-                }
-
-                > .#{$prefix}-prepend-icon,
-                > .#{$prefix}-append-icon {
-                    color: $gray-700;
-                    display: inline;
-                    font-size: 1rem;
-                }
-
-                > .#{$prefix}-prepend-icon {
-                    margin-right: $padding-sm;
-                }
-
-                > .#{$prefix}-append-icon {
-                    margin-left: .4rem;
-                    margin-right: .3rem;
-                }
-
-                &:focus, &:active {
-                    border-bottom-color: $primary-color;
-
-                    &:after {
-                        left: 0;
-                        width: 100%;
-                    }
-                }
-            }
-
-            .#{$prefix}-combobox-control-hidden {
-                background-color: transparent;
-                border: 0 none;
-                display: none;
-                outline: 0 none;
-                // height: 1px !important;
-                // width: 0 !important;
-                position: absolute;
-            }
-
-            .#{$prefix}-combobox-input {
-                @include flex(1 auto);
-                max-width: 100%;
-                min-height: 2rem;
-                // padding-bottom: 6px;
-
-                > input {
-                    background-color: transparent;
-                    border: 0 none;
-                    outline: none;
-                    flex: 1 1 auto;
-                    margin: 0 0 0 4px;
-                    min-height: 2rem;
-                    pointer-events: none;
-                }
-
-                .#{$prefix}-input-tags {
-                    margin: 4px 4px 4px 0;
-                }
-
-                .#{$prefix}-value {
-                    pointer-events: none;
-                }
-            }
-
-            .#{$prefix}-action-icon {
-                cursor: pointer;
-                margin-left: $padding-sm;
-                // margin-right: $padding-sm;
-
-                .#{$prefix}-icon {
-                    &.icon-clear {
-                        color: $gray-500;
-                        font-size: 1rem;
-
-                        &:focus, &:active, &:hover, &:active:focus {
-                            color: $red-base;
-                        }
-                    }
-                }
-
-                .caret {
-                    @include transition(all 0.3s ease 0s);
-                }
-            }
-        }
+  &.has-success {
+    .#{$prefix}-floating-label, .col-form-label {
+      color: $success-color-dark !important;
     }
 
-    &.has-error {
-        .#{$prefix}-floating-label, .col-form-label {
-            color: $danger-color-dark !important;
-        }
-
-        > .#{$prefix}-combobox-inner {
-            .#{$prefix}-combobox-control {
-                > .#{$prefix}-combobox-control-inner {
-                    &:after {
-                        background-color: $danger-color;
-                    }
-                }
-            }
-        }
+    > .#{$prefix}-combobox-inner {
+      .#{$prefix}-combobox-control-inner {
+        border-bottom-color: $success-color-dark !important;
+      }
     }
+  }
 
-    &.has-success {
-        .#{$prefix}-floating-label, .col-form-label {
-            color: $success-color-dark !important;
+  &.#{$prefix}-combobox-flat {
+    > .#{$prefix}-combobox-inner {
+      .#{$prefix}-combobox-control {
+        > .#{$prefix}-combobox-control-inner {
+          border-bottom-color: transparent;
         }
-
-        > .#{$prefix}-combobox-inner {
-            .#{$prefix}-combobox-control-inner {
-                border-bottom-color: $success-color-dark !important;
-            }
-        }
+      }
     }
+  }
 
-    &.#{$prefix}-combobox-flat {
-        > .#{$prefix}-combobox-inner {
-            .#{$prefix}-combobox-control {
-                > .#{$prefix}-combobox-control-inner {
-                    border-bottom-color: transparent;
-                }
-            }
+  &.#{$prefix}-floating-active {
+    margin-top: 1.2rem;
+
+    .#{$prefix}-combobox-control {
+      > .#{$prefix}-floating-label {
+        > .#{$prefix}-empty-class, label {
+          margin-bottom: 0;
         }
-    }
 
-    &.#{$prefix}-floating-active {
-        margin-top: 1.2rem;
-
-        .#{$prefix}-combobox-control {
-            > .#{$prefix}-floating-label {
-                > .#{$prefix}-empty-class, label {
-                    margin-bottom: 0;
-                }
-
-                &.#{$prefix}-prepend-icon:not(.#{$prefix}-active) {
-                    margin-left: $padding-base + .5;
-                }
-            }
+        &.#{$prefix}-prepend-icon:not(.#{$prefix}-active) {
+          margin-left: $padding-base + .5;
         }
+      }
     }
+  }
 
-    &.#{$prefix}-active,
-    &.#{$prefix}-focus,
-    &.#{$prefix}-open {
-        .#{$prefix}-combobox-control-inner {
-            border-bottom-color: $primary-color !important;
+  &.#{$prefix}-active,
+  &.#{$prefix}-focus,
+  &.#{$prefix}-open {
+    .#{$prefix}-combobox-control-inner {
+      border-bottom-color: $primary-color !important;
 
-            &:after {
-                left: 0 !important;
-                width: 100% !important;
-            }
-        }
+      &:after {
+        left: 0 !important;
+        width: 100% !important;
+      }
     }
+  }
 
-    &.#{$prefix}-open {
-        .#{$prefix}-combobox-control-inner {
-            .caret {
-                @include transform(rotateZ(-180deg));
-            }
-        }
+  &.#{$prefix}-open {
+    .#{$prefix}-combobox-control-inner {
+      .caret {
+        @include transform(rotateZ(-180deg));
+      }
     }
+  }
 }
 
 .#{$prefix}-combobox-popover {
-    border: 1px solid rgba($black, 0.1) !important;
-    border-right-width: 0 !important;
-    overflow: hidden !important;
+  border: 1px solid rgba($black, 0.1) !important;
+  border-right-width: 0 !important;
+  overflow: hidden !important;
 
-    > .#{$prefix}-combobox-list-container {
-        background-color: $white;
-        overflow: hidden;
+  > .#{$prefix}-combobox-list-container {
+    background-color: $white;
+    overflow: hidden;
 
-        > .#{$prefix}-combobox-search-wrapper {
-            display: block;
-            padding: 6px;
-            margin: 0;
+    > .#{$prefix}-combobox-search-wrapper {
+      display: block;
+      padding: 6px;
+      margin: 0;
 
-            > .#{$prefix}-combobox-search {
-                border: 1px solid $gray-500;
-                color: $gray-800;
-                font-size: 14px;
-                outline: none;
-                padding: 6px 8px;
-                width: 100%;
-            }
-        }
-
-        > .#{$prefix}-list {
-            overflow-x: hidden;
-            overflow-y: auto;
-        }
-
-        .#{$prefix}-list-item {
-            padding: 5px 8px 5px 16px !important;
-
-            .#{$prefix}-list-tile-action + .#{$prefix}-list-tile-content {
-                margin-left: 4px !important;
-            }
-
-            &.#{$prefix}-active {
-                .#{$prefix}-list-tile-title, .#{$prefix}-list-tile-subtitle {
-                    color: $primary-color-dark;
-                }
-            }
-        }
-
-        .#{$prefix}-checkbox {
-            margin: 10px 10px 10px 0;
-
-            > .#{$prefix}-checkbox-inner {
-                height: $dropdown-checkbox-size;
-                min-width: $dropdown-checkbox-size;
-                width: $dropdown-checkbox-size;
-
-                &:before {
-                    height: $dropdown-checkbox-ripple-size;
-                    width: $dropdown-checkbox-ripple-size;
-                }
-
-                &:after {
-                    height: 10px;
-                    width: 6px;
-                    left: 3px;
-                }
-
-                .#{$prefix}-ripple {
-                    height: $dropdown-checkbox-ripple-size !important;
-                    width: $dropdown-checkbox-ripple-size !important;
-                }
-            }
-        }
+      > .#{$prefix}-combobox-search {
+        border: 1px solid $gray-500;
+        color: $gray-800;
+        font-size: 14px;
+        outline: none;
+        padding: 6px 8px;
+        width: 100%;
+      }
     }
+
+    > .#{$prefix}-list {
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    .#{$prefix}-list-item {
+      padding: 5px 8px 5px 16px !important;
+
+      .#{$prefix}-list-tile-action + .#{$prefix}-list-tile-content {
+        margin-left: 4px !important;
+      }
+
+      &.#{$prefix}-active {
+        .#{$prefix}-list-tile-title, .#{$prefix}-list-tile-subtitle {
+          color: $primary-color-dark;
+        }
+      }
+    }
+
+    .#{$prefix}-checkbox {
+      margin: 10px 10px 10px 0;
+
+      > .#{$prefix}-checkbox-inner {
+        height: $dropdown-checkbox-size;
+        min-width: $dropdown-checkbox-size;
+        width: $dropdown-checkbox-size;
+
+        &:before {
+          height: $dropdown-checkbox-ripple-size;
+          width: $dropdown-checkbox-ripple-size;
+        }
+
+        &:after {
+          height: 10px;
+          width: 6px;
+          left: 3px;
+        }
+
+        .#{$prefix}-ripple {
+          height: $dropdown-checkbox-ripple-size !important;
+          width: $dropdown-checkbox-ripple-size !important;
+        }
+      }
+    }
+  }
 }
 </style>

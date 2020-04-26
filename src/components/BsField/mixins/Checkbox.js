@@ -2,7 +2,7 @@ export default {
     props: {
         color: {
             type: String,
-            default: 'primary'
+            default: 'default'
         },
         value: [String, Boolean, Number, Object],
         model: [String, Boolean, Number, Object, Array, Event],

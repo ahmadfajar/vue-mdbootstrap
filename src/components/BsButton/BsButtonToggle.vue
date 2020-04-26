@@ -104,7 +104,11 @@ export default {
                 flip: item.iconFlip,
                 pulse: item.iconPulse,
                 rotation: item.iconRotation,
-                spin: item.iconSpin
+                spin: item.iconSpin,
+                class: {
+                    'md-icon-left': this.iconLeft,
+                    'md-icon-right': this.iconRight,
+                }
             }
         },
         /**

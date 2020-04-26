@@ -107,15 +107,9 @@ export default {
         searchText: ''
     }),
     computed: {
-        /**
-         * @return {Array}
-         */
         catchSelectedItems() {
             return this.selectedItems.map(item => this.getItemValue(item));
         },
-        /**
-         * @return {Array}
-         */
         catchFilteredItems() {
             if (this.active && Util.isEmpty(this.searchText)) {
                 this.filteredItems = this.dataItems;
@@ -161,7 +155,7 @@ export default {
         /**
          * Generate simple UUID (non standard).
          *
-         * @return {string}
+         * @return {string} The uuid-v4 string
          */
         getUuid() {
             return Util.uuid();
@@ -170,7 +164,7 @@ export default {
          * Check the given item is selected or not.
          *
          * @param {Object} item The item to be checked
-         * @return {boolean}
+         * @return {boolean} `True` if the checked item is in active state otherwise `False`
          */
         isActiveItem(item) {
             return this.selectedItems.includes(item);
@@ -180,7 +174,7 @@ export default {
          *
          * @param {Object} item  The object to evaluate
          * @param {string} field The property name
-         * @return {string|boolean|number}
+         * @return {string|boolean|number} The value of a property
          */
         objectPropertyValue(item, field) {
             return Util.getObjectValueByPath(item, field);
@@ -190,6 +184,7 @@ export default {
          *
          * @private
          * @param {Object} item The ListItem value
+         * @return {void}
          */
         onItemClick(item) {
             if (this.isActiveItem(item)) {
@@ -203,6 +198,7 @@ export default {
          *
          * @private
          * @param {string} search The text to search
+         * @return {void}
          */
         filterData(search) {
             if (this.active && search.length > 1) {

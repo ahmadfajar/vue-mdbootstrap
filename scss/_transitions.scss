@@ -6,7 +6,7 @@
 
 /* VueJs transition animation */
 @include enter-leave-active(".fade") {
-  @include transition(opacity $md-transition-easeOut);
+  @include transition(opacity .5s);
 }
 
 @include enter-leaveto(".fade") {
@@ -45,10 +45,11 @@
 
 @include enter-leaveactive(".popover") {
   @extend %opacity-0;
-  transform: scale(0.6);
+  transform: scale(0.5);
 }
 
-.picker-transition, .picker-transition-reverse {
+.slide-bottom-top, .slide-top-bottom,
+.picker-transition, .picker-transition-reverse{
   &-enter-active, &-leave-active {
     @include transition($md-transition-enter);
   }
@@ -66,6 +67,7 @@
   }
 }
 
+.slide-bottom-top,
 .picker-transition {
   &-enter {
     @include transform(translate(0, 100%));
@@ -76,6 +78,7 @@
   }
 }
 
+.slide-top-bottom,
 .picker-transition-reverse {
   &-enter {
     @include transform(translate(0, -100%));

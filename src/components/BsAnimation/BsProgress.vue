@@ -66,7 +66,7 @@ export default {
             type: String,
             default: 'indeterminate',
             validator(value) {
-                return ['determinate', 'indeterminate'].indexOf(value) !== -1;
+                return ['determinate', 'indeterminate', 'buffer'].indexOf(value) !== -1;
             }
         },
         type: {
@@ -80,6 +80,9 @@ export default {
     computed: {
         hasAmountFill() {
             return this.isBuffer || this.isDeterminate
+        },
+        isBuffer() {
+            return this.mode.toLowerCase() === 'buffer';
         },
         isDeterminate() {
             return this.mode.toLowerCase() === 'determinate';
@@ -100,7 +103,7 @@ export default {
         progressBarClassNames() {
             return [
                 'progress-bar-' + this.color,
-                this.isDeterminate ? 'md-determinate' : 'md-indeterminate'
+                'md-' + this.mode.toLowerCase()
             ]
         },
         progressBarBufferStyle() {

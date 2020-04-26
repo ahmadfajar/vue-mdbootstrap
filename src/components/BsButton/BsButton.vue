@@ -143,11 +143,13 @@ export default {
         },
         iconRotation: {
             type: [Number, String],
-            default: undefined
+            default: undefined,
+            validator: (value) => [90, 180, 270].indexOf(parseInt(value, 10)) > -1
         },
         iconSize: {
             type: String,
-            default: undefined
+            default: undefined,
+            validator: (value) => ['lg', 'xs', 'sm', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x'].indexOf(value) > -1
         },
         iconFixed: {
             type: Boolean,
@@ -212,7 +214,11 @@ export default {
                 flip: this.iconFlip,
                 rotation: this.iconRotation,
                 spin: this.iconSpin,
-                pulse: this.iconPulse
+                pulse: this.iconPulse,
+                class: {
+                    'md-icon-left': this.iconLeft && this.mode !== 'icon' && this.mode !== 'floating',
+                    'md-icon-right': this.iconRight && this.mode !== 'icon' && this.mode !== 'floating',
+                }
             }
         },
         /**

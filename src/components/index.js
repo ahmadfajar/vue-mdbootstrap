@@ -4,7 +4,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import BsNotification from './BsNotification';
 import BsContainer from './BsContainer';
 import BsSidebar from './BsSidebar';
-import BsNavbar from './BsNavbar';
+import BsAppbar from './BsAppbar';
 import BsAnimation from './BsAnimation';
 import BsBasic from './BsBasic';
 import BsIcon from './BsIcon';
@@ -27,7 +27,7 @@ export {
     BsNotification,
     BsContainer,
     BsSidebar,
-    BsNavbar,
+    BsAppbar,
     BsAnimation,
     BsBasic,
     BsIcon,

@@ -28,7 +28,7 @@
   }
 }
 
-// Colors classes
+// Create background and text colors classes
 @each $color_name, $color in $mdb-colors-1 {
   @each $color_type, $color_value in $color {
     @if $color_type == "base" {
@@ -38,16 +38,16 @@
       .text-#{$color_name} {
         color: $color-value !important;
       }
-      .rgba-#{$color_name}-slight,
-      .rgba-#{$color_name}-slight:after {
+      .bg-rgba-#{$color_name}-slight,
+      .bg-rgba-#{$color_name}-slight:after {
         background-color: rgba($color_value, .1);
       }
-      .rgba-#{$color_name}-light,
-      .rgba-#{$color_name}-light:after {
+      .bg-rgba-#{$color_name}-light,
+      .bg-rgba-#{$color_name}-light:after {
         background-color: rgba($color_value, .3);
       }
-      .rgba-#{$color_name}-strong,
-      .rgba-#{$color_name}-strong:after {
+      .bg-rgba-#{$color_name}-strong,
+      .bg-rgba-#{$color_name}-strong:after {
         background-color: rgba($color_value, .7);
       }
     } @else {

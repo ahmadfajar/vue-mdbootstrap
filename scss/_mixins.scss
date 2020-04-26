@@ -50,8 +50,7 @@
 
 @mixin make-progress-bar($name, $color) {
   .progress-bar-#{$name} {
-    &.#{$prefix}-indeterminate,
-    &.#{$prefix}-query {
+    &.#{$prefix}-indeterminate {
       @include progress-bar-indeterminate($color);
     }
 

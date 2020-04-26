@@ -1,7 +1,7 @@
 import BsNotification from "./BsNotification";
 import registerPrototype from "../../utils/CmpHelper";
 
-BsNotification.install = function (Vue) {
+export default Vue => {
     let myComponent = Vue.extend({
         template: '<bs-notification ref="notification"></bs-notification>',
         components: {BsNotification}
@@ -16,5 +16,3 @@ BsNotification.install = function (Vue) {
 
     Vue.component(BsNotification.name, BsNotification);
 };
-
-export default BsNotification;
