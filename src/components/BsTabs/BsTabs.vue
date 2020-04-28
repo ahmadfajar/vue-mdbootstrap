@@ -1,32 +1,60 @@
 <template>
-  <div :is="_tagName"
-       :class="_classNames"
-       v-bind="_attributes"
-       v-on="$listeners">
-    <slot></slot>
+  <div v-if="orientation === 'vertical'" class="md-tabs row no-gutters">
+    <div :class="{'col-auto': true, 'order-last': tabPosition === 'right'}">
+      <div :is="_tagName"
+           :class="_classNames"
+           v-bind="_attributes"
+           v-on="$listeners">
+        <bs-tab-item v-for="(item, index) in tabPanes"
+                     :key="'tab-item-' + index"
+                     v-bind="_tabbedAttrs(item)" />
+      </div>
+    </div>
+    <div class="col tab-content">
+      <slot></slot>
+    </div>
+  </div>
+  <div class="md-tabs" v-else>
+    <div v-if="tabPosition === 'top'"
+         :is="_tagName"
+         :class="_classNames"
+         v-bind="_attributes"
+         v-on="$listeners">
+      <bs-tab-item v-for="(item, index) in tabPanes"
+                   :key="'tab-item-' + index"
+                   v-bind="_tabbedAttrs(item)" />
+    </div>
+    <div class="tab-content" :class="contentClass">
+      <slot></slot>
+    </div>
+    <div v-if="tabPosition === 'bottom'"
+         :is="_tagName"
+         :class="_classNames"
+         v-bind="_attributes"
+         v-on="$listeners">
+      <bs-tab-item v-for="(item, index) in tabPanes"
+                   :key="'tab-item-' + index"
+                   v-bind="_tabbedAttrs(item)" />
+    </div>
   </div>
 </template>
 
 <script>
+import BsTabItem from "./BsTabItem";
+
 export default {
     name: 'BsTabs',
+    components: {BsTabItem},
     model: {
         prop: 'value',
         event: 'input'
     },
     props: {
-        align: {
+        alignment: {
             type: String,
             default: 'left',
             validator(value) {
                 return ['left', 'right', 'center', 'justified'].indexOf(value) !== -1;
-            }
-        },
-        orientation: {
-            type: String,
-            default: 'horizontal',
-            validator(value) {
-                return ['horizontal', 'vertical'].indexOf(value) !== -1;
             }
         },
         variant: {
@@ -41,6 +69,32 @@ export default {
             default: 'left',
             validator(value) {
                 return ['left', 'right', 'top', 'bottom'].indexOf(value) !== -1;
+            }
+        },
+        tabPosition: {
+            type: String,
+            default: 'top',
+            validator(value) {
+                return ['left', 'right', 'top', 'bottom'].indexOf(value) !== -1;
+            }
+        },
+        tabClass: {
+            type: [String, Array],
+            default: undefined
+        },
+        innerClass: {
+            type: [String, Array],
+            default: undefined
+        },
+        contentClass: {
+            type: [String, Array],
+            default: undefined
+        },
+        contentTransition: {
+            type: String,
+            default: 'fade',
+            validator(value) {
+                return ['fade', 'slide-fade', 'slide-fade-reverse', 'popover'].indexOf(value) !== -1;
             }
         },
         iconSize: {
@@ -65,23 +119,39 @@ export default {
             tabs: {
                 iconPosition: this.iconPosition,
                 iconSize: this.iconSize,
-                align: this.align,
+                alignment: this.alignment,
                 variant: this.variant,
+                transition: this.contentTransition,
                 register: this.register,
                 unregister: this.unregister,
+                registerTab: this._registerTab,
+                unregisterTab: this._unregisterTab,
                 setActiveTab: this.setActiveTab
             }
         }
     },
     data: () => ({
         activeTab: null,
-        tabs: []
+        tabPanes: [],
+        tabItems: []
     }),
     computed: {
         /**
+         * Gets tabs orientation.
+         *
+         * @return {String} Tabs orientation: horizontal or vertical
+         */
+        orientation() {
+            if (['left', 'right'].includes(this.tabPosition)) {
+                return 'vertical';
+            } else {
+                return 'horizontal'
+            }
+        },
+        /**
          * Get computed binding's attributes.
          *
-         * @return {Object} HTML attributes
+         * @return {any} HTML attributes
          * @private
          */
         _attributes() {
@@ -97,16 +167,26 @@ export default {
          * @private
          */
         _classNames() {
-            return [
+            let cls = [
                 'nav',
                 'nav-' + this.variant,
-                this.align === 'justified' && this.orientation === 'horizontal' ?
+                this.alignment === 'justified' && this.orientation === 'horizontal' ?
                     (this.flex ? 'flex-column flex-sm-row' : 'nav-justified')
-                    : (this.orientation === 'vertical' ? 'flex-column' : ''),
-                this.align === 'center' && this.orientation === 'horizontal' ? 'justify-content-center' : '',
-                this.align === 'right' && this.orientation === 'horizontal' ? 'justify-content-end' : '',
+                    : (this.orientation === 'vertical' ? 'flex-column h-100' : ''),
+                this.alignment === 'center' ? 'justify-content-center' : '',
+                this.alignment === 'right' ? 'justify-content-end' : '',
+                this.tabPosition === 'top' ? 'md-tab-top' : (this.tabPosition === 'bottom' ? 'md-tab-bottom' : ''),
+                this.tabPosition === 'left' ? 'md-tab-left' : (this.tabPosition === 'right' ? 'md-tab-right' : ''),
                 ['material', 'modern'].indexOf(this.variant) > -1 ? 'bg-' + this.color : ''
-            ]
+            ];
+
+            if (this.innerClass && typeof this.innerClass === 'string') {
+                cls.push(this.innerClass);
+            } else if (this.innerClass && this.innerClass.length > 0) {
+                cls = cls.concat(this.innerClass);
+            }
+
+            return cls;
         },
         /**
          * Get computed html TAG.
@@ -116,65 +196,74 @@ export default {
          */
         _tagName() {
             return this.variant === 'pills' ? 'ul' : 'div'
-        }
-    },
-    watch: {
-        value(key) {
-            this._activateTab(key);
-        }
+        },
     },
     beforeDestroy() {
         this.activeTab = null;
     },
-    mounted() {
-        this.setActiveTab(this.value);
-    },
     methods: {
-        register(tab) {
-            return this.tabs.push(tab);
+        register(tabPane) {
+            return this.tabPanes.push(tabPane);
         },
         unregister(idx) {
-            this.tabs.splice(idx, 1);
+            this.tabPanes.splice(idx, 1);
         },
         setActiveTab(key) {
-            let tab, obj;
+            let tab, tabPane, obj;
 
             if (!isNaN(parseInt(key, 10))) {
-                tab = this.tabs[key];
+                tab = this.tabItems[key];
+                tabPane = this.tabPanes[key];
             }
             if (!tab) {
-                tab = this.tabs.find(el => el.id === key);
+                tab = this.tabItems.find(el => el.id === 'tab-' + key);
+                tabPane = this.tabPanes.find(el => el.id === key);
             }
             if (tab) {
-                this.tabs.forEach(el => el.active = false);
+                this.tabItems.forEach(el => el.active = false);
+                this.tabPanes.forEach(el => el.active = false);
+
                 tab.active = true;
-                this.$emit('tabchange', tab, this.activeTab);
+                tabPane.active = true;
+                this.$emit('tab:change', tabPane, this.activeTab);
 
                 if (tab.id && tab.target) {
-                    obj = {target: tab.target, tabref: tab.id};
+                    obj = {id: tab.id, index: tab.tabIndex, tabRef: tab.target};
                     this.$emit('input', obj);
                 } else {
                     this.$emit('input', tab.tabIndex);
                 }
 
-                this.activeTab = tab;
+                this.activeTab = tabPane;
             }
         },
-        _activateTab(key) {
-            let tab;
-
-            if (!isNaN(parseInt(key, 10))) {
-                tab = this.tabs[key];
+        _registerTab(tab) {
+            return this.tabItems.push(tab);
+        },
+        _unregisterTab(idx) {
+            this.tabItems.splice(idx, 1);
+        },
+        /**
+         * Compute Tabbed binding's attribute for a given object.
+         *
+         * @param {Object} tabPane Raw attributes from a tab-pane object
+         * @return {any} Tabbed binding's attribute
+         * @private
+         */
+        _tabbedAttrs(tabPane) {
+            return {
+                id: tabPane.id ? 'tab-' + tabPane.id : null,
+                icon: tabPane.icon,
+                label: tabPane.label,
+                target: tabPane.ariaLabel,
+                activeClass: tabPane.activeClass,
+                exact: tabPane.exact,
+                path: tabPane.path,
+                url: tabPane.url,
+                value: this.value,
+                class: this.tabClass
             }
-            if (!tab) {
-                tab = this.tabs.find(el => el.id === key);
-            }
-            if (tab) {
-                this.tabs.forEach(el => el.active = false);
-                tab.active = true;
-                this.activeTab = tab;
-            }
-        }
+        },
     }
 }
 </script>
@@ -187,109 +276,251 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.nav {
+.#{$prefix}-tabs {
+  .nav {
     .nav-link {
-        cursor: pointer;
-        font-size: .95rem;
-        outline: 0 none;
-        padding: 0;
+      cursor: pointer;
+      font-size: .95rem;
+      outline: 0 none;
+      padding: 0;
 
-        > .#{$prefix}-ripple {
-            @include user-select(none);
-            padding: $tab-padding-base;
+      > .#{$prefix}-ripple {
+        @include user-select(none);
+        padding: $tab-padding-base;
+      }
+    }
+
+    &.nav-tabs {
+      &.#{$prefix}-tab-top {
+        padding-bottom: 0;
+      }
+
+      &.#{$prefix}-tab-bottom {
+        padding-top: 0;
+
+        > .nav-item {
+          @include border-top-radius(0);
+          @include border-bottom-radius(($border-radius));
+          margin-bottom: 0;
+          margin-top: -1px;
+
+          &.active, &.#{$prefix}-active {
+            border-color: $white-base $gray-300 $gray-300;
+          }
         }
+      }
     }
 
     &.nav-pills {
-        .nav-link {
-            &.active {
-                @include box-shadow($z-depth-1);
+      padding: $tab-padding-base;
 
-                &:hover {
-                    color: $white;
-                }
-            }
+      .nav-link {
+        &.active {
+          @include box-shadow($z-depth-1);
+
+          &:hover {
+            color: $white;
+          }
         }
+      }
     }
 
     &.nav-material {
+      overflow-x: hidden;
+      position: relative;
+
+      > .nav-link {
+        @include border-radius(0);
+        list-style: none;
+        background-color: transparent !important;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 0;
+        color: rgba($white, .6);
+        text-transform: uppercase;
+
+        > .#{$prefix}-ripple {
+          padding: $tab-material-padding;
+        }
+
+        &:hover {
+          color: rgba($white, .8);
+        }
+
+        &.active {
+          color: var(--white);
+        }
+      }
+
+      &.#{$prefix}-tab-top {
         @include box-shadow(0px 1px 5px rgba(#000, .2), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12));
-        overflow-x: hidden;
-        position: relative;
 
         > .nav-link {
-            @include border-radius(0);
-            list-style: none;
-            background-color: transparent !important;
-            border-color: transparent;
-            border-style: solid;
-            border-width: 0;
-            border-bottom-width: 3px !important;
-            color: rgba($white, .6);
-            text-transform: uppercase;
+          border-bottom-width: 3px !important;
 
-            > .#{$prefix}-ripple {
-                padding: $tab-material-padding;
-            }
-
-            &:hover {
-                color: rgba($white, .6);
-            }
-
-            &.active {
-                color: var(--white);
-                border-bottom-color: var(--white);
-            }
-
-            @include media-breakpoint-up(lg) {
-                &:first-child {
-                    margin-left: $padding-base;
-                }
-                &:last-child {
-                    margin-right: $padding-base;
-                }
-            }
+          &.active {
+            border-bottom-color: var(--white);
+          }
         }
+      }
+
+      &.#{$prefix}-tab-bottom {
+        @include box-shadow(0px -1px 5px rgba(#000, .2), 0px -1px 2px rgba(#000, .14), 0px -3px 1px -2px rgba(#000, .12));
+
+        > .nav-link {
+          border-top-width: 3px !important;
+
+          &.active {
+            border-top-color: var(--white);
+          }
+        }
+      }
+
+      &.#{$prefix}-tab-left {
+        @include box-shadow(1px 0px 5px rgba(#000, .2), 2px 0px 2px rgba(#000, .14), 3px 0px 1px -2px rgba(#000, .12));
+
+        > .nav-link {
+          border-right-width: 3px !important;
+
+          &.active {
+            border-right-color: var(--white);
+          }
+        }
+      }
+
+      &.#{$prefix}-tab-right {
+        @include box-shadow(-1px 0px 5px rgba(#000, .2), -2px 0px 2px rgba(#000, .14), -3px 0px 1px -2px rgba(#000, .12));
+
+        > .nav-link {
+          border-left-width: 3px !important;
+
+          &.active {
+            border-left-color: var(--white);
+          }
+        }
+      }
+
+      &.#{$prefix}-tab-top,
+      &.#{$prefix}-tab-bottom {
+        > .nav-link {
+          @include media-breakpoint-up(lg) {
+            &:first-child {
+              margin-left: $padding-base;
+            }
+            &:last-child {
+              margin-right: $padding-base;
+            }
+          }
+        }
+      }
     }
 
     &.nav-modern {
-        @include border-radius(.25rem);
+      @include border-radius($border-radius);
+      border-width: 0 !important;
+      padding: $tab-modern-padding;
+
+      &.#{$prefix}-tab-top {
         @include box-shadow(0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15));
+      }
+
+      &.#{$prefix}-tab-bottom {
+        @include box-shadow(0 -2px 10px 0 rgba(0, 0, 0, .18), 0 -4px 15px 0 rgba(0, 0, 0, .15));
+      }
+
+      .nav-link {
+        @include border-radius($border-radius);
         border-width: 0 !important;
-        padding: $tab-modern-padding;
+        color: rgba($white, .6);
 
-        .nav-link {
-            @include border-radius(.25rem);
-            border-width: 0 !important;
-            color: rgba($white, .6);
-
-            &:hover {
-                color: rgba($white, .6);
-            }
-
-            &.active {
-                background-color: rgba($black, .2);
-                color: var(--white);
-            }
+        &:hover {
+          color: rgba($white, .8);
         }
+
+        &.active {
+          background-color: rgba($black, .2);
+          color: var(--white);
+        }
+      }
     }
+  }
+
+  .tab-content {
+    overflow: hidden;
+    position: relative;
+    padding: $padding-base + .25;
+  }
 }
 
 .card {
-    &:not(.rounded-0) {
-        > .nav-material {
-            @include border-top-radius(.25rem);
+  &.rounded-0 {
+    .#{$prefix}-tabs {
+      .nav-modern {
+        @include border-radius(0);
+      }
+    }
+  }
+
+  &:not(.rounded-0) {
+    > .#{$prefix}-tabs {
+      .nav-material {
+        &.#{$prefix}-tab-bottom:last-child {
+          @include border-bottom-radius($border-radius);
+        }
+      }
+
+      .nav-modern {
+        &.#{$prefix}-tab-top:first-child {
+          @include border-bottom-radius(0);
         }
 
-        > .nav-modern {
-            @include border-bottom-radius(0);
+        &.#{$prefix}-tab-bottom:last-child {
+          @include border-top-radius(0);
         }
-    }
 
-    &.rounded-0 {
-        > .nav-modern {
-            @include border-radius(0);
+        &.#{$prefix}-tab-left:first-child {
+          @include border-right-radius(0);
         }
+
+        &.#{$prefix}-tab-right:last-child {
+          @include border-left-radius(0);
+        }
+      }
+
+      &:not(:first-child) {
+        .nav-modern {
+          @include border-top-radius(0);
+        }
+      }
+
+      &:first-child {
+        .nav-material {
+          &.#{$prefix}-tab-top:first-child {
+            @include border-top-radius($border-radius);
+          }
+
+          &.#{$prefix}-tab-left:first-child {
+            @include border-top-left-radius($border-radius);
+          }
+
+          &.#{$prefix}-tab-right:last-child {
+            @include border-top-right-radius($border-radius);
+          }
+        }
+      }
+
+      &:last-child {
+        .nav-material {
+          &.#{$prefix}-tab-left:first-child {
+            @include border-bottom-left-radius($border-radius);
+          }
+
+          &.#{$prefix}-tab-right:last-child {
+            @include border-bottom-right-radius($border-radius);
+          }
+        }
+      }
     }
+  }
 }
 </style>

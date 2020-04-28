@@ -1,11 +1,7 @@
-import BsTabs from "./BsTabs";
 import BsTab from "./BsTab";
-import BsTabContent from "./BsTabContent";
-import BsTabPane from "./BsTabPane";
+import BsTabs from "./BsTabs";
 
 export default Vue => {
-    Vue.component(BsTabs.name, BsTabs);
     Vue.component(BsTab.name, BsTab);
-    Vue.component(BsTabContent.name, BsTabContent);
-    Vue.component(BsTabPane.name, BsTabPane);
+    Vue.component(BsTabs.name, BsTabs);
 };

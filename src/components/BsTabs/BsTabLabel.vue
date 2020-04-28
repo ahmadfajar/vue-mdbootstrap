@@ -1,5 +1,5 @@
 <template>
-  <bs-ripple>
+  <bs-ripple :class="_rippleClass">
     <div v-if="icon && (iconLeft || iconRight)"
          class="text-nowrap">
       <font-awesome-icon v-if="iconLeft"
@@ -17,7 +17,7 @@
                          :icon="icon"
                          :size="iconSize"
                          fixed-width />
-      <div :class="labelClass">
+      <div :class="_labelClass">
         {{ label }}
       </div>
       <font-awesome-icon v-if="iconBottom"
@@ -54,17 +54,31 @@ export default {
             default: undefined
         },
     },
-    data: (vm) => ({
-        iconLeft: vm.iconPosition === 'left',
-        iconRight: vm.iconPosition === 'right',
-        iconTop: vm.iconPosition === 'top',
-        iconBottom: vm.iconPosition === 'bottom'
-    }),
     computed: {
-        labelClass() {
+        iconLeft() {
+            return this.iconPosition === 'left';
+        },
+        iconRight() {
+            return this.iconPosition === 'right';
+        },
+        iconTop() {
+            return this.iconPosition === 'top';
+        },
+        iconBottom() {
+            return this.iconPosition === 'bottom';
+        },
+        _labelClass() {
             return {
                 'mt-1': this.iconTop && this.icon,
                 'mb-1': this.iconBottom && this.icon
+            }
+        },
+        _rippleClass() {
+            return {
+                'd-flex': true,
+                'align-items-center': true,
+                'justify-content-center': true,
+                'flex-column': this.iconTop || this.iconBottom
             }
         }
     }

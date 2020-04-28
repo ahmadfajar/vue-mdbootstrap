@@ -370,7 +370,7 @@ export default {
       display: block;
       line-height: 1;
       padding: 12px;
-      font-size: 1.7rem;
+      font-size: 1.25rem;
       position: relative;
     }
 
