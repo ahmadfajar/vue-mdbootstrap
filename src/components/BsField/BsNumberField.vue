@@ -1,5 +1,6 @@
 <script>
 import BsTextField from "./BsTextField";
+import Helper from "../../utils/Helper";
 
 export default {
     name: "BsNumberField",
@@ -22,14 +23,14 @@ export default {
             invalidNumber: false,
             numberValue: value,
             formatter: formatter,
-            localValue: formatter.format(value)
+            localValue: !Helper.isEmpty(value) ? formatter.format(value) : null
         }
     },
     computed: {
         /**
          * Get input field computed binding's attributes.
          *
-         * @return {Object} The attributes to bind
+         * @return {any} The attributes to bind
          */
         attributes() {
             return {
@@ -53,6 +54,7 @@ export default {
             } else {
                 this.localValue = null;
             }
+            this._updateLegend(newValue);
         }
     },
     methods: {
@@ -63,7 +65,7 @@ export default {
          * @return {string} The formatted value
          */
         formatValue(value) {
-            return this.formatter.format(value);
+            return !Helper.isEmpty(value) ? this.formatter.format(value) : null;
         },
         /**
          * Handler when input field lost focus.
@@ -76,6 +78,7 @@ export default {
             this.isFocused  = false;
             this.localValue = this.formatValue(this.numberValue);
             this.$emit('blur', e);
+            this._updateLegend();
             this._nextTickChange(this.numberValue);
         },
         /**
@@ -99,6 +102,7 @@ export default {
             this.isFocused  = true;
             this.localValue = this.numberValue;
             this.$emit('focus', e);
+            this._updateLegend();
         },
         /**
          * Handler when input field receive keypress.
@@ -129,7 +133,7 @@ export default {
          * @private
          */
         _parseValue(value) {
-            if (value === null || value === undefined || value === '') {
+            if (Helper.isEmpty(value)) {
                 this.localValue = null;
                 return null;
             }

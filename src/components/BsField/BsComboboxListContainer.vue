@@ -2,7 +2,8 @@
   <div class="md-combobox-list-container">
     <label v-if="showSearchBox"
            ref="search"
-           class="md-combobox-search-wrapper">
+           class="md-combobox-search-wrapper"
+           :class="{['bg-' + listboxColor]: listboxColor}">
       <input ref="input"
              type="text"
              autocomplete="off"
@@ -10,53 +11,99 @@
              role="textbox"
              tabindex="-1"
              :value="searchText"
-             @input="filterData($event.target.value)" />
+             @input="filterData($event.target.value, false)" />
     </label>
-    <bs-list :style="containerStyles">
-      <template v-if="dataItems.length === 0">
+    <bs-list-view :style="containerStyles" :color="listboxColor">
+      <bs-list-tile tag="div" v-if="dataItems.length === 0">
         <slot name="emptyData">
-          <div class="px-3 py-1">
+          <bs-list-tile-title>
             {{ emptyDataMessage }}
-          </div>
+          </bs-list-tile-title>
         </slot>
-      </template>
-      <div v-else-if="catchFilteredItems.length === 0"
-           class="px-3 py-1">
-        {{ notFoundMessage }}
-      </div>
+      </bs-list-tile>
+      <bs-list-tile tag="div" v-else-if="filteredItems.length === 0">
+        <bs-list-tile-title>
+          {{ notFoundMessage }}
+        </bs-list-tile-title>
+      </bs-list-tile>
       <template v-else>
-        <template v-for="(item, index) in catchFilteredItems">
+        <template v-for="(item, index) in filteredItems">
           <bs-list-tile :key="getUuid + index"
-                        :value="catchSelectedItems.indexOf(getItemValue(item)) !== -1"
-                        :disabled="disabled === true ? disabled : objectPropertyValue(item, disableField)"
+                        :active="isActiveItem(item)"
+                        :disabled="disabled === true ? disabled : itemPropertyValue(item, disableField)"
                         @mousedown="e => e.preventDefault()"
                         @click="onItemClick(item)">
-            <slot v-bind="{ item, index }"></slot>
+            <template v-if="multiple">
+              <bs-list-tile-action v-if="checkOptionPosition !== 'right'">
+                <bs-checkbox v-model="cacheBoolValues[index]"
+                             :disabled="isDisabled(item)"
+                             :color="checkOptionColor"
+                             @change="onItemClick(item)" />
+              </bs-list-tile-action>
+              <bs-list-tile-leading v-if="showImage && hasProperty(item, imageField)"
+                                    :img-src="itemPropertyValue(item, imageField)"
+                                    :circle="circleImage"
+                                    :rounded="roundedImage"
+                                    :size="imageSize" />
+              <bs-list-tile-content>
+                <slot name="optionItem" v-bind="{ item, index }">
+                  <bs-list-tile-title>{{ getItemText(item) }}</bs-list-tile-title>
+                </slot>
+              </bs-list-tile-content>
+              <bs-list-tile-action v-if="checkOptionPosition === 'right'">
+                <bs-checkbox v-model="cacheBoolValues[index]"
+                             :disabled="isDisabled(item)"
+                             :color="checkOptionColor"
+                             @change="onItemClick(item)" />
+              </bs-list-tile-action>
+            </template>
+            <template v-else>
+              <bs-list-tile-leading v-if="showImage && hasProperty(item, imageField)"
+                                    :circle="circleImage"
+                                    :rounded="roundedImage"
+                                    :size="imageSize"
+                                    :img-src="itemPropertyValue(item, imageField)" />
+              <bs-list-tile-content>
+                <slot name="optionItem" v-bind="{ item, index }">
+                  <bs-list-tile-title>{{ getItemText(item) }}</bs-list-tile-title>
+                </slot>
+              </bs-list-tile-content>
+            </template>
           </bs-list-tile>
-          <bs-divider v-if="itemSeparator && (index + 1 < catchFilteredItems.length)"
+          <bs-divider v-if="itemSeparator && (index + 1 < filteredItems.length)"
                       :key="'div-' + index" />
         </template>
       </template>
-    </bs-list>
+    </bs-list-view>
   </div>
 </template>
 
 <script>
-import BsList from "../BsList/BsListView";
+import BsCheckbox from "./BsCheckbox";
+import BsListView from "../BsList/BsListView";
 import BsListTile from "../BsList/BsListTile";
+import BsListTileContent from "../BsList/BsListTileContent";
+import BsListTileAction from "../BsList/BsListTileAction";
+import BsListTileLeading from "../BsList/BsListTileLeading";
+import BsListTileTitle from "../BsList/BsListTileTitle";
 import BsDivider from "../BsBasic/BsDivider";
-import Util from "../../utils/Helper";
+import Helper from "../../utils/Helper";
 
 export default {
     name: "BsComboboxListContainer",
     components: {
-        BsDivider, BsList, BsListTile
+        BsDivider, BsListView, BsListTile, BsListTileContent, BsListTileAction,
+        BsListTileLeading, BsListTileTitle, BsCheckbox
     },
-    inject: ['getItemValue', 'getItemText'],
+    inject: ['getItemValue', 'getItemText', 'hasProperty', 'itemPropertyValue'],
     props: {
         active: Boolean,
         disabled: Boolean,
         itemSeparator: Boolean,
+        multiple: Boolean,
+        showImage: Boolean,
+        roundedImage: Boolean,
+        circleImage: Boolean,
         cascadeField: {
             type: String,
             default: undefined
@@ -75,6 +122,25 @@ export default {
         },
         valueField: {
             type: String,
+            default: undefined
+        },
+        listboxColor: {
+            type: String,
+            default: undefined
+        },
+        checkOptionColor: {
+            type: String,
+            default: undefined
+        },
+        checkOptionPosition: {
+            type: String,
+            default: undefined,
+            validator(value) {
+                return ['left', 'right'].indexOf(value) > -1;
+            }
+        },
+        imageSize: {
+            type: Number,
             default: undefined
         },
         emptyDataMessage: {
@@ -103,19 +169,17 @@ export default {
         },
     },
     data: (vm) => ({
-        filteredItems: vm.dataItems || [],
+        cacheListItems: vm.dataItems || [],
+        cacheBoolValues: [],
         searchText: ''
     }),
     computed: {
-        catchSelectedItems() {
-            return this.selectedItems.map(item => this.getItemValue(item));
-        },
-        catchFilteredItems() {
-            if (this.active && Util.isEmpty(this.searchText)) {
-                this.filteredItems = this.dataItems;
+        filteredItems() {
+            if (this.active && Helper.isEmpty(this.searchText)) {
+                return this.dataItems;
             }
 
-            return this.filteredItems;
+            return this.cacheListItems;
         },
         /**
          * Get styles for ComboBox list container.
@@ -126,6 +190,7 @@ export default {
             const mHeight = this.maxHeight;
 
             if (this.active) {
+                this.filterData(this.searchText, true);
                 if (this.showSearchBox) {
                     this.$nextTick(() => this.$refs.input.focus());
                 }
@@ -134,10 +199,13 @@ export default {
                     maxHeight: (this.showSearchBox ? mHeight - this.$refs.search.offsetHeight : mHeight) + 'px'
                 }
             } else {
-                this.searchText = '';
+                this._resetSearchText();
             }
 
             return null;
+        },
+        selectedValues() {
+            return this.selectedItems.map(item => this.getItemValue(item));
         },
         /**
          * Check if input search box will be displayed or not.
@@ -149,7 +217,8 @@ export default {
         }
     },
     beforeDestroy() {
-        this.filteredItems = [];
+        this.cacheListItems  = [];
+        this.cacheBoolValues = [];
     },
     methods: {
         /**
@@ -158,7 +227,7 @@ export default {
          * @return {string} The uuid-v4 string
          */
         getUuid() {
-            return Util.uuid();
+            return Helper.uuid();
         },
         /**
          * Check the given item is selected or not.
@@ -167,17 +236,16 @@ export default {
          * @return {boolean} `True` if the checked item is in active state otherwise `False`
          */
         isActiveItem(item) {
-            return this.selectedItems.includes(item);
+            return this.selectedValues.includes(this.getItemValue(item));
         },
         /**
-         * Get property value from the given object.
+         * Check if selection for the given item must be disabled or not.
          *
-         * @param {Object} item  The object to evaluate
-         * @param {string} field The property name
-         * @return {string|boolean|number} The value of a property
+         * @param {Object} item The object to evaluate
+         * @return {boolean} Item checkbox state
          */
-        objectPropertyValue(item, field) {
-            return Util.getObjectValueByPath(item, field);
+        isDisabled(item) {
+            return (this.disabled === true ? true : this.itemPropertyValue(item, this.disableField));
         },
         /**
          * Handler when ListItem is clicked.
@@ -187,29 +255,48 @@ export default {
          * @return {void}
          */
         onItemClick(item) {
+            const idx = this.filteredItems.indexOf(this.getItemValue(item));
+
             if (this.isActiveItem(item)) {
-                this.$emit('deselect', item);
+                this.cacheBoolValues[idx] = false;
+                this.$emit('itemDeselected', item);
             } else {
-                this.$emit('select', item);
+                this.cacheBoolValues[idx] = true;
+                this.$emit('itemSelected', item);
             }
         },
         /**
          * Start searching or filter data according to the given value from the searchBox.
          *
          * @private
-         * @param {string} search The text to search
+         * @param {string} search  The text to search
+         * @param {boolean} silent Trigger event or not
          * @return {void}
          */
-        filterData(search) {
-            if (this.active && search.length > 1) {
-                this.searchText    = search;
-                const s            = search.toLowerCase();
-                this.filteredItems = this.dataItems.filter(item => this.getItemText(item).toLocaleLowerCase().indexOf(s) > -1);
+        filterData(search, silent = true) {
+            if (this.active && search.length > 0) {
+                const lowerText = search.toLowerCase();
+                this.searchText = search;
+
+                this.cacheListItems  = this.dataItems.filter(
+                    item => this.getItemText(item).toLocaleLowerCase().includes(lowerText)
+                );
+                this.cacheBoolValues = this.cacheListItems.map(
+                    item => this.selectedItems.includes(item)
+                );
             } else {
-                this.searchText    = '';
-                this.filteredItems = this.dataItems;
+                this.cacheListItems  = this.dataItems;
+                this.cacheBoolValues = this.dataItems.map(
+                    item => this.selectedItems.includes(item)
+                );
+                this._resetSearchText();
             }
-            this.$emit('filter', this.filteredItems);
+            if (!silent) {
+                this.$emit('dataFiltered', this.cacheListItems);
+            }
+        },
+        _resetSearchText() {
+            this.searchText = '';
         }
     }
 }

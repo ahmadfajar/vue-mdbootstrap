@@ -1,13 +1,13 @@
 import Vue from "vue";
 import ProxyAdapter from "./ProxyAdapter";
 import Helper from "../utils/Helper";
-import {autobind} from "../utils/Autobind";
+import { autobind } from "../utils/Autobind";
 
 /**
  * Data Model class.
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 19/04/2020 17:04
+ * @since  09/07/2018 modified: 11/05/2020 1:25
  */
 export default class BsModel {
     /**
@@ -26,7 +26,7 @@ export default class BsModel {
      */
 
     /**
-     * @property {boolean} error
+     * @property {boolean} hasError
      * Status apakah ada error atau tidak (readonly).
      */
 
@@ -41,12 +41,13 @@ export default class BsModel {
     /**
      * Class constructor.
      *
-     * @param {Object} schema        Data model schema
-     * @param {String} idProperty    Data model ID field name
-     * @param {String} dataProperty  REST Response data property
+     * @param {Object} schema                   Data model schema
+     * @param {AxiosInstance|Object} [adapter]  Axios adapter instance
+     * @param {String} [idProperty]             Data model ID field name
+     * @param {String} [dataProperty]           REST Response data property
      */
-    constructor(schema = {}, idProperty = 'id', dataProperty = 'data') {
-        this._proxy = new ProxyAdapter();
+    constructor(schema, adapter, idProperty = 'id', dataProperty = 'data') {
+        this._proxy  = new ProxyAdapter(adapter);
         this._schema = Object.freeze(schema);
 
         Object.defineProperty(this, '_idProperty', {
@@ -94,7 +95,7 @@ export default class BsModel {
      *    'url'          : '/api/token/{name}',
      *    'tokenName'    : 'token_name',
      *    'responseField': 'csrf_token',
-     *    'prefix'       : false
+     *    'suffix'       : false
      * }
      *
      * @type {Object}
@@ -164,8 +165,8 @@ export default class BsModel {
     delete() {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let config = {};
-        let url = this.restUrl['delete'] || '';
+        let config       = {};
+        let url          = this.restUrl['delete'] || '';
         const identifier = this[this.getIdProperty()];
 
         this._updateRequestConfig(identifier, url, 'delete', config);
@@ -187,8 +188,8 @@ export default class BsModel {
     fetch(id = null) {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let config = {};
-        let url = this.restUrl['fetch'] || '';
+        let config       = {};
+        let url          = this.restUrl['fetch'] || '';
         const identifier = this[this.getIdProperty()] || id;
 
         this._updateRequestConfig(identifier, url, 'fetch', config);
@@ -208,7 +209,7 @@ export default class BsModel {
         });
 
         this._schema = null;
-        this._proxy = null;
+        this._proxy  = null;
     }
 
     /**
@@ -245,9 +246,9 @@ export default class BsModel {
     request(name, method = 'get', params = null, data = null, successCallback = null, errorCallback = null) {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let config = {};
+        let config     = {};
         let parameters = {};
-        let url = this.restUrl[name] || '';
+        let url        = this.restUrl[name] || '';
 
         const identifier = !Helper.isEmptyObject(params) && params.hasOwnProperty(this.getIdProperty())
             ? params[this.getIdProperty()]
@@ -262,7 +263,7 @@ export default class BsModel {
             parameters[this._idProperty] = identifier;
         }
 
-        config['url'] = url;
+        config['url']    = url;
         config['method'] = method.toLowerCase();
 
         if (!Helper.isEmptyObject(params) && !Helper.isEmptyObject(parameters)) {
@@ -310,7 +311,7 @@ export default class BsModel {
         Vue.set(this, 'loading', false);
         Vue.set(this, 'updating', false);
         Vue.set(this, 'deleting', false);
-        Vue.set(this, 'error', false);
+        Vue.set(this, 'hasError', false);
     }
 
     /**
@@ -321,9 +322,9 @@ export default class BsModel {
     save() {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let url = this.restUrl['save'] || '';
-        let data = this.toJSON();
-        const methods = this.proxy.requestMethods();
+        let url          = this.restUrl['save'] || '';
+        let data         = this.toJSON();
+        const methods    = this.proxy.requestMethods();
         const identifier = data[this.getIdProperty()];
 
         if (url.includes('{id}') || Helper.isEmpty(identifier)) {
@@ -351,9 +352,9 @@ export default class BsModel {
     update() {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let url = this.restUrl['update'] || '';
-        let data = this.toJSON();
-        const methods = this.proxy.requestMethods();
+        let url          = this.restUrl['update'] || '';
+        let data         = this.toJSON();
+        const methods    = this.proxy.requestMethods();
         const identifier = data[this.getIdProperty()];
 
         if (url.includes('{id}') || Helper.isEmpty(identifier)) {
@@ -472,7 +473,7 @@ export default class BsModel {
      */
     _onDeleteFailure(error) {
         Vue.set(this, 'deleting', false);
-        Vue.set(this, 'error', true);
+        Vue.set(this, 'hasError', true);
         ProxyAdapter.warnResponseError(error);
     }
 
@@ -485,7 +486,7 @@ export default class BsModel {
     _onDeleteSuccess() {
         this.reset();
         Vue.set(this, 'deleting', false);
-        Vue.set(this, 'error', false);
+        Vue.set(this, 'hasError', false);
     }
 
     /**
@@ -497,7 +498,7 @@ export default class BsModel {
      */
     _onLoadingFailure(error) {
         Vue.set(this, 'loading', false);
-        Vue.set(this, 'error', true);
+        Vue.set(this, 'hasError', true);
         ProxyAdapter.warnResponseError(error);
     }
 
@@ -511,7 +512,7 @@ export default class BsModel {
     _onLoadingSuccess(response) {
         this._assignFromResponse(response);
         Vue.set(this, 'loading', false);
-        Vue.set(this, 'error', false);
+        Vue.set(this, 'hasError', false);
     }
 
     /**
@@ -536,7 +537,7 @@ export default class BsModel {
      */
     _onSaveFailure(error) {
         Vue.set(this, 'updating', false);
-        Vue.set(this, 'error', true);
+        Vue.set(this, 'hasError', true);
         ProxyAdapter.warnResponseError(error);
     }
 
@@ -550,7 +551,7 @@ export default class BsModel {
     _onSaveSuccess(response) {
         this._assignFromResponse(response);
         Vue.set(this, 'updating', false);
-        Vue.set(this, 'error', false);
+        Vue.set(this, 'hasError', false);
     }
 
     /**
@@ -570,7 +571,7 @@ export default class BsModel {
         let csrfUrl = this.csrfConfig['url'] || '';
 
         if (csrfUrl.includes('{name}') && !Helper.isEmpty(this.csrfConfig['tokenName'])) {
-            if (this.csrfConfig['prefix'] === true) {
+            if (this.csrfConfig['suffix'] === true) {
                 csrfUrl = csrfUrl.replace('{name}', this.csrfConfig['tokenName'] + suffix);
             } else {
                 csrfUrl = csrfUrl.replace('{name}', this.csrfConfig['tokenName']);
@@ -578,9 +579,9 @@ export default class BsModel {
         }
 
         if (csrfUrl !== '') {
-            const response = await Vue.prototype.$http.get(csrfUrl);
+            const response          = await Vue.prototype.$http.get(csrfUrl);
             headers['X-CSRF-TOKEN'] = response.data[this.csrfConfig['responseField']];
-            config['headers'] = headers;
+            config['headers']       = headers;
 
             return this.proxy.request(config, onRequest, onSuccess, onFailure);
         } else {
@@ -605,12 +606,12 @@ export default class BsModel {
         if (url.includes('{id}') && !Helper.isEmpty(identifier)) {
             url = url.replace('{id}', identifier);
         } else if (!Helper.isEmpty(identifier)) {
-            let params = {};
+            let params               = {};
             params[this._idProperty] = identifier;
-            config['params'] = params;
+            config['params']         = params;
         }
 
-        config['url'] = url;
+        config['url']    = url;
         config['method'] = methods[method];
     }
 

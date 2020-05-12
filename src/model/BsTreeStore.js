@@ -26,7 +26,8 @@ export default class BsTreeStore extends AbstractStore {
             idProperty: 'id',
             dataProperty: 'data',
             totalProperty: 'total',
-            childrenFieldmap: 'children',
+            childrenFieldMap: 'children',
+            adapter: undefined, // AxiosInstance
             filterLogic: 'AND',
             restUrl: {
                 'browse': '',
@@ -39,7 +40,7 @@ export default class BsTreeStore extends AbstractStore {
         };
 
         super(cfg);
-        this._proxy = new ProxyAdapter();
+        this._proxy = new ProxyAdapter(this.adapterInstance);
         Vue.set(this, 'totalCount', 0);
     }
 
@@ -77,17 +78,17 @@ export default class BsTreeStore extends AbstractStore {
      * @return {void}
      */
     appendChild(data, parentNode, clearOnAppend = false) {
-        const datas = Helper.isArray(data) ? data : Helper.isObject(data) ? [data] : [];
+        const _data = Helper.isArray(data) ? data : Helper.isObject(data) ? [data] : [];
 
-        if (!Helper.isArray(parentNode[this._config.childrenFieldmap]) || clearOnAppend) {
-            parentNode[this._config.childrenFieldmap] = [];
+        if (!Helper.isArray(parentNode[this._config.childrenFieldMap]) || clearOnAppend) {
+            parentNode[this._config.childrenFieldMap] = [];
         }
 
-        datas.forEach(v => {
+        _data.forEach(v => {
             if (this._isCandidateForModel(v)) {
-                parentNode[this._config.childrenFieldmap].push(this._createModel(v));
+                parentNode[this._config.childrenFieldMap].push(this._createModel(v));
             } else if (Helper.isObject(v)) {
-                parentNode[this._config.childrenFieldmap].push(v);
+                parentNode[this._config.childrenFieldMap].push(v);
             } else {
                 console.error('Can not assign primitive type to the parent node.')
             }
@@ -95,14 +96,14 @@ export default class BsTreeStore extends AbstractStore {
     }
 
     /**
-     * Assign datas to the Store's dataset.
+     * Assign data to the Store's dataset.
      *
-     * @param {Object[]|Object} datas The data to be assigned
+     * @param {Object[]|Object} data The data to be assigned
      * @param {boolean} silent Append item silently and doesn't trigger data conversion
      * @return {void}
      */
-    assignData(datas, silent = false) {
-        this._assignData(datas, silent);
+    assignData(data, silent = false) {
+        this._assignData(data, silent);
         Vue.set(this, 'loading', false);
         Vue.set(this, 'totalCount', this.length);
     }

@@ -1,10 +1,10 @@
 import axios from "axios";
 
 /**
- * AxiosPlugin to simplify the use of Axios with VueJs.
+ * AxiosPlugin to simplify using Axios within VueJs framework.
  *
- * @param {Vue} Vue Vue instance
- * @param {Object} options Configuration options
+ * @param {Vue} Vue         Vue instance
+ * @param {Object} options  Configuration options
  * @return {void}
  */
 export default (Vue, options) => {
@@ -36,7 +36,7 @@ export default (Vue, options) => {
     );
 
     Vue.prototype.$axios = service;
-    Vue.prototype.$http = {
+    Vue.prototype.$http  = {
         /**
          * Send HTTP GET to the remote server.
          *

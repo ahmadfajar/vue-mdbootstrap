@@ -47,7 +47,7 @@ export default {
         /**
          * Get ButtonToggle's computed binding properties.
          *
-         * @return {Object} Component binding properties
+         * @return {*} Component binding properties
          * @private
          */
         _btnToggleAttributes() {
@@ -56,22 +56,22 @@ export default {
                 readonly: this.readonly,
                 required: this.required,
                 flat: this.flat,
-                iconPosition: this.iconPosition,
-                items: this.items,
-                multiple: this.multiple,
-                name: this.name,
                 outlined: this.outlined,
                 raised: this.raised,
+                items: this.items,
+                name: this.name,
                 size: this.size,
                 color: this.color,
                 toggleColor: this.toggleColor,
+                iconPosition: this.iconPosition,
+                multiple: this.multiple,
                 value: this.value,
             }
         },
         /**
          * Get computed component's class names.
          *
-         * @return {Object} Component css classes
+         * @return {*} Component css classes
          * @private
          */
         _classNames() {

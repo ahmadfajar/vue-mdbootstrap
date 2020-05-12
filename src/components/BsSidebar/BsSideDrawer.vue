@@ -200,7 +200,7 @@ export default {
          * @private
          */
         _resize() {
-            if (this.screenMaxMd.matches) {
+            if (this.screenMaxLg.matches) {
                 this.isMobile = true;
                 this.$emit('open', false);
             } else {

@@ -66,14 +66,14 @@ export default {
             type: String,
             default: 'indeterminate',
             validator(value) {
-                return ['determinate', 'indeterminate', 'buffer'].indexOf(value) !== -1;
+                return ['determinate', 'indeterminate', 'buffer'].indexOf(value) > -1;
             }
         },
         type: {
             type: String,
             default: 'spinner',
             validator(value) {
-                return ['spinner', 'bar'].indexOf(value) !== -1;
+                return ['spinner', 'bar'].indexOf(value) > -1;
             }
         }
     },

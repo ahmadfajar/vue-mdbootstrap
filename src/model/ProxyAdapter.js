@@ -1,24 +1,33 @@
 import Vue from "vue";
 import Helper from "../utils/Helper";
+import AxiosPlugin from "../utils/AxiosPlugin";
+
+Vue.use(AxiosPlugin);
 
 /**
  * Class ProxyAdapter which is used to load data from remote server.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 03/04/2019 15:42
+ * @since  20/07/2018 modified: 11/05/2020 1:25
  */
 export default class ProxyAdapter {
     /**
      * Check if axios plugin already installed and defined not.
      *
+     * @param {AxiosInstance|Function} [adapter] Axios adapter instance
      * @return {void}
      * @throws Error If axios doesn't exists
      * @static
      */
-    static checkAxios() {
-        if (!Vue.prototype.$http || !Vue.prototype.$axios) {
-            throw Error("Application doesn't have AxiosPlugin installed. " +
-                "Please define it some where in the application before using this class.")
+    static checkAxios(adapter) {
+        if (!Vue.prototype.$http && !Vue.prototype.$axios && !adapter) {
+            if (!adapter) {
+                throw Error("Axios is not defined. " +
+                    "Please define it in the constructor before using ProxyAdapter.");
+            } else {
+                throw Error("Application doesn't have AxiosPlugin installed. " +
+                    "Please define it some where in the application before using ProxyAdapter.");
+            }
         }
     }
 
@@ -71,10 +80,24 @@ export default class ProxyAdapter {
     /**
      * Class constructor.
      *
-     * @param {Object} [httpMethods] Custom HTTP methods to override the default methods
+     * @param {AxiosInstance|Function} [adapter] Axios adapter instance
+     * @param {Object} [httpMethods]             Custom HTTP methods to override the default methods
      */
-    constructor(httpMethods = {}) {
+    constructor(adapter, httpMethods = {}) {
+        this._adapter = adapter;
         this._httpMethods = httpMethods;
+    }
+
+    get adapterInstance() {
+        if (this._adapter) {
+            return this._adapter;
+        }
+        if (Vue.prototype.$axios) {
+            return Vue.prototype.$axios;
+        } else {
+            throw Error("Application doesn't have AxiosPlugin installed. " +
+                "Please define it some where in the application before using ProxyAdapter.");
+        }
     }
 
     /**
@@ -87,7 +110,7 @@ export default class ProxyAdapter {
      * @return {Promise<*>}         Promise
      */
     request(config, onRequest, onSuccess, onFailure) {
-        ProxyAdapter.checkAxios();
+        ProxyAdapter.checkAxios(this._adapter);
 
         return new Promise((resolve, reject) => {
             let check = !Helper.isEmpty(config) && config.url && config.url !== '';
@@ -96,10 +119,8 @@ export default class ProxyAdapter {
                 return;
             }
 
-            check = Helper.isFunction(onRequest);
-
-            if (check && onRequest()) {
-                Vue.prototype.$axios(config)
+            if (Helper.isFunction(onRequest) && onRequest()) {
+                this.adapterInstance(config)
                     .then((response) => {
                         if (Helper.isFunction(onSuccess)) {
                             onSuccess(response);

@@ -118,8 +118,18 @@
           color: set-subtitle-text-color($color);
         }
 
+        .#{$prefix}-checkbox {
+          &:not(.#{$prefix}-checked) {
+            .#{$prefix}-checkbox-inner {
+              @if (lightness($color) < 80) {
+                border-color: rgba($white-base, 0.6);
+              }
+            }
+          }
+        }
+
         &.active, &.#{$prefix}-active {
-          background-color: set-hoverable-bgcolor($color, .28);
+          background-color: set-hoverable-bgcolor($color, .22);
 
           .#{$prefix}-list-tile-leading {
             color: set-subtitle-text-color($color);
@@ -197,5 +207,32 @@
   #{$parent}-leave-active,
   #{$parent}-leave-to {
     @content;
+  }
+}
+
+/* Input Placeholder mixins */
+@mixin decorate-input-placeholder {
+  &::placeholder {
+    color: $gray-500;
+    font-size: .88rem;
+    font-weight: $font-weight-light;
+  }
+
+  &::-moz-placeholder {
+    color: $gray-500;
+    font-size: .88rem;
+    font-weight: $font-weight-light;
+  }
+
+  &::-webkit-input-placeholder {
+    color: $gray-500;
+    font-size: .88rem;
+    font-weight: $font-weight-light;
+  }
+
+  &:-ms-input-placeholder {
+    color: $gray-500;
+    font-size: .88rem;
+    font-weight: $font-weight-light;
   }
 }

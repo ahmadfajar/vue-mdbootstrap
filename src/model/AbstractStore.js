@@ -4,7 +4,6 @@ import ProxyAdapter from "./ProxyAdapter";
 import Helper from "../utils/Helper";
 import orderBy from "lodash/orderBy";
 import { autobind } from "../utils/Autobind";
-// import { orderBy } from "lodash";
 
 /**
  * Filter data type.
@@ -27,7 +26,7 @@ import { autobind } from "../utils/Autobind";
  * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 24/05/2019 2:26
+ * @since  15/03/2019 modified: 11/05/2020 1:40
  */
 export default class AbstractStore {
     /**
@@ -46,7 +45,7 @@ export default class AbstractStore {
      */
 
     /**
-     * @property {boolean} error
+     * @property {boolean} hasError
      * Status apakah ada error atau tidak (readonly).
      */
 
@@ -58,7 +57,8 @@ export default class AbstractStore {
      */
     constructor(config = {}) {
         const cfg = {
-            idProperty: '',
+            idProperty: undefined,
+            dataProperty: undefined,
             filterLogic: 'AND',
             filters: [],
             sorts: [],
@@ -83,7 +83,7 @@ export default class AbstractStore {
         this._currentPage = 1;
         this._pageSize    = pgSize;
         this._filters     = Helper.isArray(cfg.filters) ? cfg.filters : [];
-        this._items = [];
+        this._items       = [];
 
         autobind(this);
         this.removeAll();
@@ -96,6 +96,15 @@ export default class AbstractStore {
      */
     get $_class() {
         return (Object.getPrototypeOf(this)).constructor.name;
+    }
+
+    /**
+     * Returns the axios plugin adapter.
+     *
+     * @type {AxiosInstance|Function} Axios plugin adapter
+     */
+    get adapterInstance() {
+        return this._config.adapter;
     }
 
     /**
@@ -198,7 +207,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Returns REST URL configuration in the form <code>{key: name}</code>, where the keys are:
+     * Overrides REST URL configuration in the form <code>{key: name}</code>, where the keys are:
      * <tt>'save', 'fetch', 'delete', 'update'</tt>.
      *
      * @example
@@ -209,7 +218,7 @@ export default class AbstractStore {
      *    'update': '/api/user/update/{id}'
      * }
      *
-     * @type {Object}
+     * @return {Object} REST url configuration
      */
     get restUrl() {
         return this._config.restUrl;
@@ -285,6 +294,30 @@ export default class AbstractStore {
     }
 
     /**
+     * Assign values from response's object.
+     *
+     * @param {Object} response Response object
+     * @return {void}
+     * @protected
+     */
+    _assignFromResponse(response) {
+        const responseData = response.data;
+
+        if (Helper.isEmpty(responseData)) {
+            console.warn('Server returns empty data.');
+        } else if (this._config) {
+            if (responseData.hasOwnProperty(this._config.dataProperty)) {
+                this.assignData(responseData[this._config.dataProperty]);
+                if (responseData[this._config.totalProperty]) {
+                    Vue.set(this, 'totalCount', responseData[this._config.totalProperty]);
+                }
+            } else {
+                console.warn('Unable to parse data coming from server.');
+            }
+        }
+    }
+
+    /**
      * Create new DataModel from the given object.
      *
      * @param {Object} item The data to convert
@@ -292,7 +325,7 @@ export default class AbstractStore {
      * @protected
      */
     _createModel(item) {
-        return new BsModel(item, this._config.idProperty);
+        return new BsModel(item, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
     }
 
     /**
@@ -303,7 +336,8 @@ export default class AbstractStore {
      * @protected
      */
     _isCandidateForModel(item) {
-        return Helper.isObject(item) && !Helper.isEmpty(this._config.idProperty) && item.hasOwnProperty(this._config.idProperty);
+        return Helper.isObject(item) && !Helper.isEmpty(this._config.idProperty) &&
+            item.hasOwnProperty(this._config.idProperty);
     }
 
     /**
@@ -444,7 +478,7 @@ export default class AbstractStore {
         Vue.set(this, 'loading', false);
         Vue.set(this, 'deleting', false);
         Vue.set(this, 'updating', false);
-        Vue.set(this, 'error', false);
+        Vue.set(this, 'hasError', false);
     }
 
     /**
@@ -468,17 +502,17 @@ export default class AbstractStore {
     /**
      * Replace old filters and apply new filters to the Store.
      *
-     * @param {IFilter[]|Object[]|IFilter|Object} filters   The filters to apply
-     * @param {boolean} incDefault                          Include default filters or not
+     * @param {IFilter[]|Object[]|IFilter|Object} filters  The filters to apply
+     * @param {boolean} includeDefault                     Include default filters or not
      * @return {AbstractStore} Itself
      */
-    setFilters(filters, incDefault = false) {
+    setFilters(filters, includeDefault = false) {
         if (Helper.isArray(filters)) {
-            this.filters = incDefault ? filters.concat(this.defaultFilters) : filters;
+            this.filters = includeDefault ? filters.concat(this.defaultFilters) : filters;
         } else if (Helper.isObject(filters)) {
-            this.filters = incDefault ? [filters].concat(this.defaultFilters) : [filters];
+            this.filters = includeDefault ? [filters].concat(this.defaultFilters) : [filters];
         } else {
-            this.filters = incDefault ? this.defaultFilters : [];
+            this.filters = includeDefault ? this.defaultFilters : [];
         }
 
         return this;
@@ -515,7 +549,7 @@ export default class AbstractStore {
      * Create sorters object's collection.
      *
      * @param {string|ISorter[]} field  The field for sorting
-     * @param {'asc'|'desc'} direction The sort direction
+     * @param {'asc'|'desc'} direction  The sort direction
      * @return {void}
      * @protected
      */
@@ -530,30 +564,6 @@ export default class AbstractStore {
             }
         } else if (field !== '') {
             this.sorters = [{'property': field, 'direction': direction.toLowerCase()}];
-        }
-    }
-
-    /**
-     * Assign values from response's object.
-     *
-     * @param {Object} response Response object
-     * @return {void}
-     * @protected
-     */
-    _assignFromResponse(response) {
-        const responseData = response.data;
-
-        if (Helper.isEmpty(responseData)) {
-            console.warn('Server returns empty data.');
-        } else if (this._config) {
-            if (responseData.hasOwnProperty(this._config.dataProperty)) {
-                this.assignData(responseData[this._config.dataProperty]);
-                if (responseData[this._config.totalProperty]) {
-                    Vue.set(this, 'totalCount', responseData[this._config.totalProperty]);
-                }
-            } else {
-                console.warn('Unable to parse data coming from server.');
-            }
         }
     }
 
@@ -578,7 +588,7 @@ export default class AbstractStore {
      */
     _onLoadingFailure(error) {
         Vue.set(this, 'loading', false);
-        Vue.set(this, 'error', true);
+        Vue.set(this, 'hasError', true);
         ProxyAdapter.warnResponseError(error);
     }
 
@@ -590,7 +600,7 @@ export default class AbstractStore {
      */
     _onLoadingSuccess() {
         Vue.set(this, 'loading', false);
-        Vue.set(this, 'error', false);
+        Vue.set(this, 'hasError', false);
     }
 
     /**

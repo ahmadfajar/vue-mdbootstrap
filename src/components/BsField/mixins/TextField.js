@@ -2,16 +2,46 @@ import Helper from "../../../utils/Helper";
 
 export default {
     props: {
-        autofocus: Boolean,
-        autocomplete: Boolean,
-        flat: Boolean,
-        floatingLabel: Boolean,
-        value: [String, Number],
-        appendIcon: [String, Array],
-        prependIcon: [String, Array],
-        controlCls: [String, Array],
-        placeholder: String,
-        clearButton: Boolean,
+        autofocus: {
+            type: Boolean,
+            default: false
+        },
+        autocomplete: {
+            type: Boolean,
+            default: false
+        },
+        flat: {
+            type: Boolean,
+            default: false
+        },
+        floatingLabel: {
+            type: Boolean,
+            default: false
+        },
+        value: {
+            type: [String, Number],
+            default: undefined
+        },
+        appendIcon: {
+            type: [String, Array],
+            default: undefined
+        },
+        prependIcon: {
+            type: [String, Array],
+            default: undefined
+        },
+        controlCls: {
+            type: [String, Array],
+            default: undefined
+        },
+        placeholder: {
+            type: String,
+            default: undefined
+        },
+        clearButton: {
+            type: Boolean,
+            default: false
+        },
         persistentHelpText: {
             type: Boolean,
             default: true
@@ -25,7 +55,7 @@ export default {
         /**
          * Get input field computed binding's attributes.
          *
-         * @return {Object} Field binding's attributes
+         * @return {any} Field binding's attributes
          */
         fieldAttrs() {
             return {
@@ -43,11 +73,12 @@ export default {
         /**
          * Get computed floating label's class names.
          *
-         * @return {Object} Floating label css classes
+         * @return {any} Floating label css classes
          */
         floatingLabelClass() {
             return {
                 'md-active': this.hasValue || this.placeholder || this.isFocused,
+                'md-focused': this.isFocused,
                 'md-after-icon': this.prependIcon
             }
         },
@@ -112,6 +143,7 @@ export default {
         _onBlur(e) {
             this.isFocused = false;
             this.$emit('blur', e);
+            this._updateLegend();
         },
         /**
          * Handler when input field get focus.
@@ -129,6 +161,7 @@ export default {
             }
             this.isFocused = true;
             this.$emit('focus', e);
+            this._updateLegend();
         },
         /**
          * Handler when input field receive keypress.
@@ -181,6 +214,20 @@ export default {
             } else if (this.$el && !this.floatingLabel) {
                 label = this.$el.querySelector('label');
                 this._setLabelFor(label);
+            }
+        },
+        _updateLegend(value) {
+            if (this.outlined && this.$refs.legend) {
+                let label = this.floatingLabel
+                    ? this.$refs.floatlabel
+                    : this.$el.querySelector('label');
+                let hasWidth = this.floatingLabel && (this.hasValue || this.isFocused || this.placeholder || value);
+
+                if (hasWidth && label) {
+                    this.$refs.legend.style.width = Helper.sizeUnit(label.clientWidth);
+                } else {
+                    this.$refs.legend.style.width = Helper.sizeUnit(0);
+                }
             }
         },
         /**

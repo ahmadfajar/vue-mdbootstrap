@@ -74,26 +74,27 @@ export default {
          * Get button item's classes.
          *
          * @param {Object} item Current item
-         * @return {string[]} Button's css classes
+         * @return {*} Button's css classes
          * @private
          */
         _btnClasses(item) {
-            return [
-                'btn',
-                this.isSelected(item) ? 'btn-' + this.toggleColor :
-                    this.outlined ? 'btn-outline-' + this.color :
-                        this.flat ? 'btn-flat-' + this.color : 'btn-' + this.color,
-                this.raised ? 'btn-raised' : '',
-                this.size ? 'btn-' + this.size : '',
-                this.disabled ? 'disabled' : '',
-                this.readonly ? 'readonly' : ''
-            ]
+            return {
+                'btn' : true,
+                ['btn-' + this.toggleColor] : this.isSelected(item) && this.toggleColor,
+                ['btn-' + this.color + ' active'] : this.isSelected(item) && !this.toggleColor,
+                ['btn-outline-' + this.color] : !this.isSelected(item) && this.outlined,
+                ['btn-flat-' + this.color] : !this.isSelected(item) && !this.outlined && this.flat,
+                ['btn-' + this.color] : !this.isSelected(item) && !this.outlined && !this.flat,
+                'btn-raised' : this.raised,
+                'disabled' : this.disabled,
+                'readonly': this.readonly,
+            }
         },
         /**
          * Get icon binding's properties.
          *
          * @param {Object} item Current item
-         * @return {Object} Icon binding properties
+         * @return {*} Icon binding properties
          * @private
          */
         _iconAttributes(item) {
@@ -124,7 +125,7 @@ export default {
          * Get input binding's properties.
          *
          * @param {Object} item Current item
-         * @return {Object} Component binding properties
+         * @return {*} Component binding properties
          * @private
          */
         _itemAttributes(item) {

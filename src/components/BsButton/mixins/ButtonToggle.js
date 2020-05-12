@@ -2,7 +2,7 @@ export default {
     props: {
         color: {
             type: String,
-            default: 'info'
+            default: 'default'
         },
         flat: {
             type: Boolean,
@@ -12,7 +12,7 @@ export default {
             type: String,
             default: 'left',
             validator(value) {
-                return ['left', 'right'].indexOf(value) !== -1;
+                return ['left', 'right'].indexOf(value) > -1;
             }
         },
         multiple: {
@@ -29,7 +29,7 @@ export default {
         },
         toggleColor: {
             type: String,
-            default: 'primary'
+            default: undefined
         },
         value: [String, Number, Boolean, Array],
         items: Array,

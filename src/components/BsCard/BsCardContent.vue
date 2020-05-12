@@ -16,7 +16,7 @@
                 type: String,
                 default: 'text',
                 validator(value) {
-                    return ['title', 'subtitle', 'text'].indexOf(value) !== -1;
+                    return ['title', 'subtitle', 'text'].indexOf(value) > -1;
                 }
             }
         },

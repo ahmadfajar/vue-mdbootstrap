@@ -3,27 +3,26 @@ import Helper from "../utils/Helper";
 import AbstractStore from "./AbstractStore";
 import averageBy from "lodash/meanBy";
 import sumBy from "lodash/sumBy";
-// import { meanBy as averageBy, sumBy } from "lodash";
 
 
 /**
  * Class to make store's collection from Array data easier.
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 15/03/2019 23:51
+ * @since  13/03/2019 modified: 02/05/2020 1:10
  */
 export default class BsArrayStore extends AbstractStore {
     /**
      * Class constructor.
      *
-     * @param {Object} [config]  The configuration properties
-     * @param {Object[]} [datas] Collection of records to be assigned
+     * @param {Object[]} [data] Collection of records to be assigned
+     * @param {Object} [config] The configuration properties
      */
-    constructor(config = {}, datas = []) {
+    constructor(data = [], config = {}) {
         super(config);
 
-        if (datas && datas.length > 0) {
-            this.assignData(datas);
+        if (data && data.length > 0) {
+            this.assignData(data);
         }
     }
 
@@ -54,7 +53,7 @@ export default class BsArrayStore extends AbstractStore {
      * @type {int}
      */
     get totalPages() {
-        return Math.ceil(this.totalCount / this.pageSize);
+        return Math.floor(this.totalCount / this.pageSize);
     }
 
     /**
@@ -96,25 +95,25 @@ export default class BsArrayStore extends AbstractStore {
     /**
      * Assign datas to the Store's dataset.
      *
-     * @param {Object|Object[]} datas A record or collection of records to be assigned
+     * @param {Object|Object[]} data A record or collection of records to be assigned
      * @param {boolean} silent        Append data silently and doesn't trigger data conversion
      * @return {void}
      */
-    assignData(datas, silent = false) {
-        this._assignData(datas, silent);
+    assignData(data, silent = false) {
+        this._assignData(data, silent);
         Vue.set(this, 'loading', false);
     }
 
     /**
      * Load the data.
      *
-     * @param {Object[]|Object} [datas] A record or collection of records to be assigned
+     * @param {Object[]|Object} [data] A record or collection of records to be assigned
      * @return {Promise<any>} Promise interface
      */
-    load(datas = null) {
+    load(data = null) {
         return new Promise(resolve => {
-            if (!Helper.isEmpty(datas)) {
-                this.assignData(datas);
+            if (!Helper.isEmpty(data)) {
+                this.assignData(data);
             }
             this.forceLocalSort().then(ret => {
                 return resolve(ret);

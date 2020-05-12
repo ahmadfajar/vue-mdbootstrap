@@ -68,6 +68,7 @@ import FieldValidation from "./mixins/FieldValidation";
 import MenuAble from "../../mixins/MenuAble";
 import PickerConst from "../BsPicker/utils/DatePickerConst";
 import moment from "moment";
+import "../../../scss/_field.scss"
 
 export default {
     name: "BsDateTimeField",
@@ -76,7 +77,7 @@ export default {
     props: {
         /**
          * DatePicker color
-         * @type {String|*}
+         * @type {string|*}
          */
         color: {
             type: String,
@@ -84,7 +85,7 @@ export default {
         },
         /**
          * Default first day of the week
-         * @type {String|*}
+         * @type {string|number|*}
          */
         firstDayOfWeek: {
             type: [String, Number],
@@ -93,7 +94,7 @@ export default {
         },
         /**
          * The value date format, see momentjs for valid format
-         * @type {String|*}
+         * @type {string|*}
          */
         format: {
             type: String,
@@ -101,7 +102,7 @@ export default {
         },
         /**
          * The display date format, see momentjs for valid format
-         * @type {String|*}
+         * @type {string|*}
          */
         displayFormat: {
             type: String,
@@ -109,7 +110,7 @@ export default {
         },
         /**
          * DatePicker header panel color, default is the same as color property
-         * @type {String|*}
+         * @type {string|*}
          */
         headerColor: {
             type: String,
@@ -117,7 +118,7 @@ export default {
         },
         /**
          * Display header panel or not
-         * @type {Boolean|*}
+         * @type {boolean|*}
          */
         headerPanel: {
             type: Boolean,
@@ -125,7 +126,7 @@ export default {
         },
         /**
          * Whether to display DatePicker in landscape or portrait orientation
-         * @type {Boolean|*}
+         * @type {boolean|*}
          */
         landscapeMode: {
             type: Boolean,
@@ -133,7 +134,7 @@ export default {
         },
         /**
          * Define locale date formatting, default "en-us"
-         * @type {String|*}
+         * @type {string|*}
          */
         locale: {
             type: String,
@@ -141,7 +142,7 @@ export default {
         },
         /**
          * Input field maxLength validator
-         * @type {String|*}
+         * @type {string|*}
          */
         maxlength: {
             type: [String, Number],
@@ -149,7 +150,7 @@ export default {
         },
         /**
          * Input field minLength validator
-         * @type {String|Number|*}
+         * @type {string|number|*}
          */
         minlength: {
             type: [String, Number],
@@ -157,7 +158,7 @@ export default {
         },
         /**
          * DatePicker placement
-         * @type {String|*}
+         * @type {string|*}
          */
         pickerPlacement: {
             type: String,
@@ -165,7 +166,7 @@ export default {
         },
         /**
          * Mark today date or not (note: belum berfungsi dengan benar)
-         * @type {Boolean|*}
+         * @type {boolean|*}
          */
         showToday: {
             type: Boolean,
@@ -173,7 +174,7 @@ export default {
         },
         /**
          * Picker display transition
-         * @type {String|*}
+         * @type {string|*}
          */
         transition: {
             type: String,
@@ -181,7 +182,7 @@ export default {
         },
         /**
          * Input field value yang dapat dikonversi menjadi Date
-         * @type {String|*}
+         * @type {string|*}
          */
         value: {
             type: [String, Number, Array],
@@ -189,7 +190,7 @@ export default {
         },
         /**
          * DatePicker view mode, valid values are: date, month, year or time
-         * @type {String|*}
+         * @type {string|*}
          */
         viewMode: {
             type: String,
@@ -206,7 +207,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {Object} Collection of css classes
+         * @return {any} Collection of css classes
          */
         _classNames() {
             return {
@@ -236,7 +237,7 @@ export default {
         /**
          * Get DatePicker computed binding attributes.
          *
-         * @return {Object} DatePicker attributes
+         * @return {any} DatePicker attributes
          */
         datePickerAttributes() {
             return {
@@ -255,7 +256,7 @@ export default {
         /**
          * Get Popover computed binding attributes.
          *
-         * @return {Object} Popover attributes
+         * @return {any} Popover attributes
          */
         popoverAttributes() {
             return {

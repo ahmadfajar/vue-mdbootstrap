@@ -4,13 +4,12 @@ import ProxyAdapter from "./ProxyAdapter";
 import Helper from "../utils/Helper";
 import averageBy from "lodash/meanBy";
 import sumBy from "lodash/sumBy";
-// import { meanBy as averageBy, sumBy } from "lodash";
 
 /**
  * Data Store class.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 15/03/2019 20:59
+ * @since  20/07/2018 modified: 02/05/2020 1:10
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -30,6 +29,7 @@ export default class BsStore extends AbstractStore {
             dataProperty: 'data',
             totalProperty: 'total',
             filterLogic: 'AND',
+            adapter: undefined, // AxiosInstance
             restUrl: {
                 'browse': '',
                 'delete': '',
@@ -41,7 +41,7 @@ export default class BsStore extends AbstractStore {
         };
 
         super(cfg);
-        this._proxy = new ProxyAdapter();
+        this._proxy = new ProxyAdapter(this.adapterInstance);
         Vue.set(this, 'totalCount', 0);
 
         if (this.restUrl.browse !== '') {
@@ -118,7 +118,7 @@ export default class BsStore extends AbstractStore {
     /**
      * Calculate means or average value of the Store's collection.
      *
-     * @param {string} field The fieldname of the Store's collection to calculate
+     * @param {string} field The field name of the Store's collection to calculate
      * @returns {number} The average value
      */
     aggregateAvg(field) {
@@ -154,18 +154,18 @@ export default class BsStore extends AbstractStore {
     /**
      * Assign datas to the Store's dataset.
      *
-     * @param {Array|Object} datas Data to be assigned
+     * @param {Array|Object} data Data to be assigned
      * @param {boolean} silent Append item silently and doesn't trigger data conversion
      * @return {void}
      */
-    assignData(datas, silent = false) {
-        this._assignData(datas, silent);
+    assignData(data, silent = false) {
+        this._assignData(data, silent);
         Vue.set(this, 'loading', false);
         Vue.set(this, 'totalCount', this.length);
     }
 
     /**
-     * Fetch data from the remote service with spesific ID.
+     * Fetch data from the remote service with specific ID.
      *
      * @param {string|int} id The item ID to fetch
      * @return {Promise<any>} Promise interface
@@ -195,13 +195,13 @@ export default class BsStore extends AbstractStore {
     /**
      * Load the data locally or from the remote server.
      *
-     * @param {Object[]|Object} [datas] A record or collection of records to be assigned
+     * @param {Object[]|Object} [data] A record or collection of records to be assigned
      * @return {Promise<any>} Promise interface
      */
-    load(datas = null) {
-        if (!Helper.isEmpty(datas)) {
+    load(data = null) {
+        if (!Helper.isEmpty(data)) {
             return new Promise(resolve => {
-                this.assignData(datas);
+                this.assignData(data);
                 this.forceLocalSort().then(ret => {
                     return resolve(ret);
                 });

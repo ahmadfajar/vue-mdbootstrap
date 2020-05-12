@@ -58,7 +58,7 @@ export default {
          * @private
          */
         _resize() {
-            this.isMobile = !!this.screenMaxMd.matches;
+            this.isMobile = !!this.screenMaxLg.matches;
             this.$emit('resize', this.isMobile);
         }
     }

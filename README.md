@@ -44,9 +44,10 @@ On your primary javascript, use code below to load or initialize the components.
 import Vue from "vue";
 import VueMdb, { AxiosPlugin } from "vue-mdbootstrap";
 
-Vue.use(VueMdb);
-// Below only requires if using BsGrid, BsModel, BsStore or needs to perform HTTP Request
+// only requires if using BsGrid, BsTreeGrid, BsModel, BsStore or needs to perform HTTP Request
 Vue.use(AxiosPlugin);
+// default requirement, to load the UI components
+Vue.use(VueMdb);
 ````
 
 Now, you are ready to go. You can use any of **Vue MdBootstrap** components without using `import` statement again. 

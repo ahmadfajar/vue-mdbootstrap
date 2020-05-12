@@ -9,37 +9,44 @@
       </div>
       <div class="col px-0">
         <div ref="activator"
-             class="md-combobox-control align-items-center"
+             class="md-combobox-control align-items-end"
              :class="controlCls">
-          <div v-if="floatingLabel"
-               ref="floatlabel"
-               class="md-floating-label"
-               :class="floatingLabelClass"
-               @click="activatorClick">
-            <slot v-bind="{ id }"></slot>
-          </div>
-          <div class="md-combobox-control-inner d-flex flex-fill align-items-center"
-               tabindex="0">
-            <div class="md-prepend-icon" v-if="prependIcon">
+          <div class="md-combobox-control-inner d-flex flex-fill align-items-start"
+               tabindex="0"
+               @focus="_onFocus"
+               @blur="_onBlur">
+            <fieldset v-if="outlined" aria-hidden="true">
+              <legend ref="legend">
+                <span>​</span>
+              </legend>
+            </fieldset>
+            <div v-if="floatingLabel"
+                 ref="floatlabel"
+                 class="md-floating-label"
+                 :class="_floatingLabelClass"
+                 @click="activatorClick">
+              <slot v-bind="{ id }"></slot>
+            </div>
+            <div v-if="prependIcon" class="md-prepend-icon">
               <slot name="prependSlot">
                 <font-awesome-icon :icon="prependIcon" />
               </slot>
             </div>
-            <div class="md-combobox-input d-flex align-items-center"
+            <div class="md-combobox-input d-flex justify-content-start"
                  @click="activatorClick">
-              <span v-if="fieldTagMode && multiple"
-                    class="md-input-tags">
-                <slot name="tags"></slot>
+              <span v-if="_showPlaceHolder" class="md-placeholder">{{ placeholder }}</span>
+              <span v-else-if="chips && multiple" class="md-input-tags">
+                <slot name="tags">{{ inputDisplay }}</slot>
               </span>
-              <span v-else class="md-value">
-                {{ inputDisplay }}
-              </span>
+              <span class="md-value" v-else>{{ inputDisplay }}</span>
             </div>
             <div class="md-action-icon d-flex align-items-center">
-              <bs-icon v-if="clearButton"
-                       class="d-flex align-items-center"
-                       icon="clear"
-                       @click="clearSelected" />
+              <transition name="fade">
+                <bs-icon v-if="_showClearButton"
+                         class="d-flex align-items-center"
+                         icon="clear"
+                         @click="clearSelected" />
+              </transition>
               <bs-icon icon="expand_more"
                        class="caret"
                        size="24"
@@ -50,9 +57,9 @@
                 <font-awesome-icon :icon="appendIcon" />
               </slot>
             </div>
-            <select class="md-combobox-control-hidden" v-bind="attributes">
+            <select class="md-combobox-control-hidden" v-bind="_inputAttributes">
               <option v-for="(item, index) in selectedItems"
-                      :key="'sel-' + index"
+                      :key="'item-' + index"
                       :value="getItemValue(item)"
                       selected>
                 {{ getItemText(item) }}
@@ -60,7 +67,7 @@
             </select>
           </div>
         </div>
-        <div v-if="helpText || showErrorValidation || floatingLabel" class="md-help-text">
+        <div v-if="helpText || showErrorValidation" class="md-help-text">
           <slot name="helptext">
             <small v-if="showHelpText" class="text-muted d-block">
               {{ helpText }}
@@ -76,49 +83,18 @@
         </div>
       </div>
     </div>
-    <bs-popover v-bind="popoverAttributes"
+    <bs-popover v-bind="_popoverAttributes"
                 ref="content"
-                class="md-combobox-popover md-shadow-1"
                 @close="hideMenu">
-      <bs-combobox-list-container v-bind="listContainerAttributes"
-                                  @filter="_onFilterData"
-                                  @select="_onSelectItem"
-                                  @deselect="_onDeselectItem">
-        <slot name="emptyData" slot="emptyData"></slot>
-        <template slot-scope="{ item, index }">
-          <slot name="itemOption" v-bind="{ item, index }">
-            <template v-if="multiple">
-              <bs-list-tile-action v-if="checkboxPosition !== 'right'">
-                <bs-checkbox v-model="filteredBoolValues[index]"
-                             :disabled="isCheckboxDisabled(item)"
-                             :color="checkboxColor"
-                             @change="selected => selected ? _onSelectItem(item) : _onDeselectItem(item)" />
-              </bs-list-tile-action>
-              <bs-list-tile-leading v-if="showAvatar && hasProperty(item, imageField)"
-                                    :img-src="itemPropertyValue(item, imageField)"
-                                    size="36" />
-              <bs-list-tile-content>
-                <slot name="itemOptionText" v-bind="{ item, index }">
-                  <bs-list-tile-title>{{ getItemText(item) }}</bs-list-tile-title>
-                </slot>
-              </bs-list-tile-content>
-              <bs-list-tile-action v-if="checkboxPosition === 'right'">
-                <bs-checkbox v-model="filteredBoolValues[index]"
-                             :disabled="isCheckboxDisabled(item)"
-                             :color="checkboxColor"
-                             @change="selected => selected ? _onSelectItem(item) : _onDeselectItem(item)" />
-              </bs-list-tile-action>
-            </template>
-            <template v-else>
-              <bs-list-tile-leading size="36"
-                                    v-if="showAvatar && hasProperty(item, imageField)"
-                                    :img-src="itemPropertyValue(item, imageField)" />
-              <bs-list-tile-content>
-                <bs-list-tile-title>{{ getItemText(item) }}</bs-list-tile-title>
-              </bs-list-tile-content>
-            </template>
-          </slot>
-        </template>
+      <bs-combobox-list-container v-bind="_listContainerAttributes"
+                                  @dataFiltered="_onFilterData"
+                                  @itemSelected="_onSelectItem"
+                                  @itemDeselected="_onDeselectItem">
+        <slot slot="emptyData" name="emptyData" />
+        <slot slot="optionItem"
+              slot-scope="{ item, index }"
+              v-bind="{ item, index }"
+              name="optionItem" />
       </bs-combobox-list-container>
     </bs-popover>
   </div>
@@ -127,14 +103,9 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsComboboxListContainer from "./BsComboboxListContainer";
-import BsListTileTitle from "../BsList/BsListTileTitle";
-import BsListTileAction from "../BsList/BsListTileAction";
-import BsListTileLeading from "../BsList/BsListTileLeading";
-import BsListTileContent from "../BsList/BsListTileContent";
-import BsCheckbox from "./BsCheckbox";
 import BsIcon from "../BsIcon/BsIcon";
 import BsPopover from "../BsPopover/BsPopover";
-import BsStore from "../../model/BsStore";
+import AbstractStore from "../../model/AbstractStore";
 import Input from "../../mixins/Input";
 import MenuAble from "../../mixins/MenuAble";
 import FieldValidation from "./mixins/FieldValidation";
@@ -144,8 +115,7 @@ import '../../../scss/_shadows.scss';
 export default {
     name: "BsCombobox",
     components: {
-        FontAwesomeIcon, BsComboboxListContainer, BsListTileContent, BsListTileAction,
-        BsListTileLeading, BsListTileTitle, BsCheckbox, BsIcon, BsPopover
+        FontAwesomeIcon, BsComboboxListContainer, BsIcon, BsPopover
     },
     mixins: [Input, FieldValidation, MenuAble],
     props: {
@@ -153,7 +123,7 @@ export default {
             type: Object,
             default() {
                 return {
-                    color: 'pink',
+                    color: 'purple',
                     position: 'left'
                 }
             }
@@ -166,8 +136,12 @@ export default {
             type: String,
             default: undefined,
             validator(value) {
-                return ['left', 'right'].indexOf(value) !== -1;
+                return ['left', 'right'].indexOf(value) > -1;
             }
+        },
+        listboxColor: {
+            type: String,
+            default: undefined
         },
         maxHeight: {
             type: [String, Number],
@@ -183,7 +157,7 @@ export default {
         },
         notFoundMessage: {
             type: String,
-            default: 'No data found.'
+            default: 'Data not found.'
         },
         parentValue: {
             type: [String, Boolean, Number, Array],
@@ -195,6 +169,10 @@ export default {
         },
         dataSource: {
             type: Object,
+            default: undefined
+        },
+        placeholder: {
+            type: String,
             default: undefined
         },
         prependIcon: {
@@ -209,8 +187,8 @@ export default {
             type: [String, Array],
             default: undefined
         },
-        items: {
-            type: Array,
+        imageSize: {
+            type: Number,
             default: undefined
         },
         minimumPopoverWidth: {
@@ -222,56 +200,63 @@ export default {
             default: BsPopover.props.transition.default
         },
         clearButton: Boolean,
-        fieldTagMode: Boolean,
+        multiple: Boolean,
+        chips: Boolean,
         flat: Boolean,
         floatingLabel: Boolean,
+        outlined: Boolean,
         itemSeparator: Boolean,
-        multiple: Boolean,
-        showAvatar: Boolean,
+        showImage: Boolean,
+        roundedImage: Boolean,
+        circleImage: Boolean,
         valueAsObject: Boolean,
     },
     data: (vm) => ({
-        dataModel: {
-            items: [],
-            // define the data field's schema
-            schema: {
-                displayField: 'text',
-                valueField: 'value',
-                imageField: 'image',
-                cascadeField: 'parent',
-                disableField: 'disabled'
-            }
+        dataModel: {},
+        /**
+         * @type {Object}
+         * Default data model schema.
+         */
+        defaultSchema: {
+            displayField: 'text',
+            valueField: 'value',
+            imageField: 'image',
+            cascadeField: 'parent',
+            disableField: 'disabled'
         },
         popoverWidth: vm.minimumPopoverWidth ? vm.minimumPopoverWidth : 0,
         dataFetched: false,
+        isFocused: false,
         inputDisplay: '',
         inputValue: vm.value,
         placement: 'bottom',
         selectedItems: [],
-        filteredBoolValues: [],
-        filteredItems: [],
         trigger: null
     }),
     provide() {
         return {
             dataModel: this.dataModel,
             getItemValue: this.getItemValue,
-            getItemText: this.getItemText
+            getItemText: this.getItemText,
+            hasProperty: this.hasProperty,
+            itemPropertyValue: this.itemPropertyValue
         }
     },
     computed: {
         /**
          * Get computed component's styles.
          *
-         * @return {Object} Collection of css classes
+         * @return {*} Collection of css classes
          */
         _classNames() {
             return {
                 ...this.cmpAttrClasses,
                 'md-open': this.active,
                 'md-combobox-flat': this.flat,
+                'md-combobox-outlined': this.outlined,
                 'md-combobox-multiple': this.multiple,
                 'md-floating-active': this.floatingLabel,
+                'md-focused': this.isFocused || this.active,
                 'has-error': this.hasValidationError,
                 'has-success': this.wasValidated && !this.hasValidationError
             };
@@ -279,9 +264,9 @@ export default {
         /**
          * Get computed binding's properties.
          *
-         * @return {Object} Attributes to bind
+         * @return {*} Attributes to bind
          */
-        attributes() {
+        _inputAttributes() {
             return {
                 ...this.cmpAttrs,
                 'tabindex': -1,
@@ -292,52 +277,79 @@ export default {
             };
         },
         /**
+         * Check if feature clear button is enabled or not.
+         *
+         * @return {boolean} TRUE if has clear button otherwise FALSE
+         */
+        _showClearButton() {
+            return this.clearButton && !this.readonly && !this.disabled && this.selectedItems.length > 0;
+        },
+        /**
+         * @return {boolean} Display placeholder or not
+         */
+        _showPlaceHolder() {
+            return !this.inputValue;
+        },
+        /**
          * Get computed floating label's class names.
          *
-         * @return {Object} Floating label css classes
+         * @return {*} Floating label css classes
          */
-        floatingLabelClass() {
+        _floatingLabelClass() {
             return {
-                'md-active': this.active || this.selectedItems.length > 0,
-                'md-prepend-icon': this.prependIcon
+                'md-active': this.placeholder || this.active || this.selectedItems.length > 0,
+                'md-after-icon': this.prependIcon
             }
         },
         /**
          * Get combobox list container binding attributes.
          *
-         * @return {Object} Attributes to bind
+         * @return {*} Attributes to bind
          */
-        listContainerAttributes() {
+        _listContainerAttributes() {
             return {
                 active: this.active,
                 disabled: this.disabled,
-                maxHeight: this.maxHeight,
                 itemSeparator: this.itemSeparator,
+                multiple: this.multiple,
+                showImage: this.showImage,
+                roundedImage: this.roundedImage,
+                circleImage: this.circleImage,
+                imageSize: this.imageSize,
+                listboxColor: this.listboxColor,
+                checkOptionColor: this.checkboxColor,
+                checkOptionPosition: this.checkboxPosition,
+                dataItems: this.dataItems,
                 selectedItems: this.selectedItems,
+                cascadeField: this.cascadeField,
+                disableField: this.disableField,
+                displayField: this.displayField,
+                imageField: this.imageField,
+                valueField: this.valueField,
+                maxHeight: this.maxHeight,
                 minimumItemsForSearch: this.minimumItemsForSearch,
                 emptyDataMessage: this.emptyDataMessage,
                 notFoundMessage: this.notFoundMessage,
-                dataItems: this.dataItems,
-                cascadeField: this.cascadeField,
-                disableField: this.disableField,
-                displayField: this.disableField,
-                imageField: this.imageField,
-                valueField: this.valueField,
-                style: this.popoverStyles
+                style: this._popoverStyles
             }
         },
         /**
          * Get Popover computed binding attributes.
          *
-         * @return {Object} Attributes to bind
+         * @return {*} Attributes to bind
          */
-        popoverAttributes() {
+        _popoverAttributes() {
             return {
                 open: this.active,
                 placement: this.placement,
                 transition: this.transition,
                 trigger: this.trigger,
-                style: this.popoverStyles
+                style: this._popoverStyles,
+                class: {
+                    'md-combobox-popover': true,
+                    'md-shadow-1': true,
+                    ['bg-' + this.listboxColor] : this.listboxColor
+                }
             }
         },
         /**
@@ -345,7 +357,7 @@ export default {
          *
          * @return {Number} Popover minimum width
          */
-        popoverMinWidth() {
+        _popoverMinWidth() {
             if (this.trigger && (this.popoverWidth < this.trigger.offsetWidth)) {
                 return this.trigger.offsetWidth;
             }
@@ -357,9 +369,9 @@ export default {
          *
          * @return {Object} Popover styles
          */
-        popoverStyles() {
+        _popoverStyles() {
             return {
-                'min-width': this.trigger ? Helper.sizeUnit(this.popoverMinWidth) : '',
+                'min-width': this.trigger ? Helper.sizeUnit(this._popoverMinWidth) : '',
                 'max-height': Helper.sizeUnit(this.maxHeight)
             }
         },
@@ -369,10 +381,7 @@ export default {
          * @return {string} Color name
          */
         checkboxColor() {
-            if (this.checkOptionColor) {
-                this.checkOption.color = this.checkOptionColor;
-            }
-
+            this._assignCheckOptionColor(this.checkOptionColor);
             return this.checkOption.color;
         },
         /**
@@ -381,19 +390,16 @@ export default {
          * @return {string} Position name
          */
         checkboxPosition() {
-            if (this.checkOptionPosition) {
-                this.checkOption.position = this.checkOptionPosition;
-            }
-
+            this._assignCheckOptionPosition(this.checkOptionPosition);
             return this.checkOption.position;
         },
         /**
          * Get data items.
          *
-         * @return {Array} Items
+         * @return {Object[]} Items
          */
         dataItems() {
-            return this.dataModel ? this.dataModel.items : [];
+            return this.dataSource ? this.dataSource.proxy.dataItems : [];
         },
         /**
          * Get property cascade field name from data schema.
@@ -401,7 +407,7 @@ export default {
          * @return {string} A field name
          */
         cascadeField() {
-            return this.dataModel.schema.cascadeField;
+            return this.dataModel.cascadeField;
         },
         /**
          * Get property disabled field name from data schema.
@@ -409,7 +415,7 @@ export default {
          * @return {string} A field name
          */
         disableField() {
-            return this.dataModel.schema.disableField;
+            return this.dataModel.disableField;
         },
         /**
          * Get property display/text field name from data schema.
@@ -417,7 +423,7 @@ export default {
          * @return {string} A field name
          */
         displayField() {
-            return this.dataModel.schema.displayField;
+            return this.dataModel.displayField;
         },
         /**
          * Get property image field name from data schema.
@@ -425,7 +431,7 @@ export default {
          * @return {string} A field name
          */
         imageField() {
-            return this.dataModel.schema.imageField;
+            return this.dataModel.imageField;
         },
         /**
          * Get property value field name from data schema.
@@ -433,7 +439,7 @@ export default {
          * @return {string} A field name
          */
         valueField() {
-            return this.dataModel.schema.valueField;
+            return this.dataModel.valueField;
         },
         /**
          * Create getter and setter for v-model
@@ -462,7 +468,7 @@ export default {
             if (value && !this.minimumPopoverWidth) {
                 this.popoverWidth = this.trigger.offsetWidth;
             }
-            this._resetFilters();
+            this._updateLegend(value);
         },
         parentValue(newValue) {
             if (!Helper.isEmpty(this.cascadeField) && newValue !== undefined) {
@@ -475,23 +481,21 @@ export default {
         },
         value(newValue) {
             this.inputValue = newValue;
+            this._updateLegend(newValue);
             this._setSelectedItems();
         }
     },
     created() {
-        this._resetFilters();
         this._fetchData();
     },
     mounted() {
         this._updateLabel();
         this._updateValue();
+        this._updateLegend();
     },
     beforeDestroy() {
-        this.filteredBoolValues = [];
-        this.filteredItems = [];
         this.selectedItems = [];
-        this.dataModel.items = [];
-        this.dataModel = null;
+        this.dataModel     = null;
     },
     methods: {
         /**
@@ -502,7 +506,6 @@ export default {
         clearSelected() {
             const results = this.selectedItems.splice(0, this.selectedItems.length);
             this._computeInternalValues();
-            this._resetFilters();
             this.$emit('input', this.inputValue);
 
             return results;
@@ -520,7 +523,9 @@ export default {
                 return item[0];
             }
 
-            return Helper.getObjectValueByPath(item, this.valueField, this.itemPropertyValue(item, this.displayField));
+            return Helper.getObjectValueByPath(
+                item, this.valueField, this.itemPropertyValue(item, this.displayField)
+            );
         },
         /**
          * Get display text from the given item.
@@ -535,7 +540,9 @@ export default {
                 return item[1] ? item[1] : item[0];
             }
 
-            return Helper.getObjectValueByPath(item, this.displayField, this.itemPropertyValue(item, this.valueField));
+            return Helper.getObjectValueByPath(
+                item, this.displayField, this.itemPropertyValue(item, this.valueField)
+            );
         },
         /**
          * Check if the given object has a property or not.
@@ -560,13 +567,26 @@ export default {
             return Helper.getObjectValueByPath(item, field);
         },
         /**
-         * Check if checkbox selection for the given item must be disabled or not.
+         * Assign checkbox color property.
          *
-         * @param {Object} item The object to evaluate
-         * @return {boolean} Item checkbox state
+         * @param {string} color CheckBox color
+         * @return {void}
          */
-        isCheckboxDisabled(item) {
-            return (this.disabled === true ? true : this.itemPropertyValue(item, this.disableField));
+        _assignCheckOptionColor(color) {
+            if (color) {
+                this.checkOption.color = color;
+            }
+        },
+        /**
+         * Assign checkbox position property.
+         *
+         * @param {string} position CheckBox position
+         * @return {void}
+         */
+        _assignCheckOptionPosition(position) {
+            if (position && ['left', 'right'].includes(position)) {
+                this.checkOption.position = position;
+            }
         },
         /**
          * Compute and join the selected array values.
@@ -580,8 +600,9 @@ export default {
                 values.push(this.getItemValue(item));
                 text.push(this.getItemText(item));
             });
-            // text.sort();
-            this.inputValue = this.multiple ? values : values.length > 0 ? values[0] : null;
+            this.inputValue   = this.multiple
+                ? (values.length > 0 ? values : null)
+                : (values.length > 0 ? values[0] : null);
             this.inputDisplay = text.join(', ');
         },
         /**
@@ -591,17 +612,20 @@ export default {
          * @private
          */
         _fetchData() {
-            const ds = this.dataSource;
+            const ds    = this.dataSource;
             let doFetch = false;
 
-            if (!Helper.isEmpty(this.items) && !Helper.isEmpty(this.dataModel)) {
-                this.dataModel.items = this.items;
-                this.$emit('data-bind', this.dataModel.items);
-            } else if (ds !== undefined && !Helper.isEmpty(this.dataModel)) {
+            if (ds !== undefined) {
                 if (ds.schema && ds.schema.valueField) {
-                    this.dataModel.schema = Object.assign(this.dataModel.schema, ds.schema);
+                    this.dataModel = Object.assign(this.dataModel, ds.schema);
+                    if (Helper.isEmpty(ds.schema.displayField)) {
+                        this.dataModel.displayField = this.dataModel.valueField;
+                    }
+                } else {
+                    // assign with default schema
+                    this.dataModel = Object.assign(this.dataModel, this.defaultSchema);
                 }
-                if (!this.dataFetched && Helper.isObject(ds.proxy) && ds.proxy instanceof BsStore) {
+                if (!this.dataFetched && Helper.isObject(ds.proxy) && ds.proxy instanceof AbstractStore) {
                     if (!Helper.isEmpty(this.parentValue) && !Helper.isEmpty(this.cascadeField)) {
                         ds.proxy.setFilters({
                             'property': this.cascadeField,
@@ -609,36 +633,22 @@ export default {
                             'operator': Helper.isArray(this.parentValue) ? 'in' : 'eq'
                         }, true);
                         doFetch = true;
-                    } else if (Helper.isEmpty(this.parentValue) && this.cascadeField === 'parent') {
+                    } else if (Helper.isEmpty(this.parentValue) &&
+                        (Helper.isEmpty(this.cascadeField) || this.cascadeField === 'parent')) {
                         doFetch = true;
                     }
                     if (doFetch) {
-                        ds.proxy.query().then(() => {
-                            this.dataModel.items = ds.proxy.dataItems;
+                        ds.proxy.load().then(() => {
                             this.$emit('data-bind', this.dataModel.items);
                             this.dataFetched = true;
-                            this._resetFilters();
                             this._updateValue();
                         }).catch((error) => {
-                            this.$emit('fetch-error', error);
+                            this.$emit('data-error', error);
                             this.dataFetched = false;
                         });
                     }
-                } else if (Helper.isArray(ds.items)) {
-                    this.dataModel.items = ds.items;
-                    this.$emit('data-bind', this.dataModel.items);
                 }
             }
-        },
-        /**
-         * Reset filtered dataItems.
-         *
-         * @return {void}
-         * @private
-         */
-        _resetFilters() {
-            this.filteredItems = this.dataItems;
-            this.filteredBoolValues = this.filteredItems.map(item => this.selectedItems.includes(item));
         },
         /**
          * Set attribute "for" for the given element.
@@ -659,7 +669,7 @@ export default {
          * @private
          */
         _setSelectedItems() {
-            const items = this.dataItems;
+            const items        = this.dataItems;
             this.selectedItems = [];
 
             if (this.inputValue) {
@@ -674,7 +684,10 @@ export default {
                         })
                     });
                 } else {
-                    this.selectedItems = items.filter(el => (this.inputValue === this.getItemValue(el)) || (this.getItemValue(el) === this.getItemValue(this.inputValue)));
+                    this.selectedItems = items.filter(el =>
+                        (this.inputValue === this.getItemValue(el)) ||
+                        (this.getItemValue(el) === this.getItemValue(this.inputValue))
+                    );
                 }
             }
 
@@ -692,18 +705,21 @@ export default {
 
             if (!this.floatingLabel && this.$refs.label.children.length > 0) {
                 const elm = this.$refs.label.children[0];
-                label = this.$refs.label.querySelector('label');
+                label     = this.$refs.label.querySelector('label');
+
                 this.$refs.label.className += ' ' + elm.className;
                 elm.className = 'md-empty-class';
                 this._setLabelFor(label);
             } else if (this.floatingLabel && this.$refs.floatlabel.children) {
                 const children = this.$refs.floatlabel.children;
+
                 if (children.length > 0) {
                     label = this.$refs.floatlabel.children[0];
                     if (!Helper.isEmpty(label.classList) && !Helper.isEmpty(label.className)) {
                         label.className = 'md-empty-class';
                     }
                 }
+
                 label = this.$refs.floatlabel.querySelector('label');
                 this._setLabelFor(label);
             }
@@ -728,10 +744,15 @@ export default {
          * @private
          */
         _onFilterData(items) {
-            this.filteredItems = items;
-            if (this.filteredBoolValues.length !== this.filteredItems.length) {
-                this.filteredBoolValues = this.filteredItems.map(el => this.selectedItems.includes(el));
-            }
+            this.$emit('data-filter', items);
+        },
+        _onFocus() {
+            this.isFocused = true;
+            this._updateLegend();
+        },
+        _onBlur() {
+            this.isFocused = false;
+            this._updateLegend();
         },
         /**
          * Handler when an item within combobox is deselected.
@@ -742,14 +763,12 @@ export default {
          */
         _onDeselectItem(item) {
             const ds = this.selectedItems;
-            const idx = this.filteredItems.lastIndexOf(item);
 
             if (ds.includes(item)) {
                 this.selectedItems = ds.filter(target => target !== item);
                 this.$emit('deselect', item);
             }
             this._computeInternalValues();
-            this.filteredBoolValues[idx] = false;
             if (!this.multiple) {
                 this.active = false;
             }
@@ -764,7 +783,7 @@ export default {
             }
 
             this.$nextTick(() => {
-                this.$emit('change', (this.inputValue === null ? null : this.selectedItems[0]));
+                this.$emit('change', null, item);
             });
         },
         /**
@@ -775,20 +794,22 @@ export default {
          * @private
          */
         _onSelectItem(item) {
+            let oldItem;
             const ds = this.selectedItems;
-            const idx = this.filteredItems.lastIndexOf(item);
 
             if (this.multiple) {
+                oldItem = this.selectedItems.length > 0 ? this.selectedItems[this.selectedItems.length - 1] : null;
                 if (!ds.includes(item)) {
                     this.selectedItems.push(item);
                 }
+                this.$emit('select', this.selectedItems);
             } else {
-                this.selectedItems.pop();
+                oldItem = this.selectedItems.pop();
                 this.selectedItems.push(item);
+                this.$emit('select', this.selectedItems[0]);
             }
 
             this._computeInternalValues();
-            this.filteredBoolValues[idx] = true;
             if (!this.multiple) {
                 this.active = false;
             }
@@ -799,12 +820,23 @@ export default {
             }
 
             this.$nextTick(() => {
-                this.$emit('select', this.multiple ? this.selectedItems : this.selectedItems[0]);
+                this.$emit('change', item, oldItem);
             });
-            this.$nextTick(() => {
-                this.$emit('change', item);
-            });
-        }
+        },
+        _updateLegend(value) {
+            if (this.outlined && this.$refs.legend) {
+                let label    = this.floatingLabel
+                    ? this.$refs.floatlabel
+                    : this.$el.querySelector('label');
+                let hasWidth = this.floatingLabel && (this.active || this.placeholder || this.inputValue || value);
+
+                if (hasWidth && label) {
+                    this.$refs.legend.style.width = Helper.sizeUnit(label.clientWidth);
+                } else {
+                    this.$refs.legend.style.width = Helper.sizeUnit(0);
+                }
+            }
+        },
     }
 }
 </script>
@@ -840,8 +872,8 @@ $dropdown-checkbox-ripple-size: 40px;
 
     .#{$prefix}-help-text {
       display: block;
-      min-height: 10px;
-      margin: 4px 15px 0 15px;
+      min-height: 18px;
+      margin: ($padding-base / 4) $padding-base 0 $padding-base;
 
       > * {
         font-size: 83% !important;
@@ -851,25 +883,26 @@ $dropdown-checkbox-ripple-size: 40px;
     .#{$prefix}-combobox-control {
       @include display-flex();
       @include flex(1 1 auto);
-      margin-left: 15px;
-      margin-right: 15px;
+      margin-left: $padding-base - .06;
+      margin-right: $padding-base - .06;
+      min-height: 2rem;
       padding-left: 0;
       padding-right: 0;
       position: relative;
+      outline: 0 none;
       width: auto;
 
-      > .#{$prefix}-floating-label {
+      .#{$prefix}-floating-label {
         @include transition(0.3s cubic-bezier(0.25, 0.8, 0.5, 1));
         @include transform-origin(top left, false);
         display: inline-block;
         left: 0;
+        top: $padding-base / 4;
         right: auto;
         line-height: 1.2;
         max-width: 90%;
         min-height: .5rem;
         overflow: hidden;
-        margin-left: .4rem;
-        padding-top: .3rem;
         position: absolute;
         pointer-events: none;
         text-overflow: ellipsis;
@@ -877,10 +910,8 @@ $dropdown-checkbox-ripple-size: 40px;
         z-index: 2;
 
         &.#{$prefix}-active {
-          @include transform(translateY(-20px) scale(.9));
+          @include transform(translateY(-24px) scale(.9));
           color: $gray-600;
-          margin-left: 0;
-          padding-top: 0;
         }
       }
 
@@ -888,16 +919,16 @@ $dropdown-checkbox-ripple-size: 40px;
         @include transition(border .3s ease-in-out);
         @include box-shadow(none);
         outline: 0 none;
-        min-height: 2rem;
         height: 100%;
         border-bottom: 1px solid $gray-500;
+        position: relative;
 
         &:after {
-          @include transition(all .3s ease-in-out);
-          background-color: $primary-color;
+          @include transition($transition-basic);
+          background-color: $blue-darken-2;
           position: absolute;
           content: '';
-          height: 2px;
+          height: 1px;
           left: 50%;
           bottom: 0;
           width: 0;
@@ -918,15 +949,6 @@ $dropdown-checkbox-ripple-size: 40px;
           margin-left: .4rem;
           margin-right: .3rem;
         }
-
-        &:focus, &:active {
-          border-bottom-color: $primary-color;
-
-          &:after {
-            left: 0;
-            width: 100%;
-          }
-        }
       }
 
       .#{$prefix}-combobox-control-hidden {
@@ -934,25 +956,19 @@ $dropdown-checkbox-ripple-size: 40px;
         border: 0 none;
         display: none;
         outline: 0 none;
-        // height: 1px !important;
-        // width: 0 !important;
         position: absolute;
       }
 
       .#{$prefix}-combobox-input {
         @include flex(1 auto);
         max-width: 100%;
-        min-height: 2rem;
-        // padding-bottom: 6px;
+        min-height: 1.25rem;
 
-        > input {
-          background-color: transparent;
-          border: 0 none;
-          outline: none;
-          flex: 1 1 auto;
-          margin: 0 0 0 4px;
-          min-height: 2rem;
-          pointer-events: none;
+        > .#{$prefix}-placeholder {
+          @include user-select(none);
+          cursor: default !important;
+          color: $gray-500;
+          font-weight: $font-weight-light;
         }
 
         .#{$prefix}-input-tags {
@@ -966,8 +982,7 @@ $dropdown-checkbox-ripple-size: 40px;
 
       .#{$prefix}-action-icon {
         cursor: pointer;
-        margin-left: $padding-sm;
-        // margin-right: $padding-sm;
+        padding-left: $padding-sm;
 
         .#{$prefix}-icon {
           &.icon-clear {
@@ -1025,16 +1040,32 @@ $dropdown-checkbox-ripple-size: 40px;
     }
   }
 
+  &.#{$prefix}-focused {
+    &:not(.#{$prefix}-disabled) {
+      .#{$prefix}-combobox-control {
+        .#{$prefix}-prepend-icon,
+        .#{$prefix}-append-icon,
+        .#{$prefix}-floating-label {
+          color: $primary-color !important;
+        }
+
+        .#{$prefix}-action-icon > .caret {
+          color: $blue-darken-3 !important;
+        }
+      }
+    }
+  }
+
   &.#{$prefix}-floating-active {
-    margin-top: 1.2rem;
+    padding-top: 1rem;
 
     .#{$prefix}-combobox-control {
-      > .#{$prefix}-floating-label {
+      .#{$prefix}-floating-label {
         > .#{$prefix}-empty-class, label {
           margin-bottom: 0;
         }
 
-        &.#{$prefix}-prepend-icon:not(.#{$prefix}-active) {
+        &.#{$prefix}-after-icon:not(.#{$prefix}-active) {
           margin-left: $padding-base + .5;
         }
       }
@@ -1042,14 +1073,18 @@ $dropdown-checkbox-ripple-size: 40px;
   }
 
   &.#{$prefix}-active,
-  &.#{$prefix}-focus,
+  &.#{$prefix}-focused,
   &.#{$prefix}-open {
-    .#{$prefix}-combobox-control-inner {
-      border-bottom-color: $primary-color !important;
+    &:not(.#{$prefix}-disabled) {
+      &:not(.#{$prefix}-combobox-outlined) {
+        .#{$prefix}-combobox-control-inner {
+          border-bottom-color: $blue-darken-2 !important;
 
-      &:after {
-        left: 0 !important;
-        width: 100% !important;
+          &:after {
+            left: 0 !important;
+            width: 100% !important;
+          }
+        }
       }
     }
   }
@@ -1058,6 +1093,100 @@ $dropdown-checkbox-ripple-size: 40px;
     .#{$prefix}-combobox-control-inner {
       .caret {
         @include transform(rotateZ(-180deg));
+      }
+    }
+  }
+
+  &.#{$prefix}-combobox-outlined {
+    padding-top: $padding-sm - .25;
+
+    > .#{$prefix}-combobox-inner {
+      .#{$prefix}-help-text {
+        margin-left: $padding-xl - .35;
+      }
+    }
+
+    .#{$prefix}-combobox-control-inner {
+      @include border-radius($border-radius-sm);
+      border-width: 0 !important;
+      padding: 0 $padding-sm 0 ($padding-base - .25);
+
+      legend {
+        @include transition(width .3s cubic-bezier(.25, .8, .5, 1));
+        display: table;
+        line-height: 1;
+        max-width: 98%;
+        padding: 0;
+        margin: 0;
+      }
+
+      > fieldset {
+        @include border-radius($border-radius-sm);
+        @include transition(border, color $md-transition-stand);
+        display: block;
+        border-collapse: collapse;
+        border: 1px solid;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: -10px;
+        color: rgba(0, 0, 0, .4);
+        padding-left: $padding-sm;
+        pointer-events: none;
+        position: absolute;
+      }
+
+      > .#{$prefix}-floating-label {
+        margin-left: $padding-base - .25;
+        padding-top: $padding-base - .25;
+
+        &.#{$prefix}-active {
+          @include transform(translateY(-21px) scale(.9));
+        }
+
+        &.#{$prefix}-after-icon:not(.#{$prefix}-active) {
+          margin-left: $padding-xl;
+        }
+      }
+
+      .#{$prefix}-combobox-input {
+        @include align-items(center);
+        padding-top: $padding-sm;
+        padding-bottom: $padding-sm;
+        min-height: 3rem;
+      }
+
+      .#{$prefix}-action-icon {
+        padding-top: $padding-base - .25;
+      }
+
+      .#{$prefix}-prepend-icon, .#{$prefix}-append-icon {
+        margin-top: $padding-base - .3;
+      }
+    }
+
+    &.#{$prefix}-focused {
+      &:not(.#{$prefix}-disabled) {
+        .#{$prefix}-combobox-control-inner {
+          > fieldset {
+            color: $blue-darken-2;
+            border-width: 2px;
+          }
+        }
+      }
+    }
+  }
+
+  &.#{$prefix}-disabled {
+    .col-form-label {
+      color: $gray-500;
+    }
+
+    &.#{$prefix}-combobox-outlined {
+      .#{$prefix}-combobox-control-inner {
+        > fieldset {
+          color: rgba($black, .25);
+        }
       }
     }
   }
@@ -1128,6 +1257,38 @@ $dropdown-checkbox-ripple-size: 40px;
         .#{$prefix}-ripple {
           height: $dropdown-checkbox-ripple-size !important;
           width: $dropdown-checkbox-ripple-size !important;
+        }
+      }
+    }
+  }
+}
+
+@each $color_name, $color in $material-colors {
+  .#{$prefix}-combobox-popover {
+    &.bg-#{$color_name} {
+      .#{$prefix}-combobox-search-wrapper {
+        > .#{$prefix}-combobox-search {
+          @if(lightness($color) < 81) {
+            background-color: rgba(lighten($color, 20%), .25);
+            border-color: rgba($gray-500, .6) !important;
+            color: darken($white-base, 10%) !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+@each $color_name, $color in $theme-colors {
+  .#{$prefix}-combobox-popover {
+    &.bg-#{$color_name} {
+      .#{$prefix}-combobox-search-wrapper {
+        > .#{$prefix}-combobox-search {
+          @if(lightness($color) < 81) {
+            background-color: rgba(lighten($color, 20%), .25);
+            border-color: rgba($gray-500, .6) !important;
+            color: darken($white-base, 10%) !important;
+          }
         }
       }
     }

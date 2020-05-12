@@ -4,21 +4,41 @@ export default {
             type: String,
             default: 'default'
         },
-        value: [String, Boolean, Number, Object],
-        model: [String, Boolean, Number, Object, Array, Event],
-        name: [String, Number],
-        required: Boolean,
-        disabled: Boolean,
-        indeterminate: Boolean,
+        value: {
+            type: [String, Boolean, Number, Object],
+            default: undefined
+        },
+        checked: {
+            type: [String, Boolean, Number, Object, Array, Event],
+            default: undefined
+        },
+        name: {
+            type: [String, Number],
+            default: undefined
+        },
+        required: {
+            type: Boolean,
+            default: false
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        indeterminate: {
+            type: Boolean,
+            default: false
+        },
         trueValue: {
+            type: Boolean,
             default: true
         },
         falseValue: {
+            type: Boolean,
             default: false
         }
     },
     model: {
-        prop: 'model',
+        prop: 'checked',
         event: 'change'
     },
     data: () => ({
@@ -44,15 +64,15 @@ export default {
             return attrs;
         },
         isSelected() {
-            if (Array.isArray(this.model)) {
-                return this.model.includes(this.value);
+            if (Array.isArray(this.checked)) {
+                return this.checked.includes(this.value);
             }
 
             if (this.hasValue) {
-                return this.model === this.value;
+                return this.checked === this.value;
             }
 
-            return this.model === this.trueValue;
+            return this.checked === this.trueValue;
         },
         checkClassname() {
             return {
@@ -75,7 +95,7 @@ export default {
             }
         },
         handleArrayCheckbox() {
-            const newModel = this.model;
+            const newModel = this.checked;
 
             if (!this.isSelected) {
                 newModel.push(this.value);
@@ -95,7 +115,7 @@ export default {
             if (!this.disabled) {
                 this.rippleActive = true;
 
-                if (Array.isArray(this.model)) {
+                if (Array.isArray(this.checked)) {
                     this.handleArrayCheckbox();
                 } else if (this.hasValue) {
                     this.handleSingleSelectCheckbox();

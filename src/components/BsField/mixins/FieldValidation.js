@@ -1,6 +1,9 @@
 export default {
     props: {
-        helpText: String,
+        helpText: {
+            type: String,
+            default: undefined
+        },
         externalValidator: {
             type: Object,
             validator: v => v.hasOwnProperty('validators') && v.hasOwnProperty('messages') && v.hasOwnProperty('hasError')
@@ -47,13 +50,15 @@ export default {
             if (this.externalValidator && this.externalValidator.hasError && !this.wasValidated) {
                 this.wasValidated = true;
             }
-
-            if (this.externalValidator && this.externalValidator.hasError && this.externalValidator.validators
-                && this.externalValidator.messages) {
-                return false;
-            } else if (this.helpText && (this.persistentHelpText || this.isFocused)) {
+            if (this.helpText && (this.persistentHelpText || this.isFocused)) {
                 return true;
             }
+            // if (this.externalValidator && this.externalValidator.hasError && this.externalValidator.validators
+            //     && this.externalValidator.messages) {
+            //     return false;
+            // } else if (this.helpText && (this.persistentHelpText || this.isFocused)) {
+            //     return true;
+            // }
 
             return false;
         },

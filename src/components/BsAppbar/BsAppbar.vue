@@ -65,7 +65,7 @@ export default {
     },
     methods: {
         _resize() {
-            if (this.screenMaxMd.matches) {
+            if (this.screenMaxLg.matches) {
                 this.$emit('toggle-drawer', 'close');
                 this.isMobile = true;
             } else {

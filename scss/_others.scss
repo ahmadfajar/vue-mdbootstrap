@@ -18,7 +18,7 @@
 
 .#{$prefix}-disabled {
   @include user-select(none);
-  color: rgba($black, .2) !important;
+  color: rgba($black, .3) !important;
   cursor: default !important;
 }
 
@@ -66,15 +66,6 @@
   }
 }
 
-@each $color_name, $color in $grays {
-  .bg-grey-#{$color_name} {
-    background-color: $color !important;
-  }
-  .text-grey-#{$color_name} {
-    color: $color !important;
-  }
-}
-
 @each $color_name, $color in $theme-colors {
   .bg-#{$color_name} {
     background-color: $color !important;
@@ -89,5 +80,14 @@
       background-color: darken($color, 10%);
       color: set-notification-text-color($color);
     }
+  }
+}
+
+@each $color_name, $color in $grays {
+  .bg-grey-#{$color_name} {
+    background-color: $color !important;
+  }
+  .text-grey-#{$color_name} {
+    color: $color !important;
   }
 }

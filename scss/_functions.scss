@@ -39,7 +39,7 @@
 @function set-hoverable-bgcolor($color, $transparency: 0) {
   @if (lightness($color) == 100) {
     @if ($transparency > 0) {
-      @return rgba($black, $transparency);
+      @return rgba($primary-color, $transparency);
     } @else {
       @return rgba($black, 0.08);
     }
@@ -51,9 +51,9 @@
     }
   } @else {
     @if ($transparency > 0) {
-      @return rgba(lighten($color, 30%), $transparency);
+      @return rgba(lighten($color, 30%), $transparency + 0.1);
     } @else {
-      @return rgba(lighten($color, 30%), .3);
+      @return rgba(lighten($color, 25%), .2);
     }
   }
 }

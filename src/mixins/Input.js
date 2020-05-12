@@ -8,7 +8,10 @@ export default {
                 return 'bs-' + Helper.uuid(true);
             }
         },
-        name: [String, Number],
+        name: {
+            type: [String, Number],
+            default: undefined
+        },
         disabled: {
             type: Boolean,
             default: false
@@ -21,7 +24,10 @@ export default {
             type: Boolean,
             default: false
         },
-        value: [String, Boolean, Number, Object, Array]
+        value: {
+            type: [String, Boolean, Number, Object, Array],
+            default: undefined
+        },
     },
     computed: {
         cmpAttrs() {

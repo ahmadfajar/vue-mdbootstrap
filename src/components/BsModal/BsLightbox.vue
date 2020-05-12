@@ -3,13 +3,13 @@
        :style="_wrapperStyles"
        class="md-lightbox-wrap">
     <div :style="_toolbarStyles" class="md-lightbox-toolbar">
-      <div v-if="showCounter" class="md-counter">
+      <div v-if="showCounter" class="md-counter d-none d-md-flex">
         <span class="md-counter-current">{{ itemIndex + 1 }}</span>
         /
         <span class="md-counter-all">{{ totalItems }}</span>
       </div>
       <div v-if="showToolbar"
-           class="md-toolbar-items">
+           class="md-toolbar-items d-flex flex-grow-1 justify-content-end">
         <bs-button v-if="toolbar['download']"
                    color="light-grey"
                    mode="icon"
@@ -198,7 +198,12 @@ export default {
         transition: {
             type: String,
             default: 'slide-fade',
-            validator: v => ['fade', 'popover', 'slide-fade', 'slide-fade-reverse', 'slide-bottom-top', 'slide-top-bottom'].indexOf(v) !== -1
+            validator(v) {
+                return [
+                    'fade', 'popover', 'slide-fade', 'slide-fade-reverse',
+                    'slide-bottom-top', 'slide-top-bottom'
+                ].indexOf(v) > -1
+            }
         },
         transitionMode: {
             type: String,
@@ -248,11 +253,6 @@ export default {
         _wrapperStyles() {
             return {
                 'z-index': this.zIndex
-            }
-        },
-        _transitionClasses() {
-            return {
-                [`md-${this.transition}`]: true
             }
         },
         totalItems() {
@@ -381,7 +381,7 @@ export default {
   }
 
   > .#{$prefix}-lightbox-toolbar {
-    @include flexbox((display: flex, flex-wrap: wrap, justify-content: space-between));
+    @include flexbox((display: flex, justify-content: space-between));
     background: rgba(0, 0, 0, .6);
     left: 0;
     top: 0;
@@ -391,7 +391,6 @@ export default {
 
     .#{$prefix}-counter,
     .#{$prefix}-toolbar-items {
-      display: inline-flex;
       min-width: 100px;
     }
 
