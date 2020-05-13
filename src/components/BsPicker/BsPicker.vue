@@ -65,66 +65,66 @@ export default {
 @import "../../../scss/shared";
 
 .#{$prefix}-picker {
-    @include border-radius($border-radius-base);
-    @include flexbox((display:inline-flex, flex-direction: column));
-    background-color: $white;
-    contain: layout style;
+  @include border-radius($border-radius-base);
+  @include flexbox((display:inline-flex, flex-direction: column));
+  background-color: $white;
+  contain: layout style;
+  position: relative;
+  vertical-align: top;
+
+  > .#{$prefix}-picker-header {
+    color: $white;
+    padding: $padding-base;
+  }
+
+  > .#{$prefix}-picker-body {
+    @include flexbox((display: flex, flex: 1 0 auto, flex-direction: column, align-items: center));
+    height: auto;
+    overflow: hidden;
     position: relative;
-    vertical-align: top;
+    z-index: 0;
 
+    > div {
+      width: 100%;
+
+      &.fade-transition-leave-active {
+        position: absolute
+      }
+    }
+  }
+
+  > .#{$prefix}-picker-footer {
+    @include flexbox((display: flex, align-items: center));
+    padding: $padding-sm;
+  }
+
+  > * {
+    &:first-child {
+      @include border-top-radius($border-radius-base);
+    }
+
+    &:last-child {
+      @include border-bottom-radius($border-radius-base);
+    }
+  }
+
+  &.#{$prefix}-picker-full {
+    @include display-flex();
+  }
+
+  &.#{$prefix}-picker-landscape {
     > .#{$prefix}-picker-header {
-        color: $white;
-        padding: $padding-base;
+      @include border-right-radius(0);
+      @extend %topleft-h100-absolute;
+      width: 200px;
+      z-index: 1;
     }
 
-    > .#{$prefix}-picker-body {
-        @include flexbox((display: flex, flex: 1 0 auto, flex-direction: column, align-items: center));
-        height: auto;
-        overflow: hidden;
-        position: relative;
-        z-index: 0;
-
-        > div {
-            width: 100%;
-
-            &.fade-transition-leave-active {
-                position: absolute
-            }
-        }
-    }
-
+    > .#{$prefix}-picker-body,
     > .#{$prefix}-picker-footer {
-        @include flexbox((display: flex, align-items: center));
-        padding: $padding-sm;
+      margin-left: 200px
     }
-
-    > * {
-        &:first-child {
-            @include border-top-radius($border-radius-base);
-        }
-
-        &:last-child {
-            @include border-bottom-radius($border-radius-base);
-        }
-    }
-
-    &.#{$prefix}-picker-full {
-        @include display-flex();
-    }
-
-    &.#{$prefix}-picker-landscape {
-        > .#{$prefix}-picker-header {
-            @include border-right-radius(0);
-            @extend %topleft-h100-absolute;
-            width: 170px;
-            z-index: 1;
-        }
-
-        > .#{$prefix}-picker-body,
-        > .#{$prefix}-picker-footer {
-            margin-left: 170px
-        }
-    }
+  }
 
 }
 </style>

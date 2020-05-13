@@ -32,7 +32,7 @@ export default {
          */
         tableDate: {
             type: Date,
-            required: true
+            // required: true
         },
         /**
          * @type {Date|*}

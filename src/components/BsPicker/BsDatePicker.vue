@@ -56,7 +56,7 @@ export default {
     },
     props: {
         /**
-         * DatePicker color
+         * Picker color.
          * @type {string|*}
          */
         color: {
@@ -64,7 +64,7 @@ export default {
             default: 'primary'
         },
         /**
-         * Define custom date which will be marked as event (note: belum berfungsi dengan benar)
+         * Define custom date which will be marked as event (note: belum berfungsi dengan benar).
          * @type {Array|Object|Function}
          */
         events: {
@@ -72,7 +72,7 @@ export default {
             default: () => null
         },
         /**
-         * DatePicker date events color (note: belum berfungsi dengan benar)
+         * DatePicker date events color (note: belum berfungsi dengan benar).
          * @type {string|Object|Function}
          */
         eventColor: {
@@ -88,7 +88,7 @@ export default {
             validator: value => parseInt(value, 10) > -1
         },
         /**
-         * The output date format, see momentjs for valid format
+         * The date format for output value, {@see moment} for valid format.
          * @type {string|*}
          */
         format: {
@@ -96,7 +96,7 @@ export default {
             default: PickerConst.shortLocale
         },
         /**
-         * Whether to display DatePicker in 100% width or not
+         * Whether to display DatePicker in 100% width or not.
          * @type {boolean|*}
          */
         fullWidth: {
@@ -104,7 +104,7 @@ export default {
             default: false
         },
         /**
-         * DatePicker header panel color, default is the same as color property
+         * DatePicker header panel color, default is the same as color property.
          * @type {string|*}
          */
         headerColor: {
@@ -112,7 +112,7 @@ export default {
             default: undefined
         },
         /**
-         * Display header panel or not
+         * Display header panel or not.
          * @type {boolean|*}
          */
         headerPanel: {
@@ -120,7 +120,7 @@ export default {
             default: true
         },
         /**
-         * Whether to display DatePicker in landscape or portrait orientation
+         * Whether to display DatePicker in landscape or portrait orientation.
          * @type {boolean|*}
          */
         landscape: {
@@ -128,7 +128,7 @@ export default {
             default: false
         },
         /**
-         * Define locale date formating, default "en-us"
+         * Define locale date formating, default "en-us".
          * @type {string|*}
          */
         locale: {
@@ -136,7 +136,7 @@ export default {
             default: PickerConst.defaultLocale
         },
         /**
-         * Can select multiple date or not (note: belum berfungsi dengan benar)
+         * Can select multiple date or not (note: belum berfungsi dengan benar).
          * @type {boolean|*}
          */
         multiple: {
@@ -144,7 +144,7 @@ export default {
             default: false
         },
         /**
-         * Set minimum date limit in format: YYYY-MM-DD or YYYY-MM (note: belum berfungsi dengan benar)
+         * Set minimum date limit in format: YYYY-MM-DD or YYYY-MM (note: belum berfungsi dengan benar).
          * @type {string|*}
          */
         minDate: {
@@ -152,7 +152,7 @@ export default {
             default: undefined
         },
         /**
-         * Set maximum date limit in format: YYYY-MM-DD or YYYY-MM (note: belum berfungsi dengan benar)
+         * Set maximum date limit in format: YYYY-MM-DD or YYYY-MM (note: belum berfungsi dengan benar).
          * @type {string|*}
          */
         maxDate: {
@@ -160,7 +160,7 @@ export default {
             default: undefined
         },
         /**
-         * Is datepicker will be in readonly mode or not
+         * Is datepicker will be in readonly mode or not.
          * @type {boolean|*}
          */
         readonly: {
@@ -168,7 +168,7 @@ export default {
             default: false
         },
         /**
-         * Mark today date or not (note: belum berfungsi dengan benar)
+         * Mark today date or not (note: belum berfungsi dengan benar).
          * @type {boolean|*}
          */
         showToday: {
@@ -234,7 +234,7 @@ export default {
         /**
          * Get default picker computed binding's properties.
          *
-         * @return {Object} The component's properties
+         * @return {*} The component's properties
          */
         defaultAttrs() {
             return {
@@ -260,10 +260,9 @@ export default {
         /**
          * Get title header panel's format function if value is string.
          *
-         * @param {string} [value] The valid date value
          * @return {Function} A function to format the selected date
          */
-        defaultTitleDateFormatter(value) {
+        defaultTitleDateFormatter() {
             const titleFormats = {
                 year: {year: 'numeric', timeZone: 'UTC'},
                 month: {month: 'long', timeZone: 'UTC'},
@@ -295,12 +294,12 @@ export default {
         /**
          * Get header panel computed binding's properties.
          *
-         * @return {Object} The component's properties
+         * @return {*} The component's properties
          */
         headerAttrs() {
             moment.locale(this.locale);
             const _date = !Helper.isEmpty(this.value) ? this.dateValue.format(PickerConst.shortISO) : null;
-            const _now = moment();
+            const _now  = moment();
 
             return {
                 readonly: this.readonly,
@@ -330,7 +329,7 @@ export default {
         /**
          * Get picker container binding's properties.
          *
-         * @return {Object} The component's properties
+         * @return {*} The component's properties
          */
         pickerAttrs() {
             return {
@@ -343,7 +342,7 @@ export default {
         /**
          * Get DayPicker computed binding's properties.
          *
-         * @return {Object} The component's properties
+         * @return {*} The component's properties
          */
         pickerDayAttrs() {
             return {
@@ -359,7 +358,7 @@ export default {
         /**
          * Get MonthPicker computed binding's properties.
          *
-         * @return {Object} The component's properties
+         * @return {*} The component's properties
          */
         pickerMonthAttrs() {
             return {
@@ -371,7 +370,7 @@ export default {
         /**
          * Get YearPicker computed binding's properties.
          *
-         * @return {Object} The component's properties
+         * @return {*} The component's properties
          */
         pickerYearAttrs() {
             return {
@@ -383,7 +382,7 @@ export default {
         /**
          * Get TimePicker computed binding's properties.
          *
-         * @return {Object} The component's properties
+         * @return {*} The component's properties
          */
         pickerTimeAttrs() {
             return {
@@ -395,7 +394,7 @@ export default {
         /**
          * Get Picker navigation computed binding's properties.
          *
-         * @return {Object} The component's properties
+         * @return {*} The component's properties
          */
         pickerNavAttrs() {
             return {
@@ -594,100 +593,99 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-datepicker {
-    .#{$prefix}-datepicker-title,
-    .#{$prefix}-picker-year,
-    .#{$prefix}-picker-time {
+  .#{$prefix}-datepicker-title,
+  .#{$prefix}-picker-year,
+  .#{$prefix}-picker-time {
+    @include transition($md-transition-stand);
+  }
+
+  .#{$prefix}-picker-body {
+    min-height: 260px;
+    padding-bottom: $padding-sm + .2;
+  }
+
+  .#{$prefix}-datepicker-nav {
+    @include flexbox((display: flex, justify-content: space-between, align-items: center));
+    padding: ($padding-base / 4) $padding-base;
+    position: relative;
+    width: 100%;
+
+    > .#{$prefix}-datepicker-navtext {
+      @include flex(1);
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+
+      strong {
         @include transition($md-transition-stand);
-    }
-
-    .#{$prefix}-picker-body {
-        min-height: 260px;
-        padding-bottom: $padding-sm + .2;
-    }
-
-    .#{$prefix}-datepicker-nav {
-        @include flexbox((display: flex, justify-content: space-between, align-items: center));
-        padding: ($padding-base / 4) $padding-base;
-        position: relative;
+        display: block;
         width: 100%;
-
-        > .#{$prefix}-datepicker-navtext {
-            @include flex(1);
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
-            text-align: center;
-
-            strong {
-                @include transition($md-transition-stand);
-                display: block;
-                width: 100%;
-            }
-        }
+      }
     }
+  }
 
-    .#{$prefix}-datepicker-body {
-        /*height: 252px;*/
-        padding: 0 12px;
+  .#{$prefix}-datepicker-body {
+    padding: 0 12px;
+    position: relative;
+
+    table {
+      @include transition($md-transition-stand);
+      table-layout: fixed;
+      width: 100%;
+      top: 0;
+
+      td, th {
         position: relative;
-
-        table {
-            @include transition($md-transition-stand);
-            table-layout: fixed;
-            width: 100%;
-            top: 0;
-
-            td, th {
-                position: relative;
-                text-align: center;
-            }
-        }
-
-        &.picker-day {
-            th {
-                color: $gray-500;
-                padding: $padding-sm 0;
-                pointer-events: none;
-            }
-
-            td {
-                height: 36px;
-                vertical-align: middle;
-            }
-
-        }
-
-        &.picker-month,
-        &.picker-year,
-        &.picker-times {
-            td {
-                padding: $padding-sm 0;
-            }
-        }
-
-        &.picker-times {
-            /*height: 288px;*/
-
-            .picker-times-number {
-                .btn-inner {
-                    font-size: 1rem;
-                    font-weight: $font-weight-bolder;
-                }
-            }
-
-            .picker-hours {
-                margin-top: $padding-base;
-
-                td {
-                    padding: 4px 0;
-                }
-            }
-
-            .picker-minutes, .picker-seconds {
-                margin-top: $padding-xl;
-            }
-
-        }
+        text-align: center;
+      }
     }
+
+    &.picker-day {
+      th {
+        color: $gray-500;
+        padding: $padding-sm 0;
+        pointer-events: none;
+      }
+
+      td {
+        height: 36px;
+        vertical-align: middle;
+      }
+
+    }
+
+    &.picker-month,
+    &.picker-year,
+    &.picker-times {
+      td {
+        padding: $padding-sm 0;
+      }
+    }
+
+    &.picker-times {
+      /*height: 288px;*/
+
+      .picker-times-number {
+        .btn-inner {
+          font-size: 1rem;
+          font-weight: $font-weight-bolder;
+        }
+      }
+
+      .picker-hours {
+        margin-top: $padding-base;
+
+        td {
+          padding: 4px 0;
+        }
+      }
+
+      .picker-minutes, .picker-seconds {
+        margin-top: $padding-xl;
+      }
+
+    }
+  }
 }
 </style>

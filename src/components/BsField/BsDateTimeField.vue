@@ -5,6 +5,11 @@
     </div>
     <div class="flex-grow-1">
       <div class="md-field-inner align-items-center" ref="activator" :class="controlCls">
+        <fieldset aria-hidden="true">
+          <legend ref="legend">
+            <span>​</span>
+          </legend>
+        </fieldset>
         <div v-if="floatingLabel"
              ref="floatlabel"
              class="md-floating-label"
@@ -12,7 +17,7 @@
              @click="activatorClick">
           <slot v-bind="{ id }" />
         </div>
-        <div v-if="prependIcon" class="md-prepend-icon" @click="activatorClick">
+        <div v-if="prependIcon" class="md-prepend-icon" @click="_activatorClick">
           <slot name="prependSlot">
             <font-awesome-icon :icon="prependIcon" />
           </slot>
@@ -29,14 +34,14 @@
             <bs-icon v-if="hasClearButton" icon="clear" @click="clearValue" />
           </div>
         </transition>
-        <div class="md-append-icon" @click="activatorClick">
+        <div class="md-append-icon" @click="_activatorClick">
           <slot name="appendSlot">
             <font-awesome-icon v-if="appendIcon" style="cursor: pointer" :icon="appendIcon" />
             <bs-icon v-else icon="calendar" style="cursor: pointer" />
           </slot>
         </div>
       </div>
-      <div class="md-help-text" v-if="helpText || showErrorValidation || floatingLabel">
+      <div class="md-help-text" v-if="helpText || showErrorValidation">
         <slot name="helptext">
           <small v-if="showHelpText" class="text-muted d-block">
             {{ helpText }}
@@ -76,7 +81,7 @@ export default {
     mixins: [MenuAble, Input, TextField, FieldValidation],
     props: {
         /**
-         * DatePicker color
+         * DateTimePicker color.
          * @type {string|*}
          */
         color: {
@@ -84,7 +89,7 @@ export default {
             default: 'primary'
         },
         /**
-         * Default first day of the week
+         * Default first day of the week.
          * @type {string|number|*}
          */
         firstDayOfWeek: {
@@ -93,15 +98,16 @@ export default {
             validator: value => parseInt(value, 10) > -1
         },
         /**
-         * The value date format, see momentjs for valid format
+         * The date format for output value, {@see moment} for valid format.
          * @type {string|*}
          */
-        format: {
+        valueFormat: {
             type: String,
             default: PickerConst.shortLocale
         },
         /**
-         * The display date format, see momentjs for valid format
+         * The display date format, {@see moment} for valid format.
+         * If `undefined` then it will takes from `format` property.
          * @type {string|*}
          */
         displayFormat: {
@@ -109,7 +115,7 @@ export default {
             default: undefined
         },
         /**
-         * DatePicker header panel color, default is the same as color property
+         * DatePicker header panel color, default is the same as color property.
          * @type {string|*}
          */
         headerColor: {
@@ -117,15 +123,19 @@ export default {
             default: undefined
         },
         /**
-         * Display header panel or not
+         * Display header panel or not.
          * @type {boolean|*}
          */
         headerPanel: {
             type: Boolean,
             default: true
         },
+        outlined: {
+            type: Boolean,
+            default: false
+        },
         /**
-         * Whether to display DatePicker in landscape or portrait orientation
+         * Whether to display DatePicker in landscape or portrait orientation.
          * @type {boolean|*}
          */
         landscapeMode: {
@@ -133,7 +143,7 @@ export default {
             default: false
         },
         /**
-         * Define locale date formatting, default "en-us"
+         * Define locale date formatting, default "en-us".
          * @type {string|*}
          */
         locale: {
@@ -141,7 +151,7 @@ export default {
             default: PickerConst.defaultLocale
         },
         /**
-         * Input field maxLength validator
+         * Input field maxLength validator.
          * @type {string|*}
          */
         maxlength: {
@@ -157,7 +167,7 @@ export default {
             default: undefined
         },
         /**
-         * DatePicker placement
+         * DatePicker dropdown placement.
          * @type {string|*}
          */
         pickerPlacement: {
@@ -165,7 +175,7 @@ export default {
             default: 'bottom-left'
         },
         /**
-         * Mark today date or not (note: belum berfungsi dengan benar)
+         * Mark today date or not (note: belum berfungsi dengan benar).
          * @type {boolean|*}
          */
         showToday: {
@@ -178,10 +188,10 @@ export default {
          */
         transition: {
             type: String,
-            default: 'popover'
+            default: BsPopover.props.transition.default
         },
         /**
-         * Input field value yang dapat dikonversi menjadi Date
+         * Input field value yang dapat dikonversi menjadi Date.
          * @type {string|*}
          */
         value: {
@@ -189,7 +199,7 @@ export default {
             default: undefined
         },
         /**
-         * DatePicker view mode, valid values are: date, month, year or time
+         * DatePicker view mode, valid values are: date, month, year or time.
          * @type {string|*}
          */
         viewMode: {
@@ -213,6 +223,7 @@ export default {
             return {
                 ...this.cmpAttrClasses,
                 'md-field-flat': this.flat,
+                'md-field-outlined': this.outlined,
                 'md-focused': this.isFocused,
                 'md-floating-active': this.floatingLabel,
                 'has-error': this.hasValidationError,
@@ -245,7 +256,7 @@ export default {
                 headerColor: this.headerColor,
                 headerPanel: this.headerPanel && this.viewMode === PickerConst.date,
                 firstDayOfWeek: this.firstDayOfWeek,
-                format: this.format,
+                format: this.valueFormat,
                 landscape: this.landscapeMode,
                 locale: this.locale,
                 showToday: this.showToday,
@@ -277,7 +288,7 @@ export default {
                 if (value.constructor.toString().match(/function (\w*)/)[1].toLowerCase() !== 'inputevent') {
                     this.$nextTick(() => {
                         this.localValue = value;
-                        this.displayValue = moment(value).format(this.displayFormat || this.format);
+                        this.displayValue = moment(value).format(this.displayFormat || this.valueFormat);
                         this.$emit('input', value);
                     })
                 }
@@ -292,6 +303,7 @@ export default {
             } else {
                 this._updateValue(newValue);
             }
+            this._updateLegend(newValue);
         }
     },
     created() {
@@ -313,9 +325,18 @@ export default {
             if (this.autofocus && this.$refs.input) {
                 this.$refs.input.focus();
             }
+            this._updateLegend();
         });
     },
     methods: {
+        _activatorClick(e) {
+            if (this.active) {
+                this._onBlur(e);
+            } else {
+                this._onFocus(e);
+            }
+            this.activatorClick();
+        },
         /**
          * Convert a value to datetime and update internal value.
          *
@@ -328,7 +349,7 @@ export default {
 
             try {
                 date = moment(value, [
-                    this.format, PickerConst.shortISO, PickerConst.dateTimeISO,
+                    this.valueFormat, PickerConst.shortISO, PickerConst.dateTimeISO,
                     PickerConst.yearMonthISO, PickerConst.yearISO
                 ]);
             } catch (e) {
@@ -336,13 +357,12 @@ export default {
             }
 
             if (date.isValid()) {
-                this.localValue = date.format(this.format);
-                this.displayValue = date.format(this.displayFormat || this.format);
+                this.localValue = date.format(this.valueFormat);
+                this.displayValue = date.format(this.displayFormat || this.valueFormat);
             } else {
                 this.localValue = 'Invalid Date';
                 this.displayValue = 'Invalid Date';
             }
-
         }
     }
 }

@@ -1,14 +1,14 @@
 <template>
   <div class="md-datepicker-header">
-    <div class="md-datepicker-header-inner row">
-      <div class="col-4 md-picker-year"
+    <div class="md-datepicker-header-inner d-flex">
+      <div class="md-picker-year"
            :class="{ active: isYearActive }"
            :style="_styles"
            @click="yearClick">
         {{ year === '' ? '&nbsp;' : year }}
       </div>
       <div v-if="enableTime"
-           class="col-8 md-picker-time text-right"
+           class="md-picker-time flex-grow-1 text-right"
            :class="{ active: isTimeActive }"
            :style="_styles"
            @click="timeClick">
@@ -115,39 +115,39 @@ export default {
 @import "../../../scss/shared";
 
 .#{$prefix}-datepicker-header {
-    display: block;
-    line-height: 1;
+  display: block;
+  line-height: 1;
 
-    .#{$prefix}-picker-year,
-    .#{$prefix}-picker-time,
-    .#{$prefix}-picker-title {
-        &:not(.active) {
-            @include opacity(.6);
-            @extend %cursor-pointer;
+  .#{$prefix}-picker-year,
+  .#{$prefix}-picker-time,
+  .#{$prefix}-picker-title {
+    &:not(.active) {
+      @include opacity(.6);
+      @extend %cursor-pointer;
 
-            &:hover {
-                @include opaque();
-            }
-        }
+      &:hover {
+        @include opaque();
+      }
+    }
+  }
+
+  .#{$prefix}-datepicker-header-inner {
+    @include transition($md-transition-stand);
+
+    &:first-child {
+      font-size: 1.25rem;
+      font-weight: $font-weight-bold;
+      margin-bottom: $padding-base / 4;
     }
 
-    .#{$prefix}-datepicker-header-inner {
-        @include transition($md-transition-stand);
-
-        &.row {
-            font-size: 1.25rem;
-            font-weight: $font-weight-bold;
-            margin-bottom: $padding-base / 4;
-        }
-
-        &.#{$prefix}-picker-title {
-            font-size: 2rem;
-            font-weight: $font-weight-bold;
-            line-height: 1.25;
-            position: relative;
-            overflow: hidden;
-            text-align: left;
-        }
+    &.#{$prefix}-picker-title {
+      font-size: 1.8rem;
+      font-weight: $font-weight-bold;
+      line-height: 1.25;
+      position: relative;
+      overflow: hidden;
+      text-align: left;
     }
+  }
 }
 </style>
