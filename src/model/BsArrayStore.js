@@ -9,7 +9,7 @@ import sumBy from "lodash/sumBy";
  * Class to make store's collection from Array data easier.
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 02/05/2020 1:10
+ * @since  13/03/2019 modified: 15/05/2020 19:54
  */
 export default class BsArrayStore extends AbstractStore {
     /**
@@ -34,6 +34,14 @@ export default class BsArrayStore extends AbstractStore {
     get dataItems() {
         const page   = this.currentPage > 0 && this.currentPage <= this.totalPages ? this.currentPage - 1 : 0;
         const offset = page * this.pageSize;
+
+        if (this.filters.length > 0) {
+            if (this._filterItems.length === 0) {
+                this._filterItems = this.localFilter();
+            }
+
+            return this._filterItems.slice(offset, this.pageSize > 0 ? offset + this.pageSize : undefined);
+        }
 
         return this._items.slice(offset, this.pageSize > 0 ? offset + this.pageSize : undefined);
     }
@@ -87,7 +95,7 @@ export default class BsArrayStore extends AbstractStore {
         if (!Helper.isEmpty(item)) {
             this._append(item);
             if (sorted === true) {
-                this.sort().then();
+                this._items = this.sort();
             }
         }
     }
@@ -115,9 +123,8 @@ export default class BsArrayStore extends AbstractStore {
             if (!Helper.isEmpty(data)) {
                 this.assignData(data);
             }
-            this.forceLocalSort().then(ret => {
-                return resolve(ret);
-            });
+            this._items = this.localSort();
+            return resolve(this._items);
         });
     }
 
@@ -126,22 +133,22 @@ export default class BsArrayStore extends AbstractStore {
      *
      * @example
      *     // sort by a single field
-     *     myStore.sort('myField', 'asc');
+     *     let results = myStore.sort('myField', 'asc');
      *
      *     //sorting by multiple fields
-     *     myStore.sort([
+     *     let results = myStore.sort([
      *      {property: 'age', direction: 'desc'},
      *      {property: 'name', direction: 'asc'}
      *     ]);
      *
      * @param {string|ISorter[]|Object[]} field  The field for sorting
      * @param {'asc'|'desc'} direction           The sort direction
-     * @return {Promise<any>} Promise interface
+     * @return {Object[]} Collection
      */
     sort(field = null, direction = 'asc') {
         this._createSorters(field, direction);
 
-        return this.forceLocalSort();
+        return this.localSort();
     }
 
 }

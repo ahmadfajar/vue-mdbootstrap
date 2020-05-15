@@ -1,23 +1,23 @@
 <template>
-  <div class="md-field md-radio-group row" :class="_classNames">
+  <div class="md-field md-checkbox-group row" :class="_classNames">
     <slot />
     <div class="d-flex flex-column flex-fill">
       <div class="md-field-inner">
         <div class="flex-fill form-row">
           <template v-if="columns">
-            <div v-for="(item, idx) in items" :key="'rdo-' + idx" :class="itemClasses">
-              <bs-radio v-bind="_radioAttributes(item)" @change="setValue">
+            <div v-for="(item, idx) in items" :key="'cbo-' + idx" :class="itemClasses">
+              <bs-checkbox v-bind="_checkboxAttributes(item, idx)" @change="setValue">
                 {{ item.label }}
-              </bs-radio>
+              </bs-checkbox>
             </div>
           </template>
           <template v-else>
             <div v-for="(item, idx) in items"
-                 :key="'rdo-' + idx"
+                 :key="'cbo-' + idx"
                  :class="{'col-12 col-md': items.length > 3, 'px-1': items.length < 4}">
-              <bs-radio v-bind="_radioAttributes(item)" @change="setValue">
+              <bs-checkbox v-bind="_checkboxAttributes(item, idx)" @change="setValue">
                 {{ item.label }}
-              </bs-radio>
+              </bs-checkbox>
             </div>
           </template>
         </div>
@@ -44,7 +44,7 @@
 import FieldValidation from "./mixins/FieldValidation";
 
 export default {
-    name: "BsRadioGroup",
+    name: "BsCheckboxGroup",
     mixins: [FieldValidation],
     model: {
         prop: 'value',
@@ -61,24 +61,34 @@ export default {
             validator: v => v > 0 && v < 5
         },
         value: {
-            type: [String, Number, Boolean],
-            default: false
-        },
-        name: {
-            type: [String, Number],
+            type: Array,
             default: undefined
         },
         items: {
             type: Array,
             default: undefined
         },
+        name: {
+            type: String,
+            default: undefined
+        },
         persistentHelpText: {
             type: Boolean,
             default: true
         },
-        required: Boolean,
-        readonly: Boolean,
-        disabled: Boolean
+        required: {
+            type: Boolean,
+            default: false
+        },
+        // readonly: Boolean,
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        indeterminate: {
+            type: Boolean,
+            default: false
+        },
     },
     computed: {
         /**
@@ -104,7 +114,7 @@ export default {
     },
     methods: {
         /**
-         * Set RadioGroup value.
+         * Set CheckboxGroup value.
          *
          * @param {string|number|boolean} value The value to set
          * @return {void}
@@ -113,19 +123,21 @@ export default {
             this.$emit('change', value);
         },
         /**
-         * Set attributes for each radio item.
+         * Set attributes for each checkbox item.
          *
-         * @param {Object} item Global attribute
+         * @param {Object} item  Global attribute
+         * @param {Number} index Checkbox item index
          * @return {*} The attributes to bind
          * @private
          */
-        _radioAttributes(item) {
+        _checkboxAttributes(item, index) {
             return {
                 color: this.color,
                 disabled: this.disabled || item.disabled,
-                readonly: this.readonly || item.readonly,
+                // readonly: this.readonly || item.readonly,
                 value: item.value,
-                name: this.name,
+                name: this.name ? (this.name + '[' + index + ']') : item.name,
+                indeterminate: this.indeterminate,
                 checked: this.value
             }
         }
@@ -137,7 +149,7 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-radio-group {
+.#{$prefix}-checkbox-group {
   .#{$prefix}-field-inner {
     border-bottom: 0 !important;
   }

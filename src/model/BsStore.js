@@ -9,7 +9,7 @@ import sumBy from "lodash/sumBy";
  * Data Store class.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 02/05/2020 1:10
+ * @since  20/07/2018 modified: 15/05/2020 19:54
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -67,6 +67,14 @@ export default class BsStore extends AbstractStore {
      * @type {BsModel[]|Object[]}
      */
     get dataItems() {
+        if (!this.remoteFilter && this.filters.length > 0) {
+            if (this._filterItems.length === 0) {
+                this._filterItems = this.localFilter();
+            }
+
+            return this._filterItems;
+        }
+
         return this._items;
     }
 
@@ -202,9 +210,8 @@ export default class BsStore extends AbstractStore {
         if (!Helper.isEmpty(data)) {
             return new Promise(resolve => {
                 this.assignData(data);
-                this.forceLocalSort().then(ret => {
-                    return resolve(ret);
-                });
+                this._items = this.localSort();
+                return resolve(this._items);
             });
         } else {
             ProxyAdapter.checkRestUrl(this.restUrl);
@@ -248,15 +255,17 @@ export default class BsStore extends AbstractStore {
      *
      * @param {string|ISorter[]|Object[]} field The field for sorting
      * @param {'asc'|'desc'} direction          The sort direction
-     * @return {Promise<any>} Promise interface
+     * @return {Object[]} Promise interface
      */
     sort(field = null, direction = 'asc') {
         this._createSorters(field, direction);
 
         if (!this.remoteSort) {
-            return this.forceLocalSort();
+            return this.localSort();
         } else {
-            return this.load();
+            this.load().then(() => {
+                return this._items;
+            });
         }
     }
 

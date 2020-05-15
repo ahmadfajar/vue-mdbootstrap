@@ -4,7 +4,7 @@
       <bs-ripple :active.sync="rippleActive" :disabled="disabled" centered>
         <input type="radio"
                role="radio"
-               v-model="model"
+               v-model="checked"
                v-bind="attributes"
                :value="value" />
       </bs-ripple>
@@ -26,7 +26,7 @@ export default {
     name: "BsRadio",
     components: {BsRipple},
     model: {
-        prop: 'model',
+        prop: 'checked',
         event: 'change'
     },
     props: {
@@ -44,7 +44,7 @@ export default {
             type: [String, Number, Boolean],
             default: 'on'
         },
-        model: {
+        checked: {
             type: [String, Number, Boolean],
             default: undefined
         },
@@ -63,7 +63,7 @@ export default {
         /**
          * Get computed binding's properties.
          *
-         * @return {Object} Attributes to bind
+         * @return {*} Attributes to bind
          */
         attributes() {
             return {
@@ -82,12 +82,12 @@ export default {
          * @return {boolean} TRUE if radio is active/selected otherwise FALSE
          */
         isSelected() {
-            return this.model === this.value;
+            return this.checked === this.value;
         },
         /**
          * Get computed component classes.
          *
-         * @return {Object} Collection of css classes
+         * @return {*} Collection of css classes
          */
         radioClassname() {
             return {

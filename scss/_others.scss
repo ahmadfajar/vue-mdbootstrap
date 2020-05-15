@@ -70,6 +70,9 @@
   .bg-#{$color_name} {
     background-color: $color !important;
   }
+  .border-#{$color_name} {
+    border-color: $color !important;
+  }
   .text-hover-#{$color_name} {
     &:hover {
       color: $color !important;
@@ -86,6 +89,9 @@
 @each $color_name, $color in $grays {
   .bg-grey-#{$color_name} {
     background-color: $color !important;
+  }
+  .border-grey-#{$color_name} {
+    border-color: $color !important;
   }
   .text-grey-#{$color_name} {
     color: $color !important;

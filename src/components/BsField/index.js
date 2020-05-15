@@ -1,4 +1,5 @@
 import BsCheckbox from "./BsCheckbox";
+import BsCheckboxGroup from "./BsCheckboxGroup";
 import BsCombobox from "./BsCombobox";
 import BsTextField from "./BsTextField";
 import BsTextArea from "./BsTextArea";
@@ -11,6 +12,7 @@ import BsSwitch from "./BsSwitch";
 
 export default Vue => {
     Vue.component(BsCheckbox.name, BsCheckbox);
+    Vue.component(BsCheckboxGroup.name, BsCheckboxGroup);
     Vue.component(BsCombobox.name, BsCombobox);
     Vue.component(BsTextField.name, BsTextField);
     Vue.component(BsTextArea.name, BsTextArea);

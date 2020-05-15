@@ -26,7 +26,7 @@ import { autobind } from "../utils/Autobind";
  * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 11/05/2020 1:40
+ * @since  15/03/2019 modified: 15/05/2020 18:57
  */
 export default class AbstractStore {
     /**
@@ -83,6 +83,7 @@ export default class AbstractStore {
         this._currentPage = 1;
         this._pageSize    = pgSize;
         this._filters     = Helper.isArray(cfg.filters) ? cfg.filters : [];
+        this._filterItems = [];
         this._items       = [];
 
         autobind(this);
@@ -167,7 +168,8 @@ export default class AbstractStore {
      * @param {IFilter[]|Object[]|IFilter|Object} newFilters The filters to be used
      */
     set filters(newFilters) {
-        this._filters = Helper.isArray(newFilters) ? newFilters : Helper.isObject(newFilters) ? [newFilters] : [];
+        this._filters     = Helper.isArray(newFilters) ? newFilters : Helper.isObject(newFilters) ? [newFilters] : [];
+        this._filterItems = [];
     }
 
     /**
@@ -273,13 +275,13 @@ export default class AbstractStore {
      */
     _assignData(data, silent = false) {
         Vue.set(this, 'loading', true);
-        const datas = Helper.isArray(data) ? data : Helper.isObject(data) ? [data] : [];
+        const items = Helper.isArray(data) ? data : Helper.isObject(data) ? [data] : [];
 
         if (silent) {
-            this._items = datas;
+            this._items = items;
         } else {
             this._items = [];
-            datas.forEach(v => {
+            items.forEach(v => {
                 if (Helper.isArray(v)) {
                     this._items.push(Object.freeze(v));
                 } else if (this._isCandidateForModel(v)) {
@@ -351,6 +353,7 @@ export default class AbstractStore {
      */
     addFilter(field, value, operator) {
         this.filters.push({'property': field, 'value': value, 'operator': operator || 'eq'});
+        this._filterItems = [];
 
         return this;
     }
@@ -362,38 +365,63 @@ export default class AbstractStore {
      */
     destroy() {
         this.removeAll();
-        this._filters = null;
-        this._config  = null;
-        this._proxy   = null;
+        this._config      = null;
+        this._proxy       = null;
+        this._filters     = [];
+        this._filterItems = [];
+    }
+
+    /**
+     * Filter the dataset locally.
+     *
+     * @return {Object[]} Collection
+     */
+    localFilter() {
+        if (this.filters.length > 0) {
+            return this._items.filter(item => {
+                let ret = false;
+                for (const flt of this.filters) {
+                    const itemValue = Helper.getObjectValueByPath(item, flt.property);
+                    if (flt.operator === 'gt') {
+                        ret = itemValue > flt.value;
+                    } else if (flt.operator === 'gte') {
+                        ret = itemValue >= flt.value;
+                    } else if (flt.operator === 'lt') {
+                        ret = itemValue < flt.value;
+                    } else if (flt.operator === 'lte') {
+                        ret = itemValue <= flt.value;
+                    } else if (flt.operator === 'in' && Helper.isArray(flt.value)) {
+                        ret = flt.value.includes(itemValue);
+                    } else {
+                        ret = itemValue === flt.value;
+                    }
+                }
+                return ret;
+            });
+        } else {
+            return this._items;
+        }
     }
 
     /**
      * Sorts the dataset locally.
      *
-     * @return {Promise<any>} Promise interface
+     * @return {Object[]} Collection
      */
-    forceLocalSort() {
-        return new Promise(resolve => {
-            let fields = [];
-            let orders = [];
+    localSort() {
+        let fields = [];
+        let orders = [];
 
-            this._checkOnLoading();
-            for (const sorter of this.sorters) {
-                fields.push(sorter.property || sorter.field);
-                orders.push(sorter.direction.toLowerCase());
-            }
+        for (const sorter of this.sorters) {
+            fields.push(sorter.property || sorter.field);
+            orders.push(sorter.direction.toLowerCase());
+        }
 
-            if (fields.length > 0 && orders.length > 0) {
-                this._items = orderBy(this._items, fields, orders);
-            }
-            this._onLoadingSuccess();
-            const obj = {
-                data: this._items,
-                total: this._items.length
-            };
+        if (fields.length > 0 && orders.length > 0) {
+            return orderBy(this._items, fields, orders);
+        }
 
-            return resolve(obj);
-        });
+        return this._items;
     }
 
     /**
@@ -502,8 +530,8 @@ export default class AbstractStore {
     /**
      * Replace old filters and apply new filters to the Store.
      *
-     * @param {IFilter[]|Object[]|IFilter|Object} filters  The filters to apply
-     * @param {boolean} includeDefault                     Include default filters or not
+     * @param {IFilter[]|IFilter} filters  The filters to apply
+     * @param {boolean} includeDefault     Include default filters or not
      * @return {AbstractStore} Itself
      */
     setFilters(filters, includeDefault = false) {

@@ -58,14 +58,21 @@
     &:active:focus,
     &.active {
       border-color: darken($color, 8%);
-      background-color: rgba(lighten($color, 15%), .3);
-      //color: set-notification-text-color($color) !important;
+      @if ($name == 'light') {
+        background-color: rgba($color, .2);
+      } @else {
+        background-color: rgba(lighten($color, 15%), .3);
+      }
     }
 
     &:not([disabled]):not(.disabled):active,
     &:not([disabled]):not(.disabled).active {
       border-color: darken($color, 8%);
-      background-color: rgba(lighten($color, 15%), .3);
+      @if ($name == 'light') {
+        background-color: rgba($color, .2);
+      } @else {
+        background-color: rgba(lighten($color, 15%), .3);
+      }
     }
 
     &:not([disabled]):not(.disabled):active:focus,
