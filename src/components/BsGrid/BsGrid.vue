@@ -69,9 +69,9 @@
       </div>
       <div class="md-grid-footer" v-if="showFooter">
         <div class="md-grid-footer-wrap" ref="tfooter">
-          <slot name="gridfooter" v-bind="{ columns: columnIterator }">
-            <bs-grid-footer :columns="columnIterator" />
-          </slot>
+          <bs-grid-footer :columns="columnIterator">
+            <slot slot="default" name="gridfooter" v-bind="{ columns: columnIterator }" />
+          </bs-grid-footer>
         </div>
       </div>
     </div>
@@ -106,7 +106,6 @@ import ScreenSize from '../../mixins/ScreenSize';
 import Grid from "./mixins/Grid";
 import Helper from '../../utils/Helper';
 import sum from 'lodash/sum';
-// import { sum } from 'lodash';
 import { addResizeListener, removeResizeListener } from '../../utils/ResizeListener';
 import '../../../scss/_others.scss';
 
@@ -138,7 +137,7 @@ export default {
          * <pre>
          * {
          *    logic: 'and|or',      // Logic yang dipakai jika filters lebih dari 1
-         *    operator: 'eq|neq|gt|gte|lt|lte|in|notin|startwith|endwith|contains|fts',  // default 'eq'
+         *    operator: 'eq|neq|gt|gte|lt|lte|in|notin|startswith|endswith|contains|fts',  // default 'eq'
          *    placeholder: boolean, // Show/hide placeholder pada textfield, default TRUE
          *    immediate: boolean,   // Jika TRUE maka filtering akan segera dilakukan setelah event 'onChange' terjadi
          *                          // jika FALSE maka filtering baru dilakukan setelah keyboard 'ENTER' ditekan
@@ -153,6 +152,10 @@ export default {
         },
         rowSelection: {
             type: [Boolean, Object],
+            default: false
+        },
+        showFooter: {
+            type: Boolean,
             default: false
         },
         sortable: {
@@ -225,7 +228,7 @@ export default {
         /**
          * Get pagination binding attributes.
          *
-         * @return {Object} Pagination attributes
+         * @return {*} Pagination attributes
          * @private
          */
         _paginationAttrs() {
@@ -275,7 +278,7 @@ export default {
          * @return {int} Total items
          */
         totalItems() {
-            return this.table.totalCount;
+            return this.dataSource ? this.dataSource.totalCount : this.table.totalCount;
         },
         /**
          * Gets the total number of pages.
@@ -283,7 +286,7 @@ export default {
          * @return {int} Total pages
          */
         totalPages() {
-            return Math.ceil(this.table.totalCount / this.table.pageSize);
+            return Math.ceil(this.totalItems / this.table.pageSize);
         }
     },
     created() {
@@ -559,28 +562,15 @@ export default {
             this._fetchData();
         },
         /**
-         * Sort the data based on the given fieldname.
+         * Sort the data based on the given field name.
          *
          * @param {string} field     The field for sorting
          * @param {string} direction The sort direction.
          * @return {void}
          */
         sort(field, direction) {
-            if (!Helper.isEmpty(this.dataSource)) {
-                this.isFetching = true;
-                this.dataSource.sort(field, direction)
-                    .then(() => {
-                        this.dataFetched      = true;
-                        this.isFetching       = false;
-                        this.table.totalCount = this.dataSource.totalCount;
-                        this.fireEvent('data-bind', this.dataSource.dataItems);
-                    })
-                    .catch((error) => {
-                        this.dataFetched = true;
-                        this.isFetching  = false;
-                        this.fireEvent('error', error);
-                    });
-            }
+            this.dataSource.sorters = [{property: field, direction: direction.toLowerCase()}];
+            this._fetchData();
         }
     }
 }

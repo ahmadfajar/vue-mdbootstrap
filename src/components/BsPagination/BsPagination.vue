@@ -42,7 +42,7 @@
         </bs-button>
         <div class="md-pagination-pager d-md-flex align-items-center pl-1 d-none">
           <bs-combobox v-model="itemPerPage"
-                       :items="configuration.pager"
+                       :data-source="configuration.paging"
                        :minimum-popover-width="70" />
           <span class="md-pagination-text text-nowrap pl-2">{{ configuration.messages.pager }}</span>
         </div>
@@ -72,10 +72,10 @@
 import BsButton from "../BsButton/BsButton";
 import BsIcon from "../BsIcon/BsIcon";
 import BsCombobox from "../BsField/BsCombobox";
-import Util from "../../utils/Helper";
+import Helper from "../../utils/Helper";
 import ceil from "lodash/ceil";
 import mergeWith from "lodash/mergeWith";
-// import { ceil, mergeWith } from "lodash";
+import BsArrayStore from "../../model/BsArrayStore";
 
 export default {
     name: "BsPagination",
@@ -134,21 +134,33 @@ export default {
          * @return {Object} Pager's configuration
          */
         configuration() {
-            const source = Util.isObject(this.pageable) ? this.pageable : {};
+            const source = Helper.isObject(this.pageable) ? this.pageable : {};
             const config = {
                 messages: {
                     display: '{0}-{1} of {2} items',
                     empty: 'No data to display',
                     pager: 'items per page'
                 },
-                pager: [10, 15, 25, 50, 75, 100, [-1, 'All']]
+                paging: [10, 15, 25, 50, 75, 100, [-1, 'All']]
             };
 
-            return mergeWith(config, source, (v1, v2) => {
+            const result = mergeWith(config, source, (v1, v2) => {
                 if (Array.isArray(v1) && Array.isArray(v2)) {
                     return v2;
                 }
             });
+            const pager  = new BsArrayStore(null, {idProperty: 'value'});
+
+            for (const el of result.paging) {
+                if (Helper.isArray(el)) {
+                    pager.append({value: el[0], text: el[1]});
+                } else {
+                    pager.append({value: el, text: el});
+                }
+            }
+            result.paging = {proxy: pager};
+
+            return result;
         },
         /**
          * Get/Set current page property.

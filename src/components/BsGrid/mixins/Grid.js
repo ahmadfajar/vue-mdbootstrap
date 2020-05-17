@@ -21,14 +21,13 @@ export default {
             type: Boolean,
             default: true
         },
-        showFooter: Boolean,
         rowHover: Boolean
     },
     computed: {
         /**
          * Get computed component css classes.
          *
-         * @return {Object} Css names to bind
+         * @return {*} Css names to bind
          * @private
          */
         _classNames() {

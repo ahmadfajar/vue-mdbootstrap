@@ -7,15 +7,15 @@
            :style="_colFooterStyles(column)" />
     </colgroup>
     <tfoot role="rowgroup">
-      <slot>
-        <tr role="row">
-          <th role="gridcell" v-if="BsGrid.enableRowSelect()"></th>
+      <tr role="row">
+        <th role="gridcell" v-if="BsGrid.enableRowSelect()"></th>
+        <slot>
           <bs-grid-footer-cell v-for="(col, idx) in columns"
                                :key="col.field + '-' + idx"
                                :column="col"
                                :index="idx" />
-        </tr>
-      </slot>
+        </slot>
+      </tr>
     </tfoot>
   </table>
 </template>

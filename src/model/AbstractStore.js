@@ -26,7 +26,7 @@ import { autobind } from "../utils/Autobind";
  * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 15/05/2020 18:57
+ * @since  15/03/2019 modified: 16/05/2020 3:58
  */
 export default class AbstractStore {
     /**
@@ -379,24 +379,40 @@ export default class AbstractStore {
     localFilter() {
         if (this.filters.length > 0) {
             return this._items.filter(item => {
-                let ret = false;
+                let equals = [];
                 for (const flt of this.filters) {
                     const itemValue = Helper.getObjectValueByPath(item, flt.property);
-                    if (flt.operator === 'gt') {
-                        ret = itemValue > flt.value;
-                    } else if (flt.operator === 'gte') {
-                        ret = itemValue >= flt.value;
-                    } else if (flt.operator === 'lt') {
-                        ret = itemValue < flt.value;
-                    } else if (flt.operator === 'lte') {
-                        ret = itemValue <= flt.value;
-                    } else if (flt.operator === 'in' && Helper.isArray(flt.value)) {
-                        ret = flt.value.includes(itemValue);
+                    const operator = flt.operator.toLowerCase();
+
+                    if (operator === 'gt') {
+                        equals.push(itemValue > flt.value);
+                    } else if (operator === 'gte') {
+                        equals.push(itemValue >= flt.value);
+                    } else if (operator === 'lt') {
+                        equals.push(itemValue < flt.value);
+                    } else if (operator === 'lte') {
+                        equals.push(itemValue <= flt.value);
+                    } else if (operator === 'neq') {
+                        equals.push(itemValue !== flt.value);
+                    } else if (operator === 'contains' || flt.operator === 'fts') {
+                        equals.push(String(itemValue).toLowerCase().includes(String(flt.value).toLowerCase()));
+                    } else if (operator === 'startswith' || flt.operator === 'startwith') {
+                        equals.push(String(itemValue).toLowerCase().startsWith(String(flt.value).toLowerCase()));
+                    } else if (operator === 'endswith' || flt.operator === 'endwith') {
+                        equals.push(String(itemValue).toLowerCase().endsWith(String(flt.value).toLowerCase()));
+                    } else if (operator === 'notin' && Helper.isArray(flt.value)) {
+                        equals.push(flt.value.includes(itemValue) === false);
+                    } else if (operator === 'in' && Helper.isArray(flt.value)) {
+                        equals.push(flt.value.includes(itemValue));
                     } else {
-                        ret = itemValue === flt.value;
+                        equals.push(itemValue === flt.value);
                     }
                 }
-                return ret;
+                if (this._config.filterLogic === 'OR') {
+                    return equals.some(it => it === true);
+                } else {
+                    return equals.every(it => it === true);
+                }
             });
         } else {
             return this._items;

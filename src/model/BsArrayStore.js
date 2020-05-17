@@ -9,7 +9,7 @@ import sumBy from "lodash/sumBy";
  * Class to make store's collection from Array data easier.
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 15/05/2020 19:54
+ * @since  13/03/2019 modified: 18/05/2020 1:32
  */
 export default class BsArrayStore extends AbstractStore {
     /**
@@ -61,7 +61,7 @@ export default class BsArrayStore extends AbstractStore {
      * @type {int}
      */
     get totalPages() {
-        return Math.floor(this.totalCount / this.pageSize);
+        return Math.ceil(this.totalCount / this.pageSize);
     }
 
     /**
@@ -72,6 +72,21 @@ export default class BsArrayStore extends AbstractStore {
      */
     aggregateAvg(field) {
         return averageBy(this._items, field);
+    }
+
+    /**
+     * Count number of items in the Store's collection specified by the given criteria.
+     *
+     * @param {string} field The field name criteria
+     * @param {*} value      The field value criteria
+     * @returns {number} The number of items
+     */
+    aggregateCountBy(field, value) {
+        const results = this._items.filter(item => {
+            return value === Helper.getObjectValueByPath(item, field);
+        });
+
+        return results.length;
     }
 
     /**
@@ -94,8 +109,8 @@ export default class BsArrayStore extends AbstractStore {
     append(item, sorted = false) {
         if (!Helper.isEmpty(item)) {
             this._append(item);
-            if (sorted === true) {
-                this._items = this.sort();
+            if (sorted === true && this.sorters.length > 0) {
+                this._items = this.localSort();
             }
         }
     }
@@ -109,6 +124,10 @@ export default class BsArrayStore extends AbstractStore {
      */
     assignData(data, silent = false) {
         this._assignData(data, silent);
+        if (this.sorters.length > 0) {
+            this._items = this.localSort();
+        }
+
         Vue.set(this, 'loading', false);
     }
 
@@ -122,8 +141,10 @@ export default class BsArrayStore extends AbstractStore {
         return new Promise(resolve => {
             if (!Helper.isEmpty(data)) {
                 this.assignData(data);
+            } else if (this.sorters.length > 0) {
+                this._items = this.localSort();
             }
-            this._items = this.localSort();
+
             return resolve(this._items);
         });
     }
@@ -147,8 +168,8 @@ export default class BsArrayStore extends AbstractStore {
      */
     sort(field = null, direction = 'asc') {
         this._createSorters(field, direction);
-
-        return this.localSort();
+        this._items = this.localSort();
+        return this._items;
     }
 
 }

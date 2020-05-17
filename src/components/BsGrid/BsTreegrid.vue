@@ -60,7 +60,6 @@ import Helper from "../../utils/Helper";
 import Common from "../../mixins/Common";
 import Grid from "./mixins/Grid";
 import sum from 'lodash/sum';
-// import { sum } from 'lodash';
 import { addResizeListener, removeResizeListener } from "../../utils/ResizeListener";
 
 export default {

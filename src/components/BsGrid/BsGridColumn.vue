@@ -43,7 +43,7 @@ export default {
          * <pre>
          * {
          *    field: String,         // default adalah nama field yang melekat pada column
-         *    operator: 'eq|neq|gt|gte|lt|lte|in|notin|startwith|endwith|contains|fts',  // default 'eq'
+         *    operator: 'eq|neq|gt|gte|lt|lte|in|notin|startswith|endswith|contains|fts',  // default 'eq'
          *    enabled: boolean,      // enable/disable column filtering, default TRUE
          *    placeholder: boolean,  // show/hide placeholder pada textfield, default TRUE
          *    button: boolean,       // show/hide action button untuk melakukan filtering, default FALSE

@@ -9,7 +9,7 @@ import sumBy from "lodash/sumBy";
  * Data Store class.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 15/05/2020 19:54
+ * @since  20/07/2018 modified: 18/05/2020 1:32
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -48,12 +48,18 @@ export default class BsStore extends AbstractStore {
             if (this._config.remoteFilter === undefined) {
                 this._config['remoteFilter'] = true;
             }
+            if (this._config.remotePaging === undefined) {
+                this._config['remotePaging'] = true;
+            }
             if (this._config.remoteSort === undefined) {
                 this._config['remoteSort'] = true;
             }
         } else {
             if (this._config.remoteFilter === undefined) {
                 this._config['remoteFilter'] = false;
+            }
+            if (this._config.remotePaging === undefined) {
+                this._config['remotePaging'] = false;
             }
             if (this._config.remoteSort === undefined) {
                 this._config['remoteSort'] = false;
@@ -67,12 +73,22 @@ export default class BsStore extends AbstractStore {
      * @type {BsModel[]|Object[]}
      */
     get dataItems() {
+        const page   = this.currentPage > 0 && this.currentPage <= this.totalPages ? this.currentPage - 1 : 0;
+        const offset = page * this.pageSize;
+
         if (!this.remoteFilter && this.filters.length > 0) {
             if (this._filterItems.length === 0) {
                 this._filterItems = this.localFilter();
             }
+            Vue.set(this, 'totalCount', this._filterItems.length);
+            if (!this.remotePaging) {
+                return this._filterItems.slice(offset, this.pageSize > 0 ? offset + this.pageSize : undefined);
+            }
 
             return this._filterItems;
+        }
+        if (!this.remotePaging) {
+            return this._items.slice(offset, this.pageSize > 0 ? offset + this.pageSize : undefined);
         }
 
         return this._items;
@@ -88,12 +104,30 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Define the server filtering configuration.
+     * Define the filter configuration.
      *
-     * @param {boolean} value If FALSE then using local filtering and TRUE otherwise
+     * @param {boolean} value If TRUE then using local filtering and FALSE otherwise
      */
     set remoteFilter(value) {
         this._config.remoteFilter = value;
+    }
+
+    /**
+     * Check if the Store is using server paging or local paging.
+     *
+     * @type {boolean}
+     */
+    get remotePaging() {
+        return this._config.remotePaging;
+    }
+
+    /**
+     * Define the paging configuration.
+     *
+     * @param {boolean} value If TRUE then using server paging and FALSE otherwise
+     */
+    set remotePaging(value) {
+        this._config.remotePaging = value;
     }
 
     /**
@@ -108,7 +142,7 @@ export default class BsStore extends AbstractStore {
     /**
      * Sets the server sorting configuration.
      *
-     * @param {boolean} value If FALSE then using server sorting and TRUE otherwise
+     * @param {boolean} value If TRUE then using server sorting and FALSE otherwise
      */
     set remoteSort(value) {
         this._config.remoteSort = value;
@@ -130,17 +164,39 @@ export default class BsStore extends AbstractStore {
      * @returns {number} The average value
      */
     aggregateAvg(field) {
-        return averageBy(this.dataItems, field);
+        return averageBy((this.remotePaging ? this.dataItems : this._items), field);
+    }
+
+    /**
+     * Count number of items in the Store's collection specified by the given criteria.
+     *
+     * @param {string} field The field name criteria
+     * @param {*} value      The field value criteria
+     * @returns {number} The number of items
+     */
+    aggregateCountBy(field, value) {
+        let results;
+        if (this.remotePaging) {
+            results = this.dataItems.filter(item => {
+                return value === Helper.getObjectValueByPath(item, field);
+            });
+        } else {
+            results = this._items.filter(item => {
+                return value === Helper.getObjectValueByPath(item, field);
+            });
+        }
+
+        return results.length;
     }
 
     /**
      * Calculate SUM or total value of the Store's collection.
      *
-     * @param {string} field The fieldname of the collection to calculate
+     * @param {string} field The field name of the collection to calculate
      * @returns {number} The sums value
      */
     aggregateSum(field) {
-        return sumBy(this.dataItems, field);
+        return sumBy((this.remotePaging ? this.dataItems : this._items), field);
     }
 
     /**
@@ -168,6 +224,10 @@ export default class BsStore extends AbstractStore {
      */
     assignData(data, silent = false) {
         this._assignData(data, silent);
+        if (!this.remoteSort && this.sorters.length > 0) {
+            this._items = this.localSort();
+        }
+
         Vue.set(this, 'loading', false);
         Vue.set(this, 'totalCount', this.length);
     }
@@ -245,28 +305,28 @@ export default class BsStore extends AbstractStore {
      *
      * @example
      *     // sort by a single field
-     *     myStore.sort('myField', 'asc');
+     *     let results = myStore.sort('myField', 'asc');
      *
      *     //sorting by multiple fields
-     *     myStore.sort([
+     *     let results = myStore.sort([
      *      {property: 'age', direction: 'desc'},
      *      {property: 'name', direction: 'asc'}
      *     ]);
      *
      * @param {string|ISorter[]|Object[]} field The field for sorting
      * @param {'asc'|'desc'} direction          The sort direction
-     * @return {Object[]} Promise interface
+     * @return {Object[]} Collection
      */
     sort(field = null, direction = 'asc') {
         this._createSorters(field, direction);
 
         if (!this.remoteSort) {
-            return this.localSort();
+            this._items = this.localSort();
+            return this._items;
         } else {
             this.load().then(() => {
                 return this._items;
             });
         }
     }
-
 }
