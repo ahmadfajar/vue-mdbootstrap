@@ -22,12 +22,12 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {{"flex-grow-1": boolean}} Component css classes
+         * @return {*} Component css classes
          * @private
          */
         _classNames() {
             return {
-                'flex-grow-1': this.fill
+                'flex-grow-1': this.fill && this.width
             }
         },
         /**
@@ -38,7 +38,7 @@ export default {
          */
         _styles() {
             return {
-                width: !this.fill ? Helper.sizeUnit(this.width) : null
+                width: this.width ? Helper.sizeUnit(this.width) : null
             }
         }
     }

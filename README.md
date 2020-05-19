@@ -5,7 +5,7 @@
     <img src="https://flat.badgen.net/npm/v/vue-mdbootstrap" alt="NPM Release">
   </a>
   <a href="https://github.com/ahmadfajar/vue-mdbootstrap">
-    <img src="https://flat.badgen.net/github/release/ahmadfajar/vue-mdbootstrap" alt="Release">
+    <img src="https://flat.badgen.net/github/release/ahmadfajar/vue-mdbootstrap?icon=github" alt="Release">
   </a>
   <a href="https://www.npmjs.com/package/vue-mdbootstrap">
     <img src="https://flat.badgen.net/npm/dt/vue-mdbootstrap" alt="Downloads">

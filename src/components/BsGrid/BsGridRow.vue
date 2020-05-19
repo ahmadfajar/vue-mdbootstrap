@@ -37,11 +37,11 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
-  @import "../../../scss/mixins";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/mixins";
 
-  @each $name, $color in $theme-colors {
-    @include grid-rowstate-variant($name, $color);
-  }
+@each $name, $color in $theme-colors {
+  @include grid-rowstate-variant($name, $color);
+}
 </style>

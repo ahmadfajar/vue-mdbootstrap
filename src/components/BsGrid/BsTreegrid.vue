@@ -147,7 +147,6 @@ export default {
                     this.$refs.treeitems.treeNodes = [];
                 }
                 this.dataSource
-                    .page(this.table.page)
                     .load()
                     .then(() => {
                         this.dataFetched = true;
@@ -268,33 +267,33 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-treegrid {
-    .#{$prefix}-grid-content {
-      tr {
-        @include transition($transition-basic);
+.#{$prefix}-treegrid {
+  .#{$prefix}-grid-content {
+    tr {
+      @include transition($transition-basic);
 
-        > .#{$prefix}-treegrid-cell {
-          &:first-child {
-            padding-left: $table-cell-padding;
-          }
+      > .#{$prefix}-treegrid-cell {
+        &:first-child {
+          padding-left: $table-cell-padding;
+        }
 
-          .#{$prefix}-grid-cell-inner {
-            padding-left: .2rem;
-          }
+        .#{$prefix}-grid-cell-inner {
+          padding-left: .2rem;
+        }
 
-          .icon-chevron-right {
-            @include transition($transition-basic);
+        .icon-chevron-right {
+          @include transition($transition-basic);
 
-            &.expanded {
-              @include transform(rotateZ(90deg));
-            }
+          &.expanded {
+            @include transform(rotateZ(90deg));
           }
         }
       }
     }
   }
+}
 </style>

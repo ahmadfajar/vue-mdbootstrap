@@ -115,7 +115,7 @@ export default {
          */
         _pageInfo() {
             if (this.dataItems.length > 0) {
-                let msg = this.configuration.messages.display;
+                let msg  = this.configuration.messages.display;
                 const pg = this.currentPage - 1;
                 const nA = (pg * this.itemPerPage) + 1;
                 const nB = (pg * this.itemPerPage) + this.dataItems.length;
@@ -203,36 +203,36 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-pagination-wrapper {
-    position: relative;
-    overflow: hidden;
-    padding-top: .8rem;
-    padding-bottom: .8rem;
-    width: 100%;
+  position: relative;
+  overflow: hidden;
+  padding-top: .8rem;
+  padding-bottom: .8rem;
+  width: 100%;
 
-    .#{$prefix}-pagination-control {
-        font-size: 14px;
-        width: 44px;
-    }
+  .#{$prefix}-pagination-control {
+    font-size: 14px;
+    width: 44px;
+  }
 
-    .#{$prefix}-pagination-text {
-        color: $table-header-color;
-    }
+  .#{$prefix}-pagination-text {
+    color: $table-header-color;
+  }
 
-    .btn-icon {
-        margin-right: 0;
-    }
+  .btn-icon {
+    margin-right: 0;
+  }
 
-    .#{$prefix}-pagination-pager {
-        min-width: 160px;
-    }
+  .#{$prefix}-pagination-pager {
+    min-width: 160px;
+  }
 
-    .#{$prefix}-combobox-control-inner {
-        > .#{$prefix}-combobox-input {
-            @include user-select(none);
-            cursor: pointer;
-            padding-bottom: 0 !important;
-            padding-left: 8px !important;
-        }
+  .#{$prefix}-combobox-control-inner {
+    > .#{$prefix}-combobox-input {
+      @include user-select(none);
+      cursor: pointer;
+      padding-bottom: 0 !important;
+      padding-left: 8px !important;
     }
+  }
 }
 </style>

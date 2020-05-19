@@ -159,23 +159,23 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-grid {
-    .#{$prefix}-field {
-      > .#{$prefix}-field-placeholder {
-        position: absolute;
-        left: 8px;
-        top: 6px;
-      }
+.#{$prefix}-grid {
+  .#{$prefix}-field {
+    > .#{$prefix}-field-placeholder {
+      position: absolute;
+      left: 8px;
+      top: 6px;
+    }
 
-      input[type='text']:focus {
-        ~ .#{$prefix}-field-placeholder {
-          display: none;
-        }
+    input[type='text']:focus {
+      ~ .#{$prefix}-field-placeholder {
+        display: none;
       }
     }
   }
+}
 </style>

@@ -577,100 +577,163 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~bootstrap/scss/functions";
-  @import "~bootstrap/scss/variables";
-  @import "~bootstrap/scss/mixins/breakpoints";
-  @import "~compass-sass-mixins/lib/compass/css3";
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-grid,
-  .#{$prefix}-treegrid {
-    position: relative;
+.#{$prefix}-grid,
+.#{$prefix}-treegrid {
+  position: relative;
+  width: 100%;
+
+  table {
+    border-collapse: separate;
+    border-spacing: 0;
+    height: auto;
     width: 100%;
+    margin: 0;
+
+    .#{$prefix}-grid-cell {
+      &.row-numbering {
+        border-right: 1px solid lighten($gray-300, 4%);
+      }
+    }
+
+    th, td {
+      border-top: $table-border-width solid $table-border-color;
+      color: $table-text-color;
+      font-size: $table-font-size;
+      font-weight: $font-weight-light;
+      padding: $table-cell-padding;
+      vertical-align: middle;
+    }
+
+    thead, tfoot {
+      th {
+        @include user-select(none);
+        font-weight: $font-weight-normal;
+        color: $table-header-color;
+
+        &.row-numbering {
+          border-right: 1px solid lighten($table-border-color, 20%);
+        }
+      }
+
+      > tr {
+        &:first-child {
+          th {
+            border-top: 0 none;
+          }
+        }
+      }
+    }
+
+    tbody {
+      > tr {
+        &:first-child {
+          td {
+            border-top: 0 none;
+          }
+        }
+      }
+    }
+
+    thead th, tbody td {
+      &:first-child {
+        padding-left: 1rem;
+      }
+    }
+  }
+
+  .#{$prefix}-pagination {
+    border-top: 1px solid darken($table-border-color, 10%);
+    position: relative;
+  }
+
+  .#{$prefix}-grid-header,
+  .#{$prefix}-grid-footer,
+  .#{$prefix}-grid-content {
+    position: relative;
 
     table {
-      border-collapse: separate;
-      border-spacing: 0;
-      height: auto;
+      table-layout: fixed;
+    }
+  }
+
+  .#{$prefix}-grid-header {
+    background-color: $table-header-bgcolor;
+    border-bottom: 1px solid darken($table-border-color, 10%);
+
+    > .#{$prefix}-grid-header-wrap {
+      position: relative;
+      overflow: hidden;
       width: 100%;
-      margin: 0;
 
-      .#{$prefix}-grid-cell {
-        &.row-numbering {
-          border-right: 1px solid lighten($gray-300, 4%);
-        }
-      }
-
-      th, td {
-        border-top: $table-border-width solid $table-border-color;
-        color: $table-text-color;
-        font-size: $table-font-size;
-        font-weight: $font-weight-light;
-        padding: $table-cell-padding;
-        vertical-align: middle;
-      }
-
-      thead, tfoot {
-        th {
-          @include user-select(none);
-          font-weight: $font-weight-normal;
-          color: $table-header-color;
-
-          &.row-numbering {
-            border-right: 1px solid lighten($table-border-color, 20%);
-          }
-        }
-
-        > tr {
-          &:first-child {
-            th {
-              border-top: 0 none;
-            }
-          }
-        }
-      }
-
-      tbody {
-        > tr {
-          &:first-child {
-            td {
-              border-top: 0 none;
-            }
-          }
-        }
-      }
-
-      thead th, tbody td {
-        &:first-child {
-          padding-left: 1rem;
-        }
-      }
-    }
-
-    .#{$prefix}-pagination {
-      border-top: 1px solid darken($table-border-color, 10%);
-      position: relative;
-    }
-
-    .#{$prefix}-grid-header,
-    .#{$prefix}-grid-footer,
-    .#{$prefix}-grid-content {
-      position: relative;
-
-      table {
-        table-layout: fixed;
-      }
-    }
-
-    .#{$prefix}-grid-header {
-      background-color: $table-header-bgcolor;
-      border-bottom: 1px solid darken($table-border-color, 10%);
-
-      > .#{$prefix}-grid-header-wrap {
-        position: relative;
+      .#{$prefix}-grid-th-inner {
         overflow: hidden;
-        width: 100%;
+        position: relative;
+        text-overflow: ellipsis;
+        vertical-align: top;
+        white-space: nowrap;
+
+        &.enable-sort {
+          cursor: pointer;
+        }
+
+        .sort-asc, .sort-desc {
+          @include transition($transition-basic);
+          color: darken($table-header-color, 10%);
+          display: inline-block;
+          font-size: 12px;
+        }
+
+        .sort-asc {
+          @include transform(rotateZ(0deg));
+        }
+
+        .sort-desc {
+          @include transform(rotateZ(180deg));
+        }
+      }
+    }
+  }
+
+  .#{$prefix}-grid-footer {
+    background-color: lighten($table-header-bgcolor, 2%);
+    border-top: 1px solid $table-border-color;
+
+    > .#{$prefix}-grid-footer-wrap {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+
+      .#{$prefix}-grid-th-inner {
+        overflow: hidden;
+        position: relative;
+        text-overflow: ellipsis;
+        vertical-align: top;
+        white-space: nowrap;
+        font-weight: $font-weight-bold;
+      }
+    }
+  }
+
+  .#{$prefix}-grid-content {
+    background-color: $body-bg;
+    min-height: 100px;
+    width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+
+    table {
+      > thead {
+        background-color: $table-header-bgcolor;
+        border-bottom: 1px solid darken($table-border-color, 10%);
 
         .#{$prefix}-grid-th-inner {
           overflow: hidden;
@@ -701,308 +764,255 @@ export default {
       }
     }
 
-    .#{$prefix}-grid-footer {
-      background-color: lighten($table-header-bgcolor, 2%);
-      border-top: 1px solid $table-border-color;
+    > .#{$prefix}-grid-alert {
+      > .alert {
+        margin-bottom: 0;
+      }
+    }
 
-      > .#{$prefix}-grid-footer-wrap {
-        position: relative;
-        overflow: hidden;
-        width: 100%;
+    .#{$prefix}-grid-cell-inner {
+      overflow: hidden;
+      position: relative;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
-        .#{$prefix}-grid-th-inner {
-          overflow: hidden;
-          position: relative;
-          text-overflow: ellipsis;
-          vertical-align: top;
-          white-space: nowrap;
-          font-weight: $font-weight-bold;
+      > .svg-inline--fa {
+        font-size: 20px;
+      }
+    }
+
+    @include media-breakpoint-up(xl) {
+      > .#{$prefix}-grid-alert {
+        width: 75%;
+      }
+    }
+  }
+
+  .#{$prefix}-progress-bar {
+    position: absolute;
+    width: 100%;
+    z-index: 100;
+  }
+
+  .#{$prefix}-grid-progress-spinner {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    min-height: 100px;
+    max-height: 100%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    display: -ms-flexbox;
+    justify-content: center;
+    -ms-flex-pack: center;
+  }
+
+  &.#{$prefix}-grid-bordered {
+    .#{$prefix}-grid-header,
+    .#{$prefix}-grid-content {
+      th, td {
+        border-right: $table-border-width solid $table-border-color;
+
+        &:last-child {
+          border-right: none;
         }
+      }
+    }
+  }
+
+  &.#{$prefix}-grid-hoverable {
+    .#{$prefix}-grid-content {
+      .#{$prefix}-grid-row,
+      .#{$prefix}-grid-row-alt {
+        @include transition($transition-hoverable);
+
+        &:hover {
+          background-color: $table-hover-bgcolor;
+        }
+      }
+    }
+  }
+
+  &.#{$prefix}-grid-fixed {
+    .#{$prefix}-grid-header {
+      padding-right: 18px;
+
+      > .#{$prefix}-grid-header-wrap {
+        border-right: 1px solid darken($table-border-color, 10%);
       }
     }
 
     .#{$prefix}-grid-content {
-      background-color: $body-bg;
-      min-height: 100px;
-      width: 100%;
-      overflow-y: hidden;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      -ms-overflow-style: -ms-autohiding-scrollbar;
+      overflow-y: scroll;
+    }
+  }
+}
 
-      table {
-        > thead {
-          background-color: $table-header-bgcolor;
-          border-bottom: 1px solid darken($table-border-color, 10%);
+.card {
+  > .#{$prefix}-grid,
+  > .#{$prefix}-treegrid {
+    &:first-child {
+      > div[class^="#{$prefix}-grid"] {
+        &:first-child:not(.#{$prefix}-grid-cell-inner) {
+          @include border-top-radius($border-radius-base * 2);
+        }
 
-          .#{$prefix}-grid-th-inner {
-            overflow: hidden;
-            position: relative;
-            text-overflow: ellipsis;
-            vertical-align: top;
-            white-space: nowrap;
+        &:last-child:not(.#{$prefix}-grid-cell-inner) {
+          @include border-bottom-radius($border-radius-base * 2);
+        }
+      }
 
-            &.enable-sort {
-              cursor: pointer;
-            }
-
-            .sort-asc, .sort-desc {
-              @include transition($transition-basic);
-              color: darken($table-header-color, 10%);
-              display: inline-block;
-              font-size: 12px;
-            }
-
-            .sort-asc {
-              @include transform(rotateZ(0deg));
-            }
-
-            .sort-desc {
-              @include transform(rotateZ(180deg));
-            }
+      > div:first-child {
+        > div[class^="#{$prefix}-grid"] {
+          &:first-child:not(.#{$prefix}-grid-cell-inner) {
+            @include border-top-radius($border-radius-base * 2);
           }
-        }
-      }
 
-      > .#{$prefix}-grid-alert {
-        > .alert {
-          margin-bottom: 0;
-        }
-      }
-
-      .#{$prefix}-grid-cell-inner {
-        overflow: hidden;
-        position: relative;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-
-        > .svg-inline--fa {
-          font-size: 20px;
-        }
-      }
-
-      @include media-breakpoint-up(xl) {
-        > .#{$prefix}-grid-alert {
-          width: 75%;
-        }
-      }
-    }
-
-    .#{$prefix}-progress-bar {
-      position: absolute;
-      width: 100%;
-      z-index: 100;
-    }
-
-    .#{$prefix}-grid-progress-spinner {
-      position: absolute;
-      left: 0;
-      top: 0;
-      right: 0;
-      z-index: 100;
-      min-height: 100px;
-      max-height: 100%;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      display: -ms-flexbox;
-      justify-content: center;
-      -ms-flex-pack: center;
-    }
-
-    &.#{$prefix}-grid-bordered {
-      .#{$prefix}-grid-header,
-      .#{$prefix}-grid-content {
-        th, td {
-          border-right: $table-border-width solid $table-border-color;
-
-          &:last-child {
-            border-right: none;
+          &:last-child:not(.#{$prefix}-grid-cell-inner) {
+            @include border-bottom-radius($border-radius-base * 2);
           }
         }
       }
     }
 
-    &.#{$prefix}-grid-hoverable {
-      .#{$prefix}-grid-content {
-        .#{$prefix}-grid-row,
-        .#{$prefix}-grid-row-alt {
-          @include transition($transition-hoverable);
-
-          &:hover {
-            background-color: $table-hover-bgcolor;
-          }
-        }
+    > div:last-child > div[class^="#{$prefix}-grid"],
+    > div[class^="#{$prefix}-grid"] {
+      &:last-child:not(.#{$prefix}-grid-cell-inner) {
+        @include border-bottom-radius($border-radius-base * 2);
       }
     }
+  }
 
-    &.#{$prefix}-grid-fixed {
+  .card-body {
+    .#{$prefix}-grid,
+    .#{$prefix}-treegrid {
       .#{$prefix}-grid-header {
-        padding-right: 18px;
+        border-top: $table-border-width solid $table-border-color;
+      }
+    }
+  }
+}
 
-        > .#{$prefix}-grid-header-wrap {
-          border-right: 1px solid darken($table-border-color, 10%);
+@include media-breakpoint-down(sm) {
+  .#{$prefix}-grid {
+    &.#{$prefix}-grid-flip {
+      .#{$prefix}-grid-header,
+      .#{$prefix}-grid-footer,
+      .#{$prefix}-grid-content {
+        .#{$prefix}-grid-cell-selection {
+          width: auto;
+        }
+
+        table {
+          table-layout: auto;
+          display: inline-flex;
+
+          thead, tfoot {
+            @include flexbox((display: flex, flex-shrink: 0));
+
+            th {
+              color: $gray-800;
+              font-weight: $font-weight-bold;
+              text-align: left !important;
+              padding-right: 1.2rem;
+
+              &.row-numbering {
+                border-right: none;
+              }
+
+              .sort-asc, .sort-desc {
+                float: right;
+              }
+            }
+          }
+
+          tbody, tfoot {
+            @include display-flex();
+            position: relative;
+            overflow-x: auto;
+            overflow-y: hidden;
+          }
+
+          tbody {
+            td {
+              border-right: $table-border-width solid $table-border-color;
+
+              &.row-numbering {
+                text-align: left !important;
+              }
+            }
+          }
+
+          tr {
+            @include flexbox((display: flex, flex-direction: column));
+            min-width: min-content;
+
+            td, th {
+              display: block;
+              border-top: $table-border-width solid $table-border-color;
+
+              &:first-child {
+                border-top: none;
+              }
+            }
+
+            &:last-child {
+              td {
+                border-right: none;
+              }
+            }
+          }
         }
       }
 
-      .#{$prefix}-grid-content {
-        overflow-y: scroll;
+      .#{$prefix}-grid-header {
+        border-right: $table-border-width solid $table-border-color;
+        border-bottom-width: 0;
+        max-width: 40%;
+      }
+
+      .#{$prefix}-grid-footer {
+        border-left: $table-border-width solid $table-border-color;
+        border-top: 0 none;
+        max-width: 30%;
+
+        > .#{$prefix}-grid-footer-wrap {
+          overflow-x: auto;
+          overflow-y: hidden;
+        }
       }
     }
   }
 
   .card {
-    > .#{$prefix}-grid,
-    > .#{$prefix}-treegrid {
-      &:first-child {
-        > div:first-child {
-          > div[class^="#{$prefix}-grid"] {
-            &:first-child:not(.#{$prefix}-grid-cell-inner) {
-              @include border-top-radius($border-radius-base * 2);
-            }
-
-            &:last-child:not(.#{$prefix}-grid-cell-inner) {
-              @include border-bottom-radius($border-radius-base * 2);
-            }
+    > .#{$prefix}-grid {
+      &.#{$prefix}-grid-flip {
+        div[class^="#{$prefix}-grid"] {
+          &:first-child {
+            @include border-top-right-radius(0);
+            @include border-bottom-left-radius($border-radius-base * 2);
           }
         }
-      }
 
-      > div:last-child > div[class^="#{$prefix}-grid"],
-      > div[class^="#{$prefix}-grid"] {
-        &:last-child:not(.#{$prefix}-grid-cell-inner) {
-          @include border-bottom-radius($border-radius-base * 2);
+        .#{$prefix}-grid-content {
+          @include border-top-right-radius($border-radius-base * 2);
         }
       }
     }
 
     .card-body {
-      .#{$prefix}-grid,
-      .#{$prefix}-treegrid {
-        .#{$prefix}-grid-header {
-          border-top: $table-border-width solid $table-border-color;
-        }
-      }
-    }
-  }
-
-  @include media-breakpoint-down(sm) {
-    .#{$prefix}-grid {
-      &.#{$prefix}-grid-flip {
-        .#{$prefix}-grid-header,
-        .#{$prefix}-grid-footer,
-        .#{$prefix}-grid-content {
-          .#{$prefix}-grid-cell-selection {
-            width: auto;
-          }
-
-          table {
-            table-layout: auto;
-            display: inline-flex;
-
-            thead, tfoot {
-              @include flexbox((display: flex, flex-shrink: 0));
-
-              th {
-                color: $gray-800;
-                font-weight: $font-weight-bold;
-                text-align: left !important;
-                padding-right: 1.2rem;
-
-                &.row-numbering {
-                  border-right: none;
-                }
-
-                .sort-asc, .sort-desc {
-                  float: right;
-                }
-              }
-            }
-
-            tbody, tfoot {
-              @include display-flex();
-              position: relative;
-              overflow-x: auto;
-              overflow-y: hidden;
-            }
-
-            tbody {
-              td {
-                border-right: $table-border-width solid $table-border-color;
-
-                &.row-numbering {
-                  text-align: left !important;
-                }
-              }
-            }
-
-            tr {
-              @include flexbox((display: flex, flex-direction: column));
-              min-width: min-content;
-
-              td, th {
-                display: block;
-                border-top: $table-border-width solid $table-border-color;
-
-                &:first-child {
-                  border-top: none;
-                }
-              }
-
-              &:last-child {
-                td {
-                  border-right: none;
-                }
-              }
-            }
-          }
-        }
-
-        .#{$prefix}-grid-header {
-          border-right: $table-border-width solid $table-border-color;
-          border-bottom-width: 0;
-          max-width: 40%;
-        }
-
-        .#{$prefix}-grid-footer {
-          border-left: $table-border-width solid $table-border-color;
-          border-top: 0 none;
-          max-width: 30%;
-
-          > .#{$prefix}-grid-footer-wrap {
-            overflow-x: auto;
-            overflow-y: hidden;
-          }
-        }
-      }
-    }
-
-    .card {
-      > .#{$prefix}-grid {
+      .#{$prefix}-grid {
         &.#{$prefix}-grid-flip {
-          div[class^="#{$prefix}-grid"] {
-            &:first-child {
-              @include border-top-right-radius(0);
-              @include border-bottom-left-radius($border-radius-base * 2);
-            }
-          }
-
+          .#{$prefix}-grid-header,
           .#{$prefix}-grid-content {
-            @include border-top-right-radius($border-radius-base * 2);
-          }
-        }
-      }
-
-      .card-body {
-        .#{$prefix}-grid {
-          &.#{$prefix}-grid-flip {
-            .#{$prefix}-grid-header,
-            .#{$prefix}-grid-content {
-              border-top: $table-border-width solid $table-border-color;
-            }
+            border-top: $table-border-width solid $table-border-color;
           }
         }
       }
     }
   }
+}
 </style>

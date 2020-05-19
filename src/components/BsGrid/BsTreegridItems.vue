@@ -234,7 +234,7 @@ export default {
          *
          * @param {int} depth                   Node depth level
          * @param {BsModel[]|Object[]} sources  Collection of data model
-         * @param {ITreeNode|null} parentNode   Parent node
+         * @param {ITreeNode|*} parentNode      Parent node
          * @return {void}
          */
         populateNodes(depth, sources, parentNode = null) {
