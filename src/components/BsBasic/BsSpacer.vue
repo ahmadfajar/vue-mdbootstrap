@@ -27,7 +27,7 @@ export default {
          */
         _classNames() {
             return {
-                'flex-grow-1': this.fill && this.width
+                'flex-grow-1': this.fill && !this.width
             }
         },
         /**
