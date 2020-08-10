@@ -13,6 +13,7 @@ Desktop.ini
 ### Covers project specific files
 /node_modules/
 /dist/vue-mdb.bundle.js.LICENSE.txt
+/dist/vue-mdb.bundle.umd.js.LICENSE.txt
 /dist/vue-mdb.cjs.js.LICENSE.txt
 npm-debug.log
 yarn-error.log

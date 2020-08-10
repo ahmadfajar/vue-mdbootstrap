@@ -1,8 +1,9 @@
-const path                 = require('path');
-const webpack              = require('webpack');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const TerserPlugin         = require("terser-webpack-plugin");
-const VueLoaderPlugin      = require('vue-loader/lib/plugin');
+const path             = require('path');
+const webpack          = require('webpack');
+const CssExtractPlugin = require("mini-css-extract-plugin");
+const MinifyCssPlugin  = require("optimize-css-assets-webpack-plugin");
+const MinifyJsPlugin   = require("terser-webpack-plugin");
+const VueLoaderPlugin  = require('vue-loader/lib/plugin');
 
 const babelLoader = [{
     loader: "babel-loader",
@@ -11,21 +12,21 @@ const babelLoader = [{
             ["@babel/preset-env"]
         ],
         plugins: [
-            ['@babel/plugin-transform-runtime', { "corejs": 3 }]
+            ['@babel/plugin-transform-runtime', {"corejs": 3}]
         ]
     }
 }];
 
 const sassLoader = [
     'vue-style-loader',
-    MiniCssExtractPlugin.loader,
+    CssExtractPlugin.loader,
     'css-loader',
     'sass-loader',
 ];
 
 const cssLoader = [
     'vue-style-loader',
-    MiniCssExtractPlugin.loader,
+    CssExtractPlugin.loader,
     'css-loader',
 ];
 
@@ -36,39 +37,10 @@ const libResolve = {
     }
 };
 
-const libExternals = [
-    {
-        'vue': {
-            root: 'vue',
-            amd: 'vue',
-            commonjs: 'vue',
-            commonjs2: 'vue'
-        },
-    },
-    {
-        'moment': {
-            root: 'moment',
-            amd: 'moment',
-            commonjs: 'moment',
-            commonjs2: 'moment'
-        },
-        'vue': {
-            root: 'vue',
-            amd: 'vue',
-            commonjs: 'vue',
-            commonjs2: 'vue'
-        },
-    }
-];
-
-const cfgOutput = {
-    library: 'VueMdb',
-    path: path.resolve(__dirname, 'dist'),
-};
-
 const cfgOptimization = {
     minimizer: [
-        new TerserPlugin()
+        new MinifyJsPlugin(),
+        new MinifyCssPlugin()
     ],
     splitChunks: {
         cacheGroups: {
@@ -122,7 +94,7 @@ const plugins = [
         }
     }),
     new VueLoaderPlugin(),
-    new MiniCssExtractPlugin({
+    new CssExtractPlugin({
         filename: '[name].css'
     }),
     new webpack.IgnorePlugin({
@@ -134,22 +106,20 @@ const plugins = [
 const configs = [{
     ...baseConfig,
     optimization: cfgOptimization,
-    externals: libExternals[0],
     plugins: plugins,
     output: {
-        ...cfgOutput,
+        library: 'VueMdb',
         libraryTarget: 'umd',
-        filename: '[name].bundle.js'
+        filename: '[name].bundle.umd.js',
+        path: path.resolve(__dirname, 'dist')
     }
 }, {
     ...baseConfig,
-    externals: libExternals[1],
     optimization: cfgOptimization,
     plugins: plugins,
     output: {
-        ...cfgOutput,
-        libraryTarget: 'commonjs2',
-        filename: '[name].cjs.js'
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].bundle.js'
     }
 }];
 
