@@ -9,10 +9,11 @@
 
 <script>
 import BsProgress from "./BsProgress";
+import BsOverlay from "./BsOverlay";
 
 export default {
     name: "BsMaskLoader",
-    components: {BsProgress},
+    components: {BsProgress, BsOverlay},
     props: {
         fixedPosition: Boolean,
         show: Boolean,

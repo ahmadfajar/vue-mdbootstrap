@@ -7,7 +7,7 @@ import { autobind } from "../utils/Autobind";
  * Data Model class.
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 11/05/2020 1:25
+ * @since  09/07/2018 modified: 20/06/2020 21:55
  */
 export default class BsModel {
     /**
@@ -41,14 +41,68 @@ export default class BsModel {
     /**
      * Class constructor.
      *
+     * @example
+     * let model1 = new BsModel({
+     *     uid: null,
+     *     username: null,
+     *     displayName: null,
+     *     email: null,
+     *     phoneNumber: null,
+     *     enabled: true,
+     *     password: null
+     * });
+     *
+     * let model2 = new BsModel({
+     *     schema: {
+     *         uid: null,
+     *         username: null,
+     *         displayName: null,
+     *         email: null,
+     *         phoneNumber: null,
+     *         enabled: true,
+     *         password: null
+     *     },
+     *     proxy: {
+     *         save: {url: './api/users', method: 'post'},
+     *         update: {url: './api/users', method: 'put'},
+     *         delete: {url: './api/users', method: 'delete'},
+     *         fetch: './api/users/{id}',
+     *     },
+     *     csrfConfig: {
+     *         url: '/api/token/{name}',
+     *         tokenName: 'token_name',
+     *         dataField: 'value',
+     *         suffix: false, 
+     *     },
+     * });
+     *
      * @param {Object} schema                   Data model schema
      * @param {AxiosInstance|Object} [adapter]  Axios adapter instance
      * @param {String} [idProperty]             Data model ID field name
      * @param {String} [dataProperty]           REST Response data property
      */
     constructor(schema, adapter, idProperty = 'id', dataProperty = 'data') {
-        this._proxy  = new ProxyAdapter(adapter);
-        this._schema = Object.freeze(schema);
+        if (!Helper.isEmptyObject(schema.schema) && !Helper.isEmptyObject(schema.proxy)) {
+            let _methods = {};
+            this._restUrl = {};
+
+            for (let [key, value] of Object.entries(schema.proxy)) {
+                if (Helper.isObject(value)) {
+                    _methods[key] = value.method;
+                }
+                this._restUrl[key] = Helper.isObject(value) ? value.url : value;
+            }
+
+            this._proxy  = new ProxyAdapter(adapter, _methods);
+            this._schema = Object.freeze(schema.schema);
+
+            if (!Helper.isEmptyObject(schema.csrfConfig)) {
+                this._csrfConfig = Object.freeze(schema.csrfConfig);
+            }
+        } else {
+            this._proxy  = new ProxyAdapter(adapter);
+            this._schema = Object.freeze(schema);
+        }
 
         Object.defineProperty(this, '_idProperty', {
             value: idProperty,
@@ -87,25 +141,25 @@ export default class BsModel {
     }
 
     /**
-     * Define CSRF configuration in the form <code>{key: value}</code>, where the keys are:
-     * <tt>'url', 'tokenName', 'responseField', 'prefix'</tt>.
+     * Get/Override CSRF configuration in the form <code>{key: value}</code>, where the keys are:
+     * <tt>'url', 'tokenName', 'dataField', 'suffix'</tt>.
      *
      * @example
      * return {
-     *    'url'          : '/api/token/{name}',
-     *    'tokenName'    : 'token_name',
-     *    'responseField': 'csrf_token',
-     *    'suffix'       : false
+     *    'url'       : '/api/token/{name}',
+     *    'tokenName' : 'token_name',
+     *    'dataField' : 'token',
+     *    'suffix'    : false
      * }
      *
      * @type {Object}
      */
     get csrfConfig() {
-        return {};
+        return this._csrfConfig || {};
     }
 
     /**
-     * Define REST URL configuration in the form <code>{key: url}</code>, where the keys are:
+     * Get/Override REST URL configuration in the form <code>{key: url}</code>, where the keys are:
      * <tt>'save', 'fetch', 'delete', 'update'</tt>.
      *
      * @example
@@ -119,7 +173,7 @@ export default class BsModel {
      * @type {Object}
      */
     get restUrl() {
-        return {}
+        return this._restUrl || {};
     }
 
     /**
@@ -160,16 +214,25 @@ export default class BsModel {
     /**
      * Perform delete record that already exists on the remote service via REST API.
      *
-     * @return {Promise<any>} Promise interface
+     * @return {Promise<*>} Promise interface
      */
     delete() {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
         let config       = {};
         let url          = this.restUrl['delete'] || '';
+        const methods    = this.proxy.requestMethods();
         const identifier = this[this.getIdProperty()];
 
-        this._updateRequestConfig(identifier, url, 'delete', config);
+        if (methods['delete'].toLowerCase() === 'delete') {
+            config = {
+                url: url.replace('{id}', identifier),
+                method: methods['delete'],
+                data: this.toJSON()
+            };
+        } else {
+            this._updateRequestConfig(identifier, url, 'delete', config);
+        }
 
         if (!Helper.isEmptyObject(this.csrfConfig) && !Helper.isEmpty(this.csrfConfig['url'])) {
             return this._requestWithToken(config, this._onDelete, this._onDeleteSuccess, this._onDeleteFailure, '-delete');
@@ -580,7 +643,7 @@ export default class BsModel {
 
         if (csrfUrl !== '') {
             const response          = await Vue.prototype.$http.get(csrfUrl);
-            headers['X-CSRF-TOKEN'] = response.data[this.csrfConfig['responseField']];
+            headers['X-CSRF-TOKEN'] = response.data[this.csrfConfig['dataField']] || response.data[this.csrfConfig['responseField']];
             config['headers']       = headers;
 
             return this.proxy.request(config, onRequest, onSuccess, onFailure);

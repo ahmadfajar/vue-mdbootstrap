@@ -10,8 +10,11 @@
 </template>
 
 <script>
+import BsContainer from "./BsContainer";
+
 export default {
     name: "BsContent",
+    components: {BsContainer},
     props: {
         app: {
             type: Boolean,

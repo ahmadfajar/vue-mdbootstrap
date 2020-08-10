@@ -70,8 +70,8 @@
 
 <script>
 import BsButton from "../BsButton/BsButton";
-import BsIcon from "../BsIcon/BsIcon";
 import BsCombobox from "../BsField/BsCombobox";
+import BsIcon from "../BsIcon/BsIcon";
 import Helper from "../../utils/Helper";
 import ceil from "lodash/ceil";
 import mergeWith from "lodash/mergeWith";
@@ -79,9 +79,7 @@ import BsArrayStore from "../../model/BsArrayStore";
 
 export default {
     name: "BsPagination",
-    components: {
-        BsButton, BsIcon, BsCombobox
-    },
+    components: {BsButton, BsCombobox, BsIcon},
     props: {
         dataItems: {
             type: Array,

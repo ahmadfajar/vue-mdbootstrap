@@ -147,11 +147,15 @@
 </template>
 
 <script>
+import BsButton from "../BsButton/BsButton";
+import BsIcon from "../BsIcon/BsIcon";
+import BsMenu from "../BsMenu/BsMenu";
 import Popup from "../../mixins/Popup";
 import Helper from "../../utils/Helper";
 
 export default {
     name: "BsLightbox",
+    components: {BsButton, BsIcon, BsMenu},
     mixins: [Popup],
     props: {
         items: {
@@ -368,7 +372,7 @@ export default {
     .#{$prefix}-lightbox-item-title {
       color: $gray-400;
       display: block;
-      line-height: 1;
+      line-height: normal;
       padding: 12px;
       font-size: 1.25rem;
       position: relative;

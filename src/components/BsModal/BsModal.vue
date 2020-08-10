@@ -61,7 +61,7 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {Object} Dialog css classes
+         * @return {*} Dialog css classes
          * @private
          */
         _classNames() {
@@ -220,9 +220,9 @@ export default {
     color: darken($gray-900, 5%);
     font-size: 22px;
     font-weight: normal;
-    line-height: 32px;
+    line-height: normal;
     margin: 0;
-    padding: $padding-lg $padding-lg 1.25rem;
+    padding: $padding-base $padding-lg 1.25rem;
 
     + .#{$prefix}-modal-body {
       padding-top: 0;

@@ -1,6 +1,3 @@
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-
 import BsNotification from './BsNotification';
 import BsContainer from './BsContainer';
 import BsSidebar from './BsSidebar';
@@ -20,8 +17,7 @@ import BsPicker from './BsPicker';
 import BsPopover from './BsPopover';
 import BsTabs from './BsTabs';
 import BsTooltip from './BsTooltip';
-
-library.add(fas);
+import FontAwesomeIcon from './fontawesome';
 
 export {
     BsNotification,
@@ -42,5 +38,6 @@ export {
     BsPicker,
     BsPopover,
     BsTabs,
-    BsTooltip
+    BsTooltip,
+    FontAwesomeIcon
 };

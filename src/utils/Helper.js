@@ -2,7 +2,7 @@
  * Class Helper
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 03/04/2019 15:55
+ * @since  05/07/2018, modified: 12/07/2020 17:41
  */
 class Helper {
     /**
@@ -30,7 +30,7 @@ class Helper {
      * Get a value from an Object property.
      *
      * @param {Object} obj     The object to check
-     * @param {Array} path     Array of fieldname
+     * @param {Array} path     Array of field name
      * @param {*} [fallbackFn] The fallback function
      * @return {*} The object property value
      */
@@ -150,6 +150,16 @@ class Helper {
     }
 
     /**
+     * Check data type of a value, whether it is a string or not.
+     *
+     * @param {*} value The value to check
+     * @return {boolean} TRUE if the given value is a String otherwise FALSE
+     */
+    static isString(value) {
+        return typeof value === 'string';
+    }
+
+    /**
      * Convert Number or String to any valid html size unit.
      *
      * @param {string|number} value The value to convert
@@ -180,7 +190,7 @@ class Helper {
      * Sort an array of object.
      *
      * @param {Array} items           Array of object
-     * @param {string} key            Fieldname or key to sort
+     * @param {string} key            Field name or key to sort
      * @param {boolean} isDescending  Sort desc or asc
      * @return {*} The sorted array
      */

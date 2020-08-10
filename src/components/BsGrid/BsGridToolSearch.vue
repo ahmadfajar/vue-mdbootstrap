@@ -66,7 +66,7 @@ export default {
         /**
          * Get input field computed binding's attributes.
          *
-         * @return {Object} Attributes to bind
+         * @return {*} Attributes to bind
          */
         _attributes() {
             return {

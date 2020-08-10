@@ -156,7 +156,7 @@
 
   &.has-success {
     .col-form-label {
-      color: $success-color-dark;
+      color: $success-color-dark !important;
     }
 
     .#{$prefix}-field-inner {
@@ -237,7 +237,7 @@
     &.has-error {
       .#{$prefix}-field-inner {
         > fieldset {
-          color: $red-darken-3;
+          color: $red-darken-3 !important;
         }
       }
     }
@@ -245,7 +245,7 @@
     &.has-success {
       .#{$prefix}-field-inner {
         > fieldset {
-          color: $green-darken-4;
+          color: $green-darken-4 !important;
         }
       }
     }

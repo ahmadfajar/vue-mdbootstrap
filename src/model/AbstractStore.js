@@ -26,7 +26,7 @@ import { autobind } from "../utils/Autobind";
  * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 16/05/2020 3:58
+ * @since  15/03/2019 modified: 29/07/2020 17:30
  */
 export default class AbstractStore {
     /**
@@ -87,7 +87,7 @@ export default class AbstractStore {
         this._items       = [];
 
         autobind(this);
-        this.removeAll();
+        this.clearData();
     }
 
     /**
@@ -136,7 +136,9 @@ export default class AbstractStore {
      * @param {IFilter[]|Object[]|IFilter|Object} newFilters Default filters to be used
      */
     set defaultFilters(newFilters) {
-        this._config.filters = Helper.isArray(newFilters) ? newFilters : (Helper.isObject(newFilters) ? [newFilters] : []);
+        this._config.filters = Helper.isArray(newFilters)
+            ? newFilters
+            : (Helper.isObject(newFilters) ? [newFilters] : []);
 
         const oldFilters = this.filters.filter(flt => {
             let found = false;
@@ -202,14 +204,14 @@ export default class AbstractStore {
     /**
      * Get proxy adapter to be used for loading data from the remote server.
      *
-     * @return {ProxyAdapter} The proxy adapter
+     * @returns {ProxyAdapter} The proxy adapter
      */
     get proxy() {
         return this._proxy;
     }
 
     /**
-     * Overrides REST URL configuration in the form <code>{key: name}</code>, where the keys are:
+     * Get/Override REST URL configuration in the form <code>{key: name}</code>, where the keys are:
      * <tt>'save', 'fetch', 'delete', 'update'</tt>.
      *
      * @example
@@ -220,10 +222,10 @@ export default class AbstractStore {
      *    'update': '/api/user/update/{id}'
      * }
      *
-     * @return {Object} REST url configuration
+     * @returns {Object} REST url configuration
      */
     get restUrl() {
-        return this._config.restUrl;
+        return this._config.restUrl || this._config.restProxy;
     }
 
     /**
@@ -252,7 +254,7 @@ export default class AbstractStore {
      * Append an item to the Store's dataset.
      *
      * @param {Object} item Data to append to the Store
-     * @return {void}
+     * @returns {void}
      * @protected
      */
     _append(item) {
@@ -270,7 +272,7 @@ export default class AbstractStore {
      *
      * @param {Object|Object[]} data A record or collection of records to be assigned
      * @param {boolean} silent       Append data silently and doesn't trigger data conversion
-     * @return {void}
+     * @returns {void}
      * @protected
      */
     _assignData(data, silent = false) {
@@ -299,7 +301,7 @@ export default class AbstractStore {
      * Assign values from response's object.
      *
      * @param {Object} response Response object
-     * @return {void}
+     * @returns {void}
      * @protected
      */
     _assignFromResponse(response) {
@@ -323,18 +325,40 @@ export default class AbstractStore {
      * Create new DataModel from the given object.
      *
      * @param {Object} item The data to convert
-     * @return {BsModel} Data model
+     * @returns {BsModel} Data model
      * @protected
      */
     _createModel(item) {
-        return new BsModel(item, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
+        let proxyCfg = {};
+        if (this.restUrl && !Helper.isEmpty(this.restUrl['delete'])) {
+            proxyCfg['delete'] = this.restUrl['delete'];
+        }
+        if (this.restUrl && !Helper.isEmpty(this.restUrl['update'])) {
+            proxyCfg['update'] = this.restUrl['update'];
+        }
+        if (this.restUrl && !Helper.isEmpty(this.restUrl['save'])) {
+            proxyCfg['save'] = this.restUrl['save'];
+        }
+        if (Helper.isEmptyObject(proxyCfg)) {
+            return new BsModel(item, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
+        } else {
+            let schema = {
+                schema: item,
+                proxy: proxyCfg
+            };
+            if (!Helper.isEmptyObject(this._config.csrfConfig)) {
+                schema['csrfConfig'] = this._config.csrfConfig;
+            }
+
+            return new BsModel(schema, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
+        }
     }
 
     /**
      * Check if the given data is DataModel or not.
      *
      * @param {Object} item The data item
-     * @return {boolean} TRUE if data can be converted into model otherwise FALSE
+     * @returns {boolean} TRUE if data can be converted into model otherwise FALSE
      * @protected
      */
     _isCandidateForModel(item) {
@@ -349,7 +373,7 @@ export default class AbstractStore {
      * @param {string|number|boolean|Array} value The filter value
      * @param {string} [operator]           Valid values: eq, neq, gt, gte, lt, lte, in, notin
      *                                      startwith, endwith, contains, fts, tsquery
-     * @return {AbstractStore} Itself
+     * @returns {AbstractStore} Itself
      */
     addFilter(field, value, operator) {
         this.filters.push({'property': field, 'value': value, 'operator': operator || 'eq'});
@@ -359,12 +383,30 @@ export default class AbstractStore {
     }
 
     /**
-     * Destroy all data items in the Store's collection.
+     * Clear all data items in this Store's collection.
      *
-     * @return {void}
+     * @returns {void}
+     */
+    clearData() {
+        if (Helper.isArray(this._items) && this._items.length > 0) {
+            for (const item of this._items) {
+                if (AbstractStore.isModel(item)) {
+                    item.destroy();
+                }
+            }
+        }
+
+        this._items = [];
+        this.resetState();
+    }
+
+    /**
+     * Destroy all data items in this Store's collection.
+     *
+     * @returns {void}
      */
     destroy() {
-        this.removeAll();
+        this.clearData();
         this._config      = null;
         this._proxy       = null;
         this._filters     = [];
@@ -372,9 +414,44 @@ export default class AbstractStore {
     }
 
     /**
+     * Finds the first matching Item in this store by a specific field value.
+     * 
+     * @param {string} property    The field name to test
+     * @param {*} value            The value to match
+     * @param {number} startIndex  The index to start searching at
+     * @returns {Object|BsModel|Array} An item that match the criteria
+     */
+    find(property, value, startIndex = 0) {
+        return this._items.find((item, idx) => item[property] === value && idx >= startIndex);
+    }
+
+    /**
+     * Finds the first matching Item in this store by function's predicate.
+     * If the predicate returns `true`, it is considered a match.
+     * 
+     * @param {Function} predicate  Function `(item: Object, index: number) => item is match`
+     * @returns {Object|BsModel|Array} An item that match the criteria
+     */
+    findBy(predicate) {
+        return this._items.find(predicate);
+    }
+
+    /**
+     * Finds the index of the first matching Item in this store by a specific field value.
+     * 
+     * @param {string} property    The field name to test
+     * @param {*} value            The value to match
+     * @param {number} startIndex  The index to start searching at
+     * @returns {number} The index of first match element, otherwise -1
+     */
+    findIndex(property, value, startIndex = 0) {
+        return this._items.findIndex((item, idx) => item[property] === value && idx >= startIndex);
+    }
+
+    /**
      * Filter the dataset locally.
      *
-     * @return {Object[]} Collection
+     * @returns {Object[]} Collection
      */
     localFilter() {
         if (this.filters.length > 0) {
@@ -422,7 +499,7 @@ export default class AbstractStore {
     /**
      * Sorts the dataset locally.
      *
-     * @return {Object[]} Collection
+     * @returns {Object[]} Collection
      */
     localSort() {
         let fields = [];
@@ -443,7 +520,7 @@ export default class AbstractStore {
     /**
      * Check if the data in the Store's collection is empty or not.
      *
-     * @return {boolean} TRUE if the Store doesn't have any data
+     * @returns {boolean} TRUE if the Store doesn't have any data
      */
     isEmpty() {
         return this.length === 0;
@@ -453,7 +530,7 @@ export default class AbstractStore {
      * Check if the given item is a data model or not.
      *
      * @param {BsModel|Object} item The item to check
-     * @return {boolean} TRUE if the given item is a data model otherwise FALSE
+     * @returns {boolean} TRUE if the given item is a data model otherwise FALSE
      */
     static isModel(item) {
         return item instanceof BsModel;
@@ -463,7 +540,7 @@ export default class AbstractStore {
      * Sets the current active page.
      *
      * @param {int} value Page number
-     * @return {AbstractStore} Itself
+     * @returns {AbstractStore} Itself
      */
     page(value) {
         this._currentPage = value;
@@ -474,7 +551,7 @@ export default class AbstractStore {
     /**
      * Sets the previous page to load by the Store.
      *
-     * @return {AbstractStore} Itself
+     * @returns {AbstractStore} Itself
      */
     previousPage() {
         if (this._currentPage > 0) {
@@ -487,7 +564,7 @@ export default class AbstractStore {
     /**
      * Sets the next page to load by the Store.
      *
-     * @return {AbstractStore} Itself
+     * @returns {AbstractStore} Itself
      */
     nextPage() {
         if (this._currentPage < this.totalPages) {
@@ -498,25 +575,50 @@ export default class AbstractStore {
     }
 
     /**
-     * Removes all records in the Store's dataset.
-     *
-     * @return {void}
+     * Removes the specified item(s) from the store.
+     * 
+     * @param {BsModel[]|Object[]|BsModel|Object} items Model instance or array of model instances to be removed
+     * @returns {void}
      */
-    removeAll() {
-        if (Helper.isArray(this._items) && this._items.length > 0 && AbstractStore.isModel(this._items[0])) {
-            for (let item of this._items) {
+    remove(items) {
+        if (Helper.isArray(items)) {
+            for (const item of items) {
+                this.remove(item);
+            }
+        } else if (AbstractStore.isModel(items) || this._isCandidateForModel(items)) {
+            const idProperty = this._config.idProperty;
+            const index = this.findIndex(idProperty, items[idProperty]);
+            this.removeAt(index);
+        } else {
+            throw Error('Item must be instance of BsModel.');
+        }
+    }
+
+    /**
+     * Removes the model instance(s) at the given index.
+     * 
+     * @param {number} index Index position
+     * @param {number} count Number of item to delete
+     * @returns {void}
+     */
+    removeAt(index, count = 1) {
+        const length = count + 1;
+        Vue.set(this, 'deleting', true);
+        for (let i = 0; i < length; i++) {
+            const item = this._items[index + i];
+            if (AbstractStore.isModel(item)) {
                 item.destroy();
             }
         }
 
-        this._items = [];
-        this.resetState();
+        this._items.splice(index, count);
+        Vue.set(this, 'deleting', false);
     }
 
     /**
      * Resets model state, ie. `loading`, etc back to their initial states.
      *
-     * @return {void}
+     * @returns {void}
      */
     resetState() {
         Vue.set(this, 'loading', false);
@@ -529,7 +631,7 @@ export default class AbstractStore {
      * Define the filter logic to be used when filtering the Store's dataset.
      *
      * @param {string} logic The filter logic, valid values: 'AND', 'OR'
-     * @return {AbstractStore} Itself
+     * @returns {AbstractStore} Itself
      */
     setFilterLogic(logic) {
         if (typeof logic === 'string' && logic.trim() !== '') {
@@ -548,7 +650,7 @@ export default class AbstractStore {
      *
      * @param {IFilter[]|IFilter} filters  The filters to apply
      * @param {boolean} includeDefault     Include default filters or not
-     * @return {AbstractStore} Itself
+     * @returns {AbstractStore} Itself
      */
     setFilters(filters, includeDefault = false) {
         if (Helper.isArray(filters)) {
@@ -565,7 +667,7 @@ export default class AbstractStore {
     /**
      * Get current query parameter's configuration.
      *
-     * @return {Object} Parameter's configuration
+     * @returns {Object} Parameter's configuration
      */
     queryParams() {
         let params = {};
@@ -594,7 +696,7 @@ export default class AbstractStore {
      *
      * @param {string|ISorter[]} field  The field for sorting
      * @param {'asc'|'desc'} direction  The sort direction
-     * @return {void}
+     * @returns {void}
      * @protected
      */
     _createSorters(field = null, direction = 'asc') {
@@ -614,7 +716,7 @@ export default class AbstractStore {
     /**
      * Callbacks function on start loading data.
      *
-     * @return {boolean} TRUE on success
+     * @returns {boolean} TRUE on success
      * @protected
      */
     _checkOnLoading() {
@@ -627,7 +729,7 @@ export default class AbstractStore {
      * Callbacks function on error loading data.
      *
      * @param {Object} error The error object
-     * @return {void}
+     * @returns {void}
      * @protected
      */
     _onLoadingFailure(error) {
@@ -639,7 +741,7 @@ export default class AbstractStore {
     /**
      * Callbacks function on success loading data.
      *
-     * @return {void}
+     * @returns {void}
      * @protected
      */
     _onLoadingSuccess() {
@@ -651,7 +753,7 @@ export default class AbstractStore {
      * Callbacks function on success loading data from remote server.
      *
      * @param {Response} response Response object
-     * @return {void}
+     * @returns {void}
      * @protected
      */
     _onQuerySuccess(response) {

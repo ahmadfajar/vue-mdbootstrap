@@ -16,3 +16,4 @@ Desktop.ini
 /dist/vue-mdb.cjs.js.LICENSE.txt
 npm-debug.log
 yarn-error.log
+yarn.lock

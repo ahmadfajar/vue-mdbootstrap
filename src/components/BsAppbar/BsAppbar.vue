@@ -37,12 +37,14 @@ export default {
         },
     },
     data: () => ({
-        isMobile: false
+        isMobile: false,
+        smoothTransition: false
     }),
     computed: {
         _classNames() {
             return {
                 'md-appbar-shadow': this.shadow,
+                'md-appbar-transition': this.smoothTransition,
                 'sticky-top': this.fixedTop
             };
         },
@@ -61,6 +63,11 @@ export default {
     mounted() {
         if (this.$el) {
             this.$VueMdb.application.appbarHeight = this.$el.getBoundingClientRect().height;
+            const me                              = this;
+
+            setTimeout(function () {
+                me.smoothTransition = true;
+            }, 100);
         }
     },
     methods: {
@@ -86,20 +93,19 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-appbar {
-  @include transition($transition-duration-base $md-transition-default-timing);
   @include justify-content(flex-start);
   background-color: $white;
   max-width: 100%;
 
   > .#{$prefix}-appbar-content {
     @include flexbox((display:flex, align-items: center, flex-direction: row));
-    padding: 12px 12px 12px 8px;
+    padding: 8px 12px 8px 8px;
 
     > .#{$prefix}-appbar-title {
       @include ellipsis();
       font-size: 1.7rem;
       font-weight: $font-weight-normal;
-      line-height: $padding-base * 2;
+      line-height: normal;
       margin: 0 $padding-base;
 
       > a {
@@ -114,6 +120,10 @@ export default {
       max-width: 100%;
       padding: 0;
     }
+  }
+
+  &.#{$prefix}-appbar-transition {
+    @include transition($transition-duration-base $md-transition-default-timing);
   }
 
   &.#{$prefix}-appbar-shadow {

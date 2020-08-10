@@ -41,10 +41,12 @@
 </template>
 
 <script>
+import BsRadio from "./BsRadio";
 import FieldValidation from "./mixins/FieldValidation";
 
 export default {
     name: "BsRadioGroup",
+    components: {BsRadio},
     mixins: [FieldValidation],
     model: {
         prop: 'value',

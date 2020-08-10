@@ -9,7 +9,7 @@ import sumBy from "lodash/sumBy";
  * Data Store class.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 18/05/2020 1:32
+ * @since  20/07/2018 modified: 13/07/2020 00:27
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -21,6 +21,26 @@ export default class BsStore extends AbstractStore {
     /**
      * Class constructor.
      *
+     * @example
+     * let dsStore = new BsStore({
+     *     idProperty: 'id',
+     *     dataProperty: 'data',
+     *     totalProperty: 'total',
+     *     pageSize: 15,
+     *     restProxy: {
+     *         browse: '/api/users',
+     *         delete: {url: './api/users', method: 'delete'},
+     *         save: {url: './api/users', method: 'post'},
+     *         update: {url: './api/users', method: 'put'}
+     *     },
+     *     csrfConfig: {
+     *         url: '/api/token/{name}',
+     *         tokenName: 'token_name',
+     *         dataField: 'value',
+     *         suffix: false, 
+     *     },
+     * });
+     *
      * @param {Object} config The configuration properties
      */
     constructor(config = {}) {
@@ -30,7 +50,7 @@ export default class BsStore extends AbstractStore {
             totalProperty: 'total',
             filterLogic: 'AND',
             adapter: undefined, // AxiosInstance
-            restUrl: {
+            restProxy: {
                 'browse': '',
                 'delete': '',
                 'fetch': '',
@@ -170,8 +190,8 @@ export default class BsStore extends AbstractStore {
     /**
      * Count number of items in the Store's collection specified by the given criteria.
      *
-     * @param {string} field The field name criteria
-     * @param {*} value      The field value criteria
+     * @param {string} field The grouping field name criteria
+     * @param {*} value      The grouping value criteria
      * @returns {number} The number of items
      */
     aggregateCountBy(field, value) {
@@ -203,7 +223,7 @@ export default class BsStore extends AbstractStore {
      * Append an item to the Store's dataset.
      *
      * @param {Object} item Data to append to the Store
-     * @return {void}
+     * @returns {void}
      */
     append(item) {
         if (!Helper.isEmpty(item)) {
@@ -220,7 +240,7 @@ export default class BsStore extends AbstractStore {
      *
      * @param {Array|Object} data Data to be assigned
      * @param {boolean} silent Append item silently and doesn't trigger data conversion
-     * @return {void}
+     * @returns {void}
      */
     assignData(data, silent = false) {
         this._assignData(data, silent);
@@ -233,10 +253,86 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
+     * Removes the specified item from this local store and from remote server.
+     *
+     * If the specified item is not BsModel instance then the item will be
+     * removed from local store only.
+     *
+     * @param {BsModel|Object} item Model instance to be removed
+     * @returns {Promise<*>} Promise interface
+     */
+    delete(item) {
+        const me = this;
+
+        if (AbstractStore.isModel(item) && !Helper.isEmptyObject(item.restUrl) &&
+            !Helper.isEmpty(item.restUrl['delete'])) {
+            Vue.set(me, 'deleting', true);
+
+            return new Promise((resolve, reject) => {
+                return item.delete().then((response) => {
+                    me.remove(item);
+                    Vue.set(me, 'deleting', false);
+                    return resolve(response);
+                }).catch((error) => {
+                    Vue.set(me, 'deleting', false);
+                    return reject(error);
+                });
+            });
+        } else {
+            return new Promise((resolve, reject) => {
+                try {
+                    me.remove(item);
+                    resolve({success: true, message: 'Item has been removed from local store.'});
+                } catch (e) {
+                    reject(e);
+                }
+            });
+        }
+    }
+
+    /**
+     * Removes the specified items from this local store and from remote server.
+     *
+     * @param {BsModel[]|Object[]} items Model instances to be removed
+     * @returns {Promise<*>} Promise interface
+     */
+    deletes(items) {
+        if (Helper.isArray(items) && items.length > 0) {
+            const me = this;
+            Vue.set(me, 'deleting', true);
+
+            return new Promise((resolve, reject) => {
+                try {
+                    for (const item of items) {
+                        if (AbstractStore.isModel(item) && !Helper.isEmptyObject(item.restUrl) &&
+                            !Helper.isEmpty(item.restUrl['delete'])) {
+                            item.delete().then(() => {
+                                me.remove(item);
+                            }).catch((error) => {
+                                throw error;
+                            });
+                        } else {
+                            me.remove(item);
+                        }
+                    }
+
+                    resolve({success: true, message: 'Items have been successfully removed.'});
+                } catch (e) {
+                    reject(e);
+                }
+
+                Vue.set(me, 'deleting', false);
+            });
+        } else {
+            throw Error('Items must be array of BsModel instances.');
+        }
+    }
+
+    /**
      * Fetch data from the remote service with specific ID.
      *
      * @param {string|int} id The item ID to fetch
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<*>} Promise interface
      */
     fetch(id) {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -264,7 +360,7 @@ export default class BsStore extends AbstractStore {
      * Load the data locally or from the remote server.
      *
      * @param {Object[]|Object} [data] A record or collection of records to be assigned
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<*>} Promise interface
      */
     load(data = null) {
         if (!Helper.isEmpty(data)) {
@@ -293,7 +389,7 @@ export default class BsStore extends AbstractStore {
     /**
      * Load data from the remote service and assign query parameters and configuration.
      *
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<any>} Promise interface
      * @deprecated
      */
     query() {
@@ -304,18 +400,18 @@ export default class BsStore extends AbstractStore {
      * Sorts the data in the Store by one or more of its properties.
      *
      * @example
-     *     // sort by a single field
-     *     let results = myStore.sort('myField', 'asc');
+     * // sort by a single field
+     * let results = myStore.sort('myField', 'asc');
      *
-     *     //sorting by multiple fields
-     *     let results = myStore.sort([
-     *      {property: 'age', direction: 'desc'},
-     *      {property: 'name', direction: 'asc'}
-     *     ]);
+     * //sorting by multiple fields
+     * let results = myStore.sort([
+     *  {property: 'age', direction: 'desc'},
+     *  {property: 'name', direction: 'asc'}
+     * ]);
      *
      * @param {string|ISorter[]|Object[]} field The field for sorting
      * @param {'asc'|'desc'} direction          The sort direction
-     * @return {Object[]} Collection
+     * @returns {Object[]} Collection
      */
     sort(field = null, direction = 'asc') {
         this._createSorters(field, direction);

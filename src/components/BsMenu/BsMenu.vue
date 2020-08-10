@@ -15,7 +15,7 @@
                 :placement="placement"
                 :transition="transition"
                 :trigger="trigger"
-                ref="content"
+                ref="popover"
                 @close="hideMenu"
                 @click="_onContentClick"
                 @mouseenter="onMouseEnter"
@@ -79,7 +79,7 @@ export default {
             if (next in this.tiles) {
                 const tile = this.tiles[next];
                 tile.classList.add('md-active');
-                this.$refs.content.$el.scrollTop = tile.offsetTop - tile.clientHeight;
+                this.$refs.popover.$el.scrollTop = tile.offsetTop - tile.clientHeight;
             }
 
             prev in this.tiles && this.tiles[prev].classList.remove('md-active');
@@ -123,7 +123,7 @@ export default {
          * @private
          */
         _getTiles() {
-            this.tiles = this.$refs.content.$el.querySelectorAll('.md-list-item');
+            this.tiles = this.$refs.popover.$el.querySelectorAll('.md-list-tile');
         },
         /**
          * Handler when content body is clicked.

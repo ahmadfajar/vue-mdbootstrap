@@ -1,8 +1,8 @@
 import Vue from "vue";
 import Helper from "../utils/Helper";
-import AxiosPlugin from "../utils/AxiosPlugin";
+// import AxiosPlugin from "../utils/AxiosPlugin";
 
-Vue.use(AxiosPlugin);
+// Vue.use(AxiosPlugin);
 
 /**
  * Class ProxyAdapter which is used to load data from remote server.

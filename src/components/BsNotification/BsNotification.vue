@@ -289,7 +289,7 @@ export default {
         /**
          * Get computed component's classes.
          *
-         * @param {String} position Notification position
+         * @param {string} position Notification position
          *
          * @return {string[]} Component's class names
          * @private
@@ -305,7 +305,7 @@ export default {
          *
          * @param {Object|string} options The notification's configuration
          *
-         * @return {Object} Component's configurations
+         * @return {*} Component's configurations
          * @private
          */
         _processOptions(options) {

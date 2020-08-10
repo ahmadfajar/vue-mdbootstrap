@@ -143,7 +143,7 @@ export default {
     &.#{$prefix}-picker-title {
       font-size: 1.8rem;
       font-weight: $font-weight-bold;
-      line-height: 1.25;
+      line-height: normal;
       position: relative;
       overflow: hidden;
       text-align: left;

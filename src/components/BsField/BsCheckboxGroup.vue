@@ -41,10 +41,12 @@
 </template>
 
 <script>
+import BsCheckbox from "./BsCheckbox";
 import FieldValidation from "./mixins/FieldValidation";
 
 export default {
     name: "BsCheckboxGroup",
+    components: {BsCheckbox},
     mixins: [FieldValidation],
     model: {
         prop: 'value',

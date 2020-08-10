@@ -43,17 +43,15 @@
 </template>
 
 <script>
-import Helper from "../../utils/Helper";
-import Common from "../../mixins/Common";
 import BsIcon from "../BsIcon/BsIcon";
 import BsButton from "../BsButton/BsButton";
 import BsPopover from "../BsPopover/BsPopover";
+import Common from "../../mixins/Common";
+import Helper from "../../utils/Helper";
 
 export default {
     name: "BsSearchField",
-    components: {
-        BsButton, BsIcon, BsPopover
-    },
+    components: {BsButton, BsIcon, BsPopover},
     mixins: [Common],
     props: {
         autofocus: {

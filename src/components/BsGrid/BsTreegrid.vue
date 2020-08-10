@@ -35,8 +35,8 @@
         </bs-treegrid-items>
       </table>
       <transition v-if="_showEmptyMessage" name="fade">
-        <div class="md-grid-alert my-3 mx-3 mx-md-4 mx-xl-auto">
-          <bs-alert color="danger" icon="exclamation-triangle">
+        <div class="md-grid-alert my-3 mx-3 mx-md-auto">
+          <bs-alert color="warning" icon="exclamation-triangle">
             <slot name="emptyMessage">
               Sorry! No data to display here.
             </slot>

@@ -58,8 +58,8 @@
           </tbody>
         </table>
         <transition v-if="_showEmptyMessage" name="fade">
-          <div class="md-grid-alert my-3 mx-3 mx-md-4 mx-xl-auto">
-            <bs-alert color="danger" icon="exclamation-triangle">
+          <div class="md-grid-alert my-3 mx-3 mx-md-auto">
+            <bs-alert color="warning" icon="exclamation-triangle">
               <slot name="emptyMessage">
                 Sorry! No data to display here.
               </slot>
@@ -96,6 +96,7 @@ import BsGridCellNumbering from "./BsGridCellNumbering";
 import BsGridCellSelection from './BsGridCellSelection';
 import BsGridColumnFilters from "./BsGridColumnFilters";
 import BsGridColumnSelection from './BsGridColumnSelection';
+import BsGridFooter from "./BsGridFooter";
 import BsPagination from '../BsPagination/BsPagination';
 import BsProgress from '../BsAnimation/BsProgress';
 import BsAlert from '../BsBasic/BsAlert';
@@ -113,7 +114,7 @@ export default {
     name: "BsGrid",
     components: {
         BsGridCell, BsGridCellSelection, BsGridCellNumbering, BsGridColumnFilters,
-        BsGridColumnSelection, BsGridRow, BsPagination, BsProgress, BsAlert
+        BsGridColumnSelection, BsGridRow, BsGridFooter, BsPagination, BsProgress, BsAlert
     },
     mixins: [Common, Grid, ScreenSize],
     props: {
@@ -765,6 +766,7 @@ export default {
     }
 
     > .#{$prefix}-grid-alert {
+      max-width: 500px;
       > .alert {
         margin-bottom: 0;
       }
@@ -777,13 +779,7 @@ export default {
       white-space: nowrap;
 
       > .svg-inline--fa {
-        font-size: 20px;
-      }
-    }
-
-    @include media-breakpoint-up(xl) {
-      > .#{$prefix}-grid-alert {
-        width: 75%;
+        font-size: 18px;
       }
     }
   }

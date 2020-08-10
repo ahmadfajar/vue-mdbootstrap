@@ -87,7 +87,6 @@ export default {
         _inputAttrs(index) {
             return {
                 'type': 'text',
-                'autocomplete': 'off',
                 'value': this.values[index].keyword,
                 'class': 'form-control form-control-sm'
             }

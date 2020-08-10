@@ -39,6 +39,7 @@ export function getScrollEventTarget(element) {
         }
         currentNode = currentNode.parentNode;
     }
+
     return window;
 }
 
@@ -57,6 +58,7 @@ export function getOffset(el) {
     const clientLeft = el.clientLeft || body.clientLeft || 0;
     const scrollTop  = window.pageYOffset || el.scrollTop;
     const scrollLeft = window.pageXOffset || el.scrollLeft;
+
     return {
         top: box.top + scrollTop - clientTop,
         left: box.left + scrollLeft - clientLeft

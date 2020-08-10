@@ -1,3 +1,5 @@
+import Vue from "vue";
+import moment from "moment";
 import * as components from "./components";
 import * as directives from "./directives";
 import AxiosPlugin from "./utils/AxiosPlugin";
@@ -22,8 +24,18 @@ let VueMdb = Vue => {
     });
 };
 
-if (typeof window !== 'undefined' && window.Vue) {
+if (typeof window !== 'undefined') {
+    window.Vue = Vue;
     window.Vue.use(VueMdb);
+    window.AxiosPlugin = AxiosPlugin;
+    window.ProxyAdapter = ProxyAdapter;
+    window.AbstractStore = AbstractStore;
+    window.BsModel = BsModel;
+    window.BsStore = BsStore;
+    window.BsArrayStore = BsArrayStore;
+    window.BsTreeStore = BsTreeStore;
+    window.Helper = Helper;
+    window.moment = moment;
 }
 
 export {

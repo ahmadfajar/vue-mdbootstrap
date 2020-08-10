@@ -24,13 +24,14 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import BsRipple from "../BsAnimation/BsRipple";
 import ButtonToggle from "./mixins/ButtonToggle";
 import Input from "../../mixins/Input";
 import Helper from "../../utils/Helper";
 
 export default {
     name: "BsButtonToggle",
-    components: {FontAwesomeIcon},
+    components: {FontAwesomeIcon, BsRipple},
     mixins: [Input, ButtonToggle],
     model: {
         prop: 'value',
