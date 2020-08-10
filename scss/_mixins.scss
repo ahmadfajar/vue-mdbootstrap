@@ -104,6 +104,7 @@
       &:not(.#{$prefix}-disabled) {
         &.#{$prefix}-link:hover {
           background-color: set-hoverable-bgcolor($color);
+          text-decoration: none;
         }
 
         .#{$prefix}-list-tile-leading {
