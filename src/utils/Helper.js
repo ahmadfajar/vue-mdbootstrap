@@ -2,7 +2,7 @@
  * Class Helper
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 12/07/2020 17:41
+ * @since  05/07/2018, modified: 16/08/2020 23:39
  */
 class Helper {
     /**
@@ -167,14 +167,12 @@ class Helper {
      * @return {string|null} Value untuk dipergunakan pada inline css
      */
     static sizeUnit(value, unit = 'px') {
-        const _px = unit || 'px';
+        const _px = unit;
 
         if (typeof value === 'string') {
             if (value.toLowerCase() === 'auto') {
                 return value;
-            } else if (value.endsWith(_px)) {
-                return value;
-            } else if (value.endsWith('%')) {
+            } else if (value.endsWith(_px) || value.endsWith('em') || value.endsWith('rem') || value.endsWith('%')) {
                 return value;
             } else {
                 return value + _px;

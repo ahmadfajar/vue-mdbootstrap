@@ -1,7 +1,7 @@
 <template>
   <span :class="_iconClass"
         :style="_iconStyles"
-        class="md-icon d-flex align-items-center"
+        class="md-icon"
         v-on="$listeners">
     <svg v-if="iconData"
          :height="szHeight"
@@ -80,6 +80,12 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
+@import "~compass-sass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
+.#{$prefix}-icon {
+  @include flexbox((display: flex, align-items: center));
+}
 </style>

@@ -39,7 +39,7 @@ export default {
   padding: 0 16px;
 
   &.#{$prefix}-subheader--dark {
-    color: $white;
+    color: rgba($white, .8);
   }
 
   &.#{$prefix}-subheader--light {

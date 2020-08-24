@@ -79,6 +79,7 @@ Vue.use(AxiosPlugin, {baseURL: "http://localhost/<api-url>"});
 Now, you can use any of **Vue MdBootstrap** components in your html page.
 
 ## Demos
+
 You can clone the demos from [here](https://github.com/ahmadfajar/vue-mdbootstrap-demos) to see it in action.
 
 ## Browser Support

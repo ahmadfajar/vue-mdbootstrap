@@ -50,7 +50,7 @@
   .btn-outline-#{$name} {
     background-color: transparent;
     border: 1px solid $color;
-    color: set-outline-button-color($name, $color) !important;
+    color: set-outline-button-color($name, $color);
 
     &:hover,
     &:focus,

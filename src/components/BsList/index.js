@@ -5,6 +5,8 @@ import BsListTileLeading from "./BsListTileLeading";
 import BsListTileContent from "./BsListTileContent";
 import BsListTileTitle from "./BsListTileTitle";
 import BsListTileSubtitle from "./BsListTileSubtitle";
+import BsListNav from "./BsListNav";
+import BsListNavItem from "./BsListNavItem";
 
 export default Vue => {
     Vue.component(BsListView.name, BsListView);
@@ -14,4 +16,6 @@ export default Vue => {
     Vue.component(BsListTileContent.name, BsListTileContent);
     Vue.component(BsListTileTitle.name, BsListTileTitle);
     Vue.component(BsListTileSubtitle.name, BsListTileSubtitle);
+    Vue.component(BsListNav.name, BsListNav);
+    Vue.component(BsListNavItem.name, BsListNavItem);
 };

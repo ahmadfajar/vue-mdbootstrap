@@ -70,7 +70,6 @@ export default {
         overlayOpacity: 0.4,
         overlayZIndex: getZIndex(),
         zIndex: getZIndex(),
-        listItems: []
     }),
     computed: {
         /**
@@ -94,10 +93,10 @@ export default {
          * @private
          */
         _styles() {
-            const top = this.$VueMdb.application.top;
+            // const top = this.$VueMdb.application.top;
             const properties = {
                 width: this.width ? Helper.sizeUnit(this.width) : null,
-                height: this.isMobile ? '100%' : (this.clipped ? 'calc(100% - ' + this.clipHeight + 'px)' : '100%'),
+                height: this.isMobile ? '100vh' : (this.clipped ? 'calc(100vh - ' + this.clipHeight + 'px)' : '100vh'),
                 transform: 'translateX(-' + (this.width ? Helper.sizeUnit(this.width) : '0px') + ')',
                 'z-index': this.clipped ? 1000 : null
             };
@@ -105,7 +104,7 @@ export default {
             if (this.isMobile && this.open) {
                 return {
                     ...properties,
-                    height: '100%',
+                    height: '100vh',
                     width: Helper.sizeUnit(this.modalWidth),
                     transform: 'translateX(0px)',
                     'z-index': this.zIndex,
@@ -115,13 +114,13 @@ export default {
                     ...properties,
                     width: Helper.sizeUnit(this.miniWidth),
                     transform: 'translateX(0px)',
-                    'margin-top': this.clipped ? Helper.sizeUnit(this.clipHeight) : Helper.sizeUnit(top),
+                    'margin-top': this.clipped ? Helper.sizeUnit(this.clipHeight) : Helper.sizeUnit(0),
                 };
             } else if (this.width && this.open) {
                 return {
                     ...properties,
                     transform: 'translateX(0px)',
-                    'margin-top': this.clipped ? Helper.sizeUnit(this.clipHeight) : Helper.sizeUnit(top),
+                    'margin-top': this.clipped ? Helper.sizeUnit(this.clipHeight) : Helper.sizeUnit(0),
                 };
             }
 
@@ -133,7 +132,7 @@ export default {
          * @return {number} Tinggi area yang akan di cut/clipped
          */
         clipHeight() {
-            return this.$VueMdb.application.top + this.$VueMdb.application.appbarHeight;
+            return this.$VueMdb.application.top + this.$VueMdb.application.appbarHeight + 1;
         }
     },
     watch: {
@@ -158,11 +157,6 @@ export default {
             }
         }
     },
-    provide() {
-        return {
-            listItems: this.listItems
-        }
-    },
     created() {
         this.$VueMdb.application.sideDrawerWidth = parseInt(this.width, 10);
     },
@@ -170,7 +164,6 @@ export default {
         if (this.isMobile) {
             PopupManager.close(this);
         }
-        this.listItems = null;
     },
     methods: {
         /**

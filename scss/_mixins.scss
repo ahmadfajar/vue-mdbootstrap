@@ -1,15 +1,15 @@
 /* BsAlert mixins */
 @mixin make-outline-alert($name, $color) {
   .alert-outline-#{$name} {
-    color: darken($color, 10%);
-    border-color: lighten($color, 10%);
+    color: $color;
+    border-color: lighten($color, 5%);
 
     hr {
-      border-top-color: lighten($color, 10%);
+      border-top-color: lighten($color, 5%);
     }
 
     .alert-link {
-      color: darken($color, 15%);
+      color: darken($color, 10%);
     }
   }
 }
@@ -86,8 +86,8 @@
 
     .#{$prefix}-divider {
       @if (lightness($color) < 81) {
-      //  background-color: darken($gray-200, 5%);
-      //} @else {
+        //  background-color: darken($gray-200, 5%);
+        //} @else {
         background-color: rgba($white-base, .2);
       }
     }
@@ -111,7 +111,8 @@
           color: set-disable-text-color($color);
         }
 
-        .#{$prefix}-list-tile-title {
+        .#{$prefix}-list-tile-title,
+        .#{$prefix}-list-tile-action {
           color: set-notification-text-color($color);
         }
 
@@ -146,6 +147,66 @@
     .#{$prefix}-list-tile {
       &.#{$prefix}-disabled {
         color: set-disable-text-color($color) !important;
+      }
+    }
+  }
+}
+
+/* BsListNav mixins */
+@mixin bslist-nav-variant($name, $color) {
+  .#{$prefix}-list-#{$name} {
+    .#{$prefix}-list-nav {
+      .#{$prefix}-nav-item {
+        > .#{$prefix}-nav-item-inner {
+          @if (lightness($color) > 50) {
+            color: $gray-900;
+          } @else {
+            color: rgba($white-base, .8);
+          }
+        }
+
+        &.#{$prefix}-disabled {
+          > .#{$prefix}-nav-item-inner {
+            color: set-disable-text-color($color);
+          }
+        }
+
+        &:hover:not(.#{$prefix}-expanded) {
+          @if (lightness($color) > 80) {
+            background-color: $default-hover-bgcolor;
+          } @else {
+            background-color: rgba(lighten($color, 10%), .25);
+          }
+        }
+
+        @if (lightness($color) < 90) {
+          &.#{$prefix}-expanded {
+            background-color: set-hoverable-bgcolor($color, 0);
+          }
+        }
+
+        &.#{$prefix}-active {
+          &:not(.#{$prefix}-parent),
+          &.#{$prefix}-parent:not(.#{$prefix}-expanded) {
+            @if (lightness($color) > 80) {
+              background-color: $sidebar-active-bgcolor;
+            } @else {
+              background-color: rgba(lighten($color, 45%), .1); // lighten($color, 8%);
+
+              > .#{$prefix}-nav-item-inner {
+                color: $white;
+              }
+            }
+          }
+
+          @if (lightness($color) < 85) {
+            &:not(.#{$prefix}-parent) {
+              &:before {
+                background: rgba(lighten($color, 85%), .3);
+              }
+            }
+          }
+        }
       }
     }
   }

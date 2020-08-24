@@ -189,7 +189,7 @@ export default {
             tableWidth: undefined,
             // methods
             /**
-             * Sort the data based on the given fieldname.
+             * Sort the data based on the given field name.
              *
              * @param {string} field     - The field for sorting
              * @param {string} direction - The sort direction.

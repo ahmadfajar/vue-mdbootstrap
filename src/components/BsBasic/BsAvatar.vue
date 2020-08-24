@@ -34,7 +34,8 @@ export default {
         },
         iconRotation: {
             type: [Number, String],
-            default: undefined
+            default: undefined,
+            validator: v => [90, 180, 270].includes(parseInt(v, 10))
         },
         iconSpin: {
             type: Boolean,
@@ -94,7 +95,7 @@ export default {
         /**
          * Get fontAwesome icon attributes.
          *
-         * @returns {Object} The icon attributes
+         * @returns {Object|*} The icon attributes
          * @private
          */
         _faAttributes() {

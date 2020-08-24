@@ -171,7 +171,7 @@ export default {
         /**
          * Get computed component's styles.
          *
-         * @return {Object} The collection of css classes
+         * @return {string[]} The collection of css classes
          */
         _classNames() {
             return [
@@ -189,7 +189,7 @@ export default {
         /**
          * Get computed binding's properties.
          *
-         * @return {Object} The attributes to bind
+         * @return {Object|*} The attributes to bind
          */
         attributes() {
             return {
@@ -204,7 +204,7 @@ export default {
         /**
          * Get icon binding's properties.
          *
-         * @return {Object} The attributes to bind
+         * @return {Object|*} The attributes to bind
          */
         iconAttributes() {
             return {
@@ -453,7 +453,7 @@ export default {
   }
 }
 
-@each $btn_name, $color_value in $mdb-colors {
+@each $btn_name, $color_value in $theme-colors {
   @include make-button($btn_name, $color_value);
   @include make-outline-button($btn_name, $color_value);
   @include make-flat-button($btn_name, $color_value);

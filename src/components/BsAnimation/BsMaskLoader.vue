@@ -2,7 +2,7 @@
   <transition :name="transition">
     <div v-if="show" class="md-mask-loader" :style="_styles">
       <bs-progress class="align-self-center" :diameter="spinnerDiameter" :stroke="stroke" />
-      <bs-overlay :show="show" :opacity="opacity" :z-index="zIndex + 1" />
+      <bs-overlay :show="show" :opacity="opacity" :z-index="zIndex - 1" />
     </div>
   </transition>
 </template>

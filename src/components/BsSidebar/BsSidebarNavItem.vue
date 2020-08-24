@@ -95,14 +95,19 @@ export default {
         if (Helper.isArray(this.listItems)) {
             this.listItems.push(this);
         }
-        this._updateActive(true);
+        if (this.$el) {
+            // this._updateActive(true);
+            // const child = this.$el.childNodes[1];
 
-        const child = this.$el.childNodes[2];
+            // console.log('child0', this.$el.childNodes[0]);
+            // console.log('child1', this.$el.childNodes[1]);
+            // console.log('child2', this.$el.childNodes[2]);
 
-        if (this.parent && !this.active) {
-            child.classList.add('collapse');
-        } else if (this.parent && this.active) {
-            this.expanded = true;
+            if (this.parent && !this.active) {
+                // child.classList.add('collapse');
+            } else if (this.parent && this.active) {
+                this.expanded = true;
+            }
         }
     },
     methods: {
@@ -165,13 +170,13 @@ export default {
          */
         collapse() {
             if (this.parent && this.expanded) {
-                const child = this.$el.childNodes[2];
-
-                child.classList.add('collapsing');
-                Helper.defer(() => {
-                    child.classList.remove('collapsing');
-                    child.classList.add('collapse');
-                }, 500);
+                // const child = this.$el.childNodes[1];
+                // console.log('childNodes[1]', child);
+                // child.classList.add('collapsing');
+                // Helper.defer(() => {
+                //     child.classList.remove('collapsing');
+                //     child.classList.add('collapse');
+                // }, 500);
                 this.$nextTick(() => {
                     this.expanded = false;
                 })
@@ -185,7 +190,9 @@ export default {
          */
         expand() {
             if (this.parent && !this.expanded) {
-                this.$el.childNodes[2].classList.remove('collapse');
+                // const child = this.$el.childNodes[1];
+                // console.log('childNodes[1]', child);
+                // child.classList.remove('collapse');
                 this.expanded = true;
             }
         },

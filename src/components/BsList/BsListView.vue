@@ -1,5 +1,5 @@
 <template>
-  <div class="md-list" :class="_classNames">
+  <div class="md-list overflow-hidden" :class="_classNames">
     <slot></slot>
   </div>
 </template>
@@ -10,24 +10,55 @@ import "../../../scss/_others.scss";
 export default {
     name: "BsListView",
     props: {
-        expand: Boolean,
         color: {
             type: String,
             default: 'white'
-        }
+        },
+        singleExpand: {
+            type: Boolean,
+            default: true
+        },
     },
     data: (vm) => ({
-        groups: [],
         bsList: {
-            listClick: vm.listClick,
-            addGroup: vm.addGroup,
-            removeGroup: vm.removeGroup
+            items: [],
+            singleExpand: vm.singleExpand,
+            /**
+             * Add an item to the ListView registry.
+             *
+             * @param {Object} item The BsListNav instance to add
+             * @returns {void}
+             */
+            addItem: vm.addItem,
+            /**
+             * Add a child's item to a parent.
+             *
+             * @param {string} parentUid  The ID of BsListNav's item
+             * @param {Object} child      The BsListNavItem instance to add
+             * @returns {void}
+             */
+            addChild: vm.addChild,
+            /**
+             * Removes an item from the ListView registry.
+             *
+             * @param {string} uid The ID of BsListNav that will be removed
+             * @returns {void}
+             */
+            removeItem: vm.removeItem,
+            /**
+             * Removes child's item from a parent.
+             *
+             * @param {string} parentUid The ID of BsListNav's item
+             * @param {string} childUid  The ID of BsListNavItem that will be removed
+             * @returns {void}
+             */
+            removeChild: vm.removeChild,
+            findActive: vm.findActive,
         }
     }),
     provide() {
-        const _list = this.bsList;
         return {
-            'BsList': _list
+            bsList: this.bsList
         }
     },
     computed: {
@@ -37,26 +68,72 @@ export default {
             ]
         }
     },
+    beforeDestroy() {
+        this.bsList.items = null;
+        this.bsList       = null;
+    },
     methods: {
-        addGroup(uid, callback) {
-            this.groups.push({uid, callback});
+        /**
+         * Add an item to the ListView registry.
+         *
+         * @param {Object} item The BsListNav instance to add
+         * @returns {void}
+         */
+        addItem(item) {
+            this.bsList.items.push(item);
         },
-        removeGroup(uid) {
-            const index = this.groups.findIndex(g => g.uid === uid);
+        /**
+         * Add a child's item to a parent.
+         *
+         * @param {string} parentUid  The ID of BsListNav's item
+         * @param {Object} child      The BsListNavItem to add
+         * @returns {void}
+         */
+        addChild(parentUid, child) {
+            const obj = this.bsList.items.find(el => el.uid === parentUid);
+
+            if (obj) {
+                obj.component.addItem(child);
+            }
+        },
+        findActive() {
+            for (const item of this.bsList.items) {
+                for (const child of item.component.children) {
+                    if (child.component.active) {
+                        return child.component;
+                    }
+                }
+            }
+
+            return null;
+        },
+        /**
+         * Removes an item from the ListView registry.
+         *
+         * @param {string} uid The ID of BsListNav that will be removed
+         * @returns {void}
+         */
+        removeItem(uid) {
+            const index = this.bsList.items.findIndex(el => el.uid === uid);
 
             if (index > -1) {
-                this.groups.splice(index, 1);
+                this.bsList.items.splice(index, 1);
             }
         },
-        listClick(uid) {
-            if (this.expand) {
-                return;
-            }
+        /**
+         * Removes child's item from a parent.
+         *
+         * @param {string} parentUid The ID of BsListNav's item
+         * @param {string} childUid  The ID of BsListNavItem that will be removed
+         * @returns {void}
+         */
+        removeChild(parentUid, childUid) {
+            const obj = this.bsList.items.find(el => el.uid === parentUid);
 
-            for (let i = this.groups.length; i--;) {
-                this.groups[i].callback(uid);
+            if (obj) {
+                obj.component.removeItem(childUid);
             }
-        }
+        },
     }
 }
 </script>
@@ -148,11 +225,13 @@ export default {
   }
 }
 
-@each $name, $color in $mdb-colors {
+@include bslist-variant(white, #fff);
+
+@each $name, $color in $material-colors {
   @include bslist-variant($name, $color);
 }
 
-@each $name, $color in $material-colors {
+@each $name, $color in $theme-colors {
   @include bslist-variant($name, $color);
 }
 
@@ -160,6 +239,7 @@ export default {
   > .#{$prefix}-list:first-child {
     @include border-top-radius($border-radius-base * 2);
   }
+
   > .#{$prefix}-list:last-child {
     @include border-bottom-radius($border-radius-base * 2);
   }

@@ -94,7 +94,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~compass-sass-mixins/lib/compass/css3";
 @import "~bootstrap/scss/mixins/alert";
 @import "~bootstrap/scss/mixins/gradients";
@@ -120,14 +120,14 @@ export default {
 @each $color, $value in $theme-colors {
   .alert-#{$color} {
     @include alert-variant(
-        theme-color-level($theme-colors, $color, $alert-bg-level),
-        theme-color-level($theme-colors, $color, $alert-border-level),
-        theme-color-level($theme-colors, $color, $alert-color-level)
+                    theme-color-level($theme-colors, $color, $alert-bg-level),
+                    theme-color-level($theme-colors, $color, $alert-border-level),
+                    theme-color-level($theme-colors, $color, $alert-color-level)
     );
   }
 }
 
 @each $color_name, $color_value in $theme-colors {
-  @include make-outline-alert($color_name, $color_value);
+  @include make-outline-alert($color_name, theme-color-level($theme-colors, $color_name, $alert-color-level));
 }
 </style>

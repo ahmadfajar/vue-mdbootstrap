@@ -28,15 +28,24 @@
   }
 }
 
+.font-weight-bold {
+  font-weight: $font-weight-bold !important;
+}
+
+.font-weight-bolder  {
+  font-weight: $font-weight-bolder !important;
+}
+
+.font-weight-boldest  {
+  font-weight: $font-weight-boldest !important;
+}
+
 // Create background and text colors classes
 @each $color_name, $color in $mdb-colors-1 {
   @each $color_type, $color_value in $color {
     @if $color_type == "base" {
       .bg-#{$color_name}-base {
         background-color: $color_value !important;
-      }
-      .text-#{$color_name} {
-        color: $color-value !important;
       }
       .bg-rgba-#{$color_name}-slight,
       .bg-rgba-#{$color_name}-slight:after {
@@ -48,7 +57,7 @@
       }
       .bg-rgba-#{$color_name}-strong,
       .bg-rgba-#{$color_name}-strong:after {
-        background-color: rgba($color_value, .7);
+        background-color: rgba(darken($color_value, 5%), .7);
       }
     } @else {
       @if $enable_full_palette {
@@ -70,18 +79,18 @@
   .bg-#{$color_name} {
     background-color: $color !important;
   }
+
   .border-#{$color_name} {
     border-color: $color !important;
   }
-  .text-hover-#{$color_name} {
-    &:hover {
-      color: $color !important;
-    }
+
+  .text-#{$color_name} {
+    color: $color !important;
   }
-  a.#{$color_name} {
-    &:hover {
-      background-color: darken($color, 10%);
-      color: set-notification-text-color($color);
+
+  a.text-#{$color_name} {
+    &:hover, &:focus {
+      color: darken($color, 15%) !important;
     }
   }
 }
@@ -90,10 +99,18 @@
   .bg-grey-#{$color_name} {
     background-color: $color !important;
   }
+
   .border-grey-#{$color_name} {
     border-color: $color !important;
   }
+
   .text-grey-#{$color_name} {
     color: $color !important;
+  }
+
+  a.text-grey-#{$color_name} {
+    &:hover, &:focus {
+      color: darken($color, 15%) !important;
+    }
   }
 }

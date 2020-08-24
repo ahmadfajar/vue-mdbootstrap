@@ -46,8 +46,8 @@ $red-darken-3:   #c62828 !default;
 $red-darken-4:   #b71c1c !default;
 $red-accent-1:   #ff8a80 !default;
 $red-accent-2:   #ff5252 !default;
-$red-accent-3:   #ff1744 !default;
-$red-accent-4:   #d50000 !default;
+$red-accent-3:   #e03333 !default;
+$red-accent-4:   #d21b1b !default;
 
 $pink-lighten-5:  #fce4ec !default;
 $pink-lighten-4:  #f8bbd0 !default;
@@ -61,7 +61,7 @@ $pink-darken-3:   #ad1457 !default;
 $pink-darken-4:   #880e4f !default;
 $pink-accent-1:   #ff80ab !default;
 $pink-accent-2:   #ff4081 !default;
-$pink-accent-3:   #f50057 !default;
+$pink-accent-3:   #da1970 !default;
 $pink-accent-4:   #c51162 !default;
 
 $purple-lighten-5:  #f3e5f5 !default;
@@ -76,8 +76,8 @@ $purple-darken-3:   #6a1b9a !default;
 $purple-darken-4:   #4a148c !default;
 $purple-accent-1:   #ea80fc !default;
 $purple-accent-2:   #e040fb !default;
-$purple-accent-3:   #d500f9 !default;
-$purple-accent-4:   #aa00ff !default;
+$purple-accent-3:   #d00cf1 !default;
+$purple-accent-4:   #c002e0 !default;
 
 $deep-purple-lighten-5:  #ede7f6 !default;
 $deep-purple-lighten-4:  #d1c4e9 !default;
@@ -90,8 +90,8 @@ $deep-purple-darken-2:   #512da8 !default;
 $deep-purple-darken-3:   #4527a0 !default;
 $deep-purple-darken-4:   #311b92 !default;
 $deep-purple-accent-1:   #b388ff !default;
-$deep-purple-accent-2:   #7c4dff !default;
-$deep-purple-accent-3:   #651fff !default;
+$deep-purple-accent-2:   #8f67ff !default;
+$deep-purple-accent-3:   #7846ff !default;
 $deep-purple-accent-4:   #6200ea !default;
 
 $indigo-lighten-5:  #e8eaf6 !default;
@@ -615,12 +615,6 @@ $mdb-colors-1: map-merge((
         "darken-2":   $grey-darken-2,
         "darken-3":   $grey-darken-3,
         "darken-4":   $grey-darken-4
-    ),
-    "black": (
-        "base":  $black-base
-    ),
-    "white": (
-        "base":  $white-base
     )
 ), $mdb-colors-1);
 
@@ -632,129 +626,101 @@ $enable-gradients:     false !default;
 $primary-color:        #4285f4 !default;
 $primary-color-dark:   #0d47a1 !default;
 $secondary-color:      #aa66cc !default;
-$secondary-color-dark: #9933cc !default;
+$secondary-color-dark: #7e21ad !default;
 $default-color:        #2bbbad !default;
 $default-color-dark:   #00695c !default;
 $info-color:           #33b5e5 !default;
-$info-color-dark:      #0099cc !default;
+$info-color-dark:      #1186ad !default;
 $success-color:        #28a745 !default;
 $success-color-dark:   #007e33 !default;
 $warning-color:        #ffbb33 !default;
 $warning-color-dark:   #ff8800 !default;
 $danger-color:         #ec2537 !default;
-$danger-color-dark:    #cc0000 !default;
+$danger-color-dark:    #ad0000 !default;
 $elegant-color:        #2e2e2e !default;
 $elegant-color-dark:   #212121 !default;
 $stylish-color:        #4b515d !default;
-$stylish-color-dark:   #3e4551 !default;
+$stylish-color-dark:   #2d333e !default;
 $unique-color:         #3f729b !default;
 $unique-color-dark:    #1c2331 !default;
 $special-color:        #37474f !default;
 $special-color-dark:   #263238 !default;
-$blue-green:           #064E40 !default;
+$blue-green:           #064e40 !default;
+$blue-green-dark:      #022f27 !default;
 $white:                $white-base;
 $black:                $black-base;
 $error-color:          $red-base !default;
 
+// Applicable to:
+// BsCombobox, BsListView
 $material-colors: () !default;
 $material-colors: map-merge((
-    "primary-color":        $primary-color,
-    "primary-color-dark":   $primary-color-dark,
-    "secondary-color":      $secondary-color,
-    "secondary-color-dark": $secondary-color-dark,
-    "default-color":        $default-color,
-    "default-color-dark":   $default-color-dark,
-    "info-color":           $info-color,
-    "info-color-dark":      $info-color-dark,
-    "success-color":        $success-color,
-    "success-color-dark":   $success-color-dark,
-    "warning-color":        $warning-color,
-    "warning-color-dark":   $warning-color-dark,
-    "danger-color":         $danger-color,
-    "danger-color-dark":    $danger-color-dark,
-    "elegant-color":        $elegant-color,
-    "elegant-color-dark":   $elegant-color-dark,
-    "stylish-color":        $stylish-color,
-    "stylish-color-dark":   $stylish-color-dark,
-    "unique-color":         $unique-color,
-    "unique-color-dark":    $unique-color-dark,
-    "special-color":        $special-color,
-    "special-color-dark":   $special-color-dark,
-    "blue-green-color":     $blue-green
+    "primary-color":          $primary-color,
+    "primary-color-dark":     $primary-color-dark,
+    "secondary-color":        $secondary-color,
+    "secondary-color-dark":   $secondary-color-dark,
+    "default-color":          $default-color,
+    "default-color-dark":     $default-color-dark,
+    "info-color":             $info-color,
+    "info-color-dark":        $info-color-dark,
+    "success-color":          $success-color,
+    "success-color-dark":     $success-color-dark,
+    "warning-color":          $warning-color,
+    "warning-color-dark":     $warning-color-dark,
+    "danger-color":           $danger-color,
+    "danger-color-dark":      $danger-color-dark,
+    "elegant-color":          $elegant-color,
+    "elegant-color-dark":     $elegant-color-dark,
+    "stylish-color":          $stylish-color,
+    "stylish-color-dark":     $stylish-color-dark,
+    "unique-color":           $unique-color,
+    "unique-color-dark":      $unique-color-dark,
+    "special-color":          $special-color,
+    "special-color-dark":     $special-color-dark,
+    "blue-green-color":       $blue-green,
+    "blue-green-color-dark":  $blue-green-dark,
 ), $material-colors);
 
-// Buttons colors
-$mdb-colors: () !default;
-$mdb-colors: map-merge((
-    "default":     $default-color,
-    "primary":     $primary-color,
-    "secondary":   $gray-600,
-    "danger":      $danger-color,
-    "warning":     $warning-color,
-    "success":     $success-color,
-    "info":        $info-color,
-    "unique":      $pink-darken-4,
-    "mdb-color":   $mdb-color-lighten-1,
-    "red":         $red-darken-2,
-    "pink":        $pink-lighten-1,
-    "purple":      $purple-darken-1,
-    "deep-purple": $deep-purple-darken-2,
-    "indigo":      $indigo-base,
-    "blue":        $blue-darken-2,
-    "dark-blue":   $blue-darken-4,
-    "light-blue":  $blue-accent-1,
-    "cyan":        $cyan-base,
-    "teal":        $teal-darken-2,
-    "green":       $green-darken-2,
-    "dark-green":  lighten($green-darken-4, 2%),
-    "light-green": $light-green-base,
-    "lime":        $lime-darken-2,
-    "amber":       $amber-darken-2,
-    "orange":      $orange-darken-2,
-    "deep-orange": $deep-orange-lighten-1,
-    "brown":       $brown-base,
-    "grey":        $grey-darken-2,
-    "light-grey":  $grey-lighten-4,
-    "blue-grey":   $blue-grey-lighten-1,
-    "blue-green":  $blue-green,
-    "dark":        $grey-darken-4,
-    "light":       $grey-lighten-2,
-    "white":       $white-base,
-    "black":       $black-base
-), $mdb-colors);
-
 // Customize default bootstrap theme colors
+// Applicable to:
+// BsButton, BsCombobox, BsListView, BsProgress, BsAlert, BsCheckbox, BsRadio, BsSwitch
+$theme-colors: () !default;
 $theme-colors: map-merge((
     "default":     $default-color,
     "primary":     $primary-color,
     "secondary":   $gray-600,
-    "danger":      $danger-color,
-    "warning":     $warning-color,
     "success":     $success-color,
+    "warning":     $warning-color,
+    "danger":      $danger-color,
     "info":        $info-color,
     "dark":        $grey-darken-4,
-    "unique":      $pink-darken-4,
-    "mdb-color":   $mdb-color-lighten-1,
-    "red":         $red-darken-2,
-    "pink":        $pink-lighten-1,
-    "purple":      $purple-darken-1,
-    "deep-purple": $deep-purple-darken-2,
-    "indigo":      $indigo-base,
+    "light":       $grey-lighten-4,
+    "light-grey":  $grey-lighten-2,
+    "amber":       $amber-darken-2,
     "blue":        $blue-darken-2,
     "blue-green":  $blue-green,
     "blue-grey":   $blue-grey-lighten-1,
-    "light-blue":  $blue-accent-1,
-    "cyan":        $cyan-base,
-    "green":       $green-darken-2,
-    "dark-green":  lighten($green-darken-4, 2%),
-    "light-green": $light-green-base,
-    "teal":        $teal-darken-2,
-    "lime":        $lime-darken-2,
-    "amber":       $amber-darken-2,
-    "orange":      $orange-darken-2,
-    "deep-orange": $deep-orange-lighten-1,
     "brown":       $brown-base,
-), $mdb-colors);
+    "cyan":        $cyan-base,
+    "dark-blue":   $blue-darken-4,
+    "dark-green":  lighten($green-darken-4, 2%),
+    "deep-orange": $deep-orange-lighten-1,
+    "deep-purple": $deep-purple-darken-2,
+    "green":       $green-darken-2,
+    "grey":        $grey-darken-2,
+    "indigo":      $indigo-base,
+    "light-blue":  $light-blue-base,
+    "light-green": $light-green-base,
+    "lime":        $lime-darken-2,
+    "mdb-color":   $mdb-color-lighten-1,
+    "orange":      $orange-darken-2,
+    "pink":        $pink-lighten-1,
+    "purple":      $purple-darken-1,
+    "red":         $red-darken-2,
+    "teal":        $teal-darken-2,
+    "unique":      $pink-darken-4,
+    "black":       $black-base
+), $theme-colors);
 
 // Set a specific jump point for requesting color jumps
 $theme-color-interval:      8% !default;
