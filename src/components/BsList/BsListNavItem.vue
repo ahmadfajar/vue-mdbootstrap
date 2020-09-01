@@ -93,6 +93,7 @@ export default {
                 'md-parent': this.hasChild,
                 'md-disabled': this.disabled,
                 'md-expanded': this.hasChild && this.expanded,
+                'md-has-icon': !Helper.isEmpty(this.icon),
                 ['md-' + this.activeClass]: this.itemActive && !this.disabled
             }
         }
@@ -118,7 +119,7 @@ export default {
         }
         if (this.hasRouter) {
             for (const matcher of this.$route.matched) {
-                if (matcher.path.startsWith(this.path)) {
+                if (matcher.path === this.path) {
                     this.$nextTick(() => {
                         this.itemActive = true;
                     });
@@ -302,11 +303,24 @@ export default {
     }
 
     &.#{$prefix}-parent {
-      > .#{$prefix}-nav-child {
-        > .#{$prefix}-nav-item {
-          > .#{$prefix}-nav-item-inner {
-            > .#{$prefix}-ripple {
-              padding-left: 1.75rem;
+      &:not(.#{$prefix}-has-icon) {
+        > .#{$prefix}-nav-child {
+          > .#{$prefix}-nav-item {
+            > .#{$prefix}-nav-item-inner {
+              > .#{$prefix}-ripple {
+                padding-left: 1.75rem;
+              }
+            }
+          }
+        }
+      }
+      &.#{$prefix}-has-icon {
+        > .#{$prefix}-nav-child {
+          > .#{$prefix}-nav-item {
+            > .#{$prefix}-nav-item-inner {
+              > .#{$prefix}-ripple {
+                padding-left: 3rem;
+              }
             }
           }
         }

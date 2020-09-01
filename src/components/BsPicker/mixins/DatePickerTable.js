@@ -74,7 +74,7 @@ export default {
         /**
          * Get active animation transition name.
          *
-         * @return {string} The transition name
+         * @returns {string} The transition name
          */
         transitionName() {
             return this.reverse === true ? PickerConst.transitionReverse : PickerConst.transition;
@@ -85,7 +85,7 @@ export default {
          * Locale setter.
          *
          * @param {string} newVal Locale
-         * @return {void}
+         * @returns {void}
          */
         locale(newVal) {
             moment.locale(newVal);
@@ -97,7 +97,7 @@ export default {
          *
          * @param {Date} newVal New date value
          * @param {Date} oldVal Old date value
-         * @return {void}
+         * @returns {void}
          */
         tableDate(newVal, oldVal) {
             this.dateValue = moment(newVal);
@@ -114,7 +114,7 @@ export default {
          *
          * @event update Triggers <code>update:table</code> event
          * @param {WheelEvent} e The event arguments
-         * @return {void}
+         * @returns {void}
          */
         onMouseWheel(e) {
             e.preventDefault();
@@ -125,7 +125,7 @@ export default {
          *
          * @event update Triggers <code>update:table</code> event
          * @param {WheelEvent} e The event arguments
-         * @return {void}
+         * @returns {void}
          */
         onTouch(e) {
             if (e.offsetX < -15) {

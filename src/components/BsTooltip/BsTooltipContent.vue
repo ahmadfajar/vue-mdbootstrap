@@ -58,7 +58,7 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {String[]} Component css classes
+         * @returns {String[]} Component css classes
          * @private
          */
         _classNames() {
@@ -70,7 +70,7 @@ export default {
         /**
          * Get component's css styles.
          *
-         * @return {Object} Inline css styles
+         * @returns {Object} Inline css styles
          * @private
          */
         _styles() {
@@ -100,7 +100,7 @@ export default {
          *
          * @param {number} width    Element width
          * @param {ClientRect} rect Parent element size
-         * @return {number} Tooltip left offset
+         * @returns {number} Tooltip left offset
          */
         getLeftPosition(width, rect) {
             switch (this.placement) {
@@ -118,7 +118,7 @@ export default {
          *
          * @param {number} height   Element height
          * @param {ClientRect} rect Parent element size
-         * @return {number} Tooltip top offset
+         * @returns {number} Tooltip top offset
          */
         getTopPosition(height, rect) {
             switch (this.placement) {
@@ -134,7 +134,7 @@ export default {
         /**
          * Sets tooltip position.
          *
-         * @return {void}
+         * @returns {void}
          */
         setPosition() {
             if (!this.open || !this.$el || !this.trigger) {

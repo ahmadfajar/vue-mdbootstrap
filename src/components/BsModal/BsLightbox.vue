@@ -229,7 +229,7 @@ export default {
         /**
          * Get navigation container's css styles.
          *
-         * @return {Object} Inline css styles
+         * @returns {Object} Inline css styles
          * @private
          */
         _controlStyles() {
@@ -240,7 +240,7 @@ export default {
         /**
          * Get toolbar container's css styles.
          *
-         * @return {Object} Inline css styles
+         * @returns {Object} Inline css styles
          * @private
          */
         _toolbarStyles() {
@@ -251,7 +251,7 @@ export default {
         /**
          * Get component wrapper's css styles.
          *
-         * @return {Object} Inline css styles
+         * @returns {Object} Inline css styles
          * @private
          */
         _wrapperStyles() {

@@ -32,7 +32,7 @@ export default {
         /**
          * Get component's css styles.
          *
-         * @return {Object|null} Inline css styles
+         * @returns {Object|null} Inline css styles
          * @private
          */
         _styles() {
@@ -54,7 +54,7 @@ export default {
         /**
          * Event handler when document body is resized.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _resize() {

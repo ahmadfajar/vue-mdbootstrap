@@ -108,7 +108,7 @@ export default {
         /**
          * Hide tooltip.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _hideTooltip() {
@@ -121,7 +121,7 @@ export default {
         /**
          * Display tooltip.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _showTooltip() {

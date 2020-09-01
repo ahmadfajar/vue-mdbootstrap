@@ -15,7 +15,7 @@ export default class ProxyAdapter {
      * Check if axios plugin already installed and defined not.
      *
      * @param {AxiosInstance|Function} [adapter] Axios adapter instance
-     * @return {void}
+     * @returns {void}
      * @throws Error If axios doesn't exists
      * @static
      */
@@ -35,7 +35,7 @@ export default class ProxyAdapter {
      * Check if Rest URL already defined or not.
      *
      * @param {Object} restUrl The Rest URL to check
-     * @return {void}
+     * @returns {void}
      * @throws URIError If Rest Url is not defined
      */
     static checkRestUrl(restUrl) {
@@ -48,7 +48,7 @@ export default class ProxyAdapter {
      * Log error response to console.
      *
      * @param {Object} error Error object
-     * @return {void}
+     * @returns {void}
      * @static
      */
     static warnResponseError(error) {
@@ -64,7 +64,7 @@ export default class ProxyAdapter {
     /**
      * Default Http request method configurations. Do not override this property.
      *
-     * @return {{browse: string, fetch: string, save: string, update: string, delete: string}} Http methods
+     * @returns {{browse: string, fetch: string, save: string, update: string, delete: string}} Http methods
      * @static
      */
     static get defaultHttpMethods() {
@@ -107,7 +107,7 @@ export default class ProxyAdapter {
      * @param {Function} onRequest  Called before the request is made.
      * @param {Function} onSuccess  Called when the request was successful.
      * @param {Function} onFailure  Called when the request failed.
-     * @return {Promise<*>}         Promise
+     * @returns {Promise<*>}         Promise
      */
     request(config, onRequest, onSuccess, onFailure) {
         ProxyAdapter.checkAxios(this._adapter);
@@ -140,7 +140,7 @@ export default class ProxyAdapter {
     /**
      * Get Http request methods.
      *
-     * @return {Object} Http request methods
+     * @returns {Object} Http request methods
      */
     requestMethods() {
         return {

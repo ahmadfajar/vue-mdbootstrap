@@ -81,7 +81,7 @@ export default {
          * Get input field binding attributes.
          *
          * @param {int} index Column index
-         * @return {Object} Input field attributes
+         * @returns {Object} Input field attributes
          * @private
          */
         _inputAttrs(index) {
@@ -94,7 +94,7 @@ export default {
         /**
          * Filter existing dataItems with available filters.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _doFilter() {
@@ -124,9 +124,9 @@ export default {
         /**
          * Update input field value and fire input events.
          *
-         * @param {String|Number} value The input value
+         * @param {string|number} value The input value
          * @param {int} index           Column index
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onChangeValue(value, index) {
@@ -141,7 +141,7 @@ export default {
          *
          * @param {KeyboardEvent} event The received event
          * @param {int} index           Column index
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onKeyDown(event, index) {

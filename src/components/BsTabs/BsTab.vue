@@ -7,12 +7,10 @@
 </template>
 
 <script>
-import RouteAble from "../../mixins/RouteAble";
 
 export default {
     name: "BsTab",
     inject: ['tabs'],
-    mixins: [RouteAble],
     props: {
         id: {
             type: String,
@@ -37,7 +35,7 @@ export default {
     }),
     computed: {
         /**
-         * @return {String} Transition animation name
+         * @returns {string} Transition animation name
          * @private
          */
         _transition() {
@@ -46,7 +44,7 @@ export default {
         /**
          * Get computed binding's attributes.
          *
-         * @return {any} HTML attributes
+         * @returns {Object|*} HTML attributes
          * @private
          */
         _attributes() {
@@ -59,7 +57,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {Object} Css class names
+         * @returns {Object} Css class names
          * @private
          */
         _classNames() {

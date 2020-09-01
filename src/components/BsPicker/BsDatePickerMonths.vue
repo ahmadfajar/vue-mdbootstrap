@@ -41,7 +41,7 @@ export default {
         /**
          * Create table rows of MONTH.
          *
-         * @return {Object[]} Array of Months
+         * @returns {Object[]} Array of Months
          */
         tableRows() {
             let rows     = [];
@@ -63,7 +63,7 @@ export default {
         /**
          * Format month's name from the given month value.
          *
-         * @return {Function} <tt>Function(value)</tt> which is used to convert any valid <tt>YYYY-MM-DD</tt>
+         * @returns {Function} <tt>Function(value)</tt> which is used to convert any valid <tt>YYYY-MM-DD</tt>
          * formatted date to the current locale date string
          */
         formatter() {
@@ -79,7 +79,7 @@ export default {
          * Get computed button binding's properties.
          *
          * @param {string} date The month's value in format `YYYY-MM-DD`
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         buttonAttrs(date) {
             const _date    = (typeof this.value === 'string' || this.value instanceof Date) ? moment(this.value) : null;
@@ -99,7 +99,7 @@ export default {
          * Calculate next Picker table values.
          *
          * @param {number} delta Year delta
-         * @return {Date} Computed date value
+         * @returns {Date} Computed date value
          */
         calculateTableDate(delta) {
             return this.dateValue.year(this.tableDate.getFullYear() + Math.sign(delta || 1)).toDate();
@@ -109,7 +109,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {string} value The month value in `YYYY-MM-DD` format
-         * @return {void}
+         * @returns {void}
          */
         onMonthClick(value) {
             if (!this.disabled) {

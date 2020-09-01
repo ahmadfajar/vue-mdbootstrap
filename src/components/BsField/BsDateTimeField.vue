@@ -217,7 +217,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {any} Collection of css classes
+         * @returns {Object|*} Collection of css classes
          */
         _classNames() {
             return {
@@ -233,7 +233,7 @@ export default {
         /**
          * Get input field computed binding's attributes.
          *
-         * @return {Object} Attributes to bind
+         * @returns {Object|*} Attributes to bind
          */
         attributes() {
             return {
@@ -248,7 +248,7 @@ export default {
         /**
          * Get DatePicker computed binding attributes.
          *
-         * @return {any} DatePicker attributes
+         * @returns {Object|*} DatePicker attributes
          */
         datePickerAttributes() {
             return {
@@ -267,7 +267,7 @@ export default {
         /**
          * Get Popover computed binding attributes.
          *
-         * @return {any} Popover attributes
+         * @returns {Object|*} Popover attributes
          */
         popoverAttributes() {
             return {
@@ -341,7 +341,7 @@ export default {
          * Convert a value to datetime and update internal value.
          *
          * @param {string|number} value The value to convert
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateValue(value) {

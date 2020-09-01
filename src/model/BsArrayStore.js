@@ -92,7 +92,7 @@ export default class BsArrayStore extends AbstractStore {
     /**
      * Calculate SUM or total value of the Store's dataset.
      *
-     * @param {string} field The fieldname to be used when calculating value
+     * @param {string} field The field name to be used when calculating value
      * @returns {number} The sum's value
      */
     aggregateSum(field) {
@@ -104,7 +104,7 @@ export default class BsArrayStore extends AbstractStore {
      *
      * @param {Object} item     Data to append to the Store
      * @param {boolean} sorted  Sort dataset after appended
-     * @return {void}
+     * @returns {void}
      */
     append(item, sorted = false) {
         if (!Helper.isEmpty(item)) {
@@ -120,7 +120,7 @@ export default class BsArrayStore extends AbstractStore {
      *
      * @param {Object|Object[]} data A record or collection of records to be assigned
      * @param {boolean} silent        Append data silently and doesn't trigger data conversion
-     * @return {void}
+     * @returns {void}
      */
     assignData(data, silent = false) {
         this._assignData(data, silent);
@@ -135,7 +135,7 @@ export default class BsArrayStore extends AbstractStore {
      * Load the data.
      *
      * @param {Object[]|Object} [data] A record or collection of records to be assigned
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<any>} Promise interface
      */
     load(data = null) {
         return new Promise(resolve => {
@@ -164,7 +164,7 @@ export default class BsArrayStore extends AbstractStore {
      *
      * @param {string|ISorter[]|Object[]} field  The field for sorting
      * @param {'asc'|'desc'} direction           The sort direction
-     * @return {Object[]} Collection
+     * @returns {Object[]} Collection
      */
     sort(field = null, direction = 'asc') {
         this._createSorters(field, direction);

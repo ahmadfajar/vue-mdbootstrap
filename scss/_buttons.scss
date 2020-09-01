@@ -58,6 +58,7 @@
     &:active:focus,
     &.active {
       border-color: darken($color, 8%);
+      color: set-outline-button-color($name, darken($color, 10%));
       @if ($name == 'light') {
         background-color: rgba($color, .2);
       } @else {
@@ -68,6 +69,7 @@
     &:not([disabled]):not(.disabled):active,
     &:not([disabled]):not(.disabled).active {
       border-color: darken($color, 8%);
+      color: set-outline-button-color($name, darken($color, 15%));
       @if ($name == 'light') {
         background-color: rgba($color, .2);
       } @else {
@@ -97,8 +99,9 @@
       &:active,
       &.active,
       &:focus {
-        background-color: rgba(lighten($color, 15%), .2);
         border-color: transparent;
+        background-color: rgba(lighten($color, 15%), .2);
+        color: set-outline-button-color($name, darken($color, 15%));
       }
 
       &:active:focus {

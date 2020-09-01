@@ -13,12 +13,22 @@
 
 <script>
 import BsAvatar from "../BsBasic/BsAvatar";
-import image from '../../mixins/Image';
+import Image from "../../mixins/Image";
 
 export default {
     name: "BsListTileLeading",
     components: {BsAvatar},
-    mixins: [image]
+    mixins: [Image],
+    props: {
+        /**
+         * The image location to place inside component.
+         * @type {string|*}
+         */
+        imgSrc: {
+            type: String,
+            default: undefined
+        },
+    }
 }
 </script>
 

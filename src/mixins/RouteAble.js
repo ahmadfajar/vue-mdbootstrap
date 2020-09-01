@@ -4,10 +4,6 @@ export default {
             type: String,
             default: 'active'
         },
-        tag: {
-            type: String,
-            default: 'a'
-        },
         exact: {
             type: Boolean,
             default: false
@@ -23,10 +19,10 @@ export default {
     },
     computed: {
         hasLink() {
-            return !this.hasRouter && this.url !== undefined && this.url !== '';
+            return !this.hasRouter && (typeof this.url !== 'undefined') && this.url !== '';
         },
         hasRouter() {
-            return (this.$router || this.$route) && this.path !== undefined && this.path !== '';
+            return (this.$router || this.$route) && (typeof this.path !== 'undefined') && this.path !== '';
         }
     }
 }

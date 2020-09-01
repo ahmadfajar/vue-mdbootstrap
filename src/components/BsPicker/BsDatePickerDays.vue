@@ -74,7 +74,7 @@ export default {
         /**
          * Get table rows of DAYS.
          *
-         * @return {Object[]} Array of Days
+         * @returns {Object[]} Array of Days
          */
         tableRows() {
             let rows      = [];
@@ -108,7 +108,7 @@ export default {
         /**
          * Get table of Day names.
          *
-         * @return {string[]} Collection of day names
+         * @returns {string[]} Collection of day names
          */
         dayNamesFmt() {
             const first = parseInt(this.firstDayOfWeek, 10);
@@ -121,7 +121,7 @@ export default {
          * Get weekday name from the given date value.
          *
          * @param {string} [value] The date value in ISO 8601 format
-         * @return {Function|void} A function to format selected date
+         * @returns {Function|void} A function to format selected date
          */
         weekdayFormatter(value) {
             return createNativeLocaleFormatter(this.locale, {weekday: 'narrow', timeZone: 'UTC'});
@@ -132,10 +132,10 @@ export default {
          * Get computed button binding's properties.
          *
          * @param {string|[string]} date The date's value in format `YYYY-MM-DD`
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         buttonAttrs(date) {
-            const _mdate   = moment(date);
+            const _mDate   = moment(date);
             const _date    = (typeof this.value === 'string' || this.value instanceof Date) ? moment(this.value) : null;
             const selected = Helper.isArray(this.value)
                 ? this.value.indexOf(date) !== -1
@@ -146,16 +146,16 @@ export default {
                 'mode': 'icon',
                 // 'active': selected,
                 'disabled': this.disabled && !selected,
-                'outlined': this.currentDate.isSame(_mdate, PickerConst.day) && !selected,
-                'flat': this.currentDate.isSame(_mdate, PickerConst.day) === false && !selected,
-                'color': this.currentDate.isSame(_mdate, PickerConst.day) === false && !selected ? 'dark' : this.color
+                'outlined': this.currentDate.isSame(_mDate, PickerConst.day) && !selected,
+                'flat': this.currentDate.isSame(_mDate, PickerConst.day) === false && !selected,
+                'color': this.currentDate.isSame(_mDate, PickerConst.day) === false && !selected ? 'dark' : this.color
             }
         },
         /**
          * Calculate next Picker table values.
          *
          * @param {number} delta Month delta
-         * @return {Date} Computed date value
+         * @returns {Date} Computed date value
          */
         calculateTableDate(delta) {
             return this.dateValue.month(this.tableDate.getMonth() + Math.sign(delta || 1)).toDate();
@@ -164,7 +164,7 @@ export default {
          * Check if the given date is within the event's date range or not.
          *
          * @param {Date} date The date to check
-         * @return {*} False if invalid
+         * @returns {*} False if invalid
          */
         isEvent(date) {
             if (Helper.isArray(this.events)) {
@@ -178,7 +178,7 @@ export default {
         /**
          * Calculate number of days before the first day of the month.
          *
-         * @return {number} Number of days
+         * @returns {number} Number of days
          */
         numDaysBefore() {
             const firstDay = new Date(`${this.dateValue.year()}-${padLeft(this.dateValue.month() + 1)}-01T00:00:00+00:00`);
@@ -191,7 +191,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {string} value The date value in `YYYY-MM-DD` format
-         * @return {void}
+         * @returns {void}
          */
         onDayClick(value) {
             if (!this.disabled) {

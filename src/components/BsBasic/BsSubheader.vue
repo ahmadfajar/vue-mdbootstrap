@@ -8,18 +8,25 @@
 export default {
     name: "BsSubheader",
     props: {
-        dark: Boolean
+        /**
+         * Define explicitly when placed inside element that has dark background color.
+         * @type {boolean|*}
+         */
+        dark: {
+            type: Boolean,
+            default: false
+        },
     },
     computed: {
         /**
          * Get component's class names.
          *
-         * @return {String[]} Component css classes
+         * @returns {String[]} Component css classes
          * @private
          */
         _classNames() {
             return [
-                this.dark ? 'md-subheader--dark' : 'md-subheader--light'
+                this.dark ? 'subheader--dark' : 'subheader--light'
             ]
         }
     }
@@ -38,11 +45,11 @@ export default {
   height: 48px;
   padding: 0 16px;
 
-  &.#{$prefix}-subheader--dark {
+  &.subheader--dark {
     color: rgba($white, .8);
   }
 
-  &.#{$prefix}-subheader--light {
+  &.subheader--light {
     color: $gray-600;
   }
 }

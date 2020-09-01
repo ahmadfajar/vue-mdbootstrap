@@ -8,20 +8,36 @@ import Helper from "../../utils/Helper";
 export default {
     name: "BsDivider",
     props: {
+        /**
+         * Set to `TRUE` when divider is placed inside element that has dark background color.
+         * @type {boolean|*}
+         */
         dark: {
             type: Boolean,
             default: false
         },
+        /**
+         * Indentation from left side.
+         * @type {string|number|*}
+         */
         leftIndent: {
             type: [String, Number],
             default: undefined,
             validator: v => !isNaN(parseInt(v, 10))
         },
+        /**
+         * Indentation from right side.
+         * @type {string|number|*}
+         */
         rightIndent: {
             type: [String, Number],
             default: undefined,
             validator: v => !isNaN(parseInt(v, 10))
         },
+        /**
+         * Divider thickness.
+         * @type {string|number|*}
+         */
         thickness: {
             type: [String, Number],
             default: undefined,
@@ -32,18 +48,18 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {String[]} Component css classes
+         * @returns {String[]} Component css classes
          * @private
          */
         _classNames() {
             return [
-                this.dark ? 'md-divider--dark' : 'md-divider--light'
+                this.dark ? 'divider--dark' : 'divider--light'
             ]
         },
         /**
          * Get component's inline css styles.
          *
-         * @return {Object} Inline css styles
+         * @returns {Object} Inline css styles
          * @private
          */
         _styles() {
@@ -74,8 +90,8 @@ export default {
   -webkit-box-flex: 1;
   -ms-flex: 1;
 
-  &.#{$prefix}-divider--dark {
-    background-color: hsla(0, 0%, 100%, 0.12);
+  &.divider--dark {
+    background-color: rgba($white, 0.2);
   }
 }
 </style>

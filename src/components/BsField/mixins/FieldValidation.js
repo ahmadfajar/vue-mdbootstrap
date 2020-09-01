@@ -25,7 +25,7 @@ export default {
         /**
          * Check if this field has been validated and has error.
          *
-         * @return {boolean} TRUE jika ada satu atau lebih element yg invalid
+         * @returns {boolean} TRUE jika ada satu atau lebih element yg invalid
          */
         hasValidationError() {
             return this.externalValidator && this.externalValidator.hasError;
@@ -33,7 +33,7 @@ export default {
         /**
          * Check if validation error message will be shown or not.
          *
-         * @return {boolean} TRUE to show validation error message otherwise FALSE
+         * @returns {boolean} TRUE to show validation error message otherwise FALSE
          */
         showErrorValidation() {
             return this.externalValidator &&
@@ -44,7 +44,7 @@ export default {
         /**
          * Check if helpText will be shown or not.
          *
-         * @return {boolean} TRUE to show help text otherwise FALSE
+         * @returns {boolean} TRUE to show help text otherwise FALSE
          */
         showHelpText() {
             if (this.externalValidator && this.externalValidator.hasError && !this.wasValidated) {
@@ -65,7 +65,7 @@ export default {
         /**
          * Get external validator.
          *
-         * @return {Object} The validators to be used
+         * @returns {Object} The validators to be used
          */
         validators() {
             if (this.externalValidator && this.externalValidator.validators) {
@@ -80,7 +80,7 @@ export default {
          * Get validation message for an element.
          *
          * @param {string} fld The element name
-         * @return {string} The validation message
+         * @returns {string} The validation message
          * @private
          */
         _validationMessage(fld) {

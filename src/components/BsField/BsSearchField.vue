@@ -164,7 +164,7 @@ export default {
         /**
          * Get Popover computed binding attributes.
          *
-         * @return {Object} Attributes to bind
+         * @returns {Object} Attributes to bind
          */
         _popoverAttributes() {
             return {
@@ -179,7 +179,7 @@ export default {
         /**
          * Get popover's computed width.
          *
-         * @return {Number} Popover minimum width
+         * @returns {number} Popover minimum width
          */
         _popoverMinWidth() {
             if (this.trigger && (this.popoverWidth < this.trigger.offsetWidth)) {
@@ -191,7 +191,7 @@ export default {
         /**
          * Get computed popover's styles.
          *
-         * @return {Object} Popover styles
+         * @returns {Object} Popover styles
          */
         _popoverStyles() {
             return {

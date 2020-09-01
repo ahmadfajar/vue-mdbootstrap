@@ -1,7 +1,7 @@
 import BsIcon from "./BsIcon";
-import BsIconEyeToggle from "./BsIconEyeToggle";
+import BsIconToggle from "./BsIconToggle";
 
 export default Vue => {
     Vue.component(BsIcon.name, BsIcon);
-    Vue.component(BsIconEyeToggle.name, BsIconEyeToggle);
+    Vue.component(BsIconToggle.name, BsIconToggle);
 };

@@ -1,6 +1,5 @@
 <template>
   <router-link v-if="hasRouter"
-               :tag="tag"
                :to="path"
                :class="_classNames"
                :active-class="activeClass"
@@ -8,7 +7,7 @@
                v-on="$listeners">
     <slot></slot>
   </router-link>
-  <a :is="tag"
+  <a :is="_tag"
      :class="_classNames"
      :href="url"
      v-on="$listeners"
@@ -23,19 +22,25 @@ import ToggleAble from './mixins/ToggleAble';
 
 export default {
     name: "BsListTile",
-    props: {
-        disabled: Boolean
-    },
     mixins: [RouteAble, ToggleAble],
+    props: {
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+    },
     computed: {
         _classNames() {
             return {
                 'd-flex': true,
                 'md-list-tile': true,
                 'md-disabled': this.disabled,
-                'md-link': (this.hasRouter || this.tag === 'a') && !this.disabled,
+                'md-link': this._tag === 'a' && !this.disabled,
                 ['md-' + this.activeClass]: !this.hasRouter && this.isActive && !this.disabled
             }
+        },
+        _tag() {
+            return this.hasRouter || this.hasLink ? 'a' : 'div'
         }
     }
 }

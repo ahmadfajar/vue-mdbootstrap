@@ -139,7 +139,7 @@ export default {
         /**
          * Gets tabs orientation.
          *
-         * @return {String} Tabs orientation: horizontal or vertical
+         * @returns {string} Tabs orientation: horizontal or vertical
          */
         orientation() {
             if (['left', 'right'].includes(this.tabPosition)) {
@@ -151,7 +151,7 @@ export default {
         /**
          * Get computed binding's attributes.
          *
-         * @return {any} HTML attributes
+         * @returns {Object|*} HTML attributes
          * @private
          */
         _attributes() {
@@ -163,7 +163,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {String[]} Css class names
+         * @returns {String[]} Css class names
          * @private
          */
         _classNames() {
@@ -191,7 +191,7 @@ export default {
         /**
          * Get computed html TAG.
          *
-         * @return {string} HTML tag
+         * @returns {string} HTML tag
          * @private
          */
         _tagName() {
@@ -247,7 +247,7 @@ export default {
          * Compute Tabbed binding's attribute for a given object.
          *
          * @param {Object} tabPane Raw attributes from a tab-pane object
-         * @return {any} Tabbed binding's attribute
+         * @returns {Object|*} Tabbed binding's attribute
          * @private
          */
         _tabbedAttrs(tabPane) {

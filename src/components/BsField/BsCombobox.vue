@@ -246,7 +246,7 @@ export default {
         /**
          * Get computed component's styles.
          *
-         * @return {*} Collection of css classes
+         * @returns {Object|*} Collection of css classes
          */
         _classNames() {
             return {
@@ -264,7 +264,7 @@ export default {
         /**
          * Get computed binding's properties.
          *
-         * @return {*} Attributes to bind
+         * @returns {Object|*} Attributes to bind
          */
         _inputAttributes() {
             return {
@@ -279,13 +279,13 @@ export default {
         /**
          * Check if feature clear button is enabled or not.
          *
-         * @return {boolean} TRUE if has clear button otherwise FALSE
+         * @returns {boolean} TRUE if has clear button otherwise FALSE
          */
         _showClearButton() {
             return this.clearButton && !this.readonly && !this.disabled && this.selectedItems.length > 0;
         },
         /**
-         * @return {boolean} Display placeholder or not
+         * @returns {boolean} Display placeholder or not
          */
         _showPlaceHolder() {
             return !this.inputValue;
@@ -293,7 +293,7 @@ export default {
         /**
          * Get computed floating label's class names.
          *
-         * @return {*} Floating label css classes
+         * @returns {Object|*} Floating label css classes
          */
         _floatingLabelClass() {
             return {
@@ -304,7 +304,7 @@ export default {
         /**
          * Get combobox list container binding attributes.
          *
-         * @return {*} Attributes to bind
+         * @returns {Object|*} Attributes to bind
          */
         _listContainerAttributes() {
             return {
@@ -336,7 +336,7 @@ export default {
         /**
          * Get Popover computed binding attributes.
          *
-         * @return {*} Attributes to bind
+         * @returns {Object|*} Attributes to bind
          */
         _popoverAttributes() {
             return {
@@ -355,7 +355,7 @@ export default {
         /**
          * Get popover's computed width.
          *
-         * @return {Number} Popover minimum width
+         * @returns {number} Popover minimum width
          */
         _popoverMinWidth() {
             if (this.trigger && (this.popoverWidth < this.trigger.offsetWidth)) {
@@ -367,7 +367,7 @@ export default {
         /**
          * Get computed popover's styles.
          *
-         * @return {Object} Popover styles
+         * @returns {Object} Popover styles
          */
         _popoverStyles() {
             return {
@@ -378,7 +378,7 @@ export default {
         /**
          * Get checkbox color.
          *
-         * @return {string} Color name
+         * @returns {string} Color name
          */
         checkboxColor() {
             this._assignCheckOptionColor(this.checkOptionColor);
@@ -387,7 +387,7 @@ export default {
         /**
          * Get checkbox position when multi-selection is enabled.
          *
-         * @return {string} Position name
+         * @returns {string} Position name
          */
         checkboxPosition() {
             this._assignCheckOptionPosition(this.checkOptionPosition);
@@ -396,7 +396,7 @@ export default {
         /**
          * Get data items.
          *
-         * @return {Object[]} Items
+         * @returns {Object[]} Items
          */
         dataItems() {
             return this.dataSource ? this.dataSource.proxy.dataItems : [];
@@ -404,7 +404,7 @@ export default {
         /**
          * Get property cascade field name from data schema.
          *
-         * @return {string} A field name
+         * @returns {string} A field name
          */
         cascadeField() {
             return this.dataModel.cascadeField;
@@ -412,7 +412,7 @@ export default {
         /**
          * Get property disabled field name from data schema.
          *
-         * @return {string} A field name
+         * @returns {string} A field name
          */
         disableField() {
             return this.dataModel.disableField;
@@ -420,7 +420,7 @@ export default {
         /**
          * Get property display/text field name from data schema.
          *
-         * @return {string} A field name
+         * @returns {string} A field name
          */
         displayField() {
             return this.dataModel.displayField;
@@ -428,7 +428,7 @@ export default {
         /**
          * Get property image field name from data schema.
          *
-         * @return {string} A field name
+         * @returns {string} A field name
          */
         imageField() {
             return this.dataModel.imageField;
@@ -436,7 +436,7 @@ export default {
         /**
          * Get property value field name from data schema.
          *
-         * @return {string} A field name
+         * @returns {string} A field name
          */
         valueField() {
             return this.dataModel.valueField;
@@ -501,7 +501,7 @@ export default {
         /**
          * Remove all selected items.
          *
-         * @return {Array} The deleted items
+         * @returns {Array} The deleted items
          */
         clearSelected() {
             const results = this.selectedItems.splice(0, this.selectedItems.length);
@@ -514,7 +514,7 @@ export default {
          * Get value from the given item.
          *
          * @param {Object|Array|string|number} item The given item
-         * @return {string|boolean|number} The item value
+         * @returns {string|boolean|number} The item value
          */
         getItemValue(item) {
             if (Helper.isPrimitive(item)) {
@@ -531,7 +531,7 @@ export default {
          * Get display text from the given item.
          *
          * @param {Object|Array|string|number} item The given item
-         * @return {string|boolean|number} The text to display
+         * @returns {string|boolean|number} The text to display
          */
         getItemText(item) {
             if (Helper.isPrimitive(item)) {
@@ -549,7 +549,7 @@ export default {
          *
          * @param {Object} item  The object to evaluate
          * @param {string} field The property name to check
-         * @return {boolean} TRUE if has the property otherwise false
+         * @returns {boolean} TRUE if has the property otherwise false
          */
         hasProperty(item, field) {
             const ret = Helper.getObjectValueByPath(item, field);
@@ -561,7 +561,7 @@ export default {
          *
          * @param {Object} item           The object to evaluate
          * @param {String|Function} field The property name
-         * @return {string|boolean|number} The property value
+         * @returns {string|boolean|number} The property value
          */
         itemPropertyValue(item, field) {
             return Helper.getObjectValueByPath(item, field);
@@ -570,7 +570,7 @@ export default {
          * Assign checkbox color property.
          *
          * @param {string} color CheckBox color
-         * @return {void}
+         * @returns {void}
          */
         _assignCheckOptionColor(color) {
             if (color) {
@@ -581,7 +581,7 @@ export default {
          * Assign checkbox position property.
          *
          * @param {string} position CheckBox position
-         * @return {void}
+         * @returns {void}
          */
         _assignCheckOptionPosition(position) {
             if (position && ['left', 'right'].includes(position)) {
@@ -591,7 +591,7 @@ export default {
         /**
          * Compute and join the selected array values.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _computeInternalValues() {
@@ -608,7 +608,7 @@ export default {
         /**
          * Fetch data from static data source or remote server.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _fetchData() {
@@ -654,7 +654,7 @@ export default {
          * Set attribute "for" for the given element.
          *
          * @param {Element} elm The DOM element
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _setLabelFor(elm) {
@@ -665,7 +665,7 @@ export default {
         /**
          * Compute selected items in the combobox.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _setSelectedItems() {
@@ -696,7 +696,7 @@ export default {
         /**
          * Update combobox label.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateLabel() {
@@ -727,7 +727,7 @@ export default {
         /**
          * Update computed values.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateValue() {
@@ -740,7 +740,7 @@ export default {
          * Handler for event data filtering.
          *
          * @param {Array} items The filtered items
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onFilterData(items) {
@@ -758,7 +758,7 @@ export default {
          * Handler when an item within combobox is deselected.
          *
          * @param {Object} item The unselected item
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onDeselectItem(item) {
@@ -790,7 +790,7 @@ export default {
          * Handler when an item within combobox is selected.
          *
          * @param {Object} item The selected item
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onSelectItem(item) {

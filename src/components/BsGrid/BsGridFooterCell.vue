@@ -23,7 +23,7 @@ export default {
         /**
          * Get computed Cell value.
          *
-         * @return {string|number} Cell value
+         * @returns {string|number} Cell value
          */
         value() {
             const col = this.column;

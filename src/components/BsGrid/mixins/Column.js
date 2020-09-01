@@ -55,7 +55,7 @@ export default {
         /**
          * Get computed header column styles.
          *
-         * @return {Object} Css styles to apply
+         * @returns {Object} Css styles to apply
          * @private
          */
         _headerStyles() {
@@ -70,7 +70,7 @@ export default {
         /**
          * Get computed header/cell text-alignment.
          *
-         * @return {string} Column text alignment
+         * @returns {string} Column text alignment
          */
         textAlignment() {
             return this.textAlign || this.headerAlign;

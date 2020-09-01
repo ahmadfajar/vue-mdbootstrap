@@ -2,7 +2,7 @@
  * Binds all methods of a class instance to itself.
  *
  * @param {Object} instance The class instance
- * @return {void}
+ * @returns {void}
  */
 export const autobind = function(instance) {
     for (let obj = instance; obj; obj = Object.getPrototypeOf(obj)) {

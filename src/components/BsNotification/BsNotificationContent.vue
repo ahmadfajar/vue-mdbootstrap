@@ -41,7 +41,7 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {String[]} Component css classes
+         * @returns {String[]} Component css classes
          * @private
          */
         _classNames() {
@@ -53,7 +53,7 @@ export default {
         /**
          * Get component's css styles.
          *
-         * @return {Object|false} Inline css styles
+         * @returns {Object|false} Inline css styles
          * @private
          */
         _cmpStyles() {
@@ -81,7 +81,7 @@ export default {
         /**
          * Manually remove component from the DOM if it's not managed.
          *
-         * @return {void}
+         * @returns {void}
          */
         close() {
             if (this.$parent != null) {
@@ -93,7 +93,7 @@ export default {
          *
          * @param {number} newValue Progress value
          *
-         * @return {void}
+         * @returns {void}
          */
         setProgressBarValue(newValue) {
             if (this.options.progressBarValue !== null) {
@@ -103,7 +103,7 @@ export default {
         /**
          * Clear assigned interval.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _clearInterval() {
@@ -115,7 +115,7 @@ export default {
         /**
          * Check if clickClose is TRUE then remove component from the DOM.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _closeOnClick() {
@@ -128,7 +128,7 @@ export default {
          *
          * @param {MouseEvent} e Mouse event
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onClick(e) {
@@ -142,7 +142,7 @@ export default {
          *
          * @param {MouseEvent} e Mouse event
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onMouseOut(e) {
@@ -158,7 +158,7 @@ export default {
          *
          * @param {MouseEvent} e Mouse event
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onMouseOver(e) {
@@ -172,7 +172,7 @@ export default {
         /**
          * Remove component from the DOM when the timout has been reached.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _setTimeout() {

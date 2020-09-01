@@ -5,7 +5,7 @@ import axios from "axios";
  *
  * @param {Vue} Vue         Vue instance
  * @param {Object} options  Configuration options
- * @return {void}
+ * @returns {void}
  */
 export default (Vue, options) => {
     const defaultOptions = {
@@ -43,7 +43,7 @@ export default (Vue, options) => {
          * @param {string} url       API url
          * @param {Object} [data]    The data to be send
          * @param {Object} [options] The configuration options
-         * @return {Promise} Promise instance
+         * @returns {Promise} Promise instance
          */
         get: (url, data, options) => {
             let axiosOpt = {
@@ -63,7 +63,7 @@ export default (Vue, options) => {
          * @param {string} url       API url
          * @param {Object} data      The data to be send
          * @param {Object} [options] The configuration options
-         * @return {Promise} Promise instance
+         * @returns {Promise} Promise instance
          */
         post: (url, data, options) => {
             let axiosOpt = {
@@ -83,7 +83,7 @@ export default (Vue, options) => {
          * @param {string} url       API url
          * @param {Object} data      The data to be send
          * @param {Object} [options] The configuration options
-         * @return {Promise} Promise instance
+         * @returns {Promise} Promise instance
          */
         put: (url, data, options) => {
             let axiosOpt = {
@@ -103,7 +103,7 @@ export default (Vue, options) => {
          * @param {string} url      API url
          * @param {Object} data     The data to be send
          * @param {Object} options  The configuration options
-         * @return {Promise} Promise instance
+         * @returns {Promise} Promise instance
          */
         delete: (url, data, options) => {
             let axiosOpt = {

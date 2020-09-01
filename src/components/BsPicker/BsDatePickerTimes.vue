@@ -208,7 +208,7 @@ export default {
         /**
          * Get default button binding's properties.
          *
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         _defaultBtnAttrs() {
             return {
@@ -220,7 +220,7 @@ export default {
         /**
          * Get button Increment/Decrement binding's properties.
          *
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         _buttonNavAttrs() {
             return {
@@ -231,7 +231,7 @@ export default {
         /**
          * Create table rows of HOUR.
          *
-         * @return {Object[]} Collection of Object to create table rows
+         * @returns {Object[]} Collection of Object to create table rows
          */
         tableHours() {
             let rows     = [];
@@ -255,7 +255,7 @@ export default {
         /**
          * Create table rows of MINUTES.
          *
-         * @return {Object[]} Collection of Object to create table rows
+         * @returns {Object[]} Collection of Object to create table rows
          */
         tableMinutes() {
             let rows     = [];
@@ -299,7 +299,7 @@ export default {
          * Get Hour button binding's properties.
          *
          * @param {number} hour The hour value
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         buttonHourAttrs(hour) {
             const selected = this.dateValue.hour() === hour;
@@ -309,7 +309,7 @@ export default {
          * Get Minute button binding's properties.
          *
          * @param {number} minute The minute value
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         buttonMinuteAttrs(minute) {
             const selected = this.dateValue.minute() === minute;
@@ -319,7 +319,7 @@ export default {
          * Get Seconds button binding's properties.
          *
          * @param {number} second The second value
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         buttonSecondAttrs(second) {
             const selected = this.dateValue.second() === second;
@@ -329,7 +329,7 @@ export default {
          * Change active view.
          *
          * @param {string} view The view mode
-         * @return {void}
+         * @returns {void}
          */
         changeView(view) {
             if (!this.disabled) {
@@ -340,7 +340,7 @@ export default {
          * Create button component binding's properties.
          *
          * @param {boolean} selected Whether the button is selected or not
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         createButtonAttrs(selected) {
             return {
@@ -354,7 +354,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {string} mode The symbol of time, `h` for Hours, `m` for Minutes, and `s` for Seconds
-         * @return {void}
+         * @returns {void}
          */
         decrease(mode) {
             if (!this.disabled && ['h', 'm', 's'].indexOf(mode) > -1) {
@@ -366,7 +366,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {string} mode The symbol of time, `h` for Hours, `m` for Minutes, and `s` for Seconds
-         * @return {void}
+         * @returns {void}
          */
         increase(mode) {
             if (!this.disabled && ['h', 'm', 's'].indexOf(mode) > -1) {
@@ -378,7 +378,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {number} value The hour
-         * @return {void}
+         * @returns {void}
          */
         setHours(value) {
             this.$emit('input', this.dateValue.hour(value));
@@ -389,7 +389,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {number} value The minute
-         * @return {void}
+         * @returns {void}
          */
         setMinutes(value) {
             this.$emit('input', this.dateValue.minute(value));
@@ -400,7 +400,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {number} value The seconds
-         * @return {void}
+         * @returns {void}
          */
         setSeconds(value) {
             this.$emit('input', this.dateValue.second(value));

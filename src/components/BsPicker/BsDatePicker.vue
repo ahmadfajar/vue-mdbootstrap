@@ -234,7 +234,7 @@ export default {
         /**
          * Get default picker computed binding's properties.
          *
-         * @return {*} The component's properties
+         * @returns {Object|*} The component's properties
          */
         defaultAttrs() {
             return {
@@ -248,7 +248,7 @@ export default {
         /**
          * Get title header panel's format function if value is an array.
          *
-         * @return {Function} A function to format the selected date
+         * @returns {Function} A function to format the selected date
          */
         defaultTitleMultipleDateFormatter() {
             if (this.value.length < 2) {
@@ -260,7 +260,7 @@ export default {
         /**
          * Get title header panel's format function if value is string.
          *
-         * @return {Function} A function to format the selected date
+         * @returns {Function} A function to format the selected date
          */
         defaultTitleDateFormatter() {
             const titleFormats = {
@@ -283,7 +283,7 @@ export default {
         /**
          * Get formatted value of Year and Days.
          *
-         * @return {Object} Header panel values
+         * @returns {Object} Header panel values
          */
         formatters() {
             return {
@@ -294,7 +294,7 @@ export default {
         /**
          * Get header panel computed binding's properties.
          *
-         * @return {*} The component's properties
+         * @returns {Object|*} The component's properties
          */
         headerAttrs() {
             moment.locale(this.locale);
@@ -317,7 +317,7 @@ export default {
         /**
          * Check if TimePicker is enabled or disabled.
          *
-         * @return {boolean} TRUE if TimePicker is enabled otherwise FALSE
+         * @returns {boolean} TRUE if TimePicker is enabled otherwise FALSE
          */
         isTimeEnabled() {
             if (this.viewMode === PickerConst.date) {
@@ -329,7 +329,7 @@ export default {
         /**
          * Get picker container binding's properties.
          *
-         * @return {*} The component's properties
+         * @returns {Object|*} The component's properties
          */
         pickerAttrs() {
             return {
@@ -342,7 +342,7 @@ export default {
         /**
          * Get DayPicker computed binding's properties.
          *
-         * @return {*} The component's properties
+         * @returns {Object|*} The component's properties
          */
         pickerDayAttrs() {
             return {
@@ -358,7 +358,7 @@ export default {
         /**
          * Get MonthPicker computed binding's properties.
          *
-         * @return {*} The component's properties
+         * @returns {Object|*} The component's properties
          */
         pickerMonthAttrs() {
             return {
@@ -370,7 +370,7 @@ export default {
         /**
          * Get YearPicker computed binding's properties.
          *
-         * @return {*} The component's properties
+         * @returns {Object|*} The component's properties
          */
         pickerYearAttrs() {
             return {
@@ -382,7 +382,7 @@ export default {
         /**
          * Get TimePicker computed binding's properties.
          *
-         * @return {*} The component's properties
+         * @returns {Object|*} The component's properties
          */
         pickerTimeAttrs() {
             return {
@@ -394,7 +394,7 @@ export default {
         /**
          * Get Picker navigation computed binding's properties.
          *
-         * @return {*} The component's properties
+         * @returns {Object|*} The component's properties
          */
         pickerNavAttrs() {
             return {
@@ -405,7 +405,7 @@ export default {
         /**
          * Memeriksa apakah Picker navigation akan ditampilkan atau tidak.
          *
-         * @return {boolean} TRUE to show navigation otherwise FALSE
+         * @returns {boolean} TRUE to show navigation otherwise FALSE
          */
         showPickerNav() {
             return this.activePicker !== PickerConst.TIME;
@@ -452,7 +452,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {Date} value The input date value
-         * @return {void}
+         * @returns {void}
          */
         selectDate(value) {
             if (!this.readonly) {
@@ -465,7 +465,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {Date} value The input date value
-         * @return {void}
+         * @returns {void}
          */
         selectMonth(value) {
             if (!this.readonly) {
@@ -485,7 +485,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {number} value The year value
-         * @return {void}
+         * @returns {void}
          */
         selectYear(value) {
             if (!this.readonly) {
@@ -505,7 +505,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {moment.Moment} value The input date value
-         * @return {void}
+         * @returns {void}
          */
         selectTime(value) {
             if (!this.readonly) {
@@ -515,7 +515,7 @@ export default {
         /**
          * Toggle active Picker view.
          *
-         * @return {void}
+         * @returns {void}
          */
         togglePicker() {
             switch (this.viewMode) {
@@ -546,7 +546,7 @@ export default {
          * Change active Picker.
          *
          * @param {string} value Picker mode
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _changePickerView(value) {
@@ -577,7 +577,7 @@ export default {
          * Set Picker table value from the given date.
          *
          * @param {Date} value The date value
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updatePickerTable(value) {

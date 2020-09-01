@@ -6,7 +6,27 @@ import averageBy from "lodash/meanBy";
 import sumBy from "lodash/sumBy";
 
 /**
- * Data Store class.
+ * Data Store for working with collection of data and remote API.
+ *
+ * @example
+ * let dsStore = new BsStore({
+ *     idProperty: 'id',
+ *     dataProperty: 'data',
+ *     totalProperty: 'total',
+ *     pageSize: 15,
+ *     restProxy: {
+ *         browse: '/api/users',
+ *         delete: {url: './api/users', method: 'delete'},
+ *         save: {url: './api/users', method: 'post'},
+ *         update: {url: './api/users', method: 'put'}
+ *     },
+ *     csrfConfig: {
+ *         url: '/api/token/{name}',
+ *         tokenName: 'token_name',
+ *         dataField: 'value',
+ *         suffix: false,
+ *     },
+ * });
  *
  * @author Ahmad Fajar
  * @since  20/07/2018 modified: 13/07/2020 00:27

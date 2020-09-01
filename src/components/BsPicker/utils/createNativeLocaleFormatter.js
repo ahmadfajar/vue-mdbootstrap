@@ -6,7 +6,7 @@ const INVALID_DATE = "Invalid date value";
  * Check if the given array can be constructed as Date object.
  *
  * @param {number[]} values Array of numbers
- * @return {boolean} TRUE if can be converted to Date otherwise FALSE
+ * @returns {boolean} TRUE if can be converted to Date otherwise FALSE
  */
 function isArrayDateValid(values) {
     if (values.length > 0) {
@@ -24,7 +24,7 @@ function isArrayDateValid(values) {
  * Parse the given DateString in ISO-8601 format.
  *
  * @param {string} value The valid date string
- * @return {Date} The Date value
+ * @returns {Date} The Date value
  */
 function parseDateString(value) {
     const _split   = value.split('-');
@@ -47,7 +47,7 @@ function parseDateString(value) {
  * Otherwise it will parse the given value and returns a Date object if valid.
  *
  * @param {moment.Moment|Date|string|number|[number]} value A valid date value
- * @return {Date} The date value
+ * @returns {Date} The date value
  */
 function parseDate(value) {
     if (value instanceof moment) {
@@ -69,7 +69,7 @@ function parseDate(value) {
  * Parse the given date value and returns date string in ISO-8601 format.
  *
  * @param {string} value Valid date string
- * @return {string} ISO-8601 formatted date
+ * @returns {string} ISO-8601 formatted date
  */
 function makeIsoDate(value) {
     try {

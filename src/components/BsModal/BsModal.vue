@@ -61,7 +61,7 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {*} Dialog css classes
+         * @returns {Object|*} Dialog css classes
          * @private
          */
         _classNames() {
@@ -75,7 +75,7 @@ export default {
         /**
          * Get component's css styles.
          *
-         * @return {Object} Inline css styles
+         * @returns {Object} Inline css styles
          * @private
          */
         _modalStyles() {
@@ -87,7 +87,7 @@ export default {
         /**
          * Get component wrapper's css styles.
          *
-         * @return {Object} Inline css styles
+         * @returns {Object} Inline css styles
          * @private
          */
         _wrapperStyles() {

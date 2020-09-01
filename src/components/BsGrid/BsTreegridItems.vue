@@ -74,7 +74,7 @@ export default {
          * Get component's name at the given index.
          *
          * @param {int} columnIndex Column index position
-         * @return {string} The component's name
+         * @returns {string} The component's name
          * @private
          */
         _componentName(columnIndex) {
@@ -84,7 +84,7 @@ export default {
          * Get row css class at the given index.
          *
          * @param {int} index Absolute index position
-         * @return {string[]} Css classes
+         * @returns {string[]} Css classes
          * @private
          */
         _rowClasses(index) {
@@ -97,7 +97,7 @@ export default {
          *
          * @param {ITreeNode} parentNode     Parent node
          * @param {BsModel[]|Object[]} datas Collection of data model
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _appendChild(parentNode, datas) {
@@ -128,7 +128,7 @@ export default {
          * @param {int} depth             Node depth level within the TreeList
          * @param {int} index             Absolute node index position within the TreeList
          * @param {boolean} expanded      The node state
-         * @return {ITreeNode} The treeNode
+         * @returns {ITreeNode} The treeNode
          * @private
          */
         _createNode(data, parentNode, depth, index, expanded) {
@@ -146,7 +146,7 @@ export default {
          *
          * @param {ITreeNode} parentNode   Parent node whos child will be iterated
          * @param {ITreeNode[]} collection An array collection to store the childnodes
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _iterateChildNode(parentNode, collection) {
@@ -164,7 +164,7 @@ export default {
          * Collapse the given node and fires event <b>collapsed</b>.
          *
          * @param {ITreeNode} node The node to collapse
-         * @return {void}
+         * @returns {void}
          */
         collapse(node) {
             let collapsedNodes = [];
@@ -183,7 +183,7 @@ export default {
          * Expand the given node and fires event <b>expanded</b>.
          *
          * @param {ITreeNode} node The node to expand
-         * @return {void}
+         * @returns {void}
          */
         expand(node) {
             const children = this.getChildren(node.data);
@@ -213,7 +213,7 @@ export default {
          * Get children of the given data model.
          *
          * @param {BsModel|Object} item Data model
-         * @return {BsModel[]|Object[]} The child items
+         * @returns {BsModel[]|Object[]} The child items
          */
         getChildren(item) {
             return item[this.childrenFieldmap];
@@ -222,7 +222,7 @@ export default {
          * Check if the given data model has one or more child or not.
          *
          * @param {Object} item Data model to check
-         * @return {boolean} TRUE if the given model has child otherwise FALSE
+         * @returns {boolean} TRUE if the given model has child otherwise FALSE
          */
         hasChildren(item) {
             const children = this.getChildren(item);
@@ -235,7 +235,7 @@ export default {
          * @param {int} depth                   Node depth level
          * @param {BsModel[]|Object[]} sources  Collection of data model
          * @param {ITreeNode|*} parentNode      Parent node
-         * @return {void}
+         * @returns {void}
          */
         populateNodes(depth, sources, parentNode = null) {
             const expandDepth = this.TreeGrid.expandDepth;

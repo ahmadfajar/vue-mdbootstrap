@@ -75,7 +75,7 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {Object} Component css classes
+         * @returns {Object} Component css classes
          * @private
          */
         _classNames() {
@@ -89,7 +89,7 @@ export default {
         /**
          * Get component's css styles.
          *
-         * @return {Object|null} Inline css styles
+         * @returns {Object|null} Inline css styles
          * @private
          */
         _styles() {
@@ -129,7 +129,7 @@ export default {
         /**
          * Get tinggi area yang akan di cut/clipped.
          *
-         * @return {number} Tinggi area yang akan di cut/clipped
+         * @returns {number} Tinggi area yang akan di cut/clipped
          */
         clipHeight() {
             return this.$VueMdb.application.top + this.$VueMdb.application.appbarHeight + 1;
@@ -170,7 +170,7 @@ export default {
          * Event handler when overlay is clicked.
          *
          * @event open Triggers open event with value TRUE or FALSE
-         * @return {void}
+         * @returns {void}
          * @private
          */
         overlayClick() {
@@ -189,7 +189,7 @@ export default {
          * Event handler when document body is resized.
          *
          * @event open Triggers open event with value TRUE or FALSE
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _resize() {
@@ -204,7 +204,7 @@ export default {
         /**
          * Sets Element z-index.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _setZIndex() {

@@ -63,7 +63,7 @@ export default {
         /**
          * Get computed binding's properties.
          *
-         * @return {*} Attributes to bind
+         * @returns {Object|*} Attributes to bind
          */
         attributes() {
             return {
@@ -79,7 +79,7 @@ export default {
         /**
          * Check if radio is active/selected or not.
          *
-         * @return {boolean} TRUE if radio is active/selected otherwise FALSE
+         * @returns {boolean} TRUE if radio is active/selected otherwise FALSE
          */
         isSelected() {
             return this.checked === this.value;
@@ -87,7 +87,7 @@ export default {
         /**
          * Get computed component classes.
          *
-         * @return {*} Collection of css classes
+         * @returns {Object|*} Collection of css classes
          */
         radioClassname() {
             return {
@@ -114,7 +114,7 @@ export default {
         /**
          * Handle radio toggle status, checked or unchecked.
          *
-         * @return {void}
+         * @returns {void}
          */
         toggleCheck() {
             if (!this.disabled && !this.readonly) {

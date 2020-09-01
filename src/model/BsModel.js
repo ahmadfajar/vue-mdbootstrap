@@ -4,7 +4,42 @@ import Helper from "../utils/Helper";
 import { autobind } from "../utils/Autobind";
 
 /**
- * Data Model class.
+ * Data Model for working with data and remote API.
+ *
+ * @example
+ * let model1 = new BsModel({
+ *     uid: null,
+ *     username: null,
+ *     displayName: null,
+ *     email: null,
+ *     phoneNumber: null,
+ *     enabled: true,
+ *     password: null
+ * });
+ *
+ * let model2 = new BsModel({
+ *     schema: {
+ *         uid: null,
+ *         username: null,
+ *         displayName: null,
+ *         email: null,
+ *         phoneNumber: null,
+ *         enabled: true,
+ *         password: null
+ *     },
+ *     proxy: {
+ *         save: {url: './api/users', method: 'post'},
+ *         update: {url: './api/users', method: 'put'},
+ *         delete: {url: './api/users', method: 'delete'},
+ *         fetch: './api/users/{id}',
+ *     },
+ *     csrfConfig: {
+ *         url: '/api/token/{name}',
+ *         tokenName: 'token_name',
+ *         dataField: 'value',
+ *         suffix: false,
+ *     },
+ * });
  *
  * @author Ahmad Fajar
  * @since  09/07/2018 modified: 20/06/2020 21:55
@@ -35,51 +70,16 @@ export default class BsModel {
      *
      * @method onAfterFetch
      * @param {Object} data The response data
-     * @return {void}
+     * @returns {void}
      */
 
     /**
      * Class constructor.
      *
-     * @example
-     * let model1 = new BsModel({
-     *     uid: null,
-     *     username: null,
-     *     displayName: null,
-     *     email: null,
-     *     phoneNumber: null,
-     *     enabled: true,
-     *     password: null
-     * });
-     *
-     * let model2 = new BsModel({
-     *     schema: {
-     *         uid: null,
-     *         username: null,
-     *         displayName: null,
-     *         email: null,
-     *         phoneNumber: null,
-     *         enabled: true,
-     *         password: null
-     *     },
-     *     proxy: {
-     *         save: {url: './api/users', method: 'post'},
-     *         update: {url: './api/users', method: 'put'},
-     *         delete: {url: './api/users', method: 'delete'},
-     *         fetch: './api/users/{id}',
-     *     },
-     *     csrfConfig: {
-     *         url: '/api/token/{name}',
-     *         tokenName: 'token_name',
-     *         dataField: 'value',
-     *         suffix: false, 
-     *     },
-     * });
-     *
      * @param {Object} schema                   Data model schema
      * @param {AxiosInstance|Object} [adapter]  Axios adapter instance
-     * @param {String} [idProperty]             Data model ID field name
-     * @param {String} [dataProperty]           REST Response data property
+     * @param {string} [idProperty]             Data model ID field name
+     * @param {string} [dataProperty]           REST Response data property
      */
     constructor(schema, adapter, idProperty = 'id', dataProperty = 'data') {
         if (!Helper.isEmptyObject(schema.schema) && !Helper.isEmptyObject(schema.proxy)) {
@@ -181,7 +181,7 @@ export default class BsModel {
      *
      * @param {string} field The field name
      * @param {*} newVal     The new value
-     * @return {void}
+     * @returns {void}
      */
     assignValue(field, newVal) {
         if (field in this) {
@@ -195,7 +195,7 @@ export default class BsModel {
      * Assign new value to some fields.
      *
      * @param {Object} newVal Object with format field-value pairs
-     * @return {void}
+     * @returns {void}
      */
     assignValues(newVal) {
         if (Helper.isObject(newVal)) {
@@ -214,7 +214,7 @@ export default class BsModel {
     /**
      * Perform delete record that already exists on the remote service via REST API.
      *
-     * @return {Promise<*>} Promise interface
+     * @returns {Promise<*>} Promise interface
      */
     delete() {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -246,7 +246,7 @@ export default class BsModel {
      *
      * @param {Number|String} id The item ID
      *
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<any>} Promise interface
      */
     fetch(id = null) {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -263,7 +263,7 @@ export default class BsModel {
     /**
      * Destroy all metadata and fields in this data model.
      *
-     * @return {void}
+     * @returns {void}
      */
     destroy() {
         this.getFields().forEach(k => {
@@ -278,7 +278,7 @@ export default class BsModel {
     /**
      * Get all field names.
      *
-     * @return {string[]} Collection of field names
+     * @returns {string[]} Collection of field names
      */
     getFields() {
         return Object.keys(this._schema);
@@ -287,7 +287,7 @@ export default class BsModel {
     /**
      * Get ID field name for this data model.
      *
-     * @return {string} ID field name
+     * @returns {string} ID field name
      */
     getIdProperty() {
         return this._idProperty;
@@ -304,7 +304,7 @@ export default class BsModel {
      * @param {Function} successCallback  Callback to be called when the request was successful
      * @param {Function} errorCallback    Callback to be called when the request was failed
      *
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<any>} Promise interface
      */
     request(name, method = 'get', params = null, data = null, successCallback = null, errorCallback = null) {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -359,7 +359,7 @@ export default class BsModel {
     /**
      * Reset all fields value to its default.
      *
-     * @return {void}
+     * @returns {void}
      */
     reset() {
         this.getFields().forEach(k => Vue.set(this, k, this._schema[k]));
@@ -368,7 +368,7 @@ export default class BsModel {
     /**
      * Resets model state, ie. `loading`, etc back to their initial states.
      *
-     * @return {void}
+     * @returns {void}
      */
     resetState() {
         Vue.set(this, 'loading', false);
@@ -380,7 +380,7 @@ export default class BsModel {
     /**
      * Persist new record to the remote service via REST API.
      *
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<any>} Promise interface
      */
     save() {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -410,7 +410,7 @@ export default class BsModel {
     /**
      * Update and persist record that already exists on the remote service via REST API.
      *
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<any>} Promise interface
      */
     update() {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -440,7 +440,7 @@ export default class BsModel {
     /**
      * Freeze this data model instance, makes it Readonly and prevents any modification.
      *
-     * @return {Readonly<BsModel>} Readonly data model
+     * @returns {Readonly<BsModel>} Readonly data model
      */
     freeze() {
         return Object.freeze(this);
@@ -451,7 +451,7 @@ export default class BsModel {
      * and marking all existing properties as non-configurable.
      * Values of present properties can still be changed as long as they are writable.
      *
-     * @return {BsModel} Sealed data model
+     * @returns {BsModel} Sealed data model
      */
     seal() {
         return Object.seal(this);
@@ -460,7 +460,7 @@ export default class BsModel {
     /**
      * Convert field attributes into plain object.
      *
-     * @return {Object} Javascript plain object
+     * @returns {Object} Javascript plain object
      */
     toJSON() {
         let data = {};
@@ -475,7 +475,7 @@ export default class BsModel {
      * Assign data from the remote source to this model.
      *
      * @param {Object} response A response object
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _assignFromResponse(response) {
@@ -505,7 +505,7 @@ export default class BsModel {
     }
 
     /**
-     * @return {boolean} TRUE if this data model is in loading state
+     * @returns {boolean} TRUE if this data model is in loading state
      * @private
      */
     _checkOnLoading() {
@@ -515,7 +515,7 @@ export default class BsModel {
     }
 
     /**
-     * @return {boolean} TRUE if this data model is in delete state
+     * @returns {boolean} TRUE if this data model is in delete state
      * @private
      */
     _onDelete() {
@@ -531,7 +531,7 @@ export default class BsModel {
      * A callback when delete request is failed.
      *
      * @param {Object} error The error object
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _onDeleteFailure(error) {
@@ -543,7 +543,7 @@ export default class BsModel {
     /**
      * A callback when delete request is successful.
      *
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _onDeleteSuccess() {
@@ -556,7 +556,7 @@ export default class BsModel {
      * A callback when remote data is failed to load.
      *
      * @param {Object} error The error object
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _onLoadingFailure(error) {
@@ -569,7 +569,7 @@ export default class BsModel {
      * A callback when remote data is successfully loaded.
      *
      * @param {Response} response A response object
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _onLoadingSuccess(response) {
@@ -579,7 +579,7 @@ export default class BsModel {
     }
 
     /**
-     * @return {boolean} TRUE if this data model is saving its data to the remote source
+     * @returns {boolean} TRUE if this data model is saving its data to the remote source
      * @private
      */
     _onSave() {
@@ -595,7 +595,7 @@ export default class BsModel {
      * A callback when saving data to the remote source is failed.
      *
      * @param {Object} error The error object
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _onSaveFailure(error) {
@@ -608,7 +608,7 @@ export default class BsModel {
      * A callback when data is successfully saved to the remote source.
      *
      * @param {Response} response A response object
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _onSaveSuccess(response) {
@@ -624,9 +624,9 @@ export default class BsModel {
      * @param {Function} onRequest  Callback function before the request is made
      * @param {Function} onSuccess  Callback function when the request was successful
      * @param {Function} onFailure  Callback when the request failed
-     * @param {String} suffix       Suffix to be append to the token-name
+     * @param {string} suffix       Suffix to be append to the token-name
      *
-     * @return {Promise<*>}         Promise interface
+     * @returns {Promise<*>}         Promise interface
      * @private
      */
     async _requestWithToken(config, onRequest, onSuccess, onFailure, suffix = '') {
@@ -655,12 +655,12 @@ export default class BsModel {
     /**
      * Update request configuration.
      *
-     * @param {String} identifier The value to be included in the configuration
-     * @param {String} url        API URL
-     * @param {String} method     Request method: delete, fetch, save, update
+     * @param {string} identifier The value to be included in the configuration
+     * @param {string} url        API URL
+     * @param {string} method     Request method: delete, fetch, save, update
      * @param {Object} config     Request configuration to be updated
      *
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _updateRequestConfig(identifier, url, method, config) {

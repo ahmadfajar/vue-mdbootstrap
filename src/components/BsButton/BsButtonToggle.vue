@@ -26,13 +26,13 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BsRipple from "../BsAnimation/BsRipple";
 import ButtonToggle from "./mixins/ButtonToggle";
+import Common from "../../mixins/Common";
 import Input from "../../mixins/Input";
-import Helper from "../../utils/Helper";
 
 export default {
     name: "BsButtonToggle",
     components: {FontAwesomeIcon, BsRipple},
-    mixins: [Input, ButtonToggle],
+    mixins: [Common, Input, ButtonToggle],
     model: {
         prop: 'value',
         event: 'change'
@@ -46,7 +46,7 @@ export default {
         /**
          * Check if icon position is at the left side of text or not.
          *
-         * @return {boolean} TRUE if icon position is on the Left side otherwise FALSE
+         * @returns {boolean} TRUE if icon position is on the Left side otherwise FALSE
          */
         iconLeft() {
             return this.iconPosition === 'left';
@@ -54,7 +54,7 @@ export default {
         /**
          * Check if icon position is at the right side of text or not.
          *
-         * @return {boolean} TRUE if icon position is on the Right side otherwise FALSE
+         * @returns {boolean} TRUE if icon position is on the Right side otherwise FALSE
          */
         iconRight() {
             return this.iconPosition === 'right';
@@ -65,7 +65,7 @@ export default {
             },
             set(value) {
                 if (!this.disabled && !this.readonly) {
-                    this.$emit('change', value);
+                    this.fireEvent('change', value);
                 }
             }
         }
@@ -75,7 +75,7 @@ export default {
          * Get button item's classes.
          *
          * @param {Object} item Current item
-         * @return {*} Button's css classes
+         * @returns {Object|*} Button's css classes
          * @private
          */
         _btnClasses(item) {
@@ -95,7 +95,7 @@ export default {
          * Get icon binding's properties.
          *
          * @param {Object} item Current item
-         * @return {*} Icon binding properties
+         * @returns {Object|*} Icon binding properties
          * @private
          */
         _iconAttributes(item) {
@@ -114,19 +114,10 @@ export default {
             }
         },
         /**
-         * Generate component's ID.
-         *
-         * @return {string} The generated ID
-         * @private
-         */
-        _generateId() {
-            return 'bs-' + Helper.uuid(true);
-        },
-        /**
          * Get input binding's properties.
          *
          * @param {Object} item Current item
-         * @return {*} Component binding properties
+         * @returns {Object|*} Component binding properties
          * @private
          */
         _itemAttributes(item) {
@@ -160,7 +151,7 @@ export default {
          * Toggle Ripple animation state.
          *
          * @param {boolean} active Ripple state to apply
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _toggleRipple(active) {
@@ -170,7 +161,7 @@ export default {
          * Check if the item is selected/checked or not.
          *
          * @param {Object} item The selected item
-         * @return {boolean} TRUE if the given item is selected otherwise FALSE
+         * @returns {boolean} TRUE if the given item is selected otherwise FALSE
          */
         isSelected(item) {
             if (this.multiple && Array.isArray(this.value)) {

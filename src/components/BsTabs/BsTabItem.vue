@@ -78,9 +78,13 @@ export default {
     }),
     computed: {
         /**
+         * @property {Object} tabs
+         */
+
+        /**
          * Get computed binding's attributes.
          *
-         * @return {any} HTML attributes
+         * @returns {Object|*} HTML attributes
          * @private
          */
         _attributes() {
@@ -94,7 +98,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {Object} Css class names
+         * @returns {Object} Css class names
          * @private
          */
         _classNames() {
@@ -109,7 +113,7 @@ export default {
         /**
          * Get computed link's class names.
          *
-         * @return {Object} Css class names
+         * @returns {Object} Css class names
          * @private
          */
         _linkClass() {
@@ -123,7 +127,7 @@ export default {
         /**
          * Get computed TabLabel binding's attributes.
          *
-         * @return {any} TabLabel attributes
+         * @returns {Object|*} TabLabel attributes
          * @private
          */
         _tabLabelAttrs() {
@@ -137,7 +141,7 @@ export default {
         /**
          * Get computed html TAG.
          *
-         * @return {string} HTML tag
+         * @returns {string} HTML tag
          * @private
          */
         _tagName() {

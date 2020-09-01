@@ -5,7 +5,7 @@ export const EventListener = {
      * @param {EventTarget} target DOM element to register listener on.
      * @param {string} eventType   Event type, e.g. 'click' or 'mouseover'.
      * @param {function} callback  Callback function.
-     * @return {object} Object with a `remove` method.
+     * @returns {object} Object with a `remove` method.
      */
     listen(target, eventType, callback) {
         if (target.addEventListener) {

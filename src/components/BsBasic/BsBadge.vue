@@ -8,19 +8,36 @@
 export default {
     name: 'BsBadge',
     props: {
+        /**
+         * Html tag use to render the badge.
+         * @type {string|*}
+         */
         tag: {
             type: String,
             default: 'span'
         },
+        /**
+         * The badge color appearance.
+         * @type {string|*}
+         */
         color: {
             type: String,
             default: 'default-color text-white'
         },
+        /**
+         * Create badge with `pill` or `label` style.
+         * @type {string|*}
+         */
         type: {
             type: String,
             validator: value => ['label', 'pill'].indexOf(value) !== -1,
             default: undefined
         },
+        /**
+         * Create contextual badge with
+         * [Bootstrap theme color](https://getbootstrap.com/docs/4.5/components/badge/#contextual-variations).
+         * @type {string|*}
+         */
         variant: {
             type: String,
             validator: value => ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'dark'].indexOf(value) !== -1,
@@ -31,7 +48,7 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {String[]} Component css classes
+         * @returns {string[]} The collection of css classes
          * @private
          */
         _classNames() {

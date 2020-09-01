@@ -48,7 +48,7 @@ export default {
          *
          * @param {Object|string} options The Notification's configuration or Notification's message
          *
-         * @return {Object|null} The Notification's instance or NULL if failed
+         * @returns {Object|null} The Notification's instance or NULL if failed
          */
         add(options) {
             return this.addItem(this._processOptions(options));
@@ -58,7 +58,7 @@ export default {
          *
          * @param {Object} options The Notification's configuration
          *
-         * @return {Object|null} The Notification's instance or NULL if failed
+         * @returns {Object|null} The Notification's instance or NULL if failed
          */
         addItem(options) {
             if (typeof options !== 'object') {
@@ -85,7 +85,7 @@ export default {
          *
          * @param {Object} data The Notification's instance
          *
-         * @return {void}
+         * @returns {void}
          */
         removeItem(data) {
             const item = this.notifications[data.position][data.index];
@@ -103,7 +103,7 @@ export default {
         /**
          * Clear and close all registered Notifications.
          *
-         * @return {void}
+         * @returns {void}
          */
         clearAll() {
             for (let i = 0; i < this.positions.length; i++) {
@@ -119,7 +119,7 @@ export default {
          *
          * @param {Object} data The Notification's instance
          *
-         * @return {void}
+         * @returns {void}
          */
         close(data) {
             this.removeItem(data)
@@ -129,7 +129,7 @@ export default {
          *
          * @param {string} name Notification type
          *
-         * @return {void}
+         * @returns {void}
          */
         removeByType(name) {
             for (let i = 0; i < this.positions.length; i++) {
@@ -147,7 +147,7 @@ export default {
          *
          * @param {Object} options The notification options
          *
-         * @return {void}
+         * @returns {void}
          */
         setDefaultOptions(options) {
             if (Helper.isObject(options)) {
@@ -186,7 +186,7 @@ export default {
          * @param {Object} data     The Notification's instance
          * @param {number} newValue The progress bar value
          *
-         * @return {void}
+         * @returns {void}
          */
         setProgressValue(data, newValue) {
             let item = this.notifications[data.position][data.index];
@@ -201,7 +201,7 @@ export default {
          * @param {Object|string} option  Notification configuration or message
          * @param {string}        [title] Notification title
          *
-         * @return {Object} Notification's instance
+         * @returns {Object} Notification's instance
          */
         error(option, title) {
             let data = this._processOptions(option);
@@ -219,7 +219,7 @@ export default {
          * @param {Object|string} option  Notification configuration or message
          * @param {string}        [title] Notification title
          *
-         * @return {Object} Notification's instance
+         * @returns {Object} Notification's instance
          */
         info(option, title) {
             let data = this._processOptions(option);
@@ -237,7 +237,7 @@ export default {
          * @param {Object|string} option  Notification configuration or message
          * @param {string}        [title] Notification title
          *
-         * @return {Object} Notification's instance
+         * @returns {Object} Notification's instance
          */
         success(option, title) {
             let data = this._processOptions(option);
@@ -255,7 +255,7 @@ export default {
          * @param {Object|string} option  Notification configuration or message
          * @param {string}        [title] Notification title
          *
-         * @return {Object} Notification's instance
+         * @returns {Object} Notification's instance
          */
         warning(option, title) {
             let data = this._processOptions(option);
@@ -272,7 +272,7 @@ export default {
          *
          * @param {Object} data The notification's configuration
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _bindItem(data) {
@@ -291,7 +291,7 @@ export default {
          *
          * @param {string} position Notification position
          *
-         * @return {string[]} Component's class names
+         * @returns {string[]} Component's class names
          * @private
          */
         _classNames(position) {
@@ -305,7 +305,7 @@ export default {
          *
          * @param {Object|string} options The notification's configuration
          *
-         * @return {*} Component's configurations
+         * @returns {Object|*} Component's configurations
          * @private
          */
         _processOptions(options) {

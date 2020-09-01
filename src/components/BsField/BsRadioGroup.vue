@@ -86,7 +86,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {*} The collection of css classes
+         * @returns {Object|*} The collection of css classes
          */
         _classNames() {
             return {
@@ -109,7 +109,7 @@ export default {
          * Set RadioGroup value.
          *
          * @param {string|number|boolean} value The value to set
-         * @return {void}
+         * @returns {void}
          */
         setValue(value) {
             this.$emit('change', value);
@@ -118,7 +118,7 @@ export default {
          * Set attributes for each radio item.
          *
          * @param {Object} item Global attribute
-         * @return {*} The attributes to bind
+         * @returns {Object|*} The attributes to bind
          * @private
          */
         _radioAttributes(item) {

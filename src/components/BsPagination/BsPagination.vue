@@ -108,7 +108,7 @@ export default {
         /**
          * Get information of current page.
          *
-         * @return {string} Information message
+         * @returns {string} Information message
          * @private
          */
         _pageInfo() {
@@ -129,7 +129,7 @@ export default {
         /**
          * Get pagination configuration.
          *
-         * @return {Object} Pager's configuration
+         * @returns {Object} Pager's configuration
          */
         configuration() {
             const source = Helper.isObject(this.pageable) ? this.pageable : {};

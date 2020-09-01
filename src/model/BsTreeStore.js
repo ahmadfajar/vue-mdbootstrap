@@ -57,7 +57,7 @@ export default class BsTreeStore extends AbstractStore {
      * Append an item to the Store's dataset.
      *
      * @param {Object} item Data to append to the Store
-     * @return {void}
+     * @returns {void}
      */
     append(item) {
         if (!Helper.isEmpty(item)) {
@@ -75,7 +75,7 @@ export default class BsTreeStore extends AbstractStore {
      * @param {Object[]|Object} data       The data to add as children
      * @param {BsModel|Object} parentNode  The parent Node
      * @param {boolean} clearOnAppend      Remove any existing children before append
-     * @return {void}
+     * @returns {void}
      */
     appendChild(data, parentNode, clearOnAppend = false) {
         const _data = Helper.isArray(data) ? data : Helper.isObject(data) ? [data] : [];
@@ -100,7 +100,7 @@ export default class BsTreeStore extends AbstractStore {
      *
      * @param {Object[]|Object} data The data to be assigned
      * @param {boolean} silent Append item silently and doesn't trigger data conversion
-     * @return {void}
+     * @returns {void}
      */
     assignData(data, silent = false) {
         this._assignData(data, silent);
@@ -111,7 +111,7 @@ export default class BsTreeStore extends AbstractStore {
     /**
      * Load data from the remote server.
      *
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<any>} Promise interface
      */
     load() {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -135,7 +135,7 @@ export default class BsTreeStore extends AbstractStore {
      * Fetch items children from the remote server.
      *
      * @param {BsModel|Object} item The parent item
-     * @return {Promise<any>} Promise interface
+     * @returns {Promise<any>} Promise interface
      */
     loadChildren(item) {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -166,7 +166,7 @@ export default class BsTreeStore extends AbstractStore {
      * Assign children from response's object.
      *
      * @param {Object} response Response object
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _assignChildrenFromResponse(response) {
@@ -187,7 +187,7 @@ export default class BsTreeStore extends AbstractStore {
      * Callbacks function on success loading items children from remote server.
      *
      * @param {Response} response Response object
-     * @return {void}
+     * @returns {void}
      * @private
      */
     _onLoadChildSuccess(response) {

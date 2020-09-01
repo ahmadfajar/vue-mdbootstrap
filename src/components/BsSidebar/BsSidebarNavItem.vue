@@ -116,7 +116,7 @@ export default {
          *
          * @event click Triggers click event
          * @param {MouseEvent} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onClick(e) {
@@ -142,7 +142,7 @@ export default {
          * Update component state, active or in-active.
          *
          * @param {boolean} silent Triggers event or not
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateActive(silent = false) {
@@ -166,7 +166,7 @@ export default {
          * Collapse or hide submenus of the component.
          * Only has effect if the property: <code>parent = true</code>.
          *
-         * @return {void}
+         * @returns {void}
          */
         collapse() {
             if (this.parent && this.expanded) {
@@ -186,7 +186,7 @@ export default {
          * Expand or show submenus of the component.
          * Only has effect if the property: <code>parent = true</code>.
          *
-         * @return {void}
+         * @returns {void}
          */
         expand() {
             if (this.parent && !this.expanded) {
@@ -201,7 +201,7 @@ export default {
          *
          * @param {boolean} value  The state
          * @param {boolean} silent Triggers event or not
-         * @return {void}
+         * @returns {void}
          */
         setActive(value, silent = false) {
             this.itemActive = value;

@@ -27,7 +27,7 @@ export default {
         /**
          * Get computed component css classes.
          *
-         * @return {*} Css names to bind
+         * @returns {Object|*} Css names to bind
          * @private
          */
         _classNames() {
@@ -41,7 +41,7 @@ export default {
         /**
          * Gets computed DataGrid styles.
          *
-         * @return {Object} Css styles to apply
+         * @returns {Object} Css styles to apply
          * @private
          */
         _gridStyles() {
@@ -52,7 +52,7 @@ export default {
         /**
          * Get loading progress binding attributes.
          *
-         * @return {Object} Loading progress attributes
+         * @returns {Object} Loading progress attributes
          * @private
          */
         _progressLoadingAttrs() {
@@ -67,7 +67,7 @@ export default {
         /**
          * Display empty message notification or not.
          *
-         * @return {boolean} TRUE if display alert otherwise FALSE
+         * @returns {boolean} TRUE if display alert otherwise FALSE
          * @private
          */
         _showEmptyMessage() {
@@ -76,7 +76,7 @@ export default {
         /**
          * Gets table styles attributes.
          *
-         * @return {Object} Css styles to apply in TABLE tag
+         * @returns {Object} Css styles to apply in TABLE tag
          * @private
          */
         _tableStyles() {
@@ -87,7 +87,7 @@ export default {
         /**
          * Gets computed columns array iterator.
          *
-         * @return {Array} Grid columns
+         * @returns {Array} Grid columns
          */
         columnIterator() {
             return this.table.columns;
@@ -95,7 +95,7 @@ export default {
         /**
          * Gets computed dataset.
          *
-         * @return {Object[]} Collection of items
+         * @returns {Object[]} Collection of items
          */
         dataItems() {
             return this.dataSource ? this.dataSource.dataItems : [];
@@ -103,7 +103,7 @@ export default {
         /**
          * Check if dataset contains any data or not.
          *
-         * @return {boolean} TRUE if has any data otherwise FALSE
+         * @returns {boolean} TRUE if has any data otherwise FALSE
          */
         hasDataItems() {
             return this.dataItems && this.dataItems.length > 0;
@@ -111,7 +111,7 @@ export default {
         /**
          * Check if Grid component has fixed height or not.
          *
-         * @return {boolean} TRUE if uses fixed height otherwise FALSE
+         * @returns {boolean} TRUE if uses fixed height otherwise FALSE
          */
         isFixedHeight() {
             return this.height && parseInt(this.height, 10) > 0;
@@ -119,7 +119,7 @@ export default {
         /**
          * Check if Grid is in loading state or not.
          *
-         * @return {boolean} TRUE if in loading state otherwise FALSE
+         * @returns {boolean} TRUE if in loading state otherwise FALSE
          */
         isLoading() {
             return this.dataSource ? this.dataSource.loading : this.isFetching;
@@ -130,7 +130,7 @@ export default {
          * Get computed gridcolumn header styles.
          *
          * @param {Object} col Column object
-         * @return {Object} Column header css styles
+         * @returns {Object} Column header css styles
          * @private
          */
         _colHeaderStyles(col) {
@@ -140,7 +140,7 @@ export default {
          * Get computed gridcell styles.
          *
          * @param {Object} col Column object
-         * @return {Object} Css style object
+         * @returns {Object} Css style object
          * @private
          */
         _colDataStyles(col) {

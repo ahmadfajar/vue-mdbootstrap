@@ -30,9 +30,11 @@
         <transition name="fade">
           <div class="md-action-icon" v-if="hasPasswordToggle || hasClearButton">
             <bs-icon icon="clear" v-if="hasClearButton" @click="clearValue" />
-            <bs-icon-eye-toggle v-if="hasPasswordToggle"
-                                :toggle="isPasswordToggled"
-                                @click="isPasswordToggled = !isPasswordToggled" />
+            <bs-icon-toggle v-if="hasPasswordToggle"
+                            icon="eye"
+                            toggle-icon="eye-slash"
+                            :toggle="isPasswordToggled"
+                            @click="isPasswordToggled = !isPasswordToggled" />
           </div>
         </transition>
         <div class="md-append-icon" v-if="appendIcon">
@@ -62,7 +64,7 @@
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BsIcon from "../BsIcon/BsIcon";
-import BsIconEyeToggle from "../BsIcon/BsIconEyeToggle";
+import BsIconToggle from "../BsIcon/BsIconToggle";
 import Input from "../../mixins/Input";
 import TextField from "./mixins/TextField";
 import FieldValidation from "./mixins/FieldValidation";
@@ -70,7 +72,7 @@ import "../../../scss/_field.scss"
 
 export default {
     name: "BsTextField",
-    components: {FontAwesomeIcon, BsIcon, BsIconEyeToggle},
+    components: {FontAwesomeIcon, BsIcon, BsIconToggle},
     mixins: [Input, TextField, FieldValidation],
     props: {
         type: {
@@ -101,7 +103,7 @@ export default {
         /**
          * Get input field computed binding's attributes.
          *
-         * @return {any} Attributes to bind
+         * @returns {Object|*} Attributes to bind
          */
         attributes() {
             return {
@@ -115,7 +117,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {any} Collection of css classes
+         * @returns {Object|*} Collection of css classes
          */
         _classNames() {
             return {
@@ -131,7 +133,7 @@ export default {
         /**
          * Get computed input field type.
          *
-         * @return {string} The input field type
+         * @returns {string} The input field type
          */
         fieldType() {
             if (this.hasPasswordToggle) {
@@ -143,7 +145,7 @@ export default {
         /**
          * Check if feature password toggle is enabled or not.
          *
-         * @return {boolean} TRUE if input field type is password and toggle feature is enabled
+         * @returns {boolean} TRUE if input field type is password and toggle feature is enabled
          */
         hasPasswordToggle() {
             return this.type === 'password' && this.passwordToggle;

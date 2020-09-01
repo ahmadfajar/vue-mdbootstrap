@@ -89,7 +89,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {any} Collection of css classes
+         * @returns {Object|*} Collection of css classes
          */
         _classNames() {
             return {
@@ -107,7 +107,7 @@ export default {
         /**
          * Get input field computed binding's attributes.
          *
-         * @return {any} Attributes to bind
+         * @returns {Object|*} Attributes to bind
          */
         attributes() {
             return {
@@ -120,7 +120,7 @@ export default {
         /**
          * Check if TextArea field can auto grow or not.
          *
-         * @return {boolean} TRUE if textarea field can grow
+         * @returns {boolean} TRUE if textarea field can grow
          */
         canGrow() {
             return this.autoGrow && !this.noResize;
@@ -128,7 +128,7 @@ export default {
         /**
          * Calculate textarea field's height.
          *
-         * @return {string|null} The textarea field's height
+         * @returns {string|null} The textarea field's height
          */
         fieldHeight() {
             if (this.rowHeight && !this.canGrow) {
@@ -157,7 +157,7 @@ export default {
          * Update textarea height on input events.
          *
          * @param {Event} e The input event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateHeight: function (e) {

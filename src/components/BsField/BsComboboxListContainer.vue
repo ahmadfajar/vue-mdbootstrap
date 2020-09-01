@@ -184,7 +184,7 @@ export default {
         /**
          * Get styles for ComboBox list container.
          *
-         * @return {Object|null} Container styles
+         * @returns {Object|null} Container styles
          */
         containerStyles() {
             const mHeight = this.maxHeight;
@@ -210,7 +210,7 @@ export default {
         /**
          * Check if input search box will be displayed or not.
          *
-         * @return {boolean} If true then search box will be displayed
+         * @returns {boolean} If true then search box will be displayed
          */
         showSearchBox() {
             return this.dataItems.length > this.minimumItemsForSearch;
@@ -224,7 +224,7 @@ export default {
         /**
          * Generate simple UUID (non standard).
          *
-         * @return {string} The uuid-v4 string
+         * @returns {string} The uuid-v4 string
          */
         getUuid() {
             return Helper.uuid();
@@ -233,7 +233,7 @@ export default {
          * Check the given item is selected or not.
          *
          * @param {Object} item The item to be checked
-         * @return {boolean} `True` if the checked item is in active state otherwise `False`
+         * @returns {boolean} `True` if the checked item is in active state otherwise `False`
          */
         isActiveItem(item) {
             return this.selectedValues.includes(this.getItemValue(item));
@@ -242,7 +242,7 @@ export default {
          * Check if selection for the given item must be disabled or not.
          *
          * @param {Object} item The object to evaluate
-         * @return {boolean} Item checkbox state
+         * @returns {boolean} Item checkbox state
          */
         isDisabled(item) {
             return (this.disabled === true ? true : this.itemPropertyValue(item, this.disableField));
@@ -252,7 +252,7 @@ export default {
          *
          * @private
          * @param {Object} item The ListItem value
-         * @return {void}
+         * @returns {void}
          */
         onItemClick(item) {
             const idx = this.filteredItems.indexOf(this.getItemValue(item));
@@ -271,7 +271,7 @@ export default {
          * @private
          * @param {string} search  The text to search
          * @param {boolean} silent Trigger event or not
-         * @return {void}
+         * @returns {void}
          */
         filterData(search, silent = true) {
             if (this.active && search.length > 0) {

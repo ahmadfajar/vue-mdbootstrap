@@ -47,7 +47,7 @@ export default {
         /**
          * Get ButtonToggle's computed binding properties.
          *
-         * @return {*} Component binding properties
+         * @returns {Object|*} Component binding properties
          * @private
          */
         _btnToggleAttributes() {
@@ -71,7 +71,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {*} Component css classes
+         * @returns {Object|*} Component css classes
          * @private
          */
         _classNames() {
@@ -87,7 +87,7 @@ export default {
          * Set Toggle field value.
          *
          * @param {string|number|boolean|Array} value The updated value
-         * @return {void}
+         * @returns {void}
          */
         setValue(value) {
             this.$emit('change', value);

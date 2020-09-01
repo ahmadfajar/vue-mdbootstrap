@@ -136,7 +136,7 @@ export default {
         /**
          * Fetch data from array data source or remote server.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _fetchData() {
@@ -170,7 +170,7 @@ export default {
          * Event handler when table body is scrolling.
          *
          * @param {Event} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _handleScroll(e) {
@@ -188,7 +188,7 @@ export default {
         /**
          * Update TreeGrid body height.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateBodyHeight() {
@@ -204,7 +204,7 @@ export default {
         /**
          * Detect screen size and recalculate TreeGrid width.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateTableWidth() {
@@ -257,7 +257,7 @@ export default {
         /**
          * Reload data from the remote server.
          *
-         * @return {void}
+         * @returns {void}
          */
         reload() {
             this._fetchData();

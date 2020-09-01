@@ -1,29 +1,46 @@
-import Util from '../utils/Helper';
+import Helper from '../utils/Helper';
 
 export default {
     props: {
+        /**
+         * Create component with circle shape.
+         * @type {boolean|*}
+         */
         circle: {
             type: Boolean,
             default: false
         },
+        /**
+         * Create component with rounded shape.
+         * @type {boolean|*}
+         */
         rounded: {
             type: Boolean,
             default: false
         },
+        /**
+         * Align item inside component at center.
+         * @type {boolean|*}
+         */
         center: {
             type: Boolean,
             default: false
         },
-        imgSrc: {
-            type: String,
-            default: undefined
-        },
+        /**
+         * The component size.
+         * @type {string|number|Object|*}
+         */
         size: {
             type: [Number, String, Object],
             default: 48
         }
     },
     computed: {
+        /**
+         * Get computed class names.
+         *
+         * @returns {Object|*} The collection of css classes
+         */
         imageClass() {
             return {
                 'mx-auto d-block': this.center,
@@ -31,6 +48,11 @@ export default {
                 'rounded': this.rounded && !this.circle,
             }
         },
+        /**
+         * Get computed image size for inline styles.
+         *
+         * @returns {Object} The inline css style
+         */
         imageSizeStyles() {
             if (!this.size) {
                 return null;
@@ -38,8 +60,8 @@ export default {
             const primitive = typeof this.size === 'string' || typeof this.size === 'number';
 
             return {
-                height: primitive ? Util.sizeUnit(this.size) : Util.sizeUnit(this.size.height),
-                width: primitive ? Util.sizeUnit(this.size) : Util.sizeUnit(this.size.width)
+                height: primitive ? Helper.sizeUnit(this.size) : Helper.sizeUnit(this.size.height),
+                width: primitive ? Helper.sizeUnit(this.size) : Helper.sizeUnit(this.size.width)
             }
         }
     }

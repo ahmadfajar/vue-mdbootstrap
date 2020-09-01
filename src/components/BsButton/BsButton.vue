@@ -26,29 +26,32 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsButtonContent from './BsButtonContent';
-import Util from '../../utils/Helper';
+import Helper from '../../utils/Helper';
 
 export default {
     name: 'BsButton',
     components: {FontAwesomeIcon, BsButtonContent},
     props: {
         /**
-         * @property String Any valid HTML button type
+         * The value to set to the button’s type attribute. Valid values are: `button`, `submit`, `reset`.
+         * @type {string|*}
          */
-        button: {
+        type: {
             type: String,
             default: 'button',
             validator: (value) => ['button', 'submit', 'reset'].indexOf(value) !== -1
         },
         /**
-         * @property String The button color to apply
+         * The button color to apply.
+         * @type {string|*}
          */
         color: {
             type: String,
             default: 'default'
         },
         /**
-         * @property String Button mode, valid values: `default, icon, floating`
+         * Button mode, valid values are: `default, icon, floating`.
+         * @type {string|*}
          */
         mode: {
             type: String,
@@ -56,67 +59,108 @@ export default {
             validator: (value) => ['default', 'icon', 'floating'].indexOf(value) !== -1
         },
         /**
-         * @property Boolean Button state, active or not,
-         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.2/components/buttons/#active-state)} for details
+         * Button state, active or not,
+         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.5/components/buttons/#active-state)} for details
+         * @type {boolean|*}
          */
         active: {
             type: Boolean,
             default: false
         },
         /**
-         * @property Boolean Act as block button or not,
-         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.2/components/buttons/#sizes)} for details
+         * Act as block button or not,
+         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.5/components/buttons/#sizes)} for details
+         * @type {boolean|*}
          */
         block: {
             type: Boolean,
             default: false
         },
         /**
-         * @property Boolean Button state, enabled or disabled
+         * Button state: enabled or disabled
+         * @type {boolean|*}
          */
         disabled: {
             type: Boolean,
             default: false
         },
         /**
-         * @property Boolean Render as dropdowns button or not,
-         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.2/components/dropdowns/)} for details
+         * Render as dropdowns button or not,
+         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.5/components/dropdowns/)} for details
+         * @type {boolean|*}
          */
         dropdownToggle: {
             type: Boolean,
             default: false
         },
+        /**
+         * Render button with flat style or not.
+         * @type {boolean|*}
+         */
         flat: {
             type: Boolean,
             default: false
         },
         /**
-         * @property Boolean Render button with outlined style or not,
-         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.2/components/buttons/#outline-buttons)} for details
+         * Render button with outlined style or not,
+         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.5/components/buttons/#outline-buttons)} for details
+         * @type {boolean|*}
          */
         outlined: {
             type: Boolean,
             default: false
         },
+        /**
+         * Render button with raised style or not.
+         * @type {boolean|*}
+         */
         raised: {
             type: Boolean,
             default: false
         },
+        /**
+         * Render button with rounded style or not.
+         * @type {boolean|*}
+         */
+        rounded: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Render button with rounded-pill style or not.
+         * @type {boolean|*}
+         */
+        pill: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Apply ripple effect or not.
+         * @type {boolean|*}
+         */
         ripple: {
             type: Boolean,
             default: true
         },
+        /**
+         * Render button with transparent style or not.
+         * @type {boolean|*}
+         */
         transparent: {
             type: Boolean,
             default: false
         },
+        /**
+         * Render as `<a>` element and define its `href` property and apply button styles to the element.
+         * @type {string|*}
+         */
         href: {
             type: String,
             default: undefined
         },
         /**
-         * @property String The button size
-         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.2/components/buttons/#sizes)} for details
+         * The button size, see {@link [Bootstrap](https://getbootstrap.com/docs/4.5/components/buttons/#sizes)} for details
+         * @type {string|*}
          */
         size: {
             type: String,
@@ -124,41 +168,70 @@ export default {
             validator: (value) => ['xs', 'sm', 'lg'].indexOf(value) !== -1
         },
         /**
-         * @property String Any valid FontAwesome icon name,
+         * Any valid FontAwesome icon name,
          * see {@link [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free)} for details
+         * @type {string|Array|*}
          */
         icon: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
+         * @type {string|*}
+         */
         iconFlip: {
             type: String,
             default: undefined,
             validator: (value) => ['horizontal', 'vertical', 'both'].indexOf(value) !== -1
         },
+        /**
+         * Place icon at `left` (before text) or at `right` (after text).
+         * @type {string|*}
+         */
         iconPosition: {
             type: String,
             default: 'left',
             validator: (value) => ['left', 'right'].indexOf(value) !== -1
         },
+        /**
+         * Rotate the icon, valid values are: `90`, `180`, `270`.
+         * @type {Number|string|*}
+         */
         iconRotation: {
             type: [Number, String],
             default: undefined,
             validator: (value) => [90, 180, 270].indexOf(parseInt(value, 10)) > -1
         },
+        /**
+         * Render the icon with predefined size, valid values are: `xs`, `sm`, `lg`, `1x`, `2x`, `3x`, `4x`, `5x`, `6x`, `7x`, `8x`, `9x`, `10x`.
+         * @type {string|*}
+         */
         iconSize: {
             type: String,
             default: undefined,
             validator: (value) => ['lg', 'xs', 'sm', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x'].indexOf(value) > -1
         },
+        /**
+         * Render Fontawesome Icon with fixed width.
+         * @type {boolean|*}
+         */
         iconFixed: {
             type: Boolean,
             default: false
         },
+        /**
+         * Apply spin animation to the icon.
+         * @type {boolean|*}
+         */
         iconSpin: {
             type: Boolean,
             default: false
         },
+        /**
+         * Apply pulse animation to the icon.
+         * @type {boolean|*}
+         */
         iconPulse: {
             type: Boolean,
             default: false
@@ -171,14 +244,15 @@ export default {
         /**
          * Get computed component's styles.
          *
-         * @return {string[]} The collection of css classes
+         * @returns {string[]} The collection of css classes
          */
         _classNames() {
             return [
-                this.mode === 'icon' ? 'btn-icon' : this.mode === 'floating' ? 'btn-floating' : 'btn',
-                this.outlined ? 'btn-outline-' + this.color : this.flat ? 'btn-flat-' + this.color :
-                    this.transparent ? 'btn-transparent' : 'btn-' + this.color,
+                this.mode === 'icon' ? 'btn-icon' : (this.mode === 'floating' ? 'btn-floating' : 'btn'),
+                this.outlined ? 'btn-outline-' + this.color : (this.flat ? 'btn-flat-' + this.color :
+                    (this.transparent ? 'btn-transparent' : 'btn-' + this.color)),
                 this.raised ? 'btn-raised' : '',
+                this.pill ? 'rounded-pill' : (this.rounded ? 'rounded' : ''),
                 this.size ? 'btn-' + this.size : '',
                 this.block ? 'btn-block' : '',
                 this.disabled ? 'disabled' : '',
@@ -189,7 +263,7 @@ export default {
         /**
          * Get computed binding's properties.
          *
-         * @return {Object|*} The attributes to bind
+         * @returns {Object|*} The attributes to bind
          */
         attributes() {
             return {
@@ -204,7 +278,7 @@ export default {
         /**
          * Get icon binding's properties.
          *
-         * @return {Object|*} The attributes to bind
+         * @returns {Object|*} The attributes to bind
          */
         iconAttributes() {
             return {
@@ -224,7 +298,7 @@ export default {
         /**
          * Check if icon position is in the left side of text or not.
          *
-         * @return {boolean} TRUE if icon placement is on the left side otherwise FALSE
+         * @returns {boolean} TRUE if icon placement is on the left side otherwise FALSE
          */
         iconLeft() {
             return this.iconPosition === 'left';
@@ -232,7 +306,7 @@ export default {
         /**
          * Check if icon position is in the right side of text or not.
          *
-         * @return {boolean} TRUE if icon placement is on the right side otherwise FALSE
+         * @returns {boolean} TRUE if icon placement is on the right side otherwise FALSE
          */
         iconRight() {
             return this.iconPosition === 'right';
@@ -240,11 +314,11 @@ export default {
         /**
          * Get html Button type.
          *
-         * @return {string|null} The html button type
+         * @returns {string|null} The html button type
          */
         buttonType() {
-            if (Util.isEmpty(this.href)) {
-                return this.button;
+            if (Helper.isEmpty(this.href)) {
+                return this.type;
             }
 
             return null;
@@ -252,10 +326,10 @@ export default {
         /**
          * Get Button html tag name.
          *
-         * @return {string} HTML tag
+         * @returns {string} HTML tag
          */
         tagName() {
-            if (!Util.isEmpty(this.href)) {
+            if (!Helper.isEmpty(this.href)) {
                 return 'a';
             }
 
@@ -264,7 +338,7 @@ export default {
         /**
          * Check if ripple animation active or not.
          *
-         * @return {boolean} TRUE if ripple animation is active otherwise FALSE
+         * @returns {boolean} TRUE if ripple animation is active otherwise FALSE
          */
         rippleWorks() {
             return this.ripple && !this.disabled
@@ -275,7 +349,7 @@ export default {
          * MouseEvent handler.
          *
          * @param {MouseEvent} event The received mouse event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _mouseDown(event) {
@@ -289,7 +363,7 @@ export default {
          * Toggle Ripple animation state.
          *
          * @param {boolean} active Ripple state to apply
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _toggleRipple(active) {
@@ -299,7 +373,7 @@ export default {
          * TouchEvent handler.
          *
          * @param {TouchEvent} event The received touch event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _touchMove(event) {
@@ -313,7 +387,7 @@ export default {
          * TouchEvent handler.
          *
          * @param {TouchEvent} event The received touch event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _touchStart(event) {

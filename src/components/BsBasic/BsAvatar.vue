@@ -28,29 +28,67 @@ export default {
     mixins: [Image],
     components: {FontAwesomeIcon, BsIcon},
     props: {
+        /**
+         * The icon to display as avatar. Use prefix `"bs-"` to use internal icon,
+         * otherwise use valid [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
+         * @type {string|*}
+         */
         icon: {
             type: String,
             default: undefined
         },
+        /**
+         * Rotate the icon, valid values are: `90`, `180`, `270`.
+         * See [vue-fontawesome](https://github.com/FortAwesome/vue-fontawesome) for more information.
+         * @type {string|number|*}
+         */
         iconRotation: {
             type: [Number, String],
             default: undefined,
             validator: v => [90, 180, 270].includes(parseInt(v, 10))
         },
+        /**
+         * Apply **spin** animation to the icon.
+         * See [vue-fontawesome](https://github.com/FortAwesome/vue-fontawesome) for more information.
+         * @type {boolean|*}
+         */
         iconSpin: {
             type: Boolean,
             default: false
         },
+        /**
+         * Apply **pulse** animation to the icon.
+         * See [vue-fontawesome](https://github.com/FortAwesome/vue-fontawesome) for more information.
+         * @type {boolean|*}
+         */
         iconPulse: {
             type: Boolean,
             default: false
         },
+        /**
+         * The image location to place inside component.
+         * @type {string|*}
+         */
+        imgSrc: {
+            type: String,
+            default: undefined
+        },
+        /**
+         * The text to display inside the component.
+         * Use short text (1 to 3 characters) to properly display it. The text will be transformed to uppercase.
+         * @type {string|*}
+         */
         text: {
             type: String,
             default: undefined
-        }
+        },
     },
     computed: {
+        /**
+         * Get computed icon name (real icon name).
+         *
+         * @returns {string} The icon name
+         */
         iconName() {
             if (this.icon.substr(0, 3) === 'bs-') {
                 return this.icon.substr(3);
@@ -58,9 +96,21 @@ export default {
                 return this.icon;
             }
         },
+        /**
+         * Check whether the icon name is internal icon or from
+         * [FontAwesome Icon](https://fontawesome.com/icons?d=gallery&s=solid&m=free).
+         *
+         * @returns {boolean} `TRUE` if icon name is internal, otherwise `FALSE`
+         */
         isInternal() {
             return this.icon.substr(0, 3) === 'bs-';
         },
+        /**
+         * Get computed component's css names and inline styles.
+         *
+         * @returns {Object|*} The collection of css classes and inline styles
+         * @private
+         */
         _avatarClass() {
             return {
                 class: {
@@ -74,6 +124,12 @@ export default {
                 }
             }
         },
+        /**
+         * Get computed component size.
+         *
+         * @returns {number} The component size
+         * @private
+         */
         _size() {
             if (typeof this.size === 'string') {
                 return parseInt(this.size, 10);
@@ -83,6 +139,12 @@ export default {
                 return this.size.height ? this.size.height : this.size.width;
             }
         },
+        /**
+         * Get computed icon's size.
+         *
+         * @returns {number} The icon size
+         * @private
+         */
         _iconSize() {
             if (this._size > 72) {
                 return this._size - 20;

@@ -1,7 +1,7 @@
 <template>
-  <svg :class="_svgClasses"
-       :height="height"
-       :width="width"
+  <svg :class="imageClass"
+       :height="_szHeight"
+       :width="_szWidth"
        focusable="false"
        preserveAspectRatio="xMidYMid slice"
        role="img"
@@ -18,59 +18,94 @@
 </template>
 
 <script>
+import Image from "../../mixins/Image";
+import Helper from "../../utils/Helper";
+
 export default {
     name: "BsImageHolder",
+    mixins: [Image],
     props: {
+        /**
+         * ImageHolder height.
+         * @type {string|number|*}
+         */
         height: {
             type: [String, Number],
             default: undefined
         },
+        /**
+         * ImageHolder width.
+         * @type {string|number|*}
+         */
         width: {
             type: [String, Number],
             default: '100%'
         },
+        /**
+         * Shortcut to create ImageHolder with equal height and width.
+         * @type {string|number|*}
+         */
+        size: {
+            type: [Number, String],
+            default: undefined
+        },
+        /**
+         * ImageHolder background color, must be in html hex coloring number.
+         * @type {string|*}
+         */
         bgColor: {
             type: String,
             default: '#868e96'
         },
-        center: {
-            type: Boolean,
-            default: false
-        },
-        circle: {
-            type: Boolean,
-            default: false
-        },
-        placeHolder: {
-            type: String,
-            default: undefined
-        },
-        rounded: {
-            type: Boolean,
-            default: false
-        },
+        /**
+         * ImageHolder background color, must be in html hex coloring number.
+         * @type {string|*}
+         */
         textColor: {
             type: String,
             default: '#dee2e6'
         },
+        /**
+         * Short text as place holder.
+         * @type {string|*}
+         */
+        placeHolder: {
+            type: String,
+            default: undefined
+        },
+        /**
+         * Text placeholder X position.
+         * @type {string|number|*}
+         */
         xPos: {
             type: [String, Number],
             default: '15%'
         },
+        /**
+         * Text placeholder Y position.
+         * @type {string|number|*}
+         */
         yPos: {
             type: [String, Number],
             default: '50%'
-        }
+        },
     },
     computed: {
-        _svgClasses() {
-            return {
-                'mx-auto d-block': this.center,
-                'rounded-circle': this.circle && !this.rounded,
-                'rounded': this.rounded && !this.circle,
+        _szHeight() {
+            if (this.size) {
+                return Helper.sizeUnit(this.size);
             }
+
+            return Helper.sizeUnit(this.height);
+        },
+        _szWidth() {
+            if (this.size) {
+                return Helper.sizeUnit(this.size);
+            }
+
+            return Helper.sizeUnit(this.width);
         }
-    }
+    },
 }
 </script>
 

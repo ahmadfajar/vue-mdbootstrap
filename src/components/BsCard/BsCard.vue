@@ -1,6 +1,14 @@
 <template>
   <div :is="tag" :class="_classNames">
+    <img v-if="imgTopSrc"
+         :src="imgTopSrc"
+         :alt="imgTopAlt"
+         class="card-img-top" />
     <slot></slot>
+    <img v-if="imgBottomSrc"
+         :src="imgBottomSrc"
+         :alt="imgBottomAlt"
+         class="card-img-bottom" />
   </div>
 </template>
 
@@ -10,8 +18,30 @@ import "../../../scss/_shadows.scss";
 export default {
     name: "BsCard",
     props: {
-        flat: Boolean,
-        shadow: Boolean,
+        flat: {
+            type: Boolean,
+            default: false
+        },
+        shadow: {
+            type: Boolean,
+            default: false
+        },
+        imgTopSrc: {
+            type: String,
+            default: undefined
+        },
+        imgTopAlt: {
+            type: String,
+            default: undefined
+        },
+        imgBottomSrc: {
+            type: String,
+            default: undefined
+        },
+        imgBottomAlt: {
+            type: String,
+            default: undefined
+        },
         tag: {
             type: String,
             default: 'div'

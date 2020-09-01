@@ -89,7 +89,7 @@ export default {
         /**
          * Get Next button binding's properties.
          *
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         _btnNextAttrs() {
             return {
@@ -100,7 +100,7 @@ export default {
         /**
          * Get Previous button binding's properties.
          *
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         _btnPrevAttrs() {
             return {
@@ -111,7 +111,7 @@ export default {
         /**
          * Get computed navigation text class names.
          *
-         * @return {string[]} Css classes
+         * @returns {string[]} Css classes
          */
         _headerClasses() {
             return [
@@ -121,7 +121,7 @@ export default {
         /**
          * Format the given date value based on locale formatter and returns date string.
          *
-         * @return {Function} <tt>Function(value)</tt> which is used to convert any valid Date
+         * @returns {Function} <tt>Function(value)</tt> which is used to convert any valid Date
          * to the current locale date string
          */
         formatter() {
@@ -144,7 +144,7 @@ export default {
         /**
          * Get computed animation transition name.
          *
-         * @return {string} Transition name
+         * @returns {string} Transition name
          */
         transitionName() {
             return this.reverse === true ? PickerConst.transitionReverse : PickerConst.transition;
@@ -163,7 +163,7 @@ export default {
          * Event handler when button Next is clicked.
          *
          * @event input Triggers input event
-         * @return {void}
+         * @returns {void}
          */
         btnNextClick() {
             if (this.disabled) {
@@ -185,7 +185,7 @@ export default {
          * Event handler when button Previous is clicked.
          *
          * @event input Triggers input event
-         * @return {void}
+         * @returns {void}
          */
         btnPreviousClick() {
             if (this.disabled) {
@@ -207,7 +207,7 @@ export default {
          * Calculate the month.
          *
          * @param {number} value The number between -1 and +1
-         * @return {Date} Computed date value
+         * @returns {Date} Computed date value
          */
         calculateChange(value) {
             const _month = this.value.getMonth() + value;
@@ -229,7 +229,7 @@ export default {
          * Check if the navigation is enabled or disabled.
          *
          * @param {number} value The number between -1 and +1
-         * @return {boolean} TRUE if navigation is disabled otherwise FALSE
+         * @returns {boolean} TRUE if navigation is disabled otherwise FALSE
          */
         checkDisabled(value) {
             return this.disabled ||
@@ -240,7 +240,7 @@ export default {
          * Event handler when navigation text is clicked.
          *
          * @event toggle Triggers toggle event
-         * @return {void}
+         * @returns {void}
          */
         toggleClick() {
             if (!this.disabled) {

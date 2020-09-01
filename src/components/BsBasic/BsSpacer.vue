@@ -22,7 +22,7 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {*} Component css classes
+         * @returns {Object|*} Component css classes
          * @private
          */
         _classNames() {
@@ -33,7 +33,7 @@ export default {
         /**
          * Get component's css styles.
          *
-         * @return {Object} Inline css styles
+         * @returns {Object} Inline css styles
          * @private
          */
         _styles() {

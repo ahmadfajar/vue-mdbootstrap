@@ -28,7 +28,7 @@ export default {
         /**
          * Get computed Cell styles.
          *
-         * @return {Object} Css styles to apply
+         * @returns {Object} Css styles to apply
          * @private
          */
         _cellStyles() {
@@ -46,7 +46,7 @@ export default {
         /**
          * Get computed Cell value.
          *
-         * @return {number} Row number
+         * @returns {number} Row number
          */
         value() {
             return ((this.BsGrid.page - 1) * this.BsGrid.pageSize) + this.index + 1;

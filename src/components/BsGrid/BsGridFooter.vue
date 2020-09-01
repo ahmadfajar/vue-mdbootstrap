@@ -44,7 +44,7 @@ export default {
         /**
          * Get checkbox column width.
          *
-         * @return {number} Checkbox width
+         * @returns {number} Checkbox width
          * @private
          */
         _checkboxWidth() {
@@ -53,7 +53,7 @@ export default {
         /**
          * Gets table styles attributes.
          *
-         * @return {Object} Css styles to apply in TABLE tag
+         * @returns {Object} Css styles to apply in TABLE tag
          * @private
          */
         _tableStyles() {
@@ -64,7 +64,7 @@ export default {
         /**
          * Flip grid footer on SmallScreen device?
          *
-         * @return {boolean} TRUE if grid footer must be flipped on smallscreen device otherwise FALSE
+         * @returns {boolean} TRUE if grid footer must be flipped on smallscreen device otherwise FALSE
          */
         flipOnSmallScreen() {
             return this.BsGrid.flipOnSmallScreen;
@@ -81,7 +81,7 @@ export default {
          * Get computed gridcolumn footer styles.
          *
          * @param {Object} col  Column object
-         * @return {Object} Css style object
+         * @returns {Object} Css style object
          * @private
          */
         _colFooterStyles(col) {
@@ -90,7 +90,7 @@ export default {
         /**
          * Detect screen size and recalculate footer width.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateWidth() {

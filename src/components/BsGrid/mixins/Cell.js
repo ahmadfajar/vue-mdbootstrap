@@ -20,7 +20,7 @@ export default {
         /**
          * Get computed Cell styles.
          *
-         * @return {Object} Cell styles to apply
+         * @returns {Object} Cell styles to apply
          * @private
          */
         _cellStyles() {
@@ -38,7 +38,7 @@ export default {
         /**
          * Check if this Cell has custom formatter or not.
          *
-         * @return {boolean} TRUE if cell has formatter function
+         * @returns {boolean} TRUE if cell has formatter function
          */
         hasFormatter() {
             return this.column && this.column.formatter;
@@ -46,7 +46,7 @@ export default {
         /**
          * Get computed Cell value.
          *
-         * @return {*} Cell value
+         * @returns {Object|*} Cell value
          */
         value() {
             const col = this.column;

@@ -96,7 +96,7 @@ export default {
         /**
          * Get computed component's class names.
          *
-         * @return {*} The collection of css classes
+         * @returns {Object|*} The collection of css classes
          */
         _classNames() {
             return {
@@ -119,7 +119,7 @@ export default {
          * Set CheckboxGroup value.
          *
          * @param {string|number|boolean} value The value to set
-         * @return {void}
+         * @returns {void}
          */
         setValue(value) {
             this.$emit('change', value);
@@ -128,8 +128,8 @@ export default {
          * Set attributes for each checkbox item.
          *
          * @param {Object} item  Global attribute
-         * @param {Number} index Checkbox item index
-         * @return {*} The attributes to bind
+         * @param {number} index Checkbox item index
+         * @returns {Object|*} The attributes to bind
          * @private
          */
         _checkboxAttributes(item, index) {

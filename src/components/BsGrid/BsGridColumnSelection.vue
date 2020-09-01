@@ -40,7 +40,7 @@ export default {
          * Handle onChange event.
          *
          * @param {*} value The received value
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onChange(value) {

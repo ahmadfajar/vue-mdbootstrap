@@ -55,7 +55,7 @@ export default {
         /**
          * Get input field computed binding's attributes.
          *
-         * @return {any} Field binding's attributes
+         * @returns {Object|*} Field binding's attributes
          */
         fieldAttrs() {
             return {
@@ -73,7 +73,7 @@ export default {
         /**
          * Get computed floating label's class names.
          *
-         * @return {any} Floating label css classes
+         * @returns {Object|*} Floating label css classes
          */
         floatingLabelClass() {
             return {
@@ -85,7 +85,7 @@ export default {
         /**
          * Check if feature clear button is enabled or not.
          *
-         * @return {boolean} TRUE if has clear button otherwise FALSE
+         * @returns {boolean} TRUE if has clear button otherwise FALSE
          */
         hasClearButton() {
             return this.clearButton && !this.readonly && !this.disabled && this.hasValue;
@@ -95,7 +95,7 @@ export default {
         /**
          * Clear the input value.
          *
-         * @return {void}
+         * @returns {void}
          */
         clearValue() {
             this.$emit('input', '');
@@ -106,7 +106,7 @@ export default {
         /**
          * Get input field value.
          *
-         * @return {string} The input field value
+         * @returns {string} The input field value
          */
         getValue() {
             return this.value;
@@ -115,7 +115,7 @@ export default {
          * Set field value.
          *
          * @param {string} value The value to be set
-         * @return {void}
+         * @returns {void}
          */
         setValue(value) {
             this.$emit('input', value);
@@ -124,8 +124,8 @@ export default {
         /**
          * Fire ChangeEvent for the input field.
          *
-         * @param {String|Number} value The input field value
-         * @return {void}
+         * @param {string|number} value The input field value
+         * @returns {void}
          * @private
          */
         _nextTickChange(value) {
@@ -137,7 +137,7 @@ export default {
          * Handler when input field lost focus.
          *
          * @param {FocusEvent} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onBlur(e) {
@@ -149,7 +149,7 @@ export default {
          * Handler when input field get focus.
          *
          * @param {FocusEvent} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onFocus(e) {
@@ -167,7 +167,7 @@ export default {
          * Handler when input field receive keypress.
          *
          * @param {KeyboardEvent} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onKeyDown(e) {
@@ -185,7 +185,7 @@ export default {
          * Set attribute "for" for the given element.
          *
          * @param {Element} elm The DOM element
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _setLabelFor(elm) {
@@ -196,7 +196,7 @@ export default {
         /**
          * Update label className and attributes.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateLabel() {
@@ -233,8 +233,8 @@ export default {
         /**
          * Update input field value and fire input events.
          *
-         * @param {String|Number} value the input value
-         * @return {void}
+         * @param {string|number} value the input value
+         * @returns {void}
          * @private
          */
         _updateValue(value) {

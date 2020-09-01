@@ -93,7 +93,7 @@ export default {
          * Keyboard event handler.
          *
          * @param {KeyboardEvent} e Keyboard event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _changeListIndex(e) {
@@ -119,7 +119,7 @@ export default {
         /**
          * Get list elements.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _getTiles() {
@@ -128,7 +128,7 @@ export default {
         /**
          * Handler when content body is clicked.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onContentClick() {

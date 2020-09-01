@@ -66,7 +66,7 @@ export default {
         /**
          * Get input field computed binding's attributes.
          *
-         * @return {*} Attributes to bind
+         * @returns {Object|*} Attributes to bind
          */
         _attributes() {
             return {
@@ -86,7 +86,7 @@ export default {
          * Start searching any record with the given term.
          *
          * @param {string} term The search term
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _beginSearch(term) {
@@ -107,7 +107,7 @@ export default {
         /**
          * Remove search filter.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _resetSearch() {

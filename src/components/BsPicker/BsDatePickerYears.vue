@@ -39,7 +39,7 @@ export default {
         /**
          * Create table rows of YEAR.
          *
-         * @return {number[]} Array of Years
+         * @returns {number[]} Array of Years
          */
         tableRows() {
             let rows        = [];
@@ -67,7 +67,7 @@ export default {
          * Get computed button binding's properties.
          *
          * @param {number} year The year value
-         * @return {Object} The component's properties
+         * @returns {Object} The component's properties
          */
         buttonAttrs(year) {
             const _date    = moment().year(year);
@@ -87,7 +87,7 @@ export default {
          * Calculate next Picker table values.
          *
          * @param {number} delta Year delta
-         * @return {Date} Computed date value
+         * @returns {Date} Computed date value
          */
         calculateTableDate(delta) {
             return this.dateValue.year(this.tableDate.getFullYear() + (Math.sign(delta || 1) * 12)).toDate();
@@ -97,7 +97,7 @@ export default {
          *
          * @event input Triggers input event
          * @param {number} year The Year value
-         * @return {void}
+         * @returns {void}
          */
         onYearClick(year) {
             if (!this.disabled) {

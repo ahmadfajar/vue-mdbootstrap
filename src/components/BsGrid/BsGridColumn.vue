@@ -80,7 +80,7 @@ export default {
         /**
          * Get computed sortDirection icon classes.
          *
-         * @return {Object} Css name to bind
+         * @returns {Object} Css name to bind
          * @private
          */
         _sortClasses() {
@@ -94,7 +94,7 @@ export default {
         /**
          * Check if this Column is sortable or not.
          *
-         * @return {boolean} TRUE if this column is sortable
+         * @returns {boolean} TRUE if this column is sortable
          */
         canSort() {
             return this.BsGrid.enableSort && this.sortable && this.rowNumbering === false;
@@ -105,7 +105,7 @@ export default {
         /**
          * Get current sort direction.
          *
-         * @return {string} Column sort direction
+         * @returns {string} Column sort direction
          */
         sortDir() {
             if (this.canSort && this.field === this.BsGrid.sort.property) {
@@ -125,7 +125,7 @@ export default {
          * Event handler when column header is clicked.
          *
          * @param {MouseEvent} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onClick(e) {
@@ -140,7 +140,7 @@ export default {
         /**
          * Register this Column to the Grid.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _registerColumn() {
@@ -195,7 +195,7 @@ export default {
          * Set grid sort direction.
          *
          * @param {string} direction The sort direction
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _setSortDir(direction) {

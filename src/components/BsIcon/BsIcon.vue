@@ -27,16 +27,21 @@ export default {
     name: "BsIcon",
     mixins: [IconSize],
     props: {
+        /**
+         * The icon’s name or alias.
+         * @type {string|*}
+         */
         icon: {
             type: String,
-            default: undefined
+            default: undefined,
+            required: true
         }
     },
     computed: {
         /**
          * Get icon css classes.
          *
-         * @return {string|null} Icon css class
+         * @returns {string|null} Icon css class
          * @private
          */
         _iconClass() {
@@ -51,7 +56,7 @@ export default {
         /**
          * Get icon css style dimension.
          *
-         * @return {Object|null} Icon css style dimension if icon data is empty
+         * @returns {Object|null} Icon css style dimension if icon data is empty
          */
         _iconStyles() {
             if (Helper.isEmpty(this.iconData)) {
@@ -66,7 +71,7 @@ export default {
         /**
          * Get icon data.
          *
-         * @return {Object|undefined} The icon data
+         * @returns {Object|undefined} The icon data
          */
         iconData() {
             if (Helper.isEmpty(this.icon)) {

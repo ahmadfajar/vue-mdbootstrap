@@ -30,7 +30,7 @@ export default {
         /**
          * Get input field computed binding's attributes.
          *
-         * @return {any} The attributes to bind
+         * @returns {Object|*} The attributes to bind
          */
         attributes() {
             return {
@@ -62,7 +62,7 @@ export default {
          * Format the input value as number formatted value.
          *
          * @param {number} value The value to format
-         * @return {string} The formatted value
+         * @returns {string} The formatted value
          */
         formatValue(value) {
             return !Helper.isEmpty(value) ? this.formatter.format(value) : null;
@@ -71,7 +71,7 @@ export default {
          * Handler when input field lost focus.
          *
          * @param {FocusEvent} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onBlur(e) {
@@ -85,7 +85,7 @@ export default {
          * Handler when input field get focus.
          *
          * @param {FocusEvent} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onFocus(e) {
@@ -108,7 +108,7 @@ export default {
          * Handler when input field receive keypress.
          *
          * @param {KeyboardEvent} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _onKeyDown(e) {
@@ -129,7 +129,7 @@ export default {
          * Convert an input string as floating-point number.
          *
          * @param {string} value The value to convert
-         * @return {Number} The converted value
+         * @returns {number} The converted value
          * @private
          */
         _parseValue(value) {
@@ -172,8 +172,8 @@ export default {
         /**
          * Update input field value and fire input events.
          *
-         * @param {String|Number} value the input value
-         * @return {void}
+         * @param {string|number} value the input value
+         * @returns {void}
          * @private
          */
         _updateValue(value) {

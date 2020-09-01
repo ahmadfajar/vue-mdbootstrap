@@ -198,7 +198,7 @@ export default {
             /**
              * Check if feature CheckBox Row selection is enabled or not.
              *
-             * @return {boolean}
+             * @returns {boolean}
              */
             enableRowSelect: vm._enableRowSelect,
             /**
@@ -213,7 +213,7 @@ export default {
              * Generate simple/random UUID or standard UUID v4.
              *
              * @param {boolean} standard
-             * @return {string}
+             * @returns {string}
              */
             uuid: vm._uuid
         }
@@ -229,7 +229,7 @@ export default {
         /**
          * Get pagination binding attributes.
          *
-         * @return {*} Pagination attributes
+         * @returns {Object|*} Pagination attributes
          * @private
          */
         _paginationAttrs() {
@@ -244,7 +244,7 @@ export default {
         /**
          * Gets current page number.
          *
-         * @return {number} Page number
+         * @returns {number} Page number
          */
         currentPage() {
             return this.table.page;
@@ -252,7 +252,7 @@ export default {
         /**
          * Check if feature Row selection is enabled or not.
          *
-         * @return {boolean} TRUE if row selection is enabled otherwise FALSE
+         * @returns {boolean} TRUE if row selection is enabled otherwise FALSE
          */
         isSelectable() {
             return this.selectionMode.rowSelect;
@@ -260,7 +260,7 @@ export default {
         /**
          * Gets the number of items that can be display in the Grid.
          *
-         * @return {int} Default number of items within a page
+         * @returns {int} Default number of items within a page
          */
         pageSize() {
             return this.table.pageSize;
@@ -268,7 +268,7 @@ export default {
         /**
          * Gets the selected items.
          *
-         * @return {Array} Current selected items
+         * @returns {Array} Current selected items
          */
         selectedItems() {
             return this.table.selectedItems;
@@ -276,7 +276,7 @@ export default {
         /**
          * Gets total number of items.
          *
-         * @return {int} Total items
+         * @returns {int} Total items
          */
         totalItems() {
             return this.dataSource ? this.dataSource.totalCount : this.table.totalCount;
@@ -284,7 +284,7 @@ export default {
         /**
          * Gets the total number of pages.
          *
-         * @return {int} Total pages
+         * @returns {int} Total pages
          */
         totalPages() {
             return Math.ceil(this.totalItems / this.table.pageSize);
@@ -320,7 +320,7 @@ export default {
         /**
          * Check if feature CheckBox Row selection is enabled or not.
          *
-         * @return {boolean} TRUE if feature CheckBox Row selection is enabled otherwise FALSE
+         * @returns {boolean} TRUE if feature CheckBox Row selection is enabled otherwise FALSE
          * @private
          */
         _enableRowSelect() {
@@ -329,7 +329,7 @@ export default {
         /**
          * Fetch data from array data source or remote server.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _fetchData() {
@@ -365,7 +365,7 @@ export default {
          * Event handler when table body is scrolling.
          *
          * @param {Event} e The received event
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _handleScroll(e) {
@@ -383,7 +383,7 @@ export default {
         /**
          * Update grid body height.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateBodyHeight() {
@@ -399,7 +399,7 @@ export default {
         /**
          * Detect screen size and recalculate grid width.
          *
-         * @return {void}
+         * @returns {void}
          * @private
          */
         _updateTableWidth() {
@@ -451,7 +451,7 @@ export default {
          * Deselect a row.
          *
          * @param {Record} item The item to deselect
-         * @return {void}
+         * @returns {void}
          */
         deselectRow(item) {
             if (this.isRowSelected(item)) {
@@ -464,7 +464,7 @@ export default {
          *
          * @param {IFilter[]} filters Collection of filters to be used
          * @param {string} [logic]   The filter logic to be used
-         * @return {void}
+         * @returns {void}
          */
         filter(filters, logic = 'AND') {
             if (!Helper.isEmpty(this.dataSource)) {
@@ -481,7 +481,7 @@ export default {
          * Go to another page and load its data.
          *
          * @param {int} page Page number
-         * @return {void}
+         * @returns {void}
          */
         gotoPage(page) {
             if (page > 0 && page <= this.totalPages) {
@@ -496,7 +496,7 @@ export default {
          * Check if a row is selected or not.
          *
          * @param {Record} item The item to be checked
-         * @return {boolean} TRUE if the given item is selected otherwise FALSE
+         * @returns {boolean} TRUE if the given item is selected otherwise FALSE
          */
         isRowSelected(item) {
             return this.table.selectedItems.includes(item);
@@ -504,7 +504,7 @@ export default {
         /**
          * Go to next page and load its data.
          *
-         * @return {void}
+         * @returns {void}
          */
         nextPage() {
             if (this.table.page < this.totalPages) {
@@ -515,7 +515,7 @@ export default {
         /**
          * Go to previous page and load its data.
          *
-         * @return {void}
+         * @returns {void}
          */
         previousPage() {
             if (this.table.page > 1) {
@@ -526,7 +526,7 @@ export default {
         /**
          * Reload data from the remote server.
          *
-         * @return {void}
+         * @returns {void}
          */
         reload() {
             this._fetchData();
@@ -535,7 +535,7 @@ export default {
          * Select a row.
          *
          * @param {Record} item The selected item
-         * @return {void}
+         * @returns {void}
          */
         selectRow(item) {
             if (!this.isRowSelected(item)) {
@@ -547,7 +547,7 @@ export default {
          * Set default number of items to display within a page.
          *
          * @param {int} value Number of items to display
-         * @return {void}
+         * @returns {void}
          */
         setPageSize(value) {
             if (Helper.isEmpty(value)) {
@@ -567,7 +567,7 @@ export default {
          *
          * @param {string} field     The field for sorting
          * @param {string} direction The sort direction.
-         * @return {void}
+         * @returns {void}
          */
         sort(field, direction) {
             this.dataSource.sorters = [{property: field, direction: direction.toLowerCase()}];

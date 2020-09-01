@@ -30,23 +30,54 @@ export default {
     name: "BsAlert",
     components: {BsButton, BsIcon, FontAwesomeIcon},
     props: {
-        dismissable: Boolean,
-        outlined: Boolean,
-        value: {
-            type: Boolean,
-            default: true
+        /**
+         * Alert color
+         * @type {string|*}
+         */
+        color: {
+            type: String,
+            default: 'primary'
         },
+        /**
+         * When set, display the close button to dismiss/hide the component.
+         * @type {boolean|*}
+         */
+        dismissable: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * The icon to display inside alert component.
+         * See {@link [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free)} for valid icon name.
+         * @type {string|*}
+         */
         icon: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * Create outlined alert style.
+         * @type {boolean|*}
+         */
+        outlined: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * The component animation transition to display/hide.
+         * @type {string|*}
+         */
         transition: {
             type: String,
             default: 'fade'
         },
-        color: {
-            type: String,
-            default: 'primary'
+        /**
+         * The value monitored by `v-model` to display or hide the alert component.
+         * @type {boolean|*}
+         */
+        value: {
+            type: Boolean,
+            default: true
         }
     },
     data: () => ({
@@ -56,7 +87,7 @@ export default {
         /**
          * Get component's class names.
          *
-         * @return {String[]} Component css classes
+         * @returns {string[]} Component css classes
          * @private
          */
         _classNames() {
@@ -72,7 +103,7 @@ export default {
         /**
          * Check if this component is visible or not.
          *
-         * @return {boolean} True if component is visible otherwise False
+         * @returns {boolean} True if component is visible otherwise False
          */
         show() {
             return !this.dismiss && this.value;

@@ -9,7 +9,7 @@ class Helper {
      * Creates range of number.
      *
      * @param {int} length Range length
-     * @return {number[]}  Array of numbers
+     * @returns {number[]}  Array of numbers
      */
     static createRange(length) {
         return Array.from({length}, (v, k) => k);
@@ -19,8 +19,8 @@ class Helper {
      * Defer execution of a function.
      *
      * @param {Function} callback   The function to execute
-     * @param {Number} delay        Number of delay in ms
-     * @return {void}
+     * @param {number} delay        Number of delay in ms
+     * @returns {void}
      */
     static defer(callback, delay) {
         setTimeout(callback, delay);
@@ -32,7 +32,7 @@ class Helper {
      * @param {Object} obj     The object to check
      * @param {Array} path     Array of field name
      * @param {*} [fallbackFn] The fallback function
-     * @return {*} The object property value
+     * @returns {*} The object property value
      */
     static getNestedValue(obj, path, fallbackFn) {
         if (!Array.isArray(path)) {
@@ -66,7 +66,7 @@ class Helper {
      * @param {Object} obj            The object to evaluate
      * @param {String|function} path  The property name
      * @param {*} [fallbackFn]        The fallback function
-     * @return {*} The object property value
+     * @returns {*} The object property value
      */
     static getObjectValueByPath(obj, path, fallbackFn) {
         if (!path || (typeof path !== 'string')) {
@@ -83,7 +83,7 @@ class Helper {
      *
      * @param {*} value                     The value to check
      * @param {boolean} [allowEmptyString]  Allow empty string or not
-     * @return {boolean} True if value is empty otherwise False
+     * @returns {boolean} True if value is empty otherwise False
      */
     static isEmpty(value, allowEmptyString) {
         return (value === null) || (typeof value === 'undefined') || (!allowEmptyString ? value === '' : false) || (Array.isArray(value) && value.length === 0);
@@ -93,7 +93,7 @@ class Helper {
      * Check a value is an empty object or not.
      *
      * @param {Object} value The value to check
-     * @return {boolean} True if value is empty otherwise False
+     * @returns {boolean} True if value is empty otherwise False
      */
     static isEmptyObject(value) {
         return !Helper.isObject(value) || (Helper.isObject(value) && Object.entries(value).length === 0);
@@ -103,7 +103,7 @@ class Helper {
      * Check data type of a value is Array or not. NULL value is considered as not an Array.
      *
      * @param {*} value The value to check
-     * @return {boolean} TRUE if the given value is an Array otherwise FALSE
+     * @returns {boolean} TRUE if the given value is an Array otherwise FALSE
      */
     static isArray(value) {
         return (typeof value !== 'undefined' && value !== null && Array.isArray(value));
@@ -113,7 +113,7 @@ class Helper {
      * Check data type of a value is Function or not. NULL or UNDEFINED is considered as not an Function.
      *
      * @param {*} value The value to check
-     * @return {boolean} TRUE if the given value is a Function otherwise FALSE
+     * @returns {boolean} TRUE if the given value is a Function otherwise FALSE
      */
     static isFunction(value) {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'function');
@@ -123,7 +123,7 @@ class Helper {
      * Check data type of a value, whether it is a number or not.
      *
      * @param {*} value The value to check
-     * @return {boolean} TRUE if the given value is a Number otherwise FALSE
+     * @returns {boolean} TRUE if the given value is a Number otherwise FALSE
      */
     static isNumber(value) {
         return typeof value === 'number';
@@ -133,7 +133,7 @@ class Helper {
      * Check data type of a value is Object or not. NULL value is considered as not an object.
      *
      * @param {*} value The value to check
-     * @return {boolean} TRUE if the given value is an object otherwise FALSE
+     * @returns {boolean} TRUE if the given value is an object otherwise FALSE
      */
     static isObject(value) {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'object');
@@ -143,7 +143,7 @@ class Helper {
      * Check data type of a value, whether it is primitive or not.
      *
      * @param {string|number|boolean} value The value to check
-     * @return {boolean} True if the data type is primitive otherwise False
+     * @returns {boolean} True if the data type is primitive otherwise False
      */
     static isPrimitive(value) {
         return (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean');
@@ -153,7 +153,7 @@ class Helper {
      * Check data type of a value, whether it is a string or not.
      *
      * @param {*} value The value to check
-     * @return {boolean} TRUE if the given value is a String otherwise FALSE
+     * @returns {boolean} TRUE if the given value is a String otherwise FALSE
      */
     static isString(value) {
         return typeof value === 'string';
@@ -164,7 +164,7 @@ class Helper {
      *
      * @param {string|number} value The value to convert
      * @param {string} [unit]       The dimension to add
-     * @return {string|null} Value untuk dipergunakan pada inline css
+     * @returns {string|null} Value untuk dipergunakan pada inline css
      */
     static sizeUnit(value, unit = 'px') {
         const _px = unit;
@@ -190,7 +190,7 @@ class Helper {
      * @param {Array} items           Array of object
      * @param {string} key            Field name or key to sort
      * @param {boolean} isDescending  Sort desc or asc
-     * @return {*} The sorted array
+     * @returns {*} The sorted array
      */
     static sortArrayObj(items, key, isDescending) {
         if (key === null) {
@@ -234,7 +234,7 @@ class Helper {
      * Generate simple/random UUID or standard UUID v4.
      *
      * @param {boolean} [standard] Generate standard UUID v4 or random UUID
-     * @return {string} UUID v4 or random UUID
+     * @returns {string} UUID v4 or random UUID
      */
     static uuid(standard = false) {
         if (standard === true) {
