@@ -1,5 +1,5 @@
 <template>
-  <div class="md-list overflow-hidden" :class="_classNames">
+  <div class="md-list" :class="_classNames">
     <slot></slot>
   </div>
 </template>
@@ -10,10 +10,26 @@ import "../../../scss/_others.scss";
 export default {
     name: "BsListView",
     props: {
+        /**
+         * Render ListView with the given color variant.
+         * @type {string|*}
+         */
         color: {
             type: String,
             default: 'white'
         },
+        /**
+         * Apply css `'overflow-hidden'` or not.
+         * @type {boolean|*}
+         */
+        overflowHidden: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * If `false` then more than one item can be expanded.
+         * @type {boolean|*}
+         */
         singleExpand: {
             type: Boolean,
             default: true
@@ -26,30 +42,30 @@ export default {
             /**
              * Add an item to the ListView registry.
              *
-             * @param {Object} item The BsListNav instance to add
+             * @param {Object} item The object or item instance to add
              * @returns {void}
              */
             addItem: vm.addItem,
             /**
              * Add a child's item to a parent.
              *
-             * @param {string} parentUid  The ID of BsListNav's item
-             * @param {Object} child      The BsListNavItem instance to add
+             * @param {string} parentUid  The parent item ID
+             * @param {Object} child      The object or item instance to add
              * @returns {void}
              */
             addChild: vm.addChild,
             /**
              * Removes an item from the ListView registry.
              *
-             * @param {string} uid The ID of BsListNav that will be removed
+             * @param {string} uid The ID of item that will be removed
              * @returns {void}
              */
             removeItem: vm.removeItem,
             /**
              * Removes child's item from a parent.
              *
-             * @param {string} parentUid The ID of BsListNav's item
-             * @param {string} childUid  The ID of BsListNavItem that will be removed
+             * @param {string} parentUid The parent item ID
+             * @param {string} childUid  The child item ID that will be removed
              * @returns {void}
              */
             removeChild: vm.removeChild,
@@ -63,9 +79,10 @@ export default {
     },
     computed: {
         _classNames() {
-            return [
-                'md-list-' + this.color
-            ]
+            return {
+                'overflow-hidden': this.overflowHidden,
+                [`md-list-${this.color}`]: this.color,
+            }
         }
     },
     beforeDestroy() {
@@ -76,7 +93,7 @@ export default {
         /**
          * Add an item to the ListView registry.
          *
-         * @param {Object} item The BsListNav instance to add
+         * @param {Object} item The object or item instance to add
          * @returns {void}
          */
         addItem(item) {
@@ -85,15 +102,18 @@ export default {
         /**
          * Add a child's item to a parent.
          *
-         * @param {string} parentUid  The ID of BsListNav's item
-         * @param {Object} child      The BsListNavItem to add
+         * @param {string} parentUid  The parent item ID
+         * @param {Object} child      The object or item instance to add
          * @returns {void}
          */
         addChild(parentUid, child) {
             const obj = this.bsList.items.find(el => el.uid === parentUid);
 
             if (obj) {
-                obj.component.addItem(child);
+                if (!obj.children) {
+                    obj.children = [];
+                }
+                obj.children.push(child);
             }
         },
         findActive() {
@@ -110,7 +130,7 @@ export default {
         /**
          * Removes an item from the ListView registry.
          *
-         * @param {string} uid The ID of BsListNav that will be removed
+         * @param {string} uid The ID of item that will be removed
          * @returns {void}
          */
         removeItem(uid) {
@@ -123,15 +143,16 @@ export default {
         /**
          * Removes child's item from a parent.
          *
-         * @param {string} parentUid The ID of BsListNav's item
-         * @param {string} childUid  The ID of BsListNavItem that will be removed
+         * @param {string} parentUid The parent item ID
+         * @param {string} childUid  The child item ID that will be removed
          * @returns {void}
          */
         removeChild(parentUid, childUid) {
             const obj = this.bsList.items.find(el => el.uid === parentUid);
 
             if (obj) {
-                obj.component.removeItem(childUid);
+                const idx = obj.children.findIndex(el => el.uid === childUid);
+                obj.children.splice(idx, 1);
             }
         },
     }
@@ -142,8 +163,6 @@ export default {
 @import "~compass-sass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "../../../scss/functions";
-@import "../../../scss/mixins";
 
 .#{$prefix}-list {
   @include transition(height .3s cubic-bezier(.4, 0, .2, 1));
@@ -156,83 +175,11 @@ export default {
   .#{$prefix}-subheader {
     @include user-select(none);
   }
-}
-
-.#{$prefix}-list-tile {
-  @include transition($transition-hoverable);
-  @include user-select(none);
-  color: inherit;
-  margin: 0;
-  padding: $padding-sm $padding-base;
-  position: relative;
-  text-decoration: none;
 
   a {
     cursor: pointer;
     text-decoration: none;
   }
-
-  .#{$prefix}-list-tile-action {
-    @include flexbox((display: flex, flex-direction: column, justify-content: center));
-
-    &.#{$prefix}-action-stack {
-      @include justify-content(flex-end);
-    }
-  }
-
-  .#{$prefix}-list-tile-leading {
-    @include justify-content(flex-start);
-  }
-
-  .#{$prefix}-list-tile-title,
-  .#{$prefix}-list-tile-subtitle {
-    @include transition(.3s cubic-bezier(.25, .8, .5, 1));
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-  }
-
-  .#{$prefix}-list-tile-content {
-    @include flexbox((display: flex, flex: 1 1 auto, flex-direction: column, justify-content: center));
-    overflow: hidden;
-
-    > .#{$prefix}-list-tile-title {
-      font-size: 1rem;
-      font-weight: $font-weight-normal;
-    }
-
-    > .#{$prefix}-list-tile-subtitle {
-      font-size: .88rem;
-    }
-
-    &.#{$prefix}-multiline {
-      > .#{$prefix}-list-tile-subtitle {
-        white-space: normal;
-      }
-    }
-  }
-
-  > div[class^="#{$prefix}-list-tile-"] {
-    &:nth-child(2),
-    &:last-child:not(:first-child) {
-      margin-left: $padding-sm;
-    }
-
-    &:first-child:not(:last-child) {
-      margin-right: $padding-sm;
-    }
-  }
-}
-
-@include bslist-variant(white, #fff);
-
-@each $name, $color in $material-colors {
-  @include bslist-variant($name, $color);
-}
-
-@each $name, $color in $theme-colors {
-  @include bslist-variant($name, $color);
 }
 
 .card {

@@ -2,27 +2,29 @@
 
 > All notable changes to this project will be documented in this file.
 
-## v1.0.5
+## v1.1.0
 Released:
 
-### Features v1.0.5
+### Features v1.1.0
 
 - Add new component: **BsListNav**, **BsListNavItem**, **BsExpandTransition**, **BsCardMedia**, **BsIconToggle**
-- **BsButton:** add property `pill` and `rounded`
+- **BsButton:** add property `pill` and `rounded`, emit events `input` to update `active` property
 - **BsCard:** add properties `img-bottom-alt`, `img-bottom-src`, `img-top-alt`, `img-top-src`
+- **BsListTile:** add properties `ripple-off` and `navigable`
 - Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
 ### Bug Fixes & Improvement v1.0.5
 
-- **BsMaskLoader:** incorrect z-index
 - **BsAlert:** fix css alert-variant
+- **BsMaskLoader:** incorrect z-index
+- **BsButton:** rename property `button` to `type` and `ripple` to `ripple-off`
 - **BsIcon:** remove css class `d-flex` and `align-items-center`
+- **BsImageHolder:** computed cssClass, height and width improvement
 - **BsListView:** beforeDestroy improvement, add function` addItem()`, `addChild()`, `findActive()`, 
   `removeItem()`, `removeChild()`
+- **BsListTile:** improve when to generate `<a>` element or `<div>` element
+- **BsProgress:** change property `type` default value to 'bar' 
 - **BsSideDrawer:** computed inline style improvement
-- **BsImageHolder:** computed cssClass, height and width improvement
-- **BsButton:** refactor `button` prop into `type`
-- **BsListTile:** improve when to generate `<a>` element or `<div>` element 
 - Fix scss color variables
 
 

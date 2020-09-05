@@ -9,7 +9,7 @@
        @touchmove.passive="event => eventTrigger && _touchMoveCheck(event)"
        @touchstart.passive="event => eventTrigger && _touchStartCheck(event)">
     <slot></slot>
-    <template v-if="!isDisabled">
+    <template v-if="!disabled">
       <bs-wave v-for="ripple in ripples"
                :key="ripple.uuid"
                :class="_rippleClassname"
@@ -51,7 +51,7 @@ export default {
         _classNames() {
             return {
                 'md-ripple': true,
-                'md-disabled': this.isDisabled
+                'ripple-off': this.disabled
             }
         },
         _rippleClassname() {
@@ -59,9 +59,6 @@ export default {
                 'md-centered': this.centered
             }
         },
-        isDisabled() {
-            return this.disabled;
-        }
     },
     watch: {
         active(handler) {
@@ -137,11 +134,11 @@ export default {
         },
         startRipple(event) {
             raf(() => {
-                const {eventType, isDisabled, centered} = this;
+                const {eventType, disabled, centered} = this;
 
-                if (!isDisabled && (!eventType || eventType === event.type)) {
+                if (!disabled && (!eventType || eventType === event.type)) {
+                    let position;
                     let size     = this._getSize();
-                    let position = null;
 
                     if (centered) {
                         position = this._getCenteredPosition(size);

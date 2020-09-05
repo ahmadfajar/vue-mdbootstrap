@@ -147,6 +147,10 @@
     .#{$prefix}-list-tile {
       &.#{$prefix}-disabled {
         color: set-disable-text-color($color) !important;
+
+        &:hover {
+          text-decoration: none;
+        }
       }
     }
   }
@@ -155,7 +159,7 @@
 /* BsListNav mixins */
 @mixin bslist-nav-variant($name, $color) {
   .#{$prefix}-list-#{$name} {
-    .#{$prefix}-list-nav {
+    > .#{$prefix}-list-nav {
       .#{$prefix}-nav-item {
         > .#{$prefix}-nav-item-inner {
           @if (lightness($color) > 50) {

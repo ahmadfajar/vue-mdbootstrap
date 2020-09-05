@@ -1,11 +1,14 @@
 <template>
   <div role="group" :class="['btn-group', cmpAttrClasses]">
-    <label v-for="(item, idx) in items" :key="'btn-' + idx" :class="_btnClasses(item)">
+    <label v-for="(item, idx) in items" 
+           :key="'btn-' + idx"
+           :class="_btnClasses(item)">
       <input v-model="localValue"
              v-bind="_itemAttributes(item)"
              :value="item.value"
              class="d-none" />
-      <bs-ripple :disabled="disabled" :active="rippleActive" @update:active="_toggleRipple">
+      <bs-ripple :disabled="disabled || readonly" 
+                 :active.sync="rippleActive">
         <span class="btn-inner d-inline-flex align-items-center">
           <span v-if="iconLeft && item.icon" class="pr-2">
             <font-awesome-icon v-bind="_iconAttributes(item)" />
@@ -146,16 +149,6 @@ export default {
             }
 
             return attr;
-        },
-        /**
-         * Toggle Ripple animation state.
-         *
-         * @param {boolean} active Ripple state to apply
-         * @returns {void}
-         * @private
-         */
-        _toggleRipple(active) {
-            this.rippleActive = active;
         },
         /**
          * Check if the item is selected/checked or not.

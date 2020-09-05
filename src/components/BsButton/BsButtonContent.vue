@@ -1,7 +1,7 @@
 <template>
   <bs-ripple tag="span"
              :class="{'dropdown-toggle': dropdownToggle && !iconMode}"
-             :disabled="!ripple || disabled"
+             :disabled="rippleOff"
              :event-trigger="false"
              :active="rippleActive"
              @update:active="active => $emit('update:rippleActive', active)">
@@ -19,9 +19,8 @@ export default {
     components: {BsRipple},
     props: {
         dropdownToggle: Boolean,
-        disabled: Boolean,
         iconMode: Boolean,
-        ripple: Boolean,
+        rippleOff: Boolean,
         rippleActive: {
             type: [Boolean, Event],
             default: false

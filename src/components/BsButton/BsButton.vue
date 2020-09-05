@@ -1,12 +1,11 @@
 <template>
-  <button :is="tagName"
+  <button :is="_tag"
           v-bind="attributes"
           v-on="$listeners"
           @touchstart="_touchStart"
           @touchmove="_touchMove"
           @mousedown="_mouseDown">
-    <bs-button-content :ripple="ripple"
-                       :disabled="disabled"
+    <bs-button-content :ripple-off="rippleOff"
                        :ripple-active="rippleActive"
                        :dropdown-toggle="dropdownToggle"
                        :icon-mode="mode === 'icon'"
@@ -31,6 +30,10 @@ import Helper from '../../utils/Helper';
 export default {
     name: 'BsButton',
     components: {FontAwesomeIcon, BsButtonContent},
+    model: {
+        prop: 'active',
+        event: 'input'
+    },
     props: {
         /**
          * The value to set to the button’s type attribute. Valid values are: `button`, `submit`, `reset`.
@@ -135,12 +138,12 @@ export default {
             default: false
         },
         /**
-         * Apply ripple effect or not.
+         * Enabled or disabled ripple effect.
          * @type {boolean|*}
          */
-        ripple: {
+        rippleOff: {
             type: Boolean,
-            default: true
+            default: false
         },
         /**
          * Render button with transparent style or not.
@@ -204,13 +207,13 @@ export default {
             validator: (value) => [90, 180, 270].indexOf(parseInt(value, 10)) > -1
         },
         /**
-         * Render the icon with predefined size, valid values are: `xs`, `sm`, `lg`, `1x`, `2x`, `3x`, `4x`, `5x`, `6x`, `7x`, `8x`, `9x`, `10x`.
+         * Render the icon with predefined size, valid values are: `xs`, `sm`, `lg`, `1x`, `2x`, `3x`, `4x`.
          * @type {string|*}
          */
         iconSize: {
             type: String,
             default: undefined,
-            validator: (value) => ['lg', 'xs', 'sm', '1x', '2x', '3x', '4x', '5x', '6x', '7x', '8x', '9x', '10x'].indexOf(value) > -1
+            validator: (value) => ['lg', 'xs', 'sm', '1x', '2x', '3x', '4x'].indexOf(value) > -1
         },
         /**
          * Render Fontawesome Icon with fixed width.
@@ -242,6 +245,18 @@ export default {
     }),
     computed: {
         /**
+         * Get html Button type.
+         *
+         * @returns {string|null} The html button type
+         */
+        _buttonType() {
+            if (Helper.isEmpty(this.href)) {
+                return this.type;
+            }
+
+            return null;
+        },
+        /**
          * Get computed component's styles.
          *
          * @returns {string[]} The collection of css classes
@@ -257,8 +272,28 @@ export default {
                 this.block ? 'btn-block' : '',
                 this.disabled ? 'disabled' : '',
                 this.active ? 'active' : '',
-                !this.ripple ? 'md-ripple-off' : ''
+                this.rippleOff ? 'md-ripple-off' : ''
             ]
+        },
+        /**
+         * Check if ripple animation active or not.
+         *
+         * @returns {boolean} TRUE if ripple animation is active otherwise FALSE
+         */
+        _rippleWorks() {
+            return !this.rippleOff && !this.disabled
+        },
+        /**
+         * Get Button html tag name.
+         *
+         * @returns {string} HTML tag
+         */
+        _tag() {
+            if (!Helper.isEmpty(this.href)) {
+                return 'a';
+            }
+
+            return 'button';
         },
         /**
          * Get computed binding's properties.
@@ -270,8 +305,8 @@ export default {
                 'role': 'button',
                 'href': this.href,
                 'class': this._classNames,
-                'type': this.buttonType,
-                'disabled': this.tagName !== 'a' && this.disabled,
+                'type': this._buttonType,
+                'disabled': this._tag !== 'a' && this.disabled,
                 'aria-disabled': this.disabled
             };
         },
@@ -311,38 +346,6 @@ export default {
         iconRight() {
             return this.iconPosition === 'right';
         },
-        /**
-         * Get html Button type.
-         *
-         * @returns {string|null} The html button type
-         */
-        buttonType() {
-            if (Helper.isEmpty(this.href)) {
-                return this.type;
-            }
-
-            return null;
-        },
-        /**
-         * Get Button html tag name.
-         *
-         * @returns {string} HTML tag
-         */
-        tagName() {
-            if (!Helper.isEmpty(this.href)) {
-                return 'a';
-            }
-
-            return 'button';
-        },
-        /**
-         * Check if ripple animation active or not.
-         *
-         * @returns {boolean} TRUE if ripple animation is active otherwise FALSE
-         */
-        rippleWorks() {
-            return this.ripple && !this.disabled
-        }
     },
     methods: {
         /**
@@ -353,10 +356,11 @@ export default {
          * @private
          */
         _mouseDown(event) {
-            if (this.rippleWorks) {
+            if (this._rippleWorks) {
                 this.rippleActive = event;
             }
 
+            this.$emit('input', !this.active);
             this.$listeners.mousedown && this.$listeners.mousedown(event);
         },
         /**
@@ -377,7 +381,7 @@ export default {
          * @private
          */
         _touchMove(event) {
-            if (this.rippleWorks) {
+            if (this._rippleWorks) {
                 this.rippleActive = event;
             }
 
@@ -391,10 +395,11 @@ export default {
          * @private
          */
         _touchStart(event) {
-            if (this.rippleWorks) {
+            if (this._rippleWorks) {
                 this.rippleActive = event;
             }
 
+            this.$emit('input', !this.active);
             this.$listeners.touchstart && this.$listeners.touchstart(event);
         }
     }

@@ -2,23 +2,23 @@
   <transition v-if="isProgressBar"
               name="md-progress-bar"
               appear>
-    <div class="md-progress-bar" :class="progressBarClassNames" :style="progressBarStyles">
-      <div class="md-progress-bar-track" :style="progressBarTrackStyle"></div>
-      <div class="md-progress-bar-fill" :style="progressBarValueStyle"></div>
-      <div class="md-progress-bar-buffer" :Style="progressBarBufferStyle"></div>
+    <div class="md-progress-bar" :class="_progressBarClassNames" :style="_progressBarStyles">
+      <div class="md-progress-bar-track" :style="_progressBarTrackStyle"></div>
+      <div class="md-progress-bar-fill" :style="_progressBarValueStyle"></div>
+      <div class="md-progress-bar-buffer" :Style="_progressBarBufferStyle"></div>
     </div>
   </transition>
   <transition v-else
               name="md-progress-spinner"
               appear>
-    <div class="md-progress-spinner" :class="spinnerClassNames">
+    <div class="md-progress-spinner" :class="_spinnerClassNames">
       <svg class="md-progress-spinner-draw"
            preserveAspectRatio="xMidYMid meet"
            focusable="false"
            :viewBox="`0 0 ${diameter} ${diameter}`"
-           :style="svgStyles">
+           :style="_svgStyles">
         <circle :r="circleRadius"
-                :style="circleStyles"
+                :style="_circleStyles"
                 class="md-progress-spinner-circle"
                 cx="50%"
                 cy="50%" />
@@ -38,30 +38,70 @@ const progressSpinner = {
 export default {
     name: "BsProgress",
     props: {
+        /**
+         * The value monitored by `v-model` to control the progress value.
+         * @type {number|*}
+         */
         value: {
             type: Number,
             default: 0
         },
+        /**
+         * Spinner diameter value.
+         * @type {number|*}
+         */
         diameter: {
-            type: Number,
-            default: 60
+            type: [Number, String],
+            default: 60,
+            validator(value) {
+                return !isNaN(parseInt(value, 10))
+            }
         },
+        /**
+         * ProgressBar thickness.
+         * @type {number|*}
+         */
         height: {
-            type: Number,
-            default: 5
+            type: [Number, String],
+            default: 5,
+            validator(value) {
+                return !isNaN(parseInt(value, 10))
+            }
         },
+        /**
+         * Spinner thickness.
+         * @type {number|*}
+         */
         stroke: {
-            type: Number,
-            default: 6
+            type: [Number, String],
+            default: 6,
+            validator(value) {
+                return !isNaN(parseInt(value, 10))
+            }
         },
+        /**
+         * ProgressBar buffer length.
+         * @type {number|*}
+         */
         buffer: {
-            type: Number,
-            default: 0
+            type: [Number, String],
+            default: 0,
+            validator(value) {
+                return !isNaN(parseInt(value, 10))
+            }
         },
+        /**
+         * The component color appearance.
+         * @type {string|*}
+         */
         color: {
             type: String,
             default: 'primary'
         },
+        /**
+         * ProgressControl mode, valid values are: `determinate`, `indeterminate`, `buffer`.
+         * @type {string|*}
+         */
         mode: {
             type: String,
             default: 'indeterminate',
@@ -69,15 +109,76 @@ export default {
                 return ['determinate', 'indeterminate', 'buffer'].indexOf(value) > -1;
             }
         },
+        /**
+         * ProgressControl type, valid values are: `spinner`, `bar`.
+         * @type {string|*}
+         */
         type: {
             type: String,
-            default: 'spinner',
+            default: 'bar',
             validator(value) {
                 return ['spinner', 'bar'].indexOf(value) > -1;
             }
         }
     },
     computed: {
+        _circleStyles() {
+            return {
+                'stroke-dashoffset': this.circleStrokeDashOffset,
+                'stroke-dasharray': this.circleStrokeDashArray,
+                'stroke-width': this.circleStrokeWidth,
+                'animation-name': 'md-progress-spinner-stroke-rotate-' + this.diameter
+            }
+        },
+        _progressBarClassNames() {
+            return [
+                'progress-bar-' + this.color,
+                'md-' + this.mode.toLowerCase()
+            ]
+        },
+        _progressBarBufferStyle() {
+            if (this.hasAmountFill) {
+                return `left: calc(${this.buffer}% + 8px)`;
+            }
+
+            return null;
+        },
+        _progressBarStyles() {
+            return `height: ${this.height}px`;
+        },
+        _progressBarTrackStyle() {
+            if (this.hasAmountFill) {
+                return `width: ${this.buffer}%`;
+            }
+            return null;
+        },
+        _progressBarValueStyle() {
+            if (this.hasAmountFill) {
+                return `width: ${this.value}%`;
+            }
+            return null;
+        },
+        _spinnerClassNames() {
+            let animationClass = 'md-progress-spinner-indeterminate';
+
+            if (this.isIE) {
+                animationClass += '-fallback';
+            }
+
+            return [
+                animationClass,
+                'spinner-' + this.color,
+                this.isDeterminate ? 'md-determinate' : 'md-indeterminate'
+            ]
+        },
+        _svgStyles() {
+            const size = `${this.diameter}px`;
+
+            return {
+                width: size,
+                height: size
+            }
+        },
         hasAmountFill() {
             return this.isBuffer || this.isDeterminate
         },
@@ -99,63 +200,6 @@ export default {
         },
         isProgressBar() {
             return this.type.toLowerCase() === 'bar';
-        },
-        progressBarClassNames() {
-            return [
-                'progress-bar-' + this.color,
-                'md-' + this.mode.toLowerCase()
-            ]
-        },
-        progressBarBufferStyle() {
-            if (this.hasAmountFill) {
-                return `left: calc(${this.buffer}% + 8px)`;
-            }
-
-            return null;
-        },
-        progressBarStyles() {
-            return `height: ${this.height}px`;
-        },
-        progressBarTrackStyle() {
-            if (this.hasAmountFill) {
-                return `width: ${this.buffer}%`;
-            }
-            return null;
-        },
-        progressBarValueStyle() {
-            if (this.hasAmountFill) {
-                return `width: ${this.value}%`;
-            }
-            return null;
-        },
-        spinnerClassNames() {
-            let animationClass = 'md-progress-spinner-indeterminate';
-
-            if (this.isIE) {
-                animationClass += '-fallback';
-            }
-
-            return [
-                animationClass,
-                'spinner-' + this.color,
-                this.isDeterminate ? 'md-determinate' : 'md-indeterminate'
-            ]
-        },
-        svgStyles() {
-            const size = `${this.diameter}px`;
-
-            return {
-                width: size,
-                height: size
-            }
-        },
-        circleStyles() {
-            return {
-                'stroke-dashoffset': this.circleStrokeDashOffset,
-                'stroke-dasharray': this.circleStrokeDashArray,
-                'stroke-width': this.circleStrokeWidth,
-                'animation-name': 'md-progress-spinner-stroke-rotate-' + this.diameter
-            }
         },
         circleRadius() {
             return (this.diameter - this.stroke) / 2

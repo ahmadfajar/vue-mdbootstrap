@@ -419,7 +419,7 @@ export default class AbstractStore {
      * @param {string} property    The field name to test
      * @param {*} value            The value to match
      * @param {number} startIndex  The index to start searching at
-     * @returns {Object|BsModel|Array} An item that match the criteria
+     * @returns {BsModel|Object|*} An item that match the criteria
      */
     find(property, value, startIndex = 0) {
         return this._items.find((item, idx) => item[property] === value && idx >= startIndex);
@@ -430,7 +430,7 @@ export default class AbstractStore {
      * If the predicate returns `true`, it is considered a match.
      * 
      * @param {Function} predicate  Function `(item: Object, index: number) => item is match`
-     * @returns {Object|BsModel|Array} An item that match the criteria
+     * @returns {BsModel|Object|*} An item that match the criteria
      */
     findBy(predicate) {
         return this._items.find(predicate);

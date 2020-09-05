@@ -39,19 +39,42 @@ export default {
         event: 'open'
     },
     props: {
-        cover: Boolean,
+        /**
+         * Display popup menu at a position which can cover the activator.
+         * @type {boolean|*}
+         */
+        cover: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Popup container background color.
+         * @type {string|*}
+         */
         color: {
             type: String,
             default: 'white',
         },
+        /**
+         * Popup menu display placement.
+         * @type {string|*}
+         */
         placement: {
             type: String,
             default: BsPopover.props.placement.default
         },
+        /**
+         * Transition animation when show popup menu. This animation is effected by `placement` prop.
+         * @type {string|*}
+         */
         transition: {
             type: String,
             default: BsPopover.props.transition.default
         },
+        /**
+         * TClose or hide popup menu when content clicked.
+         * @type {boolean|*}
+         */
         contentClickClose: {
             type: Boolean,
             default: true

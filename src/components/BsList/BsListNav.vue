@@ -9,7 +9,6 @@ import Helper from "../../utils/Helper";
 
 export default {
     name: "BsListNav",
-    inject: ['bsList'],
     props: {
         id: {
             type: String,
@@ -40,16 +39,20 @@ export default {
                 'collapse': this.child && !this.expanded,
                 'collapsing': this.child && this.collapsing,
             }
+        },
+        hasChild() {
+            return this.children.length > 0;
         }
     },
     created() {
-        if (this.bsList) {
-            this.bsList.addItem({uid: this.id, component: this});
+        if (this.child) {
+            if (this.$parent && this.$parent.$options._componentTag === 'bs-list-nav-item') {
+                this.$parent.addChild({uid: this.id, component: this, componentTag: 'bs-list-nav'});
+            }
         }
     },
     beforeDestroy() {
         this.children = [];
-        this.bsList.removeItem(this.id);
     },
     methods: {
         /**
