@@ -6,14 +6,12 @@ export default {
     props: {
         active: Boolean
     },
+    data: (vm) => ({
+        itemActive: vm.active,
+    }),
     computed: {
         isActive() {
-            return this.active;
-        }
-    },
-    watch: {
-        active(value) {
-            this.$emit('input', value);
+            return this.active || this.itemActive;
         }
     }
 }

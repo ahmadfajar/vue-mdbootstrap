@@ -36,6 +36,22 @@
   }
 }
 
+@function set-leading-text-color($color) {
+  @if (lightness($color) > 80) {
+    @return rgba($black, .54);
+  } @else {
+    @return rgba($white-base, .6);
+  }
+}
+
+@function set-leading-disable-text-color($color) {
+  @if (lightness($color) > 80) {
+    @return $gray-500;
+  } @else {
+    @return rgba($white-base, .2);
+  }
+}
+
 @function set-hoverable-bgcolor($color, $transparency: 0) {
   @if (lightness($color) == 100) {
     @if ($transparency > 0) {

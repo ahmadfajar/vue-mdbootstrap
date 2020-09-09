@@ -41,6 +41,7 @@
 
 <script>
 import BsTabItem from "./BsTabItem";
+import "../../../scss/_transitions.scss";
 
 export default {
     name: 'BsTabs',

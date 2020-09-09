@@ -99,6 +99,7 @@ export default {
 
   > .#{$prefix}-appbar-content {
     @include flexbox((display:flex, align-items: center, flex-direction: row));
+    height: 64px;
     padding: 8px 12px 8px 8px;
 
     > .#{$prefix}-appbar-title {

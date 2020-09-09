@@ -108,7 +108,6 @@ import Grid from "./mixins/Grid";
 import Helper from '../../utils/Helper';
 import sum from 'lodash/sum';
 import { addResizeListener, removeResizeListener } from '../../utils/ResizeListener';
-import '../../../scss/_others.scss';
 
 export default {
     name: "BsGrid",

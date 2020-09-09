@@ -5,8 +5,6 @@
 </template>
 
 <script>
-import "../../../scss/_others.scss";
-
 export default {
     name: "BsListView",
     props: {
@@ -69,6 +67,11 @@ export default {
              * @returns {void}
              */
             removeChild: vm.removeChild,
+            /**
+             * Find a component in the registry that has active state.
+             *
+             * @returns {Object} The component instance
+             */
             findActive: vm.findActive,
         }
     }),
@@ -116,11 +119,21 @@ export default {
                 obj.children.push(child);
             }
         },
+        /**
+         * Find a component in the registry that has active state.
+         *
+         * @returns {Object} The component instance
+         */
         findActive() {
             for (const item of this.bsList.items) {
-                for (const child of item.component.children) {
-                    if (child.component.active) {
-                        return child.component;
+                if (item.component.isActive) {
+                    return item.component;
+                }
+                if (item.children && item.children.length > 0) {
+                    for (const child of item.children) {
+                        if (child.component.isActive) {
+                            return child.component;
+                        }
                     }
                 }
             }
@@ -174,11 +187,6 @@ export default {
 
   .#{$prefix}-subheader {
     @include user-select(none);
-  }
-
-  a {
-    cursor: pointer;
-    text-decoration: none;
   }
 }
 

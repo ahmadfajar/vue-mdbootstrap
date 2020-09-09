@@ -149,7 +149,7 @@ export default {
                     this.eventType = event.type;
                     this.ripples = [{
                         waveStyles: this._applyStyles(position, size),
-                        uuid: Helper.uuid(true)
+                        uuid: Helper.uuid()
                     }];
                 }
             });

@@ -11,7 +11,22 @@
 export default {
     name: "BsListTileAction",
     props: {
-        stack: Boolean,
+        /**
+         * Center item inside it vertically.
+         * @type {boolean|*}
+         */
+        center: {
+            type: Boolean,
+            default: true
+        },
+        /**
+         * Arrange item inside it vertically.
+         * @type {boolean|*}
+         */
+        stack: {
+            type: Boolean,
+            default: false
+        },
         tag: {
             type: String,
             default: 'div'
@@ -20,7 +35,8 @@ export default {
     computed: {
         _classNames() {
             return {
-                'md-action-stack': this.stack
+                'md-action-stack': this.stack,
+                'align-self-center': this.center,
             }
         }
     }

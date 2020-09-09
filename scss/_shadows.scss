@@ -32,7 +32,7 @@
   border-width: 0 !important;
 }
 
-.#{$prefix}-hoverable-shadow {
+.#{$prefix}-hover-shadow {
   @include transition($transition-hoverable);
   @include box-shadow(none);
 

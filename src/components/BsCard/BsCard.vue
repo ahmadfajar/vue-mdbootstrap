@@ -13,8 +13,6 @@
 </template>
 
 <script>
-import "../../../scss/_shadows.scss";
-
 export default {
     name: "BsCard",
     props: {

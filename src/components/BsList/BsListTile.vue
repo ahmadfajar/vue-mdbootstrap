@@ -4,7 +4,8 @@
                :class="_classNames"
                :active-class="activeClass"
                :exact="exact"
-               v-on="$listeners">
+               v-on="$listeners"
+               @click="_onClick">
     <bs-ripple class="d-flex" :disabled="_disableRipple" :active.sync="rippleActive">
       <slot></slot>
     </bs-ripple>
@@ -12,6 +13,7 @@
   <a :is="_tag"
      :class="_classNames"
      :href="url"
+     @click="_onClick"
      v-on="$listeners"
      v-else>
     <bs-ripple class="d-flex" :disabled="_disableRipple" :active.sync="rippleActive">
@@ -65,7 +67,7 @@ export default {
                 'md-list-tile': true,
                 'md-disabled': this.disabled,
                 'md-link': this._tag === 'a' && !this.disabled,
-                ['md-' + this.activeClass]: !this.hasRouter && this.isActive && !this.disabled
+                ['md-' + this.activeClass]: this.isActive && !this.disabled
             }
         },
         _disableRipple() {
@@ -74,7 +76,23 @@ export default {
         _tag() {
             return this.hasRouter || this.hasLink || this.navigable ? 'a' : 'div';
         }
-    }
+    },
+    beforeUpdate() {
+        this._routeMatch();
+    },
+    methods: {
+        _onClick() {
+            this.$emit('input', !this.active);
+        },
+        _routeMatch() {
+            if (this.hasRouter && this.$route.path === this.path) {
+                this.itemActive = true;
+                this.$nextTick(() => {
+                    this.$emit('input', true);
+                });
+            }
+        }
+    },
 }
 </script>
 
@@ -93,16 +111,10 @@ export default {
   position: relative;
   text-decoration: none;
 
-  .#{$prefix}-list-tile-action {
-    @include flexbox((display: flex, flex-direction: column, justify-content: center));
-
-    &.#{$prefix}-action-stack {
-      @include justify-content(flex-end);
-    }
-  }
-
-  .#{$prefix}-list-tile-leading {
-    @include justify-content(flex-start);
+  &:active,
+  &:focus,
+  &:hover {
+    text-decoration: none;
   }
 
   .#{$prefix}-list-tile-title,
@@ -114,8 +126,26 @@ export default {
     width: 100%;
   }
 
+  .#{$prefix}-list-tile-action {
+    min-width: 24px;
+    max-width: 100%;
+
+    &.#{$prefix}-action-stack {
+      @include align-self(flex-start);
+    }
+    .#{$prefix}-checkbox {
+      margin-top: $padding-sm;
+    }
+  }
+
+  .#{$prefix}-list-tile-leading {
+    max-width: 100%;
+  }
+
   .#{$prefix}-list-tile-content {
-    @include flexbox((display: flex, flex: 1 1 auto, flex-direction: column, justify-content: center));
+    @include flexbox((flex: 1, align-self: center));
+    max-width: 100%;
+    width: auto;
     overflow: hidden;
 
     > .#{$prefix}-list-tile-title {
@@ -135,17 +165,19 @@ export default {
   }
 
   > .#{$prefix}-ripple {
+    min-height: 48px;
     padding: $padding-sm $padding-base;
     position: relative;
 
     > div[class^="#{$prefix}-list-tile-"] {
       &:nth-child(2),
       &:last-child:not(:first-child) {
-        margin-left: $padding-sm;
+        margin-left: $padding-base;
       }
 
-      &:first-child:not(:last-child) {
-        margin-right: $padding-sm;
+      &.#{$prefix}-has-icon {
+        @include flexbox((display: flex, align-items: center, align-self: center));
+        margin-right: $padding-base;
       }
     }
   }

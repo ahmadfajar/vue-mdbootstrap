@@ -130,7 +130,7 @@ export default {
                 'md-disabled': this.disabled,
                 'md-expanded': this.hasChild && this.expanded,
                 'md-has-icon': !Helper.isEmpty(this.icon),
-                ['md-' + this.activeClass]: this.itemActive && !this.disabled
+                ['md-' + this.activeClass]: this.isActive && !this.disabled
             }
         },
         _styles() {
@@ -148,14 +148,16 @@ export default {
     watch: {
         active(value) {
             this.itemActive = value;
-            this.$emit('input', value);
         },
         itemActive(value) {
             if (value) {
                 this.expand();
             }
             this.$emit('update:active', value, this);
-        }
+        },
+        $route(to, from) {
+            this._routeMatch(to.path, from.path);
+        },
     },
     created() {
         if (this.bsList && this.$parent.$options._componentTag === 'bs-list-nav') {
@@ -168,17 +170,14 @@ export default {
             }
         }
         if (this.hasRouter) {
-            for (const matcher of this.$route.matched) {
-                if (matcher.path === this.path) {
-                    this.$nextTick(() => {
-                        this.itemActive = true;
-                    });
-                    this._updateState(this.id, this.bsList.items);
-                    break;
-                }
-            }
+            this._routeMatch(this.$route.path);
         }
     },
+    // beforeUpdate() {
+    //     if (this.hasRouter) {
+    //         this._routeMatch(this.$route.path);
+    //     }
+    // },
     beforeDestroy() {
         this.children = [];
     },
@@ -244,7 +243,18 @@ export default {
                         this.expand();
                     }
                 }
-                this.$emit('click', e);
+                this.$nextTick(() => {
+                    this.$emit('click', e, this);
+                });
+            }
+        },
+        _routeMatch(route) {
+            if (route === this.path) {
+                this.$nextTick(() => {
+                    this.itemActive = true;
+                    this.$emit('input', true);
+                });
+                this._updateState(this.id, this.bsList.items);
             }
         },
         /**
@@ -377,7 +387,7 @@ export default {
         }
 
         > .fas, > svg {
-          margin-right: .5rem;
+          margin-right: $padding-base;
         }
       }
 

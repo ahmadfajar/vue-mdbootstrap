@@ -7,25 +7,28 @@ Released:
 
 ### Features v1.1.0
 
-- Add new component: **BsListNav**, **BsListNavItem**, **BsExpandTransition**, **BsCardMedia**, **BsIconToggle**
+- New components: **BsExpandTransition**, **BsCardMedia**, **BsIconToggle**, **BsListNav**, **BsListNavItem**
 - **BsButton:** add property `pill` and `rounded`, emit events `input` to update `active` property
 - **BsCard:** add properties `img-bottom-alt`, `img-bottom-src`, `img-top-alt`, `img-top-src`
 - **BsListTile:** add properties `ripple-off` and `navigable`
+- **BsListTileAction:** add `center` property
+- **BsListTileLeading:** add `icon` property
 - Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
 ### Bug Fixes & Improvement v1.0.5
 
-- **BsAlert:** fix css alert-variant
+- **BsAlert:** improve css alert-variant
 - **BsMaskLoader:** incorrect z-index
 - **BsButton:** rename property `button` to `type` and `ripple` to `ripple-off`
 - **BsIcon:** remove css class `d-flex` and `align-items-center`
 - **BsImageHolder:** computed cssClass, height and width improvement
 - **BsListView:** beforeDestroy improvement, add function` addItem()`, `addChild()`, `findActive()`, 
   `removeItem()`, `removeChild()`
-- **BsListTile:** improve when to generate `<a>` element or `<div>` element
+- **BsListTile:** improve when to generate `<a>` element or `<div>` element and update component scss
 - **BsProgress:** change property `type` default value to 'bar' 
 - **BsSideDrawer:** computed inline style improvement
-- Fix scss color variables
+- Improve scss color variables
+- Improve JsDoc
 
 
 # v1.0.4

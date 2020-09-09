@@ -196,6 +196,12 @@ export default {
   > .#{$prefix}-list {
     @include border-radius($border-radius-base);
 
+    .#{$prefix}-list-tile {
+      > .#{$prefix}-ripple {
+        min-height: 24px;
+      }
+    }
+
     .#{$prefix}-divider {
       margin-bottom: 3px;
       margin-top: 3px;

@@ -75,7 +75,6 @@ export default {
 
   > .#{$prefix}-switch-content {
     display: inline-flex;
-    padding-left: 6px;
     margin: $md-switch-margin;
 
     > .#{$prefix}-switch-inner {
@@ -139,11 +138,11 @@ export default {
     padding-top: 1rem;
 
     &.#{$prefix}-label-left {
-      padding-right: 15px;
+      padding-right: $padding-base + .25;
     }
 
     &.#{$prefix}-label-right {
-      padding-right: 1rem;
+      padding-left: $padding-base + .25;;
     }
   }
 

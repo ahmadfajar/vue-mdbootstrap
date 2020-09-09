@@ -7,6 +7,8 @@ import BsListTileTitle from "./BsListTileTitle";
 import BsListTileSubtitle from "./BsListTileSubtitle";
 import BsListNav from "./BsListNav";
 import BsListNavItem from "./BsListNavItem";
+import "../../../scss/_others.scss";
+import "../../../scss/_shadows.scss";
 
 export default Vue => {
     Vue.component(BsListView.name, BsListView);
