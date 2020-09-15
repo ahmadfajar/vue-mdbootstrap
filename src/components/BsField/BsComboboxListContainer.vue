@@ -14,14 +14,14 @@
              @input="filterData($event.target.value, false)" />
     </label>
     <bs-list-view :style="containerStyles" :color="listboxColor">
-      <bs-list-tile tag="div" v-if="dataItems.length === 0">
+      <bs-list-tile v-if="dataItems.length === 0">
         <slot name="emptyData">
           <bs-list-tile-title>
             {{ emptyDataMessage }}
           </bs-list-tile-title>
         </slot>
       </bs-list-tile>
-      <bs-list-tile tag="div" v-else-if="filteredItems.length === 0">
+      <bs-list-tile v-else-if="filteredItems.length === 0">
         <bs-list-tile-title>
           {{ notFoundMessage }}
         </bs-list-tile-title>
@@ -31,6 +31,7 @@
           <bs-list-tile :key="getUuid + index"
                         :active="isActiveItem(item)"
                         :disabled="disabled === true ? disabled : itemPropertyValue(item, disableField)"
+                        navigable
                         @mousedown="e => e.preventDefault()"
                         @click="onItemClick(item)">
             <template v-if="multiple">
@@ -174,6 +175,9 @@ export default {
         searchText: ''
     }),
     computed: {
+        /**
+         * @returns {Object[]} Collection of items that match the filter
+         */
         filteredItems() {
             if (this.active && Helper.isEmpty(this.searchText)) {
                 return this.dataItems;
@@ -221,6 +225,24 @@ export default {
         this.cacheBoolValues = [];
     },
     methods: {
+        /**
+         * Check if the given object has a property or not.
+         *
+         * @method hasProperty
+         * @param {Object} item  The object to evaluate
+         * @param {string} field The property name to check
+         * @returns {boolean} TRUE if has the property otherwise false
+         */
+
+        /**
+         * Get object property value from the given item.
+         *
+         * @method itemPropertyValue
+         * @param {Object} item           The object to evaluate
+         * @param {String|Function} field The property name
+         * @returns {string|boolean|number} The property value
+         */
+
         /**
          * Generate simple UUID (non standard).
          *

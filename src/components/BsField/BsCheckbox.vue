@@ -46,7 +46,7 @@ export default {
   position: relative;
   width: auto;
 
-  &:not(.#{$prefix}-disabled) {
+  &:not(.#{$prefix}-disabled):not(.#{$prefix}-readonly) {
     cursor: pointer;
 
     .#{$prefix}-checkbox-label {

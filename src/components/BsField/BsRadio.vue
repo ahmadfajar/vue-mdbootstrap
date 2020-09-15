@@ -1,11 +1,11 @@
 <template>
-  <div class="md-radio" :class="['md-radio-' + color, radioClassname]">
+  <div class="md-radio" :class="['md-radio-' + color, _radioClassname]">
     <div class="md-radio-inner" @click.stop="toggleCheck">
       <bs-ripple :active.sync="rippleActive" :disabled="disabled" centered>
         <input type="radio"
                role="radio"
                v-model="checked"
-               v-bind="attributes"
+               v-bind="_attributes"
                :value="value" />
       </bs-ripple>
     </div>
@@ -36,25 +36,59 @@ export default {
                 return 'bs-' + Helper.uuid(true);
             }
         },
+        /**
+         * The field component color appearance.
+         * @type {string|*}
+         */
         color: {
             type: String,
             default: 'default'
         },
+        /**
+         * The `<input>` element `value` attribute.
+         * @type {string|boolean|number|*}
+         */
         value: {
             type: [String, Number, Boolean],
             default: 'on'
         },
+        /**
+         * The field component value monitored by `v-model` to maintain its state.
+         * @type {string|boolean|number|*}
+         */
         checked: {
             type: [String, Number, Boolean],
             default: undefined
         },
+        /**
+         * Sets the `<input>` element `name` attribute.
+         * @type {string|number|*}
+         */
         name: {
             type: [String, Number],
             default: undefined
         },
-        required: Boolean,
+        /**
+         * Sets the `<input>` element `required` attribute.
+         * @type {boolean|*}
+         */
+        required: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Put the field component in readonly state and sets the `<input>` element `readonly` attribute.
+         * @type {boolean|*}
+         */
         readonly: Boolean,
-        disabled: Boolean
+        /**
+         * Enable/disable the component and the `<input>` element.
+         * @type {boolean|*}
+         */
+        disabled: {
+            type: Boolean,
+            default: false
+        },
     },
     data: () => ({
         rippleActive: false
@@ -65,7 +99,7 @@ export default {
          *
          * @returns {Object|*} Attributes to bind
          */
-        attributes() {
+        _attributes() {
             return {
                 'id': this.id,
                 'name': this.name,
@@ -77,24 +111,24 @@ export default {
             };
         },
         /**
+         * Get computed component classes.
+         *
+         * @returns {Object|*} Collection of css classes
+         */
+        _radioClassname() {
+            return {
+                'md-checked': this.isSelected,
+                'md-disabled': this.disabled || this.readonly,
+                'md-required': this.required
+            }
+        },
+        /**
          * Check if radio is active/selected or not.
          *
          * @returns {boolean} TRUE if radio is active/selected otherwise FALSE
          */
         isSelected() {
             return this.checked === this.value;
-        },
-        /**
-         * Get computed component classes.
-         *
-         * @returns {Object|*} Collection of css classes
-         */
-        radioClassname() {
-            return {
-                'md-checked': this.isSelected,
-                'md-disabled': this.disabled || this.readonly,
-                'md-required': this.required
-            }
         },
         /**
          * Computed getter and setter.

@@ -6,6 +6,7 @@
     <svg v-if="iconData"
          :height="szHeight"
          :width="szWidth"
+         :class="_svgClass"
          class="svg-inline mx-auto"
          viewBox="0 0 24 24"
          xmlns="http://www.w3.org/2000/svg">
@@ -35,7 +36,41 @@ export default {
             type: String,
             default: undefined,
             required: true
-        }
+        },
+        /**
+         * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
+         * @type {string|*}
+         */
+        flip: {
+            type: String,
+            default: undefined,
+            validator: v => ['horizontal', 'vertical', 'both'].indexOf(v) !== -1
+        },
+        /**
+         * Apply **pulse** animation to the icon.
+         * @type {boolean|*}
+         */
+        pulse: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Rotate the icon, valid values are: `90`, `180`, `270`.
+         * @type {string|number|*}
+         */
+        rotation: {
+            type: [Number, String],
+            default: undefined,
+            validator: v => [90, 180, 270].includes(parseInt(v, 10))
+        },
+        /**
+         * Apply **spin** animation to the icon.
+         * @type {boolean|*}
+         */
+        spin: {
+            type: Boolean,
+            default: false
+        },
     },
     computed: {
         /**
@@ -68,6 +103,18 @@ export default {
 
             return null;
         },
+        _svgClass() {
+            return {
+                'fa-spin': this.spin,
+                'fa-pulse': this.pulse,
+                'fa-flip-both': this.flip === 'both',
+                'fa-flip-vertical': this.flip === 'vertical',
+                'fa-flip-horizontal': this.flip === 'horizontal',
+                'fa-rotate-90': this.rotation && parseInt(this.rotation, 10) === 90,
+                'fa-rotate-180': this.rotation && parseInt(this.rotation, 10) === 180,
+                'fa-rotate-270': this.rotation && parseInt(this.rotation, 10) === 270,
+            }
+        },
         /**
          * Get icon data.
          *
@@ -91,6 +138,6 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-icon {
-  @include flexbox((display: flex, align-items: center));
+  @include align-self(center);
 }
 </style>

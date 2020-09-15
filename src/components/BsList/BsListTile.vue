@@ -6,7 +6,9 @@
                :exact="exact"
                v-on="$listeners"
                @click="_onClick">
-    <bs-ripple class="d-flex" :disabled="_disableRipple" :active.sync="rippleActive">
+    <bs-ripple :active.sync="rippleActive"
+               :disabled="_disableRipple"
+               class="d-flex">
       <slot></slot>
     </bs-ripple>
   </router-link>
@@ -16,7 +18,9 @@
      @click="_onClick"
      v-on="$listeners"
      v-else>
-    <bs-ripple class="d-flex" :disabled="_disableRipple" :active.sync="rippleActive">
+    <bs-ripple :active.sync="rippleActive"
+               :disabled="_disableRipple"
+               class="d-flex">
       <slot></slot>
     </bs-ripple>
   </a>
@@ -176,11 +180,137 @@ export default {
       }
 
       &.#{$prefix}-has-icon {
-        @include flexbox((display: flex, align-items: center, align-self: center));
+        @include flexbox((display: flex, align-items: center, align-self: center, justify-content: center));
         margin-right: $padding-base;
       }
     }
   }
+}
+
+.#{$prefix}-list {
+  &.#{$prefix}-space-both,
+  &.#{$prefix}-space-left,
+  &.#{$prefix}-space-right {
+    > .#{$prefix}-list-tile {
+      margin-bottom: 4px;
+      margin-top: 4px;
+
+      > .#{$prefix}-ripple {
+        min-height: 46px;
+      }
+    }
+  }
+
+  &.#{$prefix}-space-both,
+  &.#{$prefix}-space-left {
+    > .#{$prefix}-list-tile {
+      margin-left: 6px;
+
+      > .#{$prefix}-ripple {
+        padding-left: 10px;
+      }
+    }
+  }
+
+  &.#{$prefix}-space-both,
+  &.#{$prefix}-space-right {
+    > .#{$prefix}-list-tile {
+      margin-right: 6px;
+
+      > .#{$prefix}-ripple {
+        padding-right: 10px;
+      }
+    }
+  }
+
+  &.#{$prefix}-border-left,
+  &.#{$prefix}-border-right,
+  &.#{$prefix}-border-left-right,
+  &.#{$prefix}-border-top,
+  &.#{$prefix}-border-bottom,
+  &.#{$prefix}-border-top-bottom {
+    > .#{$prefix}-list-tile {
+      &.active, &.#{$prefix}-active {
+        > .#{$prefix}-ripple {
+          &:before,
+          &:after {
+            content: " ";
+            display: block;
+            position: absolute;
+          }
+        }
+      }
+    }
+  }
+
+  &.#{$prefix}-border-left,
+  &.#{$prefix}-border-left-right {
+    > .#{$prefix}-list-tile {
+      &.active, &.#{$prefix}-active {
+        > .#{$prefix}-ripple {
+          &:before {
+            background: $sidebar-item-active-bgcolor;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  &.#{$prefix}-border-right,
+  &.#{$prefix}-border-left-right {
+    > .#{$prefix}-list-tile {
+      &.active, &.#{$prefix}-active {
+        > .#{$prefix}-ripple {
+          &:after {
+            background: $sidebar-item-active-bgcolor;
+            right: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  &.#{$prefix}-border-top,
+  &.#{$prefix}-border-top-bottom {
+    > .#{$prefix}-list-tile {
+      &.active, &.#{$prefix}-active {
+        > .#{$prefix}-ripple {
+          &:before {
+            background: $sidebar-item-active-bgcolor;
+            left: 0;
+            top: 0;
+            height: 5px;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  &.#{$prefix}-border-bottom,
+  &.#{$prefix}-border-top-bottom {
+    > .#{$prefix}-list-tile {
+      &.active, &.#{$prefix}-active {
+        > .#{$prefix}-ripple {
+          &:after {
+            background: $sidebar-item-active-bgcolor;
+            left: 0;
+            bottom: 0;
+            height: 5px;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 @include bslist-variant(white, #fff);

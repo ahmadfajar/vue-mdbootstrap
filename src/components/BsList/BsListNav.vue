@@ -16,6 +16,10 @@ export default {
                 return 'bs-' + Helper.uuid(true);
             }
         },
+        /**
+         * Treat the items inside it as child items..
+         * @type {boolean|*}
+         */
         child: {
             type: Boolean,
             default: false

@@ -32,6 +32,25 @@ export default {
             type: Boolean,
             default: true
         },
+        /**
+         * Give some space around each item. Valid values are: `both`, `left`, `right`.
+         * @type {string|*}
+         */
+        spaceAround: {
+            type: String,
+            default: undefined,
+            validator: v => ['both', 'left', 'right'].indexOf(v) > -1
+        },
+        /**
+         * Give border around the active item.
+         * Valid values are: `left`, `right`, `left-right`, `top`, `bottom`, `top-bottom`.
+         * @type {string|*}
+         */
+        activeItemBordered: {
+            type: String,
+            default: undefined,
+            validator: v => ['left', 'right', 'left-right', 'top', 'bottom', 'top-bottom'].indexOf(v) > -1
+        },
     },
     data: (vm) => ({
         bsList: {
@@ -84,6 +103,15 @@ export default {
         _classNames() {
             return {
                 'overflow-hidden': this.overflowHidden,
+                'md-space-both': this.spaceAround === 'both',
+                'md-space-left': this.spaceAround === 'left',
+                'md-space-right': this.spaceAround === 'right',
+                'md-border-left': this.activeItemBordered === 'left',
+                'md-border-right': this.activeItemBordered === 'right',
+                'md-border-left-right': this.activeItemBordered === 'left-right',
+                'md-border-top': this.activeItemBordered === 'top',
+                'md-border-bottom': this.activeItemBordered === 'bottom',
+                'md-border-top-bottom': this.activeItemBordered === 'top-bottom',
                 [`md-list-${this.color}`]: this.color,
             }
         }

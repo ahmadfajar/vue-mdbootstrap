@@ -1,11 +1,11 @@
 <template>
   <div class="md-field md-checkbox-group row" :class="_classNames">
-    <slot />
+    <slot></slot>
     <div class="d-flex flex-column flex-fill">
       <div class="md-field-inner">
         <div class="flex-fill form-row">
           <template v-if="columns">
-            <div v-for="(item, idx) in items" :key="'cbo-' + idx" :class="itemClasses">
+            <div v-for="(item, idx) in items" :key="'cbo-' + idx" :class="_itemClasses">
               <bs-checkbox v-bind="_checkboxAttributes(item, idx)" @change="setValue">
                 {{ item.label }}
               </bs-checkbox>
@@ -53,40 +53,82 @@ export default {
         event: 'change'
     },
     props: {
+        /**
+         * The component color appearance.
+         * @type {string|*}
+         */
         color: {
             type: String,
             default: 'default'
         },
+        /**
+         * Sets the maximum number of columns to display the checkbox. When the number of items
+         * exceed the number of columns, then the remaining items will be displayed on the
+         * next row.
+         * @type {number|*}
+         */
         columns: {
             type: Number,
             default: undefined,
             validator: v => v > 0 && v < 5
         },
+        /**
+         * The value monitored by `v-model` to maintain checked state.
+         * @type {Array|*}
+         */
         value: {
             type: Array,
             default: undefined
         },
+        /**
+         * The collection of `<bs-checkbox>` property-value.
+         * @type {Array|*}
+         */
         items: {
             type: Array,
             default: undefined
         },
+        /**
+         * Sets the `<input>` element `name` attribute.
+         * @type {string|number|*}
+         */
         name: {
             type: String,
             default: undefined
         },
+        /**
+         * Show persistent help text or not.
+         * @type {boolean|*}
+         */
         persistentHelpText: {
             type: Boolean,
             default: true
         },
+        /**
+         * The checkbox-group `<input>` element `required` attribute.
+         * @type {boolean|*}
+         */
         required: {
             type: Boolean,
             default: false
         },
-        // readonly: Boolean,
+        /**
+         * Put the checkbox-group in readonly state and sets the each `<input>` element `readonly` attribute.
+         * @type {boolean|*}
+         */
+        readonly: Boolean,
+        /**
+         * Disable the checkbox-group and the `<input>` element.
+         * @type {boolean|*}
+         */
         disabled: {
             type: Boolean,
             default: false
         },
+        /**
+         * Sets an indeterminate state for the checkbox-group.
+         * @type {boolean|*}
+         */
         indeterminate: {
             type: Boolean,
             default: false
@@ -107,23 +149,14 @@ export default {
                 'has-success': this.wasValidated && !this.hasValidationError
             }
         },
-        itemClasses() {
+        _itemClasses() {
             return {
-                'col-12': true,
+                'col-md-6': true,
                 ['col-lg-' + Math.ceil(12 / this.columns)]: true
             }
         }
     },
     methods: {
-        /**
-         * Set CheckboxGroup value.
-         *
-         * @param {string|number|boolean} value The value to set
-         * @returns {void}
-         */
-        setValue(value) {
-            this.$emit('change', value);
-        },
         /**
          * Set attributes for each checkbox item.
          *
@@ -134,14 +167,23 @@ export default {
          */
         _checkboxAttributes(item, index) {
             return {
-                color: this.color,
-                disabled: this.disabled || item.disabled,
-                // readonly: this.readonly || item.readonly,
+                color: item.color || this.color,
+                disabled: item.disabled || this.disabled,
+                readonly: item.readonly || this.readonly,
                 value: item.value,
-                name: this.name ? (this.name + '[' + index + ']') : item.name,
-                indeterminate: this.indeterminate,
+                name: item.name ? item.name : (this.name ? (this.name + '[' + index + ']') : null),
+                indeterminate: item.indeterminate || this.indeterminate,
                 checked: this.value
             }
+        },
+        /**
+         * Set CheckboxGroup value.
+         *
+         * @param {string|number|boolean} value The value to set
+         * @returns {void}
+         */
+        setValue(value) {
+            this.$emit('change', value);
         }
     }
 }

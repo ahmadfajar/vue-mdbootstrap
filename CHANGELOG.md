@@ -8,14 +8,20 @@ Released:
 ### Features v1.1.0
 
 - New components: **BsExpandTransition**, **BsCardMedia**, **BsIconToggle**, **BsListNav**, **BsListNavItem**
+- **BsAvatar:** add property `icon-flip`, `icon-spin` and `icon-pulse`
 - **BsButton:** add property `pill` and `rounded`, emit events `input` to update `active` property
 - **BsCard:** add properties `img-bottom-alt`, `img-bottom-src`, `img-top-alt`, `img-top-src`
+- **BsCheckbox:** add properties `readonly`
+- **BsCheckboxGroup:** add properties `readonly`
+- **BsIcon:** add properties `flip`, `pulse`, `rotation`, and `spin`
 - **BsListTile:** add properties `ripple-off` and `navigable`
 - **BsListTileAction:** add `center` property
-- **BsListTileLeading:** add `icon` property
+- **BsListTileLeading:** add property `icon`, `icon-flip`, `icon-rotation`, `icon-spin` and `icon-pulse`
+- **BsListView:** add property `single-expand`, `space-around`, and `active-item-bordered`
+- **BsSwitch:** add properties `readonly`
 - Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
-### Bug Fixes & Improvement v1.0.5
+### Bug Fixes & Improvement v1.1.0
 
 - **BsAlert:** improve css alert-variant
 - **BsMaskLoader:** incorrect z-index
@@ -27,6 +33,7 @@ Released:
 - **BsListTile:** improve when to generate `<a>` element or `<div>` element and update component scss
 - **BsProgress:** change property `type` default value to 'bar' 
 - **BsSideDrawer:** computed inline style improvement
+- **BsCheckbox, BsSwitch:** improve css classes
 - Improve scss color variables
 - Improve JsDoc
 

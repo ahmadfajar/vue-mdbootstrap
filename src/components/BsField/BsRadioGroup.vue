@@ -1,11 +1,11 @@
 <template>
   <div class="md-field md-radio-group row" :class="_classNames">
-    <slot />
+    <slot></slot>
     <div class="d-flex flex-column flex-fill">
       <div class="md-field-inner">
         <div class="flex-fill form-row">
           <template v-if="columns">
-            <div v-for="(item, idx) in items" :key="'rdo-' + idx" :class="itemClasses">
+            <div v-for="(item, idx) in items" :key="'rdo-' + idx" :class="_itemClasses">
               <bs-radio v-bind="_radioAttributes(item)" @change="setValue">
                 {{ item.label }}
               </bs-radio>
@@ -53,34 +53,78 @@ export default {
         event: 'change'
     },
     props: {
+        /**
+         * The component color appearance.
+         * @type {string|*}
+         */
         color: {
             type: String,
             default: 'default'
         },
+        /**
+         * Sets the maximum number of columns to display the radio. When the number of items
+         * exceed the number of columns, then the remaining items will be displayed on the
+         * next row.
+         * @type {number|*}
+         */
         columns: {
             type: Number,
             default: undefined,
             validator: v => v > 0 && v < 5
         },
+        /**
+         * The value monitored by `v-model` to maintain checked state.
+         * @type {Array|*}
+         */
         value: {
             type: [String, Number, Boolean],
             default: false
         },
+        /**
+         * Sets default `<input>` element `name` attribute.
+         * @type {string|number|*}
+         */
         name: {
             type: [String, Number],
             default: undefined
         },
+        /**
+         * The collection of `<bs-radio>` property-value.
+         * @type {Array|*}
+         */
         items: {
             type: Array,
             default: undefined
         },
+        /**
+         * Show persistent help text or not.
+         * @type {boolean|*}
+         */
         persistentHelpText: {
             type: Boolean,
             default: true
         },
-        required: Boolean,
+        /**
+         * The radio-group `<input>` element `required` attribute.
+         * @type {boolean|*}
+         */
+        required: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Put the radio-group in readonly state and sets the each `<input>` element `readonly` attribute.
+         * @type {boolean|*}
+         */
         readonly: Boolean,
-        disabled: Boolean
+        /**
+         * Disable the radio-group and the `<input>` element.
+         * @type {boolean|*}
+         */
+        disabled: {
+            type: Boolean,
+            default: false
+        },
     },
     computed: {
         /**
@@ -97,23 +141,14 @@ export default {
                 'has-success': this.wasValidated && !this.hasValidationError
             }
         },
-        itemClasses() {
+        _itemClasses() {
             return {
-                'col-12': true,
+                'col-md-6': true,
                 ['col-lg-' + Math.ceil(12 / this.columns)]: true
             }
         }
     },
     methods: {
-        /**
-         * Set RadioGroup value.
-         *
-         * @param {string|number|boolean} value The value to set
-         * @returns {void}
-         */
-        setValue(value) {
-            this.$emit('change', value);
-        },
         /**
          * Set attributes for each radio item.
          *
@@ -123,13 +158,22 @@ export default {
          */
         _radioAttributes(item) {
             return {
-                color: this.color,
-                disabled: this.disabled || item.disabled,
-                readonly: this.readonly || item.readonly,
+                color: item.color || this.color,
+                disabled: item.disabled || this.disabled,
+                readonly: item.readonly || this.readonly,
                 value: item.value,
                 name: this.name,
                 checked: this.value
             }
+        },
+        /**
+         * Set RadioGroup value.
+         *
+         * @param {string|number|boolean} value The value to set
+         * @returns {void}
+         */
+        setValue(value) {
+            this.$emit('change', value);
         }
     }
 }

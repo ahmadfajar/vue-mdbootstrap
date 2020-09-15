@@ -1,5 +1,5 @@
 <template>
-  <span class="md-toggle-icon" v-on="$listeners">
+  <span class="md-toggle-icon" v-on="$listeners" @click="toggleClick">
     <font-awesome-icon :icon="toggleEye" fixed-width />
   </span>
 </template>
@@ -10,6 +10,10 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 export default {
     name: "BsIconToggle",
     components: {FontAwesomeIcon},
+    model: {
+        prop: 'value',
+        event: 'toggle'
+    },
     props: {
         /**
          * The default icon to display.
@@ -22,10 +26,10 @@ export default {
             required: true
         },
         /**
-         * Toggle icon state.
+         * Value monitored by `v-model` to maintain icon state.
          * @type {boolean|*}
          */
-        toggle: {
+        value: {
             type: Boolean,
             default: false
         },
@@ -42,12 +46,18 @@ export default {
     },
     computed: {
         toggleEye() {
-            if (this.toggle) {
-                return this.toggleIcon; // 'eye-slash';
+            if (this.value) {
+                return this.toggleIcon;
             }
-            return this.icon; // 'eye';
+
+            return this.icon;
         }
-    }
+    },
+    methods: {
+        toggleClick() {
+            this.$emit('toggle', !this.value);
+        }
+    },
 }
 </script>
 

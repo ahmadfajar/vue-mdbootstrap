@@ -130,24 +130,76 @@
         &.active, &.#{$prefix}-active {
           background-color: set-hoverable-bgcolor($color, .22);
 
-          .#{$prefix}-list-tile-leading {
-            color: set-subtitle-text-color($color);
-          }
-
           .#{$prefix}-list-tile-title {
             font-weight: $font-weight-bold;
           }
+
+          @if (lightness($color) > 80) {
+            color: $primary-color-dark;
+
+            .#{$prefix}-list-tile-title {
+              color: $primary-color-dark;
+            }
+
+            .#{$prefix}-list-tile-subtitle {
+              color: lighten($primary-color-dark, 20%);
+            }
+
+            .#{$prefix}-list-tile-leading {
+              &.#{$prefix}-has-icon {
+                color: rgba($primary-color-dark, .54);
+              }
+            }
+          } @else {
+            color: $white;
+
+            .#{$prefix}-list-tile-leading {
+              &.#{$prefix}-has-icon {
+                color: rgba($white-base, .8);
+              }
+            }
+          }
         }
       }
-    }
 
-    .#{$prefix}-list-tile {
       &.#{$prefix}-disabled {
         color: set-disable-text-color($color) !important;
 
         .#{$prefix}-list-tile-leading,
         .#{$prefix}-list-tile-action {
           color: set-leading-disable-text-color($color);
+        }
+      }
+    }
+
+    @if (lightness($color) < 85) {
+      &.#{$prefix}-border-left,
+      &.#{$prefix}-border-left-right,
+      &.#{$prefix}-border-top,
+      &.#{$prefix}-border-top-bottom {
+        > .#{$prefix}-list-tile {
+          &.active, &.#{$prefix}-active {
+            > .#{$prefix}-ripple {
+              &:before {
+                background: lighten(set-hoverable-bgcolor($color, .25), 35%);
+              }
+            }
+          }
+        }
+      }
+
+      &.#{$prefix}-border-right,
+      &.#{$prefix}-border-left-right,
+      &.#{$prefix}-border-bottom,
+      &.#{$prefix}-border-top-bottom {
+        > .#{$prefix}-list-tile {
+          &.active, &.#{$prefix}-active {
+            > .#{$prefix}-ripple {
+              &:after {
+                background: lighten(set-hoverable-bgcolor($color, .25), 35%);
+              }
+            }
+          }
         }
       }
     }
@@ -165,19 +217,33 @@
           } @else {
             color: rgba($white-base, .8);
           }
+
+          .#{$prefix}-icon {
+            &:not(.icon-expand-more) {
+              color: set-leading-text-color($color);
+            }
+          }
         }
 
         &.#{$prefix}-disabled {
           > .#{$prefix}-nav-item-inner {
             color: set-disable-text-color($color);
+
+            .#{$prefix}-icon {
+              &:not(.icon-expand-more) {
+                color: set-leading-disable-text-color($color);
+              }
+            }
           }
         }
 
         &:hover:not(.#{$prefix}-expanded) {
-          @if (lightness($color) > 80) {
-            background-color: $default-hover-bgcolor;
-          } @else {
-            background-color: rgba(lighten($color, 10%), .25);
+          > .#{$prefix}-nav-item-inner {
+            @if (lightness($color) > 80) {
+              background-color: $default-hover-bgcolor;
+            } @else {
+              background-color: rgba(darken($color, 10%), .25);
+            }
           }
         }
 
@@ -190,21 +256,74 @@
         &.#{$prefix}-active {
           &:not(.#{$prefix}-parent),
           &.#{$prefix}-parent:not(.#{$prefix}-expanded) {
-            @if (lightness($color) > 80) {
-              background-color: $sidebar-active-bgcolor;
-            } @else {
-              background-color: rgba(lighten($color, 45%), .1); // lighten($color, 8%);
+            > .#{$prefix}-nav-item-inner {
+              background-color: set-hoverable-bgcolor($color, .22);
+              @if (lightness($color) > 80) {
+                color: $primary-color-dark;
 
-              > .#{$prefix}-nav-item-inner {
+                .#{$prefix}-icon {
+                  &:not(.icon-expand-more) {
+                    color: rgba($primary-color-dark, .54);
+                  }
+                }
+              } @else {
                 color: $white;
+
+                .#{$prefix}-icon {
+                  &:not(.icon-expand-more) {
+                    color: rgba($white-base, .8);
+                  }
+                }
               }
             }
           }
+        }
 
-          @if (lightness($color) < 85) {
-            &:not(.#{$prefix}-parent) {
-              &:before {
-                background: rgba(lighten($color, 85%), .3);
+        @if (lightness($color) < 81) {
+          &.#{$prefix}-expanded {
+            border-color: rgba($white-base, .1);
+          }
+        }
+      }
+    }
+
+    @if (lightness($color) < 85) {
+      &.#{$prefix}-border-left,
+      &.#{$prefix}-border-left-right,
+      &.#{$prefix}-border-top,
+      &.#{$prefix}-border-top-bottom {
+        > .#{$prefix}-list-nav {
+          .#{$prefix}-nav-item {
+            &.#{$prefix}-active {
+              &:not(.#{$prefix}-parent) {
+                > .#{$prefix}-nav-item-inner {
+                  > .#{$prefix}-ripple {
+                    &:before {
+                      background: lighten(set-hoverable-bgcolor($color, .25), 35%); // rgba(lighten($color, 85%), .3);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &.#{$prefix}-border-right,
+      &.#{$prefix}-border-left-right,
+      &.#{$prefix}-border-bottom,
+      &.#{$prefix}-border-top-bottom {
+        > .#{$prefix}-list-nav {
+          .#{$prefix}-nav-item {
+            &.#{$prefix}-active {
+              &:not(.#{$prefix}-parent) {
+                > .#{$prefix}-nav-item-inner {
+                  > .#{$prefix}-ripple {
+                    &:after {
+                      background: lighten(set-hoverable-bgcolor($color, .25), 35%);
+                    }
+                  }
+                }
               }
             }
           }

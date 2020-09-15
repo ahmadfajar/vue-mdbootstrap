@@ -104,7 +104,7 @@ export default {
 
     > .#{$prefix}-appbar-title {
       @include ellipsis();
-      font-size: 1.7rem;
+      font-size: 1.5rem;
       font-weight: $font-weight-normal;
       line-height: normal;
       margin: 0 $padding-base;

@@ -5,7 +5,7 @@
            :class="labelClass"
            :for="id"
            @click.prevent="toggleCheck">
-      <slot />
+      <slot></slot>
     </label>
     <div class="md-switch-content">
       <div class="md-switch-inner" @click.stop="toggleCheck">
@@ -21,7 +21,7 @@
            :class="labelClass"
            :for="id"
            @click.prevent="toggleCheck">
-      <slot />
+      <slot></slot>
     </label>
   </div>
 </template>
@@ -42,6 +42,10 @@ export default {
                 return 'bs-' + Helper.uuid(true);
             }
         },
+        /**
+         * The switch text label position, valid values are: `left`, `right`.
+         * @type {string|*}
+         */
         labelPosition: {
             type: String,
             default: 'right',
@@ -49,6 +53,10 @@ export default {
                 return ['left', 'right'].indexOf(value) !== -1;
             }
         },
+        /**
+         * Additional css class for the text label.
+         * @type {string|Array|*}
+         */
         labelClass: {
             type: [String, Array],
             default: undefined
@@ -67,7 +75,8 @@ export default {
   @include display-flex();
   position: relative;
 
-  &:not(.#{$prefix}-disabled) {
+  &:not(.#{$prefix}-disabled):not(.#{$prefix}-readonly) {
+    > .#{$prefix}-switch-label,
     > .#{$prefix}-switch-content {
       cursor: pointer;
     }
@@ -130,8 +139,6 @@ export default {
 
   .#{$prefix}-switch-label {
     @include user-select(none);
-    // line-height: $md-switch-size;
-    // height: $md-switch-size;
     margin-bottom: 0;
     position: relative;
     padding-left: 0;
@@ -139,6 +146,7 @@ export default {
 
     &.#{$prefix}-label-left {
       padding-right: $padding-base + .25;
+      margin-right: $padding-sm;
     }
 
     &.#{$prefix}-label-right {

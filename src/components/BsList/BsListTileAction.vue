@@ -27,6 +27,10 @@ export default {
             type: Boolean,
             default: false
         },
+        /**
+         * The html tag is used to render the component.
+         * @type {string|*}
+         */
         tag: {
             type: String,
             default: 'div'

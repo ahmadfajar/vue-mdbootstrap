@@ -10,10 +10,9 @@
                  :rounded="rounded"
                  :size="size" />
       <bs-icon v-else-if="icon && isInternal"
-               :icon="iconName"
-               :size="iconSize" />
+               v-bind="_bsIconAttributes" />
       <font-awesome-icon v-else-if="icon"
-                         :icon="iconName"
+                         v-bind="iconAttributes"
                          :style="_iconStyles" />
     </template>
   </div>
@@ -22,21 +21,13 @@
 <script>
 import BsAvatar from "../BsBasic/BsAvatar";
 import Image from "../../mixins/Image";
+import IconMixin from "../BsBasic/mixins/IconMixin";
 
 export default {
     name: "BsListTileLeading",
     components: {BsAvatar},
-    mixins: [Image],
+    mixins: [Image, IconMixin],
     props: {
-        /**
-         * The icon to display as avatar. Use prefix `"bs-"` to use internal icon,
-         * otherwise use valid [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
-         * @type {string|Array|*}
-         */
-        icon: {
-            type: [String, Array],
-            default: undefined
-        },
         /**
          * The image location to place inside component.
          * @type {string|*}
@@ -75,32 +66,23 @@ export default {
             };
         },
         /**
-         * Get computed icon name (real icon name).
+         * Get BsIcon binding attributes.
          *
-         * @returns {string} The icon name
+         * @returns {Object|*} The icon attributes
+         * @private
          */
-        iconName() {
-            if (this.icon.substr(0, 3) === 'bs-') {
-                return this.icon.substr(3);
-            } else {
-                return this.icon;
+        _bsIconAttributes() {
+            return {
+                ...this.iconAttributes,
+                size: this._bsIconSize
             }
         },
-        iconSize() {
+        _bsIconSize() {
             if (!this.size || parseInt(this.size, 10) === 48) {
                 return 24;
             }
 
             return this.imageSizeStyles.width;
-        },
-        /**
-         * Check whether the icon name is internal icon or from
-         * [FontAwesome Icon](https://fontawesome.com/icons?d=gallery&s=solid&m=free).
-         *
-         * @returns {boolean} `TRUE` if icon name is internal, otherwise `FALSE`
-         */
-        isInternal() {
-            return this.icon.substr(0, 3) === 'bs-';
         },
     },
 }

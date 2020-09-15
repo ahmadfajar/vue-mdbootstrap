@@ -1,37 +1,81 @@
 export default {
     props: {
+        /**
+         * The field component color appearance.
+         * @type {string|*}
+         */
         color: {
             type: String,
             default: 'default'
         },
+        /**
+         * The `<input>` element `value` attribute.
+         * @type {string|boolean|number|Object|*}
+         */
         value: {
             type: [String, Boolean, Number, Object],
             default: undefined
         },
+        /**
+         * The field component value monitored by `v-model` to maintain its state.
+         * @type {string|boolean|number|Array|Object|*}
+         */
         checked: {
             type: [String, Boolean, Number, Object, Array, Event],
             default: undefined
         },
+        /**
+         * Sets the `<input>` element `name` attribute.
+         * @type {string|number|*}
+         */
         name: {
             type: [String, Number],
             default: undefined
         },
+        /**
+         * Put the field component in readonly state and sets the `<input>` element `readonly` attribute.
+         * @type {boolean|*}
+         */
+        readonly: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Sets the `<input>` element `required` attribute.
+         * @type {boolean|*}
+         */
         required: {
             type: Boolean,
             default: false
         },
+        /**
+         * Enable/disable the component and the `<input>` element.
+         * @type {boolean|*}
+         */
         disabled: {
             type: Boolean,
             default: false
         },
+        /**
+         * Sets an indeterminate state for the field component.
+         * @type {boolean|*}
+         */
         indeterminate: {
             type: Boolean,
             default: false
         },
+        /**
+         * Sets value for truthy state of the field component.
+         * @type {boolean|*}
+         */
         trueValue: {
             type: Boolean,
             default: true
         },
+        /**
+         * Sets value for falsy state of the field component.
+         * @type {boolean|*}
+         */
         falseValue: {
             type: Boolean,
             default: false
@@ -51,6 +95,7 @@ export default {
                 name: this.name,
                 disabled: this.disabled,
                 required: this.required,
+                readonly: this.readonly,
                 'true-value': this.trueValue,
                 'false-value': this.falseValue
             };
@@ -78,6 +123,7 @@ export default {
             return {
                 'md-checked': this.isSelected,
                 'md-disabled': this.disabled,
+                'md-readonly': this.readonly,
                 'md-required': this.required,
                 'md-indeterminate': this.indeterminate
             }
@@ -87,40 +133,40 @@ export default {
         }
     },
     methods: {
-        removeItemFromModel(newModel) {
+        _removeItemFromModel(newModel) {
             const index = newModel.indexOf(this.value);
 
             if (index !== -1) {
                 newModel.splice(index, 1);
             }
         },
-        handleArrayCheckbox() {
+        _handleArrayCheckbox() {
             const newModel = this.checked;
 
             if (!this.isSelected) {
                 newModel.push(this.value);
             } else {
-                this.removeItemFromModel(newModel);
+                this._removeItemFromModel(newModel);
             }
 
             this.$emit('change', newModel);
         },
-        handleSingleSelectCheckbox() {
+        _handleSingleSelectCheckbox() {
             this.$emit('change', this.isSelected ? null : this.value);
         },
-        handleSimpleCheckbox() {
+        _handleSimpleCheckbox() {
             this.$emit('change', this.isSelected ? this.falseValue : this.trueValue);
         },
         toggleCheck() {
-            if (!this.disabled) {
+            if (!this.disabled && !this.readonly) {
                 this.rippleActive = true;
 
                 if (Array.isArray(this.checked)) {
-                    this.handleArrayCheckbox();
+                    this._handleArrayCheckbox();
                 } else if (this.hasValue) {
-                    this.handleSingleSelectCheckbox();
+                    this._handleSingleSelectCheckbox();
                 } else {
-                    this.handleSimpleCheckbox();
+                    this._handleSimpleCheckbox();
                 }
             }
         }

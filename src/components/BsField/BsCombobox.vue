@@ -247,6 +247,7 @@ export default {
          * Get computed component's styles.
          *
          * @returns {Object|*} Collection of css classes
+         * @private
          */
         _classNames() {
             return {
@@ -265,6 +266,7 @@ export default {
          * Get computed binding's properties.
          *
          * @returns {Object|*} Attributes to bind
+         * @private
          */
         _inputAttributes() {
             return {
@@ -280,12 +282,14 @@ export default {
          * Check if feature clear button is enabled or not.
          *
          * @returns {boolean} TRUE if has clear button otherwise FALSE
+         * @private
          */
         _showClearButton() {
             return this.clearButton && !this.readonly && !this.disabled && this.selectedItems.length > 0;
         },
         /**
          * @returns {boolean} Display placeholder or not
+         * @private
          */
         _showPlaceHolder() {
             return !this.inputValue;
@@ -294,6 +298,7 @@ export default {
          * Get computed floating label's class names.
          *
          * @returns {Object|*} Floating label css classes
+         * @private
          */
         _floatingLabelClass() {
             return {
@@ -305,6 +310,7 @@ export default {
          * Get combobox list container binding attributes.
          *
          * @returns {Object|*} Attributes to bind
+         * @private
          */
         _listContainerAttributes() {
             return {
@@ -337,6 +343,7 @@ export default {
          * Get Popover computed binding attributes.
          *
          * @returns {Object|*} Attributes to bind
+         * @private
          */
         _popoverAttributes() {
             return {
@@ -356,6 +363,7 @@ export default {
          * Get popover's computed width.
          *
          * @returns {number} Popover minimum width
+         * @private
          */
         _popoverMinWidth() {
             if (this.trigger && (this.popoverWidth < this.trigger.offsetWidth)) {
@@ -368,6 +376,7 @@ export default {
          * Get computed popover's styles.
          *
          * @returns {Object} Popover styles
+         * @private
          */
         _popoverStyles() {
             return {
@@ -571,6 +580,7 @@ export default {
          *
          * @param {string} color CheckBox color
          * @returns {void}
+         * @private
          */
         _assignCheckOptionColor(color) {
             if (color) {
@@ -582,6 +592,7 @@ export default {
          *
          * @param {string} position CheckBox position
          * @returns {void}
+         * @private
          */
         _assignCheckOptionPosition(position) {
             if (position && ['left', 'right'].includes(position)) {

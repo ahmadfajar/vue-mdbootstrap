@@ -8,7 +8,20 @@
 export default {
     name: "BsListTileContent",
     props: {
-        multiLine: Boolean,
+        /**
+         * Useful when you want to display multiline text. By default the subtitle will be display
+         * in a single line, if the text length is beyond the container width then the text will be
+         * cut and put an ellipses at the end.
+         * @type {boolean|*}
+         */
+        multiLine: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * The html tag is used to render the component.
+         * @type {string|*}
+         */
         tag: {
             type: String,
             default: 'div'

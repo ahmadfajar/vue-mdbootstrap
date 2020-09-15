@@ -1,9 +1,17 @@
 export default {
     props: {
+        /**
+         * The help text to display below the field component.
+         * @type {string|*}
+         */
         helpText: {
             type: String,
             default: undefined
         },
+        /**
+         * The external validator plugin to be used to validate the field value.
+         * @type {Object|*}
+         */
         externalValidator: {
             type: Object,
             validator: v => v.hasOwnProperty('validators') && v.hasOwnProperty('messages') && v.hasOwnProperty('hasError')

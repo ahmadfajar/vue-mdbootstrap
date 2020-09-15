@@ -48,12 +48,12 @@ export default {
         },
         width: {
             type: [Number, String],
-            default: 240,
+            default: 250,
             validator: v => !isNaN(parseInt(v, 10))
         },
         miniWidth: {
             type: [Number, String],
-            default: 55,
+            default: 56,
             validator: v => !isNaN(parseInt(v, 10))
         },
         modalWidth: {
@@ -81,9 +81,9 @@ export default {
         _classNames() {
             return {
                 ['bg-' + this.color]: this.color,
-                'md-mini': this.mini && this.open,
-                'md-open': this.isMobile && this.open,
-                'md-close': this.isMobile && !this.open
+                'md-mini': this.mini,
+                'md-open': this.open,
+                'md-close': !this.open && !this.mini
             }
         },
         /**
@@ -247,8 +247,18 @@ export default {
     position: relative;
 
     > .#{$prefix}-list {
-      .#{$prefix}-list-tile-title {
-        font-size: .92rem;
+      //.#{$prefix}-list-tile-title {
+      //  font-size: .92rem;
+      //}
+
+      &.#{$prefix}-space-both,
+      &.#{$prefix}-space-left,
+      &.#{$prefix}-space-right {
+        > .#{$prefix}-list-tile {
+          &.active, &.#{$prefix}-active {
+            @include border-radius($border-radius);
+          }
+        }
       }
     }
 
@@ -266,6 +276,22 @@ export default {
 
   .divider {
     border-bottom: 1px solid rgba(200, 200, 200, 0.16);
+  }
+
+  .#{$prefix}-list-nav {
+    .#{$prefix}-nav-item {
+      &:not(.#{$prefix}-parent),
+      &.#{$prefix}-parent:not(.#{$prefix}-expanded) {
+        margin-bottom: 2px;
+        margin-top: 2px;
+
+        > .#{$prefix}-nav-item-inner {
+          > .#{$prefix}-ripple {
+            height: 46px;
+          }
+        }
+      }
+    }
   }
 
   @include media-breakpoint-up(lg) {
