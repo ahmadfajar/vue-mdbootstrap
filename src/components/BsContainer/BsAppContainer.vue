@@ -24,23 +24,23 @@ export default {
 @import "../../../scss/variables";
 
 html, body {
-  height: 100%;
-  text-rendering: optimizeLegibility;
-  /*-webkit-font-smoothing: antialiased;*/
-  -moz-osx-font-smoothing: grayscale;
+    height: 100%;
+    text-rendering: optimizeLegibility;
+    /*-webkit-font-smoothing: antialiased;*/
+    -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .#{$prefix}-application-wrap {
-  @include backface-visibility();
-  @include flexbox((display: flex, flex: 1 1 auto, flex-direction: column));
-  max-width: 100%;
-  min-height: 100vh;
-  position: relative;
+    @include backface-visibility();
+    @include flexbox((display: flex, flex: 1 1 auto, flex-direction: column));
+    max-width: 100%;
+    min-height: 100vh;
+    position: relative;
 }
 </style>

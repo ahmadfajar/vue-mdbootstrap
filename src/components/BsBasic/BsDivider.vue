@@ -1,5 +1,7 @@
 <template>
-  <hr class="md-divider" :class="_classNames" :style="_styles" />
+  <hr :class="_classNames"
+      :style="_styles"
+      class="md-divider" />
 </template>
 
 <script>
@@ -78,20 +80,20 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-divider {
-  background-color: rgba($black, 0.12);
-  border: none;
-  display: block;
-  height: 1px;
-  min-height: 1px;
-  margin-bottom: 0;
-  margin-top: 0;
-  width: 100%;
-  flex: 1;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
+    background-color: rgba($black, 0.12);
+    border: none;
+    display: block;
+    height: 1px;
+    min-height: 1px;
+    margin-bottom: 0;
+    margin-top: 0;
+    width: 100%;
+    flex: 1;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
 
-  &.divider--dark {
-    background-color: rgba($white, 0.2);
-  }
+    &.divider--dark {
+        background-color: rgba($white, 0.2);
+    }
 }
 </style>

@@ -8,6 +8,10 @@
 export default {
     name: "BsCardHeader",
     props: {
+        /**
+         * Html tag used to render the card header.
+         * @type {string|*}
+         */
         tag: {
             type: String,
             default: 'div'

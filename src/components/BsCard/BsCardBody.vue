@@ -5,15 +5,19 @@
 </template>
 
 <script>
-    export default {
-        name: "BsCardBody",
-        props: {
-            tag: {
-                type: String,
-                default: 'div'
-            }
+export default {
+    name: "BsCardBody",
+    props: {
+        /**
+         * Html tag used to render the card body.
+         * @type {string|*}
+         */
+        tag: {
+            type: String,
+            default: 'div'
         }
     }
+}
 </script>
 
 <style scoped>

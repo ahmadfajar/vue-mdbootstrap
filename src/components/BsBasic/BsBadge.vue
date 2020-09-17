@@ -9,7 +9,7 @@ export default {
     name: 'BsBadge',
     props: {
         /**
-         * Html tag use to render the badge.
+         * Html tag used to render the badge.
          * @type {string|*}
          */
         tag: {
@@ -68,18 +68,18 @@ export default {
 @import "../../../scss/variables";
 
 .badge {
-  @include box-shadow(none);
-  font-weight: $font-weight-bold;
+    @include box-shadow(none);
+    font-weight: $font-weight-bold;
 
-  &.badge-label {
-    font-size: 85%;
-    font-weight: $font-weight-normal;
-    padding: .25rem .6rem;
-  }
+    &.badge-label {
+        font-size: 85%;
+        font-weight: $font-weight-normal;
+        padding: .25rem .6rem;
+    }
 
-  &.badge-pill {
-    font-family: var(--font-family-sans-serif);
-    padding: .2rem .6rem .3rem .6rem;
-  }
+    &.badge-pill {
+        font-family: var(--font-family-sans-serif);
+        padding: .2rem .6rem .3rem .6rem;
+    }
 }
 </style>

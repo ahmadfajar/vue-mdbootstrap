@@ -1,14 +1,14 @@
 <template>
-  <div role="group" :class="['btn-group', cmpAttrClasses]">
-    <label v-for="(item, idx) in items" 
+  <div :class="['btn-group', cmpAttrClasses]" role="group">
+    <label v-for="(item, idx) in items"
            :key="'btn-' + idx"
            :class="_btnClasses(item)">
       <input v-model="localValue"
              v-bind="_itemAttributes(item)"
              :value="item.value"
              class="d-none" />
-      <bs-ripple :disabled="disabled || readonly" 
-                 :active.sync="rippleActive">
+      <bs-ripple :active.sync="rippleActive"
+                 :disabled="disabled || readonly">
         <span class="btn-inner d-inline-flex align-items-center">
           <span v-if="iconLeft && item.icon" class="pr-2">
             <font-awesome-icon v-bind="_iconAttributes(item)" />
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BsRipple from "../BsAnimation/BsRipple";
 import ButtonToggle from "./mixins/ButtonToggle";
 import Common from "../../mixins/Common";
@@ -83,14 +83,14 @@ export default {
          */
         _btnClasses(item) {
             return {
-                'btn' : true,
-                ['btn-' + this.toggleColor] : this.isSelected(item) && this.toggleColor,
-                ['btn-' + this.color + ' active'] : this.isSelected(item) && !this.toggleColor,
-                ['btn-outline-' + this.color] : !this.isSelected(item) && this.outlined,
-                ['btn-flat-' + this.color] : !this.isSelected(item) && !this.outlined && this.flat,
-                ['btn-' + this.color] : !this.isSelected(item) && !this.outlined && !this.flat,
-                'btn-raised' : this.raised,
-                'disabled' : this.disabled,
+                'btn': true,
+                ['btn-' + this.toggleColor]: this.isSelected(item) && this.toggleColor,
+                ['btn-' + this.color + ' active']: this.isSelected(item) && !this.toggleColor,
+                ['btn-outline-' + this.color]: !this.isSelected(item) && this.outlined,
+                ['btn-flat-' + this.color]: !this.isSelected(item) && !this.outlined && this.flat,
+                ['btn-' + this.color]: !this.isSelected(item) && !this.outlined && !this.flat,
+                'btn-raised': this.raised,
+                'disabled': this.disabled,
                 'readonly': this.readonly,
             }
         },

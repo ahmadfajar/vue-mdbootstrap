@@ -27,16 +27,44 @@ export default {
     name: 'BsRipple',
     components: {BsWave},
     props: {
+        /**
+         * Ripple animation state.
+         * @type {boolean|*}
+         */
         active: {
             type: [Boolean, Event],
             default: false
         },
-        centered: Boolean,
-        disabled: Boolean,
+        /**
+         * Start animation from center or from mouse click position.
+         * If true then animation always start from center, otherwise animation
+         * will start from mouse click position.
+         * @type {boolean|*}
+         */
+        centered: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Enable or disable ripple animation.
+         * @type {boolean|*}
+         */
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Start animation on mousedown/touch-event.
+         * @type {boolean|*}
+         */
         eventTrigger: {
             type: Boolean,
             default: true
         },
+        /**
+         * Html tag used to render the component.
+         * @type {string|*}
+         */
         tag: {
             type: String,
             default: 'div'

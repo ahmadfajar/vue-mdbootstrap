@@ -1,24 +1,24 @@
 <template>
   <span v-if="imgSrc"
-        class="md-avatar"
-        :class="imageClass">
-    <img class="md-avatar"
+        :class="imageClass"
+        class="md-avatar">
+    <img v-on="$listeners"
          :class="imageClass"
          :src="imgSrc"
          :style="imageSizeStyles"
-         v-on="$listeners"
-         alt="" />
+         alt=""
+         class="md-avatar" />
   </span>
   <span v-bind="_avatarClass" v-else>
     <bs-icon v-if="icon && isInternal"
              v-bind="_bsIconAttributes" />
     <font-awesome-icon v-else-if="icon" v-bind="_faAttributes" />
-    <span class="md-avatar-text" v-else>{{ text }}</span>
+    <span v-else class="md-avatar-text">{{ text }}</span>
   </span>
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import BsIcon from "../BsIcon/BsIcon";
 import Image from '../../mixins/Image';
 import IconMixin from "./mixins/IconMixin";
@@ -133,22 +133,22 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-avatar {
-  @include flexbox((display: inline-flex, align-items: center, justify-content: center));
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1;
-  max-width: 100%;
-  vertical-align: middle;
-  position: relative;
+    @include flexbox((display: inline-flex, align-items: center, justify-content: center));
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1;
+    max-width: 100%;
+    vertical-align: middle;
+    position: relative;
 
-  > .#{$prefix}-avatar-text {
-    @include flexbox((display: flex, align-items: center, justify-content: center));
-    font-weight: $font-weight-bold;
-    font-size: inherit;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    text-transform: uppercase;
-  }
+    > .#{$prefix}-avatar-text {
+        @include flexbox((display: flex, align-items: center, justify-content: center));
+        font-weight: $font-weight-bold;
+        font-size: inherit;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        text-transform: uppercase;
+    }
 }
 </style>

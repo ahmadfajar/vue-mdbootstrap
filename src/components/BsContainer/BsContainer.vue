@@ -1,7 +1,7 @@
 <template>
   <div :is="tag"
-       :style="_styles"
        v-resize="_resize"
+       :style="_styles"
        class="md-container-wrap">
     <slot></slot>
   </div>
@@ -16,10 +16,19 @@ export default {
     directives: {resize},
     mixins: [ScreenSize],
     props: {
+        /**
+         * Mount this container as part of application container or just ordinary container.
+         * If mount as part of application container, then it will adapt to SidebarDrawer and Appbar size.
+         * @type {boolean|*}
+         */
         app: {
             type: Boolean,
             default: false
         },
+        /**
+         * Html tag used to render the container.
+         * @type {string|*}
+         */
         tag: {
             type: String,
             default: 'div'
@@ -71,9 +80,9 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-container-wrap {
-  @include transition($transition-duration-base $md-transition-default-timing);
-  @include flexbox((display: flex, flex: 1 0 auto));
-  max-width: 100%;
-  position: relative;
+    @include transition($transition-duration-base $md-transition-default-timing);
+    @include flexbox((display: flex, flex: 1 0 auto));
+    max-width: 100%;
+    position: relative;
 }
 </style>

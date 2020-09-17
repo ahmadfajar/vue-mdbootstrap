@@ -1,11 +1,11 @@
 <template>
-  <div class="md-field md-button-toggle row" :class="_classNames">
+  <div :class="_classNames" class="md-field md-button-toggle row">
     <slot></slot>
     <div class="d-flex flex-column flex-fill">
       <div class="md-field-inner">
         <bs-button-toggle v-bind="_btnToggleAttributes" @change="setValue" />
       </div>
-      <div class="md-help-text" v-if="helpText || showErrorValidation">
+      <div v-if="helpText || showErrorValidation" class="md-help-text">
         <slot name="helptext">
           <small v-if="showHelpText" class="text-muted d-block">
             {{ helpText }}
@@ -38,6 +38,10 @@ export default {
         event: 'change'
     },
     props: {
+        /**
+         * Show persistent help text or not.
+         * @type {boolean|*}
+         */
         persistentHelpText: {
             type: Boolean,
             default: true
@@ -101,24 +105,24 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-field {
-  &.#{$prefix}-button-toggle {
-    .#{$prefix}-field-inner {
-      border-bottom: 0;
+    &.#{$prefix}-button-toggle {
+        .#{$prefix}-field-inner {
+            border-bottom: 0;
 
-      .btn {
-        font-size: .875rem;
-        margin-bottom: 0;
+            .btn {
+                font-size: .875rem;
+                margin-bottom: 0;
 
-        &.btn-sm {
-          font-size: 90%;
-          margin-top: $btn-margin-basic;
+                &.btn-sm {
+                    font-size: 90%;
+                    margin-top: $btn-margin-basic;
 
-          .btn-inner {
-            padding: $btn-margin-lg 1rem;
-          }
+                    .btn-inner {
+                        padding: $btn-margin-lg 1rem;
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
 </style>

@@ -8,10 +8,18 @@ import Helper from "../../utils/Helper";
 export default {
     name: "BsSpacer",
     props: {
+        /**
+         * Sets component width to fill the available space or not.
+         * @type {boolean|*}
+         */
         fill: {
             type: Boolean,
             default: true
         },
+        /**
+         * Sets component width.
+         * @type {number|string|*}
+         */
         width: {
             type: [Number, String],
             default: undefined,

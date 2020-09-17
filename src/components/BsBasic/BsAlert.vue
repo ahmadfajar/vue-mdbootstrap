@@ -1,18 +1,20 @@
 <template>
   <transition :name="transition">
-    <div v-if="show" :class="_classNames" role="alert">
+    <div v-if="show"
+         :class="_classNames"
+         role="alert">
       <div class="alert-icon">
         <font-awesome-icon v-if="icon" :icon="icon" />
       </div>
-      <div class="flex-fill" :class="{'ml-3' : icon}">
+      <div :class="{'ml-3' : icon}" class="flex-fill">
         <slot></slot>
       </div>
       <bs-button v-if="dismissable"
                  class="close ml-auto"
                  color="gray"
+                 flat
                  mode="icon"
                  size="sm"
-                 flat
                  @click="hide">
         <bs-icon icon="close" />
       </bs-button>
@@ -21,7 +23,7 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import BsButton from "../BsButton/BsButton";
 import BsIcon from "../BsIcon/BsIcon";
 import "../../../scss/_transitions.scss";
@@ -135,30 +137,30 @@ export default {
 @import "../../../scss/mixins";
 
 .alert {
-  &.alert-dismissible {
-    padding-right: 3.3rem;
+    &.alert-dismissible {
+        padding-right: 3.3rem;
 
-    > .close {
-      padding: .5rem;
+        > .close {
+            padding: .5rem;
+        }
     }
-  }
 
-  > .alert-icon {
-    font-size: 1.5rem;
-  }
+    > .alert-icon {
+        font-size: 1.5rem;
+    }
 }
 
 @each $color, $value in $theme-colors {
-  .alert-#{$color} {
-    @include alert-variant(
-                    theme-color-level($theme-colors, $color, $alert-bg-level),
-                    theme-color-level($theme-colors, $color, $alert-border-level),
-                    theme-color-level($theme-colors, $color, $alert-color-level)
-    );
-  }
+    .alert-#{$color} {
+        @include alert-variant(
+                        theme-color-level($theme-colors, $color, $alert-bg-level),
+                        theme-color-level($theme-colors, $color, $alert-border-level),
+                        theme-color-level($theme-colors, $color, $alert-color-level)
+        );
+    }
 }
 
 @each $color_name, $color_value in $theme-colors {
-  @include make-outline-alert($color_name, theme-color-level($theme-colors, $color_name, $alert-color-level));
+    @include make-outline-alert($color_name, theme-color-level($theme-colors, $color_name, $alert-color-level));
 }
 </style>

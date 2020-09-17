@@ -7,7 +7,9 @@
        role="img"
        xmlns="http://www.w3.org/2000/svg">
     <title v-if="placeHolder">{{ placeHolder }}</title>
-    <rect width="100%" height="100%" :fill="bgColor" />
+    <rect width="100%"
+          height="100%"
+          :fill="bgColor" />
     <text v-if="placeHolder && placeHolder !== ''"
           :fill="textColor"
           :x="xPos"

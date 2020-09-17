@@ -1,9 +1,9 @@
 <template>
-  <bs-ripple tag="span"
+  <bs-ripple :active="rippleActive"
              :class="{'dropdown-toggle': dropdownToggle && !iconMode}"
              :disabled="rippleOff"
              :event-trigger="false"
-             :active="rippleActive"
+             tag="span"
              @update:active="active => $emit('update:rippleActive', active)">
     <span class="btn-inner">
       <slot />
@@ -34,57 +34,57 @@ export default {
 @import "../../../scss/variables";
 
 .btn, .btn-floating, .btn-icon {
-  .btn-inner {
-    position: relative;
-  }
+    .btn-inner {
+        position: relative;
+    }
 }
 
 .btn {
-  .btn-inner {
-    width: 100%;
-    padding: $btn-margin-basic 1.5rem;
-
-    > .svg-inline--fa {
-      &.#{$prefix}-icon-left {
-        margin-right: $btn-margin-basic;
-      }
-
-      &.#{$prefix}-icon-right {
-        margin-left: $btn-margin-basic;
-      }
-    }
-  }
-
-  .#{$prefix}-ripple {
-    &.dropdown-toggle {
-      &::after {
-        margin-right: $padding-base - .2;
-      }
-
-      > .btn-inner {
-        padding: $btn-margin-basic ($padding-base - .2) $btn-margin-basic 1.5rem;
-      }
-    }
-  }
-
-  &.btn-xs {
     .btn-inner {
-      line-height: 1;
-      padding: .25rem $btn-margin-basic;
-    }
-  }
+        width: 100%;
+        padding: $btn-margin-basic 1.5rem;
 
-  &.btn-sm {
-    .btn-inner {
-      line-height: 1;
-      padding: .4rem .5rem;
-    }
-  }
+        > .svg-inline--fa {
+            &.#{$prefix}-icon-left {
+                margin-right: $btn-margin-basic;
+            }
 
-  &.btn-lg {
-    .btn-inner {
-      padding: $btn-margin-lg 1.5rem;
+            &.#{$prefix}-icon-right {
+                margin-left: $btn-margin-basic;
+            }
+        }
     }
-  }
+
+    .#{$prefix}-ripple {
+        &.dropdown-toggle {
+            &::after {
+                margin-right: $padding-base - .2;
+            }
+
+            > .btn-inner {
+                padding: $btn-margin-basic ($padding-base - .2) $btn-margin-basic 1.5rem;
+            }
+        }
+    }
+
+    &.btn-xs {
+        .btn-inner {
+            line-height: 1;
+            padding: .25rem $btn-margin-basic;
+        }
+    }
+
+    &.btn-sm {
+        .btn-inner {
+            line-height: 1;
+            padding: .4rem .5rem;
+        }
+    }
+
+    &.btn-lg {
+        .btn-inner {
+            padding: $btn-margin-lg 1.5rem;
+        }
+    }
 }
 </style>

@@ -5,10 +5,10 @@
           @touchstart="_touchStart"
           @touchmove="_touchMove"
           @mousedown="_mouseDown">
-    <bs-button-content :ripple-off="rippleOff"
-                       :ripple-active="rippleActive"
-                       :dropdown-toggle="dropdownToggle"
+    <bs-button-content :dropdown-toggle="dropdownToggle"
                        :icon-mode="mode === 'icon'"
+                       :ripple-active="rippleActive"
+                       :ripple-off="rippleOff"
                        @update:rippleActive="_toggleRipple">
       <template v-if="(mode === 'icon' || mode === 'floating') && icon">
         <font-awesome-icon v-bind="iconAttributes" />
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import BsButtonContent from './BsButtonContent';
 import Helper from '../../utils/Helper';
 
@@ -415,168 +415,168 @@ export default {
 @import "../../../scss/buttons";
 
 .btn {
-  @include border-radius($btn-border-radius);
-  @include transition($btn-transition);
-  border: 1px solid;
-  color: $btn-color-basic;
-  cursor: pointer;
-  padding: 0;
-  position: relative;
-  text-transform: uppercase;
-  white-space: normal;
-  word-wrap: break-word;
-
-  &:hover,
-  &:active,
-  &:focus {
-    @include box-shadow($z-depth-1);
-    outline: 0;
-  }
-
-  &:disabled, &.disabled {
-    @include box-shadow(none);
-    background-color: lighten($gray-500, 8%) !important;
-    border-color: lighten($gray-500, 8%) !important;
-    color: $gray-700 !important;
-    cursor: default;
-  }
-
-  &.btn-xs {
-    font-size: .75rem;
     @include border-radius($btn-border-radius);
-  }
-
-  &.btn-sm {
-    @include border-radius($btn-border-radius);
-  }
-
-  &.btn-lg {
-    @include border-radius($btn-border-radius);
-
-    &.rounded,
-    &.rounded-lg {
-      @include border-radius($btn-border-radius-lg !important);
-    }
-  }
-
-  &.btn-raised {
-    @include box-shadow($z-depth-1);
+    @include transition($btn-transition);
+    border: 1px solid;
+    color: $btn-color-basic;
+    cursor: pointer;
+    padding: 0;
+    position: relative;
+    text-transform: uppercase;
+    white-space: normal;
+    word-wrap: break-word;
 
     &:hover,
     &:active,
     &:focus {
-      @include box-shadow($z-depth-1-half);
+        @include box-shadow($z-depth-1);
+        outline: 0;
     }
 
-    &.disabled,
-    &:disabled {
-      &:active,
-      &:focus,
-      &:hover {
-        @include box-shadow($z-depth-1);
-      }
+    &:disabled, &.disabled {
+        @include box-shadow(none);
+        background-color: lighten($gray-500, 8%) !important;
+        border-color: lighten($gray-500, 8%) !important;
+        color: $gray-700 !important;
+        cursor: default;
     }
-  }
+
+    &.btn-xs {
+        font-size: .75rem;
+        @include border-radius($btn-border-radius);
+    }
+
+    &.btn-sm {
+        @include border-radius($btn-border-radius);
+    }
+
+    &.btn-lg {
+        @include border-radius($btn-border-radius);
+
+        &.rounded,
+        &.rounded-lg {
+            @include border-radius($btn-border-radius-lg !important);
+        }
+    }
+
+    &.btn-raised {
+        @include box-shadow($z-depth-1);
+
+        &:hover,
+        &:active,
+        &:focus {
+            @include box-shadow($z-depth-1-half);
+        }
+
+        &.disabled,
+        &:disabled {
+            &:active,
+            &:focus,
+            &:hover {
+                @include box-shadow($z-depth-1);
+            }
+        }
+    }
 }
 
 .btn-floating, .btn-icon {
-  @include border-radius($border-radius-circle);
-  @include transition($btn-transition);
-  @include flexbox((display: inline-flex, flex: 0 0 auto));
-  border: 1px solid;
-  cursor: pointer;
-  position: relative;
-  line-height: 36px;
-  padding: 0;
-  vertical-align: middle;
-
-  &:active,
-  &:focus {
-    outline: 0;
-  }
-
-  &:disabled, &.disabled {
-    @include box-shadow(none);
-    background-color: transparent;
-    border-color: transparent;
-    color: $gray-400 !important;
-    pointer-events: none;
-  }
-
-  .#{$prefix}-ripple {
     @include border-radius($border-radius-circle);
-    width: 38px;
-    height: 38px;
-  }
+    @include transition($btn-transition);
+    @include flexbox((display: inline-flex, flex: 0 0 auto));
+    border: 1px solid;
+    cursor: pointer;
+    position: relative;
+    line-height: 36px;
+    padding: 0;
+    vertical-align: middle;
 
-  &.btn-sm {
-    line-height: 32px;
+    &:active,
+    &:focus {
+        outline: 0;
+    }
+
+    &:disabled, &.disabled {
+        @include box-shadow(none);
+        background-color: transparent;
+        border-color: transparent;
+        color: $gray-400 !important;
+        pointer-events: none;
+    }
 
     .#{$prefix}-ripple {
-      width: 32px;
-      height: 32px;
+        @include border-radius($border-radius-circle);
+        width: 38px;
+        height: 38px;
     }
-  }
 
-  &.btn-lg {
-    line-height: 56px;
+    &.btn-sm {
+        line-height: 32px;
 
-    .#{$prefix}-ripple {
-      width: 56px;
-      height: 56px;
+        .#{$prefix}-ripple {
+            width: 32px;
+            height: 32px;
+        }
     }
-  }
 
-  .#{$prefix}-ripple-enter-active {
-    @include transition-duration(1.2s);
-  }
+    &.btn-lg {
+        line-height: 56px;
+
+        .#{$prefix}-ripple {
+            width: 56px;
+            height: 56px;
+        }
+    }
+
+    .#{$prefix}-ripple-enter-active {
+        @include transition-duration(1.2s);
+    }
 }
 
 @each $btn_name, $color_value in $theme-colors {
-  @include make-button($btn_name, $color_value);
-  @include make-outline-button($btn_name, $color_value);
-  @include make-flat-button($btn_name, $color_value);
+    @include make-button($btn_name, $color_value);
+    @include make-outline-button($btn_name, $color_value);
+    @include make-flat-button($btn_name, $color_value);
 }
 
 .btn, .btn-floating, .btn-icon {
-  .#{$prefix}-ripple {
-    @include flexbox((display: flex, justify-content: center, align-items: center));
-    padding: 0;
-  }
-
-  &:before {
-    @include transition($md-transition-default);
-    @extend %full-rect-absolute;
-    @extend %opacity-0;
-    content: " ";
-    will-change: background-color, opacity;
-  }
-
-  &.btn-transparent {
-    background-color: transparent;
-    border-width: 0 !important;
-    color: rgba(255, 255, 255, .5) !important;
-
-    &:hover,
-    &:active,
-    &:focus {
-      outline: 0;
-      background-color: rgba(25, 25, 25, .15);
+    .#{$prefix}-ripple {
+        @include flexbox((display: flex, justify-content: center, align-items: center));
+        padding: 0;
     }
 
-    &:not([disabled]):not(.disabled):active,
-    &:not([disabled]):not(.disabled):focus,
-    &:not([disabled]):not(.disabled).active {
-      color: rgba(255, 255, 255, .8) !important;
+    &:before {
+        @include transition($md-transition-default);
+        @extend %full-rect-absolute;
+        @extend %opacity-0;
+        content: " ";
+        will-change: background-color, opacity;
     }
-  }
+
+    &.btn-transparent {
+        background-color: transparent;
+        border-width: 0 !important;
+        color: rgba(255, 255, 255, .5) !important;
+
+        &:hover,
+        &:active,
+        &:focus {
+            outline: 0;
+            background-color: rgba(25, 25, 25, .15);
+        }
+
+        &:not([disabled]):not(.disabled):active,
+        &:not([disabled]):not(.disabled):focus,
+        &:not([disabled]):not(.disabled).active {
+            color: rgba(255, 255, 255, .8) !important;
+        }
+    }
 }
 
 .btn-floating {
-  position: absolute;
+    position: absolute;
 
-  &.btn-raised {
-    @include box-shadow($z-depth-1);
-  }
+    &.btn-raised {
+        @include box-shadow($z-depth-1);
+    }
 }
 </style>
