@@ -99,15 +99,15 @@ $btn-transition:                    color .15s ease-in-out, background-color .15
 // Controls
 $md-checkbox-size:                  20px !default;
 $md-checkbox-touch-size:            48px !default;
-$md-checkbox-margin:                16px 16px 0 0 !default;
+$md-checkbox-margin:                .5rem 1rem .5rem 0 !default;
 $md-radio-size:                     $md-checkbox-size !default;
 $md-radio-touch-size:               $md-checkbox-touch-size !default;
-$md-radio-margin:                   8px 16px 0 0 !default;
+$md-radio-margin:                   .5rem 1rem .5rem 0 !default;
 $md-switch-width:                   34px !default;
 $md-switch-height:                  14px !default;
 $md-switch-size:                    $md-checkbox-size !default;
 $md-switch-touch-size:              $md-checkbox-touch-size !default;
-$md-switch-margin:                  1rem .25rem 0 .25rem !default;
+$md-switch-margin:                  .5rem .25rem .5rem .25rem !default;
 $md-switch-shadows:                 0 0 6px -1px rgba(#000, .1), 0 1px 1px 1px rgba(#000, .15), 0 1px 3px 0 rgba(#000, 0.12) !default;
 
 // Sidebar

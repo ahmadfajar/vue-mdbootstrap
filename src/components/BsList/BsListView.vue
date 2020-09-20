@@ -1,5 +1,5 @@
 <template>
-  <div class="md-list" :class="_classNames">
+  <div :class="_classNames" class="md-list">
     <slot></slot>
   </div>
 </template>
@@ -118,7 +118,7 @@ export default {
     },
     beforeDestroy() {
         this.bsList.items = null;
-        this.bsList       = null;
+        this.bsList = null;
     },
     methods: {
         /**
@@ -206,25 +206,25 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-list {
-  @include transition(height .3s cubic-bezier(.4, 0, .2, 1));
-  list-style-type: none;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 8px 0;
-  height: 100%;
+    @include transition(height .3s cubic-bezier(.4, 0, .2, 1));
+    list-style-type: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 8px 0;
+    height: 100%;
 
-  .#{$prefix}-subheader {
-    @include user-select(none);
-  }
+    .#{$prefix}-subheader {
+        @include user-select(none);
+    }
 }
 
 .card {
-  > .#{$prefix}-list:first-child {
-    @include border-top-radius($border-radius-base * 2);
-  }
+    > .#{$prefix}-list:first-child {
+        @include border-top-radius($border-radius-base * 2);
+    }
 
-  > .#{$prefix}-list:last-child {
-    @include border-bottom-radius($border-radius-base * 2);
-  }
+    > .#{$prefix}-list:last-child {
+        @include border-bottom-radius($border-radius-base * 2);
+    }
 }
 </style>

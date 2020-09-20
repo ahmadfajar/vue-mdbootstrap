@@ -1,23 +1,25 @@
 <template>
-  <div class="md-menu" :class="_classNames" @keydown="_changeListIndex">
-    <div class="md-menu-activator"
-         ref="activator"
+  <div :class="_classNames"
+       class="md-menu"
+       @keydown="_changeListIndex">
+    <div ref="activator"
+         class="md-menu-activator"
+         @click="activatorClick"
          @mouseenter="onMouseEnter"
-         @mouseleave="onMouseLeave"
-         @click="activatorClick">
+         @mouseleave="onMouseLeave">
       <slot></slot>
     </div>
-    <bs-popover class="md-menu-popover md-shadow-1"
+    <bs-popover ref="popover"
                 :class="{['bg-' + color] : color}"
-                :style="popoverStyles"
                 :cover="cover"
                 :open="active"
                 :placement="placement"
+                :style="popoverStyles"
                 :transition="transition"
                 :trigger="trigger"
-                ref="popover"
-                @close="hideMenu"
+                class="md-menu-popover md-shadow-1"
                 @click="_onContentClick"
+                @close="hideMenu"
                 @mouseenter="onMouseEnter"
                 @mouseleave="onMouseLeave">
       <slot name="content"></slot>
@@ -169,51 +171,51 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-menu {
-  display: inline-block;
-  position: relative;
-  vertical-align: middle;
-
-  .#{$prefix}-menu-activator {
-    @include align-items(center);
-    cursor: pointer;
-    height: 100%;
+    display: inline-block;
     position: relative;
+    vertical-align: middle;
 
-    input[readonly] {
-      cursor: pointer;
-    }
+    .#{$prefix}-menu-activator {
+        @include align-items(center);
+        cursor: pointer;
+        height: 100%;
+        position: relative;
 
-    .disabled & {
-      cursor: default;
-      pointer-events: none;
+        input[readonly] {
+            cursor: pointer;
+        }
+
+        .disabled & {
+            cursor: default;
+            pointer-events: none;
+        }
     }
-  }
 }
 
 .#{$prefix}-menu-popover {
-  @include border-radius($border-radius-base);
-
-  > .#{$prefix}-list {
     @include border-radius($border-radius-base);
 
-    .#{$prefix}-list-tile {
-      > .#{$prefix}-ripple {
-        min-height: 24px;
-      }
-    }
+    > .#{$prefix}-list {
+        @include border-radius($border-radius-base);
 
-    .#{$prefix}-divider {
-      margin-bottom: 3px;
-      margin-top: 3px;
+        .#{$prefix}-list-tile {
+            > .#{$prefix}-ripple {
+                min-height: 24px;
+            }
+        }
+
+        .#{$prefix}-divider {
+            margin-bottom: 3px;
+            margin-top: 3px;
+        }
     }
-  }
 }
 
 .#{$prefix}-menu-toggle-icon {
-  transition: transform .3s cubic-bezier(.23, 1, .32, 1);
+    transition: transform .3s cubic-bezier(.23, 1, .32, 1);
 
-  .#{$prefix}-open & {
-    transform: rotate(180deg);
-  }
+    .#{$prefix}-open & {
+        transform: rotate(180deg);
+    }
 }
 </style>

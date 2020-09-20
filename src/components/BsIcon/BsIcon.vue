@@ -1,12 +1,12 @@
 <template>
-  <span :class="_iconClass"
+  <span v-on="$listeners"
+        :class="_iconClass"
         :style="_iconStyles"
-        class="md-icon"
-        v-on="$listeners">
+        class="md-icon">
     <svg v-if="iconData"
+         :class="_svgClass"
          :height="szHeight"
          :width="szWidth"
-         :class="_svgClass"
          class="svg-inline mx-auto"
          viewBox="0 0 24 24"
          xmlns="http://www.w3.org/2000/svg">
@@ -138,6 +138,6 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-icon {
-  @include align-self(center);
+    @include align-self(center);
 }
 </style>

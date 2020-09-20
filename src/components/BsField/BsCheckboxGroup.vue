@@ -1,12 +1,15 @@
 <template>
-  <div class="md-field md-checkbox-group row" :class="_classNames">
+  <div :class="_classNames" class="md-field md-checkbox-group row">
     <slot></slot>
-    <div class="d-flex flex-column flex-fill">
+    <div class="d-flex flex-column flex-fill mx-3">
       <div class="md-field-inner">
-        <div class="flex-fill form-row">
+        <div class="form-row">
           <template v-if="columns">
-            <div v-for="(item, idx) in items" :key="'cbo-' + idx" :class="_itemClasses">
-              <bs-checkbox v-bind="_checkboxAttributes(item, idx)" @change="setValue">
+            <div v-for="(item, idx) in items"
+                 :key="'cbo-' + idx"
+                 :class="_itemClasses">
+              <bs-checkbox v-bind="_checkboxAttributes(item, idx)"
+                           @change="setValue">
                 {{ item.label }}
               </bs-checkbox>
             </div>
@@ -15,15 +18,16 @@
             <div v-for="(item, idx) in items"
                  :key="'cbo-' + idx"
                  :class="{'col-12 col-md': items.length > 3, 'px-1': items.length < 4}">
-              <bs-checkbox v-bind="_checkboxAttributes(item, idx)" @change="setValue">
+              <bs-checkbox v-bind="_checkboxAttributes(item, idx)"
+                           @change="setValue">
                 {{ item.label }}
               </bs-checkbox>
             </div>
           </template>
         </div>
       </div>
-      <div class="md-help-text" v-if="helpText || showErrorValidation">
-        <slot name="helptext">
+      <div v-if="helpText || showErrorValidation" class="md-help-text">
+        <slot name="helpText">
           <small v-if="showHelpText" class="text-muted d-block">
             {{ helpText }}
           </small>
@@ -194,8 +198,8 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-checkbox-group {
-  .#{$prefix}-field-inner {
-    border-bottom: 0 !important;
-  }
+    .#{$prefix}-field-inner {
+        border-bottom: 0 !important;
+    }
 }
 </style>

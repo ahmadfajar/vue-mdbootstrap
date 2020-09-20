@@ -1,17 +1,17 @@
 <template>
-  <div class="md-textarea row align-items-start" :class="_classNames">
+  <div :class="_classNames" class="md-textarea row align-items-start">
     <slot v-if="floatingLabel === false" v-bind="{ id }" />
     <div class="flex-grow-1">
-      <div class="md-field-inner align-items-start" :class="controlCls">
+      <div :class="controlCls" class="md-field-inner align-items-start">
         <fieldset aria-hidden="true">
           <legend ref="legend">
             <span>​</span>
           </legend>
         </fieldset>
         <div v-if="floatingLabel"
-             ref="floatlabel"
-             class="md-floating-label"
-             :class="floatingLabelClass">
+             ref="floatLabel"
+             :class="floatingLabelClass"
+             class="md-floating-label">
           <slot v-bind="{ id }" />
         </div>
         <div v-if="prependIcon" class="md-prepend-icon d-flex">
@@ -20,11 +20,11 @@
           </slot>
         </div>
         <textarea ref="input"
-                  role="textbox"
                   v-bind="attributes"
-                  @input="_updateHeight"
-                  @focus="_onFocus"
+                  role="textbox"
                   @blur="_onBlur"
+                  @focus="_onFocus"
+                  @input="_updateHeight"
                   @keydown="_onKeyDown"></textarea>
         <div v-if="hasClearButton || appendIcon" class="md-action-icon d-flex">
           <transition name="fade">
@@ -32,7 +32,7 @@
                      icon="clear"
                      @click="clearValue" />
           </transition>
-          <span class="md-append-icon" v-if="appendIcon">
+          <span v-if="appendIcon" class="md-append-icon">
             <slot name="appendSlot">
               <font-awesome-icon :icon="appendIcon" />
             </slot>
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div v-if="helpText || showErrorValidation" class="md-help-text">
-        <slot name="helptext">
+        <slot name="helpText">
           <small v-if="showHelpText" class="text-muted d-block">
             {{ helpText }}
           </small>
@@ -71,17 +71,22 @@ export default {
     components: {FontAwesomeIcon, BsIcon},
     mixins: [Input, TextField, FieldValidation],
     props: {
-        autoGrow: Boolean,
-        noResize: Boolean,
-        outlined: Boolean,
-        rowHeight: {
-            type: [String, Number],
-            default: undefined,
-            validator: v => !isNaN(parseInt(v, 10))
+        autoGrow: {
+            type: Boolean,
+            default: false
+        },
+        noResize: {
+            type: Boolean,
+            default: false
         },
         rows: {
             type: [String, Number],
             default: 2,
+            validator: v => !isNaN(parseInt(v, 10))
+        },
+        rowHeight: {
+            type: [String, Number],
+            default: undefined,
             validator: v => !isNaN(parseInt(v, 10))
         },
     },

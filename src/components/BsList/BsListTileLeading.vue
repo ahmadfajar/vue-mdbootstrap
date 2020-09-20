@@ -1,12 +1,12 @@
 <template>
-  <div class="md-list-tile-leading"
-       :class="_classNames"
-       :style="_styles">
+  <div :class="_classNames"
+       :style="_styles"
+       class="md-list-tile-leading">
     <slot></slot>
     <template v-if="!$slots.default">
       <bs-avatar v-if="imgSrc"
-                 :img-src="imgSrc"
                  :circle="circle"
+                 :img-src="imgSrc"
                  :rounded="rounded"
                  :size="size" />
       <bs-icon v-else-if="icon && isInternal"

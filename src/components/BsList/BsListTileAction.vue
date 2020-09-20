@@ -1,8 +1,8 @@
 <template>
   <div :is="tag"
+       v-on="$listeners"
        :class="_classNames"
-       class="md-list-tile-action"
-       v-on="$listeners">
+       class="md-list-tile-action">
     <slot></slot>
   </div>
 </template>

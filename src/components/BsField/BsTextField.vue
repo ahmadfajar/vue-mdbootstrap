@@ -1,68 +1,92 @@
 <template>
-  <div class="md-field row" :class="_classNames">
+  <div :class="_classNames" class="md-field row">
     <slot v-if="floatingLabel === false" v-bind="{ id }" />
-    <div class="flex-grow-1">
-      <div class="md-field-inner align-items-center"
-           :class="controlCls">
-        <fieldset aria-hidden="true">
-          <legend ref="legend">
-            <span>​</span>
-          </legend>
-        </fieldset>
-        <div v-if="floatingLabel"
-             ref="floatlabel"
-             class="md-floating-label"
-             :class="floatingLabelClass">
-          <slot v-bind="{ id }" />
-        </div>
-        <div v-if="prependIcon" class="md-prepend-icon">
-          <slot name="prependSlot">
-            <font-awesome-icon :icon="prependIcon" />
-          </slot>
-        </div>
-        <input ref="input"
-               role="textbox"
-               v-bind="attributes"
-               @input="_updateValue($event.target.value)"
-               @focus="_onFocus"
-               @blur="_onBlur"
-               @keydown="_onKeyDown" />
-        <transition name="fade">
-          <div class="md-action-icon" v-if="hasPasswordToggle || hasClearButton">
-            <bs-icon icon="clear" v-if="hasClearButton" @click="clearValue" />
-            <bs-icon-toggle v-if="hasPasswordToggle"
-                            icon="eye"
-                            toggle-icon="eye-slash"
-                            :toggle="isPasswordToggled"
-                            @click="isPasswordToggled = !isPasswordToggled" />
+    <div class="md-field-wrapper">
+      <div v-if="prependIconOuter"
+           class="md-prepend-icon">
+        <slot name="prependIconOuter">
+          <font-awesome-icon :icon="prependIconOuter" fixed-width />
+        </slot>
+      </div>
+      <div class="md-field-ctrl">
+        <div class="md-field-inner">
+          <fieldset v-if="outlined"
+                    aria-hidden="true">
+            <legend ref="legend">
+              <span>​</span>
+            </legend>
+          </fieldset>
+          <div v-if="prependIcon"
+               class="md-prepend-icon">
+            <slot name="prependIcon">
+              <font-awesome-icon :icon="prependIcon" fixed-width />
+            </slot>
           </div>
-        </transition>
-        <div class="md-append-icon" v-if="appendIcon">
-          <slot name="appendSlot">
-            <font-awesome-icon :icon="appendIcon" />
-          </slot>
+          <div class="md-field-input-wrapper">
+            <div v-if="floatingLabel"
+                 ref="floatLabel"
+                 :class="floatingLabelClass"
+                 class="md-field-label">
+              <slot v-bind="{ id }" />
+            </div>
+            <input ref="input"
+                   v-bind="attributes"
+                   role="textbox"
+                   @blur="_onBlur"
+                   @focus="_onFocus"
+                   @input="_updateValue($event.target.value)"
+                   @keydown="_onKeyDown" />
+          </div>
+          <transition name="fade">
+            <div v-if="hasPasswordToggle || hasClearButton"
+                 class="md-action-icon">
+              <bs-icon v-if="hasClearButton"
+                       icon="clear"
+                       height="24"
+                       @click="clearValue" />
+              <bs-icon-toggle v-if="hasPasswordToggle"
+                              v-model="isPasswordToggled"
+                              icon="eye"
+                              toggle-icon="eye-slash" />
+            </div>
+          </transition>
+          <div v-if="appendIcon"
+               class="md-append-icon">
+            <slot name="appendIcon">
+              <font-awesome-icon :icon="appendIcon" fixed-width />
+            </slot>
+          </div>
+        </div>
+        <div v-if="helpText || showErrorValidation"
+             class="md-help-text">
+          <transition name="fade">
+            <slot name="helpText">
+              <small v-if="showHelpText" class="text-muted d-block">
+                {{ helpText }}
+              </small>
+            </slot>
+          </transition>
+          <template v-if="hasValidationError">
+            <small v-for="(fld) in errorItems"
+                   :key="fld"
+                   class="text-danger d-block">
+              {{ _validationMessage(fld) }}
+            </small>
+          </template>
         </div>
       </div>
-      <div class="md-help-text" v-if="helpText || showErrorValidation">
-        <slot name="helptext">
-          <small v-if="showHelpText" class="text-muted d-block">
-            {{ helpText }}
-          </small>
+      <div v-if="appendIconOuter"
+           class="md-append-icon">
+        <slot name="appendIconOuter">
+          <font-awesome-icon :icon="appendIconOuter" fixed-width />
         </slot>
-        <template v-if="hasValidationError">
-          <small v-for="(fld) in errorItems"
-                 :key="fld"
-                 class="text-danger d-block">
-            {{ _validationMessage(fld) }}
-          </small>
-        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BsIcon from "../BsIcon/BsIcon";
 import BsIconToggle from "../BsIcon/BsIconToggle";
 import Input from "../../mixins/Input";
@@ -77,11 +101,8 @@ export default {
     props: {
         type: {
             type: String,
-            default: 'text'
-        },
-        outlined: {
-            type: Boolean,
-            default: false
+            default: 'text',
+            validator: v => ['text', 'email', 'password', 'tel', 'url'].indexOf(v) > -1
         },
         passwordToggle: {
             type: Boolean,
@@ -97,7 +118,7 @@ export default {
         }
     },
     data: () => ({
-        isPasswordToggled: false
+        isPasswordToggled: false,
     }),
     computed: {
         /**
@@ -124,8 +145,8 @@ export default {
                 ...this.cmpAttrClasses,
                 'md-field-flat': this.flat,
                 'md-field-outlined': this.outlined,
+                'md-floating-label': this.floatingLabel,
                 'md-focused': this.isFocused,
-                'md-floating-active': this.floatingLabel,
                 'has-error': this.hasValidationError,
                 'has-success': this.wasValidated && !this.hasValidationError
             }
@@ -158,11 +179,13 @@ export default {
                 this.$refs.input.focus();
             }
             this._updateLegend();
+            this._setFloatingLabelPosition();
         });
     },
     watch: {
         value(newVal) {
             this._updateLegend(newVal);
+            this._setFloatingLabelPosition();
         }
     },
 }

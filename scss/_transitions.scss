@@ -6,113 +6,113 @@
 
 /* VueJs transition animation */
 @include enter-leave-active(".fade") {
-  @include transition(opacity .5s);
+    @include transition(opacity .5s);
 }
 
 @include enter-leaveto(".fade") {
-  @extend %opacity-0;
+    @extend %opacity-0;
 }
 
 .slide-fade, .slide-fade-reverse {
-  &-enter-active {
-    @include transition(all .6s ease);
-  }
+    &-enter-active {
+        @include transition(all .6s ease);
+    }
 
-  &-leave-active {
-    @include transition(all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0));
-  }
+    &-leave-active {
+        @include transition(all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0));
+    }
 
-  &-leave, &-leave-active, &-leave-to {
-    position: absolute !important;
-  }
+    &-leave, &-leave-active, &-leave-to {
+        position: absolute !important;
+    }
 }
 
 @include enter-leaveto(".slide-fade") {
-  @include transform(translateX(100%));
-  @extend %opacity-0;
+    @include transform(translateX(100%));
+    @extend %opacity-0;
 }
 
 @include enter-leaveto(".slide-fade-reverse") {
-  @include transform(translateX(-100%));
-  @extend %opacity-0;
+    @include transform(translateX(-100%));
+    @extend %opacity-0;
 }
 
 @include enter-leave-active(".popover") {
-  transition-duration: 300ms;
-  transition-property: opacity, transform;
-  backface-visibility: hidden;
+    transition-duration: 300ms;
+    transition-property: opacity, transform;
+    backface-visibility: hidden;
 }
 
 @include enter-leaveactive(".popover") {
-  @extend %opacity-0;
-  transform: scale(0.5);
+    @extend %opacity-0;
+    transform: scale(0.5);
 }
 
 .slide-bottom-top, .slide-top-bottom,
-.picker-transition, .picker-transition-reverse{
-  &-enter-active, &-leave-active {
-    @include transition($md-transition-enter);
-  }
+.picker-transition, .picker-transition-reverse {
+    &-enter-active, &-leave-active {
+        @include transition($md-transition-enter);
+    }
 
-  &-enter, &-leave-to {
-    @extend %opacity-0;
-  }
+    &-enter, &-leave-to {
+        @extend %opacity-0;
+    }
 
-  &-enter-to {
-    @include transition(translate(0, 0));
-  }
+    &-enter-to {
+        @include transition(translate(0, 0));
+    }
 
-  &-leave, &-leave-active, &-leave-to {
-    position: absolute !important;
-  }
+    &-leave, &-leave-active, &-leave-to {
+        position: absolute !important;
+    }
 }
 
 .slide-bottom-top,
 .picker-transition {
-  &-enter {
-    @include transform(translate(0, 100%));
-  }
+    &-enter {
+        @include transform(translate(0, 100%));
+    }
 
-  &-leave-to {
-    @include transform(translate(0, -100%));
-  }
+    &-leave-to {
+        @include transform(translate(0, -100%));
+    }
 }
 
 .slide-top-bottom,
 .picker-transition-reverse {
-  &-enter {
-    @include transform(translate(0, -100%));
-  }
+    &-enter {
+        @include transform(translate(0, -100%));
+    }
 
-  &-leave-to {
-    @include transform(translate(0, 100%));
-  }
+    &-leave-to {
+        @include transform(translate(0, 100%));
+    }
 }
 
 .tab-transition {
-  &-enter {
-    @include transform(translate(100%, 0));
-  }
+    &-enter {
+        @include transform(translate(100%, 0));
+    }
 
-  &-leave, &-leave-active {
-    position: absolute;
-    top: 0
-  }
+    &-leave, &-leave-active {
+        position: absolute;
+        top: 0
+    }
 
-  &-leave-to {
-    @include transform(translate(-100%, 0));
-    position: absolute;
-  }
+    &-leave-to {
+        @include transform(translate(-100%, 0));
+        position: absolute;
+    }
 }
 
 .tab-transition-reverse {
-  &-enter {
-    @include transform(translate(-100%, 0));
-  }
+    &-enter {
+        @include transform(translate(-100%, 0));
+    }
 
-  &-leave, &-leave-to {
-    @include transform(translate(100%, 0));
-    position: absolute;
-    top: 0;
-  }
+    &-leave, &-leave-to {
+        @include transform(translate(100%, 0));
+        position: absolute;
+        top: 0;
+    }
 }

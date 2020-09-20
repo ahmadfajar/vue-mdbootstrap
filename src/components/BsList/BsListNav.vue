@@ -1,5 +1,5 @@
 <template>
-  <ul class="md-list-nav" v-bind="_attributes">
+  <ul v-bind="_attributes" class="md-list-nav">
     <slot></slot>
   </ul>
 </template>
@@ -91,16 +91,16 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-list-nav {
-  @include display-flex();
-  @include flex-wrap(wrap);
-  padding-left: 0;
-  margin-bottom: 0;
-  list-style: none;
+    @include display-flex();
+    @include flex-wrap(wrap);
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
 
-  .collapsing {
-    @include transition($md-transition-default);
-    height: 0;
-    overflow: hidden;
-  }
+    .collapsing {
+        @include transition($md-transition-default);
+        height: 0;
+        overflow: hidden;
+    }
 }
 </style>

@@ -15,9 +15,12 @@ export default {
             default: true
         },
     },
-    data(vm) {
-        const value     = this._parseValue(vm.value);
-        const formatter = new Intl.NumberFormat(vm.locale, {maximumFractionDigits: 20, useGrouping: vm.useGrouping});
+    data() {
+        const value = this._parseValue(this.value);
+        const formatter = new Intl.NumberFormat(this.locale, {
+            maximumFractionDigits: 20,
+            useGrouping: this.useGrouping
+        });
 
         return {
             invalidNumber: false,
@@ -47,10 +50,10 @@ export default {
         value(newValue) {
             if (newValue && this.isFocused) {
                 this.numberValue = newValue;
-                this.localValue  = newValue;
+                this.localValue = newValue;
             } else if (newValue) {
                 this.numberValue = this._parseValue(newValue);
-                this.localValue  = this.formatValue(this.numberValue);
+                this.localValue = this.formatValue(this.numberValue);
             } else {
                 this.localValue = null;
             }
@@ -75,7 +78,7 @@ export default {
          * @private
          */
         _onBlur(e) {
-            this.isFocused  = false;
+            this.isFocused = false;
             this.localValue = this.formatValue(this.numberValue);
             this.$emit('blur', e);
             this._updateLegend();
@@ -99,7 +102,7 @@ export default {
                 this.numberValue = this._parseValue(this.localValue);
             }
 
-            this.isFocused  = true;
+            this.isFocused = true;
             this.localValue = this.numberValue;
             this.$emit('focus', e);
             this._updateLegend();
@@ -118,7 +121,7 @@ export default {
 
             if (e.key && e.key.toLowerCase() === 'enter') {
                 this.numberValue = this._parseValue(this.localValue);
-                this.localValue  = this.formatValue(this.numberValue);
+                this.localValue = this.formatValue(this.numberValue);
                 this.$emit('keydown', e);
                 this._nextTickChange(this.numberValue);
             } else {
@@ -138,9 +141,9 @@ export default {
                 return null;
             }
 
-            let strValue   = value.toString();
+            let strValue = value.toString();
             const posComma = strValue.indexOf(',');
-            const posDot   = strValue.indexOf('.');
+            const posDot = strValue.indexOf('.');
 
             if (posComma > -1 && posDot > -1) {
                 if (posComma > posDot) {
@@ -163,9 +166,9 @@ export default {
                 }
             }
 
-            const floatValue   = parseFloat(strValue);
+            const floatValue = parseFloat(strValue);
             this.invalidNumber = isNaN(floatValue);
-            this.localValue    = floatValue;
+            this.localValue = floatValue;
 
             return floatValue;
         },

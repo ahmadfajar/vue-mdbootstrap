@@ -1,11 +1,13 @@
 <template>
-  <span class="md-toggle-icon" v-on="$listeners" @click="toggleClick">
+  <span v-on="$listeners"
+        class="md-toggle-icon"
+        @click="toggleClick">
     <font-awesome-icon :icon="toggleEye" fixed-width />
   </span>
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 
 export default {
     name: "BsIconToggle",
@@ -62,10 +64,10 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "../../../scss/colors";
-  @import "../../../scss/variables";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
-  .#{$prefix}-toggle-icon {
+.#{$prefix}-toggle-icon {
     cursor: pointer;
-  }
+}
 </style>

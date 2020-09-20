@@ -8,17 +8,18 @@ Released:
 ### Features v1.1.0
 
 - New components: **BsExpandTransition**, **BsCardMedia**, **BsIconToggle**, **BsListNav**, **BsListNavItem**
-- **BsAvatar:** add property `icon-flip`, `icon-spin` and `icon-pulse`
-- **BsButton:** add property `pill` and `rounded`, emit events `input` to update `active` property
+- **BsAvatar:** add properties `icon-flip`, `icon-spin` and `icon-pulse`
+- **BsButton:** add properties `pill` and `rounded`, emit events `input` to update `active` property
 - **BsCard:** add properties `img-bottom-alt`, `img-bottom-src`, `img-top-alt`, `img-top-src`
-- **BsCheckbox:** add properties `readonly`
-- **BsCheckboxGroup:** add properties `readonly`
+- **BsCheckbox:** add property `readonly`
+- **BsCheckboxGroup:** add property `readonly`
 - **BsIcon:** add properties `flip`, `pulse`, `rotation`, and `spin`
 - **BsListTile:** add properties `ripple-off` and `navigable`
 - **BsListTileAction:** add `center` property
-- **BsListTileLeading:** add property `icon`, `icon-flip`, `icon-rotation`, `icon-spin` and `icon-pulse`
-- **BsListView:** add property `single-expand`, `space-around`, and `active-item-bordered`
-- **BsSwitch:** add properties `readonly`
+- **BsListTileLeading:** add properties `icon`, `icon-flip`, `icon-rotation`, `icon-spin` and `icon-pulse`
+- **BsListView:** add properties `single-expand`, `space-around`, and `active-item-bordered`
+- **BsSwitch:** add property `readonly`
+- **BsTextField:** add properties `append-icon-outer`, `prepend-icon-outer`
 - Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
 ### Bug Fixes & Improvement v1.1.0
@@ -34,6 +35,7 @@ Released:
 - **BsProgress:** change property `type` default value to 'bar' 
 - **BsSideDrawer:** computed inline style improvement
 - **BsCheckbox, BsSwitch:** improve css classes
+- **BsTextField:** improve html rendering and css classes
 - Improve scss color variables
 - Improve JsDoc
 

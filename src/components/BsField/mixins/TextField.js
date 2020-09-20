@@ -2,11 +2,11 @@ import Helper from "../../../utils/Helper";
 
 export default {
     props: {
-        autofocus: {
+        autocomplete: {
             type: Boolean,
             default: false
         },
-        autocomplete: {
+        autofocus: {
             type: Boolean,
             default: false
         },
@@ -18,25 +18,9 @@ export default {
             type: Boolean,
             default: false
         },
-        value: {
-            type: [String, Number],
-            default: undefined
-        },
-        appendIcon: {
-            type: [String, Array],
-            default: undefined
-        },
-        prependIcon: {
-            type: [String, Array],
-            default: undefined
-        },
-        controlCls: {
-            type: [String, Array],
-            default: undefined
-        },
-        placeholder: {
-            type: String,
-            default: undefined
+        outlined: {
+            type: Boolean,
+            default: false
         },
         clearButton: {
             type: Boolean,
@@ -45,11 +29,40 @@ export default {
         persistentHelpText: {
             type: Boolean,
             default: true
+        },
+        value: {
+            type: [String, Number],
+            default: undefined
+        },
+        appendIcon: {
+            type: [String, Array],
+            default: undefined
+        },
+        appendIconOuter: {
+            type: [String, Array],
+            default: undefined
+        },
+        prependIcon: {
+            type: [String, Array],
+            default: undefined
+        },
+        prependIconOuter: {
+            type: [String, Array],
+            default: undefined
+        },
+        // controlCls: {
+        //     type: [String, Array],
+        //     default: undefined
+        // },
+        placeholder: {
+            type: String,
+            default: undefined
         }
     },
-    data: () => ({
+    data: (vm) => ({
         isFocused: false,
-        wasValidated: false
+        localValue: vm.value,
+        wasValidated: false,
     }),
     computed: {
         /**
@@ -59,7 +72,7 @@ export default {
          */
         fieldAttrs() {
             return {
-                'value': this.value,
+                'value': this.localValue,
                 'autocomplete': this.autocomplete ? 'on' : Helper.uuid(),
                 'autofocus': this.autofocus,
                 'placeholder': this.placeholder,
@@ -79,7 +92,7 @@ export default {
             return {
                 'md-active': this.hasValue || this.placeholder || this.isFocused,
                 'md-focused': this.isFocused,
-                'md-after-icon': this.prependIcon
+                // 'md-after-icon': this.prependIcon
             }
         },
         /**
@@ -88,7 +101,16 @@ export default {
          * @returns {boolean} TRUE if has clear button otherwise FALSE
          */
         hasClearButton() {
-            return this.clearButton && !this.readonly && !this.disabled && this.hasValue;
+            return this.clearButton && this.hasValue && !this.readonly && !this.disabled;
+        },
+        /**
+         * Check whether input field has value or not.
+         *
+         * @returns {boolean} `TRUE` if input field has value otherwise `FALSE`
+         * @private
+         */
+        hasValue() {
+            return !Helper.isEmpty(this.localValue);
         }
     },
     methods: {
@@ -98,9 +120,12 @@ export default {
          * @returns {void}
          */
         clearValue() {
+            this.localValue = null;
             this.$emit('input', '');
             this.$nextTick(() => {
                 this.$emit('clear');
+                this._updateLegend();
+                this._setFloatingLabelPosition();
             });
         },
         /**
@@ -109,7 +134,7 @@ export default {
          * @returns {string} The input field value
          */
         getValue() {
-            return this.value;
+            return this.localValue;
         },
         /**
          * Set field value.
@@ -118,6 +143,7 @@ export default {
          * @returns {void}
          */
         setValue(value) {
+            this.localValue = value;
             this.$emit('input', value);
             this._nextTickChange(value);
         },
@@ -143,7 +169,9 @@ export default {
         _onBlur(e) {
             this.isFocused = false;
             this.$emit('blur', e);
+            this._nextTickChange(this.localValue);
             this._updateLegend();
+            this._setFloatingLabelPosition();
         },
         /**
          * Handler when input field get focus.
@@ -162,6 +190,7 @@ export default {
             this.isFocused = true;
             this.$emit('focus', e);
             this._updateLegend();
+            this._setFloatingLabelPosition();
         },
         /**
          * Handler when input field receive keypress.
@@ -175,8 +204,9 @@ export default {
                 return;
             }
             if (e.key && e.key.toLowerCase() === 'enter') {
+                this.localValue = this.$refs.input.value;
                 this.$emit('keydown', e);
-                this._nextTickChange(this.value);
+                this._nextTickChange(this.localValue);
             } else {
                 this.$emit('keydown', e);
             }
@@ -193,6 +223,15 @@ export default {
                 elm.setAttribute('for', this.id);
             }
         },
+        _setFloatingLabelPosition() {
+            if (this.prependIcon && this.floatingLabel && this.$refs.floatLabel) {
+                if (this.hasValue || this.isFocused || this.placeholder) {
+                    this.$refs.floatLabel.style.left = '-32px';
+                } else {
+                    this.$refs.floatLabel.style.left = null;
+                }
+            }
+        },
         /**
          * Update label className and attributes.
          *
@@ -201,15 +240,15 @@ export default {
          */
         _updateLabel() {
             let label;
-            if (this.floatingLabel && this.$refs.floatlabel.children) {
-                const children = this.$refs.floatlabel.children;
+            if (this.floatingLabel && this.$refs.floatLabel.children) {
+                const children = this.$refs.floatLabel.children;
                 if (children.length > 0) {
-                    label = this.$refs.floatlabel.children[0];
+                    label = this.$refs.floatLabel.children[0];
                     if (!Helper.isEmpty(label.classList) && !Helper.isEmpty(label.className)) {
                         label.className = 'md-empty-class';
                     }
                 }
-                label = this.$refs.floatlabel.querySelector('label');
+                label = this.$refs.floatLabel.querySelector('label');
                 this._setLabelFor(label);
             } else if (this.$el && !this.floatingLabel) {
                 label = this.$el.querySelector('label');
@@ -219,7 +258,7 @@ export default {
         _updateLegend(value) {
             if (this.outlined && this.$refs.legend) {
                 let label = this.floatingLabel
-                    ? this.$refs.floatlabel
+                    ? this.$refs.floatLabel
                     : this.$el.querySelector('label');
                 let hasWidth = this.floatingLabel && (this.hasValue || this.isFocused || this.placeholder || value);
 
@@ -238,8 +277,8 @@ export default {
          * @private
          */
         _updateValue(value) {
+            this.localValue = value;
             this.$emit('input', value);
-            this._nextTickChange(value);
         }
     }
 }

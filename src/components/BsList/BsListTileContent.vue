@@ -1,5 +1,7 @@
 <template>
-  <div :is="tag" class="md-list-tile-content" :class="_classNames">
+  <div :is="tag"
+       :class="_classNames"
+       class="md-list-tile-content">
     <slot></slot>
   </div>
 </template>

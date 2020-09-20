@@ -1,10 +1,10 @@
 <template>
   <aside :is="tag"
+         v-resize="_resize"
          :class="_classNames"
          :style="_styles"
-         v-resize="_resize"
          class="md-side-drawer">
-    <div class="md-side-drawer-inner" :class="{'md-shadow': shadow}">
+    <div :class="{'md-shadow': shadow}" class="md-side-drawer-inner">
       <slot></slot>
     </div>
   </aside>
@@ -15,7 +15,7 @@ import PopupManager from "../../utils/PopupManager";
 import resize from "../../directives/WindowResize";
 import Helper from '../../utils/Helper';
 import ScreenSize from "../../mixins/ScreenSize";
-import { getZIndex } from "../../mixins/Popup";
+import {getZIndex} from "../../mixins/Popup";
 
 export default {
     name: 'BsSideDrawer',
@@ -93,7 +93,6 @@ export default {
          * @private
          */
         _styles() {
-            // const top = this.$VueMdb.application.top;
             const properties = {
                 width: this.width ? Helper.sizeUnit(this.width) : null,
                 height: this.isMobile ? '100vh' : (this.clipped ? 'calc(100vh - ' + this.clipHeight + 'px)' : '100vh'),
@@ -228,74 +227,70 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-side-drawer {
-  @include box-sizing(border-box);
-  @include box-shadow(0px 0px 10px 0 rgba(0, 0, 0, .6));
-  @include transition($transition-duration-base $md-transition-default-timing);
-  margin: 0;
-  padding: 0;
-  position: fixed;
-  z-index: $zindex-fixed;
+    @include box-sizing(border-box);
+    @include box-shadow(0px 0px 10px 0 rgba(0, 0, 0, .6));
+    @include transition($transition-duration-base $md-transition-default-timing);
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    z-index: $zindex-fixed;
 
-  &.#{$prefix}-close {
-    @include box-shadow(none);
-  }
+    &.#{$prefix}-close {
+        @include box-shadow(none);
+    }
 
-  > .#{$prefix}-side-drawer-inner {
-    @include flexbox((display:flex, flex-direction: column));
-    height: 100%;
-    overflow: hidden;
-    position: relative;
+    > .#{$prefix}-side-drawer-inner {
+        @include flexbox((display:flex, flex-direction: column));
+        height: 100%;
+        overflow: hidden;
+        position: relative;
 
-    > .#{$prefix}-list {
-      //.#{$prefix}-list-tile-title {
-      //  font-size: .92rem;
-      //}
-
-      &.#{$prefix}-space-both,
-      &.#{$prefix}-space-left,
-      &.#{$prefix}-space-right {
-        > .#{$prefix}-list-tile {
-          &.active, &.#{$prefix}-active {
-            @include border-radius($border-radius);
-          }
+        > .#{$prefix}-list {
+            &.#{$prefix}-space-both,
+            &.#{$prefix}-space-left,
+            &.#{$prefix}-space-right {
+                > .#{$prefix}-list-tile {
+                    &.active, &.#{$prefix}-active {
+                        @include border-radius($border-radius);
+                    }
+                }
+            }
         }
-      }
-    }
 
-    a {
-      color: inherit;
+        a {
+            color: inherit;
 
-      &:hover,
-      &:focus,
-      &:active {
-        color: $sidebar-hover-textcolor;
-        text-decoration: none;
-      }
-    }
-  }
-
-  .divider {
-    border-bottom: 1px solid rgba(200, 200, 200, 0.16);
-  }
-
-  .#{$prefix}-list-nav {
-    .#{$prefix}-nav-item {
-      &:not(.#{$prefix}-parent),
-      &.#{$prefix}-parent:not(.#{$prefix}-expanded) {
-        margin-bottom: 2px;
-        margin-top: 2px;
-
-        > .#{$prefix}-nav-item-inner {
-          > .#{$prefix}-ripple {
-            height: 46px;
-          }
+            &:hover,
+            &:focus,
+            &:active {
+                color: $sidebar-hover-textcolor;
+                text-decoration: none;
+            }
         }
-      }
     }
-  }
 
-  @include media-breakpoint-up(lg) {
-    @include box-shadow(none);
-  }
+    .divider {
+        border-bottom: 1px solid rgba(200, 200, 200, 0.16);
+    }
+
+    .#{$prefix}-list-nav {
+        .#{$prefix}-nav-item {
+            &:not(.#{$prefix}-parent),
+            &.#{$prefix}-parent:not(.#{$prefix}-expanded) {
+                margin-bottom: 2px;
+                margin-top: 2px;
+
+                > .#{$prefix}-nav-item-inner {
+                    > .#{$prefix}-ripple {
+                        height: 46px;
+                    }
+                }
+            }
+        }
+    }
+
+    @include media-breakpoint-up(lg) {
+        @include box-shadow(none);
+    }
 }
 </style>

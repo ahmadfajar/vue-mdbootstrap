@@ -540,7 +540,7 @@ export default {
 
 .btn, .btn-floating, .btn-icon {
     .#{$prefix}-ripple {
-        @include flexbox((display: flex, justify-content: center, align-items: center));
+        @include flexbox((display: flex, justify-content: center, align-content: center));
         padding: 0;
     }
 

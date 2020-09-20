@@ -1,13 +1,13 @@
 <template>
   <transition :name="transition">
     <div v-show="open"
-         class="md-popover"
+         v-click-outside="clickOutSide"
+         v-on="$listeners"
+         v-resize="setPosition"
+         v-scroll="{target: trigger, callback: setPosition}"
          :class="_classNames"
          :style="_styles"
-         v-resize="setPosition"
-         v-click-outside="clickOutSide"
-         v-scroll="{target: trigger, callback: setPosition}"
-         v-on="$listeners">
+         class="md-popover">
       <slot></slot>
     </div>
   </transition>
@@ -117,7 +117,6 @@ export default {
                 case 'right':
                 case 'right-top':
                 case 'right-bottom':
-                    // left = rect.left + rect.width + this.space;
                     left = this.cover
                         ? rect.left
                         : rect.left + rect.width > maxLeft
@@ -137,8 +136,6 @@ export default {
                     left = rect.left + rect.width - width;
                     break;
             }
-            // left = Math.min(maxLeft, left);
-            // left = Math.max(minLeft, left);
 
             return left;
         },
@@ -226,68 +223,68 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-popover {
-  position: fixed;
-  max-height: 100%;
-  max-width: 80%;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
+    position: fixed;
+    max-height: 100%;
+    max-width: 80%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 
-  &.transition-bottom-left {
-    transform-origin: left top;
-  }
-
-  &.transition-bottom {
-    transform-origin: center top;
-
-    &.popover-enter,
-    &.popover-leave-active {
-      transform: scaleY(.5);
+    &.transition-bottom-left {
+        transform-origin: left top;
     }
-  }
 
-  &.transition-bottom-right {
-    transform-origin: right top;
-  }
+    &.transition-bottom {
+        transform-origin: center top;
 
-  &.transition-top-left {
-    transform-origin: left bottom;
-  }
-
-  &.transition-top {
-    transform-origin: center bottom;
-
-    &.popover-enter,
-    &.popover-leave-active {
-      transform: scaleY(.5);
+        &.popover-enter,
+        &.popover-leave-active {
+            transform: scaleY(.5);
+        }
     }
-  }
 
-  &.transition-top-right {
-    transform-origin: right bottom;
-  }
+    &.transition-bottom-right {
+        transform-origin: right top;
+    }
 
-  &.transition-left-top {
-    transform-origin: right top;
-  }
+    &.transition-top-left {
+        transform-origin: left bottom;
+    }
 
-  &.transition-left {
-    transform-origin: right center;
-  }
+    &.transition-top {
+        transform-origin: center bottom;
 
-  &.transition-left-bottom {
-    transform-origin: right bottom;
-  }
+        &.popover-enter,
+        &.popover-leave-active {
+            transform: scaleY(.5);
+        }
+    }
 
-  &.transition-right-top {
-    transform-origin: left top;
-  }
+    &.transition-top-right {
+        transform-origin: right bottom;
+    }
 
-  &.transition-right {
-    transform-origin: left center;
-  }
+    &.transition-left-top {
+        transform-origin: right top;
+    }
 
-  &.transition-right-bottom {
-    transform-origin: left bottom;
-  }
+    &.transition-left {
+        transform-origin: right center;
+    }
+
+    &.transition-left-bottom {
+        transform-origin: right bottom;
+    }
+
+    &.transition-right-top {
+        transform-origin: left top;
+    }
+
+    &.transition-right {
+        transform-origin: left center;
+    }
+
+    &.transition-right-bottom {
+        transform-origin: left bottom;
+    }
 }
 </style>

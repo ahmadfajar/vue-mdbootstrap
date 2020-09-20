@@ -30,6 +30,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~compass-sass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
@@ -58,7 +59,8 @@ export default {
     .#{$prefix}-ripple {
         &.dropdown-toggle {
             &::after {
-                margin-right: $padding-base - .2;
+                @include align-self(center);
+                margin-right: $padding-base - .25;
             }
 
             > .btn-inner {

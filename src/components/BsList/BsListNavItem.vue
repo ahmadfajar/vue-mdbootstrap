@@ -1,24 +1,28 @@
 <template>
   <router-link v-if="hasRouter"
-               tag="li"
+               :id="id"
                :active-class="activeClass"
                :class="_classNames"
                :exact="exact"
                :to="path"
-               :id="id"
+               tag="li"
                @click.native="_onClick">
     <a class="md-nav-item-inner">
-      <bs-ripple class="d-flex "
+      <bs-ripple :active.sync="rippleActive"
                  :disabled="_disableRipple"
-                 :active.sync="rippleActive"
-                 :style="_styles">
+                 :style="_styles"
+                 class="d-flex ">
         <bs-icon v-if="icon && isInternal"
                  v-bind="_iconAttributes" />
-        <span v-else-if="icon && !isInternal" class="md-icon text-center" :style="_faWidth">
+        <span v-else-if="icon && !isInternal"
+              :style="_faWidth"
+              class="md-icon text-center">
           <font-awesome-icon v-bind="_iconAttributes" :style="_faStyles" />
         </span>
         <span class="md-nav-text">{{ label }}</span>
-        <bs-icon v-if="hasChild" icon="expand-more" size="24" />
+        <bs-icon v-if="hasChild"
+                 icon="expand-more"
+                 size="24" />
       </bs-ripple>
     </a>
     <slot></slot>
@@ -29,17 +33,21 @@
     <a :href="url"
        class="md-nav-item-inner"
        @click="_onClick">
-      <bs-ripple class="d-flex"
+      <bs-ripple :active.sync="rippleActive"
                  :disabled="_disableRipple"
-                 :active.sync="rippleActive"
-                 :style="_styles">
+                 :style="_styles"
+                 class="d-flex">
         <bs-icon v-if="icon && isInternal"
                  v-bind="_iconAttributes" />
-        <span v-else-if="icon && !isInternal" class="md-icon text-center" :style="_faWidth">
+        <span v-else-if="icon && !isInternal"
+              :style="_faWidth"
+              class="md-icon text-center">
           <font-awesome-icon v-bind="_iconAttributes" :style="_faStyles" />
         </span>
         <span class="md-nav-text">{{ label }}</span>
-        <bs-icon v-if="hasChild" icon="expand-more" size="24" />
+        <bs-icon v-if="hasChild"
+                 icon="expand-more"
+                 size="24" />
       </bs-ripple>
     </a>
     <slot></slot>
@@ -47,7 +55,7 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import BsRipple from '../BsAnimation/BsRipple';
 import IconMixin from "../BsBasic/mixins/IconMixin";
 import RouteAble from "../../mixins/RouteAble";
@@ -223,7 +231,7 @@ export default {
                 item.component.collapsing = true;
                 Helper.defer(() => {
                     item.component.collapsing = false;
-                    item.component.expanded   = false;
+                    item.component.expanded = false;
                 }, 300);
             } else {
                 item.component.expanded = false;
@@ -300,16 +308,16 @@ export default {
                 if (uid === item.uid) {
                     item.component.itemActive = true;
                     // iterate parent component
-                    let iterator              = this.$parent;
-                    let cmpTag                = iterator.$options._componentTag;
+                    let iterator = this.$parent;
+                    let cmpTag = iterator.$options._componentTag;
 
                     while (cmpTag.startsWith('bs-list-nav')) {
                         if (cmpTag === 'bs-list-nav-item') {
                             iterator.itemActive = true;
                         }
                         iterator.expanded = true;
-                        iterator          = iterator.$parent;
-                        cmpTag            = iterator.$options._componentTag;
+                        iterator = iterator.$parent;
+                        cmpTag = iterator.$options._componentTag;
                     }
                 } else if (item.componentTag === 'bs-list-nav-item') {
                     item.component.itemActive = false;
@@ -397,314 +405,316 @@ export default {
 @import "../../../scss/mixins";
 
 .#{$prefix}-list-nav {
-  .#{$prefix}-nav-item {
-    position: relative;
-    white-space: nowrap;
-    width: 100%;
+    .#{$prefix}-nav-item {
+        position: relative;
+        white-space: nowrap;
+        width: 100%;
 
-    > .#{$prefix}-nav-item-inner {
-      @extend %cursor-pointer;
-      display: block;
-      outline: 0 none;
-      font-size: 1rem;
-
-      > .#{$prefix}-ripple {
-        height: 48px;
-        line-height: normal;
-        padding: .75rem 0 .75rem $padding-lg;
-
-        > .#{$prefix}-nav-text {
-          @include transition(opacity .8s);
-          @include opacity(1);
-          @include flex(1);
-        }
-
-        > .icon-expand-more {
-          @include transition(all 0.3s ease 0s);
-          @include transform(rotateZ(0deg));
-        }
-
-        > .#{$prefix}-icon {
-          margin-right: $padding-base;
-
-          &:first-child {
-            margin-right: $padding-xl;
-          }
-        }
-      }
-
-      &:hover,
-      &:focus,
-      &:active {
-        text-decoration: none;
-      }
-    }
-
-    &.#{$prefix}-has-icon {
-      > .#{$prefix}-nav-item-inner {
-        > .#{$prefix}-ripple {
-          padding-left: $padding-base;
-        }
-      }
-    }
-
-    &.#{$prefix}-expanded {
-      > .#{$prefix}-nav-item-inner {
-        > .#{$prefix}-ripple {
-          > .icon-expand-more {
-            @include transform(rotateZ(-180deg));
-          }
-        }
-      }
-    }
-
-    &.#{$prefix}-active {
-      > .#{$prefix}-nav-item-inner {
-        font-weight: $font-weight-bold;
-      }
-
-      &:not(.#{$prefix}-parent) {
         > .#{$prefix}-nav-item-inner {
-          font-weight: $font-weight-bold;
-        }
-      }
-    }
-  }
+            @extend %cursor-pointer;
+            display: block;
+            outline: 0 none;
+            font-size: 1rem;
 
-  > .#{$prefix}-nav-item {
-    &.#{$prefix}-expanded {
-      &:not(:first-child) {
-        border-top: 1px solid $gray-300;
-      }
-      &:not(:last-child) {
-        border-bottom: 1px solid $gray-300;
-      }
+            > .#{$prefix}-ripple {
+                height: 48px;
+                line-height: normal;
+                padding: .75rem 0 .75rem $padding-lg;
+
+                > .#{$prefix}-nav-text {
+                    @include transition(opacity .8s);
+                    @include opacity(1);
+                    @include flex(1);
+                }
+
+                > .icon-expand-more {
+                    @include transition(all 0.3s ease 0s);
+                    @include transform(rotateZ(0deg));
+                }
+
+                > .#{$prefix}-icon {
+                    margin-right: $padding-base;
+
+                    &:first-child {
+                        margin-right: $padding-xl;
+                    }
+                }
+            }
+
+            &:hover,
+            &:focus,
+            &:active {
+                text-decoration: none;
+            }
+        }
+
+        &.#{$prefix}-has-icon {
+            > .#{$prefix}-nav-item-inner {
+                > .#{$prefix}-ripple {
+                    padding-left: $padding-base;
+                }
+            }
+        }
+
+        &.#{$prefix}-expanded {
+            > .#{$prefix}-nav-item-inner {
+                > .#{$prefix}-ripple {
+                    > .icon-expand-more {
+                        @include transform(rotateZ(-180deg));
+                    }
+                }
+            }
+        }
+
+        &.#{$prefix}-active {
+            > .#{$prefix}-nav-item-inner {
+                font-weight: $font-weight-bold;
+            }
+
+            &:not(.#{$prefix}-parent) {
+                > .#{$prefix}-nav-item-inner {
+                    font-weight: $font-weight-bold;
+                }
+            }
+        }
     }
 
-    &:not(.#{$prefix}-has-icon) {
-      .#{$prefix}-nav-item {
-        &:not(.#{$prefix}-has-icon) {
-          > .#{$prefix}-nav-item-inner {
-            > .#{$prefix}-ripple {
-              padding-left: $padding-base * 2.5;
+    > .#{$prefix}-nav-item {
+        &.#{$prefix}-expanded {
+            &:not(:first-child) {
+                border-top: 1px solid $gray-300;
             }
-          }
-        }
-      }
-    }
-    &.#{$prefix}-has-icon {
-      .#{$prefix}-nav-item {
-        &:not(.#{$prefix}-has-icon) {
-          > .#{$prefix}-nav-item-inner {
-            > .#{$prefix}-ripple {
-              padding-left: $padding-base * 4.5;
+
+            &:not(:last-child) {
+                border-bottom: 1px solid $gray-300;
             }
-          }
         }
-      }
+
+        &:not(.#{$prefix}-has-icon) {
+            .#{$prefix}-nav-item {
+                &:not(.#{$prefix}-has-icon) {
+                    > .#{$prefix}-nav-item-inner {
+                        > .#{$prefix}-ripple {
+                            padding-left: $padding-base * 2.5;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.#{$prefix}-has-icon {
+            .#{$prefix}-nav-item {
+                &:not(.#{$prefix}-has-icon) {
+                    > .#{$prefix}-nav-item-inner {
+                        > .#{$prefix}-ripple {
+                            padding-left: $padding-base * 4.5;
+                        }
+                    }
+                }
+            }
+        }
     }
-  }
 }
 
 .#{$prefix}-list {
-  &.#{$prefix}-space-both,
-  &.#{$prefix}-space-left,
-  &.#{$prefix}-space-right {
-    > .#{$prefix}-list-nav {
-      .#{$prefix}-nav-item {
-        &:not(.#{$prefix}-parent),
-        &.#{$prefix}-parent:not(.#{$prefix}-expanded) {
-          margin-bottom: 2px;
-          margin-top: 2px;
+    &.#{$prefix}-space-both,
+    &.#{$prefix}-space-left,
+    &.#{$prefix}-space-right {
+        > .#{$prefix}-list-nav {
+            .#{$prefix}-nav-item {
+                &:not(.#{$prefix}-parent),
+                &.#{$prefix}-parent:not(.#{$prefix}-expanded) {
+                    margin-bottom: 2px;
+                    margin-top: 2px;
 
-          > .#{$prefix}-nav-item-inner {
-            > .#{$prefix}-ripple {
-              height: 46px;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  &.#{$prefix}-space-both,
-  &.#{$prefix}-space-left {
-    > .#{$prefix}-list-nav {
-      .#{$prefix}-nav-item-inner {
-        margin-left: 6px;
-      }
-
-      > .#{$prefix}-nav-item {
-        &.#{$prefix}-has-icon {
-          .#{$prefix}-nav-item {
-            &:not(.#{$prefix}-has-icon) {
-              > .#{$prefix}-nav-item-inner {
-                > .#{$prefix}-ripple {
-                  padding-left: 66px;
+                    > .#{$prefix}-nav-item-inner {
+                        > .#{$prefix}-ripple {
+                            height: 46px;
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-      }
-
-      .#{$prefix}-nav-item {
-        &.#{$prefix}-has-icon {
-          > .#{$prefix}-nav-item-inner {
-            > .#{$prefix}-ripple {
-              padding-left: 10px;
-            }
-          }
-        }
-      }
     }
-  }
 
-  &.#{$prefix}-space-both,
-  &.#{$prefix}-space-right {
-    > .#{$prefix}-list-nav {
-      .#{$prefix}-nav-item-inner {
-        margin-right: 6px;
-      }
-
-      .#{$prefix}-nav-item {
-        > .#{$prefix}-nav-item-inner {
-          > .#{$prefix}-ripple {
-            > .icon-expand-more {
-              margin-right: 10px;
+    &.#{$prefix}-space-both,
+    &.#{$prefix}-space-left {
+        > .#{$prefix}-list-nav {
+            .#{$prefix}-nav-item-inner {
+                margin-left: 6px;
             }
-          }
-        }
-      }
-    }
-  }
 
-  &.#{$prefix}-border-left,
-  &.#{$prefix}-border-right,
-  &.#{$prefix}-border-left-right,
-  &.#{$prefix}-border-top,
-  &.#{$prefix}-border-bottom,
-  &.#{$prefix}-border-top-bottom {
-    > .#{$prefix}-list-nav {
-      .#{$prefix}-nav-item {
-        &.#{$prefix}-active {
-          &:not(.#{$prefix}-parent) {
-            > .#{$prefix}-nav-item-inner {
-              > .#{$prefix}-ripple {
-                &:before,
-                &:after {
-                  content: " ";
-                  display: block;
-                  position: absolute;
+            > .#{$prefix}-nav-item {
+                &.#{$prefix}-has-icon {
+                    .#{$prefix}-nav-item {
+                        &:not(.#{$prefix}-has-icon) {
+                            > .#{$prefix}-nav-item-inner {
+                                > .#{$prefix}-ripple {
+                                    padding-left: 66px;
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
-        }
-      }
-    }
-  }
 
-  &.#{$prefix}-border-left,
-  &.#{$prefix}-border-left-right {
-    > .#{$prefix}-list-nav {
-      .#{$prefix}-nav-item {
-        &.#{$prefix}-active {
-          &:not(.#{$prefix}-parent) {
-            > .#{$prefix}-nav-item-inner {
-              > .#{$prefix}-ripple {
-                &:before {
-                  background: $sidebar-item-active-bgcolor;
-                  left: 0;
-                  top: 0;
-                  height: 100%;
-                  width: 5px;
+            .#{$prefix}-nav-item {
+                &.#{$prefix}-has-icon {
+                    > .#{$prefix}-nav-item-inner {
+                        > .#{$prefix}-ripple {
+                            padding-left: 10px;
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-      }
     }
-  }
 
-  &.#{$prefix}-border-right,
-  &.#{$prefix}-border-left-right {
-    > .#{$prefix}-list-nav {
-      .#{$prefix}-nav-item {
-        &.#{$prefix}-active {
-          &:not(.#{$prefix}-parent) {
-            > .#{$prefix}-nav-item-inner {
-              > .#{$prefix}-ripple {
-                &:after {
-                  background: $sidebar-item-active-bgcolor;
-                  right: 0;
-                  top: 0;
-                  height: 100%;
-                  width: 5px;
-                }
-              }
+    &.#{$prefix}-space-both,
+    &.#{$prefix}-space-right {
+        > .#{$prefix}-list-nav {
+            .#{$prefix}-nav-item-inner {
+                margin-right: 6px;
             }
-          }
-        }
-      }
-    }
-  }
 
-  &.#{$prefix}-border-top,
-  &.#{$prefix}-border-top-bottom {
-    > .#{$prefix}-list-nav {
-      .#{$prefix}-nav-item {
-        &.#{$prefix}-active {
-          &:not(.#{$prefix}-parent) {
-            > .#{$prefix}-nav-item-inner {
-              > .#{$prefix}-ripple {
-                &:before {
-                  background: $sidebar-item-active-bgcolor;
-                  left: 0;
-                  top: 0;
-                  height: 5px;
-                  width: 100%;
+            .#{$prefix}-nav-item {
+                > .#{$prefix}-nav-item-inner {
+                    > .#{$prefix}-ripple {
+                        > .icon-expand-more {
+                            margin-right: 10px;
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-      }
     }
-  }
 
-  &.#{$prefix}-border-bottom,
-  &.#{$prefix}-border-top-bottom {
-    > .#{$prefix}-list-nav {
-      .#{$prefix}-nav-item {
-        &.#{$prefix}-active {
-          &:not(.#{$prefix}-parent) {
-            > .#{$prefix}-nav-item-inner {
-              > .#{$prefix}-ripple {
-                &:after {
-                  background: $sidebar-item-active-bgcolor;
-                  left: 0;
-                  bottom: 0;
-                  height: 5px;
-                  width: 100%;
+    &.#{$prefix}-border-left,
+    &.#{$prefix}-border-right,
+    &.#{$prefix}-border-left-right,
+    &.#{$prefix}-border-top,
+    &.#{$prefix}-border-bottom,
+    &.#{$prefix}-border-top-bottom {
+        > .#{$prefix}-list-nav {
+            .#{$prefix}-nav-item {
+                &.#{$prefix}-active {
+                    &:not(.#{$prefix}-parent) {
+                        > .#{$prefix}-nav-item-inner {
+                            > .#{$prefix}-ripple {
+                                &:before,
+                                &:after {
+                                    content: " ";
+                                    display: block;
+                                    position: absolute;
+                                }
+                            }
+                        }
+                    }
                 }
-              }
             }
-          }
         }
-      }
     }
-  }
+
+    &.#{$prefix}-border-left,
+    &.#{$prefix}-border-left-right {
+        > .#{$prefix}-list-nav {
+            .#{$prefix}-nav-item {
+                &.#{$prefix}-active {
+                    &:not(.#{$prefix}-parent) {
+                        > .#{$prefix}-nav-item-inner {
+                            > .#{$prefix}-ripple {
+                                &:before {
+                                    background: $sidebar-item-active-bgcolor;
+                                    left: 0;
+                                    top: 0;
+                                    height: 100%;
+                                    width: 5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}-border-right,
+    &.#{$prefix}-border-left-right {
+        > .#{$prefix}-list-nav {
+            .#{$prefix}-nav-item {
+                &.#{$prefix}-active {
+                    &:not(.#{$prefix}-parent) {
+                        > .#{$prefix}-nav-item-inner {
+                            > .#{$prefix}-ripple {
+                                &:after {
+                                    background: $sidebar-item-active-bgcolor;
+                                    right: 0;
+                                    top: 0;
+                                    height: 100%;
+                                    width: 5px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}-border-top,
+    &.#{$prefix}-border-top-bottom {
+        > .#{$prefix}-list-nav {
+            .#{$prefix}-nav-item {
+                &.#{$prefix}-active {
+                    &:not(.#{$prefix}-parent) {
+                        > .#{$prefix}-nav-item-inner {
+                            > .#{$prefix}-ripple {
+                                &:before {
+                                    background: $sidebar-item-active-bgcolor;
+                                    left: 0;
+                                    top: 0;
+                                    height: 5px;
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}-border-bottom,
+    &.#{$prefix}-border-top-bottom {
+        > .#{$prefix}-list-nav {
+            .#{$prefix}-nav-item {
+                &.#{$prefix}-active {
+                    &:not(.#{$prefix}-parent) {
+                        > .#{$prefix}-nav-item-inner {
+                            > .#{$prefix}-ripple {
+                                &:after {
+                                    background: $sidebar-item-active-bgcolor;
+                                    left: 0;
+                                    bottom: 0;
+                                    height: 5px;
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 @include bslist-nav-variant(white, #fff);
 
 @each $name, $color in $material-colors {
-  @include bslist-nav-variant($name, $color);
+    @include bslist-nav-variant($name, $color);
 }
 
 @each $name, $color in $theme-colors {
-  @include bslist-nav-variant($name, $color);
+    @include bslist-nav-variant($name, $color);
 }
 </style>

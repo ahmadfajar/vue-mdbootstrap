@@ -1,141 +1,141 @@
 // Button variants mixins
 @mixin make-button($name, $color) {
-  .btn-#{$name} {
-    background-color: $color;
-    border-color: $color;
-    color: set-notification-text-color($color) !important;
+    .btn-#{$name} {
+        background-color: $color;
+        border-color: $color;
+        color: set-notification-text-color($color) !important;
 
-    &:hover {
-      background-color: lighten($color, 5%);
-      border-color: lighten($color, 5%);
+        &:hover {
+            background-color: lighten($color, 5%);
+            border-color: lighten($color, 5%);
+        }
+
+        &:focus,
+        &.focus {
+            @include box-shadow($z-depth-1);
+        }
+
+        &:focus,
+        &:active,
+        &.active {
+            background-color: darken($color, 10%);
+            border-color: darken($color, 10%);
+        }
+
+        &:not([disabled]):not(.disabled):not(.btn-raised):active,
+        &:not([disabled]):not(.disabled):not(.btn-raised).active {
+            background-color: darken($color, 10%);
+            border-color: darken($color, 10%);
+        }
+
+        &:not([disabled]):not(.disabled):active:focus,
+        &:not([disabled]):not(.disabled).active:focus,
+        .show > &.dropdown-toggle {
+            @include box-shadow(0 0 0 0.2rem rgba($color, .5));
+        }
     }
 
-    &:focus,
-    &.focus {
-      @include box-shadow($z-depth-1);
-    }
+    .#{$name}-ic {
+        color: $color !important;
 
-    &:focus,
-    &:active,
-    &.active {
-      background-color: darken($color, 10%);
-      border-color: darken($color, 10%);
+        &:hover,
+        &:focus {
+            color: $color;
+        }
     }
-
-    &:not([disabled]):not(.disabled):not(.btn-raised):active,
-    &:not([disabled]):not(.disabled):not(.btn-raised).active {
-      background-color: darken($color, 10%);
-      border-color: darken($color, 10%);
-    }
-
-    &:not([disabled]):not(.disabled):active:focus,
-    &:not([disabled]):not(.disabled).active:focus,
-    .show > &.dropdown-toggle {
-      @include box-shadow(0 0 0 0.2rem rgba($color, .5));
-    }
-  }
-
-  .#{$name}-ic {
-    color: $color !important;
-
-    &:hover,
-    &:focus {
-      color: $color;
-    }
-  }
 }
 
 // Make outline button
 @mixin make-outline-button($name, $color) {
-  .btn-outline-#{$name} {
-    background-color: transparent;
-    border: 1px solid $color;
-    color: set-outline-button-color($name, $color);
+    .btn-outline-#{$name} {
+        background-color: transparent;
+        border: 1px solid $color;
+        color: set-outline-button-color($name, $color);
 
-    &:hover,
-    &:focus,
-    &:active,
-    &:active:focus,
-    &.active {
-      border-color: darken($color, 8%);
-      color: set-outline-button-color($name, darken($color, 10%));
-      @if ($name == 'light') {
-        background-color: rgba($color, .2);
-      } @else {
-        background-color: rgba(lighten($color, 15%), .3);
-      }
-    }
+        &:hover,
+        &:focus,
+        &:active,
+        &:active:focus,
+        &.active {
+            border-color: darken($color, 8%);
+            color: set-outline-button-color($name, darken($color, 10%));
+            @if ($name == 'light') {
+                background-color: rgba($color, .2);
+            } @else {
+                background-color: rgba(lighten($color, 15%), .3);
+            }
+        }
 
-    &:not([disabled]):not(.disabled):active,
-    &:not([disabled]):not(.disabled).active {
-      border-color: darken($color, 8%);
-      color: set-outline-button-color($name, darken($color, 15%));
-      @if ($name == 'light') {
-        background-color: rgba($color, .2);
-      } @else {
-        background-color: rgba(lighten($color, 15%), .3);
-      }
-    }
+        &:not([disabled]):not(.disabled):active,
+        &:not([disabled]):not(.disabled).active {
+            border-color: darken($color, 8%);
+            color: set-outline-button-color($name, darken($color, 15%));
+            @if ($name == 'light') {
+                background-color: rgba($color, .2);
+            } @else {
+                background-color: rgba(lighten($color, 15%), .3);
+            }
+        }
 
-    &:not([disabled]):not(.disabled):active:focus,
-    &:not([disabled]):not(.disabled).active:focus,
-    .show > &.dropdown-toggle:focus {
-      @include box-shadow(0 0 0 0.2rem rgba($color, .5));
+        &:not([disabled]):not(.disabled):active:focus,
+        &:not([disabled]):not(.disabled).active:focus,
+        .show > &.dropdown-toggle:focus {
+            @include box-shadow(0 0 0 0.2rem rgba($color, .5));
+        }
     }
-  }
 }
 
 // Make flat button
 @mixin make-flat-button($name, $color) {
-  .btn-flat-#{$name} {
-    @include box-shadow(none);
-    background-color: transparent;
-    border-width: 0 !important;
-    border-color: transparent;
-    color: set-outline-button-color($name, $color) !important;
-
-    &:not([disabled]), &:not(.disabled) {
-      &:hover,
-      &:active,
-      &.active,
-      &:focus {
+    .btn-flat-#{$name} {
+        @include box-shadow(none);
+        background-color: transparent;
+        border-width: 0 !important;
         border-color: transparent;
-        background-color: rgba(lighten($color, 15%), .2);
-        color: set-outline-button-color($name, darken($color, 15%));
-      }
+        color: set-outline-button-color($name, $color) !important;
 
-      &:active:focus {
-        background-color: rgba(lighten($color, 15%), .2);
-        border-color: rgba(lighten($color, 18%), .15);
-      }
+        &:not([disabled]), &:not(.disabled) {
+            &:hover,
+            &:active,
+            &.active,
+            &:focus {
+                border-color: transparent;
+                background-color: rgba(lighten($color, 15%), .2);
+                color: set-outline-button-color($name, darken($color, 15%));
+            }
 
-      &:hover,
-      &:focus,
-      &.active,
-      &:active {
-        @include box-shadow(none);
-      }
+            &:active:focus {
+                background-color: rgba(lighten($color, 15%), .2);
+                border-color: rgba(lighten($color, 18%), .15);
+            }
 
-      &:active:focus,
-      &.active:focus {
-        @include box-shadow($z-depth-1);
-      }
+            &:hover,
+            &:focus,
+            &.active,
+            &:active {
+                @include box-shadow(none);
+            }
 
-      &.btn-raised {
-        @include box-shadow(none);
+            &:active:focus,
+            &.active:focus {
+                @include box-shadow($z-depth-1);
+            }
 
-        &:hover,
-        &:focus,
-        &.active,
-        &:active {
-          @include box-shadow($z-depth-1);
+            &.btn-raised {
+                @include box-shadow(none);
+
+                &:hover,
+                &:focus,
+                &.active,
+                &:active {
+                    @include box-shadow($z-depth-1);
+                }
+
+                &:active:focus,
+                &.active:focus {
+                    @include box-shadow($z-depth-1-half);
+                }
+            }
         }
-
-        &:active:focus,
-        &.active:focus {
-          @include box-shadow($z-depth-1-half);
-        }
-      }
     }
-  }
 }
