@@ -22,12 +22,6 @@
     cursor: default !important;
 }
 
-.#{$prefix}-icon {
-    > .svg-inline {
-        display: inline;
-    }
-}
-
 .font-weight-bold {
     font-weight: $font-weight-bold !important;
 }

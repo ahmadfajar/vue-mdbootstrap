@@ -2,58 +2,122 @@ import Helper from "../../../utils/Helper";
 
 export default {
     props: {
+        /**
+         * Sets browsers autocomplete predictions on/off.
+         * @type {string|boolean|*}
+         */
         autocomplete: {
-            type: Boolean,
+            type: [String, Boolean],
             default: false
         },
+        /**
+         * Autofocus field when document is loaded.
+         * @type {boolean|*}
+         */
         autofocus: {
             type: Boolean,
             default: false
         },
+        /**
+         * Create the component with **flat** appearance, and removes the borders.
+         * The component appearance will be styled like plain text.
+         * @type {boolean|*}
+         */
         flat: {
             type: Boolean,
             default: false
         },
+        /**
+         * Create the component with **filled** appearance.
+         * See [Google Material Design](https://material.io/components/text-fields) spec.
+         * @type {boolean|*}
+         */
+        filled: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Create the component with floating field label.
+         * See [Google Material Design](https://material.io/components/text-fields) spec.
+         * @type {boolean|*}
+         */
         floatingLabel: {
             type: Boolean,
             default: false
         },
+        /**
+         * Create the component with **outlined** appearance.
+         * See [Google Material Design](https://material.io/components/text-fields) spec.
+         * @type {boolean|*}
+         */
         outlined: {
             type: Boolean,
             default: false
         },
+        /**
+         * Sets auto show the clear button.
+         * @type {boolean|*}
+         */
         clearButton: {
             type: Boolean,
             default: false
         },
+        /**
+         * Keeps help text visible when the component is not focused.
+         * @type {boolean|*}
+         */
         persistentHelpText: {
             type: Boolean,
             default: true
         },
+        /**
+         * The value monitored by `v-model` to maintain field value.
+         * @type {string|number|*}
+         */
         value: {
             type: [String, Number],
             default: undefined
         },
+        /**
+         * Sets icon to display on inner right side. Use any valid
+         * [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
+         * @type {string|*}
+         */
         appendIcon: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * Sets icon to display on outer right side. Use any valid
+         * [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
+         * @type {string|*}
+         */
         appendIconOuter: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * Sets icon to display on inner left side. Use any valid
+         * [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
+         * @type {string|*}
+         */
         prependIcon: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * Sets icon to display on outer left side. Use any valid
+         * [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
+         * @type {string|*}
+         */
         prependIconOuter: {
             type: [String, Array],
             default: undefined
         },
-        // controlCls: {
-        //     type: [String, Array],
-        //     default: undefined
-        // },
+        /**
+         * Sets the field placeholder.
+         * @type {string|*}
+         */
         placeholder: {
             type: String,
             default: undefined
@@ -73,10 +137,14 @@ export default {
         fieldAttrs() {
             return {
                 'value': this.localValue,
-                'autocomplete': this.autocomplete ? 'on' : Helper.uuid(),
+                'autocomplete': this.autocomplete && Helper.isString(this.autocomplete)
+                    ? this.autocomplete
+                    : (this.autocomplete ? 'on' : Helper.uuid()),
                 'autofocus': this.autofocus,
                 'placeholder': this.placeholder,
-                'aria-autocomplete': this.autocomplete ? 'both' : 'none',
+                'aria-autocomplete': this.autocomplete && Helper.isString(this.autocomplete)
+                    ? this.autocomplete
+                    : (this.autocomplete ? 'both' : 'none'),
                 'aria-disabled': this.disabled,
                 'aria-required': this.required,
                 'aria-readonly': this.readonly,
@@ -92,7 +160,6 @@ export default {
             return {
                 'md-active': this.hasValue || this.placeholder || this.isFocused,
                 'md-focused': this.isFocused,
-                // 'md-after-icon': this.prependIcon
             }
         },
         /**
@@ -125,7 +192,7 @@ export default {
             this.$nextTick(() => {
                 this.$emit('clear');
                 this._updateLegend();
-                this._setFloatingLabelPosition();
+                // this._setFloatingLabelPosition();
             });
         },
         /**
@@ -171,7 +238,7 @@ export default {
             this.$emit('blur', e);
             this._nextTickChange(this.localValue);
             this._updateLegend();
-            this._setFloatingLabelPosition();
+            // this._setFloatingLabelPosition();
         },
         /**
          * Handler when input field get focus.
@@ -190,7 +257,7 @@ export default {
             this.isFocused = true;
             this.$emit('focus', e);
             this._updateLegend();
-            this._setFloatingLabelPosition();
+            // this._setFloatingLabelPosition();
         },
         /**
          * Handler when input field receive keypress.
@@ -223,6 +290,12 @@ export default {
                 elm.setAttribute('for', this.id);
             }
         },
+        /**
+         * Adjust floating label position at the left side.
+         *
+         * @returns {void}
+         * @private
+         */
         _setFloatingLabelPosition() {
             if (this.prependIcon && this.floatingLabel && this.$refs.floatLabel) {
                 if (this.hasValue || this.isFocused || this.placeholder) {
@@ -255,6 +328,13 @@ export default {
                 this._setLabelFor(label);
             }
         },
+        /**
+         * Update fieldset legend style width.
+         *
+         * @param {string|number} [value] The input value
+         * @returns {void}
+         * @private
+         */
         _updateLegend(value) {
             if (this.outlined && this.$refs.legend) {
                 let label = this.floatingLabel
@@ -263,7 +343,8 @@ export default {
                 let hasWidth = this.floatingLabel && (this.hasValue || this.isFocused || this.placeholder || value);
 
                 if (hasWidth && label) {
-                    this.$refs.legend.style.width = Helper.sizeUnit(label.clientWidth);
+                    const width = label.clientWidth < 80 ? label.clientWidth : label.clientWidth - 8;
+                    this.$refs.legend.style.width = Helper.sizeUnit(width);
                 } else {
                     this.$refs.legend.style.width = Helper.sizeUnit(0);
                 }

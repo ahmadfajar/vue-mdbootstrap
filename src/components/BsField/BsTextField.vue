@@ -61,7 +61,8 @@
              class="md-help-text">
           <transition name="fade">
             <slot name="helpText">
-              <small v-if="showHelpText" class="text-muted d-block">
+              <small v-if="showHelpText"
+                     class="text-muted d-block">
                 {{ helpText }}
               </small>
             </slot>
@@ -99,28 +100,70 @@ export default {
     components: {FontAwesomeIcon, BsIcon, BsIconToggle},
     mixins: [Input, TextField, FieldValidation],
     props: {
+        /**
+         * Sets <input> element type attribute. Valid values are: `text`, `password`, `email`, `url`, `tel`.
+         * @type {string|*}
+         */
         type: {
             type: String,
             default: 'text',
-            validator: v => ['text', 'email', 'password', 'tel', 'url'].indexOf(v) > -1
+            validator: v => ['text', 'email', 'password', 'tel', 'url', 'range'].indexOf(v) > -1
         },
+        /**
+         * Enable toggle password field.
+         * @type {boolean|*}
+         */
         passwordToggle: {
             type: Boolean,
             default: true
         },
+        /**
+         * Sets `<input>` element maximum characters allowed.
+         * @type {string|number|*}
+         */
         maxlength: {
             type: [String, Number],
             default: undefined
         },
+        /**
+         * Sets `<input>` element minimum characters allowed.
+         * @type {string|number|*}
+         */
         minlength: {
             type: [String, Number],
             default: undefined
-        }
+        },
+        /**
+         * Sets target `<datalist>` element ID.
+         * @type {string|*}
+         */
+        datalist: {
+            type: String,
+            default: undefined
+        },
     },
     data: () => ({
         isPasswordToggled: false,
     }),
     computed: {
+        /**
+         * Get computed component's class names.
+         *
+         * @returns {Object|*} Collection of css classes
+         * @private
+         */
+        _classNames() {
+            return {
+                ...this.cmpAttrClasses,
+                'md-field-flat': this.flat,
+                'md-field-filled': this.filled,
+                'md-field-outlined': this.outlined,
+                'md-floating-label': this.floatingLabel,
+                'md-focused': this.isFocused,
+                'has-error': this.hasValidationError,
+                'has-success': this.wasValidated && !this.hasValidationError
+            }
+        },
         /**
          * Get input field computed binding's attributes.
          *
@@ -131,24 +174,9 @@ export default {
                 ...this.cmpAttrs,
                 ...this.fieldAttrs,
                 'type': this.fieldType,
+                'list': this.datalist,
                 'maxlength': this.maxlength,
                 'minlength': this.minlength
-            }
-        },
-        /**
-         * Get computed component's class names.
-         *
-         * @returns {Object|*} Collection of css classes
-         */
-        _classNames() {
-            return {
-                ...this.cmpAttrClasses,
-                'md-field-flat': this.flat,
-                'md-field-outlined': this.outlined,
-                'md-floating-label': this.floatingLabel,
-                'md-focused': this.isFocused,
-                'has-error': this.hasValidationError,
-                'has-success': this.wasValidated && !this.hasValidationError
             }
         },
         /**
@@ -179,13 +207,13 @@ export default {
                 this.$refs.input.focus();
             }
             this._updateLegend();
-            this._setFloatingLabelPosition();
+            // this._setFloatingLabelPosition();
         });
     },
     watch: {
         value(newVal) {
             this._updateLegend(newVal);
-            this._setFloatingLabelPosition();
+            // this._setFloatingLabelPosition();
         }
     },
 }

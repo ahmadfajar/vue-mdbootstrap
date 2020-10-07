@@ -1,6 +1,6 @@
 <template>
-  <div class="md-datepicker-body picker-day"
-       v-touch="{left: onTouch, right: onTouch}"
+  <div v-touch="{left: onTouch, right: onTouch}"
+       class="md-datepicker-body picker-day"
        @wheel="onMouseWheel">
     <transition :name="transitionName">
       <table :key="tableDate.toISOString()">

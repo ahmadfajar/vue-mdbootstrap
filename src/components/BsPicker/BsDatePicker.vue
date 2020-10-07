@@ -1,9 +1,10 @@
 <template>
-  <bs-picker class="md-datepicker" v-bind="pickerAttrs">
-    <bs-date-picker-header v-if="headerPanel"
-                           slot="header"
-                           v-bind="headerAttrs"
-                           @change:view="_changePickerView" />
+  <bs-picker v-bind="pickerAttrs" class="md-datepicker">
+    <template v-slot:header>
+      <bs-date-picker-header v-if="headerPanel"
+                             v-bind="headerAttrs"
+                             @change:view="_changePickerView" />
+    </template>
     <div class="md-picker-body-wrapper">
       <transition name="fade">
         <bs-date-picker-table-nav v-if="showPickerNav"
@@ -128,7 +129,7 @@ export default {
             default: false
         },
         /**
-         * Define locale date formating, default "en-us".
+         * Define default locale to be used, default "en-us".
          * @type {string|*}
          */
         locale: {
@@ -186,15 +187,15 @@ export default {
         viewMode: {
             type: String,
             default: PickerConst.date,
-            validator: value => PickerConst.viewModes.indexOf(value) !== -1
+            validator: value => PickerConst.viewModes.indexOf(value) > -1
         },
         /**
-         * DatePicker's container width, default is 290px
+         * DatePicker's container width, default is 300px
          * @type {string|number|*}
          */
         width: {
             type: [Number, String],
-            default: 290,
+            default: 300,
             validator: value => parseInt(value, 10) > 0
         }
     },
@@ -299,7 +300,7 @@ export default {
         headerAttrs() {
             moment.locale(this.locale);
             const _date = !Helper.isEmpty(this.value) ? this.dateValue.format(PickerConst.shortISO) : null;
-            const _now  = moment();
+            const _now = moment();
 
             return {
                 readonly: this.readonly,
@@ -593,99 +594,99 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-datepicker {
-  .#{$prefix}-datepicker-title,
-  .#{$prefix}-picker-year,
-  .#{$prefix}-picker-time {
-    @include transition($md-transition-stand);
-  }
-
-  .#{$prefix}-picker-body {
-    min-height: 260px;
-    padding-bottom: $padding-sm + .2;
-  }
-
-  .#{$prefix}-datepicker-nav {
-    @include flexbox((display: flex, justify-content: space-between, align-items: center));
-    padding: ($padding-base / 4) $padding-base;
-    position: relative;
-    width: 100%;
-
-    > .#{$prefix}-datepicker-navtext {
-      @include flex(1);
-      cursor: pointer;
-      overflow: hidden;
-      position: relative;
-      text-align: center;
-
-      strong {
+    .#{$prefix}-datepicker-title,
+    .#{$prefix}-picker-year,
+    .#{$prefix}-picker-time {
         @include transition($md-transition-stand);
-        display: block;
-        width: 100%;
-      }
     }
-  }
 
-  .#{$prefix}-datepicker-body {
-    padding: 0 12px;
-    position: relative;
+    .#{$prefix}-picker-body {
+        min-height: 260px;
+        padding-bottom: $padding-sm + .2;
+    }
 
-    table {
-      @include transition($md-transition-stand);
-      table-layout: fixed;
-      width: 100%;
-      top: 0;
-
-      td, th {
+    .#{$prefix}-datepicker-nav {
+        @include flexbox((display: flex, justify-content: space-between, align-items: center));
+        padding: ($padding-base / 4) $padding-base;
         position: relative;
-        text-align: center;
-      }
-    }
+        width: 100%;
 
-    &.picker-day {
-      th {
-        color: $gray-500;
-        padding: $padding-sm 0;
-        pointer-events: none;
-      }
+        > .#{$prefix}-datepicker-navtext {
+            @include flex(1);
+            cursor: pointer;
+            overflow: hidden;
+            position: relative;
+            text-align: center;
 
-      td {
-        height: 36px;
-        vertical-align: middle;
-      }
-
-    }
-
-    &.picker-month,
-    &.picker-year,
-    &.picker-times {
-      td {
-        padding: $padding-sm 0;
-      }
-    }
-
-    &.picker-times {
-      /*height: 288px;*/
-
-      .picker-times-number {
-        .btn-inner {
-          font-size: 1rem;
-          font-weight: $font-weight-bolder;
+            strong {
+                @include transition($md-transition-stand);
+                display: block;
+                width: 100%;
+            }
         }
-      }
-
-      .picker-hours {
-        margin-top: $padding-base;
-
-        td {
-          padding: 4px 0;
-        }
-      }
-
-      .picker-minutes, .picker-seconds {
-        margin-top: $padding-xl;
-      }
-
     }
-  }
+
+    .#{$prefix}-datepicker-body {
+        padding: 0 12px;
+        position: relative;
+
+        table {
+            @include transition($md-transition-stand);
+            table-layout: fixed;
+            width: 100%;
+            top: 0;
+
+            td, th {
+                position: relative;
+                text-align: center;
+            }
+        }
+
+        &.picker-day {
+            th {
+                color: $gray-500;
+                padding: $padding-sm 0;
+                pointer-events: none;
+            }
+
+            td {
+                height: 36px;
+                vertical-align: middle;
+            }
+
+        }
+
+        &.picker-month,
+        &.picker-year,
+        &.picker-times {
+            td {
+                padding: $padding-sm 0;
+            }
+        }
+
+        &.picker-times {
+            /*height: 288px;*/
+
+            .picker-times-number {
+                .btn-inner {
+                    font-size: 1rem;
+                    font-weight: $font-weight-bolder;
+                }
+            }
+
+            .picker-hours {
+                margin-top: $padding-base;
+
+                td {
+                    padding: 4px 0;
+                }
+            }
+
+            .picker-minutes, .picker-seconds {
+                margin-top: $padding-xl;
+            }
+
+        }
+    }
 }
 </style>

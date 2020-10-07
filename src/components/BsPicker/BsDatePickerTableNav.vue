@@ -3,7 +3,7 @@
     <bs-button v-bind="_btnPrevAttrs" @click="btnPreviousClick">
       <bs-icon icon="chevron_left" size="32" />
     </bs-button>
-    <div class="md-datepicker-navtext" :class="_headerClasses">
+    <div :class="_headerClasses" class="md-datepicker-navtext">
       <transition :name="transitionName">
         <strong :key="value.toISOString()" @click="toggleClick">{{ formatter(value) }}</strong>
       </transition>

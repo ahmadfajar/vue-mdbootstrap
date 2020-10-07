@@ -1,23 +1,23 @@
 <template>
   <div class="md-datepicker-header">
     <div class="md-datepicker-header-inner d-flex">
-      <div class="md-picker-year"
-           :class="{ active: isYearActive }"
+      <div :class="{ active: isYearActive }"
            :style="_styles"
+           class="md-picker-year"
            @click="yearClick">
         {{ year === '' ? '&nbsp;' : year }}
       </div>
       <div v-if="enableTime"
-           class="md-picker-time flex-grow-1 text-right"
            :class="{ active: isTimeActive }"
            :style="_styles"
+           class="md-picker-time flex-grow-1 text-right"
            @click="timeClick">
         {{ time === '' ? '&nbsp;' : time }}
       </div>
     </div>
-    <div class="md-datepicker-header-inner md-picker-title"
-         :class="{ active: isTitleActive }"
+    <div :class="{ active: isTitleActive }"
          :style="_styles"
+         class="md-datepicker-header-inner md-picker-title"
          @click="titleClick">
       <transition :name="transitionName">
         <div :key="date" v-html="value"></div>
@@ -115,39 +115,39 @@ export default {
 @import "../../../scss/shared";
 
 .#{$prefix}-datepicker-header {
-  display: block;
-  line-height: 1;
+    display: block;
+    line-height: 1;
 
-  .#{$prefix}-picker-year,
-  .#{$prefix}-picker-time,
-  .#{$prefix}-picker-title {
-    &:not(.active) {
-      @include opacity(.6);
-      @extend %cursor-pointer;
+    .#{$prefix}-picker-year,
+    .#{$prefix}-picker-time,
+    .#{$prefix}-picker-title {
+        &:not(.active) {
+            @include opacity(.6);
+            @extend %cursor-pointer;
 
-      &:hover {
-        @include opaque();
-      }
-    }
-  }
-
-  .#{$prefix}-datepicker-header-inner {
-    @include transition($md-transition-stand);
-
-    &:first-child {
-      font-size: 1.25rem;
-      font-weight: $font-weight-bold;
-      margin-bottom: $padding-base / 4;
+            &:hover {
+                @include opaque();
+            }
+        }
     }
 
-    &.#{$prefix}-picker-title {
-      font-size: 1.8rem;
-      font-weight: $font-weight-bold;
-      line-height: normal;
-      position: relative;
-      overflow: hidden;
-      text-align: left;
+    .#{$prefix}-datepicker-header-inner {
+        @include transition($md-transition-stand);
+
+        &:first-child {
+            font-size: 1.25rem;
+            font-weight: $font-weight-bold;
+            margin-bottom: $padding-base / 4;
+        }
+
+        &.#{$prefix}-picker-title {
+            font-size: 1.8rem;
+            font-weight: $font-weight-bold;
+            line-height: normal;
+            position: relative;
+            overflow: hidden;
+            text-align: left;
+        }
     }
-  }
 }
 </style>

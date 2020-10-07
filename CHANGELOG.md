@@ -19,7 +19,9 @@ Released:
 - **BsListTileLeading:** add properties `icon`, `icon-flip`, `icon-rotation`, `icon-spin` and `icon-pulse`
 - **BsListView:** add properties `single-expand`, `space-around`, and `active-item-bordered`
 - **BsSwitch:** add property `readonly`
-- **BsTextField:** add properties `append-icon-outer`, `prepend-icon-outer`
+- **BsTextArea:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
+- **BsTextField:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
+- **BsDateTimeField:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
 ### Bug Fixes & Improvement v1.1.0
@@ -35,12 +37,14 @@ Released:
 - **BsProgress:** change property `type` default value to 'bar' 
 - **BsSideDrawer:** computed inline style improvement
 - **BsCheckbox, BsSwitch:** improve css classes
-- **BsTextField:** improve html rendering and css classes
+- **BsTextArea:** improve html template and css classes
+- **BsTextField:** improve html template and css classes
+- **BsDateTimeField:** improve html template and css classes
 - Improve scss color variables
 - Improve JsDoc
 
 
-# v1.0.4
+## v1.0.4
 
 Released: August 10, 2020
 
@@ -57,7 +61,7 @@ Released: August 10, 2020
 - **Helper**: add function `isString()`
 
 
-# v1.0.3
+## v1.0.3
 
 Released: Mei 20, 2020
 
@@ -66,11 +70,11 @@ Released: Mei 20, 2020
 - **BsSpacer:** can't fill available space
 
 
-# v1.0.2
+## v1.0.2
 
 Released: Mei 20, 2020
 
-### Bug Fixes v1.0.3
+### Bug Fixes v1.0.2
 
 - **BsGrid:** fix localPaging, localSorting, and localFiltering
 - **BsPagination:** fix combobox paging

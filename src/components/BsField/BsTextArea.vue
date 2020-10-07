@@ -1,69 +1,94 @@
 <template>
   <div :class="_classNames" class="md-textarea row align-items-start">
     <slot v-if="floatingLabel === false" v-bind="{ id }" />
-    <div class="flex-grow-1">
-      <div :class="controlCls" class="md-field-inner align-items-start">
-        <fieldset aria-hidden="true">
-          <legend ref="legend">
-            <span>​</span>
-          </legend>
-        </fieldset>
-        <div v-if="floatingLabel"
-             ref="floatLabel"
-             :class="floatingLabelClass"
-             class="md-floating-label">
-          <slot v-bind="{ id }" />
-        </div>
-        <div v-if="prependIcon" class="md-prepend-icon d-flex">
-          <slot name="prependSlot">
-            <font-awesome-icon :icon="prependIcon" />
-          </slot>
-        </div>
-        <textarea ref="input"
-                  v-bind="attributes"
-                  role="textbox"
-                  @blur="_onBlur"
-                  @focus="_onFocus"
-                  @input="_updateHeight"
-                  @keydown="_onKeyDown"></textarea>
-        <div v-if="hasClearButton || appendIcon" class="md-action-icon d-flex">
-          <transition name="fade">
-            <bs-icon v-if="hasClearButton"
-                     icon="clear"
-                     @click="clearValue" />
-          </transition>
-          <span v-if="appendIcon" class="md-append-icon">
-            <slot name="appendSlot">
-              <font-awesome-icon :icon="appendIcon" />
+    <div class="md-field-wrapper">
+      <div v-if="prependIconOuter"
+           class="md-prepend-icon">
+        <slot name="prependIconOuter">
+          <font-awesome-icon :icon="prependIconOuter" fixed-width />
+        </slot>
+      </div>
+      <div class="md-field-ctrl">
+        <div class="md-field-inner">
+          <fieldset v-if="outlined"
+                    aria-hidden="true">
+            <legend ref="legend">
+              <span>​</span>
+            </legend>
+          </fieldset>
+          <div v-if="prependIcon"
+               class="md-prepend-icon">
+            <slot name="prependIcon">
+              <font-awesome-icon :icon="prependIcon" fixed-width />
             </slot>
-          </span>
+          </div>
+          <div class="md-field-input-wrapper">
+            <div v-if="floatingLabel"
+                 ref="floatLabel"
+                 :class="floatingLabelClass"
+                 class="md-field-label">
+              <slot v-bind="{ id }" />
+            </div>
+            <textarea ref="input"
+                      v-bind="attributes"
+                      role="textbox"
+                      @blur="_onBlur"
+                      @focus="_onFocus"
+                      @input="_updateHeight"
+                      @keydown="_onKeyDown"></textarea>
+          </div>
+          <transition name="fade">
+            <div v-if="hasClearButton"
+                 class="md-action-icon">
+              <bs-icon v-if="hasClearButton"
+                       icon="clear"
+                       height="24"
+                       @click="clearValue" />
+            </div>
+          </transition>
+          <div v-if="appendIcon"
+               class="md-append-icon">
+            <slot name="appendIcon">
+              <font-awesome-icon :icon="appendIcon" fixed-width />
+            </slot>
+          </div>
+        </div>
+        <div v-if="helpText || showErrorValidation"
+             class="md-help-text">
+          <transition name="fade">
+            <slot name="helpText">
+              <small v-if="showHelpText"
+                     class="text-muted d-block">
+                {{ helpText }}
+              </small>
+            </slot>
+          </transition>
+          <template v-if="hasValidationError">
+            <small v-for="(fld) in errorItems"
+                   :key="fld"
+                   class="text-danger d-block">
+              {{ _validationMessage(fld) }}
+            </small>
+          </template>
         </div>
       </div>
-      <div v-if="helpText || showErrorValidation" class="md-help-text">
-        <slot name="helpText">
-          <small v-if="showHelpText" class="text-muted d-block">
-            {{ helpText }}
-          </small>
+      <div v-if="appendIconOuter"
+           class="md-append-icon">
+        <slot name="appendIconOuter">
+          <font-awesome-icon :icon="appendIconOuter" fixed-width />
         </slot>
-        <template v-if="hasValidationError">
-          <small v-for="(fld) in errorItems"
-                 :key="fld"
-                 class="text-danger d-block">
-            {{ _validationMessage(fld) }}
-          </small>
-        </template>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BsIcon from "../BsIcon/BsIcon";
 import Input from "../../mixins/Input";
 import TextField from "./mixins/TextField";
 import FieldValidation from "./mixins/FieldValidation";
-import Util from "../../utils/Helper";
+import Helper from "../../utils/Helper";
 import "../../../scss/_field.scss"
 
 export default {
@@ -71,19 +96,35 @@ export default {
     components: {FontAwesomeIcon, BsIcon},
     mixins: [Input, TextField, FieldValidation],
     props: {
+        /**
+         * Enable/disable `<textarea>` element to auto grow.
+         * @type {boolean|*}
+         */
         autoGrow: {
             type: Boolean,
             default: false
         },
+        /**
+         * Disable resizing the `<textarea>` element.
+         * @type {boolean|*}
+         */
         noResize: {
             type: Boolean,
             default: false
         },
+        /**
+         * Sets `<textarea>` height in rows.
+         * @type {string|number|*}
+         */
         rows: {
             type: [String, Number],
             default: 2,
             validator: v => !isNaN(parseInt(v, 10))
         },
+        /**
+         * Sets `<textarea>` height in pixel.
+         * @type {string|number|*}
+         */
         rowHeight: {
             type: [String, Number],
             default: undefined,
@@ -101,10 +142,11 @@ export default {
                 ...this.cmpAttrClasses,
                 'md-focused': this.isFocused,
                 'md-field-flat': this.flat,
-                'md-field-autogrow': this.canGrow,
+                'md-field-filled': this.filled,
                 'md-field-outlined': this.outlined,
-                'md-field-noresize': this.noResize,
-                'md-floating-active': this.floatingLabel,
+                'md-field-autogrow': this.canGrow,
+                'md-field-noresize': this.noResize || this.canGrow,
+                'md-floating-label': this.floatingLabel,
                 'has-error': this.hasValidationError,
                 'has-success': this.wasValidated && !this.hasValidationError
             }
@@ -115,12 +157,18 @@ export default {
          * @returns {Object|*} Attributes to bind
          */
         attributes() {
-            return {
+            let attr = {
                 ...this.cmpAttrs,
                 ...this.fieldAttrs,
                 'rows': this.canGrow ? 2 : this.rows,
-                'height': this.fieldHeight
             }
+            if (this.fieldHeight) {
+                attr['style'] = {
+                    'height': this.fieldHeight
+                }
+            }
+
+            return attr;
         },
         /**
          * Check if TextArea field can auto grow or not.
@@ -137,7 +185,7 @@ export default {
          */
         fieldHeight() {
             if (this.rowHeight && !this.canGrow) {
-                return Util.sizeUnit(this.rowHeight);
+                return Helper.sizeUnit(this.rowHeight);
             }
 
             return null;
@@ -159,13 +207,29 @@ export default {
     },
     methods: {
         /**
+         * Clear the input value.
+         *
+         * @returns {void}
+         */
+        clearValue() {
+            this.localValue = null;
+            this.$emit('input', '');
+            this.$nextTick(() => {
+                this.$emit('clear');
+                this._updateLegend();
+            });
+            if (this.canGrow) {
+                this.$refs.input.style.height = 'auto';
+            }
+        },
+        /**
          * Update textarea height on input events.
          *
          * @param {Event} e The input event
          * @returns {void}
          * @private
          */
-        _updateHeight: function (e) {
+        _updateHeight(e) {
             if (this.canGrow) {
                 this.$refs.input.style.height = 'auto';
                 this.$refs.input.style.height = e.target.scrollHeight + "px";

@@ -139,5 +139,9 @@ export default {
 
 .#{$prefix}-icon {
     @include align-self(center);
+
+    > .svg-inline {
+        display: flex;
+    }
 }
 </style>

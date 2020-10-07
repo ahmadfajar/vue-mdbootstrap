@@ -83,8 +83,12 @@
     }
 
     &.#{$prefix}-field-flat {
-        .#{$prefix}-field-inner {
-            border-bottom-color: transparent;
+        > .#{$prefix}-field-wrapper {
+            > .#{$prefix}-field-ctrl {
+                > .#{$prefix}-field-inner {
+                    border-bottom-color: transparent;
+                }
+            }
         }
     }
 
@@ -113,22 +117,18 @@
                 }
 
                 &.#{$prefix}-active {
-                    color: $gray-600;
+                    color: darken($gray-600, 5%);
                 }
 
                 &.#{$prefix}-focused {
-                    color: $primary-color;
+                    color: $blue-darken-2;
                 }
-
-                //&.#{$prefix}-after-icon:not(.#{$prefix}-active) {
-                //    margin-left: $padding-base + .5;
-                //}
             }
         }
     }
 
     &.#{$prefix}-focused {
-        &:not(.#{$prefix}-field-outlined) {
+        &:not(.#{$prefix}-field-outlined):not(.#{$prefix}-field-flat) {
             .#{$prefix}-field-inner {
                 &:after {
                     left: 0;
@@ -141,7 +141,7 @@
             .#{$prefix}-prepend-icon,
             .#{$prefix}-append-icon,
             .#{$prefix}-toggle-icon {
-                color: $primary-color;
+                color: $blue-darken-2;
             }
         }
     }
@@ -151,16 +151,18 @@
             color: $danger-color-dark !important;
         }
 
-        .#{$prefix}-field-wrapper {
-            .#{$prefix}-field-inner {
-                border-bottom-color: $red-darken-3 !important;
+        > .#{$prefix}-field-wrapper {
+            > .#{$prefix}-field-ctrl {
+                > .#{$prefix}-field-inner {
+                    border-bottom-color: $red-darken-3 !important;
 
-                .#{$prefix}-field-label {
-                    color: $danger-color-dark !important;
-                }
+                    .#{$prefix}-field-label {
+                        color: $danger-color-dark !important;
+                    }
 
-                &:after {
-                    background-color: $danger-color;
+                    &:after {
+                        background-color: $danger-color;
+                    }
                 }
             }
 
@@ -177,12 +179,14 @@
             color: $success-color-dark !important;
         }
 
-        .#{$prefix}-field-wrapper {
-            .#{$prefix}-field-inner {
-                border-bottom-color: $green-darken-4 !important;
+        > .#{$prefix}-field-wrapper {
+            > .#{$prefix}-field-ctrl {
+                > .#{$prefix}-field-inner {
+                    border-bottom-color: $green-darken-4 !important;
 
-                .#{$prefix}-field-label {
-                    color: $success-color-dark !important;
+                    .#{$prefix}-field-label {
+                        color: $success-color-dark !important;
+                    }
                 }
             }
 
@@ -194,6 +198,62 @@
         }
     }
 
+    &.#{$prefix}-field-filled {
+        > .#{$prefix}-field-wrapper {
+            > .#{$prefix}-field-ctrl {
+                > .#{$prefix}-field-inner {
+                    @include border-top-radius(.4rem);
+                    background-color: rgba($black, .03);
+                    border-color: $grey-base;
+                    padding-left: $padding-base;
+                    padding-right: $padding-base;
+
+                    &:hover {
+                        background-color: rgba($black, .07);
+                        border-color: rgba($black, .65);
+                    }
+
+                    > .#{$prefix}-action-icon:last-child,
+                    > .#{$prefix}-append-icon {
+                        margin-right: -.25rem;
+                    }
+                }
+
+                > .#{$prefix}-help-text {
+                    margin-left: $padding-base;
+                    margin-right: $padding-base;
+                }
+            }
+        }
+
+        &.#{$prefix}-focused {
+            > .#{$prefix}-field-wrapper {
+                > .#{$prefix}-field-ctrl {
+                    > .#{$prefix}-field-inner {
+                        background-color: rgba($black, .12);
+                    }
+                }
+            }
+        }
+
+        &.#{$prefix}-floating-label {
+            padding-top: $padding-sm;
+
+            .#{$prefix}-field-inner {
+                padding-top: $padding-base - .8;
+                padding-bottom: $padding-base - .8;
+
+                .#{$prefix}-field-label {
+                    top: 14px;
+                }
+
+                input {
+                    padding-top: $padding-base + .1;
+                }
+            }
+        }
+    }
+
     &.#{$prefix}-field-outlined {
         > .#{$prefix}-field-wrapper {
             > .#{$prefix}-field-ctrl {
@@ -201,8 +261,8 @@
                     @include border-radius($border-radius-sm);
                     border-bottom-color: transparent;
                     border-bottom-width: 0;
-                    padding-left: $padding-base - .25;
-                    padding-right: $padding-base - .25;
+                    padding-left: $padding-base;
+                    padding-right: $padding-base;
 
                     legend {
                         @include transition(width .3s cubic-bezier(.25, .8, .5, 1));
@@ -223,7 +283,7 @@
                         left: 0;
                         right: 0;
                         color: rgba($black, .4);
-                        padding: 0 $padding-sm - .1;
+                        padding: 0 $padding-base - .3;
                         pointer-events: none;
                         position: absolute;
                     }
@@ -233,6 +293,16 @@
                             color: rgba($black, .75);
                         }
                     }
+
+                    > .#{$prefix}-action-icon:last-child,
+                    > .#{$prefix}-append-icon {
+                        margin-right: -.25rem;
+                    }
+                }
+
+                > .#{$prefix}-help-text {
+                    margin-left: $padding-base;
+                    margin-right: $padding-base;
                 }
             }
         }
@@ -255,6 +325,16 @@
 
                 > fieldset {
                     top: -6px;
+                }
+
+                > .#{$prefix}-prepend-icon {
+                    + .#{$prefix}-field-input-wrapper {
+                        > .#{$prefix}-field-label {
+                            &.#{$prefix}-active {
+                                left: $padding-base * -2;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -302,7 +382,7 @@
 }
 
 .#{$prefix}-field {
-    .#{$prefix}-field-wrapper {
+    > .#{$prefix}-field-wrapper {
         > .#{$prefix}-prepend-icon {
             margin-right: $padding-base;
             padding-top: $padding-sm;
@@ -326,9 +406,11 @@
             }
 
             > .#{$prefix}-action-icon {
+                @include flexbox((display: flex, align-items: center));
                 cursor: pointer;
 
                 > .icon-clear {
+                    @include display-flex();
                     color: $gray-500;
 
                     &:first-child:not(:last-child) {
@@ -338,6 +420,11 @@
                     &:focus, &:active, &:hover, &:active:focus {
                         color: $red-base;
                     }
+                }
+
+                > .#{$prefix}-toggle-icon {
+                    @include flexbox((display: flex, align-items: center));
+                    width: 24px;
                 }
             }
 
@@ -355,7 +442,7 @@
     &.#{$prefix}-floating-label {
         .#{$prefix}-field-inner {
             .#{$prefix}-field-label {
-                > .#{$prefix}-empty-class, label {
+                .#{$prefix}-empty-class, label {
                     margin-bottom: 0;
                 }
 
@@ -364,16 +451,29 @@
                 }
             }
         }
-    }
 
-    &.#{$prefix}-field-outlined {
-        &.#{$prefix}-floating-label {
-            .#{$prefix}-field-wrapper {
-                @include align-items(center);
-
+        &.#{$prefix}-field-filled {
+            > .#{$prefix}-field-wrapper {
                 > .#{$prefix}-append-icon,
                 > .#{$prefix}-prepend-icon {
-                    padding-top: $padding-base - 0.6;
+                    padding-top: 1.02rem;
+                }
+            }
+
+            .#{$prefix}-field-inner {
+                .#{$prefix}-field-label {
+                    &.#{$prefix}-active {
+                        @include transform(translateY(-12px) scale(.8));
+                    }
+                }
+            }
+        }
+
+        &.#{$prefix}-field-outlined {
+            > .#{$prefix}-field-wrapper {
+                > .#{$prefix}-append-icon,
+                > .#{$prefix}-prepend-icon {
+                    padding-top: 1.38rem;
                 }
 
                 .#{$prefix}-field-inner {
@@ -389,12 +489,8 @@
 
     &.#{$prefix}-disabled {
         .#{$prefix}-field-inner {
-            > input {
+            input {
                 color: rgba($black, .4);
-
-                &:disabled {
-                    background-color: transparent;
-                }
             }
 
             > fieldset {
@@ -405,62 +501,108 @@
 }
 
 .#{$prefix}-textarea {
-    .#{$prefix}-field-ctrl {
-        @include align-items(flex-start);
+    > .#{$prefix}-field-wrapper {
+        .#{$prefix}-action-icon,
+        .#{$prefix}-append-icon,
+        .#{$prefix}-prepend-icon {
+            padding-top: $padding-sm;
+        }
 
-        > .#{$prefix}-field-inner {
-            @include align-items(flex-start);
+        > .#{$prefix}-prepend-icon {
+            margin-right: $padding-base;
+        }
+
+        > .#{$prefix}-append-icon {
+            margin-left: $padding-base;
         }
     }
 
     .#{$prefix}-field-inner {
         > .#{$prefix}-prepend-icon {
-            padding-right: 8px;
-            padding-top: 10px;
+            margin-right: $padding-sm;
+        }
+
+        > .#{$prefix}-action-icon,
+        > .#{$prefix}-append-icon {
+            margin-left: $padding-sm;
         }
 
         > .#{$prefix}-action-icon {
-            position: relative;
-            padding-left: 6px;
-            padding-right: 8px;
-            padding-top: 6px;
+            cursor: pointer;
 
             > .icon-clear {
-                cursor: pointer;
                 color: $gray-500;
+
+                &:first-child:not(:last-child) {
+                    padding-right: $padding-sm;
+                }
 
                 &:focus, &:active, &:hover, &:active:focus {
                     color: $red-base;
                 }
             }
-
-            > .#{$prefix}-append-icon {
-                padding-left: .3rem;
-            }
         }
 
-        > textarea {
-            @include flex(1 1 auto);
+        textarea {
             @include decorate-input-placeholder;
+            background-color: transparent;
             border-width: 0;
             outline: 0 none;
-            margin-top: 8px;
-            padding-bottom: 6px;
+            width: 100%;
+            margin: $padding-sm 0;
+            padding: 0;
             overflow-x: hidden;
             overflow-y: auto;
         }
     }
 
-    &.#{$prefix}-floating-active {
+    &.#{$prefix}-floating-label {
         .#{$prefix}-field-inner {
-            > .#{$prefix}-floating-label {
-
-                &:not(.#{$prefix}-active) {
-                    margin-top: $padding-sm;
+            .#{$prefix}-field-label {
+                .#{$prefix}-empty-class, label {
+                    margin-bottom: 0;
                 }
 
                 &.#{$prefix}-active {
-                    @include transform(translateY(-10px) scale(.9));
+                    @include transform(translateY(-20px) scale(.85));
+                }
+            }
+        }
+
+        &.#{$prefix}-field-filled {
+            > .#{$prefix}-field-wrapper {
+                > .#{$prefix}-append-icon,
+                > .#{$prefix}-prepend-icon {
+                    padding-top: 1.1rem;
+                }
+            }
+
+            .#{$prefix}-field-inner {
+                .#{$prefix}-field-label {
+                    &.#{$prefix}-active {
+                        @include transform(translateY(-10px) scale(.8));
+                    }
+                }
+
+                textarea {
+                    margin-top: $padding-base + .25;
+                }
+            }
+        }
+
+        &.#{$prefix}-field-outlined {
+            > .#{$prefix}-field-wrapper {
+                > .#{$prefix}-append-icon,
+                > .#{$prefix}-prepend-icon {
+                    padding-top: 1.38rem;
+                }
+
+                .#{$prefix}-field-inner {
+                    .#{$prefix}-field-label {
+                        &.#{$prefix}-active {
+                            @include transform(translateY(-28px) scale(.85));
+                        }
+                    }
                 }
             }
         }
@@ -468,49 +610,16 @@
 
     &.#{$prefix}-field-noresize {
         .#{$prefix}-field-inner {
-            > textarea {
+            textarea {
                 resize: none;
-            }
-        }
-    }
-
-    &.#{$prefix}-field-outlined {
-        .#{$prefix}-field-inner {
-            > .#{$prefix}-prepend-icon {
-                margin-left: $padding-sm;
-                padding-right: 0;
-            }
-
-            > textarea {
-                @include border-radius($border-radius-sm);
-                padding: 2px 4px 8px 8px;
-                margin-left: 3px;
-            }
-        }
-
-        &.#{$prefix}-floating-active {
-            .#{$prefix}-field-inner {
-                > .#{$prefix}-floating-label {
-                    &.#{$prefix}-active {
-                        @include transform(translateY(-10px) scale(.9));
-                    }
-                }
-
-                > textarea {
-                    padding-top: 0;
-                }
             }
         }
     }
 
     &.#{$prefix}-disabled {
         .#{$prefix}-field-inner {
-            > textarea {
+            textarea {
                 color: rgba($black, .6);
-
-                &:disabled {
-                    background-color: transparent;
-                }
             }
 
             > fieldset {

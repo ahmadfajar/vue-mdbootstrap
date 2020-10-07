@@ -1,6 +1,6 @@
 <template>
-  <div class="md-datepicker-body picker-year"
-       v-touch="{left: onTouch, right: onTouch}"
+  <div v-touch="{left: onTouch, right: onTouch}"
+       class="md-datepicker-body picker-year"
        @wheel="onMouseWheel">
     <transition :name="transitionName">
       <table :key="tableDate.toISOString()">
@@ -42,10 +42,10 @@ export default {
          * @returns {number[]} Array of Years
          */
         tableRows() {
-            let rows        = [];
-            let children    = [];
+            let rows = [];
+            let children = [];
             const startYear = this.dateValue.year() - 4;
-            const endYear   = this.dateValue.year() + 7;
+            const endYear = this.dateValue.year() + 7;
 
             for (let year = startYear; year <= endYear; year++) {
                 children.push(year);
@@ -70,7 +70,7 @@ export default {
          * @returns {Object} The component's properties
          */
         buttonAttrs(year) {
-            const _date    = moment().year(year);
+            const _date = moment().year(year);
             const selected = Helper.isArray(this.value)
                 ? this.value.indexOf(String(year)) !== -1
                 : this.value ? this.value.getFullYear() === year : false;

@@ -1,69 +1,104 @@
 <template>
-  <div class="md-field row" :class="_classNames">
-    <div v-if="floatingLabel === false" ref="label">
-      <slot v-bind="{ id }" />
-    </div>
-    <div class="flex-grow-1">
-      <div class="md-field-inner align-items-center" ref="activator" :class="controlCls">
-        <fieldset aria-hidden="true">
-          <legend ref="legend">
-            <span>​</span>
-          </legend>
-        </fieldset>
-        <div v-if="floatingLabel"
-             ref="floatlabel"
-             class="md-floating-label"
-             :class="floatingLabelClass"
-             @click="activatorClick">
-          <slot v-bind="{ id }" />
-        </div>
-        <div v-if="prependIcon" class="md-prepend-icon" @click="_activatorClick">
-          <slot name="prependSlot">
-            <font-awesome-icon :icon="prependIcon" />
-          </slot>
-        </div>
-        <input ref="input"
-               style="cursor: default"
-               v-bind="attributes"
-               v-model="dateValue"
-               @focus="_onFocus"
-               @blur="_onBlur"
-               @click="activatorClick" />
-        <transition name="fade">
-          <div class="md-action-icon" v-if="hasClearButton">
-            <bs-icon v-if="hasClearButton" icon="clear" @click="clearValue" />
-          </div>
-        </transition>
-        <div class="md-append-icon" @click="_activatorClick">
-          <slot name="appendSlot">
-            <font-awesome-icon v-if="appendIcon" style="cursor: pointer" :icon="appendIcon" />
-            <bs-icon v-else icon="calendar" style="cursor: pointer" />
-          </slot>
-        </div>
-      </div>
-      <div class="md-help-text" v-if="helpText || showErrorValidation">
-        <slot name="helptext">
-          <small v-if="showHelpText" class="text-muted d-block">
-            {{ helpText }}
-          </small>
+  <div :class="_classNames" class="md-field row">
+    <slot v-if="floatingLabel === false" v-bind="{ id }" />
+    <div class="md-field-wrapper">
+      <div v-if="prependIconOuter"
+           class="md-prepend-icon">
+        <slot name="prependIconOuter">
+          <font-awesome-icon :icon="prependIconOuter" fixed-width />
         </slot>
-        <template v-if="hasValidationError">
-          <small v-for="(fld) in errorItems"
-                 :key="fld"
-                 class="text-danger d-block">
-            {{ _validationMessage(fld) }}
-          </small>
-        </template>
+      </div>
+      <div class="md-field-ctrl">
+        <div ref="activator"
+             class="md-field-inner"
+             @mouseenter="onMouseEnter">
+          <fieldset v-if="outlined"
+                    aria-hidden="true">
+            <legend ref="legend">
+              <span>​</span>
+            </legend>
+          </fieldset>
+          <div v-if="prependIcon"
+               @click="_activatorClick"
+               class="md-prepend-icon">
+            <slot name="prependIcon">
+              <font-awesome-icon :icon="prependIcon" fixed-width />
+            </slot>
+          </div>
+          <div class="md-field-input-wrapper">
+            <div v-if="floatingLabel"
+                 ref="floatLabel"
+                 :class="floatingLabelClass"
+                 class="md-field-label">
+              <slot v-bind="{ id }" />
+            </div>
+            <input ref="input"
+                   v-model="dateValue"
+                   v-bind="attributes"
+                   style="cursor: default"
+                   @blur="_onBlur"
+                   @click="activatorClick"
+                   @focus="_onFocus" />
+          </div>
+          <transition name="fade">
+            <div v-if="hasClearButton"
+                 class="md-action-icon">
+              <bs-icon v-if="hasClearButton"
+                       height="24"
+                       icon="clear"
+                       @click="clearValue" />
+            </div>
+          </transition>
+          <div class="md-append-icon"
+               @click="_activatorClick">
+            <slot name="appendIcon">
+              <font-awesome-icon v-if="appendIcon"
+                                 :icon="appendIcon"
+                                 fixed-width
+                                 style="cursor: pointer" />
+              <bs-icon v-else
+                       height="24"
+                       icon="calendar"
+                       style="cursor: pointer" />
+            </slot>
+          </div>
+        </div>
+        <div v-if="helpText || showErrorValidation"
+             class="md-help-text">
+          <transition name="fade">
+            <slot name="helpText">
+              <small v-if="showHelpText"
+                     class="text-muted d-block">
+                {{ helpText }}
+              </small>
+            </slot>
+          </transition>
+          <template v-if="hasValidationError">
+            <small v-for="(fld) in errorItems"
+                   :key="fld"
+                   class="text-danger d-block">
+              {{ _validationMessage(fld) }}
+            </small>
+          </template>
+        </div>
+      </div>
+      <div v-if="appendIconOuter"
+           class="md-append-icon">
+        <slot name="appendIconOuter">
+          <font-awesome-icon :icon="appendIconOuter" fixed-width />
+        </slot>
       </div>
     </div>
-    <bs-popover class="md-shadow" v-bind="popoverAttributes" @close="hideMenu">
-      <bs-date-picker v-bind="datePickerAttributes" @input="setValue" />
+    <bs-popover v-bind="_popoverAttributes"
+                class="md-shadow"
+                @close="hideMenu">
+      <bs-date-picker v-bind="_datePickerAttributes" @input="setValue" />
     </bs-popover>
   </div>
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BsIcon from "../BsIcon/BsIcon";
 import BsPopover from "../BsPopover/BsPopover";
 import BsDatePicker from "../BsPicker/BsDatePicker";
@@ -107,7 +142,7 @@ export default {
         },
         /**
          * The display date format, {@see moment} for valid format.
-         * If `undefined` then it will takes from `format` property.
+         * If `undefined` then it will takes from `value-format` property.
          * @type {string|*}
          */
         displayFormat: {
@@ -115,7 +150,7 @@ export default {
             default: undefined
         },
         /**
-         * DatePicker header panel color, default is the same as color property.
+         * DateTime picker header panel color, default is the same as `color` property.
          * @type {string|*}
          */
         headerColor: {
@@ -130,12 +165,8 @@ export default {
             type: Boolean,
             default: true
         },
-        outlined: {
-            type: Boolean,
-            default: false
-        },
         /**
-         * Whether to display DatePicker in landscape or portrait orientation.
+         * Whether to display DateTime picker in landscape or portrait orientation.
          * @type {boolean|*}
          */
         landscapeMode: {
@@ -143,7 +174,7 @@ export default {
             default: false
         },
         /**
-         * Define locale date formatting, default "en-us".
+         * Default locale to be used, default "en-us".
          * @type {string|*}
          */
         locale: {
@@ -151,23 +182,7 @@ export default {
             default: PickerConst.defaultLocale
         },
         /**
-         * Input field maxLength validator.
-         * @type {string|*}
-         */
-        maxlength: {
-            type: [String, Number],
-            default: undefined
-        },
-        /**
-         * Input field minLength validator
-         * @type {string|number|*}
-         */
-        minlength: {
-            type: [String, Number],
-            default: undefined
-        },
-        /**
-         * DatePicker dropdown placement.
+         * Popover dropdown placement.
          * @type {string|*}
          */
         pickerPlacement: {
@@ -183,7 +198,7 @@ export default {
             default: true
         },
         /**
-         * Picker display transition
+         * Picker popover display transition.
          * @type {string|*}
          */
         transition: {
@@ -191,15 +206,15 @@ export default {
             default: BsPopover.props.transition.default
         },
         /**
-         * Input field value yang dapat dikonversi menjadi Date.
-         * @type {string|*}
+         * Input field value that can be convertible to date or datetime.
+         * @type {string|number|Date|*}
          */
         value: {
-            type: [String, Number, Array],
+            type: [String, Number, Date],
             default: undefined
         },
         /**
-         * DatePicker view mode, valid values are: date, month, year or time.
+         * DateTime picker view mode, valid values are: date, month, year or time.
          * @type {string|*}
          */
         viewMode: {
@@ -209,27 +224,10 @@ export default {
         },
     },
     data: () => ({
-        localValue: null,
         displayValue: null,
         popoverTrigger: null
     }),
     computed: {
-        /**
-         * Get computed component's class names.
-         *
-         * @returns {Object|*} Collection of css classes
-         */
-        _classNames() {
-            return {
-                ...this.cmpAttrClasses,
-                'md-field-flat': this.flat,
-                'md-field-outlined': this.outlined,
-                'md-focused': this.isFocused,
-                'md-floating-active': this.floatingLabel,
-                'has-error': this.hasValidationError,
-                'has-success': this.wasValidated && !this.hasValidationError
-            }
-        },
         /**
          * Get input field computed binding's attributes.
          *
@@ -246,11 +244,30 @@ export default {
             }
         },
         /**
+         * Get computed component's class names.
+         *
+         * @returns {Object|*} Collection of css classes
+         * @private
+         */
+        _classNames() {
+            return {
+                ...this.cmpAttrClasses,
+                'md-field-flat': this.flat,
+                'md-field-filled': this.filled,
+                'md-field-outlined': this.outlined,
+                'md-floating-label': this.floatingLabel,
+                'md-focused': this.isFocused,
+                'has-error': this.hasValidationError,
+                'has-success': this.wasValidated && !this.hasValidationError
+            }
+        },
+        /**
          * Get DatePicker computed binding attributes.
          *
          * @returns {Object|*} DatePicker attributes
+         * @private
          */
-        datePickerAttributes() {
+        _datePickerAttributes() {
             return {
                 color: this.color,
                 headerColor: this.headerColor,
@@ -268,8 +285,9 @@ export default {
          * Get Popover computed binding attributes.
          *
          * @returns {Object|*} Popover attributes
+         * @private
          */
-        popoverAttributes() {
+        _popoverAttributes() {
             return {
                 open: this.active,
                 placement: this.pickerPlacement,
@@ -314,12 +332,12 @@ export default {
     mounted() {
         this.popoverTrigger = this.$refs.activator;
 
-        if (!this.floatingLabel && this.$refs.label.children.length > 0) {
-            const elm = this.$refs.label.children[0];
-
-            this.$refs.label.className += ' ' + elm.className;
-            elm.className = 'd-block mb-0';
-        }
+        // if (!this.floatingLabel && this.$refs.label.children.length > 0) {
+        //     const elm = this.$refs.label.children[0];
+        //
+        //     this.$refs.label.className += ' ' + elm.className;
+        //     elm.className = 'd-block mb-0';
+        // }
         this._updateLabel();
         this.$nextTick(() => {
             if (this.autofocus && this.$refs.input) {
@@ -329,12 +347,15 @@ export default {
         });
     },
     methods: {
-        _activatorClick(e) {
+        _activatorClick() {
             if (this.active) {
-                this._onBlur(e);
+                this.isFocused = false;
+                this._updateLegend();
+                this.$emit('blur', new FocusEvent('blur'));
             } else {
-                this._onFocus(e);
+                this._onFocus(new FocusEvent('focus'));
             }
+
             this.activatorClick();
         },
         /**
