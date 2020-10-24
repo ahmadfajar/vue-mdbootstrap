@@ -337,10 +337,10 @@ export default {
          */
         _updateLegend(value) {
             if (this.outlined && this.$refs.legend) {
-                let label = this.floatingLabel
+                const label = this.floatingLabel
                     ? this.$refs.floatLabel
                     : this.$el.querySelector('label');
-                let hasWidth = this.floatingLabel && (this.hasValue || this.isFocused || this.placeholder || value);
+                const hasWidth = this.floatingLabel && (this.hasValue || this.isFocused || this.placeholder || value);
 
                 if (hasWidth && label) {
                     const width = label.clientWidth < 80 ? label.clientWidth : label.clientWidth - 8;

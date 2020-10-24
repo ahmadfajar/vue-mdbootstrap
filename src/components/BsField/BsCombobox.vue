@@ -1,63 +1,55 @@
 <template>
-  <div class="md-combobox" :class="_classNames">
-    <div class="md-combobox-inner row">
-      <div v-if="floatingLabel === false"
-           ref="label"
-           class="md-combobox-label"
-           @click.stop="activatorClick">
-        <slot v-bind="{ id }"></slot>
+  <div :class="_classNames" class="md-field md-combobox row">
+    <div v-if="floatingLabel === false"
+         ref="label"
+         class="md-combobox-label"
+         @click.stop="activatorClick">
+      <slot v-bind="{ id }"></slot>
+    </div>
+    <div class="md-field-wrapper">
+      <div v-if="prependIconOuter"
+           class="md-prepend-icon">
+        <slot name="prependIconOuter">
+          <font-awesome-icon :icon="prependIconOuter" fixed-width />
+        </slot>
       </div>
-      <div class="col px-0">
+      <div class="md-field-ctrl">
         <div ref="activator"
-             class="md-combobox-control align-items-end"
-             :class="controlCls">
-          <div class="md-combobox-control-inner d-flex flex-fill align-items-start"
+             class="md-field-inner"
+             @mouseenter="onMouseEnter">
+          <fieldset v-if="outlined"
+                    aria-hidden="true">
+            <legend ref="legend">
+              <span>​</span>
+            </legend>
+          </fieldset>
+          <div v-if="prependIcon"
+               class="md-prepend-icon">
+            <slot name="prependIcon">
+              <font-awesome-icon :icon="prependIcon" fixed-width />
+            </slot>
+          </div>
+          <div class="md-field-input-wrapper"
                tabindex="0"
-               @focus="_onFocus"
-               @blur="_onBlur">
-            <fieldset v-if="outlined" aria-hidden="true">
-              <legend ref="legend">
-                <span>​</span>
-              </legend>
-            </fieldset>
+               @blur="_onBlur"
+               @click="activatorClick"
+               @focus="_onFocus">
             <div v-if="floatingLabel"
-                 ref="floatlabel"
-                 class="md-floating-label"
+                 ref="floatLabel"
                  :class="_floatingLabelClass"
-                 @click="activatorClick">
-              <slot v-bind="{ id }"></slot>
+                 class="md-field-label">
+              <slot v-bind="{ id }" />
             </div>
-            <div v-if="prependIcon" class="md-prepend-icon">
-              <slot name="prependSlot">
-                <font-awesome-icon :icon="prependIcon" />
-              </slot>
-            </div>
-            <div class="md-combobox-input d-flex justify-content-start"
-                 @click="activatorClick">
-              <span v-if="_showPlaceHolder" class="md-placeholder">{{ placeholder }}</span>
-              <span v-else-if="chips && multiple" class="md-input-tags">
+            <div class="md-combobox-input">
+              <span v-if="_showPlaceHolder"
+                    class="md-placeholder">{{ placeholder }}</span>
+              <span v-else-if="chips && multiple"
+                    class="md-input-tags">
                 <slot name="tags">{{ inputDisplay }}</slot>
               </span>
               <span class="md-value" v-else>{{ inputDisplay }}</span>
             </div>
-            <div class="md-action-icon d-flex align-items-center">
-              <transition name="fade">
-                <bs-icon v-if="_showClearButton"
-                         class="d-flex align-items-center"
-                         icon="clear"
-                         @click="clearSelected" />
-              </transition>
-              <bs-icon icon="expand_more"
-                       class="caret"
-                       size="24"
-                       @click="activatorClick" />
-            </div>
-            <div class="md-append-icon" v-if="appendIcon">
-              <slot name="appendSlot">
-                <font-awesome-icon :icon="appendIcon" />
-              </slot>
-            </div>
-            <select class="md-combobox-control-hidden" v-bind="_inputAttributes">
+            <select v-bind="_inputAttributes" class="d-none">
               <option v-for="(item, index) in selectedItems"
                       :key="'item-' + index"
                       :value="getItemValue(item)"
@@ -66,13 +58,34 @@
               </option>
             </select>
           </div>
+          <div class="md-action-icon">
+            <transition name="fade">
+              <bs-icon v-if="_showClearButton"
+                       height="24"
+                       icon="clear"
+                       @click="clearSelected" />
+            </transition>
+            <bs-icon icon="expand_more"
+                     size="24"
+                     @click="activatorClick" />
+          </div>
+          <div v-if="appendIcon"
+               class="md-append-icon">
+            <slot name="appendIcon">
+              <font-awesome-icon :icon="appendIcon" fixed-width />
+            </slot>
+          </div>
         </div>
-        <div v-if="helpText || showErrorValidation" class="md-help-text">
-          <slot name="helptext">
-            <small v-if="showHelpText" class="text-muted d-block">
-              {{ helpText }}
-            </small>
-          </slot>
+        <div v-if="helpText || showErrorValidation"
+             class="md-help-text">
+          <transition name="fade">
+            <slot name="helpText">
+              <small v-if="showHelpText"
+                     class="text-muted d-block">
+                {{ helpText }}
+              </small>
+            </slot>
+          </transition>
           <template v-if="hasValidationError">
             <small v-for="(fld) in errorItems"
                    :key="fld"
@@ -82,9 +95,16 @@
           </template>
         </div>
       </div>
+      <div v-if="appendIconOuter"
+           class="md-append-icon">
+        <slot name="appendIconOuter">
+          <font-awesome-icon :icon="appendIconOuter" fixed-width />
+        </slot>
+      </div>
     </div>
-    <bs-popover v-bind="_popoverAttributes"
-                ref="content"
+    <bs-popover ref="content"
+                v-bind="_popoverAttributes"
+                class="md-combobox-popover md-shadow-1"
                 @close="hideMenu">
       <bs-combobox-list-container v-bind="_listContainerAttributes"
                                   @dataFiltered="_onFilterData"
@@ -101,7 +121,7 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import BsComboboxListContainer from "./BsComboboxListContainer";
 import BsIcon from "../BsIcon/BsIcon";
 import BsPopover from "../BsPopover/BsPopover";
@@ -110,6 +130,7 @@ import Input from "../../mixins/Input";
 import MenuAble from "../../mixins/MenuAble";
 import FieldValidation from "./mixins/FieldValidation";
 import Helper from "../../utils/Helper";
+import "../../../scss/_field.scss"
 import '../../../scss/_shadows.scss';
 
 export default {
@@ -119,103 +140,262 @@ export default {
     },
     mixins: [Input, FieldValidation, MenuAble],
     props: {
-        checkOption: {
-            type: Object,
-            default() {
-                return {
-                    color: 'purple',
-                    position: 'left'
-                }
-            }
-        },
-        checkOptionColor: {
-            type: String,
-            default: undefined
-        },
-        checkOptionPosition: {
-            type: String,
-            default: undefined,
-            validator(value) {
-                return ['left', 'right'].indexOf(value) > -1;
-            }
-        },
-        listboxColor: {
-            type: String,
-            default: undefined
-        },
-        maxHeight: {
-            type: [String, Number],
-            default: 300
-        },
-        minimumItemsForSearch: {
-            type: Number,
-            default: 15
-        },
-        emptyDataMessage: {
-            type: String,
-            default: 'No data to display.'
-        },
-        notFoundMessage: {
-            type: String,
-            default: 'Data not found.'
-        },
-        parentValue: {
-            type: [String, Boolean, Number, Array],
-            default: undefined
-        },
-        persistentHelpText: {
-            type: Boolean,
-            default: true
-        },
-        dataSource: {
-            type: Object,
-            default: undefined
-        },
-        placeholder: {
-            type: String,
-            default: undefined
-        },
-        prependIcon: {
-            type: [String, Array],
-            default: undefined
-        },
+        /**
+         * Sets icon to display on inner right side. Use any valid
+         * [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
+         * @type {string|*}
+         */
         appendIcon: {
             type: [String, Array],
             default: undefined
         },
-        controlCls: {
+        /**
+         * Sets icon to display on outer right side. Use any valid
+         * [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
+         * @type {string|*}
+         */
+        appendIconOuter: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * Sets the checkbox color for ListBox options.
+         * @type {string|*}
+         */
+        checkOptionColor: {
+            type: String,
+            default: 'purple'
+        },
+        /**
+         * Sets the checkbox position for ListBox options. Valid values are: `left`, `right`.
+         * @type {string|*}
+         */
+        checkOptionPosition: {
+            type: String,
+            default: 'left',
+            validator(value) {
+                return ['left', 'right'].indexOf(value) > -1;
+            }
+        },
+        /**
+         * Sets auto show the clear button.
+         * @type {boolean|*}
+         */
+        clearButton: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Sets data source for the ListBox options.
+         * @type {Object|*}
+         */
+        dataSource: {
+            type: Object,
+            default: undefined
+        },
+        /**
+         * Sets the **no data message** when ListBox options is empty.
+         * @type {string|*}
+         */
+        emptyDataMessage: {
+            type: String,
+            default: 'No data to display.'
+        },
+        /**
+         * Sets the ListBox background color.
+         * @type {string|*}
+         */
+        listboxColor: {
+            type: String,
+            default: undefined
+        },
+        /**
+         * Sets the ListBox background color.
+         * @type {number|string|*}
+         */
+        minimumItemsForSearch: {
+            type: [Number, String],
+            default: 15,
+            validator: value => parseInt(value, 10) > 0
+        },
+        /**
+         * Enable/disable multi selection.
+         * @type {boolean|*}
+         */
+        multiple: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Sets the **not found message** when searching returns no result.
+         * @type {string|*}
+         */
+        notFoundMessage: {
+            type: String,
+            default: 'Data not found.'
+        },
+        /**
+         * Sets the cascading combobox parent value.
+         * @type {string|number|boolean|Array|*}
+         */
+        parentValue: {
+            type: [String, Boolean, Number, Array],
+            default: undefined
+        },
+        /**
+         * Keeps help text visible when the component is not focused.
+         * @type {boolean|*}
+         */
+        persistentHelpText: {
+            type: Boolean,
+            default: true
+        },
+        /**
+         * Sets the field placeholder.
+         * @type {string|*}
+         */
+        placeholder: {
+            type: String,
+            default: undefined
+        },
+        /**
+         * Sets maximum height for the Popover or ListBox container.
+         * @type {number|string|*}
+         */
+        popoverMaxHeight: {
+            type: [String, Number],
+            default: 300,
+            validator: value => parseInt(value, 10) > 0
+        },
+        /**
+         * Sets minimum width for the Popover or ListBox container.
+         * @type {number|string|*}
+         */
+        popoverMinWidth: {
+            type: [String, Number],
+            default: undefined,
+            validator: value => parseInt(value, 10) > 0
+        },
+        /**
+         * Sets icon to display on inner left side. Use any valid
+         * [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
+         * @type {string|*}
+         */
+        prependIcon: {
+            type: [String, Array],
+            default: undefined
+        },
+        /**
+         * Sets icon to display on outer left side. Use any valid
+         * [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free) icon name.
+         * @type {string|*}
+         */
+        prependIconOuter: {
+            type: [String, Array],
+            default: undefined
+        },
+        chips: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Create the component with **flat** appearance, and removes the borders.
+         * The component appearance will be styled like plain text.
+         * @type {boolean|*}
+         */
+        flat: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Create the component with **filled** appearance.
+         * See [Google Material Design](https://material.io/components/text-fields) spec.
+         * @type {boolean|*}
+         */
+        filled: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Create the component with **outlined** appearance.
+         * See [Google Material Design](https://material.io/components/text-fields) spec.
+         * @type {boolean|*}
+         */
+        outlined: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Create the component with floating field label.
+         * See [Google Material Design](https://material.io/components/text-fields) spec.
+         * @type {boolean|*}
+         */
+        floatingLabel: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Show or hide the ListBox item separator.
+         * @type {boolean|*}
+         */
+        itemSeparator: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Sets the image size for the ListBox items when `show-image` is enabled.
+         * @type {number|*}
+         */
         imageSize: {
             type: Number,
             default: undefined
         },
-        minimumPopoverWidth: {
-            type: Number,
-            default: undefined
+        /**
+         * Show or hide image if ListBox item's object contains image field.
+         * @type {boolean|*}
+         */
+        showImage: {
+            type: Boolean,
+            default: false
         },
+        /**
+         * Sets **rounded** effect for the displayed image from ListBox item.
+         * @type {boolean|*}
+         */
+        roundedImage: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Sets **circle** effect for the displayed image from ListBox item.
+         * @type {boolean|*}
+         */
+        circleImage: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Sets transition animation when showing the Popover.
+         * @type {string|*}
+         */
         transition: {
             type: String,
             default: BsPopover.props.transition.default
         },
-        clearButton: Boolean,
-        multiple: Boolean,
-        chips: Boolean,
-        flat: Boolean,
-        floatingLabel: Boolean,
-        outlined: Boolean,
-        itemSeparator: Boolean,
-        showImage: Boolean,
-        roundedImage: Boolean,
-        circleImage: Boolean,
-        valueAsObject: Boolean,
+        /**
+         * Sets the returns value from `v-model` as object.
+         * @type {boolean|*}
+         */
+        valueAsObject: {
+            type: Boolean,
+            default: false
+        },
     },
     data: (vm) => ({
         dataModel: {},
         /**
-         * @type {Object}
          * Default data model schema.
+         * @type {Object}
          */
         defaultSchema: {
             displayField: 'text',
@@ -224,7 +404,7 @@ export default {
             cascadeField: 'parent',
             disableField: 'disabled'
         },
-        popoverWidth: vm.minimumPopoverWidth ? vm.minimumPopoverWidth : 0,
+        popoverWidth: vm.popoverMinWidth ? vm.popoverMinWidth : 0,
         dataFetched: false,
         isFocused: false,
         inputDisplay: '',
@@ -253,13 +433,13 @@ export default {
             return {
                 ...this.cmpAttrClasses,
                 'md-open': this.active,
-                'md-combobox-flat': this.flat,
-                'md-combobox-outlined': this.outlined,
-                'md-combobox-multiple': this.multiple,
-                'md-floating-active': this.floatingLabel,
-                'md-focused': this.isFocused || this.active,
+                'md-field-flat': this.flat,
+                'md-field-filled': this.filled,
+                'md-field-outlined': this.outlined,
+                'md-floating-label': this.floatingLabel,
+                'md-focused': (this.isFocused || this.active) && !this.disabled,
                 'has-error': this.hasValidationError,
-                'has-success': this.wasValidated && !this.hasValidationError
+                'has-success': this.wasValidated && !this.hasValidationError,
             };
         },
         /**
@@ -303,7 +483,6 @@ export default {
         _floatingLabelClass() {
             return {
                 'md-active': this.placeholder || this.active || this.selectedItems.length > 0,
-                'md-after-icon': this.prependIcon
             }
         },
         /**
@@ -323,8 +502,8 @@ export default {
                 circleImage: this.circleImage,
                 imageSize: this.imageSize,
                 listboxColor: this.listboxColor,
-                checkOptionColor: this.checkboxColor,
-                checkOptionPosition: this.checkboxPosition,
+                checkOptionColor: this.checkOptionColor,
+                checkOptionPosition: this.checkOptionPosition,
                 dataItems: this.dataItems,
                 selectedItems: this.selectedItems,
                 cascadeField: this.cascadeField,
@@ -332,8 +511,8 @@ export default {
                 displayField: this.displayField,
                 imageField: this.imageField,
                 valueField: this.valueField,
-                maxHeight: this.maxHeight,
-                minimumItemsForSearch: this.minimumItemsForSearch,
+                maxHeight: this.popoverMaxHeight,
+                minimumItemsForSearch: this.minimumItemsForSearch ? parseInt(this.minimumItemsForSearch) : undefined,
                 emptyDataMessage: this.emptyDataMessage,
                 notFoundMessage: this.notFoundMessage,
                 style: this._popoverStyles
@@ -353,9 +532,7 @@ export default {
                 trigger: this.trigger,
                 style: this._popoverStyles,
                 class: {
-                    'md-combobox-popover': true,
-                    'md-shadow-1': true,
-                    ['bg-' + this.listboxColor] : this.listboxColor
+                    ['bg-' + this.listboxColor]: this.listboxColor
                 }
             }
         },
@@ -381,26 +558,8 @@ export default {
         _popoverStyles() {
             return {
                 'min-width': this.trigger ? Helper.sizeUnit(this._popoverMinWidth) : '',
-                'max-height': Helper.sizeUnit(this.maxHeight)
+                'max-height': Helper.sizeUnit(this.popoverMaxHeight)
             }
-        },
-        /**
-         * Get checkbox color.
-         *
-         * @returns {string} Color name
-         */
-        checkboxColor() {
-            this._assignCheckOptionColor(this.checkOptionColor);
-            return this.checkOption.color;
-        },
-        /**
-         * Get checkbox position when multi-selection is enabled.
-         *
-         * @returns {string} Position name
-         */
-        checkboxPosition() {
-            this._assignCheckOptionPosition(this.checkOptionPosition);
-            return this.checkOption.position;
         },
         /**
          * Get data items.
@@ -443,6 +602,18 @@ export default {
             return this.dataModel.imageField;
         },
         /**
+         * Check if helpText will be shown or not.
+         *
+         * @returns {boolean} TRUE to show help text otherwise FALSE
+         */
+        showHelpText() {
+            if (this.externalValidator && this.externalValidator.hasError && !this.wasValidated) {
+                this.wasValidated = true;
+            }
+
+            return !!(this.helpText && (this.persistentHelpText || this.isFocused || this.active));
+        },
+        /**
          * Get property value field name from data schema.
          *
          * @returns {string} A field name
@@ -474,7 +645,7 @@ export default {
     },
     watch: {
         active(value) {
-            if (value && !this.minimumPopoverWidth) {
+            if (value && !this.popoverMinWidth) {
                 this.popoverWidth = this.trigger.offsetWidth;
             }
             this._updateLegend(value);
@@ -504,7 +675,7 @@ export default {
     },
     beforeDestroy() {
         this.selectedItems = [];
-        this.dataModel     = null;
+        this.dataModel = null;
     },
     methods: {
         /**
@@ -576,30 +747,6 @@ export default {
             return Helper.getObjectValueByPath(item, field);
         },
         /**
-         * Assign checkbox color property.
-         *
-         * @param {string} color CheckBox color
-         * @returns {void}
-         * @private
-         */
-        _assignCheckOptionColor(color) {
-            if (color) {
-                this.checkOption.color = color;
-            }
-        },
-        /**
-         * Assign checkbox position property.
-         *
-         * @param {string} position CheckBox position
-         * @returns {void}
-         * @private
-         */
-        _assignCheckOptionPosition(position) {
-            if (position && ['left', 'right'].includes(position)) {
-                this.checkOption.position = position;
-            }
-        },
-        /**
          * Compute and join the selected array values.
          *
          * @returns {void}
@@ -611,7 +758,7 @@ export default {
                 values.push(this.getItemValue(item));
                 text.push(this.getItemText(item));
             });
-            this.inputValue   = this.multiple
+            this.inputValue = this.multiple
                 ? (values.length > 0 ? values : null)
                 : (values.length > 0 ? values[0] : null);
             this.inputDisplay = text.join(', ');
@@ -623,7 +770,7 @@ export default {
          * @private
          */
         _fetchData() {
-            const ds    = this.dataSource;
+            const ds = this.dataSource;
             let doFetch = false;
 
             if (ds !== undefined) {
@@ -680,7 +827,7 @@ export default {
          * @private
          */
         _setSelectedItems() {
-            const items        = this.dataItems;
+            const items = this.dataItems;
             this.selectedItems = [];
 
             if (this.inputValue) {
@@ -716,23 +863,36 @@ export default {
 
             if (!this.floatingLabel && this.$refs.label.children.length > 0) {
                 const elm = this.$refs.label.children[0];
-                label     = this.$refs.label.querySelector('label');
-
+                // label = this.$refs.label.querySelector('label');
                 this.$refs.label.className += ' ' + elm.className;
                 elm.className = 'md-empty-class';
-                this._setLabelFor(label);
-            } else if (this.floatingLabel && this.$refs.floatlabel.children) {
-                const children = this.$refs.floatlabel.children;
+                // this._setLabelFor(label);
+            } else if (this.floatingLabel && this.$refs.floatLabel.children) {
+                const children = this.$refs.floatLabel.children;
 
                 if (children.length > 0) {
-                    label = this.$refs.floatlabel.children[0];
+                    label = this.$refs.floatLabel.children[0];
                     if (!Helper.isEmpty(label.classList) && !Helper.isEmpty(label.className)) {
                         label.className = 'md-empty-class';
                     }
                 }
+                // label = this.$refs.floatLabel.querySelector('label');
+                // this._setLabelFor(label);
+            }
+        },
+        _updateLegend(value) {
+            if (this.outlined && this.$refs.legend) {
+                const label = this.floatingLabel
+                    ? this.$refs.floatLabel
+                    : this.$el.querySelector('label');
+                const hasWidth = this.floatingLabel && (this.active || this.placeholder || this.inputValue || value);
 
-                label = this.$refs.floatlabel.querySelector('label');
-                this._setLabelFor(label);
+                if (hasWidth && label) {
+                    const width = label.clientWidth < 80 ? label.clientWidth : label.clientWidth - 8;
+                    this.$refs.legend.style.width = Helper.sizeUnit(width);
+                } else {
+                    this.$refs.legend.style.width = Helper.sizeUnit(0);
+                }
             }
         },
         /**
@@ -834,20 +994,6 @@ export default {
                 this.$emit('change', item, oldItem);
             });
         },
-        _updateLegend(value) {
-            if (this.outlined && this.$refs.legend) {
-                let label    = this.floatingLabel
-                    ? this.$refs.floatlabel
-                    : this.$el.querySelector('label');
-                let hasWidth = this.floatingLabel && (this.active || this.placeholder || this.inputValue || value);
-
-                if (hasWidth && label) {
-                    this.$refs.legend.style.width = Helper.sizeUnit(label.clientWidth);
-                } else {
-                    this.$refs.legend.style.width = Helper.sizeUnit(0);
-                }
-            }
-        },
     }
 }
 </script>
@@ -857,502 +1003,156 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-$dropdown-checkbox-size: 16px;
-$dropdown-checkbox-ripple-size: 40px;
-
 .#{$prefix}-combobox {
-  position: relative;
-  width: 100%;
+    .#{$prefix}-field-input-wrapper {
+        @include align-items(center);
+        outline: none;
+        min-height: 40px;
 
-  &.#{$prefix}-required {
-    .#{$prefix}-floating-label,
+        > .#{$prefix}-combobox-input {
+            padding: 8px 0;
+        }
+    }
+
     .#{$prefix}-combobox-label,
     .col-form-label {
-      font-weight: bold;
-    }
-  }
-
-  > .#{$prefix}-combobox-inner {
-    .#{$prefix}-combobox-label {
-      @include user-select(none);
-
-      label {
-        margin-bottom: 0;
-      }
+        label {
+            margin-bottom: 0;
+        }
     }
 
-    .#{$prefix}-help-text {
-      display: block;
-      min-height: 18px;
-      margin: ($padding-base / 4) $padding-base 0 $padding-base;
-
-      > * {
-        font-size: 83% !important;
-      }
+    .#{$prefix}-placeholder {
+        @include user-select(none);
+        cursor: default !important;
+        color: $gray-600;
+        font-weight: $font-weight-light;
     }
 
-    .#{$prefix}-combobox-control {
-      @include display-flex();
-      @include flex(1 1 auto);
-      margin-left: $padding-base - .06;
-      margin-right: $padding-base - .06;
-      min-height: 2rem;
-      padding-left: 0;
-      padding-right: 0;
-      position: relative;
-      outline: 0 none;
-      width: auto;
+    .#{$prefix}-input-tags {
+        margin: 4px 4px 4px 0;
+    }
 
-      .#{$prefix}-floating-label {
-        @include transition(0.3s cubic-bezier(0.25, 0.8, 0.5, 1));
-        @include transform-origin(top left, false);
-        display: inline-block;
-        left: 0;
-        top: $padding-base / 4;
-        right: auto;
-        line-height: 1.2;
-        max-width: 90%;
-        min-height: .5rem;
-        overflow: hidden;
-        position: absolute;
+    .#{$prefix}-value {
         pointer-events: none;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        z-index: 2;
+    }
 
-        &.#{$prefix}-active {
-          @include transform(translateY(-24px) scale(.9));
-          color: $gray-600;
+    .#{$prefix}-action-icon {
+        > .icon-expand-more {
+            @include transition(all 0.3s ease 0s);
+            cursor: pointer;
         }
-      }
+    }
 
-      > .#{$prefix}-combobox-control-inner {
-        @include transition(border .3s ease-in-out);
-        @include box-shadow(none);
-        outline: 0 none;
-        height: 100%;
-        border-bottom: 1px solid $gray-500;
-        position: relative;
-
-        &:after {
-          @include transition($transition-basic);
-          background-color: $blue-darken-2;
-          position: absolute;
-          content: '';
-          height: 1px;
-          left: 50%;
-          bottom: 0;
-          width: 0;
-        }
-
-        > .#{$prefix}-prepend-icon,
-        > .#{$prefix}-append-icon {
-          color: $gray-700;
-          display: inline;
-          font-size: 1rem;
-        }
-
-        > .#{$prefix}-prepend-icon {
-          margin-right: $padding-sm;
-        }
-
-        > .#{$prefix}-append-icon {
-          margin-left: .4rem;
-          margin-right: .3rem;
-        }
-      }
-
-      .#{$prefix}-combobox-control-hidden {
-        background-color: transparent;
-        border: 0 none;
-        display: none;
-        outline: 0 none;
-        position: absolute;
-      }
-
-      .#{$prefix}-combobox-input {
-        @include flex(1 auto);
-        max-width: 100%;
-        min-height: 1.25rem;
-
-        > .#{$prefix}-placeholder {
-          @include user-select(none);
-          cursor: default !important;
-          color: $gray-500;
-          font-weight: $font-weight-light;
-        }
-
-        .#{$prefix}-input-tags {
-          margin: 4px 4px 4px 0;
-        }
-
-        .#{$prefix}-value {
-          pointer-events: none;
-        }
-      }
-
-      .#{$prefix}-action-icon {
-        cursor: pointer;
-        padding-left: $padding-sm;
-
-        .#{$prefix}-icon {
-          &.icon-clear {
-            color: $gray-500;
-            font-size: 1rem;
-
-            &:focus, &:active, &:hover, &:active:focus {
-              color: $red-base;
+    &.#{$prefix}-disabled {
+        .#{$prefix}-action-icon {
+            > .icon-expand-more {
+                color: $gray-500;
             }
-          }
         }
-
-        .caret {
-          @include transition(all 0.3s ease 0s);
-        }
-      }
-    }
-  }
-
-  &.#{$prefix}-combobox-flat {
-    > .#{$prefix}-combobox-inner {
-      .#{$prefix}-combobox-control {
-        > .#{$prefix}-combobox-control-inner {
-          border-bottom-color: transparent;
-        }
-      }
-    }
-  }
-
-  &.#{$prefix}-focused {
-    &:not(.#{$prefix}-disabled) {
-      .#{$prefix}-combobox-control {
-        .#{$prefix}-prepend-icon,
-        .#{$prefix}-append-icon,
-        .#{$prefix}-floating-label {
-          color: $primary-color;
-        }
-
-        .#{$prefix}-action-icon > .caret {
-          color: $blue-darken-3 !important;
-        }
-      }
-    }
-  }
-
-  &.has-error {
-    .col-form-label {
-      color: $danger-color-dark !important;
     }
 
-    > .#{$prefix}-combobox-inner {
-      .#{$prefix}-combobox-control {
-        > .#{$prefix}-combobox-control-inner {
-          .#{$prefix}-prepend-icon,
-          .#{$prefix}-append-icon,
-          .#{$prefix}-floating-label {
-            color: $danger-color-dark;
-          }
-
-          border-bottom-color: $danger-color !important;
-
-          &:after {
-            background-color: $danger-color;
-          }
+    &.#{$prefix}-required {
+        .#{$prefix}-combobox-label,
+        .col-form-label {
+            font-weight: bold;
         }
-      }
-    }
-  }
-
-  &.has-success {
-    .col-form-label {
-      color: $success-color-dark !important;
-    }
-
-    > .#{$prefix}-combobox-inner {
-      .#{$prefix}-combobox-control-inner {
-        .#{$prefix}-prepend-icon,
-        .#{$prefix}-append-icon,
-        .#{$prefix}-floating-label {
-          color: $success-color-dark;
-        }
-      }
-    }
-
-    &:not(.#{$prefix}-focused) {
-      > .#{$prefix}-combobox-inner {
-        .#{$prefix}-combobox-control-inner {
-          border-bottom-color: $success-color-dark !important;
-        }
-      }
-    }
-  }
-
-  &.#{$prefix}-floating-active {
-    padding-top: 1rem;
-
-    .#{$prefix}-combobox-control {
-      .#{$prefix}-floating-label {
-        > .#{$prefix}-empty-class, label {
-          margin-bottom: 0;
-        }
-
-        &.#{$prefix}-after-icon:not(.#{$prefix}-active) {
-          margin-left: $padding-base + .5;
-        }
-      }
-    }
-  }
-
-  &.#{$prefix}-active,
-  &.#{$prefix}-focused,
-  &.#{$prefix}-open {
-    &:not(.#{$prefix}-disabled) {
-      &:not(.#{$prefix}-combobox-outlined) {
-        .#{$prefix}-combobox-control-inner {
-          border-bottom-color: $blue-darken-2;
-
-          &:after {
-            left: 0 !important;
-            width: 100% !important;
-          }
-        }
-      }
-    }
-  }
-
-  &.#{$prefix}-open {
-    .#{$prefix}-combobox-control-inner {
-      .caret {
-        @include transform(rotateZ(-180deg));
-      }
-    }
-  }
-
-  &.#{$prefix}-combobox-outlined {
-    padding-top: $padding-sm - .25;
-
-    > .#{$prefix}-combobox-inner {
-      .#{$prefix}-help-text {
-        margin-left: $padding-xl - .35;
-      }
-    }
-
-    .#{$prefix}-combobox-control-inner {
-      @include border-radius($border-radius-sm);
-      border-width: 0 !important;
-      padding: 0 $padding-sm 0 ($padding-base - .25);
-
-      legend {
-        @include transition(width .3s cubic-bezier(.25, .8, .5, 1));
-        display: table;
-        line-height: 1;
-        max-width: 98%;
-        padding: 0;
-        margin: 0;
-      }
-
-      > fieldset {
-        @include border-radius($border-radius-sm);
-        @include transition(border, color $md-transition-stand);
-        display: block;
-        border-collapse: collapse;
-        border: 1px solid;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        top: -10px;
-        color: rgba(0, 0, 0, .4);
-        padding-left: $padding-sm;
-        pointer-events: none;
-        position: absolute;
-      }
-
-      > .#{$prefix}-floating-label {
-        margin-left: $padding-base - .25;
-        padding-top: $padding-base - .25;
-
-        &.#{$prefix}-active {
-          @include transform(translateY(-21px) scale(.9));
-        }
-
-        &.#{$prefix}-after-icon:not(.#{$prefix}-active) {
-          margin-left: $padding-xl;
-        }
-      }
-
-      .#{$prefix}-combobox-input {
-        @include align-items(center);
-        padding-top: $padding-sm;
-        padding-bottom: $padding-sm;
-        min-height: 3rem;
-      }
-
-      .#{$prefix}-action-icon {
-        padding-top: $padding-base - .25;
-      }
-
-      .#{$prefix}-prepend-icon, .#{$prefix}-append-icon {
-        margin-top: $padding-base - .3;
-      }
     }
 
     &.#{$prefix}-focused {
-      &:not(.#{$prefix}-disabled) {
-        .#{$prefix}-combobox-control-inner {
-          > fieldset {
-            color: $blue-darken-2;
-            border-width: 2px;
-          }
+        &:not(.#{$prefix}-disabled) {
+            .#{$prefix}-action-icon > .icon-expand-more {
+                color: $blue-darken-3 !important;
+            }
         }
-      }
-    }
-
-    &.has-error {
-      .#{$prefix}-combobox-control-inner {
-        > fieldset {
-          color: $danger-color-dark;
-        }
-      }
-      &.#{$prefix}-focused {
-        .#{$prefix}-combobox-control-inner {
-          > fieldset {
-            color: $danger-color-dark;
-          }
-        }
-      }
     }
 
     &.has-success {
-      .#{$prefix}-combobox-control-inner {
-        > fieldset {
-          color: $success-color-dark;
+        .#{$prefix}-combobox-label {
+            color: $success-color-dark !important;
         }
-      }
-      &.#{$prefix}-focused {
-        .#{$prefix}-combobox-control-inner {
-          > fieldset {
-            color: $success-color-dark;
-          }
-        }
-      }
-    }
-  }
 
-  &.#{$prefix}-disabled {
-    .col-form-label {
-      color: $gray-500;
     }
 
-    &.#{$prefix}-combobox-outlined {
-      .#{$prefix}-combobox-control-inner {
-        > fieldset {
-          color: rgba($black, .25);
+    &.has-error {
+        .#{$prefix}-combobox-label {
+            color: $danger-color-dark !important;
         }
-      }
     }
-  }
+
+    &.#{$prefix}-open {
+        .#{$prefix}-action-icon > .icon-expand-more {
+            @include transform(rotateZ(-180deg));
+        }
+    }
+
+    &.#{$prefix}-field-filled {
+        &.#{$prefix}-floating-label {
+            .#{$prefix}-field-input-wrapper {
+                min-height: 50px;
+
+                > .#{$prefix}-combobox-input {
+                    padding-top: 18px;
+                }
+            }
+        }
+    }
 }
 
 .#{$prefix}-combobox-popover {
-  border: 1px solid rgba($black, 0.1) !important;
-  border-right-width: 0 !important;
-  overflow: hidden !important;
+    border: 1px solid rgba($black, 0.1) !important;
+    border-right-width: 0 !important;
+    overflow: hidden !important;
 
-  > .#{$prefix}-combobox-list-container {
-    background-color: $white;
-    overflow: hidden;
+    > .#{$prefix}-combobox-list-container {
+        background-color: $white;
+        overflow: hidden;
 
-    > .#{$prefix}-combobox-search-wrapper {
-      display: block;
-      padding: 6px;
-      margin: 0;
+        > .#{$prefix}-combobox-search-wrapper {
+            display: block;
+            padding: 6px;
+            margin: 0;
 
-      > .#{$prefix}-combobox-search {
-        border: 1px solid $gray-500;
-        color: $gray-800;
-        font-size: 14px;
-        outline: none;
-        padding: 6px 8px;
-        width: 100%;
-      }
-    }
-
-    > .#{$prefix}-list {
-      overflow-x: hidden;
-      overflow-y: auto;
-    }
-
-    .#{$prefix}-list-item {
-      padding: 5px 8px 5px 16px !important;
-
-      .#{$prefix}-list-tile-action + .#{$prefix}-list-tile-content {
-        margin-left: 4px !important;
-      }
-
-      &.#{$prefix}-active {
-        .#{$prefix}-list-tile-title, .#{$prefix}-list-tile-subtitle {
-          color: $primary-color-dark;
+            > .#{$prefix}-combobox-search {
+                border: 1px solid $gray-500;
+                color: $gray-800;
+                font-size: 14px;
+                outline: none;
+                padding: 6px 8px;
+                width: 100%;
+            }
         }
-      }
     }
-
-    .#{$prefix}-checkbox {
-      margin: 10px 10px 10px 0;
-
-      > .#{$prefix}-checkbox-inner {
-        height: $dropdown-checkbox-size;
-        min-width: $dropdown-checkbox-size;
-        width: $dropdown-checkbox-size;
-
-        &:before {
-          height: $dropdown-checkbox-ripple-size;
-          width: $dropdown-checkbox-ripple-size;
-        }
-
-        &:after {
-          height: 10px;
-          width: 6px;
-          left: 3px;
-        }
-
-        .#{$prefix}-ripple {
-          height: $dropdown-checkbox-ripple-size !important;
-          width: $dropdown-checkbox-ripple-size !important;
-        }
-      }
-    }
-  }
 }
 
 @each $color_name, $color in $material-colors {
-  .#{$prefix}-combobox-popover {
-    &.bg-#{$color_name} {
-      .#{$prefix}-combobox-search-wrapper {
-        > .#{$prefix}-combobox-search {
-          @if(lightness($color) < 81) {
-            background-color: rgba(lighten($color, 20%), .25);
-            border-color: rgba($gray-500, .6) !important;
-            color: darken($white-base, 10%) !important;
-          }
+    .#{$prefix}-combobox-popover {
+        &.bg-#{$color_name} {
+            .#{$prefix}-combobox-search-wrapper {
+                > .#{$prefix}-combobox-search {
+                    @if (lightness($color) < 81) {
+                        background-color: rgba(lighten($color, 20%), .25);
+                        border-color: rgba($gray-500, .6) !important;
+                        color: darken($white-base, 10%) !important;
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
 
 @each $color_name, $color in $theme-colors {
-  .#{$prefix}-combobox-popover {
-    &.bg-#{$color_name} {
-      .#{$prefix}-combobox-search-wrapper {
-        > .#{$prefix}-combobox-search {
-          @if(lightness($color) < 81) {
-            background-color: rgba(lighten($color, 20%), .25);
-            border-color: rgba($gray-500, .6) !important;
-            color: darken($white-base, 10%) !important;
-          }
+    .#{$prefix}-combobox-popover {
+        &.bg-#{$color_name} {
+            .#{$prefix}-combobox-search-wrapper {
+                > .#{$prefix}-combobox-search {
+                    @if (lightness($color) < 81) {
+                        background-color: rgba(lighten($color, 20%), .25);
+                        border-color: rgba($gray-500, .6) !important;
+                        color: darken($white-base, 10%) !important;
+                    }
+                }
+            }
         }
-      }
     }
-  }
 }
 </style>

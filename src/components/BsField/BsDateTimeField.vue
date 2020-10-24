@@ -109,6 +109,7 @@ import MenuAble from "../../mixins/MenuAble";
 import PickerConst from "../BsPicker/utils/DatePickerConst";
 import moment from "moment";
 import "../../../scss/_field.scss"
+import '../../../scss/_shadows.scss';
 
 export default {
     name: "BsDateTimeField",

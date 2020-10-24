@@ -9,7 +9,7 @@
       <div :class="{'ml-3' : icon}" class="flex-fill">
         <slot></slot>
       </div>
-      <bs-button v-if="dismissable"
+      <bs-button v-if="dismissible"
                  class="close ml-auto"
                  color="gray"
                  flat
@@ -44,7 +44,7 @@ export default {
          * When set, display the close button to dismiss/hide the component.
          * @type {boolean|*}
          */
-        dismissable: {
+        dismissible: {
             type: Boolean,
             default: false
         },
@@ -97,7 +97,7 @@ export default {
                 'alert',
                 'd-flex',
                 'align-items-center',
-                this.dismissable ? 'alert-dismissible' : '',
+                this.dismissible ? 'alert-dismissible' : '',
                 this.outlined ? 'alert-outline-' + this.color : '',
                 this.color && !this.outlined ? 'alert-' + this.color : ''
             ]
@@ -113,7 +113,7 @@ export default {
     },
     watch: {
         value(newValue) {
-            if (this.dismissable && newValue === true) {
+            if (this.dismissible && newValue === true) {
                 this.dismiss = false;
             }
         }

@@ -15,9 +15,10 @@
     }
 
     > .#{$prefix}-field-wrapper {
-        @include flexbox((display: flex, flex-grow: 1));
+        @include flexbox((display: flex, flex-grow: 1, flex-basis: 0));
         margin-left: 15px;
         margin-right: 15px;
+        max-width: 100%;
 
         .#{$prefix}-prepend-icon,
         .#{$prefix}-action-icon,
@@ -50,8 +51,9 @@
                 }
 
                 > .#{$prefix}-field-input-wrapper {
-                    @include flexbox((display: flex, flex: 1 1 auto));
+                    @include flexbox((display: flex, flex: 1 1 auto, flex-basis: 0));
                     position: relative;
+                    max-width: 100%;
                 }
             }
 

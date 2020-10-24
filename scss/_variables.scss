@@ -110,6 +110,9 @@ $md-switch-touch-size:              $md-checkbox-touch-size !default;
 $md-switch-margin:                  .5rem .25rem .5rem .25rem !default;
 $md-switch-shadows:                 0 0 6px -1px rgba(#000, .1), 0 1px 1px 1px rgba(#000, .15), 0 1px 3px 0 rgba(#000, 0.12) !default;
 
+$combobox-checkbox-size:            16px;
+$combobox-checkbox-ripple-size:     40px;
+
 // Sidebar
 $sidebar-active-bgcolor:            $gray-400 !default;
 $sidebar-expanded-bgcolor:          rgba(50,50,50, .08) !default;
