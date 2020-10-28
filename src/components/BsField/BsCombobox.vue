@@ -107,14 +107,19 @@
                 class="md-combobox-popover md-shadow-1"
                 @close="hideMenu">
       <bs-combobox-list-container v-bind="_listContainerAttributes"
-                                  @dataFiltered="_onFilterData"
-                                  @itemSelected="_onSelectItem"
-                                  @itemDeselected="_onDeselectItem">
-        <slot slot="emptyData" name="emptyData" />
-        <slot slot="optionItem"
-              slot-scope="{ item, index }"
-              v-bind="{ item, index }"
-              name="optionItem" />
+                                  @data-filtered="_onFilterData"
+                                  @item-selected="_onSelectItem"
+                                  @item-deselected="_onDeselectItem">
+        <template #emptyDataMessage>
+          <slot name="emptyData">
+            <bs-list-tile-title>{{ emptyDataMessage }}</bs-list-tile-title>
+          </slot>
+        </template>
+        <template #optionItem="{ item, index }">
+          <slot v-bind="{ item, index }" name="optionItem">
+            <bs-list-tile-title>{{ getItemText(item) }}</bs-list-tile-title>
+          </slot>
+        </template>
       </bs-combobox-list-container>
     </bs-popover>
   </div>
@@ -343,12 +348,13 @@ export default {
             default: false
         },
         /**
-         * Sets the image size for the ListBox items when `show-image` is enabled.
-         * @type {number|*}
+         * Sets the image size for each ListBox items when `show-image` is enabled.
+         * @type {number|string|*}
          */
         imageSize: {
-            type: Number,
-            default: undefined
+            type: [Number, String],
+            default: undefined,
+            validator: value => parseInt(value, 10) > 0
         },
         /**
          * Show or hide image if ListBox item's object contains image field.

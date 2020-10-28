@@ -57,7 +57,7 @@ export default {
             if (!this.size) {
                 return null;
             }
-            const primitive = typeof this.size === 'string' || typeof this.size === 'number';
+            const primitive = (typeof this.size === 'string') || (typeof this.size === 'number');
 
             return {
                 height: primitive ? Helper.sizeUnit(this.size) : Helper.sizeUnit(this.size.height),

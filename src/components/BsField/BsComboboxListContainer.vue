@@ -15,16 +15,10 @@
     </label>
     <bs-list-view :style="containerStyles" :color="listboxColor">
       <bs-list-tile v-if="dataItems.length === 0">
-        <slot name="emptyData">
-          <bs-list-tile-title>
-            {{ emptyDataMessage }}
-          </bs-list-tile-title>
-        </slot>
+        <slot name="emptyDataMessage"></slot>
       </bs-list-tile>
       <bs-list-tile v-else-if="filteredItems.length === 0">
-        <bs-list-tile-title>
-          {{ notFoundMessage }}
-        </bs-list-tile-title>
+        <bs-list-tile-title>{{ notFoundMessage }}</bs-list-tile-title>
       </bs-list-tile>
       <template v-else>
         <template v-for="(item, index) in filteredItems">
@@ -47,9 +41,7 @@
                                     :rounded="roundedImage"
                                     :size="imageSize" />
               <bs-list-tile-content>
-                <slot name="optionItem" v-bind="{ item, index }">
-                  <bs-list-tile-title>{{ getItemText(item) }}</bs-list-tile-title>
-                </slot>
+                <slot name="optionItem" v-bind="{ item, index }"></slot>
               </bs-list-tile-content>
               <bs-list-tile-action v-if="checkOptionPosition === 'right'">
                 <bs-checkbox v-model="cacheBoolValues[index]"
@@ -65,9 +57,7 @@
                                     :size="imageSize"
                                     :img-src="itemPropertyValue(item, imageField)" />
               <bs-list-tile-content>
-                <slot name="optionItem" v-bind="{ item, index }">
-                  <bs-list-tile-title>{{ getItemText(item) }}</bs-list-tile-title>
-                </slot>
+                <slot name="optionItem" v-bind="{ item, index }"></slot>
               </bs-list-tile-content>
             </template>
           </bs-list-tile>
@@ -141,8 +131,9 @@ export default {
             }
         },
         imageSize: {
-            type: Number,
-            default: undefined
+            type: [Number, String],
+            default: undefined,
+            validator: value => parseInt(value, 10) > 0
         },
         emptyDataMessage: {
             type: String,
@@ -281,10 +272,10 @@ export default {
 
             if (this.isActiveItem(item)) {
                 this.cacheBoolValues[idx] = false;
-                this.$emit('itemDeselected', item);
+                this.$emit('item-deselected', item);
             } else {
                 this.cacheBoolValues[idx] = true;
-                this.$emit('itemSelected', item);
+                this.$emit('item-selected', item);
             }
         },
         /**
@@ -314,7 +305,7 @@ export default {
                 this._resetSearchText();
             }
             if (!silent) {
-                this.$emit('dataFiltered', this.cacheListItems);
+                this.$emit('data-filtered', this.cacheListItems);
             }
         },
         _resetSearchText() {
