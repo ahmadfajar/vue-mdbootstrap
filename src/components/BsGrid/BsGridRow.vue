@@ -1,6 +1,6 @@
 <template>
   <tr role="row" :class="_rowClasses">
-    <slot />
+    <slot></slot>
   </tr>
 </template>
 
@@ -9,14 +9,26 @@ export default {
     name: "BsGridRow",
     inject: ['BsGrid'],
     props: {
+        /**
+         * The row item object.
+         * @type {Object|*}
+         */
         item: {
             type: Object,
             default: undefined
         },
+        /**
+         * The row index position.
+         * @type {number|*}
+         */
         index: {
             type: Number,
             default: undefined
         },
+        /**
+         * The row selection mode.
+         * @type {Object|*}
+         */
         selectionMode: {
             type: Object,
             default: undefined
@@ -42,6 +54,6 @@ export default {
 @import "../../../scss/mixins";
 
 @each $name, $color in $theme-colors {
-  @include grid-rowstate-variant($name, $color);
+    @include grid-rowstate-variant($name, $color);
 }
 </style>

@@ -1,20 +1,24 @@
 <template>
   <th :class="_columnCls"
       :style="_headerStyles"
-      @click="_onClick"
-      role="columnheader">
+      role="columnheader"
+      @click="_onClick">
     <div :class="{'enable-sort': canSort}" class="md-grid-th-inner">
-      <font-awesome-icon v-if="canSort && textAlignment === 'right'" :class="_sortClasses" icon="arrow-up" />
+      <font-awesome-icon v-if="canSort && textAlignment === 'right'"
+                         :class="_sortClasses"
+                         icon="arrow-up" />
       {{ label }}&nbsp;
-      <font-awesome-icon v-if="canSort && textAlignment !== 'right'" :class="_sortClasses" icon="arrow-up" />
+      <font-awesome-icon v-if="canSort && textAlignment !== 'right'"
+                         :class="_sortClasses"
+                         icon="arrow-up" />
     </div>
   </th>
 </template>
 
 <script>
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import Helper from "../../utils/Helper";
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import Column from "./mixins/Column";
+import Helper from "../../utils/Helper";
 
 export default {
     name: "BsGridColumn",
@@ -22,18 +26,51 @@ export default {
     mixins: [Column],
     inject: ['BsGrid'],
     props: {
+        /**
+         * Footer css class name.
+         * @type {string|*}
+         */
         footerCls: {
             type: String,
             default: undefined
         },
+        /**
+         * Footer text.
+         * @type {string|*}
+         */
         footerText: {
             type: String,
             default: undefined
         },
+        /**
+         * Column order in the Grid rows.
+         * @type {number|string|*}
+         */
+        order: {
+            type: [Number, String],
+            default: undefined,
+            validator: v => !isNaN(parseInt(v, 10))
+        },
+        /**
+         * Render this column in the Grid rows.
+         * @type {boolean|*}
+         */
+        cellData: {
+            type: Boolean,
+            default: true
+        },
+        /**
+         * Footer css class name.
+         * @type {boolean|*}
+         */
         rowNumbering: {
             type: Boolean,
             default: false
         },
+        /**
+         * Enable/disable column sorter.
+         * @type {boolean|*}
+         */
         sortable: {
             type: Boolean,
             default: true
@@ -54,6 +91,10 @@ export default {
             type: [Boolean, Object],
             default: true
         },
+        /**
+         * Aggregate function to pass to the column footer.
+         * @type {boolean|*}
+         */
         aggregate: {
             type: [String, Function],
             default: undefined,
@@ -65,6 +106,16 @@ export default {
         sortDirection: 'asc'
     }),
     computed: {
+        /**
+         * @property {IBsGrid} BsGrid
+         */
+
+        /**
+         * Get computed column css classes.
+         *
+         * @returns {Object} Css name to bind
+         * @private
+         */
         _columnCls() {
             let cls = [];
 
@@ -97,7 +148,7 @@ export default {
          * @returns {boolean} TRUE if this column is sortable
          */
         canSort() {
-            return this.BsGrid.enableSort && this.sortable && this.rowNumbering === false;
+            return this.BsGrid.enableSort && this.sortable && this.field && this.rowNumbering === false;
         },
         sortActive() {
             return this.canSort && this.field === this.BsGrid.sort.property;
@@ -144,7 +195,7 @@ export default {
          * @private
          */
         _registerColumn() {
-            const config  = {
+            const config = {
                 field: this.field,
                 operator: 'eq',
                 minlength: 1,
@@ -168,7 +219,8 @@ export default {
                 filterCfg.placeholder = false;
             }
 
-            const idx = this.BsGrid.columns.push({
+            const len = this.BsGrid.columns.length;
+            this.BsGrid.columns.push({
                 field: this.field,
                 label: this.label,
                 width: this.width,
@@ -186,10 +238,13 @@ export default {
                 dataAlign: this.dataAlign,
                 dataStyle: this.dataStyle,
                 headerAlign: this.headerAlign,
-                headerStyle: this.headerStyle
+                headerStyle: this.headerStyle,
+                cellData: this.cellData,
+                order: this.order ? parseInt(this.order, 10) : len
             });
+            this.BsGrid.columns = Helper.sortArrayObj(this.BsGrid.columns, 'order');
 
-            this.colIndex = idx - 1;
+            this.colIndex = this.order ? parseInt(this.order, 10) : len;
         },
         /**
          * Set grid sort direction.
@@ -199,9 +254,9 @@ export default {
          * @private
          */
         _setSortDir(direction) {
-            this.BsGrid.sort.property  = this.field;
+            this.BsGrid.sort.property = this.field;
             this.BsGrid.sort.direction = direction;
-            this.sortDirection         = direction;
+            this.sortDirection = direction;
         }
     }
 }

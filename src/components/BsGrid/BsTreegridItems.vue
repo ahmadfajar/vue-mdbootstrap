@@ -1,8 +1,8 @@
 <template>
   <tbody>
     <tr v-for="(item, index) in visibleItems"
-        :class="_rowClasses(index)"
         :key="'row-' + index"
+        :class="_rowClasses(index)"
         role="row">
       <slot v-bind="{ index: index, item: item.data, level: item.depth, node: item }">
         <template v-for="(column, colIdx) in columns">
@@ -63,7 +63,7 @@ export default {
         }
     },
     created() {
-        this.treeNodes        = [];
+        this.treeNodes = [];
         this.childrenFieldmap = this.TreeGrid.childrenFieldmap;
     },
     beforeDestroy() {
@@ -187,7 +187,7 @@ export default {
          */
         expand(node) {
             const children = this.getChildren(node.data);
-            const adapter  = this.TreeGrid.dataSource;
+            const adapter = this.TreeGrid.dataSource;
 
             if (this.hasChildren(node.data) && Helper.isEmpty(children) && (adapter instanceof BsTreeStore)) {
                 adapter.loadChildren(node.data).then(response => {
@@ -239,8 +239,8 @@ export default {
          */
         populateNodes(depth, sources, parentNode = null) {
             const expandDepth = this.TreeGrid.expandDepth;
-            const expanded    = this.TreeGrid.expanded;
-            let rowIndex      = this.treeNodes.length;
+            const expanded = this.TreeGrid.expanded;
+            let rowIndex = this.treeNodes.length;
 
             for (const source of sources) {
                 const node = this._createNode(

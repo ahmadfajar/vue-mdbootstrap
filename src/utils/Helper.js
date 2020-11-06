@@ -189,11 +189,11 @@ class Helper {
      *
      * @param {Array} items           Array of object
      * @param {string} key            Field name or key to sort
-     * @param {boolean} isDescending  Sort desc or asc
+     * @param {boolean} [isDescending]  Sort desc or asc
      * @returns {*} The sorted array
      */
     static sortArrayObj(items, key, isDescending) {
-        if (key === null) {
+        if (key == null) {
             return items;
         }
 

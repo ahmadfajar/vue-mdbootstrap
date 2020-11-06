@@ -17,11 +17,14 @@ export default {
                 }
             }
         },
-        borderless: {
+        bordered: {
             type: Boolean,
-            default: true
+            default: false
         },
-        rowHover: Boolean
+        rowHover: {
+            type: Boolean,
+            default: false
+        }
     },
     computed: {
         /**
@@ -32,7 +35,7 @@ export default {
          */
         _classNames() {
             return {
-                'md-grid-bordered': this.borderless === false,
+                'md-grid-bordered': this.bordered,
                 'md-grid-hoverable': this.rowHover,
                 'md-grid-flip': this.flipOnSmallScreen,
                 'md-grid-fixed': this.isFixedHeight
@@ -127,7 +130,7 @@ export default {
     },
     methods: {
         /**
-         * Get computed gridcolumn header styles.
+         * Get computed GridColumn header styles.
          *
          * @param {Object} col Column object
          * @returns {Object} Column header css styles
@@ -137,7 +140,7 @@ export default {
             return Object.assign({width: Helper.sizeUnit(col.width)}, col.headerStyle || {});
         },
         /**
-         * Get computed gridcell styles.
+         * Get computed GridCell styles.
          *
          * @param {Object} col Column object
          * @returns {Object} Css style object

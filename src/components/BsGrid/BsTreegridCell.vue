@@ -4,9 +4,9 @@
       role="gridcell">
     <div class="d-flex">
       <bs-icon v-for="idx in _arrayDepth"
-               :icon="_iconName(_arrayDepth.length, idx)"
                :key="'bsIcon-' + idx"
                :class="{'expanded': node.expanded}"
+               :icon="_iconName(_arrayDepth.length, idx)"
                class="text-grey-600"
                size="20"
                @click="_onIconClick(_arrayDepth.length, idx)" />

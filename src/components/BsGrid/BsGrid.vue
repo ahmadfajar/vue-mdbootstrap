@@ -1,18 +1,22 @@
 <template>
-  <div :class="_classNames" :style="_gridStyles" class="md-grid">
+  <div :class="_classNames"
+       :style="_gridStyles"
+       class="md-grid">
     <slot name="toolbar"></slot>
     <div :class="{'d-flex': isSmallScreen && flipOnSmallScreen}">
       <div class="md-grid-header">
-        <div class="md-grid-header-wrap" ref="theader">
-          <table role="grid" :style="_tableStyles">
+        <div ref="theader" class="md-grid-header-wrap">
+          <table :style="_tableStyles" role="grid">
             <colgroup v-if="!isSmallScreen || !flipOnSmallScreen">
               <col v-if="isSelectable" :style="{width: checkboxWidth + 'px'}" />
-              <col v-for="(column, idx) in columnIterator"
-                   :key="'col-' + _uuid() + idx"
-                   :style="_colHeaderStyles(column)" />
+              <template v-for="(column, idx) in columnIterator">
+                <col v-if="column.cellData"
+                     :key="'col-' + _uuid() + idx"
+                     :style="_colHeaderStyles(column)" />
+              </template>
             </colgroup>
             <thead role="rowgroup">
-              <slot name="columnheader" v-bind="{ items: dataItems, selectionMode: selectionMode }"></slot>
+              <slot v-bind="{ items: dataItems, selectionMode: selectionMode }" name="columnheader"></slot>
               <tr v-if="!$scopedSlots['columnheader']" role="row">
                 <bs-grid-column-selection v-if="isSelectable"
                                           :data-items="dataItems"
@@ -26,32 +30,37 @@
         </div>
       </div>
       <bs-progress v-if="isLoading && loading.type === 'bar'" v-bind="_progressLoadingAttrs" />
-      <div class="md-grid-content" ref="tcontent" @scroll="_handleScroll">
-        <table role="grid" :style="_tableStyles">
+      <div ref="tcontent"
+           class="md-grid-content"
+           @scroll="_handleScroll">
+        <table :style="_tableStyles" role="grid">
           <colgroup v-if="!isSmallScreen || !flipOnSmallScreen">
             <col v-if="isSelectable" :style="{width: checkboxWidth + 'px'}" />
-            <col v-for="(column, idx) in columnIterator"
-                 :key="'col-' + _uuid() + idx"
-                 :style="_colDataStyles(column)" />
+            <template v-for="(column, idx) in columnIterator">
+              <col v-if="column.cellData"
+                   :key="'col-' + _uuid() + idx"
+                   :style="_colDataStyles(column)" />
+            </template>
           </colgroup>
           <tbody role="rowgroup">
             <bs-grid-row v-for="(item, index) in dataItems"
                          :key="'row-' + index"
-                         :item="item"
                          :index="index"
+                         :item="item"
                          :selection-mode="selectionMode">
               <bs-grid-cell-selection v-if="isSelectable"
                                       :item="item"
                                       :value="isRowSelected(item)"
                                       :selection-mode="selectionMode"
                                       @input="selected => selected ? selectRow(item) : deselectRow(item)" />
-              <slot name="datarow" v-bind="{ columns: columnIterator, item: item, index: index }">
+              <slot v-bind="{ columns: columnIterator, item: item, index: index }" name="datarow">
                 <template v-for="column in columnIterator">
-                  <component :is="column.rowNumbering ? 'bs-grid-cell-numbering' : 'bs-grid-cell'"
+                  <component v-if="column.field || column.rowNumbering"
+                             :is="column.rowNumbering ? 'bs-grid-cell-numbering' : 'bs-grid-cell'"
                              :key="column.field + '-' + _uuid()"
                              :column="column"
-                             :item="item"
-                             :index="index" />
+                             :index="index"
+                             :item="item" />
                 </template>
               </slot>
             </bs-grid-row>
@@ -67,18 +76,22 @@
           </div>
         </transition>
       </div>
-      <div class="md-grid-footer" v-if="showFooter">
-        <div class="md-grid-footer-wrap" ref="tfooter">
+      <div v-if="showFooter" class="md-grid-footer">
+        <div ref="tfooter" class="md-grid-footer-wrap">
           <bs-grid-footer :columns="columnIterator">
-            <slot slot="default" name="gridfooter" v-bind="{ columns: columnIterator }" />
+            <slot slot="default"
+                  v-bind="{ columns: columnIterator }"
+                  name="gridfooter"></slot>
           </bs-grid-footer>
         </div>
       </div>
     </div>
     <div v-if="isLoading && loading.type === 'spinner'" class="md-grid-progress-spinner">
-      <bs-progress class="align-self-center" v-bind="_progressLoadingAttrs" />
+      <bs-progress v-bind="_progressLoadingAttrs" class="align-self-center" />
     </div>
-    <div class="md-pagination" v-if="pageable" ref="footer">
+    <div v-if="pageable"
+         ref="footer"
+         class="md-pagination">
       <bs-pagination v-bind="_paginationAttrs"
                      @pagesize="setPageSize"
                      @reload="reload"
@@ -90,6 +103,27 @@
 </template>
 
 <script>
+/**
+ * BsGrid interface.
+ *
+ * @typedef {Object} IBsGrid
+ * @property {Object[]} columns         The collection of columns
+ * @property {Object[]} selectedItems   Collection of selected rows
+ * @property {number} page              Current page or active page
+ * @property {number} pageSize          Number of rows in a page
+ * @property {number} totalCount        Total number of items in the Store's dataset
+ * @property {boolean} enableSort       Enable sort (Readonly)
+ * @property {BsStore|BsArrayStore} dataSource  Grid data source
+ * @property {number} checkboxWidth       Checkbox width
+ * @property {boolean} flipOnSmallScreen  Flip Grid on small screen
+ * @property {ISorter} sort               Sorter property
+ * @property {number} tableWidth          Table width (Readonly)
+ * @property {function(field: string, direction: string)} doSort   Sort dataset based on the given field name.
+ * @property {function(filters: IFilter[], logic: string=null)} filter  Filter dataset based on the given filter.
+ * @property {function(eventName: string, ...[*])} fireEvent  Triggers event.
+ * @property {function(standard: boolean)} uuid  Create UUID, if params is `TRUE` then standard UUID v4 will be created.
+ */
+
 import BsGridRow from './BsGridRow';
 import BsGridCell from './BsGridCell';
 import BsGridCellNumbering from "./BsGridCellNumbering";
@@ -107,7 +141,7 @@ import ScreenSize from '../../mixins/ScreenSize';
 import Grid from "./mixins/Grid";
 import Helper from '../../utils/Helper';
 import sum from 'lodash/sum';
-import { addResizeListener, removeResizeListener } from '../../utils/ResizeListener';
+import {addResizeListener, removeResizeListener} from '../../utils/ResizeListener';
 
 export default {
     name: "BsGrid",
@@ -118,16 +152,25 @@ export default {
     mixins: [Common, Grid, ScreenSize],
     props: {
         /**
+         * Grid data sources.
          * @type {BsStore|BsArrayStore|*}
          */
         dataSource: {
             type: [BsStore, BsArrayStore],
             default: undefined
         },
+        /**
+         * Flip Grid component on small screen.
+         * @type {boolean|*}
+         */
         flipOnSmallScreen: {
             type: Boolean,
             default: true
         },
+        /**
+         * Enable or disable pagination.
+         * @type {boolean|Object|*}
+         */
         pageable: {
             type: [Boolean, Object],
             default: false
@@ -150,14 +193,26 @@ export default {
             type: [Boolean, Object],
             default: false
         },
+        /**
+         * Enable or disable row selection.
+         * @type {boolean|Object|*}
+         */
         rowSelection: {
             type: [Boolean, Object],
             default: false
         },
+        /**
+         * Display Grid column footer at bottom or not.
+         * @type {boolean|*}
+         */
         showFooter: {
             type: Boolean,
             default: false
         },
+        /**
+         * Enable or disable column filtering feature.
+         * @type {boolean|Object|*}
+         */
         sortable: {
             type: [Boolean, Object],
             default: undefined
@@ -294,7 +349,7 @@ export default {
             this.selectionMode.rowSelect = this.rowSelection;
         } else if (typeof this.rowSelection === 'object') {
             this.selectionMode.checkboxColor = this.rowSelection.checkboxColor || 'pink';
-            this.selectionMode.rowSelect     = this.rowSelection.rowSelect || true;
+            this.selectionMode.rowSelect = this.rowSelection.rowSelect || true;
         }
         if (Helper.isObject(this.pageable) && this.pageable.pageSize && this.pageable.pageSize > 0) {
             this.table.pageSize = this.pageable.pageSize;
@@ -308,12 +363,12 @@ export default {
     },
     beforeDestroy() {
         removeResizeListener(this.$el, this._updateTableWidth);
-        this.columnsWidth  = null;
+        this.columnsWidth = null;
         this.selectionMode = null;
 
-        this.table.columns       = [];
+        this.table.columns = [];
         this.table.selectedItems = [];
-        this.table               = null;
+        this.table = null;
     },
     methods: {
         /**
@@ -345,19 +400,19 @@ export default {
                     .page(this.table.page)
                     .load()
                     .then(() => {
-                        this.dataFetched      = true;
-                        this.isFetching       = false;
+                        this.dataFetched = true;
+                        this.isFetching = false;
                         this.table.totalCount = this.dataSource.totalCount;
                         this.fireEvent('data-bind', this.dataSource.dataItems);
                     })
                     .catch((error) => {
                         this.dataFetched = true;
-                        this.isFetching  = false;
-                        this.fireEvent('error', error);
+                        this.isFetching = false;
+                        this.fireEvent('data-error', error);
                     });
             } else {
                 this.dataFetched = false;
-                this.isFetching  = false;
+                this.isFetching = false;
             }
         },
         /**
@@ -369,8 +424,8 @@ export default {
          */
         _handleScroll(e) {
             const scrollLeft = e.target.scrollLeft;
-            const theader    = this.$refs.theader;
-            const tfooter    = this.$refs.tfooter;
+            const theader = this.$refs.theader;
+            const tfooter = this.$refs.tfooter;
 
             if (theader) {
                 theader.scrollLeft = scrollLeft;
@@ -387,10 +442,10 @@ export default {
          */
         _updateBodyHeight() {
             if (this.isFixedHeight && (!this.isSmallScreen || !this.flipOnSmallScreen)) {
-                const gridHeight    = this.$el.offsetHeight;
+                const gridHeight = this.$el.offsetHeight;
                 const theaderHeight = this.$refs.theader ? this.$refs.theader.offsetHeight : 0;
                 const tfooterHeight = this.$refs.tfooter ? this.$refs.tfooter.offsetHeight : 0;
-                const footerHeight  = this.$refs.footer ? this.$refs.footer.offsetHeight : 0;
+                const footerHeight = this.$refs.footer ? this.$refs.footer.offsetHeight : 0;
 
                 this.$refs.tcontent.style.height = (gridHeight - (theaderHeight + tfooterHeight + footerHeight)) + 'px';
             }
@@ -406,13 +461,15 @@ export default {
 
             if (this.$el && this.columnIterator.length > 0 && (!this.isSmallScreen || !this.flipOnSmallScreen)) {
                 if (this.columnsWidth.length === 0) {
-                    this.columnsWidth = this.columnIterator.map(col => col.width ? Number(col.width) : 0);
+                    this.columnsWidth = this.columnIterator
+                        .filter(c => c.cellData === true)
+                        .map(col => col.width ? Number(col.width) : 0);
                 }
-                const elWidth     = this.isFixedHeight
+                const elWidth = this.isFixedHeight
                     ? (this.$el.getBoundingClientRect().width - 18)
                     : this.$el.getBoundingClientRect().width;
-                let avgColWidth   = 0;
-                let tmpCols       = this.columnsWidth.map(col => col);
+                let avgColWidth = 0;
+                let tmpCols = this.columnsWidth.map(col => col);
                 let decreaseWidth = true;
                 const colsNoWidth = tmpCols.filter(c => c === 0);
 
@@ -474,7 +531,7 @@ export default {
 
             this.table.page = 1;
             this._fetchData();
-            this.fireEvent('filter', filters);
+            this.fireEvent('data-filter', filters);
         },
         /**
          * Go to another page and load its data.
@@ -550,7 +607,7 @@ export default {
          */
         setPageSize(value) {
             if (Helper.isEmpty(value)) {
-                this.table.page     = 1;
+                this.table.page = 1;
                 this.table.pageSize = -1;
             } else {
                 this.table.pageSize = value;
@@ -586,428 +643,434 @@ export default {
 
 .#{$prefix}-grid,
 .#{$prefix}-treegrid {
-  position: relative;
-  width: 100%;
-
-  table {
-    border-collapse: separate;
-    border-spacing: 0;
-    height: auto;
+    position: relative;
     width: 100%;
-    margin: 0;
-
-    .#{$prefix}-grid-cell {
-      &.row-numbering {
-        border-right: 1px solid lighten($gray-300, 4%);
-      }
-    }
-
-    th, td {
-      border-top: $table-border-width solid $table-border-color;
-      color: $table-text-color;
-      font-size: $table-font-size;
-      font-weight: $font-weight-light;
-      padding: $table-cell-padding;
-      vertical-align: middle;
-    }
-
-    thead, tfoot {
-      th {
-        @include user-select(none);
-        font-weight: $font-weight-normal;
-        color: $table-header-color;
-
-        &.row-numbering {
-          border-right: 1px solid lighten($table-border-color, 20%);
-        }
-      }
-
-      > tr {
-        &:first-child {
-          th {
-            border-top: 0 none;
-          }
-        }
-      }
-    }
-
-    tbody {
-      > tr {
-        &:first-child {
-          td {
-            border-top: 0 none;
-          }
-        }
-      }
-    }
-
-    thead th, tbody td {
-      &:first-child {
-        padding-left: 1rem;
-      }
-    }
-  }
-
-  .#{$prefix}-pagination {
-    border-top: 1px solid darken($table-border-color, 10%);
-    position: relative;
-  }
-
-  .#{$prefix}-grid-header,
-  .#{$prefix}-grid-footer,
-  .#{$prefix}-grid-content {
-    position: relative;
 
     table {
-      table-layout: fixed;
+        border-collapse: separate;
+        border-spacing: 0;
+        height: auto;
+        width: 100%;
+        margin: 0;
+
+        .#{$prefix}-grid-cell {
+            &.row-numbering {
+                border-right: 1px solid lighten($gray-300, 4%);
+            }
+        }
+
+        th, td {
+            border-top: $table-border-width solid $table-border-color;
+            color: $table-text-color;
+            font-size: $table-font-size;
+            font-weight: $font-weight-light;
+            padding: $table-cell-padding;
+            vertical-align: middle;
+        }
+
+        thead, tfoot {
+            th {
+                @include user-select(none);
+                font-weight: $font-weight-normal;
+                color: $table-header-color;
+
+                &.row-numbering {
+                    border-right: 1px solid lighten($table-border-color, 20%);
+                }
+            }
+
+            > tr {
+                &:first-child {
+                    th {
+                        border-top: 0 none;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            > tr {
+                &:first-child {
+                    td {
+                        border-top: 0 none;
+                    }
+                }
+            }
+        }
+
+        thead th, tbody td {
+            &:first-child {
+                padding-left: 1rem;
+            }
+        }
     }
-  }
 
-  .#{$prefix}-grid-header {
-    background-color: $table-header-bgcolor;
-    border-bottom: 1px solid darken($table-border-color, 10%);
-
-    > .#{$prefix}-grid-header-wrap {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-
-      .#{$prefix}-grid-th-inner {
-        overflow: hidden;
+    .#{$prefix}-pagination {
+        border-top: 1px solid darken($table-border-color, 10%);
         position: relative;
-        text-overflow: ellipsis;
-        vertical-align: top;
-        white-space: nowrap;
-
-        &.enable-sort {
-          cursor: pointer;
-        }
-
-        .sort-asc, .sort-desc {
-          @include transition($transition-basic);
-          color: darken($table-header-color, 10%);
-          display: inline-block;
-          font-size: 12px;
-        }
-
-        .sort-asc {
-          @include transform(rotateZ(0deg));
-        }
-
-        .sort-desc {
-          @include transform(rotateZ(180deg));
-        }
-      }
+        background-color: $white;
     }
-  }
 
-  .#{$prefix}-grid-footer {
-    background-color: lighten($table-header-bgcolor, 2%);
-    border-top: 1px solid $table-border-color;
-
-    > .#{$prefix}-grid-footer-wrap {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-
-      .#{$prefix}-grid-th-inner {
-        overflow: hidden;
+    .#{$prefix}-grid-header,
+    .#{$prefix}-grid-footer,
+    .#{$prefix}-grid-content {
         position: relative;
-        text-overflow: ellipsis;
-        vertical-align: top;
-        white-space: nowrap;
-        font-weight: $font-weight-bold;
-      }
+
+        table {
+            table-layout: fixed;
+        }
     }
-  }
 
-  .#{$prefix}-grid-content {
-    background-color: $body-bg;
-    min-height: 100px;
-    width: 100%;
-    overflow-y: hidden;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-
-    table {
-      > thead {
+    .#{$prefix}-grid-header {
         background-color: $table-header-bgcolor;
         border-bottom: 1px solid darken($table-border-color, 10%);
 
-        .#{$prefix}-grid-th-inner {
-          overflow: hidden;
-          position: relative;
-          text-overflow: ellipsis;
-          vertical-align: top;
-          white-space: nowrap;
-
-          &.enable-sort {
-            cursor: pointer;
-          }
-
-          .sort-asc, .sort-desc {
-            @include transition($transition-basic);
-            color: darken($table-header-color, 10%);
-            display: inline-block;
-            font-size: 12px;
-          }
-
-          .sort-asc {
-            @include transform(rotateZ(0deg));
-          }
-
-          .sort-desc {
-            @include transform(rotateZ(180deg));
-          }
-        }
-      }
-    }
-
-    > .#{$prefix}-grid-alert {
-      max-width: 500px;
-      > .alert {
-        margin-bottom: 0;
-      }
-    }
-
-    .#{$prefix}-grid-cell-inner {
-      overflow: hidden;
-      position: relative;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      > .svg-inline--fa {
-        font-size: 18px;
-      }
-    }
-  }
-
-  .#{$prefix}-progress-bar {
-    position: absolute;
-    width: 100%;
-    z-index: 100;
-  }
-
-  .#{$prefix}-grid-progress-spinner {
-    position: absolute;
-    left: 0;
-    top: 0;
-    right: 0;
-    z-index: 100;
-    min-height: 100px;
-    max-height: 100%;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    display: -ms-flexbox;
-    justify-content: center;
-    -ms-flex-pack: center;
-  }
-
-  &.#{$prefix}-grid-bordered {
-    .#{$prefix}-grid-header,
-    .#{$prefix}-grid-content {
-      th, td {
-        border-right: $table-border-width solid $table-border-color;
-
-        &:last-child {
-          border-right: none;
-        }
-      }
-    }
-  }
-
-  &.#{$prefix}-grid-hoverable {
-    .#{$prefix}-grid-content {
-      .#{$prefix}-grid-row,
-      .#{$prefix}-grid-row-alt {
-        @include transition($transition-hoverable);
-
-        &:hover {
-          background-color: $table-hover-bgcolor;
-        }
-      }
-    }
-  }
-
-  &.#{$prefix}-grid-fixed {
-    .#{$prefix}-grid-header {
-      padding-right: 18px;
-
-      > .#{$prefix}-grid-header-wrap {
-        border-right: 1px solid darken($table-border-color, 10%);
-      }
-    }
-
-    .#{$prefix}-grid-content {
-      overflow-y: scroll;
-    }
-  }
-}
-
-.card {
-  > .#{$prefix}-grid,
-  > .#{$prefix}-treegrid {
-    &:first-child {
-      > div[class^="#{$prefix}-grid"] {
-        &:first-child:not(.#{$prefix}-grid-cell-inner) {
-          @include border-top-radius($border-radius-base * 2);
-        }
-
-        &:last-child:not(.#{$prefix}-grid-cell-inner) {
-          @include border-bottom-radius($border-radius-base * 2);
-        }
-      }
-
-      > div:first-child {
-        > div[class^="#{$prefix}-grid"] {
-          &:first-child:not(.#{$prefix}-grid-cell-inner) {
-            @include border-top-radius($border-radius-base * 2);
-          }
-
-          &:last-child:not(.#{$prefix}-grid-cell-inner) {
-            @include border-bottom-radius($border-radius-base * 2);
-          }
-        }
-      }
-    }
-
-    > div:last-child > div[class^="#{$prefix}-grid"],
-    > div[class^="#{$prefix}-grid"] {
-      &:last-child:not(.#{$prefix}-grid-cell-inner) {
-        @include border-bottom-radius($border-radius-base * 2);
-      }
-    }
-  }
-
-  .card-body {
-    .#{$prefix}-grid,
-    .#{$prefix}-treegrid {
-      .#{$prefix}-grid-header {
-        border-top: $table-border-width solid $table-border-color;
-      }
-    }
-  }
-}
-
-@include media-breakpoint-down(sm) {
-  .#{$prefix}-grid {
-    &.#{$prefix}-grid-flip {
-      .#{$prefix}-grid-header,
-      .#{$prefix}-grid-footer,
-      .#{$prefix}-grid-content {
-        .#{$prefix}-grid-cell-selection {
-          width: auto;
-        }
-
-        table {
-          table-layout: auto;
-          display: inline-flex;
-
-          thead, tfoot {
-            @include flexbox((display: flex, flex-shrink: 0));
-
-            th {
-              color: $gray-800;
-              font-weight: $font-weight-bold;
-              text-align: left !important;
-              padding-right: 1.2rem;
-
-              &.row-numbering {
-                border-right: none;
-              }
-
-              .sort-asc, .sort-desc {
-                float: right;
-              }
-            }
-          }
-
-          tbody, tfoot {
-            @include display-flex();
+        > .#{$prefix}-grid-header-wrap {
             position: relative;
-            overflow-x: auto;
-            overflow-y: hidden;
-          }
+            overflow: hidden;
+            width: 100%;
 
-          tbody {
-            td {
-              border-right: $table-border-width solid $table-border-color;
+            .#{$prefix}-grid-th-inner {
+                overflow: hidden;
+                position: relative;
+                text-overflow: ellipsis;
+                vertical-align: top;
+                white-space: nowrap;
 
-              &.row-numbering {
-                text-align: left !important;
-              }
+                &.enable-sort {
+                    cursor: pointer;
+                }
+
+                .sort-asc, .sort-desc {
+                    @include transition($transition-basic);
+                    color: darken($table-header-color, 10%);
+                    display: inline-block;
+                    font-size: 12px;
+                }
+
+                .sort-asc {
+                    @include transform(rotateZ(0deg));
+                }
+
+                .sort-desc {
+                    @include transform(rotateZ(180deg));
+                }
             }
-          }
-
-          tr {
-            @include flexbox((display: flex, flex-direction: column));
-            min-width: min-content;
-
-            td, th {
-              display: block;
-              border-top: $table-border-width solid $table-border-color;
-
-              &:first-child {
-                border-top: none;
-              }
-            }
-
-            &:last-child {
-              td {
-                border-right: none;
-              }
-            }
-          }
         }
-      }
+    }
 
-      .#{$prefix}-grid-header {
-        border-right: $table-border-width solid $table-border-color;
-        border-bottom-width: 0;
-        max-width: 40%;
-      }
-
-      .#{$prefix}-grid-footer {
-        border-left: $table-border-width solid $table-border-color;
-        border-top: 0 none;
-        max-width: 30%;
+    .#{$prefix}-grid-footer {
+        background-color: lighten($table-header-bgcolor, 2%);
+        border-top: 1px solid $table-border-color;
 
         > .#{$prefix}-grid-footer-wrap {
-          overflow-x: auto;
-          overflow-y: hidden;
-        }
-      }
-    }
-  }
+            position: relative;
+            overflow: hidden;
+            width: 100%;
 
-  .card {
-    > .#{$prefix}-grid {
-      &.#{$prefix}-grid-flip {
-        div[class^="#{$prefix}-grid"] {
-          &:first-child {
-            @include border-top-right-radius(0);
-            @include border-bottom-left-radius($border-radius-base * 2);
-          }
+            .#{$prefix}-grid-th-inner {
+                overflow: hidden;
+                position: relative;
+                text-overflow: ellipsis;
+                vertical-align: top;
+                white-space: nowrap;
+                font-weight: $font-weight-bold;
+            }
+        }
+    }
+
+    .#{$prefix}-grid-content {
+        background-color: $white;
+        min-height: 100px;
+        width: 100%;
+        overflow-y: hidden;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+
+        table {
+            > thead {
+                background-color: $table-header-bgcolor;
+                border-bottom: 1px solid darken($table-border-color, 10%);
+
+                .#{$prefix}-grid-th-inner {
+                    overflow: hidden;
+                    position: relative;
+                    text-overflow: ellipsis;
+                    vertical-align: top;
+                    white-space: nowrap;
+
+                    &.enable-sort {
+                        cursor: pointer;
+                    }
+
+                    .sort-asc, .sort-desc {
+                        @include transition($transition-basic);
+                        color: darken($table-header-color, 10%);
+                        display: inline-block;
+                        font-size: 12px;
+                    }
+
+                    .sort-asc {
+                        @include transform(rotateZ(0deg));
+                    }
+
+                    .sort-desc {
+                        @include transform(rotateZ(180deg));
+                    }
+                }
+            }
+        }
+
+        > .#{$prefix}-grid-alert {
+            max-width: 500px;
+
+            > .alert {
+                margin-bottom: 0;
+            }
+        }
+
+        .#{$prefix}-grid-cell-inner {
+            overflow: hidden;
+            position: relative;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            > .svg-inline--fa {
+                font-size: 18px;
+            }
+        }
+    }
+
+    .#{$prefix}-progress-bar {
+        position: absolute;
+        width: 100%;
+        z-index: 100;
+    }
+
+    .#{$prefix}-grid-progress-spinner {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        z-index: 100;
+        min-height: 100px;
+        max-height: 100%;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        display: -ms-flexbox;
+        justify-content: center;
+        -ms-flex-pack: center;
+    }
+
+    &.#{$prefix}-grid-bordered {
+        .#{$prefix}-grid-header,
+        .#{$prefix}-grid-content {
+            th, td {
+                border-right: $table-border-width solid $table-border-color;
+
+                &:last-child {
+                    border-right: none;
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}-grid-hoverable {
+        .#{$prefix}-grid-content {
+            .#{$prefix}-grid-row,
+            .#{$prefix}-grid-row-alt {
+                @include transition($transition-hoverable);
+
+                &:hover {
+                    background-color: $table-hover-bgcolor;
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}-grid-fixed {
+        .#{$prefix}-grid-header {
+            padding-right: 18px;
+
+            > .#{$prefix}-grid-header-wrap {
+                border-right: 1px solid darken($table-border-color, 10%);
+            }
         }
 
         .#{$prefix}-grid-content {
-          @include border-top-right-radius($border-radius-base * 2);
+            overflow-y: scroll;
         }
-      }
+    }
+}
+
+.card {
+    > .#{$prefix}-grid,
+    > .#{$prefix}-treegrid {
+        &:first-child {
+            > div[class^="#{$prefix}-grid"] {
+                &:first-child:not(.#{$prefix}-grid-cell-inner) {
+                    @include border-top-radius($border-radius-sm);
+                }
+
+                &:last-child:not(.#{$prefix}-grid-cell-inner) {
+                    @include border-bottom-radius($border-radius-sm);
+                }
+            }
+
+            > div:first-child {
+                > div[class^="#{$prefix}-grid"] {
+                    &:first-child:not(.#{$prefix}-grid-cell-inner) {
+                        @include border-top-radius($border-radius-sm);
+                    }
+
+                    &:last-child:not(.#{$prefix}-grid-cell-inner) {
+                        @include border-bottom-radius($border-radius-sm);
+                    }
+                }
+            }
+        }
+
+        > div:last-child > div[class^="#{$prefix}-grid"],
+        > div[class^="#{$prefix}-grid"] {
+            &:last-child:not(.#{$prefix}-grid-cell-inner) {
+                @include border-bottom-radius($border-radius-sm);
+            }
+        }
+
+        .#{$prefix}-pagination {
+            @include border-bottom-radius($border-radius-sm);
+        }
     }
 
     .card-body {
-      .#{$prefix}-grid {
-        &.#{$prefix}-grid-flip {
-          .#{$prefix}-grid-header,
-          .#{$prefix}-grid-content {
-            border-top: $table-border-width solid $table-border-color;
-          }
+        .#{$prefix}-grid,
+        .#{$prefix}-treegrid {
+            .#{$prefix}-grid-header {
+                border-top: $table-border-width solid $table-border-color;
+            }
         }
-      }
     }
-  }
+}
+
+@include media-breakpoint-down(sm) {
+    .#{$prefix}-grid {
+        &.#{$prefix}-grid-flip {
+            .#{$prefix}-grid-header,
+            .#{$prefix}-grid-footer,
+            .#{$prefix}-grid-content {
+                .#{$prefix}-grid-cell-selection {
+                    width: auto;
+                }
+
+                table {
+                    table-layout: auto;
+                    display: inline-flex;
+
+                    thead, tfoot {
+                        @include flexbox((display: flex, flex-shrink: 0));
+
+                        th {
+                            color: $gray-800;
+                            font-weight: $font-weight-bold;
+                            text-align: left !important;
+                            padding-right: 1.2rem;
+
+                            &.row-numbering {
+                                border-right: none;
+                            }
+
+                            .sort-asc, .sort-desc {
+                                float: right;
+                            }
+                        }
+                    }
+
+                    tbody, tfoot {
+                        @include display-flex();
+                        position: relative;
+                        overflow-x: auto;
+                        overflow-y: hidden;
+                    }
+
+                    tbody {
+                        td {
+                            border-right: $table-border-width solid $table-border-color;
+
+                            &.row-numbering {
+                                text-align: left !important;
+                            }
+                        }
+                    }
+
+                    tr {
+                        @include flexbox((display: flex, flex-direction: column));
+                        min-width: min-content;
+
+                        td, th {
+                            display: block;
+                            border-top: $table-border-width solid $table-border-color;
+
+                            &:first-child {
+                                border-top: none;
+                            }
+                        }
+
+                        &:last-child {
+                            td {
+                                border-right: none;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .#{$prefix}-grid-header {
+                border-right: $table-border-width solid $table-border-color;
+                border-bottom-width: 0;
+                max-width: 40%;
+            }
+
+            .#{$prefix}-grid-footer {
+                border-left: $table-border-width solid $table-border-color;
+                border-top: 0 none;
+                max-width: 30%;
+
+                > .#{$prefix}-grid-footer-wrap {
+                    overflow-x: auto;
+                    overflow-y: hidden;
+                }
+            }
+        }
+    }
+
+    .card {
+        > .#{$prefix}-grid {
+            &.#{$prefix}-grid-flip {
+                div[class^="#{$prefix}-grid"] {
+                    &:first-child {
+                        @include border-top-right-radius(0);
+                        @include border-bottom-left-radius($border-radius-sm);
+                    }
+                }
+
+                .#{$prefix}-grid-content {
+                    @include border-top-right-radius($border-radius-sm);
+                }
+            }
+        }
+
+        .card-body {
+            .#{$prefix}-grid {
+                &.#{$prefix}-grid-flip {
+                    .#{$prefix}-grid-header,
+                    .#{$prefix}-grid-content {
+                        border-top: $table-border-width solid $table-border-color;
+                    }
+                }
+            }
+        }
+    }
 }
 </style>

@@ -51,24 +51,24 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-grid {
-  .#{$prefix}-grid-cell-selection {
-    padding: 0 !important;
-    width: $table-checkbox-selection-size;
-    vertical-align: middle;
+    .#{$prefix}-grid-cell-selection {
+        padding: 0 !important;
+        width: $table-checkbox-selection-size;
+        vertical-align: middle;
 
-    .#{$prefix}-grid-cell-inner {
-      font-size: $table-font-size;
-      min-height: $table-checkbox-selection-size;
-      display: flex;
-      display: -ms-flexbox;
-      justify-content: center;
-      -ms-flex-pack: center;
+        .#{$prefix}-grid-cell-inner {
+            font-size: $table-font-size;
+            min-height: $table-checkbox-selection-size;
+            display: flex;
+            display: -ms-flexbox;
+            justify-content: center;
+            -ms-flex-pack: center;
 
-      > .#{$prefix}-checkbox {
-        align-self: center;
-        margin: $table-cell-padding;
-      }
+            > .#{$prefix}-checkbox {
+                align-self: center;
+                margin: $table-cell-padding;
+            }
+        }
     }
-  }
 }
 </style>

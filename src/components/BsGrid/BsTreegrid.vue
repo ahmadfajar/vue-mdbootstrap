@@ -1,8 +1,10 @@
 <template>
-  <div :class="_classNames" :style="_gridStyles" class="md-treegrid">
+  <div :class="_classNames"
+       :style="_gridStyles"
+       class="md-treegrid">
     <slot name="toolbar"></slot>
     <div class="md-grid-header">
-      <div class="md-grid-header-wrap" ref="theader">
+      <div ref="theader" class="md-grid-header-wrap">
         <table role="grid" :style="_tableStyles">
           <colgroup>
             <col v-for="(column, idx) in columnIterator"
@@ -10,7 +12,7 @@
                  :style="_colHeaderStyles(column)" />
           </colgroup>
           <thead role="rowgroup">
-            <slot name="columnheader" v-bind="{ items: dataItems }"></slot>
+            <slot v-bind="{ items: dataItems }" name="columnheader"></slot>
             <tr v-if="!$scopedSlots['columnheader']" role="row">
               <slot></slot>
             </tr>
@@ -19,19 +21,21 @@
       </div>
     </div>
     <bs-progress v-if="isLoading && loading.type === 'bar'" v-bind="_progressLoadingAttrs" />
-    <div class="md-grid-content" ref="tcontent" @scroll="_handleScroll">
+    <div ref="tcontent"
+         class="md-grid-content"
+         @scroll="_handleScroll">
       <table role="treegrid" :style="_tableStyles">
         <colgroup>
           <col v-for="(column, idx) in columnIterator"
                :key="'col-' + _uuid() + idx"
                :style="_colDataStyles(column)" />
         </colgroup>
-        <bs-treegrid-items :columns="columnIterator"
-                           :items="dataItems"
-                           ref="treeitems"
-                           v-slot="{ index, item, level, node }">
-          <slot name="datarow"
-                v-bind="{ columns: columnIterator, index: index, item: item, level: level, node: node }" />
+        <bs-treegrid-items ref="treeitems"
+                           v-slot="{ index, item, level, node }"
+                           :columns="columnIterator"
+                           :items="dataItems">
+          <slot v-bind="{ columns: columnIterator, index: index, item: item, level: level, node: node }"
+                name="datarow"></slot>
         </bs-treegrid-items>
       </table>
       <transition v-if="_showEmptyMessage" name="fade">
@@ -45,7 +49,7 @@
       </transition>
     </div>
     <div v-if="isLoading && loading.type === 'spinner'" class="md-grid-progress-spinner">
-      <bs-progress class="align-self-center" v-bind="_progressLoadingAttrs" />
+      <bs-progress v-bind="_progressLoadingAttrs" class="align-self-center" />
     </div>
   </div>
 </template>
@@ -60,7 +64,7 @@ import Helper from "../../utils/Helper";
 import Common from "../../mixins/Common";
 import Grid from "./mixins/Grid";
 import sum from 'lodash/sum';
-import { addResizeListener, removeResizeListener } from "../../utils/ResizeListener";
+import {addResizeListener, removeResizeListener} from "../../utils/ResizeListener";
 
 export default {
     name: "BsTreegrid",
@@ -128,9 +132,9 @@ export default {
     },
     beforeDestroy() {
         removeResizeListener(this.$el, this._updateTableWidth);
-        this.columnsWidth  = null;
+        this.columnsWidth = null;
         this.table.columns = null;
-        this.table         = null;
+        this.table = null;
     },
     methods: {
         /**
@@ -150,7 +154,7 @@ export default {
                     .load()
                     .then(() => {
                         this.dataFetched = true;
-                        this.isFetching  = false;
+                        this.isFetching = false;
                         this.fireEvent('data-bind', this.dataSource.dataItems);
                         if (this.$refs.treeitems) {
                             this.$refs.treeitems.populateNodes(0, this.dataSource.dataItems);
@@ -158,12 +162,12 @@ export default {
                     })
                     .catch(error => {
                         this.dataFetched = true;
-                        this.isFetching  = false;
+                        this.isFetching = false;
                         this.fireEvent('error', error);
                     });
             } else {
                 this.dataFetched = false;
-                this.isFetching  = false;
+                this.isFetching = false;
             }
         },
         /**
@@ -175,8 +179,8 @@ export default {
          */
         _handleScroll(e) {
             const scrollLeft = e.target.scrollLeft;
-            const theader    = this.$refs.theader;
-            const tfooter    = this.$refs.tfooter;
+            const theader = this.$refs.theader;
+            const tfooter = this.$refs.tfooter;
 
             if (theader) {
                 theader.scrollLeft = scrollLeft;
@@ -193,10 +197,10 @@ export default {
          */
         _updateBodyHeight() {
             if (this.isFixedHeight && (!this.isSmallScreen || !this.flipOnSmallScreen)) {
-                const gridHeight    = this.$el.offsetHeight;
+                const gridHeight = this.$el.offsetHeight;
                 const theaderHeight = this.$refs.theader ? this.$refs.theader.offsetHeight : 0;
                 const tfooterHeight = this.$refs.tfooter ? this.$refs.tfooter.offsetHeight : 0;
-                const footerHeight  = this.$refs.footer ? this.$refs.footer.offsetHeight : 0;
+                const footerHeight = this.$refs.footer ? this.$refs.footer.offsetHeight : 0;
 
                 this.$refs.tcontent.style.height = (gridHeight - (theaderHeight + tfooterHeight + footerHeight)) + 'px';
             }
@@ -217,10 +221,10 @@ export default {
                     ? (this.$el.getBoundingClientRect().width - 18)
                     : this.$el.getBoundingClientRect().width;
 
-                let avgColWidth   = 0;
-                let tmpCols       = this.columnsWidth.map(col => col);
-                let decWidth      = true;
-                let totWidth      = sum(tmpCols);
+                let avgColWidth = 0;
+                let tmpCols = this.columnsWidth.map(col => col);
+                let decWidth = true;
+                let totWidth = sum(tmpCols);
                 const colsNoWidth = tmpCols.filter(c => c === 0);
 
                 if (elWidth > totWidth && colsNoWidth.length > 0) {
@@ -272,28 +276,28 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-treegrid {
-  .#{$prefix}-grid-content {
-    tr {
-      @include transition($transition-basic);
+    .#{$prefix}-grid-content {
+        tr {
+            @include transition($transition-basic);
 
-      > .#{$prefix}-treegrid-cell {
-        &:first-child {
-          padding-left: $table-cell-padding;
+            > .#{$prefix}-treegrid-cell {
+                &:first-child {
+                    padding-left: $table-cell-padding;
+                }
+
+                .#{$prefix}-grid-cell-inner {
+                    padding-left: .2rem;
+                }
+
+                .icon-chevron-right {
+                    @include transition($transition-basic);
+
+                    &.expanded {
+                        @include transform(rotateZ(90deg));
+                    }
+                }
+            }
         }
-
-        .#{$prefix}-grid-cell-inner {
-          padding-left: .2rem;
-        }
-
-        .icon-chevron-right {
-          @include transition($transition-basic);
-
-          &.expanded {
-            @include transform(rotateZ(90deg));
-          }
-        }
-      }
     }
-  }
 }
 </style>

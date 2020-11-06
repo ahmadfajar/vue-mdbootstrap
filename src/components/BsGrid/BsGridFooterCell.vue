@@ -5,7 +5,7 @@
       x-ms-format-detection="none">
     <div class="md-grid-th-inner">
       <slot>
-        {{ value === '' || value === null ? '&nbsp;' : value }}
+        {{ value === '' || value == null ? '&nbsp;' : value }}
       </slot>
     </div>
   </th>
@@ -31,7 +31,7 @@ export default {
             if (col && col.aggregate) {
                 let value;
                 const str = col.aggregate.toString().trim();
-                const fn  = Helper.isFunction(col.aggregate)
+                const fn = Helper.isFunction(col.aggregate)
                     ? col.aggregate
                     : 'aggregate' + str.charAt(0).toUpperCase() + str.slice(1);
 

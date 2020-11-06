@@ -1,7 +1,9 @@
 <template>
   <th class="md-grid-cell-selection" role="columnheader">
     <div class="md-grid-cell-inner">
-      <bs-checkbox :model="allSelected" :color="color" @change="_onChange" />
+      <bs-checkbox :color="color"
+                   :model="allSelected"
+                   @change="_onChange" />
     </div>
   </th>
 </template>

@@ -37,29 +37,8 @@ export default class BsStore extends AbstractStore {
      * Returns total number of items in the Store's dataset (readonly).
      */
 
-
     /**
      * Class constructor.
-     *
-     * @example
-     * let dsStore = new BsStore({
-     *     idProperty: 'id',
-     *     dataProperty: 'data',
-     *     totalProperty: 'total',
-     *     pageSize: 15,
-     *     restProxy: {
-     *         browse: '/api/users',
-     *         delete: {url: './api/users', method: 'delete'},
-     *         save: {url: './api/users', method: 'post'},
-     *         update: {url: './api/users', method: 'put'}
-     *     },
-     *     csrfConfig: {
-     *         url: '/api/token/{name}',
-     *         tokenName: 'token_name',
-     *         dataField: 'value',
-     *         suffix: false, 
-     *     },
-     * });
      *
      * @param {Object} config The configuration properties
      */

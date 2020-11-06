@@ -3,66 +3,67 @@
     <div class="col-lg-7">
       <div class="d-flex align-items-center">
         <bs-button :disabled="!navFirstPageEnabled"
-                   mode="icon"
                    color="secondary"
-                   size="sm"
                    flat
+                   mode="icon"
+                   size="sm"
                    @click="$emit('gotopage', 1)">
           <bs-icon icon="first_page" />
         </bs-button>
         <bs-button :disabled="!navFirstPageEnabled"
-                   mode="icon"
                    color="secondary"
-                   size="sm"
                    flat
+                   mode="icon"
+                   size="sm"
                    @click="$emit('prevpage')">
           <bs-icon icon="chevron_left" />
         </bs-button>
         <label class="d-inline-block mb-0 mx-1">
-          <input type="text"
+          <input v-model.lazy.number="currentPage"
+                 :readonly="totalPages < 2"
                  class="form-control form-control-sm md-pagination-control"
-                 v-model.lazy.number="currentPage"
-                 :readonly="totalPages < 2" />
+                 type="text" />
         </label>
         <bs-button :disabled="!navLastPageEnabled"
-                   mode="icon"
                    color="secondary"
-                   size="sm"
                    flat
+                   mode="icon"
+                   size="sm"
                    @click="$emit('nextpage')">
           <bs-icon icon="chevron_right" />
         </bs-button>
         <bs-button :disabled="!navLastPageEnabled"
-                   mode="icon"
                    color="secondary"
-                   size="sm"
                    flat
+                   mode="icon"
+                   size="sm"
                    @click="$emit('gotopage', totalPages)">
           <bs-icon icon="last_page" />
         </bs-button>
-        <div class="md-pagination-pager d-md-flex align-items-center pl-1 d-none">
+        <div class="md-pagination-pager d-md-flex align-items-center pl-2 d-none">
           <bs-combobox v-model="itemPerPage"
                        :data-source="configuration.paging"
-                       :minimum-popover-width="70" />
+                       :minimum-popover-width="70"
+                       outlined />
           <span class="md-pagination-text text-nowrap pl-2">{{ configuration.messages.pager }}</span>
         </div>
         <div class="flex-fill d-lg-none text-right">
-          <bs-button mode="icon"
-                     color="secondary"
-                     icon="sync-alt"
-                     size="sm"
+          <bs-button color="secondary"
                      flat
+                     icon="sync-alt"
+                     mode="icon"
+                     size="sm"
                      @click="$emit('reload')" />
         </div>
       </div>
     </div>
     <div class="col-lg-5 d-none d-lg-block text-right">
       <span class="md-pagination-text pr-2">{{ _pageInfo }}</span>
-      <bs-button mode="icon"
-                 color="secondary"
-                 icon="sync-alt"
-                 size="sm"
+      <bs-button color="secondary"
                  flat
+                 icon="sync-alt"
+                 mode="icon"
+                 size="sm"
                  @click="$emit('reload')" />
     </div>
   </div>
@@ -113,7 +114,7 @@ export default {
          */
         _pageInfo() {
             if (this.dataItems.length > 0) {
-                let msg  = this.configuration.messages.display;
+                let msg = this.configuration.messages.display;
                 const pg = this.currentPage - 1;
                 const nA = (pg * this.itemPerPage) + 1;
                 const nB = (pg * this.itemPerPage) + this.dataItems.length;
@@ -147,7 +148,7 @@ export default {
                     return v2;
                 }
             });
-            const pager  = new BsArrayStore(null, {idProperty: 'value'});
+            const pager = new BsArrayStore(null, {idProperty: 'value'});
 
             for (const el of result.paging) {
                 if (Helper.isArray(el)) {
@@ -201,36 +202,54 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-pagination-wrapper {
-  position: relative;
-  overflow: hidden;
-  padding-top: .8rem;
-  padding-bottom: .8rem;
-  width: 100%;
+    position: relative;
+    overflow: hidden;
+    padding-top: .8rem;
+    padding-bottom: .8rem;
+    width: 100%;
 
-  .#{$prefix}-pagination-control {
-    font-size: 14px;
-    width: 44px;
-  }
-
-  .#{$prefix}-pagination-text {
-    color: $table-header-color;
-  }
-
-  .btn-icon {
-    margin-right: 0;
-  }
-
-  .#{$prefix}-pagination-pager {
-    min-width: 160px;
-  }
-
-  .#{$prefix}-combobox-control-inner {
-    > .#{$prefix}-combobox-input {
-      @include user-select(none);
-      cursor: pointer;
-      padding-bottom: 0 !important;
-      padding-left: 8px !important;
+    .#{$prefix}-pagination-control {
+        font-size: 14px;
+        width: 44px;
+        min-height: 36px;
     }
-  }
+
+    .#{$prefix}-pagination-text {
+        color: $table-header-color;
+        // font-size: .875rem;
+    }
+
+    .btn-icon {
+        margin-right: 0;
+    }
+
+    .#{$prefix}-pagination-pager {
+        min-width: 160px;
+    }
+
+    .#{$prefix}-combobox {
+        > .#{$prefix}-field-wrapper {
+            font-size: .875rem;
+
+            > .#{$prefix}-field-ctrl {
+                > .#{$prefix}-field-inner {
+                    padding-left: 0;
+
+                    > fieldset {
+                        padding: 0;
+                    }
+
+                    > .#{$prefix}-field-input-wrapper {
+                        min-height: fit-content;
+                        padding-left: $padding-base;
+
+                        > .#{$prefix}-combobox-input {
+                            padding: .4rem 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 </style>

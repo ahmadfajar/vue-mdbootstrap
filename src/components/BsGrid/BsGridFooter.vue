@@ -1,5 +1,5 @@
 <template>
-  <table role="grid" :style="_tableStyles">
+  <table :style="_tableStyles" role="grid">
     <colgroup v-if="!isSmallScreen || !flipOnSmallScreen">
       <col v-if="BsGrid.enableRowSelect()" :style="{width: _checkboxWidth + 'px'}" />
       <col v-for="(column, idx) in columns"
@@ -8,7 +8,7 @@
     </colgroup>
     <tfoot role="rowgroup">
       <tr role="row">
-        <th role="gridcell" v-if="BsGrid.enableRowSelect()"></th>
+        <th v-if="BsGrid.enableRowSelect()" role="gridcell"></th>
         <slot>
           <bs-grid-footer-cell v-for="(col, idx) in columns"
                                :key="col.field + '-' + idx"
@@ -24,7 +24,7 @@
 import BsGridFooterCell from "./BsGridFooterCell";
 import ScreenSize from "../../mixins/ScreenSize";
 import Util from "../../utils/Helper";
-import { addResizeListener, removeResizeListener } from "../../utils/ResizeListener";
+import {addResizeListener, removeResizeListener} from "../../utils/ResizeListener";
 
 export default {
     name: "BsGridFooter",
@@ -41,6 +41,10 @@ export default {
         isSmallScreen: false
     }),
     computed: {
+        /**
+         * @property {IBsGrid} BsGrid
+         */
+
         /**
          * Get checkbox column width.
          *
@@ -64,7 +68,7 @@ export default {
         /**
          * Flip grid footer on SmallScreen device?
          *
-         * @returns {boolean} TRUE if grid footer must be flipped on smallscreen device otherwise FALSE
+         * @returns {boolean} TRUE if grid footer must be flipped on small-screen device otherwise FALSE
          */
         flipOnSmallScreen() {
             return this.BsGrid.flipOnSmallScreen;

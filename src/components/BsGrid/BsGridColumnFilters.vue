@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BsButton from "../BsButton/BsButton";
 import Helper from "../../utils/Helper";
 
@@ -67,6 +67,10 @@ export default {
         this.values = null;
     },
     methods: {
+        /**
+         * @property {IBsGrid} BsGrid
+         */
+
         _fieldClass(index) {
             return {
                 'd-none': (this.values[index].keyword !== '' && this.values[index].keyword != null)
@@ -163,18 +167,18 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-grid {
-  .#{$prefix}-field {
-    > .#{$prefix}-field-placeholder {
-      position: absolute;
-      left: 8px;
-      top: 6px;
-    }
+    .#{$prefix}-field {
+        > .#{$prefix}-field-placeholder {
+            position: absolute;
+            left: 8px;
+            top: 6px;
+        }
 
-    input[type='text']:focus {
-      ~ .#{$prefix}-field-placeholder {
-        display: none;
-      }
+        input[type='text']:focus {
+            ~ .#{$prefix}-field-placeholder {
+                display: none;
+            }
+        }
     }
-  }
 }
 </style>

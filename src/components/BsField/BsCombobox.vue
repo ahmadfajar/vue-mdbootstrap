@@ -299,6 +299,11 @@ export default {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * Sets **Chips** style for selected items.
+         * (Work in progress,... not working yet)
+         * @type {boolean|*}
+         */
         chips: {
             type: Boolean,
             default: false

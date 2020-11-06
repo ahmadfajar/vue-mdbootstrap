@@ -13,6 +13,7 @@ Released:
 - **BsCard:** add properties `img-bottom-alt`, `img-bottom-src`, `img-top-alt`, `img-top-src`
 - **BsCheckbox:** add property `readonly`
 - **BsCheckboxGroup:** add property `readonly`
+- **BsCombobox:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - **BsIcon:** add properties `flip`, `pulse`, `rotation`, and `spin`
 - **BsListTile:** add properties `ripple-off` and `navigable`
 - **BsListTileAction:** add `center` property
@@ -22,6 +23,7 @@ Released:
 - **BsTextArea:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - **BsTextField:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - **BsDateTimeField:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
+- **BsGridColumn:** add properties `order`, `cell-data`
 - Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
 ### Bug Fixes & Improvement v1.1.0
@@ -37,9 +39,11 @@ Released:
 - **BsProgress:** change property `type` default value to 'bar' 
 - **BsSideDrawer:** computed inline style improvement
 - **BsCheckbox, BsSwitch:** improve css classes
+- **BsCombobox:** improve html template and css classes
 - **BsTextArea:** improve html template and css classes
 - **BsTextField:** improve html template and css classes
 - **BsDateTimeField:** improve html template and css classes
+- **BsGrid:** improve html template and css classes, rename property `borderless` to `bordered`
 - Improve scss color variables
 - Improve JsDoc
 

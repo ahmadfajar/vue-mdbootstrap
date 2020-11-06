@@ -2,14 +2,26 @@ import Helper from "../../../utils/Helper";
 
 export default {
     props: {
+        /**
+         * The column object for this Cell.
+         * @type {Object}
+         */
         column: {
             type: Object,
             default: undefined
         },
+        /**
+         * The row item object for this Cell.
+         * @type {Object}
+         */
         item: {
             type: Object,
             default: undefined
         },
+        /**
+         * The row index position.
+         * @type {number|string|*}
+         */
         index: {
             type: [Number, String],
             default: undefined,

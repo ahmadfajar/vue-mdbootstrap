@@ -158,7 +158,7 @@ export default {
                 'md-readonly': this.readonly,
                 'md-focused': this.isFocused,
                 'md-searchbox-dark': this.darkMode,
-                [this.innerCls]: true
+                [this.innerCls]: this.innerCls
             };
         },
         /**

@@ -17,7 +17,7 @@ export default {
         darkMode: Boolean,
         autofocus: {
             type: Boolean,
-            default: true
+            default: false
         },
         field: {
             type: [String, Array],
@@ -36,7 +36,7 @@ export default {
         operator: {
             type: String,
             default: 'contains',
-            validator: value => ['eq', 'neq', 'startwith', 'endwith', 'contains', 'fts'].indexOf(value) !== -1
+            validator: value => ['eq', 'neq', 'startwith', 'endwith', 'contains', 'fts'].indexOf(value) > -1
         },
         placeholder: {
             type: String,

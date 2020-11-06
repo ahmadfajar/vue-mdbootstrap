@@ -1,5 +1,7 @@
 <template>
-  <td class="md-grid-cell row-numbering" role="gridcell" :style="_cellStyles">
+  <td :style="_cellStyles"
+      class="md-grid-cell row-numbering"
+      role="gridcell">
     <div class="md-grid-cell-inner">
       {{ value }}
     </div>
@@ -11,14 +13,30 @@ export default {
     name: "BsGridCellNumbering",
     inject: ['BsGrid'],
     props: {
+        /**
+         * @property {IBsGrid} BsGrid
+         */
+
+        /**
+         * The column object for this Cell.
+         * @type {Object}
+         */
         column: {
             type: Object,
             default: undefined
         },
+        /**
+         * The row item object for this Cell.
+         * @type {Object}
+         */
         item: {
             type: Object,
             default: undefined
         },
+        /**
+         * The row index position.
+         * @type {number|string|*}
+         */
         index: {
             type: Number,
             default: undefined
@@ -32,7 +50,7 @@ export default {
          * @private
          */
         _cellStyles() {
-            const col    = this.column;
+            const col = this.column;
             const styles = col && col.dataStyle ? col.dataStyle : {};
 
             if (col) {
