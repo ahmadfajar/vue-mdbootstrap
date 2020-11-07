@@ -235,7 +235,7 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Assign datas to the Store's dataset.
+     * Assign data to the Store's dataset.
      *
      * @param {Array|Object} data Data to be assigned
      * @param {boolean} silent Append item silently and doesn't trigger data conversion

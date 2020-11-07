@@ -468,9 +468,9 @@ export default {
                 const elWidth = this.isFixedHeight
                     ? (this.$el.getBoundingClientRect().width - 18)
                     : this.$el.getBoundingClientRect().width;
-                let avgColWidth = 0;
-                let tmpCols = this.columnsWidth.map(col => col);
+                let avgColsNoWidth = 0;
                 let decreaseWidth = true;
+                let tmpCols = this.columnsWidth.map(col => col);
                 const colsNoWidth = tmpCols.filter(c => c === 0);
 
                 if (this.rowSelection) {
@@ -479,17 +479,17 @@ export default {
 
                 let totWidth = sum(tmpCols);
                 if (elWidth > totWidth && colsNoWidth.length > 0) {
-                    avgColWidth = Math.floor((elWidth - totWidth) / colsNoWidth.length);
+                    avgColsNoWidth = Math.floor((elWidth - totWidth) / colsNoWidth.length);
                 }
 
                 this.table.columns = this.columnIterator.map((col, idx) => {
                     if (tmpCols[idx] === 0) {
                         const minWidth = parseInt(col.minWidth, 10);
 
-                        if (avgColWidth < minWidth) {
+                        if (avgColsNoWidth < minWidth) {
                             col.width = decreaseWidth ? (minWidth - 1) : minWidth;
                         } else {
-                            col.width = decreaseWidth ? (avgColWidth - 1) : avgColWidth;
+                            col.width = decreaseWidth ? (avgColsNoWidth - 1) : avgColsNoWidth;
                         }
                         totWidth += col.width;
                         decreaseWidth = false;
@@ -737,7 +737,7 @@ export default {
                 vertical-align: top;
                 white-space: nowrap;
 
-                &.enable-sort {
+                &.#{$prefix}-sortable {
                     cursor: pointer;
                 }
 

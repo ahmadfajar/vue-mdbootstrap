@@ -47,7 +47,7 @@ export default {
         },
         minWidth: {
             type: [Number, String],
-            default: 150,
+            default: 100,
             validator: v => !isNaN(parseInt(v, 10))
         }
     },

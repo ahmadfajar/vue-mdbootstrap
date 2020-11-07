@@ -140,7 +140,7 @@ export default {
                     empty: 'No data to display',
                     pager: 'items per page'
                 },
-                paging: [10, 15, 25, 50, 75, 100, [-1, 'All']]
+                paging: [10, 15, 25, 50, [-1, 'All']]
             };
 
             const result = mergeWith(config, source, (v1, v2) => {

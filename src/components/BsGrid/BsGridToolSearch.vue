@@ -31,7 +31,7 @@ export default {
         logic: {
             type: String,
             default: 'AND',
-            validator: value => ['AND', 'OR'].indexOf(value) !== -1
+            validator: value => ['AND', 'OR'].indexOf(value) > -1
         },
         operator: {
             type: String,

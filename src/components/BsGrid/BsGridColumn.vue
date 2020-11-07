@@ -3,7 +3,7 @@
       :style="_headerStyles"
       role="columnheader"
       @click="_onClick">
-    <div :class="{'enable-sort': canSort}" class="md-grid-th-inner">
+    <div :class="{'md-sortable': canSort}" class="md-grid-th-inner">
       <font-awesome-icon v-if="canSort && textAlignment === 'right'"
                          :class="_sortClasses"
                          icon="arrow-up" />
@@ -60,7 +60,7 @@ export default {
             default: true
         },
         /**
-         * Footer css class name.
+         * Render this column as Grid row numbering.
          * @type {boolean|*}
          */
         rowNumbering: {
@@ -93,7 +93,7 @@ export default {
         },
         /**
          * Aggregate function to pass to the column footer.
-         * @type {boolean|*}
+         * @type {string|function|*}
          */
         aggregate: {
             type: [String, Function],
