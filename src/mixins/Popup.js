@@ -89,7 +89,7 @@ export default {
                 return;
             }
             this.$emit('update:open', false);
-            this.$emit('close', 'Overlay');
+            this.$emit('close', 'Overlay clicked');
         },
         popupEl() {
             return this.$el;

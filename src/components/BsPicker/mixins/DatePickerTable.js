@@ -118,7 +118,7 @@ export default {
          */
         onMouseWheel(e) {
             e.preventDefault();
-            this.$emit('update:table', this.calculateTableDate(e.deltaY));
+            this.$emit('update-table', this.calculateTableDate(e.deltaY));
         },
         /**
          * Touch device event handler.
@@ -129,9 +129,9 @@ export default {
          */
         onTouch(e) {
             if (e.offsetX < -15) {
-                this.$emit('update:table', this.calculateTableDate(1));
+                this.$emit('update-table', this.calculateTableDate(1));
             } else if (e.offsetX > 15) {
-                this.$emit('update:table', this.calculateTableDate(-1));
+                this.$emit('update-table', this.calculateTableDate(-1));
             }
         }
     }

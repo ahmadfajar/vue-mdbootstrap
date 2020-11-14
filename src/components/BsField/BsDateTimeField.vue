@@ -98,6 +98,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BsIcon from "../BsIcon/BsIcon";
 import BsPopover from "../BsPopover/BsPopover";
@@ -107,7 +108,6 @@ import TextField from "./mixins/TextField";
 import FieldValidation from "./mixins/FieldValidation";
 import MenuAble from "../../mixins/MenuAble";
 import PickerConst from "../BsPicker/utils/DatePickerConst";
-import moment from "moment";
 import "../../../scss/_field.scss"
 import '../../../scss/_shadows.scss';
 

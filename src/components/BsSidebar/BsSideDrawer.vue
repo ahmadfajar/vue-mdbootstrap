@@ -4,7 +4,8 @@
          :class="_classNames"
          :style="_styles"
          class="md-side-drawer">
-    <div :class="{'md-shadow': shadow}" class="md-side-drawer-inner">
+    <div :class="{'md-shadow': shadow}"
+         class="md-side-drawer-inner">
       <slot></slot>
     </div>
   </aside>
@@ -49,17 +50,17 @@ export default {
         width: {
             type: [Number, String],
             default: 250,
-            validator: v => !isNaN(parseInt(v, 10))
+            validator: v => parseInt(v, 10) > 0
         },
         miniWidth: {
             type: [Number, String],
             default: 56,
-            validator: v => !isNaN(parseInt(v, 10))
+            validator: v => parseInt(v, 10) > 0
         },
         modalWidth: {
             type: [Number, String],
             default: 300,
-            validator: v => !isNaN(parseInt(v, 10))
+            validator: v => parseInt(v, 10) > 0
         }
     },
     data: () => ({

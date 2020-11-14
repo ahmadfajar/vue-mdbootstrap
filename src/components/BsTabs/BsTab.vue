@@ -1,29 +1,46 @@
 <template>
   <transition :name="_transition">
-    <div v-show="active" :class="_classNames" v-bind="_attributes">
+    <div v-show="active"
+         v-bind="_attributes"
+         :class="_classNames">
       <slot></slot>
     </div>
   </transition>
 </template>
 
 <script>
-
 export default {
     name: "BsTab",
     inject: ['tabs'],
     props: {
+        /**
+         * TabItem ID.
+         * @type {string|*}
+         */
         id: {
             type: String,
             default: undefined
         },
+        /**
+         * TabItem icon to used.
+         * @type {string|*}
+         */
         icon: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * TabItem label.
+         * @type {string|*}
+         */
         label: {
             type: String,
             default: undefined
         },
+        /**
+         * TabItem aria-labelledby.
+         * @type {string|*}
+         */
         ariaLabel: {
             type: String,
             default: undefined

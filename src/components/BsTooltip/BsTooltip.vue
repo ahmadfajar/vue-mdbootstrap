@@ -7,27 +7,44 @@ export default {
     name: "BsTooltip",
     components: {BsTooltipContent},
     props: {
+        /**
+         * The tooltip content.
+         * @type {string|*}
+         */
         content: {
             type: String,
             default: undefined
         },
+        /**
+         * Put the component into disable state.
+         * @type {boolean|*}
+         */
         disabled: {
             type: Boolean,
             default: false
         },
+        /**
+         * The tooltip display placement.
+         * @type {string|*}
+         */
         placement: {
             type: String,
-            default: BsTooltipContent.props.placement.default
+            default: BsTooltipContent.props.placement.default,
+            validator: v => ['top', 'bottom', 'left', 'right'].indexOf(v) > -1
         },
-        tooltipClass: {
-            type: [String, Object, Array],
-            default: undefined
-        },
+        /**
+         * The tooltip width.
+         * @type {number|string|*}
+         */
         width: {
             type: [String, Number],
             default: undefined,
             validator: v => !isNaN(parseInt(v, 10))
         },
+        /**
+         * The tooltip maximum width.
+         * @type {number|string|*}
+         */
         maxWidth: {
             type: [String, Number],
             default: undefined,
@@ -69,29 +86,28 @@ export default {
         }
     },
     render() {
-        const vnode = firstComponentChild(this.$slots.default);
+        const vNode = firstComponentChild(this.$slots.default);
 
-        if (!vnode) {
-            return vnode;
+        if (!vNode) {
+            return vNode;
         }
         if (this.tooltipVM) {
             this.tooltipVM.$slots.default = [this.content];
 
-            vnode.data = vnode.data || {};
-            const on = vnode.data.on = vnode.data.on || {};
-            const nativeOn = vnode.data.nativeOn = vnode.data.nativeOn || {};
+            vNode.data = vNode.data || {};
+            const on = vNode.data.on = vNode.data.on || {};
+            const nativeOn = vNode.data.nativeOn = vNode.data.nativeOn || {};
 
             nativeOn.mouseenter = on.mouseenter = this._addEventListener(on.mouseenter, this._showTooltip);
             nativeOn.mouseleave = on.mouseleave = this._addEventListener(on.mouseleave, this._hideTooltip);
         }
 
-        return vnode;
+        return vNode;
     },
     watch: {
         active(value) {
             if (this.tooltipVM) {
                 this.$set(this.tooltipVM, 'open', value);
-                // console.log('open:', this.tooltipVM.open);
             }
         }
     },

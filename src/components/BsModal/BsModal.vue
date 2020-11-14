@@ -1,24 +1,28 @@
 <template>
   <transition name="bs-modal">
     <div v-if="open"
-         class="md-modal"
          :style="_wrapperStyles"
+         class="md-modal"
          @click="_onWrapperClick">
       <div ref="dialog"
            :class="_classNames"
            :style="_modalStyles">
-        <div v-if="isShowTitle"
+        <div v-if="showTitle"
              ref="titleEl"
+             :class="headerClass"
              class="md-modal-title">
-          <slot name="title">
+          <slot name="header">
             {{ title }}
           </slot>
         </div>
-        <div class="md-modal-body" ref="bodyEl">
+        <div ref="bodyEl"
+             :class="bodyClass"
+             class="md-modal-body">
           <slot></slot>
         </div>
         <div v-if="hasFooter"
              ref="footerEl"
+             :class="footerClass"
              class="md-modal-footer">
           <slot name="footer"></slot>
         </div>
@@ -35,26 +39,81 @@ export default {
     name: "BsModal",
     mixins: [Popup],
     props: {
-        fullscreen: Boolean,
-        scrollable: Boolean,
+        /**
+         * Show modal dialog in full screen.
+         * @type {boolean|*}
+         */
+        fullscreen: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Show a modal dialog that has a scrollable body.
+         * @type {boolean|*}
+         */
+        scrollable: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Dialog title.
+         * @type {string|*}
+         */
         title: {
             type: String,
             default: undefined
         },
+        /**
+         * Modal dialog width.
+         * @type {number|string|*}
+         */
         width: {
             type: [String, Number],
             default: undefined,
             validator: v => !isNaN(parseInt(v, 10))
         },
+        /**
+         * Modal dialog maximum width.
+         * @type {number|string|*}
+         */
         maxWidth: {
             type: [String, Number],
             default: undefined,
             validator: v => !isNaN(parseInt(v, 10))
         },
+        /**
+         * Additional css class name for dialog body container.
+         * @type {string|Array|*}
+         */
+        bodyClass: {
+            type: [String, Array],
+            default: undefined
+        },
+        /**
+         * Additional css class name for dialog footer container.
+         * @type {string|Array|*}
+         */
+        footerClass: {
+            type: [String, Array],
+            default: undefined
+        },
+        /**
+         * Additional css class name for dialog header container.
+         * @type {string|Array|*}
+         */
+        headerClass: {
+            type: [String, Array],
+            default: undefined
+        },
+        /**
+         * Transition animation when showing the dialog.
+         * Valid values are: 'slide-top', 'slide-bottom', 'slide-left', 'slide-right', 'fade', 'scale'.
+         * @type {string|*}
+         */
         transition: {
             type: String,
             default: 'scale',
-            validator: v => ['slide-top', 'slide-bottom', 'slide-left', 'slide-right', 'fade', 'scale'].indexOf(v) !== -1
+            validator: v => ['slide-top', 'slide-bottom', 'slide-left', 'slide-right', 'fade', 'scale'].indexOf(v) > -1
         }
     },
     computed: {
@@ -96,12 +155,12 @@ export default {
             }
         },
         hasCustomTitle() {
-            return this.$slots.title && this.$slots.title.length > 0;
+            return this.$slots.header && this.$slots.header.length > 0;
         },
         hasFooter() {
             return this.$slots.footer && this.$slots.footer.length > 0;
         },
-        isShowTitle() {
+        showTitle() {
             return !Helper.isEmpty(this.title) || this.hasCustomTitle;
         }
     },
@@ -174,122 +233,122 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-modal {
-  @include flexbox((display: flex, align-items: center, justify-content: center));
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
+    @include flexbox((display: flex, align-items: center, justify-content: center));
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
 
-  > .#{$prefix}-modal-inner {
-    @include box-shadow(0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12));
-    @include border-radius($border-radius-base);
-    background-color: $white;
-    font-size: inherit;
-    max-width: 75%;
-    padding: 0;
-
-    &.#{$prefix}-modal-scrollable {
-      .#{$prefix}-modal-body {
-        overflow-x: hidden;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
-      }
-    }
-
-    &.#{$prefix}-modal-fullscreen {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      max-width: 100% !important;
-      width: 100% !important;
-      height: 100% !important;
-      max-height: 100% !important;
-      border-radius: 0;
-
-      .#{$prefix}-modal-body {
+    > .#{$prefix}-modal-inner {
+        @include box-shadow(0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12));
+        @include border-radius($border-radius-base);
+        background-color: $white;
+        font-size: inherit;
+        max-width: 75%;
         padding: 0;
-      }
+
+        &.#{$prefix}-modal-scrollable {
+            .#{$prefix}-modal-body {
+                overflow-x: hidden;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        &.#{$prefix}-modal-fullscreen {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            max-width: 100% !important;
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 100% !important;
+            border-radius: 0;
+
+            .#{$prefix}-modal-body {
+                padding: 0;
+            }
+        }
     }
-  }
 
-  .#{$prefix}-modal-title {
-    @include flexbox((display: flex, align-items: center, justify-content: space-between));
-    color: darken($gray-900, 5%);
-    font-size: 22px;
-    font-weight: normal;
-    line-height: normal;
-    margin: 0;
-    padding: $padding-base $padding-lg 1.25rem;
+    .#{$prefix}-modal-title {
+        @include flexbox((display: flex, align-items: center, justify-content: space-between));
+        color: darken($gray-900, 5%);
+        font-size: 22px;
+        font-weight: normal;
+        line-height: normal;
+        margin: 0;
+        padding: $padding-base $padding-lg 1.25rem;
 
-    + .#{$prefix}-modal-body {
-      padding-top: 0;
+        + .#{$prefix}-modal-body {
+            padding-top: 0;
+        }
     }
-  }
 
-  .#{$prefix}-modal-body {
-    padding: $padding-lg $padding-lg 1.25rem;
-    //color: $gray-700;
-  }
-
-  .#{$prefix}-modal-footer {
-    @include flexbox((display: flex, align-items: center, justify-content: flex-end));
-    min-height: 48px;
-    padding: 8px 12px 12px 8px;
-
-    .btn + .btn {
-      margin-left: 10px;
+    .#{$prefix}-modal-body {
+        padding: $padding-lg $padding-lg 1.25rem;
+        //color: $gray-700;
     }
-  }
+
+    .#{$prefix}-modal-footer {
+        @include flexbox((display: flex, align-items: center, justify-content: flex-end));
+        min-height: 48px;
+        padding: $padding-sm $padding-base $padding-base $padding-base;
+
+        .btn + .btn {
+            margin-left: 10px;
+        }
+    }
 }
 
 .bs-modal-enter-active,
 .bs-modal-leave-active {
-  @include transition();
-  transition: opacity $md-transition-easeOut;
+    @include transition();
+    transition: opacity $md-transition-easeOut;
 
-  .#{$prefix}-modal-inner {
-    &.md-slide-top,
-    &.md-slide-bottom,
-    &.md-slide-left,
-    &.md-slide-right,
-    &.md-scale {
-      transition: transform $md-transition-easeOut;
+    .#{$prefix}-modal-inner {
+        &.md-slide-top,
+        &.md-slide-bottom,
+        &.md-slide-left,
+        &.md-slide-right,
+        &.md-scale {
+            transition: transform $md-transition-easeOut;
+        }
     }
-  }
 }
 
 .bs-modal-enter,
 .bs-modal-leave-active {
-  opacity: 0;
+    opacity: 0;
 }
 
 .bs-modal-enter,
 .bs-modal-leave-active {
-  .#{$prefix}-modal-inner {
-    backface-visibility: hidden;
+    .#{$prefix}-modal-inner {
+        backface-visibility: hidden;
 
-    &.md-slide-top {
-      transform: translate3d(0, -100%, 0);
-    }
+        &.md-slide-top {
+            transform: translate3d(0, -100%, 0);
+        }
 
-    &.md-slide-bottom {
-      transform: translate3d(0, 100%, 0);
-    }
+        &.md-slide-bottom {
+            transform: translate3d(0, 100%, 0);
+        }
 
-    &.md-slide-right {
-      transform: translate3d(100%, 0, 0);
-    }
+        &.md-slide-right {
+            transform: translate3d(100%, 0, 0);
+        }
 
-    &.md-slide-left {
-      transform: translate3d(-100%, 0, 0);
-    }
+        &.md-slide-left {
+            transform: translate3d(-100%, 0, 0);
+        }
 
-    &.md-scale {
-      transform: scale(0.6);
+        &.md-scale {
+            transform: scale(0.6);
+        }
     }
-  }
 }
 </style>

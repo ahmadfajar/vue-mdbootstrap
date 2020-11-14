@@ -65,8 +65,8 @@
                      flat>
             <bs-icon icon="MoreVert" size="24" />
           </bs-button>
-          <template v-slot:content>
-            <slot name="menubar" />
+          <template #content>
+            <slot name="menubar"></slot>
           </template>
         </bs-menu>
         <div v-if="toolbar['close']" class="ml-2">
@@ -185,7 +185,7 @@ export default {
         thumbnailHeight: {
             type: Number,
             default: 72,
-            validator: v => !isNaN(parseInt(v, 10))
+            validator: v => parseInt(v, 10) > 0
         },
         toolbar: {
             type: Object,
@@ -280,28 +280,28 @@ export default {
         },
         _closeClick() {
             this.$emit('update:open', false);
-            this.$emit('close', 'Close Button');
+            this.$emit('close', 'Button close clicked');
         },
         _deleteClick() {
-            this.$emit('click:delete', this.activeItem);
+            this.$emit('exec-delete', this.activeItem);
         },
         _downloadClick() {
-            this.$emit('click:download', this.activeItem);
+            this.$emit('exec-download', this.activeItem);
         },
         _infoClick() {
-            this.$emit('click:info', this.activeItem);
+            this.$emit('exec-info', this.activeItem);
         },
         _rotateLeftClick() {
-            this.$emit('click:rotate:left', this.activeItem);
+            this.$emit('exec-rotate-left', this.activeItem);
         },
         _rotateRightClick() {
-            this.$emit('click:rotate:right', this.activeItem);
+            this.$emit('exec-rotate-right', this.activeItem);
         },
         _zoomInClick() {
-            this.$emit('click:zoomin', this.activeItem);
+            this.$emit('exec-zoomin', this.activeItem);
         },
         _zoomOutClick() {
-            this.$emit('click:zoomout', this.activeItem);
+            this.$emit('exec-zoomout', this.activeItem);
         },
         changeActive(item, idx) {
             this.itemIndex = idx;
@@ -343,124 +343,124 @@ export default {
 @import "../../../scss/shared";
 
 .#{$prefix}-lightbox-wrap {
-  height: 100%;
-  width: 100%;
-  left: 0;
-  top: 0;
-  position: fixed;
-
-  .#{$prefix}-lightbox-item-wrap {
-    @include flexbox((display: flex, align-items: center, justify-content: center));
-    position: relative;
-
-    .#{$prefix}-lightbox-item {
-      @include flexbox((display: flex, flex-direction: column));
-      background: rgba(0, 0, 0, .3);
-      max-width: 95%;
-      max-height: 99%;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .#{$prefix}-lightbox-item-img {
-      height: calc(100% - 51px);
-      display: block;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .#{$prefix}-lightbox-item-title {
-      color: $gray-400;
-      display: block;
-      line-height: normal;
-      padding: 12px;
-      font-size: 1.25rem;
-      position: relative;
-    }
-
-    img {
-      max-width: 100%;
-      max-height: 100%;
-    }
-  }
-
-  > .#{$prefix}-lightbox-toolbar {
-    @include flexbox((display: flex, justify-content: space-between));
-    background: rgba(0, 0, 0, .6);
+    height: 100%;
+    width: 100%;
     left: 0;
     top: 0;
-    width: 100%;
     position: fixed;
-    padding: $padding-sm .3rem $padding-sm ($padding-base + ($padding-base / 4));
 
-    .#{$prefix}-counter,
-    .#{$prefix}-toolbar-items {
-      min-width: 100px;
-    }
+    .#{$prefix}-lightbox-item-wrap {
+        @include flexbox((display: flex, align-items: center, justify-content: center));
+        position: relative;
 
-    .#{$prefix}-counter {
-      color: $gray-400;
-      padding-top: $padding-sm;
-    }
-  }
-
-  > .#{$prefix}-lightbox-controls {
-    > .#{$prefix}-control-prev, > .#{$prefix}-control-next {
-      @include flexbox((display: flex, align-items: center));
-      height: 100%;
-      position: fixed;
-    }
-
-    > .#{$prefix}-control-prev {
-      left: 0;
-      padding-left: $padding-sm;
-    }
-
-    > .#{$prefix}-control-next {
-      right: 0;
-      padding-right: $padding-sm;
-    }
-
-  }
-
-  > .#{$prefix}-lightbox-thumbnail-wrap {
-    background: rgba(0, 0, 0, .5);
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    position: fixed;
-    padding: 0 $padding-sm;
-    overflow-x: auto;
-
-    > .#{$prefix}-lightbox-thumbnail-row {
-      @include flexbox((display:flex, flex-direction:row));
-
-      > .#{$prefix}-lightbox-thumbnails {
-        @include flexbox((display: flex, flex-flow:row nowrap));
-
-        .#{$prefix}-thumbnail-item {
-          @extend %cursor-pointer;
-          border: 1px solid rgba(0, 0, 0, .6);
-          display: inline-block;
-          opacity: .5;
-
-          &:hover {
-            opacity: 1;
-          }
-
-          &.#{$prefix}-active {
-            border-color: $red-base;
-            border-left-width: 2px;
-            border-right-width: 2px;
-            opacity: 1;
-          }
+        .#{$prefix}-lightbox-item {
+            @include flexbox((display: flex, flex-direction: column));
+            background: rgba(0, 0, 0, .3);
+            max-width: 95%;
+            max-height: 99%;
+            position: relative;
+            overflow: hidden;
         }
-      }
 
-      @include media-breakpoint-up(xl) {
-        @include flexbox((justify-content: center));
-      }
+        .#{$prefix}-lightbox-item-img {
+            height: calc(100% - 51px);
+            display: block;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .#{$prefix}-lightbox-item-title {
+            color: $gray-400;
+            display: block;
+            line-height: normal;
+            padding: 12px;
+            font-size: 1.25rem;
+            position: relative;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
     }
-  }
+
+    > .#{$prefix}-lightbox-toolbar {
+        @include flexbox((display: flex, justify-content: space-between));
+        background: rgba(0, 0, 0, .6);
+        left: 0;
+        top: 0;
+        width: 100%;
+        position: fixed;
+        padding: $padding-sm .3rem $padding-sm ($padding-base + ($padding-base / 4));
+
+        .#{$prefix}-counter,
+        .#{$prefix}-toolbar-items {
+            min-width: 100px;
+        }
+
+        .#{$prefix}-counter {
+            color: $gray-400;
+            padding-top: $padding-sm;
+        }
+    }
+
+    > .#{$prefix}-lightbox-controls {
+        > .#{$prefix}-control-prev, > .#{$prefix}-control-next {
+            @include flexbox((display: flex, align-items: center));
+            height: 100%;
+            position: fixed;
+        }
+
+        > .#{$prefix}-control-prev {
+            left: 0;
+            padding-left: $padding-sm;
+        }
+
+        > .#{$prefix}-control-next {
+            right: 0;
+            padding-right: $padding-sm;
+        }
+
+    }
+
+    > .#{$prefix}-lightbox-thumbnail-wrap {
+        background: rgba(0, 0, 0, .5);
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        position: fixed;
+        padding: 0 $padding-sm;
+        overflow-x: auto;
+
+        > .#{$prefix}-lightbox-thumbnail-row {
+            @include flexbox((display:flex, flex-direction:row));
+
+            > .#{$prefix}-lightbox-thumbnails {
+                @include flexbox((display: flex, flex-flow:row nowrap));
+
+                .#{$prefix}-thumbnail-item {
+                    @extend %cursor-pointer;
+                    border: 1px solid rgba(0, 0, 0, .6);
+                    display: inline-block;
+                    opacity: .5;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+
+                    &.#{$prefix}-active {
+                        border-color: $red-base;
+                        border-left-width: 2px;
+                        border-right-width: 2px;
+                        opacity: 1;
+                    }
+                }
+            }
+
+            @include media-breakpoint-up(xl) {
+                @include flexbox((justify-content: center));
+            }
+        }
+    }
 }
 </style>

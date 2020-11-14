@@ -1,9 +1,9 @@
 <template>
   <bs-picker v-bind="pickerAttrs" class="md-datepicker">
-    <template v-slot:header>
+    <template #header>
       <bs-date-picker-header v-if="headerPanel"
                              v-bind="headerAttrs"
-                             @change:view="_changePickerView" />
+                             @change-view="_changePickerView" />
     </template>
     <div class="md-picker-body-wrapper">
       <transition name="fade">
@@ -17,19 +17,19 @@
         <bs-date-picker-days v-if="activePicker === 'DATE'"
                              v-bind="pickerDayAttrs"
                              @input="selectDate"
-                             @update:table="_updatePickerTable" />
+                             @update-table="_updatePickerTable" />
         <bs-date-picker-months v-if="activePicker === 'MONTH'"
                                v-bind="pickerMonthAttrs"
                                @input="selectMonth"
-                               @update:table="_updatePickerTable" />
+                               @update-table="_updatePickerTable" />
         <bs-date-picker-years v-if="activePicker === 'YEAR'"
                               v-bind="pickerYearAttrs"
                               @input="selectYear"
-                              @update:table="_updatePickerTable" />
+                              @update-table="_updatePickerTable" />
         <bs-date-picker-times v-if="activePicker === 'TIME'"
                               v-bind="pickerTimeAttrs"
                               @input="selectTime"
-                              @toggle:view="togglePicker" />
+                              @toggle-view="togglePicker" />
       </transition>
     </div>
   </bs-picker>
@@ -65,7 +65,8 @@ export default {
             default: 'primary'
         },
         /**
-         * Define custom date which will be marked as event (note: belum berfungsi dengan benar).
+         * Define custom date which will be marked as event.
+         * (note: belum berfungsi dengan benar)
          * @type {Array|Object|Function}
          */
         events: {
@@ -73,7 +74,8 @@ export default {
             default: () => null
         },
         /**
-         * DatePicker date events color (note: belum berfungsi dengan benar).
+         * DatePicker date events color.
+         * (note: belum berfungsi dengan benar)
          * @type {string|Object|Function}
          */
         eventColor: {
@@ -113,7 +115,7 @@ export default {
             default: undefined
         },
         /**
-         * Display header panel or not.
+         * Show or hide header panel.
          * @type {boolean|*}
          */
         headerPanel: {
@@ -137,7 +139,8 @@ export default {
             default: PickerConst.defaultLocale
         },
         /**
-         * Can select multiple date or not (note: belum berfungsi dengan benar).
+         * Can select multiple date or not.
+         * (note: belum berfungsi dengan benar)
          * @type {boolean|*}
          */
         multiple: {
@@ -145,7 +148,8 @@ export default {
             default: false
         },
         /**
-         * Set minimum date limit in format: YYYY-MM-DD or YYYY-MM (note: belum berfungsi dengan benar).
+         * Set minimum date limit in format: YYYY-MM-DD or YYYY-MM.
+         * (note: belum berfungsi dengan benar)
          * @type {string|*}
          */
         minDate: {
@@ -153,7 +157,8 @@ export default {
             default: undefined
         },
         /**
-         * Set maximum date limit in format: YYYY-MM-DD or YYYY-MM (note: belum berfungsi dengan benar).
+         * Set maximum date limit in format: YYYY-MM-DD or YYYY-MM.
+         * (note: belum berfungsi dengan benar)
          * @type {string|*}
          */
         maxDate: {
@@ -169,15 +174,21 @@ export default {
             default: false
         },
         /**
-         * Mark today date or not (note: belum berfungsi dengan benar).
+         * Mark today date or not.
+         * (note: belum berfungsi dengan benar)
          * @type {boolean|*}
          */
         showToday: {
             type: Boolean,
             default: true
         },
+        /**
+         * The value monitored by `v-model` to maintain the field value.
+         * The value must be convertible to datetime.
+         * @type {string|number|Date|Array|*}
+         */
         value: {
-            type: [String, Number, Array],
+            type: [String, Number, Date, Array],
             default: undefined
         },
         /**

@@ -5,11 +5,13 @@
       <font-awesome-icon v-if="iconLeft"
                          :icon="icon"
                          :size="iconSize"
+                         :class="{'mr-1': label}"
                          fixed-width />
       <span>{{ label }}</span>
       <font-awesome-icon v-if="iconRight"
                          :icon="icon"
                          :size="iconSize"
+                         :class="{'ml-1': label}"
                          fixed-width />
     </div>
     <template v-else-if="icon && (iconTop || iconBottom)">

@@ -99,7 +99,7 @@ export default {
          * Calculate Tooltip left offset.
          *
          * @param {number} width    Element width
-         * @param {ClientRect} rect Parent element size
+         * @param {DOMRect} rect Parent element size
          * @returns {number} Tooltip left offset
          */
         getLeftPosition(width, rect) {
@@ -117,7 +117,7 @@ export default {
          * Calculate Tooltip top offset.
          *
          * @param {number} height   Element height
-         * @param {ClientRect} rect Parent element size
+         * @param {DOMRect} rect Parent element size
          * @returns {number} Tooltip top offset
          */
         getTopPosition(height, rect) {

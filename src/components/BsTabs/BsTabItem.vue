@@ -1,42 +1,42 @@
 <template>
   <li v-if="_tagName === 'li'"
-      role="presentation"
       :is="_tagName"
       :class="_classNames"
+      role="presentation"
       v-on="$listeners">
     <router-link v-if="hasRouter"
                  v-bind="_attributes"
-                 :class="_linkClass"
-                 :to="path"
                  :active-class="activeClass"
+                 :class="_linkClass"
                  :exact="exact"
+                 :to="path"
                  @click.native="_onClick">
       <bs-tab-label v-bind="_tabLabelAttrs" />
     </router-link>
     <a v-else
        v-bind="_attributes"
-       :href="url"
        :class="_linkClass"
+       :href="url"
        @click="_onClick">
       <bs-tab-label v-bind="_tabLabelAttrs" />
     </a>
   </li>
   <router-link v-else-if="hasRouter"
                v-bind="_attributes"
-               :class="_classNames"
-               :to="path"
+               v-on="$listeners"
                :active-class="activeClass"
+               :class="_classNames"
                :exact="exact"
-               @click.native="_onClick"
-               v-on="$listeners">
+               :to="path"
+               @click.native="_onClick">
     <bs-tab-label v-bind="_tabLabelAttrs" />
   </router-link>
   <a v-else
      v-bind="_attributes"
-     :href="url"
+     v-on="$listeners"
      :class="_classNames"
-     @click="_onClick"
-     v-on="$listeners">
+     :href="url"
+     @click="_onClick">
     <bs-tab-label v-bind="_tabLabelAttrs" />
   </a>
 </template>
@@ -177,7 +177,7 @@ export default {
             }
             if (!this.active) {
                 this.tabs.setActiveTab(this.tabIndex);
-                this.$emit('tab:click', this);
+                this.$emit('tab-click', this);
             }
         },
         _onRouteChange() {

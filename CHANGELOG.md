@@ -24,6 +24,7 @@ Released:
 - **BsTextField:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - **BsDateTimeField:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - **BsGridColumn:** add properties `order`, `cell-data`
+- **BsModal:** add properties `body-class`, `footer-class`, and `header-class`
 - Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
 ### Bug Fixes & Improvement v1.1.0
@@ -44,6 +45,8 @@ Released:
 - **BsTextField:** improve html template and css classes
 - **BsDateTimeField:** improve html template and css classes
 - **BsGrid:** improve html template and css classes, rename property `borderless` to `bordered`
+- **BsModal:** rename slot `title` to `header`
+- **BsTabLabel:** fix icon padding
 - Improve scss color variables
 - Improve JsDoc
 

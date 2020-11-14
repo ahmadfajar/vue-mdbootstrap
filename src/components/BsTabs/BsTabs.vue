@@ -1,5 +1,6 @@
 <template>
-  <div v-if="orientation === 'vertical'" class="md-tabs row no-gutters">
+  <div v-if="orientation === 'vertical'"
+       class="md-tabs row no-gutters">
     <div :class="{'col-auto': true, 'order-last': tabPosition === 'right'}">
       <div :is="_tagName"
            :class="_classNames"
@@ -14,7 +15,7 @@
       <slot></slot>
     </div>
   </div>
-  <div class="md-tabs" v-else>
+  <div v-else class="md-tabs">
     <div v-if="tabPosition === 'top'"
          :is="_tagName"
          :class="_classNames"
@@ -24,7 +25,7 @@
                    :key="'tab-item-' + index"
                    v-bind="_tabbedAttrs(item)" />
     </div>
-    <div class="tab-content" :class="contentClass">
+    <div :class="contentClass" class="tab-content">
       <slot></slot>
     </div>
     <div v-if="tabPosition === 'bottom'"
@@ -51,6 +52,10 @@ export default {
         event: 'input'
     },
     props: {
+        /**
+         * Tabs alignment. Valid values: `left`, `right`, `center`, `justified`.
+         * @type {string|*}
+         */
         alignment: {
             type: String,
             default: 'left',
@@ -58,6 +63,10 @@ export default {
                 return ['left', 'right', 'center', 'justified'].indexOf(value) !== -1;
             }
         },
+        /**
+         * Tabs style variant. Valid values: `tabs`, `pills`, `material`, `modern`.
+         * @type {string|*}
+         */
         variant: {
             type: String,
             default: 'tabs',
@@ -65,6 +74,10 @@ export default {
                 return ['tabs', 'pills', 'modern', 'material'].indexOf(value) !== -1;
             }
         },
+        /**
+         * TabItem icon position. Valid values: `left`, `right`, `top`, `bottom`.
+         * @type {string|*}
+         */
         iconPosition: {
             type: String,
             default: 'left',
@@ -72,6 +85,10 @@ export default {
                 return ['left', 'right', 'top', 'bottom'].indexOf(value) !== -1;
             }
         },
+        /**
+         * Tabs position. Valid values: `left`, `right`, `top`, `bottom`.
+         * @type {string|*}
+         */
         tabPosition: {
             type: String,
             default: 'top',
@@ -79,18 +96,34 @@ export default {
                 return ['left', 'right', 'top', 'bottom'].indexOf(value) !== -1;
             }
         },
+        /**
+         * TabItem css class name.
+         * @type {string|Array|*}
+         */
         tabClass: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * TabItem's container css class name.
+         * @type {string|Array|*}
+         */
         innerClass: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * Tab content css class name.
+         * @type {string|Array|*}
+         */
         contentClass: {
             type: [String, Array],
             default: undefined
         },
+        /**
+         * Tab content display animation transition.
+         * @type {string|*}
+         */
         contentTransition: {
             type: String,
             default: 'fade',
@@ -98,18 +131,34 @@ export default {
                 return ['fade', 'slide-fade', 'slide-fade-reverse', 'popover'].indexOf(value) !== -1;
             }
         },
+        /**
+         * TabItem icon size.
+         * @type {string|*}
+         */
         iconSize: {
             type: String,
             default: undefined
         },
+        /**
+         * Tabs color style for tab variant: `modern` and `material`.
+         * @type {string|*}
+         */
         color: {
             type: String,
             default: undefined
         },
+        /**
+         * Create tab variant of `tabs` or `pills` with flex.
+         * @type {string|*}
+         */
         flex: {
             type: Boolean,
             default: false
         },
+        /**
+         * The value maintained by `v-model`
+         * @type {string|*}
+         */
         value: {
             type: [String, Number, Object],
             default: undefined
@@ -226,7 +275,7 @@ export default {
 
                 tab.active = true;
                 tabPane.active = true;
-                this.$emit('tab:change', tabPane, this.activeTab);
+                this.$emit('change', tabPane, this.activeTab);
 
                 if (tab.id && tab.target) {
                     obj = {id: tab.id, index: tab.tabIndex, tabRef: tab.target};
@@ -278,250 +327,251 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-tabs {
-  .nav {
-    .nav-link {
-      cursor: pointer;
-      font-size: .95rem;
-      outline: 0 none;
-      padding: 0;
+    .nav {
+        .nav-link {
+            cursor: pointer;
+            font-size: .95rem;
+            outline: 0 none;
+            padding: 0;
 
-      > .#{$prefix}-ripple {
-        @include user-select(none);
-        padding: $tab-padding-base;
-      }
-    }
-
-    &.nav-tabs {
-      &.#{$prefix}-tab-top {
-        padding-bottom: 0;
-      }
-
-      &.#{$prefix}-tab-bottom {
-        padding-top: 0;
-
-        > .nav-item {
-          @include border-top-radius(0);
-          @include border-bottom-radius(($border-radius));
-          margin-bottom: 0;
-          margin-top: -1px;
-
-          &.active, &.#{$prefix}-active {
-            border-color: $white-base $gray-300 $gray-300;
-          }
-        }
-      }
-    }
-
-    &.nav-pills {
-      padding: $tab-padding-base;
-
-      .nav-link {
-        &.active {
-          @include box-shadow($z-depth-1);
-
-          &:hover {
-            color: $white;
-          }
-        }
-      }
-    }
-
-    &.nav-material {
-      overflow-x: hidden;
-      position: relative;
-
-      > .nav-link {
-        @include border-radius(0);
-        list-style: none;
-        background-color: transparent !important;
-        border-color: transparent;
-        border-style: solid;
-        border-width: 0;
-        color: rgba($white, .6);
-        text-transform: uppercase;
-
-        > .#{$prefix}-ripple {
-          padding: $tab-material-padding;
-        }
-
-        &:hover {
-          color: rgba($white, .8);
-        }
-
-        &.active {
-          color: var(--white);
-        }
-      }
-
-      &.#{$prefix}-tab-top {
-        @include box-shadow(0px 1px 5px rgba(#000, .2), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12));
-
-        > .nav-link {
-          border-bottom-width: 3px !important;
-
-          &.active {
-            border-bottom-color: var(--white);
-          }
-        }
-      }
-
-      &.#{$prefix}-tab-bottom {
-        @include box-shadow(0px -1px 5px rgba(#000, .2), 0px -1px 2px rgba(#000, .14), 0px -3px 1px -2px rgba(#000, .12));
-
-        > .nav-link {
-          border-top-width: 3px !important;
-
-          &.active {
-            border-top-color: var(--white);
-          }
-        }
-      }
-
-      &.#{$prefix}-tab-left {
-        @include box-shadow(1px 0px 5px rgba(#000, .2), 2px 0px 2px rgba(#000, .14), 3px 0px 1px -2px rgba(#000, .12));
-
-        > .nav-link {
-          border-right-width: 3px !important;
-
-          &.active {
-            border-right-color: var(--white);
-          }
-        }
-      }
-
-      &.#{$prefix}-tab-right {
-        @include box-shadow(-1px 0px 5px rgba(#000, .2), -2px 0px 2px rgba(#000, .14), -3px 0px 1px -2px rgba(#000, .12));
-
-        > .nav-link {
-          border-left-width: 3px !important;
-
-          &.active {
-            border-left-color: var(--white);
-          }
-        }
-      }
-
-      &.#{$prefix}-tab-top,
-      &.#{$prefix}-tab-bottom {
-        > .nav-link {
-          @include media-breakpoint-up(lg) {
-            &:first-child {
-              margin-left: $padding-base;
+            > .#{$prefix}-ripple {
+                @include user-select(none);
+                padding: $tab-padding-base;
             }
-            &:last-child {
-              margin-right: $padding-base;
+        }
+
+        &.nav-tabs {
+            &.#{$prefix}-tab-top {
+                padding-bottom: 0;
             }
-          }
+
+            &.#{$prefix}-tab-bottom {
+                padding-top: 0;
+
+                > .nav-item {
+                    @include border-top-radius(0);
+                    @include border-bottom-radius(($border-radius));
+                    margin-bottom: 0;
+                    margin-top: -1px;
+
+                    &.active, &.#{$prefix}-active {
+                        border-color: $white-base $gray-300 $gray-300;
+                    }
+                }
+            }
         }
-      }
+
+        &.nav-pills {
+            padding: $tab-padding-base;
+
+            .nav-link {
+                &.active {
+                    @include box-shadow($z-depth-1);
+
+                    &:hover {
+                        color: $white;
+                    }
+                }
+            }
+        }
+
+        &.nav-material {
+            overflow-x: hidden;
+            position: relative;
+
+            > .nav-link {
+                @include border-radius(0);
+                list-style: none;
+                background-color: transparent !important;
+                border-color: transparent;
+                border-style: solid;
+                border-width: 0;
+                color: rgba($white, .6);
+                text-transform: uppercase;
+
+                > .#{$prefix}-ripple {
+                    padding: $tab-material-padding;
+                }
+
+                &:hover {
+                    color: rgba($white, .8);
+                }
+
+                &.active {
+                    color: var(--white);
+                }
+            }
+
+            &.#{$prefix}-tab-top {
+                @include box-shadow(0px 4px 5px rgba(#000, .15), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12));
+
+                > .nav-link {
+                    border-bottom-width: 3px !important;
+
+                    &.active {
+                        border-bottom-color: var(--white);
+                    }
+                }
+            }
+
+            &.#{$prefix}-tab-bottom {
+                @include box-shadow(0px -1px 5px rgba(#000, .2), 0px -1px 2px rgba(#000, .14), 0px -3px 1px -2px rgba(#000, .12));
+
+                > .nav-link {
+                    border-top-width: 3px !important;
+
+                    &.active {
+                        border-top-color: var(--white);
+                    }
+                }
+            }
+
+            &.#{$prefix}-tab-left {
+                @include box-shadow(1px 0px 5px rgba(#000, .2), 2px 0px 2px rgba(#000, .14), 3px 0px 1px -2px rgba(#000, .12));
+
+                > .nav-link {
+                    border-right-width: 3px !important;
+
+                    &.active {
+                        border-right-color: var(--white);
+                    }
+                }
+            }
+
+            &.#{$prefix}-tab-right {
+                @include box-shadow(-1px 0px 5px rgba(#000, .2), -2px 0px 2px rgba(#000, .14), -3px 0px 1px -2px rgba(#000, .12));
+
+                > .nav-link {
+                    border-left-width: 3px !important;
+
+                    &.active {
+                        border-left-color: var(--white);
+                    }
+                }
+            }
+
+            &.#{$prefix}-tab-top,
+            &.#{$prefix}-tab-bottom {
+                > .nav-link {
+                    @include media-breakpoint-up(lg) {
+                        &:first-child {
+                            margin-left: $padding-base;
+                        }
+                        &:last-child {
+                            margin-right: $padding-base;
+                        }
+                    }
+                }
+            }
+        }
+
+        &.nav-modern {
+            @include border-radius($border-radius);
+            border-width: 0 !important;
+            padding: $tab-modern-padding;
+
+            &.#{$prefix}-tab-top {
+                @include box-shadow(0px 4px 5px rgba(#000, .15), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12));
+                //@include box-shadow(0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15));
+            }
+
+            &.#{$prefix}-tab-bottom {
+                @include box-shadow(0 -2px 10px 0 rgba(0, 0, 0, .18), 0 -4px 15px 0 rgba(0, 0, 0, .15));
+            }
+
+            .nav-link {
+                @include border-radius($border-radius);
+                border-width: 0 !important;
+                color: rgba($white, .6);
+
+                &:hover {
+                    color: rgba($white, .8);
+                }
+
+                &.active {
+                    background-color: rgba($black, .2);
+                    color: var(--white);
+                }
+            }
+        }
     }
 
-    &.nav-modern {
-      @include border-radius($border-radius);
-      border-width: 0 !important;
-      padding: $tab-modern-padding;
-
-      &.#{$prefix}-tab-top {
-        @include box-shadow(0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15));
-      }
-
-      &.#{$prefix}-tab-bottom {
-        @include box-shadow(0 -2px 10px 0 rgba(0, 0, 0, .18), 0 -4px 15px 0 rgba(0, 0, 0, .15));
-      }
-
-      .nav-link {
-        @include border-radius($border-radius);
-        border-width: 0 !important;
-        color: rgba($white, .6);
-
-        &:hover {
-          color: rgba($white, .8);
-        }
-
-        &.active {
-          background-color: rgba($black, .2);
-          color: var(--white);
-        }
-      }
+    .tab-content {
+        overflow: hidden;
+        position: relative;
+        padding: $padding-base + .25;
     }
-  }
-
-  .tab-content {
-    overflow: hidden;
-    position: relative;
-    padding: $padding-base + .25;
-  }
 }
 
 .card {
-  &.rounded-0 {
-    .#{$prefix}-tabs {
-      .nav-modern {
-        @include border-radius(0);
-      }
+    &.rounded-0 {
+        .#{$prefix}-tabs {
+            .nav-modern {
+                @include border-radius(0);
+            }
+        }
     }
-  }
 
-  &:not(.rounded-0) {
-    > .#{$prefix}-tabs {
-      .nav-material {
-        &.#{$prefix}-tab-bottom:last-child {
-          @include border-bottom-radius($border-radius);
+    &:not(.rounded-0) {
+        > .#{$prefix}-tabs {
+            .nav-material {
+                &.#{$prefix}-tab-bottom:last-child {
+                    @include border-bottom-radius($border-radius);
+                }
+            }
+
+            .nav-modern {
+                &.#{$prefix}-tab-top:first-child {
+                    @include border-bottom-radius(0);
+                }
+
+                &.#{$prefix}-tab-bottom:last-child {
+                    @include border-top-radius(0);
+                }
+
+                &.#{$prefix}-tab-left:first-child {
+                    @include border-right-radius(0);
+                }
+
+                &.#{$prefix}-tab-right:last-child {
+                    @include border-left-radius(0);
+                }
+            }
+
+            &:not(:first-child) {
+                .nav-modern {
+                    @include border-top-radius(0);
+                }
+            }
+
+            &:first-child {
+                .nav-material {
+                    &.#{$prefix}-tab-top:first-child {
+                        @include border-top-radius($border-radius);
+                    }
+
+                    &.#{$prefix}-tab-left:first-child {
+                        @include border-top-left-radius($border-radius);
+                    }
+
+                    &.#{$prefix}-tab-right:last-child {
+                        @include border-top-right-radius($border-radius);
+                    }
+                }
+            }
+
+            &:last-child {
+                .nav-material {
+                    &.#{$prefix}-tab-left:first-child {
+                        @include border-bottom-left-radius($border-radius);
+                    }
+
+                    &.#{$prefix}-tab-right:last-child {
+                        @include border-bottom-right-radius($border-radius);
+                    }
+                }
+            }
         }
-      }
-
-      .nav-modern {
-        &.#{$prefix}-tab-top:first-child {
-          @include border-bottom-radius(0);
-        }
-
-        &.#{$prefix}-tab-bottom:last-child {
-          @include border-top-radius(0);
-        }
-
-        &.#{$prefix}-tab-left:first-child {
-          @include border-right-radius(0);
-        }
-
-        &.#{$prefix}-tab-right:last-child {
-          @include border-left-radius(0);
-        }
-      }
-
-      &:not(:first-child) {
-        .nav-modern {
-          @include border-top-radius(0);
-        }
-      }
-
-      &:first-child {
-        .nav-material {
-          &.#{$prefix}-tab-top:first-child {
-            @include border-top-radius($border-radius);
-          }
-
-          &.#{$prefix}-tab-left:first-child {
-            @include border-top-left-radius($border-radius);
-          }
-
-          &.#{$prefix}-tab-right:last-child {
-            @include border-top-right-radius($border-radius);
-          }
-        }
-      }
-
-      &:last-child {
-        .nav-material {
-          &.#{$prefix}-tab-left:first-child {
-            @include border-bottom-left-radius($border-radius);
-          }
-
-          &.#{$prefix}-tab-right:last-child {
-            @include border-bottom-right-radius($border-radius);
-          }
-        }
-      }
     }
-  }
 }
 </style>

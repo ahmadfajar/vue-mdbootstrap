@@ -91,17 +91,17 @@ export default {
     methods: {
         timeClick() {
             if (!this.isTimeActive) {
-                this.$emit('change:view', PickerConst.TIME);
+                this.$emit('change-view', PickerConst.TIME);
             }
         },
         titleClick() {
             if (!this.isTitleActive) {
-                this.$emit('change:view', PickerConst.DATE);
+                this.$emit('change-view', PickerConst.DATE);
             }
         },
         yearClick() {
             if (!this.isYearActive) {
-                this.$emit('change:view', PickerConst.YEAR);
+                this.$emit('change-view', PickerConst.YEAR);
             }
         }
     }

@@ -6,7 +6,7 @@
         <div v-if="backButton === true"
              class="my-2">
           <bs-button v-bind="_buttonNavAttrs"
-                     @click="!disabled && $emit('toggle:view')">
+                     @click="!disabled && $emit('toggle-view')">
             <bs-icon icon="arrow_back" size="24" />
           </bs-button>
         </div>
@@ -95,9 +95,9 @@
               :key="'tr-' + nr">
             <td v-for="(item, idx) in items"
                 :key="'td-' + nr + '-' + idx">
-              <bs-button v-bind="buttonHourAttrs(item.intvalue)"
+              <bs-button v-bind="buttonHourAttrs(item.intValue)"
                          :key="item.name"
-                         @click="setHours(item.intvalue)">
+                         @click="setHours(item.intValue)">
                 {{ item.name }}
               </bs-button>
             </td>
@@ -111,9 +111,9 @@
               :key="'tr-' + nr">
             <td v-for="(item, idx) in items"
                 :key="'td-' + nr + '-' + idx">
-              <bs-button v-bind="buttonMinuteAttrs(item.intvalue)"
+              <bs-button v-bind="buttonMinuteAttrs(item.intValue)"
                          :key="item.name"
-                         @click="setMinutes(item.intvalue)">
+                         @click="setMinutes(item.intValue)">
                 {{ item.name }}
               </bs-button>
             </td>
@@ -126,9 +126,9 @@
               :key="'tr-' + nr">
             <td v-for="(item, idx) in items"
                 :key="'td-' + nr + '-' + idx">
-              <bs-button v-bind="buttonSecondAttrs(item.intvalue)"
+              <bs-button v-bind="buttonSecondAttrs(item.intValue)"
                          :key="item.name"
-                         @click="setSeconds(item.intvalue)">
+                         @click="setSeconds(item.intValue)">
                 {{ item.name }}
               </bs-button>
             </td>
@@ -208,7 +208,7 @@ export default {
         /**
          * Get default button binding's properties.
          *
-         * @returns {Object} The component's properties
+         * @returns {Object|*} The component's properties
          */
         _defaultBtnAttrs() {
             return {
@@ -236,10 +236,10 @@ export default {
         tableHours() {
             let rows     = [];
             let children = [];
-            const nitems = 24;
+            const hours  = 24;
 
-            for (let i = 0; i < nitems; i++) {
-                children.push({intvalue: i, name: padLeft(i)});
+            for (let i = 0; i < hours; i++) {
+                children.push({intValue: i, name: padLeft(i)});
 
                 if (children.length % 4 === 0) {
                     rows.push(children);
@@ -258,13 +258,13 @@ export default {
          * @returns {Object[]} Collection of Object to create table rows
          */
         tableMinutes() {
-            let rows     = [];
-            let children = [];
-            const nitems = 60;
+            let rows      = [];
+            let children  = [];
+            const minutes = 60;
 
-            for (let i = 0; i < nitems; i++) {
+            for (let i = 0; i < minutes; i++) {
                 if (i === 0 || i % 5 === 0) {
-                    children.push({intvalue: i, name: padLeft(i)});
+                    children.push({intValue: i, name: padLeft(i)});
                     if (children.length % 3 === 0) {
                         rows.push(children);
                         children = [];

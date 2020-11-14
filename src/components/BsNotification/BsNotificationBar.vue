@@ -1,5 +1,5 @@
 <template>
-  <div class="md-notification-bar" :style="_barStyles"></div>
+  <div :style="_barStyles" class="md-notification-bar"></div>
 </template>
 
 <script>
