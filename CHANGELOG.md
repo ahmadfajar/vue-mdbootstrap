@@ -13,15 +13,15 @@ Released:
 - **BsCard:** add properties `img-bottom-alt`, `img-bottom-src`, `img-top-alt`, `img-top-src`
 - **BsCheckbox:** add property `readonly`
 - **BsCheckboxGroup:** add property `readonly`
-- **BsCombobox:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
+- **BsSwitch:** add property `readonly`
 - **BsIcon:** add properties `flip`, `pulse`, `rotation`, and `spin`
 - **BsListTile:** add properties `ripple-off` and `navigable`
 - **BsListTileAction:** add `center` property
 - **BsListTileLeading:** add properties `icon`, `icon-flip`, `icon-rotation`, `icon-spin` and `icon-pulse`
 - **BsListView:** add properties `single-expand`, `space-around`, and `active-item-bordered`
-- **BsSwitch:** add property `readonly`
 - **BsTextArea:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - **BsTextField:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
+- **BsCombobox:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - **BsDateTimeField:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - **BsGridColumn:** add properties `order`, `cell-data`
 - **BsModal:** add properties `body-class`, `footer-class`, and `header-class`
