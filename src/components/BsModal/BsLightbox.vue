@@ -8,8 +8,9 @@
         /
         <span class="md-counter-all">{{ totalItems }}</span>
       </div>
+      <bs-spacer v-if="showToolbar" />
       <div v-if="showToolbar"
-           class="md-toolbar-items d-flex flex-grow-1 justify-content-end">
+           class="md-toolbar-items d-flex">
         <bs-button v-if="toolbar['download']"
                    color="light-grey"
                    mode="icon"
@@ -30,13 +31,6 @@
                    @click="_zoomOutClick">
           <bs-icon icon="ZoomOut" size="24" />
         </bs-button>
-        <bs-button v-if="toolbar['info']"
-                   color="light-grey"
-                   mode="icon"
-                   flat
-                   @click="_infoClick">
-          <bs-icon icon="OutlineInfo" size="24" />
-        </bs-button>
         <bs-button v-if="toolbar['rotate']"
                    color="light-grey"
                    mode="icon"
@@ -51,12 +45,19 @@
                    @click="_rotateRightClick">
           <bs-icon icon="RotateRight" size="24" />
         </bs-button>
+        <bs-button v-if="toolbar['info']"
+                   color="light-grey"
+                   mode="icon"
+                   flat
+                   @click="_infoClick">
+          <bs-icon icon="InfoOutline" size="24" />
+        </bs-button>
         <bs-button v-if="toolbar['delete']"
                    color="light-grey"
                    mode="icon"
                    flat
                    @click="_deleteClick">
-          <bs-icon icon="trashcan" size="24" />
+          <bs-icon icon="DeleteOutline" size="24" />
         </bs-button>
         <bs-menu color="transparent" placement="bottom-right">
           <bs-button v-if="toolbar['menubar']"
@@ -115,7 +116,9 @@
              class="md-lightbox-item">
           <div class="md-lightbox-item-img">
             <img :alt="activeItem.title"
-                 :src="activeItem.imageFile" />
+                 :class="imageClass"
+                 :style="_imgStyles"
+                 :src="activeItem.imageSrc" />
           </div>
           <div v-if="showItemTitle"
                class="md-lightbox-item-title">
@@ -158,72 +161,163 @@ export default {
     components: {BsButton, BsIcon, BsMenu},
     mixins: [Popup],
     props: {
+        /**
+         * Lightbox source dataset.
+         * @type {Array|*}
+         */
         items: {
             type: Array,
             default: undefined
         },
+        /**
+         * Show or hide indicator counter.
+         * @type {boolean|*}
+         */
         showCounter: {
             type: Boolean,
             default: true
         },
+        /**
+         * Show or hide active item image title.
+         * @type {boolean|*}
+         */
         showItemTitle: {
             type: Boolean,
             default: true
         },
+        /**
+         * Show or hide image thumbnails.
+         * @type {boolean|*}
+         */
         showThumbnail: {
             type: Boolean,
             default: true
         },
+        /**
+         * Show or hide toolbar buttons.
+         * @type {boolean|*}
+         */
         showToolbar: {
             type: Boolean,
             default: true
         },
+        /**
+         * Show or hide navigation controls.
+         * @type {boolean|*}
+         */
         showNavControl: {
             type: Boolean,
             default: true
         },
+        /**
+         * Additional css class name for active image.
+         * @type {string|Array|*}
+         */
+        imageClass: {
+            type: [String, Array],
+            default: undefined
+        },
+        /**
+         * Additional css styles for active image.
+         * @type {Object|*}
+         */
+        imageStyles: {
+            type: Object,
+            default: undefined
+        },
+        /**
+         * The overlay opacity.
+         * @type {number|*}
+         */
+        overlayOpacity: {
+            type: Number,
+            default: 0.9
+        },
+        /**
+         * Default image thumbnails height.
+         * @type {number|*}
+         */
         thumbnailHeight: {
             type: Number,
             default: 72,
             validator: v => parseInt(v, 10) > 0
         },
+        /**
+         * Configure the toolbar buttons.
+         * @type {Object|*}
+         */
         toolbar: {
             type: Object,
             default: () => ({
-                'download': true,
+                'download': false,
                 'zoom': true,
                 'info': true,
                 'rotate': true,
                 'delete': true,
-                'menubar': true,
+                'menubar': false,
                 'close': true
             })
         },
+        /**
+         * Transition animation name when showing the active image.
+         * @type {string|*}
+         */
         transition: {
             type: String,
-            default: 'slide-fade',
+            default: 'slide-top-bottom',
             validator(v) {
                 return [
                     'fade', 'popover', 'slide-fade', 'slide-fade-reverse',
-                    'slide-bottom-top', 'slide-top-bottom'
+                    'slide-bottom-top', 'slide-top-bottom',
+                    'slide-left-right', 'slide-right-left'
                 ].indexOf(v) > -1
             }
         },
+        /**
+         * Controls the timing sequence of leaving/entering transitions.
+         * Available modes are "out-in" and "in-out".
+         * @type {string|*}
+         */
         transitionMode: {
             type: String,
             default: undefined,
-            validator: v => ['out-in', 'in-out'].indexOf(v) !== -1
+            validator: v => ['out-in', 'in-out'].indexOf(v) > -1
         }
     },
     data: () => ({
         activeItem: undefined,
-        itemIndex: -1
+        itemIndex: -1,
+        rotate: 0,
+        zoom: 1
     }),
     computed: {
         _imgWrapperStyles() {
             return {
                 'height': this.showThumbnail ? 'calc(100% - ' + (this.thumbnailHeight + 2) + 'px)' : '100%',
                 'z-index': this.zIndex + 1
+            }
+        },
+        _imgStyles() {
+            const scale = this.zoom !== 1 && (this.zoom < 5 || this.zoom > 0.4 ) ? 'scale(' + this.zoom + ')' : '';
+            const rotation = [0, 360, -360].includes(this.rotate) ? '' : 'rotate(' + this.rotate + 'deg)';
+
+            if (scale !== '' && rotation !== '') {
+                return {
+                    ...this.imageStyles,
+                    transform: scale + ' ' + rotation
+                }
+            } else if (scale !== '') {
+                return {
+                    ...this.imageStyles,
+                    transform: scale
+                }
+            } else if (rotation !== '') {
+                return {
+                    ...this.imageStyles,
+                    transform: rotation
+                }
+            } else {
+                return this.imageStyles;
             }
         },
         /**
@@ -263,6 +357,15 @@ export default {
             return !Helper.isArray(this.items) ? 0 : this.items.length;
         }
     },
+    created() {
+        // preload images
+        if (this.totalItems > 0) {
+            this.items.map(value => {
+                const img = new Image();
+                img.src = value.imageSrc;
+            });
+        }
+    },
     watch: {
         open(value) {
             if (value && Helper.isArray(this.items) && this.items.length > 0) {
@@ -291,21 +394,54 @@ export default {
         _infoClick() {
             this.$emit('exec-info', this.activeItem);
         },
+        _resetZoomRotate() {
+            this.rotate = 0;
+            this.zoom = 1;
+        },
         _rotateLeftClick() {
+            if (this.rotate > -270 && this.rotate < 361) {
+                this.rotate -= 90;
+            } else {
+                this.rotate = 0;
+            }
+
             this.$emit('exec-rotate-left', this.activeItem);
         },
         _rotateRightClick() {
+            if (this.rotate > -361 && this.rotate < 270) {
+                this.rotate += 90;
+            } else {
+                this.rotate = 0;
+            }
+
             this.$emit('exec-rotate-right', this.activeItem);
         },
         _zoomInClick() {
+            if (this.zoom >= 1 && this.zoom < 4) {
+                this.zoom += 1;
+            } else if (this.zoom > 0.6 && this.zoom < 1) {
+                this.zoom += 0.1;
+            } else {
+                this.zoom = 1;
+            }
+
             this.$emit('exec-zoomin', this.activeItem);
         },
         _zoomOutClick() {
+            if (this.zoom > 1 && this.zoom < 4) {
+                this.zoom -= 1;
+            } else if (this.zoom > 0.6 && this.zoom <= 1) {
+                this.zoom -= 0.1;
+            } else {
+                this.zoom = 1;
+            }
+
             this.$emit('exec-zoomout', this.activeItem);
         },
         changeActive(item, idx) {
             this.itemIndex = idx;
             this.activeItem = item;
+            this._resetZoomRotate();
             this.$emit('change', item, idx);
         },
         openAt(index) {
@@ -319,7 +455,9 @@ export default {
             } else {
                 this.itemIndex = 0;
             }
+            this._resetZoomRotate();
             this.activeItem = this.items[this.itemIndex];
+            this.$emit('change', this.activeItem, this.itemIndex);
         },
         prevSlide() {
             if (this.itemIndex === 0) {
@@ -327,7 +465,9 @@ export default {
             } else {
                 this.itemIndex--;
             }
+            this._resetZoomRotate();
             this.activeItem = this.items[this.itemIndex];
+            this.$emit('change', this.activeItem, this.itemIndex);
         },
     },
 }
@@ -370,6 +510,7 @@ export default {
         }
 
         .#{$prefix}-lightbox-item-title {
+            background: rgba($black, .4);
             color: $gray-400;
             display: block;
             line-height: normal;
@@ -379,6 +520,7 @@ export default {
         }
 
         img {
+            @include transition($transition-basic);
             max-width: 100%;
             max-height: 100%;
         }
@@ -386,21 +528,20 @@ export default {
 
     > .#{$prefix}-lightbox-toolbar {
         @include flexbox((display: flex, justify-content: space-between));
-        background: rgba(0, 0, 0, .6);
         left: 0;
         top: 0;
         width: 100%;
         position: fixed;
-        padding: $padding-sm .3rem $padding-sm ($padding-base + ($padding-base / 4));
 
-        .#{$prefix}-counter,
         .#{$prefix}-toolbar-items {
+            background: rgba($black, .8);
             min-width: 100px;
+            padding: $padding-sm
         }
 
         .#{$prefix}-counter {
             color: $gray-400;
-            padding-top: $padding-sm;
+            padding: $padding-sm $padding-base;
         }
     }
 

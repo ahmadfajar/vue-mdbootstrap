@@ -10,10 +10,10 @@
 }
 
 @include enter-leaveto(".fade") {
-    @extend %opacity-0;
+    opacity: 0;
 }
 
-.slide-fade, .slide-fade-reverse {
+.slide-fade, .slide-fade-reverse{
     &-enter-active {
         @include transition(all .6s ease);
     }
@@ -29,12 +29,12 @@
 
 @include enter-leaveto(".slide-fade") {
     @include transform(translateX(100%));
-    @extend %opacity-0;
+    opacity: 0;
 }
 
 @include enter-leaveto(".slide-fade-reverse") {
     @include transform(translateX(-100%));
-    @extend %opacity-0;
+    opacity: 0;
 }
 
 @include enter-leave-active(".popover") {
@@ -44,10 +44,11 @@
 }
 
 @include enter-leaveactive(".popover") {
-    @extend %opacity-0;
+    opacity: 0;
     transform: scale(0.5);
 }
 
+.slide-left-right, .slide-right-left,
 .slide-bottom-top, .slide-top-bottom,
 .picker-transition, .picker-transition-reverse {
     &-enter-active, &-leave-active {
@@ -55,7 +56,7 @@
     }
 
     &-enter, &-leave-to {
-        @extend %opacity-0;
+        opacity: 0;
     }
 
     &-enter-to {
@@ -86,6 +87,28 @@
 
     &-leave-to {
         @include transform(translate(0, 100%));
+    }
+}
+
+.slide-left-right {
+    &-enter {
+        @include transform(translateX(-100%));
+    }
+
+    &-leave-to {
+        @include transform(translateX(100%));
+        opacity: 0;
+    }
+}
+
+.slide-right-left {
+    &-enter {
+        @include transform(translateX(100%));
+    }
+
+    &-leave-to {
+        @include transform(translateX(-100%));
+        opacity: 0;
     }
 }
 

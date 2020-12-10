@@ -137,10 +137,19 @@ const library = [
     {
         name: 'Delete',
         class: 'icon-delete',
-        aliases: ['delete', 'trash', 'trashcan', 'recyclebin'],
+        aliases: ['delete', 'trash', 'trashcan'],
         paths: [
             {d: 'M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z', fill: 'currentColor'},
             {d: 'M0 0h24v24H0z', fill: 'none'},
+        ]
+    },
+    {
+        name: 'DeleteOutline',
+        class: 'icon-delete-outline',
+        aliases: ['delete-outline', 'trash-outline', 'trashcan-outline'],
+        paths: [
+            {d: 'M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM8 9h8v10H8V9zm7.5-5l-1-1h-5l-1 1H5v2h14V4z', fill: 'currentColor'},
+            {d: 'M0 0h24v24H0V0z', fill: 'none'},
         ]
     },
     {
@@ -207,9 +216,9 @@ const library = [
         ]
     },
     {
-        name: 'OutlineInfo',
-        class: 'icon-outline-info',
-        aliases: ['outline-info', 'outline_info'],
+        name: 'InfoOutline',
+        class: 'icon-info-outline',
+        aliases: ['info-outline', 'info_outline'],
         paths: [
             {d: 'M0 0h24v24H0V0z', fill: 'none'},
             {d: 'M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z', fill: 'currentColor'},

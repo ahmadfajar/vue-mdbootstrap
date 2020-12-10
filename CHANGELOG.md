@@ -14,7 +14,7 @@ Released:
 - **BsCheckbox:** add property `readonly`
 - **BsCheckboxGroup:** add property `readonly`
 - **BsSwitch:** add property `readonly`
-- **BsIcon:** add properties `flip`, `pulse`, `rotation`, and `spin`
+- **BsIcon:** add properties `flip`, `pulse`, `rotation`, `spin`, and add new icons: `delete-outline`
 - **BsListTile:** add properties `ripple-off` and `navigable`
 - **BsListTileAction:** add `center` property
 - **BsListTileLeading:** add properties `icon`, `icon-flip`, `icon-rotation`, `icon-spin` and `icon-pulse`
@@ -25,6 +25,7 @@ Released:
 - **BsDateTimeField:** add properties `append-icon-outer`, `prepend-icon-outer`, and `filled`
 - **BsGridColumn:** add properties `order`, `cell-data`
 - **BsModal:** add properties `body-class`, `footer-class`, and `header-class`
+- **BsLightbox:** add properties `image-class`, and `image-styles`
 - Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
 ### Bug Fixes & Improvement v1.1.0
@@ -45,7 +46,7 @@ Released:
 - **BsTextField:** improve html template and css classes
 - **BsDateTimeField:** improve html template and css classes
 - **BsGrid:** improve html template and css classes, rename property `borderless` to `bordered`
-- **BsModal:** rename slot `title` to `header`
+- **BsModal:** rename slot `title` to `header`, and rename property `fullscreen` to `full-page`
 - **BsTabLabel:** fix icon padding
 - Improve scss color variables
 - Improve JsDoc

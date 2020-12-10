@@ -40,10 +40,10 @@ export default {
     mixins: [Popup],
     props: {
         /**
-         * Show modal dialog in full screen.
+         * Show modal dialog in full page mode.
          * @type {boolean|*}
          */
-        fullscreen: {
+        fullPage: {
             type: Boolean,
             default: false
         },
@@ -126,7 +126,7 @@ export default {
         _classNames() {
             return {
                 'md-modal-inner': true,
-                'md-modal-fullscreen': this.fullscreen,
+                'md-modal-fullscreen': this.fullPage,
                 'md-modal-scrollable': this.scrollable,
                 [`md-${this.transition}`]: true
             }
