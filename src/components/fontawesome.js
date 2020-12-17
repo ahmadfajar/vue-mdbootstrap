@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 library.add(fas);
 
 let fontawesome = Vue => {
-    Vue.component("font-awesome-icon", FontAwesomeIcon);
+    Vue.component("FontAwesomeIcon", FontAwesomeIcon);
 }
 
 export default fontawesome;

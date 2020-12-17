@@ -1,6 +1,6 @@
-# Vue MdBootstrap
+# Vue MDBootstrap
 
-<p align="center">
+<p style="text-align: center">
   <a href="https://www.npmjs.com/package/vue-mdbootstrap">
     <img src="https://flat.badgen.net/npm/v/vue-mdbootstrap" alt="NPM Release">
   </a>
@@ -16,8 +16,10 @@
 </p>
 
 
-**Vue MdBootstrap** is a collection of **Vue** components and built according to 
-the <a href="https://material.io/design" target="_blank">Google Material Design</a> specs.
+**Vue MDBootstrap** is a collection of **Vue** components and built according to 
+the <a href="https://material.io/design" target="_blank">Google Material Design</a> 
+specs. They can be used to built **Single Page Application (SPA)** by using module 
+bundler or built common web page by using the resources from the CDN.
 
 
 These components were build in the spirit of **Vue framework**, and utilize **Bootstrap 4** 
@@ -25,62 +27,83 @@ css framework. Long ago, I use them on all my VueJs projects. Now, I decide to p
 these components and hope it will be useful to anyone who wants to use it as an alternative of
 many Vue components out there. 
 
-## How to Use
 
-### For Building SPA with NPM/Yarn
+## How To Use
 
-#### Installation
+### Using Module Bundlers
 
-Use npm or yarn to install.
+If you are building Single Page Application and using module bundlers like 
+[Webpack](https://webpack.js.org/), [Vue Cli](https://cli.vuejs.org/) or 
+[Symfony Encore](https://symfony.com/doc/current/frontend/encore/installation.html), 
+you may prefer to directly include the package into your project. To get started, 
+use `yarn` or `npm` to get the latest version of Vue.js, and Vue MDBootstrap.
 
-```shell script
-npm install --save vue-mdbootstrap
+```bash
+# With npm
+npm install vue vue-mdbootstrap --save
+npm install node-sass --save-dev
+
+# With yarn
+yarn add vue vue-mdbootstrap
+yarn add node-sass --dev
 ```
-or
-```shell script
-yarn add vue-mdbootstrap
-```
 
-#### Usage
+Then, register Vue MDBootstrap in your app entry point.
 
-On your primary javascript, use code below to load or initialize the components.
-
-```javascript
+```js
+// main.js
 import Vue from "vue";
 import VueMdb, { AxiosPlugin } from "vue-mdbootstrap";
 
+// Default requirement
+Vue.use(VueMdb);
+// Optionally, install the MDBootstrap Axios plugin
 // only requires if using BsGrid, BsTreeGrid, BsModel, BsStore, BsTreeStore or needs to perform HTTP Request
 Vue.use(AxiosPlugin);
-// default requirement, to load the UI components
-Vue.use(VueMdb);
-````
+```
 
-Now, you are ready to go. You can use any of **Vue MdBootstrap** components without using `import` statement again. 
-Please note, these components still need css from **Bootstrap4**. 
+Now, you are ready to go. You can use any of **Vue MDBootstrap** components without 
+using `import` statement again. Please note, these components still need css from 
+**Bootstrap4** css framework. 
 
-### For Building non-SPA without NPM/Yarn
 
-If you aren't building SPA and not using npm or yarn and your goals is building common web page for web browser,
-grab the supplied css and js in the **dist** folder and put it on your html head. You can use example code below 
-to load and initialize the components.
+### Using CDN
 
-````html
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-<link rel="stylesheet" href="http://localhost/dist/vue-mdb.css">
-<script src="http://localhost/dist/vue-mdb.bundle.js"></script>
-````
+If you aren't building Single Page Application and not using module bundlers, and 
+your goals is building common web page to display on the web browser, grab the 
+supplied **css** and **js** from the **dist** folder. Or you can get the latest 
+version of the resource from [unpkg.com/vue-mdbootstrap](https://unpkg.com/vue-mdbootstrap)
+and use the js and css files on your html `<head>` section on the page to get started. 
 
-Use script below if you are using BsGrid, BsTreeGrid, BsModel, BsStore, BsTreeStore or need to perform HTTP Request.
+Code below is an example how to load and initialize the components.
 
-````javascript
+```html
+<link rel="stylesheet" href="https://unpkg.com/bootstrap@4.5.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.css" crossorigin="anonymous">
+<script src="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.bundle.js" crossorigin="anonymous"></script>
+```
+
+If you are using `BsGrid`, `BsTreeGrid`, `BsModel`, `BsStore`, `BsTreeStore` and/or 
+need to perform HTTP Request, you can use example code below in your javascript to 
+initialize MDBootstrap Axios plugin.
+
+```js
 Vue.use(AxiosPlugin, {baseURL: "http://localhost/<api-url>"});
-````
+```
 
-Now, you can use any of **Vue MdBootstrap** components in your html page.
+Now, you can use any of **Vue MDBootstrap** components in your html page.
+
 
 ## Demos
 
-You can clone the demos from [here](https://github.com/ahmadfajar/vue-mdbootstrap-demos) to see it in action.
+You can clone the demos from [here](https://github.com/ahmadfajar/vue-mdbootstrap-demos) 
+to see it in action.
+
+## Start coding
+
+Now you have implemented **Vue MDBootstrap** to your project, and it’s time to write your 
+code. Please refer to each [component’s documentation](http://vue-mdbootstrap.fajarconsultant.com) 
+to learn how to use them.
 
 ## Browser Support
 
