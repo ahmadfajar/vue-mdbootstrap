@@ -3,7 +3,8 @@
 > All notable changes to this project will be documented in this file.
 
 ## v1.1.0
-Released:
+
+Released: December 18, 2020
 
 ### Features v1.1.0
 
