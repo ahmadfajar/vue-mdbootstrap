@@ -1,5 +1,7 @@
 <template>
-  <div :is="tag" :class="_classNames">
+  <div :is="tag"
+       v-on="$listeners"
+       :class="_classNames">
     <img v-if="imgTopSrc"
          :alt="imgTopAlt"
          :src="imgTopSrc"

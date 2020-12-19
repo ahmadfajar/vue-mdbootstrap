@@ -106,6 +106,7 @@ function unbind(el, binding, vnode) {
 }
 
 export default {
+    name: 'touch',
     inserted,
     unbind
 }

@@ -2,6 +2,16 @@
 
 > All notable changes to this project will be documented in this file.
 
+## v1.1.1
+
+Released: December xx, 2020
+
+### Bug Fixes & Improvement v1.1.1
+
+- **Touch** directive did not expose correctly
+- **BsCard:** add DOM event listener
+
+
 ## v1.1.0
 
 Released: December 18, 2020
