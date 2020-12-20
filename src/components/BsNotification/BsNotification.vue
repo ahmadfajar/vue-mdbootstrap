@@ -30,7 +30,7 @@ export default {
             positions,
             notifications,
             defaultPosition: 'bottom-right',
-            defaultVariant: 'success',
+            defaultVariant: 'default',
             defaultClickClose: false,
             defaultCloseButton: true,
             defaultCloseOnHover: false,
@@ -477,9 +477,21 @@ export default {
             cursor: pointer;
         }
 
+        .#{$prefix}-notification-bar {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            height: 4px;
+            background-color: $warning-color;
+        }
+
         > .#{$prefix}-notification-default,
         > .#{$prefix}-notification-custom {
             background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACnklEQVRIibWVT0gUcRTHP+/XICkkzPqPSCNPgUjWuUN/LBg9iJGE1CFw91A3D0GeLCjpVAQGEY6XsFNUELGtLSF0DOyQhmAHoYJScNYklYr9vQ7ubuu0s4rku8x35vfe+773fczviaoSZW482QT0iJh2VdsqYmKqVoFFYErEpFXtk8xo59eoHFKKwI0nG0XMTVXbC1SIGFG1mn8Wgtff14CHIuZa4HvzmxLEEqkzwAhQE3aurNiFBX7+ypYq9htwMfC9V5EEsUTqsqodBkxxtSJGwgThjnL4F9CXGe189A+BG092iZinqtYUBRSC+7taGexqBGDg8RwPUjOlCBT4LWK8wPcmCgSxRKoBmALqSvUOMHHLoy13+mYuS/dQOsoV4DNwKPC9JQdA1V4HakUMJSpCxMjkxwxtdS4Ab2cXoiTK4yZVOwAMiBt/Wa9q54DKMgEiQGuzi81aPnz6vhmBqNoM0OwA3SKmqjCU3EDDWIGpuQzhsyh/EeMCHQ5wskwVBTzYe0T7TzUIoDdefOHOs/dl/XP4hAO0lJtW3kwxFon0C1mLA9Ru1XsbVusAWkbHv6UKUkDrZ2X9c1gdYEHV7s1/jNIURXPJFUDVbmUGCw4wLWIO71AH0w6QVrUXdqiDtAM8B5aBav6vzQNpJ/C9pVgiNQJcKdfyNiQaDnxvNX8XDQHnRMz+qJazVgsSZbO6mUSzqvYubLyuj4mYcVVbUYpgX02V9p0+KFZV7ydnWFxeiyJYETHHA9+b3EAAEEukzgJjwO5t6v4D6Al8b7wgVXhluvHkUWBMxBwIVxexk4tlOZ8Z7XxXnC9q6VeLmKuq9hLgbkKwANwTMbcD31sN5ypJkLdYIrUH6ADaWb8U61n/D+aBaeA1MB743kpUjj/Zds3fTDZCJAAAAABJRU5ErkJggg==') !important;
+
+            > .#{$prefix}-notification-bar {
+                background-color: $warning-color-dark;
+            }
         }
 
         > .#{$prefix}-notification-info {
@@ -496,6 +508,10 @@ export default {
 
         > .#{$prefix}-notification-warning {
             background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGYSURBVEhL5ZSvTsNQFMbXZGICMYGYmJhAQIJAICYQPAACiSDB8AiICQQJT4CqQEwgJvYASAQCiZiYmJhAIBATCARJy+9rTsldd8sKu1M0+dLb057v6/lbq/2rK0mS/TRNj9cWNAKPYIJII7gIxCcQ51cvqID+GIEX8ASG4B1bK5gIZFeQfoJdEXOfgX4QAQg7kH2A65yQ87lyxb27sggkAzAuFhbbg1K2kgCkB1bVwyIR9m2L7PRPIhDUIXgGtyKw575yz3lTNs6X4JXnjV+LKM/m3MydnTbtOKIjtz6VhCBq4vSm3ncdrD2lk0VgUXSVKjVDJXJzijW1RQdsU7F77He8u68koNZTz8Oz5yGa6J3H3lZ0xYgXBK2QymlWWA+RWnYhskLBv2vmE+hBMCtbA7KX5drWyRT/2JsqZ2IvfB9Y4bWDNMFbJRFmC9E74SoS0CqulwjkC0+5bpcV1CZ8NMej4pjy0U+doDQsGyo1hzVJttIjhQ7GnBtRFN1UarUlH8F3xict+HY07rEzoUGPlWcjRFRr4/gChZgc3ZL2d8oAAAAASUVORK5CYII=") !important;
+
+            > .#{$prefix}-notification-bar {
+                background-color: $danger-color-dark;
+            }
         }
 
         /*overrides*/
@@ -530,15 +546,6 @@ export default {
 
     .#{$prefix}-notification-warning {
         background-color: $warning-color-dark;
-    }
-
-    .#{$prefix}-notification-bar {
-        @include opacity(0.4);
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        height: 4px;
-        background-color: $black;
     }
 
     @media all and (max-width: 240px) {
