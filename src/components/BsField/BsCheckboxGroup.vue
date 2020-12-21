@@ -150,7 +150,7 @@ export default {
                 'md-readonly': this.readonly,
                 'md-required': this.required,
                 'has-error': this.hasValidationError,
-                'has-success': this.wasValidated && !this.hasValidationError
+                'has-success': this.hasValidated && !this.hasValidationError
             }
         },
         _itemClasses() {

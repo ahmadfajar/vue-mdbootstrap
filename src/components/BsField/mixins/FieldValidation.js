@@ -31,6 +31,18 @@ export default {
             return null;
         },
         /**
+         * Check if this field has been validated by external validator or not.
+         *
+         * @returns {boolean} TRUE has validated otherwise FALSE
+         */
+        hasValidated() {
+            if (this.externalValidator && (typeof this.externalValidator.dirty !== 'undefined')) {
+                return this.externalValidator.dirty;
+            }
+
+            return this.wasValidated;
+        },
+        /**
          * Check if this field has been validated and has error.
          *
          * @returns {boolean} TRUE jika ada satu atau lebih element yg invalid

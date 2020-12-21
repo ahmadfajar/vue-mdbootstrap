@@ -4,12 +4,14 @@
 
 ## v1.1.1
 
-Released: December xx, 2020
+Released: December 21, 2020
 
 ### Bug Fixes & Improvement v1.1.1
 
 - **Touch** directive did not expose correctly
 - **BsCard:** add DOM event listener
+- **BsNotification:** change default variant and update css styles
+- **BsTextField, BsTextArea, BsRadioGroup, BsDateTimeField, BsCombobox, BsCheckboxGroup:** bug fix when form reset
 
 
 ## v1.1.0

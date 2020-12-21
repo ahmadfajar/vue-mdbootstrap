@@ -148,7 +148,7 @@ export default {
                 'md-field-noresize': this.noResize || this.canGrow,
                 'md-floating-label': this.floatingLabel,
                 'has-error': this.hasValidationError,
-                'has-success': this.wasValidated && !this.hasValidationError
+                'has-success': this.hasValidated && !this.hasValidationError
             }
         },
         /**
@@ -202,6 +202,7 @@ export default {
     },
     watch: {
         value(newVal) {
+            this.localValue = newVal;
             this._updateLegend(newVal);
         }
     },

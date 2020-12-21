@@ -259,7 +259,7 @@ export default {
                 'md-floating-label': this.floatingLabel,
                 'md-focused': this.isFocused,
                 'has-error': this.hasValidationError,
-                'has-success': this.wasValidated && !this.hasValidationError
+                'has-success': this.hasValidated && !this.hasValidationError
             }
         },
         /**
