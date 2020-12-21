@@ -102,7 +102,7 @@ to see it in action.
 ## Start coding
 
 Now you have implemented **Vue MDBootstrap** to your project, and it’s time to write your 
-code. Please refer to each [component’s documentation](http://vue-mdbootstrap.fajarconsultant.com) 
+code. Please refer to each [component’s documentation](https://vue-mdbootstrap.fajarconsultant.com) 
 to learn how to use them.
 
 ## Browser Support
