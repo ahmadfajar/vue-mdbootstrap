@@ -52,7 +52,7 @@ export default {
                 return 'chevron-right';
             }
 
-            return null;
+            return '';
         },
         _onIconClick(length, index) {
             if (this.node.leaf === false && (index === length - 1)) {
