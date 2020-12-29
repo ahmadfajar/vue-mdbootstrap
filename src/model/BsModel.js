@@ -42,27 +42,27 @@ import { autobind } from "../utils/Autobind";
  * });
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 20/06/2020 21:55
+ * @since  09/07/2018 modified: 28/12/2020 19:30
  */
 export default class BsModel {
     /**
      * @property {boolean} loading
-     * Status apakah sedang memuat data atau tidak (readonly).
+     * The Model state, whether it is loading data or not. (readonly)
      */
 
     /**
      * @property {boolean} updating
-     * Status apakah sedang mengirim data ke remote server atau tidak (readonly).
+     * The Model state, whether it is saving/updating data to the backend server or not. (readonly)
      */
 
     /**
      * @property {boolean} deleting
-     * Status apakah sedang mengirim HTTP_DELETE ke remote server atau tidak (readonly).
+     * The Model state, whether it is deleting data or not. (readonly)
      */
 
     /**
      * @property {boolean} hasError
-     * Status apakah ada error atau tidak (readonly).
+     * The Model state, whether there was an error when loading/saving/deleting data or not. (readonly)
      */
 
     /**
@@ -76,10 +76,10 @@ export default class BsModel {
     /**
      * Class constructor.
      *
-     * @param {Object} schema                   Data model schema
-     * @param {AxiosInstance|Object} [adapter]  Axios adapter instance
-     * @param {string} [idProperty]             Data model ID field name
-     * @param {string} [dataProperty]           REST Response data property
+     * @param {Object} schema           The data model schema
+     * @param {Object} [adapter]        Axios adapter instance
+     * @param {string} [idProperty]     Data model ID field name
+     * @param {string} [dataProperty]   REST response data property
      */
     constructor(schema, adapter, idProperty = 'id', dataProperty = 'data') {
         if (!Helper.isEmptyObject(schema.schema) && !Helper.isEmptyObject(schema.proxy)) {
@@ -94,14 +94,14 @@ export default class BsModel {
             }
 
             this._proxy  = new ProxyAdapter(adapter, _methods);
-            this._schema = Object.freeze(schema.schema);
+            this._schema = Object.seal(schema.schema);
 
             if (!Helper.isEmptyObject(schema.csrfConfig)) {
                 this._csrfConfig = Object.freeze(schema.csrfConfig);
             }
         } else {
             this._proxy  = new ProxyAdapter(adapter);
-            this._schema = Object.freeze(schema);
+            this._schema = Object.seal(schema);
         }
 
         Object.defineProperty(this, '_idProperty', {
@@ -132,7 +132,7 @@ export default class BsModel {
     }
 
     /**
-     * Get proxy adapter to be used for loading data from the remote server.
+     * Get proxy adapter that is used to work with remote service.
      *
      * @type {ProxyAdapter}
      */
@@ -235,7 +235,9 @@ export default class BsModel {
         }
 
         if (!Helper.isEmptyObject(this.csrfConfig) && !Helper.isEmpty(this.csrfConfig['url'])) {
-            return this._requestWithToken(config, this._onDelete, this._onDeleteSuccess, this._onDeleteFailure, '-delete');
+            return this._requestWithToken(
+                config, this._onDelete, this._onDeleteSuccess, this._onDeleteFailure, '-delete'
+            );
         } else {
             return this.proxy.request(config, this._onDelete, this._onDeleteSuccess, this._onDeleteFailure);
         }
@@ -244,9 +246,9 @@ export default class BsModel {
     /**
      * Perform fetch or read record from remote service via REST API.
      *
-     * @param {Number|String} id The item ID
+     * @param {number|string} id The item ID
      *
-     * @returns {Promise<any>} Promise interface
+     * @returns {Promise<*>} Promise interface
      */
     fetch(id = null) {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -294,19 +296,20 @@ export default class BsModel {
     }
 
     /**
-     * Performs HTTP request to the remote service via REST API.
+     * Perform custom HTTP request to the remote service via REST API.
      *
      * @param {string} name               The key from restUrl property
-     * @param {string} method             Any valid HTTP method, likes: get, post, delete, put, patch.
-     *                                    The default is <tt>get</tt>.
+     * @param {string} method             Any valid HTTP method, likes: `get`, `post`, `delete`, `put`, `patch`.
+     *                                    The default is `get`.
      * @param {Object} params             Parameters to append when invoke rest request
      * @param {Object} data               Data to append when invoke rest request
-     * @param {Function} successCallback  Callback to be called when the request was successful
-     * @param {Function} errorCallback    Callback to be called when the request was failed
+     * @param {Function} successCallback  Callback to be called when the request is successful
+     * @param {Function} errorCallback    Callback to be called when the request is failed
      *
-     * @returns {Promise<any>} Promise interface
+     * @returns {Promise<*>} Promise interface
      */
-    request(name, method = 'get', params = null, data = null, successCallback = null, errorCallback = null) {
+    request(name, method = 'get', params = null,
+            data = null, successCallback = null, errorCallback = null) {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
         let config     = {};
@@ -366,7 +369,7 @@ export default class BsModel {
     }
 
     /**
-     * Resets model state, ie. `loading`, etc back to their initial states.
+     * Resets model state back to their initial states, ie. `loading`, etc.
      *
      * @returns {void}
      */
@@ -380,7 +383,7 @@ export default class BsModel {
     /**
      * Persist new record to the remote service via REST API.
      *
-     * @returns {Promise<any>} Promise interface
+     * @returns {Promise<*>} Promise interface
      */
     save() {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -401,7 +404,9 @@ export default class BsModel {
         };
 
         if (!Helper.isEmptyObject(this.csrfConfig) && !Helper.isEmpty(this.csrfConfig['url'])) {
-            return this._requestWithToken(config, this._onSave, this._onSaveSuccess, this._onSaveFailure, '-create');
+            return this._requestWithToken(
+                config, this._onSave, this._onSaveSuccess, this._onSaveFailure, '-create'
+            );
         } else {
             return this.proxy.request(config, this._onSave, this._onSaveSuccess, this._onSaveFailure);
         }
@@ -410,7 +415,7 @@ export default class BsModel {
     /**
      * Update and persist record that already exists on the remote service via REST API.
      *
-     * @returns {Promise<any>} Promise interface
+     * @returns {Promise<*>} Promise interface
      */
     update() {
         ProxyAdapter.checkRestUrl(this.restUrl);
@@ -431,7 +436,9 @@ export default class BsModel {
         };
 
         if (!Helper.isEmptyObject(this.csrfConfig) && !Helper.isEmpty(this.csrfConfig['url'])) {
-            return this._requestWithToken(config, this._onSave, this._onSaveSuccess, this._onSaveFailure, '-update');
+            return this._requestWithToken(
+                config, this._onSave, this._onSaveSuccess, this._onSaveFailure, '-update'
+            );
         } else {
             return this.proxy.request(config, this._onSave, this._onSaveSuccess, this._onSaveFailure);
         }
@@ -486,16 +493,22 @@ export default class BsModel {
         } else {
             if (_data.hasOwnProperty(this.getIdProperty())) {
                 this.assignValues(_data);
+                this.getFields().forEach(f => this._schema[f] = _data[f]);
+
                 if (Helper.isFunction(this['onAfterFetch'])) {
                     this['onAfterFetch'](_data);
                 }
             } else if (_data.hasOwnProperty(this._dataProperty)) {
-                if (Helper.isEmpty(_data[this._dataProperty])) {
+                const cdata = _data[this._dataProperty];
+
+                if (Helper.isEmpty(cdata)) {
                     console.warn('Server returns empty data.');
                 } else {
-                    this.assignValues(_data[this._dataProperty]);
+                    this.assignValues(cdata);
+                    this.getFields().forEach(f => this._schema[f] = cdata[f]);
+
                     if (Helper.isFunction(this['onAfterFetch'])) {
-                        this['onAfterFetch'](_data.data);
+                        this['onAfterFetch'](cdata);
                     }
                 }
             } else {
@@ -643,7 +656,8 @@ export default class BsModel {
 
         if (csrfUrl !== '') {
             const response          = await Vue.prototype.$http.get(csrfUrl);
-            headers['X-CSRF-TOKEN'] = response.data[this.csrfConfig['dataField']] || response.data[this.csrfConfig['responseField']];
+            headers['X-CSRF-TOKEN'] = response.data[this.csrfConfig['dataField']] ||
+                                      response.data[this.csrfConfig['responseField']];
             config['headers']       = headers;
 
             return this.proxy.request(config, onRequest, onSuccess, onFailure);

@@ -13,6 +13,7 @@ import { autobind } from "../utils/Autobind";
  * @property {string|number|boolean} value  Filter value
  * @property {string} operator              Filter operator, default: <tt>eq</tt>
  */
+
 /**
  * Sorter data type.
  *
@@ -26,27 +27,27 @@ import { autobind } from "../utils/Autobind";
  * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 29/07/2020 17:30
+ * @since  15/03/2019 modified: 30/12/2020 2:43
  */
 export default class AbstractStore {
     /**
      * @property {boolean} loading
-     * Status apakah sedang memuat data atau tidak (readonly).
+     * The Store state, whether it is loading dataset or not. (readonly)
      */
 
     /**
      * @property {boolean} deleting
-     * Status apakah sedang melakukan proses penghapusan data atau tidak (readonly).
+     * The Store state, whether it is deleting dataset or not. (readonly)
      */
 
     /**
      * @property {boolean} updating
-     * Status apakah sedang melakukan proses update data atau tidak (readonly).
+     * The Store state, whether it is saving/updating dataset or not. (readonly)
      */
 
     /**
      * @property {boolean} hasError
-     * Status apakah ada error atau tidak (readonly).
+     * The Store state, whether there was an error when loading/deleting dataset or not. (readonly)
      */
 
 
@@ -111,7 +112,7 @@ export default class AbstractStore {
     /**
      * Returns active page number.
      *
-     * @type {int}
+     * @type {number}
      */
     get currentPage() {
         return this._currentPage;
@@ -177,7 +178,7 @@ export default class AbstractStore {
     /**
      * Returns the number of items in the active page.
      *
-     * @type {int}
+     * @type {number}
      */
     get length() {
         return this.dataItems.length;
@@ -186,7 +187,7 @@ export default class AbstractStore {
     /**
      * Returns number of items within a page.
      *
-     * @type {int}
+     * @type {number}
      */
     get pageSize() {
         return this._pageSize;
@@ -195,14 +196,14 @@ export default class AbstractStore {
     /**
      * Define number of items within a page.
      *
-     * @param {int} value Number of items within a page
+     * @param {number} value Number of items within a page
      */
     set pageSize(value) {
         this._pageSize = value;
     }
 
     /**
-     * Get proxy adapter to be used for loading data from the remote server.
+     * Get proxy adapter to be used for loading data from the remote service.
      *
      * @returns {ProxyAdapter} The proxy adapter
      */
@@ -251,7 +252,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Append an item to the Store's dataset.
+     * Append an item to the local storage.
      *
      * @param {Object} item Data to append to the Store
      * @returns {void}
@@ -285,11 +286,11 @@ export default class AbstractStore {
             this._items = [];
             items.forEach(v => {
                 if (Helper.isArray(v)) {
-                    this._items.push(Object.freeze(v));
+                    this._items.push(Object.seal(v));
                 } else if (this._isCandidateForModel(v)) {
-                    this._items.push(this._createModel(v));
+                    this._items.push(this._createModel(v).seal());
                 } else if (Helper.isObject(v)) {
-                    this._items.push(v);
+                    this._items.push(Object.seal(v));
                 } else {
                     console.error('Can not assign primitive type to the collection.')
                 }
@@ -369,10 +370,10 @@ export default class AbstractStore {
     /**
      * Add a filter to the Store.
      *
-     * @param {string} field                The filter field name
+     * @param {string} field                The field name to which the filter will be applied.
      * @param {string|number|boolean|Array} value The filter value
-     * @param {string} [operator]           Valid values: eq, neq, gt, gte, lt, lte, in, notin
-     *                                      startwith, endwith, contains, fts, tsquery
+     * @param {string} [operator]           Filter operator to be used, valid values: eq, neq, gt, gte,
+     *                                      lt, lte, in, notin, startwith, endwith, contains, fts, tsquery
      * @returns {AbstractStore} Itself
      */
     addFilter(field, value, operator) {
@@ -383,7 +384,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Clear all data items in this Store's collection.
+     * Clear all data items in the local storage.
      *
      * @returns {void}
      */
@@ -401,7 +402,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Destroy all data items in this Store's collection.
+     * Clear and destroy all data items in the local storage.
      *
      * @returns {void}
      */
@@ -414,7 +415,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Finds the first matching Item in this store by a specific field value.
+     * Finds the first matching Item in the local storage by a specific field value.
      * 
      * @param {string} property    The field name to test
      * @param {*} value            The value to match
@@ -426,7 +427,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Finds the first matching Item in this store by function's predicate.
+     * Finds the first matching Item in the local storage by function's predicate.
      * If the predicate returns `true`, it is considered a match.
      * 
      * @param {Function} predicate  Function `(item: Object, index: number) => item is match`
@@ -437,7 +438,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Finds the index of the first matching Item in this store by a specific field value.
+     * Finds the index of the first matching Item in the local storage by a specific field value.
      * 
      * @param {string} property    The field name to test
      * @param {*} value            The value to match
@@ -451,7 +452,7 @@ export default class AbstractStore {
     /**
      * Filter the dataset locally.
      *
-     * @returns {Object[]} Collection
+     * @returns {BsModel[]|Object[]} Filtered dataset
      */
     localFilter() {
         if (this.filters.length > 0) {
@@ -499,7 +500,7 @@ export default class AbstractStore {
     /**
      * Sorts the dataset locally.
      *
-     * @returns {Object[]} Collection
+     * @returns {BsModel[]|Object[]} Sorted dataset
      */
     localSort() {
         let fields = [];
@@ -539,7 +540,7 @@ export default class AbstractStore {
     /**
      * Sets the current active page.
      *
-     * @param {int} value Page number
+     * @param {number} value Page number
      * @returns {AbstractStore} Itself
      */
     page(value) {
@@ -575,7 +576,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Removes the specified item(s) from the store.
+     * Removes the specified item(s) from the local storage.
      * 
      * @param {BsModel[]|Object[]|BsModel|Object} items Model instance or array of model instances to be removed
      * @returns {void}
@@ -595,10 +596,10 @@ export default class AbstractStore {
     }
 
     /**
-     * Removes the model instance(s) at the given index.
+     * Removes the model instance(s) at the given index from the local storage.
      * 
      * @param {number} index Index position
-     * @param {number} count Number of item to delete
+     * @param {number} count Number of items to delete
      * @returns {void}
      */
     removeAt(index, count = 1) {
@@ -616,7 +617,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Resets model state, ie. `loading`, etc back to their initial states.
+     * Resets the Store state, ie. `loading`, etc back to their initial states.
      *
      * @returns {void}
      */
@@ -628,7 +629,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Define the filter logic to be used when filtering the Store's dataset.
+     * Define the filter logic to be used when filtering the Store’s dataset.
      *
      * @param {string} logic The filter logic, valid values: 'AND', 'OR'
      * @returns {AbstractStore} Itself
@@ -646,7 +647,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Replace old filters and apply new filters to the Store.
+     * Replace old filters and apply new filters to the Store dataset.
      *
      * @param {IFilter[]|IFilter} filters  The filters to apply
      * @param {boolean} includeDefault     Include default filters or not
@@ -692,9 +693,9 @@ export default class AbstractStore {
     }
 
     /**
-     * Create sorters object's collection.
+     * Create an array of sorter criteria.
      *
-     * @param {string|ISorter[]} field  The field for sorting
+     * @param {string|ISorter[]} field  The field for sorting or ISorter objects
      * @param {'asc'|'desc'} direction  The sort direction
      * @returns {void}
      * @protected
@@ -714,7 +715,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Callbacks function on start loading data.
+     * Callbacks function when start loading the dataset.
      *
      * @returns {boolean} TRUE on success
      * @protected
@@ -726,7 +727,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Callbacks function on error loading data.
+     * Callbacks function when error loading the dataset from the remote service.
      *
      * @param {Object} error The error object
      * @returns {void}
@@ -739,7 +740,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Callbacks function on success loading data.
+     * Callbacks function when success loading the dataset from the remote service.
      *
      * @returns {void}
      * @protected
@@ -750,7 +751,7 @@ export default class AbstractStore {
     }
 
     /**
-     * Callbacks function on success loading data from remote server.
+     * Callbacks function when success loading the dataset from the remote service.
      *
      * @param {Response} response Response object
      * @returns {void}

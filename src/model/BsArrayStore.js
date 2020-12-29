@@ -49,7 +49,7 @@ export default class BsArrayStore extends AbstractStore {
     /**
      * Returns total number of items in the Store's dataset.
      *
-     * @type {int}
+     * @type {number}
      */
     get totalCount() {
         return this._items.length;
@@ -58,7 +58,7 @@ export default class BsArrayStore extends AbstractStore {
     /**
      * Returns total number of pages.
      *
-     * @type {int}
+     * @type {number}
      */
     get totalPages() {
         return Math.ceil(this.totalCount / this.pageSize);
@@ -116,10 +116,10 @@ export default class BsArrayStore extends AbstractStore {
     }
 
     /**
-     * Assign datas to the Store's dataset.
+     * Replace the dataset with new data.
      *
      * @param {Object|Object[]} data A record or collection of records to be assigned
-     * @param {boolean} silent        Append data silently and doesn't trigger data conversion
+     * @param {boolean} silent        Append data silently and don't trigger data conversion
      * @returns {void}
      */
     assignData(data, silent = false) {
@@ -150,19 +150,19 @@ export default class BsArrayStore extends AbstractStore {
     }
 
     /**
-     * Sorts the data in the Store by one or more of its properties.
+     * Sorts the dataset by the given field or *ISorter* criteria.
      *
      * @example
-     *     // sort by a single field
-     *     let results = myStore.sort('myField', 'asc');
+     * // sort by a single field
+     * let results = myStore.sort('myField', 'asc');
      *
-     *     //sorting by multiple fields
-     *     let results = myStore.sort([
-     *      {property: 'age', direction: 'desc'},
-     *      {property: 'name', direction: 'asc'}
-     *     ]);
+     * //sorting by multiple fields
+     * let results = myStore.sort([
+     *  {property: 'age', direction: 'desc'},
+     *  {property: 'name', direction: 'asc'}
+     * ]);
      *
-     * @param {string|ISorter[]|Object[]} field  The field for sorting
+     * @param {string|ISorter[]|Object[]} field  The field for sorting or ISorter objects
      * @param {'asc'|'desc'} direction           The sort direction
      * @returns {Object[]} Collection
      */

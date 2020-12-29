@@ -76,6 +76,10 @@
                 "after": true
             }
         ],
+        "vue/custom-event-name-casing": [
+            "warn",
+            "kebab-case"
+        ],
         "vue/html-closing-bracket-newline": [
             "warn",
             {

@@ -87,7 +87,7 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Returns the data items in the Store's collection.
+     * Returns the dataset in the local storage.
      *
      * @type {BsModel[]|Object[]}
      */
@@ -170,16 +170,16 @@ export default class BsStore extends AbstractStore {
     /**
      * Returns total number of pages.
      *
-     * @type {int}
+     * @type {number}
      */
     get totalPages() {
         return Math.ceil(this.totalCount / this.pageSize);
     }
 
     /**
-     * Calculate means or average value of the Store's collection.
+     * Calculate means or average value from a field in the local storage.
      *
-     * @param {string} field The field name of the Store's collection to calculate
+     * @param {string} field The field name of the dataset to calculate
      * @returns {number} The average value
      */
     aggregateAvg(field) {
@@ -187,7 +187,7 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Count number of items in the Store's collection specified by the given criteria.
+     * Count number of items in the local storage specified by the given criteria.
      *
      * @param {string} field The grouping field name criteria
      * @param {*} value      The grouping value criteria
@@ -209,9 +209,9 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Calculate SUM or total value of the Store's collection.
+     * Calculate the SUM or total value from a field in the local storage.
      *
-     * @param {string} field The field name of the collection to calculate
+     * @param {string} field The field name of the dataset to calculate
      * @returns {number} The sums value
      */
     aggregateSum(field) {
@@ -219,7 +219,9 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Append an item to the Store's dataset.
+     * Append an item to the local storage and also save the item as a new record to the
+     * remote server whenever possible. The item can be saved to the remote server,
+     * if 'restUrl' property contains a 'save' key.
      *
      * @param {Object} item Data to append to the Store
      * @returns {void}
@@ -235,10 +237,12 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Assign data to the Store's dataset.
+     * Replace local dataset with new data. The proses only affected the local dataset
+     * and nothing is sent to the remote server.
      *
-     * @param {Array|Object} data Data to be assigned
-     * @param {boolean} silent Append item silently and doesn't trigger data conversion
+     * @param {BsModel[]|Object[]|BsModel|Object} data  The new data to be assigned
+     * @param {boolean} silent                          Append the data silently and
+     *                                                  don't trigger data conversion
      * @returns {void}
      */
     assignData(data, silent = false) {
@@ -252,12 +256,10 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Removes the specified item from this local store and from remote server.
+     * Delete specific item from local storage as well as from remote server whenever possible.
+     * The item can be deleted from the remote server, if 'restUrl' property contains a 'delete' key.
      *
-     * If the specified item is not BsModel instance then the item will be
-     * removed from local store only.
-     *
-     * @param {BsModel|Object} item Model instance to be removed
+     * @param {BsModel} item Model instance to be removed
      * @returns {Promise<*>} Promise interface
      */
     delete(item) {
@@ -290,9 +292,9 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Removes the specified items from this local store and from remote server.
+     * Delete specific items from local storage as well as from the remote server whenever possible.
      *
-     * @param {BsModel[]|Object[]} items Model instances to be removed
+     * @param {BsModel[]} items Model instances to be removed
      * @returns {Promise<*>} Promise interface
      */
     deletes(items) {
@@ -328,9 +330,9 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Fetch data from the remote service with specific ID.
+     * Fetch specific item from the remote service via REST API.
      *
-     * @param {string|int} id The item ID to fetch
+     * @param {string|number} id The item ID to fetch
      * @returns {Promise<*>} Promise interface
      */
     fetch(id) {
@@ -356,9 +358,9 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Load the data locally or from the remote server.
+     * Load data from the remote service or from the given record(s).
      *
-     * @param {Object[]|Object} [data] A record or collection of records to be assigned
+     * @param {Object[]|Object} [data] The record(s) to be assigned
      * @returns {Promise<*>} Promise interface
      */
     load(data = null) {
@@ -396,7 +398,7 @@ export default class BsStore extends AbstractStore {
     }
 
     /**
-     * Sorts the data in the Store by one or more of its properties.
+     * Sorts the dataset by the given field or *ISorter* criteria.
      *
      * @example
      * // sort by a single field
@@ -408,7 +410,7 @@ export default class BsStore extends AbstractStore {
      *  {property: 'name', direction: 'asc'}
      * ]);
      *
-     * @param {string|ISorter[]|Object[]} field The field for sorting
+     * @param {string|ISorter[]|Object[]} field The field for sorting or ISorter objects
      * @param {'asc'|'desc'} direction          The sort direction
      * @returns {Object[]} Collection
      */
