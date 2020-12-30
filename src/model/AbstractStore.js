@@ -27,7 +27,7 @@ import { autobind } from "../utils/Autobind";
  * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 30/12/2020 2:43
+ * @since  15/03/2019 modified: 30/12/2020 16:33
  */
 export default class AbstractStore {
     /**
@@ -103,7 +103,7 @@ export default class AbstractStore {
     /**
      * Returns the axios plugin adapter.
      *
-     * @type {AxiosInstance|Function} Axios plugin adapter
+     * @type {AxiosInstance|Object} Axios plugin adapter
      */
     get adapterInstance() {
         return this._config.adapter;
@@ -262,9 +262,9 @@ export default class AbstractStore {
         if (this._isCandidateForModel(item)) {
             this._items.push(this._createModel(item));
         } else if (Helper.isObject(item)) {
-            this._items.push(item);
+            this._items.push(this._createModel(item).seal());
         } else {
-            console.error('Can not assign primitive type to the collection.')
+            console.error('Can not assign primitive type to the dataset.')
         }
     }
 
@@ -287,12 +287,8 @@ export default class AbstractStore {
             items.forEach(v => {
                 if (Helper.isArray(v)) {
                     this._items.push(Object.seal(v));
-                } else if (this._isCandidateForModel(v)) {
-                    this._items.push(this._createModel(v).seal());
-                } else if (Helper.isObject(v)) {
-                    this._items.push(Object.seal(v));
                 } else {
-                    console.error('Can not assign primitive type to the collection.')
+                    this._append(v);
                 }
             });
         }
@@ -662,6 +658,28 @@ export default class AbstractStore {
             this.filters = includeDefault ? this.defaultFilters : [];
         }
 
+        return this;
+    }
+
+    /**
+     * Set the number of items within a page.
+     *
+     * @param {number} value Number of items within a page
+     * @returns {AbstractStore} Itself
+     */
+    setPageSize(value) {
+        this._pageSize = value;
+        return this;
+    }
+
+    /**
+     * Set sorter's criteria collection.
+     *
+     * @param {ISorter|ISorter[]|Object|Object[]} sorters The sorts method criteria
+     * @returns {AbstractStore} Itself
+     */
+    setSorters(sorters) {
+        this._config.sorts = Helper.isArray(sorters) ? sorters : Helper.isObject(sorters) ? [sorters] : [];
         return this;
     }
 

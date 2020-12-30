@@ -113,7 +113,7 @@
                 "singleline": 2,
                 "multiline": {
                     "max": 1,
-                    "allowFirstLine": true
+                    "allowFirstLine": false
                 }
             }
         ],

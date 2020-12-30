@@ -1,27 +1,30 @@
 <template>
-  <div :class="_classNames"
-       class="md-menu"
-       @keydown="_changeListIndex">
-    <div ref="activator"
-         class="md-menu-activator"
-         @click="activatorClick"
-         @mouseenter="onMouseEnter"
-         @mouseleave="onMouseLeave">
+  <div
+    :class="_classNames"
+    class="md-menu"
+    @keydown="_changeListIndex">
+    <div
+      ref="activator"
+      class="md-menu-activator"
+      @click="activatorClick"
+      @mouseenter="onMouseEnter"
+      @mouseleave="onMouseLeave">
       <slot></slot>
     </div>
-    <bs-popover ref="popover"
-                :class="{['bg-' + color] : color}"
-                :cover="cover"
-                :open="active"
-                :placement="placement"
-                :style="popoverStyles"
-                :transition="transition"
-                :trigger="trigger"
-                class="md-menu-popover md-shadow-1"
-                @click="_onContentClick"
-                @close="hideMenu"
-                @mouseenter="onMouseEnter"
-                @mouseleave="onMouseLeave">
+    <bs-popover
+      ref="popover"
+      :class="{['bg-' + color] : color}"
+      :cover="cover"
+      :open="active"
+      :placement="placement"
+      :style="popoverStyles"
+      :transition="transition"
+      :trigger="trigger"
+      class="md-menu-popover md-shadow-1"
+      @click="_onContentClick"
+      @close="hideMenu"
+      @mouseenter="onMouseEnter"
+      @mouseleave="onMouseLeave">
       <slot name="content"></slot>
     </bs-popover>
   </div>

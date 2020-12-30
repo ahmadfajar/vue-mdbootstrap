@@ -1,29 +1,34 @@
 <template>
-  <transition v-if="isProgressBar"
-              name="md-progress-bar"
-              appear>
-    <div :class="_progressBarClassNames"
-         :style="_progressBarStyles"
-         class="md-progress-bar">
+  <transition
+    v-if="isProgressBar"
+    name="md-progress-bar"
+    appear>
+    <div
+      :class="_progressBarClassNames"
+      :style="_progressBarStyles"
+      class="md-progress-bar">
       <div :style="_progressBarTrackStyle" class="md-progress-bar-track"></div>
       <div :style="_progressBarValueStyle" class="md-progress-bar-fill"></div>
       <div :Style="_progressBarBufferStyle" class="md-progress-bar-buffer"></div>
     </div>
   </transition>
-  <transition v-else
-              name="md-progress-spinner"
-              appear>
+  <transition
+    v-else
+    name="md-progress-spinner"
+    appear>
     <div :class="_spinnerClassNames" class="md-progress-spinner">
-      <svg :style="_svgStyles"
-           :viewBox="`0 0 ${diameter} ${diameter}`"
-           class="md-progress-spinner-draw"
-           focusable="false"
-           preserveAspectRatio="xMidYMid meet">
-        <circle :r="circleRadius"
-                :style="_circleStyles"
-                class="md-progress-spinner-circle"
-                cx="50%"
-                cy="50%" />
+      <svg
+        :style="_svgStyles"
+        :viewBox="`0 0 ${diameter} ${diameter}`"
+        class="md-progress-spinner-draw"
+        focusable="false"
+        preserveAspectRatio="xMidYMid meet">
+        <circle
+          :r="circleRadius"
+          :style="_circleStyles"
+          class="md-progress-spinner-circle"
+          cx="50%"
+          cy="50%" />
       </svg>
     </div>
   </transition>

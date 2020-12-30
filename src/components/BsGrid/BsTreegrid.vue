@@ -1,15 +1,17 @@
 <template>
-  <div :class="_classNames"
-       :style="_gridStyles"
-       class="md-treegrid">
+  <div
+    :class="_classNames"
+    :style="_gridStyles"
+    class="md-treegrid">
     <slot name="toolbar"></slot>
     <div class="md-grid-header">
       <div ref="theader" class="md-grid-header-wrap">
         <table role="grid" :style="_tableStyles">
           <colgroup>
-            <col v-for="(column, idx) in columnIterator"
-                 :key="'col-' + _uuid() + idx"
-                 :style="_colHeaderStyles(column)" />
+            <col
+              v-for="(column, idx) in columnIterator"
+              :key="'col-' + _uuid() + idx"
+              :style="_colHeaderStyles(column)" />
           </colgroup>
           <thead role="rowgroup">
             <slot v-bind="{ items: dataItems }" name="columnheader"></slot>
@@ -21,21 +23,25 @@
       </div>
     </div>
     <bs-progress v-if="isLoading && loading.type === 'bar'" v-bind="_progressLoadingAttrs" />
-    <div ref="tcontent"
-         class="md-grid-content"
-         @scroll="_handleScroll">
+    <div
+      ref="tcontent"
+      class="md-grid-content"
+      @scroll="_handleScroll">
       <table role="treegrid" :style="_tableStyles">
         <colgroup>
-          <col v-for="(column, idx) in columnIterator"
-               :key="'col-' + _uuid() + idx"
-               :style="_colDataStyles(column)" />
+          <col
+            v-for="(column, idx) in columnIterator"
+            :key="'col-' + _uuid() + idx"
+            :style="_colDataStyles(column)" />
         </colgroup>
-        <bs-treegrid-items ref="treeitems"
-                           v-slot="{ index, item, level, node }"
-                           :columns="columnIterator"
-                           :items="dataItems">
-          <slot v-bind="{ columns: columnIterator, index: index, item: item, level: level, node: node }"
-                name="datarow"></slot>
+        <bs-treegrid-items
+          ref="treeitems"
+          v-slot="{ index, item, level, node }"
+          :columns="columnIterator"
+          :items="dataItems">
+          <slot
+            v-bind="{ columns: columnIterator, index: index, item: item, level: level, node: node }"
+            name="datarow"></slot>
         </bs-treegrid-items>
       </table>
       <transition v-if="_showEmptyMessage" name="fade">
@@ -64,7 +70,7 @@ import Helper from "../../utils/Helper";
 import Common from "../../mixins/Common";
 import Grid from "./mixins/Grid";
 import sum from 'lodash/sum';
-import {addResizeListener, removeResizeListener} from "../../utils/ResizeListener";
+import { addResizeListener, removeResizeListener } from "../../utils/ResizeListener";
 
 export default {
     name: "BsTreegrid",

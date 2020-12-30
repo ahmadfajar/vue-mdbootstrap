@@ -1,7 +1,8 @@
 <template>
-  <hr :class="_classNames"
-      :style="_styles"
-      class="md-divider" />
+  <hr
+    :class="_classNames"
+    :style="_styles"
+    class="md-divider" />
 </template>
 
 <script>

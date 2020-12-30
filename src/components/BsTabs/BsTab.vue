@@ -1,8 +1,9 @@
 <template>
   <transition :name="_transition">
-    <div v-show="active"
-         v-bind="_attributes"
-         :class="_classNames">
+    <div
+      v-show="active"
+      v-bind="_attributes"
+      :class="_classNames">
       <slot></slot>
     </div>
   </transition>

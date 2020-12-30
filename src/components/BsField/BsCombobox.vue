@@ -1,115 +1,134 @@
 <template>
   <div :class="_classNames" class="md-field md-combobox row">
-    <div v-if="floatingLabel === false"
-         ref="label"
-         class="md-combobox-label"
-         @click.stop="activatorClick">
+    <div
+      v-if="floatingLabel === false"
+      ref="label"
+      class="md-combobox-label"
+      @click.stop="activatorClick">
       <slot v-bind="{ id }"></slot>
     </div>
     <div class="md-field-wrapper">
-      <div v-if="prependIconOuter"
-           class="md-prepend-icon">
+      <div
+        v-if="prependIconOuter"
+        class="md-prepend-icon">
         <slot name="prependIconOuter">
           <font-awesome-icon :icon="prependIconOuter" fixed-width />
         </slot>
       </div>
       <div class="md-field-ctrl">
-        <div ref="activator"
-             class="md-field-inner"
-             @mouseenter="onMouseEnter">
-          <fieldset v-if="outlined"
-                    aria-hidden="true">
+        <div
+          ref="activator"
+          class="md-field-inner"
+          @mouseenter="onMouseEnter">
+          <fieldset
+            v-if="outlined"
+            aria-hidden="true">
             <legend ref="legend">
               <span>​</span>
             </legend>
           </fieldset>
-          <div v-if="prependIcon"
-               class="md-prepend-icon">
+          <div
+            v-if="prependIcon"
+            class="md-prepend-icon">
             <slot name="prependIcon">
               <font-awesome-icon :icon="prependIcon" fixed-width />
             </slot>
           </div>
-          <div class="md-field-input-wrapper"
-               tabindex="0"
-               @blur="_onBlur"
-               @click="activatorClick"
-               @focus="_onFocus">
-            <div v-if="floatingLabel"
-                 ref="floatLabel"
-                 :class="_floatingLabelClass"
-                 class="md-field-label">
+          <div
+            class="md-field-input-wrapper"
+            tabindex="0"
+            @blur="_onBlur"
+            @click="activatorClick"
+            @focus="_onFocus">
+            <div
+              v-if="floatingLabel"
+              ref="floatLabel"
+              :class="_floatingLabelClass"
+              class="md-field-label">
               <slot v-bind="{ id }" />
             </div>
             <div class="md-combobox-input">
-              <span v-if="_showPlaceHolder"
-                    class="md-placeholder">{{ placeholder }}</span>
-              <span v-else-if="chips && multiple"
-                    class="md-input-tags">
+              <span
+                v-if="_showPlaceHolder"
+                class="md-placeholder">{{ placeholder }}</span>
+              <span
+                v-else-if="chips && multiple"
+                class="md-input-tags">
                 <slot name="tags">{{ inputDisplay }}</slot>
               </span>
               <span class="md-value" v-else>{{ inputDisplay }}</span>
             </div>
             <select v-bind="_inputAttributes" class="d-none">
-              <option v-for="(item, index) in selectedItems"
-                      :key="'item-' + index"
-                      :value="getItemValue(item)"
-                      selected>
+              <option
+                v-for="(item, index) in selectedItems"
+                :key="'item-' + index"
+                :value="getItemValue(item)"
+                selected>
                 {{ getItemText(item) }}
               </option>
             </select>
           </div>
           <div class="md-action-icon">
             <transition name="fade">
-              <bs-icon v-if="_showClearButton"
-                       height="24"
-                       icon="clear"
-                       @click="clearSelected" />
+              <bs-icon
+                v-if="_showClearButton"
+                height="24"
+                icon="clear"
+                @click="clearSelected" />
             </transition>
-            <bs-icon icon="expand_more"
-                     size="24"
-                     @click="activatorClick" />
+            <bs-icon
+              icon="expand_more"
+              size="24"
+              @click="activatorClick" />
           </div>
-          <div v-if="appendIcon"
-               class="md-append-icon">
+          <div
+            v-if="appendIcon"
+            class="md-append-icon">
             <slot name="appendIcon">
               <font-awesome-icon :icon="appendIcon" fixed-width />
             </slot>
           </div>
         </div>
-        <div v-if="helpText || showErrorValidation"
-             class="md-help-text">
+        <div
+          v-if="helpText || showErrorValidation"
+          class="md-help-text">
           <transition name="fade">
             <slot name="helpText">
-              <small v-if="showHelpText"
-                     class="text-muted d-block">
+              <small
+                v-if="showHelpText"
+                class="text-muted d-block">
                 {{ helpText }}
               </small>
             </slot>
           </transition>
           <template v-if="hasValidationError">
-            <small v-for="(fld) in errorItems"
-                   :key="fld"
-                   class="text-danger d-block">
+            <small
+              v-for="(fld) in errorItems"
+              :key="fld"
+              class="text-danger d-block">
               {{ _validationMessage(fld) }}
             </small>
           </template>
         </div>
       </div>
-      <div v-if="appendIconOuter"
-           class="md-append-icon">
+      <div
+        v-if="appendIconOuter"
+        class="md-append-icon">
         <slot name="appendIconOuter">
           <font-awesome-icon :icon="appendIconOuter" fixed-width />
         </slot>
       </div>
     </div>
-    <bs-popover ref="content"
-                v-bind="_popoverAttributes"
-                class="md-combobox-popover md-shadow-1"
-                @close="hideMenu">
-      <bs-combobox-list-container v-bind="_listContainerAttributes"
-                                  @data-filtered="_onFilterData"
-                                  @item-selected="_onSelectItem"
-                                  @item-deselected="_onDeselectItem">
+    <bs-popover
+      ref="content"
+      v-bind="_popoverAttributes"
+      class="md-combobox-popover md-shadow-1"
+      @close="hideMenu">
+      <bs-combobox-list-container
+        v-bind="_listContainerAttributes"
+        @data-filtered="_onFilterData"
+        @item-selected="_onSelectItem"
+        @item-deselected="_onDeselectItem">
         <template #emptyDataMessage>
           <slot name="emptyData">
             <bs-list-tile-title>{{ emptyDataMessage }}</bs-list-tile-title>
@@ -126,7 +145,7 @@
 </template>
 
 <script>
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsComboboxListContainer from "./BsComboboxListContainer";
 import BsIcon from "../BsIcon/BsIcon";
 import BsPopover from "../BsPopover/BsPopover";

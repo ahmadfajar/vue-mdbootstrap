@@ -1,7 +1,8 @@
 <template>
-  <div v-if="rawHtml"
-       class="md-appbar-title"
-       v-html="title"></div>
+  <div
+    v-if="rawHtml"
+    class="md-appbar-title"
+    v-html="title"></div>
   <div v-else class="md-appbar-title">
     <slot>{{ title }}</slot>
   </div>

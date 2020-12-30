@@ -1,14 +1,17 @@
 <template>
-  <div v-if="orientation === 'vertical'"
-       class="md-tabs row no-gutters">
+  <div
+    v-if="orientation === 'vertical'"
+    class="md-tabs row no-gutters">
     <div :class="{'col-auto': true, 'order-last': tabPosition === 'right'}">
-      <div :is="_tagName"
-           :class="_classNames"
-           v-bind="_attributes"
-           v-on="$listeners">
-        <bs-tab-item v-for="(item, index) in tabPanes"
-                     :key="'tab-item-' + index"
-                     v-bind="_tabbedAttrs(item)" />
+      <div
+        :is="_tagName"
+        :class="_classNames"
+        v-bind="_attributes"
+        v-on="$listeners">
+        <bs-tab-item
+          v-for="(item, index) in tabPanes"
+          :key="'tab-item-' + index"
+          v-bind="_tabbedAttrs(item)" />
       </div>
     </div>
     <div class="col tab-content">
@@ -16,26 +19,30 @@
     </div>
   </div>
   <div v-else class="md-tabs">
-    <div v-if="tabPosition === 'top'"
-         :is="_tagName"
-         :class="_classNames"
-         v-bind="_attributes"
-         v-on="$listeners">
-      <bs-tab-item v-for="(item, index) in tabPanes"
-                   :key="'tab-item-' + index"
-                   v-bind="_tabbedAttrs(item)" />
+    <div
+      v-if="tabPosition === 'top'"
+      :is="_tagName"
+      :class="_classNames"
+      v-bind="_attributes"
+      v-on="$listeners">
+      <bs-tab-item
+        v-for="(item, index) in tabPanes"
+        :key="'tab-item-' + index"
+        v-bind="_tabbedAttrs(item)" />
     </div>
     <div :class="contentClass" class="tab-content">
       <slot></slot>
     </div>
-    <div v-if="tabPosition === 'bottom'"
-         :is="_tagName"
-         :class="_classNames"
-         v-bind="_attributes"
-         v-on="$listeners">
-      <bs-tab-item v-for="(item, index) in tabPanes"
-                   :key="'tab-item-' + index"
-                   v-bind="_tabbedAttrs(item)" />
+    <div
+      v-if="tabPosition === 'bottom'"
+      :is="_tagName"
+      :class="_classNames"
+      v-bind="_attributes"
+      v-on="$listeners">
+      <bs-tab-item
+        v-for="(item, index) in tabPanes"
+        :key="'tab-item-' + index"
+        v-bind="_tabbedAttrs(item)" />
     </div>
   </div>
 </template>

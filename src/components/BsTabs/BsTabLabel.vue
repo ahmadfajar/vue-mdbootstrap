@@ -1,31 +1,36 @@
 <template>
   <bs-ripple :class="_rippleClass">
-    <div v-if="icon && (iconLeft || iconRight)"
-         class="text-nowrap">
-      <font-awesome-icon v-if="iconLeft"
-                         :icon="icon"
-                         :size="iconSize"
-                         :class="{'mr-1': label}"
-                         fixed-width />
+    <div
+      v-if="icon && (iconLeft || iconRight)"
+      class="text-nowrap">
+      <font-awesome-icon
+        v-if="iconLeft"
+        :icon="icon"
+        :size="iconSize"
+        :class="{'mr-1': label}"
+        fixed-width />
       <span>{{ label }}</span>
-      <font-awesome-icon v-if="iconRight"
-                         :icon="icon"
-                         :size="iconSize"
-                         :class="{'ml-1': label}"
-                         fixed-width />
+      <font-awesome-icon
+        v-if="iconRight"
+        :icon="icon"
+        :size="iconSize"
+        :class="{'ml-1': label}"
+        fixed-width />
     </div>
     <template v-else-if="icon && (iconTop || iconBottom)">
-      <font-awesome-icon v-if="iconTop"
-                         :icon="icon"
-                         :size="iconSize"
-                         fixed-width />
+      <font-awesome-icon
+        v-if="iconTop"
+        :icon="icon"
+        :size="iconSize"
+        fixed-width />
       <div :class="_labelClass">
         {{ label }}
       </div>
-      <font-awesome-icon v-if="iconBottom"
-                         :icon="icon"
-                         :size="iconSize"
-                         fixed-width />
+      <font-awesome-icon
+        v-if="iconBottom"
+        :icon="icon"
+        :size="iconSize"
+        fixed-width />
     </template>
     <span v-else>{{ label }}</span>
   </bs-ripple>

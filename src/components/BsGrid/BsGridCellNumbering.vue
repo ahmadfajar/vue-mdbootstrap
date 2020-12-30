@@ -1,7 +1,8 @@
 <template>
-  <td :style="_cellStyles"
-      class="md-grid-cell row-numbering"
-      role="gridcell">
+  <td
+    :style="_cellStyles"
+    class="md-grid-cell row-numbering"
+    role="gridcell">
     <div class="md-grid-cell-inner">
       {{ value }}
     </div>

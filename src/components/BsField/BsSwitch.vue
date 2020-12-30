@@ -1,32 +1,38 @@
 <template>
-  <div :class="['md-switch-' + color, checkClassname]"
-       class="md-switch">
-    <label v-if="$slots.default && labelPosition === 'left'"
-           :class="labelClass"
-           :for="id"
-           class="md-switch-label md-label-left"
-           @click.prevent="toggleCheck">
+  <div
+    :class="['md-switch-' + color, checkClassname]"
+    class="md-switch">
+    <label
+      v-if="$slots.default && labelPosition === 'left'"
+      :class="labelClass"
+      :for="id"
+      class="md-switch-label md-label-left"
+      @click.prevent="toggleCheck">
       <slot></slot>
     </label>
     <div class="md-switch-content">
-      <div class="md-switch-inner"
-           @click.stop="toggleCheck">
+      <div
+        class="md-switch-inner"
+        @click.stop="toggleCheck">
         <div class="md-switch-thumb">
-          <bs-ripple :active.sync="rippleActive"
-                     :disabled="disabled"
-                     centered>
-            <input :id="id"
-                   v-bind="{ id, name, disabled, required, value }"
-                   type="checkbox" />
+          <bs-ripple
+            :active.sync="rippleActive"
+            :disabled="disabled"
+            centered>
+            <input
+              :id="id"
+              v-bind="{ id, name, disabled, required, value }"
+              type="checkbox" />
           </bs-ripple>
         </div>
       </div>
     </div>
-    <label v-if="$slots.default && labelPosition === 'right'"
-           :class="labelClass"
-           :for="id"
-           class="md-switch-label md-label-right"
-           @click.prevent="toggleCheck">
+    <label
+      v-if="$slots.default && labelPosition === 'right'"
+      :class="labelClass"
+      :for="id"
+      class="md-switch-label md-label-right"
+      @click.prevent="toggleCheck">
       <slot></slot>
     </label>
   </div>

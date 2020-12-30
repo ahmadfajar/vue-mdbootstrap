@@ -1,10 +1,11 @@
 <template>
-  <bs-ripple :active="rippleActive"
-             :class="{'dropdown-toggle': dropdownToggle && !iconMode}"
-             :disabled="rippleOff"
-             :event-trigger="false"
-             tag="span"
-             @update:active="active => $emit('update:rippleActive', active)">
+  <bs-ripple
+    :active="rippleActive"
+    :class="{'dropdown-toggle': dropdownToggle && !iconMode}"
+    :disabled="rippleOff"
+    :event-trigger="false"
+    tag="span"
+    @update:active="active => $emit('update:rippleActive', active)">
     <span class="btn-inner">
       <slot />
     </span>

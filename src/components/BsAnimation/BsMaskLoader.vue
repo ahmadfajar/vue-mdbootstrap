@@ -1,15 +1,18 @@
 <template>
   <transition :name="transition">
-    <div v-if="show"
-         :style="_styles"
-         class="md-mask-loader">
-      <bs-progress :diameter="spinnerDiameter"
-                   :stroke="stroke"
-                   class="align-self-center"
-                   type="spinner" />
-      <bs-overlay :opacity="opacity"
-                  :show="show"
-                  :z-index="zIndex - 1" />
+    <div
+      v-if="show"
+      :style="_styles"
+      class="md-mask-loader">
+      <bs-progress
+        :diameter="spinnerDiameter"
+        :stroke="stroke"
+        class="align-self-center"
+        type="spinner" />
+      <bs-overlay
+        :opacity="opacity"
+        :show="show"
+        :z-index="zIndex - 1" />
     </div>
   </transition>
 </template>

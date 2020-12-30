@@ -1,17 +1,19 @@
 <template>
   <tbody>
-    <tr v-for="(item, index) in visibleItems"
-        :key="'row-' + index"
-        :class="_rowClasses(index)"
-        role="row">
+    <tr
+      v-for="(item, index) in visibleItems"
+      :key="'row-' + index"
+      :class="_rowClasses(index)"
+      role="row">
       <slot v-bind="{ index: index, item: item.data, level: item.depth, node: item }">
         <template v-for="(column, colIdx) in columns">
-          <component :is="_componentName(colIdx)"
-                     :column="column"
-                     :index="colIdx"
-                     :item="item.data"
-                     :node="item"
-                     :key="column.field + '-' + _uuid()" />
+          <component
+            :is="_componentName(colIdx)"
+            :column="column"
+            :index="colIdx"
+            :item="item.data"
+            :node="item"
+            :key="column.field + '-' + _uuid()" />
         </template>
       </slot>
     </tr>

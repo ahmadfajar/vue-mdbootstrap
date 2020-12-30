@@ -1,29 +1,34 @@
 <template>
   <transition name="bs-modal">
-    <div v-if="open"
-         :style="_wrapperStyles"
-         class="md-modal"
-         @click="_onWrapperClick">
-      <div ref="dialog"
-           :class="_classNames"
-           :style="_modalStyles">
-        <div v-if="showTitle"
-             ref="titleEl"
-             :class="headerClass"
-             class="md-modal-title">
+    <div
+      v-if="open"
+      :style="_wrapperStyles"
+      class="md-modal"
+      @click="_onWrapperClick">
+      <div
+        ref="dialog"
+        :class="_classNames"
+        :style="_modalStyles">
+        <div
+          v-if="showTitle"
+          ref="titleEl"
+          :class="headerClass"
+          class="md-modal-title">
           <slot name="header">
             {{ title }}
           </slot>
         </div>
-        <div ref="bodyEl"
-             :class="bodyClass"
-             class="md-modal-body">
+        <div
+          ref="bodyEl"
+          :class="bodyClass"
+          class="md-modal-body">
           <slot></slot>
         </div>
-        <div v-if="hasFooter"
-             ref="footerEl"
-             :class="footerClass"
-             class="md-modal-footer">
+        <div
+          v-if="hasFooter"
+          ref="footerEl"
+          :class="footerClass"
+          class="md-modal-footer">
           <slot name="footer"></slot>
         </div>
       </div>

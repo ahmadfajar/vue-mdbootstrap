@@ -1,13 +1,14 @@
 <template>
-  <span v-on="$listeners"
-        class="md-toggle-icon"
-        @click="toggleClick">
+  <span
+    v-on="$listeners"
+    class="md-toggle-icon"
+    @click="toggleClick">
     <font-awesome-icon :icon="toggleEye" fixed-width />
   </span>
 </template>
 
 <script>
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 export default {
     name: "BsIconToggle",

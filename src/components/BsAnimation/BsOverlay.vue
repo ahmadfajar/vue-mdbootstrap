@@ -1,10 +1,11 @@
 <template>
   <transition name="fade">
-    <div v-if="show"
-         :style="overlayStyle"
-         class="md-overlay"
-         @click="handleClick"
-         @touchmove="prevent">
+    <div
+      v-if="show"
+      :style="overlayStyle"
+      class="md-overlay"
+      @click="handleClick"
+      @touchmove="prevent">
       <slot></slot>
     </div>
   </transition>

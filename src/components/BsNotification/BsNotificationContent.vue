@@ -1,18 +1,21 @@
 <template>
-  <div :class="_classNames"
-       :style="_cmpStyles"
-       @click="_onClick"
-       @mouseover="_onMouseOver"
-       @mouseout="_onMouseOut">
-    <bs-notification-bar v-if="progressbar"
-                         ref="notificationBar"
-                         :timeout="options.timeout"
-                         :value="options.progressBarValue" />
-    <button v-if="options.closeButton"
-            class="md-notification-close-button"
-            role="button"
-            type="button"
-            @click="close">
+  <div
+    :class="_classNames"
+    :style="_cmpStyles"
+    @click="_onClick"
+    @mouseover="_onMouseOver"
+    @mouseout="_onMouseOut">
+    <bs-notification-bar
+      v-if="progressbar"
+      ref="notificationBar"
+      :timeout="options.timeout"
+      :value="options.progressBarValue" />
+    <button
+      v-if="options.closeButton"
+      class="md-notification-close-button"
+      role="button"
+      type="button"
+      @click="close">
       ×
     </button>
     <div class="md-notification-title" v-html="options.title"></div>

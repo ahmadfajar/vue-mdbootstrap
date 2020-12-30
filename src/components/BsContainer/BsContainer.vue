@@ -1,8 +1,9 @@
 <template>
-  <div :is="tag"
-       v-resize="_resize"
-       :style="_styles"
-       class="md-container-wrap">
+  <div
+    :is="tag"
+    v-resize="_resize"
+    :style="_styles"
+    class="md-container-wrap">
     <slot></slot>
   </div>
 </template>

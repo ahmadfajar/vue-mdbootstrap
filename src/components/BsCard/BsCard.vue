@@ -1,16 +1,19 @@
 <template>
-  <div :is="tag"
-       v-on="$listeners"
-       :class="_classNames">
-    <img v-if="imgTopSrc"
-         :alt="imgTopAlt"
-         :src="imgTopSrc"
-         class="card-img-top" />
+  <div
+    :is="tag"
+    v-on="$listeners"
+    :class="_classNames">
+    <img
+      v-if="imgTopSrc"
+      :alt="imgTopAlt"
+      :src="imgTopSrc"
+      class="card-img-top" />
     <slot></slot>
-    <img v-if="imgBottomSrc"
-         :alt="imgBottomAlt"
-         :src="imgBottomSrc"
-         class="card-img-bottom" />
+    <img
+      v-if="imgBottomSrc"
+      :alt="imgBottomAlt"
+      :src="imgBottomSrc"
+      class="card-img-bottom" />
   </div>
 </template>
 

@@ -1,22 +1,25 @@
 <template>
-  <th :class="_columnCls"
-      :style="_headerStyles"
-      role="columnheader"
-      @click="_onClick">
+  <th
+    :class="_columnCls"
+    :style="_headerStyles"
+    role="columnheader"
+    @click="_onClick">
     <div :class="{'md-sortable': canSort}" class="md-grid-th-inner">
-      <font-awesome-icon v-if="canSort && textAlignment === 'right'"
-                         :class="_sortClasses"
-                         icon="arrow-up" />
+      <font-awesome-icon
+        v-if="canSort && textAlignment === 'right'"
+        :class="_sortClasses"
+        icon="arrow-up" />
       {{ label }}&nbsp;
-      <font-awesome-icon v-if="canSort && textAlignment !== 'right'"
-                         :class="_sortClasses"
-                         icon="arrow-up" />
+      <font-awesome-icon
+        v-if="canSort && textAlignment !== 'right'"
+        :class="_sortClasses"
+        icon="arrow-up" />
     </div>
   </th>
 </template>
 
 <script>
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import Column from "./mixins/Column";
 import Helper from "../../utils/Helper";
 

@@ -65,9 +65,9 @@ export default class BsArrayStore extends AbstractStore {
     }
 
     /**
-     * Calculate means or average value of the Store's dataset.
+     * Calculate means or average value from a field in the local storage.
      *
-     * @param {string} field The fieldname to be used when calculating value
+     * @param {string} field The field name of the dataset to calculate
      * @returns {number} The average value
      */
     aggregateAvg(field) {
@@ -75,10 +75,10 @@ export default class BsArrayStore extends AbstractStore {
     }
 
     /**
-     * Count number of items in the Store's collection specified by the given criteria.
+     * Count number of items in the local storage specified by the given criteria.
      *
-     * @param {string} field The field name criteria
-     * @param {*} value      The field value criteria
+     * @param {string} field The grouping field name criteria
+     * @param {*} value      The grouping value criteria
      * @returns {number} The number of items
      */
     aggregateCountBy(field, value) {
@@ -90,7 +90,7 @@ export default class BsArrayStore extends AbstractStore {
     }
 
     /**
-     * Calculate SUM or total value of the Store's dataset.
+     * Calculate the SUM or total value from a field in the local storage.
      *
      * @param {string} field The field name to be used when calculating value
      * @returns {number} The sum's value
@@ -118,8 +118,8 @@ export default class BsArrayStore extends AbstractStore {
     /**
      * Replace the dataset with new data.
      *
-     * @param {Object|Object[]} data A record or collection of records to be assigned
-     * @param {boolean} silent        Append data silently and don't trigger data conversion
+     * @param {Object|Object[]} data The new data to be assigned
+     * @param {boolean} silent       Append the data silently and don't trigger data conversion
      * @returns {void}
      */
     assignData(data, silent = false) {
@@ -132,7 +132,7 @@ export default class BsArrayStore extends AbstractStore {
     }
 
     /**
-     * Load the data.
+     * Load the dataset.
      *
      * @param {Object[]|Object} [data] A record or collection of records to be assigned
      * @returns {Promise<any>} Promise interface

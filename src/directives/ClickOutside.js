@@ -4,7 +4,7 @@ export default {
     name: 'click-outside',
     bind(el, binding, vnode) {
         const documentHandler   = function (e) {
-            if (!vnode.context || el.contains(e.target)) return;
+            if (!vnode.context || el.contains(e.target)) {return;}
             if (binding.expression) {
                 vnode.context[el[clickoutsideContext].methodName](e);
             } else {

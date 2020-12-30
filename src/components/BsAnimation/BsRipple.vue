@@ -1,19 +1,21 @@
 <template>
-  <div :class="_classNames"
-       :is="tag"
-       @mousedown.passive="event => eventTrigger && startRipple(event)"
-       @mouseleave.passive="_endRipple"
-       @mouseup.passive="_endRipple"
-       @touchcancel.passive="_endRipple"
-       @touchend.passive="_endRipple"
-       @touchmove.passive="event => eventTrigger && _touchMoveCheck(event)"
-       @touchstart.passive="event => eventTrigger && _touchStartCheck(event)">
+  <div
+    :class="_classNames"
+    :is="tag"
+    @mousedown.passive="event => eventTrigger && startRipple(event)"
+    @mouseleave.passive="_endRipple"
+    @mouseup.passive="_endRipple"
+    @touchcancel.passive="_endRipple"
+    @touchend.passive="_endRipple"
+    @touchmove.passive="event => eventTrigger && _touchMoveCheck(event)"
+    @touchstart.passive="event => eventTrigger && _touchStartCheck(event)">
     <slot></slot>
     <template v-if="!disabled">
-      <bs-wave v-for="ripple in ripples"
-               :key="ripple.uuid"
-               :class="_rippleClassname"
-               :style="ripple.waveStyles" />
+      <bs-wave
+        v-for="ripple in ripples"
+        :key="ripple.uuid"
+        :class="_rippleClassname"
+        :style="ripple.waveStyles" />
     </template>
   </div>
 </template>

@@ -12,9 +12,10 @@
           </small>
         </slot>
         <template v-if="hasValidationError">
-          <small v-for="(fld) in errorItems"
-                 :key="fld"
-                 class="text-danger d-block">
+          <small
+            v-for="(fld) in errorItems"
+            :key="fld"
+            class="text-danger d-block">
             {{ _validationMessage(fld) }}
           </small>
         </template>

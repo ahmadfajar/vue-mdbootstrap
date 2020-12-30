@@ -1,14 +1,16 @@
 <template>
-  <bs-container v-if="app"
-                :app="app"
-                :tag="tag">
+  <bs-container
+    v-if="app"
+    :app="app"
+    :tag="tag">
     <div class="md-content-wrap">
       <slot></slot>
     </div>
   </bs-container>
-  <div :is="tag"
-       v-else
-       class="md-content-wrap">
+  <div
+    :is="tag"
+    v-else
+    class="md-content-wrap">
     <slot></slot>
   </div>
 </template>

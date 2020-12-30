@@ -1,18 +1,21 @@
 <template>
   <div :class="['md-checkbox-' + color, checkClassname]" class="md-checkbox">
     <div class="md-checkbox-inner" @click.stop="toggleCheck">
-      <bs-ripple :active.sync="rippleActive"
-                 :disabled="disabled"
-                 centered>
-        <input v-bind="attrs"
-               :indeterminate.prop="indeterminate"
-               type="checkbox" />
+      <bs-ripple
+        :active.sync="rippleActive"
+        :disabled="disabled"
+        centered>
+        <input
+          v-bind="attrs"
+          :indeterminate.prop="indeterminate"
+          type="checkbox" />
       </bs-ripple>
     </div>
-    <label v-if="$slots.default"
-           :for="id"
-           class="md-checkbox-label"
-           @click.prevent="toggleCheck">
+    <label
+      v-if="$slots.default"
+      :for="id"
+      class="md-checkbox-label"
+      @click.prevent="toggleCheck">
       <slot></slot>
     </label>
   </div>

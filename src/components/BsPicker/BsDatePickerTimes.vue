@@ -1,12 +1,15 @@
 <template>
   <div class="md-datepicker-body picker-times">
     <transition name="fade" mode="out-in">
-      <div v-if="activeView === 'TIME'"
-           :class="{ 'pt-5': backButton === false }">
-        <div v-if="backButton === true"
-             class="my-2">
-          <bs-button v-bind="_buttonNavAttrs"
-                     @click="!disabled && $emit('toggle-view')">
+      <div
+        v-if="activeView === 'TIME'"
+        :class="{ 'pt-5': backButton === false }">
+        <div
+          v-if="backButton === true"
+          class="my-2">
+          <bs-button
+            v-bind="_buttonNavAttrs"
+            @click="!disabled && $emit('toggle-view')">
             <bs-icon icon="arrow_back" size="24" />
           </bs-button>
         </div>
@@ -21,66 +24,75 @@
           <tbody>
             <tr>
               <td>
-                <bs-button v-bind="_buttonNavAttrs"
-                           @click="increase('h')">
+                <bs-button
+                  v-bind="_buttonNavAttrs"
+                  @click="increase('h')">
                   <bs-icon icon="expand_less" size="24" />
                 </bs-button>
               </td>
               <td>&nbsp;</td>
               <td>
-                <bs-button v-bind="_buttonNavAttrs"
-                           @click="increase('m')">
+                <bs-button
+                  v-bind="_buttonNavAttrs"
+                  @click="increase('m')">
                   <bs-icon icon="expand_less" size="24" />
                 </bs-button>
               </td>
               <td>&nbsp;</td>
               <td>
-                <bs-button v-bind="_buttonNavAttrs"
-                           @click="increase('s')">
+                <bs-button
+                  v-bind="_buttonNavAttrs"
+                  @click="increase('s')">
                   <bs-icon icon="expand_less" size="24" />
                 </bs-button>
               </td>
             </tr>
             <tr>
               <td class="picker-times-number">
-                <bs-button v-bind="_defaultBtnAttrs"
-                           @click="changeView('HOUR')">
+                <bs-button
+                  v-bind="_defaultBtnAttrs"
+                  @click="changeView('HOUR')">
                   {{ dateValue.format('HH') }}
                 </bs-button>
               </td>
               <td>:</td>
               <td class="picker-times-number">
-                <bs-button v-bind="_defaultBtnAttrs"
-                           @click="changeView('MINUTE')">
+                <bs-button
+                  v-bind="_defaultBtnAttrs"
+                  @click="changeView('MINUTE')">
                   {{ dateValue.format('mm') }}
                 </bs-button>
               </td>
               <td>:</td>
               <td class="picker-times-number">
-                <bs-button v-bind="_defaultBtnAttrs"
-                           @click="changeView('SECOND')">
+                <bs-button
+                  v-bind="_defaultBtnAttrs"
+                  @click="changeView('SECOND')">
                   {{ dateValue.format('ss') }}
                 </bs-button>
               </td>
             </tr>
             <tr>
               <td>
-                <bs-button v-bind="_buttonNavAttrs"
-                           @click="decrease('h')">
+                <bs-button
+                  v-bind="_buttonNavAttrs"
+                  @click="decrease('h')">
                   <bs-icon icon="expand_more" size="24" />
                 </bs-button>
               </td>
               <td>&nbsp;</td>
               <td>
-                <bs-button v-bind="_buttonNavAttrs"
-                           @click="decrease('m')">
+                <bs-button
+                  v-bind="_buttonNavAttrs"
+                  @click="decrease('m')">
                   <bs-icon icon="expand_more" size="24" />
                 </bs-button>
               </td>
               <td>&nbsp;</td>
               <td>
-                <bs-button v-bind="_buttonNavAttrs"
-                           @click="decrease('s')">
+                <bs-button
+                  v-bind="_buttonNavAttrs"
+                  @click="decrease('s')">
                   <bs-icon icon="expand_more" size="24" />
                 </bs-button>
               </td>
@@ -88,32 +100,40 @@
           </tbody>
         </table>
       </div>
-      <table v-if="activeView === 'HOUR'"
-             class="picker-hours">
+      <table
+        v-if="activeView === 'HOUR'"
+        class="picker-hours">
         <tbody>
-          <tr v-for="(items, nr) in tableHours"
-              :key="'tr-' + nr">
-            <td v-for="(item, idx) in items"
-                :key="'td-' + nr + '-' + idx">
-              <bs-button v-bind="buttonHourAttrs(item.intValue)"
-                         :key="item.name"
-                         @click="setHours(item.intValue)">
+          <tr
+            v-for="(items, nr) in tableHours"
+            :key="'tr-' + nr">
+            <td
+              v-for="(item, idx) in items"
+              :key="'td-' + nr + '-' + idx">
+              <bs-button
+                v-bind="buttonHourAttrs(item.intValue)"
+                :key="item.name"
+                @click="setHours(item.intValue)">
                 {{ item.name }}
               </bs-button>
             </td>
           </tr>
         </tbody>
       </table>
-      <table v-if="activeView === 'MINUTE'"
-             class="picker-minutes">
+      <table
+        v-if="activeView === 'MINUTE'"
+        class="picker-minutes">
         <tbody>
-          <tr v-for="(items, nr) in tableMinutes"
-              :key="'tr-' + nr">
-            <td v-for="(item, idx) in items"
-                :key="'td-' + nr + '-' + idx">
-              <bs-button v-bind="buttonMinuteAttrs(item.intValue)"
-                         :key="item.name"
-                         @click="setMinutes(item.intValue)">
+          <tr
+            v-for="(items, nr) in tableMinutes"
+            :key="'tr-' + nr">
+            <td
+              v-for="(item, idx) in items"
+              :key="'td-' + nr + '-' + idx">
+              <bs-button
+                v-bind="buttonMinuteAttrs(item.intValue)"
+                :key="item.name"
+                @click="setMinutes(item.intValue)">
                 {{ item.name }}
               </bs-button>
             </td>
@@ -122,13 +142,16 @@
       </table>
       <table v-if="activeView === 'SECOND'" class="picker-seconds">
         <tbody>
-          <tr v-for="(items, nr) in tableMinutes"
-              :key="'tr-' + nr">
-            <td v-for="(item, idx) in items"
-                :key="'td-' + nr + '-' + idx">
-              <bs-button v-bind="buttonSecondAttrs(item.intValue)"
-                         :key="item.name"
-                         @click="setSeconds(item.intValue)">
+          <tr
+            v-for="(items, nr) in tableMinutes"
+            :key="'tr-' + nr">
+            <td
+              v-for="(item, idx) in items"
+              :key="'td-' + nr + '-' + idx">
+              <bs-button
+                v-bind="buttonSecondAttrs(item.intValue)"
+                :key="item.name"
+                @click="setSeconds(item.intValue)">
                 {{ item.name }}
               </bs-button>
             </td>

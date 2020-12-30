@@ -1,38 +1,44 @@
 <template>
   <tr>
     <td v-if="BsGrid.enableRowSelect()">
-      <bs-button v-if="columns[0].filterable.immediate === false"
-                 color="secondary"
-                 size="sm"
-                 @click="_doFilter">
+      <bs-button
+        v-if="columns[0].filterable.immediate === false"
+        color="secondary"
+        size="sm"
+        @click="_doFilter">
         <font-awesome-icon icon="search" />
       </bs-button>
       <span v-else>&nbsp;</span>
     </td>
-    <td v-for="(column, idx) in columns"
-        :class="{'border-right': column.rowNumbering}"
-        :key="BsGrid.uuid() + idx">
+    <td
+      v-for="(column, idx) in columns"
+      :class="{'border-right': column.rowNumbering}"
+      :key="BsGrid.uuid() + idx">
       <div v-if="column.filterable.enabled && _hasFieldName(idx)" class="md-field d-flex">
-        <input v-bind="_inputAttrs(idx)"
-               @change="_onChangeValue($event.target.value, idx)"
-               @keydown="_onKeyDown($event, idx)" />
-        <div v-if="column.filterable.placeholder"
-             :class="_fieldClass(idx)"
-             class="md-field-placeholder text-grey-400">
+        <input
+          v-bind="_inputAttrs(idx)"
+          @change="_onChangeValue($event.target.value, idx)"
+          @keydown="_onKeyDown($event, idx)" />
+        <div
+          v-if="column.filterable.placeholder"
+          :class="_fieldClass(idx)"
+          class="md-field-placeholder text-grey-400">
           <font-awesome-icon icon="search" />
         </div>
-        <bs-button v-else-if="column.filterable.button"
-                   color="secondary"
-                   size="sm"
-                   @click="_doFilter">
+        <bs-button
+          v-else-if="column.filterable.button"
+          color="secondary"
+          size="sm"
+          @click="_doFilter">
           <font-awesome-icon icon="search" />
         </bs-button>
       </div>
-      <bs-button v-else-if="column.filterable.button"
-                 color="secondary"
-                 size="sm"
-                 block
-                 @click="_doFilter">
+      <bs-button
+        v-else-if="column.filterable.button"
+        color="secondary"
+        size="sm"
+        block
+        @click="_doFilter">
         <font-awesome-icon icon="search" />
       </bs-button>
       <span v-else>&nbsp;</span>
@@ -41,7 +47,7 @@
 </template>
 
 <script>
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BsButton from "../BsButton/BsButton";
 import Helper from "../../utils/Helper";
 

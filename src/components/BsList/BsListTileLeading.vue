@@ -1,19 +1,23 @@
 <template>
-  <div :class="_classNames"
-       :style="_styles"
-       class="md-list-tile-leading">
+  <div
+    :class="_classNames"
+    :style="_styles"
+    class="md-list-tile-leading">
     <slot></slot>
     <template v-if="!$slots.default">
-      <bs-avatar v-if="imgSrc"
-                 :circle="circle"
-                 :img-src="imgSrc"
-                 :rounded="rounded"
-                 :size="size" />
-      <bs-icon v-else-if="icon && isInternal"
-               v-bind="_bsIconAttributes" />
-      <font-awesome-icon v-else-if="icon"
-                         v-bind="iconAttributes"
-                         :style="_iconStyles" />
+      <bs-avatar
+        v-if="imgSrc"
+        :circle="circle"
+        :img-src="imgSrc"
+        :rounded="rounded"
+        :size="size" />
+      <bs-icon
+        v-else-if="icon && isInternal"
+        v-bind="_bsIconAttributes" />
+      <font-awesome-icon
+        v-else-if="icon"
+        v-bind="iconAttributes"
+        :style="_iconStyles" />
     </template>
   </div>
 </template>

@@ -1,8 +1,9 @@
 <template>
-  <td :class="column ? column.columnCls : null"
-      :style="_cellStyles"
-      class="md-grid-cell"
-      role="gridcell">
+  <td
+    :class="column ? column.columnCls : null"
+    :style="_cellStyles"
+    class="md-grid-cell"
+    role="gridcell">
     <div class="md-grid-cell-inner">
       <slot>
         <div v-if="hasFormatter" v-html="value"></div>

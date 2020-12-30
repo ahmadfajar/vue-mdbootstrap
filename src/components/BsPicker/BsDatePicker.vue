@@ -1,35 +1,41 @@
 <template>
   <bs-picker v-bind="pickerAttrs" class="md-datepicker">
     <template #header>
-      <bs-date-picker-header v-if="headerPanel"
-                             v-bind="headerAttrs"
-                             @change-view="_changePickerView" />
+      <bs-date-picker-header
+        v-if="headerPanel"
+        v-bind="headerAttrs"
+        @change-view="_changePickerView" />
     </template>
     <div class="md-picker-body-wrapper">
       <transition name="fade">
-        <bs-date-picker-table-nav v-if="showPickerNav"
-                                  v-bind="pickerNavAttrs"
-                                  :value="tableDate.toDate()"
-                                  @input="_updatePickerTable"
-                                  @toggle="togglePicker" />
+        <bs-date-picker-table-nav
+          v-if="showPickerNav"
+          v-bind="pickerNavAttrs"
+          :value="tableDate.toDate()"
+          @input="_updatePickerTable"
+          @toggle="togglePicker" />
       </transition>
       <transition name="fade" mode="out-in">
-        <bs-date-picker-days v-if="activePicker === 'DATE'"
-                             v-bind="pickerDayAttrs"
-                             @input="selectDate"
-                             @update-table="_updatePickerTable" />
-        <bs-date-picker-months v-if="activePicker === 'MONTH'"
-                               v-bind="pickerMonthAttrs"
-                               @input="selectMonth"
-                               @update-table="_updatePickerTable" />
-        <bs-date-picker-years v-if="activePicker === 'YEAR'"
-                              v-bind="pickerYearAttrs"
-                              @input="selectYear"
-                              @update-table="_updatePickerTable" />
-        <bs-date-picker-times v-if="activePicker === 'TIME'"
-                              v-bind="pickerTimeAttrs"
-                              @input="selectTime"
-                              @toggle-view="togglePicker" />
+        <bs-date-picker-days
+          v-if="activePicker === 'DATE'"
+          v-bind="pickerDayAttrs"
+          @input="selectDate"
+          @update-table="_updatePickerTable" />
+        <bs-date-picker-months
+          v-if="activePicker === 'MONTH'"
+          v-bind="pickerMonthAttrs"
+          @input="selectMonth"
+          @update-table="_updatePickerTable" />
+        <bs-date-picker-years
+          v-if="activePicker === 'YEAR'"
+          v-bind="pickerYearAttrs"
+          @input="selectYear"
+          @update-table="_updatePickerTable" />
+        <bs-date-picker-times
+          v-if="activePicker === 'TIME'"
+          v-bind="pickerTimeAttrs"
+          @input="selectTime"
+          @toggle-view="togglePicker" />
       </transition>
     </div>
   </bs-picker>

@@ -1,17 +1,19 @@
 <template>
   <div class="md-combobox-list-container">
-    <label v-if="showSearchBox"
-           ref="search"
-           class="md-combobox-search-wrapper"
-           :class="{['bg-' + listboxColor]: listboxColor}">
-      <input ref="input"
-             type="text"
-             autocomplete="off"
-             class="md-combobox-search"
-             role="textbox"
-             tabindex="-1"
-             :value="searchText"
-             @input="filterData($event.target.value, false)" />
+    <label
+      v-if="showSearchBox"
+      ref="search"
+      class="md-combobox-search-wrapper"
+      :class="{['bg-' + listboxColor]: listboxColor}">
+      <input
+        ref="input"
+        type="text"
+        autocomplete="off"
+        class="md-combobox-search"
+        role="textbox"
+        tabindex="-1"
+        :value="searchText"
+        @input="filterData($event.target.value, false)" />
     </label>
     <bs-list-view :style="containerStyles" :color="listboxColor">
       <bs-list-tile v-if="dataItems.length === 0">
@@ -22,47 +24,53 @@
       </bs-list-tile>
       <template v-else>
         <template v-for="(item, index) in filteredItems">
-          <bs-list-tile :key="getUuid + index"
-                        :active="isActiveItem(item)"
-                        :disabled="disabled === true ? disabled : itemPropertyValue(item, disableField)"
-                        navigable
-                        @mousedown="e => e.preventDefault()"
-                        @click="onItemClick(item)">
+          <bs-list-tile
+            :key="getUuid + index"
+            :active="isActiveItem(item)"
+            :disabled="disabled === true ? disabled : itemPropertyValue(item, disableField)"
+            navigable
+            @mousedown="e => e.preventDefault()"
+            @click="onItemClick(item)">
             <template v-if="multiple">
               <bs-list-tile-action v-if="checkOptionPosition !== 'right'">
-                <bs-checkbox v-model="cacheBoolValues[index]"
-                             :disabled="isDisabled(item)"
-                             :color="checkOptionColor"
-                             @change="onItemClick(item)" />
+                <bs-checkbox
+                  v-model="cacheBoolValues[index]"
+                  :disabled="isDisabled(item)"
+                  :color="checkOptionColor"
+                  @change="onItemClick(item)" />
               </bs-list-tile-action>
-              <bs-list-tile-leading v-if="showImage && hasProperty(item, imageField)"
-                                    :img-src="itemPropertyValue(item, imageField)"
-                                    :circle="circleImage"
-                                    :rounded="roundedImage"
-                                    :size="imageSize" />
+              <bs-list-tile-leading
+                v-if="showImage && hasProperty(item, imageField)"
+                :img-src="itemPropertyValue(item, imageField)"
+                :circle="circleImage"
+                :rounded="roundedImage"
+                :size="imageSize" />
               <bs-list-tile-content>
                 <slot name="optionItem" v-bind="{ item, index }"></slot>
               </bs-list-tile-content>
               <bs-list-tile-action v-if="checkOptionPosition === 'right'">
-                <bs-checkbox v-model="cacheBoolValues[index]"
-                             :disabled="isDisabled(item)"
-                             :color="checkOptionColor"
-                             @change="onItemClick(item)" />
+                <bs-checkbox
+                  v-model="cacheBoolValues[index]"
+                  :disabled="isDisabled(item)"
+                  :color="checkOptionColor"
+                  @change="onItemClick(item)" />
               </bs-list-tile-action>
             </template>
             <template v-else>
-              <bs-list-tile-leading v-if="showImage && hasProperty(item, imageField)"
-                                    :circle="circleImage"
-                                    :rounded="roundedImage"
-                                    :size="imageSize"
-                                    :img-src="itemPropertyValue(item, imageField)" />
+              <bs-list-tile-leading
+                v-if="showImage && hasProperty(item, imageField)"
+                :circle="circleImage"
+                :rounded="roundedImage"
+                :size="imageSize"
+                :img-src="itemPropertyValue(item, imageField)" />
               <bs-list-tile-content>
                 <slot name="optionItem" v-bind="{ item, index }"></slot>
               </bs-list-tile-content>
             </template>
           </bs-list-tile>
-          <bs-divider v-if="itemSeparator && (index + 1 < filteredItems.length)"
-                      :key="'div-' + index" />
+          <bs-divider
+            v-if="itemSeparator && (index + 1 < filteredItems.length)"
+            :key="'div-' + index" />
         </template>
       </template>
     </bs-list-view>

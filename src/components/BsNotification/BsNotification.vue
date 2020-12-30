@@ -1,11 +1,13 @@
 <template>
   <div class="md-notification">
-    <div v-for="(notification, position) in notifications"
-         :key="position"
-         :class="_classNames(position)">
-      <bs-notification-content v-for="(config, idx) in notification"
-                               :key="idx"
-                               :options="config" />
+    <div
+      v-for="(notification, position) in notifications"
+      :key="position"
+      :class="_classNames(position)">
+      <bs-notification-content
+        v-for="(config, idx) in notification"
+        :key="idx"
+        :options="config" />
     </div>
   </div>
 </template>

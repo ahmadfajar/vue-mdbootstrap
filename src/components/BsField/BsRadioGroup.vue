@@ -5,21 +5,25 @@
       <div class="md-field-inner">
         <div class="form-row">
           <template v-if="columns">
-            <div v-for="(item, idx) in items"
-                 :key="'rdo-' + idx"
-                 :class="_itemClasses">
-              <bs-radio v-bind="_radioAttributes(item)"
-                        @change="setValue">
+            <div
+              v-for="(item, idx) in items"
+              :key="'rdo-' + idx"
+              :class="_itemClasses">
+              <bs-radio
+                v-bind="_radioAttributes(item)"
+                @change="setValue">
                 {{ item.label }}
               </bs-radio>
             </div>
           </template>
           <template v-else>
-            <div v-for="(item, idx) in items"
-                 :key="'rdo-' + idx"
-                 :class="{'col-12 col-md': items.length > 3, 'px-1': items.length < 4}">
-              <bs-radio v-bind="_radioAttributes(item)"
-                        @change="setValue">
+            <div
+              v-for="(item, idx) in items"
+              :key="'rdo-' + idx"
+              :class="{'col-12 col-md': items.length > 3, 'px-1': items.length < 4}">
+              <bs-radio
+                v-bind="_radioAttributes(item)"
+                @change="setValue">
                 {{ item.label }}
               </bs-radio>
             </div>
@@ -33,9 +37,10 @@
           </small>
         </slot>
         <template v-if="hasValidationError">
-          <small v-for="(fld) in errorItems"
-                 :key="fld"
-                 class="text-danger d-block">
+          <small
+            v-for="(fld) in errorItems"
+            :key="fld"
+            class="text-danger d-block">
             {{ _validationMessage(fld) }}
           </small>
         </template>

@@ -1,10 +1,11 @@
 <template>
   <td class="md-grid-cell md-grid-cell-selection" role="gridcell">
     <div class="md-grid-cell-inner">
-      <bs-checkbox v-model="selected"
-                   :color="selectionMode.checkboxColor"
-                   :disabled="!selectionMode.rowSelect || disabled"
-                   @change="onChange" />
+      <bs-checkbox
+        v-model="selected"
+        :color="selectionMode.checkboxColor"
+        :disabled="!selectionMode.rowSelect || disabled"
+        @change="onChange" />
     </div>
   </td>
 </template>

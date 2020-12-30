@@ -5,21 +5,25 @@
       <div class="md-field-inner">
         <div class="form-row">
           <template v-if="columns">
-            <div v-for="(item, idx) in items"
-                 :key="'cbo-' + idx"
-                 :class="_itemClasses">
-              <bs-checkbox v-bind="_checkboxAttributes(item, idx)"
-                           @change="setValue">
+            <div
+              v-for="(item, idx) in items"
+              :key="'cbo-' + idx"
+              :class="_itemClasses">
+              <bs-checkbox
+                v-bind="_checkboxAttributes(item, idx)"
+                @change="setValue">
                 {{ item.label }}
               </bs-checkbox>
             </div>
           </template>
           <template v-else>
-            <div v-for="(item, idx) in items"
-                 :key="'cbo-' + idx"
-                 :class="{'col-12 col-md': items.length > 3, 'px-1': items.length < 4}">
-              <bs-checkbox v-bind="_checkboxAttributes(item, idx)"
-                           @change="setValue">
+            <div
+              v-for="(item, idx) in items"
+              :key="'cbo-' + idx"
+              :class="{'col-12 col-md': items.length > 3, 'px-1': items.length < 4}">
+              <bs-checkbox
+                v-bind="_checkboxAttributes(item, idx)"
+                @change="setValue">
                 {{ item.label }}
               </bs-checkbox>
             </div>
@@ -33,9 +37,10 @@
           </small>
         </slot>
         <template v-if="hasValidationError">
-          <small v-for="(fld) in errorItems"
-                 :key="fld"
-                 class="text-danger d-block">
+          <small
+            v-for="(fld) in errorItems"
+            :key="fld"
+            class="text-danger d-block">
             {{ _validationMessage(fld) }}
           </small>
         </template>

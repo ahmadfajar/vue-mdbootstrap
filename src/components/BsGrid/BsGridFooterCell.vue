@@ -1,8 +1,9 @@
 <template>
-  <th :class="column.footerCls ? column.footerCls : column.columnCls"
-      :style="_cellStyles"
-      role="gridcell"
-      x-ms-format-detection="none">
+  <th
+    :class="column.footerCls ? column.footerCls : column.columnCls"
+    :style="_cellStyles"
+    role="gridcell"
+    x-ms-format-detection="none">
     <div class="md-grid-th-inner">
       <slot>
         {{ value === '' || value == null ? '&nbsp;' : value }}

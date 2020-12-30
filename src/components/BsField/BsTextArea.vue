@@ -2,78 +2,90 @@
   <div :class="_classNames" class="md-textarea row align-items-start">
     <slot v-if="floatingLabel === false" v-bind="{ id }" />
     <div class="md-field-wrapper">
-      <div v-if="prependIconOuter"
-           class="md-prepend-icon">
+      <div
+        v-if="prependIconOuter"
+        class="md-prepend-icon">
         <slot name="prependIconOuter">
           <font-awesome-icon :icon="prependIconOuter" fixed-width />
         </slot>
       </div>
       <div class="md-field-ctrl">
         <div class="md-field-inner">
-          <fieldset v-if="outlined"
-                    aria-hidden="true">
+          <fieldset
+            v-if="outlined"
+            aria-hidden="true">
             <legend ref="legend">
               <span>​</span>
             </legend>
           </fieldset>
-          <div v-if="prependIcon"
-               class="md-prepend-icon">
+          <div
+            v-if="prependIcon"
+            class="md-prepend-icon">
             <slot name="prependIcon">
               <font-awesome-icon :icon="prependIcon" fixed-width />
             </slot>
           </div>
           <div class="md-field-input-wrapper">
-            <div v-if="floatingLabel"
-                 ref="floatLabel"
-                 :class="floatingLabelClass"
-                 class="md-field-label">
+            <div
+              v-if="floatingLabel"
+              ref="floatLabel"
+              :class="floatingLabelClass"
+              class="md-field-label">
               <slot v-bind="{ id }" />
             </div>
-            <textarea ref="input"
-                      v-bind="attributes"
-                      role="textbox"
-                      @blur="_onBlur"
-                      @focus="_onFocus"
-                      @input="_updateHeight"
-                      @keydown="_onKeyDown"></textarea>
+            <textarea
+              ref="input"
+              v-bind="attributes"
+              role="textbox"
+              @blur="_onBlur"
+              @focus="_onFocus"
+              @input="_updateHeight"
+              @keydown="_onKeyDown"></textarea>
           </div>
           <transition name="fade">
-            <div v-if="hasClearButton"
-                 class="md-action-icon">
-              <bs-icon v-if="hasClearButton"
-                       icon="clear"
-                       height="24"
-                       @click="clearValue" />
+            <div
+              v-if="hasClearButton"
+              class="md-action-icon">
+              <bs-icon
+                v-if="hasClearButton"
+                icon="clear"
+                height="24"
+                @click="clearValue" />
             </div>
           </transition>
-          <div v-if="appendIcon"
-               class="md-append-icon">
+          <div
+            v-if="appendIcon"
+            class="md-append-icon">
             <slot name="appendIcon">
               <font-awesome-icon :icon="appendIcon" fixed-width />
             </slot>
           </div>
         </div>
-        <div v-if="helpText || showErrorValidation"
-             class="md-help-text">
+        <div
+          v-if="helpText || showErrorValidation"
+          class="md-help-text">
           <transition name="fade">
             <slot name="helpText">
-              <small v-if="showHelpText"
-                     class="text-muted d-block">
+              <small
+                v-if="showHelpText"
+                class="text-muted d-block">
                 {{ helpText }}
               </small>
             </slot>
           </transition>
           <template v-if="hasValidationError">
-            <small v-for="(fld) in errorItems"
-                   :key="fld"
-                   class="text-danger d-block">
+            <small
+              v-for="(fld) in errorItems"
+              :key="fld"
+              class="text-danger d-block">
               {{ _validationMessage(fld) }}
             </small>
           </template>
         </div>
       </div>
-      <div v-if="appendIconOuter"
-           class="md-append-icon">
+      <div
+        v-if="appendIconOuter"
+        class="md-append-icon">
         <slot name="appendIconOuter">
           <font-awesome-icon :icon="appendIconOuter" fixed-width />
         </slot>
@@ -83,7 +95,7 @@
 </template>
 
 <script>
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BsIcon from "../BsIcon/BsIcon";
 import Input from "../../mixins/Input";
 import TextField from "./mixins/TextField";

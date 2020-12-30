@@ -1,14 +1,17 @@
 <template>
   <div :class="['btn-group', cmpAttrClasses]" role="group">
-    <label v-for="(item, idx) in items"
-           :key="'btn-' + idx"
-           :class="_btnClasses(item)">
-      <input v-model="localValue"
-             v-bind="_itemAttributes(item)"
-             :value="item.value"
-             class="d-none" />
-      <bs-ripple :active.sync="rippleActive"
-                 :disabled="disabled || readonly">
+    <label
+      v-for="(item, idx) in items"
+      :key="'btn-' + idx"
+      :class="_btnClasses(item)">
+      <input
+        v-model="localValue"
+        v-bind="_itemAttributes(item)"
+        :value="item.value"
+        class="d-none" />
+      <bs-ripple
+        :active.sync="rippleActive"
+        :disabled="disabled || readonly">
         <span class="btn-inner d-inline-flex align-items-center">
           <span v-if="iconLeft && item.icon" class="pr-2">
             <font-awesome-icon v-bind="_iconAttributes(item)" />
@@ -26,7 +29,7 @@
 </template>
 
 <script>
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BsRipple from "../BsAnimation/BsRipple";
 import ButtonToggle from "./mixins/ButtonToggle";
 import Common from "../../mixins/Common";

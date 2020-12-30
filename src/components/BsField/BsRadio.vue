@@ -1,22 +1,27 @@
 <template>
-  <div :class="['md-radio-' + color, _radioClassname]"
-       class="md-radio">
-    <div class="md-radio-inner"
-         @click.stop="toggleCheck">
-      <bs-ripple :active.sync="rippleActive"
-                 :disabled="disabled"
-                 centered>
-        <input v-model="checked"
-               v-bind="_attributes"
-               :value="value"
-               role="radio"
-               type="radio" />
+  <div
+    :class="['md-radio-' + color, _radioClassname]"
+    class="md-radio">
+    <div
+      class="md-radio-inner"
+      @click.stop="toggleCheck">
+      <bs-ripple
+        :active.sync="rippleActive"
+        :disabled="disabled"
+        centered>
+        <input
+          v-model="checked"
+          v-bind="_attributes"
+          :value="value"
+          role="radio"
+          type="radio" />
       </bs-ripple>
     </div>
-    <label v-if="$slots.default"
-           :for="id"
-           class="md-radio-label"
-           @click.prevent="toggleCheck">
+    <label
+      v-if="$slots.default"
+      :for="id"
+      class="md-radio-label"
+      @click.prevent="toggleCheck">
       <slot></slot>
     </label>
   </div>

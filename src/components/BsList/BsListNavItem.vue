@@ -1,53 +1,64 @@
 <template>
-  <router-link v-if="hasRouter"
-               :id="id"
-               :active-class="activeClass"
-               :class="_classNames"
-               :exact="exact"
-               :to="path"
-               tag="li"
-               @click.native="_onClick">
+  <router-link
+    v-if="hasRouter"
+    :id="id"
+    :active-class="activeClass"
+    :class="_classNames"
+    :exact="exact"
+    :to="path"
+    tag="li"
+    @click.native="_onClick">
     <a class="md-nav-item-inner">
-      <bs-ripple :active.sync="rippleActive"
-                 :disabled="_disableRipple"
-                 :style="_styles"
-                 class="d-flex ">
-        <bs-icon v-if="icon && isInternal"
-                 v-bind="_iconAttributes" />
-        <span v-else-if="icon && !isInternal"
-              :style="_faWidth"
-              class="md-icon text-center">
+      <bs-ripple
+        :active.sync="rippleActive"
+        :disabled="_disableRipple"
+        :style="_styles"
+        class="d-flex ">
+        <bs-icon
+          v-if="icon && isInternal"
+          v-bind="_iconAttributes" />
+        <span
+          v-else-if="icon && !isInternal"
+          :style="_faWidth"
+          class="md-icon text-center">
           <font-awesome-icon v-bind="_iconAttributes" :style="_faStyles" />
         </span>
         <span class="md-nav-text">{{ label }}</span>
-        <bs-icon v-if="hasChild"
-                 icon="expand-more"
-                 size="24" />
+        <bs-icon
+          v-if="hasChild"
+          icon="expand-more"
+          size="24" />
       </bs-ripple>
     </a>
     <slot></slot>
   </router-link>
-  <li v-else
-      :id="id"
-      :class="_classNames">
-    <a :href="url"
-       class="md-nav-item-inner"
-       @click="_onClick">
-      <bs-ripple :active.sync="rippleActive"
-                 :disabled="_disableRipple"
-                 :style="_styles"
-                 class="d-flex">
-        <bs-icon v-if="icon && isInternal"
-                 v-bind="_iconAttributes" />
-        <span v-else-if="icon && !isInternal"
-              :style="_faWidth"
-              class="md-icon text-center">
+  <li
+    v-else
+    :id="id"
+    :class="_classNames">
+    <a
+      :href="url"
+      class="md-nav-item-inner"
+      @click="_onClick">
+      <bs-ripple
+        :active.sync="rippleActive"
+        :disabled="_disableRipple"
+        :style="_styles"
+        class="d-flex">
+        <bs-icon
+          v-if="icon && isInternal"
+          v-bind="_iconAttributes" />
+        <span
+          v-else-if="icon && !isInternal"
+          :style="_faWidth"
+          class="md-icon text-center">
           <font-awesome-icon v-bind="_iconAttributes" :style="_faStyles" />
         </span>
         <span class="md-nav-text">{{ label }}</span>
-        <bs-icon v-if="hasChild"
-                 icon="expand-more"
-                 size="24" />
+        <bs-icon
+          v-if="hasChild"
+          icon="expand-more"
+          size="24" />
       </bs-ripple>
     </a>
     <slot></slot>
@@ -55,7 +66,7 @@
 </template>
 
 <script>
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsRipple from '../BsAnimation/BsRipple';
 import IconMixin from "../BsBasic/mixins/IconMixin";
 import RouteAble from "../../mixins/RouteAble";

@@ -1,7 +1,8 @@
 <template>
-  <th :class="columnCls"
-      :style="_headerStyles"
-      role="columnheader">
+  <th
+    :class="columnCls"
+    :style="_headerStyles"
+    role="columnheader">
     <div class="md-grid-th-inner">
       {{ label }}&nbsp;
     </div>

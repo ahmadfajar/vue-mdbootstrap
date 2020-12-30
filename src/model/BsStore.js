@@ -29,7 +29,7 @@ import sumBy from "lodash/sumBy";
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 13/07/2020 00:27
+ * @since  20/07/2018 modified: 30/12/2020 19:38
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -227,12 +227,40 @@ export default class BsStore extends AbstractStore {
      * @returns {void}
      */
     append(item) {
-        if (!Helper.isEmpty(item)) {
-            this._append(item);
+        if (Helper.isEmpty(item)) {
+            return;
+        }
+
+        if (this._isCandidateForModel(item)) {
+            Vue.set(this, 'updating', true);
+            let model = this._createModel(item);
+
+            model.save()
+                .catch(error => {
+                    Vue.set(this, 'hasError', true);
+                    ProxyAdapter.warnResponseError(error);
+                })
+                .finally(() => {
+                    this._items.push(model);
+                    if (this.totalCount < this.length) {
+                        Vue.set(this, 'totalCount', this.length);
+                    } else {
+                        Vue.set(this, 'totalCount', this.totalCount + 1);
+                    }
+                    Vue.set(this, 'updating', false);
+                });
+        } else if (Helper.isObject(item)) {
+            Vue.set(this, 'updating', true);
+            this._items.push(this._createModel(item).seal());
 
             if (this.totalCount < this.length) {
                 Vue.set(this, 'totalCount', this.length);
+            } else {
+                Vue.set(this, 'totalCount', this.totalCount + 1);
             }
+            Vue.set(this, 'updating', false);
+        } else {
+            console.error('Can not assign primitive type to the dataset.')
         }
     }
 
@@ -378,7 +406,7 @@ export default class BsStore extends AbstractStore {
                 url: this.restUrl.browse || '',
                 method: methods['browse']
             };
-            const params  = this.queryParams();
+            const params = this.queryParams();
             if (!Helper.isEmpty(params)) {
                 config['params'] = params;
             }

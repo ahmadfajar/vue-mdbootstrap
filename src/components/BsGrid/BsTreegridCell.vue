@@ -1,15 +1,17 @@
 <template>
-  <td :class="column ? column.columnCls : null"
-      class="md-grid-cell md-treegrid-cell"
-      role="gridcell">
+  <td
+    :class="column ? column.columnCls : null"
+    class="md-grid-cell md-treegrid-cell"
+    role="gridcell">
     <div class="d-flex">
-      <bs-icon v-for="idx in _arrayDepth"
-               :key="'bsIcon-' + idx"
-               :class="{'expanded': node.expanded}"
-               :icon="_iconName(_arrayDepth.length, idx)"
-               class="text-grey-600"
-               size="20"
-               @click="_onIconClick(_arrayDepth.length, idx)" />
+      <bs-icon
+        v-for="idx in _arrayDepth"
+        :key="'bsIcon-' + idx"
+        :class="{'expanded': node.expanded}"
+        :icon="_iconName(_arrayDepth.length, idx)"
+        class="text-grey-600"
+        size="20"
+        @click="_onIconClick(_arrayDepth.length, idx)" />
       <div :class="_cellStyles" class="md-grid-cell-inner">
         <slot>
           <div v-if="hasFormatter" v-html="value"></div>

@@ -1,8 +1,9 @@
 <template>
   <div :class="_classNames" class="md-picker md-shadow">
-    <div v-if="$slots.header !== undefined"
-         :class="_headerClass"
-         class="md-picker-header">
+    <div
+      v-if="$slots.header !== undefined"
+      :class="_headerClass"
+      class="md-picker-header">
       <slot name="header"></slot>
     </div>
     <div :style="_styles" class="md-picker-body">
@@ -10,8 +11,9 @@
         <slot></slot>
       </transition>
     </div>
-    <div v-if="$slots.footer !== undefined"
-         class="md-picker-footer">
+    <div
+      v-if="$slots.footer !== undefined"
+      class="md-picker-footer">
       <slot name="footer"></slot>
     </div>
   </div>

@@ -1,7 +1,8 @@
 <template>
-  <div v-if="open"
-       :style="_wrapperStyles"
-       class="md-lightbox-wrap">
+  <div
+    v-if="open"
+    :style="_wrapperStyles"
+    class="md-lightbox-wrap">
     <div :style="_toolbarStyles" class="md-lightbox-toolbar">
       <div v-if="showCounter" class="md-counter d-none d-md-flex">
         <span class="md-counter-current">{{ itemIndex + 1 }}</span>
@@ -9,61 +10,70 @@
         <span class="md-counter-all">{{ totalItems }}</span>
       </div>
       <bs-spacer v-if="showToolbar" />
-      <div v-if="showToolbar"
-           class="md-toolbar-items d-flex">
-        <bs-button v-if="toolbar['download']"
-                   color="light-grey"
-                   mode="icon"
-                   icon="download"
-                   flat
-                   @click="_downloadClick" />
-        <bs-button v-if="toolbar['zoom']"
-                   color="light-grey"
-                   mode="icon"
-                   flat
-                   @click="_zoomInClick">
+      <div
+        v-if="showToolbar"
+        class="md-toolbar-items d-flex">
+        <bs-button
+          v-if="toolbar['download']"
+          color="light-grey"
+          mode="icon"
+          icon="download"
+          flat
+          @click="_downloadClick" />
+        <bs-button
+          v-if="toolbar['zoom']"
+          color="light-grey"
+          mode="icon"
+          flat
+          @click="_zoomInClick">
           <bs-icon icon="ZoomIn" size="24" />
         </bs-button>
-        <bs-button v-if="toolbar['zoom']"
-                   color="light-grey"
-                   mode="icon"
-                   flat
-                   @click="_zoomOutClick">
+        <bs-button
+          v-if="toolbar['zoom']"
+          color="light-grey"
+          mode="icon"
+          flat
+          @click="_zoomOutClick">
           <bs-icon icon="ZoomOut" size="24" />
         </bs-button>
-        <bs-button v-if="toolbar['rotate']"
-                   color="light-grey"
-                   mode="icon"
-                   flat
-                   @click="_rotateLeftClick">
+        <bs-button
+          v-if="toolbar['rotate']"
+          color="light-grey"
+          mode="icon"
+          flat
+          @click="_rotateLeftClick">
           <bs-icon icon="RotateLeft" size="24" />
         </bs-button>
-        <bs-button v-if="toolbar['rotate']"
-                   color="light-grey"
-                   mode="icon"
-                   flat
-                   @click="_rotateRightClick">
+        <bs-button
+          v-if="toolbar['rotate']"
+          color="light-grey"
+          mode="icon"
+          flat
+          @click="_rotateRightClick">
           <bs-icon icon="RotateRight" size="24" />
         </bs-button>
-        <bs-button v-if="toolbar['info']"
-                   color="light-grey"
-                   mode="icon"
-                   flat
-                   @click="_infoClick">
+        <bs-button
+          v-if="toolbar['info']"
+          color="light-grey"
+          mode="icon"
+          flat
+          @click="_infoClick">
           <bs-icon icon="InfoOutline" size="24" />
         </bs-button>
-        <bs-button v-if="toolbar['delete']"
-                   color="light-grey"
-                   mode="icon"
-                   flat
-                   @click="_deleteClick">
+        <bs-button
+          v-if="toolbar['delete']"
+          color="light-grey"
+          mode="icon"
+          flat
+          @click="_deleteClick">
           <bs-icon icon="DeleteOutline" size="24" />
         </bs-button>
         <bs-menu color="transparent" placement="bottom-right">
-          <bs-button v-if="toolbar['menubar']"
-                     color="light-grey"
-                     mode="icon"
-                     flat>
+          <bs-button
+            v-if="toolbar['menubar']"
+            color="light-grey"
+            mode="icon"
+            flat>
             <bs-icon icon="MoreVert" size="24" />
           </bs-button>
           <template #content>
@@ -71,10 +81,11 @@
           </template>
         </bs-menu>
         <div v-if="toolbar['close']" class="ml-2">
-          <bs-button color="light-grey"
-                     mode="icon"
-                     flat
-                     @click="_closeClick">
+          <bs-button
+            color="light-grey"
+            mode="icon"
+            flat
+            @click="_closeClick">
             <bs-icon icon="close" size="24" />
           </bs-button>
         </div>
@@ -83,65 +94,76 @@
 
     <div v-if="showNavControl" class="md-lightbox-controls">
       <div :style="_controlStyles" class="md-control-prev">
-        <bs-button mode="icon"
-                   color="light-grey"
-                   size="lg"
-                   flat
-                   @click="prevSlide">
-          <bs-icon icon="ChevronLeft"
-                   width="56"
-                   height="64" />
+        <bs-button
+          mode="icon"
+          color="light-grey"
+          size="lg"
+          flat
+          @click="prevSlide">
+          <bs-icon
+            icon="ChevronLeft"
+            width="56"
+            height="64" />
         </bs-button>
       </div>
       <div :style="_controlStyles" class="md-control-next">
-        <bs-button mode="icon"
-                   color="light-grey"
-                   size="lg"
-                   flat
-                   @click="nextSlide">
-          <bs-icon icon="ChevronRight"
-                   width="56"
-                   height="64" />
+        <bs-button
+          mode="icon"
+          color="light-grey"
+          size="lg"
+          flat
+          @click="nextSlide">
+          <bs-icon
+            icon="ChevronRight"
+            width="56"
+            height="64" />
         </bs-button>
       </div>
     </div>
 
-    <div :style="_imgWrapperStyles"
-         ref="imgWrapper"
-         class="md-lightbox-item-wrap"
-         @click="_onWrapperClick">
+    <div
+      :style="_imgWrapperStyles"
+      ref="imgWrapper"
+      class="md-lightbox-item-wrap"
+      @click="_onWrapperClick">
       <transition :name="transition" :mode="transitionMode">
-        <div v-if="itemIndex > -1"
-             :key="'img-' + itemIndex"
-             class="md-lightbox-item">
+        <div
+          v-if="itemIndex > -1"
+          :key="'img-' + itemIndex"
+          class="md-lightbox-item">
           <div class="md-lightbox-item-img">
-            <img :alt="activeItem.title"
-                 :class="imageClass"
-                 :style="_imgStyles"
-                 :src="activeItem.imageSrc" />
+            <img
+              :alt="activeItem.title"
+              :class="imageClass"
+              :style="_imgStyles"
+              :src="activeItem.imageSrc" />
           </div>
-          <div v-if="showItemTitle"
-               class="md-lightbox-item-title">
+          <div
+            v-if="showItemTitle"
+            class="md-lightbox-item-title">
             {{ activeItem.title }}
           </div>
         </div>
       </transition>
     </div>
 
-    <div v-if="showThumbnail"
-         :style="_toolbarStyles"
-         class="md-lightbox-thumbnail-wrap">
+    <div
+      v-if="showThumbnail"
+      :style="_toolbarStyles"
+      class="md-lightbox-thumbnail-wrap">
       <div class="md-lightbox-thumbnail-row">
         <div class="md-lightbox-thumbnails">
-          <div v-for="(item, idx) in items"
-               :key="idx"
-               :class="{'md-active': itemIndex === idx}"
-               class="md-thumbnail-item"
-               @click="changeActive(item, idx)">
-            <img :src="item.thumbnail"
-                 :alt="item.title"
-                 :height="thumbnailHeight"
-                 width="auto" />
+          <div
+            v-for="(item, idx) in items"
+            :key="idx"
+            :class="{'md-active': itemIndex === idx}"
+            class="md-thumbnail-item"
+            @click="changeActive(item, idx)">
+            <img
+              :src="item.thumbnail"
+              :alt="item.title"
+              :height="thumbnailHeight"
+              width="auto" />
           </div>
         </div>
       </div>

@@ -2,69 +2,77 @@
   <div class="md-pagination-wrapper d-flex">
     <div class="col-lg-7">
       <div class="d-flex align-items-center">
-        <bs-button :disabled="!navFirstPageEnabled"
-                   color="secondary"
-                   flat
-                   mode="icon"
-                   size="sm"
-                   @click="$emit('gotopage', 1)">
+        <bs-button
+          :disabled="!navFirstPageEnabled"
+          color="secondary"
+          flat
+          mode="icon"
+          size="sm"
+          @click="$emit('gotopage', 1)">
           <bs-icon icon="first_page" />
         </bs-button>
-        <bs-button :disabled="!navFirstPageEnabled"
-                   color="secondary"
-                   flat
-                   mode="icon"
-                   size="sm"
-                   @click="$emit('prevpage')">
+        <bs-button
+          :disabled="!navFirstPageEnabled"
+          color="secondary"
+          flat
+          mode="icon"
+          size="sm"
+          @click="$emit('prevpage')">
           <bs-icon icon="chevron_left" />
         </bs-button>
         <label class="d-inline-block mb-0 mx-1">
-          <input v-model.lazy.number="currentPage"
-                 :readonly="totalPages < 2"
-                 class="form-control form-control-sm md-pagination-control"
-                 type="text" />
+          <input
+            v-model.lazy.number="currentPage"
+            :readonly="totalPages < 2"
+            class="form-control form-control-sm md-pagination-control"
+            type="text" />
         </label>
-        <bs-button :disabled="!navLastPageEnabled"
-                   color="secondary"
-                   flat
-                   mode="icon"
-                   size="sm"
-                   @click="$emit('nextpage')">
+        <bs-button
+          :disabled="!navLastPageEnabled"
+          color="secondary"
+          flat
+          mode="icon"
+          size="sm"
+          @click="$emit('nextpage')">
           <bs-icon icon="chevron_right" />
         </bs-button>
-        <bs-button :disabled="!navLastPageEnabled"
-                   color="secondary"
-                   flat
-                   mode="icon"
-                   size="sm"
-                   @click="$emit('gotopage', totalPages)">
+        <bs-button
+          :disabled="!navLastPageEnabled"
+          color="secondary"
+          flat
+          mode="icon"
+          size="sm"
+          @click="$emit('gotopage', totalPages)">
           <bs-icon icon="last_page" />
         </bs-button>
         <div class="md-pagination-pager d-md-flex align-items-center pl-2 d-none">
-          <bs-combobox v-model="itemPerPage"
-                       :data-source="configuration.paging"
-                       :minimum-popover-width="70"
-                       outlined />
+          <bs-combobox
+            v-model="itemPerPage"
+            :data-source="configuration.paging"
+            :minimum-popover-width="70"
+            outlined />
           <span class="md-pagination-text text-nowrap pl-2">{{ configuration.messages.pager }}</span>
         </div>
         <div class="flex-fill d-lg-none text-right">
-          <bs-button color="secondary"
-                     flat
-                     icon="sync-alt"
-                     mode="icon"
-                     size="sm"
-                     @click="$emit('reload')" />
+          <bs-button
+            color="secondary"
+            flat
+            icon="sync-alt"
+            mode="icon"
+            size="sm"
+            @click="$emit('reload')" />
         </div>
       </div>
     </div>
     <div class="col-lg-5 d-none d-lg-block text-right">
       <span class="md-pagination-text pr-2">{{ _pageInfo }}</span>
-      <bs-button color="secondary"
-                 flat
-                 icon="sync-alt"
-                 mode="icon"
-                 size="sm"
-                 @click="$emit('reload')" />
+      <bs-button
+        color="secondary"
+        flat
+        icon="sync-alt"
+        mode="icon"
+        size="sm"
+        @click="$emit('reload')" />
     </div>
   </div>
 </template>

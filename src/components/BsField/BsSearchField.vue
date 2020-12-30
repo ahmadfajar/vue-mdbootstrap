@@ -1,42 +1,48 @@
 <template>
   <div class="md-field-searchbox">
-    <div class="md-searchbox-inner"
-         ref="activator"
-         :class="_classNames">
-      <bs-button color="secondary"
-                 mode="icon"
-                 icon="search"
-                 size="sm"
-                 flat
-                 @click="_onSearch" />
+    <div
+      class="md-searchbox-inner"
+      ref="activator"
+      :class="_classNames">
+      <bs-button
+        color="secondary"
+        mode="icon"
+        icon="search"
+        size="sm"
+        flat
+        @click="_onSearch" />
       <label>
-        <input ref="input"
-               v-bind="_attributes"
-               @input="setValue($event.target.value)"
-               @focus="_onFocus"
-               @blur="_onBlur"
-               @keyup.enter="_onSubmit" />
+        <input
+          ref="input"
+          v-bind="_attributes"
+          @input="setValue($event.target.value)"
+          @focus="_onFocus"
+          @blur="_onBlur"
+          @keyup.enter="_onSubmit" />
       </label>
-      <bs-button v-if="value !== null && value !== ''"
-                 color="secondary"
-                 mode="icon"
-                 size="sm"
-                 flat
-                 @click="_onClear">
+      <bs-button
+        v-if="value !== null && value !== ''"
+        color="secondary"
+        mode="icon"
+        size="sm"
+        flat
+        @click="_onClear">
         <bs-icon icon="clear" />
       </bs-button>
-      <bs-button v-if="searchOptions"
-                 color="secondary"
-                 mode="icon"
-                 size="sm"
-                 flat
-                 @click="_popoverOpen">
+      <bs-button
+        v-if="searchOptions"
+        color="secondary"
+        mode="icon"
+        size="sm"
+        flat
+        @click="_popoverOpen">
         <bs-icon icon="ArrowDropDown" size="24" />
       </bs-button>
     </div>
-    <bs-popover v-if="searchOptions"
-                v-bind="_popoverAttributes"
-                @close="_popoverClose">
+    <bs-popover
+      v-if="searchOptions"
+      v-bind="_popoverAttributes"
+      @close="_popoverClose">
       <slot name="dropdownlist"></slot>
     </bs-popover>
   </div>

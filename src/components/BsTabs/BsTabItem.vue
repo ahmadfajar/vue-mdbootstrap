@@ -1,42 +1,47 @@
 <template>
-  <li v-if="_tagName === 'li'"
-      :is="_tagName"
-      :class="_classNames"
-      role="presentation"
-      v-on="$listeners">
-    <router-link v-if="hasRouter"
-                 v-bind="_attributes"
-                 :active-class="activeClass"
-                 :class="_linkClass"
-                 :exact="exact"
-                 :to="path"
-                 @click.native="_onClick">
+  <li
+    v-if="_tagName === 'li'"
+    :is="_tagName"
+    :class="_classNames"
+    role="presentation"
+    v-on="$listeners">
+    <router-link
+      v-if="hasRouter"
+      v-bind="_attributes"
+      :active-class="activeClass"
+      :class="_linkClass"
+      :exact="exact"
+      :to="path"
+      @click.native="_onClick">
       <bs-tab-label v-bind="_tabLabelAttrs" />
     </router-link>
-    <a v-else
-       v-bind="_attributes"
-       :class="_linkClass"
-       :href="url"
-       @click="_onClick">
+    <a
+      v-else
+      v-bind="_attributes"
+      :class="_linkClass"
+      :href="url"
+      @click="_onClick">
       <bs-tab-label v-bind="_tabLabelAttrs" />
     </a>
   </li>
-  <router-link v-else-if="hasRouter"
-               v-bind="_attributes"
-               v-on="$listeners"
-               :active-class="activeClass"
-               :class="_classNames"
-               :exact="exact"
-               :to="path"
-               @click.native="_onClick">
+  <router-link
+    v-else-if="hasRouter"
+    v-bind="_attributes"
+    v-on="$listeners"
+    :active-class="activeClass"
+    :class="_classNames"
+    :exact="exact"
+    :to="path"
+    @click.native="_onClick">
     <bs-tab-label v-bind="_tabLabelAttrs" />
   </router-link>
-  <a v-else
-     v-bind="_attributes"
-     v-on="$listeners"
-     :class="_classNames"
-     :href="url"
-     @click="_onClick">
+  <a
+    v-else
+    v-bind="_attributes"
+    v-on="$listeners"
+    :class="_classNames"
+    :href="url"
+    @click="_onClick">
     <bs-tab-label v-bind="_tabLabelAttrs" />
   </a>
 </template>

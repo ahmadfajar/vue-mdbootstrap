@@ -2,104 +2,120 @@
   <div :class="_classNames" class="md-field row">
     <slot v-if="floatingLabel === false" v-bind="{ id }" />
     <div class="md-field-wrapper">
-      <div v-if="prependIconOuter"
-           class="md-prepend-icon">
+      <div
+        v-if="prependIconOuter"
+        class="md-prepend-icon">
         <slot name="prependIconOuter">
           <font-awesome-icon :icon="prependIconOuter" fixed-width />
         </slot>
       </div>
       <div class="md-field-ctrl">
-        <div ref="activator"
-             class="md-field-inner"
-             @mouseenter="onMouseEnter">
-          <fieldset v-if="outlined"
-                    aria-hidden="true">
+        <div
+          ref="activator"
+          class="md-field-inner"
+          @mouseenter="onMouseEnter">
+          <fieldset
+            v-if="outlined"
+            aria-hidden="true">
             <legend ref="legend">
               <span>​</span>
             </legend>
           </fieldset>
-          <div v-if="prependIcon"
-               @click="_activatorClick"
-               class="md-prepend-icon">
+          <div
+            v-if="prependIcon"
+            @click="_activatorClick"
+            class="md-prepend-icon">
             <slot name="prependIcon">
               <font-awesome-icon :icon="prependIcon" fixed-width />
             </slot>
           </div>
           <div class="md-field-input-wrapper">
-            <div v-if="floatingLabel"
-                 ref="floatLabel"
-                 :class="floatingLabelClass"
-                 class="md-field-label">
+            <div
+              v-if="floatingLabel"
+              ref="floatLabel"
+              :class="floatingLabelClass"
+              class="md-field-label">
               <slot v-bind="{ id }" />
             </div>
-            <input ref="input"
-                   v-model="dateValue"
-                   v-bind="attributes"
-                   style="cursor: default"
-                   @blur="_onBlur"
-                   @click="activatorClick"
-                   @focus="_onFocus" />
+            <input
+              ref="input"
+              v-model="dateValue"
+              v-bind="attributes"
+              style="cursor: default"
+              @blur="_onBlur"
+              @click="activatorClick"
+              @focus="_onFocus" />
           </div>
           <transition name="fade">
-            <div v-if="hasClearButton"
-                 class="md-action-icon">
-              <bs-icon v-if="hasClearButton"
-                       height="24"
-                       icon="clear"
-                       @click="clearValue" />
+            <div
+              v-if="hasClearButton"
+              class="md-action-icon">
+              <bs-icon
+                v-if="hasClearButton"
+                height="24"
+                icon="clear"
+                @click="clearValue" />
             </div>
           </transition>
-          <div class="md-append-icon"
-               @click="_activatorClick">
+          <div
+            class="md-append-icon"
+            @click="_activatorClick">
             <slot name="appendIcon">
-              <font-awesome-icon v-if="appendIcon"
-                                 :icon="appendIcon"
-                                 fixed-width
-                                 style="cursor: pointer" />
-              <bs-icon v-else
-                       height="24"
-                       icon="calendar"
-                       style="cursor: pointer" />
+              <font-awesome-icon
+                v-if="appendIcon"
+                :icon="appendIcon"
+                fixed-width
+                style="cursor: pointer" />
+              <bs-icon
+                v-else
+                height="24"
+                icon="calendar"
+                style="cursor: pointer" />
             </slot>
           </div>
         </div>
-        <div v-if="helpText || showErrorValidation"
-             class="md-help-text">
+        <div
+          v-if="helpText || showErrorValidation"
+          class="md-help-text">
           <transition name="fade">
             <slot name="helpText">
-              <small v-if="showHelpText"
-                     class="text-muted d-block">
+              <small
+                v-if="showHelpText"
+                class="text-muted d-block">
                 {{ helpText }}
               </small>
             </slot>
           </transition>
           <template v-if="hasValidationError">
-            <small v-for="(fld) in errorItems"
-                   :key="fld"
-                   class="text-danger d-block">
+            <small
+              v-for="(fld) in errorItems"
+              :key="fld"
+              class="text-danger d-block">
               {{ _validationMessage(fld) }}
             </small>
           </template>
         </div>
       </div>
-      <div v-if="appendIconOuter"
-           class="md-append-icon">
+      <div
+        v-if="appendIconOuter"
+        class="md-append-icon">
         <slot name="appendIconOuter">
           <font-awesome-icon :icon="appendIconOuter" fixed-width />
         </slot>
       </div>
     </div>
-    <bs-popover v-bind="_popoverAttributes"
-                class="md-shadow"
-                @close="hideMenu">
+    <bs-popover
+      v-bind="_popoverAttributes"
+      class="md-shadow"
+      @close="hideMenu">
       <bs-date-picker v-bind="_datePickerAttributes" @input="setValue" />
     </bs-popover>
   </div>
 </template>
 
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import moment from "moment";
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import BsIcon from "../BsIcon/BsIcon";
 import BsPopover from "../BsPopover/BsPopover";
 import BsDatePicker from "../BsPicker/BsDatePicker";

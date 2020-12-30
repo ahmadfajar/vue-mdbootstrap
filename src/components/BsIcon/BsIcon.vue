@@ -1,19 +1,22 @@
 <template>
-  <span v-on="$listeners"
-        :class="_iconClass"
-        :style="_iconStyles"
-        class="md-icon">
-    <svg v-if="iconData"
-         :class="_svgClass"
-         :height="szHeight"
-         :width="szWidth"
-         class="svg-inline mx-auto"
-         viewBox="0 0 24 24"
-         xmlns="http://www.w3.org/2000/svg">
-      <path v-for="(obj, k) in iconData.paths"
-            :key="obj.fill + '-' + k"
-            :d="obj.d"
-            :fill="obj.fill" />
+  <span
+    v-on="$listeners"
+    :class="_iconClass"
+    :style="_iconStyles"
+    class="md-icon">
+    <svg
+      v-if="iconData"
+      :class="_svgClass"
+      :height="szHeight"
+      :width="szWidth"
+      class="svg-inline mx-auto"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg">
+      <path
+        v-for="(obj, k) in iconData.paths"
+        :key="obj.fill + '-' + k"
+        :d="obj.d"
+        :fill="obj.fill" />
     </svg>
   </span>
 </template>

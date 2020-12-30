@@ -2,18 +2,20 @@
   <table :style="_tableStyles" role="grid">
     <colgroup v-if="!isSmallScreen || !flipOnSmallScreen">
       <col v-if="BsGrid.enableRowSelect()" :style="{width: _checkboxWidth + 'px'}" />
-      <col v-for="(column, idx) in columns"
-           :key="'col-' + BsGrid.uuid() + idx"
-           :style="_colFooterStyles(column)" />
+      <col
+        v-for="(column, idx) in columns"
+        :key="'col-' + BsGrid.uuid() + idx"
+        :style="_colFooterStyles(column)" />
     </colgroup>
     <tfoot role="rowgroup">
       <tr role="row">
         <th v-if="BsGrid.enableRowSelect()" role="gridcell"></th>
         <slot>
-          <bs-grid-footer-cell v-for="(col, idx) in columns"
-                               :key="col.field + '-' + idx"
-                               :column="col"
-                               :index="idx" />
+          <bs-grid-footer-cell
+            v-for="(col, idx) in columns"
+            :key="col.field + '-' + idx"
+            :column="col"
+            :index="idx" />
         </slot>
       </tr>
     </tfoot>
@@ -24,7 +26,7 @@
 import BsGridFooterCell from "./BsGridFooterCell";
 import ScreenSize from "../../mixins/ScreenSize";
 import Util from "../../utils/Helper";
-import {addResizeListener, removeResizeListener} from "../../utils/ResizeListener";
+import { addResizeListener, removeResizeListener } from "../../utils/ResizeListener";
 
 export default {
     name: "BsGridFooter",

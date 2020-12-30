@@ -1,11 +1,12 @@
 <template>
   <transition :name="transitionName">
-    <div v-if="open"
-         v-resize="setPosition"
-         v-scroll="{target: trigger, callback: setPosition}"
-         :class="_classNames"
-         :style="_styles"
-         role="tooltip">
+    <div
+      v-if="open"
+      v-resize="setPosition"
+      v-scroll="{target: trigger, callback: setPosition}"
+      :class="_classNames"
+      :style="_styles"
+      role="tooltip">
       <div class="arrow"></div>
       <div class="md-tooltip-inner">
         <slot></slot>

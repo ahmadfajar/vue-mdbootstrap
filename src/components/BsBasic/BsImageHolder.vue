@@ -1,19 +1,22 @@
 <template>
-  <svg :class="imageClass"
-       :height="_szHeight"
-       :width="_szWidth"
-       focusable="false"
-       preserveAspectRatio="xMidYMid slice"
-       role="img"
-       xmlns="http://www.w3.org/2000/svg">
+  <svg
+    :class="imageClass"
+    :height="_szHeight"
+    :width="_szWidth"
+    focusable="false"
+    preserveAspectRatio="xMidYMid slice"
+    role="img"
+    xmlns="http://www.w3.org/2000/svg">
     <title v-if="placeHolder">{{ placeHolder }}</title>
-    <rect width="100%"
-          height="100%"
-          :fill="bgColor" />
-    <text v-if="placeHolder && placeHolder !== ''"
-          :fill="textColor"
-          :x="xPos"
-          :y="yPos">
+    <rect
+      width="100%"
+      height="100%"
+      :fill="bgColor" />
+    <text
+      v-if="placeHolder && placeHolder !== ''"
+      :fill="textColor"
+      :x="xPos"
+      :y="yPos">
       {{ placeHolder }}
     </text>
   </svg>

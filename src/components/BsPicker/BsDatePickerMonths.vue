@@ -1,17 +1,21 @@
 <template>
-  <div v-touch="{left: onTouch, right: onTouch}"
-       class="md-datepicker-body picker-month"
-       @wheel="onMouseWheel">
+  <div
+    v-touch="{left: onTouch, right: onTouch}"
+    class="md-datepicker-body picker-month"
+    @wheel="onMouseWheel">
     <transition :name="transitionName">
       <table :key="tableDate.toISOString()">
         <tbody>
-          <tr v-for="(items, nr) in tableRows"
-              :key="'tr-' + nr">
-            <td v-for="(item, idx) in items"
-                :key="'td-' + nr + '-' + idx">
-              <bs-button v-bind="buttonAttrs(item.value)"
-                         :key="item.value"
-                         @click="onMonthClick(item.value)">
+          <tr
+            v-for="(items, nr) in tableRows"
+            :key="'tr-' + nr">
+            <td
+              v-for="(item, idx) in items"
+              :key="'td-' + nr + '-' + idx">
+              <bs-button
+                v-bind="buttonAttrs(item.value)"
+                :key="item.value"
+                @click="onMonthClick(item.value)">
                 {{ item.name }}
               </bs-button>
             </td>

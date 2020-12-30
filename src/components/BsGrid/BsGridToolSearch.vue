@@ -1,8 +1,9 @@
 <template>
-  <bs-search-field v-model="value"
-                   v-bind="_attributes"
-                   @input="_resetSearch"
-                   @search="_beginSearch" />
+  <bs-search-field
+    v-model="value"
+    v-bind="_attributes"
+    @input="_resetSearch"
+    @search="_beginSearch" />
 </template>
 
 <script>

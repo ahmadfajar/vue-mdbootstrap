@@ -1,7 +1,8 @@
 <template>
-  <div :class="_classNames"
-       :style="_gridStyles"
-       class="md-grid">
+  <div
+    :class="_classNames"
+    :style="_gridStyles"
+    class="md-grid">
     <slot name="toolbar"></slot>
     <div :class="{'d-flex': isSmallScreen && flipOnSmallScreen}">
       <div class="md-grid-header">
@@ -10,57 +11,65 @@
             <colgroup v-if="!isSmallScreen || !flipOnSmallScreen">
               <col v-if="isSelectable" :style="{width: checkboxWidth + 'px'}" />
               <template v-for="(column, idx) in columnIterator">
-                <col v-if="column.cellData"
-                     :key="'col-' + _uuid() + idx"
-                     :style="_colHeaderStyles(column)" />
+                <col
+                  v-if="column.cellData"
+                  :key="'col-' + _uuid() + idx"
+                  :style="_colHeaderStyles(column)" />
               </template>
             </colgroup>
             <thead role="rowgroup">
               <slot v-bind="{ items: dataItems, selectionMode: selectionMode }" name="columnheader"></slot>
               <tr v-if="!$scopedSlots['columnheader']" role="row">
-                <bs-grid-column-selection v-if="isSelectable"
-                                          :data-items="dataItems"
-                                          :color="selectionMode.checkboxColor" />
+                <bs-grid-column-selection
+                  v-if="isSelectable"
+                  :data-items="dataItems"
+                  :color="selectionMode.checkboxColor" />
                 <slot></slot>
               </tr>
-              <bs-grid-column-filters v-if="filterable && !(flipOnSmallScreen && isSmallScreen)"
-                                      :columns="columnIterator" />
+              <bs-grid-column-filters
+                v-if="filterable && !(flipOnSmallScreen && isSmallScreen)"
+                :columns="columnIterator" />
             </thead>
           </table>
         </div>
       </div>
       <bs-progress v-if="isLoading && loading.type === 'bar'" v-bind="_progressLoadingAttrs" />
-      <div ref="tcontent"
-           class="md-grid-content"
-           @scroll="_handleScroll">
+      <div
+        ref="tcontent"
+        class="md-grid-content"
+        @scroll="_handleScroll">
         <table :style="_tableStyles" role="grid">
           <colgroup v-if="!isSmallScreen || !flipOnSmallScreen">
             <col v-if="isSelectable" :style="{width: checkboxWidth + 'px'}" />
             <template v-for="(column, idx) in columnIterator">
-              <col v-if="column.cellData"
-                   :key="'col-' + _uuid() + idx"
-                   :style="_colDataStyles(column)" />
+              <col
+                v-if="column.cellData"
+                :key="'col-' + _uuid() + idx"
+                :style="_colDataStyles(column)" />
             </template>
           </colgroup>
           <tbody role="rowgroup">
-            <bs-grid-row v-for="(item, index) in dataItems"
-                         :key="'row-' + index"
-                         :index="index"
-                         :item="item"
-                         :selection-mode="selectionMode">
-              <bs-grid-cell-selection v-if="isSelectable"
-                                      :item="item"
-                                      :value="isRowSelected(item)"
-                                      :selection-mode="selectionMode"
-                                      @input="selected => selected ? selectRow(item) : deselectRow(item)" />
+            <bs-grid-row
+              v-for="(item, index) in dataItems"
+              :key="'row-' + index"
+              :index="index"
+              :item="item"
+              :selection-mode="selectionMode">
+              <bs-grid-cell-selection
+                v-if="isSelectable"
+                :item="item"
+                :value="isRowSelected(item)"
+                :selection-mode="selectionMode"
+                @input="selected => selected ? selectRow(item) : deselectRow(item)" />
               <slot v-bind="{ columns: columnIterator, item: item, index: index }" name="datarow">
                 <template v-for="column in columnIterator">
-                  <component v-if="column.field || column.rowNumbering"
-                             :is="column.rowNumbering ? 'bs-grid-cell-numbering' : 'bs-grid-cell'"
-                             :key="column.field + '-' + _uuid()"
-                             :column="column"
-                             :index="index"
-                             :item="item" />
+                  <component
+                    v-if="column.field || column.rowNumbering"
+                    :is="column.rowNumbering ? 'bs-grid-cell-numbering' : 'bs-grid-cell'"
+                    :key="column.field + '-' + _uuid()"
+                    :column="column"
+                    :index="index"
+                    :item="item" />
                 </template>
               </slot>
             </bs-grid-row>
@@ -79,9 +88,10 @@
       <div v-if="showFooter" class="md-grid-footer">
         <div ref="tfooter" class="md-grid-footer-wrap">
           <bs-grid-footer :columns="columnIterator">
-            <slot slot="default"
-                  v-bind="{ columns: columnIterator }"
-                  name="gridfooter"></slot>
+            <slot
+              slot="default"
+              v-bind="{ columns: columnIterator }"
+              name="gridfooter"></slot>
           </bs-grid-footer>
         </div>
       </div>
@@ -89,15 +99,17 @@
     <div v-if="isLoading && loading.type === 'spinner'" class="md-grid-progress-spinner">
       <bs-progress v-bind="_progressLoadingAttrs" class="align-self-center" />
     </div>
-    <div v-if="pageable"
-         ref="footer"
-         class="md-pagination">
-      <bs-pagination v-bind="_paginationAttrs"
-                     @pagesize="setPageSize"
-                     @reload="reload"
-                     @gotopage="gotoPage"
-                     @prevpage="previousPage"
-                     @nextpage="nextPage" />
+    <div
+      v-if="pageable"
+      ref="footer"
+      class="md-pagination">
+      <bs-pagination
+        v-bind="_paginationAttrs"
+        @pagesize="setPageSize"
+        @reload="reload"
+        @gotopage="gotoPage"
+        @prevpage="previousPage"
+        @nextpage="nextPage" />
     </div>
   </div>
 </template>
@@ -141,7 +153,7 @@ import ScreenSize from '../../mixins/ScreenSize';
 import Grid from "./mixins/Grid";
 import Helper from '../../utils/Helper';
 import sum from 'lodash/sum';
-import {addResizeListener, removeResizeListener} from '../../utils/ResizeListener';
+import { addResizeListener, removeResizeListener } from '../../utils/ResizeListener';
 
 export default {
     name: "BsGrid",
@@ -391,7 +403,8 @@ export default {
 
             if (!Helper.isEmpty(this.dataSource)) {
                 if (this.dataSource.pageSize < 1 || Helper.isEmpty(this.dataSource.pageSize)) {
-                    this.dataSource.pageSize = this.table.pageSize;
+                    // this.dataSource.pageSize = this.table.pageSize;
+                    this.dataSource.setPageSize(this.table.pageSize);
                 } else {
                     this.table.pageSize = this.dataSource.pageSize;
                 }
@@ -613,7 +626,8 @@ export default {
                 this.table.pageSize = value;
             }
             if (!Helper.isEmpty(this.dataSource)) {
-                this.dataSource.pageSize = this.table.pageSize;
+                // this.dataSource.pageSize = this.table.pageSize;
+                this.dataSource.setPageSize(this.table.pageSize);
             }
 
             this._fetchData();
@@ -626,7 +640,8 @@ export default {
          * @returns {void}
          */
         sort(field, direction) {
-            this.dataSource.sorters = [{property: field, direction: direction.toLowerCase()}];
+            // this.dataSource.sorters = [{property: field, direction: direction.toLowerCase()}];
+            this.dataSource.setSorters([{property: field, direction: direction.toLowerCase()}]);
             this._fetchData();
         }
     }

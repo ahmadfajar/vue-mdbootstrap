@@ -1,24 +1,27 @@
 <template>
-  <span v-if="imgSrc"
-        :class="imageClass"
-        class="md-avatar">
-    <img v-on="$listeners"
-         :class="imageClass"
-         :src="imgSrc"
-         :style="imageSizeStyles"
-         alt=""
-         class="md-avatar" />
+  <span
+    v-if="imgSrc"
+    :class="imageClass"
+    class="md-avatar">
+    <img
+      v-on="$listeners"
+      :class="imageClass"
+      :src="imgSrc"
+      :style="imageSizeStyles"
+      alt=""
+      class="md-avatar" />
   </span>
   <span v-bind="_avatarClass" v-else>
-    <bs-icon v-if="icon && isInternal"
-             v-bind="_bsIconAttributes" />
+    <bs-icon
+      v-if="icon && isInternal"
+      v-bind="_bsIconAttributes" />
     <font-awesome-icon v-else-if="icon" v-bind="_faAttributes" />
     <span v-else class="md-avatar-text">{{ text }}</span>
   </span>
 </template>
 
 <script>
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsIcon from "../BsIcon/BsIcon";
 import Image from '../../mixins/Image';
 import IconMixin from "./mixins/IconMixin";

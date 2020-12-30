@@ -1,17 +1,21 @@
 <template>
-  <div v-touch="{left: onTouch, right: onTouch}"
-       class="md-datepicker-body picker-year"
-       @wheel="onMouseWheel">
+  <div
+    v-touch="{left: onTouch, right: onTouch}"
+    class="md-datepicker-body picker-year"
+    @wheel="onMouseWheel">
     <transition :name="transitionName">
       <table :key="tableDate.toISOString()">
         <tbody>
-          <tr v-for="(years, nr) in tableRows"
-              :key="'tr-' + nr">
-            <td v-for="(year, idx) in years"
-                :key="'td-' + nr + '-' + idx">
-              <bs-button v-bind="buttonAttrs(year)"
-                         :key="year"
-                         @click="onYearClick(year)">
+          <tr
+            v-for="(years, nr) in tableRows"
+            :key="'tr-' + nr">
+            <td
+              v-for="(year, idx) in years"
+              :key="'td-' + nr + '-' + idx">
+              <bs-button
+                v-bind="buttonAttrs(year)"
+                :key="year"
+                @click="onYearClick(year)">
                 {{ year }}
               </bs-button>
             </td>

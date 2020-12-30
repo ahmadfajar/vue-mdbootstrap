@@ -1,24 +1,27 @@
 <template>
   <div class="md-datepicker-header">
     <div class="md-datepicker-header-inner d-flex">
-      <div :class="{ active: isYearActive }"
-           :style="_styles"
-           class="md-picker-year"
-           @click="yearClick">
+      <div
+        :class="{ active: isYearActive }"
+        :style="_styles"
+        class="md-picker-year"
+        @click="yearClick">
         {{ year === '' ? '&nbsp;' : year }}
       </div>
-      <div v-if="enableTime"
-           :class="{ active: isTimeActive }"
-           :style="_styles"
-           class="md-picker-time flex-grow-1 text-right"
-           @click="timeClick">
+      <div
+        v-if="enableTime"
+        :class="{ active: isTimeActive }"
+        :style="_styles"
+        class="md-picker-time flex-grow-1 text-right"
+        @click="timeClick">
         {{ time === '' ? '&nbsp;' : time }}
       </div>
     </div>
-    <div :class="{ active: isTitleActive }"
-         :style="_styles"
-         class="md-datepicker-header-inner md-picker-title"
-         @click="titleClick">
+    <div
+      :class="{ active: isTitleActive }"
+      :style="_styles"
+      class="md-datepicker-header-inner md-picker-title"
+      @click="titleClick">
       <transition :name="transitionName">
         <div :key="date" v-html="value"></div>
       </transition>

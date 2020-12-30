@@ -1,13 +1,14 @@
 <template>
   <transition :name="transition">
-    <div v-show="open"
-         v-click-outside="clickOutSide"
-         v-on="$listeners"
-         v-resize="setPosition"
-         v-scroll="{target: trigger, callback: setPosition}"
-         :class="_classNames"
-         :style="_styles"
-         class="md-popover">
+    <div
+      v-show="open"
+      v-click-outside="clickOutSide"
+      v-on="$listeners"
+      v-resize="setPosition"
+      v-scroll="{target: trigger, callback: setPosition}"
+      :class="_classNames"
+      :style="_styles"
+      class="md-popover">
       <slot></slot>
     </div>
   </transition>

@@ -1,26 +1,31 @@
 <template>
-  <div v-touch="{left: onTouch, right: onTouch}"
-       class="md-datepicker-body picker-day"
-       @wheel="onMouseWheel">
+  <div
+    v-touch="{left: onTouch, right: onTouch}"
+    class="md-datepicker-body picker-day"
+    @wheel="onMouseWheel">
     <transition :name="transitionName">
       <table :key="tableDate.toISOString()">
         <thead>
           <tr>
-            <th v-for="(day, idx) in dayNamesFmt"
-                :key="'th-' + idx">
+            <th
+              v-for="(day, idx) in dayNamesFmt"
+              :key="'th-' + idx">
               {{ day }}
             </th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(items, nx) in tableRows"
-              :key="'tr-' + nx">
-            <td v-for="(item, idx) in items"
-                :key="'td-' + nx + '-' + idx">
-              <bs-button v-if="item.intValue !== 0"
-                         v-bind="buttonAttrs(item.value)"
-                         :key="item.value"
-                         @click="onDayClick(item.value)">
+          <tr
+            v-for="(items, nx) in tableRows"
+            :key="'tr-' + nx">
+            <td
+              v-for="(item, idx) in items"
+              :key="'td-' + nx + '-' + idx">
+              <bs-button
+                v-if="item.intValue !== 0"
+                v-bind="buttonAttrs(item.value)"
+                :key="item.value"
+                @click="onDayClick(item.value)">
                 {{ item.intValue }}
               </bs-button>
             </td>

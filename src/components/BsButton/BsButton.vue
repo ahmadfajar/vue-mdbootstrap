@@ -1,15 +1,17 @@
 <template>
-  <button :is="_tag"
-          v-bind="attributes"
-          v-on="$listeners"
-          @touchstart="_touchStart"
-          @touchmove="_touchMove"
-          @mousedown="_mouseDown">
-    <bs-button-content :dropdown-toggle="dropdownToggle"
-                       :icon-mode="mode === 'icon'"
-                       :ripple-active="rippleActive"
-                       :ripple-off="rippleOff"
-                       @update:rippleActive="_toggleRipple">
+  <button
+    :is="_tag"
+    v-bind="attributes"
+    v-on="$listeners"
+    @touchstart="_touchStart"
+    @touchmove="_touchMove"
+    @mousedown="_mouseDown">
+    <bs-button-content
+      :dropdown-toggle="dropdownToggle"
+      :icon-mode="mode === 'icon'"
+      :ripple-active="rippleActive"
+      :ripple-off="rippleOff"
+      @update:rippleActive="_toggleRipple">
       <template v-if="(mode === 'icon' || mode === 'floating') && icon">
         <font-awesome-icon v-bind="iconAttributes" />
       </template>
@@ -23,7 +25,7 @@
 </template>
 
 <script>
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsButtonContent from './BsButtonContent';
 import Helper from '../../utils/Helper';
 

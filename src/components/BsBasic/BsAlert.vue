@@ -1,21 +1,23 @@
 <template>
   <transition :name="transition">
-    <div v-if="show"
-         :class="_classNames"
-         role="alert">
+    <div
+      v-if="show"
+      :class="_classNames"
+      role="alert">
       <div class="alert-icon">
         <font-awesome-icon v-if="icon" :icon="icon" />
       </div>
       <div :class="{'ml-3' : icon}" class="flex-fill">
         <slot></slot>
       </div>
-      <bs-button v-if="dismissible"
-                 class="close ml-auto"
-                 color="gray"
-                 flat
-                 mode="icon"
-                 size="sm"
-                 @click="hide">
+      <bs-button
+        v-if="dismissible"
+        class="close ml-auto"
+        color="gray"
+        flat
+        mode="icon"
+        size="sm"
+        @click="hide">
         <bs-icon icon="close" />
       </bs-button>
     </div>
@@ -23,7 +25,7 @@
 </template>
 
 <script>
-import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsButton from "../BsButton/BsButton";
 import BsIcon from "../BsIcon/BsIcon";
 import "../../../scss/_transitions.scss";

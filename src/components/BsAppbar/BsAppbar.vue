@@ -1,9 +1,10 @@
 <template>
-  <nav :is="tag"
-       v-resize="_resize"
-       :class="_classNames"
-       :style="_styles"
-       class="md-appbar">
+  <nav
+    :is="tag"
+    v-resize="_resize"
+    :class="_classNames"
+    :style="_styles"
+    class="md-appbar">
     <div class="md-appbar-content">
       <slot></slot>
     </div>

@@ -1,26 +1,30 @@
 <template>
-  <router-link v-if="hasRouter"
-               v-on="$listeners"
-               :active-class="activeClass"
-               :class="_classNames"
-               :exact="exact"
-               :to="path"
-               @click="_onClick">
-    <bs-ripple :active.sync="rippleActive"
-               :disabled="_disableRipple"
-               class="d-flex">
+  <router-link
+    v-if="hasRouter"
+    v-on="$listeners"
+    :active-class="activeClass"
+    :class="_classNames"
+    :exact="exact"
+    :to="path"
+    @click="_onClick">
+    <bs-ripple
+      :active.sync="rippleActive"
+      :disabled="_disableRipple"
+      class="d-flex">
       <slot></slot>
     </bs-ripple>
   </router-link>
-  <a :is="_tag"
-     v-else
-     v-on="$listeners"
-     :class="_classNames"
-     :href="url"
-     @click="_onClick">
-    <bs-ripple :active.sync="rippleActive"
-               :disabled="_disableRipple"
-               class="d-flex">
+  <a
+    :is="_tag"
+    v-else
+    v-on="$listeners"
+    :class="_classNames"
+    :href="url"
+    @click="_onClick">
+    <bs-ripple
+      :active.sync="rippleActive"
+      :disabled="_disableRipple"
+      class="d-flex">
       <slot></slot>
     </bs-ripple>
   </a>

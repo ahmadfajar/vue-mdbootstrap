@@ -1,11 +1,13 @@
 <template>
-  <aside :is="tag"
-         v-resize="_resize"
-         :class="_classNames"
-         :style="_styles"
-         class="md-side-drawer">
-    <div :class="{'md-shadow': shadow}"
-         class="md-side-drawer-inner">
+  <aside
+    :is="tag"
+    v-resize="_resize"
+    :class="_classNames"
+    :style="_styles"
+    class="md-side-drawer">
+    <div
+      :class="{'md-shadow': shadow}"
+      class="md-side-drawer-inner">
       <slot></slot>
     </div>
   </aside>
@@ -16,7 +18,7 @@ import PopupManager from "../../utils/PopupManager";
 import resize from "../../directives/WindowResize";
 import Helper from '../../utils/Helper';
 import ScreenSize from "../../mixins/ScreenSize";
-import {getZIndex} from "../../mixins/Popup";
+import { getZIndex } from "../../mixins/Popup";
 
 export default {
     name: 'BsSideDrawer',

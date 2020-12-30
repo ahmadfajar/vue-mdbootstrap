@@ -1,9 +1,10 @@
 <template>
   <div class="md-card-media">
     <slot></slot>
-    <div :class="_classNames"
-         :style="_styles"
-         class="md-card-media-overlay">
+    <div
+      :class="_classNames"
+      :style="_styles"
+      class="md-card-media-overlay">
       <div class="md-card-media-title">
         {{ title }}
       </div>
