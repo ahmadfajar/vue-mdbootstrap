@@ -28,7 +28,10 @@ export default {
     mixins: [Popup],
     directives: {clickOutside, resize, scroll},
     props: {
-        cover: Boolean,
+        cover: {
+            type: Boolean,
+            default: false
+        },
         overlay: {
             type: Boolean,
             default: false

@@ -2,6 +2,20 @@
 
 > All notable changes to this project will be documented in this file.
 
+## v1.1.2
+
+Released: January XX, 2021
+
+### Bug Fixes & Improvement v1.1.2
+
+- **BsGrid:** fix side effect on methods `sort`, `setPageSize` and `_fetchData` 
+- **BsSearchField:** remove property `can-close` and fix `BsPopover` show/hide procedure when `search-options` is enabled
+- **BsTreegridCell:** fix warning when icon is null
+- **AbstractStore:** add methods `setPageSize` and `setSorters`
+- **BsStore:** fix method `append` didn't send data to remote service
+- **BsModel:** constructor improvement
+
+
 ## v1.1.1
 
 Released: December 21, 2020

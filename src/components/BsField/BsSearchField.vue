@@ -1,16 +1,18 @@
 <template>
-  <div class="md-field-searchbox">
+  <div 
+    v-click-outside="_clickOutSide"
+    class="md-field-searchbox">
     <div
-      class="md-searchbox-inner"
       ref="activator"
-      :class="_classNames">
+      :class="_classNames"
+      class="md-searchbox-inner">
       <bs-button
         color="secondary"
-        mode="icon"
         icon="search"
+        mode="icon"
         size="sm"
         flat
-        @click="_onSearch" />
+        @click="_prepareSearch" />
       <label>
         <input
           ref="input"
@@ -18,15 +20,15 @@
           @input="setValue($event.target.value)"
           @focus="_onFocus"
           @blur="_onBlur"
-          @keyup.enter="_onSubmit" />
+          @keyup.enter="_submit" />
       </label>
       <bs-button
-        v-if="value !== null && value !== ''"
+        v-if="localValue !== null && localValue !== ''"
         color="secondary"
         mode="icon"
         size="sm"
         flat
-        @click="_onClear">
+        @click="_clearValue">
         <bs-icon icon="clear" />
       </bs-button>
       <bs-button
@@ -43,7 +45,7 @@
       v-if="searchOptions"
       v-bind="_popoverAttributes"
       @close="_popoverClose">
-      <slot name="dropdownlist"></slot>
+      <slot name="popover"></slot>
     </bs-popover>
   </div>
 </template>
@@ -54,19 +56,17 @@ import BsButton from "../BsButton/BsButton";
 import BsPopover from "../BsPopover/BsPopover";
 import Common from "../../mixins/Common";
 import Helper from "../../utils/Helper";
+import clickOutside from "../../directives/ClickOutside";
 
 export default {
     name: "BsSearchField",
     components: {BsButton, BsIcon, BsPopover},
+    directives: {clickOutside},
     mixins: [Common],
     props: {
         autofocus: {
             type: Boolean,
             default: false
-        },
-        canClose: {
-            type: Boolean,
-            default: true
         },
         darkMode: {
             type: Boolean,
@@ -94,16 +94,16 @@ export default {
                 return 'bs-' + Helper.uuid(true);
             }
         },
-        dropdownBackgroundCls: {
+        popoverCls: {
             type: String,
-            default: 'bg-white md-shadow-1'
+            default: 'bg-white md-shadow'
         },
-        dropdownMinWidth: {
+        popoverMinWidth: {
             type: [Number, String],
             default: 480,
             validator: value => parseInt(value, 10) > 0
         },
-        dropdownPosition: {
+        popoverPosition: {
             type: String,
             default: 'bottom'
         },
@@ -134,9 +134,11 @@ export default {
         },
     },
     data: (vm) => ({
+        active: vm.open,
+        localValue: vm.value,
+        popoverWidth: vm.popoverMinWidth || 0,
         isFocused: false,
-        popoverWidth: vm.dropdownMinWidth || 0,
-        trigger: null
+        trigger: null,
     }),
     computed: {
         _attributes() {
@@ -147,7 +149,7 @@ export default {
                 'autocomplete': 'false',
                 'id': this.id,
                 'name': this.name,
-                'value': this.value,
+                'value': this.localValue,
                 'disabled': this.disabled,
                 'readonly': this.readonly,
                 'autofocus': this.autofocus,
@@ -174,11 +176,11 @@ export default {
          */
         _popoverAttributes() {
             return {
-                open: this.open,
+                open: this.active,
                 trigger: this.trigger,
                 transition: this.transition,
-                placement: this.dropdownPosition,
-                class: this.dropdownBackgroundCls,
+                placement: this.popoverPosition,
+                class: this.popoverCls,
                 style: this._popoverStyles
             }
         },
@@ -207,23 +209,47 @@ export default {
     },
     watch: {
         open(value) {
-            if (value && parseInt(this.dropdownMinWidth, 10) < this.trigger.offsetWidth) {
+            if (value && parseInt(this.popoverMinWidth, 10) < this.trigger.offsetWidth) {
                 this.popoverWidth = this.trigger.offsetWidth;
             } else {
-                this.popoverWidth = this.dropdownMinWidth;
+                this.popoverWidth = this.popoverMinWidth;
             }
-        }
+            this.active = value;
+        },
+        value(newValue) {
+            this.localValue = newValue;
+        },
     },
     mounted() {
         this.trigger = this.$refs.activator;
     },
     methods: {
+        _clearValue() {
+            this.setValue(null);
+        },
+        _clickOutSide(e) {
+            let result = false;
+
+            document.querySelectorAll('.md-popover').forEach((el) => {
+                if (el.contains(e.target)) {
+                    result = true;
+                }
+            });
+
+            if (!result) {
+                this.fireEvent('open', false);
+            }
+        },
+        _doSearch() {
+            const term = this.localValue.trim();
+
+            if (term.length >= this.minlength) {
+                this.fireEvent('search', term);
+            }
+        },
         _onBlur(event) {
             this.isFocused = false;
             this.fireEvent('blur', event);
-        },
-        _onClear() {
-            this.setValue(null);
         },
         _onFocus(event) {
             if (!this.$refs.input) {
@@ -235,38 +261,33 @@ export default {
             this.isFocused = true;
             this.fireEvent('focus', event);
         },
-        _onSearch() {
-            if (!Helper.isEmpty(this.value)) {
-                this._doSearch();
-            } else {
-                this.fireEvent('input', this.value);
+        _popoverClose(reason) {
+            if (['ESC Pressed', 'Overlay clicked'].includes(reason)) {
+                this.fireEvent('open', false);
             }
         },
-        _onSubmit() {
-            if (!Helper.isEmpty(this.value)) {
+        _popoverOpen() {
+            this.fireEvent('open', !this.active);
+        },
+        _prepareSearch() {
+            if (!Helper.isEmpty(this.localValue)) {
+                this._doSearch();
+            } else {
+                this.fireEvent('input', this.localValue);
+            }
+        },
+        _submit() {
+            if (!Helper.isEmpty(this.localValue)) {
                 this._doSearch();
             } else {
                 this.setValue(null);
             }
         },
-        _doSearch() {
-            const term = this.value.trim();
-
-            this.fireEvent('input', term);
-            if (term.length >= this.minlength) {
-                this.fireEvent('search', term);
-            }
-        },
-        _popoverClose(reason) {
-            this.fireEvent('update:open', !this.canClose, reason);
-        },
-        _popoverOpen() {
-            this.fireEvent('update:open', true, 'trigger button');
-        },
         getValue() {
-            return this.value;
+            return this.localValue;
         },
         setValue(value) {
+            this.localValue = value;
             this.fireEvent('input', value);
         }
     }
@@ -279,88 +300,88 @@ export default {
 @import "../../../scss/variables";
 
 .#{$prefix}-field-searchbox {
-  position: relative;
-  width: 100%;
-
-  .#{$prefix}-searchbox-inner {
-    @include transition(border-color $transition-basic, box-shadow $transition-basic);
-    @include flexbox((display: flex, align-items: center));
-    background-color: rgba($black, .015);
-    border: 1px solid rgba($black, .05);
-    border-radius: .36rem;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1.5;
-    padding: 4px 6px;
     position: relative;
     width: 100%;
 
-    &.#{$prefix}-focused {
-      @include box-shadow(0 0 0.1rem 0.2rem rgba(0, 123, 255, .25));
-      background-color: $white;
-      border-color: $info-color-dark;
-    }
+    .#{$prefix}-searchbox-inner {
+        @include transition(border-color $transition-basic, box-shadow $transition-basic);
+        @include flexbox((display: flex, align-items: center));
+        background-color: rgba($black, .015);
+        border: 1px solid rgba($black, .05);
+        border-radius: .36rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        padding: 4px 6px;
+        position: relative;
+        width: 100%;
 
-    label {
-      display: block;
-      margin: 0 0 0 4px;
-      padding: 0;
-      width: 100%;
-    }
+        &.#{$prefix}-focused {
+            @include box-shadow(0 0 0.1rem 0.2rem rgba(0, 123, 255, .25));
+            background-color: $white;
+            border-color: $info-color-dark;
+        }
 
-    input {
-      border: 0 transparent;
-      background: transparent;
-      color: $gray-600;
-      width: 100%;
-      outline: none;
-      padding-left: 2px;
-
-      &:focus {
-        outline: none;
-      }
-
-      &::placeholder {
-        color: $gray-500;
-        font-weight: $font-weight-light;
-      }
-
-      &::-moz-placeholder {
-        color: $gray-500;
-        font-weight: $font-weight-light;
-      }
-
-      &::-webkit-input-placeholder {
-        color: $gray-500;
-        font-weight: $font-weight-light;
-      }
-
-      &:-ms-input-placeholder {
-        color: $gray-500;
-        font-weight: $font-weight-light;
-      }
-    }
-
-    &.#{$prefix}-searchbox-dark {
-      background-color: rgba($black, .25);
-      border: 1px solid rgba($black, .085);
-
-      input {
-        color: $gray-500;
-      }
-
-      &.#{$prefix}-focused {
-        @include box-shadow(0 0 0.1rem 0.23rem rgba(100, 100, 100, 0.32));
-        background-color: rgba($black, 0.35);
-        border-color: rgba($black, 0.25);
+        label {
+            display: block;
+            margin: 0 0 0 4px;
+            padding: 0;
+            width: 100%;
+        }
 
         input {
-          &:focus {
-            color: $gray-200;
-          }
+            border: 0 transparent;
+            background: transparent;
+            color: $gray-600;
+            width: 100%;
+            outline: none;
+            padding-left: 2px;
+
+            &:focus {
+                outline: none;
+            }
+
+            &::placeholder {
+                color: $gray-500;
+                font-weight: $font-weight-light;
+            }
+
+            &::-moz-placeholder {
+                color: $gray-500;
+                font-weight: $font-weight-light;
+            }
+
+            &::-webkit-input-placeholder {
+                color: $gray-500;
+                font-weight: $font-weight-light;
+            }
+
+            &:-ms-input-placeholder {
+                color: $gray-500;
+                font-weight: $font-weight-light;
+            }
         }
-      }
+
+        &.#{$prefix}-searchbox-dark {
+            background-color: rgba($black, .25);
+            border: 1px solid rgba($black, .085);
+
+            input {
+                color: $gray-500;
+            }
+
+            &.#{$prefix}-focused {
+                @include box-shadow(0 0 0.1rem 0.23rem rgba(100, 100, 100, 0.32));
+                background-color: rgba($black, 0.35);
+                border-color: rgba($black, 0.25);
+
+                input {
+                    &:focus {
+                        color: $gray-200;
+                    }
+                }
+            }
+        }
     }
-  }
 }
 </style>
