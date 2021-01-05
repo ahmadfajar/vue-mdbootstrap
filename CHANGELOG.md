@@ -2,11 +2,11 @@
 
 > All notable changes to this project will be documented in this file.
 
-## v1.1.2
+## v1.1.3
 
 Released: January 5, 2021
 
-### Bug Fixes & Improvement v1.1.2
+### Bug Fixes & Improvement v1.1.3
 
 - **BsGrid:** fix side effect on methods `sort`, `setPageSize`, `_fetchData`, and update scss styles 
 - **BsSearchField:** remove property `can-close` and fix `BsPopover` show/hide procedure when `search-options` is enabled
