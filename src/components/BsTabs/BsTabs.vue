@@ -171,6 +171,11 @@ export default {
             default: undefined
         }
     },
+    data: () => ({
+        activeTab: null,
+        tabPanes: [],
+        tabItems: []
+    }),
     provide() {
         return {
             tabs: {
@@ -187,11 +192,6 @@ export default {
             }
         }
     },
-    data: () => ({
-        activeTab: null,
-        tabPanes: [],
-        tabItems: []
-    }),
     computed: {
         /**
          * Gets tabs orientation.

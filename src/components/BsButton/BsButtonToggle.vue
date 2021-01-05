@@ -92,6 +92,7 @@ export default {
                 ['btn-outline-' + this.color]: !this.isSelected(item) && this.outlined,
                 ['btn-flat-' + this.color]: !this.isSelected(item) && !this.outlined && this.flat,
                 ['btn-' + this.color]: !this.isSelected(item) && !this.outlined && !this.flat,
+                ['btn-' + this.size]: this.size,
                 'btn-raised': this.raised,
                 'disabled': this.disabled,
                 'readonly': this.readonly,

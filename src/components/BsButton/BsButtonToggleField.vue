@@ -1,16 +1,26 @@
 <template>
-  <div :class="_classNames" class="md-field md-button-toggle row">
+  <div
+    :class="_classNames"
+    class="md-field md-button-toggle row"
+    @mouseenter="_onFocus"
+    @mouseleave="_onBlur">
     <slot></slot>
-    <div class="d-flex flex-column flex-fill">
+    <div class="col-md">
       <div class="md-field-inner">
         <bs-button-toggle v-bind="_btnToggleAttributes" @change="setValue" />
       </div>
-      <div v-if="helpText || showErrorValidation" class="md-help-text">
-        <slot name="helptext">
-          <small v-if="showHelpText" class="text-muted d-block">
-            {{ helpText }}
-          </small>
-        </slot>
+      <div 
+        v-if="helpText || showErrorValidation" 
+        class="md-help-text">
+        <transition name="fade">
+          <slot name="helpText">
+            <small
+              v-if="showHelpText"
+              class="text-muted d-block">
+              {{ helpText }}
+            </small>
+          </slot>
+        </transition>
         <template v-if="hasValidationError">
           <small
             v-for="(fld) in errorItems"
@@ -48,6 +58,9 @@ export default {
             default: true
         }
     },
+    data: () => ({
+        isFocused: false
+    }),
     computed: {
         /**
          * Get ButtonToggle's computed binding properties.
@@ -88,6 +101,12 @@ export default {
         }
     },
     methods: {
+        _onBlur() {
+            this.isFocused = false;
+        },
+        _onFocus() {
+            this.isFocused = true;
+        },
         /**
          * Set Toggle field value.
          *
@@ -111,7 +130,7 @@ export default {
             border-bottom: 0;
 
             .btn {
-                font-size: .875rem;
+                //font-size: .875rem;
                 margin-bottom: 0;
 
                 &.btn-sm {
@@ -123,6 +142,11 @@ export default {
                     }
                 }
             }
+        }
+
+        .#{$prefix}-help-text {
+            min-height: 20px;
+            margin-top: 4px;
         }
     }
 }

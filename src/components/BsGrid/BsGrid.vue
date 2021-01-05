@@ -686,8 +686,10 @@ export default {
         thead, tfoot {
             th {
                 @include user-select(none);
-                font-weight: $font-weight-normal;
+                font-weight: $font-weight-bold;
                 color: $table-header-color;
+                padding-top: $padding-base;
+                padding-bottom: $padding-base;
 
                 &.row-numbering {
                     border-right: 1px solid lighten($table-border-color, 20%);
@@ -758,7 +760,7 @@ export default {
 
                 .sort-asc, .sort-desc {
                     @include transition($transition-basic);
-                    color: darken($table-header-color, 10%);
+                    color: lighten($table-header-color, 10%);
                     display: inline-block;
                     font-size: 12px;
                 }
@@ -802,40 +804,6 @@ export default {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
         -ms-overflow-style: -ms-autohiding-scrollbar;
-
-        table {
-            > thead {
-                background-color: $table-header-bgcolor;
-                border-bottom: 1px solid darken($table-border-color, 10%);
-
-                .#{$prefix}-grid-th-inner {
-                    overflow: hidden;
-                    position: relative;
-                    text-overflow: ellipsis;
-                    vertical-align: top;
-                    white-space: nowrap;
-
-                    &.enable-sort {
-                        cursor: pointer;
-                    }
-
-                    .sort-asc, .sort-desc {
-                        @include transition($transition-basic);
-                        color: darken($table-header-color, 10%);
-                        display: inline-block;
-                        font-size: 12px;
-                    }
-
-                    .sort-asc {
-                        @include transform(rotateZ(0deg));
-                    }
-
-                    .sort-desc {
-                        @include transform(rotateZ(180deg));
-                    }
-                }
-            }
-        }
 
         > .#{$prefix}-grid-alert {
             max-width: 500px;

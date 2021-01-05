@@ -1,7 +1,7 @@
 <template>
   <div :class="_classNames" class="md-field md-radio-group row">
     <slot></slot>
-    <div class="d-flex flex-column flex-fill mx-3">
+    <div class="col-md">
       <div class="md-field-inner">
         <div class="form-row">
           <template v-if="columns">
@@ -152,7 +152,8 @@ export default {
         },
         _itemClasses() {
             return {
-                'col-md-6': true,
+                'col-md-6': this.columns > 1,
+                'col-md-12': this.columns === 1,
                 ['col-lg-' + Math.ceil(12 / this.columns)]: true
             }
         }

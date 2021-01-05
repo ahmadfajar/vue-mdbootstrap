@@ -4,13 +4,15 @@
 
 ## v1.1.2
 
-Released: January XX, 2021
+Released: January 5, 2021
 
 ### Bug Fixes & Improvement v1.1.2
 
-- **BsGrid:** fix side effect on methods `sort`, `setPageSize` and `_fetchData` 
+- **BsGrid:** fix side effect on methods `sort`, `setPageSize`, `_fetchData`, and update scss styles 
 - **BsSearchField:** remove property `can-close` and fix `BsPopover` show/hide procedure when `search-options` is enabled
 - **BsTreegridCell:** fix warning when icon is null
+- **BsCheckboxGroup, BsRadioGroup:** fix multi-column items when `columns` property is set to `1` 
+- **BsButtonToggleField:** fix non-persistent help text and update scss styles
 - **AbstractStore:** add methods `setPageSize` and `setSorters`
 - **BsStore:** fix method `append` didn't send data to remote service
 - **BsModel:** constructor improvement

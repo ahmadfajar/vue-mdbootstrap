@@ -135,7 +135,7 @@ export default {
     },
     data: (vm) => ({
         active: vm.open,
-        localValue: vm.value,
+        localValue: vm.value || null,
         popoverWidth: vm.popoverMinWidth || 0,
         isFocused: false,
         trigger: null,

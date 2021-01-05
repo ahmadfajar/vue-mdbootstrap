@@ -128,7 +128,7 @@ $table-border-width:                1px !default;
 $table-cell-padding:                $padding-base - .4; // .6rem;
 $table-font-size:                   .9rem;
 $table-checkbox-selection-size:     floor(($table-font-size + $table-cell-padding) * 2);
-$table-header-color:                #878787;
+$table-header-color:                $gray-900; // #878787;
 $table-header-bgcolor:              #f6f6f6;
 $table-hover-bgcolor:               $default-hover-bgcolor;
 $table-inverse-color-border:        $white;
