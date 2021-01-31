@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="_classNames"
     :is="tag"
+    :class="_classNames"
     @mousedown.passive="event => eventTrigger && startRipple(event)"
     @mouseleave.passive="_endRipple"
     @mouseup.passive="_endRipple"

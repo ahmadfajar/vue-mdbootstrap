@@ -60,10 +60,10 @@ export default {
         .#{$prefix}-grid-cell-inner {
             font-size: $table-font-size;
             min-height: $table-checkbox-selection-size;
-            display: flex;
             display: -ms-flexbox;
-            justify-content: center;
+            display: flex;
             -ms-flex-pack: center;
+            justify-content: center;
 
             > .#{$prefix}-checkbox {
                 align-self: center;

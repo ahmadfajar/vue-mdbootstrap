@@ -832,6 +832,7 @@ export default {
     }
 
     .#{$prefix}-grid-progress-spinner {
+        @include flexbox((display: flex, justify-content: center));
         position: absolute;
         left: 0;
         top: 0;
@@ -841,10 +842,6 @@ export default {
         max-height: 100%;
         width: 100%;
         height: 100%;
-        display: flex;
-        display: -ms-flexbox;
-        justify-content: center;
-        -ms-flex-pack: center;
     }
 
     &.#{$prefix}-grid-bordered {

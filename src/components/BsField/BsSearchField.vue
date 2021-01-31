@@ -64,70 +64,134 @@ export default {
     directives: {clickOutside},
     mixins: [Common],
     props: {
+        /**
+         * Autofocus field when document is loaded.
+         * @type {boolean|*}
+         */
         autofocus: {
             type: Boolean,
             default: false
         },
+        /**
+         * Adapts search field to the container background color.
+         * @type {boolean|*}
+         */
         darkMode: {
             type: Boolean,
             default: false
         },
+        /**
+         * Enable/disable the component and the `<input>` element.
+         * @type {boolean|*}
+         */
         disabled: {
             type: Boolean,
             default: false
         },
+        /**
+         * Popover container state: show or hide.
+         * @type {boolean|*}
+         */
         open: {
             type: Boolean,
             default: false
         },
+        /**
+         * Put the component in readonly state and sets the `<input>` element readonly attribute.
+         * @type {boolean|*}
+         */
         readonly: {
             type: Boolean,
             default: false
         },
+        /**
+         * Enable custom search. If true then Popover container will be enabled.
+         * @type {boolean|*}
+         */
         searchOptions: {
             type: Boolean,
             default: false
         },
+        /**
+         * Sets `<input>` element ID attribute. This property value is auto generates.
+         * @type {string|*}
+         */
         id: {
             type: String,
             default() {
                 return 'bs-' + Helper.uuid(true);
             }
         },
+        /**
+         * Custom CSS class for the Popover container.
+         * @type {string|*}
+         */
         popoverCls: {
             type: String,
             default: 'bg-white md-shadow'
         },
+        /**
+         * Sets minimum width for the Popover container.
+         * @type {string|number|*}
+         */
         popoverMinWidth: {
             type: [Number, String],
             default: 480,
             validator: value => parseInt(value, 10) > 0
         },
+        /**
+         * Sets the Popover display placement.
+         * @type {string|*}
+         */
         popoverPosition: {
             type: String,
             default: 'bottom'
         },
+        /**
+         * Custom CSS class for component inner element.
+         * @type {string|*}
+         */
         innerCls: {
             type: String,
             default: undefined
         },
+        /**
+         * Minimum characters to check before triggers the search event.
+         * @type {string|number|*}
+         */
         minlength: {
             type: [String, Number],
             default: 4,
             validator: value => parseInt(value, 10) > 0
         },
+        /**
+         * Sets `<input>` element name attribute.
+         * @type {string|*}
+         */
         name: {
             type: String,
             default: undefined
         },
+        /**
+         * Sets the field placeholder.
+         * @type {string|*}
+         */
         placeholder: {
             type: String,
             default: 'Search...'
         },
+        /**
+         * Sets animation transition when displaying the Popover container.
+         * @type {string|*}
+         */
         transition: {
             type: String,
-            default: 'popover'
+            default: BsPopover.props.transition.default
         },
+        /**
+         * The value monitored by v-model to maintain field value.
+         * @type {string|*}
+         */
         value: {
             type: String,
             default: undefined
@@ -176,12 +240,13 @@ export default {
          */
         _popoverAttributes() {
             return {
+                space: 2,
                 open: this.active,
                 trigger: this.trigger,
+                class: this.popoverCls,
+                style: this._popoverStyles,
                 transition: this.transition,
                 placement: this.popoverPosition,
-                class: this.popoverCls,
-                style: this._popoverStyles
             }
         },
         /**

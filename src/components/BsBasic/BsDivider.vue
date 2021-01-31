@@ -89,9 +89,9 @@ export default {
     margin-bottom: 0;
     margin-top: 0;
     width: 100%;
-    flex: 1;
     -webkit-box-flex: 1;
     -ms-flex: 1;
+    flex: 1;
 
     &.divider--dark {
         background-color: rgba($white, 0.2);

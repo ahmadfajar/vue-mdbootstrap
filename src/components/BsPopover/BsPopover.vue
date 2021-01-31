@@ -28,14 +28,26 @@ export default {
     mixins: [Popup],
     directives: {clickOutside, resize, scroll},
     props: {
+        /**
+         * Display Popover at a position that covers the activator.
+         * @type {boolean|*}
+         */
         cover: {
             type: Boolean,
             default: false
         },
+        /**
+         * Show backdrop overlay or not.
+         * @type {boolean|*}
+         */
         overlay: {
             type: Boolean,
             default: false
         },
+        /**
+         * Popover display placement.
+         * @type {string|*}
+         */
         placement: {
             type: String,
             default: 'bottom-left',
@@ -48,14 +60,26 @@ export default {
                 ].indexOf(value) !== -1;
             }
         },
+        /**
+         * Number of pixel to shift the Popover display position.
+         * @type {number|*}
+         */
         space: {
             type: Number,
             default: 0
         },
+        /**
+         * Transition animation when show the Popover. This animation is effected by placement prop.
+         * @type {string|*}
+         */
         transition: {
             type: String,
-            default: 'popover'
+            default: 'scale'
         },
+        /**
+         * HTML element to calculate the Popover display position.
+         * @type {string|Object|HTMLElement|*}
+         */
         trigger: {
             type: [String, Object, HTMLElement],
             default: undefined
@@ -152,10 +176,10 @@ export default {
                 case 'top':
                 case 'top-left':
                 case 'top-right':
-                    top = rect.top - height;
+                    top = rect.top - height - this.space;
                     if (!this.cover) {
                         if (top < minTop) {
-                            top = rect.top + rect.height + this.space;
+                            top = rect.top + rect.height - this.space;
                         }
                     } else {
                         top += rect.height;
@@ -240,8 +264,8 @@ export default {
     &.transition-bottom {
         transform-origin: center top;
 
-        &.popover-enter,
-        &.popover-leave-active {
+        &.scale-enter,
+        &.scale-leave-active {
             transform: scaleY(.5);
         }
     }
@@ -257,8 +281,8 @@ export default {
     &.transition-top {
         transform-origin: center bottom;
 
-        &.popover-enter,
-        &.popover-leave-active {
+        &.scale-enter,
+        &.scale-leave-active {
             transform: scaleY(.5);
         }
     }

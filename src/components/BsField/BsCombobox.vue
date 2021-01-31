@@ -435,11 +435,11 @@ export default {
             disableField: 'disabled'
         },
         popoverWidth: vm.popoverMinWidth ? vm.popoverMinWidth : 0,
+        popoverPlacement: 'bottom',
         dataFetched: false,
         isFocused: false,
         inputDisplay: '',
         inputValue: vm.value,
-        placement: 'bottom',
         selectedItems: [],
         trigger: null
     }),
@@ -557,10 +557,11 @@ export default {
         _popoverAttributes() {
             return {
                 open: this.active,
-                placement: this.placement,
+                placement: this.popoverPlacement,
                 transition: this.transition,
                 trigger: this.trigger,
                 style: this._popoverStyles,
+                space: this.outlined ? 2 : 0,
                 class: {
                     ['bg-' + this.listboxColor]: this.listboxColor
                 }

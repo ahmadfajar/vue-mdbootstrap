@@ -49,7 +49,7 @@
           <bs-combobox
             v-model="itemPerPage"
             :data-source="configuration.paging"
-            :minimum-popover-width="70"
+            :popover-min-width="70"
             outlined />
           <span class="md-pagination-text text-nowrap pl-2">{{ configuration.messages.pager }}</span>
         </div>

@@ -340,52 +340,52 @@
     }
 }
 
-@mixin enter-to($parent) {
+@mixin enterTo($parent) {
     #{$parent}-enter-to {
         @content;
     }
 }
 
-@mixin enter-active($parent) {
+@mixin enterActive($parent) {
     #{$parent}-enter-active {
         @content;
     }
 }
 
-@mixin enter-leave-active($parent) {
+@mixin enterActive-leaveActive($parent) {
     #{$parent}-enter-active,
     #{$parent}-leave-active {
         @content;
     }
 }
 
-@mixin enter-leaveactive($parent) {
+@mixin enter-leaveActive($parent) {
     #{$parent}-enter,
     #{$parent}-leave-active {
         @content;
     }
 }
 
-@mixin enter-leaveto($parent) {
+@mixin enter-leaveTo($parent) {
     #{$parent}-enter,
     #{$parent}-leave-to {
         @content;
     }
 }
 
-@mixin leave-active($parent) {
+@mixin leaveActive($parent) {
     #{$parent}-leave-active {
         @content;
     }
 }
 
-@mixin leave-to($parent) {
+@mixin leaveTo($parent) {
     #{$parent}-leave-to {
         @content;
     }
 }
 
-@mixin leave-active-to($parent) {
+@mixin leave-leaveActive-leaveTo($parent) {
     #{$parent}-leave,
     #{$parent}-leave-active,
     #{$parent}-leave-to {

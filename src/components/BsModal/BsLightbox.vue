@@ -286,14 +286,7 @@ export default {
          */
         transition: {
             type: String,
-            default: 'slide-top-bottom',
-            validator(v) {
-                return [
-                    'fade', 'popover', 'slide-fade', 'slide-fade-reverse',
-                    'slide-bottom-top', 'slide-top-bottom',
-                    'slide-left-right', 'slide-right-left'
-                ].indexOf(v) > -1
-            }
+            default: 'slide-top-bottom'
         },
         /**
          * Controls the timing sequence of leaving/entering transitions.

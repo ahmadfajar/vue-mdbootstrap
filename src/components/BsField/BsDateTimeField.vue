@@ -309,7 +309,8 @@ export default {
                 open: this.active,
                 placement: this.pickerPlacement,
                 transition: this.transition,
-                trigger: this.popoverTrigger
+                trigger: this.popoverTrigger,
+                space: this.outlined ? 3 : 1
             }
         },
         /**

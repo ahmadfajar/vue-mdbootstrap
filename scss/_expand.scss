@@ -4,7 +4,7 @@
 @import "shared";
 @import "mixins";
 
-@include enter-leave-active(".expand") {
+@include enterActive-leaveActive(".expand") {
     @include transition(all $transition-duration-base $transition-easeOut);
     @include backface-visibility(hidden);
     @include transform(translate3d(0, 0, 0));

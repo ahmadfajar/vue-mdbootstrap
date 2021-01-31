@@ -134,7 +134,7 @@ export default {
 
         > .#{$prefix}-appbar-items {
             @include display-flex();
-            font-size: .88rem;
+            // font-size: .88rem;
             max-width: 100%;
             padding: 0;
         }

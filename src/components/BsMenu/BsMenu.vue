@@ -127,6 +127,7 @@ export default {
         _changeListIndex(e) {
             if (['arrowdown', 'arrowup', 'enter'].includes(e.key.toLowerCase())) {
                 e.stopPropagation();
+                e.preventDefault();
             }
             if (['escape', 'tab'].includes(e.key.toLowerCase())) {
                 this.active = false;

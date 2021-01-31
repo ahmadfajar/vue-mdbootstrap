@@ -5,11 +5,11 @@
 @import "mixins";
 
 /* VueJs transition animation */
-@include enter-leave-active(".fade") {
+@include enterActive-leaveActive(".fade") {
     @include transition(opacity .5s);
 }
 
-@include enter-leaveto(".fade") {
+@include enter-leaveTo(".fade") {
     opacity: 0;
 }
 
@@ -27,23 +27,23 @@
     }
 }
 
-@include enter-leaveto(".slide-fade") {
+@include enter-leaveTo(".slide-fade") {
     @include transform(translateX(100%));
     opacity: 0;
 }
 
-@include enter-leaveto(".slide-fade-reverse") {
+@include enter-leaveTo(".slide-fade-reverse") {
     @include transform(translateX(-100%));
     opacity: 0;
 }
 
-@include enter-leave-active(".popover") {
+@include enterActive-leaveActive(".scale") {
     transition-duration: 300ms;
     transition-property: opacity, transform;
     backface-visibility: hidden;
 }
 
-@include enter-leaveactive(".popover") {
+@include enter-leaveActive(".scale") {
     opacity: 0;
     transform: scale(0.5);
 }
