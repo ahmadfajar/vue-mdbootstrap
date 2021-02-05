@@ -9,7 +9,7 @@ Released: February XX, 2021
 
 ### Features v1.2.0
 
-- New components: **BsNumberField**
+- New components: **BsNumericField**
 - New icons: `AddCircle`, `AddCircleOutline`, `Remove`, `RemoveCircle`, `RemoveCircleOutline`
 
 ### Bug Fixes & Improvement v1.2.0
