@@ -3,6 +3,20 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v1.2.0
+
+Released: February XX, 2021
+
+### Features v1.2.0
+
+- New components: **BsNumberField**
+- New icons: `AddCircle`, `AddCircleOutline`, `Remove`, `RemoveCircle`, `RemoveCircleOutline`
+
+### Bug Fixes & Improvement v1.2.0
+
+- Improve Helper class: add new method `roundNumber`  
+
+
 ## v1.1.4
 
 Released: January 31, 2021

@@ -2,7 +2,7 @@
  * Class Helper
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 16/08/2020 23:39
+ * @since  05/07/2018, modified: 05/02/2021 21:19
  */
 class Helper {
     /**
@@ -157,6 +157,17 @@ class Helper {
      */
     static isString(value) {
         return typeof value === 'string';
+    }
+
+    /**
+     * Round floating point value to the nearest decimal.
+     *
+     * @param {number} value         The floating point value to be rounded
+     * @param {number} fractionDigit Maximum fraction/decimal digit
+     * @returns {number} The rounded value
+     */
+    static roundNumber(value, fractionDigit) {
+        return Number(Math.round(Number(value + 'e' + fractionDigit)) + 'e-' + fractionDigit);
     }
 
     /**

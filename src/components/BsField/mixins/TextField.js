@@ -270,7 +270,7 @@ export default {
             if (!this.$refs.input) {
                 return;
             }
-            if (e.key && e.key.toLowerCase() === 'enter') {
+            if (e.key && e.key === 'Enter') {
                 this.localValue = this.$refs.input.value;
                 this.$emit('keydown', e);
                 this._nextTickChange(this.localValue);

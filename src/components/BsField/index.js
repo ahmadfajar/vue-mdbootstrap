@@ -3,7 +3,7 @@ import BsCheckboxGroup from "./BsCheckboxGroup";
 import BsCombobox from "./BsCombobox";
 import BsTextField from "./BsTextField";
 import BsTextArea from "./BsTextArea";
-import BsNumberField from "./BsNumberField";
+import BsNumericField from "./BsNumericField";
 import BsDateTimeField from "./BsDateTimeField";
 import BsSearchField from "./BsSearchField";
 import BsRadio from "./BsRadio";
@@ -16,7 +16,7 @@ export default Vue => {
     Vue.component(BsCombobox.name, BsCombobox);
     Vue.component(BsTextField.name, BsTextField);
     Vue.component(BsTextArea.name, BsTextArea);
-    Vue.component(BsNumberField.name, BsNumberField);
+    Vue.component(BsNumericField.name, BsNumericField);
     Vue.component(BsDateTimeField.name, BsDateTimeField);
     Vue.component(BsSearchField.name, BsSearchField);
     Vue.component(BsRadio.name, BsRadio);

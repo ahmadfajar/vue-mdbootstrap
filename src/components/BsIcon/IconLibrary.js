@@ -2,10 +2,28 @@ const library = [
     {
         name: 'Add',
         class: 'icon-add',
-        aliases: ['add'],
+        aliases: ['add', 'plus'],
         paths: [
-            {d: 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z', fill: 'currentColor'},
-            {d: 'M0 0h24v24H0z', fill: 'none'}
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'AddCircle',
+        class: 'icon-add-circle',
+        aliases: ['add-circle', 'add_circle', 'plus-circle', 'plus_circle'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'AddCircleOutline',
+        class: 'icon-add-circle-outline',
+        aliases: ['add-circle-outline', 'add_circle_outline', 'plus-circle-outline', 'plus_circle_outline'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z', fill: 'currentColor'}
         ]
     },
     {
@@ -258,6 +276,33 @@ const library = [
         paths: [
             {d: 'M0 0h24v24H0V0z', fill: 'none'},
             {d: 'M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z', fill: 'currentColor'},
+        ]
+    },
+    {
+        name: 'Remove',
+        class: 'icon-remove',
+        aliases: ['remove', 'minus'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M19 13H5v-2h14v2z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'RemoveCircle',
+        class: 'icon-remove-circle',
+        aliases: ['remove-circle', 'remove_circle', 'minus-circle', 'minus_circle'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'RemoveCircleOutline',
+        class: 'icon-remove-circle-outline',
+        aliases: ['remove-circle-outline', 'remove_circle_outline', 'minus-circle-outline', 'minus_circle_outline'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M7 11v2h10v-2H7zm5-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z', fill: 'currentColor'}
         ]
     },
     {

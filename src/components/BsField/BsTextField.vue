@@ -213,6 +213,13 @@ export default {
             return this.type === 'password' && this.passwordToggle;
         }
     },
+    watch: {
+        value(newVal) {
+            this.localValue = newVal;
+            this._updateLegend(newVal);
+            // this._setFloatingLabelPosition();
+        }
+    },
     mounted() {
         this._updateLabel();
         this.$nextTick(() => {
@@ -222,13 +229,6 @@ export default {
             this._updateLegend();
             // this._setFloatingLabelPosition();
         });
-    },
-    watch: {
-        value(newVal) {
-            this.localValue = newVal;
-            this._updateLegend(newVal);
-            // this._setFloatingLabelPosition();
-        }
     },
 }
 </script>

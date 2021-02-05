@@ -397,13 +397,72 @@
         .#{$prefix}-field-inner {
             @include align-items(center);
 
+            > .#{$prefix}-action-button-left,
+            > .#{$prefix}-action-button-right {
+                display: inline-block;
+
+                .btn-sm {
+                    .#{$prefix}-ripple {
+                        width: 28px;
+                        height: 28px;
+                    }
+
+                    &:first-child {
+                        margin-right: 2px;
+                    }
+                }
+            }
+
+            > .#{$prefix}-spin-button-left,
+            > .#{$prefix}-spin-button-right {
+                @include flexbox((display: flex, flex-direction: column));
+                width: 24px;
+
+                > .btn-xs {
+                    height: 16px;
+
+                    .btn-inner {
+                        padding: 0;
+
+                        > .icon-arrow-drop-up {
+                            > .svg-inline {
+                                margin-top: 4px;
+                            }
+                        }
+                        > .icon-arrow-drop-down {
+                            > .svg-inline {
+                                margin-top: -4px;
+                            }
+                        }
+                    }
+                }
+            }
+
+            > .#{$prefix}-action-button-left,
+            > .#{$prefix}-spin-button-left,
             > .#{$prefix}-prepend-icon {
                 margin-right: $padding-sm;
             }
 
+            > .#{$prefix}-action-button-right,
+            > .#{$prefix}-spin-button-right {
+                margin-right: $padding-sm - .25;
+            }
+
+            > .#{$prefix}-action-button-right,
+            > .#{$prefix}-spin-button-right,
             > .#{$prefix}-action-icon,
             > .#{$prefix}-append-icon {
                 margin-left: $padding-sm;
+            }
+
+            > .#{$prefix}-action-button-right + .#{$prefix}-append-icon,
+            > .#{$prefix}-spin-button-right + .#{$prefix}-append-icon {
+                margin-left: $padding-sm - .25;
+            }
+
+            > .#{$prefix}-prepend-icon + .#{$prefix}-spin-button-left {
+                margin-left: ($padding-sm - .25) * -1;
             }
 
             > .#{$prefix}-action-icon {
@@ -481,6 +540,80 @@
                     .#{$prefix}-field-label {
                         &.#{$prefix}-active {
                             @include transform(translateY(-28px) scale(.85));
+                        }
+                    }
+
+                    > .#{$prefix}-spin-button-left {
+                        + .#{$prefix}-field-input-wrapper {
+                            > .#{$prefix}-field-label {
+                                &.#{$prefix}-active {
+                                    left: $padding-base * -2;
+                                }
+                            }
+                        }
+                    }
+
+                    > .#{$prefix}-prepend-icon {
+                        + .#{$prefix}-spin-button-left {
+                            + .#{$prefix}-field-input-wrapper {
+                                > .#{$prefix}-field-label {
+                                    &.#{$prefix}-active {
+                                        left: $padding-base * -3.8;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    > .#{$prefix}-action-button-left {
+                        &.#{$prefix}-button-split {
+                            + .#{$prefix}-field-input-wrapper {
+                                > .#{$prefix}-field-label {
+                                    &.#{$prefix}-active {
+                                        left: $padding-base * -2.5;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    > .#{$prefix}-prepend-icon {
+                        + .#{$prefix}-action-button-left {
+                            &.#{$prefix}-button-split {
+                                + .#{$prefix}-field-input-wrapper {
+                                    > .#{$prefix}-field-label {
+                                        &.#{$prefix}-active {
+                                            left: $padding-base * -4.5;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    > .#{$prefix}-action-button-left {
+                        &:not(.#{$prefix}-button-split) {
+                            + .#{$prefix}-field-input-wrapper {
+                                > .#{$prefix}-field-label {
+                                    &.#{$prefix}-active {
+                                        left: $padding-base * -4.4;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    > .#{$prefix}-prepend-icon {
+                        + .#{$prefix}-action-button-left {
+                            &:not(.#{$prefix}-button-split) {
+                                + .#{$prefix}-field-input-wrapper {
+                                    > .#{$prefix}-field-label {
+                                        &.#{$prefix}-active {
+                                            left: $padding-base * -6.4;
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
