@@ -14,11 +14,14 @@ Released: February XX, 2021
   `ErrorOutline`, `Help`, `HelpCenter`, `HelpOutline`, `Info`, `Remove`, `RemoveCircle`, `RemoveCircleOutline`,
   `Report`, `ReportOutline`, `Shield`, `Verified`, `VerifiedUser`, `Warning`, `WarningOutline`
 - **BsListNavItem:** add properties `badge`, `badge-variant`
+- **BsAlert:** add properties `icon-flip`, `icon-outlined`, `icon-pulse`, `icon-rotation`, 
+  `icon-spin`, `icon-type`, `solid-fill`
 
 ### Bug Fixes & Improvement v1.2.0
 
 - Improve Helper class: add method `roundNumber`  
 - Improve BsIcon template rendering
+- Improve BsAlert: enable using internal icon via `icon` property
 
 
 ## v1.1.4

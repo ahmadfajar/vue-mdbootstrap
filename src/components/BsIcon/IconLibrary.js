@@ -413,8 +413,8 @@ const library = [
         children: [
             {rect: true, fill: 'none', height: 24, width: 24},
             {path: true, d: 'M15.73,3H8.27L3,8.27v7.46L8.27,21h7.46L21,15.73V8.27L15.73,3z M19,14.9L14.9,19H9.1L5,14.9V9.1L9.1,5h5.8L19,9.1V14.9z', fill: 'currentColor'},
-            {rect: true, height: "6", width: "2", x: "11", y: "7"},
-            {rect: true, height: "2", width: "2", x: "11", y:"15"},
+            {rect: true, height: "6", width: "2", x: "11", y: "7", fill: 'currentColor'},
+            {rect: true, height: "2", width: "2", x: "11", y:"15", fill: 'currentColor'},
         ]
     },
     {
@@ -489,8 +489,8 @@ const library = [
         children: [
             {rect: true, fill: 'none', height: 24, width: 24},
             {path: true, d: 'M12,5.99L19.53,19H4.47L12,5.99 M12,2L1,21h22L12,2L12,2z', fill: 'currentColor'},
-            {polygon: true, points: '13,16 11,16 11,18 13,18'},
-            {polygon: true, points: '13,10 11,10 11,15 13,15'},
+            {polygon: true, points: '13,16 11,16 11,18 13,18', fill: 'currentColor'},
+            {polygon: true, points: '13,10 11,10 11,15 13,15', fill: 'currentColor'},
         ]
     },
     {

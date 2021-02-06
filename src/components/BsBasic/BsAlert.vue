@@ -4,10 +4,13 @@
       v-if="show"
       :class="_classNames"
       role="alert">
-      <div v-if="icon" class="alert-icon">
-        <font-awesome-icon :icon="icon" />
+      <div v-if="iconName" class="alert-icon">
+        <slot name="alertIcon">
+          <bs-icon v-if="iconType || isInternal" v-bind="_bsIconAttributes" />
+          <font-awesome-icon v-else v-bind="iconAttributes" />
+        </slot>
       </div>
-      <div :class="{'ml-3' : icon}" class="flex-fill">
+      <div :class="{'ml-3' : icon || iconType}" class="flex-fill">
         <slot></slot>
       </div>
       <bs-button
@@ -28,11 +31,14 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsButton from "../BsButton/BsButton";
 import BsIcon from "../BsIcon/BsIcon";
+import IconMixin from "./mixins/IconMixin";
+import Helper from "../../utils/Helper";
 import "../../../scss/_transitions.scss";
 
 export default {
     name: "BsAlert",
     components: {BsButton, BsIcon, FontAwesomeIcon},
+    mixins: [IconMixin],
     props: {
         /**
          * Alert color
@@ -40,7 +46,7 @@ export default {
          */
         color: {
             type: String,
-            default: 'primary'
+            default: undefined
         },
         /**
          * When set, display the close button to dismiss/hide the component.
@@ -51,19 +57,35 @@ export default {
             default: false
         },
         /**
-         * The icon to display inside alert component.
-         * See {@link [FontAwesome](https://fontawesome.com/icons?d=gallery&s=solid&m=free)} for valid icon name.
+         * Use predefined icon to create contextual alert.
          * @type {string|*}
          */
-        icon: {
-            type: [String, Array],
-            default: undefined
+        iconType: {
+            type: String,
+            default: undefined,
+            validator: v => ['success', 'info', 'warning', 'danger', 'help'].includes(v)
+        },
+        /**
+         * Use predefined outline icon to create contextual alert.
+         * @type {string|*}
+         */
+        iconOutlined: {
+            type: Boolean,
+            default: true
         },
         /**
          * Create outlined alert style.
          * @type {boolean|*}
          */
         outlined: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Create alert with solid fill style.
+         * @type {boolean|*}
+         */
+        solidFill: {
             type: Boolean,
             default: false
         },
@@ -91,18 +113,66 @@ export default {
         /**
          * Get component's class names.
          *
-         * @returns {string[]} Component css classes
+         * @returns {Object} Component css classes
          * @private
          */
         _classNames() {
-            return [
-                'alert',
-                'd-flex',
-                'align-items-center',
-                this.dismissible ? 'alert-dismissible' : '',
-                this.outlined ? 'alert-outline-' + this.color : '',
-                this.color && !this.outlined ? 'alert-' + this.color : ''
-            ]
+            return {
+                'alert d-flex': true,
+                'align-items-center': true,
+                'alert-dismissible': this.dismissible,
+                ['md-alert-outline-' + this._colorName]: this.outlined,
+                ['alert-' + this._colorName]: this._colorName && !this.outlined && !this.solidFill,
+                ['md-alert-solid-' + this._colorName]: this._colorName && this.solidFill && !this.outlined,
+            }
+        },
+        _colorName() {
+            if (this.iconType) {
+                if (this.iconType === 'help') {
+                    return Helper.isEmpty(this.color) ? 'mdb-color' : this.color;
+                } else {
+                    return Helper.isEmpty(this.color) ? this.iconType : this.color;
+                }
+            }
+
+            return Helper.isEmpty(this.color) ? 'primary' : this.color;
+        },
+        /**
+         * Get BsIcon binding attributes.
+         *
+         * @returns {Object|*} The icon attributes
+         * @private
+         */
+        _bsIconAttributes() {
+            return {
+                ...this.iconAttributes,
+                size: 32
+            }
+        },
+        /**
+         * Get computed icon name (real icon name).
+         *
+         * @returns {string} The icon name
+         */
+        iconName() {
+            if (this.iconType) {
+                switch (this.iconType) {
+                    case 'help':
+                        return this.iconOutlined ? 'HelpOutline' : 'Help';
+                    case 'danger':
+                        return this.iconOutlined ? 'ReportOutline' : 'Report';
+                    case 'warning':
+                        return this.iconOutlined ? 'WarningOutline' : 'Warning';
+                    case 'info':
+                        return this.iconOutlined ? 'InfoOutline' : 'Info';
+                    default :
+                        return this.iconOutlined ? 'CheckCircleOutline' : 'CheckCircle';
+                }
+            } else if (this.isInternal) {
+                return this.icon.substr(3);
+            } else {
+                return this.icon;
+            }
         },
         /**
          * Check if this component is visible or not.
@@ -155,14 +225,18 @@ export default {
 @each $color, $value in $theme-colors {
     .alert-#{$color} {
         @include alert-variant(
-            theme-color-level($theme-colors, $color, $alert-bg-level),
-            theme-color-level($theme-colors, $color, $alert-border-level),
-            theme-color-level($theme-colors, $color, $alert-color-level)
+                        theme-color-level($theme-colors, $color, $alert-bg-level),
+                        theme-color-level($theme-colors, $color, $alert-border-level),
+                        theme-color-level($theme-colors, $color, $alert-color-level)
         );
     }
 }
 
 @each $color_name, $color_value in $theme-colors {
     @include make-outline-alert($color_name, theme-color-level($theme-colors, $color_name, $alert-color-level));
+}
+
+@each $color_name, $color_value in $theme-colors {
+    @include make-solid-alert($color_name, $color_value);
 }
 </style>

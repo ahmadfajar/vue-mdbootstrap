@@ -1,6 +1,6 @@
 /* BsAlert mixins */
 @mixin make-outline-alert($name, $color) {
-    .alert-outline-#{$name} {
+    .#{$prefix}-alert-outline-#{$name} {
         color: $color;
         border-color: lighten($color, 5%);
 
@@ -10,6 +10,33 @@
 
         .alert-link {
             color: darken($color, 10%);
+        }
+    }
+}
+
+@mixin make-solid-alert($name, $color) {
+    .#{$prefix}-alert-solid-#{$name} {
+        background-color: $color;
+        @if (lightness($color) > 65) {
+            color: $gray-900;
+        } @else {
+            color: $white-base;
+        }
+
+        hr {
+            @if (lightness($color) > 65) {
+                border-top-color: darken($color, 25%);
+            } @else {
+                border-top-color: rgba(darken($white-base, 4%), .5);
+            }
+        }
+
+        .alert-link {
+            @if (lightness($color) > 65) {
+                color: $gray-900;
+            } @else {
+                color: $white-base;
+            }
         }
     }
 }
