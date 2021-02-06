@@ -10,11 +10,15 @@ Released: February XX, 2021
 ### Features v1.2.0
 
 - New components: **BsNumericField**
-- New icons: `AddCircle`, `AddCircleOutline`, `Remove`, `RemoveCircle`, `RemoveCircleOutline`
+- New icons: `AddCircle`, `AddCircleOutline`, `CheckCircle`, `CheckCircleOutline`, `Checked`, `Error`, 
+  `ErrorOutline`, `Help`, `HelpCenter`, `HelpOutline`, `Info`, `Remove`, `RemoveCircle`, `RemoveCircleOutline`,
+  `Report`, `ReportOutline`, `Shield`, `Verified`, `VerifiedUser`, `Warning`, `WarningOutline`
+- **BsListNavItem:** add properties `badge`, `badge-variant`
 
 ### Bug Fixes & Improvement v1.2.0
 
-- Improve Helper class: add new method `roundNumber`  
+- Improve Helper class: add method `roundNumber`  
+- Improve BsIcon template rendering
 
 
 ## v1.1.4

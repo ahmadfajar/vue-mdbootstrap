@@ -9,14 +9,24 @@
       :class="_svgClass"
       :height="szHeight"
       :width="szWidth"
+      :enable-background="iconData.enableBackground"
       class="svg-inline mx-auto"
       viewBox="0 0 24 24"
       xmlns="http://www.w3.org/2000/svg">
-      <path
-        v-for="(obj, k) in iconData.paths"
-        :key="obj.fill + '-' + k"
-        :d="obj.d"
-        :fill="obj.fill" />
+      <g v-if="iconData.children">
+        <template v-for="(item, idx) in iconData.children">
+          <path 
+            :is="_svgElTag(item)"
+            :key="'svg-el-' + idx"
+            v-bind="item" />
+        </template>
+      </g>
+      <template v-else>
+        <path
+          v-for="(obj, k) in iconData.paths"
+          :key="'path-' + k"
+          v-bind="obj" />
+      </template>
     </svg>
   </span>
 </template>
@@ -131,7 +141,12 @@ export default {
 
             return IconLib.find(item => item.name.toLowerCase() === iconName || item.aliases.includes(this.icon));
         }
-    }
+    },
+    methods: {
+        _svgElTag(item) {
+            return item.rect ? 'rect' : (item.polygon ? 'polygon' : (item.polyline ? 'polyline' : 'path'));
+        }
+    },
 }
 </script>
 

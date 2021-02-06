@@ -34,15 +34,6 @@
             @include box-shadow(0 0 0 0.2rem rgba($color, .5));
         }
     }
-
-    .#{$name}-ic {
-        color: $color !important;
-
-        &:hover,
-        &:focus {
-            color: $color;
-        }
-    }
 }
 
 // Make outline button

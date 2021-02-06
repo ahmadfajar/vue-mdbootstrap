@@ -488,7 +488,7 @@ export default {
     border: 1px solid;
     cursor: pointer;
     position: relative;
-    line-height: 36px;
+    line-height: 2.25rem; // 36px
     padding: 0;
     vertical-align: middle;
 
@@ -507,25 +507,34 @@ export default {
 
     .#{$prefix}-ripple {
         @include border-radius($border-radius-circle);
-        width: 38px;
-        height: 38px;
+        width: 2.375rem; // 38px;
+        height: 2.375rem;
+    }
+
+    &.btn-xs {
+        line-height: 1.5rem; // 24px;
+
+        .#{$prefix}-ripple {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
     }
 
     &.btn-sm {
-        line-height: 32px;
+        line-height: 2rem; // 32px;
 
         .#{$prefix}-ripple {
-            width: 32px;
-            height: 32px;
+            width: 2rem;
+            height: 2rem;
         }
     }
 
     &.btn-lg {
-        line-height: 56px;
+        line-height: 3.5rem; // 56px;
 
         .#{$prefix}-ripple {
-            width: 56px;
-            height: 56px;
+            width: 3.5rem;
+            height: 3.5rem;
         }
     }
 

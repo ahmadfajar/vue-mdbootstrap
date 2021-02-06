@@ -4,8 +4,8 @@
       v-if="show"
       :class="_classNames"
       role="alert">
-      <div class="alert-icon">
-        <font-awesome-icon v-if="icon" :icon="icon" />
+      <div v-if="icon" class="alert-icon">
+        <font-awesome-icon :icon="icon" />
       </div>
       <div :class="{'ml-3' : icon}" class="flex-fill">
         <slot></slot>
@@ -155,9 +155,9 @@ export default {
 @each $color, $value in $theme-colors {
     .alert-#{$color} {
         @include alert-variant(
-                        theme-color-level($theme-colors, $color, $alert-bg-level),
-                        theme-color-level($theme-colors, $color, $alert-border-level),
-                        theme-color-level($theme-colors, $color, $alert-color-level)
+            theme-color-level($theme-colors, $color, $alert-bg-level),
+            theme-color-level($theme-colors, $color, $alert-border-level),
+            theme-color-level($theme-colors, $color, $alert-color-level)
         );
     }
 }

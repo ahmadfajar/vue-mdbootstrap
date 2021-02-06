@@ -108,6 +108,33 @@ const library = [
         ]
     },
     {
+        name: 'CheckCircle',
+        class: 'icon-check-circle',
+        aliases: ['check-circle', 'check_circle'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'CheckCircleOutline',
+        class: 'icon-check-circle-outline',
+        aliases: ['check-circle-outline', 'check_circle_outline'],
+        paths: [
+            {d: 'M0 0h24v24H0V0zm0 0h24v24H0V0z', fill: 'none'},
+            {d: 'M16.59 7.58L10 14.17l-3.59-3.58L5 12l5 5 8-8zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'Checked',
+        class: 'icon-checked',
+        aliases: ['checked', 'done'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z', fill: 'currentColor'}
+        ]
+    },
+    {
         name: 'ChevronLeft',
         class: 'icon-chevron-left',
         aliases: ['chevron-left', 'chevron_left', 'keyboard-arrow-left', 'keyboard_arrow_left', 'navigate-before', 'navigate_before'],
@@ -171,6 +198,24 @@ const library = [
         ]
     },
     {
+        name: 'Error',
+        class: 'icon-error',
+        aliases: ['error'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'ErrorOutline',
+        class: 'icon-error-outline',
+        aliases: ['error-outline', 'error_outline'],
+        paths: [
+            {d: 'M0 0h24v24H0V0z', fill: 'none'},
+            {d: 'M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z', fill: 'currentColor'}
+        ]
+    },
+    {
         name: 'ExpandLess',
         class: 'icon-expand-less',
         aliases: ['expand-less', 'expand_less', 'chevron-up', 'chevron_up', 'keyboard-arrow-up', 'keyboard_arrow_up'],
@@ -231,6 +276,43 @@ const library = [
         paths: [
             {d: 'M0 0h24v24H0V0z', fill: 'none'},
             {d: 'M20 6h-8l-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-2.06 11L15 15.28 12.06 17l.78-3.33-2.59-2.24 3.41-.29L15 8l1.34 3.14 3.41.29-2.59 2.24.78 3.33z', fill: 'currentColor'},
+        ]
+    },
+    {
+        name: 'Help',
+        class: 'icon-help',
+        aliases: ['help'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17h-2v-2h2v2zm2.07-7.75l-.9.92C13.45 12.9 13 13.5 13 15h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H8c0-2.21 1.79-4 4-4s4 1.79 4 4c0 .88-.36 1.68-.93 2.25z', fill: 'currentColor'},
+        ]
+    },
+    {
+        name: 'HelpCenter',
+        class: 'icon-help-center',
+        aliases: ['help-center', 'help_center'],
+        enableBackground: 'new 0 0 24 24',
+        children: [
+            {rect: true, fill: 'none', height: 24, width: 24},
+            {path: true, d: 'M19,3H5C3.9,3,3,3.9,3,5v14c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M12.01,18 c-0.7,0-1.26-0.56-1.26-1.26c0-0.71,0.56-1.25,1.26-1.25c0.71,0,1.25,0.54,1.25,1.25C13.25,17.43,12.72,18,12.01,18z M15.02,10.6 c-0.76,1.11-1.48,1.46-1.87,2.17c-0.16,0.29-0.22,0.48-0.22,1.41h-1.82c0-0.49-0.08-1.29,0.31-1.98c0.49-0.87,1.42-1.39,1.96-2.16 c0.57-0.81,0.25-2.33-1.37-2.33c-1.06,0-1.58,0.8-1.8,1.48L8.56,8.49C9.01,7.15,10.22,6,11.99,6c1.48,0,2.49,0.67,3.01,1.52 C15.44,8.24,15.7,9.59,15.02,10.6z', fill: 'currentColor'},
+        ]
+    },
+    {
+        name: 'HelpOutline',
+        class: 'icon-help-outline',
+        aliases: ['help-outline', 'help_outline'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z', fill: 'currentColor'},
+        ]
+    },
+    {
+        name: 'Info',
+        class: 'icon-info',
+        aliases: ['info'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z', fill: 'currentColor'},
         ]
     },
     {
@@ -315,6 +397,27 @@ const library = [
         ]
     },
     {
+        name: 'Report',
+        class: 'icon-report',
+        aliases: ['report', 'report-error', 'report_error'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M15.73 3H8.27L3 8.27v7.46L8.27 21h7.46L21 15.73V8.27L15.73 3zM12 17.3c-.72 0-1.3-.58-1.3-1.3 0-.72.58-1.3 1.3-1.3.72 0 1.3.58 1.3 1.3 0 .72-.58 1.3-1.3 1.3zm1-4.3h-2V7h2v6z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'ReportOutline',
+        class: 'icon-report-outline',
+        aliases: ['report-outline', 'report_outline', 'report-error-outline', 'report_error_outline'],
+        enableBackground: 'new 0 0 24 24',
+        children: [
+            {rect: true, fill: 'none', height: 24, width: 24},
+            {path: true, d: 'M15.73,3H8.27L3,8.27v7.46L8.27,21h7.46L21,15.73V8.27L15.73,3z M19,14.9L14.9,19H9.1L5,14.9V9.1L9.1,5h5.8L19,9.1V14.9z', fill: 'currentColor'},
+            {rect: true, height: "6", width: "2", x: "11", y: "7"},
+            {rect: true, height: "2", width: "2", x: "11", y:"15"},
+        ]
+    },
+    {
         name: 'RotateLeft',
         class: 'icon-rotate-left',
         aliases: ['rotate-left', 'rotate_left'],
@@ -333,12 +436,61 @@ const library = [
         ]
     },
     {
+        name: 'Shield',
+        class: 'icon-shield',
+        aliases: ['shield'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'Verified',
+        class: 'icon-verified',
+        aliases: ['verified'],
+        enableBackground: 'new 0 0 24 24',
+        children: [
+            {rect: true, fill: 'none', height: 24, width: 24},
+            {path: true, d: 'M23,12l-2.44-2.79l0.34-3.69l-3.61-0.82L15.4,1.5L12,2.96L8.6,1.5L6.71,4.69L3.1,5.5L3.44,9.2L1,12l2.44,2.79l-0.34,3.7 l3.61,0.82L8.6,22.5l3.4-1.47l3.4,1.46l1.89-3.19l3.61-0.82l-0.34-3.69L23,12z M10.09,16.72l-3.8-3.81l1.48-1.48l2.32,2.33 l5.85-5.87l1.48,1.48L10.09,16.72z', fill: 'currentColor'},
+        ]
+    },
+    {
+        name: 'VerifiedUser',
+        class: 'icon-verified-user',
+        aliases: ['verified-user', 'verified_user'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z', fill: 'currentColor'}
+        ]
+    },
+    {
         name: 'ViewModule',
         class: 'icon-view-module',
         aliases: ['view-module', 'view_module', 'modules'],
         paths: [
             {d: 'M4 11h5V5H4v6zm0 7h5v-6H4v6zm6 0h5v-6h-5v6zm6 0h5v-6h-5v6zm-6-7h5V5h-5v6zm6-6v6h5V5h-5z', fill: 'currentColor'},
             {d: 'M0 0h24v24H0z', fill: 'none'}
+        ]
+    },
+    {
+        name: 'Warning',
+        class: 'icon-warning',
+        aliases: ['warning'],
+        paths: [
+            {d: 'M0 0h24v24H0z', fill: 'none'},
+            {d: 'M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z', fill: 'currentColor'}
+        ]
+    },
+    {
+        name: 'WarningOutline',
+        class: 'icon-warning-outline',
+        aliases: ['warning-outline', 'warning_outline', 'warning-amber', 'warning_amber'],
+        enableBackground: 'new 0 0 24 24',
+        children: [
+            {rect: true, fill: 'none', height: 24, width: 24},
+            {path: true, d: 'M12,5.99L19.53,19H4.47L12,5.99 M12,2L1,21h22L12,2L12,2z', fill: 'currentColor'},
+            {polygon: true, points: '13,16 11,16 11,18 13,18'},
+            {polygon: true, points: '13,10 11,10 11,15 13,15'},
         ]
     },
     {

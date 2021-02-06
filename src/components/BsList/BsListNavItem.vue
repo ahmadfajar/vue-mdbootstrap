@@ -24,6 +24,12 @@
           <font-awesome-icon v-bind="_iconAttributes" :style="_faStyles" />
         </span>
         <span class="md-nav-text">{{ label }}</span>
+        <bs-badge
+          v-if="badge"
+          :variant="badgeVariant"
+          class="font-weight-normal mr-3">
+          {{ badge }}
+        </bs-badge>
         <bs-icon
           v-if="hasChild"
           icon="expand-more"
@@ -55,6 +61,12 @@
           <font-awesome-icon v-bind="_iconAttributes" :style="_faStyles" />
         </span>
         <span class="md-nav-text">{{ label }}</span>
+        <bs-badge
+          v-if="badge"
+          :variant="badgeVariant"
+          class="font-weight-normal mr-3">
+          {{ badge }}
+        </bs-badge>
         <bs-icon
           v-if="hasChild"
           icon="expand-more"
@@ -131,6 +143,23 @@ export default {
             type: String,
             default: undefined,
             required: true
+        },
+        /**
+         * The text to render as badge label.
+         * @type {string|*}
+         */
+        badge: {
+            type: String,
+            default: undefined
+        },
+        /**
+         * The badge variant, valid values: `primary`, `secondary`, `success`, `danger`, `warning`,
+         * `info`, `light`, `dark`.
+         * @type {string|*}
+         */
+        badgeVariant: {
+            type: String,
+            default: 'success'
         },
         /**
          * Enabled or disabled ripple effect.
