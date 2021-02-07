@@ -7,7 +7,7 @@
       <div v-if="iconName" class="alert-icon">
         <slot name="alertIcon">
           <bs-icon v-if="iconType || isInternal" v-bind="_bsIconAttributes" />
-          <font-awesome-icon v-else v-bind="iconAttributes" />
+          <font-awesome-icon v-else v-bind="_faIconAttributes" />
         </slot>
       </div>
       <div :class="{'ml-3' : icon || iconType}" class="flex-fill">
@@ -140,13 +140,25 @@ export default {
         /**
          * Get BsIcon binding attributes.
          *
-         * @returns {Object|*} The icon attributes
+         * @returns {Object} The icon attributes
          * @private
          */
         _bsIconAttributes() {
             return {
                 ...this.iconAttributes,
                 size: 32
+            }
+        },
+        /**
+         * Get FontAwesomeIcon binding attributes.
+         *
+         * @returns {Object} The icon attributes
+         * @private
+         */
+        _faIconAttributes() {
+            return {
+                ...this.iconAttributes,
+                fixedWidth: true
             }
         },
         /**
@@ -218,16 +230,16 @@ export default {
     }
 
     > .alert-icon {
-        font-size: 1.5rem;
+        font-size: 1.6rem;
     }
 }
 
 @each $color, $value in $theme-colors {
     .alert-#{$color} {
         @include alert-variant(
-                        theme-color-level($theme-colors, $color, $alert-bg-level),
-                        theme-color-level($theme-colors, $color, $alert-border-level),
-                        theme-color-level($theme-colors, $color, $alert-color-level)
+            theme-color-level($theme-colors, $color, $alert-bg-level),
+            theme-color-level($theme-colors, $color, $alert-border-level),
+            theme-color-level($theme-colors, $color, $alert-color-level)
         );
     }
 }
