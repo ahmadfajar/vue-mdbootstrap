@@ -1,0 +1,6 @@
+/* BsGrid mixins */
+@mixin grid-rowstate-variant($name, $color) {
+    .#{$prefix}-state-#{$name} {
+        background-color: rgba($color, .08);
+    }
+}

@@ -1,0 +1,50 @@
+// BsChip variants mixins
+@mixin make-chip($name, $color) {
+    .#{$prefix}-chip-#{$name} {
+        &:not(.#{$prefix}-chip-outlined):not(.#{$prefix}-disabled) {
+            background-color: $color;
+            color: set-foreground-color($color, $gray-800, $white, 80);
+
+            &:hover {
+                background-color: darken($color, 7.5%);
+            }
+
+            &.#{$prefix}-active {
+                background-color: darken($color, 10%);
+                color: set-foreground-color($color, $black, $white, 80);
+            }
+        }
+    }
+}
+
+@mixin make-outline-chip($name, $color) {
+    .#{$prefix}-chip-outline-#{$name} {
+        &:not(.#{$prefix}-disabled) {
+            border-color: set-foreground-color($color, darken($color, 8%), $color, 80);
+            color: set-foreground-color($color, $gray-800, $color, 80);
+
+            &:hover {
+                border-color: darken($color, 8%);
+                color: set-outline-button-color($name, darken($color, 10%));
+
+                @if ($name == 'light' or $name == 'light-grey') {
+                    background-color: rgba($color, .4);
+                } @else {
+                    background-color: rgba(lighten($color, 20%), .2);
+                }
+            }
+
+            &.#{$prefix}-active {
+                border-color: darken($color, 8%);
+                //color: set-outline-button-color($name, darken($color, 15%));
+                color: set-foreground-color($color, $black, darken($color, 15%), 80);
+
+                @if ($name == 'light' or $name == 'light-grey') {
+                    background-color: rgba($color, .5);
+                } @else {
+                    background-color: rgba(lighten($color, 15%), .3);
+                }
+            }
+        }
+    }
+}

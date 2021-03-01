@@ -1,0 +1,134 @@
+// Create background and text colors classes
+@each $color_name, $color in $mdb-colors-1 {
+    @each $color_type, $color_value in $color {
+        @if $color_type == "base" {
+            .bg-#{$color_name}-base {
+                background-color: $color_value !important;
+            }
+            .bg-rgba-#{$color_name}-slight,
+            .bg-rgba-#{$color_name}-slight:after {
+                background-color: rgba($color_value, .1) !important;
+            }
+            .bg-rgba-#{$color_name}-light,
+            .bg-rgba-#{$color_name}-light:after {
+                background-color: rgba($color_value, .3) !important;
+            }
+            .bg-rgba-#{$color_name}-strong,
+            .bg-rgba-#{$color_name}-strong:after {
+                background-color: rgba(darken($color_value, 5%), .7) !important;
+            }
+        } @else {
+            @if $enable_full_palette {
+                .bg-#{$color_name}.#{$color_type} {
+                    background-color: $color_value !important;
+                }
+            }
+        }
+    }
+}
+
+// Create grey variants for background, borders and text colors
+@each $color_name, $color in $grays {
+    .bg-grey-#{$color_name} {
+        background-color: $color !important;
+    }
+
+    .border-grey-#{$color_name} {
+        border-color: $color !important;
+    }
+
+    .text-grey-#{$color_name} {
+        color: $color !important;
+    }
+
+    a.text-grey-#{$color_name} {
+        &:hover, &:focus {
+            color: darken($color, 15%) !important;
+        }
+    }
+}
+
+// Create theme variants for backgrounds, borders and text colors
+$reduced-theme-colors: map-remove($merge-theme-colors,
+        "default", "default-color", "primary", "primary-color", "info", "info-color",
+        "success", "success-color", "warning", "warning-color", "danger", "danger-color",
+        "dark", "elegant-color-dark", "dark-blue", "primary-color-dark",
+        "blue-green", "blue-green-color"
+);
+
+@each $color_name, $color in $reduced-theme-colors {
+    .bg-#{$color_name} {
+        background-color: $color !important;
+    }
+
+    .border-#{$color_name} {
+        border-color: $color !important;
+    }
+
+    .text-#{$color_name} {
+        color: $color !important;
+    }
+
+    a.text-#{$color_name} {
+        &:hover, &:focus {
+            color: darken($color, 15%) !important;
+        }
+    }
+}
+
+@each $color_name, $color in $context-colors {
+    .bg-#{$color_name}, .bg-#{$color_name}-color {
+        background-color: $color !important;
+    }
+
+    .border-#{$color_name}, .border-#{$color_name}-color {
+        border-color: $color !important;
+    }
+
+    .text-#{$color_name}, .text-#{$color_name}-color {
+        color: $color !important;
+    }
+
+    a.text-#{$color_name}, a.text-#{$color_name}-color {
+        &:hover, &:focus {
+            color: darken($color, 15%) !important;
+        }
+    }
+}
+
+// Manually adds duplicate theme-color
+.bg-dark, .bg-elegant-color-dark {
+    background-color: $elegant-color-dark !important;
+}
+
+.bg-dark-blue, .bg-primary-color-dark {
+    background-color: $primary-color-dark !important;
+}
+
+.border-dark, .border-elegant-color-dark {
+    border-color: $elegant-color-dark !important;
+}
+
+.border-dark-blue, .border-primary-color-dark {
+    border-color: $primary-color-dark !important;
+}
+
+.text-dark, .text-elegant-color-dark {
+    color: $elegant-color-dark !important;
+}
+
+.text-dark-blue, .text-primary-color-dark {
+    color: $primary-color-dark !important;
+}
+
+a.text-dark, a.text-elegant-color-dark {
+    &:hover, &:focus {
+        color: darken($elegant-color-dark, 15%) !important;
+    }
+}
+
+a.text-dark-blue, a.text-primary-color-dark {
+    &:hover, &:focus {
+        color: darken($primary-color-dark, 15%) !important;
+    }
+}

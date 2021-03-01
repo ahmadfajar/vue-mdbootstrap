@@ -1,6 +1,6 @@
 @import "~compass-sass-mixins/lib/compass/css3";
-@import "colors";
-@import "variables";
+@import "../colors";
+@import "../variables";
 
 .#{$prefix}-shadow {
     @include box-shadow(0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05) !important);

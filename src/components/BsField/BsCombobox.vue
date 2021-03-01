@@ -155,7 +155,7 @@ import MenuAble from "../../mixins/MenuAble";
 import FieldValidation from "./mixins/FieldValidation";
 import Helper from "../../utils/Helper";
 import "../../../scss/_field.scss"
-import '../../../scss/_shadows.scss';
+import '../../../scss/utilities/_shadows.scss';
 
 export default {
     name: "BsCombobox",

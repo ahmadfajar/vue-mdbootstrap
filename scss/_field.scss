@@ -401,14 +401,9 @@
             > .#{$prefix}-action-button-right {
                 display: inline-block;
 
-                .btn-sm {
-                    .#{$prefix}-ripple {
-                        width: 28px;
-                        height: 28px;
-                    }
-
-                    &:first-child {
-                        margin-right: 2px;
+                > .btn-icon {
+                    + .btn-icon {
+                        margin-left: 2px;
                     }
                 }
             }
@@ -434,6 +429,10 @@
                                 margin-top: -4px;
                             }
                         }
+                    }
+
+                    + .btn-xs {
+                        margin-left: 0;
                     }
                 }
             }

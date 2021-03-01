@@ -125,7 +125,7 @@ import FieldValidation from "./mixins/FieldValidation";
 import MenuAble from "../../mixins/MenuAble";
 import PickerConst from "../BsPicker/utils/DatePickerConst";
 import "../../../scss/_field.scss"
-import '../../../scss/_shadows.scss';
+import '../../../scss/utilities/_shadows.scss';
 
 export default {
     name: "BsDateTimeField",

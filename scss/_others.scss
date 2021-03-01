@@ -3,6 +3,7 @@
 @import "colors";
 @import "variables";
 @import "shared";
+@import "utilities/color_variants";
 
 .opacity-0 {
     @extend %opacity-0;
@@ -32,79 +33,4 @@
 
 .font-weight-boldest {
     font-weight: $font-weight-boldest !important;
-}
-
-// Create background and text colors classes
-@each $color_name, $color in $mdb-colors-1 {
-    @each $color_type, $color_value in $color {
-        @if $color_type == "base" {
-            .bg-#{$color_name}-base {
-                background-color: $color_value !important;
-            }
-            .bg-rgba-#{$color_name}-slight,
-            .bg-rgba-#{$color_name}-slight:after {
-                background-color: rgba($color_value, .1);
-            }
-            .bg-rgba-#{$color_name}-light,
-            .bg-rgba-#{$color_name}-light:after {
-                background-color: rgba($color_value, .3);
-            }
-            .bg-rgba-#{$color_name}-strong,
-            .bg-rgba-#{$color_name}-strong:after {
-                background-color: rgba(darken($color_value, 5%), .7);
-            }
-        } @else {
-            @if $enable_full_palette {
-                .bg-#{$color_name}.#{$color_type} {
-                    background-color: $color_value !important;
-                }
-            }
-        }
-    }
-}
-
-@each $color_name, $color in $material-colors {
-    .bg-#{$color_name} {
-        background-color: $color !important;
-    }
-}
-
-@each $color_name, $color in $theme-colors {
-    .bg-#{$color_name} {
-        background-color: $color !important;
-    }
-
-    .border-#{$color_name} {
-        border-color: $color !important;
-    }
-
-    .text-#{$color_name} {
-        color: $color !important;
-    }
-
-    a.text-#{$color_name} {
-        &:hover, &:focus {
-            color: darken($color, 15%) !important;
-        }
-    }
-}
-
-@each $color_name, $color in $grays {
-    .bg-grey-#{$color_name} {
-        background-color: $color !important;
-    }
-
-    .border-grey-#{$color_name} {
-        border-color: $color !important;
-    }
-
-    .text-grey-#{$color_name} {
-        color: $color !important;
-    }
-
-    a.text-grey-#{$color_name} {
-        &:hover, &:focus {
-            color: darken($color, 15%) !important;
-        }
-    }
 }

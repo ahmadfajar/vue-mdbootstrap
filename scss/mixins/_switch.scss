@@ -1,0 +1,27 @@
+/* BsSwitch mixins */
+@mixin make-switch($name, $color) {
+    .#{$prefix}-switch-#{$name} {
+        &:not(.#{$prefix}-disabled) {
+            > .#{$prefix}-switch-content {
+                > .#{$prefix}-switch-inner {
+                    .#{$prefix}-ripple {
+                        color: $color;
+                    }
+                }
+            }
+
+            &.#{$prefix}-checked {
+                > .#{$prefix}-switch-content {
+                    > .#{$prefix}-switch-inner {
+                        background-color: rgba($color, .38);
+
+                        > .#{$prefix}-switch-thumb {
+                            @include box-shadow(0 0 6px -1px rgba(#000, .13), 0 1px 1px 1px rgba($color, .15), 0 1px 3px 0 rgba(#000, .2));
+                            background-color: $color;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

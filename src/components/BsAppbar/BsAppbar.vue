@@ -141,7 +141,7 @@ export default {
     }
 
     &.#{$prefix}-appbar-transition {
-        @include transition($transition-duration-base $md-transition-default-timing);
+        @include transition($md-transition-default);
     }
 
     &.#{$prefix}-appbar-shadow {

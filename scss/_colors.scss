@@ -223,7 +223,7 @@ $yellow-base:       #ffeb3b !default;
 $yellow-darken-1:   #fdd835 !default;
 $yellow-darken-2:   #fbc02d !default;
 $yellow-darken-3:   #f9a825 !default;
-$yellow-darken-4:   #f57f17 !default;
+$yellow-darken-4:   #f39600 !default;
 $yellow-accent-1:   #ffff8d !default;
 $yellow-accent-2:   #ffff00 !default;
 $yellow-accent-3:   #ffea00 !default;
@@ -238,7 +238,7 @@ $amber-base:       #ffc107 !default;
 $amber-darken-1:   #ffb300 !default;
 $amber-darken-2:   #ffa000 !default;
 $amber-darken-3:   #ff8f00 !default;
-$amber-darken-4:   #ff6f00 !default;
+$amber-darken-4:   #e88200 !default;
 $amber-accent-1:   #ffe57f !default;
 $amber-accent-2:   #ffd740 !default;
 $amber-accent-3:   #ffc400 !default;
@@ -253,7 +253,7 @@ $orange-base:       #ff9800 !default;
 $orange-darken-1:   #fb8c00 !default;
 $orange-darken-2:   #f57c00 !default;
 $orange-darken-3:   #ef6c00 !default;
-$orange-darken-4:   #e65100 !default;
+$orange-darken-4:   #e85c00 !default;
 $orange-accent-1:   #ffd180 !default;
 $orange-accent-2:   #ffab40 !default;
 $orange-accent-3:   #ff9100 !default;
@@ -265,9 +265,9 @@ $deep-orange-lighten-3:  #ffab91 !default;
 $deep-orange-lighten-2:  #ff8a65 !default;
 $deep-orange-lighten-1:  #ff7043 !default;
 $deep-orange-base:       #ff5722 !default;
-$deep-orange-darken-1:   #f4511e !default;
-$deep-orange-darken-2:   #e64a19 !default;
-$deep-orange-darken-3:   #d84315 !default;
+$deep-orange-darken-1:   #ec4410 !default;
+$deep-orange-darken-2:   #dc3b09 !default;
+$deep-orange-darken-3:   #ca380b !default;
 $deep-orange-darken-4:   #bf360c !default;
 $deep-orange-accent-1:   #ff9e80 !default;
 $deep-orange-accent-2:   #ff6e40 !default;
@@ -623,36 +623,36 @@ $enable_full_palette:  true !default;
 $enable-gradients:     false !default;
 
 // Material colors
-$primary-color:        #4285f4 !default;
-$primary-color-dark:   #0d47a1 !default;
-$secondary-color:      #aa66cc !default;
-$secondary-color-dark: #7e21ad !default;
-$default-color:        #2bbbad !default;
-$default-color-dark:   #00695c !default;
-$info-color:           #33b5e5 !default;
-$info-color-dark:      #1186ad !default;
-$success-color:        #28a745 !default;
-$success-color-dark:   #007e33 !default;
-$warning-color:        #ffbb33 !default;
-$warning-color-dark:   #ff8800 !default;
-$danger-color:         #ec2537 !default;
-$danger-color-dark:    #ad0000 !default;
-$elegant-color:        #2e2e2e !default;
-$elegant-color-dark:   #212121 !default;
-$stylish-color:        #4b515d !default;
-$stylish-color-dark:   #2d333e !default;
-$unique-color:         #3f729b !default;
-$unique-color-dark:    #1c2331 !default;
-$special-color:        #37474f !default;
-$special-color-dark:   #263238 !default;
-$blue-green:           #064e40 !default;
-$blue-green-dark:      #022f27 !default;
-$white:                $white-base;
-$black:                $black-base;
-$error-color:          $red-base !default;
+$primary-color:             #007bff !default;
+$primary-color-dark:        #0d47a1 !default;
+$secondary-color:           #aa66cc !default;
+$secondary-color-dark:      #7e21ad !default;
+$default-color:             #2bbbad !default;
+$default-color-dark:        #00695c !default;
+$info-color:                #33b5e5 !default;
+$info-color-dark:           #1186ad !default;
+$success-color:             #28a745 !default;
+$success-color-dark:        #007e33 !default;
+$warning-color:             #ffbb33 !default;
+$warning-color-dark:        #ff8800 !default;
+$danger-color:              #ec2537 !default;
+$danger-color-dark:         #ad0000 !default;
+$elegant-color:             #2e2e2e !default;
+$elegant-color-dark:        #212121 !default;
+$stylish-color:             #4b515d !default;
+$stylish-color-dark:        #2d333e !default;
+$unique-color:              #3f729b !default;
+$unique-color-dark:         #1c2331 !default;
+$special-color:             #37474f !default;
+$special-color-dark:        #263238 !default;
+$blue-green-color:          #064e40 !default;
+$blue-green-color-dark:     #022f27 !default;
+$white:                     $white-base;
+$black:                     $black-base;
+$error-color:               $red-base !default;
 
 // Applicable to:
-// BsCombobox, BsListView
+// BsCombobox, BsListView, BsButton, BsChip
 $material-colors: () !default;
 $material-colors: map-merge((
     "primary-color":          $primary-color,
@@ -677,13 +677,14 @@ $material-colors: map-merge((
     "unique-color-dark":      $unique-color-dark,
     "special-color":          $special-color,
     "special-color-dark":     $special-color-dark,
-    "blue-green-color":       $blue-green,
-    "blue-green-color-dark":  $blue-green-dark,
+    "blue-green-color":       $blue-green-color,
+    "blue-green-color-dark":  $blue-green-color-dark,
 ), $material-colors);
 
-// Customize default bootstrap theme colors
+// Bootstrap custom theme colors
 // Applicable to:
 // BsButton, BsCombobox, BsListView, BsProgress, BsAlert, BsCheckbox, BsRadio, BsSwitch
+// BsChip
 $theme-colors: () !default;
 $theme-colors: map-merge((
     "default":     $default-color,
@@ -698,7 +699,7 @@ $theme-colors: map-merge((
     "light-grey":  $grey-lighten-2,
     "amber":       $amber-darken-2,
     "blue":        $blue-darken-2,
-    "blue-green":  $blue-green,
+    "blue-green":  $blue-green-color,
     "blue-grey":   $blue-grey-lighten-1,
     "brown":       $brown-base,
     "cyan":        $cyan-base,
@@ -721,6 +722,20 @@ $theme-colors: map-merge((
     "unique":      $pink-darken-4,
     "black":       $black-base
 ), $theme-colors);
+
+// used to reduced duplicate css when created theme colors
+$merge-theme-colors: map-merge($material-colors, $theme-colors);
+
+$context-colors: () !default;
+$context-colors: map-merge((
+    "default":      $default-color,
+    "primary":      $primary-color,
+    "info":         $info-color,
+    "success":      $success-color,
+    "warning":      $warning-color,
+    "danger":       $danger-color,
+    "blue-green":   $blue-green-color,
+), $context-colors);
 
 // Set a specific jump point for requesting color jumps
 $theme-color-interval:      8% !default;

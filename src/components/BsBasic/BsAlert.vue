@@ -20,7 +20,7 @@
         flat
         mode="icon"
         size="sm"
-        @click="hide">
+        @click="_hide">
         <bs-icon icon="close" />
       </bs-button>
     </div>
@@ -203,7 +203,7 @@ export default {
         }
     },
     methods: {
-        hide() {
+        _hide() {
             this.dismiss = true;
             this.$emit('input', false);
         }

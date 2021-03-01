@@ -28,10 +28,13 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsButtonContent from './BsButtonContent';
 import Helper from '../../utils/Helper';
+import ActiveMixin from "../BsBasic/mixins/ActiveMixin";
+import DisabledMixin from "../BsBasic/mixins/DisabledMixin";
 
 export default {
     name: 'BsButton',
     components: {FontAwesomeIcon, BsButtonContent},
+    mixins: [ActiveMixin, DisabledMixin],
     model: {
         prop: 'active',
         event: 'input'
@@ -64,28 +67,11 @@ export default {
             validator: (value) => ['default', 'icon', 'floating'].indexOf(value) !== -1
         },
         /**
-         * Button state, active or not,
-         * see {@link [Bootstrap](https://getbootstrap.com/docs/4.5/components/buttons/#active-state)} for details
-         * @type {boolean|*}
-         */
-        active: {
-            type: Boolean,
-            default: false
-        },
-        /**
          * Act as block button or not,
          * see {@link [Bootstrap](https://getbootstrap.com/docs/4.5/components/buttons/#sizes)} for details
          * @type {boolean|*}
          */
         block: {
-            type: Boolean,
-            default: false
-        },
-        /**
-         * Button state: enabled or disabled
-         * @type {boolean|*}
-         */
-        disabled: {
             type: Boolean,
             default: false
         },
@@ -362,7 +348,9 @@ export default {
                 this.rippleActive = event;
             }
 
-            this.$emit('input', !this.active);
+            if (!this.disabled) {
+                this.$emit('input', !this.active);
+            }
             this.$listeners.mousedown && this.$listeners.mousedown(event);
         },
         /**
@@ -401,7 +389,9 @@ export default {
                 this.rippleActive = event;
             }
 
-            this.$emit('input', !this.active);
+            if (!this.disabled) {
+                this.$emit('input', !this.active);
+            }
             this.$listeners.touchstart && this.$listeners.touchstart(event);
         }
     }
@@ -412,9 +402,9 @@ export default {
 @import "~compass-sass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "../../../scss/shared";
 @import "../../../scss/functions";
-@import "../../../scss/buttons";
+@import "../../../scss/mixins";
+@import "../../../scss/shared";
 
 .btn {
     @include border-radius($btn-border-radius);
@@ -437,7 +427,7 @@ export default {
 
     &:disabled, &.disabled {
         @include box-shadow(none);
-        background-color: lighten($gray-500, 8%) !important;
+        background-color: lighten($gray-500, 20%) !important;
         border-color: lighten($gray-500, 8%) !important;
         color: $gray-700 !important;
         cursor: default;
@@ -479,6 +469,10 @@ export default {
             }
         }
     }
+
+    + .btn {
+        margin-left: $padding-sm;
+    }
 }
 
 .btn-floating, .btn-icon {
@@ -515,8 +509,8 @@ export default {
         line-height: 1.5rem; // 24px;
 
         .#{$prefix}-ripple {
-            width: 1.5rem;
-            height: 1.5rem;
+            width: 100%;   // 1.5rem;
+            height: 100%;  // 1.5rem;
         }
     }
 
@@ -543,7 +537,7 @@ export default {
     }
 }
 
-@each $btn_name, $color_value in $theme-colors {
+@each $btn_name, $color_value in $merge-theme-colors {
     @include make-button($btn_name, $color_value);
     @include make-outline-button($btn_name, $color_value);
     @include make-flat-button($btn_name, $color_value);
@@ -556,9 +550,9 @@ export default {
     }
 
     &:before {
-        @include transition($md-transition-default);
         @extend %full-rect-absolute;
         @extend %opacity-0;
+        @include transition($md-transition-default);
         content: " ";
         will-change: background-color, opacity;
     }

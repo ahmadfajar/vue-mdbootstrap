@@ -1,0 +1,35 @@
+/* BsAlert mixins */
+@mixin make-outline-alert($name, $color) {
+    .#{$prefix}-alert-outline-#{$name} {
+        color: $color;
+        border-color: lighten($color, 5%);
+
+        hr {
+            border-top-color: lighten($color, 5%);
+        }
+
+        .alert-link {
+            color: darken($color, 10%);
+        }
+    }
+}
+
+@mixin make-solid-alert($name, $color) {
+    .#{$prefix}-alert-solid-#{$name} {
+        background-color: $color;
+        color: set-foreground-color($color, $gray-900, $white-base, 70);
+        @if (lightness($color) > 70) {
+            color: $gray-900;
+        } @else {
+            color: $white-base;
+        }
+
+        hr {
+            border-top-color: set-foreground-color($color, darken($color, 25%), rgba(darken($white-base, 4%), .5), 70);
+        }
+
+        .alert-link {
+            color: set-foreground-color($color, $gray-900, $white-base, 70);
+        }
+    }
+}

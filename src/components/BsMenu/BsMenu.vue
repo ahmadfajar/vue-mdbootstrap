@@ -33,7 +33,7 @@
 <script>
 import BsPopover from "../BsPopover/BsPopover";
 import MenuAble from "../../mixins/MenuAble";
-import "../../../scss/_shadows.scss";
+import "../../../scss/utilities/_shadows.scss";
 
 export default {
     name: "BsMenu",

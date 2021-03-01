@@ -8,8 +8,7 @@
       :class="imageClass"
       :src="imgSrc"
       :style="imageSizeStyles"
-      alt=""
-      class="md-avatar" />
+      alt="" />
   </span>
   <span v-bind="_avatarClass" v-else>
     <bs-icon

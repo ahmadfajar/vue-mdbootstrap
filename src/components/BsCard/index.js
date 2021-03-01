@@ -5,7 +5,7 @@ import BsCardHeader from "./BsCardHeader";
 import BsCardFooter from "./BsCardFooter";
 import BsCardMedia from "./BsCardMedia";
 import "../../../scss/_others.scss";
-import "../../../scss/_shadows.scss";
+import "../../../scss/utilities/_shadows.scss";
 
 export default Vue => {
     Vue.component(BsCard.name, BsCard);

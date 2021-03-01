@@ -81,7 +81,7 @@ export default {
 @import "~compass-sass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "../../../scss/controls";
+@import "../../../scss/mixins";
 
 .#{$prefix}-switch {
     @include display-flex();

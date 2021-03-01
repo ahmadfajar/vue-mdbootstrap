@@ -232,7 +232,7 @@ export default {
 .#{$prefix}-side-drawer {
     @include box-sizing(border-box);
     @include box-shadow(0px 0px 10px 0 rgba(0, 0, 0, .6));
-    @include transition($transition-duration-base $md-transition-default-timing);
+    @include transition($md-transition-default);
     margin: 0;
     padding: 0;
     position: fixed;

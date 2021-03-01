@@ -1,0 +1,59 @@
+/* Transition mixins */
+@mixin enter($parent) {
+    #{$parent}-enter {
+        @content;
+    }
+}
+
+@mixin enterTo($parent) {
+    #{$parent}-enter-to {
+        @content;
+    }
+}
+
+@mixin enterActive($parent) {
+    #{$parent}-enter-active {
+        @content;
+    }
+}
+
+@mixin enterActive-leaveActive($parent) {
+    #{$parent}-enter-active,
+    #{$parent}-leave-active {
+        @content;
+    }
+}
+
+@mixin enter-leaveActive($parent) {
+    #{$parent}-enter,
+    #{$parent}-leave-active {
+        @content;
+    }
+}
+
+@mixin enter-leaveTo($parent) {
+    #{$parent}-enter,
+    #{$parent}-leave-to {
+        @content;
+    }
+}
+
+@mixin leaveActive($parent) {
+    #{$parent}-leave-active {
+        @content;
+    }
+}
+
+@mixin leaveTo($parent) {
+    #{$parent}-leave-to {
+        @content;
+    }
+}
+
+@mixin leave-leaveActive-leaveTo($parent) {
+    #{$parent}-leave,
+    #{$parent}-leave-active,
+    #{$parent}-leave-to {
+        @content;
+    }
+}

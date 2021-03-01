@@ -1,0 +1,57 @@
+/* BsProgress mixins */
+@mixin progress-bar-indeterminate($color) {
+    background-color: rgba($color, .24);
+
+    .#{$prefix}-progress-bar-track,
+    .#{$prefix}-progress-bar-fill {
+        &:after {
+            background-color: $color;
+        }
+    }
+}
+
+@mixin progress-bar-determinate($color) {
+    background-color: rgba($color, .24);
+
+    .#{$prefix}-progress-bar-fill {
+        background-color: $color;
+    }
+}
+
+@mixin progress-bar-buffer($color) {
+    .#{$prefix}-progress-bar-fill {
+        background-color: $color;
+    }
+
+    .#{$prefix}-progress-bar-track {
+        background-color: rgba($color, .38);
+    }
+
+    .#{$prefix}-progress-bar-buffer {
+        border-color: rgba($color, .38);
+    }
+}
+
+@mixin make-progress-bar($name, $color) {
+    .progress-bar-#{$name} {
+        &.#{$prefix}-indeterminate {
+            @include progress-bar-indeterminate($color);
+        }
+
+        &.#{$prefix}-determinate {
+            @include progress-bar-determinate($color);
+        }
+
+        &.#{$prefix}-buffer {
+            @include progress-bar-buffer($color);
+        }
+    }
+}
+
+@mixin make-progress-spinner($name, $color) {
+    .spinner-#{$name} {
+        .#{$prefix}-progress-spinner-circle {
+            stroke: $color;
+        }
+    }
+}

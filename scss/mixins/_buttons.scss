@@ -1,4 +1,4 @@
-// Button variants mixins
+// BsButton variants mixins
 @mixin make-button($name, $color) {
     .btn-#{$name} {
         background-color: $color;
@@ -50,7 +50,8 @@
         &.active {
             border-color: darken($color, 8%);
             color: set-outline-button-color($name, darken($color, 10%));
-            @if ($name == 'light') {
+
+            @if ($name == 'light' or $name == 'light-grey') {
                 background-color: rgba($color, .2);
             } @else {
                 background-color: rgba(lighten($color, 15%), .3);
@@ -61,7 +62,8 @@
         &:not([disabled]):not(.disabled).active {
             border-color: darken($color, 8%);
             color: set-outline-button-color($name, darken($color, 15%));
-            @if ($name == 'light') {
+
+            @if ($name == 'light' or $name == 'light-grey') {
                 background-color: rgba($color, .2);
             } @else {
                 background-color: rgba(lighten($color, 15%), .3);

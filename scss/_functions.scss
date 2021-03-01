@@ -76,9 +76,17 @@
 
 // Set the text color of the outlined or flat buttons
 @function set-outline-button-color($name, $color) {
-    @if ($name == 'light') {
+    @if ($name == 'light' or $name == 'light-grey') {
         @return $gray-900;
     } @else {
         @return $color
+    }
+}
+
+@function set-foreground-color($bgColor, $darkTextColor, $lightTextColor, $whiteLevel) {
+    @if (lightness($bgColor) > $whiteLevel) {
+        @return $darkTextColor; // Lighter background, return dark color
+    } @else {
+        @return $lightTextColor; // Darker background, return light color
     }
 }

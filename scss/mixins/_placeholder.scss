@@ -1,0 +1,22 @@
+/* Input Placeholder mixins */
+@mixin decorate-input-placeholder {
+    &::placeholder {
+        color: $gray-700;
+        font-weight: $font-weight-light;
+    }
+
+    &::-moz-placeholder {
+        color: $gray-700;
+        font-weight: $font-weight-light;
+    }
+
+    &::-webkit-input-placeholder {
+        color: $gray-700;
+        font-weight: $font-weight-light;
+    }
+
+    &:-ms-input-placeholder {
+        color: $gray-700;
+        font-weight: $font-weight-light;
+    }
+}

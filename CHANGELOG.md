@@ -9,10 +9,10 @@ Released: February XX, 2021
 
 ### Features v1.2.0
 
-- New components: **BsNumericField**
+- New components: **BsNumericField**, **BsChip**
 - New icons: `AddCircle`, `AddCircleOutline`, `CheckCircle`, `CheckCircleOutline`, `Checked`, `Error`, 
   `ErrorOutline`, `Help`, `HelpCenter`, `HelpOutline`, `Info`, `Remove`, `RemoveCircle`, `RemoveCircleOutline`,
-  `Report`, `ReportOutline`, `Shield`, `Verified`, `VerifiedUser`, `Warning`, `WarningOutline`
+  `Report`, `ReportOutline`, `Shield`, `Verified`, `VerifiedUser`, `Warning`, `WarningOutline`, `InvertColors`
 - **BsListNavItem:** add properties `badge`, `badge-variant`
 - **BsAlert:** add properties `icon-flip`, `icon-outlined`, `icon-pulse`, `icon-rotation`, 
   `icon-spin`, `icon-type`, `solid-fill`
@@ -20,8 +20,11 @@ Released: February XX, 2021
 ### Bug Fixes & Improvement v1.2.0
 
 - Improve Helper class: add method `roundNumber`  
-- Improve BsIcon template rendering
-- Improve BsAlert: enable using internal icon via `icon` property
+- Improve **BsIcon** template rendering
+- Improve **BsAlert**: enable using internal icon via `icon` property
+- **BsNumericField**: prevent value changing with UP/DOWN arrows when field state is readonly or disabled  
+- Expose `FontAwesomeLayers` and `FontAwesomeLayersText` components
+- Reorganize scss mixins
 
 
 ## v1.1.4

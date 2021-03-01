@@ -280,7 +280,7 @@ export default {
             return {
                 'color': this.actionButtonColor,
                 'mode': 'icon',
-                'size': 'sm'
+                'size': 'xs'
             }
         },
         _leftActionButton() {
@@ -477,9 +477,9 @@ export default {
                 this._nextTickChange(this.numberValue);
             } else if (/^-?\d*[.,]?\d*$/.test(e.key)) {
                 this.$emit('keydown', e);
-            } else if (_incrementKey.includes(e.key)) {
+            } else if (_incrementKey.includes(e.key) && !this.disabled && !this.readonly) {
                 this._incrementValue();
-            } else if (_decrementKey.includes(e.key)) {
+            } else if (_decrementKey.includes(e.key) && !this.disabled && !this.readonly) {
                 this._decrementValue();
             } else if (_specialKey.includes(e.key)) {
                 this.$emit('keydown', e);
