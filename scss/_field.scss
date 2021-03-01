@@ -126,6 +126,14 @@
                 }
             }
         }
+
+        &.#{$prefix}-disabled {
+            .#{$prefix}-field-inner {
+                .#{$prefix}-field-label {
+                    color: rgba($black, .3) !important;
+                }
+            }
+        }
     }
 
     &.#{$prefix}-focused {
@@ -250,6 +258,20 @@
 
                 input {
                     padding-top: $padding-base + .1;
+                }
+            }
+        }
+
+        &.#{$prefix}-disabled {
+            > .#{$prefix}-field-wrapper {
+                > .#{$prefix}-field-ctrl {
+                    > .#{$prefix}-field-inner {
+                        background-color: rgba($black, .08);
+
+                        .#{$prefix}-field-label {
+                            color: rgba($black, .3) !important;
+                        }
+                    }
                 }
             }
         }
@@ -569,7 +591,7 @@
                             + .#{$prefix}-field-input-wrapper {
                                 > .#{$prefix}-field-label {
                                     &.#{$prefix}-active {
-                                        left: $padding-base * -2.5;
+                                        left: $padding-base * -2.125;
                                     }
                                 }
                             }
@@ -627,7 +649,7 @@
             }
 
             > fieldset {
-                color: rgba($black, .25);
+                color: rgba($black, .25) !important;
             }
         }
     }
@@ -756,7 +778,7 @@
             }
 
             > fieldset {
-                color: rgba($black, .25);
+                color: rgba($black, .25) !important;
             }
         }
     }

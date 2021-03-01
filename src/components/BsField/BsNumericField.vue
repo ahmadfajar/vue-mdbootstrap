@@ -467,7 +467,7 @@ export default {
             }
             const _incrementKey = ['Up', 'ArrowUp'];
             const _decrementKey = ['Down', 'ArrowDown'];
-            const _specialKey = ['Left', 'ArrowLeft', 'Right', 'ArrowRight', 'Esc', 'Escape', 'End',
+            const _specialKey = ['Left', 'ArrowLeft', 'Right', 'ArrowRight', 'Esc', 'Escape', 'End', 'Tab',
                 'Home', 'PageDown', 'PageUp', 'Backspace', 'Clear', 'Delete', 'Copy', 'Cut', 'EraseEof'];
 
             if (e.key && e.key === 'Enter') {

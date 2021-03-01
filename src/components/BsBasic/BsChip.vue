@@ -5,6 +5,7 @@
       v-on="$listeners"
       :is="_cmpTag"
       :class="_classNames"
+      :href="href"
       class="md-chip"
       @mousedown="_mouseDown">
       <bs-ripple
@@ -361,9 +362,9 @@ export default {
     outline: none;
     overflow: hidden;
     position: relative;
-    text-decoration: none;
     white-space: nowrap;
     vertical-align: middle;
+    text-decoration: none !important;
 
     &:before {
         @extend %full-rect-absolute;
@@ -389,10 +390,6 @@ export default {
             border-color: lighten($gray-500, 8%);
             color: lighten($gray-500, 8%) !important;
         }
-    }
-
-    &.#{$prefix}-chip-label {
-        @include border-radius($border-radius-sm);
     }
 
     &.#{$prefix}-chip-clickable:not(.#{$prefix}-disabled) {
@@ -421,6 +418,14 @@ export default {
             &.#{$prefix}-chip-avatar-bounded {
                 margin-left: -.75rem;
             }
+        }
+    }
+
+    &.#{$prefix}-chip-label {
+        @include border-radius($border-radius-sm);
+
+        > .#{$prefix}-chip-content {
+            @include border-radius($border-radius-sm);
         }
     }
 
