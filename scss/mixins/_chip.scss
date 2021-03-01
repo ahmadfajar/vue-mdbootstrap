@@ -6,12 +6,20 @@
             color: set-foreground-color($color, $gray-800, $white, 80);
 
             &:hover {
-                background-color: darken($color, 7.5%);
+                background-color: darken($color, 5%);
             }
 
+            &:focus, &.focus,
+            &.#{$prefix}-focus,
             &.#{$prefix}-active {
-                background-color: darken($color, 10%);
+                background-color: set-foreground-color($color, darken($color, 15%), darken($color, 10%), 80);
+                //background-color: darken($color, 15%);
                 color: set-foreground-color($color, $black, $white, 80);
+            }
+
+            &:focus, &.focus,
+            &.#{$prefix}-focus {
+                @include box-shadow(0 0 0 0.2rem rgba($color, .5));
             }
         }
     }
@@ -34,9 +42,10 @@
                 }
             }
 
+            &:focus, &.focus,
+            &.#{$prefix}-focus,
             &.#{$prefix}-active {
                 border-color: darken($color, 8%);
-                //color: set-outline-button-color($name, darken($color, 15%));
                 color: set-foreground-color($color, $black, darken($color, 15%), 80);
 
                 @if ($name == 'light' or $name == 'light-grey') {
@@ -44,6 +53,11 @@
                 } @else {
                     background-color: rgba(lighten($color, 15%), .3);
                 }
+            }
+
+            &:focus, &.focus,
+            &.#{$prefix}-focus {
+                @include box-shadow(0 0 0 0.2rem rgba($color, .5));
             }
         }
     }

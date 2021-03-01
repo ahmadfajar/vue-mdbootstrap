@@ -5,7 +5,7 @@
       v-on="$listeners"
       :is="_cmpTag"
       :class="_classNames"
-      :href="href"
+      :href="href && !disabled ? href : null"
       class="md-chip"
       @mousedown="_mouseDown">
       <bs-ripple
@@ -302,10 +302,10 @@ export default {
          * @private
          */
         _rippleDisabled() {
-            return this.rippleOff || this.disabled || !this.$listeners.click;
+            return this.rippleOff || this.disabled || (!this.$listeners.click && !this.href);
         },
         _cmpTag() {
-            return this.href ? 'a' : 'div';
+            return this.href && !this.disabled ? 'a' : 'div';
         },
         /**
          * Check if this component is visible or not.

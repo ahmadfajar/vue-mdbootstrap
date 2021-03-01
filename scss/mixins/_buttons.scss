@@ -41,7 +41,7 @@
     .btn-outline-#{$name} {
         background-color: transparent;
         border: 1px solid $color;
-        color: set-outline-button-color($name, $color);
+        color: $color;
 
         &:hover,
         &:focus,
@@ -49,7 +49,7 @@
         &:active:focus,
         &.active {
             border-color: darken($color, 8%);
-            color: set-outline-button-color($name, darken($color, 10%));
+            color: set-foreground-color($color, $white, darken($color, 10%), 80); // darken($color, 10%);
 
             @if ($name == 'light' or $name == 'light-grey') {
                 background-color: rgba($color, .2);
@@ -61,7 +61,7 @@
         &:not([disabled]):not(.disabled):active,
         &:not([disabled]):not(.disabled).active {
             border-color: darken($color, 8%);
-            color: set-outline-button-color($name, darken($color, 15%));
+            color: set-foreground-color($color, $white, darken($color, 15%), 80); // darken($color, 15%);
 
             @if ($name == 'light' or $name == 'light-grey') {
                 background-color: rgba($color, .2);
@@ -85,7 +85,7 @@
         background-color: transparent;
         border-width: 0 !important;
         border-color: transparent;
-        color: set-outline-button-color($name, $color) !important;
+        color: $color;
 
         &:not([disabled]), &:not(.disabled) {
             &:hover,
@@ -94,7 +94,7 @@
             &:focus {
                 border-color: transparent;
                 background-color: rgba(lighten($color, 15%), .2);
-                color: set-outline-button-color($name, darken($color, 15%));
+                color: set-foreground-color($color, $white, darken($color, 15%), 80); // darken($color, 15%);
             }
 
             &:active:focus {
