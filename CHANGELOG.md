@@ -11,8 +11,9 @@ Released: February XX, 2021
 
 - New components: **BsNumericField**, **BsChip**
 - New icons: `AddCircle`, `AddCircleOutline`, `CheckCircle`, `CheckCircleOutline`, `Checked`, `Error`, 
-  `ErrorOutline`, `Help`, `HelpCenter`, `HelpOutline`, `Info`, `Remove`, `RemoveCircle`, `RemoveCircleOutline`,
-  `Report`, `ReportOutline`, `Shield`, `Verified`, `VerifiedUser`, `Warning`, `WarningOutline`, `InvertColors`
+  `ErrorOutline`, `Help`, `HelpCenter`, `HelpOutline`, `Info`, `Remove`, `RemoveCircle`, 
+  `RemoveCircleOutline`, `Report`, `ReportOutline`, `Shield`, `Verified`, `VerifiedUser`, 
+  `Warning`, `WarningOutline`, `InvertColors`
 - **BsListNavItem:** add properties `badge`, `badge-variant`
 - **BsAlert:** add properties `icon-flip`, `icon-outlined`, `icon-pulse`, `icon-rotation`, 
   `icon-spin`, `icon-type`, `solid-fill`
@@ -22,9 +23,11 @@ Released: February XX, 2021
 - Improve Helper class: add method `roundNumber`  
 - Improve **BsIcon** template rendering
 - Improve **BsAlert**: enable using internal icon via `icon` property
-- **BsNumericField**: prevent value changing with UP/DOWN arrows when field state is readonly or disabled  
+- **BsNumericField**: prevent value changing with UP/DOWN arrows when field state is `readonly` 
+  or `disabled` and fix `tab` key  
+- **BsNumericField, BsTextField, BsTextArea**: fix css when field state is `readonly` or `disabled` 
+- **BsDateTimeField**: disabling focus when field state is `disabled`  
 - Expose `FontAwesomeLayers` and `FontAwesomeLayersText` components
-- Reorganize scss mixins
 
 
 ## v1.1.4

@@ -349,13 +349,6 @@ export default {
     },
     mounted() {
         this.popoverTrigger = this.$refs.activator;
-
-        // if (!this.floatingLabel && this.$refs.label.children.length > 0) {
-        //     const elm = this.$refs.label.children[0];
-        //
-        //     this.$refs.label.className += ' ' + elm.className;
-        //     elm.className = 'd-block mb-0';
-        // }
         this._updateLabel();
         this.$nextTick(() => {
             if (this.autofocus && this.$refs.input) {
@@ -366,15 +359,17 @@ export default {
     },
     methods: {
         _activatorClick() {
-            if (this.active) {
-                this.isFocused = false;
-                this._updateLegend();
-                this.$emit('blur', new FocusEvent('blur'));
-            } else {
-                this._onFocus(new FocusEvent('focus'));
-            }
+            if (!this.disabled) {
+                if (this.active) {
+                    this.isFocused = false;
+                    this._updateLegend();
+                    this.$emit('blur', new FocusEvent('blur'));
+                } else {
+                    this._onFocus(new FocusEvent('focus'));
+                }
 
-            this.activatorClick();
+                this.activatorClick();
+            }
         },
         /**
          * Convert a value to datetime and update internal value.
