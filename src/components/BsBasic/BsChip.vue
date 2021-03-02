@@ -77,7 +77,7 @@ export default {
             default: undefined
         },
         /**
-         * Render as `<a>` element and define its `href` property and apply button styles to the element.
+         * Render as `<a>` element and define its `href` property and apply chip styles to the element.
          * @type {string|*}
          */
         href: {
@@ -85,17 +85,25 @@ export default {
             default: undefined
         },
         /**
-         * The image location to place inside component.
+         * Enable avatar and set the image location url.
          * @type {string|*}
          */
         imgSrc: {
             type: String,
             default: undefined
         },
+        /**
+         * Create avatar with circle shape.
+         * @type {boolean|*}
+         */
         imgCircle: {
             type: Boolean,
             default: true
         },
+        /**
+         * Adjust avatar size to match the Chip height by eliminating the margin around the avatar.
+         * @type {boolean|*}
+         */
         imgPadding: {
             type: Boolean,
             default: true
@@ -126,18 +134,23 @@ export default {
         },
         /**
          * Enabled or disabled ripple effect.
+         * Ripple effect is automatically disabled when `click` event or `href` property is not defined.
          * @type {boolean|*}
          */
         rippleOff: {
             type: Boolean,
             default: false
         },
+        /**
+         * Adjust FontAwesome Icon size with css rules like `font-size` or `height` and `width`.
+         * @type {Object}
+         */
         faStyles: {
             type: Object,
             default: undefined
         },
         /**
-         * The Chip size.
+         * Create Chip with predefined size, valid values are: `sm` (small), `lg` (large).
          * @type {string|*}
          */
         size: {
@@ -146,7 +159,7 @@ export default {
             validator: (value) => ['sm', 'lg'].includes(value)
         },
         /**
-         * The value monitored by `v-model` to display or hide the alert component.
+         * The value monitored by `v-model` to show or hide the Chip component.
          * @type {boolean|*}
          */
         value: {

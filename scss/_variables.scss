@@ -123,16 +123,16 @@ $sidebar-item-padding:              1rem 0 1rem 1.2rem !default;
 $sidebar-item-active-bgcolor:       $mdb-color-lighten-3 !default;
 
 // Table
-$table-a-color:                     #212529 !default;
-$table-border-color:                rgba(#000, .1); //#ededed;
+$table-a-color:                     #212529 !default; // not-used
+$table-border-color:                rgba(#000, .1);
 $table-border-width:                1px !default;
-$table-cell-padding:                $padding-base - .4; // .6rem;
+$table-cell-padding:                $padding-base - .4;
 $table-font-size:                   .9rem;
 $table-checkbox-selection-size:     floor(($table-font-size + $table-cell-padding) * 2);
-$table-header-color:                $gray-900; // #878787;
+$table-header-color:                $gray-900;
 $table-header-bgcolor:              #f6f6f6;
 $table-hover-bgcolor:               $default-hover-bgcolor;
-$table-inverse-color-border:        $white;
+$table-inverse-color-border:        $white;  // not-used
 $table-text-color:                  $black;
 
 // Tabs
