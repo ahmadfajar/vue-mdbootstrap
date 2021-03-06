@@ -10,8 +10,11 @@
 </template>
 
 <script>
+import RouteAble from "../../mixins/RouteAble";
+
 export default {
     name: "BsTab",
+    mixins: [RouteAble],
     inject: ['tabs'],
     props: {
         /**
@@ -52,6 +55,10 @@ export default {
         itemIndex: -1
     }),
     computed: {
+        /**
+         * @property {Object} tabs
+         */
+
         /**
          * @returns {string} Transition animation name
          * @private

@@ -38,7 +38,7 @@
 import BsButtonToggle from "./BsButtonToggle";
 import ButtonToggle from "./mixins/ButtonToggle";
 import FieldValidation from "../BsField/mixins/FieldValidation";
-import Input from "../../mixins/Input";
+import Input from "../BsField/mixins/Input";
 
 export default {
     name: "BsButtonToggleField",

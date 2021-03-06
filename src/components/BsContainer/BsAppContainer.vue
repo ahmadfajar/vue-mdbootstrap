@@ -26,7 +26,7 @@ export default {
 html, body {
     height: 100%;
     text-rendering: optimizeLegibility;
-    /*-webkit-font-smoothing: antialiased;*/
+    // -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 

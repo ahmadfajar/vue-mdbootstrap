@@ -112,6 +112,14 @@ export default {
             default: undefined
         },
         /**
+         * CSS class name for active TabItem.
+         * @type {string|*}
+         */
+        activeClass: {
+            type: String,
+            default: 'active'
+        },
+        /**
          * TabItem's container css class name.
          * @type {string|Array|*}
          */
@@ -183,6 +191,7 @@ export default {
                 iconSize: this.iconSize,
                 alignment: this.alignment,
                 variant: this.variant,
+                tabClass: this.tabClass,
                 transition: this.contentTransition,
                 register: this.register,
                 unregister: this.unregister,
@@ -234,7 +243,7 @@ export default {
                 this.alignment === 'right' ? 'justify-content-end' : '',
                 this.tabPosition === 'top' ? 'md-tab-top' : (this.tabPosition === 'bottom' ? 'md-tab-bottom' : ''),
                 this.tabPosition === 'left' ? 'md-tab-left' : (this.tabPosition === 'right' ? 'md-tab-right' : ''),
-                ['material', 'modern'].indexOf(this.variant) > -1 ? 'bg-' + this.color : ''
+                ['material', 'modern'].indexOf(this.variant) > -1 && this.color ? 'bg-' + this.color : ''
             ];
 
             if (this.innerClass && typeof this.innerClass === 'string') {
@@ -313,12 +322,12 @@ export default {
                 icon: tabPane.icon,
                 label: tabPane.label,
                 target: tabPane.ariaLabel,
-                activeClass: tabPane.activeClass,
+                activeClass: tabPane.activeClass !== 'active' ? tabPane.activeClass : (this.activeClass ? this.activeClass : tabPane.activeClass),
                 exact: tabPane.exact,
                 path: tabPane.path,
                 url: tabPane.url,
                 value: this.value,
-                class: this.tabClass
+                class: !tabPane.active ? this.tabClass : null
             }
         },
     }
@@ -332,6 +341,8 @@ export default {
 @import "~compass-sass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
+
+$tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
 
 .#{$prefix}-tabs {
     .nav {
@@ -371,13 +382,24 @@ export default {
         &.nav-pills {
             padding: $tab-padding-base;
 
+            .nav-item {
+                @include border-radius($border-radius);
+            }
+
             .nav-link {
+                @each $color_name, $color in $tab-colors {
+                    &.bg-#{$color_name}:not(.active) {
+                        color: rgba($white, .7);
+
+                        &:hover {
+                            background-color: rgba($white, .1) !important;
+                            color: rgba($white, .9);
+                        }
+                    }
+                }
+
                 &.active {
                     @include box-shadow($z-depth-1);
-
-                    &:hover {
-                        color: $white;
-                    }
                 }
             }
         }
@@ -389,7 +411,7 @@ export default {
             > .nav-link {
                 @include border-radius(0);
                 list-style: none;
-                background-color: transparent !important;
+                background-color: transparent;
                 border-color: transparent;
                 border-style: solid;
                 border-width: 0;
@@ -405,7 +427,7 @@ export default {
                 }
 
                 &.active {
-                    color: var(--white);
+                    color: $white;
                 }
             }
 
@@ -416,7 +438,7 @@ export default {
                     border-bottom-width: 3px !important;
 
                     &.active {
-                        border-bottom-color: var(--white);
+                        border-bottom-color: $white;
                     }
                 }
             }
@@ -428,7 +450,7 @@ export default {
                     border-top-width: 3px !important;
 
                     &.active {
-                        border-top-color: var(--white);
+                        border-top-color: $white;
                     }
                 }
             }
@@ -440,7 +462,7 @@ export default {
                     border-right-width: 3px !important;
 
                     &.active {
-                        border-right-color: var(--white);
+                        border-right-color: $white;
                     }
                 }
             }
@@ -452,7 +474,7 @@ export default {
                     border-left-width: 3px !important;
 
                     &.active {
-                        border-left-color: var(--white);
+                        border-left-color: $white;
                     }
                 }
             }
@@ -474,7 +496,7 @@ export default {
 
         &.nav-modern {
             @include border-radius($border-radius);
-            border-width: 0 !important;
+            border-width: 0;
             padding: $tab-modern-padding;
 
             &.#{$prefix}-tab-top {
@@ -497,7 +519,23 @@ export default {
 
                 &.active {
                     background-color: rgba($black, .2);
-                    color: var(--white);
+                    color: $white;
+                }
+            }
+        }
+
+        &.nav-pills, &.nav-modern {
+            &.#{$prefix}-tab-top,
+            &.#{$prefix}-tab-bottom {
+                .nav-item + .nav-item {
+                    margin-left: $tab-item-margin-between;
+                }
+            }
+
+            &.#{$prefix}-tab-left,
+            &.#{$prefix}-tab-right {
+                .nav-item + .nav-item {
+                    margin-top: $tab-item-margin-between;
                 }
             }
         }

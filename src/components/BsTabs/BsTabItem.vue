@@ -112,7 +112,7 @@ export default {
                 'nav-link': this._tagName !== 'li',
                 'text-center': this._tagName !== 'li',
                 'flex-fill': this.tabs.alignment === 'justified',
-                [this.activeClass]: this.active && this.tagName !== 'li' && !this.hasRouter
+                [this.activeClass]: this.active && this._tagName !== 'li' && !this.hasRouter
             }
         },
         /**
@@ -126,7 +126,8 @@ export default {
                 'nav-link': true,
                 'text-center': true,
                 'flex-fill': this.tabs.align === 'justified',
-                [this.activeClass]: this.active && !this.hasRouter
+                [this.activeClass]: this.active && !this.hasRouter,
+                [this.tabs.tabClass]: this.tabs.tabClass && !this.active && !this.hasRouter,
             }
         },
         /**

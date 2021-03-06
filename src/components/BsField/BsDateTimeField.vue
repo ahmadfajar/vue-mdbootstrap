@@ -119,7 +119,7 @@ import moment from "moment";
 import BsIcon from "../BsIcon/BsIcon";
 import BsPopover from "../BsPopover/BsPopover";
 import BsDatePicker from "../BsPicker/BsDatePicker";
-import Input from "../../mixins/Input";
+import Input from "./mixins/Input";
 import TextField from "./mixins/TextField";
 import FieldValidation from "./mixins/FieldValidation";
 import MenuAble from "../../mixins/MenuAble";

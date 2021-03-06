@@ -33,7 +33,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BsRipple from "../BsAnimation/BsRipple";
 import ButtonToggle from "./mixins/ButtonToggle";
 import Common from "../../mixins/Common";
-import Input from "../../mixins/Input";
+import Input from "../BsField/mixins/Input";
 
 export default {
     name: "BsButtonToggle",

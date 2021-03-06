@@ -17,10 +17,13 @@ Released: February XX, 2021
 - **BsListNavItem:** add properties `badge`, `badge-variant`
 - **BsAlert:** add properties `icon-flip`, `icon-outlined`, `icon-pulse`, `icon-rotation`, 
   `icon-spin`, `icon-type`, `solid-fill`
+- **BsTabs:** add properties `active-class`  
 
 ### Bug Fixes & Improvement v1.2.0
 
-- Improve Helper class: add method `roundNumber`  
+- Improve Helper class: add method `roundNumber`
+- Improve Tabs component: customize inactive TabItem via `tab-class` property and active TabItem
+  via `active-class` property for tabs variant: `pills`, `modern`, and `material`.
 - Improve **BsIcon** template rendering
 - Improve **BsAlert**: enable using internal icon via `icon` property
 - **BsNumericField**: prevent value changing with UP/DOWN arrows when field state is `readonly` 

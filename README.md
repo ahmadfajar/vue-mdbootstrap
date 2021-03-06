@@ -41,11 +41,13 @@ use `yarn` or `npm` to get the latest version of Vue.js, and Vue MDBootstrap.
 ```bash
 # With npm
 npm install vue vue-mdbootstrap --save
-npm install node-sass --save-dev
+npm install node-sass@4.14.1 --save-dev
+npm install sass-loader@10.1.1 --save-dev
 
 # With yarn
 yarn add vue vue-mdbootstrap
-yarn add node-sass --dev
+yarn add node-sass@4.14.1 --dev
+yarn add sass-loader@10.1.1 --dev
 ```
 
 Then, register Vue MDBootstrap in your app entry point.

@@ -150,7 +150,7 @@ import BsComboboxListContainer from "./BsComboboxListContainer";
 import BsIcon from "../BsIcon/BsIcon";
 import BsPopover from "../BsPopover/BsPopover";
 import AbstractStore from "../../model/AbstractStore";
-import Input from "../../mixins/Input";
+import Input from "./mixins/Input";
 import MenuAble from "../../mixins/MenuAble";
 import FieldValidation from "./mixins/FieldValidation";
 import Helper from "../../utils/Helper";
@@ -162,7 +162,7 @@ export default {
     components: {
         FontAwesomeIcon, BsComboboxListContainer, BsIcon, BsPopover
     },
-    mixins: [Input, FieldValidation, MenuAble],
+    mixins: [Input, MenuAble, FieldValidation],
     props: {
         /**
          * Sets icon to display on inner right side. Use any valid
