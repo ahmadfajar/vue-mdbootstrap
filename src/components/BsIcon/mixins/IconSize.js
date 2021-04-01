@@ -14,7 +14,7 @@ export default {
          */
         height: {
             type: [String, Number],
-            default: 20,
+            default: 24,
             validator: v => !isNaN(parseInt(v, 10))
         },
         /**
@@ -23,7 +23,7 @@ export default {
          */
         width: {
             type: [String, Number],
-            default: 20,
+            default: 24,
             validator: v => !isNaN(parseInt(v, 10))
         }
     },

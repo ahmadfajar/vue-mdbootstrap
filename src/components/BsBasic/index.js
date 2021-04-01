@@ -6,6 +6,7 @@ import BsSpacer from "./BsSpacer";
 import BsSubheader from "./BsSubheader";
 import BsImageHolder from "./BsImageHolder";
 import BsChip from "./BsChip";
+import BsChipGroup from "./BsChipGroup";
 
 export default Vue => {
     Vue.component(BsAlert.name, BsAlert);
@@ -16,4 +17,5 @@ export default Vue => {
     Vue.component(BsSubheader.name, BsSubheader);
     Vue.component(BsImageHolder.name, BsImageHolder);
     Vue.component(BsChip.name, BsChip);
+    Vue.component(BsChipGroup.name, BsChipGroup);
 };

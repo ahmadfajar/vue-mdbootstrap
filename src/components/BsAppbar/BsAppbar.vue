@@ -101,9 +101,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins/breakpoints";
 @import "~compass-sass-mixins/lib/compass/css3";
 @import "~compass-sass-mixins/lib/compass/typography";
 @import "../../../scss/colors";

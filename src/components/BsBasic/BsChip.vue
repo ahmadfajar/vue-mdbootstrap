@@ -23,16 +23,14 @@
               alt="Chip Avatar" />
           </span>
         </transition>
-        <transition name="scale">
-          <span v-if="icon" class="md-chip-icon mr-2">
-            <slot name="chipIcon">
-              <bs-icon v-if="isInternal" v-bind="_bsIconAttrs" />
-              <span v-else class="md-chip-icon-fa">
-                <font-awesome-icon v-bind="_faIconAttrs" />
-              </span>
-            </slot>
-          </span>
-        </transition>
+        <span v-if="icon" class="md-chip-icon mr-2">
+          <slot name="chipIcon">
+            <bs-icon v-if="isInternal" v-bind="_bsIconAttrs" />
+            <span v-else class="md-chip-icon-fa">
+              <font-awesome-icon v-bind="_faIconAttrs" />
+            </span>
+          </slot>
+        </span>        
         <span class="md-chip-text">
           <slot></slot>
         </span>
@@ -61,20 +59,28 @@ export default {
     mixins: [ActiveMixin, DisabledMixin, IconMixin],
     props: {
         /**
+         * Custom CSS class to apply when the chip is in active state.
+         * @type {string|*}
+         */
+        activeClass: {
+            type: String,
+            default: undefined
+        },
+        /**
+         * Predefine color when Chip is in active state.
+         * @type {string|*}
+         */
+        activeColor: {
+            type: String,
+            default: undefined
+        },
+        /**
          * The default chip color to apply.
          * @type {string|*}
          */
         color: {
             type: String,
             default: 'light-grey'
-        },
-        /**
-         * Css class to apply when the chip is in active state.
-         * @type {string|*}
-         */
-        activeClass: {
-            type: String,
-            default: undefined
         },
         /**
          * Render as `<a>` element and define its `href` property and apply chip styles to the element.
@@ -117,18 +123,18 @@ export default {
             default: false
         },
         /**
-         * Render Chip with outlined style or not.
-         * @type {boolean|*}
-         */
-        outlined: {
-            type: Boolean,
-            default: false
-        },
-        /**
          * Remove circle edges.
          * @type {boolean|*}
          */
         label: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Render Chip with outlined style or not.
+         * @type {boolean|*}
+         */
+        outlined: {
             type: Boolean,
             default: false
         },
@@ -269,8 +275,10 @@ export default {
                 'md-chip-label': this.label,
                 'md-chip-outlined': this.outlined,
                 'md-chip-clickable': (this.href || this.$listeners.click) && !this.disabled,
-                ['md-chip-' + this.color]: this.color && !this.outlined && !this.disabled,
-                ['md-chip-outline-' + this.color]: this.color && this.outlined && !this.disabled,
+                ['md-chip-' + this.color]: this.color && !this.outlined && !this.disabled && (!this.activeColor || !this.active),
+                ['md-chip-outline-' + this.color]: this.color && this.outlined && !this.disabled && (!this.activeColor || !this.active),
+                ['md-chip-' + this.activeColor]: this.activeColor && this.active && !this.outlined && !this.disabled,
+                ['md-chip-outline-' + this.activeColor]: this.activeColor && this.active && this.outlined && !this.disabled,
                 [this.activeClass]: this.activeClass && this.active && !this.disabled,
             }
         },
@@ -365,7 +373,6 @@ export default {
 @import "../../../scss/shared";
 
 .#{$prefix}-chip {
-    @include transition(opacity 400ms, visibility 400ms, width 400ms $md-transition-default-timing);
     @include flexbox((display: inline-flex, align-items: center));
     @include border-radius($border-radius-pill);
     cursor: default;
@@ -378,16 +385,17 @@ export default {
     white-space: nowrap;
     vertical-align: middle;
     text-decoration: none !important;
+    transition-duration: .4s;
+    transition-property: box-shadow, opacity, width;
+    transition-timing-function: $md-transition-stand-timing;
 
     &:before {
         @extend %full-rect-absolute;
         @extend %opacity-0;
-        @include transition(all 300ms $md-transition-default-timing);
         background-color: currentColor;
         border-radius: inherit;
         content: " ";
         pointer-events: none;
-        will-change: background-color, opacity;
     }
 
     &.#{$prefix}-disabled {
@@ -414,10 +422,12 @@ export default {
         @include flexbox((display: inline-flex, align-items: center));
         @include border-radius($border-radius-pill);
         padding: 0 ($padding-base - .25);
+        max-width: 100%;
 
         > .#{$prefix}-chip-avatar,
         > .#{$prefix}-chip-icon {
             @include flexbox((display: flex, align-self: center, align-items: center));
+            @include transition(.3s $md-transition-stand-timing, visibility);
             margin-left: -.5rem; // -6px
 
             > .#{$prefix}-chip-icon-fa {

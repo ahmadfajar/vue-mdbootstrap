@@ -103,7 +103,8 @@ export default {
          */
         items: {
             type: Array,
-            default: undefined
+            default: undefined,
+            required: true
         },
         /**
          * Show persistent help text or not.

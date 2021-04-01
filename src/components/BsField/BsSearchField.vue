@@ -446,6 +446,11 @@ export default {
                     }
                 }
             }
+
+            .btn-flat-secondary:hover,
+            .btn-flat-secondary:focus {
+                color: lighten($gray-600, 20%);
+            }
         }
     }
 }

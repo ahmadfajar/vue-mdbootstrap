@@ -95,7 +95,8 @@ export default {
          */
         items: {
             type: Array,
-            default: undefined
+            default: undefined,
+            required: true
         },
         /**
          * Sets the `<input>` element `name` attribute.
@@ -189,7 +190,7 @@ export default {
         /**
          * Set CheckboxGroup value.
          *
-         * @param {string|number|boolean} value The value to set
+         * @param {string|number|boolean|Array} value The value to set
          * @returns {void}
          */
         setValue(value) {
