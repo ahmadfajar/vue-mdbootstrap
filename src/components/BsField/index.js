@@ -5,6 +5,7 @@ import BsTextField from "./BsTextField";
 import BsTextArea from "./BsTextArea";
 import BsNumericField from "./BsNumericField";
 import BsDateTimeField from "./BsDateTimeField";
+import BsChipField from "./BsChipField";
 import BsSearchField from "./BsSearchField";
 import BsRadio from "./BsRadio";
 import BsRadioGroup from "./BsRadioGroup";
@@ -18,6 +19,7 @@ export default Vue => {
     Vue.component(BsTextArea.name, BsTextArea);
     Vue.component(BsNumericField.name, BsNumericField);
     Vue.component(BsDateTimeField.name, BsDateTimeField);
+    Vue.component(BsChipField.name, BsChipField);
     Vue.component(BsSearchField.name, BsSearchField);
     Vue.component(BsRadio.name, BsRadio);
     Vue.component(BsRadioGroup.name, BsRadioGroup);

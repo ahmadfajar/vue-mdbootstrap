@@ -479,6 +479,10 @@ export default {
                         margin-right: $padding-xl;
                     }
                 }
+
+                > .badge {
+                    line-height: normal;
+                }
             }
 
             &:hover,

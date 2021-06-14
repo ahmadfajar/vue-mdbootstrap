@@ -343,6 +343,24 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
+.#{$prefix}-chip-group-slider {
+    @include flexbox((display: flex, flex: 1 1 auto));
+    contain: content;
+    overflow: auto hidden;
+
+    > .#{$prefix}-chip-group-content {
+        @include flexbox((display: flex, flex: 1 0 auto));
+        @include transition(.3s $md-transition-stand-timing);
+        padding: .25rem 0;   // 4px 0;
+        position: relative;
+        white-space: nowrap;
+
+        .#{$prefix}-chip {
+            margin: .25rem $padding-sm .25rem 0;
+        }
+    }
+}
+
 .#{$prefix}-chip-group {
     @include flexbox((display: flex, flex: 0 1 auto));
     @include transition(.3s $md-transition-stand-timing);
@@ -353,24 +371,6 @@ export default {
     > .#{$prefix}-chip-slide-next {
         @include flexbox((display: flex, flex: 0 1 52px, align-items: center, justify-content: center));
         min-width: 52px;
-    }
-
-    > .#{$prefix}-chip-group-slider {
-        @include flexbox((display: flex, flex: 1 1 auto));
-        contain: content;
-        overflow: auto hidden;
-
-        > .#{$prefix}-chip-group-content {
-            @include flexbox((display: flex, flex: 1 0 auto));
-            @include transition(.3s $md-transition-stand-timing);
-            padding: .25rem 0;   // 4px 0;
-            position: relative;
-            white-space: nowrap;
-
-            .#{$prefix}-chip {
-                margin: .25rem $padding-sm .25rem 0;
-            }
-        }
     }
 
     &.#{$prefix}-chip-group--column {

@@ -9,7 +9,7 @@ Released: February XX, 2021
 
 ### Features v1.2.0
 
-- New components: **BsNumericField**, **BsChip**, **BsChipGroup**
+- New components: **BsNumericField**, **BsChip**, **BsChipGroup**, **BsChipField**
 - New icons: `AddCircle`, `AddCircleOutline`, `CheckCircle`, `CheckCircleOutline`, `Checked`, `Error`, 
   `ErrorOutline`, `Help`, `HelpCenter`, `HelpOutline`, `Info`, `Remove`, `RemoveCircle`, 
   `RemoveCircleOutline`, `Report`, `ReportOutline`, `Shield`, `Verified`, `VerifiedUser`, 

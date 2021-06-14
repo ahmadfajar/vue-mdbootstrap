@@ -53,7 +53,7 @@
                 > .#{$prefix}-field-input-wrapper {
                     @include flexbox((display: flex, flex: 1 1 auto, flex-basis: 0));
                     position: relative;
-                    max-width: 100%;
+                    width: 100%;
                 }
             }
 
@@ -400,6 +400,13 @@
     &.#{$prefix}-disabled {
         .col-form-label {
             color: $gray-500;
+        }
+        > .#{$prefix}-field-wrapper {
+            > .#{$prefix}-field-ctrl {
+                > .#{$prefix}-field-inner {
+                    border-color: $gray-400;
+                }
+            }
         }
     }
 }

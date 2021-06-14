@@ -141,14 +141,11 @@ export default {
                     ? this.autocomplete
                     : (this.autocomplete ? 'on' : Helper.uuid()),
                 'autofocus': this.autofocus,
-                'placeholder': this.placeholder,
-                'aria-autocomplete': this.autocomplete && Helper.isString(this.autocomplete)
-                    ? this.autocomplete
-                    : (this.autocomplete ? 'both' : 'none'),
+                'placeholder': this.placeholder && !this.readonly && !this.disabled ? this.placeholder : null,
                 'aria-disabled': this.disabled,
                 'aria-required': this.required,
                 'aria-readonly': this.readonly,
-                'aria-placeholder': this.placeholder
+                'aria-placeholder': this.placeholder && !this.readonly && !this.disabled ? this.placeholder : null
             }
         },
         /**
