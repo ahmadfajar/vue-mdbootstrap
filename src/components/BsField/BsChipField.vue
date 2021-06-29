@@ -347,7 +347,6 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-// .md-field > .md-field-wrapper > .md-field-ctrl > .md-field-inner > .md-field-input-wrapper
 .#{$prefix}-chips-field {
     .#{$prefix}-field-input-wrapper {
         @include flex-wrap(wrap);
@@ -357,8 +356,8 @@ export default {
         }
 
         > .#{$prefix}-field-input {
-            @include flexbox((display: inline-flex, flex: 1 1 auto));
-            min-width: 150px;
+            @include flexbox((display: inline-flex, flex: 1 1 0));
+            min-width: 125px;
             max-width: 100%;
             width: auto !important;
         }

@@ -5,7 +5,7 @@
 
 ## v1.2.0
 
-Released: February XX, 2021
+Released: June 29, 2021
 
 ### Features v1.2.0
 
@@ -14,9 +14,10 @@ Released: February XX, 2021
   `ErrorOutline`, `Help`, `HelpCenter`, `HelpOutline`, `Info`, `Remove`, `RemoveCircle`, 
   `RemoveCircleOutline`, `Report`, `ReportOutline`, `Shield`, `Verified`, `VerifiedUser`, 
   `Warning`, `WarningOutline`, `InvertColors`
-- **BsListNavItem:** add properties `badge`, `badge-variant`
+- **BsCombobox:** add properties `chip-enabled`, `chip-color`, `chip-labeled` and `chip-outlined`
+- **BsListNavItem:** add properties `badge`, and `badge-variant`
 - **BsAlert:** add properties `icon-flip`, `icon-outlined`, `icon-pulse`, `icon-rotation`, 
-  `icon-spin`, `icon-type`, `solid-fill`
+  `icon-spin`, `icon-type`, and `solid-fill`
 - **BsTabs:** add properties `active-class`  
 
 ### Bug Fixes & Improvement v1.2.0

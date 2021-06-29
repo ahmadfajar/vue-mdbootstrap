@@ -51,11 +51,19 @@
               <span
                 v-if="_showPlaceHolder"
                 class="md-placeholder">{{ placeholder }}</span>
-              <span
-                v-else-if="chips && multiple"
+              <div
+                v-else-if="chipEnabled && multiple"
                 class="md-input-tags">
-                <slot name="tags">{{ inputDisplay }}</slot>
-              </span>
+                <bs-chip
+                  v-for="(item, index) in selectedItems"
+                  :key="'chip-' + index"
+                  :color="chipColor"
+                  :disabled="disabled"
+                  :label="chipLabeled"
+                  :outlined="chipOutlined">
+                  {{ getItemText(item) }}
+                </bs-chip>
+              </div>
               <span class="md-value" v-else>{{ inputDisplay }}</span>
             </div>
             <select v-bind="_inputAttributes" class="d-none">
@@ -319,11 +327,34 @@ export default {
             default: undefined
         },
         /**
-         * Sets **Chips** style for selected items.
-         * (Work in progress,... not working yet)
+         * Sets **Chip** style for the selected items.
          * @type {boolean|*}
          */
-        chips: {
+        chipEnabled: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * The default Chips color to apply.
+         * @type {string|*}
+         */
+        chipColor: {
+            type: String,
+            default: 'light-grey'
+        },
+        /**
+         * Remove Chip's circle edges.
+         * @type {boolean|*}
+         */
+        chipLabeled: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Render Chips with outlined style or not.
+         * @type {boolean|*}
+         */
+        chipOutlined: {
             type: Boolean,
             default: false
         },
@@ -466,6 +497,7 @@ export default {
                 'md-field-flat': this.flat,
                 'md-field-filled': this.filled,
                 'md-field-outlined': this.outlined,
+                'md-chip-enabled': this.chipEnabled,
                 'md-floating-label': this.floatingLabel,
                 'md-focused': (this.isFocused || this.active) && !this.disabled,
                 'has-error': this.hasValidationError,
@@ -1041,7 +1073,7 @@ export default {
         min-height: 40px;
 
         > .#{$prefix}-combobox-input {
-            padding: 8px 0;
+            padding: .5rem 0;
         }
     }
 
@@ -1060,7 +1092,7 @@ export default {
     }
 
     .#{$prefix}-input-tags {
-        margin: 4px 4px 4px 0;
+        margin: .25rem 0 0 0;
     }
 
     .#{$prefix}-value {
@@ -1123,6 +1155,51 @@ export default {
 
                 > .#{$prefix}-combobox-input {
                     padding-top: 18px;
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}-chip-enabled {
+        .#{$prefix}-field-input-wrapper {
+            min-height: 2.75rem;  // 40px
+
+            > .#{$prefix}-combobox-input {
+                padding: 0;
+
+                > .#{$prefix}-input-tags {
+                    > .#{$prefix}-chip {
+                        margin: .15rem $padding-sm .25rem 0;
+                    }
+                }
+            }
+        }
+
+        &.#{$prefix}-floating-label {
+            &.#{$prefix}-field-filled {
+                .#{$prefix}-field-inner {
+                    padding-bottom: 0;
+
+                    > .#{$prefix}-field-input-wrapper {
+                        min-height: 3.65rem; // 59px
+
+                        > .#{$prefix}-combobox-input {
+                            padding-top: .7rem;
+                        }
+
+                        > .#{$prefix}-field-label {
+                            top: 1rem;
+
+                            &.#{$prefix}-active {
+                                @include transform(translateY(-16px) scale(.8));
+                            }
+                        }
+                    }
+                }
+            }
+            &.#{$prefix}-field-outlined {
+                .#{$prefix}-field-inner {
+                    padding-bottom: .125rem;
                 }
             }
         }
