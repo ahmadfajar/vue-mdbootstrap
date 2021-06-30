@@ -110,6 +110,7 @@
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BsIcon from "../BsIcon/BsIcon";
+import BsChip from "../BsBasic/BsChip";
 import Input from "./mixins/Input";
 import TextField from "./mixins/TextField";
 import FieldValidation from "./mixins/FieldValidation";
@@ -117,7 +118,7 @@ import "../../../scss/_field.scss"
 
 export default {
     name: "BsChipField",
-    components: {FontAwesomeIcon, BsIcon},
+    components: {FontAwesomeIcon, BsIcon, BsChip},
     mixins: [Input, TextField, FieldValidation],
     props: {
         /**

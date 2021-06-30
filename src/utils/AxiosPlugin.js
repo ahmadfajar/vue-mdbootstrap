@@ -17,6 +17,9 @@ export default (Vue, options) => {
         resErrorFunc: error => Promise.reject(error)
     };
 
+    /**
+     * @type {AxiosRequestConfig|Object} initOptions
+     */
     const initOptions = {
         ...defaultOptions,
         ...options

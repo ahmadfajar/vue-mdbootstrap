@@ -41,13 +41,13 @@ use `yarn` or `npm` to get the latest version of Vue.js, and Vue MDBootstrap.
 ```bash
 # With npm
 npm install vue vue-mdbootstrap --save
-npm install node-sass@4.14.1 --save-dev
-npm install sass-loader@10.1.1 --save-dev
+npm install node-sass@6.0.1 --save-dev
+npm install sass-loader@10.2.0 --save-dev
 
 # With yarn
 yarn add vue vue-mdbootstrap
-yarn add node-sass@4.14.1 --dev
-yarn add sass-loader@10.1.1 --dev
+yarn add node-sass@6.0.1 --dev
+yarn add sass-loader@10.2.0 --dev
 ```
 
 Then, register Vue MDBootstrap in your app entry point.
@@ -81,8 +81,9 @@ Code below is an example how to load and initialize the components.
 
 ```html
 <link rel="stylesheet" href="https://unpkg.com/bootstrap@4.5.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.css" crossorigin="anonymous">
-<script src="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.bundle.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.min.css" crossorigin="anonymous">
+<script src="https://unpkg.com/vue@2.6.14/dist/vue.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.min.js" crossorigin="anonymous"></script>
 ```
 
 If you are using `BsGrid`, `BsTreeGrid`, `BsModel`, `BsStore`, `BsTreeStore` and/or 
@@ -90,10 +91,17 @@ need to perform HTTP Request, you can use example code below in your javascript 
 initialize MDBootstrap Axios plugin.
 
 ```js
-Vue.use(AxiosPlugin, {baseURL: "http://localhost/<api-url>"});
+Vue.use(VueMdb.AxiosPlugin, {baseURL: "http://localhost/<api-url>"});
 ```
 
 Now, you can use any of **Vue MDBootstrap** components in your html page.
+
+**Notes**: 
+
+- [FontAwesomeIcon](https://fontawesome.com/icons?d=gallery&s=solid&m=free) and 
+  [Moment.js](https://momentjs.com/) already bundled except **Moment.js localization**.
+- All plugins and classes placed under **VueMdb** namespace. Please refer to 
+  [documentation](https://vue-mdbootstrap.fajarconsultant.com/#/reference). 
 
 
 ## Demos
@@ -104,7 +112,8 @@ to see it in action.
 ## Start coding
 
 Now you have implemented **Vue MDBootstrap** to your project, and it’s time to write your 
-code. Please refer to each [component’s documentation](https://vue-mdbootstrap.fajarconsultant.com) 
+code. Please refer to each 
+[component’s documentation](https://vue-mdbootstrap.fajarconsultant.com/#/components) 
 to learn how to use them.
 
 ## Browser Support

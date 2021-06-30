@@ -10,9 +10,8 @@
         :disabled="disabled"
         centered>
         <input
-          v-model="checked"
+          v-model="localValue"
           v-bind="_attributes"
-          :value="value"
           role="radio"
           type="radio" />
       </bs-ripple>
@@ -100,7 +99,7 @@ export default {
         },
     },
     data: () => ({
-        rippleActive: false
+        rippleActive: false,
     }),
     computed: {
         /**
@@ -112,11 +111,12 @@ export default {
             return {
                 'id': this.id,
                 'name': this.name,
+                'value': this.value,
                 'required': this.required,
                 'disabled': this.disabled,
                 'readonly': this.readonly,
                 'aria-disabled': this.disabled,
-                'aria-checked': this.isSelected
+                'aria-checked': this.isSelected,
             };
         },
         /**
@@ -144,7 +144,7 @@ export default {
          */
         localValue: {
             get() {
-                return this.value;
+                return this.checked;
             },
             set(value) {
                 if (!this.disabled && !this.readonly) {

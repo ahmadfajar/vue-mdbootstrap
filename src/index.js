@@ -1,4 +1,3 @@
-import Vue from "vue";
 import moment from "moment";
 import * as components from "./components";
 import * as directives from "./directives";
@@ -24,20 +23,6 @@ let VueMdb = Vue => {
     });
 };
 
-if (typeof window !== 'undefined') {
-    window.Vue = Vue;
-    window.Vue.use(VueMdb);
-    window.AxiosPlugin = AxiosPlugin;
-    window.ProxyAdapter = ProxyAdapter;
-    window.AbstractStore = AbstractStore;
-    window.BsModel = BsModel;
-    window.BsStore = BsStore;
-    window.BsArrayStore = BsArrayStore;
-    window.BsTreeStore = BsTreeStore;
-    window.Helper = Helper;
-    window.moment = moment;
-}
-
 export {
     AxiosPlugin,
     ProxyAdapter,
@@ -47,7 +32,21 @@ export {
     BsTreeStore,
     BsArrayStore,
     Helper,
-    ScreenSize
+    ScreenSize,
 };
 
 export default VueMdb;
+
+if (typeof window !== 'undefined' && window.Vue) {
+    console.info('INFO: Registering Vue MDBootstrap libraries...');
+    window.Vue.use(VueMdb);
+    window.moment = moment;
+    // window.AxiosPlugin = AxiosPlugin;
+    // window.ProxyAdapter = ProxyAdapter;
+    // window.AbstractStore = AbstractStore;
+    // window.BsModel = BsModel;
+    // window.BsStore = BsStore;
+    // window.BsArrayStore = BsArrayStore;
+    // window.BsTreeStore = BsTreeStore;
+    // window.Helper = Helper;
+}

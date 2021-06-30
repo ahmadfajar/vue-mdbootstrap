@@ -49,13 +49,14 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsButton from "../BsButton/BsButton";
 import BsIcon from "../BsIcon/BsIcon";
+import BsRipple from "../BsAnimation/BsRipple";
 import IconMixin from "./mixins/IconMixin";
 import ActiveMixin from "./mixins/ActiveMixin";
 import DisabledMixin from "./mixins/DisabledMixin";
 
 export default {
     name: "BsChip",
-    components: {BsButton, BsIcon, FontAwesomeIcon},
+    components: {BsButton, BsIcon, BsRipple, FontAwesomeIcon},
     mixins: [ActiveMixin, DisabledMixin, IconMixin],
     props: {
         /**

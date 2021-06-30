@@ -2,6 +2,18 @@
 
 > All notable changes to this project will be documented in this file.
 
+## v1.2.1
+
+Released: July 01, 2021
+
+### Bug Fixes & Improvement v1.2.1
+
+- Upgrade package builder to **webpack v5.x**
+- Improve build scripts
+- **BsNotification**: fix component registration
+- **BsChip**, **BsChipField**, **BsCombobox**, **BsNumericField**: fix missing component import 
+- **BsRadio**: fix property mutation
+
 
 ## v1.2.0
 

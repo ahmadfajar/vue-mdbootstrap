@@ -155,7 +155,9 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsComboboxListContainer from "./BsComboboxListContainer";
+import BsListTileTitle from "../BsList/BsListTileTitle";
 import BsIcon from "../BsIcon/BsIcon";
+import BsChip from "../BsBasic/BsChip";
 import BsPopover from "../BsPopover/BsPopover";
 import AbstractStore from "../../model/AbstractStore";
 import Input from "./mixins/Input";
@@ -168,7 +170,8 @@ import '../../../scss/utilities/_shadows.scss';
 export default {
     name: "BsCombobox",
     components: {
-        FontAwesomeIcon, BsComboboxListContainer, BsIcon, BsPopover
+        FontAwesomeIcon, BsComboboxListContainer, BsIcon, BsChip, BsPopover,
+        BsListTileTitle,
     },
     mixins: [Input, MenuAble, FieldValidation],
     props: {

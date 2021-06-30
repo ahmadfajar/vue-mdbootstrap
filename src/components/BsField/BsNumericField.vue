@@ -159,6 +159,7 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import BsButton from "../BsButton/BsButton";
 import BsIcon from "../BsIcon/BsIcon";
 import Input from "./mixins/Input";
 import TextField from "./mixins/TextField";
@@ -168,7 +169,7 @@ import "../../../scss/_field.scss"
 
 export default {
     name: "BsNumericField",
-    components: {FontAwesomeIcon, BsIcon},
+    components: {FontAwesomeIcon, BsButton, BsIcon},
     mixins: [Input, TextField, FieldValidation],
     props: {
         locale: {
