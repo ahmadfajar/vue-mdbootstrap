@@ -16,13 +16,13 @@
 </p>
 
 
-**Vue MDBootstrap** is a collection of **Vue** components and built according to 
+**Vue MDBootstrap** is a collection of **VueJs** components and built according to 
 the <a href="https://material.io/design" target="_blank">Google Material Design</a> 
 specs. They can be used to built **Single Page Application (SPA)** by using module 
 bundler or built common web page by using the resources from the CDN.
 
 
-These components were build in the spirit of **Vue framework**, and utilize **Bootstrap 4** 
+These components were build in the spirit of **VueJs framework**, and utilize **Bootstrap 4** 
 css framework. Long ago, I use them on all my VueJs projects. Now, I decide to publish 
 these components and hope it will be useful to anyone who wants to use it as an alternative of
 many Vue components out there. 
@@ -80,7 +80,7 @@ and use the js and css files on your html `<head>` section on the page to get st
 Code below is an example how to load and initialize the components.
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/bootstrap@4.5.2/dist/css/bootstrap.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.min.css" crossorigin="anonymous">
 <script src="https://unpkg.com/vue@2.6.14/dist/vue.min.js" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.min.js" crossorigin="anonymous"></script>
@@ -112,8 +112,8 @@ to see it in action.
 ## Start coding
 
 Now you have implemented **Vue MDBootstrap** to your project, and it’s time to write your 
-code. Please refer to each 
-[component’s documentation](https://vue-mdbootstrap.fajarconsultant.com/#/components) 
+code. Please refer to each component’s 
+[documentation](https://vue-mdbootstrap.fajarconsultant.com/#/components) 
 to learn how to use them.
 
 ## Browser Support
