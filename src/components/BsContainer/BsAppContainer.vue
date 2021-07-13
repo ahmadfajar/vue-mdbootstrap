@@ -5,14 +5,39 @@
 </template>
 
 <script>
+import Helper from "../../utils/Helper";
+
 export default {
     name: "BsAppContainer",
+    data: () => ({
+        uid: '',
+    }),
     mounted() {
         if (this.$el) {
-            const rect = this.$el.getBoundingClientRect();
+            this.$VueMdb.validateApps();
 
-            this.$VueMdb.application.left = rect.left;
-            this.$VueMdb.application.top = rect.top;
+            const rect = this.$el.getBoundingClientRect();
+            this.uid = Helper.uuid(true);
+
+            let obj = {};
+            obj['left'] = rect.left;
+            obj['right'] = rect.right;
+            obj['top'] = rect.top;
+            obj['bottom'] = rect.bottom;
+            obj['height'] = rect.height;
+            obj['appbarHeight'] = 0;
+            obj['sideDrawerWidth'] = {
+                'left': 0,  // left sideDrawer width
+                'right': 0, // right sideDrawer width
+            };
+
+            this.$VueMdb.apps[this.uid] = obj;
+        }
+    },
+    beforeDestroy() {
+        if (Helper.isObject(this.$VueMdb.getApplication(this.uid))) {
+            this.$VueMdb.apps[this.uid] = null;
+            delete this.$VueMdb.apps[this.uid];
         }
     }
 }

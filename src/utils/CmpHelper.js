@@ -1,18 +1,33 @@
-export default function registerPrototype (Vue) {
+import Helper from "./Helper";
+
+export default function registerPrototype(Vue) {
     if (typeof Vue.prototype.$VueMdb === 'undefined') {
         Vue.prototype.$VueMdb = new Vue({
             data: {
-                application: {
-                    footerHeight: 0,
-                    appbarHeight: 0,
-                    sideDrawerWidth: 0,
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    bottom: 0,
-                },
+                apps: {},
                 $notification: null
-            }
+            },
+            methods: {
+                /**
+                 * Get App from global data store.
+                 *
+                 * @param {string} uuid The App identifier
+                 * @returns {Object} The App which match the identifier or null
+                 */
+                getApplication(uuid) {
+                    return this.apps[uuid] || null;
+                },
+                /**
+                 * Validate $VueMdb global data store, if doesn't exist then create it.
+                 *
+                 * @returns {void}
+                 */
+                validateApps() {
+                    if (!this.apps || !Helper.isObject(this.apps)) {
+                        this.apps = {};
+                    }
+                }
+            },
         });
     }
 }

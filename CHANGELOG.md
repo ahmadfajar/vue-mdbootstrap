@@ -2,6 +2,22 @@
 
 > All notable changes to this project will be documented in this file.
 
+## v1.2.2
+
+Released: July xx, 2021
+
+### Features v1.2.2
+
+- **BsSideDrawer:** add property `position`
+- **BsAppbar:** add property `clipped-right`
+
+### Bug Fixes & Improvement v1.2.2
+
+- Improve **BsAppContainer**
+- Improve build scripts
+- **BsSideDrawer, BsAppbar**: detect **BsAppContainer** upon mounting
+
+
 ## v1.2.1
 
 Released: July 01, 2021

@@ -18,16 +18,22 @@ import PopupManager from "../../utils/PopupManager";
 import resize from "../../directives/WindowResize";
 import Helper from '../../utils/Helper';
 import ScreenSize from "../../mixins/ScreenSize";
+import AppContainer from "../BsContainer/mixins/ParentContainer";
 import { getZIndex } from "../../mixins/Popup";
 
 export default {
     name: 'BsSideDrawer',
     directives: {resize},
-    mixins: [ScreenSize],
+    mixins: [ScreenSize, AppContainer],
     props: {
         color: {
             type: String,
             default: 'light-grey'
+        },
+        position: {
+            type: String,
+            default: 'left',
+            validator: v => ['left', 'right'].includes(v)
         },
         tag: {
             type: String,
@@ -66,6 +72,7 @@ export default {
         }
     },
     data: () => ({
+        uid: null,
         isMobile: false,
         overlay: true,
         overlayClose: true,
@@ -97,7 +104,7 @@ export default {
          */
         _styles() {
             const properties = {
-                width: this.width ? Helper.sizeUnit(this.width) : null,
+                width: Helper.sizeUnit(this.width),
                 height: this.isMobile ? '100vh' : (this.clipped ? 'calc(100vh - ' + this.clipHeight + 'px)' : '100vh'),
                 transform: 'translateX(-' + (this.width ? Helper.sizeUnit(this.width) : '0px') + ')',
                 'z-index': this.clipped ? 1000 : null
@@ -116,13 +123,13 @@ export default {
                     ...properties,
                     width: Helper.sizeUnit(this.miniWidth),
                     transform: 'translateX(0px)',
-                    'margin-top': this.clipped ? Helper.sizeUnit(this.clipHeight) : Helper.sizeUnit(0),
+                    'margin-top': Helper.sizeUnit(this.clipHeight),
                 };
             } else if (this.width && this.open) {
                 return {
                     ...properties,
                     transform: 'translateX(0px)',
-                    'margin-top': this.clipped ? Helper.sizeUnit(this.clipHeight) : Helper.sizeUnit(0),
+                    'margin-top': Helper.sizeUnit(this.clipHeight),
                 };
             }
 
@@ -134,7 +141,11 @@ export default {
          * @returns {number} Tinggi area yang akan di cut/clipped
          */
         clipHeight() {
-            return this.$VueMdb.application.top + this.$VueMdb.application.appbarHeight + 1;
+            if (this.clipped && this.uid) {
+                return this.$VueMdb.apps[this.uid].top + this.$VueMdb.apps[this.uid].appbarHeight + 1;
+            }
+
+            return  0;
         }
     },
     watch: {
@@ -145,22 +156,30 @@ export default {
                     PopupManager.open(this);
                 }
 
-                this.$VueMdb.application.sideDrawerWidth = parseInt(this.width, 10);
+                this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = parseInt(this.width, 10);
             } else {
                 PopupManager.close(this);
-                this.$VueMdb.application.sideDrawerWidth = 0;
+                this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = 0;
             }
         },
         mini(value) {
             if (value) {
-                this.$VueMdb.application.sideDrawerWidth = parseInt(this.miniWidth, 10);
+                this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = parseInt(this.miniWidth, 10);
             } else {
-                this.$VueMdb.application.sideDrawerWidth = parseInt(this.width, 10);
+                this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = parseInt(this.width, 10);
             }
         }
     },
-    created() {
-        this.$VueMdb.application.sideDrawerWidth = parseInt(this.width, 10);
+    mounted() {
+        this.$VueMdb.validateApps();
+        const parent = this.getParentContainer('bs-app-container', 2);
+
+        if (parent && Helper.isObject(this.$VueMdb.getApplication(parent.uid))) {
+            this.uid = parent.uid;
+            this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = parseInt(this.width, 10);
+        } else {
+            console.warn('<bs-side-drawer> must be wrapped by <bs-app-container>');
+        }
     },
     beforeDestroy() {
         if (this.isMobile) {

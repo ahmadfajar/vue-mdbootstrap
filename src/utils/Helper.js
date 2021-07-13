@@ -72,7 +72,7 @@ class Helper {
         if (!path || (typeof path !== 'string')) {
             return fallbackFn;
         }
-        path = path.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
+        path = path.replace(/\[(\w+)]/g, '.$1'); // convert indexes to properties
         path = path.replace(/^\./, '');           // strip leading dot
 
         return Helper.getNestedValue(obj, path.split('.'), fallbackFn);
@@ -250,6 +250,7 @@ class Helper {
     static uuid(standard = false) {
         if (standard === true) {
             if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+                console.debug('crypto.getRandomValues() is being used...');
                 return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g,
                     c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
                 )

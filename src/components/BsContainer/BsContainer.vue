@@ -11,11 +11,13 @@
 <script>
 import resize from "../../directives/WindowResize";
 import ScreenSize from "../../mixins/ScreenSize";
+import AppContainer from "./mixins/ParentContainer";
+import Helper from "../../utils/Helper";
 
 export default {
     name: "BsContainer",
     directives: {resize},
-    mixins: [ScreenSize],
+    mixins: [ScreenSize, AppContainer],
     props: {
         /**
          * Mount this container as part of application container or just ordinary container.
@@ -36,6 +38,7 @@ export default {
         },
     },
     data: () => ({
+        uid: null,
         isMobile: false
     }),
     computed: {
@@ -46,18 +49,28 @@ export default {
          * @private
          */
         _styles() {
-            if (this.app) {
-                const {sideDrawerWidth, left, right} = this.$VueMdb.application;
+            if (this.app && this.uid) {
+                const {left, right, sideDrawerWidth} = this.$VueMdb.apps[this.uid];
 
                 return {
                     // paddingTop: `${top + navbarHeight}px`,
-                    paddingRight: `${right}px`,
+                    paddingRight: this.isMobile ? `${right}px` : `${sideDrawerWidth.right + left}px`,
                     // paddingBottom: `${footer + insetFooter + bottom}px`,
-                    paddingLeft: this.isMobile ? `${left}px` : `${sideDrawerWidth + left}px`
+                    paddingLeft: this.isMobile ? `${left}px` : `${sideDrawerWidth.left + left}px`
                 };
             }
 
             return null;
+        }
+    },
+    mounted() {
+        this.$VueMdb.validateApps();
+        const parent = this.getParentContainer('bs-app-container', 3);
+
+        if (parent && Helper.isObject(this.$VueMdb.getApplication(parent.uid))) {
+            this.uid = parent.uid;
+        } else if (this.app) {
+            console.warn('<bs-container> must be wrapped by <bs-app-container>');
         }
     },
     methods: {

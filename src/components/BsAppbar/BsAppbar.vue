@@ -12,19 +12,29 @@
 </template>
 
 <script>
-import ScreenSize from "../../mixins/ScreenSize";
 import resize from "../../directives/WindowResize";
+import ScreenSize from "../../mixins/ScreenSize";
+import AppContainer from "../BsContainer/mixins/ParentContainer";
+import Helper from "../../utils/Helper";
 
 export default {
     name: "BsAppbar",
     directives: {resize},
-    mixins: [ScreenSize],
+    mixins: [ScreenSize, AppContainer],
     props: {
         /**
          * Clipped left side of the Appbar or not.
          * @type {boolean|*}
          */
         clippedLeft: {
+            type: Boolean,
+            default: false
+        },
+        /**
+         * Clipped right side of the Appbar or not.
+         * @type {boolean|*}
+         */
+        clippedRight: {
             type: Boolean,
             default: false
         },
@@ -54,6 +64,7 @@ export default {
         },
     },
     data: () => ({
+        uid: null,
         isMobile: false,
         smoothTransition: false
     }),
@@ -68,18 +79,39 @@ export default {
         _styles() {
             if (this.fixedTop) {
                 return {
-                    'margin-left': this.isMobile ? 0 : (this.clippedLeft ? this.$VueMdb.application.sideDrawerWidth + 'px' : 0)
+                    'margin-left': this.isMobile
+                        ? 0
+                        : (this.clippedLeft && this.$VueMdb.getApplication(this.uid)
+                            ? this.$VueMdb.apps[this.uid].sideDrawerWidth.left + 'px' : 0),
+                    'margin-right': this.isMobile
+                        ? 0
+                        : (this.clippedRight && this.$VueMdb.getApplication(this.uid)
+                            ? this.$VueMdb.apps[this.uid].sideDrawerWidth.right + 'px' : 0),
                 }
             } else {
                 return {
-                    'margin-left': this.clippedLeft ? this.$VueMdb.application.sideDrawerWidth + 'px' : false
+                    'margin-left': this.clippedLeft && this.$VueMdb.getApplication(this.uid)
+                        ? this.$VueMdb.apps[this.uid].sideDrawerWidth.left + 'px'
+                        : false,
+                    'margin-right': this.clippedRight && this.$VueMdb.getApplication(this.uid)
+                        ? this.$VueMdb.apps[this.uid].sideDrawerWidth.right + 'px'
+                        : false,
                 }
             }
         }
     },
     mounted() {
+        this.$VueMdb.validateApps();
+        const parent = this.getParentContainer('bs-app-container', 2);
+
         if (this.$el) {
-            this.$VueMdb.application.appbarHeight = this.$el.getBoundingClientRect().height;
+            if (parent && Helper.isObject(this.$VueMdb.getApplication(parent.uid))) {
+                this.uid = parent.uid;
+                this.$VueMdb.apps[this.uid].appbarHeight = this.$el.getBoundingClientRect().height;
+            } else {
+                console.warn('<bs-appbar> must be wrapped by <bs-app-container>');
+            }
+
             const me = this;
 
             setTimeout(function () {
