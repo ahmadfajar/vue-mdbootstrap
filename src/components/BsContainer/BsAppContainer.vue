@@ -1,5 +1,5 @@
 <template>
-  <div class="md-application-wrap">
+  <div class="md-application-wrap" :class="_classNames">
     <slot></slot>
   </div>
 </template>
@@ -9,9 +9,28 @@ import Helper from "../../utils/Helper";
 
 export default {
     name: "BsAppContainer",
+    props: {
+        viewportHeight: {
+            type: Boolean,
+            default: false
+        },
+    },
     data: () => ({
         uid: '',
     }),
+    computed: {
+        /**
+         * Get component's class names.
+         *
+         * @returns {Object} Component css classes
+         * @private
+         */
+      _classNames() {
+          return {
+              'md-viewport-height': this.viewportHeight,
+          }
+      }
+    },
     mounted() {
         if (this.$el) {
             this.$VueMdb.validateApps();
@@ -65,7 +84,10 @@ body {
     @include backface-visibility();
     @include flexbox((display: flex, flex: 1 1 auto, flex-direction: column));
     max-width: 100%;
-    min-height: 100vh;
     position: relative;
+
+    &.#{$prefix}-viewport-height {
+        min-height: 100vh;
+    }
 }
 </style>

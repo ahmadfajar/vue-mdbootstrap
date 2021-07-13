@@ -14,7 +14,7 @@ export default {
             while (iterator) {
                 // Loop X step upward,
                 // if not found then stops.
-                if (counter === (stepMax + 1)) {
+                if (stepMax > 0 && counter === (stepMax + 1)) {
                     iterator = null;
                     break;
                 }

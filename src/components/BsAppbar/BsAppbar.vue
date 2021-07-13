@@ -64,7 +64,7 @@ export default {
         },
     },
     data: () => ({
-        uid: null,
+        appId: null,
         isMobile: false,
         smoothTransition: false
     }),
@@ -81,43 +81,43 @@ export default {
                 return {
                     'margin-left': this.isMobile
                         ? 0
-                        : (this.clippedLeft && this.$VueMdb.getApplication(this.uid)
-                            ? this.$VueMdb.apps[this.uid].sideDrawerWidth.left + 'px' : 0),
+                        : (this.clippedLeft && this.$VueMdb.getApplication(this.appId)
+                            ? this.$VueMdb.apps[this.appId].sideDrawerWidth.left + 'px' : 0),
                     'margin-right': this.isMobile
                         ? 0
-                        : (this.clippedRight && this.$VueMdb.getApplication(this.uid)
-                            ? this.$VueMdb.apps[this.uid].sideDrawerWidth.right + 'px' : 0),
+                        : (this.clippedRight && this.$VueMdb.getApplication(this.appId)
+                            ? this.$VueMdb.apps[this.appId].sideDrawerWidth.right + 'px' : 0),
                 }
             } else {
                 return {
-                    'margin-left': this.clippedLeft && this.$VueMdb.getApplication(this.uid)
-                        ? this.$VueMdb.apps[this.uid].sideDrawerWidth.left + 'px'
+                    'margin-left': this.clippedLeft && this.$VueMdb.getApplication(this.appId)
+                        ? this.$VueMdb.apps[this.appId].sideDrawerWidth.left + 'px'
                         : false,
-                    'margin-right': this.clippedRight && this.$VueMdb.getApplication(this.uid)
-                        ? this.$VueMdb.apps[this.uid].sideDrawerWidth.right + 'px'
+                    'margin-right': this.clippedRight && this.$VueMdb.getApplication(this.appId)
+                        ? this.$VueMdb.apps[this.appId].sideDrawerWidth.right + 'px'
                         : false,
                 }
             }
         }
     },
     mounted() {
-        this.$VueMdb.validateApps();
-        const parent = this.getParentContainer('bs-app-container', 2);
+        const me = this;
 
-        if (this.$el) {
-            if (parent && Helper.isObject(this.$VueMdb.getApplication(parent.uid))) {
-                this.uid = parent.uid;
-                this.$VueMdb.apps[this.uid].appbarHeight = this.$el.getBoundingClientRect().height;
-            } else {
-                console.warn('<bs-appbar> must be wrapped by <bs-app-container>');
-            }
+        this.$nextTick().then(() => {
+            me.$VueMdb.validateApps();
+            const parent = me.getParentContainer('bs-app-container', 2);
 
-            const me = this;
+            if (me.$el) {
+                if (parent && Helper.isObject(me.$VueMdb.getApplication(parent.uid))) {
+                    me.appId = parent.uid;
+                    me.$VueMdb.apps[me.appId].appbarHeight = me.$el.getBoundingClientRect().height;
+                } else {
+                    console.warn('<bs-appbar> must be wrapped by <bs-app-container>');
+                }
 
-            setTimeout(function () {
                 me.smoothTransition = true;
-            }, 100);
-        }
+            }
+        });
     },
     methods: {
         _resize() {

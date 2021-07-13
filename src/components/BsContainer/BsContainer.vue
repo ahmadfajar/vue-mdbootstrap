@@ -38,7 +38,7 @@ export default {
         },
     },
     data: () => ({
-        uid: null,
+        appId: null,
         isMobile: false
     }),
     computed: {
@@ -49,8 +49,8 @@ export default {
          * @private
          */
         _styles() {
-            if (this.app && this.uid) {
-                const {left, right, sideDrawerWidth} = this.$VueMdb.apps[this.uid];
+            if (this.app && this.appId) {
+                const {left, right, sideDrawerWidth} = this.$VueMdb.apps[this.appId];
 
                 return {
                     // paddingTop: `${top + navbarHeight}px`,
@@ -64,14 +64,18 @@ export default {
         }
     },
     mounted() {
-        this.$VueMdb.validateApps();
-        const parent = this.getParentContainer('bs-app-container', 3);
+        const me = this;
 
-        if (parent && Helper.isObject(this.$VueMdb.getApplication(parent.uid))) {
-            this.uid = parent.uid;
-        } else if (this.app) {
-            console.warn('<bs-container> must be wrapped by <bs-app-container>');
-        }
+        this.$nextTick().then(() => {
+            me.$VueMdb.validateApps();
+            const parent = me.getParentContainer('bs-app-container', 3);
+
+            if (parent && Helper.isObject(me.$VueMdb.getApplication(parent.uid))) {
+                me.appId = parent.uid;
+            } else if (me.app) {
+                console.warn('<bs-container> must be wrapped by <bs-app-container>');
+            }
+        });
     },
     methods: {
         /**

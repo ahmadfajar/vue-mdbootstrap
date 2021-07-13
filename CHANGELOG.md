@@ -10,12 +10,12 @@ Released: July xx, 2021
 
 - **BsSideDrawer:** add property `position`
 - **BsAppbar:** add property `clipped-right`
+- **BsAppContainer:** add property `viewport-height`
 
 ### Bug Fixes & Improvement v1.2.2
 
 - Improve **BsAppContainer**
-- Improve build scripts
-- **BsSideDrawer, BsAppbar**: detect **BsAppContainer** upon mounting
+- **BsSideDrawer, BsAppbar, BsContainer**: detect **BsAppContainer** and `appId` upon mounting
 
 
 ## v1.2.1

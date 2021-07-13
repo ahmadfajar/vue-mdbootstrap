@@ -72,7 +72,7 @@ export default {
         }
     },
     data: () => ({
-        uid: null,
+        appId: null,
         isMobile: false,
         overlay: true,
         overlayClose: true,
@@ -141,11 +141,11 @@ export default {
          * @returns {number} Tinggi area yang akan di cut/clipped
          */
         clipHeight() {
-            if (this.clipped && this.uid) {
-                return this.$VueMdb.apps[this.uid].top + this.$VueMdb.apps[this.uid].appbarHeight + 1;
+            if (this.clipped && this.appId) {
+                return this.$VueMdb.apps[this.appId].top + this.$VueMdb.apps[this.appId].appbarHeight + 1;
             }
 
-            return  0;
+            return 0;
         }
     },
     watch: {
@@ -155,31 +155,40 @@ export default {
                     this._setZIndex();
                     PopupManager.open(this);
                 }
-
-                this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = parseInt(this.width, 10);
+                if (this.$VueMdb.getApplication(this.appId)) {
+                    this.$VueMdb.apps[this.appId].sideDrawerWidth[this.position] = parseInt(this.width, 10);
+                }
             } else {
                 PopupManager.close(this);
-                this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = 0;
+                if (this.$VueMdb.getApplication(this.appId)) {
+                    this.$VueMdb.apps[this.appId].sideDrawerWidth[this.position] = 0;
+                }
             }
         },
         mini(value) {
-            if (value) {
-                this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = parseInt(this.miniWidth, 10);
-            } else {
-                this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = parseInt(this.width, 10);
+            if (this.$VueMdb.getApplication(this.appId)) {
+                if (value) {
+                    this.$VueMdb.apps[this.appId].sideDrawerWidth[this.position] = parseInt(this.miniWidth, 10);
+                } else {
+                    this.$VueMdb.apps[this.appId].sideDrawerWidth[this.position] = parseInt(this.width, 10);
+                }
             }
         }
     },
     mounted() {
-        this.$VueMdb.validateApps();
-        const parent = this.getParentContainer('bs-app-container', 2);
+        const me = this;
 
-        if (parent && Helper.isObject(this.$VueMdb.getApplication(parent.uid))) {
-            this.uid = parent.uid;
-            this.$VueMdb.apps[this.uid].sideDrawerWidth[this.position] = parseInt(this.width, 10);
-        } else {
-            console.warn('<bs-side-drawer> must be wrapped by <bs-app-container>');
-        }
+        this.$nextTick().then(() => {
+            me.$VueMdb.validateApps();
+            const parent = me.getParentContainer('bs-app-container', 2);
+
+            if (parent && Helper.isObject(me.$VueMdb.getApplication(parent.uid))) {
+                me.appId = parent.uid;
+                me.$VueMdb.apps[me.appId].sideDrawerWidth[me.position] = parseInt(me.width, 10);
+            } else {
+                console.warn('<bs-side-drawer> must be wrapped by <bs-app-container>');
+            }
+        });
     },
     beforeDestroy() {
         if (this.isMobile) {

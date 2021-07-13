@@ -2,7 +2,7 @@
  * Class Helper
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 05/02/2021 21:19
+ * @since  05/07/2018, modified: 14/07/2021 4:09
  */
 class Helper {
     /**
@@ -250,7 +250,6 @@ class Helper {
     static uuid(standard = false) {
         if (standard === true) {
             if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
-                console.debug('crypto.getRandomValues() is being used...');
                 return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g,
                     c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
                 )
