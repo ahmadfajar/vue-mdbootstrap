@@ -158,7 +158,7 @@ export default {
 <style lang="scss">
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
-@import "~compass-sass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 

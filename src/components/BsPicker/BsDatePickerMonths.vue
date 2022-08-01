@@ -34,7 +34,7 @@ import createNativeLocaleFormatter from "./utils/createNativeLocaleFormatter";
 import PickerConst from "./utils/DatePickerConst";
 import BsButton from "../BsButton/BsButton";
 import Helper from "../../utils/Helper";
-import { padLeft } from "../../utils/StringHelper";
+import { padLeft } from "../../mixins/StringHelper";
 
 export default {
     name: "BsDatePickerMonths",
@@ -48,7 +48,7 @@ export default {
          * @returns {Object[]} Array of Months
          */
         tableRows() {
-            let rows     = [];
+            const rows     = [];
             let children = [];
             const nitems = 12;
 

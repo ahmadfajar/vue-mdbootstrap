@@ -23,7 +23,7 @@ export default {
         const positions = [
             'top-right', 'top-left', 'top-center', 'top-full-width',
             'bottom-right', 'bottom-left', 'bottom-center', 'bottom-full-width'];
-        let notifications = {};
+        const notifications = {};
         for (let i = 0; i <= positions.length - 1; i++) {
             notifications[positions[i]] = {}
         }
@@ -191,7 +191,7 @@ export default {
          * @returns {void}
          */
         setProgressValue(data, newValue) {
-            let item = this.notifications[data.position][data.index];
+            const item = this.notifications[data.position][data.index];
 
             if (typeof item !== 'undefined') {
                 this.$set(item, 'progressBarValue', newValue);
@@ -206,7 +206,7 @@ export default {
          * @returns {Object} Notification's instance
          */
         error(option, title) {
-            let data = this._processOptions(option);
+            const data = this._processOptions(option);
             data['variant'] = 'error';
 
             if (typeof title !== 'undefined') {
@@ -224,7 +224,7 @@ export default {
          * @returns {Object} Notification's instance
          */
         info(option, title) {
-            let data = this._processOptions(option);
+            const data = this._processOptions(option);
             data['variant'] = 'info';
 
             if (typeof title !== 'undefined') {
@@ -242,7 +242,7 @@ export default {
          * @returns {Object} Notification's instance
          */
         success(option, title) {
-            let data = this._processOptions(option);
+            const data = this._processOptions(option);
             data['variant'] = 'success';
 
             if (typeof title !== 'undefined') {
@@ -260,7 +260,7 @@ export default {
          * @returns {Object} Notification's instance
          */
         warning(option, title) {
-            let data = this._processOptions(option);
+            const data = this._processOptions(option);
             data['variant'] = 'warning';
 
             if (typeof title !== 'undefined') {
@@ -346,7 +346,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~compass-sass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 

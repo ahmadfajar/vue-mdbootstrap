@@ -169,7 +169,7 @@ export default {
          * @returns {Object|*} Attributes to bind
          */
         attributes() {
-            let attr = {
+            const attr = {
                 ...this.cmpAttrs,
                 ...this.fieldAttrs,
                 'rows': this.canGrow ? 2 : this.rows,

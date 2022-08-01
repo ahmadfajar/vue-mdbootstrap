@@ -153,7 +153,7 @@ import ScreenSize from '../../mixins/ScreenSize';
 import Grid from "./mixins/Grid";
 import Helper from '../../utils/Helper';
 import sum from 'lodash/sum';
-import { addResizeListener, removeResizeListener } from '../../utils/ResizeListener';
+import { addResizeListener, removeResizeListener } from '../../mixins/ResizeListener';
 
 export default {
     name: "BsGrid",
@@ -373,7 +373,7 @@ export default {
         addResizeListener(this.$el, this._updateTableWidth);
         this._updateBodyHeight();
     },
-    beforeDestroy() {
+    beforeUnmount() {
         removeResizeListener(this.$el, this._updateTableWidth);
         this.columnsWidth = null;
         this.selectionMode = null;
@@ -483,7 +483,7 @@ export default {
                     : this.$el.getBoundingClientRect().width;
                 let avgColsNoWidth = 0;
                 let decreaseWidth = true;
-                let tmpCols = this.columnsWidth.map(col => col);
+                const tmpCols = this.columnsWidth.map(col => col);
                 const colsNoWidth = tmpCols.filter(c => c === 0);
 
                 if (this.rowSelection) {
@@ -652,7 +652,7 @@ export default {
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins/breakpoints";
-@import "~compass-sass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 

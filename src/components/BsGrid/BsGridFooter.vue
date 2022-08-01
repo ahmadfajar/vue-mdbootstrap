@@ -26,7 +26,7 @@
 import BsGridFooterCell from "./BsGridFooterCell";
 import ScreenSize from "../../mixins/ScreenSize";
 import Util from "../../utils/Helper";
-import { addResizeListener, removeResizeListener } from "../../utils/ResizeListener";
+import { addResizeListener, removeResizeListener } from "../../mixins/ResizeListener";
 
 export default {
     name: "BsGridFooter",
@@ -79,7 +79,7 @@ export default {
     mounted() {
         addResizeListener(this.$el, this._updateWidth);
     },
-    beforeDestroy() {
+    beforeUnmount() {
         removeResizeListener(this.$el, this._updateWidth);
     },
     methods: {

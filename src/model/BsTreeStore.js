@@ -118,7 +118,7 @@ export default class BsTreeStore extends AbstractStore {
 
         const methods = this.proxy.requestMethods();
         const params  = this.queryParams();
-        let config    = {
+        const config  = {
             url: this.restUrl.browse || '',
             method: methods['browse']
         };
@@ -140,7 +140,7 @@ export default class BsTreeStore extends AbstractStore {
     loadChildren(item) {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let config       = {};
+        const config     = {};
         let url          = this.restUrl['fetch'] || '';
         const methods    = this.proxy.requestMethods();
         const identifier = this._config.idProperty;
@@ -148,7 +148,7 @@ export default class BsTreeStore extends AbstractStore {
         if (url.includes('{id}') && !Helper.isEmpty(identifier) && !Helper.isEmpty(item[identifier])) {
             url = url.replace('{id}', item[identifier]);
         } else if (!Helper.isEmpty(identifier) && !Helper.isEmpty(item[identifier])) {
-            let params         = {};
+            const params       = {};
             params[identifier] = item[identifier];
             config['params']   = params;
         } else {

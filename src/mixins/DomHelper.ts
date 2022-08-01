@@ -1,15 +1,22 @@
-export const EventListener = {
+interface IEventTarget extends EventTarget {
+    attachEvent(type: string, callback: EventListenerOrEventListenerObject);
+
+    detachEvent(type: string, callback: EventListenerOrEventListenerObject);
+}
+
+export class EventListener {
     /**
      * Listen to DOM events during the bubble phase.
      *
-     * @param {EventTarget} target DOM element to register listener on.
-     * @param {string} eventType   Event type, e.g. 'click' or 'mouseover'.
-     * @param {function} callback  Callback function.
+     * @param {IEventTarget} target  DOM element to register listener on.
+     * @param {string} eventType     Event type, e.g. 'click' or 'mouseover'.
+     * @param {function} callback    Callback function.
      * @returns {object} Object with a `remove` method.
      */
-    listen(target, eventType, callback) {
+    static listen(target: IEventTarget, eventType: string, callback: EventListenerOrEventListenerObject) {
         if (target.addEventListener) {
             target.addEventListener(eventType, callback, false);
+
             return {
                 remove() {
                     target.removeEventListener(eventType, callback, false)
@@ -24,7 +31,7 @@ export const EventListener = {
             }
         }
     }
-};
+}
 
 export function firstComponentChild(children) {
     return children && children.filter(c => c && c.tag)[0];
@@ -43,21 +50,27 @@ export function getScrollEventTarget(element) {
     return window;
 }
 
-export function getScrollTop(element) {
+/**
+ * Get scroll Top position.
+ *
+ * @param {Element|Window} element The source DOM element
+ * @returns {number} Scroll top position
+ */
+export function getScrollTop(element): number {
     if (element === window) {
-        return Math.max(window.pageYOffset || 0, document.documentElement.scrollTop);
+        return Math.max(window.scrollY || 0, document.documentElement.scrollTop);
     } else {
         return element.scrollTop;
     }
 }
 
-export function getOffset(el) {
-    const box        = el.getBoundingClientRect();
-    const body       = document.body;
-    const clientTop  = el.clientTop || body.clientTop || 0;
+export function getOffset(el: Element) {
+    const box = el.getBoundingClientRect();
+    const body = document.body;
+    const clientTop = el.clientTop || body.clientTop || 0;
     const clientLeft = el.clientLeft || body.clientLeft || 0;
-    const scrollTop  = window.pageYOffset || el.scrollTop;
-    const scrollLeft = window.pageXOffset || el.scrollLeft;
+    const scrollTop = window.scrollY || el.scrollTop;
+    const scrollLeft = window.scrollX || el.scrollLeft;
 
     return {
         top: box.top + scrollTop - clientTop,

@@ -92,7 +92,7 @@ export default {
          */
         _beginSearch(term) {
             if (!Helper.isEmpty(this.field) && !Helper.isEmpty(term)) {
-                let filters = [];
+                const filters = [];
 
                 if (Helper.isArray(this.field)) {
                     for (const fld of this.field) {

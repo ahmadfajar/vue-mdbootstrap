@@ -44,7 +44,7 @@ import DatePickerTable from "./mixins/DatePickerTable";
 import PickerConst from "./utils/DatePickerConst";
 import BsButton from "../BsButton/BsButton";
 import Helper from "../../utils/Helper";
-import { padLeft } from "../../utils/StringHelper";
+import { padLeft } from "../../mixins/StringHelper";
 
 export default {
     name: "BsDatePickerDays",
@@ -82,10 +82,10 @@ export default {
          * @returns {Object[]} Array of Days
          */
         tableRows() {
-            let rows      = [];
+            const rows      = [];
             let children  = [];
             let days      = this.numDaysBefore();
-            let mdate     = moment(this.tableDate);
+            const mdate     = moment(this.tableDate);
             const totDays = mdate.daysInMonth();
 
             while (days--) {

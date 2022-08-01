@@ -1,6 +1,6 @@
 import BsSideDrawer from "./BsSideDrawer";
 import BsSidebarFooter from "./BsSidebarFooter";
-import registerPrototype from "../../utils/CmpHelper";
+import registerPrototype from "../../mixins/CmpHelper";
 
 export default Vue => {
     registerPrototype(Vue);

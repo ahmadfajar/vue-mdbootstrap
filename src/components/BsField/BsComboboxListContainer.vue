@@ -219,7 +219,7 @@ export default {
             return this.dataItems.length > this.minimumItemsForSearch;
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.cacheListItems  = [];
         this.cacheBoolValues = [];
     },

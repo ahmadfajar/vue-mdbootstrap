@@ -233,7 +233,7 @@ export default class BsStore extends AbstractStore {
 
         if (this._isCandidateForModel(item)) {
             Vue.set(this, 'updating', true);
-            let model = this._createModel(item);
+            const model = this._createModel(item);
 
             model.save()
                 .catch(error => {
@@ -366,7 +366,7 @@ export default class BsStore extends AbstractStore {
     fetch(id) {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let config       = {};
+        const config     = {};
         let url          = this.restUrl['fetch'] || '';
         const methods    = this.proxy.requestMethods();
         const identifier = this._config.idProperty;
@@ -374,7 +374,7 @@ export default class BsStore extends AbstractStore {
         if (url.includes('{id}') && !Helper.isEmpty(id)) {
             url = url.replace('{id}', id);
         } else if (!Helper.isEmpty(identifier) && !Helper.isEmpty(id)) {
-            let params         = {};
+            const params       = {};
             params[identifier] = id;
             config['params']   = params;
         }
@@ -402,7 +402,7 @@ export default class BsStore extends AbstractStore {
             ProxyAdapter.checkRestUrl(this.restUrl);
 
             const methods = this.proxy.requestMethods();
-            let config    = {
+            const config  = {
                 url: this.restUrl.browse || '',
                 method: methods['browse']
             };

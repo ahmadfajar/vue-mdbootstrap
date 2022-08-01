@@ -46,7 +46,7 @@ export default {
          * @returns {number[]} Array of Years
          */
         tableRows() {
-            let rows = [];
+            const rows = [];
             let children = [];
             const startYear = this.dateValue.year() - 4;
             const endYear = this.dateValue.year() + 7;

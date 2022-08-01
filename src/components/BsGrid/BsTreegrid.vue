@@ -70,7 +70,7 @@ import Helper from "../../utils/Helper";
 import Common from "../../mixins/Common";
 import Grid from "./mixins/Grid";
 import sum from 'lodash/sum';
-import { addResizeListener, removeResizeListener } from "../../utils/ResizeListener";
+import { addResizeListener, removeResizeListener } from "../../mixins/ResizeListener";
 
 export default {
     name: "BsTreegrid",
@@ -136,7 +136,7 @@ export default {
         addResizeListener(this.$el, this._updateTableWidth);
         this._updateBodyHeight();
     },
-    beforeDestroy() {
+    beforeUnmount() {
         removeResizeListener(this.$el, this._updateTableWidth);
         this.columnsWidth = null;
         this.table.columns = null;
@@ -228,7 +228,7 @@ export default {
                     : this.$el.getBoundingClientRect().width;
 
                 let avgColWidth = 0;
-                let tmpCols = this.columnsWidth.map(col => col);
+                const tmpCols = this.columnsWidth.map(col => col);
                 let decWidth = true;
                 let totWidth = sum(tmpCols);
                 const colsNoWidth = tmpCols.filter(c => c === 0);
@@ -277,7 +277,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~compass-sass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 

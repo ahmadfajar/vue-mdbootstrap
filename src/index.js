@@ -10,9 +10,9 @@ import BsTreeStore from "./model/BsTreeStore";
 import BsArrayStore from "./model/BsArrayStore";
 import Helper from "./utils/Helper";
 import ScreenSize from "./mixins/ScreenSize";
-import registerPrototype from "./utils/CmpHelper";
+import registerPrototype from "./mixins/CmpHelper";
 
-let VueMdb = Vue => {
+const VueMdb = Vue => {
     registerPrototype(Vue);
 
     Object.values(components).forEach(component => {

@@ -1,17 +1,17 @@
 /**
- * Class Helper
+ * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 14/07/2021 4:09
+ * @since  05/07/2018, modified: 31/07/2022 18:15
  */
 class Helper {
     /**
      * Creates range of number.
      *
-     * @param {int} length Range length
+     * @param {number} length Range length
      * @returns {number[]}  Array of numbers
      */
-    static createRange(length) {
+    static createRange(length: number): number[] {
         return Array.from({length}, (v, k) => k);
     }
 
@@ -22,25 +22,25 @@ class Helper {
      * @param {number} delay        Number of delay in ms
      * @returns {void}
      */
-    static defer(callback, delay) {
+    static defer(callback: CallableFunction, delay: number) {
         setTimeout(callback, delay);
     }
 
     /**
      * Get a value from an Object property.
      *
-     * @param {Object} obj     The object to check
-     * @param {Array} path     Array of field name
-     * @param {*} [fallbackFn] The fallback function
+     * @param {object} obj              The object to check
+     * @param {Array} path              Array of field name
+     * @param {Function} [fallbackFn]   The fallback function
      * @returns {*} The object property value
      */
-    static getNestedValue(obj, path, fallbackFn) {
+    static getNestedValue(obj: object, path: string[], fallbackFn?: CallableFunction) {
         if (!Array.isArray(path)) {
             return fallbackFn;
         }
 
         const last = path.length - 1;
-        let _temp  = obj;
+        let _temp = obj;
 
         if (last < 0) {
             return obj === undefined ? fallbackFn : obj;
@@ -65,15 +65,17 @@ class Helper {
      *
      * @param {Object} obj            The object to evaluate
      * @param {String|function} path  The property name
-     * @param {*} [fallbackFn]        The fallback function
+     * @param {Function} [fallbackFn] The fallback function
      * @returns {*} The object property value
      */
-    static getObjectValueByPath(obj, path, fallbackFn) {
+    static getObjectValueByPath(obj: object, path: string, fallbackFn?: CallableFunction) {
         if (!path || (typeof path !== 'string')) {
             return fallbackFn;
         }
-        path = path.replace(/\[(\w+)]/g, '.$1'); // convert indexes to properties
-        path = path.replace(/^\./, '');           // strip leading dot
+        // convert indexes to properties
+        path = path.replace(/\[(\w+)]/g, '.$1');
+        // strip leading dot
+        path = path.replace(/^\./, '');
 
         return Helper.getNestedValue(obj, path.split('.'), fallbackFn);
     }
@@ -85,77 +87,77 @@ class Helper {
      * @param {boolean} [allowEmptyString]  Allow empty string or not
      * @returns {boolean} True if value is empty otherwise False
      */
-    static isEmpty(value, allowEmptyString) {
+    static isEmpty(value, allowEmptyString = true): boolean {
         return (value === null) || (typeof value === 'undefined') || (!allowEmptyString ? value === '' : false) || (Array.isArray(value) && value.length === 0);
     }
 
     /**
      * Check a value is an empty object or not.
      *
-     * @param {Object} value The value to check
+     * @param {object} value The value to check
      * @returns {boolean} True if value is empty otherwise False
      */
-    static isEmptyObject(value) {
+    static isEmptyObject(value: object): boolean {
         return !Helper.isObject(value) || (Helper.isObject(value) && Object.entries(value).length === 0);
     }
 
     /**
-     * Check data type of a value is Array or not. NULL value is considered as not an Array.
+     * Check the type of value is Array or not. NULL value is considered as not an Array.
      *
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an Array otherwise FALSE
      */
-    static isArray(value) {
+    static isArray(value): boolean {
         return (typeof value !== 'undefined' && value !== null && Array.isArray(value));
     }
 
     /**
-     * Check data type of a value is Function or not. NULL or UNDEFINED is considered as not an Function.
+     * Check the type of value is Function or not. NULL or UNDEFINED is considered as not a Function.
      *
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is a Function otherwise FALSE
      */
-    static isFunction(value) {
+    static isFunction(value): boolean {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'function');
     }
 
     /**
-     * Check data type of a value, whether it is a number or not.
+     * Check the type of value, whether it is a number or not.
      *
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is a Number otherwise FALSE
      */
-    static isNumber(value) {
+    static isNumber(value): boolean {
         return typeof value === 'number';
     }
 
     /**
-     * Check data type of a value is Object or not. NULL value is considered as not an object.
+     * Check the type of value is Object or not. NULL value is considered as not an object.
      *
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an object otherwise FALSE
      */
-    static isObject(value) {
+    static isObject(value): boolean {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'object');
     }
 
     /**
-     * Check data type of a value, whether it is primitive or not.
+     * Check the type of value, whether it is primitive type or not.
      *
-     * @param {string|number|boolean} value The value to check
+     * @param {*} value The value to check
      * @returns {boolean} True if the data type is primitive otherwise False
      */
-    static isPrimitive(value) {
+    static isPrimitive(value): boolean {
         return (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean');
     }
 
     /**
-     * Check data type of a value, whether it is a string or not.
+     * Check the type of value, whether it is a string or not.
      *
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is a String otherwise FALSE
      */
-    static isString(value) {
+    static isString(value): boolean {
         return typeof value === 'string';
     }
 
@@ -166,7 +168,7 @@ class Helper {
      * @param {number} fractionDigit Maximum fraction/decimal digit
      * @returns {number} The rounded value
      */
-    static roundNumber(value, fractionDigit) {
+    static roundNumber(value: number, fractionDigit: number): number {
         return Number(Math.round(Number(value + 'e' + fractionDigit)) + 'e-' + fractionDigit);
     }
 
@@ -175,9 +177,9 @@ class Helper {
      *
      * @param {string|number} value The value to convert
      * @param {string} [unit]       The dimension to add
-     * @returns {string|null} Value untuk dipergunakan pada inline css
+     * @returns {string|null} Css inline dimension
      */
-    static sizeUnit(value, unit = 'px') {
+    static sizeUnit(value: string | number, unit = 'px'): string | null {
         const _px = unit;
 
         if (typeof value === 'string') {
@@ -198,12 +200,12 @@ class Helper {
     /**
      * Sort an array of object.
      *
-     * @param {Array} items           Array of object
-     * @param {string} key            Field name or key to sort
+     * @param {Array} items             Array of object
+     * @param {string} key              Field name or key to sort
      * @param {boolean} [isDescending]  Sort desc or asc
      * @returns {*} The sorted array
      */
-    static sortArrayObj(items, key, isDescending) {
+    static sortArrayObj(items: Array<object>, key: string, isDescending = false) {
         if (key == null) {
             return items;
         }
@@ -247,9 +249,11 @@ class Helper {
      * @param {boolean} [standard] Generate standard UUID v4 or random UUID
      * @returns {string} UUID v4 or random UUID
      */
-    static uuid(standard = false) {
+    static uuid(standard = false): string {
         if (standard === true) {
             if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g,
                     c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
                 )
@@ -260,7 +264,7 @@ class Helper {
                 }
 
                 return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-                    let r = (value + Math.random() * 16) % 16 | 0;
+                    const r = (value + Math.random() * 16) % 16 | 0;
                     value = Math.floor(value / 16);
 
                     return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
@@ -272,4 +276,4 @@ class Helper {
     }
 }
 
-export default Helper;
+export default Helper

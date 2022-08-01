@@ -120,7 +120,7 @@ export default {
          * @private
          */
         _columnCls() {
-            let cls = [];
+            const cls = [];
 
             if (this.columnCls) {
                 cls.push(this.columnCls);

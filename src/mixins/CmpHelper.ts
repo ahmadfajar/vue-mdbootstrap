@@ -1,11 +1,17 @@
-import Helper from "./Helper";
+import Helper from "../utils/Helper";
 
 export default function registerPrototype(Vue) {
     if (typeof Vue.prototype.$VueMdb === 'undefined') {
         Vue.prototype.$VueMdb = new Vue({
-            data: {
-                apps: {},
-                $notification: null
+            props: {
+                apps: {
+                    type: Object,
+                    default: null
+                },
+                notification: {
+                    type: Object,
+                    default: null
+                }
             },
             methods: {
                 /**
@@ -14,7 +20,7 @@ export default function registerPrototype(Vue) {
                  * @param {string} uuid The App identifier
                  * @returns {Object} The App which match the identifier or null
                  */
-                getApplication(uuid) {
+                getApplication(uuid: string): object {
                     return this.apps[uuid] || null;
                 },
                 /**

@@ -69,7 +69,7 @@ export default {
             this.values.push({index: i, keyword: null});
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.values = null;
     },
     methods: {
@@ -108,7 +108,7 @@ export default {
          * @private
          */
         _doFilter() {
-            let filters = [];
+            const filters = [];
 
             for (const item of this.values) {
                 const column = this.columns[item.index];
@@ -168,7 +168,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~compass-sass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 

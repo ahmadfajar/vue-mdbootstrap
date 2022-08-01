@@ -190,7 +190,7 @@ export default {
             }
         });
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (this.isMobile) {
             PopupManager.close(this);
         }
@@ -253,7 +253,7 @@ export default {
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins/breakpoints";
-@import "~compass-sass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 

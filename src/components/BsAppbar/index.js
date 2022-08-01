@@ -1,7 +1,7 @@
 import BsAppbar from "./BsAppbar";
 import BsAppbarItems from "./BsAppbarItems";
 import BsAppbarTitle from "./BsAppbarTitle";
-import registerPrototype from "../../utils/CmpHelper";
+import registerPrototype from "../../mixins/CmpHelper";
 
 export default Vue => {
     registerPrototype(Vue);

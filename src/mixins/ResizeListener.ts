@@ -13,19 +13,19 @@ const resizeHandler = function (entries) {
     }
 };
 
-export const addResizeListener = function (element, fn) {
+export function addResizeListener(element, fn) {
     if (isServer) {
         return;
     }
     if (!element.__resizeListeners__) {
         element.__resizeListeners__ = [];
-        element.__ro__              = new ResizeObserver(resizeHandler);
+        element.__ro__ = new ResizeObserver(resizeHandler);
         element.__ro__.observe(element);
     }
     element.__resizeListeners__.push(fn);
-};
+}
 
-export const removeResizeListener = function (element, fn) {
+export function removeResizeListener(element, fn?: CallableFunction) {
     if (!element || !element.__resizeListeners__) {
         return;
     }
@@ -33,4 +33,4 @@ export const removeResizeListener = function (element, fn) {
     if (!element.__resizeListeners__.length) {
         element.__ro__.disconnect();
     }
-};
+}

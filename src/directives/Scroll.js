@@ -1,4 +1,4 @@
-import { getScrollEventTarget } from "../utils/DomHelper";
+import { getScrollEventTarget } from "../mixins/DomHelper";
 
 function bindScroll(el, binding) {
     const callback = typeof binding.value === 'function'

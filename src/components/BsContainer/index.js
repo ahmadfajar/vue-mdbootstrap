@@ -1,7 +1,7 @@
 import BsAppContainer from "./BsAppContainer";
 import BsContainer from "./BsContainer";
 import BsContent from "./BsContent";
-import registerPrototype from "../../utils/CmpHelper";
+import registerPrototype from "../../mixins/CmpHelper";
 
 export default Vue => {
     registerPrototype(Vue);

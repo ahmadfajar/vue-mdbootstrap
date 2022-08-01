@@ -1,9 +1,9 @@
 import Vue from "vue";
 import BsTooltipContent from "../components/BsTooltip/BsTooltipContent";
 import Util from "../utils/Helper";
-import { EventListener } from "../utils/DomHelper";
+import { EventListener } from "../mixins/DomHelper";
 
-let tooltips   = [];
+const tooltips = [];
 const CmpClass = Vue.extend(BsTooltipContent);
 
 function createTooltip(el, binding) {
@@ -15,7 +15,7 @@ function createTooltip(el, binding) {
         trigger: el
     };
 
-    let data = Util.isObject(binding.value) ? {
+    const data = Util.isObject(binding.value) ? {
         ...defValue,
         ...binding.value
     } : {
@@ -48,7 +48,7 @@ function createTooltip(el, binding) {
         'mouseLeave': EventListener.listen(el, 'mouseleave', hideTooltip)
     };
 
-    const length     = tooltips.push(instance);
+    const length = tooltips.push(instance);
     el['varsOffset'] = length - 1;
     instance.$mount();
 }
@@ -56,7 +56,7 @@ function createTooltip(el, binding) {
 function destroyTooltip(el) {
     if (tooltips.length > 0) {
         const index = el['varsOffset'] || 0;
-        let obj     = tooltips[index];
+        const obj = tooltips[index];
 
         if (Util.isObject(obj)) {
             obj.$destroy();

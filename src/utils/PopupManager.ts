@@ -1,6 +1,6 @@
-import Vue from 'vue';
-import BsOverlay from '../components/BsAnimation/BsOverlay';
-import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
+import {nextTick} from 'vue';
+import BsOverlay from '../components/BsAnimation/BsOverlay.vue';
+import {disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks} from 'body-scroll-lock';
 
 const OverlayCmp = Vue.extend(BsOverlay);
 
@@ -29,9 +29,9 @@ const PopupManager = {
         }
 
         if (instance.overlay) {
-            this.overlay.color   = instance.overlayColor;
+            this.overlay.color = instance.overlayColor;
             this.overlay.opacity = instance.overlayOpacity;
-            this.overlay.zIndex  = instance.overlayZIndex;
+            this.overlay.zIndex = instance.overlayZIndex;
         } else {
             this.closeOverlay();
         }
@@ -42,7 +42,7 @@ const PopupManager = {
             return;
         }
         this.instances.splice(index, 1);
-        Vue.nextTick(() => {
+        nextTick().then(() => {
             if (this.instances.length === 0) {
                 this.closeOverlay();
             }
@@ -58,8 +58,8 @@ const PopupManager = {
 
         this.allowScrolling();
         const overlay = this.overlay;
-        overlay.show  = false;
-        this.overlay  = null;
+        overlay.show = false;
+        this.overlay = null;
         setTimeout(() => {
             document.body.removeChild(overlay.$el);
             overlay.$destroy();
@@ -103,17 +103,17 @@ const PopupManager = {
             el: document.createElement('div')
         });
 
-        overlay.fixed   = true;
-        overlay.color   = instance.overlayColor;
+        overlay.fixed = true;
+        overlay.color = instance.overlayColor;
         overlay.opacity = instance.overlayOpacity;
-        overlay.zIndex  = instance.overlayZIndex;
+        overlay.zIndex = instance.overlayZIndex;
         overlay.onClick = this.handleOverlayClick.bind(this);
 
         document.body.appendChild(overlay.$el);
         this.preventScrolling();
-        Vue.nextTick(() => {
+        nextTick().then(() => {
             overlay.show = true;
-        });
+        })
     }
 };
 

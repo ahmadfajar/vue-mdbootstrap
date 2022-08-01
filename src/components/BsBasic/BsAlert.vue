@@ -212,7 +212,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~compass-sass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/css3";
 @import "~bootstrap/scss/mixins/alert";
 @import "~bootstrap/scss/mixins/gradients";
 @import "../../../scss/colors";

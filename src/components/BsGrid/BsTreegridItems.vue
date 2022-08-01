@@ -68,7 +68,7 @@ export default {
         this.treeNodes = [];
         this.childrenFieldmap = this.TreeGrid.childrenFieldmap;
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.treeNodes = null;
     },
     methods: {
@@ -103,7 +103,7 @@ export default {
          * @private
          */
         _appendChild(parentNode, datas) {
-            let tmpNodes = [];
+            const tmpNodes = [];
 
             for (let i = 0; i < this.treeNodes.length; i++) {
                 const node = this.treeNodes[i];
@@ -169,7 +169,7 @@ export default {
          * @returns {void}
          */
         collapse(node) {
-            let collapsedNodes = [];
+            const collapsedNodes = [];
 
             collapsedNodes.push(node);
             if (this.hasChildren(node.data)) {

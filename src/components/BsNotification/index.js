@@ -1,5 +1,5 @@
 import BsNotification from "./BsNotification";
-import registerPrototype from "../../utils/CmpHelper";
+import registerPrototype from "../../mixins/CmpHelper";
 
 export default Vue => {
     const myComponent = Vue.extend(BsNotification);

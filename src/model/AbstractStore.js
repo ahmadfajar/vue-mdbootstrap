@@ -3,7 +3,7 @@ import BsModel from "./BsModel";
 import ProxyAdapter from "./ProxyAdapter";
 import Helper from "../utils/Helper";
 import orderBy from "lodash/orderBy";
-import { autobind } from "../utils/Autobind";
+import { autoBind } from "../mixins/AutoBind";
 
 /**
  * Filter data type.
@@ -87,7 +87,7 @@ export default class AbstractStore {
         this._filterItems = [];
         this._items       = [];
 
-        autobind(this);
+        autoBind(this);
         this.clearData();
     }
 
@@ -326,7 +326,7 @@ export default class AbstractStore {
      * @protected
      */
     _createModel(item) {
-        let proxyCfg = {};
+        const proxyCfg = {};
         if (this.restUrl && !Helper.isEmpty(this.restUrl['delete'])) {
             proxyCfg['delete'] = this.restUrl['delete'];
         }
@@ -339,7 +339,7 @@ export default class AbstractStore {
         if (Helper.isEmptyObject(proxyCfg)) {
             return new BsModel(item, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
         } else {
-            let schema = {
+            const schema = {
                 schema: item,
                 proxy: proxyCfg
             };
@@ -453,7 +453,7 @@ export default class AbstractStore {
     localFilter() {
         if (this.filters.length > 0) {
             return this._items.filter(item => {
-                let equals = [];
+                const equals = [];
                 for (const flt of this.filters) {
                     const itemValue = Helper.getObjectValueByPath(item, flt.property);
                     const operator = flt.operator.toLowerCase();
@@ -499,8 +499,8 @@ export default class AbstractStore {
      * @returns {BsModel[]|Object[]} Sorted dataset
      */
     localSort() {
-        let fields = [];
-        let orders = [];
+        const fields = [];
+        const orders = [];
 
         for (const sorter of this.sorters) {
             fields.push(sorter.property || sorter.field);
@@ -689,7 +689,7 @@ export default class AbstractStore {
      * @returns {Object} Parameter's configuration
      */
     queryParams() {
-        let params = {};
+        const params = {};
         let check  = Helper.isNumber(this.currentPage) && this.currentPage > 0;
 
         if (check) {

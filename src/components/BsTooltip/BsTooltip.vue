@@ -1,7 +1,7 @@
 <script>
 import Vue from "vue";
 import BsTooltipContent from "./BsTooltipContent";
-import { firstComponentChild } from "../../utils/DomHelper";
+import { firstComponentChild } from "../../mixins/DomHelper";
 
 export default {
     name: "BsTooltip",

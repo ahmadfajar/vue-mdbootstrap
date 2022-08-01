@@ -167,7 +167,7 @@ import moment from "moment";
 import BsButton from "../BsButton/BsButton";
 import BsIcon from "../BsIcon/BsIcon";
 import PickerConst from "./utils/DatePickerConst";
-import { padLeft } from "../../utils/StringHelper";
+import { padLeft } from "../../mixins/StringHelper";
 
 export default {
     name: "BsDatePickerTimes",

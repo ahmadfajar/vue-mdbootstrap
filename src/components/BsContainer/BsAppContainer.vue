@@ -38,7 +38,7 @@ export default {
             const rect = this.$el.getBoundingClientRect();
             this.uid = Helper.uuid(true);
 
-            let obj = {};
+            const obj = {};
             obj['left'] = rect.left;
             obj['right'] = rect.right;
             obj['top'] = rect.top;
@@ -53,7 +53,7 @@ export default {
             this.$VueMdb.apps[this.uid] = obj;
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         if (Helper.isObject(this.$VueMdb.getApplication(this.uid))) {
             this.$VueMdb.apps[this.uid] = null;
             delete this.$VueMdb.apps[this.uid];
@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~compass-sass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 

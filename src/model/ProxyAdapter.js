@@ -113,8 +113,7 @@ export default class ProxyAdapter {
         ProxyAdapter.checkAxios(this._adapter);
 
         return new Promise((resolve, reject) => {
-            let check = !Helper.isEmpty(config) && config.url && config.url !== '';
-
+            const check = !Helper.isEmpty(config) && config.url && config.url !== '';
             if (!check) {
                 return;
             }
@@ -148,5 +147,4 @@ export default class ProxyAdapter {
             ...this._httpMethods
         }
     }
-
 }

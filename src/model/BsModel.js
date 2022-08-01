@@ -1,7 +1,7 @@
 import Vue from "vue";
 import ProxyAdapter from "./ProxyAdapter";
 import Helper from "../utils/Helper";
-import { autobind } from "../utils/Autobind";
+import { autoBind } from "../mixins/AutoBind";
 
 /**
  * Data Model for working with data and remote API.
@@ -83,10 +83,10 @@ export default class BsModel {
      */
     constructor(schema, adapter, idProperty = 'id', dataProperty = 'data') {
         if (!Helper.isEmptyObject(schema.schema) && !Helper.isEmptyObject(schema.proxy)) {
-            let _methods = {};
-            this._restUrl = {};
+            const _methods = {};
+            this._restUrl  = {};
 
-            for (let [key, value] of Object.entries(schema.proxy)) {
+            for (const [key, value] of Object.entries(schema.proxy)) {
                 if (Helper.isObject(value)) {
                     _methods[key] = value.method;
                 }
@@ -117,7 +117,7 @@ export default class BsModel {
             enumerable: false
         });
 
-        autobind(this);
+        autoBind(this);
         this.reset();
         this.resetState();
     }
@@ -220,7 +220,7 @@ export default class BsModel {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
         let config       = {};
-        let url          = this.restUrl['delete'] || '';
+        const url        = this.restUrl['delete'] || '';
         const methods    = this.proxy.requestMethods();
         const identifier = this[this.getIdProperty()];
 
@@ -253,8 +253,8 @@ export default class BsModel {
     fetch(id = null) {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let config       = {};
-        let url          = this.restUrl['fetch'] || '';
+        const config       = {};
+        const url          = this.restUrl['fetch'] || '';
         const identifier = this[this.getIdProperty()] || id;
 
         this._updateRequestConfig(identifier, url, 'fetch', config);
@@ -312,9 +312,9 @@ export default class BsModel {
             data = null, successCallback = null, errorCallback = null) {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let config     = {};
-        let parameters = {};
-        let url        = this.restUrl[name] || '';
+        const config     = {};
+        const parameters = {};
+        let url          = this.restUrl[name] || '';
 
         const identifier = !Helper.isEmptyObject(params) && params.hasOwnProperty(this.getIdProperty())
             ? params[this.getIdProperty()]
@@ -388,8 +388,8 @@ export default class BsModel {
     save() {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let url          = this.restUrl['save'] || '';
-        let data         = this.toJSON();
+        const url        = this.restUrl['save'] || '';
+        const data       = this.toJSON();
         const methods    = this.proxy.requestMethods();
         const identifier = data[this.getIdProperty()];
 
@@ -420,8 +420,8 @@ export default class BsModel {
     update() {
         ProxyAdapter.checkRestUrl(this.restUrl);
 
-        let url          = this.restUrl['update'] || '';
-        let data         = this.toJSON();
+        const url        = this.restUrl['update'] || '';
+        const data       = this.toJSON();
         const methods    = this.proxy.requestMethods();
         const identifier = data[this.getIdProperty()];
 
@@ -470,7 +470,7 @@ export default class BsModel {
      * @returns {Object} Javascript plain object
      */
     toJSON() {
-        let data = {};
+        const data = {};
         this.getFields().forEach(f => {
             data[f] = this[f];
         });
@@ -643,8 +643,8 @@ export default class BsModel {
      * @private
      */
     async _requestWithToken(config, onRequest, onSuccess, onFailure, suffix = '') {
-        let headers = {'X-Requested-With': 'XMLHttpRequest'};
-        let csrfUrl = this.csrfConfig['url'] || '';
+        const headers = {'X-Requested-With': 'XMLHttpRequest'};
+        let csrfUrl   = this.csrfConfig['url'] || '';
 
         if (csrfUrl.includes('{name}') && !Helper.isEmpty(this.csrfConfig['tokenName'])) {
             if (this.csrfConfig['suffix'] === true) {
@@ -683,7 +683,7 @@ export default class BsModel {
         if (url.includes('{id}') && !Helper.isEmpty(identifier)) {
             url = url.replace('{id}', identifier);
         } else if (!Helper.isEmpty(identifier)) {
-            let params               = {};
+            const params             = {};
             params[this._idProperty] = identifier;
             config['params']         = params;
         }
@@ -691,5 +691,4 @@ export default class BsModel {
         config['url']    = url;
         config['method'] = methods[method];
     }
-
 }

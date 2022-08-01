@@ -4,7 +4,7 @@
  * @param {Object} instance The class instance
  * @returns {void}
  */
-export const autobind = function(instance) {
+export const autoBind = function (instance: object) {
     for (let obj = instance; obj; obj = Object.getPrototypeOf(obj)) {
 
         // We're the end of the inheritance chain if we've reached 'Object'.
@@ -12,11 +12,11 @@ export const autobind = function(instance) {
             return;
         }
 
-        let names = Object.getOwnPropertyNames(obj);
+        const names = Object.getOwnPropertyNames(obj);
 
         // Bind each function to the instance.
         for (let i = 0; i < names.length; i++) {
-            let name = names[i];
+            const name = names[i];
 
             // No need to bind getters, as attempting to access them would also
             // invoke them which is something we don't want to do here.
