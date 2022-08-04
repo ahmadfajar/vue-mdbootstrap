@@ -148,7 +148,7 @@ import BsProgress from '../BsAnimation/BsProgress';
 import BsAlert from '../BsBasic/BsAlert';
 import BsStore from '../../model/BsStore';
 import BsArrayStore from "../../model/BsArrayStore";
-import Common from "../../mixins/Common";
+import Common from "../../mixins/Commons";
 import ScreenSize from '../../mixins/ScreenSize';
 import Grid from "./mixins/Grid";
 import Helper from '../../utils/Helper';

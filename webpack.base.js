@@ -46,7 +46,7 @@ const plugins = [
 const baseConfig = {
     context: path.resolve('./'),
     entry: {
-        'vue-mdb': './src/index.js',
+        'vue-mdb': './src/index.ts',
     },
     module: {
         rules: [

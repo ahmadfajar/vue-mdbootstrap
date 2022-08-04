@@ -35,7 +35,7 @@
 import BsTreeStore from "../../model/BsTreeStore";
 import BsTreegridCell from "./BsTreegridCell";
 import BsGridCell from "./BsGridCell";
-import Common from "../../mixins/Common";
+import Common from "../../mixins/Commons";
 import Helper from "../../utils/Helper";
 
 export default {

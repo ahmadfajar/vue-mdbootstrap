@@ -67,7 +67,7 @@ import BsTreegridItems from "./BsTreegridItems";
 import BsTreeStore from "../../model/BsTreeStore";
 import BsArrayStore from "../../model/BsArrayStore";
 import Helper from "../../utils/Helper";
-import Common from "../../mixins/Common";
+import Common from "../../mixins/Commons";
 import Grid from "./mixins/Grid";
 import sum from 'lodash/sum';
 import { addResizeListener, removeResizeListener } from "../../mixins/ResizeListener";

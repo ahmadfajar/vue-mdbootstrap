@@ -54,7 +54,7 @@
 import BsIcon from "../BsIcon/BsIcon";
 import BsButton from "../BsButton/BsButton";
 import BsPopover from "../BsPopover/BsPopover";
-import Common from "../../mixins/Common";
+import Common from "../../mixins/Commons";
 import Helper from "../../utils/Helper";
 import clickOutside from "../../directives/ClickOutside";
 

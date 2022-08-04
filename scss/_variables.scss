@@ -61,7 +61,7 @@ $md-transition-stand-duration:      $transition-duration-base;
 $md-transition-stand:               $md-transition-stand-duration $md-transition-stand-timing;
 
 /**
- * The out transition, used when the element is going to deaccelerate,
+ * The out transition, used when the element is going to de-accelerate,
  * like movements from top to bottom
  */
 $md-transition-drop-timing:         cubic-bezier(.55, 0, .55, .2);

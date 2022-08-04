@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 31/07/2022 18:15
+ * @since  05/07/2018, modified: 02/08/2022 6:42
  */
 class Helper {
     /**
@@ -246,7 +246,7 @@ class Helper {
     /**
      * Generate simple/random UUID or standard UUID v4.
      *
-     * @param {boolean} [standard] Generate standard UUID v4 or random UUID
+     * @param {boolean} [standard] If `true` then generate standard UUID v4 otherwise generate random UUID
      * @returns {string} UUID v4 or random UUID
      */
     static uuid(standard = false): string {
