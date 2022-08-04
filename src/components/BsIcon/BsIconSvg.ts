@@ -1,7 +1,8 @@
 import {defineComponent, h} from "vue";
-import {height, useSizeHeight, useSizeWidth, width} from "./mixins/SizeProps";
-import {flip, iconName, rotate, useSvgClasses} from "./mixins/Svg";
 import {booleanProp} from "../../mixins/Commons";
+import {flip, iconName, rotate} from "./mixins/SvgProps";
+import {height, useSizeHeight, useSizeWidth, width} from "./mixins/SizeProps";
+import {useGoogleIcon, useRenderSvgIcon, useSvgClasses} from "./mixins/SvgFunc";
 
 export default defineComponent({
     name: "BsIconSvg",
@@ -35,16 +36,13 @@ export default defineComponent({
          */
         rotate,
     },
-    setup(props) {
-        return () => h(
-            "svg",
-            {
-                "xmlns": "http://www.w3.org/2000/svg",
-                "viewBox": "0 0 24 24",
-                height: useSizeHeight(props),
-                width: useSizeWidth(props),
-                class: useSvgClasses(props),
-            },
-        )
+    async setup(props) {
+        const iconObj = await useGoogleIcon(props.icon);
+
+        if (iconObj) {
+            return useRenderSvgIcon(iconObj, useSizeHeight(props), useSizeWidth(props), useSvgClasses(props));
+        } else {
+            return () => h("span")
+        }
     },
 });

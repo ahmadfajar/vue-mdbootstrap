@@ -1,6 +1,6 @@
 import {defineComponent, h} from "vue";
 import {height, size, useSizeHeight, useSizeWidth, width} from "./mixins/SizeProps";
-import {flip, iconName, rotate} from "./mixins/Svg";
+import {flip, iconName, rotate} from "./mixins/SvgProps";
 import {booleanProp, cssPrefix} from "../../mixins/Commons";
 import BsIconSvg from "./BsIconSvg";
 import Helper from "../../utils/Helper";

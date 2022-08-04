@@ -1,6 +1,6 @@
 import {computed, defineComponent, h} from "vue";
 import {height} from "./mixins/SizeProps";
-import {iconName} from "./mixins/Svg";
+import {iconName} from "./mixins/SvgProps";
 import {booleanProp, cssPrefix} from "../../mixins/Commons";
 import BsIconSvg from "./BsIconSvg";
 
