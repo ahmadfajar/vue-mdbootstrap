@@ -1,4 +1,4 @@
-import {computed, defineComponent, h} from "vue";
+import {defineComponent, h} from "vue";
 import {height} from "./mixins/SizeProps";
 import {iconName} from "./mixins/SvgProps";
 import {booleanProp, cssPrefix} from "../../mixins/Commons";
@@ -28,21 +28,38 @@ export default defineComponent({
         "update:modelValue",
     ],
     setup(props, {emit}) {
-        const toggleIcon = computed((): string => props.modelValue ? props.toggleIcon : props.icon);
-
         return () => h(
             "span", {
                 class: [`${cssPrefix}-toggle-icon`],
                 onClick: () => {
                     emit("update:modelValue", !props.modelValue);
                 },
-            }, [
-                h(BsIconSvg, {
-                    icon: toggleIcon.value,
-                    height: props.size,
-                    width: props.size,
-                }),
-            ],
-        );
+            },
+            h(BsIconSvg, {
+                icon: props.modelValue ? props.toggleIcon : props.icon,
+                height: props.size,
+                width: props.size,
+            }),
+        )
+
+        // return () => h(
+        //     Suspense, {}, {
+        //         default: () => h(
+        //             "span", {
+        //                 class: [`${cssPrefix}-toggle-icon`],
+        //                 onClick: () => {
+        //                     emit("update:modelValue", !props.modelValue);
+        //                 },
+        //             },
+        //             h(BsIconSvg, {
+        //                 // id: generateId(),
+        //                 icon: props.modelValue ? props.toggleIcon : props.icon,
+        //                 height: props.size,
+        //                 width: props.size,
+        //             }),
+        //         ),
+        //         fallback: () => h("span"),
+        //     }
+        // )
     }
 });

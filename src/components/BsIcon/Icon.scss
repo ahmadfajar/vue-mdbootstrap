@@ -2,7 +2,7 @@
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-icon {
+.#{$prefix}-icon, .#{$prefix}-toggle-icon {
     @include align-self(center);
 
     > .#{$prefix}-svg-inline {

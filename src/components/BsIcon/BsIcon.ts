@@ -44,7 +44,6 @@ export default defineComponent({
     setup(props) {
         const szHeight = useSizeHeight(props);
         const szWidth = useSizeWidth(props);
-
         return () => h(
             "span", {
                 class: [`${cssPrefix}-icon`],
@@ -52,17 +51,37 @@ export default defineComponent({
                     "height": Helper.sizeUnit(szHeight),
                     "width": Helper.sizeUnit(szWidth),
                 },
-            }, [
-                h(BsIconSvg, {
-                    icon: props.icon,
-                    height: props.height,
-                    width: props.width,
-                    spin: props.spin,
-                    pulse: props.pulse,
-                    flip: props.flip,
-                    rotate: props.rotate,
-                }),
-            ]
+            }, h(BsIconSvg, {
+                icon: props.icon,
+                height: szHeight,
+                width: szWidth,
+                spin: props.spin,
+                pulse: props.pulse,
+                flip: props.flip,
+                rotate: props.rotate,
+            }),
         );
+        // return () => h(
+        //     Suspense, {}, {
+        //         default: () => h(
+        //             "span", {
+        //                 class: [`${cssPrefix}-icon`],
+        //                 style: {
+        //                     "height": Helper.sizeUnit(szHeight),
+        //                     "width": Helper.sizeUnit(szWidth),
+        //                 },
+        //             }, h(BsIconSvg, {
+        //                 icon: props.icon,
+        //                 height: szHeight,
+        //                 width: szWidth,
+        //                 spin: props.spin,
+        //                 pulse: props.pulse,
+        //                 flip: props.flip,
+        //                 rotate: props.rotate,
+        //             }),
+        //         ),
+        //         fallback: () => h("span"),
+        //     }
+        // )
     }
 });
