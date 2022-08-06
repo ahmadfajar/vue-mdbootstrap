@@ -2,7 +2,7 @@ import {App} from "vue";
 import BsIcon from "./BsIcon";
 import BsIconSvg from "./BsIconSvg";
 import BsIconToggle from "./BsIconToggle";
-import "./Icon.scss";
+import "./icon.scss";
 
 const BsIconPlugin = {
     install: (app: App): void => {

@@ -48,8 +48,8 @@ export default defineComponent({
             return [
                 `${cssPrefix}-svg-inline`, 'mx-auto',
                 {
-                    [`${cssPrefix}-icon-spin`]: this.spin,
-                    [`${cssPrefix}-icon-pulse`]: this.pulse,
+                    [`${cssPrefix}-spin`]: this.spin,
+                    [`${cssPrefix}-pulse`]: this.pulse,
                     [`${cssPrefix}-flip-both`]: this.flip === 'both',
                     [`${cssPrefix}-flip-vertical`]: this.flip === 'vertical',
                     [`${cssPrefix}-flip-horizontal`]: this.flip === 'horizontal',

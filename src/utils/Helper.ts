@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 02/08/2022 6:42
+ * @since  05/07/2018, modified: 06/08/2022 14:46
  */
 class Helper {
     /**
@@ -34,13 +34,15 @@ class Helper {
      * @param {Function} [fallbackFn]   The fallback function
      * @returns {*} The object property value
      */
-    static getNestedValue(obj: object, path: string[], fallbackFn?: CallableFunction) {
+    static getNestedValue(obj: never,
+                          path: string[],
+                          fallbackFn?: CallableFunction): CallableFunction | never | unknown {
         if (!Array.isArray(path)) {
             return fallbackFn;
         }
 
         const last = path.length - 1;
-        let _temp = obj;
+        let _temp: unknown = obj;
 
         if (last < 0) {
             return obj === undefined ? fallbackFn : obj;
@@ -50,6 +52,7 @@ class Helper {
             if (_temp == null) {
                 return fallbackFn;
             }
+            // @ts-ignore
             _temp = _temp[path[i]];
         }
 
@@ -57,6 +60,7 @@ class Helper {
             return fallbackFn;
         }
 
+        // @ts-ignore
         return _temp[path[last]] === undefined ? fallbackFn : _temp[path[last]];
     }
 
@@ -68,7 +72,7 @@ class Helper {
      * @param {Function} [fallbackFn] The fallback function
      * @returns {*} The object property value
      */
-    static getObjectValueByPath(obj: object, path: string, fallbackFn?: CallableFunction) {
+    static getObjectValueByPath(obj: never, path: string, fallbackFn?: CallableFunction) {
         if (!path || (typeof path !== 'string')) {
             return fallbackFn;
         }
@@ -87,7 +91,7 @@ class Helper {
      * @param {boolean} [allowEmptyString]  Allow empty string or not
      * @returns {boolean} True if value is empty otherwise False
      */
-    static isEmpty(value, allowEmptyString = true): boolean {
+    static isEmpty(value: Array<unknown> | string | unknown, allowEmptyString = true): boolean {
         return (value === null) || (typeof value === 'undefined') || (!allowEmptyString ? value === '' : false) || (Array.isArray(value) && value.length === 0);
     }
 
@@ -107,7 +111,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an Array otherwise FALSE
      */
-    static isArray(value): boolean {
+    static isArray(value: Array<unknown> | unknown): boolean {
         return (typeof value !== 'undefined' && value !== null && Array.isArray(value));
     }
 
@@ -117,7 +121,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is a Function otherwise FALSE
      */
-    static isFunction(value): boolean {
+    static isFunction(value: unknown): boolean {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'function');
     }
 
@@ -127,7 +131,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is a Number otherwise FALSE
      */
-    static isNumber(value): boolean {
+    static isNumber(value: unknown): boolean {
         return typeof value === 'number';
     }
 
@@ -137,7 +141,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an object otherwise FALSE
      */
-    static isObject(value): boolean {
+    static isObject(value: object | unknown): boolean {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'object');
     }
 
@@ -147,7 +151,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} True if the data type is primitive otherwise False
      */
-    static isPrimitive(value): boolean {
+    static isPrimitive(value: unknown): boolean {
         return (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean');
     }
 
@@ -157,7 +161,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is a String otherwise FALSE
      */
-    static isString(value): boolean {
+    static isString(value: unknown): boolean {
         return typeof value === 'string';
     }
 
@@ -211,8 +215,8 @@ class Helper {
         }
 
         return items.sort((a, b) => {
-            let sortA = Helper.getObjectValueByPath(a, key);
-            let sortB = Helper.getObjectValueByPath(b, key);
+            let sortA: never = Helper.getObjectValueByPath(a as never, key) as never;
+            let sortB: never = Helper.getObjectValueByPath(b as never, key) as never;
 
             if (isDescending) {
                 [sortA, sortB] = [sortB, sortA]
@@ -224,11 +228,14 @@ class Helper {
             }
 
             // Check if both cannot be evaluated
-            if ((sortA === null && sortB === null) || (typeof sortA === 'undefined' && typeof sortB === 'undefined')) {
+            if ((sortA === null && sortB === null) ||
+                (typeof sortA === 'undefined' && typeof sortB === 'undefined')) {
                 return 0;
             }
 
+            // @ts-ignore
             [sortA, sortB] = [sortA, sortB].map(s => (
+                // @ts-ignore
                 (s || '').toString().toLocaleLowerCase()
             ));
 
@@ -252,9 +259,9 @@ class Helper {
     static uuid(standard = false): string {
         if (standard === true) {
             if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore
                 return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g,
+                    // @ts-ignore
                     c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
                 )
             } else {

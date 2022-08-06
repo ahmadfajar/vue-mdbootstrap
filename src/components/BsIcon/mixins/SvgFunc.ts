@@ -36,7 +36,9 @@ function findIcon(name: string | undefined): IIconData | undefined {
         return undefined;
     }
 
-    const strIcon = name.trim().toLowerCase().replace(" ", "_");
+    const strIcon = name.trim().toLowerCase()
+        .replace(" ", "_")
+        .replace("-", "_");
     const variant = strIcon.endsWith("_round") || strIcon.endsWith("_rounded")
         ? "round"
         : strIcon.endsWith("_outlined")
@@ -74,7 +76,7 @@ async function useGoogleIcon(iconObj: IIconData): Promise<IIconData> {
 }
 
 function createNodeAttrs(attrs: Array<[string, unknown]>): object {
-    const props = {};
+    const props: Record<string, unknown> = {};
     const filtered = attrs
         .filter(el => el[0].startsWith("@_"))
         .map<[string, unknown]>(el => {
@@ -108,7 +110,7 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
     return results;
 }
 
-function useRenderSvgIcon(iconData: IIconData | undefined, height: number, width: number, classes): VNode {
+function useRenderSvgIcon(iconData: IIconData | undefined, height: number, width: number, classes: unknown): VNode {
     if (!iconData || !iconData.data) {
         return h("span");
     }
@@ -128,7 +130,7 @@ function useRenderSvgIcon(iconData: IIconData | undefined, height: number, width
     filteredAttrs.push(["class", classes]);
     filteredAttrs.push(["xmlns", "http://www.w3.org/2000/svg"]);
     const children = svgData.filter(el => el[0].startsWith("@_") === false);
-    const props = {};
+    const props: Record<string, unknown> = {};
     filteredAttrs.forEach(el => props[el[0]] = el[1]);
 
     return h("svg", props, renderChildNodes(children))

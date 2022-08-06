@@ -79,6 +79,7 @@
                 "after": true
             }
         ],
+        "@typescript-eslint/ban-ts-comment": "off",
         "vue/custom-event-name-casing": [
             "warn",
             "kebab-case"
