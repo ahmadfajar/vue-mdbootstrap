@@ -30,7 +30,7 @@
               <font-awesome-icon v-bind="_faIconAttrs" />
             </span>
           </slot>
-        </span>        
+        </span>
         <span class="md-chip-text">
           <slot></slot>
         </span>
@@ -48,7 +48,7 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsButton from "../BsButton/BsButton";
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import BsRipple from "../BsAnimation/BsRipple";
 import IconMixin from "./mixins/IconMixin";
 import ActiveMixin from "./mixins/ActiveMixin";
@@ -213,7 +213,7 @@ export default {
             }
         },
         /**
-         * Get BsIcon binding attributes.
+         * Get Icon binding attributes.
          *
          * @returns {Object} The icon attributes
          * @private

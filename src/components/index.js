@@ -4,7 +4,7 @@ import BsSidebar from './BsSidebar';
 import BsAppbar from './BsAppbar';
 import BsAnimation from './BsAnimation';
 import BsBasic from './BsBasic';
-import BsIcon from './BsIcon';
+import BsIcon from './Icon';
 import BsButton from './BsButton';
 import BsCard from './BsCard';
 import BsField from './BsField';

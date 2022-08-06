@@ -173,7 +173,7 @@
 
 <script>
 import BsButton from "../BsButton/BsButton";
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import BsMenu from "../BsMenu/BsMenu";
 import Popup from "../../mixins/Popup";
 import Helper from "../../utils/Helper";

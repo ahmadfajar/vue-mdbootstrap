@@ -80,7 +80,7 @@
 <script>
 import BsButton from "../BsButton/BsButton";
 import BsCombobox from "../BsField/BsCombobox";
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import Helper from "../../utils/Helper";
 import ceil from "lodash/ceil";
 import mergeWith from "lodash/mergeWith";

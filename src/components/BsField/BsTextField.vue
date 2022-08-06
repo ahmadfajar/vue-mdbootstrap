@@ -101,8 +101,8 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import BsIcon from "../BsIcon/BsIcon";
-import BsIconToggle from "../BsIcon/BsIconToggle";
+import BsIcon from "../Icon/BsIcon";
+import BsIconToggle from "../Icon/BsIconToggle";
 import Input from "./mixins/Input";
 import TextField from "./mixins/TextField";
 import FieldValidation from "./mixins/FieldValidation";

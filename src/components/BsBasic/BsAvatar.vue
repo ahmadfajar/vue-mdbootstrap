@@ -21,7 +21,7 @@
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import Image from '../../mixins/Image';
 import IconMixin from "./mixins/IconMixin";
 
@@ -69,7 +69,7 @@ export default {
             }
         },
         /**
-         * Get BsIcon binding attributes.
+         * Get Icon binding attributes.
          *
          * @returns {Object|*} The icon attributes
          * @private

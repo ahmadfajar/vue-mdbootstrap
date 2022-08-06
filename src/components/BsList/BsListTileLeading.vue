@@ -70,7 +70,7 @@ export default {
             };
         },
         /**
-         * Get BsIcon binding attributes.
+         * Get Icon binding attributes.
          *
          * @returns {Object|*} The icon attributes
          * @private

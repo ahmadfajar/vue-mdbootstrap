@@ -116,7 +116,7 @@
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import moment from "moment";
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import BsPopover from "../BsPopover/BsPopover";
 import BsDatePicker from "../BsPicker/BsDatePicker";
 import Input from "./mixins/Input";

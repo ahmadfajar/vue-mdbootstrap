@@ -1,5 +1,5 @@
 <template>
-  <div 
+  <div
     v-click-outside="_clickOutSide"
     class="md-field-searchbox">
     <div
@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import BsButton from "../BsButton/BsButton";
 import BsPopover from "../BsPopover/BsPopover";
 import Common from "../../mixins/Commons";

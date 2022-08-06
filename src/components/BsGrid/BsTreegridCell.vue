@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import Helper from "../../utils/Helper";
 import Cell from "./mixins/Cell";
 

@@ -156,7 +156,7 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsComboboxListContainer from "./BsComboboxListContainer";
 import BsListTileTitle from "../BsList/BsListTileTitle";
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import BsChip from "../BsBasic/BsChip";
 import BsPopover from "../BsPopover/BsPopover";
 import AbstractStore from "../../model/AbstractStore";

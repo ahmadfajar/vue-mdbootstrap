@@ -2,6 +2,7 @@ import {defineComponent, h} from "vue";
 import {height, size, useSizeHeight, useSizeWidth, width} from "./mixins/SizeProps";
 import {flip, iconName, rotate} from "./mixins/SvgProps";
 import {booleanProp, cssPrefix} from "../../mixins/Commons";
+import {IBsIconOptionProps} from "./index.d";
 import BsIconSvg from "./BsIconSvg";
 import Helper from "../../utils/Helper";
 
@@ -42,8 +43,8 @@ export default defineComponent({
         rotate,
     },
     setup(props) {
-        const szHeight = useSizeHeight(props);
-        const szWidth = useSizeWidth(props);
+        const szHeight = useSizeHeight(props as Readonly<IBsIconOptionProps>);
+        const szWidth = useSizeWidth(props as Readonly<IBsIconOptionProps>);
         return () => h(
             "span", {
                 class: [`${cssPrefix}-icon`],

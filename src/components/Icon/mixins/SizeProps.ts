@@ -21,10 +21,10 @@ export const width = {
     validator: (value: string): boolean => !isNaN(parseInt(value, 10))
 }
 
-export function useSizeHeight(props: ISizeOptionProps): number {
+export function useSizeHeight(props: Readonly<ISizeOptionProps>): number {
     return props.size && props.size > 0 ? props.size : props.height;
 }
 
-export function useSizeWidth(props: ISizeOptionProps): number {
+export function useSizeWidth(props: Readonly<ISizeOptionProps>): number {
     return props.size && props.size > 0 ? props.size : props.width;
 }

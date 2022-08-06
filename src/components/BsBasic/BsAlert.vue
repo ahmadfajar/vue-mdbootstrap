@@ -30,7 +30,7 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsButton from "../BsButton/BsButton";
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import IconMixin from "./mixins/IconMixin";
 import Helper from "../../utils/Helper";
 import "../../../scss/_transitions.scss";
@@ -138,7 +138,7 @@ export default {
             return Helper.isEmpty(this.color) ? 'primary' : this.color;
         },
         /**
-         * Get BsIcon binding attributes.
+         * Get Icon binding attributes.
          *
          * @returns {Object} The icon attributes
          * @private

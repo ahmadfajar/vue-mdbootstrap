@@ -165,7 +165,7 @@
 <script>
 import moment from "moment";
 import BsButton from "../BsButton/BsButton";
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import PickerConst from "./utils/DatePickerConst";
 import { padLeft } from "../../mixins/StringHelper";
 

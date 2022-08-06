@@ -16,7 +16,7 @@
 
 <script>
 import BsButton from "../BsButton/BsButton";
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import createNativeLocaleFormatter from "./utils/createNativeLocaleFormatter";
 import PickerConst from "./utils/DatePickerConst";
 

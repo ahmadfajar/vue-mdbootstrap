@@ -109,7 +109,7 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import BsIcon from "../BsIcon/BsIcon";
+import BsIcon from "../Icon/BsIcon";
 import BsChip from "../BsBasic/BsChip";
 import Input from "./mixins/Input";
 import TextField from "./mixins/TextField";
