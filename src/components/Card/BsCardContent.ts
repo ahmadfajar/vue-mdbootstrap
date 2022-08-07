@@ -1,5 +1,6 @@
-import {computed, defineComponent, h} from "vue";
+import {computed, defineComponent} from "vue";
 import {stringProp} from "../../mixins/Commons";
+import {useSimpleNodeWithSlots} from "./mixins/cardFunc";
 
 export default defineComponent({
     name: "BsCardContent",
@@ -27,14 +28,9 @@ export default defineComponent({
             return props.tag;
         });
 
-        return () => h(
-            tagName.value, {
-                class: {
-                    [`card-${props.type}`]: tagName.value,
-                }
-            }, [
-                slots.default && slots.default()
-            ]
-        )
+        return () => useSimpleNodeWithSlots(
+            tagName.value, slots,
+            {[`card-${props.type}`]: tagName.value},
+        );
     }
 });
