@@ -4,6 +4,7 @@
 @import "variables";
 @import "shared";
 @import "utilities/color_variants";
+@import "utilities/shadows";
 
 .opacity-0 {
     @extend %opacity-0;
@@ -23,14 +24,18 @@
     cursor: default !important;
 }
 
-.font-weight-bold {
+.#{$prefix}-fw-bold {
     font-weight: $font-weight-bold !important;
 }
 
-.font-weight-bolder {
-    font-weight: $font-weight-bolder !important;
+.#{$prefix}-fw-bolder {
+    font-weight: $font-weight-boldest !important;
 }
 
-.font-weight-boldest {
-    font-weight: $font-weight-boldest !important;
+.#{$prefix}-fw-semibold {
+    font-weight: $font-weight-semi-bold !important;
+}
+
+.#{$prefix}-fw-light {
+    font-weight: $font-weight-light !important;
 }

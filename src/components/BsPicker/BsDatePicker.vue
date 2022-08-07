@@ -687,7 +687,7 @@ export default {
             .picker-times-number {
                 .btn-inner {
                     font-size: 1rem;
-                    font-weight: $font-weight-bolder;
+                    font-weight: $font-weight-bold;
                 }
             }
 

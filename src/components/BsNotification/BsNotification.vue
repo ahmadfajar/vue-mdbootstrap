@@ -352,7 +352,7 @@ export default {
 
 .#{$prefix}-notification {
     .#{$prefix}-notification-title {
-        font-weight: $font-weight-bold;
+        font-weight: $font-weight-semi-bold;
         font-size: 110%;
     }
 

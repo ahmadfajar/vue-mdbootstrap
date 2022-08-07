@@ -1,0 +1,94 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.card {
+    .card-header {
+        font-weight: $font-weight-semi-bold;
+    }
+
+    .card-subtitle {
+        color: $gray-600;
+    }
+}
+
+.card-group {
+    @include media-breakpoint-up(sm) {
+        > .card {
+            &.#{$prefix}-shadow,
+            &.#{$prefix}-shadow-1,
+            &.#{$prefix}-shadow-2,
+            &.#{$prefix}-shadow-3,
+            &.#{$prefix}-shadow-4,
+            &.#{$prefix}-shadow-5 {
+                @include box-shadow(none !important);
+            }
+        }
+    }
+}
+
+.#{$prefix}-card-media {
+    position: relative;
+
+    > img {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        display: block;
+        vertical-align: top;
+    }
+
+    > .#{$prefix}-card-media-overlay {
+        position: absolute;
+        left: 0;
+        right: 0;
+        padding: $padding-base;
+        background-color: rgba(0, 0, 0, .54);
+
+        > .#{$prefix}-card-media-title,
+        > .#{$prefix}-card-media-subtitle {
+            color: rgba(255, 255, 255, .8);
+        }
+
+        > .#{$prefix}-card-media-title {
+            font-size: 1.5rem;
+            font-weight: $font-weight-semi-bold;
+        }
+
+        > .#{$prefix}-card-media-subtitle {
+            font-size: 1.125rem;
+            font-weight: $font-weight-light;
+        }
+    }
+}
+
+.card {
+    > .#{$prefix}-card-media {
+        &:first-child {
+            > img {
+                @include border-top-radius($card-border-radius);
+            }
+
+            > .#{$prefix}-card-media-overlay {
+                &.#{$prefix}-overlay-top {
+                    @include border-top-radius($card-border-radius);
+                }
+            }
+        }
+
+        &:last-child {
+            > img {
+                @include border-bottom-radius($card-border-radius);
+            }
+
+            > .#{$prefix}-card-media-overlay {
+                &.#{$prefix}-overlay-bottom {
+                    @include border-bottom-radius($card-border-radius);
+                }
+            }
+        }
+    }
+}

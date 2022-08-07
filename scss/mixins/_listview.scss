@@ -50,7 +50,7 @@
                     background-color: set-hoverable-bgcolor($color, .22);
 
                     .#{$prefix}-list-tile-title {
-                        font-weight: $font-weight-bold;
+                        font-weight: $font-weight-semi-bold;
                     }
 
                     @if (lightness($color) > 80) {

@@ -69,7 +69,7 @@ export default {
 
 .badge {
     @include box-shadow(none);
-    font-weight: $font-weight-bold;
+    font-weight: $font-weight-semi-bold;
 
     &.badge-label {
         font-size: 85%;

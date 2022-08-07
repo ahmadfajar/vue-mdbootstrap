@@ -4,7 +4,28 @@ export const cssPrefix = "md";
 
 export const booleanProp = {
     type: Boolean,
-    default: false
+    default: false,
+}
+
+export const stringProp = {
+    type: String,
+    default: undefined,
+}
+
+export const stringRequiredProp = {
+    type: String,
+    default: undefined,
+    required: true,
+}
+
+export const stringOrNumberLooseProp = {
+    type: [String, Number],
+    default: undefined,
+}
+
+export const tagProp = {
+    type: String,
+    default: "div",
 }
 
 /**

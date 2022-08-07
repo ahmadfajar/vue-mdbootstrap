@@ -139,13 +139,13 @@ export default {
 
         &:first-child {
             font-size: 1.25rem;
-            font-weight: $font-weight-bold;
+            font-weight: $font-weight-semi-bold;
             margin-bottom: $padding-base / 4;
         }
 
         &.#{$prefix}-picker-title {
             font-size: 1.8rem;
-            font-weight: $font-weight-bold;
+            font-weight: $font-weight-semi-bold;
             line-height: normal;
             position: relative;
             overflow: hidden;

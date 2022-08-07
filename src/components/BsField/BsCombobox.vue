@@ -157,7 +157,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsComboboxListContainer from "./BsComboboxListContainer";
 import BsListTileTitle from "../BsList/BsListTileTitle";
 import BsIcon from "../Icon/BsIcon";
-import BsChip from "../BsBasic/BsChip";
+import BsChip from "../Basic/BsChip";
 import BsPopover from "../BsPopover/BsPopover";
 import AbstractStore from "../../model/AbstractStore";
 import Input from "./mixins/Input";

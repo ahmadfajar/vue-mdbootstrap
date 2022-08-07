@@ -45,6 +45,7 @@ export default defineComponent({
     setup(props) {
         const szHeight = useSizeHeight(props as Readonly<IBsIconOptionProps>);
         const szWidth = useSizeWidth(props as Readonly<IBsIconOptionProps>);
+
         return () => h(
             "span", {
                 class: [`${cssPrefix}-icon`],

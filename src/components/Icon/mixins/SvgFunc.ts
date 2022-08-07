@@ -110,7 +110,12 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
     return results;
 }
 
-function useRenderSvgIcon(iconData: IIconData | undefined, height: number, width: number, classes: unknown): VNode {
+function useRenderSvgIcon(
+    iconData: IIconData | undefined,
+    height: number | string,
+    width: number | string,
+    classes: unknown,
+): VNode {
     if (!iconData || !iconData.data) {
         return h("span");
     }

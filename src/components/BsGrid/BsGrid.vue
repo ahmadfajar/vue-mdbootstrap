@@ -145,7 +145,7 @@ import BsGridColumnSelection from './BsGridColumnSelection';
 import BsGridFooter from "./BsGridFooter";
 import BsPagination from '../BsPagination/BsPagination';
 import BsProgress from '../BsAnimation/BsProgress';
-import BsAlert from '../BsBasic/BsAlert';
+import BsAlert from '../Basic/BsAlert';
 import BsStore from '../../model/BsStore';
 import BsArrayStore from "../../model/BsArrayStore";
 import Common from "../../mixins/Commons";
@@ -686,7 +686,7 @@ export default {
         thead, tfoot {
             th {
                 @include user-select(none);
-                font-weight: $font-weight-bold;
+                font-weight: $font-weight-semi-bold;
                 color: $table-header-color;
                 padding-top: $padding-base;
                 padding-bottom: $padding-base;
@@ -791,7 +791,7 @@ export default {
                 text-overflow: ellipsis;
                 vertical-align: top;
                 white-space: nowrap;
-                font-weight: $font-weight-bold;
+                font-weight: $font-weight-semi-bold;
             }
         }
     }
@@ -953,7 +953,7 @@ export default {
 
                         th {
                             color: $gray-800;
-                            font-weight: $font-weight-bold;
+                            font-weight: $font-weight-semi-bold;
                             text-align: left !important;
                             padding-right: 1.2rem;
 

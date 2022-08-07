@@ -23,9 +23,9 @@
 </template>
 
 <script>
-import BsAvatar from "../BsBasic/BsAvatar";
+import BsAvatar from "../Basic/BsAvatar";
 import Image from "../../mixins/Image";
-import IconMixin from "../BsBasic/mixins/IconMixin";
+import IconMixin from "../Basic/mixins/IconMixin";
 
 export default {
     name: "BsListTileLeading",

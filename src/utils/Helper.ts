@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 06/08/2022 14:46
+ * @since  05/07/2018, modified: 07/08/2022 3:36
  */
 class Helper {
     /**
@@ -189,7 +189,7 @@ class Helper {
         if (typeof value === 'string') {
             if (value.toLowerCase() === 'auto') {
                 return value;
-            } else if (value.endsWith(_px) || value.endsWith('em') || value.endsWith('rem') || value.endsWith('%')) {
+            } else if (value.endsWith('px') || value.endsWith('em') || value.endsWith('rem') || value.endsWith('%')) {
                 return value;
             } else {
                 return value + _px;

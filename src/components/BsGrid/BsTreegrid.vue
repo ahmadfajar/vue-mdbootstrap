@@ -61,7 +61,7 @@
 </template>
 
 <script>
-import BsAlert from "../BsBasic/BsAlert";
+import BsAlert from "../Basic/BsAlert";
 import BsProgress from "../BsAnimation/BsProgress";
 import BsTreegridItems from "./BsTreegridItems";
 import BsTreeStore from "../../model/BsTreeStore";

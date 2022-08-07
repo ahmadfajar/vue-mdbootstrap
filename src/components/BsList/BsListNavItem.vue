@@ -80,7 +80,7 @@
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsRipple from '../BsAnimation/BsRipple';
-import IconMixin from "../BsBasic/mixins/IconMixin";
+import IconMixin from "../Basic/mixins/IconMixin";
 import RouteAble from "../../mixins/RouteAble";
 import ToggleAble from "./mixins/ToggleAble";
 import Helper from "../../utils/Helper";
@@ -512,12 +512,12 @@ export default {
 
         &.#{$prefix}-active {
             > .#{$prefix}-nav-item-inner {
-                font-weight: $font-weight-bold;
+                font-weight: $font-weight-semi-bold;
             }
 
             &:not(.#{$prefix}-parent) {
                 > .#{$prefix}-nav-item-inner {
-                    font-weight: $font-weight-bold;
+                    font-weight: $font-weight-semi-bold;
                 }
             }
         }

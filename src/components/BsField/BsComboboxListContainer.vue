@@ -85,7 +85,7 @@ import BsListTileContent from "../BsList/BsListTileContent";
 import BsListTileAction from "../BsList/BsListTileAction";
 import BsListTileLeading from "../BsList/BsListTileLeading";
 import BsListTileTitle from "../BsList/BsListTileTitle";
-import BsDivider from "../BsBasic/BsDivider";
+import BsDivider from "../Basic/BsDivider";
 import Helper from "../../utils/Helper";
 
 export default {

@@ -96,7 +96,7 @@
             {
                 "startTag": "never",
                 "endTag": "never",
-                "selfClosingTag": "always"
+                "selfClosingTag": "never"
             }
         ],
         "vue/html-self-closing": [

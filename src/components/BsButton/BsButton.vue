@@ -28,8 +28,8 @@
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import BsButtonContent from './BsButtonContent';
 import Helper from '../../utils/Helper';
-import ActiveMixin from "../BsBasic/mixins/ActiveMixin";
-import DisabledMixin from "../BsBasic/mixins/DisabledMixin";
+import ActiveMixin from "../Basic/mixins/ActiveMixin";
+import DisabledMixin from "../Basic/mixins/DisabledMixin";
 
 export default {
     name: 'BsButton',
