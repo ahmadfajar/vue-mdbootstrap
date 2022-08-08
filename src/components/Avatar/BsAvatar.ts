@@ -1,13 +1,12 @@
 import {defineComponent, h} from "vue";
 import {BsIcon} from "../Icon";
-import {TBsAvatarOptionProps} from "./mixins/types";
+import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/SizeProps";
 import {flip, rotate} from "../Icon/mixins/SvgProps";
 import {useShapeClasses} from "../Basic/mixins/imageFunc";
-import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/SizeProps";
-import {
-    booleanProp, booleanTrueProp, cssPrefix,
-    stringProp, validStringOrNumberProp
-} from "../../mixins/Commons";
+import {useAvatarIconSize, useRenderAvatarImage} from "./mixins/avatarFunc";
+import {TBsAvatarOptionProps} from "./mixins/types";
+import {booleanProp, booleanTrueProp, cssPrefix, stringProp, validStringOrNumberProp} from "../../mixins/Commons";
+import Helper from "../../utils/Helper";
 
 export default defineComponent({
     name: 'BsAvatar',
@@ -95,26 +94,11 @@ export default defineComponent({
             style: useSizeStyles(props as Readonly<TBsAvatarOptionProps>),
         }, {
             default() {
-                if (props.imgSrc) {
-                    return h('img', {
-                        class: useShapeClasses(props.circle, props.rounded),
-                        style: useSizeStyles(props as Readonly<TBsAvatarOptionProps>),
-                        src: props.imgSrc,
-                    });
-                } else if (props.icon) {
-                    const iconSize = () => {
-                        const size = useGetCalcSize(props as Readonly<TBsAvatarOptionProps>);
-                        if (size > 72) {
-                            return size - 20;
-                        } else if (size > 32) {
-                            return size - 12;
-                        } else {
-                            return size - 8;
-                        }
-                    }
-
+                if (!Helper.isEmpty(props.imgSrc)) {
+                    return useRenderAvatarImage(props as Readonly<TBsAvatarOptionProps>);
+                } else if (!Helper.isEmpty(props.icon)) {
                     return h(BsIcon, {
-                        size: iconSize(),
+                        size: useAvatarIconSize(props as Readonly<TBsAvatarOptionProps>),
                         icon: props.icon,
                         spin: props.iconSpin,
                         pulse: props.iconPulse,
