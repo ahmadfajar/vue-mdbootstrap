@@ -1,0 +1,19 @@
+@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+
+.badge {
+    @include box-shadow(none);
+    font-weight: $font-weight-semi-bold;
+
+    &.badge-label {
+        font-size: 85%;
+        font-weight: $font-weight-normal;
+        padding: .25rem .6rem;
+    }
+
+    &.badge-pill {
+        font-family: var(--font-family-sans-serif);
+        padding: .2rem .6rem .3rem .6rem;
+    }
+}

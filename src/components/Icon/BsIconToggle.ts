@@ -10,10 +10,12 @@ export default defineComponent({
         icon: iconName,
         /**
          * The icon to display when `value` property is `true`.
+         * @type {string|*}
          */
         toggleIcon: iconName,
         /**
          * Value monitored by `v-model` to maintain this component state.
+         * @type {boolean|*}
          */
         modelValue: booleanProp,
         /**

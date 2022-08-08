@@ -1,6 +1,6 @@
-import {ComponentCustomProps, ComponentPropsOptions, VNodeProps} from "vue";
+import {ComponentPropsOptions, VNodeProps} from "vue";
 
-export declare interface IIconData {
+export declare type TIconData = {
     id: number;
     name: string;
     icon?: string;
@@ -9,13 +9,13 @@ export declare interface IIconData {
     data?: string;
 }
 
-export declare interface ISizeOptionProps extends ComponentCustomProps {
+export declare type TSizeOptionProps = {
     size: number;
     height: number;
     width: number;
 }
 
-export declare interface IBsIconOptionProps extends ISizeOptionProps {
+export declare type TBsIconOptionProps = TSizeOptionProps & {
     icon: string;
     pulse: boolean;
     spin: boolean;
@@ -23,42 +23,42 @@ export declare interface IBsIconOptionProps extends ISizeOptionProps {
     rotate: string | number;
 }
 
-export declare interface IBsIconToggleOptionProps {
+export declare type TBsIconToggleOptionProps = {
     icon: string;
     toggleIcon: string;
     modelValue: boolean;
     size: number;
 }
 
-export declare interface IBsIcon {
+export declare type TBsIcon = {
     name?: string;
-    props: ComponentPropsOptions<IBsIconOptionProps>;
+    props: ComponentPropsOptions<TBsIconOptionProps>;
 }
 
-export declare interface IBsIconSvg {
+export declare type TBsIconSvg = {
     name?: string;
-    props: ComponentPropsOptions<IBsIconOptionProps>;
+    props: ComponentPropsOptions<TBsIconOptionProps>;
 }
 
-export declare interface IBsIconToggle {
+export declare type TBsIconToggle = {
     name?: string;
-    props: ComponentPropsOptions<IBsIconToggleOptionProps>;
+    props: ComponentPropsOptions<TBsIconToggleOptionProps>;
 }
 
 export declare const BsIcon: {
     new (): {
-        $props: VNodeProps & ComponentPropsOptions<IBsIconOptionProps>;
+        $props: VNodeProps & ComponentPropsOptions<TBsIcon>;
     };
 };
 
 export declare const BsIconSvg: {
     new (): {
-        $props: VNodeProps & ComponentPropsOptions<IBsIconOptionProps>;
+        $props: VNodeProps & ComponentPropsOptions<TBsIconSvg>;
     };
 };
 
 export declare const BsIconToggle: {
     new (): {
-        $props: VNodeProps & ComponentPropsOptions<IBsIconToggleOptionProps>;
+        $props: VNodeProps & ComponentPropsOptions<TBsIconToggle>;
     };
 };

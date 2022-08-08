@@ -1,0 +1,45 @@
+@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+
+.#{$prefix}-divider {
+    background-color: rgba($black, 0.12);
+    border: none;
+    display: block;
+    height: 1px;
+    min-height: 1px;
+    margin-bottom: 0;
+    margin-top: 0;
+    width: 100%;
+    -webkit-box-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+
+    &.divider--dark {
+        background-color: rgba($white, 0.2);
+    }
+}
+
+.#{$prefix}-img-holder {
+    user-select: none;
+}
+
+.#{$prefix}-anchor-center {
+    text-anchor: middle;
+}
+
+.#{$prefix}-subheader {
+    @include flexbox((display: flex, align-items: center));
+    font-size: 1rem;
+    font-weight: normal;
+    height: 48px;
+    padding: 0 16px;
+
+    &.subheader--dark {
+        color: rgba($white, .8);
+    }
+
+    &.subheader--light {
+        color: $gray-600;
+    }
+}

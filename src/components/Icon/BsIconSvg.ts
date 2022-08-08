@@ -3,45 +3,52 @@ import {booleanProp, cssPrefix} from "../../mixins/Commons";
 import {flip, iconName, rotate} from "./mixins/SvgProps";
 import {height, width} from "./mixins/SizeProps";
 import {findIcon, useGoogleIcon, useRenderSvgIcon} from "./mixins/SvgFunc";
-import {IIconData} from "./index.d";
+import {TIconData} from "./mixins/types";
 
 export default defineComponent({
     name: "BsIconSvg",
     props: {
         /**
          * The SVG icon’s name.
+         * @type {string|*}
          */
         icon: iconName,
         /**
          * The SVG icon’s height in pixel.
+         * @type {string|number|*}
          */
         height,
         /**
          * The SVG icon’s width in pixel.
+         * @type {string|number|*}
          */
         width,
         /**
          * Apply **pulse** animation to the icon.
+         * @type {boolean|*}
          */
         pulse: booleanProp,
         /**
          * Apply **spin** animation to the icon.
+         * @type {boolean|*}
          */
         spin: booleanProp,
         /**
          * Flip the SVG icon, valid values are: `horizontal`, `vertical`, `both`.
+         * @type {string|*}
          */
         flip,
         /**
          * Rotate the icon, valid values are: `90`, `180`, `270`.
+         * @type {string|number|*}
          */
         rotate,
     },
     data: () => ({
-        svgIcon: undefined as IIconData | undefined,
+        svgIcon: undefined as TIconData | undefined,
     }),
     computed: {
-        iconData(): IIconData | undefined {
+        iconData(): TIconData | undefined {
             return findIcon(this.icon);
         },
         svgClasses() {
@@ -61,7 +68,7 @@ export default defineComponent({
         }
     },
     watch: {
-        async iconData(newVal: IIconData | undefined) {
+        async iconData(newVal: TIconData | undefined) {
             if (newVal) {
                 this.svgIcon = await useGoogleIcon(newVal);
             }
@@ -75,8 +82,8 @@ export default defineComponent({
     render() {
         return useRenderSvgIcon(
             this.svgIcon,
-            parseInt(String(this.height)),
-            parseInt(String(this.width)),
+            parseInt(String(this.height), 10),
+            parseInt(String(this.width), 10),
             this.svgClasses,
         );
     },

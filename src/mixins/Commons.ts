@@ -7,6 +7,11 @@ export const booleanProp = {
     default: false,
 }
 
+export const booleanTrueProp = {
+    type: Boolean,
+    default: true,
+}
+
 export const stringProp = {
     type: String,
     default: undefined,
@@ -18,9 +23,15 @@ export const stringRequiredProp = {
     required: true,
 }
 
-export const stringOrNumberLooseProp = {
+export const stringOrNumberProp = {
     type: [String, Number],
     default: undefined,
+}
+
+export const validStringOrNumberProp = {
+    type: [String, Number],
+    default: undefined,
+    validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
 }
 
 export const tagProp = {

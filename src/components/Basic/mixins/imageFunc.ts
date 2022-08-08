@@ -12,3 +12,10 @@ export function useSizeOrWh(
         return Helper.sizeUnit(widthOrHeight);
     }
 }
+
+export function useShapeClasses(circle: boolean, rounded: boolean): object {
+    return {
+        "rounded-circle": circle && !rounded,
+        "rounded": rounded && !circle,
+    }
+}

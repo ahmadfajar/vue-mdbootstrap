@@ -19,12 +19,21 @@ export function useContentTag(type: string | undefined, tag?: string | undefined
     return tag
 }
 
-export function useSimpleNodeWithSlots(
+export function useSimpleRenderWithSlots(
     tagName: string | unknown,
-    slots: Readonly<Slots>,
+    slots?: Readonly<Slots>,
     classes?: string | Array<string> | Record<string, unknown>,
+    styles?: string | Array<string> | Record<string, unknown>,
 ): VNode {
-    return h(
-        tagName, {class: classes}, [slots.default && slots.default()],
-    )
+    if (styles) {
+        return h(
+            tagName, {class: classes, style: styles},
+            slots ? slots.default && slots.default() : null,
+        )
+    } else {
+        return h(
+            tagName, {class: classes},
+            slots ? slots.default && slots.default() : null,
+        )
+    }
 }

@@ -1,7 +1,10 @@
 import {defineComponent, h} from "vue";
-import {useSizeOrWh} from "./mixins/imageFunc";
-import {booleanProp, cssPrefix, stringOrNumberLooseProp, stringProp} from "../../mixins/Commons";
+import {useShapeClasses, useSizeOrWh} from "./mixins/imageFunc";
 import Helper from "../../utils/Helper";
+import {
+    booleanProp, cssPrefix,
+    stringOrNumberProp, stringProp
+} from "../../mixins/Commons";
 
 export default defineComponent({
     name: "BsImageHolder",
@@ -10,25 +13,25 @@ export default defineComponent({
          * This component's height.
          * @type {string|number|*}
          */
-        height: stringOrNumberLooseProp,
+        height: stringOrNumberProp,
         /**
          * This component's width.
          * @type {string|number|*}
          */
-        width: stringOrNumberLooseProp,
+        width: stringOrNumberProp,
         /**
          * Shortcut to create this component with equal height and width.
          * @type {string|number|*}
          */
-        size: stringOrNumberLooseProp,
+        size: stringOrNumberProp,
         /**
          * Create this component with circle shape.
-         * @type {boolean|*}
+         * @type {boolean}
          */
         circle: booleanProp,
         /**
          * Create this component with rounded shape.
-         * @type {boolean|*}
+         * @type {boolean}
          */
         rounded: booleanProp,
         /**
@@ -84,8 +87,7 @@ export default defineComponent({
                 class: {
                     [`${cssPrefix}-img-holder`]: true,
                     [`${cssPrefix}-anchor-center`]: props.xPos === "50%",
-                    "rounded-circle": props.circle && !props.rounded,
-                    "rounded": props.rounded && !props.circle,
+                    ...useShapeClasses(props.circle, props.rounded),
                 },
                 height: useSizeOrWh(props.size, props.height),
                 width: useSizeOrWh(props.size, props.width),

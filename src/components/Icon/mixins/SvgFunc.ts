@@ -2,7 +2,7 @@ import axios from "axios";
 import {h, VNode} from "vue";
 import {XMLParser} from "fast-xml-parser";
 import {IconLib} from "./IconLib";
-import {IIconData} from "../index.d"
+import {TIconData} from "./types"
 import Helper from "../../../utils/Helper";
 
 function googleIconUrl(theme: string, icon: string, version: number): string {
@@ -29,9 +29,9 @@ function googleIconUrl(theme: string, icon: string, version: number): string {
  * Find an icon on the Google's icon library.
  *
  * @param {string} name The icon name
- * @returns {IIconData} Icon data if icon exists on the library otherwise `undefined`.
+ * @returns {TIconData} Icon data if icon exists on the library otherwise `undefined`.
  */
-function findIcon(name: string | undefined): IIconData | undefined {
+function findIcon(name: string | undefined): TIconData | undefined {
     if (!name) {
         return undefined;
     }
@@ -63,7 +63,7 @@ function findIcon(name: string | undefined): IIconData | undefined {
     return undefined
 }
 
-async function useGoogleIcon(iconObj: IIconData): Promise<IIconData> {
+async function useGoogleIcon(iconObj: TIconData): Promise<TIconData> {
     const resp = await axios.get(googleIconUrl(iconObj.variant, iconObj.name, iconObj.id))
     return {
         id: iconObj.id,
@@ -111,7 +111,7 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
 }
 
 function useRenderSvgIcon(
-    iconData: IIconData | undefined,
+    iconData: TIconData | undefined,
     height: number | string,
     width: number | string,
     classes: unknown,
