@@ -30,11 +30,11 @@ export function useGetCalcSize(props: Readonly<TSizeOptionProps>): number {
     }
 }
 
-export function useSizeHeight(props: Readonly<TSizeOptionProps>): number {
+export function useSizeHeight(props: Readonly<TSizeOptionProps>): number | undefined {
     return props.size && props.size > 0 ? props.size : props.height;
 }
 
-export function useSizeWidth(props: Readonly<TSizeOptionProps>): number {
+export function useSizeWidth(props: Readonly<TSizeOptionProps>): number | undefined {
     return props.size && props.size > 0 ? props.size : props.width;
 }
 

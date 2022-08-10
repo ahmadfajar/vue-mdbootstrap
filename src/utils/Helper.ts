@@ -91,8 +91,14 @@ class Helper {
      * @param {boolean} [allowEmptyString]  Allow empty string or not
      * @returns {boolean} True if value is empty otherwise False
      */
-    static isEmpty(value: Array<unknown> | string | unknown, allowEmptyString = true): boolean {
-        return (value === null) || (typeof value === 'undefined') || (!allowEmptyString ? value === '' : false) || (Array.isArray(value) && value.length === 0);
+    static isEmpty(
+        value: Array<unknown> | string | unknown | null | undefined,
+        allowEmptyString = true,
+    ): boolean {
+        return (value === null) ||
+            (typeof value === 'undefined') ||
+            (!allowEmptyString ? value === '' : false) ||
+            (Array.isArray(value) && value.length === 0);
     }
 
     /**
@@ -111,7 +117,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an Array otherwise FALSE
      */
-    static isArray(value: Array<unknown> | unknown): boolean {
+    static isArray(value: Array<unknown> | unknown | null | undefined): boolean {
         return (typeof value !== 'undefined' && value !== null && Array.isArray(value));
     }
 
@@ -121,7 +127,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is a Function otherwise FALSE
      */
-    static isFunction(value: unknown): boolean {
+    static isFunction(value: unknown | null | undefined): boolean {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'function');
     }
 
@@ -141,7 +147,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an object otherwise FALSE
      */
-    static isObject(value: object | unknown): boolean {
+    static isObject(value: object | unknown | null | undefined): boolean {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'object');
     }
 
@@ -183,8 +189,11 @@ class Helper {
      * @param {string} [unit]       The dimension to add
      * @returns {string|null} Css inline dimension
      */
-    static sizeUnit(value: string | number, unit = 'px'): string | null {
-        const _px = unit;
+    static sizeUnit(
+        value: string | number | null | undefined,
+        unit?: string | null | undefined,
+    ): string | null {
+        const _px = unit || 'px';
 
         if (typeof value === 'string') {
             if (value.toLowerCase() === 'auto') {

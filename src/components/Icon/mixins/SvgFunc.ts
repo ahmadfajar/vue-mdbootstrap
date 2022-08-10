@@ -5,7 +5,7 @@ import {IconLib} from "./IconLib";
 import {TIconData} from "./types"
 import Helper from "../../../utils/Helper";
 
-function googleIconUrl(theme: string, icon: string, version: number): string {
+function googleIconUrl(theme: string | undefined, icon: string, version: number): string {
     return `https://fonts.gstatic.com/s/i/materialicons${theme}/${icon}/v${version}/24px.svg`;
 }
 
