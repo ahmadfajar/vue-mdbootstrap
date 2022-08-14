@@ -49,7 +49,7 @@ export default defineComponent({
             [
                 "badge",
                 props.type ? `badge-${props.type}` : "",
-                props.variant ? `badge-${props.variant}` : `bg-${props.color}`,
+                props.variant ? `text-bg-${props.variant}` : `bg-${props.color}`,
             ]
         )
     }

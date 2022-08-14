@@ -9,8 +9,7 @@ $gray-700: #495057;
 $gray-800: #343a40;
 $gray-900: #212529;
 
-$grays: ();
-$grays: map-merge((
+$grays: (
     "100": $gray-100,
     "200": $gray-200,
     "300": $gray-300,
@@ -20,7 +19,7 @@ $grays: map-merge((
     "700": $gray-700,
     "800": $gray-800,
     "900": $gray-900
-), $grays);
+);
 
 // Material Bootstrap Colors
 $mdb-color-lighten-5:  #d0d6e2 !default;
@@ -31,7 +30,7 @@ $mdb-color-lighten-1:  #59698d !default;
 $mdb-color-base:       #45526e !default;
 $mdb-color-darken-1:   #3b465e !default;
 $mdb-color-darken-2:   #2e3951 !default;
-$mdb-color-darken-3:   #1c2a48 !default;
+$mdb-color-darken-3:   #232c40 !default;
 $mdb-color-darken-4:   #1c2331 !default;
 
 $red-lighten-5:  #ffebee !default;
@@ -49,16 +48,16 @@ $red-accent-2:   #ff5252 !default;
 $red-accent-3:   #e03333 !default;
 $red-accent-4:   #d21b1b !default;
 
-$pink-lighten-5:  #fce4ec !default;
-$pink-lighten-4:  #f8bbd0 !default;
-$pink-lighten-3:  #f48fb1 !default;
-$pink-lighten-2:  #f06292 !default;
-$pink-lighten-1:  #ec407a !default;
-$pink-base:       #e91e63 !default;
-$pink-darken-1:   #d81b60 !default;
-$pink-darken-2:   #c2185b !default;
-$pink-darken-3:   #ad1457 !default;
-$pink-darken-4:   #880e4f !default;
+$pink-lighten-5:  #ffdfe7 !default;
+$pink-lighten-4:  #ffc6d5 !default;
+$pink-lighten-3:  #ffa8bf !default;
+$pink-lighten-2:  #ff8baa !default;
+$pink-lighten-1:  #ff6f95 !default;
+$pink-base:       #F65A83 !default;
+$pink-darken-1:   #dd4c72 !default;
+$pink-darken-2:   #c1385b !default;
+$pink-darken-3:   #a12747 !default;
+$pink-darken-4:   #871d39 !default;
 $pink-accent-1:   #ff80ab !default;
 $pink-accent-2:   #ff4081 !default;
 $pink-accent-3:   #da1970 !default;
@@ -73,11 +72,11 @@ $purple-base:       #9c27b0 !default;
 $purple-darken-1:   #8e24aa !default;
 $purple-darken-2:   #7b1fa2 !default;
 $purple-darken-3:   #6a1b9a !default;
-$purple-darken-4:   #4a148c !default;
+$purple-darken-4:   #581581 !default;
 $purple-accent-1:   #ea80fc !default;
 $purple-accent-2:   #e040fb !default;
-$purple-accent-3:   #d00cf1 !default;
-$purple-accent-4:   #c002e0 !default;
+$purple-accent-3:   #bf19db !default;
+$purple-accent-4:   #9d08b7 !default;
 
 $deep-purple-lighten-5:  #ede7f6 !default;
 $deep-purple-lighten-4:  #d1c4e9 !default;
@@ -105,9 +104,9 @@ $indigo-darken-2:   #303f9f !default;
 $indigo-darken-3:   #283593 !default;
 $indigo-darken-4:   #1a237e !default;
 $indigo-accent-1:   #8c9eff !default;
-$indigo-accent-2:   #536dfe !default;
-$indigo-accent-3:   #3d5afe !default;
-$indigo-accent-4:   #304ffe !default;
+$indigo-accent-2:   #6770eb !default;
+$indigo-accent-3:   #4a56f1 !default;
+$indigo-accent-4:   #3945dd !default;
 
 $blue-lighten-5:  #e3f2fd !default;
 $blue-lighten-4:  #bbdefb !default;
@@ -151,8 +150,8 @@ $cyan-darken-3:   #00838f !default;
 $cyan-darken-4:   #006064 !default;
 $cyan-accent-1:   #84ffff !default;
 $cyan-accent-2:   #18ffff !default;
-$cyan-accent-3:   #00e5ff !default;
-$cyan-accent-4:   #00b8d4 !default;
+$cyan-accent-3:   #0bd3d2 !default;
+$cyan-accent-4:   #0ba1a0 !default;
 
 $teal-lighten-5:  #e0f2f1 !default;
 $teal-lighten-4:  #b2dfdb !default;
@@ -165,24 +164,24 @@ $teal-darken-2:   #00796b !default;
 $teal-darken-3:   #00695c !default;
 $teal-darken-4:   #004d40 !default;
 $teal-accent-1:   #a7ffeb !default;
-$teal-accent-2:   #64ffda !default;
-$teal-accent-3:   #1de9b6 !default;
-$teal-accent-4:   #00bfa5 !default;
+$teal-accent-2:   #64f9dd !default;
+$teal-accent-3:   #27c9ab !default;
+$teal-accent-4:   #14a98d !default;
 
-$green-lighten-5:  #e8f5e9 !default;
-$green-lighten-4:  #c8e6c9 !default;
-$green-lighten-3:  #a5d6a7 !default;
-$green-lighten-2:  #81c784 !default;
-$green-lighten-1:  #66bb6a !default;
-$green-base:       #4caf50 !default;
-$green-darken-1:   #43a047 !default;
-$green-darken-2:   #388e3c !default;
-$green-darken-3:   #2e7d32 !default;
+$green-lighten-5:  #deffdf !default;
+$green-lighten-4:  #c3f9c6 !default;
+$green-lighten-3:  #9add9d !default;
+$green-lighten-2:  #78d17d !default;
+$green-lighten-1:  #59bb5e !default;
+$green-base:       #40a545 !default;
+$green-darken-1:   #37973c !default;
+$green-darken-2:   #2a832e !default;
+$green-darken-3:   #26702a !default;
 $green-darken-4:   #1b5e20 !default;
 $green-accent-1:   #b9f6ca !default;
-$green-accent-2:   #69f0ae !default;
-$green-accent-3:   #00e676 !default;
-$green-accent-4:   #00c853 !default;
+$green-accent-2:   #8fefaa !default;
+$green-accent-3:   #5bcd7a !default;
+$green-accent-4:   #1da762 !default;
 
 $light-green-lighten-5:  #f1f8e9 !default;
 $light-green-lighten-4:  #dcedc8 !default;
@@ -193,11 +192,11 @@ $light-green-base:       #8bc34a !default;
 $light-green-darken-1:   #7cb342 !default;
 $light-green-darken-2:   #689f38 !default;
 $light-green-darken-3:   #558b2f !default;
-$light-green-darken-4:   #33691e !default;
+$light-green-darken-4:   #406823 !default;
 $light-green-accent-1:   #ccff90 !default;
-$light-green-accent-2:   #b2ff59 !default;
-$light-green-accent-3:   #76ff03 !default;
-$light-green-accent-4:   #64dd17 !default;
+$light-green-accent-2:   #a7e75c !default;
+$light-green-accent-3:   #76b130 !default;
+$light-green-accent-4:   #508511 !default;
 
 $lime-lighten-5:  #f9fbe7 !default;
 $lime-lighten-4:  #f0f4c3 !default;
@@ -205,14 +204,14 @@ $lime-lighten-3:  #e6ee9c !default;
 $lime-lighten-2:  #dce775 !default;
 $lime-lighten-1:  #d4e157 !default;
 $lime-base:       #cddc39 !default;
-$lime-darken-1:   #c0ca33 !default;
-$lime-darken-2:   #afb42b !default;
-$lime-darken-3:   #9e9d24 !default;
-$lime-darken-4:   #827717 !default;
+$lime-darken-1:   #bbcb21 !default;
+$lime-darken-2:   #a4b501 !default;
+$lime-darken-3:   #8d9b02 !default;
+$lime-darken-4:   #6f7a00 !default;
 $lime-accent-1:   #f4ff81 !default;
-$lime-accent-2:   #eeff41 !default;
-$lime-accent-3:   #c6ff00 !default;
-$lime-accent-4:   #aeea00 !default;
+$lime-accent-2:   #dae75b !default;
+$lime-accent-3:   #bbc741 !default;
+$lime-accent-4:   #9ca919 !default;
 
 $yellow-lighten-5:  #fffde7 !default;
 $yellow-lighten-4:  #fff9c4 !default;
@@ -220,14 +219,14 @@ $yellow-lighten-3:  #fff59d !default;
 $yellow-lighten-2:  #fff176 !default;
 $yellow-lighten-1:  #ffee58 !default;
 $yellow-base:       #ffeb3b !default;
-$yellow-darken-1:   #fdd835 !default;
-$yellow-darken-2:   #fbc02d !default;
-$yellow-darken-3:   #f9a825 !default;
-$yellow-darken-4:   #f39600 !default;
-$yellow-accent-1:   #ffff8d !default;
-$yellow-accent-2:   #ffff00 !default;
-$yellow-accent-3:   #ffea00 !default;
-$yellow-accent-4:   #ffd600 !default;
+$yellow-darken-1:   #f1dc24 !default;
+$yellow-darken-2:   #e3ce12 !default;
+$yellow-darken-3:   #d1bc02 !default;
+$yellow-darken-4:   #b3a105 !default;
+$yellow-accent-1:   #fffe6d !default;
+$yellow-accent-2:   #f3f23a !default;
+$yellow-accent-3:   #dbda18 !default;
+$yellow-accent-4:   #c1c00a !default;
 
 $amber-lighten-5:  #fff8e1 !default;
 $amber-lighten-4:  #ffecb3 !default;
@@ -235,14 +234,14 @@ $amber-lighten-3:  #ffe082 !default;
 $amber-lighten-2:  #ffd54f !default;
 $amber-lighten-1:  #ffca28 !default;
 $amber-base:       #ffc107 !default;
-$amber-darken-1:   #ffb300 !default;
-$amber-darken-2:   #ffa000 !default;
-$amber-darken-3:   #ff8f00 !default;
-$amber-darken-4:   #e88200 !default;
-$amber-accent-1:   #ffe57f !default;
-$amber-accent-2:   #ffd740 !default;
-$amber-accent-3:   #ffc400 !default;
-$amber-accent-4:   #ffab00 !default;
+$amber-darken-1:   #efb301 !default;
+$amber-darken-2:   #e1a900 !default;
+$amber-darken-3:   #cb9800 !default;
+$amber-darken-4:   #a77d00 !default;
+$amber-accent-1:   #ffe05d !default;
+$amber-accent-2:   #f3cd2f !default;
+$amber-accent-3:   #d5b016 !default;
+$amber-accent-4:   #bd9900 !default;
 
 $orange-lighten-5:  #fff3e0 !default;
 $orange-lighten-4:  #ffe0b2 !default;
@@ -253,11 +252,11 @@ $orange-base:       #ff9800 !default;
 $orange-darken-1:   #fb8c00 !default;
 $orange-darken-2:   #f57c00 !default;
 $orange-darken-3:   #ef6c00 !default;
-$orange-darken-4:   #e85c00 !default;
+$orange-darken-4:   #c9560c !default;
 $orange-accent-1:   #ffd180 !default;
 $orange-accent-2:   #ffab40 !default;
 $orange-accent-3:   #ff9100 !default;
-$orange-accent-4:   #ff6d00 !default;
+$orange-accent-4:   #d37801 !default;
 
 $deep-orange-lighten-5:  #fbe9e7 !default;
 $deep-orange-lighten-4:  #ffccbc !default;
@@ -268,7 +267,7 @@ $deep-orange-base:       #ff5722 !default;
 $deep-orange-darken-1:   #ec4410 !default;
 $deep-orange-darken-2:   #dc3b09 !default;
 $deep-orange-darken-3:   #ca380b !default;
-$deep-orange-darken-4:   #bf360c !default;
+$deep-orange-darken-4:   #af2b03 !default;
 $deep-orange-accent-1:   #ff9e80 !default;
 $deep-orange-accent-2:   #ff6e40 !default;
 $deep-orange-accent-3:   #ff3d00 !default;
@@ -310,8 +309,7 @@ $grey-darken-4:   #212121 !default;
 $black-base: #000 !default;
 $white-base: #fff !default;
 
-$mdb-colors-1: () !default;
-$mdb-colors-1: map-merge((
+$mdb-colors-1: (
     "mdb-color": (
         "lighten-5":  $mdb-color-lighten-5,
         "lighten-4":  $mdb-color-lighten-4,
@@ -616,32 +614,32 @@ $mdb-colors-1: map-merge((
         "darken-3":   $grey-darken-3,
         "darken-4":   $grey-darken-4
     )
-), $mdb-colors-1);
+);
 
 // Full palette of colors
 $enable_full_palette:  true !default;
 $enable-gradients:     false !default;
 
 // Material colors
-$primary-color:             #007bff !default;
+$primary-color:             #0d6efd !default;
 $primary-color-dark:        #0d47a1 !default;
 $secondary-color:           #aa66cc !default;
-$secondary-color-dark:      #7e21ad !default;
+$secondary-color-dark:      #681c8f !default;
 $default-color:             #2bbbad !default;
 $default-color-dark:        #00695c !default;
-$info-color:                #33b5e5 !default;
-$info-color-dark:           #1186ad !default;
-$success-color:             #28a745 !default;
-$success-color-dark:        #007e33 !default;
+$info-color:                #0dcaf0 !default;
+$info-color-dark:           #0b6c8d !default;
+$success-color:             #198754 !default;
+$success-color-dark:        #025222 !default;
 $warning-color:             #ffbb33 !default;
-$warning-color-dark:        #ff8800 !default;
-$danger-color:              #ec2537 !default;
+$warning-color-dark:        #b57a04 !default;
+$danger-color:              #dc3545 !default;
 $danger-color-dark:         #ad0000 !default;
 $elegant-color:             #2e2e2e !default;
 $elegant-color-dark:        #212121 !default;
 $stylish-color:             #4b515d !default;
 $stylish-color-dark:        #2d333e !default;
-$unique-color:              #3f729b !default;
+$unique-color:              #385870 !default;
 $unique-color-dark:         #1c2331 !default;
 $special-color:             #37474f !default;
 $special-color-dark:        #263238 !default;
@@ -653,8 +651,7 @@ $error-color:               $red-base !default;
 
 // Applicable to:
 // BsCombobox, BsListView, BsButton, BsChip
-$material-colors: () !default;
-$material-colors: map-merge((
+$material-colors: (
     "primary-color":          $primary-color,
     "primary-color-dark":     $primary-color-dark,
     "secondary-color":        $secondary-color,
@@ -669,6 +666,8 @@ $material-colors: map-merge((
     "warning-color-dark":     $warning-color-dark,
     "danger-color":           $danger-color,
     "danger-color-dark":      $danger-color-dark,
+    "blue-green-color":       $blue-green-color,
+    "blue-green-color-dark":  $blue-green-color-dark,
     "elegant-color":          $elegant-color,
     "elegant-color-dark":     $elegant-color-dark,
     "stylish-color":          $stylish-color,
@@ -677,16 +676,13 @@ $material-colors: map-merge((
     "unique-color-dark":      $unique-color-dark,
     "special-color":          $special-color,
     "special-color-dark":     $special-color-dark,
-    "blue-green-color":       $blue-green-color,
-    "blue-green-color-dark":  $blue-green-color-dark,
-), $material-colors);
+);
 
 // Bootstrap custom theme colors
 // Applicable to:
 // BsButton, BsCombobox, BsListView, BsProgress, BsAlert, BsCheckbox, BsRadio, BsSwitch
 // BsChip
-$theme-colors: () !default;
-$theme-colors: map-merge((
+$theme-colors: (
     "default":     $default-color,
     "primary":     $primary-color,
     "secondary":   $gray-600,
@@ -695,47 +691,50 @@ $theme-colors: map-merge((
     "danger":      $danger-color,
     "info":        $info-color,
     "dark":        $grey-darken-4,
-    "light":       $grey-lighten-4,
+    "light":       #f8f9fa,
     "light-grey":  $grey-lighten-2,
-    "amber":       $amber-darken-2,
-    "blue":        $blue-darken-2,
+    "yellow":      $yellow-base,
+    "amber":       $amber-base,
+    "blue":        $blue-base,
     "blue-green":  $blue-green-color,
-    "blue-grey":   $blue-grey-lighten-1,
+    "blue-grey":   $blue-grey-base,
     "brown":       $brown-base,
     "cyan":        $cyan-base,
     "dark-blue":   $blue-darken-4,
     "dark-green":  lighten($green-darken-4, 2%),
-    "deep-orange": $deep-orange-lighten-1,
-    "deep-purple": $deep-purple-darken-2,
-    "green":       $green-darken-2,
-    "grey":        $grey-darken-2,
+    "deep-orange": $deep-orange-base,
+    "deep-purple": $deep-purple-base,
+    "green":       $green-base,
+    "grey":        $grey-base,
     "indigo":      $indigo-base,
     "light-blue":  $light-blue-base,
     "light-green": $light-green-base,
-    "lime":        $lime-darken-2,
-    "mdb-color":   $mdb-color-lighten-1,
-    "orange":      $orange-darken-2,
-    "pink":        $pink-lighten-1,
-    "purple":      $purple-darken-1,
-    "red":         $red-darken-2,
-    "teal":        $teal-darken-2,
-    "unique":      $pink-darken-4,
+    "lime":        $lime-base,
+    "mdb-color":   $mdb-color-base,
+    "orange":      $orange-base,
+    "pink":        $pink-base,
+    "purple":      $purple-base,
+    "red":         $red-base,
+    "teal":        $teal-base,
+    "unique":      #880e4f,
     "black":       $black-base
-), $theme-colors);
+);
 
 // used to reduced duplicate css when created theme colors
 $merge-theme-colors: map-merge($material-colors, $theme-colors);
 
-$context-colors: () !default;
-$context-colors: map-merge((
+$context-colors: (
     "default":      $default-color,
     "primary":      $primary-color,
+    "secondary":    $gray-600,
     "info":         $info-color,
     "success":      $success-color,
     "warning":      $warning-color,
     "danger":       $danger-color,
+    "light":        $grey-lighten-4,
+    "dark":         $grey-darken-4,
     "blue-green":   $blue-green-color,
-), $context-colors);
+);
 
 // Set a specific jump point for requesting color jumps
 $theme-color-interval:      8% !default;

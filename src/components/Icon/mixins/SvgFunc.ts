@@ -75,7 +75,13 @@ async function useGoogleIcon(iconObj: TIconData): Promise<TIconData> {
     }
 }
 
-function createNodeAttrs(attrs: Array<[string, unknown]>): object {
+// function hasFillNoneAttr(attrs: Array<[string, unknown]>): boolean {
+//     const ret = attrs.find(it => it[0] === '@_fill' && it[1] === 'none')
+//     return ret !== null && ret !== undefined;
+// }
+
+// function createNodeAttrs(attrs: Array<[string, unknown]>, parent?: [string, unknown]): object {
+function createNodeAttrs(attrs: Array<[string, unknown]>): Record<string, unknown> {
     const props: Record<string, unknown> = {};
     const filtered = attrs
         .filter(el => el[0].startsWith("@_"))
@@ -83,10 +89,23 @@ function createNodeAttrs(attrs: Array<[string, unknown]>): object {
             const attr = el[0].replace("@_", "");
             return [attr, el[1]];
         });
+
+    // if (!parent || !hasFillNoneAttr(parent[1] as Array<[string, unknown]>)) {
+    //     if (filtered.length > 0 && !filtered.find(el => el[0] === "fill")) {
+    //         filtered.push(["fill", "currentColor"]);
+    //     }
+    // }
     filtered.forEach(el => props[el[0]] = el[1]);
+
     return props;
 }
 
+// function parentAttr(tag: string, attrs:Array<[string, unknown]>): [string, unknown] {
+//     const filtered = attrs.filter(it => it[0].startsWith("@_"));
+//     return [tag, filtered];
+// }
+
+// function renderChildNodes(children: Array<[string, unknown]>, parent?: [string, unknown]): Array<VNode> {
 function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
     const results: Array<VNode> = [];
 
@@ -95,12 +114,16 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
             (el[1] as Array<object>).forEach(it => {
                 const entries = Object.entries(it);
                 const childNodes = entries.filter(it => it[0].startsWith("@_") === false);
+                // const elValue: [string, unknown] = parentAttr(el[0], entries);
+                // const rh = h(el[0], createNodeAttrs(entries, parent), renderChildNodes(childNodes, elValue));
                 const rh = h(el[0], createNodeAttrs(entries), renderChildNodes(childNodes));
                 results.push(rh);
             });
         } else if (Helper.isObject(el[1])) {
             const entries = Object.entries(el[1] as object);
             const childNodes = entries.filter(it => it[0].startsWith("@_") === false);
+            // const elValue: [string, unknown] = parentAttr(el[0], entries);
+            // const rh = h(el[0], createNodeAttrs(entries, parent), renderChildNodes(childNodes, elValue));
             const rh = h(el[0], createNodeAttrs(entries), renderChildNodes(childNodes));
 
             results.push(rh);
@@ -119,24 +142,16 @@ function useRenderSvgIcon(
     if (!iconData || !iconData.data) {
         return h("span");
     }
-    // console.log("svg_icon:", iconData.icon);
     const parser = new XMLParser({ignoreAttributes: false});
     const jsonObj = parser.parse(iconData.data);
     const svgData = Object.entries(jsonObj.svg);
-    // console.log("svg_data:", svgData);
-    const filteredAttrs = svgData
-        .filter(el => el[0].startsWith("@_"))
-        .map<[string, unknown]>(el => {
-            const attr = el[0].replace("@_", "");
-            const value = attr === "height" ? height : attr === "width" ? width : el[1];
-
-            return [attr, value];
-        });
-    filteredAttrs.push(["class", classes]);
-    filteredAttrs.push(["xmlns", "http://www.w3.org/2000/svg"]);
+    const props = createNodeAttrs(svgData);
     const children = svgData.filter(el => el[0].startsWith("@_") === false);
-    const props: Record<string, unknown> = {};
-    filteredAttrs.forEach(el => props[el[0]] = el[1]);
+    props["height"] = height;
+    props["width"] = width;
+    props["class"] = classes;
+    props["fill"] = "currentColor";
+    props["xmlns"] = "http://www.w3.org/2000/svg";
 
     return h("svg", props, renderChildNodes(children))
 }

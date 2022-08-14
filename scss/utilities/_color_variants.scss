@@ -2,9 +2,12 @@
 @each $color_name, $color in $mdb-colors-1 {
     @each $color_type, $color_value in $color {
         @if $color_type == "base" {
-            .bg-#{$color_name}-base {
-                background-color: $color_value !important;
+            @if(map-get($theme-colors, $color_name) == null) {
+                .bg-#{$color_name} {
+                    background-color: $color_value !important;
+                }
             }
+
             .bg-rgba-#{$color_name}-slight,
             .bg-rgba-#{$color_name}-slight:after {
                 background-color: rgba($color_value, .1) !important;
@@ -49,14 +52,13 @@
 }
 
 // Create theme variants for backgrounds, borders and text colors
-$reduced-theme-colors: map-remove($merge-theme-colors,
-        "default", "default-color", "primary", "primary-color", "info", "info-color",
-        "success", "success-color", "warning", "warning-color", "danger", "danger-color",
-        "dark", "elegant-color-dark", "dark-blue", "primary-color-dark",
-        "blue-green", "blue-green-color"
+$removed-duplicate-colors: map-remove($merge-theme-colors,
+        "default", "default-color", "primary", "info", "success", "secondary", "warning",
+        "warning-color", "danger", "dark", "light", "black", "white", "primary-color-dark",
+        "elegant-color-dark", "dark-blue", "blue-green", "blue-green-color"
 );
 
-@each $color_name, $color in $reduced-theme-colors {
+@each $color_name, $color in $removed-duplicate-colors {
     .bg-#{$color_name} {
         background-color: $color !important;
     }
@@ -76,13 +78,15 @@ $reduced-theme-colors: map-remove($merge-theme-colors,
     }
 }
 
-@each $color_name, $color in $context-colors {
+$bs-custom-colors: (
+    "default":      $default-color,
+    "warning":      $warning-color,
+    "blue-green":   $blue-green-color,
+);
+
+@each $color_name, $color in $bs-custom-colors {
     .bg-#{$color_name}, .bg-#{$color_name}-color {
         background-color: $color !important;
-    }
-
-    .border-#{$color_name}, .border-#{$color_name}-color {
-        border-color: $color !important;
     }
 
     .text-#{$color_name}, .text-#{$color_name}-color {
@@ -93,6 +97,12 @@ $reduced-theme-colors: map-remove($merge-theme-colors,
         &:hover, &:focus {
             color: darken($color, 15%) !important;
         }
+    }
+}
+
+@each $color_name, $color in map-remove($context-colors, "dark", "light", "blue-green") {
+    .border-#{$color_name}, .border-#{$color_name}-color {
+        border-color: $color !important;
     }
 }
 

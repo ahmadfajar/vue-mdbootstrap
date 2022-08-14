@@ -1,8 +1,8 @@
 import {h, VNode} from "vue";
-import {TBsAvatarOptionProps} from "./types";
+import {TImageOptionProps} from "./types";
+import {TSizeOptionProps} from "../../Icon/mixins/types";
 import {useShapeClasses} from "../../Basic/mixins/imageFunc";
 import {useGetCalcSize, useSizeStyles} from "../../Icon/mixins/SizeProps";
-import {TSizeOptionProps} from "../../Icon/mixins/types";
 
 export function useAvatarIconSize(props: TSizeOptionProps): number {
     const size = useGetCalcSize(props);
@@ -15,10 +15,10 @@ export function useAvatarIconSize(props: TSizeOptionProps): number {
     }
 }
 
-export function useRenderAvatarImage(props: Readonly<TBsAvatarOptionProps>): VNode {
+export function useRenderAvatarImage(props: Readonly<TImageOptionProps>): VNode {
     return h('img', {
         class: useShapeClasses(props.circle, props.rounded),
-        style: useSizeStyles(props as Readonly<TBsAvatarOptionProps>),
+        style: useSizeStyles(props as Readonly<TImageOptionProps>),
         src: props.imgSrc,
     });
 }

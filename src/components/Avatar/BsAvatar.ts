@@ -6,7 +6,6 @@ import {useShapeClasses} from "../Basic/mixins/imageFunc";
 import {useAvatarIconSize, useRenderAvatarImage} from "./mixins/avatarFunc";
 import {TBsAvatarOptionProps} from "./mixins/types";
 import {booleanProp, booleanTrueProp, cssPrefix, stringProp, validStringOrNumberProp} from "../../mixins/Commons";
-import Helper from "../../utils/Helper";
 
 export default defineComponent({
     name: 'BsAvatar',
@@ -84,34 +83,31 @@ export default defineComponent({
          */
         text: stringProp,
     },
-    setup(props) {
+    setup(props, {slots}) {
         return () => h('div', {
-            class: {
-                [`${cssPrefix}-avatar`]: true,
-                'p-2': useGetCalcSize(props as Readonly<TBsAvatarOptionProps>) > 72,
-                ...useShapeClasses(props.circle, props.rounded),
-            },
-            style: useSizeStyles(props as Readonly<TBsAvatarOptionProps>),
-        }, {
-            default() {
-                if (!Helper.isEmpty(props.imgSrc)) {
-                    return useRenderAvatarImage(props as Readonly<TBsAvatarOptionProps>);
-                } else if (!Helper.isEmpty(props.icon)) {
-                    return h(BsIcon, {
-                        size: useAvatarIconSize(props as Readonly<TBsAvatarOptionProps>),
-                        icon: props.icon,
-                        spin: props.iconSpin,
-                        pulse: props.iconPulse,
-                        flip: props.iconFlip,
-                        rotate: props.iconRotation,
-                    });
-                } else {
-                    return h('span',
-                        {class: [`${cssPrefix}-avatar-text`]},
-                        props.text || '??',
-                    );
-                }
-            }
-        })
+                class: {
+                    [`${cssPrefix}-avatar`]: true,
+                    'p-2': useGetCalcSize(props as Readonly<TBsAvatarOptionProps>) > 72,
+                    ...useShapeClasses(props.circle, props.rounded),
+                },
+                style: useSizeStyles(props as Readonly<TBsAvatarOptionProps>),
+            }, slots.default
+                ? slots.default()
+                : props.imgSrc && props.imgSrc !== ''
+                    ? useRenderAvatarImage(props as Readonly<TBsAvatarOptionProps>)
+                    : props.icon && props.icon !== ''
+                        ? h(BsIcon, {
+                            size: useAvatarIconSize(props as Readonly<TBsAvatarOptionProps>),
+                            icon: props.icon,
+                            spin: props.iconSpin,
+                            pulse: props.iconPulse,
+                            flip: props.iconFlip,
+                            rotate: props.iconRotation,
+                        })
+                        : h('span',
+                            {class: [`${cssPrefix}-avatar-text`]},
+                            props.text || '?',
+                        )
+        )
     }
 });
