@@ -1,6 +1,6 @@
 import {computed, defineComponent} from "vue";
-import {stringProp} from "../../mixins/Commons";
-import {useSimpleRenderWithSlots} from "./mixins/cardFunc";
+import {stringProp} from "../../mixins/CommonProps";
+import {useSimpleRenderWithSlots} from "./mixins/cardApi";
 
 export default defineComponent({
     name: "BsCardContent",

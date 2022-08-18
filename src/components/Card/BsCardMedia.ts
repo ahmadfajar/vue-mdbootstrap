@@ -1,5 +1,6 @@
 import {defineComponent, h} from "vue";
-import {booleanProp, cssPrefix, stringProp, stringRequiredProp} from "../../mixins/Commons";
+import {cssPrefix} from "../../mixins/CommonApi";
+import {booleanProp, stringProp, stringRequiredProp} from "../../mixins/CommonProps";
 
 export default defineComponent({
     name: "BsCardMedia",

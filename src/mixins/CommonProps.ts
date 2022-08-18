@@ -1,7 +1,3 @@
-import Helper from "../utils/Helper";
-
-export const cssPrefix = "md";
-
 export const booleanProp = {
     type: Boolean,
     default: false,
@@ -34,16 +30,13 @@ export const validStringOrNumberProp = {
     validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
 }
 
+export const validStringOrFloatProp = {
+    type: [String, Number],
+    default: undefined,
+    validator: (value: string): boolean => !isNaN(parseFloat(value)),
+}
+
 export const tagProp = {
     type: String,
     default: "div",
-}
-
-/**
- * Generate component's ID.
- *
- * @returns {string} The generated ID
- */
-export function generateId(): string {
-    return 'bs-' + Helper.uuid(true);
 }

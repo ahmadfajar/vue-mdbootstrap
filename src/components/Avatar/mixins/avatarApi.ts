@@ -1,8 +1,8 @@
 import {h, VNode} from "vue";
-import {TImageOptionProps} from "./types";
-import {TSizeOptionProps} from "../../Icon/mixins/types";
-import {useShapeClasses} from "../../Basic/mixins/imageFunc";
-import {useGetCalcSize, useSizeStyles} from "../../Icon/mixins/SizeProps";
+import {TImageOptionProps} from "../types";
+import {TSizeOptionProps} from "../../Icon/types";
+import {useShapeClasses} from "../../Basic/mixins/imageApi";
+import {useGetCalcSize, useSizeStyles} from "../../Icon/mixins/IconApi";
 
 export function useAvatarIconSize(props: TSizeOptionProps): number {
     const size = useGetCalcSize(props);

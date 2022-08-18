@@ -1,11 +1,12 @@
 import {defineComponent, h} from "vue";
 import {BsIcon} from "../Icon";
-import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/SizeProps";
+import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/IconApi";
 import {flip, rotate} from "../Icon/mixins/SvgProps";
-import {useShapeClasses} from "../Basic/mixins/imageFunc";
-import {useAvatarIconSize, useRenderAvatarImage} from "./mixins/avatarFunc";
-import {TBsAvatarOptionProps} from "./mixins/types";
-import {booleanProp, booleanTrueProp, cssPrefix, stringProp, validStringOrNumberProp} from "../../mixins/Commons";
+import {useShapeClasses} from "../Basic/mixins/imageApi";
+import {useAvatarIconSize, useRenderAvatarImage} from "./mixins/avatarApi";
+import {booleanProp, booleanTrueProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
+import {cssPrefix} from "../../mixins/CommonApi";
+import {TBsAvatarOptionProps} from "./types";
 
 export default defineComponent({
     name: 'BsAvatar',

@@ -1,19 +1,24 @@
 @import "~compass-mixins/lib/compass/css3";
 @import "colors";
 @import "variables";
-@import "shared";
-@import "mixins";
+@import "mixins/transitions";
 
 /* VueJs transition animation */
-@include enterActive-leaveActive(".fade") {
+@include enterActive-leaveActive("fade") {
     @include transition(opacity .5s);
 }
 
-@include enter-leaveTo(".fade") {
+@include enterFrom-leaveTo("fade") {
     opacity: 0;
 }
 
-.slide-fade, .slide-fade-reverse{
+@include enterActive-leaveActive("expand") {
+    @include transition(all $transition-duration-base $transition-easeOut);
+    @include backface-visibility(hidden);
+    @include transform(translate3d(0, 0, 0));
+}
+
+.slide-fade, .slide-fade-reverse {
     &-enter-active {
         @include transition(all .6s ease);
     }
@@ -22,28 +27,28 @@
         @include transition(all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0));
     }
 
-    &-leave, &-leave-active, &-leave-to {
+    &-leave-from, &-leave-active, &-leave-to {
         position: absolute !important;
     }
 }
 
-@include enter-leaveTo(".slide-fade") {
+@include enterFrom-leaveTo("slide-fade") {
     @include transform(translateX(100%));
     opacity: 0;
 }
 
-@include enter-leaveTo(".slide-fade-reverse") {
+@include enterFrom-leaveTo("slide-fade-reverse") {
     @include transform(translateX(-100%));
     opacity: 0;
 }
 
-@include enterActive-leaveActive(".scale") {
+@include enterActive-leaveActive("scale") {
     transition-duration: 300ms;
     transition-property: opacity, transform;
     backface-visibility: hidden;
 }
 
-@include enter-leaveActive(".scale") {
+@include enterFrom-leaveActive("scale") {
     opacity: 0;
     transform: scale(0.5);
 }
@@ -55,7 +60,7 @@
         @include transition($md-transition-enter);
     }
 
-    &-enter, &-leave-to {
+    &-enter-from, &-leave-to {
         opacity: 0;
     }
 
@@ -63,14 +68,14 @@
         @include transition(translate(0, 0));
     }
 
-    &-leave, &-leave-active, &-leave-to {
+    &-leave-from, &-leave-active, &-leave-to {
         position: absolute !important;
     }
 }
 
 .slide-bottom-top,
 .picker-transition {
-    &-enter {
+    &-enter-from {
         @include transform(translate(0, 100%));
     }
 
@@ -81,7 +86,7 @@
 
 .slide-top-bottom,
 .picker-transition-reverse {
-    &-enter {
+    &-enter-from {
         @include transform(translate(0, -100%));
     }
 
@@ -91,7 +96,7 @@
 }
 
 .slide-left-right {
-    &-enter {
+    &-enter-from {
         @include transform(translateX(-100%));
     }
 
@@ -102,7 +107,7 @@
 }
 
 .slide-right-left {
-    &-enter {
+    &-enter-from {
         @include transform(translateX(100%));
     }
 
@@ -113,11 +118,11 @@
 }
 
 .tab-transition {
-    &-enter {
+    &-enter-from {
         @include transform(translate(100%, 0));
     }
 
-    &-leave, &-leave-active {
+    &-leave-from, &-leave-active {
         position: absolute;
         top: 0
     }
@@ -129,11 +134,11 @@
 }
 
 .tab-transition-reverse {
-    &-enter {
+    &-enter-from {
         @include transform(translate(-100%, 0));
     }
 
-    &-leave, &-leave-to {
+    &-leave-from, &-leave-to {
         @include transform(translate(100%, 0));
         position: absolute;
         top: 0;

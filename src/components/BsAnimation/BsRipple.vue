@@ -72,6 +72,7 @@ export default {
             default: 'div'
         }
     },
+    emits: ['update:active'],
     data: () => ({
         ripples: [],
         touchTimeout: null,
@@ -106,7 +107,7 @@ export default {
             this.$emit('update:active', false);
         }
     },
-    beforeDestroy() {
+    beforeUnmount() {
         this.ripples = null;
     },
     methods: {
@@ -168,7 +169,7 @@ export default {
 
                 if (!disabled && (!eventType || eventType === event.type)) {
                     let position;
-                    let size     = this._getSize();
+                    const size     = this._getSize();
 
                     if (centered) {
                         position = this._getCenteredPosition(size);

@@ -1,6 +1,5 @@
+import {isServer} from "./CommonApi";
 import ResizeObserver from 'resize-observer-polyfill';
-
-const isServer = typeof window === 'undefined';
 
 const resizeHandler = function (entries) {
     for (const entry of entries) {

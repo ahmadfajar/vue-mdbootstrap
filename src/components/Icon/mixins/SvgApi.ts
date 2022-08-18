@@ -2,7 +2,7 @@ import axios from "axios";
 import {h, VNode} from "vue";
 import {XMLParser} from "fast-xml-parser";
 import {IconLib} from "./IconLib";
-import {TIconData} from "./types"
+import {TIconData} from "../types"
 import Helper from "../../../utils/Helper";
 
 function googleIconUrl(theme: string | undefined, icon: string, version: number): string {

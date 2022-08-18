@@ -16,11 +16,11 @@ export declare type TSizeOptionProps = {
 }
 
 export declare type TBsIconOptionProps = TSizeOptionProps & {
-    icon: string;
     pulse: boolean;
     spin: boolean;
-    flip: string;
-    rotate: string | number;
+    icon?: string;
+    flip?: string;
+    rotate?: string | number;
 }
 
 export declare type TBsIconToggleOptionProps = {

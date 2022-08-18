@@ -32,7 +32,7 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import BsRipple from "../BsAnimation/BsRipple";
 import ButtonToggle from "./mixins/ButtonToggle";
-import Common from "../../mixins/Commons";
+import Common from "../../mixins/CommonProps";
 import Input from "../BsField/mixins/Input";
 
 export default {

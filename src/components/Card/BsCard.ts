@@ -1,6 +1,7 @@
 import {defineComponent, h} from "vue";
-import {useRenderCardImg} from "./mixins/cardFunc";
-import {booleanProp, cssPrefix, stringProp, tagProp} from "../../mixins/Commons";
+import {useRenderCardImg} from "./mixins/cardApi";
+import {cssPrefix} from "../../mixins/CommonApi";
+import {booleanProp, stringProp, tagProp} from "../../mixins/CommonProps";
 
 export default defineComponent({
     name: "BsCard",

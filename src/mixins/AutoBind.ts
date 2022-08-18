@@ -4,7 +4,7 @@
  * @param {Object} instance The class instance
  * @returns {void}
  */
-export const autoBind = function (instance: object) {
+export const autoBind = (instance: object) => {
     for (let obj = instance; obj; obj = Object.getPrototypeOf(obj)) {
 
         // We're the end of the inheritance chain if we've reached 'Object'.

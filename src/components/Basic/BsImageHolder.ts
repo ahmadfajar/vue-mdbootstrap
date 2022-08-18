@@ -1,10 +1,8 @@
 import {defineComponent, h} from "vue";
-import {useShapeClasses, useSizeOrWh} from "./mixins/imageFunc";
+import {useShapeClasses, useSizeOrWh} from "./mixins/imageApi";
+import {booleanProp, stringOrNumberProp, stringProp} from "../../mixins/CommonProps";
+import {cssPrefix} from "../../mixins/CommonApi";
 import Helper from "../../utils/Helper";
-import {
-    booleanProp, cssPrefix,
-    stringOrNumberProp, stringProp
-} from "../../mixins/Commons";
 
 export default defineComponent({
     name: "BsImageHolder",

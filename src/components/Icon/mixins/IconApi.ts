@@ -1,4 +1,4 @@
-import {TSizeOptionProps} from "./types";
+import {TSizeOptionProps} from "../types";
 import Helper from "../../../utils/Helper";
 
 export const size = {

@@ -1,6 +1,6 @@
 import {defineComponent} from "vue";
-import {useSimpleRenderWithSlots} from "../Card/mixins/cardFunc";
-import {booleanTrueProp, validStringOrNumberProp} from "../../mixins/Commons";
+import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
+import {booleanTrueProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import Helper from "../../utils/Helper";
 
 export default defineComponent({

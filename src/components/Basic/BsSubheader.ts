@@ -1,6 +1,7 @@
 import {defineComponent} from "vue";
-import {useSimpleRenderWithSlots} from "../Card/mixins/cardFunc";
-import {booleanProp, cssPrefix} from "../../mixins/Commons";
+import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
+import {booleanProp} from "../../mixins/CommonProps";
+import {cssPrefix} from "../../mixins/CommonApi";
 
 export default defineComponent({
     name: "BsSubheader",

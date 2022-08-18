@@ -21,9 +21,9 @@ export function useContentTag(type: string | undefined, tag?: string | undefined
 
 export function useSimpleRenderWithSlots(
     type: string,
-    slots?: Readonly<Slots> | null | undefined,
-    classes?: string | Array<string> | Record<string, unknown> | null | undefined,
-    styles?: string | Array<string> | Record<string, unknown> | null | undefined,
+    slots?: Slots | undefined | null,
+    classes?: string | Array<string> | Record<string, unknown> | undefined | null,
+    styles?: string | Array<string> | Record<string, unknown> | undefined | null,
 ): VNode {
     if (styles) {
         return h(

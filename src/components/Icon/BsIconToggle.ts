@@ -1,7 +1,8 @@
 import {defineComponent, h} from "vue";
-import {height} from "./mixins/SizeProps";
+import {height} from "./mixins/IconApi";
 import {iconName} from "./mixins/SvgProps";
-import {booleanProp, cssPrefix} from "../../mixins/Commons";
+import {cssPrefix} from "../../mixins/CommonApi";
+import {booleanProp} from "../../mixins/CommonProps";
 import BsIconSvg from "./BsIconSvg";
 
 export default defineComponent({

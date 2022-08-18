@@ -1,5 +1,5 @@
 import {defineComponent} from "vue";
-import {useSimpleRenderWithSlots} from "../Card/mixins/cardFunc";
+import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
 
 export default defineComponent({
     name: "BsBadge",

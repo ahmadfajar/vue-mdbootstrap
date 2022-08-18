@@ -1,7 +1,11 @@
 interface IEventTarget extends EventTarget {
-    attachEvent(type: string, callback: EventListenerOrEventListenerObject);
+    attachEvent(type: string, callback: EventListenerOrEventListenerObject): void;
 
-    detachEvent(type: string, callback: EventListenerOrEventListenerObject);
+    detachEvent(type: string, callback: EventListenerOrEventListenerObject): void;
+}
+
+interface IEventResult {
+    remove(): void;
 }
 
 export class EventListener {
@@ -13,7 +17,11 @@ export class EventListener {
      * @param {function} callback    Callback function.
      * @returns {object} Object with a `remove` method.
      */
-    static listen(target: IEventTarget, eventType: string, callback: EventListenerOrEventListenerObject) {
+    static listen(
+        target: IEventTarget,
+        eventType: string,
+        callback: EventListenerOrEventListenerObject,
+    ): IEventResult {
         if (target.addEventListener) {
             target.addEventListener(eventType, callback, false);
 
@@ -33,18 +41,20 @@ export class EventListener {
     }
 }
 
-export function firstComponentChild(children) {
+export function firstComponentChild(children: HTMLElement[]): HTMLElement {
+    // @ts-ignore
     return children && children.filter(c => c && c.tag)[0];
 }
 
-export function getScrollEventTarget(element) {
+export function getScrollEventTarget(element: HTMLElement): Window | HTMLElement {
     let currentNode = element;
+
     while (currentNode && currentNode.tagName !== 'HTML' && currentNode.nodeType === 1) {
         const overflowY = window.getComputedStyle(currentNode).overflowY;
         if (overflowY === 'scroll' || overflowY === 'auto') {
             return currentNode;
         }
-        currentNode = currentNode.parentNode;
+        currentNode = currentNode.parentNode as HTMLElement;
     }
 
     return window;
@@ -56,15 +66,15 @@ export function getScrollEventTarget(element) {
  * @param {Element|Window} element The source DOM element
  * @returns {number} Scroll top position
  */
-export function getScrollTop(element): number {
+export function getScrollTop(element: Window | HTMLElement): number {
     if (element === window) {
         return Math.max(window.scrollY || 0, document.documentElement.scrollTop);
     } else {
-        return element.scrollTop;
+        return (element as HTMLElement).scrollTop;
     }
 }
 
-export function getOffset(el: Element) {
+export function getOffset(el: HTMLElement): object {
     const box = el.getBoundingClientRect();
     const body = document.body;
     const clientTop = el.clientTop || body.clientTop || 0;
@@ -76,4 +86,9 @@ export function getOffset(el: Element) {
         top: box.top + scrollTop - clientTop,
         left: box.left + scrollLeft - clientLeft
     };
+}
+
+export function preventEventTarget(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
 }

@@ -1,6 +1,6 @@
 import {defineComponent} from "vue";
-import {tagProp} from "../../mixins/Commons";
-import {useSimpleRenderWithSlots} from "./mixins/cardFunc";
+import {useSimpleRenderWithSlots} from "./mixins/cardApi";
+import {tagProp} from "../../mixins/CommonProps";
 
 export default defineComponent({
     name: "BsCardHeader",
