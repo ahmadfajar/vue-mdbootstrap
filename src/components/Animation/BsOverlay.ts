@@ -1,8 +1,7 @@
 import {createCommentVNode, defineComponent, h, Transition} from "vue";
-import {booleanProp, stringRequiredProp, validStringOrNumberProp} from "../../mixins/CommonProps";
+import {booleanProp, stringProp, validStringOrFloatProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {preventEventTarget} from "../../mixins/DomHelper";
-import Helper from "../../utils/Helper";
 
 export default defineComponent({
     name: "BsOverlay",
@@ -11,9 +10,10 @@ export default defineComponent({
          * Overlay base color.
          * @type {string|*}
          */
-        color: stringRequiredProp,
+        color: stringProp,
         /**
-         * Use css position: `fixed` or `absolute`. If `true` then css position fixed will be used.
+         * Use inline-css position: `fixed` or `absolute`. If `true`
+         * then inline-css position `fixed` will be used.
          * @type {boolean}
          */
         fixed: booleanProp,
@@ -21,31 +21,20 @@ export default defineComponent({
          * Overlay opacity.
          * @type {string|number|*}
          */
-        opacity: {
-            type: [String, Number],
-            default: 0.4,
-            validator: (value: string): boolean => !isNaN(parseFloat(value)),
-        },
-        /**
-         * Handler when overlay is clicked.
-         * @type {Function|*}
-         */
-        onClick: {
-            type: Function,
-            default: undefined
-        },
+        opacity: validStringOrFloatProp,
         /**
          * Overlay state, show or hide.
          * @type {boolean}
          */
         show: booleanProp,
         /**
-         * Overlay css `z-index`.
+         * Overlay inline-css `z-index`.
          * @type {string|number|*}
          */
         zIndex: validStringOrNumberProp,
     },
-    setup(props, {slots}) {
+    emits: ["click"],
+    setup(props, {emit, slots}) {
         return () => h(Transition, {
             name: "fade",
         }, {
@@ -59,15 +48,13 @@ export default defineComponent({
                         'z-index': props.zIndex
                     },
                     onClick() {
-                        if (props.onClick && Helper.isFunction(props.onClick)) {
-                            props.onClick();
-                        }
+                        emit("click");
                     },
                     onTouchmove(event: Event) {
                         preventEventTarget(event);
                     },
                 }, slots.default && slots.default())
-                : createCommentVNode("v-if", true)
+                : createCommentVNode(" BsOverlay ", true)
         })
     }
 });
