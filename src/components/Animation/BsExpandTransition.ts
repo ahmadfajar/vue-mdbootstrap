@@ -1,10 +1,10 @@
-import { defineComponent, h, Transition } from "vue";
-import { afterEnter, afterLeave, beforeEnter, beforeLeave, onEnter, onLeave } from "./mixins/expandTransitionApi";
+import {defineComponent, EmitsOptions, h, Transition, TransitionProps} from "vue";
+import {afterEnter, afterLeave, beforeEnter, beforeLeave, onEnter, onLeave} from "./mixins/expandTransitionApi";
 
 export default defineComponent({
     name: "BsExpandTransition",
     setup(props, {slots}) {
-        return () => h(Transition, {
+        return () => h<TransitionProps, EmitsOptions>(Transition, {
             name: 'expand',
             onBeforeEnter: beforeEnter,
             onEnter: onEnter,

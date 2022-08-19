@@ -16,7 +16,7 @@ export default defineComponent({
         toggleIcon: iconName,
         /**
          * Value monitored by `v-model` to maintain this component state.
-         * @type {boolean|*}
+         * @type {boolean}
          */
         modelValue: booleanProp,
         /**
@@ -34,9 +34,7 @@ export default defineComponent({
         return () => h(
             "span", {
                 class: [`${cssPrefix}-toggle-icon`],
-                onClick: () => {
-                    emit("update:modelValue", !props.modelValue);
-                },
+                onClick: () => emit("update:modelValue", !props.modelValue),
             },
             h(BsIconSvg, {
                 icon: props.modelValue ? props.toggleIcon : props.icon,

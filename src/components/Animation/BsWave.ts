@@ -1,15 +1,11 @@
-import {defineComponent, h, Transition} from "vue";
-import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
+import {h, Transition} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
 
-export default defineComponent({
-    name: "BsWave",
-    setup() {
-        return () => h(Transition, {
-            name: `${cssPrefix}-ripple`,
-            appear: true,
-        }, [
-            useSimpleRenderWithSlots("span", null, [`${cssPrefix}-ripple-wave`]),
-        ])
-    }
-});
+export default function bsWave() {
+    return h(Transition, {
+        name: `${cssPrefix}-ripple`,
+        appear: true,
+    }, {
+        default: () => h("span", {class: `${cssPrefix}-ripple-wave`}),
+    })
+}

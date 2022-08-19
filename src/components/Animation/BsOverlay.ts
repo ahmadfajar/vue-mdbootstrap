@@ -67,7 +67,7 @@ export default defineComponent({
                         preventEventTarget(event);
                     },
                 }, slots.default && slots.default())
-                : createCommentVNode("BsOverlay", true)
+                : createCommentVNode("v-if", true)
         })
     }
 });

@@ -3,12 +3,18 @@ export declare type TRipple = {
     waveStyles: Record<string, unknown>;
 }
 
+export declare type TRippleData = {
+    ripples: TRipple[];
+    eventType: string | null;
+    touchTimeout?: number | undefined;
+}
+
 export declare type TRippleEvent = MouseEvent & TouchEvent;
 
 export declare type TBsRippleOptionProps = {
-    active: boolean | Event;
+    active?: boolean | Event;
     centered: boolean;
     disabled: boolean;
-    eventTrigger: boolean;
+    eventTrigger?: boolean;
     tag: string;
 }

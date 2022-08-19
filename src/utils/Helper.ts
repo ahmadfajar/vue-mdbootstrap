@@ -92,7 +92,7 @@ class Helper {
      * @returns {boolean} True if value is empty otherwise False
      */
     static isEmpty(
-        value: Array<unknown> | string | unknown | null | undefined,
+        value: Array<unknown> | string | unknown | undefined | null,
         allowEmptyString = true,
     ): boolean {
         return (value === null) ||
@@ -117,7 +117,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an Array otherwise FALSE
      */
-    static isArray(value: Array<unknown> | unknown | null | undefined): boolean {
+    static isArray(value: Array<unknown> | unknown | undefined | null): boolean {
         return (typeof value !== 'undefined' && value !== null && Array.isArray(value));
     }
 
@@ -127,7 +127,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is a Function otherwise FALSE
      */
-    static isFunction(value: unknown | null | undefined): boolean {
+    static isFunction(value: unknown | undefined | null): boolean {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'function');
     }
 
@@ -147,7 +147,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an object otherwise FALSE
      */
-    static isObject(value: object | unknown | null | undefined): boolean {
+    static isObject(value: object | unknown | undefined | null): boolean {
         return (value !== null && typeof value !== 'undefined' && typeof value === 'object');
     }
 
@@ -190,8 +190,8 @@ class Helper {
      * @returns {string|null} Css inline dimension
      */
     static sizeUnit(
-        value: string | number | null | undefined,
-        unit?: string | null | undefined,
+        value: string | number | undefined | null,
+        unit?: string | undefined | null,
     ): string | null {
         const _px = unit || 'px';
 

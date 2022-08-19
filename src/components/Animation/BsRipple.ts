@@ -1,21 +1,14 @@
-import {defineComponent, h, onBeforeUnmount, ref, watch} from "vue";
+import {createCommentVNode, defineComponent, Fragment, h, renderList} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {booleanProp, booleanTrueProp, tagProp} from "../../mixins/CommonProps";
+import {booleanProp, tagProp} from "../../mixins/CommonProps";
 import {useEndRipple, useStartRipple, useTouchMoveCheck, useTouchStartCheck} from "./mixins/rippleApi";
 import {TBsRippleOptionProps, TRipple, TRippleEvent} from "./types";
 import BsWave from "./BsWave";
+import Helper from "../../utils/Helper";
 
 export default defineComponent({
     name: "BsRipple",
     props: {
-        /**
-         * Ripple animation state.
-         * @type {boolean|Event|*}
-         */
-        active: {
-            type: [Boolean, Event],
-            default: false
-        },
         /**
          * Start animation from center or from mouse click position.
          * If true then animation always start from center, otherwise animation
@@ -29,93 +22,81 @@ export default defineComponent({
          */
         disabled: booleanProp,
         /**
-         * Start animation on mousedown/touch-event.
-         * @type {boolean}
-         */
-        eventTrigger: booleanTrueProp,
-        /**
          * Html tag used to render the component.
          * @type {string|*}
          */
         tag: tagProp
     },
-    emits: ['update:active'],
-    setup(props, {slots, emit}) {
-        const thisEl = ref<HTMLElement | null>(null);
-        const ripples = ref<Array<TRipple>>([]);
-        const touchTimeout = ref<number | null>(null);
-        const eventType = ref<string | null>(null);
-
-        watch(
-            () => props.active,
-            (handler: boolean | Event) => {
+    /*
+        emits: ["update:active"],
+        watch: {
+            active(handler: boolean | Event) {
                 const isBoolean = typeof handler === 'boolean';
                 const matches = handler?.constructor?.toString()?.match(/function (\w*)/);
                 const isEvent = matches && matches.length > 0 && (matches[1] as string).toLowerCase() === 'mouseevent';
 
-                if (isBoolean && props.centered && handler) {
+                if (isBoolean && this.centered && handler) {
+                    console.log("ripple-start, handler:boolean:center");
                     useStartRipple(
-                        props as TBsRippleOptionProps,
-                        ripples, eventType,
-                        {type: 'mousedown'} as TRippleEvent,
-                        thisEl.value,
+                        this.$props as TBsRippleOptionProps,
+                        this.$data,
+                        {type: "mousedown"} as TRippleEvent, this.$el,
                     );
                 } else if (isEvent) {
+                    console.log("ripple-start, handler:event");
                     useStartRipple(
-                        props as TBsRippleOptionProps,
-                        ripples, eventType,
-                        handler as TRippleEvent,
-                        thisEl.value,
+                        this.$props as TBsRippleOptionProps,
+                        this.$data,
+                        handler as TRippleEvent, this.$el,
                     );
                 }
-                emit("update:active", false);
+                this.$emit("update:active", false);
             }
-        );
-
-        onBeforeUnmount(() => ripples.value = []);
-
-        return () => h(props.tag, {
-            ref: thisEl,
-            class: [`${cssPrefix}-ripple`, !props.disabled ? "ripple-off" : ""],
-            onMousedownPassive(event: TRippleEvent): void {
-                props.eventTrigger &&
+        },
+    */
+    data() {
+        return {
+            ripples: [],
+            eventType: null,
+            touchTimeout: undefined
+        }
+    },
+    render() {
+        return h(this.tag, {
+            class: [`${cssPrefix}-ripple`, this.disabled ? "ripple-off" : ""],
+            onMousedownPassive: (event: TRippleEvent) =>
                 useStartRipple(
-                    props as TBsRippleOptionProps,
-                    ripples, eventType, event, thisEl.value,
-                );
-            },
-            onMouseleavePassive(): void {
-                useEndRipple(ripples);
-            },
-            onMouseupPassive(): void {
-                useEndRipple(ripples);
-            },
-            onTouchcancelPassive(): void {
-                useEndRipple(ripples);
-            },
-            onTouchendPassive(): void {
-                useEndRipple(ripples);
-            },
-            onTouchmovePassive(): void {
-                props.eventTrigger && useTouchMoveCheck(touchTimeout);
-            },
-            onTouchstartPassive(event: TRippleEvent): void {
-                props.eventTrigger &&
+                    this.$props as TBsRippleOptionProps,
+                    this.$data, event, this.$el,
+                ),
+            onMouseleavePassive: () => useEndRipple(this.$data),
+            onMouseupPassive: () => useEndRipple(this.$data),
+            onTouchcancelPassive: () => useEndRipple(this.$data),
+            onTouchendPassive: () => useEndRipple(this.$data),
+            onTouchmovePassive: () => useTouchMoveCheck(this.$data),
+            onTouchstartPassive: (event: TRippleEvent) =>
                 useTouchStartCheck(
-                    props as TBsRippleOptionProps,
-                    touchTimeout, ripples,
-                    eventType, event, thisEl.value,
-                );
-            },
+                    this.$props as TBsRippleOptionProps,
+                    this.$data, event, this.$el,
+                )
         }, [
-            slots.default && slots.default(),
-            !props.disabled
-                ? ripples.value.map(ripple => h(BsWave, {
-                    key: ripple.uuid,
-                    class: [props.centered ? `${cssPrefix}-centered` : ""],
-                    style: ripple.waveStyles,
-                }))
-                : null,
-        ])
+            this.$slots.default && this.$slots.default(),
+            (!this.disabled)
+                ? h(
+                    Fragment,
+                    {key: Helper.uuid(true)},
+                    renderList(
+                        this.ripples,
+                        (ripple: TRipple) => {
+                            return h(BsWave, {
+                                key: ripple.uuid,
+                                class: [this.centered ? `${cssPrefix}-centered` : ""],
+                                style: ripple.waveStyles,
+                            });
+                        },
+                    )
+                )
+                : createCommentVNode("v-if", true),
+        ]);
     }
 });

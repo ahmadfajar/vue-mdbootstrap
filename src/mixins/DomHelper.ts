@@ -21,7 +21,7 @@ export class EventListener {
         target: IEventTarget,
         eventType: string,
         callback: EventListenerOrEventListenerObject,
-    ): IEventResult {
+    ): IEventResult | undefined {
         if (target.addEventListener) {
             target.addEventListener(eventType, callback, false);
 
@@ -42,8 +42,7 @@ export class EventListener {
 }
 
 export function firstComponentChild(children: HTMLElement[]): HTMLElement {
-    // @ts-ignore
-    return children && children.filter(c => c && c.tag)[0];
+    return children && children.filter(c => c && (c as GetNotificationOptions).tag)[0];
 }
 
 export function getScrollEventTarget(element: HTMLElement): Window | HTMLElement {

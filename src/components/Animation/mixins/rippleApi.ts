@@ -1,7 +1,7 @@
-import {Ref} from "vue";
-import {TBsRippleOptionProps, TRipple, TRippleEvent} from "../types";
-import * as raf from "raf";
+import {TBsRippleOptionProps, TRippleData, TRippleEvent} from "../types";
 import Helper from "../../../utils/Helper";
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const raf = require("raf")
 
 export function useApplyWaveStyles(position: object, size: string | number) {
     const unitSize = Helper.sizeUnit(size);
@@ -13,7 +13,7 @@ export function useApplyWaveStyles(position: object, size: string | number) {
     };
 }
 
-export function useGetCenteredPosition(size: number): Record<string, unknown> {
+export function useGetCenteredPosition(size: number): Record<string, string> {
     const halfSize = -size / 2 + 'px';
 
     return {
@@ -22,8 +22,8 @@ export function useGetCenteredPosition(size: number): Record<string, unknown> {
     }
 }
 
-export function useGetSize(el: HTMLElement | null): number {
-    if (el === null) {
+export function useGetSize(el: HTMLElement | undefined): number {
+    if (!el) {
         return 0;
     }
 
@@ -32,7 +32,7 @@ export function useGetSize(el: HTMLElement | null): number {
     return Math.round(Math.max(offsetWidth, offsetHeight));
 }
 
-export function useGetHitPosition(event: TRippleEvent, el: HTMLElement | null, elSize: number) {
+export function useGetHitPosition(event: TRippleEvent, el: HTMLElement | undefined, elSize: number) {
     const rect = el?.getBoundingClientRect();
     let top = event.pageY;
     let left = event.pageX;
@@ -48,32 +48,29 @@ export function useGetHitPosition(event: TRippleEvent, el: HTMLElement | null, e
     }
 }
 
-export function useTouchMoveCheck(touchTimeout: Ref) {
-    window.clearTimeout(touchTimeout.value);
+export function useTouchMoveCheck(data: TRippleData): void {
+    window.clearTimeout(data.touchTimeout);
 }
 
 export function useTouchStartCheck(
     props: TBsRippleOptionProps,
-    touchTimeout: Ref<number | null>,
-    ripples: Ref<Array<TRipple>>,
-    eventType: Ref<string | null>,
+    data: TRippleData,
     event: TRippleEvent,
-    el: HTMLElement | null,
-) {
-    touchTimeout.value = window.setTimeout(() => {
-        useStartRipple(props, ripples, eventType, event, el);
+    el: HTMLElement | undefined,
+): void {
+    data.touchTimeout = window.setTimeout(() => {
+        useStartRipple(props, data, event, el);
     }, 100);
 }
 
 export function useStartRipple(
     props: TBsRippleOptionProps,
-    ripples: Ref<Array<TRipple>>,
-    eventType: Ref<string | null>,
+    data: TRippleData,
     event: TRippleEvent,
-    el: HTMLElement | null,
-) {
+    el: HTMLElement | undefined,
+): void {
     raf(() => {
-        if (!props.disabled && (!eventType.value || eventType.value === event.type)) {
+        if (!props.disabled && (!data.eventType || data.eventType === event.type)) {
             let position;
             const size = useGetSize(el);
 
@@ -83,8 +80,8 @@ export function useStartRipple(
                 position = useGetHitPosition(event, el, size);
             }
 
-            eventType.value = event.type;
-            ripples.value = [{
+            data.eventType = event.type;
+            data.ripples = [{
                 waveStyles: useApplyWaveStyles(position, size),
                 uuid: Helper.uuid()
             }];
@@ -92,10 +89,10 @@ export function useStartRipple(
     });
 }
 
-export function useEndRipple(ripples: Ref<Array<TRipple>>) {
+export function useEndRipple(data: TRippleData): void {
     Helper.defer(() => {
-        if (Helper.isArray(ripples.value) && ripples.value.length > 0) {
-            ripples.value.shift();
+        if (Helper.isArray(data.ripples) && data.ripples.length > 0) {
+            data.ripples.shift();
         }
-    }, 500);
+    }, 300);
 }
