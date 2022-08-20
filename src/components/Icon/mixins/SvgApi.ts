@@ -1,5 +1,5 @@
 import axios from "axios";
-import {h, VNode} from "vue";
+import {h, VNode, VNodeArrayChildren, VNodeProps} from "vue";
 import {XMLParser} from "fast-xml-parser";
 import {IconLib} from "./IconLib";
 import {TIconData} from "../types"
@@ -156,4 +156,62 @@ function useRenderSvgIcon(
     return h("svg", props, renderChildNodes(children))
 }
 
-export {findIcon, googleIconUrl, useGoogleIcon, useRenderSvgIcon}
+const spinnerSvgData = "M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z";
+
+type RawProps = VNodeProps & Record<string, unknown>;
+
+function useCreateSvgNode(
+    clazz: Array<string> | Record<string, unknown>,
+    style: Array<string> | Record<string, unknown>,
+    focusable: boolean,
+    aspectRatio?: string | null,
+    viewBox?: string | null,
+    otherProps?: object,
+    children?: string | VNode | VNodeArrayChildren | object,
+): VNode {
+    const nodeProps: RawProps = {
+        xmlns: "http://www.w3.org/2000/svg",
+        class: clazz,
+        style: style,
+        focusable: focusable ? "true" : "false",
+        preserveAspectRatio: aspectRatio,
+        viewBox: viewBox,
+        ...otherProps
+    }
+    // @ts-ignore
+    return h("svg", nodeProps, children);
+}
+
+function useCreateSvgCircleNode(
+    clazz: Array<string> | Record<string, unknown>,
+    style: Array<string> | Record<string, unknown>,
+    radius: number,
+): VNode {
+    return h("circle", {
+        class: clazz,
+        style: style,
+        cx: "50%",
+        cy: "50%",
+        r: radius,
+    });
+}
+
+function useCircleSizeStyles(diameter: number): Record<string, string> {
+    const size = `${diameter}px`;
+
+    return {
+        width: size,
+        height: size
+    }
+}
+
+export {
+    findIcon,
+    googleIconUrl,
+    spinnerSvgData,
+    useCircleSizeStyles,
+    useCreateSvgNode,
+    useCreateSvgCircleNode,
+    useGoogleIcon,
+    useRenderSvgIcon
+}

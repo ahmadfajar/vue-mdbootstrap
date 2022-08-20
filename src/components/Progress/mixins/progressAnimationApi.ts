@@ -1,6 +1,7 @@
-import {ComputedRef, h, Transition, VNode, VNodeArrayChildren, VNodeProps} from "vue";
+import {ComputedRef, h, Transition, VNode} from "vue";
 import {ISpinnerElement, TBsProgressOptionProps, TSpinnerRecord} from "../types";
 import {cssPrefix, useBrowserIE} from "../../../mixins/CommonApi";
+import {useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode} from "../../Icon/mixins/SvgApi";
 import INDETERMINATE_ANIMATION_TEMPLATE from "./ProgressSpinnerAnimation";
 
 const progressSpinner: TSpinnerRecord = {
@@ -13,8 +14,6 @@ export const maskLoaderVariant = {
     default: 'linear',
     validator: (value: string): boolean => ['linear', 'progress', 'spinner', 'grow'].includes(value)
 }
-
-export const spinnerSvgData = "M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z";
 
 export function useBufferMode(props: Readonly<TBsProgressOptionProps>) {
     return props.mode.toLowerCase() === 'buffer';
@@ -54,53 +53,6 @@ export function useAttachStyleTag(circleCircumference: number, diameter: number)
     }
 
     progressSpinner.diameters.add(diameter);
-}
-
-export function useCircleSizeStyles(diameter: number): Record<string, string> {
-    const size = `${diameter}px`;
-
-    return {
-        width: size,
-        height: size
-    }
-}
-
-type RawProps = VNodeProps & Record<string, unknown>;
-
-export function useCreateSvgNode(
-    clazz: Array<string> | Record<string, unknown>,
-    style: Array<string> | Record<string, unknown>,
-    focusable: boolean,
-    aspectRatio?: string | null,
-    viewBox?: string | null,
-    otherProps?: object,
-    children?: string | VNode | VNodeArrayChildren | object,
-): VNode {
-    const nodeProps: RawProps = {
-        xmlns: "http://www.w3.org/2000/svg",
-        class: clazz,
-        style: style,
-        focusable: focusable ? "true" : "false",
-        preserveAspectRatio: aspectRatio,
-        viewBox: viewBox,
-        ...otherProps
-    }
-    // @ts-ignore
-    return h("svg", nodeProps, children);
-}
-
-export function useCreateSvgCircleNode(
-    clazz: Array<string> | Record<string, unknown>,
-    style: Array<string> | Record<string, unknown>,
-    radius: number,
-): VNode {
-    return h("circle", {
-        class: clazz,
-        style: style,
-        cx: "50%",
-        cy: "50%",
-        r: radius,
-    });
 }
 
 export function useRenderProgressBar(

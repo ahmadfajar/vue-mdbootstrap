@@ -11,37 +11,37 @@ export default defineComponent({
     props: {
         /**
          * The SVG icon’s name.
-         * @type {string|*}
+         * @type {string}
          */
         icon: iconName,
         /**
          * The SVG icon’s height in pixel.
-         * @type {string|number|*}
+         * @type {number}
          */
         height,
         /**
          * The SVG icon’s width in pixel.
-         * @type {string|number|*}
+         * @type {number}
          */
         width,
         /**
          * Apply **pulse** animation to the icon.
-         * @type {boolean|*}
+         * @type {boolean}
          */
         pulse: booleanProp,
         /**
          * Apply **spin** animation to the icon.
-         * @type {boolean|*}
+         * @type {boolean}
          */
         spin: booleanProp,
         /**
          * Flip the SVG icon, valid values are: `horizontal`, `vertical`, `both`.
-         * @type {string|*}
+         * @type {string}
          */
         flip,
         /**
          * Rotate the icon, valid values are: `90`, `180`, `270`.
-         * @type {string|number|*}
+         * @type {number}
          */
         rotate,
     },

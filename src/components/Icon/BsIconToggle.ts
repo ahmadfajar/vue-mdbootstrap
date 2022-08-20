@@ -1,5 +1,5 @@
 import {defineComponent, h} from "vue";
-import {height} from "./mixins/IconApi";
+import {height as defaultSize} from "./mixins/IconApi";
 import {iconName} from "./mixins/SvgProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {booleanProp} from "../../mixins/CommonProps";
@@ -8,10 +8,14 @@ import BsIconSvg from "./BsIconSvg";
 export default defineComponent({
     name: "BsIconToggle",
     props: {
+        /**
+         * The icon’s name or alias.
+         * @type {string}
+         */
         icon: iconName,
         /**
          * The icon to display when `value` property is `true`.
-         * @type {string|*}
+         * @type {string}
          */
         toggleIcon: iconName,
         /**
@@ -20,9 +24,10 @@ export default defineComponent({
          */
         modelValue: booleanProp,
         /**
-         * The icon size.
+         * The icon size in pixels.
+         * @type {number}
          */
-        size: height,
+        size: defaultSize,
     },
     emits: [
         /**

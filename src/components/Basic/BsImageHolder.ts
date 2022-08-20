@@ -1,6 +1,6 @@
 import {defineComponent, h} from "vue";
+import {useCreateSvgNode} from "../Icon/mixins/SvgApi";
 import {useShapeClasses, useSizeOrWh} from "./mixins/imageApi";
-import {useCreateSvgNode} from "../Progress/mixins/progressAnimationApi";
 import {booleanProp, stringOrNumberProp, stringProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import Helper from "../../utils/Helper";
@@ -101,31 +101,6 @@ export default defineComponent({
                     }, props.placeholderText || props.placeHolder)
                     : null,
             ]);
-            // return h(
-            //     "svg", {
-            //         class: {
-            //             [`${cssPrefix}-img-holder`]: true,
-            //             [`${cssPrefix}-anchor-center`]: props.xPos === "50%",
-            //             ...useShapeClasses(props.circle, props.rounded),
-            //         },
-            //         height: useSizeOrWh(props.size, props.height),
-            //         width: useSizeOrWh(props.size, props.width),
-            //         focusable: "false",
-            //         role: "img",
-            //         preserveAspectRatio: "xMidYMid slice",
-            //         xmlns: "http://www.w3.org/2000/svg",
-            //     }, [
-            //         showText() ? h("title", props.placeholderText || props.placeHolder) : null,
-            //         h("rect", {width: "100%", height: "100%", fill: props.bgColor}),
-            //         showText()
-            //             ? h("text", {
-            //                 fill: props.textColor,
-            //                 x: Helper.sizeUnit(props.xPos),
-            //                 y: Helper.sizeUnit(props.yPos),
-            //             }, props.placeholderText || props.placeHolder)
-            //             : null,
-            //     ]
-            // );
         }
     }
 });

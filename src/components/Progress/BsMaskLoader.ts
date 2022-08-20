@@ -7,8 +7,9 @@ import {
     validStringOrFloatProp
 } from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {maskLoaderVariant, spinnerSvgData, useCircleSizeStyles, useCreateSvgNode} from "./mixins/progressAnimationApi";
-import BsOverlay from "../Animation/BsOverlay";
+import {maskLoaderVariant} from "./mixins/progressAnimationApi";
+import {BsOverlay} from "../Animation";
+import {BsIconSpinner} from "../Icon";
 import BsProgress from "./BsProgress";
 import Helper from "../../utils/Helper";
 
@@ -46,7 +47,7 @@ export default defineComponent({
          */
         spinnerDiameter: {
             type: [String, Number],
-            default: 35,
+            default: 36,
             validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
         },
         /**
@@ -108,19 +109,11 @@ export default defineComponent({
                                     type: "spinner"
                                 })
                                 : ((loaderSpinnerType.value === "spinner")
-                                        ? useCreateSvgNode(
-                                            [`${cssPrefix}-spin`, `text-${props.spinnerColor}`, "align-self-center"],
-                                            useCircleSizeStyles(props.spinnerDiameter as number),
-                                            false, null,
-                                            "0 0 512 512", {
-                                                role: "img"
-                                            }, [
-                                                h("path", {
-                                                    d: spinnerSvgData,
-                                                    fill: "currentColor"
-                                                }),
-                                            ]
-                                        )
+                                        ? h(BsIconSpinner, {
+                                            color: props.spinnerColor,
+                                            size: props.spinnerDiameter,
+                                            spin: true,
+                                        })
                                         : h("div", {
                                             class: {
                                                 'spinner-grow': loaderSpinnerType.value === "grow",

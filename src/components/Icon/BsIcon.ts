@@ -11,42 +11,42 @@ export default defineComponent({
     props: {
         /**
          * The icon’s name or alias.
-         * @type {string|*}
+         * @type {string}
          */
         icon: iconName,
         /**
          * Shortcut to create icon with equal height and width.
-         * @type {string|number|*}
+         * @type {number}
          */
         size,
         /**
          * The icon’s height in pixel.
-         * @type {string|number|*}
+         * @type {number}
          */
         height,
         /**
          * The icon’s width in pixel.
-         * @type {string|number|*}
+         * @type {number}
          */
         width,
         /**
          * Apply **pulse** animation to the icon.
-         * @type {string|number|*}
+         * @type {boolean}
          */
         pulse: booleanProp,
         /**
          * Apply **spin** animation to the icon.
-         * @type {boolean|*}
+         * @type {boolean}
          */
         spin: booleanProp,
         /**
          * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
-         * @type {string|*}
+         * @type {string}
          */
         flip,
         /**
          * Rotate the icon, valid values are: `90`, `180`, `270`.
-         * @type {string|number|*}
+         * @type {number}
          */
         rotate,
     },
