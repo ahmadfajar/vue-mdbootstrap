@@ -13,6 +13,14 @@
     .card-subtitle {
         color: $gray-600;
     }
+
+    &:not(.rounded-0) {
+        > .#{$prefix}-mask-loader {
+            > .#{$prefix}-overlay {
+                @include border-radius(var(--bs-card-border-radius))
+            }
+        }
+    }
 }
 
 .card-group {

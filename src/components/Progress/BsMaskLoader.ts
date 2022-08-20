@@ -8,7 +8,7 @@ import {
 } from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {maskLoaderVariant, spinnerSvgData, useCircleSizeStyles, useCreateSvgNode} from "./mixins/progressAnimationApi";
-import BsOverlay from "./BsOverlay";
+import BsOverlay from "../Animation/BsOverlay";
 import BsProgress from "./BsProgress";
 import Helper from "../../utils/Helper";
 
@@ -123,7 +123,7 @@ export default defineComponent({
                                         )
                                         : h("div", {
                                             class: {
-                                                'spinner-grow': loaderSpinnerType.value === "glow",
+                                                'spinner-grow': loaderSpinnerType.value === "grow",
                                                 'spinner-border': loaderSpinnerType.value === "linear",
                                                 [`text-${props.spinnerColor}`]: props.spinnerColor
                                             },
@@ -143,7 +143,7 @@ export default defineComponent({
                                 zIndex: (props.zIndex as number) - 1,
                             }),
                         ])
-                        : createCommentVNode("v-if", true)
+                        : createCommentVNode(" BsMaskLoader ", true)
                 }
             });
         }

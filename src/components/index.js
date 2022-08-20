@@ -2,11 +2,7 @@ import BsNotification from './BsNotification';
 import BsContainer from './BsContainer';
 import BsSidebar from './BsSidebar';
 import BsAppbar from './BsAppbar';
-import BsAnimation from './BsAnimation';
-import BsBasic from './Basic';
-import BsIcon from './Icon';
 import BsButton from './BsButton';
-import BsCard from './Card';
 import BsField from './BsField';
 import BsGrid from './BsGrid';
 import BsPagination from './BsPagination';
@@ -24,11 +20,7 @@ export {
     BsContainer,
     BsSidebar,
     BsAppbar,
-    BsAnimation,
-    BsBasic,
-    BsIcon,
     BsButton,
-    BsCard,
     BsField,
     BsGrid,
     BsList,

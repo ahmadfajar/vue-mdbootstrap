@@ -62,7 +62,8 @@ export default defineComponent({
          */
         modelValue: {
             type: Number,
-            default: 0
+            default: 0,
+            validator: (value: number): boolean => value >= 0 && value <= 100
         },
         /**
          * ProgressControl mode, valid values are: `determinate`, `indeterminate`, `buffer`.

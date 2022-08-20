@@ -1,6 +1,6 @@
 import {defineComponent, h} from "vue";
 import {useShapeClasses, useSizeOrWh} from "./mixins/imageApi";
-import {useCreateSvgNode} from "../Animation/mixins/progressAnimationApi";
+import {useCreateSvgNode} from "../Progress/mixins/progressAnimationApi";
 import {booleanProp, stringOrNumberProp, stringProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import Helper from "../../utils/Helper";
