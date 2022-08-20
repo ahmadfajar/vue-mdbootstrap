@@ -86,7 +86,7 @@ export default defineComponent({
     setup(props) {
         const cmpProps = props as Readonly<TBsProgressOptionProps>;
         const hasAmountFill = computed<boolean>(() => {
-            return useBufferMode(cmpProps) && useDeterminateMode(cmpProps);
+            return useBufferMode(cmpProps) || useDeterminateMode(cmpProps);
         });
         const isProgressBar = computed<boolean>(() => cmpProps.type.toLowerCase() === "bar");
         const circleRadius = computed<number>(() => {
@@ -125,14 +125,12 @@ export default defineComponent({
 
         watch(
             () => props.diameter,
-            (diameter: number) => {
-                console.log("watch-event: attaching StyleTag...");
-                useAttachStyleTag(circleCircumference.value, diameter);
+            (value) => {
+                useAttachStyleTag(circleCircumference.value, value as number);
             }
         );
         onMounted(
             () => {
-                console.log("onMounted-event: attaching StyleTag...");
                 useAttachStyleTag(circleCircumference.value, cmpProps.diameter);
             }
         );

@@ -20,7 +20,7 @@ export declare type TBsIconOptionProps = TSizeOptionProps & {
     spin: boolean;
     icon?: string;
     flip?: string;
-    rotate?: string | number;
+    rotate?: number;
 }
 
 export declare type TBsIconToggleOptionProps = {

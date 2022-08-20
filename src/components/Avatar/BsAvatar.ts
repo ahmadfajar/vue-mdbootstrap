@@ -1,8 +1,8 @@
 import {defineComponent, h} from "vue";
 import {BsIcon} from "../Icon";
-import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/IconApi";
 import {flip, rotate} from "../Icon/mixins/SvgProps";
 import {useShapeClasses} from "../Basic/mixins/imageApi";
+import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/IconApi";
 import {useAvatarIconSize, useRenderAvatarImage} from "./mixins/avatarApi";
 import {booleanProp, booleanTrueProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";

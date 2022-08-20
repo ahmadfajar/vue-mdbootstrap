@@ -1,10 +1,10 @@
 import {ComputedRef, h, Transition, VNode, VNodeArrayChildren, VNodeProps} from "vue";
-import {TBsProgressOptionProps, TSpinnerRecord} from "../types";
+import {ISpinnerElement, TBsProgressOptionProps, TSpinnerRecord} from "../types";
 import {cssPrefix, useBrowserIE} from "../../../mixins/CommonApi";
 import INDETERMINATE_ANIMATION_TEMPLATE from "./ProgressSpinnerAnimation";
 
 const progressSpinner: TSpinnerRecord = {
-    styleTag: null,
+    styleTag: undefined,
     diameters: new Set<number>(),
 };
 
@@ -39,12 +39,11 @@ export function useAttachStyleTag(circleCircumference: number, diameter: number)
     let styleTag = progressSpinner.styleTag;
 
     if (!styleTag) {
-        styleTag = document.getElementById('bs-progress-spinner-styles');
+        styleTag = document.getElementById('bs-progress-spinner-styles') as ISpinnerElement;
     }
 
     if (!styleTag) {
-        styleTag = document.createElement('style');
-
+        styleTag = document.createElement('style') as ISpinnerElement;
         styleTag.id = 'bs-progress-spinner-styles';
         document.head.appendChild(styleTag);
         progressSpinner.styleTag = styleTag;
@@ -113,31 +112,33 @@ export function useRenderProgressBar(
     return h(Transition, {
         name: `${cssPrefix}-progress-bar`,
         appear: true,
-    }, [
-        h("div", {
-            class: [
-                `${cssPrefix}-progress-bar`,
-                `progress-bar-${props.color}`,
-                `${cssPrefix}-${props.mode.toLowerCase()}`,
-            ],
-            style: {
-                height: `${props.height}px`
-            }
-        }, [
-            h("div", {
-                class: [`${cssPrefix}-progress-bar-track`],
-                style: progressBarTrackStyle.value,
-            }),
-            h("div", {
-                class: [`${cssPrefix}-progress-bar-fill`],
-                style: progressBarValueStyle.value,
-            }),
-            h("div", {
-                class: [`${cssPrefix}-progress-bar-buffer`],
-                style: progressBarBufferStyle.value,
-            }),
-        ])
-    ]);
+    }, {
+        default: () => {
+            return h("div", {
+                class: [
+                    `${cssPrefix}-progress-bar`,
+                    `progress-bar-${props.color}`,
+                    `${cssPrefix}-${props.mode.toLowerCase()}`,
+                ],
+                style: {
+                    height: `${props.height}px`
+                }
+            }, [
+                h("div", {
+                    class: [`${cssPrefix}-progress-bar-track`],
+                    style: progressBarTrackStyle.value,
+                }),
+                h("div", {
+                    class: [`${cssPrefix}-progress-bar-fill`],
+                    style: progressBarValueStyle.value,
+                }),
+                h("div", {
+                    class: [`${cssPrefix}-progress-bar-buffer`],
+                    style: progressBarBufferStyle.value,
+                }),
+            ]);
+        }
+    });
 }
 
 export function useRenderProgressSpinner(
@@ -149,33 +150,35 @@ export function useRenderProgressSpinner(
     return h(Transition, {
         name: `${cssPrefix}-progress-spinner`,
         appear: true,
-    }, [
-        h("div", {
-            class: [
-                `${cssPrefix}-progress-spinner`,
-                `${cssPrefix}-progress-spinner-indeterminate`,
-                `spinner-${props.color}`,
-                useBrowserIE() ? `${cssPrefix}-progress-spinner-indeterminate-fallback` : "",
-                useDeterminateMode(props) ? `${cssPrefix}-determinate` : `${cssPrefix}-indeterminate`,
-            ],
-        }, [
-            useCreateSvgNode(
-                [`${cssPrefix}-progress-spinner-draw`],
-                useCircleSizeStyles(props.diameter as number),
-                false, "xMidYMid meet",
-                `0 0 ${props.diameter} ${props.diameter}`,
-                {},
-                [useCreateSvgCircleNode(
-                    [`${cssPrefix}-progress-spinner-circle`],
-                    {
-                        "stroke-dashoffset": circleStrokeDashOffset.value,
-                        "stroke-dasharray": `${circleCircumference.value}px`,
-                        "stroke-width": `${props.stroke}px`,
-                        "animation-name": `${cssPrefix}-progress-spinner-stroke-rotate-${props.diameter}`
-                    },
-                    circleRadius.value
-                )],
-            ),
-        ])
-    ]);
+    }, {
+        default: () => {
+            return h("div", {
+                class: [
+                    `${cssPrefix}-progress-spinner`,
+                    `${cssPrefix}-progress-spinner-indeterminate`,
+                    `spinner-${props.color}`,
+                    useBrowserIE() ? `${cssPrefix}-progress-spinner-indeterminate-fallback` : "",
+                    useDeterminateMode(props) ? `${cssPrefix}-determinate` : `${cssPrefix}-indeterminate`,
+                ],
+            }, [
+                useCreateSvgNode(
+                    [`${cssPrefix}-progress-spinner-draw`],
+                    useCircleSizeStyles(props.diameter as number),
+                    false, "xMidYMid meet",
+                    `0 0 ${props.diameter} ${props.diameter}`,
+                    {},
+                    [useCreateSvgCircleNode(
+                        [`${cssPrefix}-progress-spinner-circle`],
+                        {
+                            "stroke-dashoffset": circleStrokeDashOffset.value,
+                            "stroke-dasharray": `${circleCircumference.value}px`,
+                            "stroke-width": `${props.stroke}px`,
+                            "animation-name": `${cssPrefix}-progress-spinner-stroke-rotate-${props.diameter}`
+                        },
+                        circleRadius.value
+                    )],
+                ),
+            ]);
+        }
+    });
 }

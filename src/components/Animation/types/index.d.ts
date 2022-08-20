@@ -10,7 +10,7 @@ export declare type TRippleData = {
 }
 
 export declare type TSpinnerRecord = {
-    styleTag?: ISpinnerStyleNode;
+    styleTag?: ISpinnerElement;
     diameters: Set<number>;
 }
 
@@ -35,7 +35,6 @@ export declare type TBsProgressOptionProps = {
 export declare interface IRippleEvent extends MouseEvent, TouchEvent {
 }
 
-export declare interface ISpinnerStyleNode extends Node {
-    id: string;
+export declare interface ISpinnerElement extends Element {
     sheet?: CSSStyleSheet;
 }
