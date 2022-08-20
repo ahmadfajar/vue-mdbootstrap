@@ -1,4 +1,4 @@
-import {TBsRippleOptionProps, TRippleData, TRippleEvent} from "../types";
+import {TBsRippleOptionProps, TRippleData, IRippleEvent} from "../types";
 import Helper from "../../../utils/Helper";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const raf = require("raf")
@@ -32,7 +32,7 @@ export function useGetSize(el: HTMLElement | undefined): number {
     return Math.round(Math.max(offsetWidth, offsetHeight));
 }
 
-export function useGetHitPosition(event: TRippleEvent, el: HTMLElement | undefined, elSize: number) {
+export function useGetHitPosition(event: IRippleEvent, el: HTMLElement | undefined, elSize: number) {
     const rect = el?.getBoundingClientRect();
     let top = event.pageY;
     let left = event.pageX;
@@ -55,7 +55,7 @@ export function useTouchMoveCheck(data: TRippleData): void {
 export function useTouchStartCheck(
     props: TBsRippleOptionProps,
     data: TRippleData,
-    event: TRippleEvent,
+    event: IRippleEvent,
     el: HTMLElement | undefined,
 ): void {
     data.touchTimeout = window.setTimeout(() => {
@@ -66,7 +66,7 @@ export function useTouchStartCheck(
 export function useStartRipple(
     props: TBsRippleOptionProps,
     data: TRippleData,
-    event: TRippleEvent,
+    event: IRippleEvent,
     el: HTMLElement | undefined,
 ): void {
     raf(() => {

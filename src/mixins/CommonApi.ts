@@ -9,6 +9,14 @@ export const isServer = typeof window === 'undefined';
  *
  * @returns {string} The generated ID
  */
-export function generateId(): string {
+export function useGenerateId(): string {
     return 'bs-' + Helper.uuid(true);
+}
+
+/**
+ * Check whether IE browser is used or not.
+ * @return {boolean} Returns `true` if IE browser is used otherwise `false`.
+ */
+export function useBrowserIE() {
+    return !isServer && navigator.userAgent.toLowerCase().includes('trident')
 }

@@ -40,3 +40,18 @@ export const tagProp = {
     type: String,
     default: "div",
 }
+
+export const defaultColorProp = {
+    type: String,
+    default: 'default'
+};
+
+export const primaryColorProp = {
+    type: String,
+    default: 'primary'
+};
+
+export const defaultTransitionProp = {
+    type: String,
+    default: 'fade'
+};

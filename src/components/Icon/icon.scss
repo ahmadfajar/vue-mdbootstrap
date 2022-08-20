@@ -1,4 +1,4 @@
-@import "~compass-mixins/lib/animate";
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
@@ -12,32 +12,6 @@
 
 .#{$prefix}-toggle-icon {
     cursor: pointer;
-}
-
-.#{$prefix}-spin {
-    @include animation(#{$prefix}-spin 2s infinite linear);
-}
-
-.#{$prefix}-pulse {
-    @include animation(#{$prefix}-spin 1.5s infinite steps(8));
-}
-
-@-webkit-keyframes #{$prefix}-spin {
-    0% {
-        @include transform(rotate(0deg));
-    }
-    100% {
-        @include transform(rotate(360deg));
-    }
-}
-
-@keyframes #{$prefix}-spin {
-    0% {
-        @include transform(rotate(0deg));
-    }
-    100% {
-        @include transform(rotate(360deg));
-    }
 }
 
 .#{$prefix}-rotate-90 {

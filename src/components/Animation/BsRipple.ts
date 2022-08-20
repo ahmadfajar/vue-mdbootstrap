@@ -2,7 +2,7 @@ import {createCommentVNode, defineComponent, Fragment, h, renderList} from "vue"
 import {cssPrefix} from "../../mixins/CommonApi";
 import {booleanProp, tagProp} from "../../mixins/CommonProps";
 import {useEndRipple, useStartRipple, useTouchMoveCheck, useTouchStartCheck} from "./mixins/rippleApi";
-import {TBsRippleOptionProps, TRipple, TRippleEvent} from "./types";
+import {TBsRippleOptionProps, TRipple, IRippleEvent} from "./types";
 import BsWave from "./BsWave";
 import Helper from "../../utils/Helper";
 
@@ -64,7 +64,7 @@ export default defineComponent({
     render() {
         return h(this.tag, {
             class: [`${cssPrefix}-ripple`, this.disabled ? "ripple-off" : ""],
-            onMousedownPassive: (event: TRippleEvent) =>
+            onMousedownPassive: (event: IRippleEvent) =>
                 useStartRipple(
                     this.$props as TBsRippleOptionProps,
                     this.$data, event, this.$el,
@@ -74,7 +74,7 @@ export default defineComponent({
             onTouchcancelPassive: () => useEndRipple(this.$data),
             onTouchendPassive: () => useEndRipple(this.$data),
             onTouchmovePassive: () => useTouchMoveCheck(this.$data),
-            onTouchstartPassive: (event: TRippleEvent) =>
+            onTouchstartPassive: (event: IRippleEvent) =>
                 useTouchStartCheck(
                     this.$props as TBsRippleOptionProps,
                     this.$data, event, this.$el,

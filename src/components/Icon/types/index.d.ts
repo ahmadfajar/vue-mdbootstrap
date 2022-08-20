@@ -10,7 +10,7 @@ export declare type TIconData = {
 }
 
 export declare type TSizeOptionProps = {
-    size: number;
+    size?: number;
     height: number;
     width: number;
 }

@@ -9,7 +9,10 @@ export declare type TRippleData = {
     touchTimeout?: number | undefined;
 }
 
-export declare type TRippleEvent = MouseEvent & TouchEvent;
+export declare type TSpinnerRecord = {
+    styleTag?: ISpinnerStyleNode;
+    diameters: Set<number>;
+}
 
 export declare type TBsRippleOptionProps = {
     active?: boolean | Event;
@@ -17,4 +20,22 @@ export declare type TBsRippleOptionProps = {
     disabled: boolean;
     eventTrigger?: boolean;
     tag: string;
+}
+
+export declare type TBsProgressOptionProps = {
+    buffer: number;
+    color: string;
+    diameter: number;
+    height: number;
+    stroke: number;
+    mode: string;
+    type: string;
+}
+
+export declare interface IRippleEvent extends MouseEvent, TouchEvent {
+}
+
+export declare interface ISpinnerStyleNode extends Node {
+    id: string;
+    sheet?: CSSStyleSheet;
 }

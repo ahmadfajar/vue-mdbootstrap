@@ -2,6 +2,7 @@ import {App} from "vue";
 import BsIcon from "./BsIcon";
 import BsIconSvg from "./BsIconSvg";
 import BsIconToggle from "./BsIconToggle";
+import "../Animation/animation.scss";
 import "./icon.scss";
 
 const BsIconPlugin = {

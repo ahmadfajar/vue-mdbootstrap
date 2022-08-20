@@ -12,8 +12,7 @@ export default defineComponent({
          */
         color: stringProp,
         /**
-         * Use inline-css position: `fixed` or `absolute`. If `true`
-         * then inline-css position `fixed` will be used.
+         * Sets the css-style `position` value. If `true` then css-style `position` is set to `fixed`.
          * @type {boolean}
          */
         fixed: booleanProp,

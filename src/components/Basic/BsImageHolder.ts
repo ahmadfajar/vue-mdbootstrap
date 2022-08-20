@@ -1,5 +1,6 @@
 import {defineComponent, h} from "vue";
 import {useShapeClasses, useSizeOrWh} from "./mixins/imageApi";
+import {useCreateSvgNode} from "../Animation/mixins/progressAnimationApi";
 import {booleanProp, stringOrNumberProp, stringProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import Helper from "../../utils/Helper";
@@ -80,19 +81,15 @@ export default defineComponent({
             return !Helper.isEmpty(props.placeholderText) || !Helper.isEmpty(props.placeHolder);
         };
 
-        return () => h(
-            "svg", {
-                class: {
-                    [`${cssPrefix}-img-holder`]: true,
-                    [`${cssPrefix}-anchor-center`]: props.xPos === "50%",
-                    ...useShapeClasses(props.circle, props.rounded),
-                },
+        return () => {
+            return useCreateSvgNode({
+                [`${cssPrefix}-img-holder`]: true,
+                [`${cssPrefix}-anchor-center`]: props.xPos === "50%",
+                ...useShapeClasses(props.circle, props.rounded),
+            }, [], false, "xMidYMid slice", null, {
                 height: useSizeOrWh(props.size, props.height),
                 width: useSizeOrWh(props.size, props.width),
-                focusable: "false",
                 role: "img",
-                preserveAspectRatio: "xMidYMid slice",
-                xmlns: "http://www.w3.org/2000/svg",
             }, [
                 showText() ? h("title", props.placeholderText || props.placeHolder) : null,
                 h("rect", {width: "100%", height: "100%", fill: props.bgColor}),
@@ -103,7 +100,32 @@ export default defineComponent({
                         y: Helper.sizeUnit(props.yPos),
                     }, props.placeholderText || props.placeHolder)
                     : null,
-            ]
-        )
+            ]);
+            // return h(
+            //     "svg", {
+            //         class: {
+            //             [`${cssPrefix}-img-holder`]: true,
+            //             [`${cssPrefix}-anchor-center`]: props.xPos === "50%",
+            //             ...useShapeClasses(props.circle, props.rounded),
+            //         },
+            //         height: useSizeOrWh(props.size, props.height),
+            //         width: useSizeOrWh(props.size, props.width),
+            //         focusable: "false",
+            //         role: "img",
+            //         preserveAspectRatio: "xMidYMid slice",
+            //         xmlns: "http://www.w3.org/2000/svg",
+            //     }, [
+            //         showText() ? h("title", props.placeholderText || props.placeHolder) : null,
+            //         h("rect", {width: "100%", height: "100%", fill: props.bgColor}),
+            //         showText()
+            //             ? h("text", {
+            //                 fill: props.textColor,
+            //                 x: Helper.sizeUnit(props.xPos),
+            //                 y: Helper.sizeUnit(props.yPos),
+            //             }, props.placeholderText || props.placeHolder)
+            //             : null,
+            //     ]
+            // );
+        }
     }
 });
