@@ -1,7 +1,8 @@
 @import "~compass-mixins/lib/animate";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "../../../scss/mixins";
+@import "../../../scss/functions";
+@import "../../../scss/mixins/progressbar";
 
 @-webkit-keyframes #{$prefix}-spin {
     0% {
@@ -200,6 +201,12 @@
     }
 }
 
+.#{$prefix}-progress-bar-enter-from,
+.#{$prefix}-progress-bar-leave-active {
+    opacity: .5;
+    transform: translateZ(0) scaleY(0);
+}
+
 .#{$prefix}-progress-bar {
     overflow: hidden;
     position: relative;
@@ -210,7 +217,7 @@
 
     &.#{$prefix}-indeterminate,
     &.#{$prefix}-query {
-        .#{$prefix}-progress-bar-track {
+        > .#{$prefix}-progress-bar-track {
             left: -150%;
             animation: #{$prefix}-progress-bar-indeterminate-track 2s infinite linear;
 
@@ -219,7 +226,7 @@
             }
         }
 
-        .#{$prefix}-progress-bar-fill {
+        > .#{$prefix}-progress-bar-fill {
             left: -55%;
             animation: #{$prefix}-progress-bar-indeterminate-fill 2s infinite linear;
 
@@ -231,21 +238,21 @@
 
     &.#{$prefix}-determinate,
     &.#{$prefix}-buffer {
-        .#{$prefix}-progress-bar-fill,
-        .#{$prefix}-progress-bar-track,
-        .#{$prefix}-progress-bar-buffer {
+        > .#{$prefix}-progress-bar-fill,
+        > .#{$prefix}-progress-bar-track,
+        > .#{$prefix}-progress-bar-buffer {
             transition: .25s $md-transition-stand-timing;
         }
     }
 
     &.#{$prefix}-determinate {
-        .#{$prefix}-progress-bar-track {
+        > .#{$prefix}-progress-bar-track {
             display: none;
         }
     }
 
     &.#{$prefix}-buffer {
-        .#{$prefix}-progress-bar-buffer {
+        > .#{$prefix}-progress-bar-buffer {
             border-top: 4px dotted;
             animation: #{$prefix}-progress-bar-buffer .25s infinite linear;
         }
@@ -273,16 +280,12 @@
             content: " "
         }
     }
-}
 
-.#{$prefix}-progress-bar-enter-from,
-.#{$prefix}-progress-bar-leave-active {
-    opacity: .5;
-    transform: translateZ(0) scaleY(0);
+    @include make-progress-bar-vars();
 }
 
 @each $name, $color in $theme-colors {
-    @include make-progress-bar($name, $color);
+    @include make-progress-bar-variant($name, $color);
 }
 
 @each $name, $color in $theme-colors {

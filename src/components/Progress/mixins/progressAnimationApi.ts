@@ -107,9 +107,8 @@ export function useRenderProgressSpinner(
             return h("div", {
                 class: [
                     `${cssPrefix}-progress-spinner`,
-                    `${cssPrefix}-progress-spinner-indeterminate`,
                     `spinner-${props.color}`,
-                    useBrowserIE() ? `${cssPrefix}-progress-spinner-indeterminate-fallback` : "",
+                    useBrowserIE() ? `${cssPrefix}-indeterminate-fallback` : "",
                     useDeterminateMode(props) ? `${cssPrefix}-determinate` : `${cssPrefix}-indeterminate`,
                 ],
             }, [
