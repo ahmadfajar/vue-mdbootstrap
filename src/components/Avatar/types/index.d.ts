@@ -1,5 +1,5 @@
+import {DefineComponent} from "vue";
 import {TSizeOptionProps} from "../../Icon/types";
-import {ComponentPropsOptions, VNodeProps} from "vue";
 
 export declare type TImageOptionProps = TSizeOptionProps & {
     circle: boolean,
@@ -7,7 +7,7 @@ export declare type TImageOptionProps = TSizeOptionProps & {
     imgSrc?: string;
 }
 
-export declare type TBsAvatarOptionProps = TImageOptionProps & {
+export declare type TAvatarOptionProps = TImageOptionProps & {
     iconSpin: boolean;
     iconPulse: boolean;
     iconFlip?: string;
@@ -16,13 +16,4 @@ export declare type TBsAvatarOptionProps = TImageOptionProps & {
     text?: string;
 }
 
-export declare type TBsAvatar = {
-    name?: string;
-    props: ComponentPropsOptions<TBsAvatarOptionProps>;
-}
-
-export declare const BsAvatar: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsAvatar>;
-    };
-};
+export declare const BsAvatar: DefineComponent<TAvatarOptionProps>;

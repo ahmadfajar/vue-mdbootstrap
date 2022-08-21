@@ -10,17 +10,17 @@ export default defineComponent({
     props: {
         /**
          * This component's height.
-         * @type {string|number|*}
+         * @type {number}
          */
         height: stringOrNumberProp,
         /**
          * This component's width.
-         * @type {string|number|*}
+         * @type {number}
          */
         width: stringOrNumberProp,
         /**
          * Shortcut to create this component with equal height and width.
-         * @type {string|number|*}
+         * @type {number}
          */
         size: stringOrNumberProp,
         /**
@@ -35,7 +35,7 @@ export default defineComponent({
         rounded: booleanProp,
         /**
          * This component's background color, must be in html hex coloring number.
-         * @type {string|*}
+         * @type {string}
          */
         bgColor: {
             type: String,
@@ -43,7 +43,7 @@ export default defineComponent({
         },
         /**
          * This component's text color, must be in html hex coloring number.
-         * @type {string|*}
+         * @type {string}
          */
         textColor: {
             type: String,
@@ -51,17 +51,17 @@ export default defineComponent({
         },
         /**
          * Short text as placeholder `[deprecated]`.
-         * @type {string|*}
+         * @type {string}
          */
         placeHolder: stringProp,
         /**
          * Short text as placeholder.
-         * @type {string|*}
+         * @type {string}
          */
         placeholderText: stringProp,
         /**
          * Text placeholder X position.
-         * @type {string|number|*}
+         * @type {string|number}
          */
         xPos: {
             type: [String, Number],
@@ -69,7 +69,7 @@ export default defineComponent({
         },
         /**
          * Text placeholder Y position.
-         * @type {string|number|*}
+         * @type {string|number}
          */
         yPos: {
             type: [String, Number],

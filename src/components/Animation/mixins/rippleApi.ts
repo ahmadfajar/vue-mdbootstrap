@@ -1,4 +1,4 @@
-import {TBsRippleOptionProps, TRippleData, IRippleEvent} from "../types";
+import {TRippleOptionProps, TRippleData, IRippleEvent} from "../types";
 import Helper from "../../../utils/Helper";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const raf = require("raf")
@@ -53,7 +53,7 @@ export function useTouchMoveCheck(data: TRippleData): void {
 }
 
 export function useTouchStartCheck(
-    props: TBsRippleOptionProps,
+    props: TRippleOptionProps,
     data: TRippleData,
     event: IRippleEvent,
     el: HTMLElement | undefined,
@@ -64,7 +64,7 @@ export function useTouchStartCheck(
 }
 
 export function useStartRipple(
-    props: TBsRippleOptionProps,
+    props: TRippleOptionProps,
     data: TRippleData,
     event: IRippleEvent,
     el: HTMLElement | undefined,

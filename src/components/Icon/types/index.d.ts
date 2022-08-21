@@ -1,4 +1,4 @@
-import {ComponentPropsOptions, VNodeProps} from "vue";
+import {DefineComponent} from "vue";
 
 export declare type TIconData = {
     id: number;
@@ -10,12 +10,12 @@ export declare type TIconData = {
 }
 
 export declare type TSizeOptionProps = {
-    size?: number;
     height: number;
     width: number;
+    size?: number;
 }
 
-export declare type TBsIconOptionProps = TSizeOptionProps & {
+export declare type TIconOptionProps = TSizeOptionProps & {
     pulse: boolean;
     spin: boolean;
     icon?: string;
@@ -23,42 +23,24 @@ export declare type TBsIconOptionProps = TSizeOptionProps & {
     rotate?: number;
 }
 
-export declare type TBsIconToggleOptionProps = {
+export declare type TIconSpinnerOptionProps = {
+    color?: string;
+    size: number;
+    pulse: boolean;
+    spin: boolean;
+}
+
+export declare type TIconToggleOptionProps = {
     icon: string;
     toggleIcon: string;
     modelValue: boolean;
     size: number;
 }
 
-export declare type TBsIcon = {
-    name?: string;
-    props: ComponentPropsOptions<TBsIconOptionProps>;
-}
+export declare const BsIcon: DefineComponent<TIconOptionProps>;
 
-export declare type TBsIconSvg = {
-    name?: string;
-    props: ComponentPropsOptions<TBsIconOptionProps>;
-}
+export declare const BsIconSvg: DefineComponent<TIconOptionProps>;
 
-export declare type TBsIconToggle = {
-    name?: string;
-    props: ComponentPropsOptions<TBsIconToggleOptionProps>;
-}
+export declare const BsIconSpinner: DefineComponent<TIconSpinnerOptionProps>;
 
-export declare const BsIcon: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsIcon>;
-    };
-};
-
-export declare const BsIconSvg: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsIconSvg>;
-    };
-};
-
-export declare const BsIconToggle: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsIconToggle>;
-    };
-};
+export declare const BsIconToggle: DefineComponent<TIconToggleOptionProps>;

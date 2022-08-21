@@ -1,21 +1,6 @@
-import {ComponentPropsOptions, VNodeProps} from "vue";
+import {DefineComponent} from "vue";
 
-export declare type TBsCardBodyOptionProps = {
-    tag: string;
-}
-
-export declare type TBsCardContentOptionProps = {
-    tag?: string;
-    type: string;
-}
-
-export declare type TBsCardMediaOptionProps = {
-    title: string;
-    subtitle?: string;
-    overlayTop?: boolean;
-}
-
-export declare type TBsCardOptionProps = {
+export declare type TCardOptionProps = {
     flat?: boolean;
     shadow?: boolean;
     imgTopSrc?: string;
@@ -25,58 +10,29 @@ export declare type TBsCardOptionProps = {
     tag: string;
 }
 
-export declare type TBsCard = {
-    name?: string;
-    props: ComponentPropsOptions<TBsCardOptionProps>;
+export declare type TCardBodyOptionProps = {
+    tag: string;
 }
 
-export declare type TBsCardBody = {
-    name?: string;
-    props: ComponentPropsOptions<TBsCardBodyOptionProps>;
+export declare type TCardContentOptionProps = {
+    tag?: string;
+    type: string;
 }
 
-export declare type TBsCardContent = {
-    name?: string;
-    props: ComponentPropsOptions<TBsCardContentOptionProps>;
+export declare type TCardMediaOptionProps = {
+    title: string;
+    subtitle?: string;
+    overlayTop?: boolean;
 }
 
-export declare type TBsCardMedia = {
-    name?: string;
-    props: ComponentPropsOptions<TBsCardMediaOptionProps>;
-}
+export declare const BsCard: DefineComponent<TCardOptionProps>;
 
-export declare const BsCard: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsCard>;
-    };
-};
+export declare const BsCardBody: DefineComponent<TCardBodyOptionProps>;
 
-export declare const BsCardBody: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsCardBody>;
-    };
-};
+export declare const BsCardContent: DefineComponent<TCardContentOptionProps>;
 
-export declare const BsCardContent: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsCardContent>;
-    };
-};
+export declare const BsCardFooter: DefineComponent<TCardBodyOptionProps>;
 
-export declare const BsCardFooter: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsCardBody>;
-    };
-};
+export declare const BsCardHeader: DefineComponent<TCardBodyOptionProps>;
 
-export declare const BsCardHeader: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsCardBody>;
-    };
-};
-
-export declare const BsCardMedia: {
-    new (): {
-        $props: VNodeProps & ComponentPropsOptions<TBsCardMedia>;
-    };
-};
+export declare const BsCardMedia: DefineComponent<TCardMediaOptionProps>;

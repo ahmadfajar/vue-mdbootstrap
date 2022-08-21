@@ -13,7 +13,7 @@ export default defineComponent({
         fill: booleanTrueProp,
         /**
          * Sets this component width.
-         * @type {number|string|*}
+         * @type {number}
          */
         width: validStringOrNumberProp,
     },

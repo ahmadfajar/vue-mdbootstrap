@@ -1,5 +1,5 @@
 import {ComputedRef, h, Transition, VNode} from "vue";
-import {ISpinnerElement, TBsProgressOptionProps, TSpinnerRecord} from "../types";
+import {ISpinnerElement, TProgressOptionProps, TSpinnerRecord} from "../types";
 import {cssPrefix, useBrowserIE} from "../../../mixins/CommonApi";
 import {useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode} from "../../Icon/mixins/SvgApi";
 import INDETERMINATE_ANIMATION_TEMPLATE from "./ProgressSpinnerAnimation";
@@ -15,15 +15,15 @@ export const maskLoaderVariant = {
     validator: (value: string): boolean => ['linear', 'progress', 'spinner', 'grow'].includes(value)
 }
 
-export function useBufferMode(props: Readonly<TBsProgressOptionProps>) {
+export function useBufferMode(props: Readonly<TProgressOptionProps>) {
     return props.mode.toLowerCase() === 'buffer';
 }
 
-export function useDeterminateMode(props: Readonly<TBsProgressOptionProps>) {
+export function useDeterminateMode(props: Readonly<TProgressOptionProps>) {
     return props.mode.toLowerCase() === 'determinate';
 }
 
-export function useIndeterminateMode(props: Readonly<TBsProgressOptionProps>) {
+export function useIndeterminateMode(props: Readonly<TProgressOptionProps>) {
     return props.mode.toLowerCase() === 'indeterminate';
 }
 
@@ -56,7 +56,7 @@ export function useAttachStyleTag(circleCircumference: number, diameter: number)
 }
 
 export function useRenderProgressBar(
-    props: Readonly<TBsProgressOptionProps>,
+    props: Readonly<TProgressOptionProps>,
     progressBarTrackStyle: ComputedRef<string | null>,
     progressBarValueStyle: ComputedRef<string | null>,
     progressBarBufferStyle: ComputedRef<string | null>,
@@ -94,7 +94,7 @@ export function useRenderProgressBar(
 }
 
 export function useRenderProgressSpinner(
-    props: Readonly<TBsProgressOptionProps>,
+    props: Readonly<TProgressOptionProps>,
     circleStrokeDashOffset: ComputedRef<string | null>,
     circleCircumference: ComputedRef<number>,
     circleRadius: ComputedRef<number>,

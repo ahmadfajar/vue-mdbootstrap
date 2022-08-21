@@ -22,7 +22,7 @@ export default defineComponent({
         },
         /**
          * Create badge with `pill` or `label` style.
-         * @type {string|*}
+         * @type {string}
          */
         type: {
             type: String,
@@ -32,7 +32,7 @@ export default defineComponent({
         /**
          * Create contextual badge with
          * [Bootstrap theme color](https://getbootstrap.com/docs/5.2/components/badge/#background-colors).
-         * @type {string|*}
+         * @type {string}
          */
         variant: {
             type: String,

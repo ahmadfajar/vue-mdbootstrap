@@ -6,7 +6,7 @@ import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/IconApi";
 import {useAvatarIconSize, useRenderAvatarImage} from "./mixins/avatarApi";
 import {booleanProp, booleanTrueProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {TBsAvatarOptionProps} from "./types";
+import {TAvatarOptionProps} from "./types";
 
 export default defineComponent({
     name: 'BsAvatar',
@@ -88,17 +88,17 @@ export default defineComponent({
         return () => h('div', {
                 class: {
                     [`${cssPrefix}-avatar`]: true,
-                    'p-2': useGetCalcSize(props as Readonly<TBsAvatarOptionProps>) > 72,
+                    'p-2': useGetCalcSize(props as Readonly<TAvatarOptionProps>) > 72,
                     ...useShapeClasses(props.circle, props.rounded),
                 },
-                style: useSizeStyles(props as Readonly<TBsAvatarOptionProps>),
+                style: useSizeStyles(props as Readonly<TAvatarOptionProps>),
             }, slots.default
                 ? slots.default()
                 : props.imgSrc && props.imgSrc !== ''
-                    ? useRenderAvatarImage(props as Readonly<TBsAvatarOptionProps>)
+                    ? useRenderAvatarImage(props as Readonly<TAvatarOptionProps>)
                     : props.icon && props.icon !== ''
                         ? h(BsIcon, {
-                            size: useAvatarIconSize(props as Readonly<TBsAvatarOptionProps>),
+                            size: useAvatarIconSize(props as Readonly<TAvatarOptionProps>),
                             icon: props.icon,
                             spin: props.iconSpin,
                             pulse: props.iconPulse,

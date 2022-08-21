@@ -7,7 +7,7 @@ import "./animation.scss";
 
 const BsAnimationPlugin = {
     install: (app: App): void => {
-        app.component("BsExpandTransition", BsExpandTransition);
+        app.component(BsExpandTransition.name, BsExpandTransition);
         app.component(BsOverlay.name, BsOverlay);
         app.component(BsRipple.name, BsRipple);
         // app.component("BsWave", BsWave);

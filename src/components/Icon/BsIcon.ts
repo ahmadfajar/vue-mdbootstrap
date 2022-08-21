@@ -3,7 +3,7 @@ import {height, size, useSizeHeight, useSizeStyles, useSizeWidth, width} from ".
 import {flip, iconName, rotate} from "./mixins/SvgProps";
 import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {TBsIconOptionProps} from "./types";
+import {TIconOptionProps} from "./types";
 import BsIconSvg from "./BsIconSvg";
 
 export default defineComponent({
@@ -51,13 +51,13 @@ export default defineComponent({
         rotate,
     },
     setup(props) {
-        const szHeight = useSizeHeight(props as Readonly<TBsIconOptionProps>);
-        const szWidth = useSizeWidth(props as Readonly<TBsIconOptionProps>);
+        const szHeight = useSizeHeight(props as Readonly<TIconOptionProps>);
+        const szWidth = useSizeWidth(props as Readonly<TIconOptionProps>);
 
         return () => h(
             "span", {
                 class: [`${cssPrefix}-icon`],
-                style: useSizeStyles(props as Readonly<TBsIconOptionProps>),
+                style: useSizeStyles(props as Readonly<TIconOptionProps>),
             }, h(BsIconSvg, {
                 icon: props.icon,
                 height: szHeight,

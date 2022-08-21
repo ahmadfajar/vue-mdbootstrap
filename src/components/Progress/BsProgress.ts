@@ -1,5 +1,5 @@
 import {computed, defineComponent, onMounted, watch} from "vue";
-import {TBsProgressOptionProps} from "./types";
+import {TProgressOptionProps} from "./types";
 import {
     useAttachStyleTag,
     useBufferMode,
@@ -85,7 +85,7 @@ export default defineComponent({
         },
     },
     setup(props) {
-        const cmpProps = props as Readonly<TBsProgressOptionProps>;
+        const cmpProps = props as Readonly<TProgressOptionProps>;
         const hasAmountFill = computed<boolean>(() => {
             return useBufferMode(cmpProps) || useDeterminateMode(cmpProps);
         });
