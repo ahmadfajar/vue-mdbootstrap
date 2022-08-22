@@ -3,7 +3,7 @@ import {BsIcon} from "../Icon";
 import {flip, rotate} from "../Icon/mixins/SvgProps";
 import {useShapeClasses} from "../Basic/mixins/imageApi";
 import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/IconApi";
-import {useAvatarIconSize, useRenderAvatarImage} from "./mixins/avatarApi";
+import {useAvatarIconSize, useCreateIconProps, useRenderAvatarImage} from "./mixins/avatarApi";
 import {booleanProp, booleanTrueProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {TAvatarOptionProps} from "./types";
@@ -13,17 +13,17 @@ export default defineComponent({
     props: {
         /**
          * This component's height.
-         * @type {string|number|*}
+         * @type {number}
          */
         height: validStringOrNumberProp,
         /**
          * This component's width.
-         * @type {string|number|*}
+         * @type {number}
          */
         width: validStringOrNumberProp,
         /**
          * Shortcut to create this component with equal height and width.
-         * @type {string|number|*}
+         * @type {number}
          */
         size: {
             type: [Number, String],
@@ -48,17 +48,17 @@ export default defineComponent({
         /**
          * Display an icon as avatar. Use valid
          * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons) icon name.
-         * @type {string|*}
+         * @type {string}
          */
         icon: stringProp,
         /**
          * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
-         * @type {string|*}
+         * @type {string}
          */
         iconFlip: flip,
         /**
          * Rotate the icon, valid values are: `90`, `180`, `270`.
-         * @type {string|number|*}
+         * @type {string|number}
          */
         iconRotation: rotate,
         /**
@@ -73,42 +73,45 @@ export default defineComponent({
         iconPulse: booleanProp,
         /**
          * The image location to place inside this component.
-         * @type {string|*}
+         * @type {string}
          */
         imgSrc: stringProp,
         /**
          * The text to display inside the component.
          * Use short text (1 to 3 characters) to properly display it.
          * The text will be transformed to uppercase.
-         * @type {string|*}
+         * @type {string}
          */
         text: stringProp,
     },
     setup(props, {slots}) {
-        return () => h('div', {
-                class: {
-                    [`${cssPrefix}-avatar`]: true,
-                    'p-2': useGetCalcSize(props as Readonly<TAvatarOptionProps>) > 72,
-                    ...useShapeClasses(props.circle, props.rounded),
+        const cmpProps = props as Readonly<TAvatarOptionProps>;
+
+        return () =>
+            h('div',
+                {
+                    class: {
+                        [`${cssPrefix}-avatar`]: true,
+                        'p-2': useGetCalcSize(cmpProps) > 72,
+                        ...useShapeClasses(props.circle, props.rounded),
+                    },
+                    style: useSizeStyles(cmpProps),
                 },
-                style: useSizeStyles(props as Readonly<TAvatarOptionProps>),
-            }, slots.default
-                ? slots.default()
-                : props.imgSrc && props.imgSrc !== ''
-                    ? useRenderAvatarImage(props as Readonly<TAvatarOptionProps>)
-                    : props.icon && props.icon !== ''
-                        ? h(BsIcon, {
-                            size: useAvatarIconSize(props as Readonly<TAvatarOptionProps>),
-                            icon: props.icon,
-                            spin: props.iconSpin,
-                            pulse: props.iconPulse,
-                            flip: props.iconFlip,
-                            rotate: props.iconRotation,
-                        })
-                        : h('span',
-                            {class: [`${cssPrefix}-avatar-text`]},
-                            props.text || '?',
-                        )
-        )
+                slots.default
+                    ? slots.default()
+                    : (
+                        (props.imgSrc && props.imgSrc !== '')
+                            ? useRenderAvatarImage(cmpProps)
+                            : (props.icon && props.icon !== '')
+                                ? h(BsIcon, {
+                                    size: useAvatarIconSize(cmpProps),
+                                    ...useCreateIconProps(cmpProps),
+                                })
+                                : h('span',
+                                    {class: [`${cssPrefix}-avatar-text`]},
+                                    props.text || '?',
+                                )
+                    )
+            )
     }
 });

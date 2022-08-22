@@ -1,0 +1,136 @@
+import {defineComponent, h, ref, vModelCheckbox, vModelRadio, withDirectives} from "vue";
+import {booleanProp, booleanTrueProp, defaultColorProp, inputProps, stringProp} from "../../mixins/CommonProps";
+import {useInputItemAttrs, useInputItemClasses, useRenderToggleItemContent} from "./mixins/buttonApi";
+import {buttonSize, iconPosition} from "./mixins/buttonProps";
+import {TInputOptionItem, TToggleButtonOptionProps} from "./types";
+import {cssPrefix} from "../../mixins/CommonApi";
+import BsButtonInner from "./BsButtonInner";
+
+export default defineComponent({
+    name: "BsToggleButton",
+    props: {
+        ...inputProps,
+        /**
+         * The number of items stored in the collection.
+         * @type {Array}
+         */
+        items: {
+            type: Array,
+            default: undefined
+        },
+        /**
+         * Allow multiple choice or not.
+         * @type {boolean}
+         */
+        multiple: booleanProp,
+        /**
+         * The input value to be monitored by `v-model`.
+         * @type {string|boolean|Number|Array}
+         */
+        modelValue: {
+            type: [String, Number, Boolean, Array],
+            default: undefined
+        },
+        /**
+         * Render this button with flat style (Google Material Text Button) or not.
+         * @type {boolean}
+         */
+        flat: booleanProp,
+        /**
+         * Render this button with outlined style (Google Material Outlined Button) or not, see
+         * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#outline-buttons)}
+         * for details.
+         * @type {boolean}
+         */
+        outlined: booleanProp,
+        /**
+         * Render this button with raised style (Google Material Elevated Button) or not.
+         * @type {boolean}
+         */
+        raised: booleanProp,
+        /**
+         * Render this button with rounded style or not, see
+         * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/)}
+         * for details.
+         * @type {boolean}
+         */
+        rounded: booleanProp,
+        /**
+         * Render button with rounded-pill style (Google Material Button) or not.
+         * @type {boolean}
+         */
+        pill: booleanTrueProp,
+        /**
+         * This button size, see
+         * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#sizes)}
+         * for details.
+         * @type {string}
+         */
+        size: buttonSize,
+        /**
+         * Sets this button color.
+         * @type {string}
+         */
+        color: defaultColorProp,
+        /**
+         * Color to apply when Button is active or selected.
+         * @type {string}
+         */
+        toggleColor: stringProp,
+        /**
+         * Place icon at `left` (before text) or at `right` (after text).
+         * @type {string}
+         */
+        iconPosition: iconPosition,
+    },
+    emits: ['update:modelValue'],
+    setup(props, {emit, slots}) {
+        const localValue = ref<string | number | boolean | Array<unknown>|undefined>(props.modelValue);
+        const cmpProps = props as Readonly<TToggleButtonOptionProps>;
+
+        return () => {
+            return h("div", {
+                    class: [
+                        "btn-group",
+                        props.pill ? "rounded-pill" : "",
+                        props.disabled ? `${cssPrefix}-disabled` : "",
+                        props.readonly ? `${cssPrefix}-readonly` : "",
+                        props.required ? `${cssPrefix}-required` : "",
+                    ],
+                    id: props.id,
+                    role: "group",
+                },
+                props.items.map((item: TInputOptionItem, idx: number) => {
+                    return h("label", {
+                        key: `btn-${idx}`,
+                        class: useInputItemClasses(item, cmpProps),
+                    }, [
+                        withDirectives(
+                            h("input", {
+                                class: "d-none",
+                                value: item.value,
+                                ...useInputItemAttrs(item, cmpProps),
+                                "onUpdate:modelValue": (event: string | number | boolean) => {
+                                    if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
+                                        localValue.value = event;
+                                        emit("update:modelValue", localValue.value)
+                                    }
+                                }
+                            }),
+                            [
+                                props.multiple
+                                    ? [vModelCheckbox, localValue.value]
+                                    : [vModelRadio, localValue.value],
+                            ]
+                        ),
+                        h(BsButtonInner, {
+                            rippleOff: props.disabled || props.readonly
+                        }, {
+                            default: () => useRenderToggleItemContent(slots, item, cmpProps)
+                        })
+                    ]);
+                })
+            );
+        };
+    }
+});

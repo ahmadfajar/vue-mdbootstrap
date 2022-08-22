@@ -77,6 +77,7 @@ $padding-xl:                        $padding-base * 2 !default;
 // Border radius
 $border-radius-base:                .125rem !default;
 $border-radius-sm:                  .25rem !default;
+$border-radius-lg:                  .5rem !default;
 $border-radius-pill:                50rem !default;
 $border-radius-circle:              50% !default;
 
@@ -91,7 +92,6 @@ $alert-color-level:                 6 !default;
 
 // Buttons
 $btn-border-radius:                 .125rem !default;
-$btn-border-radius-lg:              .4rem !default;
 $btn-margin-basic:                  .375rem !default;
 $btn-margin-lg:                     .5rem !default;
 $btn-color-basic:                   var(--white);
@@ -139,4 +139,4 @@ $table-text-color:                  $black;
 $tab-padding-base:                  .75rem 1.25rem !default;
 $tab-material-padding:              1.125rem 1.5rem 1rem 1.5rem !default;
 $tab-modern-padding:                .625rem 1.25rem !default;
-$tab-item-margin-between:          .375rem;  // 6px
+$tab-item-margin-between:           .375rem;  // 6px

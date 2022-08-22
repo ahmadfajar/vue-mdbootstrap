@@ -7,12 +7,15 @@ export declare type TImageOptionProps = TSizeOptionProps & {
     imgSrc?: string;
 }
 
-export declare type TAvatarOptionProps = TImageOptionProps & {
+export declare type TAvatarIconProps = {
+    icon?: string;
     iconSpin: boolean;
     iconPulse: boolean;
     iconFlip?: string;
     iconRotation?: string | number;
-    icon?: string;
+}
+
+export declare type TAvatarOptionProps = TImageOptionProps & TAvatarIconProps & {
     text?: string;
 }
 

@@ -447,7 +447,7 @@ export default {
 
         &.rounded,
         &.rounded-lg {
-            @include border-radius($btn-border-radius-lg !important);
+            @include border-radius($border-radius-lg !important);
         }
     }
 

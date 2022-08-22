@@ -1,9 +1,9 @@
-import {TRippleOptionProps, TRippleData, IRippleEvent} from "../types";
+import {IRippleEvent, TRippleData, TRippleOptionProps} from "../types";
 import Helper from "../../../utils/Helper";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const raf = require("raf")
 
-export function useApplyWaveStyles(position: object, size: string | number) {
+function applyWaveStyles(position: object, size: string | number) {
     const unitSize = Helper.sizeUnit(size);
 
     return {
@@ -13,7 +13,7 @@ export function useApplyWaveStyles(position: object, size: string | number) {
     };
 }
 
-export function useGetCenteredPosition(size: number): Record<string, string> {
+function getCenteredPosition(size: number): Record<string, string> {
     const halfSize = -size / 2 + 'px';
 
     return {
@@ -22,7 +22,7 @@ export function useGetCenteredPosition(size: number): Record<string, string> {
     }
 }
 
-export function useGetSize(el: HTMLElement | undefined): number {
+function getElementSize(el: HTMLElement | undefined): number {
     if (!el) {
         return 0;
     }
@@ -32,7 +32,7 @@ export function useGetSize(el: HTMLElement | undefined): number {
     return Math.round(Math.max(offsetWidth, offsetHeight));
 }
 
-export function useGetHitPosition(event: IRippleEvent, el: HTMLElement | undefined, elSize: number) {
+function getHitPosition(event: IRippleEvent, el: HTMLElement | undefined, elSize: number) {
     const rect = el?.getBoundingClientRect();
     let top = event.pageY;
     let left = event.pageX;
@@ -72,17 +72,17 @@ export function useStartRipple(
     raf(() => {
         if (!props.disabled && (!data.eventType || data.eventType === event.type)) {
             let position;
-            const size = useGetSize(el);
+            const size = getElementSize(el);
 
             if (props.centered) {
-                position = useGetCenteredPosition(size);
+                position = getCenteredPosition(size);
             } else {
-                position = useGetHitPosition(event, el, size);
+                position = getHitPosition(event, el, size);
             }
 
             data.eventType = event.type;
             data.ripples = [{
-                waveStyles: useApplyWaveStyles(position, size),
+                waveStyles: applyWaveStyles(position, size),
                 uuid: Helper.uuid()
             }];
         }

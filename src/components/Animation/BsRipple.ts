@@ -2,7 +2,7 @@ import {createCommentVNode, defineComponent, Fragment, h, renderList} from "vue"
 import {cssPrefix} from "../../mixins/CommonApi";
 import {booleanProp, tagProp} from "../../mixins/CommonProps";
 import {useEndRipple, useStartRipple, useTouchMoveCheck, useTouchStartCheck} from "./mixins/rippleApi";
-import {TRippleOptionProps, TRipple, IRippleEvent} from "./types";
+import {IRippleEvent, TRipple, TRippleOptionProps} from "./types";
 import BsWave from "./BsWave";
 import Helper from "../../utils/Helper";
 

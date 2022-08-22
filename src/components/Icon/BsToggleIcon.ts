@@ -6,7 +6,7 @@ import {booleanProp} from "../../mixins/CommonProps";
 import BsIconSvg from "./BsIconSvg";
 
 export default defineComponent({
-    name: "BsIconToggle",
+    name: "BsToggleIcon",
     props: {
         /**
          * The icon’s name or alias.

@@ -2,17 +2,40 @@
 
 > All notable changes to this project will be documented in this file.
 
+## v2.0.0
+
+Released: September xx, 2022
+
+#### Features v2.0.0
+
+- Rewrite the components in the TypeScript language.
+- Add support for **Vue 3** and **Bootstrap v5.2**.
+- New components: **BsIconSpinner**, **BsIconSvg**, **BsProgressBar**
+- **BsIconToggle**: add property `size`.
+- **BsMaskLoader**: add property `variant`.
+- **BsOverlay**: add event `click`.
+
+#### Breaking Changes
+
+- Remove the **FontAwesome icons** from the bundle, in favor of dynamic 
+  loading of **[Google Material Icons](https://fonts.google.com/icons?icon.set=Material+Icons)**.
+- **BsIcon**: replace property `rotation` with `rotate`.
+- **BsIconToggle**: replace property `value` with `modelValue`.
+- **BsRipple**: remove properties `active`, `centered` and `eventTrigger`.
+- **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
+
+
 ## v1.2.2
 
 Released: July xx, 2021
 
-### Features v1.2.2
+#### Features v1.2.2
 
 - **BsSideDrawer:** add property `position`
 - **BsAppbar:** add property `clipped-right`
 - **BsAppContainer:** add property `viewport-height`
 
-### Bug Fixes & Improvement v1.2.2
+#### Bug Fixes & Improvement v1.2.2
 
 - Improve **BsAppContainer**
 - **BsSideDrawer, BsAppbar, BsContainer**: detect **BsAppContainer** and `appId` upon mounting
@@ -22,7 +45,7 @@ Released: July xx, 2021
 
 Released: July 01, 2021
 
-### Bug Fixes & Improvement v1.2.1
+#### Bug Fixes & Improvement v1.2.1
 
 - Upgrade package builder to **webpack v5.x**
 - Improve build scripts
@@ -35,7 +58,7 @@ Released: July 01, 2021
 
 Released: June 29, 2021
 
-### Features v1.2.0
+#### Features v1.2.0
 
 - New components: **BsNumericField**, **BsChip**, **BsChipGroup**, **BsChipField**
 - New icons: `AddCircle`, `AddCircleOutline`, `CheckCircle`, `CheckCircleOutline`, `Checked`, `Error`, 
@@ -48,7 +71,7 @@ Released: June 29, 2021
   `icon-spin`, `icon-type`, and `solid-fill`
 - **BsTabs:** add properties `active-class`  
 
-### Bug Fixes & Improvement v1.2.0
+#### Bug Fixes & Improvement v1.2.0
 
 - Improve Helper class: add method `roundNumber`
 - Improve Tabs component: customize inactive TabItem via `tab-class` property and active TabItem
@@ -66,12 +89,12 @@ Released: June 29, 2021
 
 Released: January 31, 2021
 
-### Features v1.1.4
+#### Features v1.1.4
 
 - **BsMaskLoader:** add properties `overlay-color`, `overlay-opacity`, `spinner-color`,
   `spinner-thickness`, and `spinner-type`
 
-### Bug Fixes & Improvement v1.1.4
+#### Bug Fixes & Improvement v1.1.4
 
 - **BsAppbarItems:** remove `font-size` scss styles
 - **BsMenu:** improve keyboard navigation using `arrow-down` and `arrow-up`
@@ -84,7 +107,7 @@ Released: January 31, 2021
 
 Released: January 5, 2021
 
-### Bug Fixes & Improvement v1.1.3
+#### Bug Fixes & Improvement v1.1.3
 
 - **BsGrid:** fix side effect on methods `sort`, `setPageSize`, `_fetchData`, and update scss styles 
 - **BsSearchField:** remove property `can-close` and fix `BsPopover` show/hide procedure when 
@@ -101,7 +124,7 @@ Released: January 5, 2021
 
 Released: December 21, 2020
 
-### Bug Fixes & Improvement v1.1.1
+#### Bug Fixes & Improvement v1.1.1
 
 - **Touch** directive did not expose correctly
 - **BsCard:** add DOM event listener
@@ -114,7 +137,7 @@ Released: December 21, 2020
 
 Released: December 18, 2020
 
-### Features v1.1.0
+#### Features v1.1.0
 
 - New components: **BsExpandTransition**, **BsCardMedia**, **BsIconToggle**, **BsListNav**, **BsListNavItem**
 - **BsAvatar:** add properties `icon-flip`, `icon-spin` and `icon-pulse`
@@ -137,7 +160,7 @@ Released: December 18, 2020
 - **BsLightbox:** add properties `image-class`, and `image-styles`
 - Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
-### Bug Fixes & Improvement v1.1.0
+#### Bug Fixes & Improvement v1.1.0
 
 - **BsAlert:** improve css alert-variant
 - **BsMaskLoader:** incorrect z-index
@@ -165,7 +188,7 @@ Released: December 18, 2020
 
 Released: August 10, 2020
 
-### Bug Fixes & Improvement v1.0.4
+#### Bug Fixes & Improvement v1.0.4
 
 - **BsMaskLoader, BsButtonToggle, BsContent, BsCheckboxGroup, BsRadioGroup, BsSearchField, BsGrid, 
   BsLightbox, BsPagination:** add missing import and components declaration
@@ -182,7 +205,7 @@ Released: August 10, 2020
 
 Released: Mei 20, 2020
 
-### Bug Fixes v1.0.3
+#### Bug Fixes v1.0.3
 
 - **BsSpacer:** fix didn't fill available space
 
@@ -191,7 +214,7 @@ Released: Mei 20, 2020
 
 Released: Mei 20, 2020
 
-### Bug Fixes v1.0.2
+#### Bug Fixes v1.0.2
 
 - **BsGrid:** fix local paging, local sorting, and local filtering
 - **BsPagination:** fix combobox paging

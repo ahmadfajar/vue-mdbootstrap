@@ -1,3 +1,5 @@
+import Helper from "../utils/Helper";
+
 export const booleanProp = {
     type: Boolean,
     default: false,
@@ -55,3 +57,36 @@ export const defaultTransitionProp = {
     type: String,
     default: 'fade'
 };
+
+export const inputProps = {
+    /**
+     * This input field element ID.
+     * @type {string}
+     */
+    id: {
+        type: String,
+        default() {
+            return 'bs-' + Helper.uuid(true);
+        }
+    },
+    /**
+     * This input field element name.
+     * @type {string|number}
+     */
+    name: stringOrNumberProp,
+    /**
+     * This input field state.
+     * @type {boolean}
+     */
+    disabled: booleanProp,
+    /**
+     * This input field state.
+     * @type {boolean}
+     */
+    readonly: booleanProp,
+    /**
+     * Whether this input field is required or not.
+     * @type {boolean}
+     */
+    required: booleanProp
+}

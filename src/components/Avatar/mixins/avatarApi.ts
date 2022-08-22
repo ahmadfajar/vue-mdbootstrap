@@ -1,5 +1,5 @@
 import {h, VNode} from "vue";
-import {TImageOptionProps} from "../types";
+import {TAvatarIconProps, TImageOptionProps} from "../types";
 import {TSizeOptionProps} from "../../Icon/types";
 import {useShapeClasses} from "../../Basic/mixins/imageApi";
 import {useGetCalcSize, useSizeStyles} from "../../Icon/mixins/IconApi";
@@ -12,6 +12,16 @@ export function useAvatarIconSize(props: TSizeOptionProps): number {
         return size - 12;
     } else {
         return size - 8;
+    }
+}
+
+export function useCreateIconProps(props: Readonly<TAvatarIconProps>) {
+    return {
+        icon: props.icon,
+        spin: props.iconSpin,
+        pulse: props.iconPulse,
+        flip: props.iconFlip,
+        rotate: props.iconRotation,
     }
 }
 
