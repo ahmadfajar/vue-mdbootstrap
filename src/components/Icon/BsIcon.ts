@@ -56,7 +56,7 @@ export default defineComponent({
 
         return () => h(
             "span", {
-                class: [`${cssPrefix}-icon`],
+                class: [`${cssPrefix}icon`],
                 style: useSizeStyles(props as Readonly<TIconOptionProps>),
             }, h(BsIconSvg, {
                 icon: props.icon,
@@ -72,7 +72,7 @@ export default defineComponent({
         //     Suspense, {}, {
         //         default: () => h(
         //             "span", {
-        //                 class: [`${cssPrefix}-icon`],
+        //                 class: [`${cssPrefix}icon`],
         //                 style: {
         //                     "height": Helper.sizeUnit(szHeight),
         //                     "width": Helper.sizeUnit(szWidth),

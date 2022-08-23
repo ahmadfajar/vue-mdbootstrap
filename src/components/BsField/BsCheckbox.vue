@@ -47,21 +47,21 @@ export default {
 @import "../../../scss/variables";
 @import "../../../scss/mixins";
 
-.#{$prefix}-checkbox {
+.#{$prefix}checkbox {
     display: inline-flex;
     margin: $md-checkbox-margin;
     position: relative;
     width: auto;
 
-    &:not(.#{$prefix}-disabled):not(.#{$prefix}-readonly) {
+    &:not(.#{$prefix}disabled):not(.#{$prefix}readonly) {
         cursor: pointer;
 
-        .#{$prefix}-checkbox-label {
+        .#{$prefix}checkbox-label {
             cursor: pointer;
         }
     }
 
-    > .#{$prefix}-checkbox-inner {
+    > .#{$prefix}checkbox-inner {
         @include border-radius(2px);
         @include transition($md-transition-stand);
         border: 2px solid rgba(#000, .54);
@@ -104,7 +104,7 @@ export default {
             z-index: 12;
         }
 
-        .#{$prefix}-ripple {
+        .#{$prefix}ripple {
             @include border-radius($border-radius-circle);
             @include transform(translate(-50%, -50%));
             height: $md-checkbox-touch-size !important;
@@ -120,7 +120,7 @@ export default {
         }
     }
 
-    > .#{$prefix}-checkbox-label {
+    > .#{$prefix}checkbox-label {
         @include user-select(none);
         line-height: $md-checkbox-size;
         height: $md-checkbox-size;
@@ -129,8 +129,8 @@ export default {
         position: relative;
     }
 
-    &.#{$prefix}-indeterminate {
-        > .#{$prefix}-checkbox-inner {
+    &.#{$prefix}indeterminate {
+        > .#{$prefix}checkbox-inner {
             &:after {
                 @include transform(translate(-50%, -50%) !important);
                 border-style: solid;
@@ -145,8 +145,8 @@ export default {
         }
     }
 
-    &.#{$prefix}-checked {
-        > .#{$prefix}-checkbox-inner {
+    &.#{$prefix}checked {
+        > .#{$prefix}checkbox-inner {
             &:after {
                 @include transform(rotate(45deg) scale3D(1, 1, 1));
                 @include transition($md-transition-stand);
@@ -155,14 +155,14 @@ export default {
         }
     }
 
-    &.#{$prefix}-disabled {
-        &.#{$prefix}-checked {
-            > .#{$prefix}-checkbox-inner {
+    &.#{$prefix}disabled {
+        &.#{$prefix}checked {
+            > .#{$prefix}checkbox-inner {
                 border-color: transparent !important;
             }
         }
 
-        > .#{$prefix}-checkbox-inner {
+        > .#{$prefix}checkbox-inner {
             background-color: rgba(#000, .26);
             border-color: rgba(#000, .26);
 
@@ -172,7 +172,7 @@ export default {
         }
     }
 
-    &.#{$prefix}-required {
+    &.#{$prefix}required {
         label:after {
             position: absolute;
             top: 2px;

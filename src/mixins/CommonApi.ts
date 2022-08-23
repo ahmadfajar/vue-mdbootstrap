@@ -1,7 +1,7 @@
 import {Fragment, h, Slots, VNode, VNodeArrayChildren} from "vue";
 import Helper from "../utils/Helper";
 
-export const cssPrefix = "md";
+export const cssPrefix = "md-";
 
 export const isServer = typeof window === 'undefined';
 
@@ -29,6 +29,7 @@ export function useBrowserIE() {
  * @param {string} name The slot name
  * @param {Object} props Fragment key identifier
  * @param {VNode|VNodeArrayChildren} [fallback] The default value as fallback
+ * @param {*} [slotArgs] The argument for the given slot
  * @returns {VNode} The Rendered node.
  */
 export function useRenderSlot(
@@ -36,8 +37,10 @@ export function useRenderSlot(
     name: string,
     props: Readonly<Record<string, unknown>> = {},
     fallback?: VNode | VNodeArrayChildren,
+    slotArgs?: unknown,
 ): VNode {
-    const validSlot = slots && slots[name] && slots[name]();
+    // @ts-ignore
+    const validSlot = slots && slots[name] && (slotArgs ? slots[name](slotArgs) : slots[name]());
 
     // @ts-ignore
     return h(Fragment,

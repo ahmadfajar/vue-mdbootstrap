@@ -497,18 +497,18 @@ export default {
 @import "../../../scss/variables";
 @import "../../../scss/shared";
 
-.#{$prefix}-lightbox-wrap {
+.#{$prefix}lightbox-wrap {
     height: 100%;
     width: 100%;
     left: 0;
     top: 0;
     position: fixed;
 
-    .#{$prefix}-lightbox-item-wrap {
+    .#{$prefix}lightbox-item-wrap {
         @include flexbox((display: flex, align-items: center, justify-content: center));
         position: relative;
 
-        .#{$prefix}-lightbox-item {
+        .#{$prefix}lightbox-item {
             @include flexbox((display: flex, flex-direction: column));
             background: rgba(0, 0, 0, .3);
             max-width: 95%;
@@ -517,14 +517,14 @@ export default {
             overflow: hidden;
         }
 
-        .#{$prefix}-lightbox-item-img {
+        .#{$prefix}lightbox-item-img {
             height: calc(100% - 51px);
             display: block;
             overflow: hidden;
             position: relative;
         }
 
-        .#{$prefix}-lightbox-item-title {
+        .#{$prefix}lightbox-item-title {
             background: rgba($black, .4);
             color: $gray-400;
             display: block;
@@ -541,45 +541,45 @@ export default {
         }
     }
 
-    > .#{$prefix}-lightbox-toolbar {
+    > .#{$prefix}lightbox-toolbar {
         @include flexbox((display: flex, justify-content: space-between));
         left: 0;
         top: 0;
         width: 100%;
         position: fixed;
 
-        .#{$prefix}-toolbar-items {
+        .#{$prefix}toolbar-items {
             background: rgba($black, .8);
             min-width: 100px;
             padding: $padding-sm
         }
 
-        .#{$prefix}-counter {
+        .#{$prefix}counter {
             color: $gray-400;
             padding: $padding-sm $padding-base;
         }
     }
 
-    > .#{$prefix}-lightbox-controls {
-        > .#{$prefix}-control-prev, > .#{$prefix}-control-next {
+    > .#{$prefix}lightbox-controls {
+        > .#{$prefix}control-prev, > .#{$prefix}control-next {
             @include flexbox((display: flex, align-items: center));
             height: 100%;
             position: fixed;
         }
 
-        > .#{$prefix}-control-prev {
+        > .#{$prefix}control-prev {
             left: 0;
             padding-left: $padding-sm;
         }
 
-        > .#{$prefix}-control-next {
+        > .#{$prefix}control-next {
             right: 0;
             padding-right: $padding-sm;
         }
 
     }
 
-    > .#{$prefix}-lightbox-thumbnail-wrap {
+    > .#{$prefix}lightbox-thumbnail-wrap {
         background: rgba(0, 0, 0, .5);
         left: 0;
         bottom: 0;
@@ -588,13 +588,13 @@ export default {
         padding: 0 $padding-sm;
         overflow-x: auto;
 
-        > .#{$prefix}-lightbox-thumbnail-row {
+        > .#{$prefix}lightbox-thumbnail-row {
             @include flexbox((display:flex, flex-direction:row));
 
-            > .#{$prefix}-lightbox-thumbnails {
+            > .#{$prefix}lightbox-thumbnails {
                 @include flexbox((display: flex, flex-flow:row nowrap));
 
-                .#{$prefix}-thumbnail-item {
+                .#{$prefix}thumbnail-item {
                     @extend %cursor-pointer;
                     border: 1px solid rgba(0, 0, 0, .6);
                     display: inline-block;
@@ -604,7 +604,7 @@ export default {
                         opacity: 1;
                     }
 
-                    &.#{$prefix}-active {
+                    &.#{$prefix}active {
                         border-color: $red-base;
                         border-left-width: 2px;
                         border-right-width: 2px;

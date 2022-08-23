@@ -4,17 +4,19 @@
 
 .badge {
     @include box-shadow(none);
-    font-weight: $font-weight-semi-bold;
+    --#{$bs-prefix}badge-font-weight: #{$font-weight-semi-bold};
 
     &.badge-label {
-        font-size: 85%;
-        font-weight: $font-weight-normal;
+        --#{$bs-prefix}badge-font-size: 85%;
+        --#{$bs-prefix}badge-font-weight: #{$font-weight-normal};
         padding: .25rem .6rem .4rem;
     }
 
     &.badge-pill {
-        @include border-radius($border-radius-pill);
-        font-size: 80%;
+        $bade-padding: $padding-base - .25;
+        --#{$bs-prefix}badge-border-radius: #{$border-radius-pill};
+        --#{$bs-prefix}badge-font-size: 80%;
+        --#{$bs-prefix}badge-padding-x: #{$bade-padding};
     }
 
     ~ .badge {

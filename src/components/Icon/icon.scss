@@ -2,44 +2,44 @@
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-icon, .#{$prefix}-toggle-icon {
+.#{$prefix}icon, .#{$prefix}toggle-icon {
     @include align-self(center);
 
-    > .#{$prefix}-svg-inline {
+    > .#{$prefix}svg-inline {
         display: flex;
     }
 }
 
-.#{$prefix}-toggle-icon {
+.#{$prefix}toggle-icon {
     cursor: pointer;
 }
 
-.#{$prefix}-rotate-90 {
+.#{$prefix}rotate-90 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
     @include transform(rotate(90deg));
 }
 
-.#{$prefix}-rotate-180 {
+.#{$prefix}rotate-180 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
     @include transform(rotate(180deg));
 }
 
-.#{$prefix}-rotate-270 {
+.#{$prefix}rotate-270 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
     @include transform(rotate(270deg));
 }
 
-.#{$prefix}-flip-horizontal {
+.#{$prefix}flip-horizontal {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
     @include transform(scale(-1, 1));
 }
 
-.#{$prefix}-flip-vertical {
+.#{$prefix}flip-vertical {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
     @include transform(scale(1, -1));
 }
 
-.#{$prefix}-flip-both, .#{$prefix}-flip-horizontal.#{$prefix}-flip-vertical {
+.#{$prefix}flip-both, .#{$prefix}flip-horizontal.#{$prefix}flip-vertical {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
     @include transform(scale(-1, -1));
 }

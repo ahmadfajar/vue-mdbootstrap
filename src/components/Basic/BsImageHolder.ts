@@ -83,8 +83,8 @@ export default defineComponent({
 
         return () => {
             return useCreateSvgNode({
-                [`${cssPrefix}-img-holder`]: true,
-                [`${cssPrefix}-anchor-center`]: props.xPos === "50%",
+                [`${cssPrefix}img-holder`]: true,
+                [`${cssPrefix}anchor-center`]: props.xPos === "50%",
                 ...useShapeClasses(props.circle, props.rounded),
             }, [], false, "xMidYMid slice", null, {
                 height: useSizeOrWh(props.size, props.height),

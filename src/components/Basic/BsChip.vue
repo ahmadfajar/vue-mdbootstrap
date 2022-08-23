@@ -373,7 +373,7 @@ export default {
 @import "../../../scss/mixins";
 @import "../../../scss/shared";
 
-.#{$prefix}-chip {
+.#{$prefix}chip {
     @include flexbox((display: inline-flex, align-items: center));
     @include border-radius($border-radius-pill);
     cursor: default;
@@ -399,109 +399,109 @@ export default {
         pointer-events: none;
     }
 
-    &.#{$prefix}-disabled {
+    &.#{$prefix}disabled {
         background-color: lighten($gray-500, 25%);
         color: $gray-700;
     }
 
-    &.#{$prefix}-chip-outlined {
+    &.#{$prefix}chip-outlined {
         border: thin solid $gray-500;
         background-color: transparent;
 
-        &.#{$prefix}-disabled {
+        &.#{$prefix}disabled {
             border-color: lighten($gray-500, 8%);
             color: lighten($gray-500, 8%) !important;
         }
     }
 
-    &.#{$prefix}-chip-clickable:not(.#{$prefix}-disabled) {
+    &.#{$prefix}chip-clickable:not(.#{$prefix}disabled) {
         @include user-select(none);
         cursor: pointer;
     }
 
-    > .#{$prefix}-chip-content {
+    > .#{$prefix}chip-content {
         @include flexbox((display: inline-flex, align-items: center));
         @include border-radius($border-radius-pill);
         padding: 0 ($padding-base - .25);
         max-width: 100%;
 
-        > .#{$prefix}-chip-avatar,
-        > .#{$prefix}-chip-icon {
+        > .#{$prefix}chip-avatar,
+        > .#{$prefix}chip-icon {
             @include flexbox((display: flex, align-self: center, align-items: center));
             @include transition(.3s $md-transition-stand-timing, visibility);
             margin-left: -.5rem; // -6px
 
-            > .#{$prefix}-chip-icon-fa {
+            > .#{$prefix}chip-icon-fa {
                 @include flexbox((display: flex, justify-content: center, align-items: center));
                 height: 22px;
                 width: 22px;
             }
         }
 
-        > .#{$prefix}-chip-avatar {
-            &.#{$prefix}-chip-avatar-bounded {
+        > .#{$prefix}chip-avatar {
+            &.#{$prefix}chip-avatar-bounded {
                 margin-left: -.75rem;
             }
         }
     }
 
-    &.#{$prefix}-chip-label {
+    &.#{$prefix}chip-label {
         @include border-radius($border-radius-sm);
 
-        > .#{$prefix}-chip-content {
+        > .#{$prefix}chip-content {
             @include border-radius($border-radius-sm);
         }
     }
 
-    &.#{$prefix}-chip-sm {
+    &.#{$prefix}chip-sm {
         font-size: 80%;
         height: 1.56rem;
 
-        > .#{$prefix}-chip-content {
-            > .#{$prefix}-chip-avatar,
-            > .#{$prefix}-chip-icon {
+        > .#{$prefix}chip-content {
+            > .#{$prefix}chip-avatar,
+            > .#{$prefix}chip-icon {
                 margin-left: -.5rem; // -8px
 
-                > .#{$prefix}-chip-icon-fa {
+                > .#{$prefix}chip-icon-fa {
                     height: 18px;
                     width: 18px;
                 }
             }
 
-            > .#{$prefix}-chip-avatar {
-                &.#{$prefix}-chip-avatar-bounded {
+            > .#{$prefix}chip-avatar {
+                &.#{$prefix}chip-avatar-bounded {
                     margin-left: -.75rem;
                 }
             }
         }
     }
 
-    &.#{$prefix}-chip-lg {
+    &.#{$prefix}chip-lg {
         font-size: 120%;
         height: 3rem;
 
-        > .#{$prefix}-chip-content {
+        > .#{$prefix}chip-content {
             padding: 0 $padding-base;
 
-            > .#{$prefix}-chip-avatar,
-            > .#{$prefix}-chip-icon {
+            > .#{$prefix}chip-avatar,
+            > .#{$prefix}chip-icon {
                 margin-left: -.625rem; // -10px
 
-                > .#{$prefix}-chip-icon-fa {
+                > .#{$prefix}chip-icon-fa {
                     height: 38px;
                     width: 38px;
                 }
             }
 
-            > .#{$prefix}-chip-avatar {
-                &.#{$prefix}-chip-avatar-bounded {
+            > .#{$prefix}chip-avatar {
+                &.#{$prefix}chip-avatar-bounded {
                     margin-left: -$padding-base;
                 }
             }
         }
     }
 
-    + .#{$prefix}-chip {
+    + .#{$prefix}chip {
         margin-left: $padding-sm;
     }
 }

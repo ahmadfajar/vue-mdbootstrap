@@ -1,4 +1,4 @@
-import {createCommentVNode, h, Slots, VNode, VNodeArrayChildren} from "vue";
+import {h, Slots, VNode, VNodeArrayChildren} from "vue";
 import {TButtonOptionProps, TInputOptionItem, TToggleButtonOptionProps} from "../types";
 import {cssPrefix, useGenerateId, useRenderSlot} from "../../../mixins/CommonApi";
 import {TAvatarIconProps} from "../../Avatar/types";
@@ -6,7 +6,7 @@ import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
 import {BsIcon} from "../../Icon";
 import Helper from "../../../utils/Helper";
 
-export function useButtonProps(
+export function useMakeButtonProps(
     props: Readonly<TButtonOptionProps>,
     disabled: boolean,
     buttonType?: string | null,
@@ -14,20 +14,26 @@ export function useButtonProps(
     return {
         class: [
             props.mode === 'icon'
-                ? `${cssPrefix}-btn-icon`
-                : (props.mode === 'floating' ? `${cssPrefix}-btn-floating` : 'btn'),
+                ? `${cssPrefix}btn-icon`
+                : (props.mode === 'floating' ? `${cssPrefix}btn-floating` : 'btn'),
             props.outlined
                 ? 'btn-outline-' + props.color
                 : (props.flat
                         ? 'btn-flat-' + props.color
-                        : (props.transparent ? `${cssPrefix}-btn-transparent` : 'btn-' + props.color)
+                        : (props.transparent ? `${cssPrefix}btn-transparent` : 'btn-' + props.color)
                 ),
-            props.raised ? `${cssPrefix}-btn-raised` : '',
-            !props.pill && !props.rounded ? 'rounded-0' : (props.pill ? 'rounded-pill' : ''),
+            props.raised ? `${cssPrefix}btn-raised` : '',
+            props.mode !== 'icon' && !props.pill && !props.rounded
+                ? 'rounded-1' :
+                (props.mode !== 'icon' && props.pill ? 'rounded-pill' : ''),
             props.size ? 'btn-' + props.size : '',
             disabled ? 'disabled' : '',
             props.active ? 'active' : '',
         ],
+        clazz: {
+            'btn': ['icon', 'floating'].includes(props.mode) === false,
+            [`${cssPrefix}btn-${props.mode}`]: ['icon', 'floating'].includes(props.mode),
+        },
         role: !Helper.isEmpty(props.href) ? 'button' : null,
         type: buttonType,
         disabled: disabled,
@@ -47,7 +53,7 @@ function isInputItemSelected(
     }
 }
 
-export function useInputItemClasses(
+export function useMakeInputItemClasses(
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>,
 ): Record<string, unknown> | object {
@@ -59,14 +65,14 @@ export function useInputItemClasses(
         [`btn-flat-${props.color}`]: !isInputItemSelected(item, props) && !props.outlined && props.flat,
         [`btn-${props.color}`]: !isInputItemSelected(item, props) && !props.outlined && !props.flat,
         [`btn-${props.size}`]: props.size,
-        [`${cssPrefix}-btn-raised`]: props.raised,
-        'rounded-0': !props.pill && !props.rounded,
+        [`${cssPrefix}btn-raised`]: props.raised,
+        'rounded-1': !props.pill && !props.rounded,
         'disabled': props.disabled || item.disabled,
         'readonly': props.readonly || item.readonly,
     }
 }
 
-export function useInputItemAttrs(
+export function useMakeInputItemAttrs(
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>,
 ): Record<string, unknown> | object {
@@ -86,7 +92,7 @@ export function useInputItemAttrs(
         'aria-checked': isInputItemSelected(item, props),
     };
 
-    if (this.multiple) {
+    if (props.multiple) {
         return {
             ...attr,
             'true-value': true,
@@ -101,45 +107,62 @@ export function useRenderIconWithSlot(
     slot: Slots,
     name: string,
     btnMode: string,
-    iconPosition: string,
     props: Readonly<TAvatarIconProps>,
+    iconPosition: string,
     iconSize?: number,
+    slotArgs?: unknown,
 ): VNode {
-    return useRenderSlot(
-        slot, name,
-        {key: Helper.uuid(true)},
-        h(BsIcon, {
-            class: {
-                [`${cssPrefix}-icon-${iconPosition}`]:
-                btnMode !== 'icon' && btnMode !== 'floating',
+    if (slot && slot[name]) {
+        return h("span", {
+                class: {
+                    [`${cssPrefix}icon`]: true,
+                    [`${cssPrefix}icon-${iconPosition}`]: btnMode !== 'icon' && btnMode !== 'floating',
+                }
             },
-            size: iconSize,
-            ...useCreateIconProps(props),
-        }),
-    );
+            // @ts-ignore
+            name && slot[name] && (slotArgs ? slot[name](slotArgs) : slot[name]())
+        )
+    } else {
+        return useRenderSlot(
+            slot, name,
+            {key: Helper.uuid(true)},
+            !Helper.isEmpty(props.icon)
+                ? h(BsIcon, {
+                    class: {
+                        [`${cssPrefix}icon-${iconPosition}`]: btnMode !== 'icon' && btnMode !== 'floating',
+                    },
+                    size: iconSize,
+                    ...useCreateIconProps(props),
+                }) : [],
+            slotArgs,
+        );
+    }
 }
 
 export function useRenderButtonContent(
     slots: Slots,
-    hasIcon: boolean,
     props: Readonly<TButtonOptionProps>,
 ): VNodeArrayChildren {
     return [
-        (hasIcon && props.iconPosition === 'left')
+        (props.iconPosition === 'left')
             ? useRenderIconWithSlot(
                 slots, 'icon',
-                props.mode, props.iconPosition,
-                props, props.iconSize as number,
+                props.mode,
+                props,
+                props.iconPosition,
+                props.iconSize as number,
             )
-            : createCommentVNode(" v-if-iconLeft ", true),
+            : '',
         slots.default && slots.default(),
-        (hasIcon && props.iconPosition === 'right')
+        (props.iconPosition === 'right')
             ? useRenderIconWithSlot(
                 slots, 'icon',
-                props.mode, props.iconPosition,
-                props, props.iconSize as number,
+                props.mode,
+                props,
+                props.iconPosition,
+                props.iconSize as number,
             )
-            : createCommentVNode(" v-if-iconRight ", true),
+            : '',
     ]
 }
 
@@ -149,26 +172,33 @@ export function useRenderToggleItemContent(
     props: Readonly<TToggleButtonOptionProps>,
 ): VNodeArrayChildren {
     return [
-        (!Helper.isEmpty(item.icon) && props.iconPosition === 'left')
+        (props.iconPosition === 'left')
             ? useRenderIconWithSlot(
                 slots, 'icon',
-                'default', props.iconPosition,
-                item, item.iconSize as number,
+                'default',
+                item,
+                props.iconPosition,
+                item.iconSize as number,
+                item,
             )
-            : createCommentVNode(" v-if-iconLeft ", true),
+            : '',
         useRenderSlot(
             slots, 'default',
             {key: Helper.uuid()},
             h('span', {
-                class: 'btn-text',
-            }, item.label)
+                class: `${cssPrefix}btn-text`,
+            }, item.label),
+            item,
         ),
-        (!Helper.isEmpty(item.icon) && props.iconPosition === 'right')
+        (props.iconPosition === 'right')
             ? useRenderIconWithSlot(
                 slots, 'icon',
-                'default', props.iconPosition,
-                item, item.iconSize as number,
+                'default',
+                item,
+                props.iconPosition,
+                item.iconSize as number,
+                item,
             )
-            : createCommentVNode(" v-if-iconRight ", true),
+            : '',
     ]
 }

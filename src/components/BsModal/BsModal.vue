@@ -237,7 +237,7 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-modal {
+.#{$prefix}modal {
     @include flexbox((display: flex, align-items: center, justify-content: center));
     position: fixed;
     left: 0;
@@ -245,7 +245,7 @@ export default {
     right: 0;
     bottom: 0;
 
-    > .#{$prefix}-modal-inner {
+    > .#{$prefix}modal-inner {
         @include box-shadow(0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12));
         @include border-radius($border-radius-base);
         background-color: $white;
@@ -253,15 +253,15 @@ export default {
         max-width: 75%;
         padding: 0;
 
-        &.#{$prefix}-modal-scrollable {
-            .#{$prefix}-modal-body {
+        &.#{$prefix}modal-scrollable {
+            .#{$prefix}modal-body {
                 overflow-x: hidden;
                 overflow-y: auto;
                 -webkit-overflow-scrolling: touch;
             }
         }
 
-        &.#{$prefix}-modal-fullscreen {
+        &.#{$prefix}modal-fullscreen {
             position: absolute;
             left: 0;
             right: 0;
@@ -273,13 +273,13 @@ export default {
             max-height: 100% !important;
             border-radius: 0;
 
-            .#{$prefix}-modal-body {
+            .#{$prefix}modal-body {
                 padding: 0;
             }
         }
     }
 
-    .#{$prefix}-modal-title {
+    .#{$prefix}modal-title {
         @include flexbox((display: flex, align-items: center, justify-content: space-between));
         color: darken($gray-900, 5%);
         font-size: 22px;
@@ -288,17 +288,17 @@ export default {
         margin: 0;
         padding: $padding-base $padding-lg 1.25rem;
 
-        + .#{$prefix}-modal-body {
+        + .#{$prefix}modal-body {
             padding-top: 0;
         }
     }
 
-    .#{$prefix}-modal-body {
+    .#{$prefix}modal-body {
         padding: $padding-lg $padding-lg 1.25rem;
         //color: $gray-700;
     }
 
-    .#{$prefix}-modal-footer {
+    .#{$prefix}modal-footer {
         @include flexbox((display: flex, align-items: center, justify-content: flex-end));
         min-height: 48px;
         padding: $padding-sm $padding-base $padding-base $padding-base;
@@ -314,7 +314,7 @@ export default {
     @include transition();
     transition: opacity $md-transition-easeOut;
 
-    .#{$prefix}-modal-inner {
+    .#{$prefix}modal-inner {
         &.md-slide-top,
         &.md-slide-bottom,
         &.md-slide-left,
@@ -332,7 +332,7 @@ export default {
 
 .bs-modal-enter,
 .bs-modal-leave-active {
-    .#{$prefix}-modal-inner {
+    .#{$prefix}modal-inner {
         backface-visibility: hidden;
 
         &.md-slide-top {

@@ -194,8 +194,8 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-radio-group {
-    .#{$prefix}-field-inner {
+.#{$prefix}radio-group {
+    .#{$prefix}field-inner {
         border-bottom: 0 !important;
     }
 }

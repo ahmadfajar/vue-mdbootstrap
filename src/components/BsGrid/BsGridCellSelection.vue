@@ -51,13 +51,13 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-grid {
-    .#{$prefix}-grid-cell-selection {
+.#{$prefix}grid {
+    .#{$prefix}grid-cell-selection {
         padding: 0 !important;
         width: $table-checkbox-selection-size;
         vertical-align: middle;
 
-        .#{$prefix}-grid-cell-inner {
+        .#{$prefix}grid-cell-inner {
             font-size: $table-font-size;
             min-height: $table-checkbox-selection-size;
             display: -ms-flexbox;
@@ -65,7 +65,7 @@ export default {
             -ms-flex-pack: center;
             justify-content: center;
 
-            > .#{$prefix}-checkbox {
+            > .#{$prefix}checkbox {
                 align-self: center;
                 margin: $table-cell-padding;
             }

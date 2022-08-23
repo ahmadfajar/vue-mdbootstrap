@@ -1,9 +1,9 @@
 /* BsCheckbox mixins */
 @mixin make-checkbox($name, $color) {
-    .#{$prefix}-checkbox-#{$name} {
-        &:not(.#{$prefix}-disabled) {
-            &.#{$prefix}-checked {
-                > .#{$prefix}-checkbox-inner {
+    .#{$prefix}checkbox-#{$name} {
+        &:not(.#{$prefix}disabled) {
+            &.#{$prefix}checked {
+                > .#{$prefix}checkbox-inner {
                     background-color: $color;
                     border-color: $color;
 
@@ -12,7 +12,7 @@
                     }
                 }
 
-                .#{$prefix}-ripple {
+                .#{$prefix}ripple {
                     color: $color;
                 }
             }

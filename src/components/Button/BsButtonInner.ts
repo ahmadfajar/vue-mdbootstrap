@@ -8,6 +8,7 @@ export default defineComponent({
     props: {
         dropdownToggle: booleanProp,
         iconMode: booleanProp,
+        hasIcon: booleanProp,
         rippleOff: booleanProp,
     },
     setup(props, {slots}) {
@@ -19,7 +20,12 @@ export default defineComponent({
             }, {
                 default: () => h(
                     "span",
-                    {class: `${cssPrefix}-btn-inner`},
+                    {
+                        class: [
+                            `${cssPrefix}btn-inner`,
+                            props.hasIcon ? `${cssPrefix}has-icon` : '',
+                        ],
+                    },
                     slots.default && slots.default(),
                 )
             })

@@ -1,6 +1,6 @@
 /* BsAlert mixins */
 @mixin make-outline-alert($name, $color) {
-    .#{$prefix}-alert-outline-#{$name} {
+    .#{$prefix}alert-outline-#{$name} {
         color: $color;
         border-color: lighten($color, 5%);
 
@@ -15,7 +15,7 @@
 }
 
 @mixin make-solid-alert($name, $color) {
-    .#{$prefix}-alert-solid-#{$name} {
+    .#{$prefix}alert-solid-#{$name} {
         background-color: $color;
         color: set-foreground-color($color, $gray-900, $white-base, 70);
         @if (lightness($color) > 70) {

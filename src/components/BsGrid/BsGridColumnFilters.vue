@@ -172,16 +172,16 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-grid {
-    .#{$prefix}-field {
-        > .#{$prefix}-field-placeholder {
+.#{$prefix}grid {
+    .#{$prefix}field {
+        > .#{$prefix}field-placeholder {
             position: absolute;
             left: 8px;
             top: 6px;
         }
 
         input[type='text']:focus {
-            ~ .#{$prefix}-field-placeholder {
+            ~ .#{$prefix}field-placeholder {
                 display: none;
             }
         }

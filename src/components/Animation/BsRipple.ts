@@ -23,7 +23,7 @@ export default defineComponent({
         disabled: booleanProp,
         /**
          * Html tag used to render the component.
-         * @type {string|*}
+         * @type {string}
          */
         tag: tagProp
     },
@@ -63,7 +63,7 @@ export default defineComponent({
     },
     render() {
         return h(this.tag, {
-            class: [`${cssPrefix}-ripple`, this.disabled ? "ripple-off" : ""],
+            class: [`${cssPrefix}ripple`, this.disabled ? "ripple-off" : ""],
             onMousedownPassive: (event: IRippleEvent) =>
                 useStartRipple(
                     this.$props as TRippleOptionProps,
@@ -90,7 +90,7 @@ export default defineComponent({
                         (ripple: TRipple) => {
                             return h(BsWave, {
                                 key: ripple.uuid,
-                                class: [this.centered ? `${cssPrefix}-centered` : ""],
+                                class: [this.centered ? `${cssPrefix}centered` : ""],
                                 style: ripple.waveStyles,
                             });
                         },

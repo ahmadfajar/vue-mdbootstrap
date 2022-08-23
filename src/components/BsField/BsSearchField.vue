@@ -364,11 +364,11 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-field-searchbox {
+.#{$prefix}field-searchbox {
     position: relative;
     width: 100%;
 
-    .#{$prefix}-searchbox-inner {
+    .#{$prefix}searchbox-inner {
         @include transition(border-color $transition-basic, box-shadow $transition-basic);
         @include flexbox((display: flex, align-items: center));
         background-color: rgba($black, .015);
@@ -381,7 +381,7 @@ export default {
         position: relative;
         width: 100%;
 
-        &.#{$prefix}-focused {
+        &.#{$prefix}focused {
             @include box-shadow(0 0 0.1rem 0.2rem rgba(0, 123, 255, .25));
             background-color: $white;
             border-color: $info-color-dark;
@@ -427,7 +427,7 @@ export default {
             }
         }
 
-        &.#{$prefix}-searchbox-dark {
+        &.#{$prefix}searchbox-dark {
             background-color: rgba($black, .25);
             border: 1px solid rgba($black, .085);
 
@@ -435,7 +435,7 @@ export default {
                 color: $gray-500;
             }
 
-            &.#{$prefix}-focused {
+            &.#{$prefix}focused {
                 @include box-shadow(0 0 0.1rem 0.23rem rgba(100, 100, 100, 0.32));
                 background-color: rgba($black, 0.35);
                 border-color: rgba($black, 0.25);

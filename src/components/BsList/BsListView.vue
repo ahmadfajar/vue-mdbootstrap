@@ -205,7 +205,7 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-list {
+.#{$prefix}list {
     @include transition(height .3s cubic-bezier(.4, 0, .2, 1));
     list-style-type: none;
     overflow-x: hidden;
@@ -213,17 +213,17 @@ export default {
     padding: 8px 0;
     height: 100%;
 
-    .#{$prefix}-subheader {
+    .#{$prefix}subheader {
         @include user-select(none);
     }
 }
 
 .card {
-    > .#{$prefix}-list:first-child {
+    > .#{$prefix}list:first-child {
         @include border-top-radius($border-radius-base * 2);
     }
 
-    > .#{$prefix}-list:last-child {
+    > .#{$prefix}list:last-child {
         @include border-bottom-radius($border-radius-base * 2);
     }
 }

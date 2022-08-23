@@ -47,17 +47,17 @@ export default {
         padding: $btn-margin-basic 1.5rem;
 
         > .svg-inline--fa {
-            &.#{$prefix}-icon-left {
+            &.#{$prefix}icon-left {
                 margin-right: $btn-margin-basic;
             }
 
-            &.#{$prefix}-icon-right {
+            &.#{$prefix}icon-right {
                 margin-left: $btn-margin-basic;
             }
         }
     }
 
-    .#{$prefix}-ripple {
+    .#{$prefix}ripple {
         &.dropdown-toggle {
             &::after {
                 @include align-self(center);

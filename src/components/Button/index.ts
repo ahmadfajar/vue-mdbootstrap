@@ -1,6 +1,7 @@
 import {App} from "vue";
 import BsButton from "./BsButton";
 import BsToggleButton from "./BsToggleButton";
+import "./button.scss";
 
 const BsButtonPlugin = {
     install: (app: App): void => {

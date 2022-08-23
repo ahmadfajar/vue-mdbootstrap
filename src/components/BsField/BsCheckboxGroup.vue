@@ -204,8 +204,8 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-checkbox-group {
-    .#{$prefix}-field-inner {
+.#{$prefix}checkbox-group {
+    .#{$prefix}field-inner {
         border-bottom: 0 !important;
     }
 }

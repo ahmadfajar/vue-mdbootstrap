@@ -138,17 +138,17 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-appbar {
+.#{$prefix}appbar {
     @include justify-content(flex-start);
     background-color: $white;
     max-width: 100%;
 
-    > .#{$prefix}-appbar-content {
+    > .#{$prefix}appbar-content {
         @include flexbox((display:flex, align-items: center, flex-direction: row));
         height: 64px;
         padding: 8px 12px 8px 8px;
 
-        > .#{$prefix}-appbar-title {
+        > .#{$prefix}appbar-title {
             @include ellipsis();
             font-size: 1.5rem;
             font-weight: $font-weight-normal;
@@ -161,7 +161,7 @@ export default {
             }
         }
 
-        > .#{$prefix}-appbar-items {
+        > .#{$prefix}appbar-items {
             @include display-flex();
             // font-size: .88rem;
             max-width: 100%;
@@ -169,11 +169,11 @@ export default {
         }
     }
 
-    &.#{$prefix}-appbar-transition {
+    &.#{$prefix}appbar-transition {
         @include transition($md-transition-default);
     }
 
-    &.#{$prefix}-appbar-shadow {
+    &.#{$prefix}appbar-shadow {
         @include box-shadow($z-depth-1);
     }
 }

@@ -175,21 +175,21 @@ export default {
 @import "../../../scss/variables";
 @import "../../../scss/mixins";
 
-.#{$prefix}-radio {
+.#{$prefix}radio {
     display: inline-flex;
     margin: $md-radio-margin;
     position: relative;
     width: auto;
 
-    &:not(.#{$prefix}-disabled) {
+    &:not(.#{$prefix}disabled) {
         cursor: pointer;
 
-        .#{$prefix}-radio-label {
+        .#{$prefix}radio-label {
             cursor: pointer;
         }
     }
 
-    > .#{$prefix}-radio-inner {
+    > .#{$prefix}radio-inner {
         @include border-radius($border-radius-circle);
         @include transition($md-transition-stand);
         border: 2px solid rgba(#000, .54);
@@ -231,7 +231,7 @@ export default {
             position: absolute;
         }
 
-        .#{$prefix}-ripple {
+        .#{$prefix}ripple {
             @include border-radius($border-radius-circle);
             @include transform(translate(-50%, -50%));
             height: $md-radio-touch-size !important;
@@ -246,7 +246,7 @@ export default {
         }
     }
 
-    > .#{$prefix}-radio-label {
+    > .#{$prefix}radio-label {
         @include user-select(none);
         height: $md-radio-size;
         line-height: $md-radio-size;
@@ -255,8 +255,8 @@ export default {
         position: relative;
     }
 
-    &.#{$prefix}-checked {
-        .#{$prefix}-radio-inner {
+    &.#{$prefix}checked {
+        .#{$prefix}radio-inner {
             &:after {
                 @include transform(scale3D(1, 1, 1));
                 @include transition($md-transition-stand);
@@ -265,7 +265,7 @@ export default {
         }
     }
 
-    &.#{$prefix}-required {
+    &.#{$prefix}required {
         label:after {
             @include transform(translateX(calc(100% + 2px)));
             content: "*";
@@ -277,8 +277,8 @@ export default {
         }
     }
 
-    &.#{$prefix}-disabled {
-        > .#{$prefix}-radio-inner {
+    &.#{$prefix}disabled {
+        > .#{$prefix}radio-inner {
             border-color: rgba(#000, .26);
 
             &:after {

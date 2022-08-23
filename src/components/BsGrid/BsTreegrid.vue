@@ -281,17 +281,17 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-treegrid {
-    .#{$prefix}-grid-content {
+.#{$prefix}treegrid {
+    .#{$prefix}grid-content {
         tr {
             @include transition($transition-basic);
 
-            > .#{$prefix}-treegrid-cell {
+            > .#{$prefix}treegrid-cell {
                 &:first-child {
                     padding-left: $table-cell-padding;
                 }
 
-                .#{$prefix}-grid-cell-inner {
+                .#{$prefix}grid-cell-inner {
                     padding-left: .2rem;
                 }
 

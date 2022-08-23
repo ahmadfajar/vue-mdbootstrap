@@ -38,7 +38,7 @@ export default defineComponent({
     setup(props, {emit}) {
         return () => h(
             "span", {
-                class: [`${cssPrefix}-toggle-icon`],
+                class: [`${cssPrefix}toggle-icon`],
                 onClick: () => emit("update:modelValue", !props.modelValue),
             },
             h(BsIconSvg, {
@@ -52,7 +52,7 @@ export default defineComponent({
         //     Suspense, {}, {
         //         default: () => h(
         //             "span", {
-        //                 class: [`${cssPrefix}-toggle-icon`],
+        //                 class: [`${cssPrefix}toggle-icon`],
         //                 onClick: () => {
         //                     emit("update:modelValue", !props.modelValue);
         //                 },

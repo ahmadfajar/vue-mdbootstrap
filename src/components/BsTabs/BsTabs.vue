@@ -344,7 +344,7 @@ export default {
 
 $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
 
-.#{$prefix}-tabs {
+.#{$prefix}tabs {
     .nav {
         .nav-link {
             cursor: pointer;
@@ -352,18 +352,18 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
             outline: 0 none;
             padding: 0;
 
-            > .#{$prefix}-ripple {
+            > .#{$prefix}ripple {
                 @include user-select(none);
                 padding: $tab-padding-base;
             }
         }
 
         &.nav-tabs {
-            &.#{$prefix}-tab-top {
+            &.#{$prefix}tab-top {
                 padding-bottom: 0;
             }
 
-            &.#{$prefix}-tab-bottom {
+            &.#{$prefix}tab-bottom {
                 padding-top: 0;
 
                 > .nav-item {
@@ -372,7 +372,7 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
                     margin-bottom: 0;
                     margin-top: -1px;
 
-                    &.active, &.#{$prefix}-active {
+                    &.active, &.#{$prefix}active {
                         border-color: $white-base $gray-300 $gray-300;
                     }
                 }
@@ -418,7 +418,7 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
                 color: rgba($white, .6);
                 text-transform: uppercase;
 
-                > .#{$prefix}-ripple {
+                > .#{$prefix}ripple {
                     padding: $tab-material-padding;
                 }
 
@@ -431,7 +431,7 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
                 }
             }
 
-            &.#{$prefix}-tab-top {
+            &.#{$prefix}tab-top {
                 @include box-shadow(0px 4px 5px rgba(#000, .15), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12));
 
                 > .nav-link {
@@ -443,7 +443,7 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
                 }
             }
 
-            &.#{$prefix}-tab-bottom {
+            &.#{$prefix}tab-bottom {
                 @include box-shadow(0px -1px 5px rgba(#000, .2), 0px -1px 2px rgba(#000, .14), 0px -3px 1px -2px rgba(#000, .12));
 
                 > .nav-link {
@@ -455,7 +455,7 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
                 }
             }
 
-            &.#{$prefix}-tab-left {
+            &.#{$prefix}tab-left {
                 @include box-shadow(1px 0px 5px rgba(#000, .2), 2px 0px 2px rgba(#000, .14), 3px 0px 1px -2px rgba(#000, .12));
 
                 > .nav-link {
@@ -467,7 +467,7 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
                 }
             }
 
-            &.#{$prefix}-tab-right {
+            &.#{$prefix}tab-right {
                 @include box-shadow(-1px 0px 5px rgba(#000, .2), -2px 0px 2px rgba(#000, .14), -3px 0px 1px -2px rgba(#000, .12));
 
                 > .nav-link {
@@ -479,8 +479,8 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
                 }
             }
 
-            &.#{$prefix}-tab-top,
-            &.#{$prefix}-tab-bottom {
+            &.#{$prefix}tab-top,
+            &.#{$prefix}tab-bottom {
                 > .nav-link {
                     @include media-breakpoint-up(lg) {
                         &:first-child {
@@ -499,12 +499,12 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
             border-width: 0;
             padding: $tab-modern-padding;
 
-            &.#{$prefix}-tab-top {
+            &.#{$prefix}tab-top {
                 @include box-shadow(0px 4px 5px rgba(#000, .15), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12));
                 //@include box-shadow(0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15));
             }
 
-            &.#{$prefix}-tab-bottom {
+            &.#{$prefix}tab-bottom {
                 @include box-shadow(0 -2px 10px 0 rgba(0, 0, 0, .18), 0 -4px 15px 0 rgba(0, 0, 0, .15));
             }
 
@@ -525,15 +525,15 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
         }
 
         &.nav-pills, &.nav-modern {
-            &.#{$prefix}-tab-top,
-            &.#{$prefix}-tab-bottom {
+            &.#{$prefix}tab-top,
+            &.#{$prefix}tab-bottom {
                 .nav-item + .nav-item {
                     margin-left: $tab-item-margin-between;
                 }
             }
 
-            &.#{$prefix}-tab-left,
-            &.#{$prefix}-tab-right {
+            &.#{$prefix}tab-left,
+            &.#{$prefix}tab-right {
                 .nav-item + .nav-item {
                     margin-top: $tab-item-margin-between;
                 }
@@ -550,7 +550,7 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
 
 .card {
     &.rounded-0 {
-        .#{$prefix}-tabs {
+        .#{$prefix}tabs {
             .nav-modern {
                 @include border-radius(0);
             }
@@ -558,27 +558,27 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
     }
 
     &:not(.rounded-0) {
-        > .#{$prefix}-tabs {
+        > .#{$prefix}tabs {
             .nav-material {
-                &.#{$prefix}-tab-bottom:last-child {
+                &.#{$prefix}tab-bottom:last-child {
                     @include border-bottom-radius($border-radius);
                 }
             }
 
             .nav-modern {
-                &.#{$prefix}-tab-top:first-child {
+                &.#{$prefix}tab-top:first-child {
                     @include border-bottom-radius(0);
                 }
 
-                &.#{$prefix}-tab-bottom:last-child {
+                &.#{$prefix}tab-bottom:last-child {
                     @include border-top-radius(0);
                 }
 
-                &.#{$prefix}-tab-left:first-child {
+                &.#{$prefix}tab-left:first-child {
                     @include border-right-radius(0);
                 }
 
-                &.#{$prefix}-tab-right:last-child {
+                &.#{$prefix}tab-right:last-child {
                     @include border-left-radius(0);
                 }
             }
@@ -591,15 +591,15 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
 
             &:first-child {
                 .nav-material {
-                    &.#{$prefix}-tab-top:first-child {
+                    &.#{$prefix}tab-top:first-child {
                         @include border-top-radius($border-radius);
                     }
 
-                    &.#{$prefix}-tab-left:first-child {
+                    &.#{$prefix}tab-left:first-child {
                         @include border-top-left-radius($border-radius);
                     }
 
-                    &.#{$prefix}-tab-right:last-child {
+                    &.#{$prefix}tab-right:last-child {
                         @include border-top-right-radius($border-radius);
                     }
                 }
@@ -607,11 +607,11 @@ $tab-colors: map-remove($merge-theme-colors, 'light', 'light-grey');
 
             &:last-child {
                 .nav-material {
-                    &.#{$prefix}-tab-left:first-child {
+                    &.#{$prefix}tab-left:first-child {
                         @include border-bottom-left-radius($border-radius);
                     }
 
-                    &.#{$prefix}-tab-right:last-child {
+                    &.#{$prefix}tab-right:last-child {
                         @include border-bottom-right-radius($border-radius);
                     }
                 }

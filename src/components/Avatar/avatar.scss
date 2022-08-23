@@ -2,7 +2,7 @@
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-avatar {
+.#{$prefix}avatar {
     @include flexbox((display: inline-flex, align-items: center, justify-content: center));
     font-weight: 400;
     font-size: 1rem;
@@ -10,7 +10,7 @@
     max-width: 100%;
     position: relative;
 
-    > .#{$prefix}-avatar-text {
+    > .#{$prefix}avatar-text {
         @include flexbox((display: flex, align-items: center, justify-content: center));
         font-weight: $font-weight-semi-bold;
         font-size: inherit;

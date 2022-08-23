@@ -1,7 +1,7 @@
 <template>
   <div :class="{'md-chip-group--column': column}" class="md-chip-group">
     <div
-      v-if="_showSliderArrows" 
+      v-if="_showSliderArrows"
       class="md-chip-slide-prev">
       <transition name="fade">
         <bs-button
@@ -10,7 +10,7 @@
           mode="icon"
           flat
           @click="_scrollTo('prev')">
-          <bs-icon 
+          <bs-icon
             icon="chevron-left"
             size="24" />
         </bs-button>
@@ -30,7 +30,7 @@
       </div>
     </div>
     <div
-      v-if="_showSliderArrows" 
+      v-if="_showSliderArrows"
       class="md-chip-slide-next">
       <transition name="fade">
         <bs-button
@@ -39,7 +39,7 @@
           mode="icon"
           flat
           @click="_scrollTo('next')">
-          <bs-icon 
+          <bs-icon
             icon="chevron-right"
             size="24" />
         </bs-button>
@@ -343,38 +343,38 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-chip-group-slider {
+.#{$prefix}chip-group-slider {
     @include flexbox((display: flex, flex: 1 1 auto));
     contain: content;
     overflow: auto hidden;
 
-    > .#{$prefix}-chip-group-content {
+    > .#{$prefix}chip-group-content {
         @include flexbox((display: flex, flex: 1 0 auto));
         @include transition(.3s $md-transition-stand-timing);
         padding: .25rem 0;   // 4px 0;
         position: relative;
         white-space: nowrap;
 
-        .#{$prefix}-chip {
+        .#{$prefix}chip {
             margin: .25rem $padding-sm .25rem 0;
         }
     }
 }
 
-.#{$prefix}-chip-group {
+.#{$prefix}chip-group {
     @include flexbox((display: flex, flex: 0 1 auto));
     @include transition(.3s $md-transition-stand-timing);
     position: relative;
     max-width: 100%;
 
-    > .#{$prefix}-chip-slide-prev,
-    > .#{$prefix}-chip-slide-next {
+    > .#{$prefix}chip-slide-prev,
+    > .#{$prefix}chip-slide-next {
         @include flexbox((display: flex, flex: 0 1 52px, align-items: center, justify-content: center));
         min-width: 52px;
     }
 
-    &.#{$prefix}-chip-group--column {
-        .#{$prefix}-chip-group-content {
+    &.#{$prefix}chip-group--column {
+        .#{$prefix}chip-group-content {
             @include flex-wrap(wrap);
             max-width: 100%;
             white-space: normal;
@@ -382,7 +382,7 @@ export default {
     }
 
     @include media-breakpoint-up(lg) {
-        > .#{$prefix}-chip-group-slider {
+        > .#{$prefix}chip-group-slider {
             overflow: hidden;
         }
     }

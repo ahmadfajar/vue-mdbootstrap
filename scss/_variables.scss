@@ -1,7 +1,6 @@
-$body-bg:                     $white;
-
 // component prefix
-$prefix:                      'md' !default;
+$prefix:                      'md-' !default;
+$bs-prefix:                   'bs-' !default;
 
 // Fonts
 $font-weight-thin:            200;
@@ -12,12 +11,12 @@ $font-weight-bold:            700;
 $font-weight-boldest:         900;
 
 // Shadows
-$z-depth-1:          0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 8px 0 rgba(0, 0, 0, 0.12) !default;
-$z-depth-1-half:     0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15) !default;
-$z-depth-2:          0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !default;
-$z-depth-3:          0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !default;
-$z-depth-4:          0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21) !default;
-$z-depth-5:          0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22) !default;
+$z-depth-1:                   0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 8px 0 rgba(0, 0, 0, 0.12) !default;
+$z-depth-1-half:              0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15) !default;
+$z-depth-2:                   0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !default;
+$z-depth-3:                   0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !default;
+$z-depth-4:                   0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21) !default;
+$z-depth-5:                   0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22) !default;
 
 $default-hover-bgcolor:             rgba($black, 0.045) !default;
 
@@ -91,9 +90,9 @@ $alert-border-level:                -5 !default;
 $alert-color-level:                 6 !default;
 
 // Buttons
-$btn-border-radius:                 .125rem !default;
+$btn-border-radius:                 .5rem !default;
+$btn-border-radius-lg:              .7rem !default;
 $btn-margin-basic:                  .375rem !default;
-$btn-margin-lg:                     .5rem !default;
 $btn-color-basic:                   var(--white);
 $btn-transition:                    color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
 

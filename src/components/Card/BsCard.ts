@@ -48,7 +48,7 @@ export default defineComponent({
                 class: {
                     'card': true,
                     'rounded-0': props.flat,
-                    [`${cssPrefix}-shadow`]: props.shadow
+                    [`${cssPrefix}shadow`]: props.shadow
                 }
             }, [
                 props.imgTopSrc

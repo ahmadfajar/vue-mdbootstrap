@@ -209,20 +209,20 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-pagination-wrapper {
+.#{$prefix}pagination-wrapper {
     position: relative;
     overflow: hidden;
     padding-top: .8rem;
     padding-bottom: .8rem;
     width: 100%;
 
-    .#{$prefix}-pagination-control {
+    .#{$prefix}pagination-control {
         font-size: 14px;
         width: 44px;
         min-height: 36px;
     }
 
-    .#{$prefix}-pagination-text {
+    .#{$prefix}pagination-text {
         color: $table-header-color;
         // font-size: .875rem;
     }
@@ -231,27 +231,27 @@ export default {
         margin-right: 0;
     }
 
-    .#{$prefix}-pagination-pager {
+    .#{$prefix}pagination-pager {
         min-width: 160px;
     }
 
-    .#{$prefix}-combobox {
-        > .#{$prefix}-field-wrapper {
+    .#{$prefix}combobox {
+        > .#{$prefix}field-wrapper {
             font-size: .875rem;
 
-            > .#{$prefix}-field-ctrl {
-                > .#{$prefix}-field-inner {
+            > .#{$prefix}field-ctrl {
+                > .#{$prefix}field-inner {
                     padding-left: 0;
 
                     > fieldset {
                         padding: 0;
                     }
 
-                    > .#{$prefix}-field-input-wrapper {
+                    > .#{$prefix}field-input-wrapper {
                         min-height: fit-content;
                         padding-left: $padding-base;
 
-                        > .#{$prefix}-combobox-input {
+                        > .#{$prefix}combobox-input {
                             padding: .4rem 0;
                         }
                     }

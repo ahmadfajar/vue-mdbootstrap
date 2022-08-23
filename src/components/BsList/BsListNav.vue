@@ -90,7 +90,7 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-list-nav {
+.#{$prefix}list-nav {
     @include display-flex();
     @include flex-wrap(wrap);
     padding-left: 0;

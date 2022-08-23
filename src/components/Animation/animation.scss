@@ -3,7 +3,7 @@
 @import "../../../scss/variables";
 @import "../../../scss/mixins";
 
-.#{$prefix}-overlay {
+.#{$prefix}overlay {
     background-color: $black;
     bottom: 0;
     left: 0;
@@ -14,7 +14,7 @@
     z-index: 1000;
 }
 
-.#{$prefix}-ripple {
+.#{$prefix}ripple {
     width: 100%;
     height: 100%;
     position: relative;
@@ -22,7 +22,7 @@
     mask-image: radial-gradient(circle, #fff 100%, #000 100%);
 }
 
-.#{$prefix}-ripple-wave {
+.#{$prefix}ripple-wave {
     @include transform(scale(2) translateZ(0));
     background: currentColor;
     border-radius: 50%;
@@ -31,29 +31,29 @@
     opacity: 0;
     z-index: 1;
 
-    &.#{$prefix}-centered {
+    &.#{$prefix}centered {
         animation-duration: 1.2s;
         top: 50%;
         left: 50%;
     }
 
-    ~ *:not(.#{$prefix}-ripple-wave) {
+    ~ *:not(.#{$prefix}ripple-wave) {
         position: relative;
         z-index: 2;
     }
 }
 
-.#{$prefix}-ripple-enter-active {
+.#{$prefix}ripple-enter-active {
     @include transition(.8s $md-transition-stand-timing);
     @include transition-property(opacity, transform);
     will-change: opacity, transform;
 
-    &.#{$prefix}-centered {
+    &.#{$prefix}centered {
         @include transition-duration(1.2s);
     }
 }
 
-.#{$prefix}-ripple-enter-from {
+.#{$prefix}ripple-enter-from {
     @include transform(scale(.26) translateZ(0));
     opacity: .26;
 }

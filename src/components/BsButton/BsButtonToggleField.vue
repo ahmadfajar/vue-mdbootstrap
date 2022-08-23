@@ -9,8 +9,8 @@
       <div class="md-field-inner">
         <bs-button-toggle v-bind="_btnToggleAttributes" @change="setValue" />
       </div>
-      <div 
-        v-if="helpText || showErrorValidation" 
+      <div
+        v-if="helpText || showErrorValidation"
         class="md-help-text">
         <transition name="fade">
           <slot name="helpText">
@@ -124,9 +124,9 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-field {
-    &.#{$prefix}-button-toggle {
-        .#{$prefix}-field-inner {
+.#{$prefix}field {
+    &.#{$prefix}button-toggle {
+        .#{$prefix}field-inner {
             border-bottom: 0;
 
             .btn {
@@ -144,7 +144,7 @@ export default {
             }
         }
 
-        .#{$prefix}-help-text {
+        .#{$prefix}help-text {
             min-height: 20px;
             margin-top: 4px;
         }

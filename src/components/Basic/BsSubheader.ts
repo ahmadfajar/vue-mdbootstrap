@@ -15,7 +15,7 @@ export default defineComponent({
     setup(props, {slots}) {
         return () => useSimpleRenderWithSlots(
             "div", slots,
-            [`${cssPrefix}-subheader`, props.dark ? 'subheader--dark' : 'subheader--light'],
+            [`${cssPrefix}subheader`, props.dark ? 'subheader--dark' : 'subheader--light'],
         )
     }
 });

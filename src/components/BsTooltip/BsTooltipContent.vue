@@ -162,7 +162,7 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-tooltip {
+.#{$prefix}tooltip {
   @include flexbox((display: flex, align-items: center, justify-content: center));
   margin: 0;
   position: fixed;
@@ -181,7 +181,7 @@ export default {
     }
   }
 
-  > .#{$prefix}-tooltip-inner {
+  > .#{$prefix}tooltip-inner {
     @include border-radius($tooltip-border-radius);
     @include opacity(.9);
     background-color: $tooltip-bg;
@@ -193,7 +193,7 @@ export default {
   }
 }
 
-.#{$prefix}-tooltip-top {
+.#{$prefix}tooltip-top {
   padding: $tooltip-arrow-height 0;
 
   .arrow {
@@ -207,7 +207,7 @@ export default {
   }
 }
 
-.#{$prefix}-tooltip-right {
+.#{$prefix}tooltip-right {
   padding: 0 $tooltip-arrow-height;
 
   .arrow {
@@ -223,7 +223,7 @@ export default {
   }
 }
 
-.#{$prefix}-tooltip-bottom {
+.#{$prefix}tooltip-bottom {
   padding: $tooltip-arrow-height 0;
 
   .arrow {
@@ -237,7 +237,7 @@ export default {
   }
 }
 
-.#{$prefix}-tooltip-left {
+.#{$prefix}tooltip-left {
   padding: 0 $tooltip-arrow-height;
 
   .arrow {
@@ -253,46 +253,46 @@ export default {
   }
 }
 
-.#{$prefix}-tooltip-top-enter-active,
-.#{$prefix}-tooltip-top-leave-active {
+.#{$prefix}tooltip-top-enter-active,
+.#{$prefix}tooltip-top-leave-active {
   transition: transform .3s $transition-easeOut, opacity .3s $transition-easeOut;
 }
 
-.#{$prefix}-tooltip-top-enter,
-.#{$prefix}-tooltip-top-leave-active {
+.#{$prefix}tooltip-top-enter,
+.#{$prefix}tooltip-top-leave-active {
   @include opacity(0);
   transform: translate3d(0, 15px, 0);
 }
 
-.#{$prefix}-tooltip-bottom-enter-active,
-.#{$prefix}-tooltip-bottom-leave-active {
+.#{$prefix}tooltip-bottom-enter-active,
+.#{$prefix}tooltip-bottom-leave-active {
   transition: transform .3s $transition-easeOut, opacity .3s $transition-easeOut;
 }
 
-.#{$prefix}-tooltip-bottom-enter,
-.#{$prefix}-tooltip-bottom-leave-active {
+.#{$prefix}tooltip-bottom-enter,
+.#{$prefix}tooltip-bottom-leave-active {
   @include opacity(0);
   transform: translate3d(0, -15px, 0);
 }
 
-.#{$prefix}-tooltip-left-enter-active,
-.#{$prefix}-tooltip-left-leave-active {
+.#{$prefix}tooltip-left-enter-active,
+.#{$prefix}tooltip-left-leave-active {
   transition: transform .3s $transition-easeOut, opacity .3s $transition-easeOut;
 }
 
-.#{$prefix}-tooltip-left-enter,
-.#{$prefix}-tooltip-left-leave-active {
+.#{$prefix}tooltip-left-enter,
+.#{$prefix}tooltip-left-leave-active {
   @include opacity(0);
   transform: translate3d(24px, 0, 0);
 }
 
-.#{$prefix}-tooltip-right-enter-active,
-.#{$prefix}-tooltip-right-leave-active {
+.#{$prefix}tooltip-right-enter-active,
+.#{$prefix}tooltip-right-leave-active {
   transition: transform .3s $transition-easeOut, opacity .3s $transition-easeOut;
 }
 
-.#{$prefix}-tooltip-right-enter,
-.#{$prefix}-tooltip-right-leave-active {
+.#{$prefix}tooltip-right-enter,
+.#{$prefix}tooltip-right-leave-active {
   @include opacity(0);
   transform: translate3d(-24px, 0, 0);
 }

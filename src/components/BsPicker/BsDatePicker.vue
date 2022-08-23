@@ -610,25 +610,25 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-datepicker {
-    .#{$prefix}-datepicker-title,
-    .#{$prefix}-picker-year,
-    .#{$prefix}-picker-time {
+.#{$prefix}datepicker {
+    .#{$prefix}datepicker-title,
+    .#{$prefix}picker-year,
+    .#{$prefix}picker-time {
         @include transition($md-transition-stand);
     }
 
-    .#{$prefix}-picker-body {
+    .#{$prefix}picker-body {
         min-height: 260px;
         padding-bottom: $padding-sm + .2;
     }
 
-    .#{$prefix}-datepicker-nav {
+    .#{$prefix}datepicker-nav {
         @include flexbox((display: flex, justify-content: space-between, align-items: center));
         padding: ($padding-base / 4) $padding-base;
         position: relative;
         width: 100%;
 
-        > .#{$prefix}-datepicker-navtext {
+        > .#{$prefix}datepicker-navtext {
             @include flex(1);
             cursor: pointer;
             overflow: hidden;
@@ -643,7 +643,7 @@ export default {
         }
     }
 
-    .#{$prefix}-datepicker-body {
+    .#{$prefix}datepicker-body {
         padding: 0 12px;
         position: relative;
 

@@ -8,7 +8,7 @@ export default defineComponent({
     props: {
         /**
          * Overlay base color.
-         * @type {string|*}
+         * @type {string}
          */
         color: stringProp,
         /**
@@ -18,7 +18,7 @@ export default defineComponent({
         fixed: booleanProp,
         /**
          * Overlay opacity.
-         * @type {string|number|*}
+         * @type {string|number}
          */
         opacity: validStringOrFloatProp,
         /**
@@ -28,7 +28,7 @@ export default defineComponent({
         show: booleanProp,
         /**
          * Overlay inline-css `z-index`.
-         * @type {string|number|*}
+         * @type {string|number}
          */
         zIndex: validStringOrNumberProp,
     },
@@ -39,7 +39,7 @@ export default defineComponent({
         }, {
             default: () => props.show
                 ? h("div", {
-                    class: [`${cssPrefix}-overlay`],
+                    class: [`${cssPrefix}overlay`],
                     style: {
                         'opacity': props.opacity,
                         'background-color': props.color,

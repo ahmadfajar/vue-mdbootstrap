@@ -1,0 +1,159 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+
+.btn {
+    --#{$bs-prefix}btn-padding-y: 0;
+    --#{$bs-prefix}btn-padding-x: 0;
+    --#{$bs-prefix}btn-border-radius: #{$btn-border-radius};
+    position: relative;
+    white-space: normal;
+    word-wrap: break-word;
+
+    &:hover,
+    &:active,
+    &:focus {
+        @include box-shadow($z-depth-1);
+        outline: 0;
+    }
+
+    &.readonly {
+        @include box-shadow(none);
+        cursor: default;
+    }
+
+    &:disabled, &.disabled {
+        @include box-shadow(none);
+        $disabled-bg: lighten($gray-500, 20%);
+        $border-color: lighten($gray-500, 8%);
+        --#{$bs-prefix}btn-disabled-bg: #{$disabled-bg};
+        --#{$bs-prefix}btn-disabled-border-color: #{$border-color};
+        --#{$bs-prefix}btn-disabled-color: #{$gray-700};
+        cursor: default;
+    }
+
+    &.#{$prefix}btn-raised {
+        @include box-shadow($z-depth-1);
+
+        &:hover,
+        &:active,
+        &:focus {
+            @include box-shadow($z-depth-1-half);
+        }
+
+        &:active:focus {
+            @include box-shadow(var(--bs-btn-focus-box-shadow));
+        }
+
+        &.disabled, &:disabled, &.readonly {
+            &:active,
+            &:focus,
+            &:hover {
+                @include box-shadow($z-depth-1);
+            }
+        }
+    }
+
+    > .#{$prefix}ripple {
+        @include display-flex();
+        @include border-radius(var(--#{$bs-prefix}btn-border-radius));
+        padding: 0;
+
+        > .#{$prefix}btn-inner {
+            @include flexbox((display: flex, justify-content: center, align-items: center));
+            padding: .425rem $padding-lg;
+
+            .#{$prefix}icon-left {
+                margin-right: $padding-sm;
+                margin-left: -$padding-sm;
+            }
+
+            .#{$prefix}icon-right {
+                margin-left: $padding-sm;
+                margin-right: -$padding-sm;
+            }
+        }
+
+        &.dropdown-toggle {
+            &::after {
+                @include align-self(center);
+                margin-right: $padding-base - .25;
+            }
+
+            > .#{$prefix}btn-inner {
+                padding: $btn-margin-basic ($padding-base - .2) $btn-margin-basic $padding-lg;
+            }
+        }
+    }
+
+    &.rounded-pill {
+        > .#{$prefix}ripple {
+            @include border-radius($border-radius-pill);
+        }
+    }
+
+    &.btn-xs {
+        --bs-btn-font-size: .75rem;
+
+        .#{$prefix}btn-inner {
+            line-height: 1;
+            padding: $btn-margin-basic ($padding-sm + .25);
+        }
+    }
+
+    &.btn-sm {
+        .#{$prefix}btn-inner {
+            line-height: 1.3;
+            padding: .4rem $padding-base;
+        }
+    }
+
+    &.btn-lg {
+        --#{$bs-prefix}btn-border-radius: #{$btn-border-radius-lg};
+
+        .#{$prefix}btn-inner {
+            padding: $padding-sm $padding-lg;
+        }
+    }
+
+    ~ .btn {
+        margin-left: $padding-sm;
+    }
+}
+
+[class^="btn btn-flat"] {
+    --#{$bs-prefix}btn-border-width: 0;
+    --#{$bs-prefix}btn-border-color: transparent;
+    --#{$bs-prefix}btn-bg: transparent;
+    @include box-shadow(none);
+
+    &:not([disabled]), &:not(.disabled) {
+        &:hover,
+        &:focus,
+        &.active,
+        &:active {
+            @include box-shadow(none);
+        }
+
+        &:active:focus,
+        &.active:focus {
+            @include box-shadow($z-depth-1);
+        }
+
+        &.#{$prefix}btn-raised {
+            @include box-shadow(none);
+
+            &:hover,
+            &:focus,
+            &.active,
+            &:active {
+                @include box-shadow($z-depth-1);
+            }
+
+            &:active:focus,
+            &.active:focus {
+                @include box-shadow($z-depth-1-half);
+            }
+        }
+    }
+}

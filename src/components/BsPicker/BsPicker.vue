@@ -69,7 +69,7 @@ export default {
 @import "../../../scss/variables";
 @import "../../../scss/shared";
 
-.#{$prefix}-picker {
+.#{$prefix}picker {
     @include border-radius($border-radius-base);
     @include flexbox((display:inline-flex, flex-direction: column));
     background-color: $white;
@@ -77,12 +77,12 @@ export default {
     position: relative;
     vertical-align: top;
 
-    > .#{$prefix}-picker-header {
+    > .#{$prefix}picker-header {
         color: $white;
         padding: $padding-base;
     }
 
-    > .#{$prefix}-picker-body {
+    > .#{$prefix}picker-body {
         @include flexbox((display: flex, flex: 1 0 auto, flex-direction: column, align-items: center));
         height: auto;
         overflow: hidden;
@@ -98,7 +98,7 @@ export default {
         }
     }
 
-    > .#{$prefix}-picker-footer {
+    > .#{$prefix}picker-footer {
         @include flexbox((display: flex, align-items: center));
         padding: $padding-sm;
     }
@@ -113,20 +113,20 @@ export default {
         }
     }
 
-    &.#{$prefix}-picker-full {
+    &.#{$prefix}picker-full {
         @include display-flex();
     }
 
-    &.#{$prefix}-picker-landscape {
-        > .#{$prefix}-picker-header {
+    &.#{$prefix}picker-landscape {
+        > .#{$prefix}picker-header {
             @include border-right-radius(0);
             @extend %topleft-h100-absolute;
             width: 200px;
             z-index: 1;
         }
 
-        > .#{$prefix}-picker-body,
-        > .#{$prefix}-picker-footer {
+        > .#{$prefix}picker-body,
+        > .#{$prefix}picker-footer {
             margin-left: 200px
         }
     }

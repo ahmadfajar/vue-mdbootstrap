@@ -1,6 +1,6 @@
 import {defineComponent, h, ref, vModelCheckbox, vModelRadio, withDirectives} from "vue";
 import {booleanProp, booleanTrueProp, defaultColorProp, inputProps, stringProp} from "../../mixins/CommonProps";
-import {useInputItemAttrs, useInputItemClasses, useRenderToggleItemContent} from "./mixins/buttonApi";
+import {useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemContent} from "./mixins/buttonApi";
 import {buttonSize, iconPosition} from "./mixins/buttonProps";
 import {TInputOptionItem, TToggleButtonOptionProps} from "./types";
 import {cssPrefix} from "../../mixins/CommonApi";
@@ -93,23 +93,23 @@ export default defineComponent({
                     class: [
                         "btn-group",
                         props.pill ? "rounded-pill" : "",
-                        props.disabled ? `${cssPrefix}-disabled` : "",
-                        props.readonly ? `${cssPrefix}-readonly` : "",
-                        props.required ? `${cssPrefix}-required` : "",
+                        props.disabled ? `${cssPrefix}disabled` : "",
+                        props.readonly ? `${cssPrefix}readonly` : "",
+                        props.required ? `${cssPrefix}required` : "",
                     ],
                     id: props.id,
                     role: "group",
                 },
-                props.items.map((item: TInputOptionItem, idx: number) => {
+                (props.items as Array<TInputOptionItem>)?.map((item: TInputOptionItem, idx: number) => {
                     return h("label", {
                         key: `btn-${idx}`,
-                        class: useInputItemClasses(item, cmpProps),
+                        class: useMakeInputItemClasses(item, cmpProps),
                     }, [
                         withDirectives(
                             h("input", {
                                 class: "d-none",
                                 value: item.value,
-                                ...useInputItemAttrs(item, cmpProps),
+                                ...useMakeInputItemAttrs(item, cmpProps),
                                 "onUpdate:modelValue": (event: string | number | boolean) => {
                                     if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
                                         localValue.value = event;
@@ -124,7 +124,7 @@ export default defineComponent({
                             ]
                         ),
                         h(BsButtonInner, {
-                            rippleOff: props.disabled || props.readonly
+                            rippleOff: props.disabled || props.readonly || item.disabled && item.readonly
                         }, {
                             default: () => useRenderToggleItemContent(slots, item, cmpProps)
                         })

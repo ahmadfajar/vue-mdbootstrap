@@ -91,7 +91,7 @@ export default defineComponent({
             h('div',
                 {
                     class: {
-                        [`${cssPrefix}-avatar`]: true,
+                        [`${cssPrefix}avatar`]: true,
                         'p-2': useGetCalcSize(cmpProps) > 72,
                         ...useShapeClasses(props.circle, props.rounded),
                     },
@@ -108,7 +108,7 @@ export default defineComponent({
                                     ...useCreateIconProps(cmpProps),
                                 })
                                 : h('span',
-                                    {class: [`${cssPrefix}-avatar-text`]},
+                                    {class: [`${cssPrefix}avatar-text`]},
                                     props.text || '?',
                                 )
                     )

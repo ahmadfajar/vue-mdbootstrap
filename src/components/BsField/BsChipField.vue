@@ -348,15 +348,15 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-chips-field {
-    .#{$prefix}-field-input-wrapper {
+.#{$prefix}chips-field {
+    .#{$prefix}field-input-wrapper {
         @include flex-wrap(wrap);
 
-        .#{$prefix}-chip {
+        .#{$prefix}chip {
             margin: .25rem $padding-sm .25rem 0;
         }
 
-        > .#{$prefix}-field-input {
+        > .#{$prefix}field-input {
             @include flexbox((display: inline-flex, flex: 1 1 0));
             min-width: 125px;
             max-width: 100%;
@@ -364,32 +364,32 @@ export default {
         }
     }
 
-    &.#{$prefix}-floating-label:not(.#{$prefix}-field-outlined) {
-        .#{$prefix}-field-inner {
-            .#{$prefix}-field-label {
+    &.#{$prefix}floating-label:not(.#{$prefix}field-outlined) {
+        .#{$prefix}field-inner {
+            .#{$prefix}field-label {
                 top: 4px;
 
-                &.#{$prefix}-active {
+                &.#{$prefix}active {
                     @include transform(translateY(-22px) scale(.8));
                 }
             }
         }
 
-        &.#{$prefix}-field-filled {
-            .#{$prefix}-field-inner {
+        &.#{$prefix}field-filled {
+            .#{$prefix}field-inner {
                 padding-bottom: 0;
 
-                > .#{$prefix}-field-input-wrapper {
+                > .#{$prefix}field-input-wrapper {
                     margin-top: 1.15rem;
 
                     > input {
                         padding-top: $padding-sm;
                     }
 
-                    > .#{$prefix}-field-label {
+                    > .#{$prefix}field-label {
                         top: 0;
 
-                        &.#{$prefix}-active {
+                        &.#{$prefix}active {
                             @include transform(translateY(-16px) scale(.8));
                         }
                     }

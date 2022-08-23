@@ -32,9 +32,9 @@ export default defineComponent({
         return () => {
             return useCreateSvgNode(
                 [
-                    `${cssPrefix}-svg-inline`,
+                    `${cssPrefix}svg-inline`,
                     "align-self-center",
-                    props.spin ? `${cssPrefix}-spin` : (props.pulse ? `${cssPrefix}-pulse` : ""),
+                    props.spin ? `${cssPrefix}spin` : (props.pulse ? `${cssPrefix}pulse` : ""),
                     props.color ? `text-${props.color}` : "",
                 ],
                 useCircleSizeStyles(props.size as number),

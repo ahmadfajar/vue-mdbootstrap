@@ -444,24 +444,24 @@ export default {
 @import "../../../scss/functions";
 @import "../../../scss/mixins";
 
-.#{$prefix}-list-nav {
-    .#{$prefix}-nav-item {
+.#{$prefix}list-nav {
+    .#{$prefix}nav-item {
         position: relative;
         white-space: nowrap;
         width: 100%;
 
-        > .#{$prefix}-nav-item-inner {
+        > .#{$prefix}nav-item-inner {
             @extend %cursor-pointer;
             display: block;
             outline: 0 none;
             font-size: 1rem;
 
-            > .#{$prefix}-ripple {
+            > .#{$prefix}ripple {
                 height: 48px;
                 line-height: normal;
                 padding: .75rem 0 .75rem $padding-lg;
 
-                > .#{$prefix}-nav-text {
+                > .#{$prefix}nav-text {
                     @include transition(opacity .8s);
                     @include opacity(1);
                     @include flex(1);
@@ -472,7 +472,7 @@ export default {
                     @include transform(rotateZ(0deg));
                 }
 
-                > .#{$prefix}-icon {
+                > .#{$prefix}icon {
                     margin-right: $padding-base;
 
                     &:first-child {
@@ -492,17 +492,17 @@ export default {
             }
         }
 
-        &.#{$prefix}-has-icon {
-            > .#{$prefix}-nav-item-inner {
-                > .#{$prefix}-ripple {
+        &.#{$prefix}has-icon {
+            > .#{$prefix}nav-item-inner {
+                > .#{$prefix}ripple {
                     padding-left: $padding-base;
                 }
             }
         }
 
-        &.#{$prefix}-expanded {
-            > .#{$prefix}-nav-item-inner {
-                > .#{$prefix}-ripple {
+        &.#{$prefix}expanded {
+            > .#{$prefix}nav-item-inner {
+                > .#{$prefix}ripple {
                     > .icon-expand-more {
                         @include transform(rotateZ(-180deg));
                     }
@@ -510,21 +510,21 @@ export default {
             }
         }
 
-        &.#{$prefix}-active {
-            > .#{$prefix}-nav-item-inner {
+        &.#{$prefix}active {
+            > .#{$prefix}nav-item-inner {
                 font-weight: $font-weight-semi-bold;
             }
 
-            &:not(.#{$prefix}-parent) {
-                > .#{$prefix}-nav-item-inner {
+            &:not(.#{$prefix}parent) {
+                > .#{$prefix}nav-item-inner {
                     font-weight: $font-weight-semi-bold;
                 }
             }
         }
     }
 
-    > .#{$prefix}-nav-item {
-        &.#{$prefix}-expanded {
+    > .#{$prefix}nav-item {
+        &.#{$prefix}expanded {
             &:not(:first-child) {
                 border-top: 1px solid $gray-300;
             }
@@ -534,11 +534,11 @@ export default {
             }
         }
 
-        &:not(.#{$prefix}-has-icon) {
-            .#{$prefix}-nav-item {
-                &:not(.#{$prefix}-has-icon) {
-                    > .#{$prefix}-nav-item-inner {
-                        > .#{$prefix}-ripple {
+        &:not(.#{$prefix}has-icon) {
+            .#{$prefix}nav-item {
+                &:not(.#{$prefix}has-icon) {
+                    > .#{$prefix}nav-item-inner {
+                        > .#{$prefix}ripple {
                             padding-left: $padding-base * 2.5;
                         }
                     }
@@ -546,11 +546,11 @@ export default {
             }
         }
 
-        &.#{$prefix}-has-icon {
-            .#{$prefix}-nav-item {
-                &:not(.#{$prefix}-has-icon) {
-                    > .#{$prefix}-nav-item-inner {
-                        > .#{$prefix}-ripple {
+        &.#{$prefix}has-icon {
+            .#{$prefix}nav-item {
+                &:not(.#{$prefix}has-icon) {
+                    > .#{$prefix}nav-item-inner {
+                        > .#{$prefix}ripple {
                             padding-left: $padding-base * 4.5;
                         }
                     }
@@ -560,19 +560,19 @@ export default {
     }
 }
 
-.#{$prefix}-list {
-    &.#{$prefix}-space-both,
-    &.#{$prefix}-space-left,
-    &.#{$prefix}-space-right {
-        > .#{$prefix}-list-nav {
-            .#{$prefix}-nav-item {
-                &:not(.#{$prefix}-parent),
-                &.#{$prefix}-parent:not(.#{$prefix}-expanded) {
+.#{$prefix}list {
+    &.#{$prefix}space-both,
+    &.#{$prefix}space-left,
+    &.#{$prefix}space-right {
+        > .#{$prefix}list-nav {
+            .#{$prefix}nav-item {
+                &:not(.#{$prefix}parent),
+                &.#{$prefix}parent:not(.#{$prefix}expanded) {
                     margin-bottom: 2px;
                     margin-top: 2px;
 
-                    > .#{$prefix}-nav-item-inner {
-                        > .#{$prefix}-ripple {
+                    > .#{$prefix}nav-item-inner {
+                        > .#{$prefix}ripple {
                             height: 46px;
                         }
                     }
@@ -581,19 +581,19 @@ export default {
         }
     }
 
-    &.#{$prefix}-space-both,
-    &.#{$prefix}-space-left {
-        > .#{$prefix}-list-nav {
-            .#{$prefix}-nav-item-inner {
+    &.#{$prefix}space-both,
+    &.#{$prefix}space-left {
+        > .#{$prefix}list-nav {
+            .#{$prefix}nav-item-inner {
                 margin-left: 6px;
             }
 
-            > .#{$prefix}-nav-item {
-                &.#{$prefix}-has-icon {
-                    .#{$prefix}-nav-item {
-                        &:not(.#{$prefix}-has-icon) {
-                            > .#{$prefix}-nav-item-inner {
-                                > .#{$prefix}-ripple {
+            > .#{$prefix}nav-item {
+                &.#{$prefix}has-icon {
+                    .#{$prefix}nav-item {
+                        &:not(.#{$prefix}has-icon) {
+                            > .#{$prefix}nav-item-inner {
+                                > .#{$prefix}ripple {
                                     padding-left: 66px;
                                 }
                             }
@@ -602,10 +602,10 @@ export default {
                 }
             }
 
-            .#{$prefix}-nav-item {
-                &.#{$prefix}-has-icon {
-                    > .#{$prefix}-nav-item-inner {
-                        > .#{$prefix}-ripple {
+            .#{$prefix}nav-item {
+                &.#{$prefix}has-icon {
+                    > .#{$prefix}nav-item-inner {
+                        > .#{$prefix}ripple {
                             padding-left: 10px;
                         }
                     }
@@ -614,16 +614,16 @@ export default {
         }
     }
 
-    &.#{$prefix}-space-both,
-    &.#{$prefix}-space-right {
-        > .#{$prefix}-list-nav {
-            .#{$prefix}-nav-item-inner {
+    &.#{$prefix}space-both,
+    &.#{$prefix}space-right {
+        > .#{$prefix}list-nav {
+            .#{$prefix}nav-item-inner {
                 margin-right: 6px;
             }
 
-            .#{$prefix}-nav-item {
-                > .#{$prefix}-nav-item-inner {
-                    > .#{$prefix}-ripple {
+            .#{$prefix}nav-item {
+                > .#{$prefix}nav-item-inner {
+                    > .#{$prefix}ripple {
                         > .icon-expand-more {
                             margin-right: 10px;
                         }
@@ -633,18 +633,18 @@ export default {
         }
     }
 
-    &.#{$prefix}-border-left,
-    &.#{$prefix}-border-right,
-    &.#{$prefix}-border-left-right,
-    &.#{$prefix}-border-top,
-    &.#{$prefix}-border-bottom,
-    &.#{$prefix}-border-top-bottom {
-        > .#{$prefix}-list-nav {
-            .#{$prefix}-nav-item {
-                &.#{$prefix}-active {
-                    &:not(.#{$prefix}-parent) {
-                        > .#{$prefix}-nav-item-inner {
-                            > .#{$prefix}-ripple {
+    &.#{$prefix}border-left,
+    &.#{$prefix}border-right,
+    &.#{$prefix}border-left-right,
+    &.#{$prefix}border-top,
+    &.#{$prefix}border-bottom,
+    &.#{$prefix}border-top-bottom {
+        > .#{$prefix}list-nav {
+            .#{$prefix}nav-item {
+                &.#{$prefix}active {
+                    &:not(.#{$prefix}parent) {
+                        > .#{$prefix}nav-item-inner {
+                            > .#{$prefix}ripple {
                                 &:before,
                                 &:after {
                                     content: " ";
@@ -659,14 +659,14 @@ export default {
         }
     }
 
-    &.#{$prefix}-border-left,
-    &.#{$prefix}-border-left-right {
-        > .#{$prefix}-list-nav {
-            .#{$prefix}-nav-item {
-                &.#{$prefix}-active {
-                    &:not(.#{$prefix}-parent) {
-                        > .#{$prefix}-nav-item-inner {
-                            > .#{$prefix}-ripple {
+    &.#{$prefix}border-left,
+    &.#{$prefix}border-left-right {
+        > .#{$prefix}list-nav {
+            .#{$prefix}nav-item {
+                &.#{$prefix}active {
+                    &:not(.#{$prefix}parent) {
+                        > .#{$prefix}nav-item-inner {
+                            > .#{$prefix}ripple {
                                 &:before {
                                     background: $sidebar-item-active-bgcolor;
                                     left: 0;
@@ -682,14 +682,14 @@ export default {
         }
     }
 
-    &.#{$prefix}-border-right,
-    &.#{$prefix}-border-left-right {
-        > .#{$prefix}-list-nav {
-            .#{$prefix}-nav-item {
-                &.#{$prefix}-active {
-                    &:not(.#{$prefix}-parent) {
-                        > .#{$prefix}-nav-item-inner {
-                            > .#{$prefix}-ripple {
+    &.#{$prefix}border-right,
+    &.#{$prefix}border-left-right {
+        > .#{$prefix}list-nav {
+            .#{$prefix}nav-item {
+                &.#{$prefix}active {
+                    &:not(.#{$prefix}parent) {
+                        > .#{$prefix}nav-item-inner {
+                            > .#{$prefix}ripple {
                                 &:after {
                                     background: $sidebar-item-active-bgcolor;
                                     right: 0;
@@ -705,14 +705,14 @@ export default {
         }
     }
 
-    &.#{$prefix}-border-top,
-    &.#{$prefix}-border-top-bottom {
-        > .#{$prefix}-list-nav {
-            .#{$prefix}-nav-item {
-                &.#{$prefix}-active {
-                    &:not(.#{$prefix}-parent) {
-                        > .#{$prefix}-nav-item-inner {
-                            > .#{$prefix}-ripple {
+    &.#{$prefix}border-top,
+    &.#{$prefix}border-top-bottom {
+        > .#{$prefix}list-nav {
+            .#{$prefix}nav-item {
+                &.#{$prefix}active {
+                    &:not(.#{$prefix}parent) {
+                        > .#{$prefix}nav-item-inner {
+                            > .#{$prefix}ripple {
                                 &:before {
                                     background: $sidebar-item-active-bgcolor;
                                     left: 0;
@@ -728,14 +728,14 @@ export default {
         }
     }
 
-    &.#{$prefix}-border-bottom,
-    &.#{$prefix}-border-top-bottom {
-        > .#{$prefix}-list-nav {
-            .#{$prefix}-nav-item {
-                &.#{$prefix}-active {
-                    &:not(.#{$prefix}-parent) {
-                        > .#{$prefix}-nav-item-inner {
-                            > .#{$prefix}-ripple {
+    &.#{$prefix}border-bottom,
+    &.#{$prefix}border-top-bottom {
+        > .#{$prefix}list-nav {
+            .#{$prefix}nav-item {
+                &.#{$prefix}active {
+                    &:not(.#{$prefix}parent) {
+                        > .#{$prefix}nav-item-inner {
+                            > .#{$prefix}ripple {
                                 &:after {
                                     background: $sidebar-item-active-bgcolor;
                                     left: 0;

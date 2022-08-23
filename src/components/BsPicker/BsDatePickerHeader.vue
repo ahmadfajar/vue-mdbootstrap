@@ -117,13 +117,13 @@ export default {
 @import "../../../scss/variables";
 @import "../../../scss/shared";
 
-.#{$prefix}-datepicker-header {
+.#{$prefix}datepicker-header {
     display: block;
     line-height: 1;
 
-    .#{$prefix}-picker-year,
-    .#{$prefix}-picker-time,
-    .#{$prefix}-picker-title {
+    .#{$prefix}picker-year,
+    .#{$prefix}picker-time,
+    .#{$prefix}picker-title {
         &:not(.active) {
             @include opacity(.6);
             @extend %cursor-pointer;
@@ -134,7 +134,7 @@ export default {
         }
     }
 
-    .#{$prefix}-datepicker-header-inner {
+    .#{$prefix}datepicker-header-inner {
         @include transition($md-transition-stand);
 
         &:first-child {
@@ -143,7 +143,7 @@ export default {
             margin-bottom: $padding-base / 4;
         }
 
-        &.#{$prefix}-picker-title {
+        &.#{$prefix}picker-title {
             font-size: 1.8rem;
             font-weight: $font-weight-semi-bold;
             line-height: normal;

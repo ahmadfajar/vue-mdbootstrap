@@ -3,9 +3,9 @@ import {cssPrefix} from "../../mixins/CommonApi";
 
 export default function bsWave() {
     return h(Transition, {
-        name: `${cssPrefix}-ripple`,
+        name: `${cssPrefix}ripple`,
         appear: true,
     }, {
-        default: () => h("span", {class: `${cssPrefix}-ripple-wave`}),
+        default: () => h("span", {class: `${cssPrefix}ripple-wave`}),
     })
 }

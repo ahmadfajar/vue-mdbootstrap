@@ -31,20 +31,20 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-sidebar,
-.#{$prefix}-side-drawer {
-    > .#{$prefix}-sidebar-inner,
-    > .#{$prefix}-side-drawer-inner {
-        > .#{$prefix}-sidebar-footer {
+.#{$prefix}sidebar,
+.#{$prefix}side-drawer {
+    > .#{$prefix}sidebar-inner,
+    > .#{$prefix}side-drawer-inner {
+        > .#{$prefix}sidebar-footer {
             @include box-shadow(0 1px 0 rgba(50, 50, 50, .1) inset);
             @include transform(translate(0, 0));
             padding: 0;
 
-            > .#{$prefix}-list-tile {
+            > .#{$prefix}list-tile {
                 padding: $padding-sm ($padding-base - .2);
                 position: relative;
 
-                > .#{$prefix}-list-tile-content {
+                > .#{$prefix}list-tile-content {
                     @include transition($transition-duration-base $md-transition-default-timing);
                 }
             }
@@ -57,11 +57,11 @@ export default {
         }
     }
 
-    &.#{$prefix}-mini {
-        > .#{$prefix}-sidebar-inner,
-        > .#{$prefix}-side-drawer-inner {
-            > .#{$prefix}-sidebar-footer {
-                .#{$prefix}-list-tile-content {
+    &.#{$prefix}mini {
+        > .#{$prefix}sidebar-inner,
+        > .#{$prefix}side-drawer-inner {
+            > .#{$prefix}sidebar-footer {
+                .#{$prefix}list-tile-content {
                     margin-left: -240px;
                 }
 

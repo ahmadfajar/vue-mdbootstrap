@@ -83,22 +83,22 @@ export default {
 @import "../../../scss/variables";
 @import "../../../scss/mixins";
 
-.#{$prefix}-switch {
+.#{$prefix}switch {
     @include display-flex();
     position: relative;
 
-    &:not(.#{$prefix}-disabled):not(.#{$prefix}-readonly) {
-        > .#{$prefix}-switch-label,
-        > .#{$prefix}-switch-content {
+    &:not(.#{$prefix}disabled):not(.#{$prefix}readonly) {
+        > .#{$prefix}switch-label,
+        > .#{$prefix}switch-content {
             cursor: pointer;
         }
     }
 
-    > .#{$prefix}-switch-content {
+    > .#{$prefix}switch-content {
         display: inline-flex;
         margin: $md-switch-margin;
 
-        > .#{$prefix}-switch-inner {
+        > .#{$prefix}switch-inner {
             @include display-flex();
             @include border-radius($md-switch-height);
             @include transition($md-transition-stand);
@@ -110,7 +110,7 @@ export default {
             align-items: center;
             position: relative;
 
-            > .#{$prefix}-switch-thumb {
+            > .#{$prefix}switch-thumb {
                 @include border-radius($border-radius-circle);
                 @include transition($md-transition-stand);
                 @include box-shadow($md-switch-shadows);
@@ -130,7 +130,7 @@ export default {
                     z-index: 11;
                 }
 
-                .#{$prefix}-ripple {
+                .#{$prefix}ripple {
                     @include border-radius($border-radius-circle);
                     @include transform(translate(-50%, -50%));
                     height: $md-switch-touch-size !important;
@@ -149,30 +149,30 @@ export default {
         }
     }
 
-    .#{$prefix}-switch-label {
+    .#{$prefix}switch-label {
         @include user-select(none);
         margin-bottom: 0;
         position: relative;
         padding-left: 0;
         padding-top: $padding-base - .6;
 
-        &.#{$prefix}-label-left {
+        &.#{$prefix}label-left {
             padding-right: $padding-base + .25;
             margin-right: $padding-sm;
         }
 
-        &.#{$prefix}-label-right {
+        &.#{$prefix}label-right {
             padding-left: $padding-base + .25;;
         }
     }
 
-    &.#{$prefix}-checked {
-        .#{$prefix}-switch-thumb {
+    &.#{$prefix}checked {
+        .#{$prefix}switch-thumb {
             @include transform(translate3d(15px, 0, 0));
         }
     }
 
-    &.#{$prefix}-required {
+    &.#{$prefix}required {
         label:after {
             @include transform(translateX(calc(100% + 2px)));
             content: "*";
@@ -184,11 +184,11 @@ export default {
         }
     }
 
-    &.#{$prefix}-disabled {
-        > .#{$prefix}-switch-inner {
+    &.#{$prefix}disabled {
+        > .#{$prefix}switch-inner {
             background-color: $grey-lighten-2;
 
-            > .#{$prefix}-switch-thumb {
+            > .#{$prefix}switch-thumb {
                 @include box-shadow(0 2px 1px -1px rgba(#000, .2), 0 1px 1px 0 rgba(#000, .14), 0 1px 3px 0 rgba(#000, .12));
                 background-color: $grey-lighten-1;
             }

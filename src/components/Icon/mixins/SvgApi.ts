@@ -11,16 +11,16 @@ function googleIconUrl(theme: string | undefined, icon: string, version: number)
 
 // function useSvgClasses(props) {
 //     return [
-//         `${cssPrefix}-svg-inline`, 'mx-auto',
+//         `${cssPrefix}svg-inline`, 'mx-auto',
 //         {
-//             [`${cssPrefix}-icon-spin`]: props.spin,
-//             [`${cssPrefix}-icon-pulse`]: props.pulse,
-//             [`${cssPrefix}-flip-both`]: props.flip === 'both',
-//             [`${cssPrefix}-flip-vertical`]: props.flip === 'vertical',
-//             [`${cssPrefix}-flip-horizontal`]: props.flip === 'horizontal',
-//             [`${cssPrefix}-rotate-90`]: props.rotate && parseInt(String(props.rotate), 10) === 90,
-//             [`${cssPrefix}-rotate-180`]: props.rotate && parseInt(String(props.rotate), 10) === 180,
-//             [`${cssPrefix}-rotate-270`]: props.rotate && parseInt(String(props.rotate), 10) === 270,
+//             [`${cssPrefix}icon-spin`]: props.spin,
+//             [`${cssPrefix}icon-pulse`]: props.pulse,
+//             [`${cssPrefix}flip-both`]: props.flip === 'both',
+//             [`${cssPrefix}flip-vertical`]: props.flip === 'vertical',
+//             [`${cssPrefix}flip-horizontal`]: props.flip === 'horizontal',
+//             [`${cssPrefix}rotate-90`]: props.rotate && parseInt(String(props.rotate), 10) === 90,
+//             [`${cssPrefix}rotate-180`]: props.rotate && parseInt(String(props.rotate), 10) === 180,
+//             [`${cssPrefix}rotate-270`]: props.rotate && parseInt(String(props.rotate), 10) === 270,
 //         },
 //     ];
 // }

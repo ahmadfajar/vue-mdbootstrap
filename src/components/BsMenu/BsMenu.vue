@@ -174,12 +174,12 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-menu {
+.#{$prefix}menu {
     display: inline-block;
     position: relative;
     vertical-align: middle;
 
-    .#{$prefix}-menu-activator {
+    .#{$prefix}menu-activator {
         @include align-items(center);
         cursor: pointer;
         height: 100%;
@@ -196,29 +196,29 @@ export default {
     }
 }
 
-.#{$prefix}-menu-popover {
+.#{$prefix}menu-popover {
     @include border-radius($border-radius-base);
 
-    > .#{$prefix}-list {
+    > .#{$prefix}list {
         @include border-radius($border-radius-base);
 
-        .#{$prefix}-list-tile {
-            > .#{$prefix}-ripple {
+        .#{$prefix}list-tile {
+            > .#{$prefix}ripple {
                 min-height: 24px;
             }
         }
 
-        .#{$prefix}-divider {
+        .#{$prefix}divider {
             margin-bottom: 3px;
             margin-top: 3px;
         }
     }
 }
 
-.#{$prefix}-menu-toggle-icon {
+.#{$prefix}menu-toggle-icon {
     transition: transform .3s cubic-bezier(.23, 1, .32, 1);
 
-    .#{$prefix}-open & {
+    .#{$prefix}open & {
         transform: rotate(180deg);
     }
 }

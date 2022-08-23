@@ -48,7 +48,7 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-content-wrap {
+.#{$prefix}content-wrap {
     @include flex(1 1 auto);
     max-width: 100%;
     position: relative;

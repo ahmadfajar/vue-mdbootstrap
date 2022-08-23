@@ -499,7 +499,7 @@ export default {
         pointer-events: none;
     }
 
-    .#{$prefix}-ripple {
+    .#{$prefix}ripple {
         @include border-radius($border-radius-circle);
         width: 2.375rem; // 38px;
         height: 2.375rem;
@@ -508,7 +508,7 @@ export default {
     &.btn-xs {
         line-height: 1.5rem; // 24px;
 
-        .#{$prefix}-ripple {
+        .#{$prefix}ripple {
             width: 100%;   // 1.5rem;
             height: 100%;  // 1.5rem;
         }
@@ -517,7 +517,7 @@ export default {
     &.btn-sm {
         line-height: 2rem; // 32px;
 
-        .#{$prefix}-ripple {
+        .#{$prefix}ripple {
             width: 2rem;
             height: 2rem;
         }
@@ -526,13 +526,13 @@ export default {
     &.btn-lg {
         line-height: 3.5rem; // 56px;
 
-        .#{$prefix}-ripple {
+        .#{$prefix}ripple {
             width: 3.5rem;
             height: 3.5rem;
         }
     }
 
-    .#{$prefix}-ripple-enter-active {
+    .#{$prefix}ripple-enter-active {
         @include transition-duration(1.2s);
     }
 }
@@ -544,7 +544,7 @@ export default {
 }
 
 .btn, .btn-floating, .btn-icon {
-    .#{$prefix}-ripple {
+    .#{$prefix}ripple {
         @include flexbox((display: flex, justify-content: center, align-items: center));
         padding: 0;
     }

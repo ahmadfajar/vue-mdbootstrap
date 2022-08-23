@@ -54,16 +54,16 @@ export default defineComponent({
         },
         svgClasses() {
             return [
-                `${cssPrefix}-svg-inline`, 'mx-auto',
+                `${cssPrefix}svg-inline`, 'mx-auto',
                 {
-                    [`${cssPrefix}-spin`]: this.spin,
-                    [`${cssPrefix}-pulse`]: this.pulse,
-                    [`${cssPrefix}-flip-both`]: this.flip === 'both',
-                    [`${cssPrefix}-flip-vertical`]: this.flip === 'vertical',
-                    [`${cssPrefix}-flip-horizontal`]: this.flip === 'horizontal',
-                    [`${cssPrefix}-rotate-90`]: this.rotate && parseInt(String(this.rotate), 10) === 90,
-                    [`${cssPrefix}-rotate-180`]: this.rotate && parseInt(String(this.rotate), 10) === 180,
-                    [`${cssPrefix}-rotate-270`]: this.rotate && parseInt(String(this.rotate), 10) === 270,
+                    [`${cssPrefix}spin`]: this.spin,
+                    [`${cssPrefix}pulse`]: this.pulse,
+                    [`${cssPrefix}flip-both`]: this.flip === 'both',
+                    [`${cssPrefix}flip-vertical`]: this.flip === 'vertical',
+                    [`${cssPrefix}flip-horizontal`]: this.flip === 'horizontal',
+                    [`${cssPrefix}rotate-90`]: this.rotate && parseInt(String(this.rotate), 10) === 90,
+                    [`${cssPrefix}rotate-180`]: this.rotate && parseInt(String(this.rotate), 10) === 180,
+                    [`${cssPrefix}rotate-270`]: this.rotate && parseInt(String(this.rotate), 10) === 270,
                 },
             ];
         }

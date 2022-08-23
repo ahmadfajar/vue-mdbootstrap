@@ -3,7 +3,7 @@ import {booleanProp, booleanTrueProp, defaultColorProp, stringProp} from "../../
 import {width as iconSize} from "../Icon/mixins/IconApi";
 import {flip as iconFlip, rotate as iconRotation} from "../Icon/mixins/SvgProps";
 import {buttonMode, buttonSize, buttonType, iconPosition} from "./mixins/buttonProps";
-import {useButtonProps, useRenderButtonContent} from "./mixins/buttonApi";
+import {useMakeButtonProps, useRenderButtonContent} from "./mixins/buttonApi";
 import {TButtonOptionProps} from "./types";
 import BsButtonInner from "./BsButtonInner";
 import Helper from "../../utils/Helper";
@@ -89,7 +89,7 @@ export default defineComponent({
          */
         icon: stringProp,
         /**
-         * Place icon at `left` (before text) or at `right` (after text).
+         * Place icon on the `left` side (before text) or on the `right` side (after text).
          * @type {string}
          */
         iconPosition,
@@ -143,9 +143,8 @@ export default defineComponent({
             }
             return null;
         });
-        const hasIcon = computed<boolean>(() => {
-            return props.icon && !Helper.isEmpty(props.icon) &&
-                (props.mode === 'icon' || props.mode === 'floating');
+        const hasIcon = computed<boolean>((): boolean => {
+            return (!Helper.isEmpty(props.icon) || (slots.icon !== undefined));
         });
         const isDisabled = computed<boolean>(() => props.disabled && Helper.isEmpty(props.href));
         const rippleWorks = computed<boolean>(() => !props.rippleOff && !isDisabled.value);
@@ -153,7 +152,7 @@ export default defineComponent({
 
         return () => {
             return h(tagName.value, {
-                ...useButtonProps(
+                ...useMakeButtonProps(
                     cmpProps,
                     isDisabled.value, buttonType.value,
                 ),
@@ -162,9 +161,10 @@ export default defineComponent({
                 h(BsButtonInner, {
                     dropdownToggle: props.dropdownToggle,
                     iconMode: props.mode === 'icon',
+                    hasIcon: hasIcon.value,
                     rippleOff: !rippleWorks.value,
                 }, {
-                    default: () => useRenderButtonContent(slots, hasIcon.value, cmpProps)
+                    default: () => useRenderButtonContent(slots, cmpProps)
                 }),
             ]);
         }

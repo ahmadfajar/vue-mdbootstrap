@@ -94,7 +94,7 @@ export default defineComponent({
                 default: () => {
                     return props.show
                         ? h("div", {
-                            class: [`${cssPrefix}-mask-loader`],
+                            class: [`${cssPrefix}mask-loader`],
                             style: {
                                 'position': props.fixedPosition ? 'fixed' : null,
                                 'z-index': props.zIndex

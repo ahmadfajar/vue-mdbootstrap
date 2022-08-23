@@ -250,7 +250,7 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-popover {
+.#{$prefix}popover {
     position: fixed;
     max-height: 100%;
     max-width: 80%;

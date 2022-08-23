@@ -2,7 +2,7 @@
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-divider {
+.#{$prefix}divider {
     background-color: rgba($black, 0.2);
     border: none;
     display: block;
@@ -20,15 +20,15 @@
     }
 }
 
-.#{$prefix}-img-holder {
+.#{$prefix}img-holder {
     user-select: none;
 }
 
-.#{$prefix}-anchor-center {
+.#{$prefix}anchor-center {
     text-anchor: middle;
 }
 
-.#{$prefix}-subheader {
+.#{$prefix}subheader {
     @include flexbox((display: flex, align-items: center));
     font-size: 1rem;
     font-weight: normal;

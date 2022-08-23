@@ -257,7 +257,7 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-side-drawer {
+.#{$prefix}side-drawer {
     @include box-sizing(border-box);
     @include box-shadow(0px 0px 10px 0 rgba(0, 0, 0, .6));
     @include transition($md-transition-default);
@@ -266,22 +266,22 @@ export default {
     position: fixed;
     z-index: $zindex-fixed;
 
-    &.#{$prefix}-close {
+    &.#{$prefix}close {
         @include box-shadow(none);
     }
 
-    > .#{$prefix}-side-drawer-inner {
+    > .#{$prefix}side-drawer-inner {
         @include flexbox((display:flex, flex-direction: column));
         height: 100%;
         overflow: hidden;
         position: relative;
 
-        > .#{$prefix}-list {
-            &.#{$prefix}-space-both,
-            &.#{$prefix}-space-left,
-            &.#{$prefix}-space-right {
-                > .#{$prefix}-list-tile {
-                    &.active, &.#{$prefix}-active {
+        > .#{$prefix}list {
+            &.#{$prefix}space-both,
+            &.#{$prefix}space-left,
+            &.#{$prefix}space-right {
+                > .#{$prefix}list-tile {
+                    &.active, &.#{$prefix}active {
                         @include border-radius($border-radius);
                     }
                 }
@@ -304,15 +304,15 @@ export default {
         border-bottom: 1px solid rgba(200, 200, 200, 0.16);
     }
 
-    .#{$prefix}-list-nav {
-        .#{$prefix}-nav-item {
-            &:not(.#{$prefix}-parent),
-            &.#{$prefix}-parent:not(.#{$prefix}-expanded) {
+    .#{$prefix}list-nav {
+        .#{$prefix}nav-item {
+            &:not(.#{$prefix}parent),
+            &.#{$prefix}parent:not(.#{$prefix}expanded) {
                 margin-bottom: 2px;
                 margin-top: 2px;
 
-                > .#{$prefix}-nav-item-inner {
-                    > .#{$prefix}-ripple {
+                > .#{$prefix}nav-item-inner {
+                    > .#{$prefix}ripple {
                         height: 46px;
                     }
                 }

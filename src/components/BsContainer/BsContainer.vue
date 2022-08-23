@@ -97,7 +97,7 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-container-wrap {
+.#{$prefix}container-wrap {
     @include transition($transition-duration-base $md-transition-default-timing);
     @include flexbox((display: flex, flex: 1 0 auto));
     max-width: 100%;

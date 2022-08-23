@@ -14,28 +14,28 @@
     @extend %opacity-100;
 }
 
-.#{$prefix}-link {
+.#{$prefix}link {
     @extend %cursor-pointer;
 }
 
-.#{$prefix}-disabled {
+.#{$prefix}disabled {
     @include user-select(none);
     color: rgba($black, .3) !important;
     cursor: default !important;
 }
 
-.#{$prefix}-fw-bold {
+.#{$prefix}fw-bold {
     font-weight: $font-weight-bold !important;
 }
 
-.#{$prefix}-fw-bolder {
+.#{$prefix}fw-bolder {
     font-weight: $font-weight-boldest !important;
 }
 
-.#{$prefix}-fw-semibold {
+.#{$prefix}fw-semibold {
     font-weight: $font-weight-semi-bold !important;
 }
 
-.#{$prefix}-fw-light {
+.#{$prefix}fw-light {
     font-weight: $font-weight-light !important;
 }

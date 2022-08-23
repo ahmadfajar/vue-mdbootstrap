@@ -32,7 +32,7 @@ export default defineComponent({
         return () => useSimpleRenderWithSlots(
             "hr", null,
             [
-                `${cssPrefix}-divider`,
+                `${cssPrefix}divider`,
                 props.dark ? "divider--dark" : "divider--light"
             ], {
                 marginLeft: props.leftIndent ? Helper.sizeUnit(props.leftIndent) : null,

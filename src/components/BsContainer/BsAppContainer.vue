@@ -80,13 +80,13 @@ body {
     padding: 0;
 }
 
-.#{$prefix}-application-wrap {
+.#{$prefix}application-wrap {
     @include backface-visibility();
     @include flexbox((display: flex, flex: 1 1 auto, flex-direction: column));
     max-width: 100%;
     position: relative;
 
-    &.#{$prefix}-viewport-height {
+    &.#{$prefix}viewport-height {
         min-height: 100vh;
     }
 }

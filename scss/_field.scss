@@ -3,44 +3,44 @@
 @import "variables";
 @import "mixins";
 
-.#{$prefix}-field,
-.#{$prefix}-textarea {
+.#{$prefix}field,
+.#{$prefix}textarea {
     position: relative;
 
-    &.#{$prefix}-required {
-        .#{$prefix}-field-label,
+    &.#{$prefix}required {
+        .#{$prefix}field-label,
         .col-form-label {
             font-weight: bold;
         }
     }
 
-    > .#{$prefix}-field-wrapper {
+    > .#{$prefix}field-wrapper {
         @include flexbox((display: flex, flex-grow: 1, flex-basis: 0));
         margin-left: 15px;
         margin-right: 15px;
         max-width: 100%;
 
-        .#{$prefix}-prepend-icon,
-        .#{$prefix}-action-icon,
-        .#{$prefix}-append-icon {
+        .#{$prefix}prepend-icon,
+        .#{$prefix}action-icon,
+        .#{$prefix}append-icon {
             color: $gray-700;
             display: inline;
             font-size: 1rem;
             min-width: 1.5rem;
             text-align: center;
 
-            > .#{$prefix}-icon-text {
+            > .#{$prefix}icon-text {
                 color: $gray-500;
                 font-size: .88rem;
                 white-space: nowrap;
             }
         }
 
-        > .#{$prefix}-field-ctrl {
+        > .#{$prefix}field-ctrl {
             @include flexbox((display: flex, flex-grow: 1, flex-direction: column));
             max-width: 100%;
 
-            > .#{$prefix}-field-inner {
+            > .#{$prefix}field-inner {
                 @include flexbox((display: flex, flex: 1 1 auto));
                 border-bottom: 1px solid $gray-500;
                 position: relative;
@@ -50,14 +50,14 @@
                     border-color: rgba($black, .65);
                 }
 
-                > .#{$prefix}-field-input-wrapper {
+                > .#{$prefix}field-input-wrapper {
                     @include flexbox((display: flex, flex: 1 1 auto, flex-basis: 0));
                     position: relative;
                     width: 100%;
                 }
             }
 
-            > .#{$prefix}-help-text {
+            > .#{$prefix}help-text {
                 display: block;
                 height: 18px;
                 margin-top: 4px;
@@ -69,8 +69,8 @@
         }
     }
 
-    &:not(.#{$prefix}-field-outlined) {
-        .#{$prefix}-field-inner {
+    &:not(.#{$prefix}field-outlined) {
+        .#{$prefix}field-inner {
             &:after {
                 @include transition($transition-basic);
                 background-color: $blue-darken-2;
@@ -84,21 +84,21 @@
         }
     }
 
-    &.#{$prefix}-field-flat {
-        > .#{$prefix}-field-wrapper {
-            > .#{$prefix}-field-ctrl {
-                > .#{$prefix}-field-inner {
+    &.#{$prefix}field-flat {
+        > .#{$prefix}field-wrapper {
+            > .#{$prefix}field-ctrl {
+                > .#{$prefix}field-inner {
                     border-bottom-color: transparent;
                 }
             }
         }
     }
 
-    &.#{$prefix}-floating-label {
+    &.#{$prefix}floating-label {
         padding-top: 0.625rem;
 
-        .#{$prefix}-field-inner {
-            .#{$prefix}-field-label {
+        .#{$prefix}field-inner {
+            .#{$prefix}field-label {
                 @include transition(0.3s cubic-bezier(0.25, 0.8, 0.5, 1));
                 @include transform-origin(top left, false);
                 display: inline-block;
@@ -117,28 +117,28 @@
                     margin-bottom: 0;
                 }
 
-                &.#{$prefix}-active {
+                &.#{$prefix}active {
                     color: darken($gray-600, 5%);
                 }
 
-                &.#{$prefix}-focused {
+                &.#{$prefix}focused {
                     color: $blue-darken-2;
                 }
             }
         }
 
-        &.#{$prefix}-disabled {
-            .#{$prefix}-field-inner {
-                .#{$prefix}-field-label {
+        &.#{$prefix}disabled {
+            .#{$prefix}field-inner {
+                .#{$prefix}field-label {
                     color: rgba($black, .3) !important;
                 }
             }
         }
     }
 
-    &.#{$prefix}-focused {
-        &:not(.#{$prefix}-field-outlined):not(.#{$prefix}-field-flat) {
-            .#{$prefix}-field-inner {
+    &.#{$prefix}focused {
+        &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-flat) {
+            .#{$prefix}field-inner {
                 &:after {
                     left: 0;
                     width: 100%;
@@ -146,10 +146,10 @@
             }
         }
 
-        .#{$prefix}-field-wrapper {
-            .#{$prefix}-prepend-icon,
-            .#{$prefix}-append-icon,
-            .#{$prefix}-toggle-icon {
+        .#{$prefix}field-wrapper {
+            .#{$prefix}prepend-icon,
+            .#{$prefix}append-icon,
+            .#{$prefix}toggle-icon {
                 color: $blue-darken-2;
             }
         }
@@ -160,12 +160,12 @@
             color: $danger-color-dark !important;
         }
 
-        > .#{$prefix}-field-wrapper {
-            > .#{$prefix}-field-ctrl {
-                > .#{$prefix}-field-inner {
+        > .#{$prefix}field-wrapper {
+            > .#{$prefix}field-ctrl {
+                > .#{$prefix}field-inner {
                     border-bottom-color: $red-darken-3 !important;
 
-                    .#{$prefix}-field-label {
+                    .#{$prefix}field-label {
                         color: $danger-color-dark !important;
                     }
 
@@ -175,9 +175,9 @@
                 }
             }
 
-            .#{$prefix}-prepend-icon,
-            .#{$prefix}-append-icon,
-            .#{$prefix}-toggle-icon {
+            .#{$prefix}prepend-icon,
+            .#{$prefix}append-icon,
+            .#{$prefix}toggle-icon {
                 color: $danger-color-dark;
             }
         }
@@ -188,29 +188,29 @@
             color: $success-color-dark !important;
         }
 
-        > .#{$prefix}-field-wrapper {
-            > .#{$prefix}-field-ctrl {
-                > .#{$prefix}-field-inner {
+        > .#{$prefix}field-wrapper {
+            > .#{$prefix}field-ctrl {
+                > .#{$prefix}field-inner {
                     border-bottom-color: $green-darken-4 !important;
 
-                    .#{$prefix}-field-label {
+                    .#{$prefix}field-label {
                         color: $success-color-dark !important;
                     }
                 }
             }
 
-            .#{$prefix}-prepend-icon,
-            .#{$prefix}-append-icon,
-            .#{$prefix}-toggle-icon {
+            .#{$prefix}prepend-icon,
+            .#{$prefix}append-icon,
+            .#{$prefix}toggle-icon {
                 color: $success-color-dark;
             }
         }
     }
 
-    &.#{$prefix}-field-filled {
-        > .#{$prefix}-field-wrapper {
-            > .#{$prefix}-field-ctrl {
-                > .#{$prefix}-field-inner {
+    &.#{$prefix}field-filled {
+        > .#{$prefix}field-wrapper {
+            > .#{$prefix}field-ctrl {
+                > .#{$prefix}field-inner {
                     @include border-top-radius(.4rem);
                     background-color: rgba($black, .03);
                     border-color: $grey-base;
@@ -222,37 +222,37 @@
                         border-color: rgba($black, .65);
                     }
 
-                    > .#{$prefix}-action-icon:last-child,
-                    > .#{$prefix}-append-icon {
+                    > .#{$prefix}action-icon:last-child,
+                    > .#{$prefix}append-icon {
                         margin-right: -.25rem;
                     }
                 }
 
-                > .#{$prefix}-help-text {
+                > .#{$prefix}help-text {
                     margin-left: $padding-base;
                     margin-right: $padding-base;
                 }
             }
         }
 
-        &.#{$prefix}-focused {
-            > .#{$prefix}-field-wrapper {
-                > .#{$prefix}-field-ctrl {
-                    > .#{$prefix}-field-inner {
+        &.#{$prefix}focused {
+            > .#{$prefix}field-wrapper {
+                > .#{$prefix}field-ctrl {
+                    > .#{$prefix}field-inner {
                         background-color: rgba($black, .12);
                     }
                 }
             }
         }
 
-        &.#{$prefix}-floating-label {
+        &.#{$prefix}floating-label {
             padding-top: $padding-sm;
 
-            .#{$prefix}-field-inner {
+            .#{$prefix}field-inner {
                 padding-top: $padding-base - .8;
                 padding-bottom: $padding-base - .8;
 
-                .#{$prefix}-field-label {
+                .#{$prefix}field-label {
                     top: 14px;
                 }
 
@@ -262,13 +262,13 @@
             }
         }
 
-        &.#{$prefix}-disabled {
-            > .#{$prefix}-field-wrapper {
-                > .#{$prefix}-field-ctrl {
-                    > .#{$prefix}-field-inner {
+        &.#{$prefix}disabled {
+            > .#{$prefix}field-wrapper {
+                > .#{$prefix}field-ctrl {
+                    > .#{$prefix}field-inner {
                         background-color: rgba($black, .08);
 
-                        .#{$prefix}-field-label {
+                        .#{$prefix}field-label {
                             color: rgba($black, .3) !important;
                         }
                     }
@@ -277,10 +277,10 @@
         }
     }
 
-    &.#{$prefix}-field-outlined {
-        > .#{$prefix}-field-wrapper {
-            > .#{$prefix}-field-ctrl {
-                > .#{$prefix}-field-inner {
+    &.#{$prefix}field-outlined {
+        > .#{$prefix}field-wrapper {
+            > .#{$prefix}field-ctrl {
+                > .#{$prefix}field-inner {
                     @include border-radius($border-radius-sm);
                     border-bottom-color: transparent;
                     border-bottom-width: 0;
@@ -317,32 +317,32 @@
                         }
                     }
 
-                    > .#{$prefix}-action-icon:last-child,
-                    > .#{$prefix}-append-icon {
+                    > .#{$prefix}action-icon:last-child,
+                    > .#{$prefix}append-icon {
                         margin-right: -.25rem;
                     }
                 }
 
-                > .#{$prefix}-help-text {
+                > .#{$prefix}help-text {
                     margin-left: $padding-base;
                     margin-right: $padding-base;
                 }
             }
         }
 
-        &:not(.#{$prefix}-floating-label) {
-            .#{$prefix}-field-inner {
+        &:not(.#{$prefix}floating-label) {
+            .#{$prefix}field-inner {
                 > fieldset {
                     top: -12px;
                 }
             }
         }
 
-        &.#{$prefix}-floating-label {
+        &.#{$prefix}floating-label {
             margin-top: 0;
             padding-top: 0.25rem;
 
-            .#{$prefix}-field-inner {
+            .#{$prefix}field-inner {
                 padding-top: .85rem;
                 padding-bottom: .4rem;
 
@@ -350,10 +350,10 @@
                     top: -6px;
                 }
 
-                > .#{$prefix}-prepend-icon {
-                    + .#{$prefix}-field-input-wrapper {
-                        > .#{$prefix}-field-label {
-                            &.#{$prefix}-active {
+                > .#{$prefix}prepend-icon {
+                    + .#{$prefix}field-input-wrapper {
+                        > .#{$prefix}field-label {
+                            &.#{$prefix}active {
                                 left: $padding-base * -2;
                             }
                         }
@@ -362,14 +362,14 @@
             }
         }
 
-        .#{$prefix}-help-text {
+        .#{$prefix}help-text {
             margin-left: $padding-sm;
         }
 
-        &.#{$prefix}-focused {
-            > .#{$prefix}-field-wrapper {
-                > .#{$prefix}-field-ctrl {
-                    > .#{$prefix}-field-inner {
+        &.#{$prefix}focused {
+            > .#{$prefix}field-wrapper {
+                > .#{$prefix}field-ctrl {
+                    > .#{$prefix}field-inner {
                         > fieldset {
                             @include transition(border, color $md-transition-stand);
                             border-width: 2px;
@@ -381,7 +381,7 @@
         }
 
         &.has-error {
-            .#{$prefix}-field-inner {
+            .#{$prefix}field-inner {
                 > fieldset {
                     color: $red-darken-3 !important;
                 }
@@ -389,7 +389,7 @@
         }
 
         &.has-success {
-            .#{$prefix}-field-inner {
+            .#{$prefix}field-inner {
                 > fieldset {
                     color: $green-darken-4 !important;
                 }
@@ -397,13 +397,13 @@
         }
     }
 
-    &.#{$prefix}-disabled {
+    &.#{$prefix}disabled {
         .col-form-label {
             color: $gray-500;
         }
-        > .#{$prefix}-field-wrapper {
-            > .#{$prefix}-field-ctrl {
-                > .#{$prefix}-field-inner {
+        > .#{$prefix}field-wrapper {
+            > .#{$prefix}field-ctrl {
+                > .#{$prefix}field-inner {
                     border-color: $gray-400;
                 }
             }
@@ -411,23 +411,23 @@
     }
 }
 
-.#{$prefix}-field {
-    > .#{$prefix}-field-wrapper {
-        > .#{$prefix}-prepend-icon {
+.#{$prefix}field {
+    > .#{$prefix}field-wrapper {
+        > .#{$prefix}prepend-icon {
             margin-right: $padding-base;
             padding-top: $padding-sm;
         }
 
-        > .#{$prefix}-append-icon {
+        > .#{$prefix}append-icon {
             margin-left: $padding-base;
             padding-top: $padding-sm;
         }
 
-        .#{$prefix}-field-inner {
+        .#{$prefix}field-inner {
             @include align-items(center);
 
-            > .#{$prefix}-action-button-left,
-            > .#{$prefix}-action-button-right {
+            > .#{$prefix}action-button-left,
+            > .#{$prefix}action-button-right {
                 display: inline-block;
 
                 > .btn-icon {
@@ -437,8 +437,8 @@
                 }
             }
 
-            > .#{$prefix}-spin-button-left,
-            > .#{$prefix}-spin-button-right {
+            > .#{$prefix}spin-button-left,
+            > .#{$prefix}spin-button-right {
                 @include flexbox((display: flex, flex-direction: column));
                 width: 24px;
 
@@ -466,34 +466,34 @@
                 }
             }
 
-            > .#{$prefix}-action-button-left,
-            > .#{$prefix}-spin-button-left,
-            > .#{$prefix}-prepend-icon {
+            > .#{$prefix}action-button-left,
+            > .#{$prefix}spin-button-left,
+            > .#{$prefix}prepend-icon {
                 margin-right: $padding-sm;
             }
 
-            > .#{$prefix}-action-button-right,
-            > .#{$prefix}-spin-button-right {
+            > .#{$prefix}action-button-right,
+            > .#{$prefix}spin-button-right {
                 margin-right: $padding-sm - .25;
             }
 
-            > .#{$prefix}-action-button-right,
-            > .#{$prefix}-spin-button-right,
-            > .#{$prefix}-action-icon,
-            > .#{$prefix}-append-icon {
+            > .#{$prefix}action-button-right,
+            > .#{$prefix}spin-button-right,
+            > .#{$prefix}action-icon,
+            > .#{$prefix}append-icon {
                 margin-left: $padding-sm;
             }
 
-            > .#{$prefix}-action-button-right + .#{$prefix}-append-icon,
-            > .#{$prefix}-spin-button-right + .#{$prefix}-append-icon {
+            > .#{$prefix}action-button-right + .#{$prefix}append-icon,
+            > .#{$prefix}spin-button-right + .#{$prefix}append-icon {
                 margin-left: $padding-sm - .25;
             }
 
-            > .#{$prefix}-prepend-icon + .#{$prefix}-spin-button-left {
+            > .#{$prefix}prepend-icon + .#{$prefix}spin-button-left {
                 margin-left: ($padding-sm - .25) * -1;
             }
 
-            > .#{$prefix}-action-icon {
+            > .#{$prefix}action-icon {
                 @include flexbox((display: flex, align-items: center));
                 cursor: pointer;
 
@@ -510,7 +510,7 @@
                     }
                 }
 
-                > .#{$prefix}-toggle-icon {
+                > .#{$prefix}toggle-icon {
                     @include flexbox((display: flex, align-items: center));
                     width: 24px;
                 }
@@ -527,65 +527,65 @@
         }
     }
 
-    &.#{$prefix}-floating-label {
-        .#{$prefix}-field-inner {
-            .#{$prefix}-field-label {
-                .#{$prefix}-empty-class, label {
+    &.#{$prefix}floating-label {
+        .#{$prefix}field-inner {
+            .#{$prefix}field-label {
+                .#{$prefix}empty-class, label {
                     margin-bottom: 0;
                 }
 
-                &.#{$prefix}-active {
+                &.#{$prefix}active {
                     @include transform(translateY(-20px) scale(.85));
                 }
             }
         }
 
-        &.#{$prefix}-field-filled {
-            > .#{$prefix}-field-wrapper {
-                > .#{$prefix}-append-icon,
-                > .#{$prefix}-prepend-icon {
+        &.#{$prefix}field-filled {
+            > .#{$prefix}field-wrapper {
+                > .#{$prefix}append-icon,
+                > .#{$prefix}prepend-icon {
                     padding-top: 1.02rem;
                 }
             }
 
-            .#{$prefix}-field-inner {
-                .#{$prefix}-field-label {
-                    &.#{$prefix}-active {
+            .#{$prefix}field-inner {
+                .#{$prefix}field-label {
+                    &.#{$prefix}active {
                         @include transform(translateY(-12px) scale(.8));
                     }
                 }
             }
         }
 
-        &.#{$prefix}-field-outlined {
-            > .#{$prefix}-field-wrapper {
-                > .#{$prefix}-append-icon,
-                > .#{$prefix}-prepend-icon {
+        &.#{$prefix}field-outlined {
+            > .#{$prefix}field-wrapper {
+                > .#{$prefix}append-icon,
+                > .#{$prefix}prepend-icon {
                     padding-top: 1.38rem;
                 }
 
-                .#{$prefix}-field-inner {
-                    .#{$prefix}-field-label {
-                        &.#{$prefix}-active {
+                .#{$prefix}field-inner {
+                    .#{$prefix}field-label {
+                        &.#{$prefix}active {
                             @include transform(translateY(-28px) scale(.85));
                         }
                     }
 
-                    > .#{$prefix}-spin-button-left {
-                        + .#{$prefix}-field-input-wrapper {
-                            > .#{$prefix}-field-label {
-                                &.#{$prefix}-active {
+                    > .#{$prefix}spin-button-left {
+                        + .#{$prefix}field-input-wrapper {
+                            > .#{$prefix}field-label {
+                                &.#{$prefix}active {
                                     left: $padding-base * -2;
                                 }
                             }
                         }
                     }
 
-                    > .#{$prefix}-prepend-icon {
-                        + .#{$prefix}-spin-button-left {
-                            + .#{$prefix}-field-input-wrapper {
-                                > .#{$prefix}-field-label {
-                                    &.#{$prefix}-active {
+                    > .#{$prefix}prepend-icon {
+                        + .#{$prefix}spin-button-left {
+                            + .#{$prefix}field-input-wrapper {
+                                > .#{$prefix}field-label {
+                                    &.#{$prefix}active {
                                         left: $padding-base * -3.8;
                                     }
                                 }
@@ -593,11 +593,11 @@
                         }
                     }
 
-                    > .#{$prefix}-action-button-left {
-                        &.#{$prefix}-button-split {
-                            + .#{$prefix}-field-input-wrapper {
-                                > .#{$prefix}-field-label {
-                                    &.#{$prefix}-active {
+                    > .#{$prefix}action-button-left {
+                        &.#{$prefix}button-split {
+                            + .#{$prefix}field-input-wrapper {
+                                > .#{$prefix}field-label {
+                                    &.#{$prefix}active {
                                         left: $padding-base * -2.125;
                                     }
                                 }
@@ -605,12 +605,12 @@
                         }
                     }
 
-                    > .#{$prefix}-prepend-icon {
-                        + .#{$prefix}-action-button-left {
-                            &.#{$prefix}-button-split {
-                                + .#{$prefix}-field-input-wrapper {
-                                    > .#{$prefix}-field-label {
-                                        &.#{$prefix}-active {
+                    > .#{$prefix}prepend-icon {
+                        + .#{$prefix}action-button-left {
+                            &.#{$prefix}button-split {
+                                + .#{$prefix}field-input-wrapper {
+                                    > .#{$prefix}field-label {
+                                        &.#{$prefix}active {
                                             left: $padding-base * -4.5;
                                         }
                                     }
@@ -619,11 +619,11 @@
                         }
                     }
 
-                    > .#{$prefix}-action-button-left {
-                        &:not(.#{$prefix}-button-split) {
-                            + .#{$prefix}-field-input-wrapper {
-                                > .#{$prefix}-field-label {
-                                    &.#{$prefix}-active {
+                    > .#{$prefix}action-button-left {
+                        &:not(.#{$prefix}button-split) {
+                            + .#{$prefix}field-input-wrapper {
+                                > .#{$prefix}field-label {
+                                    &.#{$prefix}active {
                                         left: $padding-base * -4.4;
                                     }
                                 }
@@ -631,12 +631,12 @@
                         }
                     }
 
-                    > .#{$prefix}-prepend-icon {
-                        + .#{$prefix}-action-button-left {
-                            &:not(.#{$prefix}-button-split) {
-                                + .#{$prefix}-field-input-wrapper {
-                                    > .#{$prefix}-field-label {
-                                        &.#{$prefix}-active {
+                    > .#{$prefix}prepend-icon {
+                        + .#{$prefix}action-button-left {
+                            &:not(.#{$prefix}button-split) {
+                                + .#{$prefix}field-input-wrapper {
+                                    > .#{$prefix}field-label {
+                                        &.#{$prefix}active {
                                             left: $padding-base * -6.4;
                                         }
                                     }
@@ -649,8 +649,8 @@
         }
     }
 
-    &.#{$prefix}-disabled {
-        .#{$prefix}-field-inner {
+    &.#{$prefix}disabled {
+        .#{$prefix}field-inner {
             input {
                 color: rgba($black, .4);
             }
@@ -662,34 +662,34 @@
     }
 }
 
-.#{$prefix}-textarea {
-    > .#{$prefix}-field-wrapper {
-        .#{$prefix}-action-icon,
-        .#{$prefix}-append-icon,
-        .#{$prefix}-prepend-icon {
+.#{$prefix}textarea {
+    > .#{$prefix}field-wrapper {
+        .#{$prefix}action-icon,
+        .#{$prefix}append-icon,
+        .#{$prefix}prepend-icon {
             padding-top: $padding-sm;
         }
 
-        > .#{$prefix}-prepend-icon {
+        > .#{$prefix}prepend-icon {
             margin-right: $padding-base;
         }
 
-        > .#{$prefix}-append-icon {
+        > .#{$prefix}append-icon {
             margin-left: $padding-base;
         }
     }
 
-    .#{$prefix}-field-inner {
-        > .#{$prefix}-prepend-icon {
+    .#{$prefix}field-inner {
+        > .#{$prefix}prepend-icon {
             margin-right: $padding-sm;
         }
 
-        > .#{$prefix}-action-icon,
-        > .#{$prefix}-append-icon {
+        > .#{$prefix}action-icon,
+        > .#{$prefix}append-icon {
             margin-left: $padding-sm;
         }
 
-        > .#{$prefix}-action-icon {
+        > .#{$prefix}action-icon {
             cursor: pointer;
 
             > .icon-clear {
@@ -718,30 +718,30 @@
         }
     }
 
-    &.#{$prefix}-floating-label {
-        .#{$prefix}-field-inner {
-            .#{$prefix}-field-label {
-                .#{$prefix}-empty-class, label {
+    &.#{$prefix}floating-label {
+        .#{$prefix}field-inner {
+            .#{$prefix}field-label {
+                .#{$prefix}empty-class, label {
                     margin-bottom: 0;
                 }
 
-                &.#{$prefix}-active {
+                &.#{$prefix}active {
                     @include transform(translateY(-20px) scale(.85));
                 }
             }
         }
 
-        &.#{$prefix}-field-filled {
-            > .#{$prefix}-field-wrapper {
-                > .#{$prefix}-append-icon,
-                > .#{$prefix}-prepend-icon {
+        &.#{$prefix}field-filled {
+            > .#{$prefix}field-wrapper {
+                > .#{$prefix}append-icon,
+                > .#{$prefix}prepend-icon {
                     padding-top: 1.1rem;
                 }
             }
 
-            .#{$prefix}-field-inner {
-                .#{$prefix}-field-label {
-                    &.#{$prefix}-active {
+            .#{$prefix}field-inner {
+                .#{$prefix}field-label {
+                    &.#{$prefix}active {
                         @include transform(translateY(-10px) scale(.8));
                     }
                 }
@@ -752,16 +752,16 @@
             }
         }
 
-        &.#{$prefix}-field-outlined {
-            > .#{$prefix}-field-wrapper {
-                > .#{$prefix}-append-icon,
-                > .#{$prefix}-prepend-icon {
+        &.#{$prefix}field-outlined {
+            > .#{$prefix}field-wrapper {
+                > .#{$prefix}append-icon,
+                > .#{$prefix}prepend-icon {
                     padding-top: 1.38rem;
                 }
 
-                .#{$prefix}-field-inner {
-                    .#{$prefix}-field-label {
-                        &.#{$prefix}-active {
+                .#{$prefix}field-inner {
+                    .#{$prefix}field-label {
+                        &.#{$prefix}active {
                             @include transform(translateY(-28px) scale(.85));
                         }
                     }
@@ -770,16 +770,16 @@
         }
     }
 
-    &.#{$prefix}-field-noresize {
-        .#{$prefix}-field-inner {
+    &.#{$prefix}field-noresize {
+        .#{$prefix}field-inner {
             textarea {
                 resize: none;
             }
         }
     }
 
-    &.#{$prefix}-disabled {
-        .#{$prefix}-field-inner {
+    &.#{$prefix}disabled {
+        .#{$prefix}field-inner {
             textarea {
                 color: rgba($black, .6);
             }

@@ -1069,139 +1069,139 @@ export default {
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
-.#{$prefix}-combobox {
-    .#{$prefix}-field-input-wrapper {
+.#{$prefix}combobox {
+    .#{$prefix}field-input-wrapper {
         @include align-items(center);
         outline: none;
         min-height: 40px;
 
-        > .#{$prefix}-combobox-input {
+        > .#{$prefix}combobox-input {
             padding: .5rem 0;
         }
     }
 
-    .#{$prefix}-combobox-label,
+    .#{$prefix}combobox-label,
     .col-form-label {
         label {
             margin-bottom: 0;
         }
     }
 
-    .#{$prefix}-placeholder {
+    .#{$prefix}placeholder {
         @include user-select(none);
         cursor: default !important;
         color: $gray-600;
         font-weight: $font-weight-light;
     }
 
-    .#{$prefix}-input-tags {
+    .#{$prefix}input-tags {
         margin: .25rem 0 0 0;
     }
 
-    .#{$prefix}-value {
+    .#{$prefix}value {
         pointer-events: none;
     }
 
-    .#{$prefix}-action-icon {
+    .#{$prefix}action-icon {
         > .icon-expand-more {
             @include transition(all 0.3s ease 0s);
             cursor: pointer;
         }
     }
 
-    &.#{$prefix}-disabled {
-        .#{$prefix}-action-icon {
+    &.#{$prefix}disabled {
+        .#{$prefix}action-icon {
             > .icon-expand-more {
                 color: $gray-500;
             }
         }
     }
 
-    &.#{$prefix}-required {
-        .#{$prefix}-combobox-label,
+    &.#{$prefix}required {
+        .#{$prefix}combobox-label,
         .col-form-label {
             font-weight: bold;
         }
     }
 
-    &.#{$prefix}-focused {
-        &:not(.#{$prefix}-disabled) {
-            .#{$prefix}-action-icon > .icon-expand-more {
+    &.#{$prefix}focused {
+        &:not(.#{$prefix}disabled) {
+            .#{$prefix}action-icon > .icon-expand-more {
                 color: $blue-darken-3 !important;
             }
         }
     }
 
     &.has-success {
-        .#{$prefix}-combobox-label {
+        .#{$prefix}combobox-label {
             color: $success-color-dark !important;
         }
 
     }
 
     &.has-error {
-        .#{$prefix}-combobox-label {
+        .#{$prefix}combobox-label {
             color: $danger-color-dark !important;
         }
     }
 
-    &.#{$prefix}-open {
-        .#{$prefix}-action-icon > .icon-expand-more {
+    &.#{$prefix}open {
+        .#{$prefix}action-icon > .icon-expand-more {
             @include transform(rotateZ(-180deg));
         }
     }
 
-    &.#{$prefix}-field-filled {
-        &.#{$prefix}-floating-label {
-            .#{$prefix}-field-input-wrapper {
+    &.#{$prefix}field-filled {
+        &.#{$prefix}floating-label {
+            .#{$prefix}field-input-wrapper {
                 min-height: 50px;
 
-                > .#{$prefix}-combobox-input {
+                > .#{$prefix}combobox-input {
                     padding-top: 18px;
                 }
             }
         }
     }
 
-    &.#{$prefix}-chip-enabled {
-        .#{$prefix}-field-input-wrapper {
+    &.#{$prefix}chip-enabled {
+        .#{$prefix}field-input-wrapper {
             min-height: 2.75rem;  // 40px
 
-            > .#{$prefix}-combobox-input {
+            > .#{$prefix}combobox-input {
                 padding: 0;
 
-                > .#{$prefix}-input-tags {
-                    > .#{$prefix}-chip {
+                > .#{$prefix}input-tags {
+                    > .#{$prefix}chip {
                         margin: .15rem $padding-sm .25rem 0;
                     }
                 }
             }
         }
 
-        &.#{$prefix}-floating-label {
-            &.#{$prefix}-field-filled {
-                .#{$prefix}-field-inner {
+        &.#{$prefix}floating-label {
+            &.#{$prefix}field-filled {
+                .#{$prefix}field-inner {
                     padding-bottom: 0;
 
-                    > .#{$prefix}-field-input-wrapper {
+                    > .#{$prefix}field-input-wrapper {
                         min-height: 3.65rem; // 59px
 
-                        > .#{$prefix}-combobox-input {
+                        > .#{$prefix}combobox-input {
                             padding-top: .7rem;
                         }
 
-                        > .#{$prefix}-field-label {
+                        > .#{$prefix}field-label {
                             top: 1rem;
 
-                            &.#{$prefix}-active {
+                            &.#{$prefix}active {
                                 @include transform(translateY(-16px) scale(.8));
                             }
                         }
                     }
                 }
             }
-            &.#{$prefix}-field-outlined {
-                .#{$prefix}-field-inner {
+            &.#{$prefix}field-outlined {
+                .#{$prefix}field-inner {
                     padding-bottom: .125rem;
                 }
             }
@@ -1209,21 +1209,21 @@ export default {
     }
 }
 
-.#{$prefix}-combobox-popover {
+.#{$prefix}combobox-popover {
     border: 1px solid rgba($black, 0.1) !important;
     border-right-width: 0 !important;
     overflow: hidden !important;
 
-    > .#{$prefix}-combobox-list-container {
+    > .#{$prefix}combobox-list-container {
         background-color: $white;
         overflow: hidden;
 
-        > .#{$prefix}-combobox-search-wrapper {
+        > .#{$prefix}combobox-search-wrapper {
             display: block;
             padding: 6px;
             margin: 0;
 
-            > .#{$prefix}-combobox-search {
+            > .#{$prefix}combobox-search {
                 border: 1px solid $gray-500;
                 color: $gray-800;
                 font-size: 14px;
@@ -1236,10 +1236,10 @@ export default {
 }
 
 @each $color_name, $color in $material-colors {
-    .#{$prefix}-combobox-popover {
+    .#{$prefix}combobox-popover {
         &.bg-#{$color_name} {
-            .#{$prefix}-combobox-search-wrapper {
-                > .#{$prefix}-combobox-search {
+            .#{$prefix}combobox-search-wrapper {
+                > .#{$prefix}combobox-search {
                     @if (lightness($color) < 81) {
                         background-color: rgba(lighten($color, 20%), .25);
                         border-color: rgba($gray-500, .6) !important;
@@ -1252,10 +1252,10 @@ export default {
 }
 
 @each $color_name, $color in $theme-colors {
-    .#{$prefix}-combobox-popover {
+    .#{$prefix}combobox-popover {
         &.bg-#{$color_name} {
-            .#{$prefix}-combobox-search-wrapper {
-                > .#{$prefix}-combobox-search {
+            .#{$prefix}combobox-search-wrapper {
+                > .#{$prefix}combobox-search {
                     @if (lightness($color) < 81) {
                         background-color: rgba(lighten($color, 20%), .25);
                         border-color: rgba($gray-500, .6) !important;

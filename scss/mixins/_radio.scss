@@ -1,9 +1,9 @@
 /* BsRadio mixins */
 @mixin make-radio($name, $color) {
-    .#{$prefix}-radio-#{$name} {
-        &:not(.#{$prefix}-disabled) {
-            &.#{$prefix}-checked {
-                > .#{$prefix}-radio-inner {
+    .#{$prefix}radio-#{$name} {
+        &:not(.#{$prefix}disabled) {
+            &.#{$prefix}checked {
+                > .#{$prefix}radio-inner {
                     border-color: $color;
 
                     &:after {
@@ -11,7 +11,7 @@
                     }
                 }
 
-                .#{$prefix}-ripple {
+                .#{$prefix}ripple {
                     color: $color;
                 }
             }
