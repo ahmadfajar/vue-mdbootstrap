@@ -85,14 +85,35 @@ export default defineComponent({
     },
     emits: ['update:modelValue'],
     setup(props, {emit, slots}) {
-        const localValue = ref<string | number | boolean | Array<unknown>|undefined>(props.modelValue);
+        const localValue = ref<string | number | boolean | Array<unknown> | undefined>(props.modelValue);
         const cmpProps = props as Readonly<TToggleButtonOptionProps>;
+        const makeInputEl = (item: TInputOptionItem, props: Readonly<TToggleButtonOptionProps>) => {
+            return withDirectives(
+                h("input", {
+                    class: "d-none",
+                    value: item.value,
+                    ...useMakeInputItemAttrs(item, props),
+                    "onUpdate:modelValue": (event: string | number | boolean) => {
+                        // console.log('input:value =', event);
+                        if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
+                            localValue.value = event;
+                            emit("update:modelValue", localValue.value)
+                        }
+                    }
+                }),
+                [
+                    props.multiple
+                        ? [vModelCheckbox, localValue.value]
+                        : [vModelRadio, localValue.value],
+                ]
+            );
+        }
 
         return () => {
             return h("div", {
                     class: [
                         "btn-group",
-                        props.pill ? "rounded-pill" : "",
+                        props.pill ? "rounded-pill" : (!props.pill && !props.rounded ? "rounded-1" : ""),
                         props.disabled ? `${cssPrefix}disabled` : "",
                         props.readonly ? `${cssPrefix}readonly` : "",
                         props.required ? `${cssPrefix}required` : "",
@@ -104,29 +125,16 @@ export default defineComponent({
                     return h("label", {
                         key: `btn-${idx}`,
                         class: useMakeInputItemClasses(item, cmpProps),
+                        // 'for': item.id,
                     }, [
-                        withDirectives(
-                            h("input", {
-                                class: "d-none",
-                                value: item.value,
-                                ...useMakeInputItemAttrs(item, cmpProps),
-                                "onUpdate:modelValue": (event: string | number | boolean) => {
-                                    if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
-                                        localValue.value = event;
-                                        emit("update:modelValue", localValue.value)
-                                    }
-                                }
-                            }),
-                            [
-                                props.multiple
-                                    ? [vModelCheckbox, localValue.value]
-                                    : [vModelRadio, localValue.value],
-                            ]
-                        ),
+                        makeInputEl(item, cmpProps),
                         h(BsButtonInner, {
-                            rippleOff: props.disabled || props.readonly || item.disabled && item.readonly
+                            rippleOff: true,
+                            // rippleOff: props.disabled || props.readonly || item.disabled && item.readonly,
                         }, {
-                            default: () => useRenderToggleItemContent(slots, item, cmpProps)
+                            default: () => useRenderToggleItemContent(
+                                slots, item, cmpProps,
+                            )
                         })
                     ]);
                 })

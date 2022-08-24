@@ -2,7 +2,6 @@
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "../../../scss/functions";
-@import "../../../scss/shared";
 @import "../../../scss/mixins/buttons";
 
 .btn {
@@ -27,6 +26,12 @@
     &.readonly {
         @include box-shadow(none);
         cursor: default;
+
+        &:not(.active) {
+            background-color: var(--#{$bs-prefix}btn-bg);
+            border-color: var(--#{$bs-prefix}btn-border-color);
+            opacity: .75;
+        }
     }
 
     &:disabled, &.disabled {
@@ -135,8 +140,8 @@
     --#{$bs-prefix}btn-disabled-opacity: .65;
     --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), .5);
 
-    @include border-radius(var(--#{$bs-prefix}btn-border-radius));
     @include transition($btn-transition);
+    @include border-radius(var(--#{$bs-prefix}btn-border-radius));
     @include flexbox((display: inline-flex, flex: 0 0 auto));
 
     background-color: var(--#{$bs-prefix}btn-bg);
@@ -240,6 +245,21 @@
 
     &.#{$prefix}btn-raised {
         @include box-shadow($z-depth-1);
+    }
+}
+
+.btn-group {
+    &.rounded-pill {
+        > .btn:first-child,
+        > .btn:last-child {
+            --#{$bs-prefix}btn-border-radius: #{$border-radius-pill};
+        }
+    }
+    &.rounded-1 {
+        > .btn:first-child,
+        > .btn:last-child {
+            --#{$bs-prefix}btn-border-radius: #{$border-radius-sm};
+        }
     }
 }
 

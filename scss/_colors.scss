@@ -626,7 +626,8 @@ $primary-color-dark:        #0d47a1 !default;
 $secondary-color:           #aa66cc !default;
 $secondary-color-dark:      #681c8f !default;
 $default-color:             #2bbbad !default;
-$default-color-dark:        #00695c !default;
+$mdb-default-color:         #6200ee !default;
+$mdb-default-color-dark:    #4600ab !default;
 $info-color:                #0dcaf0 !default;
 $info-color-dark:           #0b6c8d !default;
 $success-color:             #198754 !default;
@@ -656,8 +657,8 @@ $material-colors: (
     "primary-color-dark":     $primary-color-dark,
     "secondary-color":        $secondary-color,
     "secondary-color-dark":   $secondary-color-dark,
-    "default-color":          $default-color,
-    "default-color-dark":     $default-color-dark,
+    "default-color":          $mdb-default-color,
+    "default-color-dark":     $mdb-default-color-dark,
     "info-color":             $info-color,
     "info-color-dark":        $info-color-dark,
     "success-color":          $success-color,

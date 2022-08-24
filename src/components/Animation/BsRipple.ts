@@ -9,6 +9,22 @@ import Helper from "../../utils/Helper";
 export default defineComponent({
     name: "BsRipple",
     props: {
+        // /**
+        //  * Ripple animation state.
+        //  * @type {boolean|Event}
+        //  */
+        // active: {
+        //     type: [Boolean, Event],
+        //     default: false
+        // },
+        // /**
+        //  * Start animation on mousedown/touch-event.
+        //  * @type {boolean}
+        //  */
+        // eventTrigger: {
+        //     type: Boolean,
+        //     default: true
+        // },
         /**
          * Start animation from center or from mouse click position.
          * If true then animation always start from center, otherwise animation
@@ -27,33 +43,31 @@ export default defineComponent({
          */
         tag: tagProp
     },
-    /*
-        emits: ["update:active"],
-        watch: {
-            active(handler: boolean | Event) {
-                const isBoolean = typeof handler === 'boolean';
-                const matches = handler?.constructor?.toString()?.match(/function (\w*)/);
-                const isEvent = matches && matches.length > 0 && (matches[1] as string).toLowerCase() === 'mouseevent';
-
-                if (isBoolean && this.centered && handler) {
-                    console.log("ripple-start, handler:boolean:center");
-                    useStartRipple(
-                        this.$props as TBsRippleOptionProps,
-                        this.$data,
-                        {type: "mousedown"} as TRippleEvent, this.$el,
-                    );
-                } else if (isEvent) {
-                    console.log("ripple-start, handler:event");
-                    useStartRipple(
-                        this.$props as TBsRippleOptionProps,
-                        this.$data,
-                        handler as TRippleEvent, this.$el,
-                    );
-                }
-                this.$emit("update:active", false);
-            }
-        },
-    */
+    // emits: ["update:active"],
+    // watch: {
+    //     active(handler: boolean | Event) {
+    //         const isBoolean = typeof handler === 'boolean';
+    //         const matches = handler?.constructor?.toString()?.match(/function (\w*)/);
+    //         const isEvent = matches && matches.length > 0 && (matches[1] as string).toLowerCase() === 'mouseevent';
+    //
+    //         if (isBoolean && this.centered && handler) {
+    //             console.log("ripple-start, handler:boolean:center");
+    //             useStartRipple(
+    //                 this.$props as TRippleOptionProps,
+    //                 this.$data,
+    //                 {type: "mousedown"} as IRippleEvent, this.$el,
+    //             );
+    //         } else if (isEvent) {
+    //             console.log("ripple-start, handler:event");
+    //             useStartRipple(
+    //                 this.$props as TRippleOptionProps,
+    //                 this.$data,
+    //                 handler as IRippleEvent, this.$el,
+    //             );
+    //         }
+    //         this.$emit("update:active", false);
+    //     }
+    // },
     data() {
         return {
             ripples: [],

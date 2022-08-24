@@ -1,7 +1,6 @@
 @import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "../../../scss/mixins";
 
 .#{$prefix}overlay {
     background-color: $black;
@@ -28,7 +27,7 @@
     border-radius: 50%;
     pointer-events: none;
     position: absolute;
-    opacity: 0;
+    opacity: 0.06;
     z-index: 1;
 
     &.#{$prefix}centered {

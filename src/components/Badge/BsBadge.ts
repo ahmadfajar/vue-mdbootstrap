@@ -10,7 +10,7 @@ export default defineComponent({
          */
         color: {
             type: String,
-            default: "default-color text-white",
+            default: "default text-white",
         },
         /**
          * Html tag used to render the badge.

@@ -53,7 +53,8 @@
 
 // Create theme variants for backgrounds, borders and text colors
 $removed-duplicate-colors: map-remove($merge-theme-colors,
-        "default", "default-color", "primary", "info", "success", "secondary", "warning",
+        //"default", "default-color", "primary", "info", "success", "secondary", "warning",
+        "primary", "info", "success", "secondary", "warning",
         "warning-color", "danger", "dark", "light", "black", "white", "primary-color-dark",
         "elegant-color-dark", "dark-blue", "blue-green", "blue-green-color"
 );
@@ -79,7 +80,7 @@ $removed-duplicate-colors: map-remove($merge-theme-colors,
 }
 
 $bs-custom-colors: (
-    "default":      $default-color,
+    //"default":      $default-color,
     "warning":      $warning-color,
     "blue-green":   $blue-green-color,
 );

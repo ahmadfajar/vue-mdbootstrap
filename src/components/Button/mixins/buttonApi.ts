@@ -49,6 +49,10 @@ export function useMakeInputItemClasses(
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>,
 ): Record<string, unknown> | object {
+    if (!item.id) {
+        item.id = useGenerateId();
+    }
+
     return {
         'btn': true,
         [`btn-${props.toggleColor}`]: isInputItemSelected(item, props) && props.toggleColor,
@@ -58,7 +62,6 @@ export function useMakeInputItemClasses(
         [`btn-${props.color}`]: !isInputItemSelected(item, props) && !props.outlined && !props.flat,
         [`btn-${props.size}`]: props.size,
         [`${cssPrefix}btn-raised`]: props.raised,
-        'rounded-1': !props.pill && !props.rounded,
         'disabled': props.disabled || item.disabled,
         'readonly': props.readonly || item.readonly,
     }
@@ -68,10 +71,6 @@ export function useMakeInputItemAttrs(
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>,
 ): Record<string, unknown> | object {
-    if (!item.id) {
-        item.id = useGenerateId();
-    }
-
     const attr = {
         id: item.id,
         role: props.multiple ? 'checkbox' : 'radio',
@@ -162,6 +161,7 @@ export function useRenderToggleItemContent(
     slots: Slots,
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>,
+    // inputField: VNode,
 ): VNodeArrayChildren {
     return [
         (props.iconPosition === 'left')
@@ -174,6 +174,7 @@ export function useRenderToggleItemContent(
                 item,
             )
             : '',
+        // inputField,
         useRenderSlot(
             slots, 'default',
             {key: Helper.uuid()},
