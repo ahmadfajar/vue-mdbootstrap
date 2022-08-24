@@ -92,7 +92,7 @@ class Helper {
      * @returns {boolean} True if value is empty otherwise False
      */
     static isEmpty(
-        value: Array<unknown> | string | unknown | undefined | null,
+        value: unknown | undefined | null,
         allowEmptyString = true,
     ): boolean {
         return (value === null) ||
@@ -117,7 +117,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an Array otherwise FALSE
      */
-    static isArray(value: Array<unknown> | unknown | undefined | null): boolean {
+    static isArray(value: unknown | undefined | null): boolean {
         return (typeof value !== 'undefined' && value !== null && Array.isArray(value));
     }
 

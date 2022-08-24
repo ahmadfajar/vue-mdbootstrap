@@ -153,8 +153,7 @@ export default defineComponent({
         return () => {
             return h(tagName.value, {
                 ...useMakeButtonProps(
-                    cmpProps,
-                    isDisabled.value, buttonType.value,
+                    cmpProps, isDisabled.value, buttonType.value,
                 ),
                 onClick: (event: Event): void => emit('click', event),
             }, [

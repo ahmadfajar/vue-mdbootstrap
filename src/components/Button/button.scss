@@ -1,12 +1,19 @@
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/functions";
+@import "../../../scss/shared";
+@import "../../../scss/mixins/buttons";
 
 .btn {
+    $disabled-bg: lighten($gray-500, 20%);
+    $border-color: lighten($gray-500, 8%);
     --#{$bs-prefix}btn-padding-y: 0;
     --#{$bs-prefix}btn-padding-x: 0;
     --#{$bs-prefix}btn-border-radius: #{$btn-border-radius};
-    position: relative;
+    --#{$bs-prefix}btn-disabled-bg: #{$disabled-bg};
+    --#{$bs-prefix}btn-disabled-border-color: #{$border-color};
+    --#{$bs-prefix}btn-disabled-color: #{$gray-700};
     white-space: normal;
     word-wrap: break-word;
 
@@ -24,11 +31,6 @@
 
     &:disabled, &.disabled {
         @include box-shadow(none);
-        $disabled-bg: lighten($gray-500, 20%);
-        $border-color: lighten($gray-500, 8%);
-        --#{$bs-prefix}btn-disabled-bg: #{$disabled-bg};
-        --#{$bs-prefix}btn-disabled-border-color: #{$border-color};
-        --#{$bs-prefix}btn-disabled-color: #{$gray-700};
         cursor: default;
     }
 
@@ -93,7 +95,8 @@
     }
 
     &.btn-xs {
-        --bs-btn-font-size: .75rem;
+        --#{$bs-prefix}btn-font-size: .75rem;
+        --#{$bs-prefix}btn-border-radius: #{$btn-border-radius / 2};
 
         .#{$prefix}btn-inner {
             line-height: 1;
@@ -121,17 +124,155 @@
     }
 }
 
-[class^="btn btn-flat"] {
-    --#{$bs-prefix}btn-border-width: 0;
-    --#{$bs-prefix}btn-border-color: transparent;
-    --#{$bs-prefix}btn-bg: transparent;
-    @include box-shadow(none);
+.#{$prefix}btn-floating, .#{$prefix}btn-icon {
+    $disabled-bg: lighten($gray-500, 20%);
+    $border-color: lighten($gray-500, 8%);
+    --#{$bs-prefix}btn-border-width: 1px;
+    --#{$bs-prefix}btn-border-radius: #{$border-radius-circle};
+    --#{$bs-prefix}btn-disabled-bg: #{$disabled-bg};
+    --#{$bs-prefix}btn-disabled-border-color: #{$border-color};
+    --#{$bs-prefix}btn-disabled-color: #{$gray-700};
+    --#{$bs-prefix}btn-disabled-opacity: .65;
+    --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), .5);
 
+    @include border-radius(var(--#{$bs-prefix}btn-border-radius));
+    @include transition($btn-transition);
+    @include flexbox((display: inline-flex, flex: 0 0 auto));
+
+    background-color: var(--#{$bs-prefix}btn-bg);
+    border: var(--#{$bs-prefix}btn-border-width) solid var(--#{$bs-prefix}btn-border-color);
+    color: var(--#{$bs-prefix}btn-color);
+    cursor: pointer;
+    padding: 0;
+    vertical-align: middle;
+    line-height: 2.25rem;    // 36px
+
+    &:hover {
+        @include box-shadow($z-depth-1);
+        background-color: var(--#{$bs-prefix}btn-hover-bg);
+        border-color: var(--#{$bs-prefix}btn-hover-border-color);
+        outline: 0;
+    }
+
+    &:focus,
+    &.focus {
+        @include box-shadow($z-depth-1);
+        background-color: var(--#{$bs-prefix}btn-active-bg);
+        border-color: var(--#{$bs-prefix}btn-active-border-color);
+        outline: 0;
+    }
+
+    &.active {
+        @include box-shadow($z-depth-1);
+        background-color: var(--#{$bs-prefix}btn-active-bg);
+        border-color: var(--#{$bs-prefix}btn-active-border-color);
+        outline: 0;
+    }
+
+    &:not([disabled]):not(.disabled):active:focus,
+    &:not([disabled]):not(.disabled).active:focus,
+    .show > &.dropdown-toggle {
+        @include box-shadow(var(--#{$bs-prefix}btn-focus-box-shadow));
+    }
+
+    &:disabled, &.disabled {
+        @include box-shadow(none);
+        background-color: var(--#{$bs-prefix}btn-disabled-bg);
+        border-color: var(--#{$bs-prefix}btn-disabled-border-color);
+        color: var(--#{$bs-prefix}btn-disabled-color);
+        opacity: var(--#{$bs-prefix}btn-disabled-opacity);
+        pointer-events: none;
+        cursor: default;
+    }
+
+    > .#{$prefix}ripple {
+        @include display-flex();
+        @include border-radius(var(--#{$bs-prefix}btn-border-radius));
+        width: 2.375rem;     // 38px;
+        height: 2.375rem;    // 38px;
+
+        > .#{$prefix}btn-inner {
+            @include flexbox((display: flex, justify-content: center, align-items: center));
+            width: 100%;
+            position: relative;
+        }
+    }
+
+    &.btn-xs {
+        line-height: 1.5rem;   // 24px;
+
+        .#{$prefix}ripple {
+            width: 1.5rem;     // 24px;
+            height: 1.5rem;    // 24px;
+        }
+    }
+
+    &.btn-sm {
+        line-height: 2rem;   // 32px;
+
+        .#{$prefix}ripple {
+            width: 2rem;
+            height: 2rem;
+        }
+    }
+
+    &.btn-lg {
+        line-height: 3.5rem; // 56px;
+
+        .#{$prefix}ripple {
+            width: 3.5rem;
+            height: 3.5rem;
+        }
+    }
+
+    .#{$prefix}ripple-enter-active {
+        @include transition-duration(1.2s);
+    }
+
+    ~ .#{$prefix}btn-floating,
+    ~ .#{$prefix}btn-icon {
+        margin-left: $padding-sm - .25;
+    }
+}
+
+.#{$prefix}btn-floating {
+    position: absolute;
+
+    &.#{$prefix}btn-raised {
+        @include box-shadow($z-depth-1);
+    }
+}
+
+@each $btn_name, $color_value in map-remove($merge-theme-colors,
+        'primary', 'secondary', 'success', 'danger', 'light', 'dark'
+) {
+    @include make-button-variant($btn_name, $color_value);
+}
+
+@each $btn_name, $color_value in $merge-theme-colors {
+    @include make-outline-button-variant($btn_name, $color_value);
+    @include make-flat-button-variant($btn_name, $color_value);
+}
+
+.#{$prefix}btn-transparent {
+    $border-color: rgba(250, 250, 250, .15);
+    --#{$bs-prefix}btn-bg: transparent;
+    --#{$bs-prefix}btn-border-color: transparent;
+    --#{$bs-prefix}btn-border-width: 1px;
+    --#{$bs-prefix}btn-color: rgba(255, 255, 255, .5);
+    --#{$bs-prefix}btn-active-bg: rgba(25, 25, 25, .15);
+    --#{$bs-prefix}btn-active-color: rgba(255, 255, 255, .8);
+    --#{$bs-prefix}btn-active-border-color: #{$border-color};
+    --#{$bs-prefix}btn-hover-bg: rgba(25, 25, 25, .15);
+    --#{$bs-prefix}btn-hover-color: rgba(255, 255, 255, .8);
+    --#{$bs-prefix}btn-hover-border-color: #{$border-color};
+}
+
+[class*="btn-flat"] {
     &:not([disabled]), &:not(.disabled) {
         &:hover,
-        &:focus,
-        &.active,
-        &:active {
+        &:active,
+        &:focus {
             @include box-shadow(none);
         }
 
@@ -141,18 +282,11 @@
         }
 
         &.#{$prefix}btn-raised {
-            @include box-shadow(none);
-
             &:hover,
             &:focus,
             &.active,
             &:active {
                 @include box-shadow($z-depth-1);
-            }
-
-            &:active:focus,
-            &.active:focus {
-                @include box-shadow($z-depth-1-half);
             }
         }
     }

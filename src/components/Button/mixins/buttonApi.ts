@@ -12,27 +12,19 @@ export function useMakeButtonProps(
     buttonType?: string | null,
 ) {
     return {
-        class: [
-            props.mode === 'icon'
-                ? `${cssPrefix}btn-icon`
-                : (props.mode === 'floating' ? `${cssPrefix}btn-floating` : 'btn'),
-            props.outlined
-                ? 'btn-outline-' + props.color
-                : (props.flat
-                        ? 'btn-flat-' + props.color
-                        : (props.transparent ? `${cssPrefix}btn-transparent` : 'btn-' + props.color)
-                ),
-            props.raised ? `${cssPrefix}btn-raised` : '',
-            props.mode !== 'icon' && !props.pill && !props.rounded
-                ? 'rounded-1' :
-                (props.mode !== 'icon' && props.pill ? 'rounded-pill' : ''),
-            props.size ? 'btn-' + props.size : '',
-            disabled ? 'disabled' : '',
-            props.active ? 'active' : '',
-        ],
-        clazz: {
+        class: {
             'btn': ['icon', 'floating'].includes(props.mode) === false,
             [`${cssPrefix}btn-${props.mode}`]: ['icon', 'floating'].includes(props.mode),
+            [`btn-outline-${props.color}`]: props.outlined && props.color && !props.transparent,
+            [`btn-flat-${props.color}`]: !props.outlined && props.flat && props.color && !props.transparent,
+            [`${cssPrefix}btn-transparent`]: !props.outlined && !props.flat && props.transparent,
+            [`btn-${props.color}`]: !props.outlined && !props.flat && !props.transparent && props.color,
+            [`${cssPrefix}btn-raised`]: props.raised,
+            [`btn-${props.size}`]: !Helper.isEmpty(props.size),
+            'rounded-pill': props.mode !== 'icon' && props.pill,
+            'rounded-1': props.mode !== 'icon' && !props.pill && !props.rounded,
+            'disabled': disabled,
+            'active': props.active,
         },
         role: !Helper.isEmpty(props.href) ? 'button' : null,
         type: buttonType,

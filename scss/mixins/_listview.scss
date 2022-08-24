@@ -29,7 +29,7 @@
                 }
 
                 .#{$prefix}list-tile-title {
-                    color: set-notification-text-color($color);
+                    color: set-alt-color-level($color, $gray-900, $white, 80);
                 }
 
                 .#{$prefix}list-tile-subtitle {

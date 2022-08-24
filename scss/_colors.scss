@@ -650,7 +650,7 @@ $black:                     $black-base;
 $error-color:               $red-base !default;
 
 // Applicable to:
-// BsCombobox, BsListView, BsButton, BsChip
+// BsButton, BsToggleButton, BsChip, BsCombobox, BsListView,
 $material-colors: (
     "primary-color":          $primary-color,
     "primary-color-dark":     $primary-color-dark,
@@ -680,8 +680,8 @@ $material-colors: (
 
 // Bootstrap custom theme colors
 // Applicable to:
-// BsButton, BsCombobox, BsListView, BsProgress, BsAlert, BsCheckbox, BsRadio, BsSwitch
-// BsChip
+// BsButton, BsAlert, BsCheckbox, BsChip, BsCombobox, BsListView,
+// BsProgress, BsRadio, BsSwitch, BsToggleButton
 $theme-colors: (
     "default":     $default-color,
     "primary":     $primary-color,

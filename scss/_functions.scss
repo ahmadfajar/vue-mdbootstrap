@@ -11,12 +11,11 @@
     @return mix($color-base, $color, $level * $theme-color-interval);
 }
 
-// Set the color of the Button, Badge, List
-@function set-notification-text-color($color) {
-    @if (lightness($color) > 80) {
-        @return $gray-900; // Lighter background, return dark color
+@function set-alt-color-level($bgColor, $darkTextColor, $lightTextColor, $whiteLevel) {
+    @if (lightness($bgColor) > $whiteLevel) {
+        @return $darkTextColor; // Lighter background, return dark color
     } @else {
-        @return $white-base; // Darker background, return light color
+        @return $lightTextColor; // Darker background, return light color
     }
 }
 
@@ -74,20 +73,12 @@
     }
 }
 
-// Set the text color of the outlined or flat buttons
-@function set-outline-button-color($name, $color) {
+// Set the text color of chip buttons
+@function set-outline-chip-text-color($name, $color) {
     @if ($name == 'light' or $name == 'light-grey') {
         @return $gray-900;
     } @else {
         @return $color
-    }
-}
-
-@function set-foreground-color($bgColor, $darkTextColor, $lightTextColor, $whiteLevel) {
-    @if (lightness($bgColor) > $whiteLevel) {
-        @return $darkTextColor; // Lighter background, return dark color
-    } @else {
-        @return $lightTextColor; // Darker background, return light color
     }
 }
 

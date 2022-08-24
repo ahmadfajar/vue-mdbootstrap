@@ -1,9 +1,10 @@
-// BsButton variants mixins
+/* BsButton variants mixins -- backward compatibility */
+
 @mixin make-button($name, $color) {
     .btn-#{$name} {
         background-color: $color;
         border-color: $color;
-        color: set-notification-text-color($color) !important;
+        color: set-alt-color-level($color, $gray-900, $white, 80) !important;
 
         &:hover {
             background-color: lighten($color, 5%);
@@ -49,7 +50,7 @@
         &:active:focus,
         &.active {
             border-color: darken($color, 8%);
-            color: set-foreground-color($color, $white, darken($color, 10%), 80); // darken($color, 10%);
+            color: set-alt-color-level($color, $white, darken($color, 10%), 80); // darken($color, 10%);
 
             @if ($name == 'light' or $name == 'light-grey') {
                 background-color: rgba($color, .2);
@@ -61,7 +62,7 @@
         &:not([disabled]):not(.disabled):active,
         &:not([disabled]):not(.disabled).active {
             border-color: darken($color, 8%);
-            color: set-foreground-color($color, $white, darken($color, 15%), 80); // darken($color, 15%);
+            color: set-alt-color-level($color, $white, darken($color, 15%), 80); // darken($color, 15%);
 
             @if ($name == 'light' or $name == 'light-grey') {
                 background-color: rgba($color, .2);
@@ -94,7 +95,7 @@
             &:focus {
                 border-color: transparent;
                 background-color: rgba(lighten($color, 15%), .2);
-                color: set-foreground-color($color, $white, darken($color, 15%), 80); // darken($color, 15%);
+                color: set-alt-color-level($color, $white, darken($color, 15%), 80); // darken($color, 15%);
             }
 
             &:active:focus {
@@ -129,6 +130,95 @@
                     @include box-shadow($z-depth-1-half);
                 }
             }
+        }
+    }
+}
+
+/* BsButton variants mixins -- sass variables */
+
+@mixin make-button-variant($name, $color) {
+    .btn-#{$name} {
+        $active-box-shadow-color-rgb: to-rgb(lighten($color, 5%));
+        $text-color: set-alt-color-level($color, $black, $white, 80);
+        $hover-color: darken($color, 8%);
+        $active-color: darken($color, 14%);
+
+        --#{$bs-prefix}btn-bg: #{$color};
+        --#{$bs-prefix}btn-color: #{$text-color};
+        --#{$bs-prefix}btn-border-color: #{$color};
+        --#{$bs-prefix}btn-active-bg: #{$active-color};
+        --#{$bs-prefix}btn-active-color: #{$text-color};
+        --#{$bs-prefix}btn-active-border-color: #{$active-color};
+        --#{$bs-prefix}btn-hover-bg: #{$hover-color};
+        --#{$bs-prefix}btn-hover-color: #{$text-color};
+        --#{$bs-prefix}btn-hover-border-color: #{$hover-color};
+        --#{$bs-prefix}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
+    }
+}
+
+@mixin make-outline-button-variant($name, $color) {
+    .btn-outline-#{$name} {
+        $active-box-shadow-color-rgb: to-rgb(lighten($color, 5%));
+        $border-color: lighten($gray-600, 25%);
+        --#{$bs-prefix}btn-bg: transparent;
+        --#{$bs-prefix}btn-border-color: #{$border-color};
+        --#{$bs-prefix}btn-border-width: .1rem;
+        --#{$bs-prefix}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
+
+        @if ($name == 'light' or $name == 'light-grey') {
+            $active-bg-rgba: rgba($border-color, .2);
+            $active-border-color-rgba: darken($border-color, 8%);
+            $active-color: darken($color, 90%);
+            $normal-color: darken($color, 50%);
+            --#{$bs-prefix}btn-color: #{$normal-color};
+            --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
+            --#{$bs-prefix}btn-active-color: #{$active-color};
+            --#{$bs-prefix}btn-active-border-color: #{$active-border-color-rgba};
+            --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
+            --#{$bs-prefix}btn-hover-color: #{$active-color};
+            --#{$bs-prefix}btn-hover-border-color: #{$active-border-color-rgba};
+        } @else {
+            $active-bg-rgba: rgba(lighten($color, 15%), .3);
+            $active-border-color-rgba: darken($color, 8%);
+            $active-color-rgba: set-alt-color-level($color, $white, darken($color, 10%), 80);
+            --#{$bs-prefix}btn-color: #{$color};
+            --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
+            --#{$bs-prefix}btn-active-color: #{$active-color-rgba};
+            --#{$bs-prefix}btn-active-border-color: #{$color};
+            --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
+            --#{$bs-prefix}btn-hover-color: #{$active-color-rgba};
+            --#{$bs-prefix}btn-hover-border-color: #{$active-border-color-rgba};
+        }
+    }
+}
+
+@mixin make-flat-button-variant($name, $color) {
+    .btn-flat-#{$name} {
+        --#{$bs-prefix}btn-bg: transparent;
+        --#{$bs-prefix}btn-border-color: transparent;
+        --#{$bs-prefix}btn-border-width: 0;
+
+        @if ($name == 'light' or $name == 'light-grey') {
+            $active-bg-rgba: rgba($gray-500, .2);
+            $active-color: darken($color, 90%);
+            $normal-color: darken($color, 50%);
+            --#{$bs-prefix}btn-color: #{$normal-color};
+            --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
+            --#{$bs-prefix}btn-active-color: #{$active-color};
+            --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
+            --#{$bs-prefix}btn-hover-color: #{$active-color};
+        } @else {
+            $active-color-rgba: set-alt-color-level($color, darken($color, 15%), $white, 70);
+            --#{$bs-prefix}btn-color: #{$color};
+            --#{$bs-prefix}btn-active-bg: #{$color};
+            --#{$bs-prefix}btn-active-color: #{$active-color-rgba};
+            --#{$bs-prefix}btn-hover-color: #{$color};
+
+            $hover-bg-rgba: set-alt-color-level(
+                            $color, rgba(lighten($color, 20%), .3),
+                            rgba(lighten($color, 40%), .5), 58
+            );
+            --#{$bs-prefix}btn-hover-bg: #{$hover-bg-rgba};
         }
     }
 }

@@ -17,7 +17,7 @@
 @mixin make-solid-alert($name, $color) {
     .#{$prefix}alert-solid-#{$name} {
         background-color: $color;
-        color: set-foreground-color($color, $gray-900, $white-base, 70);
+        color: set-alt-color-level($color, $gray-900, $white-base, 70);
         @if (lightness($color) > 70) {
             color: $gray-900;
         } @else {
@@ -25,11 +25,11 @@
         }
 
         hr {
-            border-top-color: set-foreground-color($color, darken($color, 25%), rgba(darken($white-base, 4%), .5), 70);
+            border-top-color: set-alt-color-level($color, darken($color, 25%), rgba(darken($white-base, 4%), .5), 70);
         }
 
         .alert-link {
-            color: set-foreground-color($color, $gray-900, $white-base, 70);
+            color: set-alt-color-level($color, $gray-900, $white-base, 70);
         }
     }
 }
