@@ -2,8 +2,8 @@ import {defineComponent, h, ref, vModelCheckbox, vModelRadio, withDirectives} fr
 import {booleanProp, booleanTrueProp, defaultColorProp, inputProps, stringProp} from "../../mixins/CommonProps";
 import {useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemContent} from "./mixins/buttonApi";
 import {buttonSize, iconPosition} from "./mixins/buttonProps";
-import {TInputOptionItem, TToggleButtonOptionProps} from "./types";
 import {cssPrefix} from "../../mixins/CommonApi";
+import {TInputOptionItem, TToggleButtonOptionProps} from "./types";
 import BsButtonInner from "./BsButtonInner";
 
 export default defineComponent({
@@ -108,6 +108,9 @@ export default defineComponent({
                 ]
             );
         }
+        const rippleOff = (item: TInputOptionItem) => {
+            return props.disabled || props.readonly || item.disabled || item.readonly;
+        }
 
         return () => {
             return h("div", {
@@ -125,17 +128,14 @@ export default defineComponent({
                     return h("label", {
                         key: `btn-${idx}`,
                         class: useMakeInputItemClasses(item, cmpProps),
-                        // 'for': item.id,
                     }, [
                         makeInputEl(item, cmpProps),
                         h(BsButtonInner, {
-                            rippleOff: true,
-                            // rippleOff: props.disabled || props.readonly || item.disabled && item.readonly,
+                            rippleOff: rippleOff(item),
+                            // tagName: "div",
                         }, {
-                            default: () => useRenderToggleItemContent(
-                                slots, item, cmpProps,
-                            )
-                        })
+                            default: () => useRenderToggleItemContent(slots, item, cmpProps)
+                        }),
                     ]);
                 })
             );

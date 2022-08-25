@@ -13,8 +13,13 @@
     --#{$bs-prefix}btn-disabled-bg: #{$disabled-bg};
     --#{$bs-prefix}btn-disabled-border-color: #{$border-color};
     --#{$bs-prefix}btn-disabled-color: #{$gray-700};
+    position: relative;
     white-space: normal;
     word-wrap: break-word;
+
+    &.rounded-1 {
+        --#{$bs-prefix}btn-border-radius: #{$border-radius-sm};
+    }
 
     &:hover,
     &:active,
@@ -25,12 +30,12 @@
 
     &.readonly {
         @include box-shadow(none);
+        opacity: .75;
         cursor: default;
 
         &:not(.active) {
             background-color: var(--#{$bs-prefix}btn-bg);
             border-color: var(--#{$bs-prefix}btn-border-color);
-            opacity: .75;
         }
     }
 
@@ -66,21 +71,6 @@
         @include border-radius(var(--#{$bs-prefix}btn-border-radius));
         padding: 0;
 
-        > .#{$prefix}btn-inner {
-            @include flexbox((display: flex, justify-content: center, align-items: center));
-            padding: .425rem $padding-lg;
-
-            .#{$prefix}icon-left {
-                margin-right: $padding-sm;
-                margin-left: -$padding-sm;
-            }
-
-            .#{$prefix}icon-right {
-                margin-left: $padding-sm;
-                margin-right: -$padding-sm;
-            }
-        }
-
         &.dropdown-toggle {
             &::after {
                 @include align-self(center);
@@ -90,6 +80,22 @@
             > .#{$prefix}btn-inner {
                 padding: $btn-margin-basic ($padding-base - .2) $btn-margin-basic $padding-lg;
             }
+        }
+    }
+
+    .#{$prefix}btn-inner {
+        @include flexbox((display: flex, justify-content: center, align-items: center));
+        padding: .425rem $padding-lg;
+        width: 100%;
+
+        .#{$prefix}icon-left {
+            margin-right: $padding-sm;
+            margin-left: -$padding-sm;
+        }
+
+        .#{$prefix}icon-right {
+            margin-left: $padding-sm;
+            margin-right: -$padding-sm;
         }
     }
 
@@ -259,6 +265,17 @@
         > .btn:first-child,
         > .btn:last-child {
             --#{$bs-prefix}btn-border-radius: #{$border-radius-sm};
+        }
+    }
+
+    > .btn:not(:last-child) {
+        .#{$prefix}ripple {
+            @include border-right-radius(0);
+        }
+    }
+    > .btn:not(:first-child) {
+        .#{$prefix}ripple {
+            @include border-left-radius(0);
         }
     }
 }

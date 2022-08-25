@@ -10,7 +10,6 @@ const BsAnimationPlugin = {
         app.component(BsExpandTransition.name, BsExpandTransition);
         app.component(BsOverlay.name, BsOverlay);
         app.component(BsRipple.name, BsRipple);
-        // app.component("BsWave", BsWave);
     }
 }
 

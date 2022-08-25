@@ -1,17 +1,9 @@
-@import "~compass-mixins/lib/animate";
+@import "~compass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/animation/core";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/progressbar";
-
-@-webkit-keyframes #{$prefix}spin {
-    0% {
-        @include transform(rotate(0deg));
-    }
-    100% {
-        @include transform(rotate(360deg));
-    }
-}
 
 @keyframes #{$prefix}spin {
     0% {

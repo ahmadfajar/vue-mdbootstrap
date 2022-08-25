@@ -35,6 +35,7 @@ $md-transition-default-timing:      cubic-bezier(.4, 0, .2, 1);
 $md-transition-default-duration:    $transition-duration-base;
 $md-transition-default:             $md-transition-default-duration $md-transition-default-timing;
 $md-transition-easeOut:             $transition-duration-base $transition-easeOut;
+
 /**
  * The enter transition, used when the element is not visible on the screen
  * since the beginning of the animation and become visible

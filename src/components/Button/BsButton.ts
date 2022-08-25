@@ -147,7 +147,7 @@ export default defineComponent({
             return (!Helper.isEmpty(props.icon) || (slots.icon !== undefined));
         });
         const isDisabled = computed<boolean>(() => props.disabled && Helper.isEmpty(props.href));
-        const rippleWorks = computed<boolean>(() => !props.rippleOff && !isDisabled.value);
+        const rippleOff = computed<boolean>(() => props.rippleOff && isDisabled.value);
         const tagName = computed<string>(() => !Helper.isEmpty(props.href) ? 'a' : 'button');
 
         return () => {
@@ -161,7 +161,7 @@ export default defineComponent({
                     dropdownToggle: props.dropdownToggle,
                     iconMode: props.mode === 'icon',
                     hasIcon: hasIcon.value,
-                    rippleOff: !rippleWorks.value,
+                    rippleOff: rippleOff.value,
                 }, {
                     default: () => useRenderButtonContent(slots, cmpProps)
                 }),

@@ -73,13 +73,13 @@ export function getScrollTop(element: Window | HTMLElement): number {
     }
 }
 
-export function getOffset(el: HTMLElement): object {
-    const box = el.getBoundingClientRect();
+export function getOffset(element: HTMLElement): object {
+    const box = element.getBoundingClientRect();
     const body = document.body;
-    const clientTop = el.clientTop || body.clientTop || 0;
-    const clientLeft = el.clientLeft || body.clientLeft || 0;
-    const scrollTop = window.scrollY || el.scrollTop;
-    const scrollLeft = window.scrollX || el.scrollLeft;
+    const clientTop = element.clientTop || body.clientTop || 0;
+    const clientLeft = element.clientLeft || body.clientLeft || 0;
+    const scrollTop = window.scrollY || element.scrollTop;
+    const scrollLeft = window.scrollX || element.scrollLeft;
 
     return {
         top: box.top + scrollTop - clientTop,

@@ -10,13 +10,17 @@ export default defineComponent({
         iconMode: booleanProp,
         hasIcon: booleanProp,
         rippleOff: booleanProp,
+        tagName: {
+            type: String,
+            default: "span",
+        },
     },
     setup(props, {slots}) {
         return () =>
             h(BsRipple, {
                 class: {'dropdown-toggle': props.dropdownToggle && !props.iconMode},
                 disabled: props.rippleOff,
-                tag: "span"
+                tag: props.tagName
             }, {
                 default: () => h(
                     "span",
