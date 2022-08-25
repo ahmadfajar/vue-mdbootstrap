@@ -11,18 +11,32 @@ Released: September xx, 2022
 - Rewrite the components in the TypeScript language.
 - Add support for **Vue 3** and **Bootstrap v5.2**.
 - New components: **BsIconSpinner**, **BsIconSvg**, **BsProgressBar**
-- **BsIconToggle**: add property `size`.
+- **BsAlert**: add property `filled`, `iconVariant`, and `variant`.
+- **BsButton**: add slot `icon` for placing a custom icon.
 - **BsMaskLoader**: add property `variant`.
 - **BsOverlay**: add event `click`.
+- **BsToggleButton**: add property `pill`, and `rounded`.
+- **BsToggleIcon**: add property `size`.
 
 #### Breaking Changes
 
-- Remove the **FontAwesome icons** from the bundle, in favor of dynamic 
+- Removed **FontAwesome icons** from package bundle, in favor of dynamic 
   loading of **[Google Material Icons](https://fonts.google.com/icons?icon.set=Material+Icons)**.
+- All components which have `value` property is replaced with `modelValue` property.
+  See [Vue 3 Migration Guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html).
+- All `input` event is replaced with `update:modelValue` event, so it can be integrated with `v-model` directive.
+  See [Vue 3 Migration Guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html).
+- **BsAlert**: replace property `iconOutlined` with `iconVariant` for flexibility. 
+  Property `solid-fill` is deprecated, use property `filled` instead, and replaced property `value` with `modelValue`.
+- **BsButton**: removed properties `block` 
+  see [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#block-buttons) on how to achieve 
+  the same result and `iconFixed` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid) 
+  is removed from package bundle.
+- **BsButtonToggle**: is deprecated, use **BsToggleButton** instead. Replaced property `value` with `modelValue`.
 - **BsIcon**: replace property `rotation` with `rotate`.
-- **BsIconToggle**: replace property `value` with `modelValue`.
-- **BsRipple**: remove properties `active`, `centered` and `eventTrigger`.
+- **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
+- **BsRipple**: removed properties `active` and `eventTrigger`.
 
 
 ## v1.2.2

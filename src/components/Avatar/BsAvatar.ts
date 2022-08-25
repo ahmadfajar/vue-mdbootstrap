@@ -1,11 +1,11 @@
 import {defineComponent, h} from "vue";
 import {BsIcon} from "../Icon";
-import {flip, rotate} from "../Icon/mixins/SvgProps";
 import {useShapeClasses} from "../Basic/mixins/imageApi";
 import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/IconApi";
 import {useAvatarIconSize, useCreateIconProps, useRenderAvatarImage} from "./mixins/avatarApi";
 import {booleanProp, booleanTrueProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
+import {iconProps} from "./mixins/avatarProps";
 import {TAvatarOptionProps} from "./types";
 
 export default defineComponent({
@@ -46,32 +46,6 @@ export default defineComponent({
          */
         rounded: booleanProp,
         /**
-         * Display an icon as avatar. Use valid
-         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons) icon name.
-         * @type {string}
-         */
-        icon: stringProp,
-        /**
-         * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
-         * @type {string}
-         */
-        iconFlip: flip,
-        /**
-         * Rotate the icon, valid values are: `90`, `180`, `270`.
-         * @type {string|number}
-         */
-        iconRotation: rotate,
-        /**
-         * Apply **spin** animation to the icon.
-         * @type {boolean}
-         */
-        iconSpin: booleanProp,
-        /**
-         * Apply **pulse** animation to the icon.
-         * @type {boolean}
-         */
-        iconPulse: booleanProp,
-        /**
          * The image location to place inside this component.
          * @type {string}
          */
@@ -83,6 +57,7 @@ export default defineComponent({
          * @type {string}
          */
         text: stringProp,
+        ...iconProps,
     },
     setup(props, {slots}) {
         const cmpProps = props as Readonly<TAvatarOptionProps>;

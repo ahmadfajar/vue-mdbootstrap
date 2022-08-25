@@ -1,0 +1,38 @@
+@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins/alerts";
+
+.alert {
+    --#{$bs-prefix}alert-link-color: inherit;
+    --#{$bs-prefix}alert-hr-color: inherit;
+
+    hr {
+        border-top: 1px solid var(--#{$bs-prefix}alert-hr-color);
+        opacity: 0.4;
+    }
+
+    .alert-link {
+        color: var(--#{$bs-prefix}alert-link-color);
+    }
+
+    &.alert-dismissible {
+        padding-right: 1rem;
+
+        > .close {
+            padding: .5rem;
+        }
+    }
+}
+
+@each $color-name, $value in $theme-colors {
+    $background-color: theme-color-level($theme-colors, $color-name, $alert-bg-level);
+    $border-color: theme-color-level($theme-colors, $color-name, $alert-border-level);
+    $text-color: theme-color-level($theme-colors, $color-name, $alert-color-level);
+    @include alert-variant($color-name, $background-color, $border-color, $text-color);
+
+    $outline-color: theme-color-level($theme-colors, $color-name, $alert-color-level);
+    @include make-outline-alert-variant($color-name, $outline-color);
+    @include make-solid-alert-variant($color-name, $value);
+}

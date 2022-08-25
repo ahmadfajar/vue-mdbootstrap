@@ -137,7 +137,7 @@ function useRenderSvgIcon(
     iconData: TIconData | undefined,
     height: number | string,
     width: number | string,
-    classes: unknown,
+    clazz: unknown,
 ): VNode {
     if (!iconData || !iconData.data) {
         return h("span");
@@ -149,11 +149,21 @@ function useRenderSvgIcon(
     const children = svgData.filter(el => el[0].startsWith("@_") === false);
     props["height"] = height;
     props["width"] = width;
-    props["class"] = classes;
+    props["class"] = clazz;
     props["fill"] = "currentColor";
     props["xmlns"] = "http://www.w3.org/2000/svg";
 
     return h("svg", props, renderChildNodes(children))
+}
+
+function useCreateSvgComponent(
+    data: string,
+    height: number | string,
+    width: number | string,
+    clazz: unknown,
+): VNode {
+    const svgData = {id: 123, name: 'svg', data: data} as TIconData;
+    return useRenderSvgIcon(svgData, height, width, clazz);
 }
 
 const spinnerSvgData = "M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z";
@@ -213,5 +223,6 @@ export {
     useCreateSvgNode,
     useCreateSvgCircleNode,
     useGoogleIcon,
-    useRenderSvgIcon
+    useRenderSvgIcon,
+    useCreateSvgComponent,
 }

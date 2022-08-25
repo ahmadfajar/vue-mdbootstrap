@@ -1,7 +1,7 @@
 import {computed, defineComponent, h} from "vue";
 import {booleanProp, booleanTrueProp, defaultColorProp, stringProp} from "../../mixins/CommonProps";
+import {iconProps} from "../Avatar/mixins/avatarProps";
 import {width as iconSize} from "../Icon/mixins/IconApi";
-import {flip as iconFlip, rotate as iconRotation} from "../Icon/mixins/SvgProps";
 import {buttonMode, buttonSize, buttonType, iconPosition} from "./mixins/buttonProps";
 import {useMakeButtonProps, useRenderButtonContent} from "./mixins/buttonApi";
 import {TButtonOptionProps} from "./types";
@@ -81,14 +81,6 @@ export default defineComponent({
          */
         size: buttonSize,
         /**
-         * Shortcut to insert component `BsIcon` inside this button component.
-         * Use any valid Google Material icon name, see
-         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-         * for details.
-         * @type {string}
-         */
-        icon: stringProp,
-        /**
          * Place icon on the `left` side (before text) or on the `right` side (after text).
          * @type {string}
          */
@@ -98,26 +90,6 @@ export default defineComponent({
          * @type {number}
          */
         iconSize,
-        /**
-         * Apply **spin** animation to the icon.
-         * @type {boolean}
-         */
-        iconSpin: booleanProp,
-        /**
-         * Apply **pulse** animation to the icon.
-         * @type {boolean}
-         */
-        iconPulse: booleanProp,
-        /**
-         * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
-         * @type {string}
-         */
-        iconFlip,
-        /**
-         * Rotate the icon, valid values are: `90`, `180`, `270`.
-         * @type {string|number}
-         */
-        iconRotation,
         /**
          * Enabled or disabled **ripple** effect.
          * @type {boolean}
@@ -133,6 +105,7 @@ export default defineComponent({
          * @type {string}
          */
         type: buttonType,
+        ...iconProps,
     },
     emits: ['click'],
     setup(props, {emit, slots}) {

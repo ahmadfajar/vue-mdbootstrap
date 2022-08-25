@@ -1,4 +1,4 @@
-/* BsAlert mixins */
+/* BsAlert mixins - backward compatibility */
 @mixin make-outline-alert($name, $color) {
     .#{$prefix}alert-outline-#{$name} {
         color: $color;
@@ -31,5 +31,45 @@
         .alert-link {
             color: set-alt-color-level($color, $gray-900, $white-base, 70);
         }
+    }
+}
+
+/* BsAlert variants mixins -- sass variables */
+@mixin alert-variant($name, $background, $border, $color) {
+    .alert-#{$name} {
+        --#{$bs-prefix}alert-bg: #{$background};
+        --#{$bs-prefix}alert-border-color: #{$border};
+        --#{$bs-prefix}alert-color: #{$color};
+
+        $hr-border-color: darken($border, 10%);
+        --#{$bs-prefix}alert-hr-color: #{$hr-border-color};
+
+        $link-color: mix(black, $color, 20%);
+        --#{$bs-prefix}alert-link-color: #{$link-color};
+    }
+}
+
+@mixin make-outline-alert-variant($name, $color) {
+    .#{$prefix}alert-outline-#{$name} {
+        $border-color: lighten($color, 5%);
+        $hr-border-color: darken($color, 5%);
+        $link-color: darken($color, 10%);
+
+        --#{$bs-prefix}alert-color: #{$color};
+        --#{$bs-prefix}alert-border-color: #{$border-color};
+        --#{$bs-prefix}alert-hr-color: #{$hr-border-color};
+        --#{$bs-prefix}alert-link-color: #{$link-color};
+    }
+}
+
+@mixin make-solid-alert-variant($name, $color) {
+    .#{$prefix}alert-solid-#{$name} {
+        $text-color: set-alt-color-level($color, $gray-900, $white, 70);
+        $hr-border-color: set-alt-color-level($color, darken($color, 25%), rgba(darken($white, 4%), .65), 70);
+
+        --#{$bs-prefix}alert-bg: #{$color};
+        --#{$bs-prefix}alert-color: #{$text-color};
+        --#{$bs-prefix}alert-link-color: #{$text-color};
+        --#{$bs-prefix}alert-hr-color: #{$hr-border-color};
     }
 }
