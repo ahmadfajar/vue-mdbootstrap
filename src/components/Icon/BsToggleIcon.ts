@@ -1,10 +1,11 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, Prop} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {toggleIconProps} from "./mixins/iconProps";
-import {TBsToggleIcon} from "./types";
+import {TBsIconSvg, TBsToggleIcon, TToggleIconOptionProps} from "./types";
+import {TRecord} from "../../types";
 import BsIconSvg from "./BsIconSvg";
 
-export default defineComponent<TBsToggleIcon, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsToggleIcon, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsToggleIcon",
     props: toggleIconProps,
     emits: [
@@ -14,15 +15,16 @@ export default defineComponent<TBsToggleIcon, unknown, unknown, ComputedOptions,
         "update:modelValue",
     ],
     setup(props, {emit}) {
+        const cmpProps = props as Readonly<TToggleIconOptionProps>;
         return () => h(
             "span", {
                 class: [`${cssPrefix}toggle-icon`],
-                onClick: () => emit("update:modelValue", !props.modelValue),
+                onClick: () => emit("update:modelValue", !cmpProps.modelValue),
             },
-            h(BsIconSvg, {
-                icon: props.modelValue ? props.toggleIcon : props.icon,
-                height: props.size,
-                width: props.size,
+            h<TBsIconSvg>(BsIconSvg, {
+                icon: (props.modelValue ? props.toggleIcon : props.icon) as Prop<string>,
+                height: props.size as Prop<string | number>,
+                width: props.size as Prop<string | number>,
             }),
         )
     }

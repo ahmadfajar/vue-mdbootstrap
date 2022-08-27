@@ -1,5 +1,5 @@
 import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, onMounted, watch} from "vue";
-import {TBsProgress} from "./types";
+import {TBsProgress, TProgressOptionProps} from "./types";
 import {
     useAttachStyleTag,
     useBufferMode,
@@ -16,20 +16,21 @@ export default defineComponent<TBsProgress, unknown, unknown, ComputedOptions, C
     name: "BsProgress",
     props: progressProps,
     setup(props) {
+        const cmpProps = props as Readonly<TProgressOptionProps>;
         const hasAmountFill = computed<boolean>(() => {
-            return useBufferMode(props) || useDeterminateMode(props);
+            return useBufferMode(cmpProps) || useDeterminateMode(cmpProps);
         });
-        const isProgressBar = computed<boolean>(() => props.type.toLowerCase() === "bar");
+        const isProgressBar = computed<boolean>(() => (props.type as string).toLowerCase() === "bar");
         const circleRadius = computed<number>(() => {
             return ((props.diameter as number) - (props.stroke as number)) / 2;
         });
         const circleCircumference = computed<number>(() => 2 * Math.PI * circleRadius.value);
         const circleStrokeDashOffset = computed<string | undefined>(() => {
-            if (useDeterminateMode(props)) {
-                return (circleCircumference.value * (100 - props.modelValue) / 100) + "px";
+            if (useDeterminateMode(cmpProps)) {
+                return (circleCircumference.value * (100 - (props.modelValue as number)) / 100) + "px";
             }
 
-            if (useIndeterminateMode(props) && useBrowserIE()) {
+            if (useIndeterminateMode(cmpProps) && useBrowserIE()) {
                 return (circleCircumference.value * 0.2) + "px";
             }
 
@@ -68,11 +69,11 @@ export default defineComponent<TBsProgress, unknown, unknown, ComputedOptions, C
 
         return () => {
             return isProgressBar.value ? useRenderProgressBar(
-                props, progressBarTrackStyle,
+                cmpProps, progressBarTrackStyle,
                 progressBarValueStyle,
                 progressBarBufferStyle,
             ) : useRenderProgressSpinner(
-                props, circleStrokeDashOffset,
+                cmpProps, circleStrokeDashOffset,
                 circleCircumference, circleRadius,
             );
         }

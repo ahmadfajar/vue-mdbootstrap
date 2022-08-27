@@ -6,10 +6,11 @@ import {
     EmitsOptions,
     TransitionProps
 } from "vue";
+import {TRecord} from "../../../types";
 
 export declare type TRipple = {
     uuid: string;
-    waveStyles: Record<string, unknown>;
+    waveStyles: TRecord;
 }
 
 export declare type TRippleData = {
@@ -41,6 +42,6 @@ export declare type TBsRipple = ComponentObjectPropsOptions<TRippleOptionProps>;
 
 export declare const BsExpandTransition: DefineComponent<TransitionProps>;
 
-export declare const BsOverlay: DefineComponent<TBsOverlay, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsOverlay: DefineComponent<TBsOverlay, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsRipple: DefineComponent<TBsRipple, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsRipple: DefineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

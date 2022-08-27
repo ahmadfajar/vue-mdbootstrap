@@ -1,5 +1,6 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
 import {TAvatarIconProps} from "../../Avatar/types";
+import {TRecord} from "../../../types";
 
 export declare type TChipOptionProps = TAvatarIconProps & {
     active?: boolean;
@@ -21,4 +22,4 @@ export declare type TChipOptionProps = TAvatarIconProps & {
 
 export declare type TBsChip = ComponentObjectPropsOptions<TChipOptionProps>;
 
-export declare const BsChip: DefineComponent<TBsChip, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsChip: DefineComponent<TBsChip, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

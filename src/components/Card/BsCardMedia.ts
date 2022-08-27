@@ -2,8 +2,9 @@ import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h
 import {cssPrefix} from "../../mixins/CommonApi";
 import {cardMediaProps} from "./mixins/cardProps";
 import {TBsCardMedia} from "./types";
+import {TRecord} from "../../types";
 
-export default defineComponent<TBsCardMedia, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsCardMedia, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCardMedia",
     props: cardMediaProps,
     setup(props, {slots}) {
@@ -26,13 +27,13 @@ export default defineComponent<TBsCardMedia, unknown, unknown, ComputedOptions, 
                     h("div", {
                             class: [`${cssPrefix}card-media-title`],
                         },
-                        props.title,
+                        props.title as string,
                     ),
                     props.subtitle
                         ? h("div", {
                                 class: [`${cssPrefix}card-media-subtitle`],
                             },
-                            props.subtitle,
+                            props.subtitle as string,
                         )
                         : null,
                 ]),

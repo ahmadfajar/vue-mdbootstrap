@@ -1,4 +1,4 @@
-import {ComputedRef, createCommentVNode, h, Slots, VNode} from "vue";
+import {ComputedRef, createCommentVNode, h, Prop, Slots, VNode} from "vue";
 import {cssPrefix, useRenderSlotWithWrapper} from "../../../mixins/CommonApi";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
 import {useSimpleRenderWithSlots} from "../../Card/mixins/cardApi";
@@ -6,19 +6,21 @@ import {TAlertOptionProps} from "../types";
 import {BsIcon} from "../../Icon";
 import {BsButton} from "../../Button";
 import Helper from "../../../utils/Helper";
+import {TBsIcon} from "../../Icon/types";
+import {TBsButton} from "../../Button/types";
 
 export function useAlertClassNames(
     props: Readonly<TAlertOptionProps>,
     colorName: ComputedRef<string | undefined>,
-): Record<string, boolean> {
+): Record<string, boolean | undefined> {
     const solid = props.filled || props.solidFill;
     return {
         'alert d-flex': true,
         'align-items-center': true,
         'alert-dismissible': props.dismissible,
-        [`alert-${colorName.value}`]: colorName.value && !props.outlined && !solid,
+        [`alert-${colorName.value}`]: !Helper.isEmpty(colorName.value) && !props.outlined && !solid,
+        [`${cssPrefix}alert-solid-${colorName.value}`]: !Helper.isEmpty(colorName.value) && solid && !props.outlined,
         [`${cssPrefix}alert-outline-${colorName.value}`]: props.outlined,
-        [`${cssPrefix}alert-solid-${colorName.value}`]: colorName.value && solid && !props.outlined,
     }
 }
 
@@ -62,7 +64,7 @@ export function useAlertIconName(props: Readonly<TAlertOptionProps>): string | u
 export function useRenderAlert(
     slots: Slots,
     props: Readonly<TAlertOptionProps>,
-    classNames: ComputedRef<Record<string, boolean>>,
+    classNames: ComputedRef<Record<string, boolean | undefined>>,
     alertIconName: ComputedRef<string | undefined>,
     dismissHandler: VoidFunction,
 ): VNode {
@@ -90,23 +92,23 @@ export function useRenderAlert(
             slots, 'alertIcon', Helper.uuid(), "div",
             {class: 'alert-icon me-3'},
             alertIconName.value
-                ? h(BsIcon, {
+                ? h<TBsIcon>(BsIcon, {
                     ...useCreateIconProps(props),
-                    icon: alertIconName.value,
-                    size: 32,
+                    icon: alertIconName.value as Prop<string>,
+                    size: 32 as Prop<number>,
                 })
                 : undefined, // createCommentVNode(" v-if-alert-icon ", true),
         ),
         useSimpleRenderWithSlots("div", slots, "flex-fill"),
         props.dismissible
-            ? h(BsButton, {
+            ? h<TBsButton>(BsButton, {
                 class: "ms-auto",
                 // color: "secondary",
-                transparent: true,
-                icon: "close",
-                mode: "icon",
+                transparent: true as Prop<boolean>,
+                icon: "close" as Prop<string>,
+                mode: "icon" as Prop<string>,
                 // size: "sm",
-                flat: true,
+                flat: true as Prop<boolean>,
                 onClick: (): void => dismissHandler()
             })
             : createCommentVNode(" v-if-alert-dismissible ", true),

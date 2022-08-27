@@ -1,9 +1,10 @@
 import {h, Slots, VNode} from "vue";
+import {TRecord} from "../../../types";
 
 export function useRenderCardImg(
-    imgSrc: string | undefined,
-    altText: string | undefined,
-    classes: string | Array<string> | Record<string, unknown>,
+    imgSrc?: string | undefined,
+    altText?: string | undefined,
+    classes?: string | Array<string> | TRecord,
 ): VNode {
     return h("img", {
         class: classes,
@@ -12,7 +13,7 @@ export function useRenderCardImg(
     })
 }
 
-export function useContentTag(type: string | undefined, tag?: string | undefined): string {
+export function useContentTag(type?: string | undefined, tag?: string | undefined): string {
     if (!tag) {
         return (type === 'title' ? 'h4' : type === 'subtitle' ? 'h5' : 'p');
     }
@@ -22,8 +23,8 @@ export function useContentTag(type: string | undefined, tag?: string | undefined
 export function useSimpleRenderWithSlots(
     type: string,
     slots?: Slots | undefined | null,
-    classes?: string | Array<string> | Record<string, unknown> | undefined | null,
-    styles?: string | Array<string> | Record<string, unknown> | undefined | null,
+    classes?: string | Array<string> | TRecord | undefined | null,
+    styles?: string | Array<string> | TRecord | undefined | null,
 ): VNode {
     if (styles) {
         return h(

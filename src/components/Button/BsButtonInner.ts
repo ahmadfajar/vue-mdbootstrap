@@ -1,25 +1,29 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, Prop} from "vue";
 import {BsRipple} from "../Animation";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {buttonInnerProps} from "./mixins/buttonProps";
-import {TBsButtonInner} from "./types";
+import {TBsButtonInner, TButtonInnerOptionProps} from "./types";
+import {TBsRipple} from "../Animation/types";
+import {TRecord} from "../../types";
 
-export default defineComponent<TBsButtonInner, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsButtonInner",
     props: buttonInnerProps,
     setup(props, {slots}) {
+        const cmpProps = props as Readonly<TButtonInnerOptionProps>;
+
         return () =>
-            h(BsRipple, {
-                class: {'dropdown-toggle': props.dropdownToggle && !props.iconMode},
-                disabled: props.rippleOff,
-                tag: props.tagName
+            h<TBsRipple>(BsRipple, {
+                class: {'dropdown-toggle': cmpProps.dropdownToggle && !cmpProps.iconMode},
+                disabled: cmpProps.rippleOff as Prop<boolean>,
+                tag: cmpProps.tagName as Prop<string>
             }, {
                 default: () => h(
                     "span",
                     {
                         class: [
                             `${cssPrefix}btn-inner`,
-                            props.hasIcon ? `${cssPrefix}has-icon` : '',
+                            cmpProps.hasIcon ? `${cssPrefix}has-icon` : '',
                         ],
                     },
                     slots.default && slots.default(),

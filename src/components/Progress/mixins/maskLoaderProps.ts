@@ -35,7 +35,7 @@ export const maskLoaderProps = {
     spinnerColor: primaryColorProp,
     /**
      * Mask loader spinner diameter.
-     * @type {number}
+     * @type {string|number}
      */
     spinnerDiameter: {
         type: [String, Number],
@@ -44,7 +44,7 @@ export const maskLoaderProps = {
     },
     /**
      * Mask loader spinner thickness.
-     * @type {number}
+     * @type {string|number}
      */
     spinnerThickness: {
         type: [String, Number],
@@ -68,7 +68,7 @@ export const maskLoaderProps = {
     transition: defaultTransitionProp,
     /**
      * Sets the css style `z-index` value.
-     * @type {number}
+     * @type {string|number}
      */
     zIndex: {
         type: [String, Number],

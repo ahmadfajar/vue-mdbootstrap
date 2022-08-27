@@ -13,7 +13,7 @@ export function useSizeOrWh(
     }
 }
 
-export function useShapeClasses(circle: boolean, rounded: boolean): object {
+export function useShapeClasses(circle?: boolean, rounded?: boolean): object {
     return {
         "rounded-circle": circle && !rounded,
         "rounded": rounded && !circle,

@@ -16,15 +16,15 @@ export const maskLoaderVariant = {
 }
 
 export function useBufferMode(props: Readonly<TProgressOptionProps>) {
-    return props.mode.toLowerCase() === 'buffer';
+    return (props.mode as string).toLowerCase() === 'buffer';
 }
 
 export function useDeterminateMode(props: Readonly<TProgressOptionProps>) {
-    return props.mode.toLowerCase() === 'determinate';
+    return (props.mode as string).toLowerCase() === 'determinate';
 }
 
 export function useIndeterminateMode(props: Readonly<TProgressOptionProps>) {
-    return props.mode.toLowerCase() === 'indeterminate';
+    return (props.mode as string).toLowerCase() === 'indeterminate';
 }
 
 export function useGetCSSAnimation(circleCircumference: number, diameter: number) {
@@ -70,7 +70,7 @@ export function useRenderProgressBar(
                 class: [
                     `${cssPrefix}progress-bar`,
                     `progress-bar-${props.color}`,
-                    `${cssPrefix}${props.mode.toLowerCase()}`,
+                    `${cssPrefix}${(props.mode as string).toLowerCase()}`,
                 ],
                 style: {
                     height: `${props.height}px`

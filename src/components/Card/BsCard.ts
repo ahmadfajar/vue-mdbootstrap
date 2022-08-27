@@ -2,14 +2,16 @@ import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h
 import {useRenderCardImg} from "./mixins/cardApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {cardProps} from "./mixins/cardProps";
-import {TBsCard} from "./types";
+import {TBsCard, TCardOptionProps} from "./types";
+import {TRecord} from "../../types";
 
-export default defineComponent<TBsCard, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsCard, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCard",
     props: cardProps,
     setup(props, {slots}) {
+        const cmpProps = props as Readonly<TCardOptionProps>;
         return () => h(
-            props.tag, {
+            props.tag as string, {
                 class: {
                     'card': true,
                     'rounded-0': props.rounded === false,
@@ -17,11 +19,11 @@ export default defineComponent<TBsCard, unknown, unknown, ComputedOptions, Compo
                 }
             }, [
                 props.imgTopSrc
-                    ? useRenderCardImg(props.imgTopSrc, props.imgTopAlt, "card-img-top")
+                    ? useRenderCardImg(cmpProps.imgTopSrc, cmpProps.imgTopAlt, "card-img-top")
                     : null,
                 slots.default && slots.default(),
-                props.imgBottomSrc
-                    ? useRenderCardImg(props.imgBottomSrc, props.imgBottomAlt, "card-img-bottom")
+                cmpProps.imgBottomSrc
+                    ? useRenderCardImg(cmpProps.imgBottomSrc, cmpProps.imgBottomAlt, "card-img-bottom")
                     : null,
             ]
         )

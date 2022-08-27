@@ -1,5 +1,6 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
 import {TSizeOptionProps} from "../../Icon/types";
+import {TRecord} from "../../../types";
 
 export declare type TImageOptionProps = TSizeOptionProps & {
     circle?: boolean,
@@ -21,4 +22,4 @@ export declare type TAvatarOptionProps = TImageOptionProps & TAvatarIconProps & 
 
 export declare type TBsAvatar = ComponentObjectPropsOptions<TAvatarOptionProps>;
 
-export declare const BsAvatar: DefineComponent<TBsAvatar, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAvatar: DefineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

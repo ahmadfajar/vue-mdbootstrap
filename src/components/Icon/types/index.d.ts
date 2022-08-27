@@ -1,4 +1,5 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import {TRecord} from "../../../types";
 
 export declare type TIconData = {
     id: number;
@@ -25,7 +26,7 @@ export declare type TIconOptionProps = TSizeOptionProps & {
 
 export declare type TIconSpinnerOptionProps = {
     color?: string;
-    size?: number;
+    size?: string | number;
     pulse?: boolean;
     spin?: boolean;
 }
@@ -45,10 +46,10 @@ export declare type TBsIconSpinner = ComponentObjectPropsOptions<TIconSpinnerOpt
 
 export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptionProps>;
 
-export declare const BsIcon: DefineComponent<TBsIcon, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsIcon: DefineComponent<TBsIcon, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsIconSvg: DefineComponent<TBsIconSvg, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsIconSvg: DefineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsIconSpinner: DefineComponent<TBsIconSpinner, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsIconSpinner: DefineComponent<TBsIconSpinner, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsToggleIcon: DefineComponent<TBsToggleIcon, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsToggleIcon: DefineComponent<TBsToggleIcon, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

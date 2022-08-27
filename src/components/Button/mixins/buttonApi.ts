@@ -1,10 +1,12 @@
-import {h, Slots, VNode, VNodeArrayChildren} from "vue";
+import {h, Prop, Slots, VNode, VNodeArrayChildren} from "vue";
 import {TButtonOptionProps, TInputOptionItem, TToggleButtonOptionProps} from "../types";
 import {cssPrefix, useGenerateId, useRenderSlot} from "../../../mixins/CommonApi";
-import {TAvatarIconProps} from "../../Avatar/types";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
+import {TAvatarIconProps} from "../../Avatar/types";
+import {TRecord} from "../../../types";
 import {BsIcon} from "../../Icon";
 import Helper from "../../../utils/Helper";
+import {TBsIcon} from "../../Icon/types";
 
 export function useMakeButtonProps(
     props: Readonly<TButtonOptionProps>,
@@ -13,8 +15,8 @@ export function useMakeButtonProps(
 ) {
     return {
         class: {
-            'btn': ['icon', 'floating'].includes(props.mode) === false,
-            [`${cssPrefix}btn-${props.mode}`]: ['icon', 'floating'].includes(props.mode),
+            'btn': ['icon', 'floating'].includes(props.mode as string) === false,
+            [`${cssPrefix}btn-${props.mode}`]: ['icon', 'floating'].includes(props.mode as string),
             [`btn-outline-${props.color}`]: props.outlined && props.color && !props.transparent,
             [`btn-flat-${props.color}`]: !props.outlined && props.flat && props.color && !props.transparent,
             [`${cssPrefix}btn-transparent`]: !props.outlined && !props.flat && props.transparent,
@@ -48,7 +50,7 @@ function isInputItemSelected(
 export function useMakeInputItemClasses(
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>,
-): Record<string, unknown> | object {
+): TRecord | object {
     if (!item.id) {
         item.id = useGenerateId();
     }
@@ -70,7 +72,7 @@ export function useMakeInputItemClasses(
 export function useMakeInputItemAttrs(
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>,
-): Record<string, unknown> | object {
+): TRecord | object {
     const attr = {
         id: item.id,
         role: props.multiple ? 'checkbox' : 'radio',
@@ -118,11 +120,11 @@ export function useRenderIconWithSlot(
             slot, name,
             {key: Helper.uuid(true)},
             !Helper.isEmpty(props.icon)
-                ? h(BsIcon, {
+                ? h<TBsIcon>(BsIcon, {
                     class: {
                         [`${cssPrefix}icon-${iconPosition}`]: btnMode !== 'icon' && btnMode !== 'floating',
                     },
-                    size: iconSize,
+                    size: iconSize as Prop<string | number>,
                     ...useCreateIconProps(props),
                 }) : [],
             slotArgs,
@@ -138,7 +140,7 @@ export function useRenderButtonContent(
         (props.iconPosition === 'left')
             ? useRenderIconWithSlot(
                 slots, 'icon',
-                props.mode,
+                props.mode as string,
                 props,
                 props.iconPosition,
                 props.iconSize as number,
@@ -148,7 +150,7 @@ export function useRenderButtonContent(
         (props.iconPosition === 'right')
             ? useRenderIconWithSlot(
                 slots, 'icon',
-                props.mode,
+                props.mode as string,
                 props,
                 props.iconPosition,
                 props.iconSize as number,

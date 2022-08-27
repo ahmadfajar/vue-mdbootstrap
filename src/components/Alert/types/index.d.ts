@@ -1,5 +1,6 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
 import {TAvatarIconProps} from "../../Avatar/types";
+import {TRecord} from "../../../types";
 
 export declare type TAlertOptionProps = TAvatarIconProps & {
     color?: string;
@@ -16,4 +17,4 @@ export declare type TAlertOptionProps = TAvatarIconProps & {
 
 export declare type TBsAlert = ComponentObjectPropsOptions<TAlertOptionProps>;
 
-export declare const BsAlert: DefineComponent<TBsAlert, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAlert: DefineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

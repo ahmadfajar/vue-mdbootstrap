@@ -6,11 +6,12 @@ import {BsIcon} from "../../Icon";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
 import {useSimpleRenderWithSlots} from "../../Card/mixins/cardApi";
 import {TChipOptionProps} from "../types";
+import {TRecord} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 export function useChipClassNames(
     props: Readonly<TChipOptionProps>,
-    attrs: Record<string, unknown>,
+    attrs: TRecord,
 ): Record<string, boolean> {
     return {
         [`${cssPrefix}chip`]: true,
@@ -68,7 +69,7 @@ export function useRenderChip(
     tagName: string,
     rippleDisabled: boolean,
     slots: Slots,
-    attrs: Record<string, unknown>,
+    attrs: TRecord,
     props: Readonly<TChipOptionProps>,
     classNames: ComputedRef<Record<string, boolean>>,
     clickHandler: (event: (MouseEvent | TouchEvent)) => void,

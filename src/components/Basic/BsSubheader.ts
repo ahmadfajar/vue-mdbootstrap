@@ -3,8 +3,9 @@ import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
 import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {TBsSubheader} from "./types";
+import {TRecord} from "../../types";
 
-export default defineComponent<TBsSubheader, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsSubheader, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsSubheader",
     props: {
         /**

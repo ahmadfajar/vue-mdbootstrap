@@ -11,9 +11,10 @@ import {
 import {useRenderTransition} from "../../mixins/CommonApi";
 import {useAlertClassNames, useAlertColorName, useAlertIconName, useRenderAlert} from "./mixins/alertApi";
 import {alertProps} from "./mixins/alertProps";
-import {TBsAlert} from "./types";
+import {TAlertOptionProps, TBsAlert} from "./types";
+import {TRecord} from "../../types";
 
-export default defineComponent<TBsAlert, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsAlert",
     props: alertProps,
     emits: [
@@ -23,15 +24,16 @@ export default defineComponent<TBsAlert, unknown, unknown, ComputedOptions, Comp
         'update:modelValue'
     ],
     setup(props, {emit, slots}) {
+        const cmpProps = props as Readonly<TAlertOptionProps>;
         const dismiss = ref<boolean>(false);
         const colorName = computed<string | undefined>(
-            () => useAlertColorName(props)
+            () => useAlertColorName(cmpProps)
         );
         const alertIconName = computed<string | undefined>(
-            () => useAlertIconName(props)
+            () => useAlertIconName(cmpProps)
         );
-        const classNames = computed<Record<string, boolean>>(
-            () => useAlertClassNames(props, colorName)
+        const classNames = computed<Record<string, boolean | undefined>>(
+            () => useAlertClassNames(cmpProps, colorName)
         );
         const show = computed(() => !dismiss.value && props.modelValue);
         const dismissedAlert = () => {
@@ -50,9 +52,9 @@ export default defineComponent<TBsAlert, unknown, unknown, ComputedOptions, Comp
 
         return () =>
             useRenderTransition(
-                {name: props.transition},
+                {name: cmpProps.transition},
                 show.value
-                    ? useRenderAlert(slots, props, classNames, alertIconName, dismissedAlert)
+                    ? useRenderAlert(slots, cmpProps, classNames, alertIconName, dismissedAlert)
                     : createCommentVNode(" BsAlert ", true)
             )
     }

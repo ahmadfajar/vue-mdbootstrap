@@ -1,4 +1,5 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import {TRecord} from "../../../types";
 
 export declare type TBadgeOptionProps = {
     color?: string;
@@ -9,4 +10,4 @@ export declare type TBadgeOptionProps = {
 
 export declare type TBsBadge = ComponentObjectPropsOptions<TBadgeOptionProps>;
 
-export declare const BsBadge: DefineComponent<TBsBadge, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsBadge: DefineComponent<TBsBadge, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

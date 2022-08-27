@@ -4,8 +4,9 @@ import {cssPrefix} from "../../mixins/CommonApi";
 import {baseTagProps} from "../Card/mixins/cardProps";
 import {useCreateRipple} from "./mixins/rippleApi";
 import {IRippleEvent, TBsRipple} from "./types";
+import {TRecord} from "../../types";
 
-export default defineComponent<TBsRipple, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsRipple",
     props: {
         ...baseTagProps,
@@ -26,15 +27,15 @@ export default defineComponent<TBsRipple, unknown, unknown, ComputedOptions, Com
         const touchTimeout = ref<number>();
 
         return () => {
-            return h(props.tag, {
+            return h(props.tag as string, {
                 class: `${cssPrefix}ripple`,
                 onMousedownPassive: (event: IRippleEvent) => {
-                    !props.disabled && useCreateRipple(event, props.centered)
+                    !props.disabled && useCreateRipple(event, props.centered as boolean)
                 },
                 onTouchstartPassive: (event: IRippleEvent) => {
                     if (!props.disabled) {
                         touchTimeout.value = window.setTimeout(() => {
-                            useCreateRipple(event, props.centered)
+                            useCreateRipple(event, props.centered as boolean)
                         }, 100);
                     }
                 },

@@ -12,9 +12,10 @@ import {
 import {useRenderTransition} from "../../mixins/CommonApi";
 import {useChipClassNames, useRenderChip} from "./mixins/chipApi";
 import {chipProps} from "./mixins/chipProps";
-import {TBsChip} from "./types";
+import {TBsChip, TChipOptionProps} from "./types";
+import {TRecord} from "../../types";
 
-export default defineComponent<TBsChip, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsChip",
     props: chipProps,
     emits: [
@@ -36,12 +37,13 @@ export default defineComponent<TBsChip, unknown, unknown, ComputedOptions, Compo
         "update:modelValue",
     ],
     setup(props, {emit, attrs, slots}) {
+        const cmpProps = props as Readonly<TChipOptionProps>;
         const dismiss = ref<boolean>(false);
         const classNames = computed<Record<string, boolean>>(
-            () => useChipClassNames(props, attrs)
+            () => useChipClassNames(cmpProps, attrs)
         );
         const tagName = computed<string>(
-            () => props.href && !props.disabled ? 'a' : 'div'
+            () => cmpProps.href && !props.disabled ? 'a' : 'div'
         );
         const rippleDisabled = computed<boolean>(
             () => (
@@ -77,7 +79,7 @@ export default defineComponent<TBsChip, unknown, unknown, ComputedOptions, Compo
                 show.value
                     ? useRenderChip(
                         tagName.value, rippleDisabled.value, slots, attrs,
-                        props, classNames, clickHandler, dismissedChip,
+                        cmpProps, classNames, clickHandler, dismissedChip,
                     )
                     : createCommentVNode(" BsChip ", true)
             )

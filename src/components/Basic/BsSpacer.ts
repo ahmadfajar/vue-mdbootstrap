@@ -2,9 +2,10 @@ import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} f
 import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
 import {booleanTrueProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {TBsSpacer} from "./types";
+import {TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
-export default defineComponent<TBsSpacer, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsSpacer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsSpacer",
     props: {
         /**
@@ -21,7 +22,7 @@ export default defineComponent<TBsSpacer, unknown, unknown, ComputedOptions, Com
     setup(props) {
         return () => useSimpleRenderWithSlots("div", null,
             {'flex-grow-1': props.fill && !props.width},
-            {width: props.width ? Helper.sizeUnit(props.width) : null},
+            {width: props.width ? Helper.sizeUnit(props.width as string) : null},
         )
     }
 });

@@ -1,5 +1,6 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
 import {TAvatarIconProps} from "../../Avatar/types";
+import {TRecord} from "../../../types";
 
 export declare type TButtonInnerOptionProps = {
     dropdownToggle?: boolean;
@@ -61,8 +62,8 @@ export declare type TBsButton = ComponentObjectPropsOptions<TButtonOptionProps>;
 
 export declare type TBsToggleButton = ComponentObjectPropsOptions<TToggleButtonOptionProps>;
 
-export declare const BsButtonInner: DefineComponent<TBsButtonInner, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsButtonInner: DefineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsButton: DefineComponent<TBsButton, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsButton: DefineComponent<TBsButton, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsToggleButton: DefineComponent<TBsToggleButton, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsToggleButton: DefineComponent<TBsToggleButton, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

@@ -98,7 +98,7 @@ export function useEndRipple(data: TRippleData): void {
     }, 300);
 }
 
-export function useCreateRipple(event: IRippleEvent, centered: boolean) {
+export function useCreateRipple(event: IRippleEvent, centered?: boolean) {
     const target = event.currentTarget as HTMLElement;
     const rect = target.getBoundingClientRect();
     const top = event.pageY;

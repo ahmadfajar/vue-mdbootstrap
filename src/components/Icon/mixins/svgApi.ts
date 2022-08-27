@@ -4,6 +4,7 @@ import {XMLParser} from "fast-xml-parser";
 import {IconLib} from "./IconLib";
 import {TIconData} from "../types"
 import Helper from "../../../utils/Helper";
+import {TRecord} from "../../../types";
 
 function googleIconUrl(theme: string | undefined, icon: string, version: number): string {
     return `https://fonts.gstatic.com/s/i/materialicons${theme}/${icon}/v${version}/24px.svg`;
@@ -168,11 +169,11 @@ function useCreateSvgComponent(
 
 const spinnerSvgData = "M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z";
 
-type RawProps = VNodeProps & Record<string, unknown>;
+type RawProps = VNodeProps & TRecord;
 
 function useCreateSvgNode(
-    clazz: Array<string> | Record<string, unknown>,
-    style: Array<string> | Record<string, unknown>,
+    clazz: Array<string> | TRecord,
+    style: Array<string> | TRecord,
     focusable: boolean,
     aspectRatio?: string | null,
     viewBox?: string | null,
@@ -193,8 +194,8 @@ function useCreateSvgNode(
 }
 
 function useCreateSvgCircleNode(
-    clazz: Array<string> | Record<string, unknown>,
-    style: Array<string> | Record<string, unknown>,
+    clazz: Array<string> | TRecord,
+    style: Array<string> | TRecord,
     radius: number,
 ): VNode {
     return h("circle", {

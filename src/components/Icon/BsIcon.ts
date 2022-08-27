@@ -1,11 +1,12 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, Prop} from "vue";
 import {useSizeHeight, useSizeStyles, useSizeWidth} from "./mixins/iconApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {iconProps, iconSize as size} from "./mixins/iconProps";
-import {TBsIcon, TIconOptionProps} from "./types";
+import {TBsIcon, TBsIconSvg, TIconOptionProps} from "./types";
+import {TRecord} from "../../types";
 import BsIconSvg from "./BsIconSvg";
 
-export default defineComponent<TBsIcon, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsIcon, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsIcon",
     props: {
         /**
@@ -16,21 +17,22 @@ export default defineComponent<TBsIcon, unknown, unknown, ComputedOptions, Compo
         ...iconProps,
     },
     setup(props) {
-        const szHeight = useSizeHeight(props as Readonly<TIconOptionProps>);
-        const szWidth = useSizeWidth(props as Readonly<TIconOptionProps>);
+        const cmpProps = props as Readonly<TIconOptionProps>;
+        const szHeight = useSizeHeight(cmpProps) as Prop<string>;
+        const szWidth = useSizeWidth(cmpProps) as Prop<string>;
 
         return () => h(
             "span", {
                 class: [`${cssPrefix}icon`],
-                style: useSizeStyles(props as Readonly<TIconOptionProps>),
-            }, h(BsIconSvg, {
-                icon: props.icon,
+                style: useSizeStyles(cmpProps),
+            }, h<TBsIconSvg>(BsIconSvg, {
+                icon: cmpProps.icon as Prop<string>,
                 height: szHeight,
                 width: szWidth,
-                spin: props.spin,
-                pulse: props.pulse,
-                flip: props.flip,
-                rotate: props.rotate,
+                spin: cmpProps.spin as Prop<boolean>,
+                pulse: cmpProps.pulse as Prop<boolean>,
+                flip: cmpProps.flip as Prop<string>,
+                rotate: cmpProps.rotate as Prop<string>,
             }),
         );
     }

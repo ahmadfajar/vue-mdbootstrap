@@ -3,16 +3,17 @@ import {findIcon, useGoogleIcon, useRenderSvgIcon} from "./mixins/svgApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {iconProps} from "./mixins/iconProps";
 import {TBsIconSvg, TIconData} from "./types";
+import {TRecord} from "../../types";
 
-export default defineComponent<TBsIconSvg, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsIconSvg",
     props: iconProps,
     data: () => ({
-        svgIcon: undefined as TIconData | undefined,
+        svgIcon: (undefined as TIconData | undefined),
     }),
     computed: {
         iconData(): TIconData | undefined {
-            return findIcon(this.icon);
+            return findIcon(this.icon as string);
         },
         svgClasses() {
             return [
@@ -33,12 +34,14 @@ export default defineComponent<TBsIconSvg, unknown, unknown, ComputedOptions, Co
     watch: {
         async iconData(newVal: TIconData | undefined) {
             if (newVal) {
+                // @ts-ignore
                 this.svgIcon = await useGoogleIcon(newVal);
             }
         }
     },
     async beforeMount() {
         if (this.iconData) {
+            // @ts-ignore
             this.svgIcon = await useGoogleIcon(this.iconData);
         }
     },

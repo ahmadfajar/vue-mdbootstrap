@@ -3,8 +3,9 @@ import {cssPrefix, useRenderTransition} from "../../mixins/CommonApi";
 import {preventEventTarget} from "../../mixins/DomHelper";
 import {overlayProps} from "./mixins/overlayProps";
 import {TBsOverlay} from "./types";
+import {TRecord} from "../../types";
 
-export default defineComponent<TBsOverlay, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsOverlay, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsOverlay",
     props: overlayProps,
     emits: ["click"],
