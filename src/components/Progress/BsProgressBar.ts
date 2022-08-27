@@ -1,50 +1,11 @@
-import {computed, defineComponent, h} from "vue";
-import {booleanProp, stringOrNumberProp, stringProp} from "../../mixins/CommonProps";
+import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import {progressBarProps} from "./mixins/progressBarProps";
+import {TBsProgressBar} from "./types";
 import Helper from "../../utils/Helper";
 
-export default defineComponent({
+export default defineComponent<TBsProgressBar, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsProgressBar",
-    props: {
-        /**
-         * The component color appearance.
-         * @type {string}
-         */
-        color: stringProp,
-        /**
-         * The ProgressBar thickness.
-         * @type {string|number}
-         */
-        height: stringOrNumberProp,
-        /**
-         * The value monitored by `v-model` to control the progress bar value.
-         * @type {number}
-         */
-        modelValue: {
-            type: Number,
-            default: 0,
-            validator: (value: number): boolean => value >= 0 && value <= 100
-        },
-        /**
-         * Remove circle radius on progress bar's sides.
-         * @type {boolean}
-         */
-        flat: booleanProp,
-        /**
-         * Create striped ProgressBar.
-         * @type {boolean}
-         */
-        striped: booleanProp,
-        /**
-         * Create animated stripe ProgressBar.
-         * @type {boolean}
-         */
-        stripedAnimation: booleanProp,
-        /**
-         * Display progress bar's value or not.
-         * @type {boolean}
-         */
-        showValue: booleanProp,
-    },
+    props: progressBarProps,
     setup(props) {
         const progressBarValueStyle = computed<string>(() => {
             return `width: ${props.modelValue}%`;
@@ -52,7 +13,7 @@ export default defineComponent({
 
         return () => {
             return h("div", {
-                class: ["progress", props.flat ? "rounded-0" : ""],
+                class: ["progress", props.rounded === false ? "rounded-0" : ""],
                 style: {
                     height: Helper.sizeUnit(props.height)
                 }

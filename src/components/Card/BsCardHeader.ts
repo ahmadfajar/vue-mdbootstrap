@@ -1,16 +1,11 @@
-import {defineComponent} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} from "vue";
 import {useSimpleRenderWithSlots} from "./mixins/cardApi";
-import {tagProp} from "../../mixins/CommonProps";
+import {TBsCardHeader} from "./types";
+import {baseTagProps} from "./mixins/cardProps";
 
-export default defineComponent({
+export default defineComponent<TBsCardHeader, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCardHeader",
-    props: {
-        /**
-         * Html tag used to render the card header.
-         * @type {string|*}
-         */
-        tag: tagProp
-    },
+    props: baseTagProps,
     setup(props, {slots}) {
         return () => useSimpleRenderWithSlots(props.tag, slots, "card-header");
     }

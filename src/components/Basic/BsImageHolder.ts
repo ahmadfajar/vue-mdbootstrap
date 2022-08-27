@@ -1,81 +1,14 @@
-import {defineComponent, h} from "vue";
-import {useCreateSvgNode} from "../Icon/mixins/SvgApi";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import {useCreateSvgNode} from "../Icon/mixins/svgApi";
 import {useShapeClasses, useSizeOrWh} from "./mixins/imageApi";
-import {booleanProp, stringOrNumberProp, stringProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
+import {imageHolderProps} from "./mixins/imageHolderProps";
+import {TBsImageHolder} from "./types";
 import Helper from "../../utils/Helper";
 
-export default defineComponent({
+export default defineComponent<TBsImageHolder, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsImageHolder",
-    props: {
-        /**
-         * This component's height.
-         * @type {number}
-         */
-        height: stringOrNumberProp,
-        /**
-         * This component's width.
-         * @type {number}
-         */
-        width: stringOrNumberProp,
-        /**
-         * Shortcut to create this component with equal height and width.
-         * @type {number}
-         */
-        size: stringOrNumberProp,
-        /**
-         * Create this component with circle shape.
-         * @type {boolean}
-         */
-        circle: booleanProp,
-        /**
-         * Create this component with rounded shape.
-         * @type {boolean}
-         */
-        rounded: booleanProp,
-        /**
-         * This component's background color, must be in html hex coloring number.
-         * @type {string}
-         */
-        bgColor: {
-            type: String,
-            default: "#868e96"
-        },
-        /**
-         * This component's text color, must be in html hex coloring number.
-         * @type {string}
-         */
-        textColor: {
-            type: String,
-            default: "#dee2e6"
-        },
-        /**
-         * Short text as placeholder `[deprecated]`.
-         * @type {string}
-         */
-        placeHolder: stringProp,
-        /**
-         * Short text as placeholder.
-         * @type {string}
-         */
-        placeholderText: stringProp,
-        /**
-         * Text placeholder X position.
-         * @type {string|number}
-         */
-        xPos: {
-            type: [String, Number],
-            default: "50%"
-        },
-        /**
-         * Text placeholder Y position.
-         * @type {string|number}
-         */
-        yPos: {
-            type: [String, Number],
-            default: "50%"
-        },
-    },
+    props: imageHolderProps,
     setup(props) {
         const showText = () => {
             return !Helper.isEmpty(props.placeholderText) || !Helper.isEmpty(props.placeHolder);

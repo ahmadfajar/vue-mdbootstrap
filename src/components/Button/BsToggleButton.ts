@@ -1,92 +1,31 @@
-import {defineComponent, h, ref, vModelCheckbox, vModelRadio, withDirectives} from "vue";
-import {booleanProp, booleanTrueProp, defaultColorProp, inputProps, stringProp} from "../../mixins/CommonProps";
+import {
+    ComponentOptionsMixin,
+    ComputedOptions,
+    defineComponent,
+    EmitsOptions,
+    h,
+    ref,
+    vModelCheckbox,
+    vModelRadio,
+    withDirectives
+} from "vue";
 import {useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemContent} from "./mixins/buttonApi";
-import {buttonSize, iconPosition} from "./mixins/buttonProps";
+import {TBsToggleButton, TInputOptionItem, TToggleButtonOptionProps} from "./types";
+import {toggleButtonProps} from "./mixins/buttonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {TInputOptionItem, TToggleButtonOptionProps} from "./types";
 import BsButtonInner from "./BsButtonInner";
 
-export default defineComponent({
+export default defineComponent<TBsToggleButton, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsToggleButton",
-    props: {
-        ...inputProps,
+    props: toggleButtonProps,
+    emits: [
         /**
-         * The number of items stored in the collection.
-         * @type {Array}
+         * Callback fired when this component's value is updated.
          */
-        items: {
-            type: Array,
-            default: undefined
-        },
-        /**
-         * Allow multiple choice or not.
-         * @type {boolean}
-         */
-        multiple: booleanProp,
-        /**
-         * The input value to be monitored by `v-model`.
-         * @type {string|boolean|Number|Array}
-         */
-        modelValue: {
-            type: [String, Number, Boolean, Array],
-            default: undefined
-        },
-        /**
-         * Render this button with flat style (Google Material Text Button) or not.
-         * @type {boolean}
-         */
-        flat: booleanProp,
-        /**
-         * Render this button with outlined style (Google Material Outlined Button) or not, see
-         * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#outline-buttons)}
-         * for details.
-         * @type {boolean}
-         */
-        outlined: booleanProp,
-        /**
-         * Render this button with raised style (Google Material Elevated Button) or not.
-         * @type {boolean}
-         */
-        raised: booleanProp,
-        /**
-         * Render this button with rounded style or not, see
-         * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/)}
-         * for details.
-         * @type {boolean}
-         */
-        rounded: booleanProp,
-        /**
-         * Render button with rounded-pill style (Google Material Button) or not.
-         * @type {boolean}
-         */
-        pill: booleanTrueProp,
-        /**
-         * This button size, see
-         * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#sizes)}
-         * for details.
-         * @type {string}
-         */
-        size: buttonSize,
-        /**
-         * Sets this button color.
-         * @type {string}
-         */
-        color: defaultColorProp,
-        /**
-         * Color to apply when Button is active or selected.
-         * @type {string}
-         */
-        toggleColor: stringProp,
-        /**
-         * Place icon at `left` (before text) or at `right` (after text).
-         * @type {string}
-         */
-        iconPosition: iconPosition,
-    },
-    emits: ['update:modelValue'],
+        'update:modelValue'
+    ],
     setup(props, {emit, slots}) {
         const localValue = ref<string | number | boolean | Array<unknown> | undefined>(props.modelValue);
-        const cmpProps = props as Readonly<TToggleButtonOptionProps>;
         const makeInputEl = (item: TInputOptionItem, props: Readonly<TToggleButtonOptionProps>) => {
             return withDirectives(
                 h("input", {
@@ -127,14 +66,14 @@ export default defineComponent({
                 (props.items as Array<TInputOptionItem>)?.map((item: TInputOptionItem, idx: number) => {
                     return h("label", {
                         key: `btn-${idx}`,
-                        class: useMakeInputItemClasses(item, cmpProps),
+                        class: useMakeInputItemClasses(item, props),
                     }, [
-                        makeInputEl(item, cmpProps),
+                        makeInputEl(item, props),
                         h(BsButtonInner, {
                             rippleOff: rippleOff(item),
                             // tagName: "div",
                         }, {
-                            default: () => useRenderToggleItemContent(slots, item, cmpProps)
+                            default: () => useRenderToggleItemContent(slots, item, props)
                         }),
                     ]);
                 })

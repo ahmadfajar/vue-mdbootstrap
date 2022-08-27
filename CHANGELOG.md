@@ -28,11 +28,13 @@ Released: September xx, 2022
   See [Vue 3 Migration Guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html).
 - **BsAlert**: replace property `iconOutlined` with `iconVariant` for flexibility. 
   Property `solid-fill` is deprecated, use property `filled` instead, and replaced property `value` with `modelValue`.
+- **BsAvatar**: removed property `center`. 
 - **BsButton**: removed properties `block` 
   see [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#block-buttons) on how to achieve 
   the same result and `iconFixed` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid) 
   is removed from package bundle.
 - **BsButtonToggle**: is deprecated, use **BsToggleButton** instead. Replaced property `value` with `modelValue`.
+- **BsCard**: replace property `flat` with `rounded`.
 - **BsIcon**: replace property `rotation` with `rotate`.
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.

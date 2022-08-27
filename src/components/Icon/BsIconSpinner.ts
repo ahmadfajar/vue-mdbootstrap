@@ -1,33 +1,11 @@
 import {defineComponent, h} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {booleanProp, stringProp} from "../../mixins/CommonProps";
-import {width as defaultSize} from "./mixins/IconApi";
-import {spinnerSvgData, useCircleSizeStyles, useCreateSvgNode} from "./mixins/SvgApi";
+import {iconSpinnerProps} from "./mixins/iconProps";
+import {spinnerSvgData, useCircleSizeStyles, useCreateSvgNode} from "./mixins/svgApi";
 
 export default defineComponent({
     name: "BsIconSpinner",
-    props: {
-        /**
-         * The Icon color.
-         * @type {string}
-         */
-        color: stringProp,
-        /**
-         * The icon’s size in pixel.
-         * @type {number}
-         */
-        size: defaultSize,
-        /**
-         * Apply **pulse** animation to the icon.
-         * @type {boolean}
-         */
-        pulse: booleanProp,
-        /**
-         * Apply **spin** animation to the icon.
-         * @type {boolean}
-         */
-        spin: booleanProp,
-    },
+    props: iconSpinnerProps,
     setup(props) {
         return () => {
             return useCreateSvgNode(

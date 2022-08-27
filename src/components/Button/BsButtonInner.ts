@@ -1,20 +1,12 @@
-import {defineComponent, h} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
 import {BsRipple} from "../Animation";
-import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
+import {buttonInnerProps} from "./mixins/buttonProps";
+import {TBsButtonInner} from "./types";
 
-export default defineComponent({
+export default defineComponent<TBsButtonInner, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsButtonInner",
-    props: {
-        dropdownToggle: booleanProp,
-        iconMode: booleanProp,
-        hasIcon: booleanProp,
-        rippleOff: booleanProp,
-        tagName: {
-            type: String,
-            default: "span",
-        },
-    },
+    props: buttonInnerProps,
     setup(props, {slots}) {
         return () =>
             h(BsRipple, {

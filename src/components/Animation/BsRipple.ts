@@ -1,12 +1,14 @@
-import {defineComponent, h, ref} from "vue";
-import {booleanProp, tagProp} from "../../mixins/CommonProps";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, ref} from "vue";
+import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
+import {baseTagProps} from "../Card/mixins/cardProps";
 import {useCreateRipple} from "./mixins/rippleApi";
-import {IRippleEvent} from "./types";
+import {IRippleEvent, TBsRipple} from "./types";
 
-export default defineComponent({
+export default defineComponent<TBsRipple, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsRipple",
     props: {
+        ...baseTagProps,
         /**
          * Start animation from center or from mouse click position.
          * If true then animation always start from center, otherwise animation
@@ -19,11 +21,6 @@ export default defineComponent({
          * @type {boolean}
          */
         disabled: booleanProp,
-        /**
-         * Html tag used to render the component.
-         * @type {string}
-         */
-        tag: tagProp
     },
     setup(props, {slots}) {
         const touchTimeout = ref<number>();

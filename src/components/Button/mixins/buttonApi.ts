@@ -9,7 +9,7 @@ import Helper from "../../../utils/Helper";
 export function useMakeButtonProps(
     props: Readonly<TButtonOptionProps>,
     disabled: boolean,
-    buttonType?: string | null,
+    buttonType?: string | undefined,
 ) {
     return {
         class: {

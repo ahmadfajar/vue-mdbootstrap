@@ -1,50 +1,12 @@
-import {defineComponent} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} from "vue";
+import {findIcon, useGoogleIcon, useRenderSvgIcon} from "./mixins/svgApi";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {booleanProp} from "../../mixins/CommonProps";
-import {flip, iconName, rotate} from "./mixins/SvgProps";
-import {height, width} from "./mixins/IconApi";
-import {findIcon, useGoogleIcon, useRenderSvgIcon} from "./mixins/SvgApi";
-import {TIconData} from "./types";
+import {iconProps} from "./mixins/iconProps";
+import {TBsIconSvg, TIconData} from "./types";
 
-export default defineComponent({
+export default defineComponent<TBsIconSvg, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsIconSvg",
-    props: {
-        /**
-         * The SVG icon’s name.
-         * @type {string}
-         */
-        icon: iconName,
-        /**
-         * The SVG icon’s height in pixel.
-         * @type {number}
-         */
-        height,
-        /**
-         * The SVG icon’s width in pixel.
-         * @type {number}
-         */
-        width,
-        /**
-         * Apply **pulse** animation to the icon.
-         * @type {boolean}
-         */
-        pulse: booleanProp,
-        /**
-         * Apply **spin** animation to the icon.
-         * @type {boolean}
-         */
-        spin: booleanProp,
-        /**
-         * Flip the SVG icon, valid values are: `horizontal`, `vertical`, `both`.
-         * @type {string}
-         */
-        flip,
-        /**
-         * Rotate the icon, valid values are: `90`, `180`, `270`.
-         * @type {number}
-         */
-        rotate,
-    },
+    props: iconProps,
     data: () => ({
         svgIcon: undefined as TIconData | undefined,
     }),

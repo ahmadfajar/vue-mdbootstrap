@@ -1,16 +1,11 @@
-import {defineComponent} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} from "vue";
 import {useSimpleRenderWithSlots} from "./mixins/cardApi";
-import {tagProp} from "../../mixins/CommonProps";
+import {TBsCardFooter} from "./types";
+import {baseTagProps} from "./mixins/cardProps";
 
-export default defineComponent({
+export default defineComponent<TBsCardFooter, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCardFooter",
-    props: {
-        /**
-         * Html tag used to render the card footer.
-         * @type {string|*}
-         */
-        tag: tagProp
-    },
+    props: baseTagProps,
     setup(props, {slots}) {
         return () => useSimpleRenderWithSlots(props.tag, slots, "card-footer");
     }

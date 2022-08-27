@@ -1,92 +1,57 @@
-import {defineComponent, h} from "vue";
-import {BsIcon} from "../Icon";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
 import {useShapeClasses} from "../Basic/mixins/imageApi";
-import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/IconApi";
+import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/iconApi";
 import {useAvatarIconSize, useCreateIconProps, useRenderAvatarImage} from "./mixins/avatarApi";
-import {booleanProp, booleanTrueProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {iconProps} from "./mixins/avatarProps";
-import {TAvatarOptionProps} from "./types";
+import {cssPrefix, useRenderSlot} from "../../mixins/CommonApi";
+import {avatarProps} from "./mixins/avatarProps";
+import {BsIcon} from "../Icon";
+import {TBsAvatar} from "./types";
+import Helper from "../../utils/Helper";
 
-export default defineComponent({
+export default defineComponent<TBsAvatar, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: 'BsAvatar',
-    props: {
-        /**
-         * This component's height.
-         * @type {number}
-         */
-        height: validStringOrNumberProp,
-        /**
-         * This component's width.
-         * @type {number}
-         */
-        width: validStringOrNumberProp,
-        /**
-         * Shortcut to create this component with equal height and width.
-         * @type {number}
-         */
-        size: {
-            type: [Number, String],
-            default: 48,
-            validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
-        },
-        /**
-         * Align item inside, at the middle of this component. [`deprecated`]
-         * @type {boolean}
-         */
-        center: booleanTrueProp,
-        /**
-         * Create this component with circle shape.
-         * @type {boolean}
-         */
-        circle: booleanProp,
-        /**
-         * Create this component with rounded shape.
-         * @type {boolean}
-         */
-        rounded: booleanProp,
-        /**
-         * The image location to place inside this component.
-         * @type {string}
-         */
-        imgSrc: stringProp,
-        /**
-         * The text to display inside the component.
-         * Use short text (1 to 3 characters) to properly display it.
-         * The text will be transformed to uppercase.
-         * @type {string}
-         */
-        text: stringProp,
-        ...iconProps,
-    },
+    props: avatarProps,
     setup(props, {slots}) {
-        const cmpProps = props as Readonly<TAvatarOptionProps>;
-
         return () =>
             h('div',
                 {
                     class: {
                         [`${cssPrefix}avatar`]: true,
-                        'p-2': useGetCalcSize(cmpProps) > 72,
+                        'p-2': useGetCalcSize(props) > 72,
                         ...useShapeClasses(props.circle, props.rounded),
                     },
-                    style: useSizeStyles(cmpProps),
-                },
-                slots.default
-                    ? slots.default()
-                    : (
+                    style: useSizeStyles(props),
+                }, useRenderSlot(
+                    slots, 'default', {key: Helper.uuid()},
+                    (
                         (props.imgSrc && props.imgSrc !== '')
-                            ? useRenderAvatarImage(cmpProps)
+                            ? useRenderAvatarImage(props)
                             : (props.icon && props.icon !== '')
                                 ? h(BsIcon, {
-                                    size: useAvatarIconSize(cmpProps),
-                                    ...useCreateIconProps(cmpProps),
+                                    size: useAvatarIconSize(props),
+                                    ...useCreateIconProps(props),
                                 })
                                 : h('span',
                                     {class: [`${cssPrefix}avatar-text`]},
                                     props.text || '?',
                                 )
                     )
+                )
+                // slots.default
+                //     ? slots.default()
+                //     : (
+                //         (props.imgSrc && props.imgSrc !== '')
+                //             ? useRenderAvatarImage(props)
+                //             : (props.icon && props.icon !== '')
+                //                 ? h(BsIcon, {
+                //                     size: useAvatarIconSize(props),
+                //                     ...useCreateIconProps(props),
+                //                 })
+                //                 : h('span',
+                //                     {class: [`${cssPrefix}avatar-text`]},
+                //                     props.text || '?',
+                //                 )
+                //     )
             )
     }
 });

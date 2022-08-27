@@ -1,9 +1,10 @@
-import {defineComponent} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} from "vue";
 import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
 import {booleanTrueProp, validStringOrNumberProp} from "../../mixins/CommonProps";
+import {TBsSpacer} from "./types";
 import Helper from "../../utils/Helper";
 
-export default defineComponent({
+export default defineComponent<TBsSpacer, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsSpacer",
     props: {
         /**
@@ -13,7 +14,7 @@ export default defineComponent({
         fill: booleanTrueProp,
         /**
          * Sets this component width.
-         * @type {number}
+         * @type {string|number}
          */
         width: validStringOrNumberProp,
     },

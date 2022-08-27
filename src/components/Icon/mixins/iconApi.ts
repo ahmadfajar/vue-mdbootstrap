@@ -1,23 +1,6 @@
 import {TSizeOptionProps} from "../types";
 import Helper from "../../../utils/Helper";
 
-export const size = {
-    type: [String, Number],
-    validator: (value: string): boolean => !isNaN(parseInt(value, 10))
-}
-
-export const height = {
-    type: [String, Number],
-    default: 24,
-    validator: (value: string): boolean => !isNaN(parseInt(value, 10))
-}
-
-export const width = {
-    type: [String, Number],
-    default: 24,
-    validator: (value: string): boolean => !isNaN(parseInt(value, 10))
-}
-
 export function useGetCalcSize(props: Readonly<TSizeOptionProps>): number {
     if (!props.size && !props.height && !props.width) {
         return 0;
@@ -30,12 +13,12 @@ export function useGetCalcSize(props: Readonly<TSizeOptionProps>): number {
     }
 }
 
-export function useSizeHeight(props: Readonly<TSizeOptionProps>): number | undefined {
-    return props.size && props.size > 0 ? props.size : props.height;
+export function useSizeHeight(props: Readonly<TSizeOptionProps>): string | number | undefined {
+    return props.size && (props.size as number) > 0 ? props.size : props.height;
 }
 
-export function useSizeWidth(props: Readonly<TSizeOptionProps>): number | undefined {
-    return props.size && props.size > 0 ? props.size : props.width;
+export function useSizeWidth(props: Readonly<TSizeOptionProps>): string | number | undefined {
+    return props.size && (props.size as number) > 0 ? props.size : props.width;
 }
 
 export function useSizeStyles(props: Readonly<TSizeOptionProps>): object {

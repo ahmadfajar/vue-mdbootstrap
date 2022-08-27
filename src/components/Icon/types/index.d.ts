@@ -1,4 +1,4 @@
-import {DefineComponent} from "vue";
+import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
 
 export declare type TIconData = {
     id: number;
@@ -10,37 +10,45 @@ export declare type TIconData = {
 }
 
 export declare type TSizeOptionProps = {
-    height: number;
-    width: number;
-    size?: number;
+    height?: string | number;
+    width?: string | number;
+    size?: string | number;
 }
 
 export declare type TIconOptionProps = TSizeOptionProps & {
-    pulse: boolean;
-    spin: boolean;
     icon?: string;
+    pulse?: boolean;
+    spin?: boolean;
     flip?: string;
-    rotate?: number;
+    rotate?: string | number;
 }
 
 export declare type TIconSpinnerOptionProps = {
     color?: string;
-    size: number;
-    pulse: boolean;
-    spin: boolean;
+    size?: number;
+    pulse?: boolean;
+    spin?: boolean;
 }
 
-export declare type TIconToggleOptionProps = {
-    icon: string;
-    toggleIcon: string;
-    modelValue: boolean;
-    size: number;
+export declare type TToggleIconOptionProps = {
+    icon?: string;
+    toggleIcon?: string;
+    modelValue?: boolean;
+    size?: string | number;
 }
 
-export declare const BsIcon: DefineComponent<TIconOptionProps>;
+export declare type TBsIcon = ComponentObjectPropsOptions<TIconOptionProps>;
 
-export declare const BsIconSvg: DefineComponent<TIconOptionProps>;
+export declare type TBsIconSvg = ComponentObjectPropsOptions<TIconOptionProps>;
 
-export declare const BsIconSpinner: DefineComponent<TIconSpinnerOptionProps>;
+export declare type TBsIconSpinner = ComponentObjectPropsOptions<TIconSpinnerOptionProps>;
 
-export declare const BsIconToggle: DefineComponent<TIconToggleOptionProps>;
+export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptionProps>;
+
+export declare const BsIcon: DefineComponent<TBsIcon, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsIconSvg: DefineComponent<TBsIconSvg, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsIconSpinner: DefineComponent<TBsIconSpinner, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsToggleIcon: DefineComponent<TBsToggleIcon, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

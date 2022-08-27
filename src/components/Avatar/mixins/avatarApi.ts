@@ -1,10 +1,10 @@
 import {h, VNode} from "vue";
-import {TAvatarIconProps, TImageOptionProps} from "../types";
-import {TSizeOptionProps} from "../../Icon/types";
 import {useShapeClasses} from "../../Basic/mixins/imageApi";
-import {useGetCalcSize, useSizeStyles} from "../../Icon/mixins/IconApi";
+import {useGetCalcSize, useSizeStyles} from "../../Icon/mixins/iconApi";
+import {TSizeOptionProps} from "../../Icon/types";
+import {TAvatarIconProps, TImageOptionProps} from "../types";
 
-export function useAvatarIconSize(props: TSizeOptionProps): number {
+export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
     const size = useGetCalcSize(props);
     if (size > 72) {
         return size - 20;

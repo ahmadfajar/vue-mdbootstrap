@@ -1,53 +1,18 @@
-import {defineComponent, h} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
 import {useRenderCardImg} from "./mixins/cardApi";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {booleanProp, stringProp, tagProp} from "../../mixins/CommonProps";
+import {cardProps} from "./mixins/cardProps";
+import {TBsCard} from "./types";
 
-export default defineComponent({
+export default defineComponent<TBsCard, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCard",
-    props: {
-        /**
-         * Create rectangle card and removes rounded border on its corner.
-         * @type {boolean|*}
-         */
-        flat: booleanProp,
-        /**
-         * Create card with shadow on its sides.
-         * @type {boolean|*}
-         */
-        shadow: booleanProp,
-        /**
-         * The image URL for image placed at the top of the card.
-         * @type {string|*}
-         */
-        imgTopSrc: stringProp,
-        /**
-         * Value for the image `alt` attribute.
-         * @type {string|*}
-         */
-        imgTopAlt: stringProp,
-        /**
-         * The image URL for image placed at the bottom of the card.
-         * @type {string|*}
-         */
-        imgBottomSrc: stringProp,
-        /**
-         * Value for the image `alt` attribute.
-         * @type {string|*}
-         */
-        imgBottomAlt: stringProp,
-        /**
-         * Html tag used to render the card.
-         * @type {string|*}
-         */
-        tag: tagProp,
-    },
+    props: cardProps,
     setup(props, {slots}) {
         return () => h(
             props.tag, {
                 class: {
                     'card': true,
-                    'rounded-0': props.flat,
+                    'rounded-0': props.rounded === false,
                     [`${cssPrefix}shadow`]: props.shadow
                 }
             }, [

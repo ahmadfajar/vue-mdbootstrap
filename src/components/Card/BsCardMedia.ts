@@ -1,26 +1,11 @@
-import {defineComponent, h} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {booleanProp, stringProp, stringRequiredProp} from "../../mixins/CommonProps";
+import {cardMediaProps} from "./mixins/cardProps";
+import {TBsCardMedia} from "./types";
 
-export default defineComponent({
+export default defineComponent<TBsCardMedia, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCardMedia",
-    props: {
-        /**
-         * Text for media title.
-         * @type {string|*}
-         */
-        title: stringRequiredProp,
-        /**
-         * Text for media subtitle.
-         * @type {string|*}
-         */
-        subtitle: stringProp,
-        /**
-         * Placed text overlay at the top.
-         * @type {boolean|*}
-         */
-        overlayTop: booleanProp,
-    },
+    props: cardMediaProps,
     setup(props, {slots}) {
         return () => h(
             "div", {

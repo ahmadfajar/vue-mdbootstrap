@@ -1,4 +1,4 @@
-export function getElSize(size: string | undefined | null): number {
+function getElSize(size: string | undefined | null): number {
     if (!size) {
         return 0;
     }

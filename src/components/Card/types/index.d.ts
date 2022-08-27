@@ -1,38 +1,48 @@
-import {DefineComponent} from "vue";
+import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
 
-export declare type TCardOptionProps = {
-    flat?: boolean;
+export declare type TTagProps = {
+    tag?: string;
+}
+
+export declare type TCardOptionProps = TTagProps & {
+    rounded?: boolean;
     shadow?: boolean;
     imgTopSrc?: string;
     imgTopAlt?: string;
     imgBottomSrc?: string;
     imgBottomAlt?: string;
-    tag: string;
 }
 
-export declare type TCardBodyOptionProps = {
-    tag: string;
-}
-
-export declare type TCardContentOptionProps = {
-    tag?: string;
-    type: string;
+export declare type TCardContentOptionProps = TTagProps & {
+    type?: string;
 }
 
 export declare type TCardMediaOptionProps = {
-    title: string;
+    title?: string;
     subtitle?: string;
     overlayTop?: boolean;
 }
 
-export declare const BsCard: DefineComponent<TCardOptionProps>;
+export declare type TBsCard = ComponentObjectPropsOptions<TCardOptionProps>;
 
-export declare const BsCardBody: DefineComponent<TCardBodyOptionProps>;
+export declare type TBsCardBody = ComponentObjectPropsOptions<TTagProps>;
 
-export declare const BsCardContent: DefineComponent<TCardContentOptionProps>;
+export declare type TBsCardContent = ComponentObjectPropsOptions<TCardContentOptionProps>;
 
-export declare const BsCardFooter: DefineComponent<TCardBodyOptionProps>;
+export declare type TBsCardFooter = ComponentObjectPropsOptions<TTagProps>;
 
-export declare const BsCardHeader: DefineComponent<TCardBodyOptionProps>;
+export declare type TBsCardHeader = ComponentObjectPropsOptions<TTagProps>;
 
-export declare const BsCardMedia: DefineComponent<TCardMediaOptionProps>;
+export declare type TBsCardMedia = ComponentObjectPropsOptions<TCardMediaOptionProps>;
+
+export declare const BsCard: DefineComponent<TBsCard, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsCardBody: DefineComponent<TBsCardBody, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsCardContent: DefineComponent<TBsCardContent, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsCardFooter: DefineComponent<TBsCardFooter, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsCardHeader: DefineComponent<TBsCardHeader, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsCardMedia: DefineComponent<TBsCardMedia, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

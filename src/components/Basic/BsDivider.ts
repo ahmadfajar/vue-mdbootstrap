@@ -1,33 +1,13 @@
-import {defineComponent} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} from "vue";
 import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {booleanProp, validStringOrNumberProp} from "../../mixins/CommonProps";
+import {dividerProps} from "./mixins/dividerProps";
+import {TBsDivider} from "./types";
 import Helper from "../../utils/Helper";
 
-export default defineComponent({
+export default defineComponent<TBsDivider, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsDivider",
-    props: {
-        /**
-         * Set to `TRUE` when divider is placed inside element that has dark background color.
-         * @type {boolean}
-         */
-        dark: booleanProp,
-        /**
-         * Indentation from left side.
-         * @type {string|number|*}
-         */
-        leftIndent: validStringOrNumberProp,
-        /**
-         * Indentation from right side.
-         * @type {string|number|*}
-         */
-        rightIndent: validStringOrNumberProp,
-        /**
-         * Divider thickness.
-         * @type {string|number|*}
-         */
-        thickness: validStringOrNumberProp,
-    },
+    props: dividerProps,
     setup(props) {
         return () => useSimpleRenderWithSlots(
             "hr", null,

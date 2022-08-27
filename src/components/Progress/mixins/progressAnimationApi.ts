@@ -1,7 +1,7 @@
 import {ComputedRef, h, Transition, VNode} from "vue";
 import {ISpinnerElement, TProgressOptionProps, TSpinnerRecord} from "../types";
 import {cssPrefix, useBrowserIE} from "../../../mixins/CommonApi";
-import {useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode} from "../../Icon/mixins/SvgApi";
+import {useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode} from "../../Icon/mixins/svgApi";
 import INDETERMINATE_ANIMATION_TEMPLATE from "./ProgressSpinnerAnimation";
 
 const progressSpinner: TSpinnerRecord = {
@@ -57,9 +57,9 @@ export function useAttachStyleTag(circleCircumference: number, diameter: number)
 
 export function useRenderProgressBar(
     props: Readonly<TProgressOptionProps>,
-    progressBarTrackStyle: ComputedRef<string | null>,
-    progressBarValueStyle: ComputedRef<string | null>,
-    progressBarBufferStyle: ComputedRef<string | null>,
+    progressBarTrackStyle: ComputedRef<string | undefined>,
+    progressBarValueStyle: ComputedRef<string | undefined>,
+    progressBarBufferStyle: ComputedRef<string | undefined>,
 ): VNode {
     return h(Transition, {
         name: `${cssPrefix}progress-bar`,
@@ -95,7 +95,7 @@ export function useRenderProgressBar(
 
 export function useRenderProgressSpinner(
     props: Readonly<TProgressOptionProps>,
-    circleStrokeDashOffset: ComputedRef<string | null>,
+    circleStrokeDashOffset: ComputedRef<string | undefined>,
     circleCircumference: ComputedRef<number>,
     circleRadius: ComputedRef<number>,
 ): VNode {

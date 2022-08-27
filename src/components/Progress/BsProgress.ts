@@ -1,5 +1,5 @@
-import {computed, defineComponent, onMounted, watch} from "vue";
-import {TProgressOptionProps} from "./types";
+import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, onMounted, watch} from "vue";
+import {TBsProgress} from "./types";
 import {
     useAttachStyleTag,
     useBufferMode,
@@ -9,119 +9,49 @@ import {
     useRenderProgressSpinner
 } from "./mixins/progressAnimationApi";
 import {useBrowserIE} from "../../mixins/CommonApi";
-import {primaryColorProp} from "../../mixins/CommonProps";
+import {progressProps} from "./mixins/progressProps";
 
 
-export default defineComponent({
+export default defineComponent<TBsProgress, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsProgress",
-    props: {
-        /**
-         * ProgressBar buffer length.
-         * @type {number}
-         */
-        buffer: {
-            type: [String, Number],
-            default: 0,
-            validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
-        },
-        /**
-         * The component color appearance.
-         * @type {string}
-         */
-        color: primaryColorProp,
-        /**
-         * Spinner diameter value.
-         * @type {number}
-         */
-        diameter: {
-            type: [String, Number],
-            default: 60,
-            validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
-        },
-        /**
-         * ProgressBar thickness.
-         * @type {number}
-         */
-        height: {
-            type: [String, Number],
-            default: 5,
-            validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
-        },
-        /**
-         * Spinner thickness.
-         * @type {number}
-         */
-        stroke: {
-            type: [String, Number],
-            default: 6,
-            validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
-        },
-        /**
-         * The value monitored by `v-model` to control the progress value.
-         * @type {number}
-         */
-        modelValue: {
-            type: Number,
-            default: 0,
-            validator: (value: number): boolean => value >= 0 && value <= 100
-        },
-        /**
-         * ProgressControl mode, valid values are: `determinate`, `indeterminate`, `buffer`.
-         * @type {string}
-         */
-        mode: {
-            type: String,
-            default: 'indeterminate',
-            validator: (value: string): boolean => ['determinate', 'indeterminate', 'buffer'].includes(value)
-        },
-        /**
-         * ProgressControl type, valid values are: `spinner`, `bar`.
-         * @type {string}
-         */
-        type: {
-            type: String,
-            default: 'bar',
-            validator: (value: string): boolean => ['spinner', 'bar'].includes(value)
-        },
-    },
+    props: progressProps,
     setup(props) {
-        const cmpProps = props as Readonly<TProgressOptionProps>;
         const hasAmountFill = computed<boolean>(() => {
-            return useBufferMode(cmpProps) || useDeterminateMode(cmpProps);
+            return useBufferMode(props) || useDeterminateMode(props);
         });
-        const isProgressBar = computed<boolean>(() => cmpProps.type.toLowerCase() === "bar");
+        const isProgressBar = computed<boolean>(() => props.type.toLowerCase() === "bar");
         const circleRadius = computed<number>(() => {
-            return (cmpProps.diameter - cmpProps.stroke) / 2;
+            return ((props.diameter as number) - (props.stroke as number)) / 2;
         });
         const circleCircumference = computed<number>(() => 2 * Math.PI * circleRadius.value);
-        const circleStrokeDashOffset = computed<string | null>(() => {
-            if (useDeterminateMode(cmpProps)) {
+        const circleStrokeDashOffset = computed<string | undefined>(() => {
+            if (useDeterminateMode(props)) {
                 return (circleCircumference.value * (100 - props.modelValue) / 100) + "px";
             }
 
-            if (useIndeterminateMode(cmpProps) && useBrowserIE()) {
+            if (useIndeterminateMode(props) && useBrowserIE()) {
                 return (circleCircumference.value * 0.2) + "px";
             }
 
-            return null
+            return undefined
         });
-        const progressBarTrackStyle = computed<string | null>(() => {
+        const progressBarTrackStyle = computed<string | undefined>(() => {
             if (hasAmountFill.value) {
-                return `width: ${cmpProps.buffer}%`;
+                return `width: ${props.buffer}%`;
             }
-            return null;
+            return undefined;
         });
-        const progressBarValueStyle = computed<string | null>(() => {
+        const progressBarValueStyle = computed<string | undefined>(() => {
             if (hasAmountFill.value) {
                 return `width: ${props.modelValue}%`;
             }
-            return null;
+            return undefined;
         });
-        const progressBarBufferStyle = computed<string | null>(() => {
+        const progressBarBufferStyle = computed<string | undefined>(() => {
             if (hasAmountFill.value) {
-                return `left: calc(${cmpProps.buffer}% + 8px)`;
+                return `left: calc(${props.buffer}% + 8px)`;
             }
-            return null;
+            return undefined;
         });
 
         watch(
@@ -132,17 +62,17 @@ export default defineComponent({
         );
         onMounted(
             () => {
-                useAttachStyleTag(circleCircumference.value, cmpProps.diameter);
+                useAttachStyleTag(circleCircumference.value, (props.diameter as number));
             }
         );
 
         return () => {
             return isProgressBar.value ? useRenderProgressBar(
-                cmpProps, progressBarTrackStyle,
+                props, progressBarTrackStyle,
                 progressBarValueStyle,
                 progressBarBufferStyle,
             ) : useRenderProgressSpinner(
-                cmpProps, circleStrokeDashOffset,
+                props, circleStrokeDashOffset,
                 circleCircumference, circleRadius,
             );
         }
