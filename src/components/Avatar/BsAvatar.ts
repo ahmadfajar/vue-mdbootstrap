@@ -41,21 +41,6 @@ export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, Com
                                 )
                     )
                 )
-                // slots.default
-                //     ? slots.default()
-                //     : (
-                //         (props.imgSrc && props.imgSrc !== '')
-                //             ? useRenderAvatarImage(props)
-                //             : (props.icon && props.icon !== '')
-                //                 ? h(BsIcon, {
-                //                     size: useAvatarIconSize(props),
-                //                     ...useCreateIconProps(props),
-                //                 })
-                //                 : h('span',
-                //                     {class: [`${cssPrefix}avatar-text`]},
-                //                     props.text || '?',
-                //                 )
-                //     )
             )
     }
 });

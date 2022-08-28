@@ -2,7 +2,7 @@
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "../../../scss/functions";
-@import "../../../scss/mixins/buttons";
+@import "../../../scss/mixins/button";
 
 .btn {
     $disabled-bg: lighten($gray-500, 20%);
@@ -54,7 +54,7 @@
         }
 
         &:active:focus {
-            @include box-shadow(var(--bs-btn-focus-box-shadow));
+            @include box-shadow(var(--#{$bs-prefix}btn-focus-box-shadow));
         }
 
         &.disabled, &:disabled, &.readonly {
@@ -281,12 +281,12 @@
 }
 
 @each $btn_name, $color_value in map-remove($merge-theme-colors,
-        'primary', 'secondary', 'success', 'danger', 'light', 'dark'
+        'primary', 'secondary', 'success', 'danger', 'light', 'dark', 'black'
 ) {
     @include make-button-variant($btn_name, $color_value);
 }
 
-@each $btn_name, $color_value in $merge-theme-colors {
+@each $btn_name, $color_value in map-remove($merge-theme-colors, 'black') {
     @include make-outline-button-variant($btn_name, $color_value);
     @include make-flat-button-variant($btn_name, $color_value);
 }

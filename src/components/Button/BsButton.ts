@@ -9,8 +9,7 @@ import Helper from "../../utils/Helper";
 export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsButton",
     props: buttonProps,
-    emits: ['click'],
-    setup(props, {emit, slots}) {
+    setup(props, {slots}) {
         const cmpProps = props as Readonly<TButtonOptionProps>;
         const buttonType = computed<string | undefined>(() => {
             if (Helper.isEmpty(props.href)) {
@@ -30,7 +29,6 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
                 ...useMakeButtonProps(
                     cmpProps, isDisabled.value, buttonType.value,
                 ),
-                onClick: (event: Event): void => emit('click', event),
             }, [
                 h<TBsButtonInner>(BsButtonInner, {
                     dropdownToggle: cmpProps.dropdownToggle as Prop<boolean>,

@@ -1,4 +1,4 @@
-// BsChip variants mixins
+/* BsChip variants mixins -- backward compatibility */
 @mixin make-chip($name, $color) {
     .#{$prefix}chip-#{$name} {
         &:not(.#{$prefix}chip-outlined):not(.#{$prefix}disabled) {
@@ -33,7 +33,7 @@
 
             &:hover {
                 border-color: darken($color, 8%);
-                color: set-outline-chip-text-color($name, darken($color, 10%));
+                color: set-alt-color-level($name, $gray-900, darken($color, 10%));
 
                 @if ($name == 'light' or $name == 'light-grey') {
                     background-color: rgba($color, .4);
@@ -60,5 +60,56 @@
                 @include box-shadow(0 0 0 0.2rem rgba($color, .5));
             }
         }
+    }
+}
+
+/* BsButton variants mixins -- sass variables */
+@mixin make-chip-variant($name, $color) {
+    .#{$prefix}chip-#{$name} {
+        $text-color: set-alt-color-level($color, $gray-800, $white, 80);
+        $hover-bg: darken($color, 5%);
+        $hover-color: set-alt-color-level($color, $gray-800, $white, 80);
+        $active-bg: set-alt-color-level($color, darken($color, 20%), darken($color, 12%), 80);
+        $active-color: set-alt-color-level($color, $black, $white, 80);
+        $active-box-shadow-color-rgb: to-rgb(lighten($color, 5%));
+
+        --#{$prefix}chip-bg: #{$color};
+        --#{$prefix}chip-color: #{$text-color};
+        --#{$prefix}chip-border-color: #{$color};
+        --#{$prefix}chip-hover-bg: #{$hover-bg};
+        --#{$prefix}chip-hover-border-color: #{$hover-bg};
+        --#{$prefix}chip-hover-color: #{$hover-color};
+        --#{$prefix}chip-active-bg: #{$active-bg};
+        --#{$prefix}chip-active-border-color: #{$active-bg};
+        --#{$prefix}chip-focus-border-color: #{$active-bg};
+        --#{$prefix}chip-active-color: #{$active-color};
+        --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
+    }
+}
+
+@mixin make-chip-outline-variant($name, $color) {
+    .#{$prefix}chip-outline-#{$name} {
+        $border-color: lighten($gray-600, 25%);
+        $text-color: set-alt-color-level($color, $gray-800, $color, 80);
+        $hover-bg: set-alt-color-level($color, rgba(darken($color, 10%), .4), rgba(lighten($color, 20%), .2), 70);
+        $hover-border: set-alt-color-level($color, $border-color, lighten($color, 12%), 80);
+        $hover-color: set-alt-color-level($color, $gray-900, darken($color, 12%), 70);
+        $active-bg: set-alt-color-level($color, $color, rgba(lighten($color, 15%), .3), 80);
+        $active-border: set-alt-color-level($color, $color, rgba(lighten($color, 20%), .1), 80);
+        $active-color: set-alt-color-level($color, $black, darken($color, 20%), 80);
+        $focus-border: set-alt-color-level($color, darken($border-color, 15%), $color, 80);
+        $active-box-shadow-color-rgb: to-rgb(lighten($hover-bg, 10%));
+
+        --#{$prefix}chip-bg: transparent;
+        --#{$prefix}chip-color: #{$text-color};
+        --#{$prefix}chip-border-color: #{$border-color};
+        --#{$prefix}chip-hover-bg: #{$hover-bg};
+        --#{$prefix}chip-hover-border-color: #{$hover-border};
+        --#{$prefix}chip-hover-color: #{$hover-color};
+        --#{$prefix}chip-active-bg: #{$active-bg};
+        --#{$prefix}chip-active-border-color: #{$active-border};
+        --#{$prefix}chip-active-color: #{$active-color};
+        --#{$prefix}chip-focus-border-color: #{$focus-border};
+        --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
     }
 }

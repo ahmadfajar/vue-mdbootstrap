@@ -162,7 +162,7 @@
         $border-color: lighten($gray-600, 25%);
         --#{$bs-prefix}btn-bg: transparent;
         --#{$bs-prefix}btn-border-color: #{$border-color};
-        --#{$bs-prefix}btn-border-width: .1rem;
+        --#{$bs-prefix}btn-border-width: thin;
         --#{$bs-prefix}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
 
         @if ($name == 'light' or $name == 'light-grey') {

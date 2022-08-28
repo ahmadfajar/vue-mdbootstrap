@@ -1,4 +1,4 @@
-import {ComputedRef, createCommentVNode, h, Slots, VNode} from "vue";
+import {ComputedRef, createCommentVNode, h, Prop, Slots, VNode} from "vue";
 import {cssPrefix, useRenderSlotWithWrapper} from "../../../mixins/CommonApi";
 import {BsRipple} from "../../Animation";
 import {BsButton} from "../../Button";
@@ -8,34 +8,36 @@ import {useSimpleRenderWithSlots} from "../../Card/mixins/cardApi";
 import {TChipOptionProps} from "../types";
 import {TRecord} from "../../../types";
 import Helper from "../../../utils/Helper";
+import {TBsButton} from "../../Button/types";
+import {TBsIcon} from "../../Icon/types";
+import {TBsRipple} from "../../Animation/types";
 
 export function useChipClassNames(
     props: Readonly<TChipOptionProps>,
     attrs: TRecord,
-): Record<string, boolean> {
+): TRecord {
     return {
         [`${cssPrefix}chip`]: true,
         [`${cssPrefix}chip-sm`]: props.size === 'sm',
         [`${cssPrefix}chip-lg`]: props.size === 'lg',
         [`${cssPrefix}chip-pill`]: props.pill,
-        // [`${cssPrefix}chip-outlined`]: props.outlined,
         [`${cssPrefix}chip-clickable`]: (
             (props.href || attrs.click || attrs.onclick || attrs.onClick) && !props.disabled
         ),
         [`${cssPrefix}chip-${props.color}`]: props.color && !props.outlined,
         [`${cssPrefix}chip-outline-${props.color}`]: props.color && props.outlined,
-        'disabled': props.disabled,
-        'active': props.active && !props.disabled,
-        [props.activeClass]: props.activeClass && props.active && !props.disabled,
+        'disabled': props.disabled === true,
+        'active': (props.active === true) && !props.disabled,
+        [(props.activeClass as string)]: props.activeClass && (props.active === true) && !props.disabled,
     }
 }
 
-function getChipAvatarSize(chipSize: string, hasPadding: boolean) {
+function getChipAvatarSize(chipSize: string | undefined, hasPadding: boolean | undefined) {
     let imgSize: string;
 
     if (chipSize === 'sm') {
         imgSize = hasPadding ? '1.125rem' : '1.56rem';
-    } else if (this.size === 'lg') {
+    } else if (chipSize === 'lg') {
         imgSize = hasPadding ? '2.375rem' : '3rem';
     } else {
         imgSize = hasPadding ? '1.5rem' : '2rem';
@@ -58,7 +60,7 @@ function renderChipAvatar(props: Readonly<TChipOptionProps>): VNode {
             src: props.imgSrc,
             alt: 'Chip Avatar',
             class: [
-                props.imgCircle || props.pill ? 'rounded-circle' : 'rounded-3'
+                props.imgCircle || props.pill ? 'rounded-circle' : 'rounded'
             ],
             style: getChipAvatarSize(props.size, props.imgPadding)
         })
@@ -71,28 +73,34 @@ export function useRenderChip(
     slots: Slots,
     attrs: TRecord,
     props: Readonly<TChipOptionProps>,
-    classNames: ComputedRef<Record<string, boolean>>,
-    clickHandler: (event: (MouseEvent | TouchEvent)) => void,
+    classNames: ComputedRef<TRecord>,
     dismissHandler: VoidFunction,
 ): VNode {
     const btnCloseAttr = {
-        flat: true,
-        mode: 'icon',
-        size: props.size === 'sm' ? 'xs' : '',
-        color: props.outlined
+        flat: true as Prop<boolean>,
+        mode: 'icon' as Prop<string>,
+        icon: 'close' as Prop<string>,
+        iconSize: (
+            props.size === 'sm' ? 14 : props.size === 'lg' ? 24 : 20
+        ) as Prop<number>,
+        size: (
+            props.size === 'sm'
+                ? 'xs'
+                : (props.size === 'lg' ? undefined : 'sm')
+        ) as Prop<string | undefined>,
+        color: (props.outlined
             ? props.color
-            : ['light', 'light-grey'].includes(props.color)
-                ? 'grey' : 'light',
+            : ['light', 'light-grey'].includes(props.color as string)
+                ? 'dark' : 'light text-white') as Prop<string>,
         onClick: (): void => dismissHandler(),
-    }
+    } as TBsButton;
 
     return h(tagName, {
         class: classNames.value,
-        onMousedown: (event: MouseEvent) => clickHandler(event),
-        onTouchstart: (event: TouchEvent) => clickHandler(event),
+        href: (props.href && !props.disabled) ? props.href : undefined
     }, [
-        h(BsRipple, {
-            disabled: rippleDisabled,
+        h<TBsRipple>(BsRipple, {
+            disabled: rippleDisabled as Prop<boolean>,
             class: `${cssPrefix}chip-content`
         }, {
             default: () => [
@@ -101,16 +109,17 @@ export function useRenderChip(
                     : useRenderSlotWithWrapper(
                         slots, 'chipIcon', Helper.uuid(), "div",
                         {class: `${cssPrefix}chip-icon`},
-                        props.icon
-                            ? h(BsIcon, {
+                        !Helper.isEmpty(props.icon)
+                            ? h<TBsIcon>(BsIcon, {
                                 ...useCreateIconProps(props),
-                                size: props.size === 'sm' ? 18 : (props.size === 'lg' ? 40 : 24),
+                                icon: `${props.icon}_${props.iconVariant}` as Prop<string>,
+                                size: (props.size === 'sm' ? 18 : (props.size === 'lg' ? 40 : 24)) as Prop<string | number>,
                             })
                             : undefined, // createCommentVNode(" v-if-chip-icon ", true),
                     ),
                 useSimpleRenderWithSlots("div", slots, `${cssPrefix}chip-text`),
                 props.dismissible
-                    ? h(BsButton, btnCloseAttr)
+                    ? h<TBsButton>(BsButton, btnCloseAttr)
                     : createCommentVNode(" v-if-chip-dismissible ", true),
             ]
         }),

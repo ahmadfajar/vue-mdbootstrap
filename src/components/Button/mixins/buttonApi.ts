@@ -28,7 +28,7 @@ export function useMakeButtonProps(
             'disabled': disabled,
             'active': props.active,
         },
-        role: !Helper.isEmpty(props.href) ? 'button' : null,
+        role: 'button',
         type: buttonType,
         disabled: disabled,
         'aria-disabled': disabled,

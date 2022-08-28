@@ -1,4 +1,5 @@
 import {Fragment, h, Slots, Transition, VNode, VNodeArrayChildren, TransitionProps} from "vue";
+import {TRecord} from "../types";
 import Helper from "../utils/Helper";
 
 export const cssPrefix = "md-";
@@ -35,7 +36,7 @@ export function useBrowserIE() {
 export function useRenderSlot(
     slots: Slots,
     name: string,
-    props: Readonly<Record<string, unknown>> = {},
+    props: Readonly<TRecord> = {},
     children?: VNode | VNodeArrayChildren,
     slotArgs?: unknown,
 ): VNode {
@@ -66,7 +67,7 @@ export function useRenderSlotWithWrapper(
     name: string,
     key: string,
     wrapTag = 'div',
-    wrapProps: Readonly<Record<string, unknown>> = {},
+    wrapProps: Readonly<TRecord> = {},
     children?: VNode | VNodeArrayChildren,
     slotArgs?: unknown,
 ) {
@@ -78,7 +79,7 @@ export function useRenderSlotWithWrapper(
     } else {
         return useRenderSlot(
             slots, name, {key: key},
-            h(wrapTag, wrapProps, children || []),
+            children ? h(wrapTag, wrapProps, children) : undefined,
             slotArgs,
         );
     }

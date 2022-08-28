@@ -7,10 +7,6 @@ import {TIconData, TIconOptionProps} from "../types"
 import {TRecord} from "../../../types";
 import Helper from "../../../utils/Helper";
 
-export function googleIconUrl(theme: string | undefined, icon: string, version: number): string {
-    return `https://fonts.gstatic.com/s/i/materialicons${theme}/${icon}/v${version}/24px.svg`;
-}
-
 /**
  * Find an icon on the Google's icon library.
  *
@@ -49,6 +45,10 @@ export function findIcon(name: string | undefined): TIconData | undefined {
     return undefined
 }
 
+export function googleIconUrl(theme: string | undefined, icon: string, version: number): string {
+    return `https://fonts.gstatic.com/s/i/materialicons${theme}/${icon}/v${version}/24px.svg`;
+}
+
 export async function useGoogleIcon(iconObj: TIconData): Promise<TIconData> {
     const resp = await axios.get(googleIconUrl(iconObj.variant, iconObj.name, iconObj.id))
     return {
@@ -61,7 +61,7 @@ export async function useGoogleIcon(iconObj: TIconData): Promise<TIconData> {
     }
 }
 
-function createNodeAttrs(attrs: Array<[string, unknown]>): Record<string, unknown> {
+function createNodeAttrs(attrs: Array<[string, unknown]>): TRecord {
     const props: Record<string, unknown> = {};
     const filtered = attrs
         .filter(el => el[0].startsWith("@_"))

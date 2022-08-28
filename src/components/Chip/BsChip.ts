@@ -20,10 +20,6 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
     props: chipProps,
     emits: [
         /**
-         * Callback fired when this component is clicked.
-         */
-        "click",
-        /**
          * Callback fired when this component is dismissed (hide).
          */
         "close",
@@ -39,17 +35,19 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
     setup(props, {emit, attrs, slots}) {
         const cmpProps = props as Readonly<TChipOptionProps>;
         const dismiss = ref<boolean>(false);
-        const classNames = computed<Record<string, boolean>>(
+        const classNames = computed<TRecord>(
             () => useChipClassNames(cmpProps, attrs)
         );
         const tagName = computed<string>(
-            () => cmpProps.href && !props.disabled ? 'a' : 'div'
+            () => cmpProps.href && !cmpProps.disabled ? 'a' : 'div'
         );
         const rippleDisabled = computed<boolean>(
-            () => (
-                props.rippleOff || props.disabled ||
-                (!attrs.click && !attrs.onclick && !attrs.onClick && !props.href)
-            )
+            () => {
+                return (
+                    cmpProps.rippleOff || cmpProps.disabled ||
+                    (!attrs.click && !attrs.onclick && !attrs.onClick && !props.href)
+                );
+            }
         )
         const show = computed(() => !dismiss.value && props.modelValue);
         const dismissedChip = () => {
@@ -57,12 +55,6 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
             emit("update:active", false);
             emit("update:modelValue", false);
             nextTick().then(() => emit("close"))
-        }
-        const clickHandler = (event: MouseEvent | TouchEvent) => {
-            if (!props.disabled) {
-                emit('update:active', !props.active);
-            }
-            nextTick().then(() => emit("click", event))
         }
         watch(
             () => props.modelValue,
@@ -79,7 +71,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
                 show.value
                     ? useRenderChip(
                         tagName.value, rippleDisabled.value, slots, attrs,
-                        cmpProps, classNames, clickHandler, dismissedChip,
+                        cmpProps, classNames, dismissedChip,
                     )
                     : createCommentVNode(" BsChip ", true)
             )

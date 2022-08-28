@@ -73,15 +73,6 @@
     }
 }
 
-// Set the text color of chip buttons
-@function set-outline-chip-text-color($name, $color) {
-    @if ($name == 'light' or $name == 'light-grey') {
-        @return $gray-900;
-    } @else {
-        @return $color
-    }
-}
-
 // Colors
 @function to-rgb($value) {
     @return red($value), green($value), blue($value);

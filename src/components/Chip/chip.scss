@@ -1,0 +1,145 @@
+@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins/chip";
+
+.#{$prefix}chip {
+    $disabled-bg: lighten($gray-500, 15%);
+    $disabled-border-color: lighten($gray-500, 8%);
+    --#{$prefix}chip-border-radius: #{$border-radius-lg};
+    --#{$prefix}chip-border-width: thin;
+    --#{$prefix}chip-disabled-bg: #{$disabled-bg};
+    --#{$prefix}chip-disabled-border-color: #{$disabled-border-color};
+    --#{$prefix}chip-disabled-color: #{$gray-900};
+    --#{$prefix}chip-disabled-opacity: .5;
+
+    @include flexbox((display: inline-flex, align-items: center));
+    @include border-radius(var(--#{$prefix}chip-border-radius));
+    background-color: var(--#{$prefix}chip-bg);
+    border: var(--#{$prefix}chip-border-width) solid var(--#{$prefix}chip-border-color);
+    color: var(--#{$prefix}chip-color);
+    cursor: default;
+    height: 2rem;
+    max-width: 100%;
+    line-height: 1;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-decoration: none !important;
+    transition-duration: $transition-duration-base;
+    transition-property: box-shadow, opacity, width;
+    transition-timing-function: $md-transition-stand-timing;
+
+    &:not(.disabled) {
+        &:hover {
+            @include box-shadow($z-depth-1);
+            background-color: var(--#{$prefix}chip-hover-bg);
+            border-color: var(--#{$prefix}chip-hover-border-color);
+            color: var(--#{$prefix}chip-hover-color);
+        }
+
+        &:focus, &.focus,
+        &.active {
+            background-color: var(--#{$prefix}chip-active-bg);
+            border-color: var(--#{$prefix}chip-active-border-color);
+            color: var(--#{$prefix}chip-active-color);
+
+            &:hover {
+                border-color: var(--#{$prefix}chip-hover-border-color);
+            }
+        }
+
+        &:focus, &.focus {
+            @include box-shadow(0 0 0 0.2rem rgba(var(--#{$prefix}chip-focus-shadow-color), .5));
+            border-color: var(--#{$prefix}chip-focus-border-color);
+        }
+    }
+
+    &.disabled {
+        background-color: var(--#{$prefix}chip-disabled-bg);
+        border-color: var(--#{$prefix}chip-disabled-border-color);
+        color: var(--#{$prefix}chip-disabled-color);
+        opacity: var(--#{$prefix}chip-disabled-opacity);
+    }
+
+    &.#{$prefix}chip-clickable:not(.disabled) {
+        @include user-select(none);
+        cursor: pointer;
+    }
+
+    > .#{$prefix}chip-content {
+        @include flexbox((display: inline-flex, align-items: center));
+        @include border-radius(var(--#{$prefix}chip-border-radius));
+        padding: 0 $padding-base;
+        max-width: 100%;
+
+        > .#{$prefix}chip-icon {
+            @include flexbox((display: flex, align-self: center, align-items: center));
+            @include transition(.3s $md-transition-stand-timing, visibility);
+            margin-left: -$padding-sm;
+            margin-right: $padding-sm;
+        }
+
+        > .#{$prefix}chip-avatar {
+            @include flexbox((display: flex, align-self: center, align-items: center));
+            @include transition(.3s $md-transition-stand-timing, visibility);
+            margin-left: -($padding-base - .25);
+            margin-right: $padding-sm;
+
+            &.#{$prefix}chip-avatar-bounded {
+                margin-left: -$padding-base;
+            }
+        }
+
+        > .#{$prefix}btn-icon {
+            margin-left: $padding-sm;
+            margin-right: -($padding-sm + .25);
+        }
+    }
+
+    &.#{$prefix}chip-pill {
+        --#{$prefix}chip-border-radius: #{$border-radius-pill};
+    }
+
+    &.#{$prefix}chip-sm {
+        font-size: 80%;
+        height: 1.56rem;
+    }
+
+    &.#{$prefix}chip-lg {
+        font-size: 120%;
+        height: 3rem;
+
+        > .#{$prefix}chip-content {
+            padding: 0 $padding-lg;
+
+            > .#{$prefix}chip-icon {
+                margin-left: -.625rem; // -10px
+            }
+
+            > .#{$prefix}chip-avatar {
+                margin-left: -($padding-base + .125); // -18px
+
+                &.#{$prefix}chip-avatar-bounded {
+                    margin-left: -$padding-lg;
+                }
+            }
+
+            > .#{$prefix}btn-icon {
+                margin-right: -($padding-sm + .5);
+            }
+        }
+    }
+
+    ~ .#{$prefix}chip {
+        margin-left: $padding-sm;
+    }
+}
+
+@each $color_name, $color in map-remove($merge-theme-colors, 'black') {
+    @include make-chip-variant($color_name, $color);
+    @include make-chip-outline-variant($color_name, $color);
+}

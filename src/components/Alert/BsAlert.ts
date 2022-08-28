@@ -54,7 +54,10 @@ export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, Comp
             useRenderTransition(
                 {name: cmpProps.transition},
                 show.value
-                    ? useRenderAlert(slots, cmpProps, classNames, alertIconName, dismissedAlert)
+                    ? useRenderAlert(
+                        slots, cmpProps, classNames, colorName,
+                        alertIconName, dismissedAlert,
+                    )
                     : createCommentVNode(" BsAlert ", true)
             )
     }

@@ -65,6 +65,7 @@ export function useRenderAlert(
     slots: Slots,
     props: Readonly<TAlertOptionProps>,
     classNames: ComputedRef<Record<string, boolean | undefined>>,
+    alertColorName: ComputedRef<string | undefined>,
     alertIconName: ComputedRef<string | undefined>,
     dismissHandler: VoidFunction,
 ): VNode {
@@ -72,22 +73,6 @@ export function useRenderAlert(
         class: classNames.value,
         role: "alert"
     }, [
-        // alertIconName.value
-        //     ? h("div", {
-        //         class: "alert-icon me-3"
-        //     }, [
-        //         h(BsIcon, {
-        //             ...useCreateIconProps(props),
-        //             icon: alertIconName.value,
-        //             size: 32,
-        //         }),
-        //     ])
-        //     : slots.alertIcon
-        //         ? h("div",
-        //             {class: "alert-icon me-3"},
-        //             slots.alertIcon && slots.alertIcon()
-        //         )
-        //         : createCommentVNode(" v-if-alert-icon ", true),
         useRenderSlotWithWrapper(
             slots, 'alertIcon', Helper.uuid(), "div",
             {class: 'alert-icon me-3'},
@@ -103,11 +88,14 @@ export function useRenderAlert(
         props.dismissible
             ? h<TBsButton>(BsButton, {
                 class: "ms-auto",
-                // color: "secondary",
-                transparent: true as Prop<boolean>,
+                color: (
+                    !(props.filled || props.solidFill)
+                        ? alertColorName.value
+                        : ['light', 'light-grey'].includes(props.color as string)
+                            ? 'dark' : 'light text-white'
+                ) as Prop<string>,
                 icon: "close" as Prop<string>,
                 mode: "icon" as Prop<string>,
-                // size: "sm",
                 flat: true as Prop<boolean>,
                 onClick: (): void => dismissHandler()
             })

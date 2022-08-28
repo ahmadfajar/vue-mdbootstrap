@@ -2,7 +2,7 @@
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "../../../scss/functions";
-@import "../../../scss/mixins/alerts";
+@import "../../../scss/mixins/alert";
 
 .alert {
     --#{$bs-prefix}alert-link-color: inherit;
@@ -33,6 +33,6 @@
     @include alert-variant($color-name, $background-color, $border-color, $text-color);
 
     $outline-color: theme-color-level($theme-colors, $color-name, $alert-color-level);
-    @include make-outline-alert-variant($color-name, $outline-color);
+    @include make-outline-alert-variant($color-name, $value);
     @include make-solid-alert-variant($color-name, $value);
 }
