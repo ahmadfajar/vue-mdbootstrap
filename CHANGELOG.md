@@ -4,7 +4,7 @@
 
 ## v2.0.0
 
-Released: September xx, 2022
+Released: November xx, 2022
 
 #### Features v2.0.0
 

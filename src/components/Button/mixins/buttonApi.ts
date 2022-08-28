@@ -29,7 +29,7 @@ export function useMakeButtonProps(
             'active': props.active,
         },
         role: 'button',
-        type: buttonType,
+        type: buttonType === 'div' ? undefined : buttonType,
         disabled: disabled,
         'aria-disabled': disabled,
     }

@@ -20,9 +20,19 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
         const hasIcon = computed<boolean>((): boolean => {
             return (!Helper.isEmpty(props.icon) || (slots.icon !== undefined));
         });
-        const isDisabled = computed<boolean>(() => (props.disabled as boolean) && Helper.isEmpty(props.href as string));
-        const rippleOff = computed<boolean>(() => (props.rippleOff as boolean) && isDisabled.value);
-        const tagName = computed<string>(() => !Helper.isEmpty(props.href as string) ? 'a' : 'button');
+        const isDisabled = computed<boolean>(
+            () => (props.disabled as boolean) && Helper.isEmpty(props.href as string)
+        );
+        const rippleOff = computed<boolean>(
+            () => (props.rippleOff as boolean) && isDisabled.value
+        );
+        const tagName = computed<string>(
+            () => (
+                !Helper.isEmpty(props.href as string)
+                    ? 'a'
+                    : buttonType.value === 'div' ? 'div' : 'button'
+            )
+        );
 
         return () => {
             return h(tagName.value, {

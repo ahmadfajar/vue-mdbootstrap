@@ -17,7 +17,7 @@ export const buttonSize = {
 export const buttonType = {
     type: String,
     default: "button",
-    validator: (value: string): boolean => ["button", "submit", "reset"].includes(value)
+    validator: (value: string): boolean => ["button", "submit", "reset", "div"].includes(value)
 }
 
 export const iconPosition = {
