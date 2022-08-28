@@ -7,23 +7,8 @@ import {TIconData, TIconOptionProps} from "../types"
 import {TRecord} from "../../../types";
 import Helper from "../../../utils/Helper";
 
-function googleIconUrl(theme: string | undefined, icon: string, version: number): string {
+export function googleIconUrl(theme: string | undefined, icon: string, version: number): string {
     return `https://fonts.gstatic.com/s/i/materialicons${theme}/${icon}/v${version}/24px.svg`;
-}
-
-export function useSvgClasses(props: Readonly<TIconOptionProps>): TRecord {
-    return {
-        'mx-auto': true,
-        [`${cssPrefix}svg-inline`]: true,
-        [`${cssPrefix}spin`]: props.spin,
-        [`${cssPrefix}pulse`]: props.pulse,
-        [`${cssPrefix}flip-both`]: props.flip === 'both',
-        [`${cssPrefix}flip-vertical`]: props.flip === 'vertical',
-        [`${cssPrefix}flip-horizontal`]: props.flip === 'horizontal',
-        [`${cssPrefix}rotate-90`]: props.rotate && parseInt((props.rotate as string), 10) === 90,
-        [`${cssPrefix}rotate-180`]: props.rotate && parseInt((props.rotate as string), 10) === 180,
-        [`${cssPrefix}rotate-270`]: props.rotate && parseInt((props.rotate as string), 10) === 270,
-    }
 }
 
 /**
@@ -32,7 +17,7 @@ export function useSvgClasses(props: Readonly<TIconOptionProps>): TRecord {
  * @param {string} name The icon name
  * @returns {TIconData} Icon data if icon exists on the library otherwise `undefined`.
  */
-function findIcon(name: string | undefined): TIconData | undefined {
+export function findIcon(name: string | undefined): TIconData | undefined {
     if (!name) {
         return undefined;
     }
@@ -64,7 +49,7 @@ function findIcon(name: string | undefined): TIconData | undefined {
     return undefined
 }
 
-async function useGoogleIcon(iconObj: TIconData): Promise<TIconData> {
+export async function useGoogleIcon(iconObj: TIconData): Promise<TIconData> {
     const resp = await axios.get(googleIconUrl(iconObj.variant, iconObj.name, iconObj.id))
     return {
         id: iconObj.id,
@@ -76,12 +61,6 @@ async function useGoogleIcon(iconObj: TIconData): Promise<TIconData> {
     }
 }
 
-// function hasFillNoneAttr(attrs: Array<[string, unknown]>): boolean {
-//     const ret = attrs.find(it => it[0] === '@_fill' && it[1] === 'none')
-//     return ret !== null && ret !== undefined;
-// }
-
-// function createNodeAttrs(attrs: Array<[string, unknown]>, parent?: [string, unknown]): object {
 function createNodeAttrs(attrs: Array<[string, unknown]>): Record<string, unknown> {
     const props: Record<string, unknown> = {};
     const filtered = attrs
@@ -91,22 +70,11 @@ function createNodeAttrs(attrs: Array<[string, unknown]>): Record<string, unknow
             return [attr, el[1]];
         });
 
-    // if (!parent || !hasFillNoneAttr(parent[1] as Array<[string, unknown]>)) {
-    //     if (filtered.length > 0 && !filtered.find(el => el[0] === "fill")) {
-    //         filtered.push(["fill", "currentColor"]);
-    //     }
-    // }
     filtered.forEach(el => props[el[0]] = el[1]);
 
     return props;
 }
 
-// function parentAttr(tag: string, attrs:Array<[string, unknown]>): [string, unknown] {
-//     const filtered = attrs.filter(it => it[0].startsWith("@_"));
-//     return [tag, filtered];
-// }
-
-// function renderChildNodes(children: Array<[string, unknown]>, parent?: [string, unknown]): Array<VNode> {
 function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
     const results: Array<VNode> = [];
 
@@ -115,16 +83,12 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
             (el[1] as Array<object>).forEach(it => {
                 const entries = Object.entries(it);
                 const childNodes = entries.filter(it => it[0].startsWith("@_") === false);
-                // const elValue: [string, unknown] = parentAttr(el[0], entries);
-                // const rh = h(el[0], createNodeAttrs(entries, parent), renderChildNodes(childNodes, elValue));
                 const rh = h(el[0], createNodeAttrs(entries), renderChildNodes(childNodes));
                 results.push(rh);
             });
         } else if (Helper.isObject(el[1])) {
             const entries = Object.entries(el[1] as object);
             const childNodes = entries.filter(it => it[0].startsWith("@_") === false);
-            // const elValue: [string, unknown] = parentAttr(el[0], entries);
-            // const rh = h(el[0], createNodeAttrs(entries, parent), renderChildNodes(childNodes, elValue));
             const rh = h(el[0], createNodeAttrs(entries), renderChildNodes(childNodes));
 
             results.push(rh);
@@ -134,7 +98,7 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
     return results;
 }
 
-function useRenderSvgIcon(
+export function useRenderSvgIcon(
     iconData: TIconData | undefined,
     height: number | string | undefined,
     width: number | string | undefined,
@@ -157,7 +121,22 @@ function useRenderSvgIcon(
     return h("svg", props, renderChildNodes(children))
 }
 
-function useCreateSvgComponent(
+export function useSvgClasses(props: Readonly<TIconOptionProps>): TRecord {
+    return {
+        'mx-auto': true,
+        [`${cssPrefix}svg-inline`]: true,
+        [`${cssPrefix}spin`]: props.spin,
+        [`${cssPrefix}pulse`]: props.pulse,
+        [`${cssPrefix}flip-both`]: props.flip === 'both',
+        [`${cssPrefix}flip-vertical`]: props.flip === 'vertical',
+        [`${cssPrefix}flip-horizontal`]: props.flip === 'horizontal',
+        [`${cssPrefix}rotate-90`]: props.rotate && parseInt((props.rotate as string), 10) === 90,
+        [`${cssPrefix}rotate-180`]: props.rotate && parseInt((props.rotate as string), 10) === 180,
+        [`${cssPrefix}rotate-270`]: props.rotate && parseInt((props.rotate as string), 10) === 270,
+    }
+}
+
+export function useCreateSvgComponent(
     data: string,
     height: number | string,
     width: number | string,
@@ -167,18 +146,18 @@ function useCreateSvgComponent(
     return useRenderSvgIcon(svgData, height, width, clazz);
 }
 
-const spinnerSvgData = "M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z";
+export const spinnerSvgData = "M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z";
 
 type RawProps = VNodeProps & TRecord;
 
-function useCreateSvgNode(
+export function useCreateSvgNode(
     clazz: Array<string> | TRecord,
     style: Array<string> | TRecord,
     focusable: boolean,
     aspectRatio?: string | null,
     viewBox?: string | null,
     otherProps?: object,
-    children?: string | VNode | VNodeArrayChildren | object,
+    children?: string | VNode | VNodeArrayChildren,
 ): VNode {
     const nodeProps: RawProps = {
         xmlns: "http://www.w3.org/2000/svg",
@@ -193,7 +172,7 @@ function useCreateSvgNode(
     return h("svg", nodeProps, children);
 }
 
-function useCreateSvgCircleNode(
+export function useCreateSvgCircleNode(
     clazz: Array<string> | TRecord,
     style: Array<string> | TRecord,
     radius: number,
@@ -207,23 +186,11 @@ function useCreateSvgCircleNode(
     });
 }
 
-function useCircleSizeStyles(diameter: number): Record<string, string> {
+export function useCircleSizeStyles(diameter: number): Record<string, string> {
     const size = `${diameter}px`;
 
     return {
         width: size,
         height: size
     }
-}
-
-export {
-    findIcon,
-    googleIconUrl,
-    spinnerSvgData,
-    useCircleSizeStyles,
-    useCreateSvgNode,
-    useCreateSvgCircleNode,
-    useGoogleIcon,
-    useRenderSvgIcon,
-    useCreateSvgComponent,
 }
