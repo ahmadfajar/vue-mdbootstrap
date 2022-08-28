@@ -2,29 +2,29 @@ import axios from "axios";
 import {h, VNode, VNodeArrayChildren, VNodeProps} from "vue";
 import {XMLParser} from "fast-xml-parser";
 import {IconLib} from "./IconLib";
-import {TIconData} from "../types"
-import Helper from "../../../utils/Helper";
+import {cssPrefix} from "../../../mixins/CommonApi";
+import {TIconData, TIconOptionProps} from "../types"
 import {TRecord} from "../../../types";
+import Helper from "../../../utils/Helper";
 
 function googleIconUrl(theme: string | undefined, icon: string, version: number): string {
     return `https://fonts.gstatic.com/s/i/materialicons${theme}/${icon}/v${version}/24px.svg`;
 }
 
-// function useSvgClasses(props) {
-//     return [
-//         `${cssPrefix}svg-inline`, 'mx-auto',
-//         {
-//             [`${cssPrefix}icon-spin`]: props.spin,
-//             [`${cssPrefix}icon-pulse`]: props.pulse,
-//             [`${cssPrefix}flip-both`]: props.flip === 'both',
-//             [`${cssPrefix}flip-vertical`]: props.flip === 'vertical',
-//             [`${cssPrefix}flip-horizontal`]: props.flip === 'horizontal',
-//             [`${cssPrefix}rotate-90`]: props.rotate && parseInt(String(props.rotate), 10) === 90,
-//             [`${cssPrefix}rotate-180`]: props.rotate && parseInt(String(props.rotate), 10) === 180,
-//             [`${cssPrefix}rotate-270`]: props.rotate && parseInt(String(props.rotate), 10) === 270,
-//         },
-//     ];
-// }
+export function useSvgClasses(props: Readonly<TIconOptionProps>): TRecord {
+    return {
+        'mx-auto': true,
+        [`${cssPrefix}svg-inline`]: true,
+        [`${cssPrefix}spin`]: props.spin,
+        [`${cssPrefix}pulse`]: props.pulse,
+        [`${cssPrefix}flip-both`]: props.flip === 'both',
+        [`${cssPrefix}flip-vertical`]: props.flip === 'vertical',
+        [`${cssPrefix}flip-horizontal`]: props.flip === 'horizontal',
+        [`${cssPrefix}rotate-90`]: props.rotate && parseInt((props.rotate as string), 10) === 90,
+        [`${cssPrefix}rotate-180`]: props.rotate && parseInt((props.rotate as string), 10) === 180,
+        [`${cssPrefix}rotate-270`]: props.rotate && parseInt((props.rotate as string), 10) === 270,
+    }
+}
 
 /**
  * Find an icon on the Google's icon library.
@@ -136,8 +136,8 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
 
 function useRenderSvgIcon(
     iconData: TIconData | undefined,
-    height: number | string,
-    width: number | string,
+    height: number | string | undefined,
+    width: number | string | undefined,
     clazz: unknown,
 ): VNode {
     if (!iconData || !iconData.data) {
