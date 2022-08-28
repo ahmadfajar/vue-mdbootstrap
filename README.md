@@ -16,17 +16,22 @@
 </p>
 
 
-**Vue MDBootstrap** is a collection of **VueJs** components and built according to 
-the <a href="https://material.io/design" target="_blank">Google Material Design</a> 
+**Vue MDBootstrap** is a collection of **Vue 3** components and built according to 
+the <a href="https://m3.material.io/" target="_blank">Google Material Design 3</a> 
 specs. They can be used to built **Single Page Application (SPA)** by using module 
 bundler or built common web page by using the resources from the CDN.
 
 
-These components were build in the spirit of **VueJs framework**, and utilize **Bootstrap 4** 
+These components were build in the spirit of **VueJs 3 framework**, and utilize **Bootstrap 5** 
 css framework. Long ago, I use them on all my VueJs projects. Now, I decide to publish 
 these components and hope it will be useful to anyone who wants to use it as an alternative of
 many Vue components out there. 
 
+
+## Notes
+
+We are now working on **version 2**, and still working hard on migrating the components to fully
+support **Vue 3** and **Bootstrap 5**. When the migration is finish, we will publish it on **NPM**.
 
 ## How To Use
 

@@ -13,6 +13,7 @@ Released: September xx, 2022
 - New components: **BsIconSpinner**, **BsIconSvg**, **BsProgressBar**
 - **BsAlert**: add property `filled`, `iconVariant`, and `variant`.
 - **BsButton**: add slot `icon` for placing a custom icon.
+- **BsChip**: add property `iconVariant`, `pill`.
 - **BsMaskLoader**: add property `variant`.
 - **BsOverlay**: add event `click`.
 - **BsToggleButton**: add property `pill`, and `rounded`.
@@ -26,15 +27,25 @@ Released: September xx, 2022
   See [Vue 3 Migration Guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html).
 - All `input` event is replaced with `update:modelValue` event, so it can be integrated with `v-model` directive.
   See [Vue 3 Migration Guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html).
-- **BsAlert**: replace property `iconOutlined` with `iconVariant` for flexibility. 
-  Property `solid-fill` is deprecated, use property `filled` instead, and replaced property `value` with `modelValue`.
+- **BsAlert**: 
+  - Replaced property `iconOutlined` with `iconVariant` for flexibility.
+  - Property `solid-fill` is deprecated, use property `filled` instead. 
+  - Replaced property `value` with `modelValue`.
 - **BsAvatar**: removed property `center`. 
-- **BsButton**: removed properties `block` 
-  see [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#block-buttons) on how to achieve 
-  the same result and `iconFixed` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid) 
-  is removed from package bundle.
+- **BsButton**: 
+  - Removed properties `block` 
+    see [Bootstrap 5](https://getbootstrap.com/docs/5.2/components/buttons/#block-buttons) on how to achieve 
+    the same result.
+  - Removed property `iconFixed` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid) 
+    is removed from package bundle.
 - **BsButtonToggle**: is deprecated, use **BsToggleButton** instead. Replaced property `value` with `modelValue`.
 - **BsCard**: replace property `flat` with `rounded`.
+- **BsChip**: 
+  - Replaced property `value` with `modelValue`. 
+  - Removed `label` property to meet the MD3 design specification. 
+  - Removed property `activeColor`, because it is redundant with property `activeClass`.
+  - Removed property `faStyles` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid)
+    is removed from package bundle. 
 - **BsIcon**: replace property `rotation` with `rotate`.
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
