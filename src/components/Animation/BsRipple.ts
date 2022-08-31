@@ -29,7 +29,7 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Com
         return () => {
             return h(props.tag as string, {
                 class: `${cssPrefix}ripple`,
-                onMousedownPassive: (event: IRippleEvent) => {
+                onClickPassive: (event: IRippleEvent) => {
                     !props.disabled && useCreateRipple(event, <boolean>props.centered)
                 },
                 onTouchstartPassive: (event: IRippleEvent) => {
