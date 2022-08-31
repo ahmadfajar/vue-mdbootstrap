@@ -66,34 +66,38 @@
 /* BsChip variants mixins -- sass variables */
 @mixin make-chip-variant($name, $color) {
     .#{$prefix}chip-#{$name} {
-        $text-color: set-alt-color-level($color, $gray-800, $white, 80);
-        $hover-bg: darken($color, 5%);
-        $hover-color: set-alt-color-level($color, $gray-800, $white, 80);
-        $active-bg: set-alt-color-level($color, darken($color, 20%), darken($color, 12%), 80);
-        $active-color: set-alt-color-level($color, $black, $white, 80);
-        $active-box-shadow-color-rgb: to-rgb(lighten($color, 5%));
+        $chip-color: set-alt-color-level($color, rgba(lighten($color, 20%), .55), rgba(lighten($color, 30%), .55), 57);
+        $icon-color: darken($color, 5%);
+        $hover-bg: darken($chip-color, 10%);
+        $active-bg: darken($chip-color, 25%);
+        $active-box-shadow-color-rgb: to-rgb($chip-color);
 
         @if($name == 'light-grey') {
             $light-bg-color: lighten($color, 2.5%);
+            $light-hover-bg: darken($color, 10%);
             --#{$prefix}chip-bg: #{$light-bg-color};
+            --#{$prefix}chip-hover-bg: #{$light-hover-bg};
             --#{$prefix}chip-border-color: #{$light-bg-color};
         } @else if($name == 'light') {
             $light-bg-color: darken($color, 2.5%);
+            $light-hover-bg: darken($color, 10%);
             --#{$prefix}chip-bg: #{$light-bg-color};
+            --#{$prefix}chip-hover-bg: #{$light-hover-bg};
             --#{$prefix}chip-border-color: #{$light-bg-color};
         } @else {
-            --#{$prefix}chip-bg: #{$color};
-            --#{$prefix}chip-border-color: #{$color};
+            --#{$prefix}chip-bg: #{$chip-color};
+            --#{$prefix}chip-border-color: #{$chip-color};
+            --#{$prefix}chip-hover-bg: #{$hover-bg};
         }
 
-        --#{$prefix}chip-color: #{$text-color};
-        --#{$prefix}chip-hover-bg: #{$hover-bg};
+        --#{$prefix}chip-color: #{$black};
         --#{$prefix}chip-hover-border-color: #{$hover-bg};
-        --#{$prefix}chip-hover-color: #{$hover-color};
+        --#{$prefix}chip-hover-color: #{$black};
         --#{$prefix}chip-active-bg: #{$active-bg};
         --#{$prefix}chip-active-border-color: #{$active-bg};
+        --#{$prefix}chip-active-color: #{$black};
+        --#{$prefix}chip-icon-color: #{$icon-color};
         --#{$prefix}chip-focus-border-color: #{$active-bg};
-        --#{$prefix}chip-active-color: #{$active-color};
         --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
     }
 }
@@ -120,6 +124,7 @@
         --#{$prefix}chip-active-bg: #{$active-bg};
         --#{$prefix}chip-active-border-color: #{$active-border};
         --#{$prefix}chip-active-color: #{$active-color};
+        --#{$prefix}chip-icon-color: #{$text-color};
         --#{$prefix}chip-focus-border-color: #{$focus-border};
         --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
     }

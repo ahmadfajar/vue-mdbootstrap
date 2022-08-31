@@ -86,10 +86,7 @@ function createCloseBtnAttr(
                 ? 'xs'
                 : (props.size === 'lg' ? undefined : 'sm')
         ),
-        color: <Prop<string>>(props.outlined
-            ? props.color
-            : ['light', 'light-grey'].includes(<string>props.color)
-                ? 'dark' : 'light text-white'),
+        color: ['light', 'light-grey'].includes(<string>props.color) ? 'dark' : props.color,
         onClick: (): void => clickHandler(),
     }
 }

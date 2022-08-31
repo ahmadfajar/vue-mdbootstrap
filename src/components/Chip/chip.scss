@@ -55,7 +55,7 @@
         }
 
         &:focus, &.focused {
-            @include box-shadow(0 0 0 0.2rem rgba(var(--#{$prefix}chip-focus-shadow-color), .5));
+            @include box-shadow(0 0 0 0.2rem rgba(var(--#{$prefix}chip-focus-shadow-color), .55));
             border-color: var(--#{$prefix}chip-focus-border-color);
         }
     }
@@ -77,6 +77,10 @@
         @include border-radius(var(--#{$prefix}chip-border-radius));
         padding: 0 $padding-base;
         max-width: 100%;
+
+        .#{$prefix}chip-icon {
+            color: var(--#{$prefix}chip-icon-color);
+        }
 
         > .#{$prefix}chip-avatar {
             @include flexbox((display: flex, align-self: center, align-items: center));
