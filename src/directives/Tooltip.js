@@ -8,7 +8,7 @@ const CmpClass = Vue.extend(BsTooltipContent);
 
 function createTooltip(el, binding) {
     const defValue = {
-        content: '',
+        contentWidth: '',
         open: false,
         placement: 'bottom',
         timer: undefined,
@@ -20,10 +20,10 @@ function createTooltip(el, binding) {
         ...binding.value
     } : {
         ...defValue,
-        content: binding.value
+        contentWidth: binding.value
     };
 
-    const msg = data.content || '';
+    const msg = data.contentWidth || '';
     delete data['content'];
     const instance = new CmpClass({propsData: data});
 

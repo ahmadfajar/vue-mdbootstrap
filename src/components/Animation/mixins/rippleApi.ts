@@ -1,5 +1,7 @@
-import {IRippleEvent, TRippleData, TRippleOptionProps} from "../types";
+import {IRippleEvent} from "../types";
 import {cssPrefix} from "../../../mixins/CommonApi";
+
+/*
 import Helper from "../../../utils/Helper";
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const raf = require("raf")
@@ -97,9 +99,10 @@ export function useEndRipple(data: TRippleData): void {
         }
     }, 300);
 }
+*/
 
 export function useCreateRipple(event: IRippleEvent, centered?: boolean) {
-    const target = event.currentTarget as HTMLElement;
+    const target = event.target as HTMLElement;
     const rect = target.getBoundingClientRect();
     const top = event.pageY;
     const left = event.pageX;

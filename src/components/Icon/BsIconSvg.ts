@@ -21,7 +21,7 @@ export default defineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, Co
         const cmpProps = props as Readonly<TIconOptionProps>;
         const svgIcon = ref<TIconData>();
         const iconData = computed<TIconData | undefined>(
-            () => findIcon(props.icon as string)
+            () => findIcon(<string>props.icon)
         );
         const svgClasses = computed<TRecord>(
             () => useSvgClasses(cmpProps)

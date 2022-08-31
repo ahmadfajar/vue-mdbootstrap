@@ -1,18 +1,20 @@
 {
-    "parser": "vue-eslint-parser",
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 2020,
-        "parser": "@typescript-eslint/parser",
+        "parser": "vue-eslint-parser",
         "sourceType": "module"
     },
     "plugins": [
         "es",
-        "vue"
+        "vue",
+        "@typescript-eslint"
     ],
     "extends": [
         "eslint:recommended",
         "plugin:vue/vue3-strongly-recommended",
-        "@vue/eslint-config-typescript/recommended"
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "rules": {
         "constructor-super": "error",

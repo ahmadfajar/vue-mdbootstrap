@@ -139,11 +139,12 @@ export const toggleButtonProps = {
     ...inputProps,
     /**
      * The number of items stored in the collection.
-     * @type {Array}
+     * @type {Array<TInputOptionItem>}
      */
     items: {
         type: Array,
-        default: undefined
+        default: undefined,
+        required: true
     },
     /**
      * Allow multiple choice or not.

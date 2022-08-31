@@ -16,9 +16,9 @@ export default defineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, Co
                 `${cssPrefix}divider`,
                 props.dark ? "divider--dark" : "divider--light"
             ], {
-                marginLeft: props.leftIndent ? Helper.sizeUnit(props.leftIndent as string) : null,
-                marginRight: props.rightIndent ? Helper.sizeUnit(props.rightIndent as string) : null,
-                height: props.thickness ? Helper.sizeUnit(props.thickness as string) : null,
+                marginLeft: props.leftIndent ? Helper.sizeUnit(<string>props.leftIndent) : null,
+                marginRight: props.rightIndent ? Helper.sizeUnit(<string>props.rightIndent) : null,
+                height: props.thickness ? Helper.sizeUnit(<string>props.thickness) : null,
             })
     }
 });

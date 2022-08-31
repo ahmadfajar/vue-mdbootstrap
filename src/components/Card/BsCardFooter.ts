@@ -8,6 +8,6 @@ export default defineComponent<TBsCardFooter, TRecord, TRecord, ComputedOptions,
     name: "BsCardFooter",
     props: baseTagProps,
     setup(props, {slots}) {
-        return () => useSimpleRenderWithSlots(props.tag as string, slots, "card-footer");
+        return () => useSimpleRenderWithSlots(<string>props.tag, slots, "card-footer");
     }
 });

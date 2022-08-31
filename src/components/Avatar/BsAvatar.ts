@@ -32,7 +32,7 @@ export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, Com
                             ? useRenderAvatarImage(cmpProps)
                             : (cmpProps.icon && cmpProps.icon !== '')
                                 ? h<TBsIcon>(BsIcon, {
-                                    size: useAvatarIconSize(cmpProps) as Prop<number>,
+                                    size: <Prop<number>>useAvatarIconSize(cmpProps),
                                     ...useCreateIconProps(cmpProps),
                                 })
                                 : h('span',

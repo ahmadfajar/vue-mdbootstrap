@@ -20,15 +20,15 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
     props: chipProps,
     emits: [
         /**
-         * Callback fired when this component is dismissed (hide).
+         * Fired when this component is dismissed (hide).
          */
         "close",
         /**
-         * Callback fired when this component state is updated.
+         * Fired when this component state is updated.
          */
         "update:active",
         /**
-         * Callback fired when this component's value is updated.
+         * Fired when this component's value is updated.
          */
         "update:modelValue",
     ],

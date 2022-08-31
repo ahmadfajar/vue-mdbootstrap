@@ -73,7 +73,7 @@ class Helper {
      * @returns {*} The object property value
      */
     static getObjectValueByPath(obj: never, path: string, fallbackFn?: CallableFunction) {
-        if (!path || (typeof path !== 'string')) {
+        if (!path) {
             return fallbackFn;
         }
         // convert indexes to properties
@@ -266,7 +266,7 @@ class Helper {
      * @returns {string} UUID v4 or random UUID
      */
     static uuid(standard = false): string {
-        if (standard === true) {
+        if (standard) {
             if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
                 // @ts-ignore
                 return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g,

@@ -166,7 +166,7 @@
     }
 
     &:focus,
-    &.focus {
+    &.focused {
         @include box-shadow($z-depth-1);
         background-color: var(--#{$bs-prefix}btn-active-bg);
         border-color: var(--#{$bs-prefix}btn-active-border-color);
@@ -242,7 +242,7 @@
 
     ~ .#{$prefix}btn-floating,
     ~ .#{$prefix}btn-icon {
-        margin-left: $padding-sm - .25;
+        margin-left: $padding-xs;
     }
 }
 

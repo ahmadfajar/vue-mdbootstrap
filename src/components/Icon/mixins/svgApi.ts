@@ -82,13 +82,13 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
         if (Helper.isArray(el[1])) {
             (el[1] as Array<object>).forEach(it => {
                 const entries = Object.entries(it);
-                const childNodes = entries.filter(it => it[0].startsWith("@_") === false);
+                const childNodes = entries.filter(it => !it[0].startsWith("@_"));
                 const rh = h(el[0], createNodeAttrs(entries), renderChildNodes(childNodes));
                 results.push(rh);
             });
         } else if (Helper.isObject(el[1])) {
             const entries = Object.entries(el[1] as object);
-            const childNodes = entries.filter(it => it[0].startsWith("@_") === false);
+            const childNodes = entries.filter(it => !it[0].startsWith("@_"));
             const rh = h(el[0], createNodeAttrs(entries), renderChildNodes(childNodes));
 
             results.push(rh);
@@ -111,7 +111,7 @@ export function useRenderSvgIcon(
     const jsonObj = parser.parse(iconData.data);
     const svgData = Object.entries(jsonObj.svg);
     const props = createNodeAttrs(svgData);
-    const children = svgData.filter(el => el[0].startsWith("@_") === false);
+    const children = svgData.filter(el => !el[0].startsWith("@_"));
     props["height"] = height;
     props["width"] = width;
     props["class"] = clazz;
@@ -130,9 +130,9 @@ export function useSvgClasses(props: Readonly<TIconOptionProps>): TRecord {
         [`${cssPrefix}flip-both`]: props.flip === 'both',
         [`${cssPrefix}flip-vertical`]: props.flip === 'vertical',
         [`${cssPrefix}flip-horizontal`]: props.flip === 'horizontal',
-        [`${cssPrefix}rotate-90`]: props.rotate && parseInt((props.rotate as string), 10) === 90,
-        [`${cssPrefix}rotate-180`]: props.rotate && parseInt((props.rotate as string), 10) === 180,
-        [`${cssPrefix}rotate-270`]: props.rotate && parseInt((props.rotate as string), 10) === 270,
+        [`${cssPrefix}rotate-90`]: props.rotate && parseInt(<string>props.rotate, 10) === 90,
+        [`${cssPrefix}rotate-180`]: props.rotate && parseInt(<string>props.rotate, 10) === 180,
+        [`${cssPrefix}rotate-270`]: props.rotate && parseInt(<string>props.rotate, 10) === 270,
     }
 }
 
@@ -156,7 +156,7 @@ export function useCreateSvgNode(
     focusable: boolean,
     aspectRatio?: string | null,
     viewBox?: string | null,
-    otherProps?: object,
+    otherProps?: TRecord,
     children?: string | VNode | VNodeArrayChildren,
 ): VNode {
     const nodeProps: RawProps = {

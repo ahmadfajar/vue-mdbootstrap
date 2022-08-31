@@ -278,8 +278,5 @@
 
 @each $name, $color in $theme-colors {
     @include make-progress-bar-variant($name, $color);
-}
-
-@each $name, $color in $theme-colors {
     @include make-progress-spinner($name, $color);
 }

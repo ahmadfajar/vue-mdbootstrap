@@ -11,7 +11,7 @@ export default {
          * The tooltip content.
          * @type {string|*}
          */
-        content: {
+        contentWidth: {
             type: String,
             default: undefined
         },
@@ -92,7 +92,7 @@ export default {
             return vNode;
         }
         if (this.tooltipVM) {
-            this.tooltipVM.$slots.default = [this.content];
+            this.tooltipVM.$slots.default = [this.contentWidth];
 
             vNode.data = vNode.data || {};
             const on = vNode.data.on = vNode.data.on || {};

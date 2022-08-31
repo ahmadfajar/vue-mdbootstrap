@@ -43,7 +43,11 @@ export const cardProps = {
 }
 
 export const cardContentProps = {
-    ...baseTagProps,
+    /**
+     * Html tag used to render this component.
+     * @type {string}
+     */
+    tag: stringProp,
     /**
      * Card content variations, valid values are: `title`, `subtitle`, `text`.
      * @type {string}

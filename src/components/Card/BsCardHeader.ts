@@ -8,6 +8,6 @@ export default defineComponent<TBsCardHeader, TRecord, TRecord, ComputedOptions,
     name: "BsCardHeader",
     props: baseTagProps,
     setup(props, {slots}) {
-        return () => useSimpleRenderWithSlots(props.tag as string, slots, "card-header");
+        return () => useSimpleRenderWithSlots(<string>props.tag, slots, "card-header");
     }
 });

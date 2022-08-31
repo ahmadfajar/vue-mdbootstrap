@@ -27,13 +27,13 @@ export default defineComponent<TBsCardMedia, TRecord, TRecord, ComputedOptions, 
                     h("div", {
                             class: [`${cssPrefix}card-media-title`],
                         },
-                        props.title as string,
+                        <string>props.title,
                     ),
                     props.subtitle
                         ? h("div", {
                                 class: [`${cssPrefix}card-media-subtitle`],
                             },
-                            props.subtitle as string,
+                            <string>props.subtitle,
                         )
                         : null,
                 ]),

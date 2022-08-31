@@ -33,7 +33,7 @@
     font-size: 1rem;
     font-weight: normal;
     height: 48px;
-    padding: 0 16px;
+    padding: 0 $padding-base;
 
     &.subheader--dark {
         color: rgba($white, .8);

@@ -2,6 +2,11 @@ import {booleanProp, booleanTrueProp, stringProp} from "../../../mixins/CommonPr
 import {iconProps} from "../../Avatar/mixins/avatarProps";
 import {iconVariant} from "../../Icon/mixins/iconProps";
 
+export const chipDefaultColor = {
+    type: String,
+    default: 'light'
+}
+
 export const chipProps = {
     /**
      * Sets this component state: `active` or `normal`.
@@ -17,10 +22,7 @@ export const chipProps = {
      * The default chip color to apply.
      * @type {string}
      */
-    color: {
-        type: String,
-        default: 'light-grey'
-    },
+    color: chipDefaultColor,
     /**
      * Sets this component state: `enabled` or `disabled`.
      * @type {boolean}

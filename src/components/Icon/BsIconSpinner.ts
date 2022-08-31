@@ -17,7 +17,7 @@ export default defineComponent<TBsIconSpinner, TRecord, TRecord, ComputedOptions
                     props.spin ? `${cssPrefix}spin` : (props.pulse ? `${cssPrefix}pulse` : ""),
                     props.color ? `text-${props.color}` : "",
                 ],
-                useCircleSizeStyles(props.size as number),
+                useCircleSizeStyles(<number>props.size),
                 false, null,
                 "0 0 512 512", {
                     role: "img"

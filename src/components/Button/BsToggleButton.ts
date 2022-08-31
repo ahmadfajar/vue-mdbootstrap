@@ -27,7 +27,7 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TToggleButtonOptionProps>;
-        const localValue = ref<string | number | boolean | Array<unknown> | undefined>(props.modelValue as string | number | boolean | Array<unknown> | undefined);
+        const localValue = ref<string | number | boolean | Array<unknown> | undefined>(<string | number | boolean | Array<unknown> | undefined>props.modelValue);
         const makeInputEl = (item: TInputOptionItem, props: Readonly<TToggleButtonOptionProps>) => {
             return withDirectives(
                 h("input", {
@@ -72,7 +72,7 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                     }, [
                         makeInputEl(item, cmpProps),
                         h<TBsButtonInner>(BsButtonInner, {
-                            rippleOff: rippleOff(item) as Prop<boolean>,
+                            rippleOff: <Prop<boolean>>rippleOff(item),
                             // tagName: "div",
                         }, {
                             default: () => useRenderToggleItemContent(slots, item, cmpProps)

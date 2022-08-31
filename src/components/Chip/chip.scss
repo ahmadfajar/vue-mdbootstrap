@@ -29,30 +29,32 @@
     white-space: nowrap;
     vertical-align: middle;
     text-decoration: none !important;
-    transition-duration: $transition-duration-base;
-    transition-property: box-shadow, opacity, width;
-    transition-timing-function: $md-transition-stand-timing;
+    transition-duration: .75s;
+    transition-property: opacity, width;
+    transition-timing-function: ease-in-out;
 
     &:not(.disabled) {
         &:hover {
-            @include box-shadow($z-depth-1);
+            @include box-shadow($z-depth-half);
             background-color: var(--#{$prefix}chip-hover-bg);
             border-color: var(--#{$prefix}chip-hover-border-color);
             color: var(--#{$prefix}chip-hover-color);
         }
 
-        &:focus, &.focus,
+        &:focus, &.focused,
         &.active {
             background-color: var(--#{$prefix}chip-active-bg);
             border-color: var(--#{$prefix}chip-active-border-color);
             color: var(--#{$prefix}chip-active-color);
 
-            &:hover {
-                border-color: var(--#{$prefix}chip-hover-border-color);
+            &[class*="chip-outline"] {
+                &:hover {
+                    border-color: var(--#{$prefix}chip-hover-border-color);
+                }
             }
         }
 
-        &:focus, &.focus {
+        &:focus, &.focused {
             @include box-shadow(0 0 0 0.2rem rgba(var(--#{$prefix}chip-focus-shadow-color), .5));
             border-color: var(--#{$prefix}chip-focus-border-color);
         }
@@ -76,13 +78,6 @@
         padding: 0 $padding-base;
         max-width: 100%;
 
-        > .#{$prefix}chip-icon {
-            @include flexbox((display: flex, align-self: center, align-items: center));
-            @include transition(.3s $md-transition-stand-timing, visibility);
-            margin-left: -$padding-sm;
-            margin-right: $padding-sm;
-        }
-
         > .#{$prefix}chip-avatar {
             @include flexbox((display: flex, align-self: center, align-items: center));
             @include transition(.3s $md-transition-stand-timing, visibility);
@@ -91,6 +86,17 @@
 
             &.#{$prefix}chip-avatar-bounded {
                 margin-left: -$padding-base;
+            }
+        }
+
+        > .#{$prefix}chip-icon {
+            @include flexbox((display: flex, align-self: center, align-items: center));
+            @include transition(.3s $md-transition-stand-timing, visibility);
+            margin-left: -$padding-sm;
+            margin-right: $padding-sm;
+
+            ~ .#{$prefix}chip-avatar {
+                margin-left: 0;
             }
         }
 

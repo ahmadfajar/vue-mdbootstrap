@@ -22,7 +22,7 @@ export default defineComponent<TBsSpacer, TRecord, TRecord, ComputedOptions, Com
     setup(props) {
         return () => useSimpleRenderWithSlots("div", null,
             {'flex-grow-1': props.fill && !props.width},
-            {width: props.width ? Helper.sizeUnit(props.width as string) : null},
+            {width: props.width ? Helper.sizeUnit(<string>props.width) : null},
         )
     }
 });

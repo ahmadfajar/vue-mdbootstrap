@@ -12,6 +12,7 @@ $font-weight-boldest:         900;
 
 // Shadows
 $z-depth-1:                   0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 8px 0 rgba(0, 0, 0, 0.12) !default;
+$z-depth-half:                0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 3px 0 rgba(0, 0, 0, 0.02) !default;
 $z-depth-1-half:              0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15) !default;
 $z-depth-2:                   0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !default;
 $z-depth-3:                   0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !default;
@@ -70,6 +71,7 @@ $md-transition-drop:                $md-transition-drop-duration $md-transition-
 
 // padding or margin
 $padding-base:                      1rem !default;
+$padding-xs:                        .25rem !default;
 $padding-sm:                        $padding-base - .5 !default;
 $padding-lg:                        $padding-base + .5 !default;
 $padding-xl:                        $padding-base * 2 !default;

@@ -8,7 +8,7 @@ export default defineComponent<TBsCardContent, TRecord, TRecord, ComputedOptions
     name: "BsCardContent",
     props: cardContentProps,
     setup(props, {slots}) {
-        const tagName = computed((): string => useContentTag(props.type as string, props.tag as string));
+        const tagName = computed((): string => useContentTag(<string>props.type, <string>props.tag));
 
         return () => useSimpleRenderWithSlots(
             tagName.value, slots,

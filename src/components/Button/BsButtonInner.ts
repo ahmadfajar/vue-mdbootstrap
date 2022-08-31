@@ -15,8 +15,8 @@ export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions
         return () =>
             h<TBsRipple>(BsRipple, {
                 class: {'dropdown-toggle': cmpProps.dropdownToggle && !cmpProps.iconMode},
-                disabled: cmpProps.rippleOff as Prop<boolean>,
-                tag: cmpProps.tagName as Prop<string>
+                disabled: <Prop<boolean>>cmpProps.rippleOff,
+                tag: <Prop<string>>cmpProps.tagName,
             }, {
                 default: () => h(
                     "span",

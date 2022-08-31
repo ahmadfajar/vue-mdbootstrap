@@ -63,7 +63,7 @@
     }
 }
 
-/* BsButton variants mixins -- sass variables */
+/* BsChip variants mixins -- sass variables */
 @mixin make-chip-variant($name, $color) {
     .#{$prefix}chip-#{$name} {
         $text-color: set-alt-color-level($color, $gray-800, $white, 80);
@@ -73,9 +73,20 @@
         $active-color: set-alt-color-level($color, $black, $white, 80);
         $active-box-shadow-color-rgb: to-rgb(lighten($color, 5%));
 
-        --#{$prefix}chip-bg: #{$color};
+        @if($name == 'light-grey') {
+            $light-bg-color: lighten($color, 2.5%);
+            --#{$prefix}chip-bg: #{$light-bg-color};
+            --#{$prefix}chip-border-color: #{$light-bg-color};
+        } @else if($name == 'light') {
+            $light-bg-color: darken($color, 2.5%);
+            --#{$prefix}chip-bg: #{$light-bg-color};
+            --#{$prefix}chip-border-color: #{$light-bg-color};
+        } @else {
+            --#{$prefix}chip-bg: #{$color};
+            --#{$prefix}chip-border-color: #{$color};
+        }
+
         --#{$prefix}chip-color: #{$text-color};
-        --#{$prefix}chip-border-color: #{$color};
         --#{$prefix}chip-hover-bg: #{$hover-bg};
         --#{$prefix}chip-hover-border-color: #{$hover-bg};
         --#{$prefix}chip-hover-color: #{$hover-color};
@@ -94,7 +105,7 @@
         $hover-bg: set-alt-color-level($color, rgba(darken($color, 10%), .4), rgba(lighten($color, 20%), .2), 70);
         $hover-border: set-alt-color-level($color, $border-color, lighten($color, 12%), 80);
         $hover-color: set-alt-color-level($color, $gray-900, darken($color, 12%), 70);
-        $active-bg: set-alt-color-level($color, $color, rgba(lighten($color, 15%), .3), 80);
+        $active-bg: set-alt-color-level($color, darken($color, 5%), rgba(lighten($color, 15%), .3), 80);
         $active-border: set-alt-color-level($color, $color, rgba(lighten($color, 20%), .1), 80);
         $active-color: set-alt-color-level($color, $black, darken($color, 20%), 80);
         $focus-border: set-alt-color-level($color, darken($border-color, 15%), $color, 80);

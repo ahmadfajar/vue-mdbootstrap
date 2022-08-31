@@ -1,4 +1,5 @@
 @import "~compass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/animation/core";
 @import "colors";
 @import "variables";
 @import "mixins/transition";
@@ -13,7 +14,7 @@
 }
 
 @include enterActive-leaveActive("expand") {
-    @include transition(all $transition-duration-base $transition-easeOut);
+    @include transition(all $md-transition-easeOut);
     @include backface-visibility(hidden);
     @include transform(translate3d(0, 0, 0));
 }
@@ -45,7 +46,8 @@
 @include enterActive-leaveActive("scale") {
     transition-duration: 300ms;
     transition-property: opacity, transform;
-    backface-visibility: hidden;
+    opacity: 1;
+    //backface-visibility: hidden;
 }
 
 @include enterFrom-leaveActive("scale") {
@@ -142,5 +144,84 @@
         @include transform(translate(100%, 0));
         position: absolute;
         top: 0;
+    }
+}
+
+@keyframes rotateIn {
+    0% {
+        @include transform-origin(center center);
+        @include rotate(-180deg);
+        opacity: 0;
+    }
+    100% {
+        @include transform-origin(center center);
+        @include rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rotateOut {
+    0% {
+        @include transform-origin(center center);
+        @include rotate(0);
+        opacity: 1;
+    }
+    100% {
+        @include transform-origin(center center);
+        @include rotate(180deg);
+        opacity: 0;
+    }
+}
+
+@keyframes rotateInUpLeft {
+    0% {
+        @include transform-origin(left bottom);
+        @include rotate(90deg);
+        opacity: 0;
+    }
+    100% {
+        @include transform-origin(left bottom);
+        @include rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rotateOutUpLeft {
+    0% {
+        @include transform-origin(left bottom);
+        @include rotate(0);
+        opacity: 1;
+    }
+    100% {
+        @include transform-origin(left bottom);
+        @include rotate(-90deg);
+        opacity: 0;
+    }
+}
+
+.rotate-InOut {
+    &-enter-active {
+        @include animation(rotateIn 1s);
+    }
+
+    &-leave-active {
+        @include animation(rotateOut 1s);
+    }
+    &-enter-from, &-leave-to {
+        opacity: 0;
+    }
+}
+
+.rotate-InOut-small {
+    &-enter-active {
+        @include animation(rotateInUpLeft 750ms);
+    }
+
+    &-leave-active {
+        @include animation(rotateOutUpLeft 750ms);
+    }
+
+    &-enter-from, &-leave-to {
+        opacity: 0;
     }
 }

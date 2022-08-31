@@ -8,6 +8,6 @@ export default defineComponent<TBsCardBody, TRecord, TRecord, ComputedOptions, C
     name: "BsCardBody",
     props: baseTagProps,
     setup(props, {slots}) {
-        return () => useSimpleRenderWithSlots(props.tag as string, slots, "card-body");
+        return () => useSimpleRenderWithSlots(<string>props.tag, slots, "card-body");
     }
 });

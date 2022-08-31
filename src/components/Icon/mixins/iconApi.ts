@@ -4,12 +4,12 @@ import Helper from "../../../utils/Helper";
 export function useGetCalcSize(props: Readonly<TSizeOptionProps>): number {
     if (!props.size && !props.height && !props.width) {
         return 0;
-    } else if (props.size && parseInt(String(props.size), 10) > 0) {
-        return parseInt(String(props.size), 10)
-    } else if (props.height && parseInt(String(props.height), 10) > 0) {
-        return parseInt(String(props.height), 10)
+    } else if (props.size && parseInt(<string>props.size, 10) > 0) {
+        return parseInt(<string>props.size, 10)
+    } else if (props.height && parseInt(<string>props.height, 10) > 0) {
+        return parseInt(<string>props.height, 10)
     } else {
-        return parseInt(String(props.width), 10)
+        return parseInt(<string>props.width, 10)
     }
 }
 

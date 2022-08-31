@@ -53,10 +53,8 @@
 
 // Create theme variants for backgrounds, borders and text colors
 $removed-duplicate-colors: map-remove($merge-theme-colors,
-        //"default", "default-color", "primary", "info", "success", "secondary", "warning",
-        "primary", "info", "success", "secondary", "warning",
-        "warning-color", "danger", "dark", "light", "black", "white", "primary-color-dark",
-        "elegant-color-dark", "dark-blue", "blue-green", "blue-green-color"
+        "light", "black", "white", "dark", "elegant-color-dark",
+        "dark-blue", "primary-color-dark"
 );
 
 @each $color_name, $color in $removed-duplicate-colors {
@@ -76,34 +74,6 @@ $removed-duplicate-colors: map-remove($merge-theme-colors,
         &:hover, &:focus {
             color: darken($color, 15%) !important;
         }
-    }
-}
-
-$bs-custom-colors: (
-    //"default":      $default-color,
-    "warning":      $warning-color,
-    "blue-green":   $blue-green-color,
-);
-
-@each $color_name, $color in $bs-custom-colors {
-    .bg-#{$color_name}, .bg-#{$color_name}-color {
-        background-color: $color !important;
-    }
-
-    .text-#{$color_name}, .text-#{$color_name}-color {
-        color: $color !important;
-    }
-
-    a.text-#{$color_name}, a.text-#{$color_name}-color {
-        &:hover, &:focus {
-            color: darken($color, 15%) !important;
-        }
-    }
-}
-
-@each $color_name, $color in map-remove($context-colors, "dark", "light", "blue-green") {
-    .border-#{$color_name}, .border-#{$color_name}-color {
-        border-color: $color !important;
     }
 }
 

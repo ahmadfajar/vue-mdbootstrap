@@ -79,7 +79,7 @@ export function useRenderAlert(
             alertIconName.value
                 ? h<TBsIcon>(BsIcon, {
                     ...useCreateIconProps(props),
-                    icon: alertIconName.value as Prop<string>,
+                    icon: <Prop<string | undefined>>alertIconName.value,
                     size: 32 as Prop<number>,
                 })
                 : undefined, // createCommentVNode(" v-if-alert-icon ", true),
@@ -88,12 +88,12 @@ export function useRenderAlert(
         props.dismissible
             ? h<TBsButton>(BsButton, {
                 class: "ms-auto",
-                color: (
+                color: <Prop<string>>(
                     !(props.filled || props.solidFill)
                         ? alertColorName.value
-                        : ['light', 'light-grey'].includes(props.color as string)
+                        : ['light', 'light-grey'].includes(<string>props.color)
                             ? 'dark' : 'light text-white'
-                ) as Prop<string>,
+                ),
                 icon: "close" as Prop<string>,
                 mode: "icon" as Prop<string>,
                 flat: true as Prop<boolean>,

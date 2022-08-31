@@ -70,7 +70,7 @@ export function useRenderProgressBar(
                 class: [
                     `${cssPrefix}progress-bar`,
                     `progress-bar-${props.color}`,
-                    `${cssPrefix}${(props.mode as string).toLowerCase()}`,
+                    `${cssPrefix}${(<string>props.mode).toLowerCase()}`,
                 ],
                 style: {
                     height: `${props.height}px`
@@ -114,7 +114,7 @@ export function useRenderProgressSpinner(
             }, [
                 useCreateSvgNode(
                     [`${cssPrefix}progress-spinner-draw`],
-                    useCircleSizeStyles(props.diameter as number),
+                    useCircleSizeStyles(<number>props.diameter),
                     false, "xMidYMid meet",
                     `0 0 ${props.diameter} ${props.diameter}`,
                     {},

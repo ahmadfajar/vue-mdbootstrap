@@ -15,8 +15,8 @@ export function useMakeButtonProps(
 ) {
     return {
         class: {
-            'btn': ['icon', 'floating'].includes(props.mode as string) === false,
-            [`${cssPrefix}btn-${props.mode}`]: ['icon', 'floating'].includes(props.mode as string),
+            'btn': !['icon', 'floating'].includes(<string>props.mode),
+            [`${cssPrefix}btn-${props.mode}`]: ['icon', 'floating'].includes(<string>props.mode),
             [`btn-outline-${props.color}`]: props.outlined && props.color && !props.transparent,
             [`btn-flat-${props.color}`]: !props.outlined && props.flat && props.color && !props.transparent,
             [`${cssPrefix}btn-transparent`]: !props.outlined && !props.flat && props.transparent,
@@ -30,8 +30,8 @@ export function useMakeButtonProps(
         },
         role: 'button',
         type: buttonType === 'div' ? undefined : buttonType,
-        disabled: disabled,
-        'aria-disabled': disabled,
+        disabled: buttonType === 'div' ? undefined : disabled,
+        'aria-disabled': buttonType === 'div' ? undefined : disabled,
     }
 }
 
@@ -54,16 +54,21 @@ export function useMakeInputItemClasses(
     if (!item.id) {
         item.id = useGenerateId();
     }
+    const isSelected = isInputItemSelected(item, props);
 
     return {
         'btn': true,
-        [`btn-${props.toggleColor}`]: isInputItemSelected(item, props) && props.toggleColor,
-        [`btn-${props.color} active`]: isInputItemSelected(item, props) && !props.toggleColor,
-        [`btn-outline-${props.color}`]: !isInputItemSelected(item, props) && props.outlined,
-        [`btn-flat-${props.color}`]: !isInputItemSelected(item, props) && !props.outlined && props.flat,
-        [`btn-${props.color}`]: !isInputItemSelected(item, props) && !props.outlined && !props.flat,
+        [`btn-${props.toggleColor}`]: isSelected && props.toggleColor,
+        // [`btn-${props.color} active`]: isSelected && !props.toggleColor,
+        // [`btn-outline-${props.color}`]: !isSelected && props.outlined,
+        [`btn-outline-${props.color}`]: props.outlined && !props.toggleColor,
+        // [`btn-flat-${props.color}`]: !isSelected && !props.outlined && props.flat,
+        [`btn-flat-${props.color}`]: props.flat && !props.outlined && !props.toggleColor,
+        // [`btn-${props.color}`]: !isSelected && !props.outlined && !props.flat,
+        [`btn-${props.color}`]: !props.outlined && !props.flat && !props.toggleColor,
         [`btn-${props.size}`]: props.size,
         [`${cssPrefix}btn-raised`]: props.raised,
+        'active': isSelected && !props.toggleColor && !props.disabled && !item.disabled,
         'disabled': props.disabled || item.disabled,
         'readonly': props.readonly || item.readonly,
     }
@@ -124,7 +129,7 @@ export function useRenderIconWithSlot(
                     class: {
                         [`${cssPrefix}icon-${iconPosition}`]: btnMode !== 'icon' && btnMode !== 'floating',
                     },
-                    size: iconSize as Prop<string | number>,
+                    size: <Prop<string | number>>iconSize,
                     ...useCreateIconProps(props),
                 }) : [],
             slotArgs,
@@ -140,20 +145,20 @@ export function useRenderButtonContent(
         (props.iconPosition === 'left')
             ? useRenderIconWithSlot(
                 slots, 'icon',
-                props.mode as string,
+                <string>props.mode,
                 props,
                 props.iconPosition,
-                props.iconSize as number,
+                <number>props.iconSize,
             )
             : '',
         slots.default && slots.default(),
         (props.iconPosition === 'right')
             ? useRenderIconWithSlot(
                 slots, 'icon',
-                props.mode as string,
+                <string>props.mode,
                 props,
                 props.iconPosition,
-                props.iconSize as number,
+                <number>props.iconSize,
             )
             : '',
     ]
@@ -172,7 +177,7 @@ export function useRenderToggleItemContent(
                 'default',
                 item,
                 props.iconPosition,
-                item.iconSize as number,
+                <number | undefined>item.iconSize,
                 item,
             )
             : '',
@@ -191,7 +196,7 @@ export function useRenderToggleItemContent(
                 'default',
                 item,
                 props.iconPosition,
-                item.iconSize as number,
+                <number | undefined>item.iconSize,
                 item,
             )
             : '',

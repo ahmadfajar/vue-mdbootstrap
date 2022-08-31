@@ -30,12 +30,12 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Com
             return h(props.tag as string, {
                 class: `${cssPrefix}ripple`,
                 onMousedownPassive: (event: IRippleEvent) => {
-                    !props.disabled && useCreateRipple(event, props.centered as boolean)
+                    !props.disabled && useCreateRipple(event, <boolean>props.centered)
                 },
                 onTouchstartPassive: (event: IRippleEvent) => {
                     if (!props.disabled) {
                         touchTimeout.value = window.setTimeout(() => {
-                            useCreateRipple(event, props.centered as boolean)
+                            useCreateRipple(event, <boolean>props.centered)
                         }, 100);
                     }
                 },

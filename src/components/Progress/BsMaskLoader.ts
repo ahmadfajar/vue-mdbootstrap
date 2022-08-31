@@ -21,7 +21,7 @@ export default defineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions,
     name: "BsMaskLoader",
     props: maskLoaderProps,
     setup(props) {
-        const loaderVariant = computed<string>(() => (props.variant as string) || (props.spinnerType as string));
+        const loaderVariant = computed<string>(() => (<string>props.variant) || (<string>props.spinnerType));
 
         return () =>
             useRenderTransition(
@@ -56,10 +56,10 @@ export default defineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions,
                                         },
                                         style: {
                                             'border-width': loaderVariant.value === "linear"
-                                                ? Helper.sizeUnit(props.spinnerThickness as string)
+                                                ? Helper.sizeUnit(<string>props.spinnerThickness)
                                                 : null,
-                                            'height': Helper.sizeUnit(props.spinnerDiameter as string),
-                                            'width': Helper.sizeUnit(props.spinnerDiameter as string),
+                                            'height': Helper.sizeUnit(<string>props.spinnerDiameter),
+                                            'width': Helper.sizeUnit(<string>props.spinnerDiameter),
                                         }
                                     })
                             ),
@@ -67,7 +67,7 @@ export default defineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions,
                             color: props.overlayColor as Prop<string>,
                             opacity: props.overlayOpacity as Prop<string | number>,
                             show: props.show as Prop<boolean>,
-                            zIndex: ((props.zIndex as number) - 1) as Prop<string | number>,
+                            zIndex: ((<number>props.zIndex) - 1) as Prop<string | number>,
                         }),
                     ])
                     : createCommentVNode(" BsMaskLoader ", true)

@@ -186,8 +186,8 @@ export default {
     data: () => ({
         scrollOffset: 0,
         widths: {
-            content: 0,
-            wrapper: 0,
+            contentWidth: 0,
+            wrapperWidth: 0,
         },
     }),
     computed: {
@@ -223,7 +223,7 @@ export default {
     },
     watch: {
         scrollOffset(val) {
-            this.$refs.content.style.transform = `translateX(${-val}px)`;
+            this.$refs.contentWidth.style.transform = `translateX(${-val}px)`;
         },
     },
     mounted() {
@@ -240,8 +240,8 @@ export default {
             const { content, wrapper } = this.$refs;
 
             this.widths = {
-                content: content ? content.clientWidth : 0,
-                wrapper: wrapper ? wrapper.clientWidth : 0,
+                contentWidth: content ? content.clientWidth : 0,
+                wrapperWidth: wrapper ? wrapper.clientWidth : 0,
             };
         },
         /**
@@ -327,8 +327,8 @@ export default {
         _scrollTo(direction) {
             this.scrollOffset = this._calculateNewOffset(direction, {
                 // Force reflow
-                content: this.$refs.content ? this.$refs.content.clientWidth : 0,
-                wrapper: this.$refs.wrapper ? this.$refs.wrapper.clientWidth : 0,
+                contentWidth: this.$refs.contentWidth ? this.$refs.contentWidth.clientWidth : 0,
+                wrapperWidth: this.$refs.wrapperWidth ? this.$refs.wrapperWidth.clientWidth : 0,
             }, this.scrollOffset);
         },
     }
@@ -339,7 +339,7 @@ export default {
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins/breakpoints";
-@import "~compass-sass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 

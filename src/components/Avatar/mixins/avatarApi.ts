@@ -18,18 +18,18 @@ export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
 
 export function useCreateIconProps(props: Readonly<TAvatarIconProps>): TRecord {
     return {
-        icon: props.icon as Prop<string>,
-        spin: props.iconSpin as Prop<boolean>,
-        pulse: props.iconPulse as Prop<boolean>,
-        flip: props.iconFlip as Prop<boolean>,
-        rotate: props.iconRotation as Prop<string|number>,
+        icon: <Prop<string | undefined>>props.icon,
+        spin: <Prop<boolean>>props.iconSpin,
+        pulse: <Prop<boolean>>props.iconPulse,
+        flip: <Prop<boolean>>props.iconFlip,
+        rotate: <Prop<string | number>>props.iconRotation,
     }
 }
 
 export function useRenderAvatarImage(props: Readonly<TImageOptionProps>): VNode {
     return h('img', {
         class: useShapeClasses(props.circle, props.rounded),
-        style: useSizeStyles(props as Readonly<TImageOptionProps>),
+        style: useSizeStyles(props),
         src: props.imgSrc,
     });
 }

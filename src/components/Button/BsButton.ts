@@ -12,23 +12,24 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
     setup(props, {slots}) {
         const cmpProps = props as Readonly<TButtonOptionProps>;
         const buttonType = computed<string | undefined>(() => {
-            if (Helper.isEmpty(props.href)) {
-                return cmpProps.type;
+            if (Helper.isEmpty(<string | undefined>props.href)) {
+                return ["icon", "floating"].includes(<string>props.mode) ? 'div' : cmpProps.type;
             }
+
             return undefined;
         });
         const hasIcon = computed<boolean>((): boolean => {
             return (!Helper.isEmpty(props.icon) || (slots.icon !== undefined));
         });
         const isDisabled = computed<boolean>(
-            () => (props.disabled as boolean) && Helper.isEmpty(props.href as string)
+            () => (<boolean>props.disabled) && Helper.isEmpty(<string | undefined>props.href)
         );
         const rippleOff = computed<boolean>(
-            () => (props.rippleOff as boolean) && isDisabled.value
+            () => (<boolean>props.rippleOff) && isDisabled.value
         );
         const tagName = computed<string>(
             () => (
-                !Helper.isEmpty(props.href as string)
+                !Helper.isEmpty(<string | undefined>props.href)
                     ? 'a'
                     : buttonType.value === 'div' ? 'div' : 'button'
             )
@@ -41,10 +42,10 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
                 ),
             }, [
                 h<TBsButtonInner>(BsButtonInner, {
-                    dropdownToggle: cmpProps.dropdownToggle as Prop<boolean>,
-                    iconMode: (cmpProps.mode === 'icon') as Prop<boolean>,
-                    hasIcon: hasIcon.value as Prop<boolean>,
-                    rippleOff: rippleOff.value as Prop<boolean>,
+                    dropdownToggle: <Prop<boolean>>cmpProps.dropdownToggle,
+                    iconMode: <Prop<boolean>>(cmpProps.mode === 'icon'),
+                    hasIcon: <Prop<boolean>>hasIcon.value,
+                    rippleOff: <Prop<boolean>>rippleOff.value,
                 }, {
                     default: () => useRenderButtonContent(slots, cmpProps)
                 }),
