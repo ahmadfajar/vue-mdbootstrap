@@ -1,4 +1,4 @@
-import Helper from "../utils/Helper";
+import {useGenerateId} from "./CommonApi";
 
 export const booleanProp = {
     type: Boolean,
@@ -65,9 +65,7 @@ export const inputProps = {
      */
     id: {
         type: String,
-        default() {
-            return 'bs-' + Helper.uuid(true);
-        }
+        default: () => useGenerateId()
     },
     /**
      * This input field element name.

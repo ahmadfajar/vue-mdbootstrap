@@ -5,6 +5,7 @@ import {
     createCommentVNode,
     defineComponent,
     EmitsOptions,
+    nextTick,
     ref,
     watch
 } from "vue";
@@ -19,7 +20,11 @@ export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, Comp
     props: alertProps,
     emits: [
         /**
-         * Callback fired when this component's value is updated.
+         * Event fired when this component is dismissed (hide).
+         */
+        'close',
+        /**
+         * Event fired when this component's value is updated.
          */
         'update:modelValue'
     ],
@@ -39,6 +44,7 @@ export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, Comp
         const dismissedAlert = () => {
             dismiss.value = true;
             emit("update:modelValue", false);
+            nextTick().then(() => emit('close'))
         }
 
         watch(

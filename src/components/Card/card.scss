@@ -10,10 +10,6 @@
         font-weight: $font-weight-semi-bold;
     }
 
-    .card-subtitle {
-        color: $gray-600;
-    }
-
     &:not(.rounded-0) {
         > .#{$prefix}mask-loader {
             > .#{$prefix}overlay {

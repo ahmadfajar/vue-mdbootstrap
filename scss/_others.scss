@@ -18,12 +18,6 @@
     @extend %cursor-pointer;
 }
 
-.#{$prefix}disabled {
-    @include user-select(none);
-    color: rgba($black, .3) !important;
-    cursor: default !important;
-}
-
 .#{$prefix}fw-bold {
     font-weight: $font-weight-bold !important;
 }

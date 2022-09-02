@@ -10,11 +10,11 @@ import {
     ref,
     watch
 } from "vue";
+import {useGenerateId} from "../../mixins/CommonApi";
 import {chipGroupProps} from "./mixins/chipGroupProps";
 import {useChipIsSelected, useRenderChipGroup, useSetSliderSize} from "./mixins/chipGroupApi";
 import {TBsChipGroup, TChipContainer, TChipGroupOptionProps, TChipOptionItem, TChipValue} from "./types";
 import {TRecord} from "../../types";
-import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsChipGroup",
@@ -37,9 +37,9 @@ export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, 
         const cmpProps = props as Readonly<TChipGroupOptionProps>;
         const scrollOffset = ref<number>(0);
         const slider = reactive<TChipContainer>({
-            contentId: Helper.uuid(true),
+            contentId: useGenerateId(),
             contentWidth: 0,
-            wrapperId: Helper.uuid(true),
+            wrapperId: useGenerateId(),
             wrapperWidth: 0,
         });
         const showSliderButton = computed(

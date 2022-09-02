@@ -1,6 +1,7 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
 import {TAvatarIconProps} from "../../Avatar/types";
 import {TRecord} from "../../../types";
+import {TInputBaseProps} from "../../Checkbox/types";
 
 export declare type TButtonInnerOptionProps = {
     dropdownToggle?: boolean;
@@ -43,12 +44,7 @@ export declare type TInputOptionItem = TAvatarIconProps & {
     iconSize?: number;
 }
 
-export declare type TToggleButtonOptionProps = TBaseButtonProps & {
-    id?: string;
-    name?: string | number;
-    disabled?: boolean;
-    readonly?: boolean;
-    required?: boolean;
+export declare type TToggleButtonOptionProps = TInputBaseProps & TBaseButtonProps & {
     items: Array<TInputOptionItem>;
     multiple?: boolean;
     modelValue?: string | number | boolean | Array<unknown>;

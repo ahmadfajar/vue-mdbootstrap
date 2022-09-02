@@ -44,24 +44,36 @@
     .#{$prefix}chip-outline-#{$name} {
         $border-color: lighten($gray-600, 25%);
         $text-color: set-alt-color-level($color, $gray-800, $color, 80);
-        $hover-bg: set-alt-color-level($color, rgba(darken($color, 10%), .4), rgba(lighten($color, 20%), .2), 70);
+        $hover-bg: set-alt-color-level($color, rgba(darken($color, 10%), .4), rgba(lighten($color, 20%), .2), 80);
         $hover-border: set-alt-color-level($color, $border-color, lighten($color, 12%), 80);
-        $hover-color: set-alt-color-level($color, $gray-900, darken($color, 12%), 70);
-        $active-bg: set-alt-color-level($color, darken($color, 5%), rgba(lighten($color, 15%), .3), 80);
+        $hover-color: set-alt-color-level($color, $gray-900, darken($color, 12%), 80);
+        $active-bg: set-alt-color-level($color, rgba(darken($color, 6%), .4), rgba(lighten($color, 15%), .3), 80);
         $active-border: set-alt-color-level($color, $color, rgba(lighten($color, 20%), .1), 80);
         $active-color: set-alt-color-level($color, $black, darken($color, 20%), 80);
         $focus-border: set-alt-color-level($color, darken($border-color, 15%), $color, 80);
         $active-box-shadow-color-rgb: to-rgb(lighten($hover-bg, 10%));
 
         --#{$prefix}chip-bg: transparent;
-        --#{$prefix}chip-color: #{$text-color};
+        @if($name == 'grey' or $name == 'secondary') {
+            $hover-bg-alt: rgba(darken($color, 2%), .3);
+            $active-bg-alt: rgba(darken($color, 6%), .3);
+            --#{$prefix}chip-color: #{$gray-800};
+            --#{$prefix}chip-hover-bg: #{$hover-bg-alt};
+            --#{$prefix}chip-hover-color: #{$gray-900};
+            --#{$prefix}chip-active-bg: #{$active-bg-alt};
+            --#{$prefix}chip-active-color: #{$black};
+            --#{$prefix}chip-hover-border-color: #{$color};
+        } @else {
+            --#{$prefix}chip-color: #{$text-color};
+            --#{$prefix}chip-hover-bg: #{$hover-bg};
+            --#{$prefix}chip-hover-color: #{$hover-color};
+            --#{$prefix}chip-active-bg: #{$active-bg};
+            --#{$prefix}chip-active-color: #{$active-color};
+            --#{$prefix}chip-hover-border-color: #{$hover-border};
+        }
+
         --#{$prefix}chip-border-color: #{$border-color};
-        --#{$prefix}chip-hover-bg: #{$hover-bg};
-        --#{$prefix}chip-hover-border-color: #{$hover-border};
-        --#{$prefix}chip-hover-color: #{$hover-color};
-        --#{$prefix}chip-active-bg: #{$active-bg};
         --#{$prefix}chip-active-border-color: #{$active-border};
-        --#{$prefix}chip-active-color: #{$active-color};
         --#{$prefix}chip-icon-color: #{$text-color};
         --#{$prefix}chip-focus-border-color: #{$focus-border};
         --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};

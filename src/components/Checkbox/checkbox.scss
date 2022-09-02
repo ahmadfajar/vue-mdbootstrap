@@ -1,0 +1,169 @@
+@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins/checkbox";
+
+.#{$prefix}checkbox {
+    --#{$prefix}checkbox-size: #{$checkbox-size};
+    --#{$prefix}checkbox-touch-size: #{$checkbox-touch-size};
+    --#{$prefix}checkbox-border-radius: #{$border-radius-sm};
+    --#{$prefix}checkbox-stroke: #{$checkbox-stroke};
+    --#{$prefix}checkbox-margin: #{$checkbox-margin};
+    --#{$prefix}checkbox-indeterminate-width: #{$checkbox-indeterminate-width};
+    --#{$prefix}checkbox-disabled-bg: transparent;
+    --#{$prefix}checkbox-disabled-opacity: .4;
+
+    @include display-flex(inline-flex);
+    margin: var(--#{$prefix}checkbox-margin);
+    position: relative;
+    cursor: pointer;
+
+    > .#{$prefix}checkbox-inner {
+        @include transition($md-transition-stand);
+        @include border-radius(var(--#{$prefix}checkbox-border-radius));
+        border: var(--#{$prefix}checkbox-stroke) solid currentColor;
+        height: var(--#{$prefix}checkbox-size);
+        min-width: var(--#{$prefix}checkbox-size);
+        width: var(--#{$prefix}checkbox-size);
+        position: relative;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:before,
+        &:after {
+            @include transition($md-transition-drop);
+            content: " ";
+            position: absolute;
+        }
+
+        &:before {
+            @include border-radius($border-radius-circle);
+            @include transform(translate(-50%, -50%));
+            height: var(--#{$prefix}checkbox-touch-size);
+            width: var(--#{$prefix}checkbox-touch-size);
+            left: 50%;
+            top: 50%;
+            z-index: 11;
+        }
+
+        &:after {
+            @include transform(rotate(45deg) scale3D(.15, .15, 1));
+            border: var(--#{$prefix}checkbox-stroke) solid transparent;
+            border-top: 0;
+            border-left: 0;
+            height: 13px;
+            width: 7px;
+            left: 4px;
+            top: 0;
+            opacity: 0;
+            z-index: 12;
+        }
+
+        .#{$prefix}ripple {
+            @include border-radius($border-radius-circle);
+            @include transform(translate(-50%, -50%));
+            height: var(--#{$prefix}checkbox-touch-size);
+            width: var(--#{$prefix}checkbox-touch-size);
+            left: 50% !important;
+            top: 50% !important;
+
+            .#{$prefix}ripple-animation {
+                background-color: var(--#{$prefix}checkbox-ripple-rgba);
+            }
+
+            > input {
+                display: none;
+            }
+        }
+    }
+
+    > .#{$prefix}checkbox-label {
+        @include user-select(none);
+        line-height: var(--#{$prefix}checkbox-size);
+        height: var(--#{$prefix}checkbox-size);
+        margin-bottom: 0;
+        padding-left: $padding-base;
+        position: relative;
+        cursor: pointer;
+    }
+
+    &.#{$prefix}indeterminate {
+        > .#{$prefix}checkbox-inner {
+            &:after {
+                @include transform(translate(-50%, -50%) !important);
+                border-width: 0 0 var(--#{$prefix}checkbox-stroke);
+                border-style: solid;
+                width: var(--#{$prefix}checkbox-indeterminate-width);
+                height: var(--#{$prefix}checkbox-stroke);
+                left: 50%;
+                top: 50%;
+                opacity: 0;
+                z-index: 7;
+            }
+        }
+    }
+
+    &.checked {
+        > .#{$prefix}checkbox-inner {
+            background-color: var(--#{$prefix}checkbox-bg);
+            border-color: var(--#{$prefix}checkbox-bg);
+
+            &:after {
+                @include transform(rotate(45deg) scale3D(1, 1, 1));
+                @include transition($md-transition-stand);
+                border-color: var(--#{$prefix}checkbox-color);
+                opacity: 1;
+            }
+        }
+    }
+
+    &.required {
+        label:after {
+            position: absolute;
+            top: var(--#{$prefix}checkbox-stroke);
+            right: 0;
+            transform: translateX(calc(100% + 2px));
+            content: "*";
+            line-height: 1em;
+            vertical-align: top;
+        }
+    }
+
+    &.readonly {
+        cursor: default;
+
+        > .#{$prefix}checkbox-inner {
+            opacity: var(--#{$prefix}checkbox-disabled-opacity);
+        }
+
+        > .#{$prefix}checkbox-label {
+            cursor: default;
+        }
+    }
+
+    &.disabled {
+        cursor: default;
+
+        > .#{$prefix}checkbox-inner {
+            background-color: var(--#{$prefix}checkbox-disabled-bg);
+            border-color: currentColor;
+            opacity: var(--#{$prefix}checkbox-disabled-opacity);
+
+            &:after {
+                border-color: currentColor;
+            }
+        }
+
+        > .#{$prefix}checkbox-label {
+            opacity: .5;
+            cursor: default;
+        }
+    }
+}
+
+@each $name, $color in map-remove($merge-theme-colors, 'black') {
+    @include make-checkbox($name, $color);
+}

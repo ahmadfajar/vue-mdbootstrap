@@ -20,6 +20,7 @@ export declare type TRippleData = {
 }
 
 export declare type TRippleOptionProps = {
+    active?: boolean;
     centered?: boolean;
     disabled?: boolean;
     tag?: string;

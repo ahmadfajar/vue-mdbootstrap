@@ -1,20 +1,18 @@
 /* BsCheckbox mixins */
 @mixin make-checkbox($name, $color) {
     .#{$prefix}checkbox-#{$name} {
-        &:not(.#{$prefix}disabled) {
-            &.#{$prefix}checked {
-                > .#{$prefix}checkbox-inner {
-                    background-color: $color;
-                    border-color: $color;
+        $ripple-bg: set-alt-color-level($color, rgba($gray-500, .5), rgba($color, .4), 70);
+        $checked-color: set-alt-color-level($color, $black, $white, 70);
+        --#{$prefix}checkbox-bg: #{$color};
+        --#{$prefix}checkbox-color: #{$checked-color};
+        --#{$prefix}checkbox-ripple-rgba: #{$ripple-bg};
 
-                    &:after {
-                        border-color: $white;
-                    }
-                }
-
-                .#{$prefix}ripple {
-                    color: $color;
-                }
+        > .#{$prefix}checkbox-inner {
+            &:before {
+                --#{$prefix}checkbox-touch-size: #{$checkbox-touch-size};
+            }
+            &:after {
+                --#{$prefix}checkbox-border-width: #{$checkbox-stroke}
             }
         }
     }

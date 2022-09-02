@@ -626,8 +626,6 @@ $primary-color-dark:        #0d47a1 !default;
 $secondary-color:           #aa66cc !default;
 $secondary-color-dark:      #681c8f !default;
 $default-color:             #2bbbad !default;
-$mdb-default-color:         #6200ee !default;
-$mdb-default-color-dark:    #4600ab !default;
 $info-color:                #0dcaf0 !default;
 $info-color-dark:           #0b6c8d !default;
 $success-color:             #198754 !default;
@@ -646,12 +644,16 @@ $special-color:             #37474f !default;
 $special-color-dark:        #263238 !default;
 $blue-green-color:          #064e40 !default;
 $blue-green-color-dark:     #022f27 !default;
+$mdb-default-color:         #6200ee !default;
+$mdb-default-color-dark:    #4600ab !default;
+$mdb-unique-color:          #880e4f !default;
+$mdb-light-color:           #f8f9fa !default;
 $white:                     $white-base;
 $black:                     $black-base;
 $error-color:               $red-base !default;
 
 // Applicable to:
-// BsButton, BsToggleButton, BsChip, BsCombobox, BsListView,
+// BsButton, BsToggleButton, BsCheckbox, BsChip, BsCombobox, BsListView,
 $material-colors: (
     "primary-color":          $primary-color,
     "primary-color-dark":     $primary-color-dark,
@@ -692,7 +694,7 @@ $theme-colors: (
     "danger":      $danger-color,
     "info":        $info-color,
     "dark":        $grey-darken-4,
-    "light":       #f8f9fa,
+    "light":       $mdb-light-color,
     "light-grey":  $grey-lighten-2,
     "yellow":      $yellow-base,
     "amber":       $amber-base,
@@ -717,7 +719,7 @@ $theme-colors: (
     "purple":      $purple-base,
     "red":         $red-base,
     "teal":        $teal-base,
-    "unique":      #880e4f,
+    "unique":      $mdb-unique-color,
     "black":       $black-base
 );
 
