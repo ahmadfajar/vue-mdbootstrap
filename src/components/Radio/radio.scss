@@ -59,6 +59,17 @@
             position: absolute;
         }
 
+        .#{$prefix}field-overlay {
+            @include border-radius($border-radius-circle);
+            @include transform(translate(-50%, -50%));
+            height: var(--#{$prefix}radio-touch-size);
+            width: var(--#{$prefix}radio-touch-size);
+            left: 50% !important;
+            top: 50% !important;
+            pointer-events: none;
+            position: absolute;
+        }
+
         .#{$prefix}ripple {
             @include border-radius($border-radius-circle);
             @include transform(translate(-50%, -50%));
@@ -103,8 +114,11 @@
     &:not(.disabled):not(.readonly) {
         .#{$prefix}radio-inner {
             &:hover {
-                .#{$prefix}ripple {
-                    background-color: var(--#{$prefix}radio-hover-rgba);
+                .#{$prefix}field-overlay {
+                    //background-color: var(--#{$prefix}radio-hover-rgba);
+                    background-color: currentColor;
+                    opacity: .09;
+                    transition: opacity $transition-hoverable;
                 }
             }
         }
@@ -112,8 +126,12 @@
         &.checked {
             .#{$prefix}radio-inner {
                 &:hover {
-                    .#{$prefix}ripple {
-                        background-color: var(--#{$prefix}radio-active-hover-rgba);
+                    .#{$prefix}field-overlay {
+                        background-color: var(--#{$prefix}radio-color);
+                        opacity: .2;
+                        transition: opacity $transition-hoverable;
+                        //background-color: var(--#{$prefix}radio-active-hover-rgba);
+                        //opacity: 1;
                     }
                 }
             }

@@ -69,6 +69,7 @@ export function useRenderRadioOrCheckbox(
                 class: `${cssPrefix}${inputType}-inner`,
                 onClick: () => toggleCheckHandler(),
             }, [
+                h("div", {class: `${cssPrefix}field-overlay`}),
                 h<TBsRipple>(BsRipple, {
                     centered: true as Prop<boolean>,
                     active: <Prop<boolean>>rippleActive.value,
