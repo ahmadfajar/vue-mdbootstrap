@@ -3,9 +3,14 @@
     .#{$prefix}checkbox-#{$name} {
         $ripple-bg: set-alt-color-level($color, rgba($gray-500, .5), rgba($color, .4), 70);
         $checked-color: set-alt-color-level($color, $black, $white, 70);
+        $ripple-lighten: transparentize($ripple-bg, .2);
+        $hover-rgba: rgba($black, .12);
+
         --#{$prefix}checkbox-bg: #{$color};
         --#{$prefix}checkbox-color: #{$checked-color};
         --#{$prefix}checkbox-ripple-rgba: #{$ripple-bg};
+        --#{$prefix}checkbox-hover-rgba: #{$hover-rgba};
+        --#{$prefix}checkbox-active-hover-rgba: #{$ripple-lighten};
 
         > .#{$prefix}checkbox-inner {
             &:before {

@@ -40,6 +40,21 @@ Released: November xx, 2022
     is removed from package bundle.
 - **BsButtonToggle**: is deprecated, use **BsToggleButton** instead. Replaced property `value` with `modelValue`.
 - **BsCard**: replace property `flat` with `rounded`.
+- **BsCheckbox**: 
+   - Replace property `checked` with `modelValue`. 
+   - Removed property `falseValue` and `trueValue`.
+   - Replace event `change` with `update:modelValue`.
+- **BsCheckboxGroup**: 
+   - Replace property `columns` with `column`. 
+   - Deprecated property `externalValidator`, use property `validator` instead.
+   - Replace event `change` with `update:modelValue`.
+- **BsRadio**: 
+   - Replace property `checked` with `modelValue`. 
+   - Replace event `change` with `update:modelValue`.
+- **BsRadioGroup**: 
+   - Replace property `columns` with `column`. 
+   - Deprecated property `externalValidator`, use property `validator` instead.
+   - Replace event `change` with `update:modelValue`.
 - **BsChip**: 
   - Replaced property `value` with `modelValue`. 
   - Removed `label` property to meet the MD3 design specification. 
@@ -49,7 +64,7 @@ Released: November xx, 2022
 - **BsIcon**: replace property `rotation` with `rotate`.
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
-- **BsRipple**: removed properties `active` and `eventTrigger`.
+- **BsRipple**: removed property `eventTrigger`.
 
 
 ## v1.2.2

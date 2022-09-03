@@ -1,20 +1,13 @@
 /* BsRadio mixins */
 @mixin make-radio($name, $color) {
     .#{$prefix}radio-#{$name} {
-        &:not(.#{$prefix}disabled) {
-            &.#{$prefix}checked {
-                > .#{$prefix}radio-inner {
-                    border-color: $color;
+        $ripple-bg: set-alt-color-level($color, rgba($gray-500, .5), rgba($color, .4), 70);
+        $ripple-lighten: transparentize($ripple-bg, .2);
+        $hover-rgba: rgba($black, .12);
 
-                    &:after {
-                        background-color: $color;
-                    }
-                }
-
-                .#{$prefix}ripple {
-                    color: $color;
-                }
-            }
-        }
+        --#{$prefix}radio-color: #{$color};
+        --#{$prefix}radio-ripple-rgba: #{$ripple-bg};
+        --#{$prefix}radio-hover-rgba: #{$hover-rgba};
+        --#{$prefix}radio-active-hover-rgba: #{$ripple-lighten};
     }
 }

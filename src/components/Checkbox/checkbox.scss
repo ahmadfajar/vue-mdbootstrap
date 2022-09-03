@@ -120,15 +120,35 @@
         }
     }
 
+    &:not(.disabled):not(.readonly) {
+        .#{$prefix}checkbox-inner {
+            &:hover {
+                .#{$prefix}ripple {
+                    background-color: var(--#{$prefix}checkbox-hover-rgba);
+                }
+            }
+        }
+
+        &.checked {
+            .#{$prefix}checkbox-inner {
+                &:hover {
+                    .#{$prefix}ripple {
+                        background-color: var(--#{$prefix}checkbox-active-hover-rgba);
+                    }
+                }
+            }
+        }
+    }
+
     &.required {
         label:after {
-            position: absolute;
-            top: var(--#{$prefix}checkbox-stroke);
+            @include transform(translateX(calc(100% + 2px)));
             right: 0;
-            transform: translateX(calc(100% + 2px));
             content: "*";
             line-height: 1em;
+            position: absolute;
             vertical-align: top;
+            top: var(--#{$prefix}checkbox-stroke);
         }
     }
 

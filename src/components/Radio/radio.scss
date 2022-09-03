@@ -1,0 +1,175 @@
+@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins/radio";
+
+.#{$prefix}radio {
+    --#{$prefix}radio-size: #{$radio-size};
+    --#{$prefix}radio-touch-size: #{$radio-touch-size};
+    --#{$prefix}radio-stroke: #{$radio-stroke};
+    --#{$prefix}radio-margin: #{$radio-margin};
+    --#{$prefix}radio-disabled-bg: transparent;
+    --#{$prefix}radio-disabled-opacity: .4;
+
+    @include display-flex(inline-flex);
+    margin: var(--#{$prefix}radio-margin);
+    position: relative;
+    cursor: pointer;
+
+    > .#{$prefix}radio-inner {
+        @include border-radius($border-radius-circle);
+        @include transition($md-transition-stand);
+        border: var(--#{$prefix}radio-stroke) solid currentColor;
+        height: var(--#{$prefix}radio-size);
+        min-width: var(--#{$prefix}radio-size);
+        width: var(--#{$prefix}radio-size);
+        position: relative;
+
+        &:focus {
+            outline: none;
+        }
+
+        &:before,
+        &:after {
+            @include transition($md-transition-drop);
+            content: " ";
+            position: absolute;
+        }
+
+        &:before {
+            @include border-radius($border-radius-circle);
+            @include transform(translate(-50%, -50%));
+            height: var(--#{$prefix}radio-touch-size);
+            width: var(--#{$prefix}radio-touch-size);
+            left: 50%;
+            top: 50%;
+            z-index: 11;
+        }
+
+        &:after {
+            @include border-radius($border-radius-circle);
+            @include transform(scale3D(.38, .38, 1));
+            content: " ";
+            bottom: 3px;
+            left: 3px;
+            right: 3px;
+            top: 3px;
+            opacity: 0;
+            position: absolute;
+        }
+
+        .#{$prefix}ripple {
+            @include border-radius($border-radius-circle);
+            @include transform(translate(-50%, -50%));
+            height: var(--#{$prefix}radio-touch-size);
+            width: var(--#{$prefix}radio-touch-size);
+            left: 50% !important;
+            top: 50% !important;
+
+            .#{$prefix}ripple-animation {
+                background-color: var(--#{$prefix}radio-ripple-rgba);
+            }
+
+            > input {
+                display: none;
+            }
+        }
+    }
+
+    > .#{$prefix}radio-label {
+        @include user-select(none);
+        height: var(--#{$prefix}radio-size);
+        line-height: var(--#{$prefix}radio-size);
+        margin-bottom: 0;
+        padding-left: $padding-base;
+        position: relative;
+        cursor: pointer;
+    }
+
+    &.checked {
+        .#{$prefix}radio-inner {
+            border-color: var(--#{$prefix}radio-color);
+
+            &:after {
+                @include transform(scale3D(1, 1, 1));
+                @include transition($md-transition-stand);
+                background-color: var(--#{$prefix}radio-color);
+                opacity: 1;
+            }
+        }
+    }
+
+    &:not(.disabled):not(.readonly) {
+        .#{$prefix}radio-inner {
+            &:hover {
+                .#{$prefix}ripple {
+                    background-color: var(--#{$prefix}radio-hover-rgba);
+                }
+            }
+        }
+
+        &.checked {
+            .#{$prefix}radio-inner {
+                &:hover {
+                    .#{$prefix}ripple {
+                        background-color: var(--#{$prefix}radio-active-hover-rgba);
+                    }
+                }
+            }
+        }
+    }
+
+    &.required {
+        label:after {
+            @include transform(translateX(calc(100% + 2px)));
+            content: "*";
+            line-height: 1em;
+            position: absolute;
+            vertical-align: top;
+            right: 0;
+            top: var(--#{$prefix}radio-stroke);
+        }
+    }
+
+    &.readonly {
+        cursor: default;
+
+        > .#{$prefix}radio-inner {
+            opacity: var(--#{$prefix}checkbox-disabled-opacity);
+        }
+
+        > .#{$prefix}radio-label {
+            cursor: default;
+        }
+    }
+
+    &.disabled {
+        cursor: default;
+
+        > .#{$prefix}radio-inner {
+            background-color: var(--#{$prefix}radio-disabled-bg);
+            border-color: currentColor;
+            opacity: var(--#{$prefix}radio-disabled-opacity);
+
+            &:after {
+                border-color: currentColor;
+            }
+        }
+
+        &.checked {
+            > .#{$prefix}radio-inner {
+                border-color: var(--#{$prefix}radio-color);
+            }
+        }
+
+        > .#{$prefix}radio-label {
+            opacity: .5;
+            cursor: default;
+        }
+    }
+}
+
+@each $name, $color in map-remove($merge-theme-colors, 'black') {
+    @include make-radio($name, $color);
+}
