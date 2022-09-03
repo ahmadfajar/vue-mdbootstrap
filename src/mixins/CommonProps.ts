@@ -58,17 +58,9 @@ export const defaultTransitionProp = {
     default: 'fade'
 };
 
-export const inputProps = {
+export const baseInputProps = {
     /**
-     * This input field element ID.
-     * @type {string}
-     */
-    id: {
-        type: String,
-        default: () => useGenerateId()
-    },
-    /**
-     * This input field element name.
+     * Sets the `<input>` element `name` attribute.
      * @type {string|number}
      */
     name: stringOrNumberProp,
@@ -87,4 +79,16 @@ export const inputProps = {
      * @type {boolean}
      */
     required: booleanProp
+}
+
+export const inputProps = {
+    /**
+     * Sets the `<input>` element `ID` attribute. This property value is auto generates.
+     * @type {string}
+     */
+    id: {
+        type: String,
+        default: () => useGenerateId()
+    },
+    ...baseInputProps,
 }

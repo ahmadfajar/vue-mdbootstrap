@@ -38,6 +38,6 @@ export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, C
             useRenderCheckbox(
                 slots, cmpProps, checkboxClasses, rippleActive,
                 toggleCheckHandler,
-            )
+            );
     }
 });
