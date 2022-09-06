@@ -59,7 +59,7 @@
             position: absolute;
         }
 
-        .#{$prefix}field-overlay {
+        .#{$prefix}radio-overlay {
             @include border-radius($border-radius-circle);
             @include transform(translate(-50%, -50%));
             height: var(--#{$prefix}radio-touch-size);
@@ -79,7 +79,8 @@
             top: 50% !important;
 
             .#{$prefix}ripple-animation {
-                background-color: var(--#{$prefix}radio-ripple-rgba);
+                background-color: var(--#{$prefix}radio-color);
+                opacity: .65;
             }
 
             > input {
@@ -112,9 +113,9 @@
     }
 
     &:not(.disabled):not(.readonly) {
-        .#{$prefix}radio-inner {
+        > .#{$prefix}radio-inner {
             &:hover {
-                .#{$prefix}field-overlay {
+                .#{$prefix}radio-overlay {
                     //background-color: var(--#{$prefix}radio-hover-rgba);
                     background-color: currentColor;
                     opacity: .09;
@@ -124,9 +125,9 @@
         }
 
         &.checked {
-            .#{$prefix}radio-inner {
+            > .#{$prefix}radio-inner {
                 &:hover {
-                    .#{$prefix}field-overlay {
+                    .#{$prefix}radio-overlay {
                         background-color: var(--#{$prefix}radio-color);
                         opacity: .2;
                         transition: opacity $transition-hoverable;

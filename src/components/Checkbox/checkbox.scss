@@ -62,7 +62,7 @@
             z-index: 12;
         }
 
-        .#{$prefix}field-overlay {
+        .#{$prefix}checkbox-overlay {
             @include border-radius($border-radius-circle);
             @include transform(translate(-50%, -50%));
             height: var(--#{$prefix}checkbox-touch-size);
@@ -82,7 +82,8 @@
             top: 50% !important;
 
             .#{$prefix}ripple-animation {
-                background-color: var(--#{$prefix}checkbox-ripple-rgba);
+                background-color: var(--#{$prefix}checkbox-bg);
+                opacity: .65;
             }
 
             > input {
@@ -132,9 +133,9 @@
     }
 
     &:not(.disabled):not(.readonly) {
-        .#{$prefix}checkbox-inner {
+        > .#{$prefix}checkbox-inner {
             &:hover {
-                .#{$prefix}field-overlay {
+                .#{$prefix}checkbox-overlay {
                     background-color: currentColor;
                     opacity: .09;
                     transition: opacity $transition-hoverable;
@@ -143,9 +144,9 @@
         }
 
         &.checked {
-            .#{$prefix}checkbox-inner {
+            > .#{$prefix}checkbox-inner {
                 &:hover {
-                    .#{$prefix}field-overlay {
+                    .#{$prefix}checkbox-overlay {
                         background-color: var(--#{$prefix}checkbox-bg);
                         opacity: .22;
                         transition: opacity $transition-hoverable;
