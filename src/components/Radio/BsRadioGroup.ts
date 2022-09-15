@@ -3,7 +3,7 @@ import {useGetErrorItems, useHasValidated, useHasValidationError, useShowValidat
 import {useCreateRadioItems, useInputGroupClasses, useRenderRadioCheckboxGroup} from "./mixins/radioApi";
 import {baseInputProps} from "../../mixins/CommonProps";
 import {radioGroupProps} from "./mixins/radioProps";
-import {validationProps} from "../Checkbox/mixins/checkboxProps";
+import {validationProps} from "./mixins/validationProps";
 import {TBsRadioGroup, TRadioGroupOptionProps, TRadioProps} from "./types";
 import {TRecord} from "../../types";
 import Helper from "../../utils/Helper";
@@ -25,17 +25,17 @@ export default defineComponent<TBsRadioGroup, TRecord, TRecord, ComputedOptions,
         const cmpProps = props as Readonly<TRadioGroupOptionProps>;
         const hasError = computed<boolean>(() => useHasValidationError(cmpProps));
         const hasValidated = computed<boolean>(() => useHasValidated(cmpProps));
-        const errorItems = computed(() => useGetErrorItems(cmpProps))
+        const showValidationError = computed<boolean>(() => useShowValidationError(cmpProps));
+        const errorItems = computed(() => useGetErrorItems(cmpProps));
         const checkboxClasses = computed(
             () => useInputGroupClasses(cmpProps, hasValidated.value, hasError.value)
         );
-        const showValidationError = computed<boolean>(() => useShowValidationError(cmpProps));
 
         const toggleCheckHandler = (item: TRadioProps): void => {
             if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {
                 emit("update:modelValue", item.value)
             }
-        }
+        };
 
         return () =>
             useRenderRadioCheckboxGroup(

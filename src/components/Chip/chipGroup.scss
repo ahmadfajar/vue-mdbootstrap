@@ -25,7 +25,6 @@
 
 .#{$prefix}chip-group {
     @include flexbox((display: flex, flex: 0 1 auto));
-    //@include transition($transition-duration-base $md-transition-stand-timing);
     position: relative;
     max-width: 100%;
 

@@ -18,6 +18,7 @@ Released: November xx, 2022
 - **BsOverlay**: add event `click`.
 - **BsToggleButton**: add property `pill`, and `rounded`.
 - **BsToggleIcon**: add property `size`.
+- **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
 
 #### Breaking Changes
 
@@ -39,20 +40,20 @@ Released: November xx, 2022
   - Removed property `iconFixed` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid) 
     is removed from package bundle.
 - **BsButtonToggle**: is deprecated, use **BsToggleButton** instead. Replaced property `value` with `modelValue`.
-- **BsCard**: replace property `flat` with `rounded`.
+- **BsCard**: replaced property `flat` with `rounded`.
 - **BsCheckbox**: 
-   - Replace property `checked` with `modelValue`. 
+   - Replaced property `checked` with `modelValue`. 
    - Removed property `falseValue` and `trueValue`.
-   - Replace event `change` with `update:modelValue`.
+   - Replaced event `change` with `update:modelValue`.
 - **BsCheckboxGroup**: 
-   - Replace property `columns` with `column`. 
+   - Replaced property `columns` with `column`. 
    - Deprecated property `externalValidator`, use property `validator` instead.
-   - Replace event `change` with `update:modelValue`.
+   - Replaced event `change` with `update:modelValue`.
 - **BsRadio**: 
-   - Replace property `checked` with `modelValue`. 
-   - Replace event `change` with `update:modelValue`.
+   - Replaced property `checked` with `modelValue`. 
+   - Replaced event `change` with `update:modelValue`.
 - **BsRadioGroup**: 
-   - Replace property `columns` with `column`. 
+   - Replaced property `columns` with `column`. 
    - Deprecated property `externalValidator`, use property `validator` instead.
    - Replace event `change` with `update:modelValue`.
 - **BsChip**: 
@@ -65,6 +66,15 @@ Released: November xx, 2022
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
 - **BsRipple**: removed property `eventTrigger`.
+- **BsTextField**:
+  - Replaced property `value` with `modelValue`.
+  - Replaced event `input` with `update:modelValue`.
+  - Replaced slot `prependIcon` with `prependInner`.
+  - Replaced slot `prependIconOuter` with `prependOuter`.
+  - Replaced slot `appendIcon` with `appendInner`.
+  - Replaced slot `appendIconOuter` with `appendOuter`.
+  - Removed event `change`, already covered by event `update:modelValue`.
+  - Deprecated property `externalValidator`, use property `validator` instead.
 
 
 ## v1.2.2

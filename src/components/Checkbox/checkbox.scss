@@ -12,7 +12,14 @@
     --#{$prefix}checkbox-margin: #{$checkbox-margin};
     --#{$prefix}checkbox-indeterminate-width: #{$checkbox-indeterminate-width};
     --#{$prefix}checkbox-disabled-bg: transparent;
-    --#{$prefix}checkbox-disabled-opacity: .4;
+    --#{$prefix}checkbox-disabled-opacity: calc(var(--#{$prefix}field-disabled-opacity) - .2);
+    --#{$prefix}checkbox-state-bg: transparent;
+    --#{$prefix}checkbox-state-color: currentColor;
+    --#{$prefix}checkbox-state-opacity: 1;
+    --#{$prefix}checkbox-state-inner-color: transparent;
+    --#{$prefix}checkbox-state-inner-opacity: 0;
+    --#{$prefix}checkbox-state-overlay-bg: transparent;
+    --#{$prefix}checkbox-state-overlay-opacity: 0;
 
     @include display-flex(inline-flex);
     margin: var(--#{$prefix}checkbox-margin);
@@ -22,7 +29,9 @@
     > .#{$prefix}checkbox-inner {
         @include transition($md-transition-stand);
         @include border-radius(var(--#{$prefix}checkbox-border-radius));
-        border: var(--#{$prefix}checkbox-stroke) solid currentColor;
+        background-color: var(--#{$prefix}checkbox-state-bg);
+        border: var(--#{$prefix}checkbox-stroke) solid var(--#{$prefix}checkbox-state-color);
+        opacity: var(--#{$prefix}checkbox-state-opacity);
         height: var(--#{$prefix}checkbox-size);
         min-width: var(--#{$prefix}checkbox-size);
         width: var(--#{$prefix}checkbox-size);
@@ -51,20 +60,23 @@
 
         &:after {
             @include transform(rotate(45deg) scale3D(.15, .15, 1));
-            border: var(--#{$prefix}checkbox-stroke) solid transparent;
+            opacity: var(--#{$prefix}checkbox-state-inner-opacity);
+            border: var(--#{$prefix}checkbox-stroke) solid var(--#{$prefix}checkbox-state-inner-color);
             border-top: 0;
             border-left: 0;
             height: 13px;
             width: 7px;
             left: 4px;
             top: 0;
-            opacity: 0;
             z-index: 12;
         }
 
         .#{$prefix}checkbox-overlay {
+            @include transition($transition-hoverable);
             @include border-radius($border-radius-circle);
             @include transform(translate(-50%, -50%));
+            background-color: var(--#{$prefix}checkbox-state-overlay-bg);
+            opacity: var(--#{$prefix}checkbox-state-overlay-opacity);
             height: var(--#{$prefix}checkbox-touch-size);
             width: var(--#{$prefix}checkbox-touch-size);
             left: 50% !important;
@@ -94,6 +106,7 @@
 
     > .#{$prefix}checkbox-label {
         @include user-select(none);
+        opacity: var(--#{$prefix}checkbox-state-opacity);
         line-height: var(--#{$prefix}checkbox-size);
         height: var(--#{$prefix}checkbox-size);
         margin-bottom: 0;
@@ -119,15 +132,15 @@
     }
 
     &.checked {
-        > .#{$prefix}checkbox-inner {
-            background-color: var(--#{$prefix}checkbox-bg);
-            border-color: var(--#{$prefix}checkbox-bg);
+        --#{$prefix}checkbox-state-bg: var(--#{$prefix}checkbox-bg);
+        --#{$prefix}checkbox-state-color: var(--#{$prefix}checkbox-bg);
+        --#{$prefix}checkbox-state-inner-color: var(--#{$prefix}checkbox-color);
+        --#{$prefix}checkbox-state-inner-opacity: 1;
 
+        > .#{$prefix}checkbox-inner {
             &:after {
                 @include transform(rotate(45deg) scale3D(1, 1, 1));
                 @include transition($md-transition-stand);
-                border-color: var(--#{$prefix}checkbox-color);
-                opacity: 1;
             }
         }
     }
@@ -135,22 +148,16 @@
     &:not(.disabled):not(.readonly) {
         > .#{$prefix}checkbox-inner {
             &:hover {
-                .#{$prefix}checkbox-overlay {
-                    background-color: currentColor;
-                    opacity: .09;
-                    transition: opacity $transition-hoverable;
-                }
+                --#{$prefix}checkbox-state-overlay-bg: currentColor;
+                --#{$prefix}checkbox-state-overlay-opacity: .09;
             }
         }
 
         &.checked {
             > .#{$prefix}checkbox-inner {
                 &:hover {
-                    .#{$prefix}checkbox-overlay {
-                        background-color: var(--#{$prefix}checkbox-bg);
-                        opacity: .22;
-                        transition: opacity $transition-hoverable;
-                    }
+                    --#{$prefix}checkbox-state-overlay-bg: var(--#{$prefix}checkbox-bg);
+                    --#{$prefix}checkbox-state-overlay-opacity: .22;
                 }
             }
         }
@@ -168,12 +175,9 @@
         }
     }
 
-    &.readonly {
+    &.disabled, &.readonly {
+        --#{$prefix}checkbox-state-opacity: var(--#{$prefix}field-readonly-opacity);
         cursor: default;
-
-        > .#{$prefix}checkbox-inner {
-            opacity: var(--#{$prefix}checkbox-disabled-opacity);
-        }
 
         > .#{$prefix}checkbox-label {
             cursor: default;
@@ -181,22 +185,10 @@
     }
 
     &.disabled {
-        cursor: default;
-
-        > .#{$prefix}checkbox-inner {
-            background-color: var(--#{$prefix}checkbox-disabled-bg);
-            border-color: currentColor;
-            opacity: var(--#{$prefix}checkbox-disabled-opacity);
-
-            &:after {
-                border-color: currentColor;
-            }
-        }
-
-        > .#{$prefix}checkbox-label {
-            opacity: .5;
-            cursor: default;
-        }
+        --#{$prefix}checkbox-state-bg: var(--#{$prefix}checkbox-disabled-bg);
+        --#{$prefix}checkbox-state-color: currentColor;
+        --#{$prefix}checkbox-state-opacity: var(--#{$prefix}checkbox-disabled-opacity);
+        --#{$prefix}checkbox-state-inner-color: currentColor;
     }
 }
 

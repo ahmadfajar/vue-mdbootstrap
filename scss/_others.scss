@@ -2,20 +2,19 @@
 @import "functions";
 @import "colors";
 @import "variables";
-@import "shared";
 @import "utilities/color_variants";
 @import "utilities/shadows";
 
 .opacity-0 {
-    @extend %opacity-0;
+    opacity: 0;
 }
 
 .opacity-100 {
-    @extend %opacity-100;
+    opacity: 1;
 }
 
 .#{$prefix}link {
-    @extend %cursor-pointer;
+    cursor: pointer;
 }
 
 .#{$prefix}fw-bold {

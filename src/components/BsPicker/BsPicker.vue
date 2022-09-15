@@ -120,7 +120,7 @@ export default {
     &.#{$prefix}picker-landscape {
         > .#{$prefix}picker-header {
             @include border-right-radius(0);
-            @extend %topleft-h100-absolute;
+            @extend %topLeft-h100-absolute;
             width: 200px;
             z-index: 1;
         }

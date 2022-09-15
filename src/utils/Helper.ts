@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 07/08/2022 3:36
+ * @since  05/07/2018, modified: 13/09/2022 10:38
  */
 class Helper {
     /**
@@ -93,7 +93,7 @@ class Helper {
      */
     static isEmpty(
         value: unknown | undefined | null,
-        allowEmptyString = true,
+        allowEmptyString = false,
     ): boolean {
         return (value === null) ||
             (typeof value === 'undefined') ||

@@ -1,6 +1,7 @@
 import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions} from "vue";
 import {baseInputProps} from "../../mixins/CommonProps";
-import {checkboxGroupProps, validationProps} from "./mixins/checkboxProps";
+import {checkboxGroupProps} from "./mixins/checkboxProps";
+import {validationProps} from "../Radio/mixins/validationProps";
 import {useCreateCheckboxItems} from "./mixins/checkboxApi";
 import {useInputGroupClasses, useRenderRadioCheckboxGroup} from "../Radio/mixins/radioApi";
 import {
@@ -30,11 +31,11 @@ export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptio
         const cmpProps = props as Readonly<TCheckboxGroupOptionProps>;
         const hasError = computed<boolean>(() => useHasValidationError(cmpProps));
         const hasValidated = computed<boolean>(() => useHasValidated(cmpProps));
-        const errorItems = computed(() => useGetErrorItems(cmpProps))
+        const showValidationError = computed<boolean>(() => useShowValidationError(cmpProps));
+        const errorItems = computed(() => useGetErrorItems(cmpProps));
         const checkboxClasses = computed(
             () => useInputGroupClasses(cmpProps, hasValidated.value, hasError.value)
         );
-        const showValidationError = computed<boolean>(() => useShowValidationError(cmpProps));
 
         const toggleCheckHandler = (item: TCheckboxProps): void => {
             if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {

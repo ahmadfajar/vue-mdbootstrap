@@ -1,6 +1,7 @@
 import {App} from "vue";
 import BsCheckbox from "./BsCheckbox";
 import BsCheckboxGroup from "./BsCheckboxGroup";
+import "../../../scss/_globalvars.scss";
 import "./checkbox.scss";
 
 const BsCheckboxPlugin = {

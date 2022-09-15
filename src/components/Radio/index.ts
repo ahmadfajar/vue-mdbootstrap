@@ -1,6 +1,7 @@
 import {App} from "vue";
 import BsRadio from "./BsRadio";
 import BsRadioGroup from "./BsRadioGroup";
+import "../../../scss/_globalvars.scss";
 import "./radio.scss";
 
 const BsRadioPlugin = {

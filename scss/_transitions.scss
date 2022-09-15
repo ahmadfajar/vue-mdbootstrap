@@ -6,7 +6,7 @@
 
 /* VueJs transition animation */
 @include enterActive-leaveActive("fade") {
-    @include transition(opacity .4s ease);
+    @include transition(opacity 0.5s ease-in-out);
 }
 
 @include enterFrom-leaveTo("fade") {

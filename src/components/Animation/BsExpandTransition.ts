@@ -13,8 +13,9 @@ export default defineComponent({
                     onBeforeLeave: beforeLeave,
                     onLeave: onLeave,
                     onAfterLeave: afterLeave,
-                },
-                slots.default && slots.default()
+                }, {
+                    default: () => slots.default && slots.default()
+                }
             )
     }
 });

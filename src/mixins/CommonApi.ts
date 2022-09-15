@@ -12,7 +12,7 @@ export const isServer = typeof window === 'undefined';
  * @returns {string} The generated ID
  */
 export function useGenerateId(): string {
-    return 'bs-' + Helper.uuid(true);
+    return 'md-' + Helper.uuid(true);
 }
 
 /**
@@ -70,11 +70,11 @@ export function useRenderSlotWithWrapper(
     wrapProps: Readonly<TRecord> = {},
     children?: VNode | VNodeArrayChildren,
     slotArgs?: unknown,
-) {
+): VNode {
     if (slots && slots[name]) {
         return h(wrapTag, wrapProps,
             // @ts-ignore
-            name && slots[name] && (slotArgs ? slots[name](slotArgs) : slots[name]())
+            slots[name] && (slotArgs ? slots[name](slotArgs) : slots[name]())
         );
     } else {
         return useRenderSlot(
@@ -83,6 +83,34 @@ export function useRenderSlotWithWrapper(
             slotArgs,
         );
     }
+}
+
+/**
+ * Simple function to render a slot with the given condition.
+ *
+ * @param {Slots} slots        The given slot
+ * @param {string} name        The slot name
+ * @param {boolean} condition  The given condition
+ * @param {Object} wrapProps   The VNode wrapper properties
+ * @param {string} [wrapTag]   The VNode wrapper html Tag name
+ * @param {*} [slotArgs] The argument for the given slot
+ * @returns {VNode} The Rendered node.
+ */
+export function useRenderSlotWrapperWithCondition(
+    slots: Slots,
+    name: string,
+    condition: boolean,
+    wrapProps: Readonly<TRecord> = {},
+    wrapTag?: string,
+    slotArgs?: unknown,
+): VNode | undefined {
+    return condition
+        ? h(
+            wrapTag || 'div', wrapProps,
+            // @ts-ignore
+            slots[name] && (slotArgs ? slots[name](slotArgs) : slots[name]())
+        )
+        : undefined;
 }
 
 /**

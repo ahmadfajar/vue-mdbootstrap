@@ -1,22 +1,26 @@
 /* Input Placeholder mixins */
 @mixin decorate-input-placeholder {
     &::placeholder {
-        color: $gray-700;
+        color: currentColor;
         font-weight: $font-weight-light;
+        opacity: .35;
     }
 
     &::-moz-placeholder {
-        color: $gray-700;
+        color: currentColor;
         font-weight: $font-weight-light;
+        opacity: .35;
     }
 
     &::-webkit-input-placeholder {
-        color: $gray-700;
+        color: currentColor;
         font-weight: $font-weight-light;
+        opacity: .35;
     }
 
     &:-ms-input-placeholder {
-        color: $gray-700;
+        color: currentColor;
         font-weight: $font-weight-light;
+        opacity: .35;
     }
 }

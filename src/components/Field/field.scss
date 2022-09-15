@@ -1,0 +1,437 @@
+@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins/placeholder";
+
+.feedback-enter-active, .feedback-leave-active {
+    transition: all 0.45s ease-in-out;
+}
+
+.feedback-enter-from,
+.feedback-leave-to {
+    transform: translateY(-8px);
+    transition: all 0.25s ease;
+    opacity: 0;
+}
+
+.#{$prefix}field {
+    --#{$prefix}field-active-border-color: var(--#{$prefix}field-active-indicator);
+    --#{$prefix}field-active-border-width: 2px;
+    --#{$prefix}field-border-color: currentColor;
+    --#{$prefix}field-border-width: 1px;
+    --#{$prefix}field-control-height: #{$text-field-height};
+    --#{$prefix}field-padding-start: #{$padding-base};
+    --#{$prefix}field-padding-end: #{$padding-base};
+    --#{$prefix}field-padding-top: #{$text-field-padding-top};
+    --#{$prefix}field-padding-bottom: #{$text-field-padding-bottom};
+    --#{$prefix}field-label-color: currentColor;
+    --#{$prefix}field-floating-label-color: var(--#{$prefix}field-label-color);
+
+    position: relative;
+
+    > .#{$prefix}field-wrapper {
+        @include display-flex();
+
+        .#{$prefix}action-icon,
+        .#{$prefix}prepend-inner,
+        .#{$prefix}prepend-outer,
+        .#{$prefix}append-inner,
+        .#{$prefix}append-outer {
+            @include display-flex(inline-flex);
+            opacity: .65;
+
+            > .#{$prefix}icon, > .#{$prefix}toggle-icon {
+                @include align-self(flex-start);
+                margin-top: $padding-base;
+            }
+
+            .#{$prefix}text {
+                font-size: .88rem;
+                white-space: nowrap;
+            }
+        }
+
+        .#{$prefix}prepend-outer {
+            margin-right: $padding-base;
+        }
+
+        .#{$prefix}append-outer {
+            margin-left: $padding-base;
+        }
+    }
+
+    &.required {
+        > .col-form-label,
+        .#{$prefix}field-label {
+            color: var(--#{$prefix}field-label-color);
+            font-weight: $font-weight-semi-bold;
+        }
+    }
+
+    &.disabled {
+        > .col-form-label,
+        .#{$prefix}prepend-inner,
+        .#{$prefix}append-inner {
+            opacity: var(--#{$prefix}field-disabled-opacity);
+        }
+    }
+
+    &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-filled) {
+        .#{$prefix}action-icon,
+        .#{$prefix}append-outer,
+        .#{$prefix}prepend-outer,
+        .#{$prefix}append-inner,
+        .#{$prefix}prepend-inner {
+            > .#{$prefix}icon, > .#{$prefix}toggle-icon {
+                margin-top: 22px;
+            }
+        }
+    }
+
+    .#{$prefix}field-feedback {
+        padding: #{$padding-xs} var(--#{$prefix}field-padding-start) 0 var(--#{$prefix}field-padding-start);
+        min-height: 25px;
+
+        .#{$prefix}help-text {
+            opacity: $text-field-support-text-opacity;
+        }
+    }
+}
+
+.#{$prefix}field-control {
+    @include flexbox((display: flex, flex-grow: 1, flex-direction: column));
+    max-width: 100%;
+
+    > .#{$prefix}field-inner {
+        @include flexbox((display: flex, flex: 1 1 auto));
+        position: relative;
+
+        > .#{$prefix}field-activator {
+            @include flexbox((display: flex, flex: 1 0, flex-basis: 0));
+            @include align-items(flex-start);
+            position: relative;
+
+            > input {
+                @include decorate-input-placeholder();
+                @include flexbox((display: flex, flex: 1 1 auto));
+                @include transition(opacity $md-transition-default);
+                background-color: transparent;
+                border-width: 0;
+                color: inherit;
+                outline: 0 none;
+                opacity: 0.5;
+                min-height: var(--#{$prefix}field-control-height);
+                padding-inline-start: var(--#{$prefix}field-padding-start);
+                padding-inline-end: var(--#{$prefix}field-padding-end);
+                padding-top: var(--#{$prefix}field-padding-top);
+                padding-bottom: var(--#{$prefix}field-padding-bottom);
+            }
+        }
+
+        > .#{$prefix}prepend-inner {
+            margin-left: $padding-base - .25;
+        }
+
+        > .#{$prefix}action-icon,
+        > .#{$prefix}append-inner {
+            margin-right: $padding-base - .25;
+        }
+
+        > .#{$prefix}action-icon {
+            > .icon-clear, > .#{$prefix}toggle-icon  {
+                cursor: pointer;
+                opacity: $text-field-opacity;
+
+                &:hover {
+                    opacity: 1;
+                }
+            }
+
+            > .#{$prefix}icon ~ .#{$prefix}icon,
+            > .#{$prefix}icon ~ .#{$prefix}toggle-icon,
+            > .#{$prefix}toggle-icon ~ .#{$prefix}icon {
+                margin-left: $padding-xs;
+            }
+        }
+    }
+
+    &.active, &.focused {
+        &:not(.disabled) {
+            > .#{$prefix}field-inner {
+                > .#{$prefix}field-activator {
+                    > input {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
+    &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-flat) {
+        > .#{$prefix}field-inner {
+            &:before {
+                @include transition(opacity $md-transition-default);
+                background-color: var(--#{$prefix}field-border-color);
+                position: absolute;
+                content: '';
+                height: var(--#{$prefix}field-border-width);
+                bottom: 0;
+                left: 0;
+                opacity: $text-field-opacity;
+                width: 100%;
+            }
+
+            &:after {
+                @include transition($transition-basic);
+                background-color: var(--#{$prefix}field-active-border-color);
+                position: absolute;
+                content: '';
+                height: var(--#{$prefix}field-active-border-width);
+                width: 0;
+                bottom: 0;
+                left: 50%;
+            }
+        }
+
+        &:not(.disabled) {
+            &:hover {
+                > .#{$prefix}field-inner {
+                    &:before {
+                        opacity: $text-field-hover-opacity;
+                    }
+                }
+            }
+        }
+
+        &.focused {
+            > .#{$prefix}field-inner {
+                &:after {
+                    left: 0;
+                    width: 100%;
+                }
+            }
+        }
+
+        &.disabled {
+            > .#{$prefix}field-inner {
+                &:before {
+                    opacity: .15;
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}floating-label {
+        --#{$prefix}field-floating-label-opacity: #{$text-field-opacity};
+
+        .#{$prefix}field-label {
+            @include transition(.25s $md-transition-stand-timing);
+            @include transform-origin(top left, false);
+            @include display-flex(inline-flex);
+            @include align-items(center);
+            color: var(--#{$prefix}field-floating-label-color);
+            left: var(--#{$prefix}field-padding-start);
+            top: 0;
+            right: auto;
+            max-width: 90%;
+            overflow: hidden;
+            opacity: var(--#{$prefix}field-floating-label-opacity);
+            position: absolute;
+            pointer-events: none;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            height: 100%;
+            z-index: 2;
+        }
+
+        &.active {
+            .#{$prefix}field-label {
+                @include transform(translateY(-8px) scale(.85));
+            }
+        }
+
+        &.focused {
+            --#{$prefix}field-floating-label-color: var(--#{$prefix}field-active-border-color);
+            --#{$prefix}field-floating-label-opacity: 1;
+
+            .#{$prefix}field-label {
+                @include transform(translateY(-8px) scale(.85));
+            }
+        }
+
+        &.disabled {
+            --#{$prefix}field-floating-label-opacity: calc(var(--#{$prefix}field-disabled-opacity) - .15);
+        }
+    }
+
+    &.#{$prefix}field-filled {
+        --#{$prefix}field-overlay-opacity: .04;
+
+        .#{$prefix}field-overlay {
+            @include border-top-radius($text-field-border-radius);
+            @include transition(opacity $md-transition-default);
+            background-color: currentColor;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: var(--#{$prefix}field-overlay-opacity);
+            position: absolute;
+            pointer-events: none;
+        }
+
+        &:not(.disabled):not(.focused) {
+            &:hover {
+                --#{$prefix}field-overlay-opacity: .08;
+            }
+        }
+
+        &.focused {
+            --#{$prefix}field-overlay-opacity: .15;
+        }
+
+        &.disabled {
+            --#{$prefix}field-overlay-opacity: .02;
+        }
+    }
+
+    &.#{$prefix}field-outlined {
+        --#{$prefix}field-padding-top: #{$padding-base};
+        --#{$prefix}field-padding-bottom: #{$padding-base};
+        --#{$prefix}field-outline-border-color: var(--#{$prefix}field-border-color);
+        --#{$prefix}field-outline-border-width: var(--#{$prefix}field-border-width);
+        --#{$prefix}field-outline-opacity: #{$text-field-opacity};
+
+        .#{$prefix}field-outline-control {
+            @include border-radius($text-field-border-radius);
+            @include flexbox((display: flex, flex: 1 1 auto));
+            pointer-events: none;
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 100%;
+
+            > .#{$prefix}field-outline-start {
+                @include border-left-radius($text-field-border-radius);
+                @include display-flex(inline-flex);
+                border: var(--#{$prefix}field-outline-border-width) solid var(--#{$prefix}field-outline-border-color);
+                border-width: var(--#{$prefix}field-outline-border-width) 0 var(--#{$prefix}field-outline-border-width) var(--#{$prefix}field-outline-border-width);
+                opacity: var(--#{$prefix}field-outline-opacity);
+                width: .75rem;
+            }
+
+            > .#{$prefix}field-outline-label {
+                border: var(--#{$prefix}field-outline-border-width) solid var(--#{$prefix}field-outline-border-color);
+                border-width: 0 0 var(--md-field-outline-border-width) 0;
+                opacity: var(--#{$prefix}field-outline-opacity);
+                color: var(--#{$prefix}field-floating-label-color);
+                display: none;
+                margin-top: -12px;
+                padding: 0 $padding-xs;
+                font-size: 85%;
+            }
+
+            > .#{$prefix}field-outline-end {
+                @include border-right-radius($text-field-border-radius);
+                @include flex(1 1 auto);
+                border: var(--#{$prefix}field-outline-border-width) solid var(--#{$prefix}field-outline-border-color);
+                border-width: var(--#{$prefix}field-outline-border-width) var(--#{$prefix}field-outline-border-width) var(--#{$prefix}field-outline-border-width) 0;
+                opacity: var(--#{$prefix}field-outline-opacity);
+            }
+        }
+
+        &:not(.disabled):not(.focused) {
+            &:hover {
+                .#{$prefix}field-outline-control {
+                    --#{$prefix}field-outline-opacity: #{$text-field-hover-opacity};
+                }
+            }
+        }
+
+        &.active, &.focused {
+            .#{$prefix}field-label {
+                @include transform(translateY(-26px) scale(.85));
+                opacity: 1;
+                visibility: hidden;
+            }
+
+            &.prepend-icon {
+                .#{$prefix}field-label {
+                    @include transform(translateY(-26px) translateX(-36px) scale(.85));
+                }
+            }
+
+            .#{$prefix}field-outline-control {
+                > .#{$prefix}field-outline-label {
+                    @include display-flex(inline-flex);
+                }
+            }
+        }
+
+        &.focused {
+            .#{$prefix}field-outline-control {
+                --#{$prefix}field-floating-label-color: var(--#{$prefix}field-active-border-color);
+                --#{$prefix}field-outline-border-width: var(--#{$prefix}field-active-border-width);
+                --#{$prefix}field-outline-border-color: var(--#{$prefix}field-active-border-color);
+                --#{$prefix}field-outline-opacity: 1;
+            }
+        }
+
+        &.disabled {
+            --#{$prefix}field-outline-opacity: calc(var(--#{$prefix}field-disabled-opacity) - .2);
+        }
+    }
+
+    &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-filled) {
+        --#{$prefix}field-padding-start: 0;
+
+        &:not(.append-icon) {
+            --#{$prefix}field-padding-end: 0;
+        }
+
+        .#{$prefix}prepend-inner {
+            margin-left: 0;
+            margin-right: $padding-base;
+        }
+
+        .#{$prefix}append-inner {
+            margin-right: 0;
+        }
+
+        &.#{$prefix}floating-label {
+            .#{$prefix}field-label {
+                padding-top: 12px;
+            }
+        }
+
+        &.active, &.focused {
+            .#{$prefix}field-label {
+                @include transform(translateY(-16px) scale(.85));
+            }
+        }
+    }
+}
+
+.#{$prefix}field {
+    &.has-success {
+        $textSuccess: lighten($success-color, 8%);
+        --#{$prefix}field-active-border-color: #{$textSuccess};
+        --#{$prefix}field-border-color: #{$textSuccess};
+        --#{$prefix}field-floating-label-color: #{$textSuccess};
+    }
+
+    &.has-error {
+        --#{$prefix}field-active-border-color: #{$red-accent-3};
+        --#{$prefix}field-border-color: #{$red-accent-3};
+        --#{$prefix}field-floating-label-color: #{$red-accent-3};
+    }
+
+    &.has-success, &.has-error {
+        .#{$prefix}field-control {
+            &.#{$prefix}floating-label {
+                --#{$prefix}field-floating-label-opacity: .85;
+            }
+        }
+    }
+}

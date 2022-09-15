@@ -26,6 +26,13 @@ export function useShowValidationError(props: Readonly<TValidationProps>): boole
         && validator.validators !== undefined
 }
 
+export function useShowHelpText(
+    props: Readonly<TValidationProps>,
+    isFocused?: boolean,
+): boolean {
+    return !Helper.isEmpty(props.helpText) && (props.persistentHelpText === true || isFocused === true);
+}
+
 export function useGetErrorItems(props: Readonly<TValidationProps>) {
     const validator = useGetValidator(props);
 
@@ -77,17 +84,17 @@ export function useRenderFieldFeedback(
             class: `${cssPrefix}field-feedback`
         }, [
             useRenderTransition(
-                {name: "fade"},
+                {name: "feedback"},
                 useRenderSlot(
                     slots, "helpText",
-                    {key: Helper.uuid()},
+                    {key: 'feedback-help-text'},
                     (
                         showHelpText
                             ? h("small", {
                                     class: `${cssPrefix}help-text d-block`
                                 }, props.helpText
                             )
-                            : undefined
+                            : createCommentVNode(" v-if-help-text ")
                     )
                 )
             ),
