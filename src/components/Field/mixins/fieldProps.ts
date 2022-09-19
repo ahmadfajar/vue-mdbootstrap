@@ -1,3 +1,4 @@
+import {Prop} from "vue";
 import {booleanProp, stringProp} from "../../../mixins/CommonProps";
 
 export const textFieldProps = {
@@ -30,6 +31,11 @@ export const textFieldProps = {
      * @type {boolean}
      */
     clearButton: booleanProp,
+    /**
+     * Display validation icon or not, when this field has been validated.
+     * @type {boolean}
+     */
+    validationIcon: booleanProp,
     /**
      * Sets icon to display on inner right side.
      * This is a shortcut to insert component `BsIcon` inside this component.
@@ -66,4 +72,13 @@ export const textFieldProps = {
      * @type {string}
      */
     prependIconOuter: stringProp,
+    /**
+     * Sets the action icon style variant.
+     * @type {string}
+     */
+    actionIconVariant: {
+        type: String,
+        default: 'outlined',
+        validator: (value: string): boolean => ["outlined", "filled", "round", "sharp"].includes(value),
+    } as Prop<'outlined' | 'filled' | 'round' | 'sharp'>,
 }

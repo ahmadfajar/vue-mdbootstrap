@@ -3,15 +3,18 @@
 @import "../../../scss/variables";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/placeholder";
+@import "../../../scss/mixins/transition";
 
-.feedback-enter-active, .feedback-leave-active {
-    transition: all 0.45s ease-in-out;
+@include enterActive-leaveActive("field-feedback") {
+    @include transition(0.15s ease);
 }
 
-.feedback-enter-from,
+@include enterFrom-leaveTo("field-feedback") {
+    @include transform(translateY(-8px));
+    @include transition(opacity, transform 0.25s ease-out);
+}
+
 .feedback-leave-to {
-    transform: translateY(-8px);
-    transition: all 0.25s ease;
     opacity: 0;
 }
 
@@ -112,7 +115,7 @@
             @include align-items(flex-start);
             position: relative;
 
-            > input {
+            > input, > textarea {
                 @include decorate-input-placeholder();
                 @include flexbox((display: flex, flex: 1 1 auto));
                 @include transition(opacity $md-transition-default);
@@ -151,7 +154,7 @@
             > .#{$prefix}icon ~ .#{$prefix}icon,
             > .#{$prefix}icon ~ .#{$prefix}toggle-icon,
             > .#{$prefix}toggle-icon ~ .#{$prefix}icon {
-                margin-left: $padding-xs;
+                margin-left: $padding-sm;
             }
         }
     }
@@ -160,7 +163,7 @@
         &:not(.disabled) {
             > .#{$prefix}field-inner {
                 > .#{$prefix}field-activator {
-                    > input {
+                    > input, > textarea {
                         opacity: 1;
                     }
                 }
@@ -399,15 +402,124 @@
             margin-right: 0;
         }
 
+        .#{$prefix}action-icon:last-child {
+            margin-right: 0;
+        }
+
         &.#{$prefix}floating-label {
             .#{$prefix}field-label {
-                padding-top: 12px;
+                top: .5rem;
             }
         }
 
         &.active, &.focused {
             .#{$prefix}field-label {
                 @include transform(translateY(-16px) scale(.85));
+            }
+        }
+    }
+
+    &:not(.#{$prefix}floating-label) {
+        --#{$prefix}field-control-height: 2.5rem;
+        --#{$prefix}field-padding-top: .425rem;
+
+        &.#{$prefix}field-outlined {
+            --#{$prefix}field-padding-top: .5rem;
+            --#{$prefix}field-padding-bottom: .5rem;
+
+            .#{$prefix}field-outline-control {
+                > .#{$prefix}field-outline-label {
+                    display: none;
+                }
+            }
+        }
+
+        > .#{$prefix}field-inner {
+            > .#{$prefix}prepend-inner,
+            > .#{$prefix}append-inner {
+                > .#{$prefix}icon {
+                    @include align-self(center);
+                    margin-top: 0;
+                }
+            }
+
+            > .#{$prefix}action-icon {
+                > .#{$prefix}icon, > .#{$prefix}toggle-icon  {
+                    @include align-self(center);
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
+}
+
+.#{$prefix}textarea {
+    --#{$prefix}field-padding-top: #{$text-field-padding-top + .25};
+    --#{$prefix}field-control-height: #{$text-field-line-height * 2};
+
+    > .#{$prefix}field-inner {
+        > .#{$prefix}field-activator {
+            > textarea {
+                padding-top: 0;
+                padding-bottom: 0;
+                padding-inline-start: 0;
+                padding-inline-end: 0;
+                margin: var(--#{$prefix}field-padding-top) var(--#{$prefix}field-padding-end) var(--#{$prefix}field-padding-bottom) var(--#{$prefix}field-padding-start);
+            }
+        }
+    }
+
+    &.#{$prefix}textarea-noresize {
+        > .#{$prefix}field-inner {
+            > .#{$prefix}field-activator {
+                > textarea {
+                    resize: none;
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}textarea-autogrow {
+        > .#{$prefix}field-inner {
+            > .#{$prefix}field-activator {
+                > textarea {
+                    overflow-y: hidden;
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}floating-label {
+        .#{$prefix}field-label {
+            @include align-items(flex-start);
+            top: 1rem;
+        }
+    }
+
+    &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-filled) {
+        &.#{$prefix}floating-label {
+            .#{$prefix}field-label {
+                top: 1.5rem;
+            }
+        }
+    }
+
+    &:not(.#{$prefix}floating-label) {
+        > .#{$prefix}field-inner {
+            > .#{$prefix}prepend-inner,
+            > .#{$prefix}append-inner {
+                > .#{$prefix}icon {
+                    @include align-self(flex-start);
+                    margin-top: .75rem;
+                }
+            }
+
+            > .#{$prefix}action-icon {
+                > .#{$prefix}icon, > .#{$prefix}toggle-icon  {
+                    @include align-self(flex-start);
+                    margin-top: .75rem;
+                }
             }
         }
     }

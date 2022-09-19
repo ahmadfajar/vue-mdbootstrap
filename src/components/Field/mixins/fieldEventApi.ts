@@ -54,13 +54,20 @@ export function useOnFieldNodeMounted(
     const fieldLabel = element.querySelector("." + cssPrefix + "field-label")
     let label;
 
-    if (props.floatingLabel && fieldLabel?.children) {
-        const children = fieldLabel.children;
-        if (children.length > 0) {
+    if (props.floatingLabel) {
+        const children = fieldLabel?.children;
+        if (children && children.length > 0) {
             label = fieldLabel.children[0];
             if (!Helper.isEmpty(label.classList) && !Helper.isEmpty(label.className)) {
                 label.className = `${cssPrefix}empty-class`;
             }
+        }
+    }
+
+    if (props.outlined) {
+        const outlineLabel = element.querySelector("." + cssPrefix + "field-outline-label");
+        if (outlineLabel && fieldLabel) {
+            outlineLabel.innerHTML = fieldLabel.innerHTML;
         }
     }
 

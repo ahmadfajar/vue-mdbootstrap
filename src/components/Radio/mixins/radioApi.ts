@@ -38,7 +38,7 @@ export function useMakeInputBaseAttrs(props: Readonly<TInputBaseProps>): TRecord
     }
 }
 
-export function useCreateRadioElement(props: Readonly<TRadioOptionProps>): VNode {
+export function useCreateInputRadio(props: Readonly<TRadioOptionProps>): VNode {
     const thisValue = !Helper.isEmpty(props.value)
         ? (Helper.isObject(props.value) ? JSON.stringify(props.value) : String(props.value))
         : '';

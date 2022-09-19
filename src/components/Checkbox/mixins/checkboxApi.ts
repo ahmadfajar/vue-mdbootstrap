@@ -31,7 +31,7 @@ export function useCheckboxClasses(
     }
 }
 
-export function useCreateCheckboxElement(props: Readonly<TCheckboxOptionProps>): VNode {
+export function useCreateInputCheckbox(props: Readonly<TCheckboxOptionProps>): VNode {
     const thisValue = !Helper.isEmpty(props.value)
         ? (Helper.isObject(props.value) ? JSON.stringify(props.value) : String(props.value))
         : '';

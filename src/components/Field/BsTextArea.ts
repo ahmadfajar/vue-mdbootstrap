@@ -1,14 +1,15 @@
-import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, Prop, ref, watch} from "vue";
+import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, ref, watch} from "vue";
 import {
     booleanProp,
-    booleanTrueProp,
     inputProps,
     stringOrNumberProp,
     stringProp,
     validStringOrNumberProp
 } from "../../mixins/CommonProps";
+import {cssPrefix} from "../../mixins/CommonApi";
 import {textFieldProps} from "./mixins/fieldProps";
 import {validationProps} from "../Radio/mixins/validationProps";
+import {useFieldWrapperClasses, useRenderTextArea, useShowClearButton} from "./mixins/fieldApi";
 import {
     useGetErrorItems,
     useHasValidated,
@@ -16,13 +17,12 @@ import {
     useShowHelpText,
     useShowValidationError
 } from "../Radio/mixins/validationApi";
-import {useFieldWrapperClasses, useRenderTextField, useShowClearButton} from "./mixins/fieldApi";
-import {TBsTextField, TTextFieldOptionProps} from "./types";
+import {TBsTextArea, TTextAreaOptionProps} from "./types";
 import {TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
-export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsTextField",
+export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
+    name: "BsTextArea",
     props: {
         ...inputProps,
         ...textFieldProps,
@@ -41,44 +41,39 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
          */
         autofocus: booleanProp,
         /**
-         * Sets <input> element type attribute. Valid values are: `text`, `password`, `email`, `url`, `tel`.
-         * @type {string}
+         * Enable/disable `<textarea>` element to auto grow.
+         * @type {boolean}
          */
-        type: {
-            type: String,
-            default: 'text',
-            validator: (v: string): boolean => ['text', 'email', 'password', 'tel', 'url'].includes(v)
-        } as Prop<'text' | 'email' | 'password' | 'tel' | 'url'>,
-        /**
-         * Sets target `<datalist>` element ID.
-         * @type {string}
-         */
-        datalist: stringProp,
+        autoGrow: booleanProp,
         /**
          * The value monitored by `v-model` to maintain this field value.
          * @type {string|number}
          */
         modelValue: stringOrNumberProp,
         /**
-         * Enable toggle password field.
+         * Disable resizing the `<textarea>` element.
          * @type {boolean}
          */
-        passwordToggle: booleanTrueProp,
+        noResize: booleanProp,
         /**
          * Sets the field placeholder.
          * @type {string}
          */
         placeholder: stringProp,
         /**
-         * Sets `<input>` element maximum characters allowed.
+         * Sets `<textarea>` height in rows.
          * @type {string|number}
          */
-        maxlength: validStringOrNumberProp,
+        rows: {
+            type: [String, Number],
+            default: 2,
+            validator: (v: string): boolean => !isNaN(parseInt(v, 10))
+        },
         /**
-         * Sets `<input>` element minimum characters allowed.
+         * Sets `<textarea>` height in pixel.
          * @type {string|number}
          */
-        minlength: validStringOrNumberProp,
+        rowHeight: validStringOrNumberProp,
     },
     emits: [
         /**
@@ -94,7 +89,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
          */
         "clear",
         /**
-         * Triggers when cursor is still in the `<input>` element and keyboard key is pressed.
+         * Triggers when cursor is still in the `<textarea>` element and keyboard key is pressed.
          */
         "keydown",
         /**
@@ -103,12 +98,12 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         "update:modelValue",
     ],
     setup(props, {emit, slots}) {
-        const cmpProps = props as Readonly<TTextFieldOptionProps>;
+        const cmpProps = props as Readonly<TTextAreaOptionProps>;
         const autocomplete = cmpProps.autocomplete && Helper.isString(cmpProps.autocomplete)
             ? cmpProps.autocomplete
             : (cmpProps.autocomplete ? "on" : Helper.uuid());
         const localValue = ref<string | number | undefined | null>(cmpProps.modelValue);
-        const isPasswordToggled = ref(false);
+        const rowHeight = ref<string | number | undefined | null>(cmpProps.rowHeight);
         const isFocused = ref(false);
         const hasError = computed<boolean>(() => useHasValidationError(cmpProps));
         const hasValidated = computed<boolean>(() => useHasValidated(cmpProps));
@@ -116,22 +111,10 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         const showHelpText = computed<boolean>(() => useShowHelpText(cmpProps, isFocused.value));
         const errorItems = computed(() => useGetErrorItems(cmpProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(cmpProps, localValue));
-        const fieldClasses = computed<TRecord>(
+        const textAreaClasses = computed<TRecord>(
             () => useFieldWrapperClasses(
-                cmpProps, hasValidated.value, hasError.value,
+                cmpProps, hasValidated.value, hasError.value
             )
-        );
-        const showPasswordToggle = computed<boolean>(
-            () => cmpProps.type === 'password' && cmpProps.passwordToggle === true
-        );
-        const fieldType = computed<string | undefined>(
-            () => {
-                if (showPasswordToggle.value) {
-                    return isPasswordToggled.value ? 'text' : 'password';
-                }
-
-                return cmpProps.type;
-            }
         );
         watch(
             () => cmpProps.modelValue,
@@ -139,26 +122,22 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
                 localValue.value = value;
             }
         );
-        const onPasswordToggleHandler = (value: boolean): void => {
-            isPasswordToggled.value = value;
-        };
 
         return () =>
-            useRenderTextField(
+            useRenderTextArea(
                 slots, emit, cmpProps,
-                fieldClasses,
-                fieldType.value,
-                localValue, isFocused,
-                isPasswordToggled,
+                textAreaClasses,
+                localValue,
+                rowHeight,
+                isFocused,
                 autocomplete,
                 showClearButton.value,
-                showPasswordToggle.value,
                 showHelpText.value,
                 showValidationError.value,
                 hasValidated.value,
                 hasError.value,
-                errorItems.value, 24,
-                onPasswordToggleHandler,
+                errorItems.value,
+                24,
             );
     }
 });

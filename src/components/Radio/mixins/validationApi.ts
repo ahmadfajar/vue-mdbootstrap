@@ -84,7 +84,7 @@ export function useRenderFieldFeedback(
             class: `${cssPrefix}field-feedback`
         }, [
             useRenderTransition(
-                {name: "feedback"},
+                {name: "field-feedback"},
                 useRenderSlot(
                     slots, "helpText",
                     {key: 'feedback-help-text'},

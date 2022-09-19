@@ -1,5 +1,5 @@
 import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, nextTick, ref} from "vue";
-import {useCreateRadioElement, useRadioClasses, useRenderRadioOrCheckbox} from "./mixins/radioApi";
+import {useCreateInputRadio, useRadioClasses, useRenderRadioOrCheckbox} from "./mixins/radioApi";
 import {radioProps} from "./mixins/radioProps";
 import {TBsRadio, TRadioOptionProps} from "./types";
 import {TRecord} from "../../types";
@@ -35,7 +35,7 @@ export default defineComponent<TBsRadio, TRecord, TRecord, ComputedOptions, Comp
         return () =>
             useRenderRadioOrCheckbox(
                 slots, cmpProps, radioClasses, rippleActive, "radio",
-                useCreateRadioElement(cmpProps), toggleCheckHandler,
+                useCreateInputRadio(cmpProps), toggleCheckHandler,
             );
     }
 });

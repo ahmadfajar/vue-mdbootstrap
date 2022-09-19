@@ -12,7 +12,7 @@ export const isServer = typeof window === 'undefined';
  * @returns {string} The generated ID
  */
 export function useGenerateId(): string {
-    return 'md-' + Helper.uuid(true);
+    return 'bs-' + Helper.uuid(true);
 }
 
 /**

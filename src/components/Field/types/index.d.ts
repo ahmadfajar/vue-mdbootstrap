@@ -3,12 +3,17 @@ import {TInputBaseProps, TValidationProps} from "../../Radio/types";
 import {TRecord} from "../../../types";
 
 export declare type TInputFieldProps = TInputBaseProps & TValidationProps & {
+    actionIconVariant?: string;
+    clearButton?: boolean;
     flat?: boolean;
     filled?: boolean;
     floatingLabel?: boolean;
     outlined?: boolean;
+    validationIcon?: boolean;
     appendIcon?: string;
+    appendIconOuter?: string;
     prependIcon?: string;
+    prependIconOuter?: string;
 }
 
 export declare type TInputTextProps = TInputFieldProps & {
@@ -21,16 +26,22 @@ export declare type TInputTextProps = TInputFieldProps & {
 export declare type TTextFieldOptionProps = TInputTextProps & {
     type?: string;
     datalist?: string;
-    actionIconVariant?: string;
-    clearButton?: boolean;
     passwordToggle?: boolean;
-    validationIcon?: boolean;
-    appendIconOuter?: string;
-    prependIconOuter?: string;
     maxlength?: string | number;
     minlength?: string | number;
 }
 
+export declare type TTextAreaOptionProps = TInputTextProps & {
+    autoGrow?: boolean;
+    noResize?: boolean;
+    rows?: string | number;
+    rowHeight?: string | number;
+}
+
 export declare type TBsTextField = ComponentObjectPropsOptions<TTextFieldOptionProps>;
 
+export declare type TBsTextArea = ComponentObjectPropsOptions<TTextAreaOptionProps>;
+
 export declare const BsTextField: DefineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsTextArea: DefineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
