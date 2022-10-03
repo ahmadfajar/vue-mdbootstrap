@@ -13,7 +13,7 @@ import BsPicker from './BsPicker';
 import BsPopover from './BsPopover';
 import BsTabs from './BsTabs';
 import BsTooltip from './BsTooltip';
-import FontAwesomeIcon from './fontawesome';
+// import FontAwesomeIcon from './fontawesome';
 
 export {
     BsNotification,
@@ -31,5 +31,5 @@ export {
     BsPopover,
     BsTabs,
     BsTooltip,
-    FontAwesomeIcon
+    // FontAwesomeIcon
 };

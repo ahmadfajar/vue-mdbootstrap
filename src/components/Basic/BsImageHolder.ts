@@ -1,4 +1,4 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, toDisplayString} from "vue";
 import {useCreateSvgNode} from "../Icon/mixins/svgApi";
 import {useShapeClasses, useSizeOrWh} from "./mixins/imageApi";
 import {cssPrefix} from "../../mixins/CommonApi";
@@ -26,14 +26,21 @@ export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions
                 width: useSizeOrWh(cmpProps.size, cmpProps.width),
                 role: "img",
             }, [
-                showText() ? h("title", cmpProps.placeholderText || cmpProps.placeHolder) : null,
+                showText()
+                    ? h(
+                        "title",
+                        toDisplayString(cmpProps.placeholderText || cmpProps.placeHolder)
+                    )
+                    : null,
                 h("rect", {width: "100%", height: "100%", fill: cmpProps.bgColor}),
                 showText()
                     ? h("text", {
-                        fill: cmpProps.textColor,
-                        x: Helper.sizeUnit(cmpProps.xPos),
-                        y: Helper.sizeUnit(cmpProps.yPos),
-                    }, cmpProps.placeholderText || cmpProps.placeHolder || [])
+                            fill: cmpProps.textColor,
+                            x: Helper.sizeUnit(cmpProps.xPos),
+                            y: Helper.sizeUnit(cmpProps.yPos),
+                        },
+                        toDisplayString(cmpProps.placeholderText || cmpProps.placeHolder)
+                    )
                     : null,
             ]);
         }

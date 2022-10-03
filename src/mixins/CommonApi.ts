@@ -1,5 +1,5 @@
-import {Fragment, h, Slots, Transition, VNode, VNodeArrayChildren, TransitionProps} from "vue";
-import {TRecord} from "../types";
+import {ComponentPublicInstance, Fragment, h, Slots, Transition, TransitionProps, VNode, VNodeArrayChildren} from "vue";
+import {TBreakpoint, TRecord} from "../types";
 import Helper from "../utils/Helper";
 
 export const cssPrefix = "md-";
@@ -29,7 +29,7 @@ export function useBrowserIE() {
  * @param {Slots} slots                         The given slot
  * @param {string} name                         The slot name
  * @param {Object} props                        Fragment key identifier
- * @param {VNode|VNodeArrayChildren} [children] The VNode children
+ * @param {VNode|VNodeArrayChildren|string} [children] The VNode children
  * @param {*} [slotArgs] The argument for the given slot
  * @returns {VNode} The Rendered node.
  */
@@ -37,7 +37,7 @@ export function useRenderSlot(
     slots: Slots,
     name: string,
     props: Readonly<TRecord> = {},
-    children?: VNode | VNodeArrayChildren,
+    children?: VNode | VNodeArrayChildren | string,
     slotArgs?: unknown,
 ): VNode {
     // @ts-ignore
@@ -127,4 +127,65 @@ export function useRenderTransition(
     return h(Transition, props, {
         default: () => children
     });
+}
+
+export function useMaxBreakpoint(breakpoint: TBreakpoint | number): boolean {
+    switch (breakpoint) {
+        case "sm":
+            return window.matchMedia("(max-width: 767.98px)").matches;
+        case "md":
+            return window.matchMedia("(max-width: 991.98px)").matches;
+        case "lg":
+            return window.matchMedia("(max-width: 1199.98px)").matches;
+        case "xl":
+            return window.matchMedia("(max-width: 1399.98px)").matches;
+        default:
+            if (Helper.isNumber(breakpoint)) {
+                return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
+            }
+            return true;
+    }
+}
+
+export function useMinBreakpoint(breakpoint: TBreakpoint | number): boolean {
+    switch (breakpoint) {
+        case "sm":
+            return window.matchMedia("(min-width: 576px)").matches;
+        case "md":
+            return window.matchMedia("(min-width: 768px)").matches;
+        case "lg":
+            return window.matchMedia("(min-width: 992px)").matches;
+        case "xl":
+        default:
+            if (Helper.isNumber(breakpoint)) {
+                return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
+            }
+
+            return window.matchMedia("(min-width: 1200px)").matches;
+    }
+}
+
+export function useFindParentCmp(
+    cmpNames: Array<string>,
+    node: VNode, maxStep = 2
+): ComponentPublicInstance | null | undefined {
+    let step = 0;
+    let iterator = node.component?.proxy?.$parent;
+
+    while (iterator) {
+        // if not found then stops.
+        if (maxStep > 0 && step === (maxStep + 1)) {
+            iterator = null;
+            break;
+        }
+        // Found match $parent: stop iterate upward
+        if (cmpNames.includes(iterator.$options._componentTag)) {
+            break;
+        }
+        // Not found: iterate $parent and increase step counter
+        ++step;
+        iterator = iterator.$parent;
+    }
+
+    return iterator;
 }

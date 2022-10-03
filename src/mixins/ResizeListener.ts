@@ -1,35 +1,42 @@
-import {isServer} from "./CommonApi";
 import ResizeObserver from 'resize-observer-polyfill';
+import {isServer} from "./CommonApi";
+import {IBindingElement} from "../types";
 
-const resizeHandler = function (entries) {
+declare type TResizeTarget = {
+    target: IBindingElement;
+}
+
+const resizeHandler = function (entries: Array<TResizeTarget>) {
     for (const entry of entries) {
         const listeners = entry.target.__resizeListeners__ || [];
-        if (listeners.length) {
-            listeners.forEach(fn => {
+        if (Array.isArray(listeners) && listeners.length) {
+            listeners.forEach((fn: CallableFunction): void => {
                 fn();
             });
         }
     }
 };
 
-export function addResizeListener(element, fn) {
+export function addResizeListener(el: IBindingElement, fn: CallableFunction) {
     if (isServer) {
         return;
     }
-    if (!element.__resizeListeners__) {
-        element.__resizeListeners__ = [];
-        element.__ro__ = new ResizeObserver(resizeHandler);
-        element.__ro__.observe(element);
+
+    if (!el.__resizeListeners__) {
+        el.__resizeListeners__ = [];
+        el.__observer__ = new ResizeObserver(resizeHandler);
+        el.__observer__.observe(el);
     }
-    element.__resizeListeners__.push(fn);
+    el.__resizeListeners__.push(fn);
 }
 
-export function removeResizeListener(element, fn?: CallableFunction) {
-    if (!element || !element.__resizeListeners__) {
-        return;
-    }
-    element.__resizeListeners__.splice(element.__resizeListeners__.indexOf(fn), 1);
-    if (!element.__resizeListeners__.length) {
-        element.__ro__.disconnect();
+export function removeResizeListener(el: IBindingElement, fn?: CallableFunction) {
+    if (el && el.__resizeListeners__) {
+        if (fn) {
+            el.__resizeListeners__.splice(el.__resizeListeners__.indexOf(fn), 1);
+        }
+        if (!el.__resizeListeners__.length) {
+            el.__observer__?.disconnect();
+        }
     }
 }

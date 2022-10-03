@@ -22,9 +22,9 @@ export default defineComponent<TBsToggleIcon, TRecord, TRecord, ComputedOptions,
                 onClick: () => emit("update:modelValue", !cmpProps.modelValue),
             },
             h<TBsIconSvg>(BsIconSvg, {
-                icon: (props.modelValue ? props.toggleIcon : props.icon) as Prop<string>,
-                height: props.size as Prop<string | number>,
-                width: props.size as Prop<string | number>,
+                icon: (props.modelValue ? props.toggleIcon : props.icon),
+                height: props.size,
+                width: props.size,
             }),
         )
     }

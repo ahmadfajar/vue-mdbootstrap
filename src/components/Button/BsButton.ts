@@ -42,7 +42,7 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
                 ),
             }, [
                 h<TBsButtonInner>(BsButtonInner, {
-                    dropdownToggle: <Prop<boolean>>cmpProps.dropdownToggle,
+                    dropdownToggle: props.dropdownToggle,
                     iconMode: <Prop<boolean>>(cmpProps.mode === 'icon'),
                     hasIcon: <Prop<boolean>>hasIcon.value,
                     rippleOff: <Prop<boolean>>rippleOff.value,

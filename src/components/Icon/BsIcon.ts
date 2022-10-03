@@ -26,13 +26,13 @@ export default defineComponent<TBsIcon, TRecord, TRecord, ComputedOptions, Compo
                 class: [`${cssPrefix}icon`],
                 style: useSizeStyles(cmpProps),
             }, h<TBsIconSvg>(BsIconSvg, {
-                icon: cmpProps.icon as Prop<string>,
+                icon: props.icon,
                 height: szHeight,
                 width: szWidth,
-                spin: cmpProps.spin as Prop<boolean>,
-                pulse: cmpProps.pulse as Prop<boolean>,
-                flip: cmpProps.flip as Prop<string>,
-                rotate: cmpProps.rotate as Prop<string>,
+                spin: props.spin,
+                pulse: props.pulse,
+                flip: props.flip,
+                rotate: props.rotate,
             }),
         );
     }

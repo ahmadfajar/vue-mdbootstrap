@@ -1,0 +1,38 @@
+@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+
+html, body {
+    height: 100%;
+    text-rendering: optimizeLegibility;
+    // -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.#{$prefix}application-wrap,
+.#{$prefix}container-wrap,
+.#{$prefix}content-wrap {
+    @include flex(1 1 auto);
+    max-width: 100%;
+    position: relative;
+}
+
+.#{$prefix}application-wrap {
+    @include flexbox((display: flex, flex-direction: column));
+    @include backface-visibility();
+
+    &.#{$prefix}viewport-height {
+        min-height: 100vh;
+    }
+}
+
+.#{$prefix}container-wrap {
+    @include transition($md-transition-default);
+    @include flexbox((display: flex, flex: 1 0 auto));
+}

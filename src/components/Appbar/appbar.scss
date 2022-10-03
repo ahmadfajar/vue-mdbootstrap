@@ -1,0 +1,47 @@
+@import "~compass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/typography";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+
+.#{$prefix}appbar {
+    --#{$prefix}appbar-bgcolor: #{$white};
+    --#{$prefix}appbar-height: 64px;
+    --#{$prefix}appbar-margin: #{$padding-sm ($padding-base - .25) $padding-sm $padding-sm};
+
+    @include justify-content(flex-start);
+    background-color: var(--#{$prefix}appbar-bgcolor);
+    max-width: 100%;
+
+    > .#{$prefix}appbar-content {
+        @include flexbox((display:flex, align-items: center, flex-direction: row));
+        height: var(--#{$prefix}appbar-height);
+        padding: var(--#{$prefix}appbar-margin);
+
+        > .#{$prefix}appbar-title {
+            @include ellipsis();
+            font-size: 1.5rem;
+            font-weight: $font-weight-normal;
+            line-height: normal;
+            margin: 0 $padding-base;
+
+            > a {
+                color: inherit;
+                text-decoration: none;
+            }
+        }
+
+        > .#{$prefix}appbar-items {
+            @include display-flex();
+            max-width: 100%;
+            padding: 0;
+        }
+    }
+
+    &.#{$prefix}appbar-transition {
+        @include transition($md-transition-default);
+    }
+
+    &.#{$prefix}appbar-shadow {
+        @include box-shadow($z-depth-1);
+    }
+}

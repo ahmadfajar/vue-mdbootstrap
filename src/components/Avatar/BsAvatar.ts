@@ -14,7 +14,7 @@ export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, Com
     name: 'BsAvatar',
     props: avatarProps,
     setup(props, {slots}) {
-        const cmpProps = props as Readonly<TAvatarOptionProps>
+        const cmpProps = props as Readonly<TAvatarOptionProps>;
 
         return () =>
             h('div',
