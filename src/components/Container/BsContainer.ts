@@ -1,19 +1,21 @@
 import {
-    ComponentOptionsMixin, computed,
+    ComponentOptionsMixin,
+    computed,
     ComputedOptions,
     defineComponent,
     EmitsOptions,
+    getCurrentInstance,
     h,
+    onMounted,
     ref,
     VNode,
     withDirectives
 } from "vue";
 import {booleanProp, tagProp} from "../../mixins/CommonProps";
-import {cssPrefix, useMaxBreakpoint, useFindParentCmp} from "../../mixins/CommonApi";
+import {cssPrefix, useFindParentCmp, useMaxBreakpoint} from "../../mixins/CommonApi";
 import {TAppContainerOptionProps, TBsContainer, TContainerOptionProps} from "./types";
-import {IVueMdb, TRecord, TVueMdb} from "../../types";
+import {TRecord, TVueMdb} from "../../types";
 import Resize from "../../directives/Resize";
-import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsContainer",
@@ -45,20 +47,6 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
             isMobile.value = useMaxBreakpoint("lg");
             emit("resize", node);
         };
-        const nodeMountedHandler = (node: VNode): void => {
-            const app = node.appContext?.app;
-            if (app) {
-                vueMdb.value = (<IVueMdb>app).$VueMdb;
-                const parent = useFindParentCmp(["bs-app-container", "BsAppContainer"], node, 3);
-
-                if (parent) {
-                    appId.value = (<Readonly<TAppContainerOptionProps>>parent.$props).id;
-                    if (!Helper.isObject(vueMdb.value?.app[(<string>appId.value)])) {
-                        console.warn("<bs-container> must be wrapped by <bs-app-container>");
-                    }
-                }
-            }
-        };
         const styles = computed(
             () => {
                 if (cmpProps.app && appId.value) {
@@ -75,13 +63,26 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
                 return undefined;
             }
         );
+        onMounted(
+            () => {
+                const instance = getCurrentInstance();
+                // console.log("instance:", instance);
+                vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
+                const parent = useFindParentCmp(["bs-app-container", "BsAppContainer"], instance, 3);
+
+                if (parent) {
+                    appId.value = (<Readonly<TAppContainerOptionProps>>parent.props).id;
+                } else {
+                    console.warn("<bs-container> must be used inside <bs-app-container>");
+                }
+            }
+        );
 
         return () =>
             withDirectives(
                 h(cmpProps.tag || "div", {
                         class: `${cssPrefix}container-wrap`,
                         style: styles.value,
-                        onVnodeMounted: nodeMountedHandler,
                     },
                     slots.default && slots.default()
                 ), [

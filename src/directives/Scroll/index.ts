@@ -34,7 +34,7 @@ function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
             callback(target, e);
         };
         target.addEventListener("scroll", scrollHandler, options);
-        el.__scrollListener__ = {
+        el.__scrollListener = {
             handler: scrollHandler,
             target: self ? undefined : target,
             options,
@@ -43,8 +43,8 @@ function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
 }
 
 function unmounted(el: IBindingElement): void {
-    if (el.__scrollListener__) {
-        const {handler, options, target} = el.__scrollListener__;
+    if (el.__scrollListener) {
+        const {handler, options, target} = el.__scrollListener;
 
         if (target) {
             target.removeEventListener("scroll", handler, options);

@@ -1,4 +1,5 @@
 import axios, {AxiosRequestConfig} from "axios";
+import {App} from "vue";
 
 interface IRequestConfig extends AxiosRequestConfig {
     requestHandler: CallableFunction,
@@ -7,26 +8,16 @@ interface IRequestConfig extends AxiosRequestConfig {
     responseErrorHandler: CallableFunction,
 }
 
-/**
- * AxiosPlugin to simplify using Axios within VueJs framework.
- *
- * @param {*} Vue                       Vue instance
- * @param {AxiosRequestConfig} options  Configuration options
- * @returns {void}
- */
-export default (Vue, options: AxiosRequestConfig) => {
+function _axiosPlugin(options?: AxiosRequestConfig) {
     const defaultOptions: IRequestConfig = {
         // request interceptor handler
-        requestHandler: config => config,
-        requestErrorHandler: error => Promise.reject(error),
+        requestHandler: (config: unknown) => config,
+        requestErrorHandler: (error: unknown) => Promise.reject(error),
         // response interceptor handler
-        responseHandler: response => response,
-        responseErrorHandler: error => Promise.reject(error)
+        responseHandler: (response: unknown) => response,
+        responseErrorHandler: (error: unknown) => Promise.reject(error)
     };
 
-    /**
-     * @type {IRequestConfig} initOptions
-     */
     const initOptions: IRequestConfig = {
         ...defaultOptions,
         ...options
@@ -45,8 +36,7 @@ export default (Vue, options: AxiosRequestConfig) => {
         error => initOptions.responseErrorHandler(error)
     );
 
-    Vue.prototype.$axios = service;
-    Vue.prototype.$http = {
+    const http = {
         /**
          * Send HTTP GET to the remote server.
          *
@@ -75,7 +65,7 @@ export default (Vue, options: AxiosRequestConfig) => {
          * @param {IRequestConfig} [options] The configuration options
          * @returns {Promise} Promise instance
          */
-        post: (url: string, data?: object, options?: IRequestConfig) => {
+        post: (url: string, data: Record<string, unknown>, options?: IRequestConfig) => {
             const axiosOpt = {
                 ...options,
                 ...{
@@ -95,7 +85,7 @@ export default (Vue, options: AxiosRequestConfig) => {
          * @param {IRequestConfig} [options] The configuration options
          * @returns {Promise} Promise instance
          */
-        put: (url: string, data?: object, options?: IRequestConfig) => {
+        put: (url: string, data: Record<string, unknown>, options?: IRequestConfig) => {
             const axiosOpt = {
                 ...options,
                 ...{
@@ -110,9 +100,9 @@ export default (Vue, options: AxiosRequestConfig) => {
         /**
          * Send HTTP DELETE to the remote server.
          *
-         * @param {string} url              API url
-         * @param {Object} data             The data to be sent
-         * @param {IRequestConfig} options  The configuration options
+         * @param {string} url                API url
+         * @param {Object} [data]             The data to be sent
+         * @param {IRequestConfig} [options]  The configuration options
          * @returns {Promise} Promise instance
          */
         delete: (url: string, data?: object, options?: IRequestConfig) => {
@@ -127,5 +117,17 @@ export default (Vue, options: AxiosRequestConfig) => {
 
             return service(axiosOpt)
         }
+    };
+
+    return {service, http}
+}
+
+const AxiosPlugin = {
+    install: (app: App, options?: AxiosRequestConfig): void => {
+        const {service, http} = _axiosPlugin(options);
+        app.config.globalProperties.$axios = service;
+        app.config.globalProperties.$http = http;
     }
-};
+}
+
+export default AxiosPlugin;

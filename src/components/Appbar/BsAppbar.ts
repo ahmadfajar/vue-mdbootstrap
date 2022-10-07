@@ -4,18 +4,19 @@ import {
     ComputedOptions,
     defineComponent,
     EmitsOptions,
+    getCurrentInstance,
     h,
+    onMounted,
     ref,
     VNode,
     withDirectives
 } from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix, useFindParentCmp, useMaxBreakpoint} from "../../mixins/CommonApi";
-import {IVueMdb, TRecord, TVueMdb} from "../../types";
+import {IComponentInstance, TRecord, TVueMdb} from "../../types";
 import {TAppbarOptionProps, TBsAppbar} from "./types";
 import {TAppContainerOptionProps} from "../Container/types";
 import Resize from "../../directives/Resize";
-import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsAppbar",
@@ -65,24 +66,6 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Com
             isMobile.value = useMaxBreakpoint("lg");
             emit("resize", node);
         };
-        const nodeMountedHandler = (node: VNode): void => {
-            const app = node.appContext?.app;
-            if (app) {
-                vueMdb.value = (<IVueMdb>app).$VueMdb;
-                const parent = useFindParentCmp(["bs-app-container", "BsAppContainer"], node, 3);
-
-                if (parent) {
-                    appId.value = (<Readonly<TAppContainerOptionProps>>parent.$props).id;
-                    if (!Helper.isObject(vueMdb.value?.app[(<string>appId.value)])) {
-                        console.warn("<bs-appbar> must be wrapped by <bs-app-container>");
-                    } else if (appId.value) {
-                        const rect = (<HTMLElement>node.el).getBoundingClientRect();
-                        vueMdb.value.app[appId.value].appbarHeight = rect.height;
-                    }
-                }
-                smoothTransition.value = true;
-            }
-        };
         const styles = computed(
             () => {
                 if (cmpProps.fixedTop) {
@@ -114,6 +97,26 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Com
                 }
             }
         );
+        onMounted(
+            () => {
+                const instance = getCurrentInstance();
+                // console.log("instance:", instance);
+                vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
+                const parent = useFindParentCmp(["bs-app-container", "BsAppContainer"], instance, 3);
+
+                if (parent && instance) {
+                    appId.value = (<Readonly<TAppContainerOptionProps>>parent.props).id;
+
+                    if (appId.value && vueMdb.value) {
+                        const rect = (<HTMLElement>(<IComponentInstance>instance).ctx.$el).getBoundingClientRect();
+                        vueMdb.value.app[appId.value].appbarHeight = rect.height;
+                    }
+                } else {
+                    console.warn("<bs-appbar> must be used inside <bs-app-container>");
+                }
+                smoothTransition.value = true;
+            }
+        );
 
         return () =>
             withDirectives(
@@ -125,7 +128,6 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Com
                         "sticky-top": cmpProps.fixedTop
                     },
                     style: styles.value,
-                    onVnodeMounted: nodeMountedHandler,
                 }, [
                     h("div", {
                         class: `${cssPrefix}appbar-content`

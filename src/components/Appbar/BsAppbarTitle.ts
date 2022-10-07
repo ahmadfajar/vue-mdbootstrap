@@ -1,7 +1,15 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, toDisplayString} from "vue";
+import {
+    ComponentOptionsMixin,
+    ComputedOptions,
+    createTextVNode,
+    defineComponent,
+    EmitsOptions,
+    h,
+    toDisplayString
+} from "vue";
 import {cssPrefix, useRenderSlot} from "../../mixins/CommonApi";
 import {stringProp} from "../../mixins/CommonProps";
-import {TBsAppbarTitle} from "./types";
+import {TAppbarTitleOptionProps, TBsAppbarTitle} from "./types";
 import {TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
@@ -15,6 +23,8 @@ export default defineComponent<TBsAppbarTitle, TRecord, TRecord, ComputedOptions
         title: stringProp
     },
     setup(props, {slots}) {
+        const cmpProps = props as Readonly<TAppbarTitleOptionProps>;
+
         return () =>
             h("div", {
                     class: `${cssPrefix}appbar-title`
@@ -22,7 +32,7 @@ export default defineComponent<TBsAppbarTitle, TRecord, TRecord, ComputedOptions
                 useRenderSlot(
                     slots, "default",
                     {key: Helper.uuid()},
-                    toDisplayString(props.title),
+                    [createTextVNode(toDisplayString(cmpProps.title))],
                 )
             )
     }

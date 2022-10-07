@@ -6,7 +6,7 @@
 .#{$prefix}appbar {
     --#{$prefix}appbar-bgcolor: #{$white};
     --#{$prefix}appbar-height: 64px;
-    --#{$prefix}appbar-margin: #{$padding-sm ($padding-base - .25) $padding-sm $padding-sm};
+    --#{$prefix}appbar-margin: #{$padding-sm ($padding-base - .25) $padding-sm $padding-base};
 
     @include justify-content(flex-start);
     background-color: var(--#{$prefix}appbar-bgcolor);

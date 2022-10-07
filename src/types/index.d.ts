@@ -1,5 +1,5 @@
 import ResizeObserver from "resize-observer-polyfill";
-import {App} from "vue";
+import {App, ComponentInternalInstance, ComponentPublicInstance} from "vue";
 
 export declare type TBreakpoint = "sm" | "md" | "lg" | "xl";
 
@@ -41,10 +41,14 @@ export interface EventListenerTarget {
 }
 
 export interface IBindingElement extends Element {
-    __scrollListener__?: TEventListenerBinding;
-    __resizeListener__?: EventListenerOrEventListenerObject | CallableFunction;
-    __resizeListeners__?: Array<CallableFunction>;
-    __observer__?: ResizeObserver;
+    __scrollListener?: TEventListenerBinding;
+    __resizeListener?: EventListenerOrEventListenerObject | CallableFunction;
+    __resizeListeners?: Array<CallableFunction>;
+    __observer?: ResizeObserver;
+}
+
+export interface IComponentInstance extends ComponentInternalInstance {
+    ctx: ComponentPublicInstance;
 }
 
 export interface IVueMdb extends App {

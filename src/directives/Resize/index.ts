@@ -30,7 +30,7 @@ function mounted(el: IBindingElement, binding: ResizeDirectiveBinding): void {
     };
 
     window.addEventListener("resize", onResizeHandler, options);
-    el.__resizeListener__ = onResizeHandler;
+    el.__resizeListener = onResizeHandler;
 
     if (!binding.modifiers?.quiet) {
         onResizeHandler();
@@ -38,11 +38,11 @@ function mounted(el: IBindingElement, binding: ResizeDirectiveBinding): void {
 }
 
 function unmounted(el: IBindingElement): void {
-    if (el.__resizeListener__) {
-        const handler = el.__resizeListener__ as EventListenerObject;
+    if (el.__resizeListener) {
+        const handler = el.__resizeListener as EventListenerObject;
 
         window.removeEventListener("resize", handler);
-        delete el.__resizeListener__;
+        delete el.__resizeListener;
     }
 }
 

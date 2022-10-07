@@ -1,4 +1,14 @@
-import {ComponentPublicInstance, Fragment, h, Slots, Transition, TransitionProps, VNode, VNodeArrayChildren} from "vue";
+import {
+    ComponentInternalInstance,
+    ComponentPublicInstance,
+    Fragment,
+    h,
+    Slots,
+    Transition,
+    TransitionProps,
+    VNode,
+    VNodeArrayChildren
+} from "vue";
 import {TBreakpoint, TRecord} from "../types";
 import Helper from "../utils/Helper";
 
@@ -29,7 +39,7 @@ export function useBrowserIE() {
  * @param {Slots} slots                         The given slot
  * @param {string} name                         The slot name
  * @param {Object} props                        Fragment key identifier
- * @param {VNode|VNodeArrayChildren|string} [children] The VNode children
+ * @param {VNode|VNodeArrayChildren} [children] The VNode children
  * @param {*} [slotArgs] The argument for the given slot
  * @returns {VNode} The Rendered node.
  */
@@ -37,7 +47,7 @@ export function useRenderSlot(
     slots: Slots,
     name: string,
     props: Readonly<TRecord> = {},
-    children?: VNode | VNodeArrayChildren | string,
+    children?: VNode | VNodeArrayChildren,
     slotArgs?: unknown,
 ): VNode {
     // @ts-ignore
@@ -167,25 +177,30 @@ export function useMinBreakpoint(breakpoint: TBreakpoint | number): boolean {
 
 export function useFindParentCmp(
     cmpNames: Array<string>,
-    node: VNode, maxStep = 2
-): ComponentPublicInstance | null | undefined {
-    let step = 0;
-    let iterator = node.component?.proxy?.$parent;
+    instance: ComponentInternalInstance | null,
+    maxStep = 2
+): ComponentInternalInstance | undefined | null {
+    if (instance) {
+        let step = 0;
+        let iterator = instance.parent;
 
-    while (iterator) {
-        // if not found then stops.
-        if (maxStep > 0 && step === (maxStep + 1)) {
-            iterator = null;
-            break;
+        while (iterator) {
+            // if not found then stops.
+            if (maxStep > 0 && step === (maxStep + 1)) {
+                iterator = null;
+                break;
+            }
+            // Found match parent: stop iterate upward
+            if (cmpNames.includes((<string>iterator.type.name))) {
+                break;
+            }
+            // Not found: iterate $parent and increase step counter
+            ++step;
+            iterator = iterator.parent;
         }
-        // Found match $parent: stop iterate upward
-        if (cmpNames.includes(iterator.$options._componentTag)) {
-            break;
-        }
-        // Not found: iterate $parent and increase step counter
-        ++step;
-        iterator = iterator.$parent;
+
+        return iterator;
     }
 
-    return iterator;
+    return null;
 }

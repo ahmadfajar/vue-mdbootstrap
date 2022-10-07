@@ -168,14 +168,14 @@
         @if ($name == 'light' or $name == 'light-grey') {
             $active-bg-rgba: rgba($border-color, .2);
             $active-border-color-rgba: darken($border-color, 8%);
-            $active-color: darken($color, 90%);
-            $normal-color: darken($color, 50%);
-            --#{$bs-prefix}btn-color: #{$normal-color};
+            //$active-color: darken($color, 90%);
+            //$normal-color: darken($color, 50%);
+            --#{$bs-prefix}btn-color: #{$color};
             --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-active-color: #{$active-color};
+            --#{$bs-prefix}btn-active-color: #{$white};
             --#{$bs-prefix}btn-active-border-color: #{$active-border-color-rgba};
             --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-hover-color: #{$active-color};
+            --#{$bs-prefix}btn-hover-color: #{$color};
             --#{$bs-prefix}btn-hover-border-color: #{$active-border-color-rgba};
         } @else {
             $active-bg-rgba: rgba(lighten($color, 15%), .3);
@@ -197,23 +197,20 @@
         --#{$bs-prefix}btn-bg: transparent;
         --#{$bs-prefix}btn-border-color: transparent;
         --#{$bs-prefix}btn-border-width: 0;
+        --#{$bs-prefix}btn-color: #{$color};
+        --#{$bs-prefix}btn-hover-color: #{$color};
 
         @if ($name == 'light' or $name == 'light-grey') {
             $active-bg-rgba: rgba($gray-500, .2);
-            $active-color: darken($color, 90%);
-            $normal-color: darken($color, 50%);
-            --#{$bs-prefix}btn-color: #{$normal-color};
+            //$active-color: darken($color, 90%);
             --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-active-color: #{$active-color};
+            --#{$bs-prefix}btn-active-color: #{$white};
             --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-hover-color: #{$active-color};
         } @else {
             $active-bg-color: rgba(lighten($color, 15%), .3);
             $active-color: darken($color, 10%);
-            --#{$bs-prefix}btn-color: #{$color};
             --#{$bs-prefix}btn-active-bg: #{$active-bg-color};
             --#{$bs-prefix}btn-active-color: #{$active-color};
-            --#{$bs-prefix}btn-hover-color: #{$color};
 
             $hover-bg-rgba: set-alt-color-level(
                             $color, rgba(lighten($color, 15%), .3),

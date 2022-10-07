@@ -8,7 +8,7 @@ declare type TResizeTarget = {
 
 const resizeHandler = function (entries: Array<TResizeTarget>) {
     for (const entry of entries) {
-        const listeners = entry.target.__resizeListeners__ || [];
+        const listeners = entry.target.__resizeListeners || [];
         if (Array.isArray(listeners) && listeners.length) {
             listeners.forEach((fn: CallableFunction): void => {
                 fn();
@@ -22,21 +22,21 @@ export function addResizeListener(el: IBindingElement, fn: CallableFunction) {
         return;
     }
 
-    if (!el.__resizeListeners__) {
-        el.__resizeListeners__ = [];
-        el.__observer__ = new ResizeObserver(resizeHandler);
-        el.__observer__.observe(el);
+    if (!el.__resizeListeners) {
+        el.__resizeListeners = [];
+        el.__observer = new ResizeObserver(resizeHandler);
+        el.__observer.observe(el);
     }
-    el.__resizeListeners__.push(fn);
+    el.__resizeListeners.push(fn);
 }
 
 export function removeResizeListener(el: IBindingElement, fn?: CallableFunction) {
-    if (el && el.__resizeListeners__) {
+    if (el && el.__resizeListeners) {
         if (fn) {
-            el.__resizeListeners__.splice(el.__resizeListeners__.indexOf(fn), 1);
+            el.__resizeListeners.splice(el.__resizeListeners.indexOf(fn), 1);
         }
-        if (!el.__resizeListeners__.length) {
-            el.__observer__?.disconnect();
+        if (!el.__resizeListeners.length) {
+            el.__observer?.disconnect();
         }
     }
 }
