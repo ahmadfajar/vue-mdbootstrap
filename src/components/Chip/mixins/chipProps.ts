@@ -4,7 +4,7 @@ import {iconVariant} from "../../Icon/mixins/iconProps";
 
 export const chipDefaultColor = {
     type: String,
-    default: 'light'
+    default: 'grey'
 }
 
 export const chipProps = {
