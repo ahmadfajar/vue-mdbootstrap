@@ -1,11 +1,11 @@
-import {App} from "vue";
+import {App, Plugin as Plugin_2} from "vue";
 import BsExpandTransition from "./BsExpandTransition";
 import BsOverlay from "./BsOverlay";
 import BsRipple from "./BsRipple";
 import "../../../scss/_transitions.scss";
 import "./animation.scss";
 
-const BsAnimationPlugin = {
+const BsAnimationPlugin: Plugin_2 = {
     install: (app: App): void => {
         app.component(BsExpandTransition.name, BsExpandTransition);
         app.component(BsOverlay.name, BsOverlay);

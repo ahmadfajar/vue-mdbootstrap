@@ -1,4 +1,4 @@
-import {App} from "vue";
+import {App, Plugin as Plugin_2} from "vue";
 import registerApplication from "../../mixins/registerApplication";
 import BsAppbar from "./BsAppbar";
 import BsAppbarItems from "./BsAppbarItems";
@@ -6,7 +6,7 @@ import BsAppbarTitle from "./BsAppbarTitle";
 import "./appbar.scss";
 import "../../../scss/_others.scss";
 
-const BsAppbarPlugin = {
+const BsAppbarPlugin: Plugin_2 = {
     install: (app: App): void => {
         registerApplication(app);
         app.component(BsAppbar.name, BsAppbar);

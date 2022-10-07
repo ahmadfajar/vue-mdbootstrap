@@ -1,9 +1,9 @@
-import {App} from "vue";
+import {App, Plugin as Plugin_2} from "vue";
 import BsBadge from "./BsBadge";
 import "./badge.scss";
 import "../../../scss/_others.scss";
 
-const BsBadgePlugin = {
+const BsBadgePlugin: Plugin_2 = {
     install: (app: App): void => {
         app.component(BsBadge.name, BsBadge);
     }
