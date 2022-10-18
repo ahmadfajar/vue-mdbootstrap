@@ -1,7 +1,6 @@
 import {Ref, VNode} from "vue";
 import {cssPrefix} from "../../../mixins/CommonApi";
-import {TInputFieldProps} from "../types";
-import {TEmitFn} from "../../../types";
+import {TEmitFn, TInputFieldProps} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 export function useOnFieldBlurred(

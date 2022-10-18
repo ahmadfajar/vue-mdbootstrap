@@ -4,19 +4,14 @@ import {
     ComputedOptions,
     defineComponent,
     EmitsOptions,
-    getCurrentInstance,
-    h,
     onMounted,
     ref,
-    VNode,
-    withDirectives
+    VNode
 } from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
-import {cssPrefix, useFindParentCmp, useMaxBreakpoint} from "../../mixins/CommonApi";
-import {IComponentInstance, TRecord, TVueMdb} from "../../types";
-import {TAppbarOptionProps, TBsAppbar} from "./types";
-import {TAppContainerOptionProps} from "../Container/types";
-import Resize from "../../directives/Resize";
+import {useBreakpointMax} from "../../mixins/CommonApi";
+import {TAppbarOptionProps, TBsAppbar, TRecord, TVueMdb} from "../../types";
+import {useAppbarOnMountedHook, useAppbarStyles, useRenderAppbar} from "./mixins/appbarApi";
 
 export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsAppbar",
@@ -63,78 +58,19 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Com
         const isMobile = ref<boolean>(false);
         const smoothTransition = ref<boolean>(false);
         const resizeHandler = (node: VNode) => {
-            isMobile.value = useMaxBreakpoint("lg");
+            isMobile.value = useBreakpointMax("lg");
             emit("resize", node);
         };
         const styles = computed(
-            () => {
-                if (cmpProps.fixedTop) {
-                    return {
-                        'margin-left': isMobile.value
-                            ? 0
-                            : (
-                                (cmpProps.clippedLeft && appId.value)
-                                    ? (vueMdb.value?.app[appId.value].leftSideDrawerWidth || 0) + 'px'
-                                    : 0
-                            ),
-                        'margin-right': isMobile.value
-                            ? 0
-                            : (
-                                (cmpProps.clippedRight && appId.value)
-                                    ? (vueMdb.value?.app[appId.value].rightSideDrawerWidth || 0) + 'px'
-                                    : 0
-                            ),
-                    }
-                } else {
-                    return {
-                        'margin-left': (cmpProps.clippedLeft && appId.value)
-                            ? (vueMdb.value?.app[appId.value].leftSideDrawerWidth || 0) + 'px'
-                            : undefined,
-                        'margin-right': (cmpProps.clippedRight && appId.value)
-                            ? (vueMdb.value?.app[appId.value].rightSideDrawerWidth || 0) + 'px'
-                            : undefined,
-                    }
-                }
-            }
+            () => useAppbarStyles(cmpProps, appId, vueMdb, isMobile)
         );
         onMounted(
-            () => {
-                const instance = getCurrentInstance();
-                // console.log("instance:", instance);
-                vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
-                const parent = useFindParentCmp(["bs-app-container", "BsAppContainer"], instance, 3);
-
-                if (parent && instance) {
-                    appId.value = (<Readonly<TAppContainerOptionProps>>parent.props).id;
-
-                    if (appId.value && vueMdb.value) {
-                        const rect = (<HTMLElement>(<IComponentInstance>instance).ctx.$el).getBoundingClientRect();
-                        vueMdb.value.app[appId.value].appbarHeight = rect.height;
-                    }
-                } else {
-                    console.warn("<bs-appbar> must be used inside <bs-app-container>");
-                }
-                smoothTransition.value = true;
-            }
+            () => useAppbarOnMountedHook(appId, vueMdb, smoothTransition)
         );
 
-        return () =>
-            withDirectives(
-                h(cmpProps.tag || "nav", {
-                    class: {
-                        [`${cssPrefix}appbar`]: true,
-                        [`${cssPrefix}appbar-shadow`]: cmpProps.shadow,
-                        [`${cssPrefix}appbar-transition`]: smoothTransition.value,
-                        "sticky-top": cmpProps.fixedTop
-                    },
-                    style: styles.value,
-                }, [
-                    h("div", {
-                        class: `${cssPrefix}appbar-content`
-                    }, slots.default && slots.default()),
-                ]), [
-                    [Resize, resizeHandler]
-                ]
-            )
+        return () => useRenderAppbar(
+            cmpProps, appId, vueMdb, styles,
+            smoothTransition, slots, resizeHandler
+        )
     }
 });

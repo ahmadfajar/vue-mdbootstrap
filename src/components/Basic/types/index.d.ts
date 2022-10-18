@@ -1,6 +1,5 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TSizeOptionProps} from "../../Icon/types";
-import {TRecord} from "../../../types";
+import {TRecord, TSizeOptionProps} from "../../../types";
 
 export declare type TDividerOptionProps = {
     dark?: boolean;

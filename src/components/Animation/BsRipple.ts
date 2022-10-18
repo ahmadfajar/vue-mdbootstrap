@@ -3,8 +3,7 @@ import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
 import {baseTagProps} from "../Card/mixins/cardProps";
 import {useCreateRipple} from "./mixins/rippleApi";
-import {IRippleEvent, TBsRipple} from "./types";
-import {TRecord} from "../../types";
+import {IRippleEvent, TBsRipple, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

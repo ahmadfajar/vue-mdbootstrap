@@ -1,0 +1,40 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+
+.#{$prefix}side-drawer {
+    @include transition($md-transition-default);
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    z-index: $zindex-fixed;
+
+    &.#{$prefix}closed {
+        @include box-shadow(none);
+    }
+
+    > .#{$prefix}side-drawer-inner {
+        @include flexbox((display:flex, flex-direction: column));
+        height: 100%;
+        overflow: hidden;
+        position: relative;
+
+        a {
+            color: inherit;
+
+            &:hover,
+            &:focus,
+            &:active {
+                color: $sidebar-hover-textcolor;
+                text-decoration: none;
+            }
+        }
+    }
+
+    .divider {
+        border-bottom: 1px solid rgba(200, 200, 200, 0.16);
+    }
+}

@@ -1,11 +1,17 @@
 import {createCommentVNode, h, Prop, Ref, Slots, VNode} from "vue";
-import {cssPrefix, useGenerateId} from "../../../mixins/CommonApi";
-import {TBsButton} from "../../Button/types";
+import {cssPrefix} from "../../../mixins/CommonApi";
 import {BsButton} from "../../Button";
-import {TBsChip, TChipContainer, TChipGroupOptionProps, TChipOptionItem, TChipValue} from "../types";
-import {TRecord} from "../../../types";
-import Helper from "../../../utils/Helper";
+import {
+    TBsButton,
+    TBsChip,
+    TChipContainer,
+    TChipGroupOptionProps,
+    TChipOptionItem,
+    TChipValue,
+    TRecord
+} from "../../../types";
 import BsChip from "../BsChip";
+import Helper from "../../../utils/Helper";
 
 export function useSetSliderSize(slider: TChipContainer): void {
     const contentEl = document.getElementById(slider.contentId);

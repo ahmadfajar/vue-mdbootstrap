@@ -2,8 +2,7 @@ import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} f
 import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {dividerProps} from "./mixins/dividerProps";
-import {TBsDivider} from "./types";
-import {TRecord} from "../../types";
+import {TBsDivider, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

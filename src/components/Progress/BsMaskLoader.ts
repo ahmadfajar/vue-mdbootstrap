@@ -10,10 +10,8 @@ import {
 import {cssPrefix, useRenderTransition} from "../../mixins/CommonApi";
 import {maskLoaderProps} from "./mixins/maskLoaderProps";
 import {BsOverlay} from "../Animation";
-import {TBsOverlay} from "../Animation/types";
 import {BsIconSpinner} from "../Icon";
-import {TBsIconSpinner} from "../Icon/types";
-import {TBsMaskLoader, TBsProgress} from "./types";
+import {TBsIconSpinner, TBsMaskLoader, TBsOverlay, TBsProgress} from "../../types";
 import BsProgress from "./BsProgress";
 import Helper from "../../utils/Helper";
 
@@ -21,7 +19,9 @@ export default defineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions,
     name: "BsMaskLoader",
     props: maskLoaderProps,
     setup(props) {
-        const loaderVariant = computed<string>(() => (<string>props.variant) || (<string>props.spinnerType));
+        const loaderVariant = computed<string>(
+            () => (<string>props.variant) || (<string>props.spinnerType)
+        );
 
         return () =>
             useRenderTransition(

@@ -4,8 +4,7 @@ import {useCreateRadioItems, useInputGroupClasses, useRenderRadioCheckboxGroup} 
 import {baseInputProps} from "../../mixins/CommonProps";
 import {radioGroupProps} from "./mixins/radioProps";
 import {validationProps} from "./mixins/validationProps";
-import {TBsRadioGroup, TRadioGroupOptionProps, TRadioProps} from "./types";
-import {TRecord} from "../../types";
+import {TBsRadioGroup, TRadioGroupOptionProps, TRadioProps, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsRadioGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

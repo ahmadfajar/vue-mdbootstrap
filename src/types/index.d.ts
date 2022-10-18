@@ -1,6 +1,23 @@
 import ResizeObserver from "resize-observer-polyfill";
 import {App, ComponentInternalInstance, ComponentPublicInstance} from "vue";
 
+export * from "../components/Alert/types";
+export * from "../components/Animation/types";
+export * from "../components/Appbar/types";
+export * from "../components/Avatar/types";
+export * from "../components/Badge/types";
+export * from "../components/Basic/types";
+export * from "../components/Button/types";
+export * from "../components/Card/types";
+export * from "../components/Checkbox/types";
+export * from "../components/Chip/types";
+export * from "../components/Container/types";
+export * from "../components/Field/types";
+export * from "../components/Icon/types";
+export * from "../components/Progress/types";
+export * from "../components/Radio/types";
+export * from "../components/SideDrawer/types";
+
 export declare type TBreakpoint = "sm" | "md" | "lg" | "xl";
 
 export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
@@ -51,6 +68,6 @@ export interface IComponentInstance extends ComponentInternalInstance {
     ctx: ComponentPublicInstance;
 }
 
-export interface IVueMdb extends App {
+export interface IVMdbApp extends App {
     $VueMdb: TVueMdb
 }

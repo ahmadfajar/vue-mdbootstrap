@@ -1,7 +1,5 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TAvatarIconProps} from "../../Avatar/types";
-import {TRecord} from "../../../types";
-import {TInputBaseProps} from "../../Checkbox/types";
+import {TAvatarIconProps, TInputBaseProps, TRecord} from "../../../types";
 
 export declare type TButtonInnerOptionProps = {
     dropdownToggle?: boolean;

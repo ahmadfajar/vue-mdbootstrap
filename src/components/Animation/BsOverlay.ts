@@ -2,8 +2,7 @@ import {ComponentOptionsMixin, ComputedOptions, createCommentVNode, defineCompon
 import {cssPrefix, useRenderTransition} from "../../mixins/CommonApi";
 import {preventEventTarget} from "../../mixins/DomHelper";
 import {overlayProps} from "./mixins/overlayProps";
-import {TBsOverlay} from "./types";
-import {TRecord} from "../../types";
+import {TBsOverlay, TRecord} from "../../types";
 
 export default defineComponent<TBsOverlay, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsOverlay",

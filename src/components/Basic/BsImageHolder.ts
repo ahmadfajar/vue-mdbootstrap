@@ -3,8 +3,7 @@ import {useCreateSvgNode} from "../Icon/mixins/svgApi";
 import {useShapeClasses, useSizeOrWh} from "./mixins/imageApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {imageHolderProps} from "./mixins/imageHolderProps";
-import {TBsImageHolder, TImageHolderOptionProps} from "./types";
-import {TRecord} from "../../types";
+import {TBsImageHolder, TImageHolderOptionProps, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

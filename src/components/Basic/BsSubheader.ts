@@ -2,8 +2,7 @@ import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} f
 import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
 import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {TBsSubheader} from "./types";
-import {TRecord} from "../../types";
+import {TBsSubheader, TRecord} from "../../types";
 
 export default defineComponent<TBsSubheader, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsSubheader",

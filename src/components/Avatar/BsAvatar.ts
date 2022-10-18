@@ -5,10 +5,8 @@ import {useAvatarIconSize, useCreateIconProps, useRenderAvatarImage} from "./mix
 import {cssPrefix, useRenderSlot} from "../../mixins/CommonApi";
 import {avatarProps} from "./mixins/avatarProps";
 import {BsIcon} from "../Icon";
-import {TAvatarOptionProps, TBsAvatar} from "./types";
-import {TRecord} from "../../types";
+import {TAvatarOptionProps, TBsAvatar, TBsIcon, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
-import {TBsIcon} from "../Icon/types";
 
 export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: 'BsAvatar',

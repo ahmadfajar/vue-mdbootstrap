@@ -12,9 +12,8 @@ import {
     withDirectives
 } from "vue";
 import {booleanProp, tagProp} from "../../mixins/CommonProps";
-import {cssPrefix, useFindParentCmp, useMaxBreakpoint} from "../../mixins/CommonApi";
-import {TAppContainerOptionProps, TBsContainer, TContainerOptionProps} from "./types";
-import {TRecord, TVueMdb} from "../../types";
+import {cssPrefix, useBreakpointMax, useFindParentCmp} from "../../mixins/CommonApi";
+import {TAppContainerOptionProps, TBsContainer, TContainerOptionProps, TRecord, TVueMdb} from "../../types";
 import Resize from "../../directives/Resize";
 
 export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
@@ -44,8 +43,8 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
         const resizeHandler = (node: VNode) => {
-            isMobile.value = useMaxBreakpoint("lg");
             emit("resize", node);
+            isMobile.value = useBreakpointMax("lg");
         };
         const styles = computed(
             () => {

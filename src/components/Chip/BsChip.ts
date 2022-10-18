@@ -12,8 +12,7 @@ import {
 import {useRenderTransition} from "../../mixins/CommonApi";
 import {useChipClassNames, useRenderChip} from "./mixins/chipApi";
 import {chipProps} from "./mixins/chipProps";
-import {TBsChip, TChipOptionProps} from "./types";
-import {TRecord} from "../../types";
+import {TBsChip, TChipOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsChip",

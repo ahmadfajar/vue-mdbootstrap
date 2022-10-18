@@ -1,10 +1,9 @@
 import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, h, Prop} from "vue";
 import {useMakeButtonProps, useRenderButtonContent} from "./mixins/buttonApi";
 import {buttonProps} from "./mixins/buttonProps";
-import {TBsButton, TBsButtonInner, TButtonOptionProps} from "./types";
-import {TRecord} from "../../types";
 import BsButtonInner from "./BsButtonInner";
 import Helper from "../../utils/Helper";
+import {TBsButton, TBsButtonInner, TButtonOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsButton",

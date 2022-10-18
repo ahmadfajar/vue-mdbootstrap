@@ -2,16 +2,16 @@ import {ComputedRef, h, Prop, Ref, Slots, VNode, VNodeArrayChildren} from "vue";
 import {cssPrefix, useRenderSlot, useRenderSlotWithWrapper} from "../../../mixins/CommonApi";
 import {BsRipple} from "../../Animation";
 import {useRenderFieldFeedback} from "./validationApi";
-import {TBsRipple} from "../../Animation/types";
-import {TRecord} from "../../../types";
 import {
     TBsRadio,
+    TBsRipple,
     TInputBaseProps,
     TInputGroupProps,
     TRadioGroupOptionProps,
     TRadioOptionProps,
-    TRadioProps
-} from "../types";
+    TRadioProps,
+    TRecord
+} from "../../../types";
 import BsRadio from "../BsRadio";
 import Helper from "../../../utils/Helper";
 

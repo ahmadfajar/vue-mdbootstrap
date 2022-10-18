@@ -3,8 +3,7 @@ import {h, VNode, VNodeArrayChildren, VNodeProps} from "vue";
 import {XMLParser} from "fast-xml-parser";
 import {IconLib} from "./IconLib";
 import {cssPrefix} from "../../../mixins/CommonApi";
-import {TIconData, TIconOptionProps} from "../types"
-import {TRecord} from "../../../types";
+import {TIconData, TIconOptionProps, TRecord} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 /**

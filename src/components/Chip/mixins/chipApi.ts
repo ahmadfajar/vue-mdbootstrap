@@ -5,11 +5,7 @@ import {BsButton} from "../../Button";
 import {BsIcon} from "../../Icon";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
 import {useSimpleRenderWithSlots} from "../../Card/mixins/cardApi";
-import {TChipOptionProps} from "../types";
-import {TRecord} from "../../../types";
-import {TBsButton} from "../../Button/types";
-import {TBsIcon} from "../../Icon/types";
-import {TBsRipple} from "../../Animation/types";
+import {TBsButton, TBsIcon, TBsRipple, TChipOptionProps, TRecord} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 export function useChipClassNames(

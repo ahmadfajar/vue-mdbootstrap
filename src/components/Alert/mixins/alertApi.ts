@@ -2,12 +2,10 @@ import {ComputedRef, createCommentVNode, h, Prop, Slots, VNode} from "vue";
 import {cssPrefix, useRenderSlotWithWrapper} from "../../../mixins/CommonApi";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
 import {useSimpleRenderWithSlots} from "../../Card/mixins/cardApi";
-import {TAlertOptionProps} from "../types";
 import {BsIcon} from "../../Icon";
 import {BsButton} from "../../Button";
+import {TAlertOptionProps, TBsButton, TBsIcon} from "../../../types";
 import Helper from "../../../utils/Helper";
-import {TBsIcon} from "../../Icon/types";
-import {TBsButton} from "../../Button/types";
 
 export function useAlertClassNames(
     props: Readonly<TAlertOptionProps>,

@@ -1,6 +1,5 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TAvatarIconProps} from "../../Avatar/types";
-import {TRecord} from "../../../types";
+import {TAvatarIconProps, TRecord} from "../../../types";
 
 export declare type TChipValue = {
     id: string;

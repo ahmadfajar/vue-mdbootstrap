@@ -9,8 +9,7 @@ import {
 } from "vue";
 import {cssPrefix, useRenderSlot} from "../../mixins/CommonApi";
 import {stringProp} from "../../mixins/CommonProps";
-import {TAppbarTitleOptionProps, TBsAppbarTitle} from "./types";
-import {TRecord} from "../../types";
+import {TAppbarTitleOptionProps, TBsAppbarTitle, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsAppbarTitle, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

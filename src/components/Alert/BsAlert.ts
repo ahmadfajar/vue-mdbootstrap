@@ -12,8 +12,7 @@ import {
 import {useRenderTransition} from "../../mixins/CommonApi";
 import {useAlertClassNames, useAlertColorName, useAlertIconName, useRenderAlert} from "./mixins/alertApi";
 import {alertProps} from "./mixins/alertProps";
-import {TAlertOptionProps, TBsAlert} from "./types";
-import {TRecord} from "../../types";
+import {TAlertOptionProps, TBsAlert, TRecord} from "../../types";
 
 export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsAlert",

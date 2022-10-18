@@ -10,8 +10,7 @@ import {
     useHasValidationError,
     useShowValidationError
 } from "../Radio/mixins/validationApi";
-import {TBsCheckboxGroup, TCheckboxGroupOptionProps, TCheckboxProps} from "./types";
-import {TRecord} from "../../types";
+import {TBsCheckboxGroup, TCheckboxGroupOptionProps, TCheckboxProps, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

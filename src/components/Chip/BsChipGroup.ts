@@ -13,8 +13,7 @@ import {
 import {useGenerateId} from "../../mixins/CommonApi";
 import {chipGroupProps} from "./mixins/chipGroupProps";
 import {useChipIsSelected, useRenderChipGroup, useSetSliderSize} from "./mixins/chipGroupApi";
-import {TBsChipGroup, TChipContainer, TChipGroupOptionProps, TChipOptionItem, TChipValue} from "./types";
-import {TRecord} from "../../types";
+import {TBsChipGroup, TChipContainer, TChipGroupOptionProps, TChipOptionItem, TChipValue, TRecord} from "../../types";
 
 export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsChipGroup",

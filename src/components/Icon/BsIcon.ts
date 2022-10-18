@@ -2,8 +2,7 @@ import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h
 import {useSizeHeight, useSizeStyles, useSizeWidth} from "./mixins/iconApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {iconProps, iconSize as size} from "./mixins/iconProps";
-import {TBsIcon, TBsIconSvg, TIconOptionProps} from "./types";
-import {TRecord} from "../../types";
+import {TBsIcon, TBsIconSvg, TIconOptionProps, TRecord} from "../../types";
 import BsIconSvg from "./BsIconSvg";
 
 export default defineComponent<TBsIcon, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

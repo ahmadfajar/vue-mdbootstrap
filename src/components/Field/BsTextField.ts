@@ -17,8 +17,7 @@ import {
     useShowValidationError
 } from "../Radio/mixins/validationApi";
 import {useFieldWrapperClasses, useRenderTextField, useShowClearButton} from "./mixins/fieldApi";
-import {TBsTextField, TTextFieldOptionProps} from "./types";
-import {TRecord} from "../../types";
+import {TBsTextField, TRecord, TTextFieldOptionProps} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

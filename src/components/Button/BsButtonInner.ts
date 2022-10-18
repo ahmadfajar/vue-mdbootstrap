@@ -2,9 +2,7 @@ import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h
 import {BsRipple} from "../Animation";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {buttonInnerProps} from "./mixins/buttonProps";
-import {TBsButtonInner, TButtonInnerOptionProps} from "./types";
-import {TBsRipple} from "../Animation/types";
-import {TRecord} from "../../types";
+import {TBsButtonInner, TBsRipple, TButtonInnerOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsButtonInner",

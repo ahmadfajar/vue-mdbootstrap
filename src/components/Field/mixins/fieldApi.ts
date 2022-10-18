@@ -6,7 +6,6 @@ import {
     useRenderTransition
 } from "../../../mixins/CommonApi";
 import {BsIcon, BsToggleIcon} from "../../Icon";
-import {TBsIcon, TBsToggleIcon} from "../../Icon/types";
 import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
 import {useRenderFieldFeedback} from "../../Radio/mixins/validationApi";
 import {
@@ -16,8 +15,16 @@ import {
     useOnFieldValueCleared,
     useOnFieldValueUpdated
 } from "./fieldEventApi";
-import {TInputFieldProps, TInputTextProps, TTextAreaOptionProps, TTextFieldOptionProps} from "../types";
-import {TEmitFn, TRecord} from "../../../types";
+import {
+    TBsIcon,
+    TBsToggleIcon,
+    TEmitFn,
+    TInputFieldProps,
+    TInputTextProps,
+    TRecord,
+    TTextAreaOptionProps,
+    TTextFieldOptionProps
+} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 export function useFieldWrapperClasses(

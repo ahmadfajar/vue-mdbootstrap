@@ -1,6 +1,5 @@
 import {
     ComponentInternalInstance,
-    ComponentPublicInstance,
     Fragment,
     h,
     Slots,
@@ -139,7 +138,7 @@ export function useRenderTransition(
     });
 }
 
-export function useMaxBreakpoint(breakpoint: TBreakpoint | number): boolean {
+export function useBreakpointMax(breakpoint: TBreakpoint | number): boolean {
     switch (breakpoint) {
         case "sm":
             return window.matchMedia("(max-width: 767.98px)").matches;
@@ -157,7 +156,7 @@ export function useMaxBreakpoint(breakpoint: TBreakpoint | number): boolean {
     }
 }
 
-export function useMinBreakpoint(breakpoint: TBreakpoint | number): boolean {
+export function useBreakpointMin(breakpoint: TBreakpoint | number): boolean {
     switch (breakpoint) {
         case "sm":
             return window.matchMedia("(min-width: 576px)").matches;

@@ -10,11 +10,10 @@ import {
     withDirectives
 } from "vue";
 import {useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemContent} from "./mixins/buttonApi";
-import {TBsButtonInner, TBsToggleButton, TInputOptionItem, TToggleButtonOptionProps} from "./types";
 import {toggleButtonProps} from "./mixins/buttonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import BsButtonInner from "./BsButtonInner";
-import {TRecord} from "../../types";
+import {TBsButtonInner, TBsToggleButton, TInputOptionItem, TRecord, TToggleButtonOptionProps} from "../../types";
 
 export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsToggleButton",

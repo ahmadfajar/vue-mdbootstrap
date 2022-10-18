@@ -2,8 +2,7 @@ import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h
 import {useRenderCardImg} from "./mixins/cardApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {cardProps} from "./mixins/cardProps";
-import {TBsCard, TCardOptionProps} from "./types";
-import {TRecord} from "../../types";
+import {TBsCard, TCardOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsCard, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCard",

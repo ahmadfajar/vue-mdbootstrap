@@ -1,8 +1,7 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, Prop} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {toggleIconProps} from "./mixins/iconProps";
-import {TBsIconSvg, TBsToggleIcon, TToggleIconOptionProps} from "./types";
-import {TRecord} from "../../types";
+import {TBsIconSvg, TBsToggleIcon, TRecord, TToggleIconOptionProps} from "../../types";
 import BsIconSvg from "./BsIconSvg";
 
 export default defineComponent<TBsToggleIcon, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

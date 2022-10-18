@@ -6,7 +6,6 @@ import {
     stringProp,
     validStringOrNumberProp
 } from "../../mixins/CommonProps";
-import {cssPrefix} from "../../mixins/CommonApi";
 import {textFieldProps} from "./mixins/fieldProps";
 import {validationProps} from "../Radio/mixins/validationProps";
 import {useFieldWrapperClasses, useRenderTextArea, useShowClearButton} from "./mixins/fieldApi";
@@ -17,8 +16,7 @@ import {
     useShowHelpText,
     useShowValidationError
 } from "../Radio/mixins/validationApi";
-import {TBsTextArea, TTextAreaOptionProps} from "./types";
-import {TRecord} from "../../types";
+import {TBsTextArea, TRecord, TTextAreaOptionProps} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

@@ -1,8 +1,7 @@
 import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {cardMediaProps} from "./mixins/cardProps";
-import {TBsCardMedia} from "./types";
-import {TRecord} from "../../types";
+import {TBsCardMedia, TRecord} from "../../types";
 
 export default defineComponent<TBsCardMedia, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCardMedia",

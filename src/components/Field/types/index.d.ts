@@ -1,6 +1,5 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TInputBaseProps, TValidationProps} from "../../Radio/types";
-import {TRecord} from "../../../types";
+import {TInputBaseProps, TRecord, TValidationProps} from "../../../types";
 
 export declare type TInputFieldProps = TInputBaseProps & TValidationProps & {
     actionIconVariant?: string;

@@ -1,8 +1,7 @@
 import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} from "vue";
 import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
 import {badgeProps} from "./mixins/badgeProps";
-import {TBadgeOptionProps, TBsBadge} from "./types";
-import {TRecord} from "../../types";
+import {TBadgeOptionProps, TBsBadge, TRecord} from "../../types";
 
 export default defineComponent<TBsBadge, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsBadge",

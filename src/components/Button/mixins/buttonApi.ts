@@ -1,12 +1,16 @@
 import {h, Prop, Slots, VNode, VNodeArrayChildren} from "vue";
-import {TButtonOptionProps, TInputOptionItem, TToggleButtonOptionProps} from "../types";
 import {cssPrefix, useGenerateId, useRenderSlot} from "../../../mixins/CommonApi";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
-import {TAvatarIconProps} from "../../Avatar/types";
-import {TRecord} from "../../../types";
 import {BsIcon} from "../../Icon";
+import {
+    TAvatarIconProps,
+    TBsIcon,
+    TButtonOptionProps,
+    TInputOptionItem,
+    TRecord,
+    TToggleButtonOptionProps
+} from "../../../types";
 import Helper from "../../../utils/Helper";
-import {TBsIcon} from "../../Icon/types";
 
 export function useMakeButtonProps(
     props: Readonly<TButtonOptionProps>,

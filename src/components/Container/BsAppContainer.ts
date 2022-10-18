@@ -11,8 +11,7 @@ import {
 } from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
-import {IComponentInstance, TRecord, TVueMdb} from "../../types";
-import {TAppContainerOptionProps, TBsAppContainer} from "./types";
+import {IComponentInstance, TAppContainerOptionProps, TBsAppContainer, TRecord, TVueMdb} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
