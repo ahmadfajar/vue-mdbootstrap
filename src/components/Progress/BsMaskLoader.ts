@@ -46,6 +46,7 @@ export default defineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions,
                                     ? h<TBsIconSpinner>(BsIconSpinner, {
                                         color: props.spinnerColor as Prop<string>,
                                         size: props.spinnerDiameter as Prop<string | number>,
+                                        // @ts-ignore
                                         spin: true as Prop<boolean>,
                                     })
                                     : h("div", {

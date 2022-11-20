@@ -67,10 +67,12 @@ function createSliderArrow(
     }, [
         h<TBsButton>(BsButton, {
             mode: 'icon' as Prop<string>,
+            // @ts-ignore
             flat: true as Prop<boolean>,
             color: <Prop<string>>props.sliderButtonColor,
             icon: <Prop<string>>(direction === 'prev' ? 'navigate_before' : 'navigate_next'),
             iconSize: 24 as Prop<number>,
+            // @ts-ignore
             disabled: <Prop<boolean>>(!canScroll),
             onClick: () => scrollTo(direction, scrollOffset, slider),
         }),

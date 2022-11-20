@@ -1,6 +1,7 @@
 import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, VNode} from "vue";
-import {booleanProp, tagProp} from "../../mixins/CommonProps";
+import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
+import {baseTagProps} from "../Card/mixins/cardProps";
 import {TBsContainer, TBsContent, TContainerOptionProps, TRecord} from "../../types";
 import BsContainer from "./BsContainer";
 
@@ -13,11 +14,7 @@ export default defineComponent<TBsContent, TRecord, TRecord, ComputedOptions, Co
          * @type {boolean}
          */
         app: booleanProp,
-        /**
-         * Html tag used to render this component.
-         * @type {string}
-         */
-        tag: tagProp,
+        ...baseTagProps,
     },
     setup(props, {slots}) {
         const cmpProps = props as Readonly<TContainerOptionProps>;

@@ -10,14 +10,14 @@ export default defineComponent<TBsCard, TRecord, TRecord, ComputedOptions, Compo
     setup(props, {slots}) {
         const cmpProps = props as Readonly<TCardOptionProps>;
         return () => h(
-            props.tag as string, {
+            cmpProps.tag || "div", {
                 class: {
                     'card': true,
-                    'rounded-0': props.rounded === false,
+                    'rounded-0': cmpProps.rounded === false,
                     [`${cssPrefix}shadow`]: props.shadow
                 }
             }, [
-                props.imgTopSrc
+                cmpProps.imgTopSrc
                     ? useRenderCardImg(cmpProps.imgTopSrc, cmpProps.imgTopAlt, "card-img-top")
                     : null,
                 slots.default && slots.default(),

@@ -53,8 +53,11 @@ export function useCreateCheckboxItems(
         return h("div", {class: "col", key: `checkbox-${idx}`}, [
             h<TBsCheckbox>(BsCheckbox, {
                 color: <Prop<string>>(it.color || props.color),
+                // @ts-ignore
                 disabled: <Prop<boolean>>(it.disabled || props.disabled),
+                // @ts-ignore
                 readonly: <Prop<boolean>>(it.readonly || props.readonly),
+                // @ts-ignore
                 indeterminate: <Prop<boolean>>(it.indeterminate || props.indeterminate),
                 value: <Prop<string | number | unknown>>it.value,
                 name: <Prop<string | undefined>>(

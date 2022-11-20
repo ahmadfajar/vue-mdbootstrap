@@ -5,12 +5,12 @@
 @import "utilities/color_variants";
 @import "utilities/shadows";
 
-.opacity-0 {
-    opacity: 0;
+.x-overflow-hidden {
+    overflow-x: hidden !important;
 }
 
-.opacity-100 {
-    opacity: 1;
+.y-overflow-hidden {
+    overflow-y: hidden !important;
 }
 
 .#{$prefix}link {

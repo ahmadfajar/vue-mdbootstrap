@@ -1,6 +1,6 @@
-@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
 
 .#{$prefix}divider {
     background-color: rgba($black, 0.2);
@@ -11,9 +11,6 @@
     margin-bottom: 0;
     margin-top: 0;
     width: 100%;
-    -webkit-box-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
 
     &.divider--dark {
         background-color: rgba($white, 0.2);

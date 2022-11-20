@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 13/09/2022 10:38
+ * @since  05/07/2018, modified: 20/11/2022 1:45
  */
 class Helper {
     /**
@@ -20,10 +20,13 @@ class Helper {
      *
      * @param {Function} callback   The function to execute
      * @param {number} delay        Number of delay in ms
-     * @returns {void}
+     * @returns {number} The returned **timeoutID** is a positive integer value
+     * which identifies the timer created by the call to **setTimeout()**.
+     * This value can be passed to [clearTimeout()]{@link https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout}
+     * to cancel the timeout.
      */
-    static defer(callback: CallableFunction, delay: number) {
-        setTimeout(callback, delay);
+    static defer(callback: CallableFunction, delay: number): number {
+        return setTimeout(callback, delay);
     }
 
     /**

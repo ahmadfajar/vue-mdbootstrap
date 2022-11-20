@@ -64,6 +64,7 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Com
         const styles = computed(
             () => useAppbarStyles(cmpProps, appId, vueMdb, isMobile)
         );
+
         onMounted(
             () => useAppbarOnMountedHook(appId, vueMdb, smoothTransition)
         );

@@ -17,7 +17,9 @@ export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
 export function useCreateIconProps(props: Readonly<TAvatarIconProps>): TRecord {
     return {
         icon: <Prop<string | undefined>>props.icon,
+        // @ts-ignore
         spin: <Prop<boolean>>props.iconSpin,
+        // @ts-ignore
         pulse: <Prop<boolean>>props.iconPulse,
         flip: <Prop<boolean>>props.iconFlip,
         rotate: <Prop<string | number>>props.iconRotation,

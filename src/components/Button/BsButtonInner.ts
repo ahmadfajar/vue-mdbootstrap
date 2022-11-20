@@ -13,6 +13,7 @@ export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions
         return () =>
             h<TBsRipple>(BsRipple, {
                 class: {'dropdown-toggle': cmpProps.dropdownToggle && !cmpProps.iconMode},
+                // @ts-ignore
                 disabled: <Prop<boolean>>cmpProps.rippleOff,
                 tag: <Prop<string>>cmpProps.tagName,
             }, {

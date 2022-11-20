@@ -8,10 +8,10 @@ import {
     h,
     onMounted,
     ref,
-    VNode,
     withDirectives
 } from "vue";
-import {booleanProp, tagProp} from "../../mixins/CommonProps";
+import {booleanProp} from "../../mixins/CommonProps";
+import {baseTagProps} from "../Card/mixins/cardProps";
 import {cssPrefix, useBreakpointMax, useFindParentCmp} from "../../mixins/CommonApi";
 import {TAppContainerOptionProps, TBsContainer, TContainerOptionProps, TRecord, TVueMdb} from "../../types";
 import Resize from "../../directives/Resize";
@@ -25,11 +25,7 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
          * @type {boolean}
          */
         app: booleanProp,
-        /**
-         * Html tag used to render this component.
-         * @type {string}
-         */
-        tag: tagProp,
+        ...baseTagProps,
     },
     emits: [
         /**
@@ -42,19 +38,20 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
         const vueMdb = ref<TVueMdb>();
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
-        const resizeHandler = (node: VNode) => {
-            emit("resize", node);
+        const resizeHandler = () => {
+            emit("resize");
             isMobile.value = useBreakpointMax("lg");
         };
         const styles = computed(
             () => {
                 if (cmpProps.app && appId.value) {
                     if (vueMdb.value) {
-                        const {left, right, leftSideDrawerWidth, rightSideDrawerWidth} = vueMdb.value.app[appId.value];
+                        // console.log("vueMdb.value", vueMdb.value);
+                        const {leftSideDrawerWidth, rightSideDrawerWidth} = vueMdb.value.app[appId.value];
 
                         return {
-                            paddingRight: isMobile.value ? `${right}px` : `${rightSideDrawerWidth + right}px`,
-                            paddingLeft: isMobile.value ? `${left}px` : `${leftSideDrawerWidth + left}px`
+                            paddingRight: isMobile.value ? `0` : `${rightSideDrawerWidth}px`,
+                            paddingLeft: isMobile.value ? `0` : `${leftSideDrawerWidth}px`
                         };
                     }
                 }
@@ -62,17 +59,17 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
                 return undefined;
             }
         );
+
         onMounted(
             () => {
                 const instance = getCurrentInstance();
-                // console.log("instance:", instance);
                 vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
                 const parent = useFindParentCmp(["bs-app-container", "BsAppContainer"], instance, 3);
 
                 if (parent) {
                     appId.value = (<Readonly<TAppContainerOptionProps>>parent.props).id;
                 } else {
-                    console.warn("<bs-container> must be used inside <bs-app-container>");
+                    console.warn("<BsContainer> must be used inside <BsAppContainer>");
                 }
             }
         );

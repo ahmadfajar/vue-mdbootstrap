@@ -1,6 +1,6 @@
-@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
 
 html, body {
     height: 100%;
@@ -18,21 +18,23 @@ body {
 .#{$prefix}application-wrap,
 .#{$prefix}container-wrap,
 .#{$prefix}content-wrap {
-    @include flex(1 1 auto);
+    @include display-flex();
     max-width: 100%;
     position: relative;
 }
 
 .#{$prefix}application-wrap {
-    @include flexbox((display: flex, flex-direction: column));
+    @include flexbox((flex: 1 1 auto, flex-direction: column));
     @include backface-visibility();
+    overflow-x: hidden;
 
     &.#{$prefix}viewport-height {
         min-height: 100vh;
     }
 }
 
-.#{$prefix}container-wrap {
+.#{$prefix}container-wrap,
+.#{$prefix}content-wrap {
+    @include flex(1 0 auto);
     @include transition($md-transition-default);
-    @include flexbox((display: flex, flex: 1 0 auto));
 }

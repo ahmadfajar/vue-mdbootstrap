@@ -1,7 +1,7 @@
-@import "~compass-mixins/lib/compass/css3";
-@import "~compass-mixins/lib/compass/typography";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/compass/typography";
 
 .#{$prefix}appbar {
     --#{$prefix}appbar-bgcolor: #{$white};
@@ -11,6 +11,7 @@
     @include justify-content(flex-start);
     background-color: var(--#{$prefix}appbar-bgcolor);
     max-width: 100%;
+    z-index: 1030;
 
     > .#{$prefix}appbar-content {
         @include flexbox((display:flex, align-items: center, flex-direction: row));

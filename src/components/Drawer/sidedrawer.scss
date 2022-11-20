@@ -1,24 +1,25 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins/breakpoints";
-@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
 
 .#{$prefix}side-drawer {
     @include transition($md-transition-default);
+    height: 100%;
     margin: 0;
     padding: 0;
-    position: fixed;
+    position: absolute;
     z-index: $zindex-fixed;
 
     &.#{$prefix}closed {
-        @include box-shadow(none);
+        @include box-shadow(none !important);
     }
 
     > .#{$prefix}side-drawer-inner {
         @include flexbox((display:flex, flex-direction: column));
         height: 100%;
+        width: 100%;
         overflow: hidden;
         position: relative;
 

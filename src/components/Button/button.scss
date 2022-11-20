@@ -1,8 +1,8 @@
-@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/button";
+@import "~compass-mixins/lib/compass/css3";
 
 .btn {
     $disabled-bg: lighten($gray-500, 20%);
@@ -199,8 +199,8 @@
     > .#{$prefix}ripple {
         @include display-flex();
         @include border-radius(var(--#{$bs-prefix}btn-border-radius));
-        width: 2.375rem;     // 38px;
-        height: 2.375rem;    // 38px;
+        width: 2.75rem;     // 44px;
+        height: 2.75rem;    // 44px;
 
         > .#{$prefix}btn-inner {
             @include flexbox((display: flex, justify-content: center, align-items: center));

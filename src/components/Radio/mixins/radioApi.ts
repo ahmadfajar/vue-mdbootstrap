@@ -71,8 +71,11 @@ export function useRenderRadioOrCheckbox(
             }, [
                 h("div", {class: `${cssPrefix}${inputType}-overlay`}),
                 h<TBsRipple>(BsRipple, {
+                    // @ts-ignore
                     centered: true as Prop<boolean>,
+                    // @ts-ignore
                     active: <Prop<boolean>>rippleActive.value,
+                    // @ts-ignore
                     disabled: <Prop<boolean>>props.disabled || <Prop<boolean>>props.readonly,
                     "onUpdate:active": (value: boolean): void => {
                         rippleActive.value = value
@@ -118,7 +121,9 @@ export function useCreateRadioItems(
         return h("div", {class: "col", key: `radio-${idx}`}, [
             h<TBsRadio>(BsRadio, {
                 color: <Prop<string>>(it.color || props.color),
+                // @ts-ignore
                 disabled: <Prop<boolean>>(it.disabled || props.disabled),
+                // @ts-ignore
                 readonly: <Prop<boolean>>(it.readonly || props.readonly),
                 value: <Prop<string | number | unknown>>it.value,
                 name: <Prop<string | undefined>>(

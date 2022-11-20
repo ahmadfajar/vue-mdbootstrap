@@ -6,6 +6,9 @@
 @import "~bootstrap/scss/mixins/breakpoints";
 
 .card {
+    --#{$bs-prefix}card-border-radius: 0.75rem;
+    --#{$bs-prefix}card-inner-border-radius: calc(0.75rem - 1px);
+
     .card-header {
         font-weight: $font-weight-semi-bold;
     }
@@ -13,7 +16,7 @@
     &:not(.rounded-0) {
         > .#{$prefix}mask-loader {
             > .#{$prefix}overlay {
-                @include border-radius(var(--bs-card-border-radius))
+                @include border-radius(var(--#{$bs-prefix}card-border-radius))
             }
         }
     }
@@ -73,26 +76,36 @@
     > .#{$prefix}card-media {
         &:first-child {
             > img {
-                @include border-top-radius($card-border-radius);
+                @include border-top-radius(var(--#{$bs-prefix}card-inner-border-radius));
             }
 
             > .#{$prefix}card-media-overlay {
                 &.#{$prefix}overlay-top {
-                    @include border-top-radius($card-border-radius);
+                    @include border-top-radius(var(--#{$bs-prefix}card-inner-border-radius));
                 }
             }
         }
 
         &:last-child {
             > img {
-                @include border-bottom-radius($card-border-radius);
+                @include border-bottom-radius(var(--#{$bs-prefix}card-border-radius));
             }
 
             > .#{$prefix}card-media-overlay {
                 &.#{$prefix}overlay-bottom {
-                    @include border-bottom-radius($card-border-radius);
+                    @include border-bottom-radius(var(--#{$bs-prefix}card-border-radius));
                 }
             }
         }
     }
+}
+
+.card-img-start,
+.card-img-left {
+    @include border-left-radius(var(--#{$bs-prefix}card-inner-border-radius));
+}
+
+.card-img-end,
+.card-img-right {
+    @include border-right-radius(var(--#{$bs-prefix}card-inner-border-radius));
 }

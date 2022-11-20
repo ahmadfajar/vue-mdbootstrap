@@ -3,7 +3,7 @@ import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
 import {baseTagProps} from "../Card/mixins/cardProps";
 import {useCreateRipple} from "./mixins/rippleApi";
-import {IRippleEvent, TBsRipple, TRecord} from "../../types";
+import {IRippleEvent, TBsRipple, TRecord, TRippleOptionProps} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
@@ -35,11 +35,12 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Com
         "update:active",
     ],
     setup(props, {emit, slots}) {
+        const cmpProps = props as Readonly<TRippleOptionProps>;
         const cmpId = useGenerateId();
         const touchTimeout = ref<number>();
         const startRipple = (event: IRippleEvent): void => {
             emit('update:active', true);
-            useCreateRipple(event, <boolean>props.centered);
+            useCreateRipple(event, cmpProps.centered);
             Helper.defer(() => {
                 emit('update:active', false);
             }, 100);
@@ -50,7 +51,7 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Com
             (value) => {
                 if (value && !props.disabled) {
                     const event = {target: document.getElementById(cmpId)} as IRippleEvent;
-                    useCreateRipple(event, <boolean>props.centered);
+                    useCreateRipple(event, cmpProps.centered);
                     Helper.defer(() => {
                         emit('update:active', false);
                     }, 100);

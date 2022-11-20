@@ -39,7 +39,7 @@ export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOption
             () => {
                 const instance = getCurrentInstance();
                 vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
-
+                // console.log("vueMdb.value:", vueMdb.value);
                 if (instance && vueMdb.value) {
                     const rect = (<HTMLElement>(<IComponentInstance>instance).ctx.$el).getBoundingClientRect();
                     vueMdb.value.app[(<string>cmpProps.id)] = {

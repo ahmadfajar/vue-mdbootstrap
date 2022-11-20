@@ -47,7 +47,7 @@ export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, Comp
         }
 
         watch(
-            () => props.modelValue,
+            () => cmpProps.modelValue,
             (value) => {
                 if (props.dismissible) {
                     dismiss.value = !(value === true);

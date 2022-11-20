@@ -13,14 +13,6 @@ export declare type TCheckboxGroupOptionProps = TInputGroupProps<TCheckboxProps,
     indeterminate?: boolean;
 }
 
-// export declare type TCheckboxGroupOptionProps = TInputBaseProps & TValidationProps & {
-//     color?: string;
-//     column?: string | number;
-//     indeterminate?: boolean;
-//     items: Array<TCheckboxProps>;
-//     modelValue?: Array<string | number | unknown>;
-// }
-
 export declare type TBsCheckbox = ComponentObjectPropsOptions<TCheckboxOptionProps>;
 
 export declare type TBsCheckboxGroup = ComponentObjectPropsOptions<TCheckboxGroupOptionProps>;

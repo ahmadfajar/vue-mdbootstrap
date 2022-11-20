@@ -71,17 +71,14 @@ function createCloseBtnAttr(
     clickHandler: VoidFunction,
 ): TBsButton {
     return <TBsButton>{
+        // @ts-ignore
         flat: true as Prop<boolean>,
         mode: 'icon' as Prop<string>,
         icon: 'close' as Prop<string>,
         iconSize: <Prop<number>>(
-            props.size === 'sm' ? 14 : props.size === 'lg' ? 24 : 20
+            props.size === 'sm' ? 14 : props.size === 'lg' ? 22 : 20
         ),
-        size: <Prop<string | undefined>>(
-            props.size === 'sm'
-                ? 'xs'
-                : (props.size === 'lg' ? undefined : 'sm')
-        ),
+        size: <Prop<string | undefined>>(props.size === 'sm' ? 'xs' : 'sm'),
         color: ['light', 'light-grey'].includes(<string>props.color) ? 'dark' : props.color,
         onClick: (): void => clickHandler(),
     }
@@ -101,7 +98,8 @@ export function useRenderChip(
         href: (props.href && !props.disabled) ? props.href : undefined
     }, [
         h<TBsRipple>(BsRipple, {
-            disabled: <Prop<boolean>>rippleDisabled,
+            // @ts-ignore
+            disabled: rippleDisabled as Prop<boolean>,
             class: `${cssPrefix}chip-content`
         }, {
             default: () => [

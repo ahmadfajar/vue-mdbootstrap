@@ -21,7 +21,7 @@ export function useContentTag(type?: string | undefined, tag?: string | undefine
 }
 
 export function useSimpleRenderWithSlots(
-    type: string,
+    tag: string,
     slots?: Slots | undefined | null,
     classes?: string | Array<string> | TRecord | undefined | null,
     styles?: string | Array<string> | TRecord | undefined | null,
@@ -29,13 +29,13 @@ export function useSimpleRenderWithSlots(
     if (styles) {
         return h(
             // @ts-ignore
-            type, {class: classes, style: styles},
+            tag, {class: classes, style: styles},
             slots ? slots.default && slots.default() : null,
         )
     } else {
         return h(
             // @ts-ignore
-            type, {class: classes},
+            tag, {class: classes},
             slots ? slots.default && slots.default() : null,
         )
     }

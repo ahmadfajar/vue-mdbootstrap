@@ -56,7 +56,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
             nextTick().then(() => emit("close"))
         }
         watch(
-            () => props.modelValue,
+            () => cmpProps.modelValue,
             (value) => {
                 if (props.dismissible) {
                     dismiss.value = !(value === true);

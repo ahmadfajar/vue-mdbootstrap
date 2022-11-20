@@ -21,10 +21,10 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
             return (!Helper.isEmpty(props.icon) || (slots.icon !== undefined));
         });
         const isDisabled = computed<boolean>(
-            () => (<boolean>props.disabled) && Helper.isEmpty(<string | undefined>props.href)
+            () => (cmpProps.disabled === true) && Helper.isEmpty(<string | undefined>props.href)
         );
         const rippleOff = computed<boolean>(
-            () => (<boolean>props.rippleOff) && isDisabled.value
+            () => (cmpProps.rippleOff === true) && isDisabled.value
         );
         const tagName = computed<string>(
             () => (
@@ -42,8 +42,11 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
             }, [
                 h<TBsButtonInner>(BsButtonInner, {
                     dropdownToggle: props.dropdownToggle,
+                    // @ts-ignore
                     iconMode: <Prop<boolean>>(cmpProps.mode === 'icon'),
+                    // @ts-ignore
                     hasIcon: <Prop<boolean>>hasIcon.value,
+                    // @ts-ignore
                     rippleOff: <Prop<boolean>>rippleOff.value,
                 }, {
                     default: () => useRenderButtonContent(slots, cmpProps)

@@ -1,6 +1,6 @@
-@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
 
 .badge {
     @include box-shadow(none);

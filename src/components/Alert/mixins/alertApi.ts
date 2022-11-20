@@ -94,6 +94,7 @@ export function useRenderAlert(
                 ),
                 icon: "close" as Prop<string>,
                 mode: "icon" as Prop<string>,
+                // @ts-ignore
                 flat: true as Prop<boolean>,
                 onClick: (): void => dismissHandler()
             })

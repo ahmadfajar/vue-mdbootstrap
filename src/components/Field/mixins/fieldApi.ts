@@ -210,6 +210,7 @@ export function useCreateFieldActionIcon(
                         icon: `visibility_${iconVariant}` as Prop<string>,
                         toggleIcon: `visibility_off_${iconVariant}` as Prop<string>,
                         size: iconSize as Prop<number | undefined>,
+                        // @ts-ignore
                         modelValue: passwordToggle?.value as Prop<boolean | undefined>,
                         "onUpdate:modelValue": passwordToggleHandler
                     })

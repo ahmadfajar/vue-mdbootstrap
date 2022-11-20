@@ -4,7 +4,7 @@
 
 ## v2.0.0
 
-Released: November xx, 2022
+Released: December xx, 2022
 
 #### Features v2.0.0
 
@@ -12,6 +12,8 @@ Released: November xx, 2022
 - Add support for **Vue 3** and **Bootstrap v5.2**.
 - New components: **BsIconSpinner**, **BsIconSvg**, **BsProgressBar**
 - **BsAlert**: add property `filled`, `iconVariant`, and `variant`.
+- **BsAppbar**: add property `clippedRight`.
+- **BsAppContainer**: add property `viewportHeight`.
 - **BsButton**: add slot `icon` for placing a custom icon.
 - **BsChip**: add property `iconVariant`, `pill`.
 - **BsMaskLoader**: add property `variant`.
@@ -19,6 +21,7 @@ Released: November xx, 2022
 - **BsToggleButton**: add property `pill`, and `rounded`.
 - **BsToggleIcon**: add property `size`.
 - **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
+- **BsSideDrawer**: add property `position`, `overlayColor`.
 
 #### Breaking Changes
 
