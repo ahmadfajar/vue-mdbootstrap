@@ -1,5 +1,5 @@
 import {App, Plugin as Plugin_2} from "vue";
-import registerApplication from "../../mixins/registerApplication";
+import registerConfig from "../../mixins/registerConfig";
 import BsAppContainer from "./BsAppContainer";
 import BsContainer from "./BsContainer";
 import BsContent from "./BsContent";
@@ -8,7 +8,7 @@ import "../../../scss/_others.scss";
 
 const BsContainerPlugin: Plugin_2 = {
     install: (app: App): void => {
-        registerApplication(app);
+        registerConfig(app);
         app.component(BsAppContainer.name, BsAppContainer);
         app.component(BsContainer.name, BsContainer);
         app.component(BsContent.name, BsContent);

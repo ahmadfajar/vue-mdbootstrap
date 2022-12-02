@@ -18,13 +18,13 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
     props: sideDrawerProps,
     emits: [
         /**
-         * Fired when this component is hide or show.
-         */
-        "open",
-        /**
          * Fired when this component size is changed.
          */
         "resize",
+        /**
+         * Fired when this component state is updated.
+         */
+        "update:open",
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TSideDrawerOptionProps>;
@@ -38,10 +38,10 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
             isMobile.value = useBreakpointMax("lg");
             if (isMobile.value) {
                 isOpen.value = false;
-                emit("open", false);
+                emit("update:open", false);
             } else {
                 isOpen.value = true;
-                emit("open", true);
+                emit("update:open", true);
             }
         };
         const clipHeight = computed(

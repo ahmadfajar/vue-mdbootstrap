@@ -28,15 +28,17 @@ export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, Com
                     (
                         (cmpProps.imgSrc && cmpProps.imgSrc !== '')
                             ? useRenderAvatarImage(cmpProps)
-                            : (cmpProps.icon && cmpProps.icon !== '')
-                                ? h<TBsIcon>(BsIcon, {
-                                    size: <Prop<number>>useAvatarIconSize(cmpProps),
-                                    ...useCreateIconProps(cmpProps),
-                                })
-                                : h('span',
-                                    {class: [`${cssPrefix}avatar-text`]},
-                                    cmpProps.text || '?',
-                                )
+                            : (
+                                (cmpProps.icon && cmpProps.icon !== '')
+                                    ? h<TBsIcon>(BsIcon, {
+                                        size: <Prop<number>>useAvatarIconSize(cmpProps),
+                                        ...useCreateIconProps(cmpProps),
+                                    })
+                                    : h('span',
+                                        {class: [`${cssPrefix}avatar-text`]},
+                                        cmpProps.text || '?',
+                                    )
+                            )
                     )
                 )
             )

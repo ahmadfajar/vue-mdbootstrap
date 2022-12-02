@@ -1,6 +1,12 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
 import {TRecord} from "../../../types";
 
+export declare type TFlipMode = "horizontal" | "vertical" | "both";
+
+export declare type TShapeStyle = "outlined" | "filled" | "round" | "sharp";
+
+export declare type TPositionType = "left" | "right" | "top" | "bottom";
+
 export declare type TIconData = {
     id: number;
     name: string;

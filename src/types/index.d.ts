@@ -1,5 +1,6 @@
+import type {AllowedComponentProps, ComponentInternalInstance, ComponentPublicInstance, VNode, VNodeProps} from "vue";
+import type {RouterLinkProps} from "vue-router";
 import ResizeObserver from "resize-observer-polyfill";
-import {App, ComponentInternalInstance, ComponentPublicInstance} from "vue";
 
 export * from "../components/Alert/types";
 export * from "../components/Animation/types";
@@ -17,6 +18,7 @@ export * from "../components/Field/types";
 export * from "../components/Icon/types";
 export * from "../components/Progress/types";
 export * from "../components/Radio/types";
+export * from "../components/Tabs/types";
 
 export declare type TBreakpoint = "sm" | "md" | "lg" | "xl";
 
@@ -29,6 +31,14 @@ export declare type TDirectiveBinding = {
     debounce?: number;
     target?: string;
 };
+
+export declare type TRouterLinkProps = AllowedComponentProps & VNodeProps & typeof RouterLinkProps;
+
+export declare type TRouterOptionProps = {
+    activeClass?: string;
+    path?: string;
+    url?: string;
+}
 
 export declare type TEventListenerBinding = {
     handler: EventListenerOrEventListenerObject;
@@ -64,10 +74,10 @@ export interface IBindingElement extends Element {
     __observer?: ResizeObserver;
 }
 
-export interface IComponentInstance extends ComponentInternalInstance {
-    ctx: ComponentPublicInstance;
+export interface IVNode extends VNode {
+    ctx: ComponentInternalInstance;
 }
 
-export interface IVMdbApp extends App {
-    $VueMdb: TVueMdb
+export interface IComponentInstance extends ComponentInternalInstance {
+    ctx: ComponentPublicInstance;
 }

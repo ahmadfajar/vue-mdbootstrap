@@ -22,6 +22,7 @@ Released: December xx, 2022
 - **BsToggleIcon**: add property `size`.
 - **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
 - **BsSideDrawer**: add property `position`, `overlayColor`.
+- **BsTab**: add property `disabled`, `iconSpin`, `iconPulse`, `iconFlip`, `iconRotation`.
 
 #### Breaking Changes
 
@@ -78,6 +79,7 @@ Released: December xx, 2022
   - Replaced slot `appendIconOuter` with `appendOuter`.
   - Removed event `change`, already covered by event `update:modelValue`.
   - Deprecated property `externalValidator`, use property `validator` instead.
+- **BsTab**: Replace property `value` with `modelValue`. 
 
 
 ## v1.2.2

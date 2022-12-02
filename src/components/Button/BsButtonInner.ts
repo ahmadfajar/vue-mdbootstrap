@@ -1,4 +1,4 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, Prop} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
 import {BsRipple} from "../Animation";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {buttonInnerProps} from "./mixins/buttonProps";
@@ -13,9 +13,8 @@ export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions
         return () =>
             h<TBsRipple>(BsRipple, {
                 class: {'dropdown-toggle': cmpProps.dropdownToggle && !cmpProps.iconMode},
-                // @ts-ignore
-                disabled: <Prop<boolean>>cmpProps.rippleOff,
-                tag: <Prop<string>>cmpProps.tagName,
+                disabled: props.rippleOff,
+                tag: props.tagName,
             }, {
                 default: () => h(
                     "span",

@@ -1,19 +1,12 @@
-import {
-    ComponentInternalInstance,
-    Fragment,
-    h,
-    Slots,
-    Transition,
-    TransitionProps,
-    VNode,
-    VNodeArrayChildren
-} from "vue";
-import {TBreakpoint, TRecord} from "../types";
+import type {ComponentInternalInstance, Slots, TransitionProps, VNode, VNodeArrayChildren} from "vue";
+import type {TBreakpoint, TRecord, TRouterLinkProps, TRouterOptionProps} from "../types";
+import {Fragment, getCurrentInstance, h, Transition} from "vue";
+import {RouterLink} from "vue-router";
 import Helper from "../utils/Helper";
 
 export const cssPrefix = "md-";
 
-export const isServer = typeof window === 'undefined';
+export const isServer = typeof window === "undefined";
 
 /**
  * Generate component's ID.
@@ -21,7 +14,7 @@ export const isServer = typeof window === 'undefined';
  * @returns {string} The generated ID
  */
 export function useGenerateId(): string {
-    return 'bs-' + Helper.uuid(true);
+    return "bs-" + Helper.uuid(true);
 }
 
 /**
@@ -29,7 +22,7 @@ export function useGenerateId(): string {
  * @return {boolean} Returns `true` if IE browser is used otherwise `false`.
  */
 export function useBrowserIE() {
-    return !isServer && navigator.userAgent.toLowerCase().includes('trident');
+    return !isServer && navigator.userAgent.toLowerCase().includes("trident");
 }
 
 /**
@@ -138,6 +131,30 @@ export function useRenderTransition(
     });
 }
 
+/**
+ * Simple function to render a RouterLink VNode.
+ *
+ * @param {TRouterLinkProps} props            The RouterLink's component properties
+ * @param {VNode|VNodeArrayChildren} children The child nodes
+ * @returns {VNode} The Rendered node.
+ */
+export function useRenderRouter(
+    props: Readonly<TRouterLinkProps>,
+    children: VNode | VNodeArrayChildren,
+) {
+    // @ts-ignore
+    return h(RouterLink, props, {
+        default: () => children
+    });
+}
+
+/**
+ * Simple function to detect whether a device's screen is within allowable
+ * maximum screen resolution.
+ *
+ * @param {TBreakpoint|number} breakpoint Allowable maximum screen resolution.
+ * @returns {boolean} TRUE when the screen resolution is within allowable resolution.
+ */
 export function useBreakpointMax(breakpoint: TBreakpoint | number): boolean {
     switch (breakpoint) {
         case "sm":
@@ -156,6 +173,13 @@ export function useBreakpointMax(breakpoint: TBreakpoint | number): boolean {
     }
 }
 
+/**
+ * Simple function to detect whether a device's screen is within allowable
+ * minimum screen resolution.
+ *
+ * @param {TBreakpoint|number} breakpoint Allowable minimum screen resolution.
+ * @returns {boolean} TRUE when the screen resolution is within allowable resolution.
+ */
 export function useBreakpointMin(breakpoint: TBreakpoint | number): boolean {
     switch (breakpoint) {
         case "sm":
@@ -167,7 +191,7 @@ export function useBreakpointMin(breakpoint: TBreakpoint | number): boolean {
         case "xl":
         default:
             if (Helper.isNumber(breakpoint)) {
-                return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
+                return window.matchMedia(`(min-width: ${breakpoint}px)`).matches;
             }
 
             return window.matchMedia("(min-width: 1200px)").matches;
@@ -202,4 +226,15 @@ export function useFindParentCmp(
     }
 
     return null;
+}
+
+export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
+    const vm = getCurrentInstance();
+    return vm !== null && !Helper.isEmpty(props.path) &&
+        ((vm.appContext.config.globalProperties.$router !== null) ||
+            (vm.appContext.config.globalProperties.$route !== null));
+}
+
+export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
+    return !useHasRouter(props) && !Helper.isEmpty(props.url);
 }

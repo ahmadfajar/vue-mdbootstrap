@@ -1,16 +1,4 @@
-import {
-    ComputedRef, defineProps,
-    getCurrentInstance,
-    h,
-    nextTick,
-    Prop,
-    PropType,
-    Ref,
-    Slots,
-    Teleport,
-    VNode,
-    withDirectives
-} from "vue";
+import {ComputedRef, getCurrentInstance, h, nextTick, Prop, Ref, Slots, Teleport, VNode, withDirectives} from "vue";
 import {cssPrefix, useFindParentCmp} from "../../../mixins/CommonApi";
 import {BsOverlay} from "../../Animation";
 import {TAppContainerOptionProps, TBsOverlay, TEmitFn, TRecord, TSideDrawerOptionProps, TVueMdb} from "../../../types";
@@ -129,7 +117,7 @@ export function useRenderSideDrawer(
                         zIndex: zIndex as Prop<number>,
                         onClick: () => {
                             isOpen.value = false;
-                            emit("open", false);
+                            emit("update:open", false);
                         }
                     })
                 ),

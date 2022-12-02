@@ -78,7 +78,7 @@ $padding-lg:                        $padding-base + .5 !default;
 $padding-xl:                        $padding-base * 2 !default;
 
 // Border radius
-$border-radius-base:                .125rem !default;
+$border-radius-base:                .375rem !default;
 $border-radius-sm:                  .25rem !default;
 $border-radius-lg:                  .5rem !default;
 $border-radius-pill:                50rem !default;
@@ -94,13 +94,13 @@ $alert-border-level:                -5 !default;
 $alert-color-level:                 6 !default;
 
 // Buttons
-$btn-border-radius:                 .5rem !default;
+$btn-border-radius:                 $border-radius-lg !default;
 $btn-border-radius-lg:              .7rem !default;
 $btn-margin-basic:                  .375rem !default;
-$btn-color-basic:                   var(--white);
+$btn-color-basic:                   $white !default;
 $btn-transition:                    color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
 
-// Controls
+// Input Controls
 $checkbox-size:                  20px !default;
 $checkbox-touch-size:            40px !default;
 $checkbox-stroke:                2px !default;
@@ -119,25 +119,32 @@ $switch-height:                  14px !default;
 $switch-margin:                  .5rem .25rem .5rem .25rem !default;
 $switch-shadows:                 0 0 6px -1px rgba(#000, .1), 0 1px 1px 1px rgba(#000, .15), 0 1px 3px 0 rgba(#000, 0.12) !default;
 
-$text-field-height:                 3.5rem;
-$text-field-padding-top:            1.625rem;
-$text-field-padding-bottom:         .375rem;
-$text-field-border-radius:          .375rem;
-$text-field-line-height:            1.5rem;
-$text-field-opacity:                .6;
-$text-field-hover-opacity:          .9;
-$text-field-support-text-opacity:   .65;
+$text-field-height:                 3.5rem !default;
+$text-field-padding-top:            1.625rem !default;
+$text-field-padding-bottom:         .375rem !default;
+$text-field-border-radius:          $border-radius-base !default;
+$text-field-line-height:            1.5rem !default;
+$text-field-opacity:                .6 !default;
+$text-field-hover-opacity:          .9 !default;
+$text-field-support-text-opacity:   .65 !default;
 
 $combobox-checkbox-size:            16px;
 $combobox-checkbox-ripple-size:     40px;
 
-// Sidebar
-$sidebar-active-bgcolor:            $gray-400 !default;
-$sidebar-expanded-bgcolor:          rgba(50,50,50, .08) !default;
-$sidebar-hover-bgcolor:             $default-hover-bgcolor !default;
-$sidebar-hover-textcolor:           darken(map_get($theme-colors, "primary"), 15%) !default;
-$sidebar-item-padding:              1rem 0 1rem 1.2rem !default;
-$sidebar-item-active-bgcolor:       $mdb-color-lighten-3 !default;
+// SideDrawer
+$side-drawer-hover-textcolor:           darken(map_get($theme-colors, "primary"), 15%) !default;
+
+// Tabs
+$tabs-item-spacing:                 .375rem !default;
+$tabs-item-padding:                 .75rem 1.25rem !default;
+$tabs-material-indicator-border:    .2rem !default;
+$tabs-material-padding:             1.125rem 1.5rem 1rem 1.5rem !default;
+$tabs-modern-padding:               .625rem 1.25rem !default;
+$tabs-modern-border-radius:         $border-radius-pill !default;
+$tabs-placement-top-shadow:         0px 4px 5px rgba(#000, .15), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12) !default;
+$tabs-placement-bottom-shadow:      0px -1px 5px rgba(#000, .2), 0px -1px 2px rgba(#000, .14), 0px -3px 1px -2px rgba(#000, .12) !default;
+$tabs-placement-left-shadow:        1px 0px 5px rgba(#000, .2), 2px 0px 2px rgba(#000, .14), 3px 0px 1px -2px rgba(#000, .12) !default;
+$tabs-placement-right-shadow:       -1px 0px 5px rgba(#000, .2), -2px 0px 2px rgba(#000, .14), -3px 0px 1px -2px rgba(#000, .12) !default;
 
 // Table
 $table-border-color:                rgba(#000, .1);
@@ -150,8 +157,3 @@ $table-header-bgcolor:              $grey-lighten-4;
 $table-hover-bgcolor:               $default-hover-bgcolor;
 $table-text-color:                  $black;
 
-// Tabs
-$tab-padding-base:                  .75rem 1.25rem !default;
-$tab-material-padding:              1.125rem 1.5rem 1rem 1.5rem !default;
-$tab-modern-padding:                .625rem 1.25rem !default;
-$tab-item-margin-between:           .375rem;  // 6px

@@ -26,12 +26,12 @@ export default defineComponent<TBsProgress, unknown, unknown, ComputedOptions, C
         });
         const circleCircumference = computed<number>(() => 2 * Math.PI * circleRadius.value);
         const circleStrokeDashOffset = computed<string | undefined>(() => {
-            if (useDeterminateMode(cmpProps)) {
-                return (circleCircumference.value * (100 - (<number>props.modelValue)) / 100) + "px";
-            }
-
             if (useIndeterminateMode(cmpProps) && useBrowserIE()) {
                 return (circleCircumference.value * 0.2) + "px";
+            }
+
+            if (useDeterminateMode(cmpProps)) {
+                return (circleCircumference.value * (100 - (<number>props.modelValue)) / 100) + "px";
             }
 
             return undefined

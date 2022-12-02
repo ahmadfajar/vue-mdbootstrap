@@ -20,12 +20,12 @@ export function findIcon(name: string | undefined): TIconData | undefined {
     const strIcon = name.trim().toLowerCase()
         .replace(" ", "_")
         .replace("-", "_");
-    const variant = strIcon.endsWith("_round") || strIcon.endsWith("_rounded")
+    const variant = (strIcon.endsWith("_rounded") || strIcon.endsWith("_round"))
         ? "round"
-        : strIcon.endsWith("_outlined")
+        : (strIcon.endsWith("_outlined") || strIcon.endsWith("_outline"))
             ? "outlined"
             : (strIcon.endsWith("_sharp") ? "sharp" : "");
-    const realName = strIcon.replace(/_outlined|_filled|_round|_rounded|_sharp/g, "");
+    const realName = strIcon.replace(/_outlined|_outline|_filled|_rounded|_round|_sharp/g, "");
     const found = Object.entries(IconLib).find((el) => {
         const arr = el[0].split("::");
         return arr[1] === realName

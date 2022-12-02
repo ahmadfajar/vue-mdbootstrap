@@ -159,7 +159,7 @@ export function useRenderRadioCheckboxGroup<D, M>(
         }, [
             h("div", {
                 class: {
-                    "row g-3": true,
+                    "row g-2": true,
                     "row-cols-auto": !props.column && props.items.length < 4,
                     "row-cols-1 row-cols-md-2": props.column || props.items.length > 3,
                     [`row-cols-lg-4`]: (props.column && props.column > 4) || props.items.length > 3,

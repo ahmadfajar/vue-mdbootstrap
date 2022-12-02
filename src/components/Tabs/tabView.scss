@@ -1,0 +1,324 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.#{$prefix}tabs {
+    --#{$prefix}tabs-content-padding: #{$padding-base + .25};
+    --#{$prefix}tabs-item-padding: #{$tabs-item-padding};
+    --#{$prefix}tabs-item-spacing: #{$tabs-item-spacing};
+    --#{$prefix}tabs-item-color: #{rgba($white, .6)};
+    --#{$prefix}tabs-item-active-color: #{$white};
+    --#{$prefix}tabs-item-hover-color: #{rgba($white, .8)};
+    --#{$prefix}tabs-item-disabled-color: #{rgba($white, .3)};
+    --#{$prefix}tabs-item-font-weight: #{$font-weight-semi-bold};
+    --#{$prefix}tabs-nav-active-border-color: #{$gray-300};
+    --#{$prefix}tabs-nav-margin-x: #{$card-cap-padding-x};
+    --#{$prefix}tabs-nav-margin-y: #{$card-cap-padding-y};
+    --#{$prefix}tabs-material-padding: #{$tabs-material-padding};
+    --#{$prefix}tabs-material-margin-start: #{$padding-base};
+    --#{$prefix}tabs-material-margin-end: #{$padding-base};
+    --#{$prefix}tabs-material-indicator-active-color: #{$white};
+    --#{$prefix}tabs-material-indicator-border: #{$tabs-material-indicator-border};
+    --#{$prefix}tabs-modern-border-radius: #{$tabs-modern-border-radius};
+    --#{$prefix}tabs-modern-padding: #{$tabs-modern-padding};
+    --#{$prefix}tabs-modern-active-bgcolor: #{rgba($black, .2)};
+    --#{$prefix}tabs-placement-top-shadow: #{$tabs-placement-top-shadow};
+    --#{$prefix}tabs-placement-bottom-shadow: #{$tabs-placement-bottom-shadow};
+    --#{$prefix}tabs-placement-left-shadow: #{$tabs-placement-left-shadow};
+    --#{$prefix}tabs-placement-right-shadow: #{$tabs-placement-right-shadow};
+
+    @include transition($md-transition-leave);
+
+    .nav {
+        //overflow-x: hidden;
+
+        .nav-link {
+            cursor: pointer;
+            font-size: .95rem;
+            outline: 0 none;
+            padding: 0;
+
+            > .#{$prefix}ripple {
+                @include user-select(none);
+                padding: var(--#{$prefix}tabs-item-padding);
+                font-weight: var(--#{$prefix}tabs-item-font-weight);
+            }
+        }
+
+        &.nav-tabs {
+            &.#{$prefix}tab-left {
+                background-color: var(--#{$bs-prefix}card-cap-bg);
+                border-right: var(--#{$bs-prefix}card-border-width) solid var(--#{$bs-prefix}card-border-color);
+                padding: var(--#{$prefix}tabs-nav-margin-x) 0 var(--#{$prefix}tabs-nav-margin-x) var(--#{$prefix}tabs-nav-margin-x);
+
+                > .nav-item {
+                    @include border-right-radius(0);
+                    @include border-left-radius(var(--#{$bs-prefix}nav-tabs-border-radius));
+                    margin-right: -1px;
+
+                    &.active {
+                        border-color: var(--#{$prefix}tabs-nav-active-border-color) var(--#{$bs-prefix}white) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color);
+                    }
+                }
+            }
+
+            &.#{$prefix}tab-right {
+                background-color: var(--#{$bs-prefix}card-cap-bg);
+                border-left: var(--#{$bs-prefix}card-border-width) solid var(--#{$bs-prefix}card-border-color);
+                padding: var(--#{$prefix}tabs-nav-margin-x) var(--#{$prefix}tabs-nav-margin-x) var(--#{$prefix}tabs-nav-margin-x) 0;
+
+                > .nav-item {
+                    @include border-left-radius(0);
+                    @include border-right-radius(var(--#{$bs-prefix}nav-tabs-border-radius));
+                    margin-left: -1px;
+
+                    &.active {
+                        border-color: var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$bs-prefix}white);
+                    }
+                }
+            }
+
+            &.#{$prefix}tab-top {
+                padding: var(--#{$prefix}tabs-nav-margin-y) var(--#{$prefix}tabs-nav-margin-x) 0 var(--#{$prefix}tabs-nav-margin-x);
+            }
+
+            &.#{$prefix}tab-bottom {
+                padding: 0 var(--#{$prefix}tabs-nav-margin-x) var(--#{$prefix}tabs-nav-margin-y) var(--#{$prefix}tabs-nav-margin-x);
+
+                > .nav-item {
+                    @include border-top-radius(0);
+                    @include border-bottom-radius(--#{$bs-prefix}nav-tabs-border-radius);
+                    margin-bottom: 0;
+                    margin-top: -1px;
+
+                    &.active {
+                        border-color: var(--#{$bs-prefix}white) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color);
+                    }
+                }
+            }
+        }
+
+        &.nav-pills {
+            padding: var(--#{$prefix}tabs-item-padding);
+
+            &.#{$prefix}tab-left {
+                background-color: var(--#{$bs-prefix}card-cap-bg);
+                border-right: var(--#{$bs-prefix}card-border-width) solid var(--#{$bs-prefix}card-border-color);
+            }
+
+            &.#{$prefix}tab-right {
+                background-color: var(--#{$bs-prefix}card-cap-bg);
+                border-left: var(--#{$bs-prefix}card-border-width) solid var(--#{$bs-prefix}card-border-color);
+            }
+
+            .nav-link {
+                > .#{$prefix}ripple {
+                    @include border-radius(var(--#{$bs-prefix}nav-pills-border-radius));
+                }
+
+                &.active {
+                    @include box-shadow($z-depth-1);
+                }
+            }
+        }
+
+        &.nav-material {
+            position: relative;
+
+            > .nav-link {
+                @include transition($md-transition-default);
+                @include border-radius(0);
+                background-color: transparent;
+                border-color: transparent;
+                border-style: solid;
+                border-width: 0;
+                list-style: none;
+                color: var(--#{$prefix}tabs-item-color);
+
+                > .#{$prefix}ripple {
+                    padding: var(--#{$prefix}tabs-material-padding);
+                }
+
+                &:hover {
+                    color: var(--#{$prefix}tabs-item-hover-color);
+                }
+
+                &.active {
+                    color: var(--#{$prefix}tabs-item-active-color);
+                }
+
+                &.disabled {
+                    color: var(--#{$prefix}tabs-item-disabled-color);
+                }
+            }
+
+            &.#{$prefix}tab-top {
+                @include box-shadow(var(--#{$prefix}tabs-placement-top-shadow));
+
+                > .nav-link {
+                    border-bottom-width: var(--#{$prefix}tabs-material-indicator-border);
+
+                    &.active {
+                        border-bottom-color: var(--#{$prefix}tabs-material-indicator-active-color);
+                    }
+                }
+            }
+
+            &.#{$prefix}tab-bottom {
+                @include box-shadow(var(--#{$prefix}tabs-placement-bottom-shadow));
+
+                > .nav-link {
+                    border-top-width: var(--#{$prefix}tabs-material-indicator-border);
+
+                    &.active {
+                        border-top-color: var(--#{$prefix}tabs-material-indicator-active-color);
+                    }
+                }
+            }
+
+            &.#{$prefix}tab-left {
+                @include box-shadow(var(--#{$prefix}tabs-placement-left-shadow));
+
+                > .nav-link {
+                    border-right-width: var(--#{$prefix}tabs-material-indicator-border);
+
+                    &.active {
+                        border-right-color: var(--#{$prefix}tabs-material-indicator-active-color);
+                    }
+                }
+            }
+
+            &.#{$prefix}tab-right {
+                @include box-shadow(var(--#{$prefix}tabs-placement-right-shadow));
+
+                > .nav-link {
+                    border-left-width: var(--#{$prefix}tabs-material-indicator-border);
+
+                    &.active {
+                        border-left-color: var(--#{$prefix}tabs-material-indicator-active-color);
+                    }
+                }
+            }
+
+            &.#{$prefix}tab-top,
+            &.#{$prefix}tab-bottom {
+                > .nav-link {
+                    @include media-breakpoint-up(lg) {
+                        &:first-child {
+                            margin-left: var(--#{$prefix}tabs-material-margin-start);
+                        }
+                        &:last-child {
+                            margin-right: var(--#{$prefix}tabs-material-margin-end);
+                        }
+                    }
+                }
+            }
+        }
+
+        &.nav-modern {
+            border-width: 0;
+            padding: var(--#{$prefix}tabs-modern-padding);
+
+            &.#{$prefix}tab-top {
+                @include box-shadow(var(--#{$prefix}tabs-placement-top-shadow));
+            }
+
+            &.#{$prefix}tab-bottom {
+                @include box-shadow(var(--#{$prefix}tabs-placement-bottom-shadow));
+            }
+
+            .nav-link {
+                @include border-radius(var(--#{$prefix}tabs-modern-border-radius));
+                border-width: 0 !important;
+                color: var(--#{$prefix}tabs-item-color);
+
+                > .#{$prefix}ripple {
+                    @include border-radius(var(--#{$prefix}tabs-modern-border-radius));
+                }
+
+                &:hover {
+                    color: var(--#{$prefix}tabs-item-hover-color);
+                }
+
+                &.active {
+                    background-color: var(--#{$prefix}tabs-modern-active-bgcolor);
+                    color: var(--#{$prefix}tabs-item-active-color);
+                }
+
+                &.disabled {
+                    color: var(--#{$prefix}tabs-item-disabled-color);
+                }
+            }
+        }
+
+        &.nav-pills, &.nav-modern {
+            &.#{$prefix}tab-top,
+            &.#{$prefix}tab-bottom {
+                .nav-item + .nav-item {
+                    margin-left: var(--#{$prefix}tabs-item-spacing);
+                }
+            }
+
+            &.#{$prefix}tab-left,
+            &.#{$prefix}tab-right {
+                .nav-item + .nav-item {
+                    margin-top: var(--#{$prefix}tabs-item-spacing);
+                }
+            }
+        }
+    }
+
+    .tab-content {
+        @include transition(all $md-transition-default);
+        overflow: hidden;
+        position: relative;
+        padding: var(--#{$prefix}tabs-content-padding);
+    }
+}
+
+.card {
+    > .#{$prefix}tabs {
+        &:first-child {
+            .nav-pills, .nav-material, .nav-modern {
+                &.#{$prefix}tab-top {
+                    @include border-top-radius(var(--#{$bs-prefix}card-border-radius));
+                }
+
+                &.#{$prefix}tab-left {
+                    @include border-top-left-radius(var(--#{$bs-prefix}card-border-radius));
+                }
+
+                &.#{$prefix}tab-right {
+                    @include border-top-right-radius(var(--#{$bs-prefix}card-border-radius));
+                }
+            }
+        }
+
+        &:last-child {
+            .nav-pills, .nav-material, .nav-modern {
+                &.#{$prefix}tab-bottom {
+                    @include border-bottom-radius(var(--#{$bs-prefix}card-border-radius));
+                }
+
+                &.#{$prefix}tab-left {
+                    @include border-bottom-left-radius(var(--#{$bs-prefix}card-border-radius));
+                }
+
+                &.#{$prefix}tab-right {
+                    @include border-bottom-right-radius(var(--#{$bs-prefix}card-border-radius));
+                }
+            }
+        }
+    }
+
+    &.rounded-0 {
+        .#{$prefix}tabs {
+            .nav-pills, .nav-material, .nav-modern {
+                @include border-radius(0);
+            }
+        }
+    }
+}

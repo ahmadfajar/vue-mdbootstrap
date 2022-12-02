@@ -1,4 +1,4 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, toDisplayString} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {cardMediaProps} from "./mixins/cardProps";
 import {TBsCardMedia, TRecord} from "../../types";
@@ -26,13 +26,13 @@ export default defineComponent<TBsCardMedia, TRecord, TRecord, ComputedOptions, 
                     h("div", {
                             class: [`${cssPrefix}card-media-title`],
                         },
-                        <string>props.title,
+                        toDisplayString(props.title),
                     ),
                     props.subtitle
                         ? h("div", {
                                 class: [`${cssPrefix}card-media-subtitle`],
                             },
-                            <string>props.subtitle,
+                            toDisplayString(props.subtitle),
                         )
                         : null,
                 ]),

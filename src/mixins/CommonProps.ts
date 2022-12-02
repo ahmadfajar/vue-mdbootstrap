@@ -15,6 +15,11 @@ export const stringProp = {
     default: undefined,
 }
 
+export const numberProp = {
+    type: Number,
+    default: undefined,
+}
+
 export const stringRequiredProp = {
     type: String,
     default: undefined,
@@ -24,6 +29,11 @@ export const stringRequiredProp = {
 export const stringOrNumberProp = {
     type: [String, Number],
     default: undefined,
+}
+
+export const stringOrArrayProp = {
+    type: [String, Array],
+    default: undefined
 }
 
 export const validStringOrNumberProp = {
@@ -91,4 +101,18 @@ export const inputProps = {
         default: () => useGenerateId()
     },
     ...baseInputProps,
+}
+
+export const routerProps = {
+    activeClass: stringProp,
+    /**
+     * Internal, router or navigation path.
+     * @type {string}
+     */
+    path: stringProp,
+    /**
+     * Navigation url.
+     * @type {string}
+     */
+    url: stringProp
 }

@@ -1,3 +1,5 @@
+import type {PropType} from "vue";
+import type {TFlipMode, TShapeStyle} from "../types";
 import {booleanProp, stringProp} from "../../../mixins/CommonProps";
 
 export const height = {
@@ -23,15 +25,15 @@ export const iconSize = {
 }
 
 export const iconVariant = {
-    type: String,
+    type: String as PropType<TShapeStyle>,
     default: "filled",
     validator: (value: string): boolean => ["outlined", "filled", "round", "sharp"].includes(value),
 }
 
 export const flip = {
-    type: String,
+    type: String as PropType<TFlipMode>,
     default: undefined,
-    validator: (value: string): boolean => ['horizontal', 'vertical', 'both'].includes(value),
+    validator: (value: string): boolean => ["horizontal", "vertical", "both"].includes(value),
 }
 
 export const rotate = {
