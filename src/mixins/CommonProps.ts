@@ -1,5 +1,3 @@
-import {useGenerateId} from "./CommonApi";
-
 export const booleanProp = {
     type: Boolean,
     default: false,
@@ -67,41 +65,6 @@ export const defaultTransitionProp = {
     type: String,
     default: 'fade'
 };
-
-export const baseInputProps = {
-    /**
-     * Sets the `<input>` element `name` attribute.
-     * @type {string|number}
-     */
-    name: stringOrNumberProp,
-    /**
-     * This input field state.
-     * @type {boolean}
-     */
-    disabled: booleanProp,
-    /**
-     * This input field state.
-     * @type {boolean}
-     */
-    readonly: booleanProp,
-    /**
-     * Whether this input field is required or not.
-     * @type {boolean}
-     */
-    required: booleanProp
-}
-
-export const inputProps = {
-    /**
-     * Sets the `<input>` element `ID` attribute. This property value is auto generates.
-     * @type {string}
-     */
-    id: {
-        type: String,
-        default: () => useGenerateId()
-    },
-    ...baseInputProps,
-}
 
 export const routerProps = {
     activeClass: stringProp,

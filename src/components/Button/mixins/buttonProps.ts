@@ -1,6 +1,7 @@
-import {booleanProp, booleanTrueProp, defaultColorProp, inputProps, stringProp} from "../../../mixins/CommonProps";
+import {booleanProp, booleanTrueProp, defaultColorProp, stringProp} from "../../../mixins/CommonProps";
 import {width as iconSize} from "../../Icon/mixins/iconProps";
 import {iconProps} from "../../Avatar/mixins/avatarProps";
+import {inputProps} from "../../Field/mixins/fieldProps";
 
 export const buttonMode = {
     type: String,

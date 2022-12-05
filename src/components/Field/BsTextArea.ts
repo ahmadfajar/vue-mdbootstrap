@@ -1,12 +1,7 @@
-import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, ref, watch} from "vue";
-import {
-    booleanProp,
-    inputProps,
-    stringOrNumberProp,
-    stringProp,
-    validStringOrNumberProp
-} from "../../mixins/CommonProps";
-import {textFieldProps} from "./mixins/fieldProps";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, ref, watch} from "vue";
+import {booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
+import {inputProps, textFieldProps} from "./mixins/fieldProps";
 import {validationProps} from "../Radio/mixins/validationProps";
 import {useFieldWrapperClasses, useRenderTextArea, useShowClearButton} from "./mixins/fieldApi";
 import {
@@ -16,8 +11,9 @@ import {
     useShowHelpText,
     useShowValidationError
 } from "../Radio/mixins/validationApi";
-import {TBsTextArea, TRecord, TTextAreaOptionProps} from "../../types";
+import type {TBsTextArea, TRecord, TTextAreaOptionProps} from "../../types";
 import Helper from "../../utils/Helper";
+
 
 export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsTextArea",

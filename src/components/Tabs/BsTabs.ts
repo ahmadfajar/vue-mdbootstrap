@@ -5,9 +5,20 @@ import {useRenderTabView, useTabViewClassNames} from "./mixins/tabsApi";
 import type {TBsTabs, TOrientation, TRecord, TTabsOptionProps} from "../../types";
 import TabsProvider from "./mixins/TabsProvider";
 
+
 export default defineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsTabs",
     props: tabsProps,
+    emits: [
+        /**
+         * Fired when this component's mutate its modelValue.
+         */
+        "change",
+        /**
+         * Fired when this component's modelValue is updated.
+         */
+        "update:modelValue",
+    ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TTabsOptionProps>;
         const tabPanels = shallowRef<ComponentInternalInstance[]>([]);

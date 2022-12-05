@@ -1,4 +1,6 @@
-import {defaultColorProp, inputProps} from "../../../mixins/CommonProps";
+import {defaultColorProp} from "../../../mixins/CommonProps";
+import {inputProps} from "../../Field/mixins/fieldProps";
+
 
 export const radioProps = {
     ...inputProps,

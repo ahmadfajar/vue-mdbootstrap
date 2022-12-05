@@ -1,130 +1,3 @@
-/* BsList mixins */
-@mixin bslist-variant($name, $color) {
-    .#{$prefix}list-#{$name} {
-        background-color: $color;
-
-        .#{$prefix}divider {
-            @if (lightness($color) < 81) {
-                background-color: rgba($white-base, .2);
-            }
-        }
-
-        .#{$prefix}subheader {
-            @if (lightness($color) > 80) {
-                color: darken($gray-500, 5%);
-            } @else {
-                color: rgba($white-base, .8);
-            }
-        }
-
-        .#{$prefix}list-tile {
-            &:not(.#{$prefix}disabled) {
-                &.#{$prefix}link:hover {
-                    background-color: set-hoverable-bgcolor($color);
-                }
-
-                .#{$prefix}list-tile-leading,
-                .#{$prefix}list-tile-action {
-                    color: set-leading-text-color($color);
-                }
-
-                .#{$prefix}list-tile-title {
-                    color: set-alt-color-level($color, $gray-900, $white, 80);
-                }
-
-                .#{$prefix}list-tile-subtitle {
-                    color: set-subtitle-text-color($color);
-                }
-
-                .#{$prefix}checkbox {
-                    &:not(.#{$prefix}checked) {
-                        .#{$prefix}checkbox-inner {
-                            @if (lightness($color) < 80) {
-                                border-color: rgba($white-base, 0.6);
-                            }
-                        }
-                    }
-                }
-
-                &.active, &.#{$prefix}active {
-                    background-color: set-hoverable-bgcolor($color, .22);
-
-                    .#{$prefix}list-tile-title {
-                        font-weight: $font-weight-semi-bold;
-                    }
-
-                    @if (lightness($color) > 80) {
-                        color: $primary-color-dark;
-
-                        .#{$prefix}list-tile-title {
-                            color: $primary-color-dark;
-                        }
-
-                        .#{$prefix}list-tile-subtitle {
-                            color: lighten($primary-color-dark, 20%);
-                        }
-
-                        .#{$prefix}list-tile-leading {
-                            &.#{$prefix}has-icon {
-                                color: rgba($primary-color-dark, .54);
-                            }
-                        }
-                    } @else {
-                        color: $white;
-
-                        .#{$prefix}list-tile-leading {
-                            &.#{$prefix}has-icon {
-                                color: rgba($white-base, .8);
-                            }
-                        }
-                    }
-                }
-            }
-
-            &.#{$prefix}disabled {
-                color: set-disable-text-color($color) !important;
-
-                .#{$prefix}list-tile-leading,
-                .#{$prefix}list-tile-action {
-                    color: set-leading-disable-text-color($color);
-                }
-            }
-        }
-
-        @if (lightness($color) < 85) {
-            &.#{$prefix}border-left,
-            &.#{$prefix}border-left-right,
-            &.#{$prefix}border-top,
-            &.#{$prefix}border-top-bottom {
-                > .#{$prefix}list-tile {
-                    &.active, &.#{$prefix}active {
-                        > .#{$prefix}ripple {
-                            &:before {
-                                background: lighten(set-hoverable-bgcolor($color, .25), 35%);
-                            }
-                        }
-                    }
-                }
-            }
-
-            &.#{$prefix}border-right,
-            &.#{$prefix}border-left-right,
-            &.#{$prefix}border-bottom,
-            &.#{$prefix}border-top-bottom {
-                > .#{$prefix}list-tile {
-                    &.active, &.#{$prefix}active {
-                        > .#{$prefix}ripple {
-                            &:after {
-                                background: lighten(set-hoverable-bgcolor($color, .25), 35%);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 /* BsListNav mixins */
 @mixin bslist-nav-variant($name, $color) {
     .#{$prefix}list-#{$name} {
@@ -248,6 +121,70 @@
                     }
                 }
             }
+        }
+    }
+}
+
+
+/* BsListView variants mixins -- sass variables */
+
+@mixin make-listview-variant($name, $color) {
+    .#{$prefix}list-#{$name} {
+        --#{$prefix}listview-bg: #{$color};
+
+        @if (lightness($color) < 81) {
+            .#{$prefix}divider {
+                --#{$prefix}divider-color: #{rgba($white, 0.4)};
+            }
+        }
+
+        .#{$prefix}subheader {
+            @if (lightness($color) > 80) {
+                --#{$prefix}subheader-color: #{darken($gray-500, 5%)};
+            } @else {
+                --#{$prefix}subheader-color: #{rgba($white, .8)};
+            }
+        }
+    }
+}
+
+
+/* BsListTile variants mixins -- sass variables */
+
+@mixin make-list-tile-variant($name, $color) {
+    .#{$prefix}list-#{$name} {
+        .#{$prefix}list-tile {
+            $tile-hover-bg: set-hoverable-bgcolor($color);
+            $tile-active-bg: set-hoverable-bgcolor($color, .22);
+            $tile-title-color: set-alt-color-level($color, $gray-900, $white, 80);
+            $tile-subtitle-color: set-alt-color-level($color, $gray-600, rgba($white, .7), 80);
+            $tile-leading-color: set-alt-color-level($color, rgba($black, .54), rgba($white, .6), 80);
+            $tile-active-title-color: set-alt-color-level($color, $primary-color-dark, $white, 80);
+            $tile-active-subtitle-color: set-alt-color-level($color, lighten($primary-color-dark, 20%), $white, 80);
+            $tile-active-leading-icon-color: set-alt-color-level($color, rgba($primary-color-dark, .54), rgba($white, .8), 80);
+            $tile-disable-title-color: set-alt-color-level($color, $gray-700, rgba($white, .8), 80);
+            $tile-disable-subtitle-color: set-alt-color-level($color, $gray-500, rgba($white, .6), 80);
+            $tile-disable-leading-color: set-alt-color-level($color, $gray-500, rgba($white, .2), 80);
+            $tile-indicator-border-color: set-alt-color-level($color, $mdb-default-color-dark, lighten(set-hoverable-bgcolor($color, .25), 35%), 84);
+
+            --#{$prefix}tile-action-color: #{$tile-leading-color};
+            --#{$prefix}tile-leading-color: #{$tile-leading-color};
+            --#{$prefix}tile-title-color: #{$tile-title-color};
+            --#{$prefix}tile-subtitle-color: #{$tile-subtitle-color};
+            --#{$prefix}tile-hover-bg: #{$tile-hover-bg};
+
+            --#{$prefix}tile-active-bg: #{$tile-active-bg};
+            --#{$prefix}tile-active-action-color: #{$tile-active-title-color};
+            --#{$prefix}tile-active-leading-color: #{$tile-active-title-color};
+            --#{$prefix}tile-active-leading-icon-color: #{$tile-active-leading-icon-color};
+            --#{$prefix}tile-active-title-color: #{$tile-active-title-color};
+            --#{$prefix}tile-active-subtitle-color: #{$tile-active-subtitle-color};
+            --#{$prefix}tile-active-indicator-border-color: #{$tile-indicator-border-color};
+
+            --#{$prefix}tile-disable-action-color: #{$tile-disable-leading-color};
+            --#{$prefix}tile-disable-leading-color: #{$tile-disable-leading-color};
+            --#{$prefix}tile-disable-title-color: #{$tile-disable-title-color};
+            --#{$prefix}tile-disable-subtitle-color: #{$tile-disable-subtitle-color};
         }
     }
 }

@@ -1,0 +1,253 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins/listview";
+@import "~compass-mixins/lib/compass/css3";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+
+.#{$prefix}list-tile {
+    --#{$prefix}tile-spacing-x: #{$padding-base - .5};
+    --#{$prefix}tile-spacing-y: #{$padding-xs};
+    --#{$prefix}tile-padding-x: #{$padding-base};
+    --#{$prefix}tile-padding-y: #{$padding-sm};
+    --#{$prefix}tile-title-fontsize: #{$font-size-base};
+    --#{$prefix}tile-title-fontweight: #{$font-weight-normal};
+    --#{$prefix}tile-subtitle-fontsize: #{$font-size-base * 90/100};
+    --#{$prefix}tile-active-title-fontweight: #{$font-weight-semi-bold};
+    --#{$prefix}tile-active-indicator-border: #{map-get($border-widths, 5)};
+
+    @include transition($transition-hoverable);
+    @include user-select(none);
+    position: relative;
+    text-decoration: none;
+
+    &:active,
+    &:focus,
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:not(.disabled):not(.active) {
+        &.#{$prefix}link:hover {
+            background-color: var(--#{$prefix}tile-hover-bg);
+        }
+    }
+
+    .#{$prefix}list-tile-title,
+    .#{$prefix}list-tile-subtitle {
+        @include transition(.3s $md-transition-stand-timing);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+    }
+
+    .#{$prefix}list-tile-leading {
+        color: var(--#{$prefix}tile-leading-color);
+        max-width: 100%;
+    }
+
+    .#{$prefix}list-tile-title {
+        color: var(--#{$prefix}tile-title-color);
+    }
+
+    .#{$prefix}list-tile-subtitle {
+        color: var(--#{$prefix}tile-subtitle-color);
+    }
+
+    .#{$prefix}list-tile-action {
+        color: var(--#{$prefix}tile-action-color);
+        min-width: 1.5rem;
+        max-width: 100%;
+
+        &.#{$prefix}action-stack {
+            @include align-self(flex-start);
+        }
+
+        .#{$prefix}checkbox {
+            margin-top: $padding-sm;
+        }
+    }
+
+    .#{$prefix}list-tile-content {
+        @include flexbox((flex: 1, align-self: center));
+        max-width: 100%;
+        width: auto;
+        overflow: hidden;
+
+        > .#{$prefix}list-tile-title {
+            font-size: var(--#{$prefix}tile-title-fontsize);
+            font-weight: var(--#{$prefix}tile-title-fontweight);
+        }
+
+        > .#{$prefix}list-tile-subtitle {
+            font-size: var(--#{$prefix}tile-subtitle-fontsize);
+        }
+
+        &.#{$prefix}multiline {
+            > .#{$prefix}list-tile-subtitle {
+                white-space: normal;
+            }
+        }
+    }
+
+    > .#{$prefix}ripple {
+        min-height: 3rem;
+        position: relative;
+        padding: var(--#{$prefix}tile-padding-y) var(--#{$prefix}tile-padding-x);
+
+        > div[class^="#{$prefix}list-tile-"] {
+            &:nth-child(2),
+            &:last-child:not(:first-child) {
+                margin-left: var(--#{$prefix}tile-padding-x);
+            }
+
+            &.#{$prefix}has-icon {
+                @include flexbox((display: flex, align-items: center, align-self: center, justify-content: center));
+                margin-right: var(--#{$prefix}tile-padding-x);
+            }
+        }
+    }
+
+    &.active {
+        background-color: var(--#{$prefix}tile-active-bg);
+
+        .#{$prefix}list-tile-leading {
+            color: var(--#{$prefix}tile-active-leading-color);
+
+            &.#{$prefix}has-icon {
+                color: var(--#{$prefix}tile-active-leading-icon-color);
+            }
+        }
+
+        .#{$prefix}list-tile-title {
+            font-weight: var(--#{$prefix}tile-active-title-fontweight);
+            color: var(--#{$prefix}tile-title-active-color);
+        }
+
+        .#{$prefix}list-tile-subtitle {
+            color: var(--#{$prefix}tile-active-subtitle-color);
+        }
+
+        .#{$prefix}list-tile-action {
+            color: var(--#{$prefix}tile-active-action-color);
+        }
+    }
+
+    &.disabled {
+        .#{$prefix}list-tile-leading {
+            color: var(--#{$prefix}tile-disable-leading-color);
+        }
+
+        .#{$prefix}list-tile-title {
+            color: var(--#{$prefix}tile-disable-title-color);
+        }
+
+        .#{$prefix}list-tile-subtitle {
+            color: var(--#{$prefix}tile-disable-subtitle-color);
+        }
+
+        .#{$prefix}list-tile-action {
+            color: var(--#{$prefix}tile-disable-action-color);
+        }
+    }
+
+    &.#{$prefix}tile-space-both,
+    &.#{$prefix}tile-space-left,
+    &.#{$prefix}tile-space-right {
+        margin-bottom: var(--#{$prefix}tile-spacing-y);
+        margin-top: var(--#{$prefix}tile-spacing-y);
+    }
+
+    &.#{$prefix}tile-space-both,
+    &.#{$prefix}tile-space-left {
+        margin-left: var(--#{$prefix}tile-spacing-x);
+    }
+
+    &.#{$prefix}tile-space-both,
+    &.#{$prefix}tile-space-right {
+        margin-right: var(--#{$prefix}tile-spacing-x);
+    }
+
+    &.#{$prefix}tile-border-left,
+    &.#{$prefix}tile-border-right,
+    &.#{$prefix}tile-border-left-right,
+    &.#{$prefix}tile-border-top,
+    &.#{$prefix}tile-border-bottom,
+    &.#{$prefix}tile-border-top-bottom {
+        &.active {
+            > .#{$prefix}ripple {
+                &:before,
+                &:after {
+                    background: var(--#{$prefix}tile-active-indicator-border-color);
+                    content: " ";
+                    display: block;
+                    position: absolute;
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}tile-border-left,
+    &.#{$prefix}tile-border-left-right {
+        &.active {
+            > .#{$prefix}ripple {
+                &:before {
+                    left: 0;
+                    top: 0;
+                    height: 100%;
+                    width: var(--#{$prefix}tile-active-indicator-border);
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}tile-border-right,
+    &.#{$prefix}tile-border-left-right {
+        &.active {
+            > .#{$prefix}ripple {
+                &:after {
+                    right: 0;
+                    top: 0;
+                    height: 100%;
+                    width: var(--#{$prefix}tile-active-indicator-border);
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}tile-border-top,
+    &.#{$prefix}tile-border-top-bottom {
+        &.active {
+            > .#{$prefix}ripple {
+                &:before {
+                    left: 0;
+                    top: 0;
+                    height: var(--#{$prefix}tile-active-indicator-border);
+                    width: 100%;
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}-border-bottom,
+    &.#{$prefix}-border-top-bottom {
+        &.active {
+            > .#{$prefix}ripple {
+                &:after {
+                    left: 0;
+                    bottom: 0;
+                    height: var(--#{$prefix}tile-active-indicator-border);
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@each $name, $color in map-merge($merge-theme-colors, ("white": $white)) {
+    @include make-list-tile-variant($name, $color);
+}

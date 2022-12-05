@@ -11,19 +11,11 @@
     @return mix($color-base, $color, $level * $theme-color-interval);
 }
 
-@function set-alt-color-level($bgColor, $darkTextColor, $lightTextColor, $whiteLevel) {
+@function set-alt-color-level($bgColor, $textOnLightBgColor, $textOnDarkBgColor, $whiteLevel) {
     @if (lightness($bgColor) > $whiteLevel) {
-        @return $darkTextColor; // Lighter background, return dark color
+        @return $textOnLightBgColor; // Lighter background, return dark color
     } @else {
-        @return $lightTextColor; // Darker background, return light color
-    }
-}
-
-@function set-subtitle-text-color($color) {
-    @if (lightness($color) > 80) {
-        @return $gray-700;
-    } @else {
-        @return rgba($white-base, .8);
+        @return $textOnDarkBgColor; // Darker background, return light color
     }
 }
 

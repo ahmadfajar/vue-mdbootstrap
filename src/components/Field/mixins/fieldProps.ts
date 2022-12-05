@@ -1,5 +1,42 @@
-import {Prop} from "vue";
-import {booleanProp, stringProp} from "../../../mixins/CommonProps";
+import type {Prop, PropType} from "vue";
+import {booleanProp, stringOrNumberProp, stringProp} from "../../../mixins/CommonProps";
+import {useGenerateId} from "../../../mixins/CommonApi";
+import type {TShapeStyle} from "../../Icon/types";
+
+export const baseInputProps = {
+    /**
+     * Sets the `<input>` element `name` attribute.
+     * @type {string|number}
+     */
+    name: stringOrNumberProp,
+    /**
+     * This input field state.
+     * @type {boolean}
+     */
+    disabled: booleanProp,
+    /**
+     * This input field state.
+     * @type {boolean}
+     */
+    readonly: booleanProp,
+    /**
+     * Whether this input field is required or not.
+     * @type {boolean}
+     */
+    required: booleanProp
+}
+
+export const inputProps = {
+    /**
+     * Sets the `<input>` element `ID` attribute. This property value is auto generates.
+     * @type {string}
+     */
+    id: {
+        type: String,
+        default: () => useGenerateId()
+    },
+    ...baseInputProps,
+}
 
 export const textFieldProps = {
     /**
@@ -77,7 +114,7 @@ export const textFieldProps = {
      * @type {string}
      */
     actionIconVariant: {
-        type: String,
+        type: String as PropType<TShapeStyle>,
         default: 'outlined',
         validator: (value: string): boolean => ["outlined", "filled", "round", "sharp"].includes(value),
     } as Prop<'outlined' | 'filled' | 'round' | 'sharp'>,

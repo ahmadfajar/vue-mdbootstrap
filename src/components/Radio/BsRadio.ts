@@ -1,7 +1,9 @@
-import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, nextTick, ref} from "vue";
-import {useCreateInputRadio, useRadioClasses, useRenderRadioOrCheckbox} from "./mixins/radioApi";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, nextTick, ref} from "vue";
 import {radioProps} from "./mixins/radioProps";
-import {TBsRadio, TRadioOptionProps, TRecord} from "../../types";
+import {useCreateInputRadio, useRadioClasses, useRenderRadioOrCheckbox} from "./mixins/radioApi";
+import type {TBsRadio, TRadioOptionProps, TRecord} from "../../types";
+
 
 export default defineComponent<TBsRadio, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsRadio",

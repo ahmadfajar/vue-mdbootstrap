@@ -22,21 +22,19 @@ export function useContentTag(type?: string | undefined, tag?: string | undefine
 
 export function useSimpleRenderWithSlots(
     tag: string,
-    slots?: Slots | undefined | null,
-    classes?: string | Array<string> | TRecord | undefined | null,
-    styles?: string | Array<string> | TRecord | undefined | null,
+    slots?: Slots,
+    classes?: string | Array<string> | TRecord,
+    styles?: string | Array<string> | TRecord,
 ): VNode {
     if (styles) {
         return h(
-            // @ts-ignore
             tag, {class: classes, style: styles},
-            slots ? slots.default && slots.default() : null,
+            slots ? slots.default && slots.default() : undefined,
         )
     } else {
         return h(
-            // @ts-ignore
             tag, {class: classes},
-            slots ? slots.default && slots.default() : null,
+            slots ? slots.default && slots.default() : undefined,
         )
     }
 }

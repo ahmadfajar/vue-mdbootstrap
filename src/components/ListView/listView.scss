@@ -1,0 +1,35 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/mixins/listview";
+@import "~compass-mixins/lib/compass/css3";
+
+.#{$prefix}list {
+    --#{$prefix}listview-padding-x: 0;
+    --#{$prefix}listview-padding-y: #{$padding-base - .5};
+
+    @include transition($md-transition-default, height);
+    list-style-type: none;
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    background-color: var(--#{$prefix}listview-bg);
+    padding: var(--#{$prefix}listview-padding-y) var(--#{$prefix}listview-padding-x);
+
+    .#{$prefix}-subheader {
+        @include user-select(none);
+    }
+}
+
+.card {
+    > .#{$prefix}list:first-child {
+        @include border-top-radius(var(--#{$bs-prefix}card-border-radius));
+    }
+
+    > .#{$prefix}list:last-child {
+        @include border-bottom-radius(var(--#{$bs-prefix}card-border-radius));
+    }
+}
+
+@each $name, $color in map-merge($merge-theme-colors, ("white": $white)) {
+    @include make-listview-variant($name, $color);
+}

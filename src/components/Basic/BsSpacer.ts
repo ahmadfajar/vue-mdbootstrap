@@ -19,9 +19,9 @@ export default defineComponent<TBsSpacer, TRecord, TRecord, ComputedOptions, Com
         width: validStringOrNumberProp,
     },
     setup(props) {
-        return () => useSimpleRenderWithSlots("div", null,
+        return () => useSimpleRenderWithSlots("div", undefined,
             {'flex-grow-1': props.fill && !props.width},
-            {width: props.width ? Helper.sizeUnit(<string>props.width) : null},
+            {width: props.width ? Helper.sizeUnit(<string>props.width) : undefined},
         )
     }
 });

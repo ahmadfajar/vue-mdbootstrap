@@ -1,7 +1,14 @@
-import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TRecord, TSizeOptionProps} from "../../../types";
+import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import type {TRecord, TSizeOptionProps} from "../../../types";
 
-export declare type TImageOptionProps = TSizeOptionProps & {
+export declare type TImageOptionProps = {
+    circle?: boolean,
+    rounded?: boolean;
+    imgSrc?: string;
+    size?: string | number;
+}
+
+export declare type TAvatarImageOptionProps = TSizeOptionProps & {
     circle?: boolean,
     rounded?: boolean;
     imgSrc?: string;
@@ -15,7 +22,7 @@ export declare type TAvatarIconProps = {
     iconRotation?: string | number;
 }
 
-export declare type TAvatarOptionProps = TImageOptionProps & TAvatarIconProps & {
+export declare type TAvatarOptionProps = TAvatarImageOptionProps & TAvatarIconProps & {
     text?: string;
 }
 

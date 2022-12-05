@@ -94,7 +94,6 @@ class TabsProvider {
      * @returns {number} The TabPanel index position
      */
     registerTabPanel(item: ComponentInternalInstance): number {
-        // console.log("tabPanel", item);
         return this._tabPanels.push(item);
     }
 

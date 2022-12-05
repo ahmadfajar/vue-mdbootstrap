@@ -1,7 +1,7 @@
 import type {ComponentInternalInstance, Slots, TransitionProps, VNode, VNodeArrayChildren} from "vue";
-import type {TBreakpoint, TRecord, TRouterLinkProps, TRouterOptionProps} from "../types";
 import {Fragment, getCurrentInstance, h, Transition} from "vue";
 import {RouterLink} from "vue-router";
+import type {TBreakpoint, TRecord, TRouterLinkProps, TRouterOptionProps} from "../types";
 import Helper from "../utils/Helper";
 
 export const cssPrefix = "md-";
@@ -26,7 +26,8 @@ export function useBrowserIE() {
 }
 
 /**
- * Simple function to render a slot with default VNode children.
+ * Simple function to render a VNode children within a given slot name
+ * if the given slot doesn't contain any VNode child.
  *
  * @param {Slots} slots                         The given slot
  * @param {string} name                         The slot name
@@ -228,6 +229,12 @@ export function useFindParentCmp(
     return null;
 }
 
+/**
+ * Check if component instance has a `$router` and `path` property has been defined.
+ *
+ * @param {TRouterOptionProps} props The component properties.
+ * @returns {boolean} TRUE when Router property
+ */
 export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
     const vm = getCurrentInstance();
     return vm !== null && !Helper.isEmpty(props.path) &&
@@ -235,6 +242,12 @@ export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
             (vm.appContext.config.globalProperties.$route !== null));
 }
 
+/**
+ * Check if component instance has `url` property been defined.
+ *
+ * @param {TRouterOptionProps} props The component properties.
+ * @returns {boolean} TRUE when `url` property has been defined and doesn't have Router.
+ */
 export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
     return !useHasRouter(props) && !Helper.isEmpty(props.url);
 }

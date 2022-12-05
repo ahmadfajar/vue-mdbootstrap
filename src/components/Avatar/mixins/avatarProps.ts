@@ -32,26 +32,7 @@ export const iconProps = {
     iconPulse: booleanProp,
 }
 
-export const avatarProps = {
-    /**
-     * This component's height.
-     * @type {string|number}
-     */
-    height: validStringOrNumberProp,
-    /**
-     * This component's width.
-     * @type {string|number}
-     */
-    width: validStringOrNumberProp,
-    /**
-     * Shortcut to create this component with equal height and width.
-     * @type {string|number}
-     */
-    size: {
-        type: [Number, String],
-        default: 48,
-        validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
-    },
+export const imageProps = {
     /**
      * Create this component with circle shape.
      * @type {boolean}
@@ -68,6 +49,28 @@ export const avatarProps = {
      */
     imgSrc: stringProp,
     /**
+     * Shortcut to create this component with equal height and width.
+     * @type {string|number}
+     */
+    size: {
+        type: [Number, String],
+        default: 48,
+        validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
+    },
+}
+
+export const avatarProps = {
+    /**
+     * This component's height.
+     * @type {string|number}
+     */
+    height: validStringOrNumberProp,
+    /**
+     * This component's width.
+     * @type {string|number}
+     */
+    width: validStringOrNumberProp,
+    /**
      * The text to display inside the component.
      * Use short text (1 to 3 characters) to properly display it.
      * The text will be transformed to uppercase.
@@ -75,5 +78,6 @@ export const avatarProps = {
      */
     text: stringProp,
     ...iconProps,
+    ...imageProps,
 }
 

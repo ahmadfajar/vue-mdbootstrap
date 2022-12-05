@@ -1,11 +1,13 @@
-import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent} from "vue";
 import {useGetErrorItems, useHasValidated, useHasValidationError, useShowValidationError} from "./mixins/validationApi";
 import {useCreateRadioItems, useInputGroupClasses, useRenderRadioCheckboxGroup} from "./mixins/radioApi";
-import {baseInputProps} from "../../mixins/CommonProps";
 import {radioGroupProps} from "./mixins/radioProps";
 import {validationProps} from "./mixins/validationProps";
-import {TBsRadioGroup, TRadioGroupOptionProps, TRadioProps, TRecord} from "../../types";
+import {baseInputProps} from "../Field/mixins/fieldProps";
+import type {TBsRadioGroup, TRadioGroupOptionProps, TRadioProps, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
+
 
 export default defineComponent<TBsRadioGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsRadioGroup",

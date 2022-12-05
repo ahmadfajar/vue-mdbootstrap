@@ -13,7 +13,7 @@ import {useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemConte
 import {toggleButtonProps} from "./mixins/buttonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import BsButtonInner from "./BsButtonInner";
-import {TBsButtonInner, TBsToggleButton, TInputOptionItem, TRecord, TToggleButtonOptionProps} from "../../types";
+import type {TBsButtonInner, TBsToggleButton, TInputOptionItem, TRecord, TToggleButtonOptionProps} from "../../types";
 
 export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsToggleButton",

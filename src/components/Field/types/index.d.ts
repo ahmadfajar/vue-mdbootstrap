@@ -1,8 +1,8 @@
-import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TInputBaseProps, TRecord, TValidationProps} from "../../../types";
+import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import type {TInputBaseProps, TRecord, TShapeStyle, TValidationProps} from "../../../types";
 
 export declare type TInputFieldProps = TInputBaseProps & TValidationProps & {
-    actionIconVariant?: string;
+    actionIconVariant?: TShapeStyle;
     clearButton?: boolean;
     flat?: boolean;
     filled?: boolean;

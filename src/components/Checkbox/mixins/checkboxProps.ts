@@ -1,4 +1,5 @@
-import {booleanProp, defaultColorProp, inputProps} from "../../../mixins/CommonProps";
+import {booleanProp, defaultColorProp} from "../../../mixins/CommonProps";
+import {inputProps} from "../../Field/mixins/fieldProps";
 
 export const checkboxProps = {
     ...inputProps,

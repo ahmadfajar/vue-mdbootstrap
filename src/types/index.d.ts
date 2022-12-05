@@ -16,6 +16,7 @@ export * from "../components/Container/types";
 export * from "../components/Drawer/types";
 export * from "../components/Field/types";
 export * from "../components/Icon/types";
+export * from "../components/ListView/types";
 export * from "../components/Progress/types";
 export * from "../components/Radio/types";
 export * from "../components/Tabs/types";

@@ -10,7 +10,7 @@ export default defineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, Co
     props: dividerProps,
     setup(props) {
         return () => useSimpleRenderWithSlots(
-            "hr", null,
+            "hr", undefined,
             [
                 `${cssPrefix}divider`,
                 props.dark ? "divider--dark" : "divider--light"
