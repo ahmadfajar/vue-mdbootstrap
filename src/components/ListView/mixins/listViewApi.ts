@@ -47,10 +47,10 @@ function createListTileVnode(
         onClick: (e: Event) => {
             // console.log("tile-instance", instance.value);
             if (tagName === "a") {
+                emitter("update:active", !props.active);
                 if (instance.value && provider) {
                     provider.activeItem = instance.value;
                 }
-                emitter("update:active", true);
             }
             emitter("click", e, (instance.value ? instance.value.vnode.el : undefined));
         },
@@ -89,6 +89,7 @@ function createListTileRouterVnode(
             onVnodeBeforeUnmount: (vnode: IVNode) => provider?.removeItem(vnode.ctx),
             onClick: (e: Event) => {
                 if (instance.value && provider) {
+                    emitter("update:active", !props.active);
                     provider.activeItem = instance.value;
                 }
                 emitter("click", e, (instance.value ? instance.value.vnode.el : undefined));

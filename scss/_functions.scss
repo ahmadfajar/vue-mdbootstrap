@@ -46,7 +46,7 @@
 @function set-hoverable-bgcolor($color, $transparency: 0) {
     @if (lightness($color) == 100) {
         @if ($transparency > 0) {
-            @return rgba($primary-color, $transparency);
+            @return rgba($default-active-bgcolor, $transparency);
         } @else {
             @return rgba($black, 0.08);
         }

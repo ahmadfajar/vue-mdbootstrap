@@ -1,6 +1,7 @@
 import type {App, Plugin as Plugin_2} from "vue";
 import BsTabs from "./BsTabs";
 import BsTab from "./BsTab";
+import "../../../scss/_globalvars.scss";
 import "../../../scss/_transitions.scss";
 import "./tabView.scss";
 

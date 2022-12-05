@@ -1,11 +1,11 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, Prop} from "vue";
-import {useShapeClasses} from "../Basic/mixins/imageApi";
-import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/iconApi";
-import {useAvatarIconSize, useCreateIconProps, useRenderAvatarImage} from "./mixins/avatarApi";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "vue";
+import {defineComponent, h} from "vue";
 import {cssPrefix, useRenderSlot} from "../../mixins/CommonApi";
+import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/iconApi";
+import {useAvatarIconSize, useCreateIconProps, useRenderAvatarImage, useShapeClasses} from "./mixins/avatarApi";
 import {avatarProps} from "./mixins/avatarProps";
 import {BsIcon} from "../Icon";
-import {TAvatarOptionProps, TBsAvatar, TBsIcon, TRecord} from "../../types";
+import type {TAvatarOptionProps, TBsAvatar, TBsIcon, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

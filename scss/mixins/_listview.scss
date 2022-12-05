@@ -155,7 +155,7 @@
     .#{$prefix}list-#{$name} {
         .#{$prefix}list-tile {
             $tile-hover-bg: set-hoverable-bgcolor($color);
-            $tile-active-bg: set-hoverable-bgcolor($color, .22);
+            $tile-active-bg: set-hoverable-bgcolor($color, .12);
             $tile-title-color: set-alt-color-level($color, $gray-900, $white, 80);
             $tile-subtitle-color: set-alt-color-level($color, $gray-600, rgba($white, .7), 80);
             $tile-leading-color: set-alt-color-level($color, rgba($black, .54), rgba($white, .6), 80);

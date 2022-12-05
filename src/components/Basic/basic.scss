@@ -15,7 +15,7 @@
     margin-top: var(--#{$prefix}divider-margin-y);
     border: none;
     display: block;
-    width: 100%;
+    max-width: 100%;
 
     &.divider--dark {
         --#{$prefix}divider-color: #{rgba($white, 0.4)};

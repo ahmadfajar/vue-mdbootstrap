@@ -2,8 +2,9 @@ import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "v
 import {computed, createCommentVNode, defineComponent, h} from "vue";
 import {cssPrefix, useRenderSlot} from "../../mixins/CommonApi";
 import {booleanProp} from "../../mixins/CommonProps";
-import {useCreateIconProps} from "../Avatar/mixins/avatarApi";
 import {iconProps, imageProps} from "../Avatar/mixins/avatarProps";
+import {useCreateIconProps} from "../Avatar/mixins/avatarApi";
+import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/iconApi";
 import {BsAvatar} from "../Avatar";
 import {BsIcon} from "../Icon";
 import type {TBsListTileLeading, TListTileLeadingOptionProps, TRecord} from "../../types";
@@ -25,13 +26,13 @@ export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOpt
         const cmpProps = props as Readonly<TListTileLeadingOptionProps>;
         const styles = computed(
             () => {
-                if (cmpProps.icon && (!cmpProps.size || parseInt(<string>cmpProps?.size, 10) === 48)) {
+                if (cmpProps.icon && (!cmpProps.size || useGetCalcSize(cmpProps) === 48)) {
                     return {
                         height: "24px",
                         width: "24px"
                     }
                 } else {
-                    return {width: Helper.sizeUnit(cmpProps.size)}
+                    return useSizeStyles(cmpProps);
                 }
             }
         );
@@ -57,10 +58,10 @@ export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOpt
                         : (
                             !Helper.isEmpty(cmpProps.icon)
                                 ? h(BsIcon, {
-                                    size: ((!cmpProps.size || parseInt(<string>cmpProps?.size, 10) === 48) ? 24 : props.size) as Prop<string | number>,
+                                    size: ((!cmpProps.size || useGetCalcSize(cmpProps) === 48) ? 24 : useGetCalcSize(cmpProps)) as Prop<string | number>,
                                     ...useCreateIconProps(cmpProps),
                                 })
-                                : createCommentVNode(" BsIcon ")
+                                : createCommentVNode(" v-if-BsIcon ")
                         )
                 )
             )

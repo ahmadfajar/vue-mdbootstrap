@@ -16,10 +16,15 @@ export declare type TIconData = {
     data?: string;
 }
 
+export declare type TSizeProps = {
+    height?: string | number;
+    width?: string | number;
+}
+
 export declare type TSizeOptionProps = {
     height?: string | number;
     width?: string | number;
-    size?: string | number;
+    size?: string | number | TSizeProps;
 }
 
 export declare type TIconOptionProps = TSizeOptionProps & {

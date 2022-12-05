@@ -51,6 +51,11 @@ export const listViewProps = {
      */
     singleExpand: booleanTrueProp,
     /**
+     * The ListView doesn't manage each ListTile item's state.
+     * @type {boolean}
+     */
+    individualState: booleanProp,
+    /**
      * Give some space around each item. Valid values are: `both`, `left`, `right`.
      * @type {TSpaceAround}
      */
@@ -71,6 +76,11 @@ export const listTileProps = {
         type: String,
         default: () => useGenerateId()
     },
+    /**
+     * This component state.
+     * @type {boolean}
+     */
+    active: booleanProp,
     /**
      * Disable this component.
      * @type {boolean}

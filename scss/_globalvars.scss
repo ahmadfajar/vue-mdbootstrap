@@ -3,7 +3,7 @@
 
 /* Global css variables */
 :root {
-    --#{$prefix}field-primary-indicator: #{$mdb-default-color};
+    --#{$prefix}field-primary-indicator: #{$default-active-bgcolor};
     --#{$prefix}field-accent-indicator: #{$mdb-default-color-light};
     --#{$prefix}field-active-indicator: var(--#{$prefix}field-primary-indicator);
     --#{$prefix}field-disabled-opacity: .4;

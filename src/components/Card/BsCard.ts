@@ -1,4 +1,4 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import {ComponentOptionsMixin, ComputedOptions, createCommentVNode, defineComponent, EmitsOptions, h} from "vue";
 import {useRenderCardImg} from "./mixins/cardApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {cardProps} from "./mixins/cardProps";
@@ -19,11 +19,11 @@ export default defineComponent<TBsCard, TRecord, TRecord, ComputedOptions, Compo
             }, [
                 cmpProps.imgTopSrc
                     ? useRenderCardImg(cmpProps.imgTopSrc, cmpProps.imgTopAlt, "card-img-top")
-                    : null,
+                    : createCommentVNode(" v-if-imgTop "),
                 slots.default && slots.default(),
                 cmpProps.imgBottomSrc
                     ? useRenderCardImg(cmpProps.imgBottomSrc, cmpProps.imgBottomAlt, "card-img-bottom")
-                    : null,
+                    : createCommentVNode(" v-if-imgBottom "),
             ]
         )
     },

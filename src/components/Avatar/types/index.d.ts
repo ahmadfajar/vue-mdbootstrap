@@ -1,11 +1,17 @@
-import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import type {TRecord, TSizeOptionProps} from "../../../types";
+import type {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions
+} from "vue";
+import type {TRecord, TSizeOptionProps, TSizeProps} from "../../../types";
 
 export declare type TImageOptionProps = {
     circle?: boolean,
     rounded?: boolean;
     imgSrc?: string;
-    size?: string | number;
+    size?: string | number | TSizeProps;
 }
 
 export declare type TAvatarImageOptionProps = TSizeOptionProps & {

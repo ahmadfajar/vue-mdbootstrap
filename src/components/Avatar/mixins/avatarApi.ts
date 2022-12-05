@@ -1,5 +1,5 @@
-import {h, Prop, VNode} from "vue";
-import {useShapeClasses} from "../../Basic/mixins/imageApi";
+import type {Prop, VNode} from "vue";
+import {h} from "vue";
 import {useGetCalcSize, useSizeStyles} from "../../Icon/mixins/iconApi";
 import type {TAvatarIconProps, TAvatarImageOptionProps, TRecord, TSizeOptionProps} from "../../../types";
 
@@ -23,6 +23,13 @@ export function useCreateIconProps(props: Readonly<TAvatarIconProps>): TRecord {
         pulse: <Prop<boolean>>props.iconPulse,
         flip: <Prop<boolean>>props.iconFlip,
         rotate: <Prop<string | number>>props.iconRotation,
+    }
+}
+
+export function useShapeClasses(circle?: boolean, rounded?: boolean): object {
+    return {
+        "rounded-circle": circle && !rounded,
+        "rounded": rounded && !circle,
     }
 }
 

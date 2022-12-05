@@ -34,6 +34,10 @@ export declare type TListViewOptionProps = {
      */
     singleExpand?: boolean;
     /**
+     * The ListView doesn't manage each ListTile item's state.
+     */
+    individualState?: boolean;
+    /**
      * Give some space around each item. Valid values are: `both`, `left`, `right`.
      */
     spaceAround?: TSpaceAround;

@@ -73,6 +73,9 @@ class ListViewProvider {
             this._emit("update:modelValue", undefined);
             return;
         }
+        if (this._config.individualState === true) {
+            return;
+        }
 
         this.items.forEach(it => {
             it.props.active = (it.uid === value.uid);

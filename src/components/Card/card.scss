@@ -13,6 +13,10 @@
         font-weight: $font-weight-semi-bold;
     }
 
+    .card-subtitle {
+        font-weight: $font-weight-normal;
+    }
+
     &:not(.rounded-0) {
         > .#{$prefix}mask-loader {
             > .#{$prefix}overlay {

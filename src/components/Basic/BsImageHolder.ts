@@ -1,9 +1,11 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, toDisplayString} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {defineComponent, h, toDisplayString} from "vue";
+import {useSizeHeight, useSizeWidth} from "../Icon/mixins/iconApi";
 import {useCreateSvgNode} from "../Icon/mixins/svgApi";
-import {useShapeClasses, useSizeOrWh} from "./mixins/imageApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {imageHolderProps} from "./mixins/imageHolderProps";
-import {TBsImageHolder, TImageHolderOptionProps, TRecord} from "../../types";
+import {useShapeClasses} from "../Avatar/mixins/avatarApi";
+import type {TBsImageHolder, TImageHolderOptionProps, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
@@ -14,6 +16,8 @@ export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions
         const showText = () => {
             return !Helper.isEmpty(props.placeholderText) || !Helper.isEmpty(props.placeHolder);
         };
+        const szHeight = useSizeHeight(cmpProps);
+        const szWidth = useSizeWidth(cmpProps);
 
         return () => {
             return useCreateSvgNode({
@@ -21,16 +25,13 @@ export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions
                 [`${cssPrefix}anchor-center`]: cmpProps.xPos === "50%",
                 ...useShapeClasses(cmpProps.circle, cmpProps.rounded),
             }, [], false, "xMidYMid slice", null, {
-                height: useSizeOrWh(cmpProps.size, cmpProps.height),
-                width: useSizeOrWh(cmpProps.size, cmpProps.width),
+                height: !szHeight || szHeight < 2 ? "100%" : Helper.sizeUnit(szHeight),
+                width: !szWidth || szWidth < 2 ? "100%" : Helper.sizeUnit(szWidth),
                 role: "img",
             }, [
                 showText()
-                    ? h(
-                        "title",
-                        toDisplayString(cmpProps.placeholderText || cmpProps.placeHolder)
-                    )
-                    : null,
+                    ? h("title", toDisplayString(cmpProps.placeholderText || cmpProps.placeHolder))
+                    : undefined,
                 h("rect", {width: "100%", height: "100%", fill: cmpProps.bgColor}),
                 showText()
                     ? h("text", {
@@ -40,7 +41,7 @@ export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions
                         },
                         toDisplayString(cmpProps.placeholderText || cmpProps.placeHolder)
                     )
-                    : null,
+                    : undefined,
             ]);
         }
     }

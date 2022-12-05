@@ -6,6 +6,7 @@ import BsListTileContent from "./BsListTileContent";
 import BsListTileSubtitle from "./BsListTileSubtitle";
 import BsListTileTitle from "./BsListTileTitle";
 import BsListTileLeading from "./BsListTileLeading";
+import "../../../scss/_globalvars.scss";
 import "../Basic/basic.scss";
 import "./listView.scss";
 import "./listTile.scss";

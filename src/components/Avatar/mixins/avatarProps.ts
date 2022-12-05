@@ -50,12 +50,11 @@ export const imageProps = {
     imgSrc: stringProp,
     /**
      * Shortcut to create this component with equal height and width.
-     * @type {string|number}
+     * @type {string|number|TSizeProps}
      */
     size: {
-        type: [Number, String],
+        type: [Number, String, Object],
         default: 48,
-        validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
     },
 }
 

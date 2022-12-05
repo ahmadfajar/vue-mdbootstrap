@@ -33,6 +33,8 @@
     @include transition($md-transition-leave);
 
     .nav {
+        --#{$bs-prefix}nav-link-color: #{mix($default-active-bgcolor, rgba($gray-800, .8), 30%)};
+        --#{$bs-prefix}nav-link-hover-color: var(--#{$prefix}field-primary-indicator);
         //overflow-x: hidden;
 
         .nav-link {
@@ -102,6 +104,7 @@
         }
 
         &.nav-pills {
+            --#{$bs-prefix}nav-pills-link-active-bg: var(--#{$prefix}field-primary-indicator);
             padding: var(--#{$prefix}tabs-item-padding);
 
             &.#{$prefix}tab-left {
