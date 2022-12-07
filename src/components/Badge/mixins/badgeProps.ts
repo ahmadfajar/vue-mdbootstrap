@@ -5,7 +5,7 @@ export const badgeProps = {
      */
     color: {
         type: String,
-        default: "default text-white",
+        default: "default",
     },
     /**
      * Html tag used to render the badge.

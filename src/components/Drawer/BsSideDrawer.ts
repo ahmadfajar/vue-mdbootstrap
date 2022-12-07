@@ -1,17 +1,9 @@
-import {
-    ComponentOptionsMixin,
-    computed,
-    ComputedOptions,
-    defineComponent,
-    EmitsOptions,
-    onMounted,
-    ref,
-    watch
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, onMounted, ref, watch} from "vue";
 import {useBreakpointMax} from "../../mixins/CommonApi";
 import {useRenderSideDrawer, useSideDrawerOnMountedHook, useSideDrawerStyles} from "./mixins/sideDrawerApi";
 import {sideDrawerProps} from "./mixins/sideDrawerProps";
-import {TBsSideDrawer, TRecord, TSideDrawerOptionProps, TVueMdb} from "../../types";
+import type {TBsSideDrawer, TRecord, TSideDrawerOptionProps, TVueMdb} from "../../types";
 
 export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsSideDrawer",
@@ -35,7 +27,7 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
         const isOpen = ref<boolean>(true);
         const resizeHandler = () => {
             emit("resize");
-            isMobile.value = useBreakpointMax("lg");
+            isMobile.value = useBreakpointMax("md");
             if (isMobile.value) {
                 isOpen.value = false;
                 emit("update:open", false);

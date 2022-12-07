@@ -41,7 +41,7 @@ export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOpt
             h("div", {
                     class: [
                         `${cssPrefix}list-tile-leading`,
-                        cmpProps.center === true ? "align-self-center" : "",
+                        cmpProps.center === true ? "d-flex align-items-center" : "",
                         !Helper.isEmpty(cmpProps.icon) ? `${cssPrefix}has-icon` : "",
                     ],
                     style: styles.value,

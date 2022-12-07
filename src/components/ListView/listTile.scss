@@ -17,7 +17,7 @@
     --#{$prefix}tile-title-fontweight: #{$font-weight-normal};
     --#{$prefix}tile-subtitle-fontsize: #{$font-size-base * 90/100};
     --#{$prefix}tile-active-title-fontweight: #{$font-weight-semi-bold};
-    --#{$prefix}tile-active-indicator-border: #{map-get($border-widths, 5)};
+    --#{$prefix}tile-active-indicator-border: #{map-get($border-widths, 4)};
 
     @include transition($transition-hoverable);
     @include user-select(none);
@@ -64,7 +64,7 @@
         max-width: 100%;
 
         &.#{$prefix}action-stack {
-            @include align-self(flex-start);
+            @include flexbox((display: flex, align-self: flex-start, flex-direction: column));
         }
 
         .#{$prefix}checkbox {
@@ -219,6 +219,24 @@
         }
     }
 
+    &.#{$prefix}tile-border-left,
+    &.#{$prefix}tile-border-right,
+    &.#{$prefix}tile-border-left-right {
+        &.active {
+            > .#{$prefix}ripple {
+                &.rounded-pill {
+                    &:before,
+                    &:after {
+                        --#{$prefix}tile-active-indicator-border: 6px;
+                        @include border-radius(40%);
+                        top: 30%;
+                        height: 40%;
+                    }
+                }
+            }
+        }
+    }
+
     &.#{$prefix}tile-border-top,
     &.#{$prefix}tile-border-top-bottom {
         &.active {
@@ -233,8 +251,8 @@
         }
     }
 
-    &.#{$prefix}-border-bottom,
-    &.#{$prefix}-border-top-bottom {
+    &.#{$prefix}tile-border-bottom,
+    &.#{$prefix}tile-border-top-bottom {
         &.active {
             > .#{$prefix}ripple {
                 &:after {

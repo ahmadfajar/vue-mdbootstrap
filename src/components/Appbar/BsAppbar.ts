@@ -1,17 +1,9 @@
-import {
-    ComponentOptionsMixin,
-    computed,
-    ComputedOptions,
-    defineComponent,
-    EmitsOptions,
-    onMounted,
-    ref,
-    VNode
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, VNode} from "vue";
+import {computed, defineComponent, onMounted, ref} from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
 import {useBreakpointMax} from "../../mixins/CommonApi";
-import {TAppbarOptionProps, TBsAppbar, TRecord, TVueMdb} from "../../types";
 import {useAppbarOnMountedHook, useAppbarStyles, useRenderAppbar} from "./mixins/appbarApi";
+import type {TAppbarOptionProps, TBsAppbar, TRecord, TVueMdb} from "../../types";
 
 export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsAppbar",
@@ -58,7 +50,7 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Com
         const isMobile = ref<boolean>(false);
         const smoothTransition = ref<boolean>(false);
         const resizeHandler = (node: VNode) => {
-            isMobile.value = useBreakpointMax("lg");
+            isMobile.value = useBreakpointMax("md");
             emit("resize", node);
         };
         const styles = computed(

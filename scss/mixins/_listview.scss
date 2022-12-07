@@ -159,9 +159,9 @@
             $tile-title-color: set-alt-color-level($color, $gray-900, $white, 80);
             $tile-subtitle-color: set-alt-color-level($color, $gray-600, rgba($white, .7), 80);
             $tile-leading-color: set-alt-color-level($color, rgba($black, .54), rgba($white, .6), 80);
-            $tile-active-title-color: set-alt-color-level($color, $primary-color-dark, $white, 80);
-            $tile-active-subtitle-color: set-alt-color-level($color, lighten($primary-color-dark, 20%), $white, 80);
-            $tile-active-leading-icon-color: set-alt-color-level($color, rgba($primary-color-dark, .54), rgba($white, .8), 80);
+            $tile-active-title-color: set-alt-color-level($color, darken($default-active-bgcolor, 20%), $white, 80);
+            $tile-active-subtitle-color: set-alt-color-level($color, darken($default-active-bgcolor, 10%), $white, 80);
+            $tile-active-leading-icon-color: set-alt-color-level($color, rgba($default-active-bgcolor, .54), rgba($white, .8), 80);
             $tile-disable-title-color: set-alt-color-level($color, $gray-700, rgba($white, .8), 80);
             $tile-disable-subtitle-color: set-alt-color-level($color, $gray-500, rgba($white, .6), 80);
             $tile-disable-leading-color: set-alt-color-level($color, $gray-500, rgba($white, .2), 80);
@@ -174,7 +174,7 @@
             --#{$prefix}tile-hover-bg: #{$tile-hover-bg};
 
             --#{$prefix}tile-active-bg: #{$tile-active-bg};
-            --#{$prefix}tile-active-action-color: #{$tile-active-title-color};
+            --#{$prefix}tile-active-action-color: #{$tile-active-leading-icon-color};
             --#{$prefix}tile-active-leading-color: #{$tile-active-title-color};
             --#{$prefix}tile-active-leading-icon-color: #{$tile-active-leading-icon-color};
             --#{$prefix}tile-active-title-color: #{$tile-active-title-color};
