@@ -1,5 +1,6 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsAlert from "./BsAlert";
+import "../../../scss/_transitions.scss";
 import "./alert.scss";
 
 const BsAlertPlugin: Plugin_2 = {

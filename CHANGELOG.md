@@ -16,13 +16,17 @@ Released: December xx, 2022
 - **BsAppContainer**: add property `viewportHeight`.
 - **BsButton**: add slot `icon` for placing a custom icon.
 - **BsChip**: add property `iconVariant`, `pill`.
+- **BsListTile**: add property `id`, `borderOff`, `pillOff`, and `roundedOff`.
+- **BsListTileSubtitle**: add property `rawHtml`.
+- **BsListTileTitle**: add property `rawHtml`.
+- **BsListView**: add property `itemRounded`, `itemRoundedPill`, `individualState`, and `modelValue`.
 - **BsMaskLoader**: add property `variant`.
 - **BsOverlay**: add event `click`.
+- **BsSideDrawer**: add property `position`, `overlayColor`.
+- **BsTab**: add property `disabled`, `iconSpin`, `iconPulse`, `iconFlip`, `iconRotation`.
 - **BsToggleButton**: add property `pill`, and `rounded`.
 - **BsToggleIcon**: add property `size`.
 - **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
-- **BsSideDrawer**: add property `position`, `overlayColor`.
-- **BsTab**: add property `disabled`, `iconSpin`, `iconPulse`, `iconFlip`, `iconRotation`.
 
 #### Breaking Changes
 
@@ -68,8 +72,11 @@ Released: December xx, 2022
     is removed from package bundle. 
 - **BsIcon**: replace property `rotation` with `rotate`.
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
+- **BsListTile**: Remove property `exact`.
+- **BsListView**: Replace property `activeItemBordered` with `itemBorderVariant`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
 - **BsRipple**: removed property `eventTrigger`.
+- **BsTab**: Replace property `value` with `modelValue`.
 - **BsTextField**:
   - Replaced property `value` with `modelValue`.
   - Replaced event `input` with `update:modelValue`.
@@ -79,7 +86,6 @@ Released: December xx, 2022
   - Replaced slot `appendIconOuter` with `appendOuter`.
   - Removed event `change`, already covered by event `update:modelValue`.
   - Deprecated property `externalValidator`, use property `validator` instead.
-- **BsTab**: Replace property `value` with `modelValue`. 
 
 
 ## v1.2.2
