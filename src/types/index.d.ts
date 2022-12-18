@@ -64,21 +64,28 @@ export declare type TVueMdb = {
     notification: TRecord;
 }
 
-export interface EventListenerTarget {
+export declare interface ObjectBase {
+    /**
+     * Dispose each property before destroying this object.
+     */
+    destroy(): void;
+}
+
+export declare interface EventListenerTarget {
     (target: Element | Window | undefined | null, event: Event | undefined | null): void;
 }
 
-export interface IBindingElement extends Element {
+export declare interface IBindingElement extends Element {
     __scrollListener?: TEventListenerBinding;
     __resizeListener?: EventListenerOrEventListenerObject | CallableFunction;
     __resizeListeners?: Array<CallableFunction>;
     __observer?: ResizeObserver;
 }
 
-export interface IVNode extends VNode {
+export declare interface IVNode extends VNode {
     ctx: ComponentInternalInstance;
 }
 
-export interface IComponentInstance extends ComponentInternalInstance {
+export declare interface IComponentInstance extends ComponentInternalInstance {
     ctx: ComponentPublicInstance;
 }

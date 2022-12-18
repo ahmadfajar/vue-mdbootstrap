@@ -1,16 +1,24 @@
-import type {ComponentInternalInstance, ComputedRef, Prop, Ref, ShallowRef, Slots, VNode} from "vue";
+import type {ComputedRef, Prop, Ref, ShallowRef, Slots, VNode} from "vue";
 import {h} from "vue";
 import {BsRipple} from "../../Animation";
 import {cssPrefix, useHasLink, useHasRouter, useRenderRouter} from "../../../mixins/CommonApi";
-import type {IVNode, TBsRipple, TEmitFn, TListTileOptionProps, TRecord} from "../../../types";
-import ListViewProvider from "./ListViewProvider";
+import type {
+    IListItem,
+    IListViewProvider,
+    IVNode,
+    TBsRipple,
+    TEmitFn,
+    TListTileOptionProps,
+    TRecord
+} from "../../../types";
+import ListItem from "./ListItem";
 
 
 export function useListTileClassNames(
+    tagName: string,
     props: Readonly<TListTileOptionProps>,
     isActive: Ref<boolean | undefined>,
-    tagName: string,
-    provider?: ListViewProvider,
+    provider?: IListViewProvider,
 ): TRecord {
     return {
         [`${cssPrefix}list-tile d-flex`]: true,
@@ -18,8 +26,8 @@ export function useListTileClassNames(
         [`${cssPrefix}tile-border-${provider?.itemBorderVariant}`]: provider?.itemBorderVariant && !props.borderOff
         && ["left", "right", "left-right", "top", "bottom", "top-bottom"].includes(provider.itemBorderVariant),
         [`${cssPrefix}tile-space-${provider?.spaceAround}`]: provider?.spaceAround && ["both", "left", "right"].includes(provider.spaceAround),
-        [`active ${props.activeClass}`]: (useHasLink(props) || props.navigable)
-        && !props.disabled && isActive.value === true,
+        [`${props.activeClass}`]: (useHasLink(props) || props.navigable) && props.activeClass && !props.disabled && isActive.value === true,
+        "active": (useHasLink(props) || props.navigable) && !props.disabled && isActive.value === true,
         "rounded": provider?.itemRounded === true && !props.roundedOff,
         "rounded-pill": provider?.itemRoundedPill === true && !props.pillOff,
         "disabled": props.disabled === true,
@@ -31,28 +39,30 @@ function createListTileVnode(
     slots: Slots,
     props: Readonly<TListTileOptionProps>,
     classes: ComputedRef<TRecord>,
-    emitter: TEmitFn,
-    instance: ShallowRef<ComponentInternalInstance | undefined | null>,
-    provider?: ListViewProvider,
+    instance: ShallowRef<IListItem | undefined>,
+    emit: TEmitFn,
+    provider?: IListViewProvider,
 ): VNode {
     return h(tagName, {
         id: props.id,
         class: classes.value,
         href: tagName === "a" ? props.url : undefined,
         onVnodeMounted: (vnode: VNode) => {
-            instance.value = (<IVNode>vnode).ctx;
-            provider?.addItem((<IVNode>vnode).ctx);
+            instance.value = new ListItem(<string>props.id, "BsListTile", (<IVNode>vnode).ctx, emit);
+            provider?.addItem(instance.value);
         },
-        onVnodeBeforeUnmount: (vnode: VNode) => provider?.removeItem((<IVNode>vnode).ctx),
+        onVnodeBeforeUnmount: () => instance.value && provider?.removeItem(instance.value),
         onClick: (e: Event) => {
             // console.log("tile-instance", instance.value);
             if (tagName === "a") {
-                emitter("update:active", !props.active);
-                if (instance.value && provider) {
+                if (provider) {
                     provider.activeItem = instance.value;
                 }
+                if (!provider || provider.config.individualState === true) {
+                    emit("update:active", !props.active);
+                }
             }
-            emitter("click", e, (instance.value ? instance.value.vnode.el : undefined));
+            emit("click", e, (instance.value ? instance.value.component.vnode.el : undefined));
         },
     }, [
         h<TBsRipple>(BsRipple, {
@@ -73,9 +83,9 @@ function createListTileRouterVnode(
     slots: Slots,
     props: Readonly<TListTileOptionProps>,
     classes: ComputedRef<TRecord>,
-    emitter: TEmitFn,
-    instance: ShallowRef<ComponentInternalInstance | undefined | null>,
-    provider?: ListViewProvider,
+    instance: ShallowRef<IListItem | undefined>,
+    emit: TEmitFn,
+    provider?: IListViewProvider,
 ): VNode {
     return useRenderRouter({
             id: props.id,
@@ -83,16 +93,18 @@ function createListTileRouterVnode(
             activeClass: props.activeClass,
             to: !props.disabled ? props.path : undefined,
             onVnodeMounted: (vnode: IVNode) => {
-                instance.value = vnode.ctx;
-                provider?.addItem(vnode.ctx);
+                instance.value = new ListItem(<string>props.id, "BsListTile", vnode.ctx, emit);
+                provider?.addItem(instance.value);
             },
-            onVnodeBeforeUnmount: (vnode: IVNode) => provider?.removeItem(vnode.ctx),
+            onVnodeBeforeUnmount: () => instance.value && provider?.removeItem(instance.value),
             onClick: (e: Event) => {
-                if (instance.value && provider) {
-                    emitter("update:active", !props.active);
+                if (provider) {
                     provider.activeItem = instance.value;
                 }
-                emitter("click", e, (instance.value ? instance.value.vnode.el : undefined));
+                if (!provider || provider.config.individualState === true) {
+                    emit("update:active", !props.active);
+                }
+                emit("click", e, (instance.value ? instance.value.component.vnode.el : undefined));
             }
         },
         h<TBsRipple>(BsRipple, {
@@ -114,13 +126,13 @@ export function useRenderListTile(
     slots: Slots,
     props: Readonly<TListTileOptionProps>,
     classes: ComputedRef<TRecord>,
-    emitter: TEmitFn,
-    instance: ShallowRef<ComponentInternalInstance | undefined | null>,
-    provider?: ListViewProvider,
+    instance: ShallowRef<IListItem | undefined>,
+    emit: TEmitFn,
+    provider?: IListViewProvider,
 ): VNode {
     if (useHasRouter(props)) {
-        return createListTileRouterVnode(slots, props, classes, emitter, instance, provider);
+        return createListTileRouterVnode(slots, props, classes, instance, emit, provider);
     } else {
-        return createListTileVnode(tagName, slots, props, classes, emitter, instance, provider);
+        return createListTileVnode(tagName, slots, props, classes, instance, emit, provider);
     }
 }

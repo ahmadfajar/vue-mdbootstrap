@@ -4,7 +4,7 @@
     .btn-#{$name} {
         background-color: $color;
         border-color: $color;
-        color: set-alt-color-level($color, $gray-900, $white, 80) !important;
+        color: set-color-variant($color, $gray-900, $white, 80) !important;
 
         &:hover {
             background-color: lighten($color, 5%);
@@ -50,7 +50,7 @@
         &:active:focus,
         &.active {
             border-color: darken($color, 8%);
-            color: set-alt-color-level($color, $white, darken($color, 10%), 80); // darken($color, 10%);
+            color: set-color-variant($color, $white, darken($color, 10%), 80); // darken($color, 10%);
 
             @if ($name == 'light' or $name == 'light-grey') {
                 background-color: rgba($color, .2);
@@ -62,7 +62,7 @@
         &:not([disabled]):not(.disabled):active,
         &:not([disabled]):not(.disabled).active {
             border-color: darken($color, 8%);
-            color: set-alt-color-level($color, $white, darken($color, 15%), 80); // darken($color, 15%);
+            color: set-color-variant($color, $white, darken($color, 15%), 80); // darken($color, 15%);
 
             @if ($name == 'light' or $name == 'light-grey') {
                 background-color: rgba($color, .2);
@@ -95,7 +95,7 @@
             &:focus {
                 border-color: transparent;
                 background-color: rgba(lighten($color, 15%), .2);
-                color: set-alt-color-level($color, $white, darken($color, 15%), 80); // darken($color, 15%);
+                color: set-color-variant($color, $white, darken($color, 15%), 80); // darken($color, 15%);
             }
 
             &:active:focus {
@@ -139,7 +139,7 @@
 @mixin make-button-variant($name, $color) {
     .btn-#{$name} {
         $active-box-shadow-color-rgb: to-rgb(lighten($color, 5%));
-        $text-color: set-alt-color-level($color, $black, $white, 80);
+        $text-color: set-color-variant($color, $black, $white, 80);
         $hover-color: darken($color, 8%);
         $active-color: darken($color, 14%);
 
@@ -180,7 +180,7 @@
         } @else {
             $active-bg-rgba: rgba(lighten($color, 15%), .3);
             $hover-border-color: lighten($color, 10%);
-            $active-color-rgba: set-alt-color-level($color, $white, darken($color, 10%), 80);
+            $active-color-rgba: set-color-variant($color, $white, darken($color, 10%), 80);
             --#{$bs-prefix}btn-color: #{$color};
             --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
             --#{$bs-prefix}btn-active-color: #{$active-color-rgba};
@@ -212,7 +212,7 @@
             --#{$bs-prefix}btn-active-bg: #{$active-bg-color};
             --#{$bs-prefix}btn-active-color: #{$active-color};
 
-            $hover-bg-rgba: set-alt-color-level(
+            $hover-bg-rgba: set-color-variant(
                             $color, rgba(lighten($color, 15%), .3),
                             rgba(lighten($color, 20%), .2), 55
             );

@@ -1,19 +1,24 @@
 import type {App, Plugin as Plugin_2} from "vue";
 import BsListView from "./BsListView";
+import BsListNav from "./BsListNav";
+import BsListNavItem from "./BsListNavItem";
 import BsListTile from "./BsListTile";
 import BsListTileAction from "./BsListTileAction";
 import BsListTileContent from "./BsListTileContent";
 import BsListTileSubtitle from "./BsListTileSubtitle";
 import BsListTileTitle from "./BsListTileTitle";
 import BsListTileLeading from "./BsListTileLeading";
-import "../../../scss/_globalvars.scss";
 import "../Basic/basic.scss";
 import "./listView.scss";
+import "./listNav.scss";
 import "./listTile.scss";
+
 
 const BsListViewPlugin: Plugin_2 = {
     install: (app: App): void => {
         app.component(BsListView.name, BsListView);
+        app.component(BsListNav.name, BsListNav);
+        app.component(BsListNavItem.name, BsListNavItem);
         app.component(BsListTile.name, BsListTile);
         app.component(BsListTileAction.name, BsListTileAction);
         app.component(BsListTileContent.name, BsListTileContent);
@@ -24,6 +29,6 @@ const BsListViewPlugin: Plugin_2 = {
 }
 
 export {
-    BsListViewPlugin, BsListView, BsListTile, BsListTileAction,
+    BsListViewPlugin, BsListView, BsListNav, BsListNavItem, BsListTile, BsListTileAction,
     BsListTileContent, BsListTileLeading, BsListTileSubtitle, BsListTileTitle,
 }

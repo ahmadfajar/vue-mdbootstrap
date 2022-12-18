@@ -1,64 +1,38 @@
 import type {ComponentInternalInstance, PropType} from "vue";
-import {booleanProp, booleanTrueProp, routerProps} from "../../../mixins/CommonProps";
+import {
+    booleanProp,
+    booleanTrueProp,
+    routerProps,
+    stringOrNumberProp,
+    stringProp,
+    stringRequiredProp,
+    validStringOrNumberProp
+} from "../../../mixins/CommonProps";
 import {useGenerateId} from "../../../mixins/CommonApi";
+import {iconProps} from "../../Avatar/mixins/avatarProps";
+import {width} from "../../Icon/mixins/iconProps";
 import type {TSpaceAround} from "../types";
 
 
 export const listViewProps = {
-    /**
-     * This ListView's background color appearance.
-     * @type {string}
-     */
     color: {
         type: String,
         default: "white"
     },
-    /**
-     * Apply css `overflow-hidden` or not.
-     * @type {boolean}
-     */
     overflowHidden: booleanProp,
-    /**
-     * Highlight this ListView active item with rounded style on its edge corners.
-     * @type {boolean}
-     */
     itemRounded: booleanProp,
-    /**
-     * Highlight this ListView active item with rounded-pill style on its edge corners.
-     * @type {boolean}
-     */
     itemRoundedPill: booleanProp,
-    /**
-     * Give border around the ListView's active item.
-     * Valid values are: `left`, `right`, `left-right`, `top`, `bottom`, `top-bottom`.
-     * @type {string}
-     */
     itemBorderVariant: {
         type: String,
         default: undefined,
         validator: (v: string) => ["left", "right", "left-right", "top", "bottom", "top-bottom"].includes(v)
     },
-    /**
-     * ReadOnly storage which hold this ListView's active item object instance.
-     */
     modelValue: {
         type: Object as PropType<ComponentInternalInstance>,
         default: undefined
     },
-    /**
-     * If `false` then more than one item can be expanded.
-     * @type {boolean}
-     */
     singleExpand: booleanTrueProp,
-    /**
-     * The ListView doesn't manage each ListTile item's state.
-     * @type {boolean}
-     */
     individualState: booleanProp,
-    /**
-     * Give some space around each item. Valid values are: `both`, `left`, `right`.
-     * @type {TSpaceAround}
-     */
     spaceAround: {
         type: String as PropType<TSpaceAround>,
         default: undefined,
@@ -66,49 +40,43 @@ export const listViewProps = {
     }
 }
 
-export const listTileProps = {
+export const listNavItemProps = {
+    ...iconProps,
     ...routerProps,
-    /**
-     * Sets this component `ID` attribute. This property value is auto generates.
-     * @type {string}
-     */
     id: {
         type: String,
         default: () => useGenerateId()
     },
-    /**
-     * This component state.
-     * @type {boolean}
-     */
-    active: booleanProp,
-    /**
-     * Disable this component.
-     * @type {boolean}
-     */
+    // active: booleanProp,
     disabled: booleanProp,
-    /**
-     * Render ListTile as menu item.
-     * @type {boolean}
-     */
-    navigable: booleanProp,
-    /**
-     * Disable ListView `itemBorderVariant` feature on this component.
-     * @type {boolean}
-     */
+    depth: validStringOrNumberProp,
+    indent: stringOrNumberProp,
+    iconSize: width,
+    label: stringRequiredProp,
+    badge: stringProp,
+    badgeColor: stringProp,
+    badgeType: stringProp,
+    badgeVariant: {
+        type: String,
+        default: 'success'
+    },
     borderOff: booleanProp,
-    /**
-     * Disable ListView `itemRoundedPill` feature on this component.
-     * @type {boolean}
-     */
     pillOff: booleanProp,
-    /**
-     * Enabled or disabled ripple effect.
-     * @type {boolean}
-     */
     rippleOff: booleanProp,
-    /**
-     * Disable ListView `itemRounded` feature on this component.
-     * @type {boolean}
-     */
+    roundedOff: booleanProp,
+}
+
+export const listTileProps = {
+    ...routerProps,
+    id: {
+        type: String,
+        default: () => useGenerateId()
+    },
+    active: booleanProp,
+    disabled: booleanProp,
+    navigable: booleanProp,
+    borderOff: booleanProp,
+    pillOff: booleanProp,
+    rippleOff: booleanProp,
     roundedOff: booleanProp,
 }

@@ -1,7 +1,8 @@
-/* BsCheckbox mixins */
+/* BsCheckbox variants mixins -- sass variables */
+
 @mixin make-checkbox($name, $color) {
     .#{$prefix}checkbox-#{$name} {
-        $checked-color: set-alt-color-level($color, $black, $white, 70);
+        $checked-color: set-color-variant($color, $black, $white, 70);
 
         --#{$prefix}checkbox-bg: #{$color};
         --#{$prefix}checkbox-color: #{$checked-color};

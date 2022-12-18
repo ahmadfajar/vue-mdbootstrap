@@ -1,0 +1,150 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins/listview";
+@import "~compass-mixins/lib/compass/css3";
+
+
+.#{$prefix}list-nav {
+    --#{$prefix}nav-item-state-bgcolor: inherit;
+    --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-color);
+    --#{$prefix}nav-item-state-icon-color: var(--#{$prefix}nav-item-icon-color);
+    --#{$prefix}nav-item-state-font-weight: var(--#{$prefix}nav-item-font-weight);
+    --#{$prefix}nav-item-inner-state-bgcolor: inherit;
+    --#{$prefix}nav-item-padding-left: var(--#{$prefix}nav-item-padding-x);
+    --#{$prefix}nav-item-padding-right: var(--#{$prefix}nav-item-padding-x);
+
+    @include flexbox((display: flex, flex-wrap: wrap));
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    .collapsing {
+        @include transition($md-transition-default, height);
+        height: 0;
+        overflow: hidden;
+    }
+
+    .#{$prefix}nav-item {
+        background-color: var(--#{$prefix}nav-item-state-bgcolor);
+        position: relative;
+        white-space: nowrap;
+        width: 100%;
+
+        > .#{$prefix}nav-item-inner {
+            @include user-select(none);
+            cursor: pointer;
+            display: block;
+            outline: 0 none;
+            text-decoration: none;
+            background-color: var(--#{$prefix}nav-item-inner-state-bgcolor);
+            color: var(--#{$prefix}nav-item-state-color);
+            font-size: var(--#{$prefix}nav-item-font-size);
+            font-weight: var(--#{$prefix}nav-item-state-font-weight);
+
+            &:hover,
+            &:focus,
+            &:active {
+                text-decoration: none;
+            }
+
+            > .#{$prefix}ripple {
+                min-height: var(--#{$prefix}tile-minheight);
+                line-height: var(--#{$prefix}nav-item-line-height);
+                padding: var(--#{$prefix}nav-item-padding-y) var(--#{$prefix}nav-item-padding-right) var(--#{$prefix}nav-item-padding-y) var(--#{$prefix}nav-item-padding-left);
+
+                > .#{$prefix}nav-text {
+                    @include transition(opacity .8s);
+                    @include opacity(1);
+                    @include flex(1);
+                }
+
+                > .#{$prefix}icon:first-child {
+                    margin-right: calc(var(--#{$prefix}nav-item-padding-x) + .25);
+                    color: var(--#{$prefix}nav-item-state-icon-color);
+                }
+
+                > .badge {
+                    font-size: 75%;
+                    line-height: var(--#{$prefix}nav-item-line-height);
+                }
+
+                > .expand-more {
+                    @include transition(all 0.3s ease 0s);
+                    @include transform(rotateZ(0deg));
+                }
+            }
+        }
+
+        &.#{$prefix}expanded {
+            --#{$prefix}nav-item-state-bgcolor: var(--#{$prefix}nav-item-expanded-bg);
+
+            > .#{$prefix}nav-item-inner {
+                > .#{$prefix}ripple {
+                    > .expand-more {
+                        @include transform(rotateZ(-180deg));
+                    }
+                }
+            }
+        }
+
+        &.active {
+            --#{$prefix}nav-item-inner-state-bgcolor: var(--#{$prefix}nav-item-active-bg);
+            --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-active-color);
+            --#{$prefix}nav-item-state-icon-color: var(--#{$prefix}nav-item-active-icon-color);
+            --#{$prefix}nav-item-state-font-weight: var(--#{$prefix}nav-item-active-font-weight);
+
+            &.#{$prefix}nav-parent {
+                &.#{$prefix}expanded {
+                    --#{$prefix}nav-item-inner-state-bgcolor: var(--#{$prefix}nav-item-expanded-bg);
+                    --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-color);
+                }
+            }
+        }
+
+        &:hover:not(.#{$prefix}expanded) {
+            --#{$prefix}nav-item-inner-state-bgcolor: var(--#{$prefix}nav-item-hover-bg);
+        }
+
+        &.disabled {
+            --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-disable-color);
+            --#{$prefix}nav-item-state-icon-color: var(--#{$prefix}nav-item-disable-icon-color);
+        }
+    }
+
+    > .#{$prefix}nav-item {
+        &.#{$prefix}expanded {
+            &:not(:first-child) {
+                border-top: 1px solid var(--#{$prefix}nav-item-divider-color);
+            }
+
+            &:not(:last-child) {
+                border-bottom: 1px solid var(--#{$prefix}nav-item-divider-color);
+            }
+        }
+
+        &.#{$prefix}nav-parent {
+            &.#{$prefix}has-icon {
+                > .#{$prefix}nav-item {
+                    &:not(.#{$prefix}has-icon) {
+                        --#{$prefix}nav-item-padding-left: calc(var(--#{$prefix}nav-item-padding-x) + 2.75);
+                    }
+
+                    .#{$prefix}nav-item {
+                        --#{$prefix}nav-item-padding-left: calc(var(--#{$prefix}nav-item-padding-x) + 3.75);
+                    }
+                }
+            }
+
+            &:not(.#{$prefix}has-icon) {
+                > .#{$prefix}nav-item {
+                    --#{$prefix}nav-item-padding-left: calc(var(--#{$prefix}nav-item-padding-x) + 1);
+
+                    .#{$prefix}nav-item {
+                        --#{$prefix}nav-item-padding-left: calc(var(--#{$prefix}nav-item-padding-x) + 2);
+                    }
+                }
+            }
+        }
+    }
+}

@@ -3,26 +3,22 @@
 @import "../../../scss/functions";
 @import "../../../scss/mixins/listview";
 @import "~compass-mixins/lib/compass/css3";
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins/breakpoints";
 
 
 .#{$prefix}list-tile {
-    --#{$prefix}tile-spacing-x: #{$padding-base - .5};
-    --#{$prefix}tile-spacing-y: #{$padding-xs};
-    --#{$prefix}tile-padding-x: #{$padding-base};
-    --#{$prefix}tile-padding-y: #{$padding-sm};
-    --#{$prefix}tile-title-fontsize: #{$font-size-base};
-    --#{$prefix}tile-title-fontweight: #{$font-weight-normal};
-    --#{$prefix}tile-subtitle-fontsize: #{$font-size-base * 90/100};
-    --#{$prefix}tile-active-title-fontweight: #{$font-weight-semi-bold};
-    --#{$prefix}tile-active-indicator-border: #{map-get($border-widths, 4)};
+    --#{$prefix}tile-state-bgcolor: inherit;
+    --#{$prefix}tile-state-action-color: var(--#{$prefix}tile-action-color);
+    --#{$prefix}tile-state-leading-color: var(--#{$prefix}tile-leading-color);
+    --#{$prefix}tile-state-leading-icon-color: var(--#{$prefix}tile-leading-color);
+    --#{$prefix}tile-state-subtitle-color: var(--#{$prefix}tile-subtitle-color);
+    --#{$prefix}tile-state-title-color: var(--#{$prefix}tile-title-color);
+    --#{$prefix}tile-state-title-font-weight: var(--#{$prefix}tile-title-font-weight);
 
     @include transition($transition-hoverable);
     @include user-select(none);
     position: relative;
     text-decoration: none;
+    background-color: var(--#{$prefix}tile-state-bgcolor);
 
     &:active,
     &:focus,
@@ -32,7 +28,7 @@
 
     &:not(.disabled):not(.active) {
         &.#{$prefix}link:hover {
-            background-color: var(--#{$prefix}tile-hover-bg);
+            --#{$prefix}tile-state-bgcolor: var(--#{$prefix}tile-hover-bg);
         }
     }
 
@@ -46,21 +42,25 @@
     }
 
     .#{$prefix}list-tile-leading {
-        color: var(--#{$prefix}tile-leading-color);
+        color: var(--#{$prefix}tile-state-leading-color);
         max-width: 100%;
+
+        &.#{$prefix}has-icon {
+            color: var(--#{$prefix}tile-state-leading-icon-color);
+        }
     }
 
     .#{$prefix}list-tile-title {
-        color: var(--#{$prefix}tile-title-color);
+        color: var(--#{$prefix}tile-state-title-color);
     }
 
     .#{$prefix}list-tile-subtitle {
-        color: var(--#{$prefix}tile-subtitle-color);
+        color: var(--#{$prefix}tile-state-subtitle-color);
     }
 
     .#{$prefix}list-tile-action {
-        color: var(--#{$prefix}tile-action-color);
-        min-width: 1.5rem;
+        color: var(--#{$prefix}tile-state-action-color);
+        min-width: var(--#{$prefix}tile-action-minwidth);
         max-width: 100%;
 
         &.#{$prefix}action-stack {
@@ -79,12 +79,12 @@
         overflow: hidden;
 
         > .#{$prefix}list-tile-title {
-            font-size: var(--#{$prefix}tile-title-fontsize);
-            font-weight: var(--#{$prefix}tile-title-fontweight);
+            font-size: var(--#{$prefix}tile-title-font-size);
+            font-weight: var(--#{$prefix}tile-state-title-font-weight);
         }
 
         > .#{$prefix}list-tile-subtitle {
-            font-size: var(--#{$prefix}tile-subtitle-fontsize);
+            font-size: var(--#{$prefix}tile-subtitle-font-size);
         }
 
         &.#{$prefix}multiline {
@@ -95,9 +95,9 @@
     }
 
     > .#{$prefix}ripple {
-        min-height: 3rem;
-        position: relative;
+        min-height: var(--#{$prefix}tile-minheight);
         padding: var(--#{$prefix}tile-padding-y) var(--#{$prefix}tile-padding-x);
+        position: relative;
 
         > div[class^="#{$prefix}list-tile-"] {
             &:nth-child(2),
@@ -113,48 +113,24 @@
     }
 
     &.active {
-        background-color: var(--#{$prefix}tile-active-bg);
-
-        .#{$prefix}list-tile-leading {
-            color: var(--#{$prefix}tile-active-leading-color);
-
-            &.#{$prefix}has-icon {
-                color: var(--#{$prefix}tile-active-leading-icon-color);
-            }
-        }
-
-        .#{$prefix}list-tile-title {
-            font-weight: var(--#{$prefix}tile-active-title-fontweight);
-            color: var(--#{$prefix}tile-active-title-color);
-        }
-
-        .#{$prefix}list-tile-subtitle {
-            color: var(--#{$prefix}tile-active-subtitle-color);
-        }
-
-        .#{$prefix}list-tile-action {
-            color: var(--#{$prefix}tile-active-action-color);
-        }
+        --#{$prefix}tile-state-bgcolor: var(--#{$prefix}tile-active-bg);
+        --#{$prefix}tile-state-action-color: var(--#{$prefix}tile-active-action-color);
+        --#{$prefix}tile-state-leading-color: var(--#{$prefix}tile-active-leading-color);
+        --#{$prefix}tile-state-leading-icon-color: var(--#{$prefix}tile-active-leading-icon-color);
+        --#{$prefix}tile-state-subtitle-color: var(--#{$prefix}tile-active-subtitle-color);
+        --#{$prefix}tile-state-title-color: var(--#{$prefix}tile-active-title-color);
+        --#{$prefix}tile-state-title-font-weight: var(--#{$prefix}tile-active-title-font-weight);
     }
 
     &.disabled {
-        .#{$prefix}list-tile-leading {
-            color: var(--#{$prefix}tile-disable-leading-color);
-        }
-
-        .#{$prefix}list-tile-title {
-            color: var(--#{$prefix}tile-disable-title-color);
-        }
-
-        .#{$prefix}list-tile-subtitle {
-            color: var(--#{$prefix}tile-disable-subtitle-color);
-        }
-
-        .#{$prefix}list-tile-action {
-            color: var(--#{$prefix}tile-disable-action-color);
-        }
+        --#{$prefix}tile-state-action-color: var(--#{$prefix}tile-disable-action-color);
+        --#{$prefix}tile-state-leading-color: var(--#{$prefix}tile-disable-leading-color);
+        --#{$prefix}tile-state-subtitle-color: var(--#{$prefix}tile-disable-subtitle-color);
+        --#{$prefix}tile-state-title-color: var(--#{$prefix}tile-disable-title-color);
     }
+}
 
+.#{$prefix}list-tile, .#{$prefix}nav-item-inner {
     &.#{$prefix}tile-space-both,
     &.#{$prefix}tile-space-left,
     &.#{$prefix}tile-space-right {

@@ -13,10 +13,10 @@
     }
 
     &.badge-pill {
-        $bade-padding: $padding-base - .25;
+        $base-padding: $padding-base - .25;
         --#{$bs-prefix}badge-border-radius: #{$border-radius-pill};
         --#{$bs-prefix}badge-font-size: 80%;
-        --#{$bs-prefix}badge-padding-x: #{$bade-padding};
+        --#{$bs-prefix}badge-padding-x: #{$base-padding};
     }
 
     ~ .badge {

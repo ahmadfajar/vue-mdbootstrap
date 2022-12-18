@@ -17,7 +17,7 @@
 @mixin make-solid-alert($name, $color) {
     .#{$prefix}alert-solid-#{$name} {
         background-color: $color;
-        color: set-alt-color-level($color, $gray-900, $white-base, 70);
+        color: set-color-variant($color, $gray-900, $white-base, 70);
         @if (lightness($color) > 70) {
             color: $gray-900;
         } @else {
@@ -25,11 +25,11 @@
         }
 
         hr {
-            border-top-color: set-alt-color-level($color, darken($color, 25%), rgba(darken($white-base, 4%), .5), 70);
+            border-top-color: set-color-variant($color, darken($color, 25%), rgba(darken($white-base, 4%), .5), 70);
         }
 
         .alert-link {
-            color: set-alt-color-level($color, $gray-900, $white-base, 70);
+            color: set-color-variant($color, $gray-900, $white-base, 70);
         }
     }
 }
@@ -65,8 +65,8 @@
 
 @mixin make-solid-alert-variant($name, $color) {
     .#{$prefix}alert-solid-#{$name} {
-        $text-color: set-alt-color-level($color, $gray-900, $white, 70);
-        $hr-border-color: set-alt-color-level($color, darken($color, 25%), rgba(darken($white, 4%), .65), 70);
+        $text-color: set-color-variant($color, $gray-900, $white, 70);
+        $hr-border-color: set-color-variant($color, darken($color, 25%), rgba(darken($white, 4%), .65), 70);
 
         --#{$bs-prefix}alert-bg: #{$color};
         --#{$bs-prefix}alert-color: #{$text-color};

@@ -24,9 +24,9 @@ Released: December xx, 2022
 - **BsOverlay**: add event `click`.
 - **BsSideDrawer**: add property `position`, `overlayColor`.
 - **BsTab**: add property `disabled`, `iconSpin`, `iconPulse`, `iconFlip`, `iconRotation`.
+- **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
 - **BsToggleButton**: add property `pill`, and `rounded`.
 - **BsToggleIcon**: add property `size`.
-- **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
 
 #### Breaking Changes
 

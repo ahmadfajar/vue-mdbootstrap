@@ -1,17 +1,13 @@
-// Theme color function
-@function theme-color($theme, $key: "primary") {
-    @return map-get($theme, $key);
-}
-
+// Colors function
 @function theme-color-level($theme, $color-name: "primary", $level: 0) {
-    $color: theme-color($theme, $color-name);
+    $color: map-get($theme, $color-name);
     $color-base: if($level > 0, $black, $white);
     $level: abs($level);
 
     @return mix($color-base, $color, $level * $theme-color-interval);
 }
 
-@function set-alt-color-level($bgColor, $textOnLightBgColor, $textOnDarkBgColor, $whiteLevel) {
+@function set-color-variant($bgColor, $textOnLightBgColor, $textOnDarkBgColor, $whiteLevel) {
     @if (lightness($bgColor) > $whiteLevel) {
         @return $textOnLightBgColor; // Lighter background, return dark color
     } @else {
@@ -19,36 +15,12 @@
     }
 }
 
-@function set-disable-text-color($color) {
-    @if (lightness($color) > 80) {
-        @return $gray-500;
-    } @else {
-        @return rgba($white-base, .5);
-    }
-}
-
-@function set-leading-text-color($color) {
-    @if (lightness($color) > 80) {
-        @return rgba($black, .54);
-    } @else {
-        @return rgba($white-base, .6);
-    }
-}
-
-@function set-leading-disable-text-color($color) {
-    @if (lightness($color) > 80) {
-        @return $gray-500;
-    } @else {
-        @return rgba($white-base, .2);
-    }
-}
-
-@function set-hoverable-bgcolor($color, $transparency: 0) {
+@function set-alt-bgcolor($color, $transparency: 0) {
     @if (lightness($color) == 100) {
         @if ($transparency > 0) {
             @return rgba($default-active-bgcolor, $transparency);
         } @else {
-            @return rgba($black, 0.08);
+            @return $white; // rgba($black, 0.08);
         }
     } @else if (lightness($color) > 80) {
         @if ($transparency > 0) {
@@ -65,7 +37,6 @@
     }
 }
 
-// Colors
 @function to-rgb($value) {
     @return red($value), green($value), blue($value);
 }

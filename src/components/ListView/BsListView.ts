@@ -2,7 +2,7 @@ import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent, h, provide} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {listViewProps} from "./mixins/listViewProps";
-import type {TBsListView, TListViewOptionProps, TRecord} from "../../types";
+import type {IListViewProvider, TBsListView, TListViewOptionProps, TRecord} from "../../types";
 import ListViewProvider from "./mixins/ListViewProvider";
 
 
@@ -30,12 +30,12 @@ export default defineComponent<TBsListView, TRecord, TRecord, ComputedOptions, C
         );
 
         const provider = new ListViewProvider(cmpProps, emit);
-        provide<ListViewProvider>("ListView", provider);
+        provide<IListViewProvider>("ListView", provider);
 
         return () =>
             h("div", {
                 class: classNames.value,
-                onVnodeBeforeUnmount: () => provider.removeAll()
+                onVnodeBeforeUnmount: () => provider.destroy()
             }, slots.default && slots.default())
     }
 });

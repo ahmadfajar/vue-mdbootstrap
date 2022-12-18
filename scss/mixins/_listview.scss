@@ -1,131 +1,3 @@
-/* BsListNav mixins */
-@mixin bslist-nav-variant($name, $color) {
-    .#{$prefix}list-#{$name} {
-        > .#{$prefix}list-nav {
-            .#{$prefix}nav-item {
-                > .#{$prefix}nav-item-inner {
-                    @if (lightness($color) > 50) {
-                        color: $gray-900;
-                    } @else {
-                        color: rgba($white-base, .8);
-                    }
-
-                    .#{$prefix}icon {
-                        &:not(.icon-expand-more) {
-                            color: set-leading-text-color($color);
-                        }
-                    }
-                }
-
-                &.#{$prefix}disabled {
-                    > .#{$prefix}nav-item-inner {
-                        color: set-disable-text-color($color);
-
-                        .#{$prefix}icon {
-                            &:not(.icon-expand-more) {
-                                color: set-leading-disable-text-color($color);
-                            }
-                        }
-                    }
-                }
-
-                &:hover:not(.#{$prefix}expanded) {
-                    > .#{$prefix}nav-item-inner {
-                        @if (lightness($color) > 80) {
-                            background-color: $default-hover-bgcolor;
-                        } @else {
-                            background-color: rgba(darken($color, 10%), .25);
-                        }
-                    }
-                }
-
-                @if (lightness($color) < 90) {
-                    &.#{$prefix}expanded {
-                        background-color: set-hoverable-bgcolor($color, 0);
-                    }
-                }
-
-                &.#{$prefix}active {
-                    &:not(.#{$prefix}parent),
-                    &.#{$prefix}parent:not(.#{$prefix}expanded) {
-                        > .#{$prefix}nav-item-inner {
-                            background-color: set-hoverable-bgcolor($color, .22);
-                            @if (lightness($color) > 80) {
-                                color: $primary-color-dark;
-
-                                .#{$prefix}icon {
-                                    &:not(.icon-expand-more) {
-                                        color: rgba($primary-color-dark, .54);
-                                    }
-                                }
-                            } @else {
-                                color: $white;
-
-                                .#{$prefix}icon {
-                                    &:not(.icon-expand-more) {
-                                        color: rgba($white-base, .8);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-
-                @if (lightness($color) < 81) {
-                    &.#{$prefix}expanded {
-                        border-color: rgba($white-base, .1);
-                    }
-                }
-            }
-        }
-
-        @if (lightness($color) < 85) {
-            &.#{$prefix}border-left,
-            &.#{$prefix}border-left-right,
-            &.#{$prefix}border-top,
-            &.#{$prefix}border-top-bottom {
-                > .#{$prefix}list-nav {
-                    .#{$prefix}nav-item {
-                        &.#{$prefix}active {
-                            &:not(.#{$prefix}parent) {
-                                > .#{$prefix}nav-item-inner {
-                                    > .#{$prefix}ripple {
-                                        &:before {
-                                            background: lighten(set-hoverable-bgcolor($color, .25), 35%); // rgba(lighten($color, 85%), .3);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            &.#{$prefix}border-right,
-            &.#{$prefix}border-left-right,
-            &.#{$prefix}border-bottom,
-            &.#{$prefix}border-top-bottom {
-                > .#{$prefix}list-nav {
-                    .#{$prefix}nav-item {
-                        &.#{$prefix}active {
-                            &:not(.#{$prefix}parent) {
-                                > .#{$prefix}nav-item-inner {
-                                    > .#{$prefix}ripple {
-                                        &:after {
-                                            background: lighten(set-hoverable-bgcolor($color, .25), 35%);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-
 /* BsListView variants mixins -- sass variables */
 
 @mixin make-listview-variant($name, $color) {
@@ -139,33 +11,27 @@
         }
 
         .#{$prefix}subheader {
-            @if (lightness($color) > 80) {
-                --#{$prefix}subheader-color: #{darken($gray-500, 5%)};
-            } @else {
-                --#{$prefix}subheader-color: #{rgba($white, .8)};
-            }
+            $subheader-color: set-color-variant($color, darken($gray-500, 5%), rgba($white, .8), 80);
+            --#{$prefix}subheader-color: #{$subheader-color};
         }
     }
 }
 
-
-/* BsListTile variants mixins -- sass variables */
-
 @mixin make-list-tile-variant($name, $color) {
     .#{$prefix}list-#{$name} {
-        .#{$prefix}list-tile {
-            $tile-hover-bg: set-hoverable-bgcolor($color);
-            $tile-active-bg: set-hoverable-bgcolor($color, .12);
-            $tile-title-color: set-alt-color-level($color, $gray-900, $white, 80);
-            $tile-subtitle-color: set-alt-color-level($color, $gray-600, rgba($white, .7), 80);
-            $tile-leading-color: set-alt-color-level($color, rgba($black, .54), rgba($white, .6), 80);
-            $tile-active-title-color: set-alt-color-level($color, darken($default-active-bgcolor, 20%), $white, 80);
-            $tile-active-subtitle-color: set-alt-color-level($color, darken($default-active-bgcolor, 10%), $white, 80);
-            $tile-active-leading-icon-color: set-alt-color-level($color, rgba($default-active-bgcolor, .54), rgba($white, .8), 80);
-            $tile-disable-title-color: set-alt-color-level($color, $gray-700, rgba($white, .8), 80);
-            $tile-disable-subtitle-color: set-alt-color-level($color, $gray-500, rgba($white, .6), 80);
-            $tile-disable-leading-color: set-alt-color-level($color, $gray-500, rgba($white, .2), 80);
-            $tile-indicator-border-color: set-alt-color-level($color, $mdb-default-color-dark, lighten(set-hoverable-bgcolor($color, .25), 35%), 84);
+        .#{$prefix}list-tile, .#{$prefix}list-nav {
+            $tile-hover-bg: set-alt-bgcolor($color);
+            $tile-active-bg: set-alt-bgcolor($color, .12);
+            $tile-title-color: set-color-variant($color, $gray-900, $white, 80);
+            $tile-subtitle-color: set-color-variant($color, $gray-600, rgba($white, .7), 80);
+            $tile-leading-color: set-color-variant($color, rgba($black, .54), rgba($white, .6), 80);
+            $tile-active-title-color: set-color-variant($color, darken($default-active-bgcolor, 20%), $white, 80);
+            $tile-active-subtitle-color: set-color-variant($color, darken($default-active-bgcolor, 10%), $white, 80);
+            $tile-active-leading-icon-color: set-color-variant($color, rgba($default-active-bgcolor, .54), rgba($white, .8), 80);
+            $tile-disable-title-color: set-color-variant($color, $gray-700, rgba($white, .8), 80);
+            $tile-disable-subtitle-color: set-color-variant($color, $gray-500, rgba($white, .6), 80);
+            $tile-disable-leading-color: set-color-variant($color, $gray-500, rgba($white, .2), 80);
+            $tile-indicator-border-color: set-color-variant($color, $mdb-default-color-dark, lighten(set-alt-bgcolor($color, .25), 35%), 84);
 
             --#{$prefix}tile-action-color: #{$tile-leading-color};
             --#{$prefix}tile-leading-color: #{$tile-leading-color};
@@ -185,6 +51,20 @@
             --#{$prefix}tile-disable-leading-color: #{$tile-disable-leading-color};
             --#{$prefix}tile-disable-title-color: #{$tile-disable-title-color};
             --#{$prefix}tile-disable-subtitle-color: #{$tile-disable-subtitle-color};
+
+            $divider-color: set-color-variant($color, $gray-300, rgba($white, .1), 80);
+            $nav-item-expanded-bg: set-alt-bgcolor($color);
+
+            --#{$prefix}nav-item-color: #{$tile-title-color};
+            --#{$prefix}nav-item-divider-color: #{$divider-color};
+            --#{$prefix}nav-item-icon-color: #{$tile-leading-color};
+            --#{$prefix}nav-item-expanded-bg: #{$nav-item-expanded-bg};
+            --#{$prefix}nav-item-hover-bg: #{$tile-hover-bg};
+            --#{$prefix}nav-item-active-bg: #{$tile-active-bg};
+            --#{$prefix}nav-item-active-color: #{$tile-active-title-color};
+            --#{$prefix}nav-item-active-icon-color: #{$tile-active-leading-icon-color};
+            --#{$prefix}nav-item-disable-color: #{$tile-disable-title-color};
+            --#{$prefix}nav-item-disable-icon-color: #{$tile-disable-leading-color};
         }
     }
 }

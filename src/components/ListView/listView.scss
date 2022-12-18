@@ -2,10 +2,31 @@
 @import "../../../scss/variables";
 @import "../../../scss/mixins/listview";
 @import "~compass-mixins/lib/compass/css3";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
 
 .#{$prefix}list {
     --#{$prefix}listview-padding-x: 0;
-    --#{$prefix}listview-padding-y: #{$padding-base - .5};
+    --#{$prefix}listview-padding-y: #{$padding-sm};
+
+    --#{$prefix}tile-minheight: 3rem;
+    --#{$prefix}tile-action-minwidth: 1.5rem;
+    --#{$prefix}tile-spacing-x: #{$padding-base - .5};
+    --#{$prefix}tile-spacing-y: #{$padding-xs};
+    --#{$prefix}tile-padding-x: #{$padding-base};
+    --#{$prefix}tile-padding-y: #{$padding-sm};
+    --#{$prefix}tile-title-font-size: #{$font-size-base};
+    --#{$prefix}tile-title-font-weight: #{$font-weight-normal};
+    --#{$prefix}tile-subtitle-font-size: #{$font-size-base * 90/100};
+    --#{$prefix}tile-active-title-font-weight: #{$font-weight-semi-bold};
+    --#{$prefix}tile-active-indicator-border: #{map-get($border-widths, 4)};
+
+    --#{$prefix}nav-item-padding-x: #{$padding-base};
+    --#{$prefix}nav-item-padding-y: #{$padding-base - .25};
+    --#{$prefix}nav-item-line-height: normal;
+    --#{$prefix}nav-item-font-size: #{$font-size-base};
+    --#{$prefix}nav-item-font-weight: #{$font-weight-normal};
+    --#{$prefix}nav-item-active-font-weight: #{$font-weight-semi-bold};
 
     @include transition($md-transition-default, height);
     list-style-type: none;
