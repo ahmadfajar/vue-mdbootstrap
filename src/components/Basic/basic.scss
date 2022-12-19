@@ -22,20 +22,20 @@
     }
 
     &.divider--light {
-        --#{$prefix}divider-color: #{rgba($black, 0.2)};
+        --#{$prefix}divider-color: #{rgba($black, 0.25)};
     }
 }
 
 .#{$prefix}subheader {
-    --#{$prefix}subheader-fontsize: #{$font-size-base};
-    --#{$prefix}subheader-fontweight: #{$font-weight-normal};
+    --#{$prefix}subheader-font-size: #{$font-size-base};
+    --#{$prefix}subheader-font-size: #{$font-weight-semi-bold};
     --#{$prefix}subheader-padding-x: #{$padding-base};
     --#{$prefix}subheader-padding-y: 0;
 
     @include flexbox((display: flex, align-items: center));
     color: var(--#{$prefix}subheader-color);
-    font-size: var(--#{$prefix}subheader-fontsize);
-    font-weight: var(--#{$prefix}subheader-fontweight);
+    font-size: var(--#{$prefix}subheader-font-size);
+    font-weight: var(--#{$prefix}subheader-font-size);
     padding: var(--#{$prefix}subheader-padding-y) var(--#{$prefix}subheader-padding-x);
     height: 48px;
 

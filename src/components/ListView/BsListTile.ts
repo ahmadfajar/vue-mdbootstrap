@@ -34,7 +34,11 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, C
 
         watch(
             () => cmpProps.active,
-            (value) => isActive.value = value
+            (value) => {
+                if (provider && provider.config.individualState === true) {
+                    isActive.value = value
+                }
+            }
         );
         onBeforeUpdate(
             () => {

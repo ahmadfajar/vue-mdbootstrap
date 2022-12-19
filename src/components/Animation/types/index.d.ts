@@ -1,4 +1,4 @@
-import {
+import type {
     ComponentObjectPropsOptions,
     ComponentOptionsMixin,
     ComputedOptions,
@@ -6,23 +6,27 @@ import {
     EmitsOptions,
     TransitionProps
 } from "vue";
-import {TRecord} from "../../../types";
+import type {TRecord} from "../../../types";
 
-export declare type TRipple = {
-    uuid: string;
-    waveStyles: TRecord;
-}
-
-export declare type TRippleData = {
-    ripples: TRipple[];
-    eventType: string | null;
-    touchTimeout?: number | undefined;
-}
 
 export declare type TRippleOptionProps = {
+    /**
+     * Ripple animation state.
+     */
     active?: boolean;
+    /**
+     * Start animation from center or from mouse click position.
+     * If true then animation always start from center, otherwise animation
+     * will start from mouse click position.
+     */
     centered?: boolean;
+    /**
+     * Enable or disable ripple animation.
+     */
     disabled?: boolean;
+    /**
+     * Html tag used to render this component.
+     */
     tag?: string;
 }
 

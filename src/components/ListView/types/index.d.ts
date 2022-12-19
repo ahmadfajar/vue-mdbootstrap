@@ -243,8 +243,11 @@ export declare interface IListItem extends ObjectBase {
     readonly uid: string;
     readonly tag: string;
     readonly component: ComponentInternalInstance;
-    readonly parent?: ComponentInternalInstance | null;
     readonly children: Array<IListItem>;
+
+    get parent(): IListItem | undefined;
+
+    set parent(value: IListItem | undefined): void;
 
     /**
      * Add or register an item to this ListItem registry.
@@ -269,6 +272,8 @@ export declare interface IListItem extends ObjectBase {
     fireEvent(name: string, ...args: unknown[]): void;
 
     setActive(value: boolean): void;
+
+    setRippleOff(value: boolean): void;
 }
 
 export declare interface IListViewProvider extends ObjectBase {

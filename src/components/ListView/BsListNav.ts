@@ -1,5 +1,5 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, VNode} from "vue";
-import {computed, defineComponent, h, inject, ref, shallowRef} from "vue";
+import {computed, defineComponent, h, inject, nextTick, ref, shallowRef} from "vue";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
 import {booleanProp} from "../../mixins/CommonProps";
 import type {IListItem, IListViewProvider, IVNode, TBsListNav, TListNavOptionProps, TRecord} from "../../types";
@@ -38,14 +38,23 @@ export default defineComponent<TBsListNav, TRecord, TRecord, ComputedOptions, Co
             h("ul", {
                 id: props.id,
                 class: classNames.value,
-                onVnodeMounted: (vnode: VNode) => {
+                onVnodeBeforeMount: (vnode: VNode) => {
                     const context = (<IVNode>vnode).ctx;
-                    refItem.value = new ListItem(<string>cmpProps.id, "BsListNav", context, emit, context.parent);
+                    refItem.value = new ListItem(<string>cmpProps.id, "BsListNav", context, emit);
 
                     if (provider) {
                         if (cmpProps.child === true) {
-                            const item = provider.findItem(it => it.uid === context.parent?.props.id, true);
-                            item?.addChild(refItem.value);
+                            nextTick().then(() => {
+                                const item = provider.findItem(it =>
+                                        context.parent !== undefined && context.parent !== null
+                                        && it.uid === context.parent.props.id,
+                                    true
+                                );
+                                if (item && refItem.value) {
+                                    refItem.value.parent = item;
+                                    item.addChild(refItem.value);
+                                }
+                            });
                         } else {
                             provider.addItem(refItem.value);
                         }

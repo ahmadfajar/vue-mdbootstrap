@@ -20,8 +20,8 @@ $z-depth-3:                   0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 r
 $z-depth-4:                   0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21) !default;
 $z-depth-5:                   0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22) !default;
 
-$default-hover-bgcolor:             rgba($black, 0.045) !default;
 $default-active-bgcolor:            $mdb-default-color;
+$default-hover-bgcolor:             rgba($default-active-bgcolor, .06) !default; // rgba($black, 0.045) !default;
 
 // Transitions
 $transition-basic:                  all .3s ease-in-out !default;

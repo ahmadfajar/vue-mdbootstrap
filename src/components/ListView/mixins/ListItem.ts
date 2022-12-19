@@ -8,16 +8,15 @@ class ListItem implements IListItem {
     public readonly uid: string;
     public readonly tag: string;
     private readonly _component: ComponentInternalInstance;
-    private readonly _parent: ComponentInternalInstance | undefined | null;
     private readonly _emit: TEmitFn;
     private _children: Array<IListItem>;
+    private _parent: IListItem | undefined;
 
     constructor(uid: string, tag: string, component: ComponentInternalInstance,
-                emit: TEmitFn, parent?: ComponentInternalInstance | null) {
+                emit: TEmitFn) {
         this.uid = uid;
         this.tag = tag;
         this._component = component;
-        this._parent = parent;
         this._emit = emit;
         this._children = [];
     }
@@ -34,8 +33,12 @@ class ListItem implements IListItem {
         return this._component;
     }
 
-    get parent(): ComponentInternalInstance | undefined | null {
+    get parent(): IListItem | undefined {
         return this._parent;
+    }
+
+    set parent(value: IListItem | undefined) {
+        this._parent = value;
     }
 
     get children(): Array<IListItem> {
@@ -60,7 +63,7 @@ class ListItem implements IListItem {
     }
 
     hasChild(): boolean {
-        return this.children.length > 0;
+        return this.children.length > 0
     }
 
     fireEvent(name: string, ...args: unknown[]): void {
@@ -79,6 +82,10 @@ class ListItem implements IListItem {
         }
 
         this.fireEvent("update:active", value);
+    }
+
+    setRippleOff(value: boolean): void {
+        this.component.props.rippleOff = value;
     }
 }
 

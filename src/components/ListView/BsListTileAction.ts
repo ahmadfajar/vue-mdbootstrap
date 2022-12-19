@@ -29,7 +29,8 @@ export default defineComponent<TBsListTileAction, TRecord, TRecord, ComputedOpti
             useSimpleRenderWithSlots(<string>props.tag, slots, {
                 [`${cssPrefix}list-tile-action`]: true,
                 [`${cssPrefix}action-stack`]: cmpProps.stack === true,
-                "d-flex align-items-center": cmpProps.center === true,
+                "d-flex": !cmpProps.stack && cmpProps.center === true,
+                "align-self-center": cmpProps.center === true,
             })
     }
 });

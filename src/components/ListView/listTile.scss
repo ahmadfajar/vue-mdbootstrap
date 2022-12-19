@@ -73,7 +73,7 @@
     }
 
     .#{$prefix}list-tile-content {
-        @include flexbox((flex: 1, align-self: center));
+        @include flexbox((display: flex, flex: 1, align-self: center, flex-direction: column));
         max-width: 100%;
         width: auto;
         overflow: hidden;
@@ -107,7 +107,7 @@
 
             &.#{$prefix}has-icon {
                 @include flexbox((display: flex, align-items: center, align-self: center, justify-content: center));
-                margin-right: var(--#{$prefix}tile-padding-x);
+                margin-right: calc(var(--#{$prefix}tile-padding-x) - .75rem);
             }
         }
     }

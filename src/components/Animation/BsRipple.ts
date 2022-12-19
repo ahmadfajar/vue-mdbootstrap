@@ -1,31 +1,18 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, ref, watch} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {defineComponent, h, ref, watch} from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
 import {baseTagProps} from "../Card/mixins/cardProps";
 import {useCreateRipple} from "./mixins/rippleApi";
-import {IRippleEvent, TBsRipple, TRecord, TRippleOptionProps} from "../../types";
+import type {IRippleEvent, TBsRipple, TRecord, TRippleOptionProps} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsRipple",
     props: {
         ...baseTagProps,
-        /**
-         * Ripple animation state.
-         * @type {boolean}
-         */
         active: booleanProp,
-        /**
-         * Start animation from center or from mouse click position.
-         * If true then animation always start from center, otherwise animation
-         * will start from mouse click position.
-         * @type {boolean}
-         */
         centered: booleanProp,
-        /**
-         * Enable or disable ripple animation.
-         * @type {boolean}
-         */
         disabled: booleanProp,
     },
     emits: [
@@ -47,9 +34,9 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Com
         }
 
         watch(
-            () => props.active,
+            () => cmpProps.active,
             (value) => {
-                if (value && !props.disabled) {
+                if (value === true && !cmpProps.disabled) {
                     const event = {target: document.getElementById(cmpId)} as IRippleEvent;
                     useCreateRipple(event, cmpProps.centered);
                     Helper.defer(() => {
@@ -57,7 +44,22 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Com
                     }, 100);
                 }
             }
-        )
+        );
+        watch(
+            () => cmpProps.disabled,
+            (value) => {
+                if (value === true) {
+                    const target = document.getElementById(cmpId);
+
+                    if (target) {
+                        const ripple = target.getElementsByClassName(`${cssPrefix}ripple-animation`)[0];
+                        if (ripple) {
+                            ripple.remove();
+                        }
+                    }
+                }
+            }
+        );
 
         return () => {
             return h(props.tag as string, {

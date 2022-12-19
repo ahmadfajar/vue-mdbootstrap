@@ -15,18 +15,18 @@
     }
 }
 
-@function set-alt-bgcolor($color, $transparency: 0) {
+@function set-alt-bgcolor($color, $transparency: 0, $level: 80) {
     @if (lightness($color) == 100) {
         @if ($transparency > 0) {
             @return rgba($default-active-bgcolor, $transparency);
         } @else {
-            @return $white; // rgba($black, 0.08);
+            @return $white;
         }
-    } @else if (lightness($color) > 80) {
+    } @else if (lightness($color) > $level) {
         @if ($transparency > 0) {
-            @return rgba($default-hover-bgcolor, $transparency);
+            @return rgba(darken($color, 40%), $transparency + 0.1);
         } @else {
-            @return $default-hover-bgcolor;
+            @return rgba(darken($color, 25%), .2);
         }
     } @else {
         @if ($transparency > 0) {

@@ -1,3 +1,5 @@
+import type {ComponentInternalInstance, Ref} from "vue";
+import {isRef, unref} from "vue";
 import type {IListItem, IListViewProvider, TEmitFn, TListViewOptionProps, TRecord, TSpaceAround} from "../../../types";
 import Helper from "../../../utils/Helper";
 
@@ -54,7 +56,7 @@ class ListViewProvider implements IListViewProvider {
     }
 
     set activeItem(value: IListItem | undefined) {
-        this.setActiveItem(value);
+        this.setActiveItem(value).then();
     }
 
     addItem(item: IListItem): number {
@@ -68,25 +70,30 @@ class ListViewProvider implements IListViewProvider {
 
     findItem(predicate: (value: IListItem, sources: IListItem[]) => boolean,
              recursive = false): IListItem | undefined {
+        let result: IListItem | undefined;
+
         for (const it of this.items) {
             const ret = predicate(it, this.items);
 
             if (ret) {
-                return it;
+                result = it;
+                break;
             } else if (recursive) {
-                const retObj = this.iterateChildren(predicate, it, recursive, true);
+                const tmpObj = this.iterateChildren(predicate, it, recursive, true);
 
-                if (retObj !== undefined) {
-                    return retObj;
+                if (tmpObj !== undefined) {
+                    result = tmpObj;
+                    break;
                 }
             }
         }
 
-        return undefined;
+        return result;
     }
 
-    private iterateChildren(callbackFn: (value: IListItem, sources: IListItem[]) => unknown,
-                            source: IListItem, recursive: boolean, stopImmediately: boolean
+    private iterateChildren(
+        callbackFn: (value: IListItem, sources: IListItem[]) => unknown,
+        source: IListItem, recursive: boolean, stopImmediately: boolean,
     ): IListItem | undefined {
         let result: IListItem | undefined;
 
@@ -116,20 +123,24 @@ class ListViewProvider implements IListViewProvider {
     }
 
     execAction(actionFn: (value: IListItem, sources: IListItem[]) => unknown,
-               recursive = false, stopImmediately = false): void {
-        for (const it of this.items) {
-            const ret = actionFn(it, this.items);
+               recursive = false, stopImmediately = false): Promise<boolean> {
+        return new Promise((resolve) => {
+            for (const it of this.items) {
+                const ret = actionFn(it, this.items);
 
-            if (ret && stopImmediately) {
-                return;
-            } else if (recursive) {
-                const retObj = this.iterateChildren(actionFn, it, recursive, stopImmediately);
+                if (ret && stopImmediately) {
+                    break;
+                } else if (recursive) {
+                    const retObj = this.iterateChildren(actionFn, it, recursive, stopImmediately);
 
-                if (retObj !== undefined && stopImmediately) {
-                    return;
+                    if (retObj !== undefined && stopImmediately) {
+                        break;
+                    }
                 }
             }
-        }
+
+            resolve(true);
+        });
     }
 
     removeItem(item: IListItem): void {
@@ -140,7 +151,7 @@ class ListViewProvider implements IListViewProvider {
         }
     }
 
-    setActiveItem(value?: IListItem): void {
+    async setActiveItem(value?: IListItem): Promise<void> {
         if (value === undefined) {
             this._activeItem = undefined;
             this._emit("update:modelValue", undefined);
@@ -150,7 +161,7 @@ class ListViewProvider implements IListViewProvider {
             return;
         }
 
-        this.execAction((it) => {
+        await this.execAction((it) => {
             it.setActive(it.uid === value.uid);
             if (it.uid === value.uid) {
                 this.triggerEvent(it);
@@ -170,38 +181,52 @@ class ListViewProvider implements IListViewProvider {
         }
 
         if (item.tag === "BsListNav") {
-            (<TRecord>item.component.exposed).collapsing = true;
             Helper.defer(() => {
-                (<TRecord>item.component.exposed).collapsing = false;
-                (<TRecord>item.component.exposed).expanded = false;
-            }, 300);
+                this.setExposedValue(item.component, "collapsing", true);
+                Helper.defer(() => {
+                    this.setExposedValue(item.component, "collapsing", false);
+                    this.setExposedValue(item.component, "expanded", false);
+                }, 200);
+            }, 100);
         } else if (item.tag === "BsListNavItem") {
-            (<TRecord>item.component.exposed).expanded = false;
+            this.setExposedValue(item.component, "expanded", false);
+            if (!item.hasChild()) {
+                item.setRippleOff(true);
+            }
+        }
+    }
+
+    private setExposedValue<T>(component: ComponentInternalInstance, property: string, value: T): void {
+        if (isRef((<TRecord>component.exposed)[property])) {
+            (<Ref<T>>(<TRecord>component.exposed)[property]).value = value;
+        } else {
+            (<TRecord>component.exposed)[property] = value;
+        }
+    }
+
+    private expandItem(item: IListItem): void {
+        this.setExposedValue(item.component, "expanded", true);
+        item.setRippleOff(false);
+
+        if (item.hasChild()) {
+            this.setExposedValue(item.children[0].component, "expanded", true);
+            item.children[0].children.forEach((it) => it.setRippleOff(false));
         }
     }
 
     expand(item: IListItem): void {
         const cmp = item.component;
-
-        if (item.hasChild() && ["BsListNav", "BsListNavItem"].includes(item.tag) && !(<TRecord>cmp.exposed).expanded) {
+        if (item.hasChild() && ["BsListNav", "BsListNavItem"].includes(item.tag) && !unref((<TRecord>cmp.exposed).expanded)) {
             if (this.singleExpand) {
-                this.execAction((source) => {
-                    // Iterate root-item and check if root-item contains the provided item.
-                    const child = this.iterateChildren(
-                        (it) => it.uid === item.uid,
-                        source, true, true
-                    );
-
-                    if (child) {
-                        // If the root-item contains the provided item then return immediately.
-                        return child;
-                    } else {
-                        this.collapse(source);
-                    }
-                }, false, false);
+                if (item.parent) {
+                    item.parent.children.forEach((it) => {
+                        if (it.uid !== item.uid) {
+                            this.collapse(it);
+                        }
+                    });
+                }
             }
-
-            (<TRecord>cmp.exposed).expanded = true;
+            this.expandItem(item);
         }
     }
 }

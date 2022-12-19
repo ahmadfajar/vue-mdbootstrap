@@ -1,4 +1,4 @@
-import {IRippleEvent} from "../types";
+import type {IRippleEvent} from "../types";
 import {cssPrefix} from "../../../mixins/CommonApi";
 
 export function useCreateRipple(event: IRippleEvent, centered?: boolean) {
