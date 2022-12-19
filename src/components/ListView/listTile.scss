@@ -158,6 +158,7 @@
             > .#{$prefix}ripple {
                 &:before,
                 &:after {
+                    @include transition(.3s $md-transition-stand-timing);
                     background: var(--#{$prefix}tile-active-indicator-border-color);
                     content: " ";
                     display: block;
@@ -236,6 +237,49 @@
                     bottom: 0;
                     height: var(--#{$prefix}tile-active-indicator-border);
                     width: 100%;
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}tile-border-top,
+    &.#{$prefix}tile-border-bottom,
+    &.#{$prefix}tile-border-top-bottom {
+        &.active {
+            > .#{$prefix}ripple {
+                &.rounded-pill {
+                    &:before,
+                    &:after {
+                        --#{$prefix}tile-active-indicator-border: 5px;
+                        width: 85%;
+                        left: 7.5%;
+                    }
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}tile-border-top,
+    &.#{$prefix}tile-border-top-bottom {
+        &.active {
+            > .#{$prefix}ripple {
+                &.rounded-pill {
+                    &:before {
+                        @include border-bottom-radius(6px);
+                    }
+                }
+            }
+        }
+    }
+
+    &.#{$prefix}tile-border-bottom,
+    &.#{$prefix}tile-border-top-bottom {
+        &.active {
+            > .#{$prefix}ripple {
+                &.rounded-pill {
+                    &:after {
+                        @include border-top-radius(6px);
+                    }
                 }
             }
         }

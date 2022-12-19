@@ -13,6 +13,8 @@ export {BsSideDrawer} from "./Drawer";
 export {BsTextField, BsTextArea} from "./Field";
 export {BsIcon, BsIconSvg, BsIconSpinner, BsToggleIcon} from "./Icon";
 export {
+    BsListNav,
+    BsListNavItem,
     BsListTile,
     BsListTileAction,
     BsListTileContent,

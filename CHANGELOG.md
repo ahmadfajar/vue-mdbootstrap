@@ -4,7 +4,7 @@
 
 ## v2.0.0
 
-Released: December xx, 2022
+Released: January xx, 2023
 
 #### Features v2.0.0
 
@@ -16,6 +16,8 @@ Released: December xx, 2022
 - **BsAppContainer**: add property `viewportHeight`.
 - **BsButton**: add slot `icon` for placing a custom icon.
 - **BsChip**: add property `iconVariant`, `pill`.
+- **BsListNav**: add property `id`.
+- **BsListNavItem**: add property `id`, `borderOff`, `pillOff`, `roundedOff`, `badgeColor`, and `badgeType`.
 - **BsListTile**: add property `id`, `borderOff`, `pillOff`, and `roundedOff`.
 - **BsListTileSubtitle**: add property `rawHtml`.
 - **BsListTileTitle**: add property `rawHtml`.
@@ -72,7 +74,12 @@ Released: December xx, 2022
     is removed from package bundle. 
 - **BsIcon**: replace property `rotation` with `rotate`.
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
-- **BsListTile**: Remove property `exact`.
+- **BsListNavItem**:
+  - Removed property `exact`.
+  - Replace event `input` with `update:active`.
+- **BsListTile**:
+  - Removed property `exact`.
+  - Replace event `input` with `update:active`.
 - **BsListView**: Replace property `activeItemBordered` with `itemBorderVariant`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
 - **BsRipple**: removed property `eventTrigger`.

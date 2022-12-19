@@ -19,7 +19,7 @@
     margin: 0;
     list-style: none;
 
-    .collapsing {
+    &.collapsing {
         @include transition(height .65s $md-transition-drop-timing);
     }
 
