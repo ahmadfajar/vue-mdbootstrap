@@ -6,7 +6,7 @@ import BsCardFooter from "./BsCardFooter";
 import BsCardHeader from "./BsCardHeader";
 import BsCardMedia from "./BsCardMedia";
 import "./card.scss";
-import "../../../scss/_others.scss";
+import "../../../scss/utilities/_others.scss";
 
 const BsCardPlugin: Plugin_2 = {
     install: (app: App): void => {

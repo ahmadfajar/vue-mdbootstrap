@@ -1,9 +1,9 @@
+@import "../functions";
+@import "../colors";
+@import "../variables";
+@import "color_variants";
+@import "shadows";
 @import "~compass-mixins/lib/compass/css3";
-@import "functions";
-@import "colors";
-@import "variables";
-@import "utilities/color_variants";
-@import "utilities/shadows";
 
 .x-overflow-hidden {
     overflow-x: hidden !important;

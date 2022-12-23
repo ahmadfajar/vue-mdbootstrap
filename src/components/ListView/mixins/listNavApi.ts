@@ -9,23 +9,14 @@ import type {
     Slots,
     VNode
 } from "vue";
-import {createCommentVNode, createTextVNode, h, nextTick, toDisplayString} from "vue";
-import {cssPrefix, useHasRouter, useRenderRouter, useRenderSlot, useRenderTransition} from "../../../mixins/CommonApi";
+import {createCommentVNode, createTextVNode, h, toDisplayString} from "vue";
+import {cssPrefix, useHasRouter, useRenderRouter} from "../../../mixins/CommonApi";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
 import {BsRipple} from "../../Animation";
 import {BsBadge} from "../../Badge";
 import {BsIcon} from "../../Icon";
-import type {
-    IListItem,
-    IListViewProvider,
-    IVNode,
-    TBsRipple,
-    TEmitFn,
-    TListNavItemOptionProps,
-    TRecord
-} from "../../../types";
+import type {IListItem, IListViewProvider, TBsRipple, TEmitFn, TListNavItemOptionProps, TRecord} from "../../../types";
 import Helper from "../../../utils/Helper";
-import ListItem from "./ListItem";
 
 
 export function useListNavItemClasses(
@@ -104,7 +95,7 @@ function renderNavItemContent(
             ),
             (!Helper.isEmpty(cmpProps.badge)
                     ? h(BsBadge, {
-                        class: ["fw-normal me-3"],
+                        class: [hasChild.value ? "me-3" : ""],
                         color: props.badgeColor,
                         type: props.badgeType,
                         variant: props.badgeVariant,
@@ -137,7 +128,6 @@ function renderNavLink(
     return h("a", {
         class: classes.value,
         href: !cmpProps.disabled ? cmpProps.url : undefined,
-        onVnodeBeforeMount: (vnode: VNode) => onVNodeMountedHandler(cmpProps, instance, <IVNode>vnode, emit, provider),
         onClick: (evt: Event) => onVNodeClickHandler(cmpProps, isActive, isExpanded, instance, evt, provider),
     }, [
         renderNavItemContent(props, innerStyles, hasChild, isExpanded, provider),
@@ -161,46 +151,10 @@ function renderRouterLink(
             class: classes.value,
             activeClass: props.activeClass,
             to: !cmpProps.disabled ? cmpProps.path : undefined,
-            onVnodeBeforeMount: (vnode: IVNode) => onVNodeMountedHandler(cmpProps, instance, vnode, emit, provider),
             onClick: (evt: Event) => onVNodeClickHandler(cmpProps, isActive, isExpanded, instance, evt, provider)
         },
         renderNavItemContent(props, innerStyles, hasChild, isExpanded, provider),
     );
-}
-
-function onVNodeMountedHandler(
-    props: Readonly<TListNavItemOptionProps>,
-    instance: ShallowRef<IListItem | undefined>,
-    vnode: IVNode,
-    emit: TEmitFn,
-    provider?: IListViewProvider,
-): void {
-    const context = vnode.ctx;
-    instance.value = new ListItem(<string>props.id, "BsListNavItem", context, emit);
-
-    if (provider) {
-        if (context.parent?.props.child === true) {
-            Helper.defer(() => addChild(provider, context.parent, instance.value), 50);
-        } else {
-            nextTick().then(() => addChild(provider, context.parent, instance.value));
-        }
-    }
-}
-
-function addChild(
-    listViewProvider: IListViewProvider,
-    parent?: ComponentInternalInstance | null,
-    child?: IListItem,
-): void {
-    const item = listViewProvider.findItem(it =>
-            parent !== undefined && parent !== null
-            && it.uid === parent.props.id,
-        true
-    );
-    if (item && child) {
-        child.parent = item;
-        item.addChild(child);
-    }
 }
 
 function onVNodeClickHandler(
@@ -234,6 +188,21 @@ function onVNodeClickHandler(
     }
 }
 
+export async function useAddChild(
+    listViewProvider: IListViewProvider,
+    parent?: ComponentInternalInstance | null,
+    child?: IListItem,
+): Promise<void> {
+    await listViewProvider.execAction((it) => {
+        if (parent && child && it.uid === parent.props.id) {
+            child.parent = it;
+            it.addChild(child);
+
+            return it;
+        }
+    }, true, true);
+}
+
 export function useRenderListNavItem(
     slots: Slots,
     props: Readonly<ExtractPropTypes<ComponentObjectPropsOptions<TListNavItemOptionProps>>>,
@@ -258,11 +227,5 @@ export function useRenderListNavItem(
                 : renderNavLink(props, innerClasses, innerStyles, isActive, isExpanded, hasChild, instance, emit, provider)
         ),
         slots.default && slots.default(),
-        // useRenderTransition(
-        //     {name: "fade"},
-        //     hasChild.value && isExpanded.value
-        //         ? useRenderSlot(slots, "default")
-        //         : createCommentVNode(" BsAlert ", true)
-        // ),
     ]);
 }

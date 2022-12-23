@@ -1,147 +1,13 @@
-/* BsButton variants mixins -- backward compatibility */
-
-@mixin make-button($name, $color) {
-    .btn-#{$name} {
-        background-color: $color;
-        border-color: $color;
-        color: set-color-variant($color, $gray-900, $white, 80) !important;
-
-        &:hover {
-            background-color: lighten($color, 5%);
-            border-color: lighten($color, 5%);
-        }
-
-        &:focus,
-        &.focus {
-            @include box-shadow($z-depth-1);
-        }
-
-        &:focus,
-        &:active,
-        &.active {
-            background-color: darken($color, 10%);
-            border-color: darken($color, 10%);
-        }
-
-        &:not([disabled]):not(.disabled):not(.btn-raised):active,
-        &:not([disabled]):not(.disabled):not(.btn-raised).active {
-            background-color: darken($color, 10%);
-            border-color: darken($color, 10%);
-        }
-
-        &:not([disabled]):not(.disabled):active:focus,
-        &:not([disabled]):not(.disabled).active:focus,
-        .show > &.dropdown-toggle {
-            @include box-shadow(0 0 0 0.2rem rgba($color, .5));
-        }
-    }
-}
-
-// Make outline button
-@mixin make-outline-button($name, $color) {
-    .btn-outline-#{$name} {
-        background-color: transparent;
-        border: 1px solid $color;
-        color: $color;
-
-        &:hover,
-        &:focus,
-        &:active,
-        &:active:focus,
-        &.active {
-            border-color: darken($color, 8%);
-            color: set-color-variant($color, $white, darken($color, 10%), 80); // darken($color, 10%);
-
-            @if ($name == 'light' or $name == 'light-grey') {
-                background-color: rgba($color, .2);
-            } @else {
-                background-color: rgba(lighten($color, 15%), .3);
-            }
-        }
-
-        &:not([disabled]):not(.disabled):active,
-        &:not([disabled]):not(.disabled).active {
-            border-color: darken($color, 8%);
-            color: set-color-variant($color, $white, darken($color, 15%), 80); // darken($color, 15%);
-
-            @if ($name == 'light' or $name == 'light-grey') {
-                background-color: rgba($color, .2);
-            } @else {
-                background-color: rgba(lighten($color, 15%), .3);
-            }
-        }
-
-        &:not([disabled]):not(.disabled):active:focus,
-        &:not([disabled]):not(.disabled).active:focus,
-        .show > &.dropdown-toggle:focus {
-            @include box-shadow(0 0 0 0.2rem rgba($color, .5));
-        }
-    }
-}
-
-// Make flat button
-@mixin make-flat-button($name, $color) {
-    .btn-flat-#{$name} {
-        @include box-shadow(none);
-        background-color: transparent;
-        border-width: 0 !important;
-        border-color: transparent;
-        color: $color;
-
-        &:not([disabled]), &:not(.disabled) {
-            &:hover,
-            &:active,
-            &.active,
-            &:focus {
-                border-color: transparent;
-                background-color: rgba(lighten($color, 15%), .2);
-                color: set-color-variant($color, $white, darken($color, 15%), 80); // darken($color, 15%);
-            }
-
-            &:active:focus {
-                background-color: rgba(lighten($color, 15%), .2);
-                border-color: rgba(lighten($color, 18%), .15);
-            }
-
-            &:hover,
-            &:focus,
-            &.active,
-            &:active {
-                @include box-shadow(none);
-            }
-
-            &:active:focus,
-            &.active:focus {
-                @include box-shadow($z-depth-1);
-            }
-
-            &.btn-raised {
-                @include box-shadow(none);
-
-                &:hover,
-                &:focus,
-                &.active,
-                &:active {
-                    @include box-shadow($z-depth-1);
-                }
-
-                &:active:focus,
-                &.active:focus {
-                    @include box-shadow($z-depth-1-half);
-                }
-            }
-        }
-    }
-}
+@use "sass:color";
 
 /* BsButton variants mixins -- sass variables */
 
 @mixin make-button-variant($name, $color) {
     .btn-#{$name} {
-        $active-box-shadow-color-rgb: to-rgb(lighten($color, 5%));
-        $text-color: set-color-variant($color, $black, $white, 80);
-        $hover-color: darken($color, 8%);
-        $active-color: darken($color, 14%);
+        $active-box-shadow-color-rgb: to-rgb(color.scale($color, $lightness: 5%));
+        $text-color: set-color-contrast($color, $black, $white);
+        $hover-color: color.scale($color, $lightness: -15%);
+        $active-color: color.scale($color, $lightness: -35%);
 
         --#{$bs-prefix}btn-bg: #{$color};
         --#{$bs-prefix}btn-color: #{$text-color};
@@ -168,8 +34,6 @@
         @if ($name == 'light' or $name == 'light-grey') {
             $active-bg-rgba: rgba($border-color, .2);
             $active-border-color-rgba: darken($border-color, 8%);
-            //$active-color: darken($color, 90%);
-            //$normal-color: darken($color, 50%);
             --#{$bs-prefix}btn-color: #{$color};
             --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
             --#{$bs-prefix}btn-active-color: #{$white};
@@ -178,14 +42,15 @@
             --#{$bs-prefix}btn-hover-color: #{$color};
             --#{$bs-prefix}btn-hover-border-color: #{$active-border-color-rgba};
         } @else {
-            $active-bg-rgba: rgba(lighten($color, 15%), .3);
+            $active-bg-rgba: rgba(color.scale($color, $lightness: 5%), .4);
+            $active-color-rgba: set-color-contrast($active-bg-rgba, $white, color.scale($color, $lightness: -40%), 220);
+            $hover-bg-rgba: rgba(color.scale($color, $lightness: 45%), .35);
             $hover-border-color: lighten($color, 10%);
-            $active-color-rgba: set-color-variant($color, $white, darken($color, 10%), 80);
             --#{$bs-prefix}btn-color: #{$color};
             --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
             --#{$bs-prefix}btn-active-color: #{$active-color-rgba};
             --#{$bs-prefix}btn-active-border-color: #{$color};
-            --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
+            --#{$bs-prefix}btn-hover-bg: #{$hover-bg-rgba};
             --#{$bs-prefix}btn-hover-color: #{$active-color-rgba};
             --#{$bs-prefix}btn-hover-border-color: #{$hover-border-color};
         }
@@ -198,24 +63,20 @@
         --#{$bs-prefix}btn-border-color: transparent;
         --#{$bs-prefix}btn-border-width: 0;
         --#{$bs-prefix}btn-color: #{$color};
-        --#{$bs-prefix}btn-hover-color: #{$color};
+        --#{$bs-prefix}btn-hover-color: #{color.scale($color, $lightness: -20%)};
 
         @if ($name == 'light' or $name == 'light-grey') {
             $active-bg-rgba: rgba($gray-500, .2);
-            //$active-color: darken($color, 90%);
             --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
             --#{$bs-prefix}btn-active-color: #{$white};
             --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
         } @else {
-            $active-bg-color: rgba(lighten($color, 15%), .3);
+            $active-bg-color: rgba(color.scale($color, $lightness: 10%), .3);
             $active-color: darken($color, 10%);
+            $hover-bg-rgba: set-color-contrast($color, rgba(color.scale($color, $lightness: 15%), .3), rgba(color.scale($color, $lightness: 20%), .2));
+
             --#{$bs-prefix}btn-active-bg: #{$active-bg-color};
             --#{$bs-prefix}btn-active-color: #{$active-color};
-
-            $hover-bg-rgba: set-color-variant(
-                            $color, rgba(lighten($color, 15%), .3),
-                            rgba(lighten($color, 20%), .2), 55
-            );
             --#{$bs-prefix}btn-hover-bg: #{$hover-bg-rgba};
         }
     }

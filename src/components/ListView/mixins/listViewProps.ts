@@ -56,10 +56,7 @@ export const listNavItemProps = {
     badge: stringProp,
     badgeColor: stringProp,
     badgeType: stringProp,
-    badgeVariant: {
-        type: String,
-        default: 'success'
-    },
+    badgeVariant: stringProp,
     borderOff: booleanProp,
     pillOff: booleanProp,
     rippleOff: booleanProp,

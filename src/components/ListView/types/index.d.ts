@@ -311,7 +311,7 @@ export declare interface IListViewProvider extends ObjectBase {
      * @param recursive        When `TRUE` the callback will be executed for every child.
      * @param stopImmediately  When `TRUE` if the callback returns a result, function will be stopped immediately.
      */
-    execAction(actionFn: (value: IListItem, sources: IListItem[]) => unknown, recursive: boolean = false, stopImmediately: boolean = false): void;
+    execAction(actionFn: (value: IListItem, sources: IListItem[]) => unknown, recursive: boolean = false, stopImmediately: boolean = false): Promise<void>;
 
     /**
      * Remove an item from the collection.
@@ -320,7 +320,7 @@ export declare interface IListViewProvider extends ObjectBase {
      */
     removeItem(item: IListItem): void;
 
-    setActiveItem(value?: IListItem): void;
+    setActiveItem(value?: IListItem): Promise<void>;
 
     /**
      * Collapse current item and hide its child-items.

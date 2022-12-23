@@ -1,8 +1,20 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, inject, nextTick, onMounted, ref, shallowRef, watch} from "vue";
+import {
+    computed,
+    defineComponent,
+    getCurrentInstance,
+    inject,
+    nextTick,
+    onBeforeMount,
+    onMounted,
+    ref,
+    shallowRef,
+    watch
+} from "vue";
 import {useRoute} from "vue-router";
 import {useHasRouter} from "../../mixins/CommonApi";
 import {
+    useAddChild,
     useListNavItemClasses,
     useListNavItemInnerClasses,
     useNavItemContentStyles,
@@ -10,6 +22,7 @@ import {
 } from "./mixins/listNavApi";
 import {listNavItemProps} from "./mixins/listViewProps";
 import type {IListItem, IListViewProvider, TBsListNavItem, TListNavItemOptionProps, TRecord} from "../../types";
+import ListItem from "./mixins/ListItem";
 
 
 export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
@@ -52,6 +65,18 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
                 }
             );
         }
+        onBeforeMount(
+            () => {
+                const vm = getCurrentInstance();
+                if (vm) {
+                    refItem.value = new ListItem(<string>props.id, "BsListNavItem", vm, emit);
+
+                    if (provider) {
+                        nextTick().then(() => useAddChild(provider, vm.parent, refItem.value));
+                    }
+                }
+            }
+        );
         onMounted(
             () => {
                 if (useHasRouter(cmpProps)) {

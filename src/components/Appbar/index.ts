@@ -4,7 +4,7 @@ import BsAppbar from "./BsAppbar";
 import BsAppbarItems from "./BsAppbarItems";
 import BsAppbarTitle from "./BsAppbarTitle";
 import "./appbar.scss";
-import "../../../scss/_others.scss";
+import "../../../scss/utilities/_others.scss";
 
 const BsAppbarPlugin: Plugin_2 = {
     install: (app: App): void => {

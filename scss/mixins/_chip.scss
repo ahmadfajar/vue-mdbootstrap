@@ -1,11 +1,14 @@
+@use "sass:color";
+
 /* BsChip variants mixins -- sass variables */
 
 @mixin make-chip-variant($name, $color) {
     .#{$prefix}chip-#{$name} {
-        $chip-color: set-color-variant($color, rgba(lighten($color, 20%), .55), rgba(lighten($color, 30%), .55), 57);
+        $chip-color: set-color-contrast($color, rgba(color.scale($color, $lightness: 20%), .55), rgba(color.scale($color, $lightness: 30%), .55));
         $icon-color: darken($color, 5%);
-        $hover-bg: darken($chip-color, 10%);
-        $active-bg: darken($chip-color, 25%);
+        $hover-bg: color.scale($chip-color, $lightness: -25%);
+        $active-bg: color.scale($color, $lightness: 10%);
+        $active-color: set-color-contrast($active-bg, $black, $white);
         $active-box-shadow-color-rgb: to-rgb($chip-color);
 
         @if($name == 'light') {
@@ -34,7 +37,7 @@
         --#{$prefix}chip-hover-border-color: #{$hover-bg};
         --#{$prefix}chip-hover-color: #{$black};
         --#{$prefix}chip-active-border-color: #{$active-bg};
-        --#{$prefix}chip-active-color: #{$black};
+        --#{$prefix}chip-active-color: #{$active-color};
         --#{$prefix}chip-icon-color: #{$icon-color};
         --#{$prefix}chip-focus-border-color: #{$active-bg};
         --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
@@ -44,19 +47,18 @@
 @mixin make-chip-outline-variant($name, $color) {
     .#{$prefix}chip-outline-#{$name} {
         $border-color: lighten($gray-600, 25%);
-        $hover-bg: set-color-variant($color, rgba(darken($color, 10%), .4), rgba(lighten($color, 20%), .2), 80);
-        $hover-border: set-color-variant($color, $border-color, lighten($color, 12%), 80);
-        $hover-color: set-color-variant($color, $white, darken($color, 12%), 80);
-        $active-bg: set-color-variant($color, rgba(darken($color, 6%), .4), rgba(lighten($color, 15%), .3), 80);
-        $active-color: set-color-variant($color, $white, darken($color, 20%), 80);
-        $focus-border: set-color-variant($color, darken($border-color, 15%), $color, 80);
+        $hover-bg: set-color-contrast($color, rgba(darken($color, 10%), .4), rgba(lighten($color, 20%), .2), 200);
+        $hover-border: set-color-contrast($color, $border-color, lighten($color, 12%));
+        $hover-color: set-color-contrast($color, $white, color.scale($color, $lightness: -40%), 210);
+        $active-bg: set-color-contrast($color, rgba(color.scale($color, $lightness: -10%), .4), rgba(color.scale($color, $lightness: 15%), .3), 200);
+        $active-color: set-color-contrast($color, $white, color.scale($color, $lightness: -40%), 210);
+        $focus-border: set-color-contrast($color, darken($border-color, 15%), $color);
         $active-box-shadow-color-rgb: to-rgb(lighten($hover-bg, 10%));
 
-        --#{$prefix}chip-bg: transparent;
         @if($name == 'grey' or $name == 'secondary') {
             $hover-bg-alt: rgba(darken($color, 2%), .3);
             $active-bg-alt: rgba(darken($color, 6%), .3);
-            $active-border: set-color-variant($color, $color, rgba(lighten($color, 20%), .1), 80);
+            $active-border: set-color-contrast($color, $color, rgba(lighten($color, 20%), .1));
             --#{$prefix}chip-color: #{$gray-800};
             --#{$prefix}chip-hover-bg: #{$hover-bg-alt};
             --#{$prefix}chip-hover-color: #{$gray-900};
@@ -74,6 +76,7 @@
             --#{$prefix}chip-hover-border-color: #{$hover-border};
         }
 
+        --#{$prefix}chip-bg: transparent;
         --#{$prefix}chip-border-color: #{$border-color};
         --#{$prefix}chip-icon-color: #{$color};
         --#{$prefix}chip-focus-border-color: #{$focus-border};

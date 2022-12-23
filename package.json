@@ -34,8 +34,8 @@
     "fast-xml-parser": "^4.0.12",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
-    "node-sass": "^8.0.0",
     "resize-observer-polyfill": "^1.5.1",
+    "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
     "vue": "^3.2.45"
   },

@@ -1,30 +1,34 @@
+@use "sass:color";
+@use "sass:map";
+@use "sass:math";
+
 // Colors function
 @function theme-color-level($theme, $color-name: "primary", $level: 0) {
-    $color: map-get($theme, $color-name);
+    $color: map.get($theme, $color-name);
     $color-base: if($level > 0, $black, $white);
-    $level: abs($level);
+    $level: math.abs($level);
 
-    @return mix($color-base, $color, $level * $theme-color-interval);
+    @return color.mix($color-base, $color, $level * $theme-color-interval);
 }
 
-@function set-color-variant($bgColor, $textOnLightBgColor, $textOnDarkBgColor, $whiteLevel) {
-    @if (lightness($bgColor) > $whiteLevel) {
-        @return $textOnLightBgColor; // Lighter background, return dark color
+@function set-color-contrast($bgColor, $textOnLightBgColor, $textOnDarkBgColor, $brightnessLevel: 165) {
+    @if (brightness($bgColor) > $brightnessLevel) {
+        @return $textOnLightBgColor;
     } @else {
-        @return $textOnDarkBgColor; // Darker background, return light color
+        @return $textOnDarkBgColor;
     }
 }
 
-@function set-alt-bgcolor($color, $transparency: 0, $level: 80) {
-    @if (lightness($color) == 100) {
+@function set-alt-bgcolor($color, $transparency: 0, $brightnessLevel: 170) {
+    @if (brightness($color) > 254) {
         @if ($transparency > 0) {
             @return rgba($default-active-bgcolor, $transparency);
         } @else {
             @return $white;
         }
-    } @else if (lightness($color) > $level) {
+    } @else if (brightness($color) > $brightnessLevel) {
         @if ($transparency > 0) {
-            @return rgba(darken($color, 40%), $transparency + 0.1);
+            @return rgba(darken($color, 35%), $transparency + 0.1);
         } @else {
             @return rgba(darken($color, 25%), .2);
         }
@@ -37,6 +41,14 @@
     }
 }
 
+@function brightness($color) {
+    $red: color.red($color) * 299;
+    $green: color.green($color) * 587;
+    $blue: color.blue($color) * 114;
+
+    @return math.div(($red + $green + $blue), 1000);
+}
+
 @function to-rgb($value) {
-    @return red($value), green($value), blue($value);
+    @return color.red($value), color.green($value), color.blue($value);
 }

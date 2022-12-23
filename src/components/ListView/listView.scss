@@ -3,8 +3,6 @@
 @import "../../../scss/functions";
 @import "../../../scss/mixins/listview";
 @import "~compass-mixins/lib/compass/css3";
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
 
 .#{$prefix}list {
     --#{$prefix}listview-padding-x: 0;
@@ -18,9 +16,9 @@
     --#{$prefix}tile-padding-y: #{$padding-sm};
     --#{$prefix}tile-title-font-size: #{$font-size-base};
     --#{$prefix}tile-title-font-weight: #{$font-weight-normal};
-    --#{$prefix}tile-subtitle-font-size: #{$font-size-base * 90/100};
+    --#{$prefix}tile-subtitle-font-size: #{calc($font-size-base * 90/100)};
     --#{$prefix}tile-active-title-font-weight: #{$font-weight-semi-bold};
-    --#{$prefix}tile-active-indicator-border: #{map-get($border-widths, 4)};
+    --#{$prefix}tile-active-indicator-border: 4px;
 
     --#{$prefix}nav-item-padding-x: #{$padding-base};
     --#{$prefix}nav-item-padding-y: #{$padding-base - .25};

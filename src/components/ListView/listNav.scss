@@ -6,7 +6,7 @@
 
 
 .#{$prefix}list-nav {
-    --#{$prefix}nav-item-state-bgcolor: inherit;
+    --#{$prefix}nav-item-state-bgcolor: transparent;
     --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-color);
     --#{$prefix}nav-item-state-icon-color: var(--#{$prefix}nav-item-icon-color);
     --#{$prefix}nav-item-state-font-weight: var(--#{$prefix}nav-item-font-weight);
@@ -24,11 +24,14 @@
     }
 
     .#{$prefix}nav-item {
+        background-color: var(--#{$prefix}nav-item-state-bgcolor);
         position: relative;
         white-space: nowrap;
         width: 100%;
 
         > .#{$prefix}nav-item-inner {
+            --#{$prefix}tile-spacing-y: #{$padding-xs - .1};
+
             @include user-select(none);
             cursor: pointer;
             display: block;
@@ -62,20 +65,23 @@
                 }
 
                 > .badge {
-                    font-size: 75%;
+                    --#{$bs-prefix}badge-font-size: 75%;
+                    --#{$bs-prefix}badge-padding-y: #{$padding-xs};
+                    --#{$bs-prefix}badge-font-weight: #{$font-weight-normal};
                     line-height: var(--#{$prefix}nav-item-line-height);
                 }
 
                 > .expand-more {
                     @include transition(all 0.3s ease 0s);
                     @include transform(rotateZ(0deg));
+                    color: var(--#{$prefix}nav-item-state-icon-color);
                 }
             }
         }
 
         &.#{$prefix}expanded {
             --#{$prefix}nav-item-state-bgcolor: var(--#{$prefix}nav-item-expanded-bg);
-            --#{$prefix}nav-item-inner-state-bgcolor: var(--#{$prefix}nav-item-expanded-bg);
+            --#{$prefix}nav-item-inner-state-bgcolor: transparent;
 
             > .#{$prefix}nav-item-inner {
                 > .#{$prefix}ripple {
@@ -94,7 +100,8 @@
 
             &.#{$prefix}nav-parent {
                 &.#{$prefix}expanded {
-                    --#{$prefix}nav-item-inner-state-bgcolor: var(--#{$prefix}nav-item-expanded-bg);
+                    --#{$prefix}nav-item-inner-state-bgcolor: transparent;
+                    --#{$prefix}nav-item-state-bgcolor: var(--#{$prefix}nav-item-expanded-bg);
                     --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-color);
                     --#{$prefix}nav-item-state-icon-color: var(--#{$prefix}nav-item-icon-color);
                 }

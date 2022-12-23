@@ -123,7 +123,7 @@ class ListViewProvider implements IListViewProvider {
     }
 
     execAction(actionFn: (value: IListItem, sources: IListItem[]) => unknown,
-               recursive = false, stopImmediately = false): Promise<boolean> {
+               recursive = false, stopImmediately = false): Promise<void> {
         return new Promise((resolve) => {
             for (const it of this.items) {
                 const ret = actionFn(it, this.items);
@@ -139,7 +139,7 @@ class ListViewProvider implements IListViewProvider {
                 }
             }
 
-            resolve(true);
+            resolve();
         });
     }
 

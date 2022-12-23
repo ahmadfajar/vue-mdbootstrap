@@ -1,14 +1,5 @@
-import {
-    ComponentOptionsMixin,
-    ComputedOptions,
-    defineComponent,
-    EmitsOptions,
-    h, Prop,
-    ref,
-    vModelCheckbox,
-    vModelRadio,
-    withDirectives
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "vue";
+import {defineComponent, h, ref, vModelCheckbox, vModelRadio, withDirectives} from "vue";
 import {useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemContent} from "./mixins/buttonApi";
 import {toggleButtonProps} from "./mixins/buttonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
@@ -56,10 +47,10 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
             return h("div", {
                     class: [
                         "btn-group",
-                        props.pill ? "rounded-pill" : (!props.pill && !props.rounded ? "rounded-1" : ""),
-                        props.disabled ? `${cssPrefix}disabled` : "",
-                        props.readonly ? `${cssPrefix}readonly` : "",
-                        props.required ? `${cssPrefix}required` : "",
+                        cmpProps.pill ? "rounded-pill" : (!cmpProps.pill && !cmpProps.rounded ? "rounded-1" : ""),
+                        cmpProps.disabled ? `${cssPrefix}disabled` : "",
+                        cmpProps.readonly ? `${cssPrefix}readonly` : "",
+                        cmpProps.required ? `${cssPrefix}required` : "",
                     ],
                     id: props.id,
                     role: "group",

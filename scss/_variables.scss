@@ -3,6 +3,7 @@ $prefix:                      'md-' !default;
 $bs-prefix:                   'bs-' !default;
 
 // Fonts
+$font-size-base:              1rem !default;
 $font-weight-thin:            200;
 $font-weight-light:           300;
 $font-weight-normal:          400;
@@ -12,7 +13,6 @@ $font-weight-boldest:         900;
 
 // Shadows
 $z-depth-1:                   0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 8px 0 rgba(0, 0, 0, 0.12) !default;
-//$z-depth-half:                0 1px 4px 0 rgba(0, 0, 0, 0.2), 0 2px 3px 0 rgba(0, 0, 0, 0.02) !default;
 $z-depth-half:                0 1px 2px 0 rgba(50, 50, 50, 0.35), 0 2px 4px 2px rgba(10, 10, 10, 0.05) !default;
 $z-depth-1-half:              0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15) !default;
 $z-depth-2:                   0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !default;
@@ -98,27 +98,26 @@ $alert-color-level:                 6 !default;
 $btn-border-radius:                 $border-radius-lg !default;
 $btn-border-radius-lg:              .7rem !default;
 $btn-margin-basic:                  .375rem !default;
-$btn-color-basic:                   $white !default;
 $btn-transition:                    color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
 
 // Input Controls
-$checkbox-size:                  20px !default;
-$checkbox-touch-size:            40px !default;
-$checkbox-stroke:                2px !default;
-$checkbox-indeterminate-width:   12px !default;
-$checkbox-margin:                .5rem 1rem .5rem 0 !default;
+$checkbox-size:                     20px !default;
+$checkbox-touch-size:               40px !default;
+$checkbox-stroke:                   2px !default;
+$checkbox-indeterminate-width:      12px !default;
+$checkbox-margin:                   .5rem 1rem .5rem 0 !default;
 
-$radio-size:                     $checkbox-size !default;
-$radio-touch-size:               $checkbox-touch-size !default;
-$radio-stroke:                   $checkbox-stroke !default;
-$radio-margin:                   $checkbox-margin !default;
+$radio-size:                        $checkbox-size !default;
+$radio-touch-size:                  $checkbox-touch-size !default;
+$radio-stroke:                      $checkbox-stroke !default;
+$radio-margin:                      $checkbox-margin !default;
 
-$switch-size:                    $checkbox-size !default;
-$switch-touch-size:              $checkbox-touch-size !default;
-$switch-width:                   34px !default;
-$switch-height:                  14px !default;
-$switch-margin:                  .5rem .25rem .5rem .25rem !default;
-$switch-shadows:                 0 0 6px -1px rgba(#000, .1), 0 1px 1px 1px rgba(#000, .15), 0 1px 3px 0 rgba(#000, 0.12) !default;
+$switch-size:                       $checkbox-size !default;
+$switch-touch-size:                 $checkbox-touch-size !default;
+$switch-width:                      34px !default;
+$switch-height:                     14px !default;
+$switch-margin:                     .5rem .25rem .5rem .25rem !default;
+$switch-shadows:                    0 0 6px -1px rgba(#000, .1), 0 1px 1px 1px rgba(#000, .15), 0 1px 3px 0 rgba(#000, 0.12) !default;
 
 $text-field-height:                 3.5rem !default;
 $text-field-padding-top:            1.625rem !default;

@@ -286,6 +286,28 @@
     }
 }
 
+.#{$prefix}nav-item {
+    &.#{$prefix}expanded {
+        > .#{$prefix}nav-item-inner {
+            &.#{$prefix}tile-border-top,
+            &.#{$prefix}tile-border-bottom,
+            &.#{$prefix}tile-border-top-bottom,
+            &.#{$prefix}tile-border-right,
+            &.#{$prefix}tile-border-left,
+            &.#{$prefix}tile-border-left-right {
+                &.active {
+                    > .#{$prefix}ripple {
+                        &:before,
+                        &:after {
+                            --#{$prefix}tile-active-indicator-border: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 @each $name, $color in map-merge($merge-theme-colors, ("white": $white)) {
     @include make-list-tile-variant($name, $color);
 }

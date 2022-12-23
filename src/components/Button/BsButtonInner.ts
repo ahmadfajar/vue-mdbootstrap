@@ -1,8 +1,9 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {defineComponent, h} from "vue";
 import {BsRipple} from "../Animation";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {buttonInnerProps} from "./mixins/buttonProps";
-import {TBsButtonInner, TBsRipple, TButtonInnerOptionProps, TRecord} from "../../types";
+import type {TBsButtonInner, TBsRipple, TButtonInnerOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsButtonInner",

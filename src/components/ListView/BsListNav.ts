@@ -1,8 +1,9 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, VNode} from "vue";
-import {computed, defineComponent, h, inject, nextTick, ref, shallowRef} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, getCurrentInstance, h, inject, nextTick, onBeforeMount, ref, shallowRef} from "vue";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
 import {booleanProp} from "../../mixins/CommonProps";
-import type {IListItem, IListViewProvider, IVNode, TBsListNav, TListNavOptionProps, TRecord} from "../../types";
+import type {IListItem, IListViewProvider, TBsListNav, TListNavOptionProps, TRecord} from "../../types";
+import {useAddChild} from "./mixins/listNavApi";
 import ListItem from "./mixins/ListItem";
 
 
@@ -33,33 +34,27 @@ export default defineComponent<TBsListNav, TRecord, TRecord, ComputedOptions, Co
                 "collapsing": cmpProps.child === true && collapsing.value,
             })
         );
+        onBeforeMount(
+            () => {
+                const vm = getCurrentInstance();
+                if (vm) {
+                    refItem.value = new ListItem(<string>cmpProps.id, "BsListNav", vm, emit);
+
+                    if (provider) {
+                        if (cmpProps.child === true) {
+                            nextTick().then(() => useAddChild(provider, vm.parent, refItem.value));
+                        } else {
+                            provider.addItem(refItem.value);
+                        }
+                    }
+                }
+            }
+        );
 
         return () =>
             h("ul", {
                 id: props.id,
                 class: classNames.value,
-                onVnodeBeforeMount: (vnode: VNode) => {
-                    const context = (<IVNode>vnode).ctx;
-                    refItem.value = new ListItem(<string>cmpProps.id, "BsListNav", context, emit);
-
-                    if (provider) {
-                        if (cmpProps.child === true) {
-                            nextTick().then(() => {
-                                const item = provider.findItem(it =>
-                                        context.parent !== undefined && context.parent !== null
-                                        && it.uid === context.parent.props.id,
-                                    true
-                                );
-                                if (item && refItem.value) {
-                                    refItem.value.parent = item;
-                                    item.addChild(refItem.value);
-                                }
-                            });
-                        } else {
-                            provider.addItem(refItem.value);
-                        }
-                    }
-                },
                 onVnodeBeforeUnmount: () => refItem.value?.destroy(),
             }, slots.default && slots.default())
     }

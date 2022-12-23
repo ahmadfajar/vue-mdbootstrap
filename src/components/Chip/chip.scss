@@ -1,8 +1,8 @@
-@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/chip";
+@import "~compass-mixins/lib/compass/css3";
 
 .#{$prefix}chip {
     $disabled-bg: lighten($gray-500, 15%);

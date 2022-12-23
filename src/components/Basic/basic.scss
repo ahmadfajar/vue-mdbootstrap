@@ -1,8 +1,6 @@
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "~compass-mixins/lib/compass/css3";
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
 
 .#{$prefix}divider {
     --#{$prefix}divider-height: 1px;

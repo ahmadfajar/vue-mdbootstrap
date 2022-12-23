@@ -3,7 +3,7 @@ import BsMaskLoader from "./BsMaskLoader";
 import BsProgress from "./BsProgress";
 import BsProgressBar from "./BsProgressBar";
 import "./progress.scss";
-import "../../../scss/_others.scss";
+import "../../../scss/utilities/_others.scss";
 
 const BsProgressPlugin: Plugin_2 = {
     install: (app: App): void => {

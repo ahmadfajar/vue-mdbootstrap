@@ -2,7 +2,7 @@
 
 @mixin make-checkbox($name, $color) {
     .#{$prefix}checkbox-#{$name} {
-        $checked-color: set-color-variant($color, $black, $white, 70);
+        $checked-color: set-color-contrast($color, $black, $white, 170);
 
         --#{$prefix}checkbox-bg: #{$color};
         --#{$prefix}checkbox-color: #{$checked-color};
