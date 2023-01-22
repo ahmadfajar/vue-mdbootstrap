@@ -1,3 +1,5 @@
+@use "sass:list";
+
 /* BsListView variants mixins -- sass variables */
 
 @mixin make-listview-variant($name, $color) {
@@ -32,7 +34,7 @@
             $tile-disable-title-color: set-color-contrast($color, rgba($black, .5), rgba($white, .4));
             $tile-disable-subtitle-color: $tile-disable-title-color;
             $tile-disable-leading-color: $tile-disable-title-color;
-            $tile-indicator-border-color: set-color-contrast($color, darken($mdb-default-color, 5%), lighten(set-alt-bgcolor($color, .25), 35%), 220);
+            $tile-indicator-border-color: set-color-contrast($color, darken($mdb-default-color, 5%), lighten(set-alt-bgcolor($color, .65), 75%), 220);
 
             --#{$prefix}tile-action-color: #{$tile-leading-color};
             --#{$prefix}tile-leading-color: #{$tile-leading-color};
@@ -46,7 +48,13 @@
             --#{$prefix}tile-active-leading-icon-color: #{$tile-active-leading-icon-color};
             --#{$prefix}tile-active-title-color: #{$tile-active-title-color};
             --#{$prefix}tile-active-subtitle-color: #{$tile-active-subtitle-color};
-            --#{$prefix}tile-active-indicator-border-color: #{$tile-indicator-border-color};
+
+            $list-colors: "amber", "yellow", "lime", "warning", "warning-color";
+            @if(not list.index($list-colors, $name)) {
+                --#{$prefix}tile-active-indicator-border-color: #{$tile-indicator-border-color};
+            } @else {
+                --#{$prefix}tile-active-indicator-border-color: #{darken($mdb-default-color, 5%)};
+            }
 
             --#{$prefix}tile-disable-action-color: #{$tile-disable-leading-color};
             --#{$prefix}tile-disable-leading-color: #{$tile-disable-leading-color};
