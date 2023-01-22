@@ -34,7 +34,7 @@
             $tile-disable-title-color: set-color-contrast($color, rgba($black, .5), rgba($white, .4));
             $tile-disable-subtitle-color: $tile-disable-title-color;
             $tile-disable-leading-color: $tile-disable-title-color;
-            $tile-indicator-border-color: set-color-contrast($color, darken($mdb-default-color, 5%), lighten(set-alt-bgcolor($color, .65), 75%), 220);
+            $tile-indicator-border-color: set-color-contrast($color, darken($mdb-default-color, 5%), lighten(set-alt-bgcolor($color, .65), 45%), 220);
 
             --#{$prefix}tile-action-color: #{$tile-leading-color};
             --#{$prefix}tile-leading-color: #{$tile-leading-color};
