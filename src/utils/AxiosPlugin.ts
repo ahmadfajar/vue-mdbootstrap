@@ -1,54 +1,54 @@
+import type {AxiosPromise, RawAxiosRequestConfig} from "axios";
 import axios from "axios";
-import type {AxiosPromise, AxiosRequestConfig} from "axios";
 import type {App, Plugin as Plugin_2} from "vue";
 
-interface IRequestConfig extends AxiosRequestConfig {
+declare interface IRequestConfig extends RawAxiosRequestConfig {
     requestHandler: CallableFunction;
     requestErrorHandler: CallableFunction;
     responseHandler: CallableFunction;
     responseErrorHandler: CallableFunction;
 }
 
-interface IHttpService {
+declare interface IHttpService {
     /**
      * Send HTTP GET to the remote server.
      *
-     * @param {string} url               API url
-     * @param {Object} [data]            The data to be sent
-     * @param {IRequestConfig} [options] The configuration options
+     * @param {string} url                      API url
+     * @param {Object} [data]                   The data to be sent
+     * @param {RawAxiosRequestConfig} [options] Additional options
      * @returns {AxiosPromise} Promise instance
      */
-    get: (url: string, data?: object, options?: IRequestConfig) => AxiosPromise;
+    get: (url: string, data?: object, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP POST to the remote server.
      *
-     * @param {string} url               API url
-     * @param {Object} data              The data to be sent
-     * @param {IRequestConfig} [options] The configuration options
+     * @param {string} url                      API url
+     * @param {Object} data                     The data to be sent
+     * @param {RawAxiosRequestConfig} [options] Additional options
      * @returns {AxiosPromise} Promise instance
      */
-    post: (url: string, data: Record<string, unknown>, options?: IRequestConfig) => AxiosPromise;
+    post: (url: string, data: Record<string, unknown>, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP PUT to the remote server.
      *
-     * @param {string} url               API url
-     * @param {Object} data              The data to be sent
-     * @param {IRequestConfig} [options] The configuration options
+     * @param {string} url                      API url
+     * @param {Object} data                     The data to be sent
+     * @param {RawAxiosRequestConfig} [options] Additional options
      * @returns {AxiosPromise} Promise instance
      */
-    put: (url: string, data: Record<string, unknown>, options?: IRequestConfig) => AxiosPromise;
+    put: (url: string, data: Record<string, unknown>, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP DELETE to the remote server.
      *
-     * @param {string} url                API url
-     * @param {Object} [data]             The data to be sent
-     * @param {IRequestConfig} [options]  The configuration options
+     * @param {string} url                      API url
+     * @param {Object} [data]                   The data to be sent
+     * @param {RawAxiosRequestConfig} [options] Additional options
      * @returns {AxiosPromise} Promise instance
      */
-    delete: (url: string, data?: object, options?: IRequestConfig) => AxiosPromise;
+    delete: (url: string, data?: object, options?: RawAxiosRequestConfig) => AxiosPromise;
 }
 
-function _axiosPlugin(options?: AxiosRequestConfig) {
+function _axiosPlugin(options?: RawAxiosRequestConfig) {
     const defaultOptions: IRequestConfig = {
         // request interceptor handler
         requestHandler: (config: unknown) => config,
@@ -77,53 +77,27 @@ function _axiosPlugin(options?: AxiosRequestConfig) {
     );
 
     const http: IHttpService = {
-        get: (url: string, data?: object, options?: IRequestConfig) => {
-            const axiosOpt = {
+        get: (url: string, data?: object, options?: RawAxiosRequestConfig) => {
+            const config = {
                 ...options,
-                ...{
-                    method: 'get',
-                    url: url,
-                    params: data
-                }
+                params: data,
             };
 
-            return service(axiosOpt)
+            return service.get(url, config)
         },
-        post: (url: string, data: Record<string, unknown>, options?: IRequestConfig) => {
-            const axiosOpt = {
-                ...options,
-                ...{
-                    method: 'post',
-                    url: url,
-                    data: data
-                }
-            };
-
-            return service(axiosOpt)
+        post: (url: string, data: Record<string, unknown>, options?: RawAxiosRequestConfig) => {
+            return service.post(url, data, options)
         },
-        put: (url: string, data: Record<string, unknown>, options?: IRequestConfig) => {
-            const axiosOpt = {
-                ...options,
-                ...{
-                    method: 'put',
-                    url: url,
-                    data: data
-                }
-            };
-
-            return service(axiosOpt)
+        put: (url: string, data: Record<string, unknown>, options?: RawAxiosRequestConfig) => {
+            return service.put(url, data, options)
         },
-        delete: (url: string, data?: object, options?: IRequestConfig) => {
-            const axiosOpt = {
+        delete: (url: string, data?: object, options?: RawAxiosRequestConfig) => {
+            const config = {
                 ...options,
-                ...{
-                    method: 'delete',
-                    url: url,
-                    data: data
-                }
+                data: data
             };
 
-            return service(axiosOpt)
+            return service.delete(url, config)
         }
     };
 
@@ -131,7 +105,7 @@ function _axiosPlugin(options?: AxiosRequestConfig) {
 }
 
 const AxiosPlugin: Plugin_2 = {
-    install: (app: App, options?: AxiosRequestConfig): void => {
+    install: (app: App, options?: RawAxiosRequestConfig): void => {
         const {service, http} = _axiosPlugin(options);
         app.config.globalProperties.$axios = service;
         app.config.globalProperties.$http = http;
