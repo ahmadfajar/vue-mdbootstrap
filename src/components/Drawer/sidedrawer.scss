@@ -10,7 +10,7 @@
     margin: 0;
     padding: 0;
     position: absolute;
-    z-index: $zindex-fixed;
+    z-index: $zindex-sticky - 1;
 
     &.#{$prefix}closed {
         @include box-shadow(none !important);
@@ -22,17 +22,6 @@
         width: 100%;
         overflow: hidden;
         position: relative;
-
-        a {
-            color: inherit;
-
-            &:hover,
-            &:focus,
-            &:active {
-                color: $side-drawer-hover-textcolor;
-                text-decoration: none;
-            }
-        }
     }
 
     .divider {

@@ -5,6 +5,7 @@ export declare type TSideDrawerOptionProps = {
     color?: string;
     clipped?: boolean;
     mini?: boolean;
+    fixedLayout?: boolean;
     miniWidth?: number | string;
     modalWidth?: number | string;
     open?: boolean;

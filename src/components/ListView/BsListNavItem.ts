@@ -9,10 +9,9 @@ import {
     onMounted,
     ref,
     shallowRef,
-    watch
+    watchEffect
 } from "vue";
-import {useRoute} from "vue-router";
-import {useHasRouter} from "../../mixins/CommonApi";
+import {useGetCurrentRoute, useHasRouter} from "../../mixins/CommonApi";
 import {
     useAddChild,
     useListNavItemClasses,
@@ -56,23 +55,21 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
         );
 
         if (useHasRouter(cmpProps)) {
-            watch(
-                () => useRoute().path,
-                (value) => {
-                    if (value === cmpProps.path && provider) {
-                        provider.activeItem = refItem.value;
-                    }
+            const route = useGetCurrentRoute();
+            watchEffect(() => {
+                if (provider && route?.value.path === cmpProps.path) {
+                    provider.activeItem = refItem.value;
                 }
-            );
+            });
         }
         onBeforeMount(
             () => {
-                const vm = getCurrentInstance();
-                if (vm) {
-                    refItem.value = new ListItem(<string>props.id, "BsListNavItem", vm, emit);
+                const instance = getCurrentInstance();
+                if (instance) {
+                    refItem.value = new ListItem(<string>props.id, "BsListNavItem", instance, emit);
 
                     if (provider) {
-                        nextTick().then(() => useAddChild(provider, vm.parent, refItem.value));
+                        nextTick().then(() => useAddChild(provider, instance?.parent, refItem.value));
                     }
                 }
             }
@@ -80,7 +77,8 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
         onMounted(
             () => {
                 if (useHasRouter(cmpProps)) {
-                    if (useRoute().path === cmpProps.path) {
+                    const route = useGetCurrentRoute();
+                    if (route && route.value.path === cmpProps.path) {
                         refItem.value?.setActive(true);
                     }
                 }

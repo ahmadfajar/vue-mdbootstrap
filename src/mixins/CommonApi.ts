@@ -1,6 +1,6 @@
-import type {ComponentInternalInstance, Slots, TransitionProps, VNode, VNodeArrayChildren} from "vue";
-import {Fragment, getCurrentInstance, h, Transition} from "vue";
-import {RouterLink} from "vue-router";
+import type {ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNodeArrayChildren} from "vue";
+import {createVNode, Fragment, getCurrentInstance, h, resolveComponent, Transition} from "vue";
+import type {RouteLocationNormalizedLoaded} from "vue-router";
 import type {TBreakpoint, TRecord, TRouterLinkProps, TRouterOptionProps} from "../types";
 import Helper from "../utils/Helper";
 
@@ -21,7 +21,7 @@ export function useGenerateId(): string {
  * Check whether IE browser is used or not.
  * @return {boolean} Returns `true` if IE browser is used otherwise `false`.
  */
-export function useBrowserIE() {
+export function useBrowserIE(): boolean {
     return !isServer && navigator.userAgent.toLowerCase().includes("trident");
 }
 
@@ -142,11 +142,48 @@ export function useRenderTransition(
 export function useRenderRouter(
     props: Readonly<TRouterLinkProps>,
     children: VNode | VNodeArrayChildren,
-) {
-    // @ts-ignore
-    return h(RouterLink, props, {
+): VNode {
+    const routerLinkCmp = resolveComponent("RouterLink");
+    return createVNode(routerLinkCmp, props, {
         default: () => children
     });
+}
+
+/**
+ * Check if component instance has a `$router` and `path` property has been defined.
+ *
+ * @param {TRouterOptionProps} props The component properties.
+ * @returns {boolean} TRUE when Router property
+ */
+export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
+    const vm = getCurrentInstance();
+    return vm !== null && !Helper.isEmpty(props.path) &&
+        ((vm.appContext.config.globalProperties.$router !== null) ||
+            (vm.appContext.config.globalProperties.$route !== null));
+}
+
+/**
+ * Check if component instance has `url` property been defined.
+ *
+ * @param {TRouterOptionProps} props The component properties.
+ * @returns {boolean} TRUE when `url` property has been defined and doesn't have Router.
+ */
+export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
+    return !useHasRouter(props) && !Helper.isEmpty(props.url);
+}
+
+/**
+ * Get current active route if exists.
+ *
+ * @returns {Ref} Current route location.
+ */
+export function useGetCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefined {
+    const vm = getCurrentInstance();
+    if (vm !== null) {
+        return vm.appContext.config.globalProperties.$router?.currentRoute;
+    }
+
+    return undefined;
 }
 
 /**
@@ -227,27 +264,4 @@ export function useFindParentCmp(
     }
 
     return null;
-}
-
-/**
- * Check if component instance has a `$router` and `path` property has been defined.
- *
- * @param {TRouterOptionProps} props The component properties.
- * @returns {boolean} TRUE when Router property
- */
-export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
-    const vm = getCurrentInstance();
-    return vm !== null && !Helper.isEmpty(props.path) &&
-        ((vm.appContext.config.globalProperties.$router !== null) ||
-            (vm.appContext.config.globalProperties.$route !== null));
-}
-
-/**
- * Check if component instance has `url` property been defined.
- *
- * @param {TRouterOptionProps} props The component properties.
- * @returns {boolean} TRUE when `url` property has been defined and doesn't have Router.
- */
-export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
-    return !useHasRouter(props) && !Helper.isEmpty(props.url);
 }

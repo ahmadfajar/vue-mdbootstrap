@@ -7,6 +7,7 @@ export const sideDrawerProps = {
     },
     clipped: booleanProp,
     mini: booleanProp,
+    fixedLayout: booleanProp,
     miniWidth: {
         type: [Number, String],
         default: 56,

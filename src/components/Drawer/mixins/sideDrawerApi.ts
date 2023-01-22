@@ -21,9 +21,10 @@ export function useSideDrawerStyles(
             ? `translateX(${Helper.sizeUnit(sbWidth)})`
             : `translateX(-${Helper.sizeUnit(sbWidth)})`,
         paddingTop: Helper.sizeUnit(clipHeight.value),
-        left: props.position === "left" ? zeroPx : null,
-        right: props.position === "right" ? zeroPx : null,
-        "z-index": clipHeight.value > 0 ? (zIndex - 1) : zIndex,
+        left: props.position === "left" ? zeroPx : undefined,
+        right: props.position === "right" ? zeroPx : undefined,
+        position: props.fixedLayout ? "fixed" : undefined,
+        "z-index": clipHeight.value > 0 ? (zIndex - 1) : undefined,
     };
 
     if (isMobile.value && !props.mini) {

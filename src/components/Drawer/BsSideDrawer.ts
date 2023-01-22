@@ -20,7 +20,7 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TSideDrawerOptionProps>;
-        const zIndex = 1030; // see bootstrap: $zindex-fixed
+        const zIndex = 1020; // see bootstrap: $zindex-sticky
         const vueMdb = ref<TVueMdb>();
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);

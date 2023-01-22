@@ -30,7 +30,7 @@ export function useListNavItemClasses(
         [`${cssPrefix}nav-parent`]: hasChild.value,
         [`${cssPrefix}expanded`]: hasChild.value && expanded.value,
         [`${cssPrefix}has-icon`]: !Helper.isEmpty(props.icon),
-        "active": !useHasRouter(props) && !props.disabled && isActive.value,
+        "active": !props.disabled && isActive.value,
         "disabled": props.disabled === true,
     };
 }
@@ -149,8 +149,8 @@ function renderRouterLink(
 
     return useRenderRouter({
             class: classes.value,
-            activeClass: props.activeClass,
-            to: !cmpProps.disabled ? cmpProps.path : undefined,
+            activeClass: props.activeClass || "active",
+            to: cmpProps.path,
             onClick: (evt: Event) => onVNodeClickHandler(cmpProps, isActive, isExpanded, instance, evt, provider)
         },
         renderNavItemContent(props, innerStyles, hasChild, isExpanded, provider),
@@ -222,7 +222,7 @@ export function useRenderListNavItem(
         id: props.id,
         class: classes.value,
     }, [
-        (useHasRouter(cmpProps)
+        (useHasRouter(cmpProps) && !props.disabled
                 ? renderRouterLink(props, innerClasses, innerStyles, isActive, isExpanded, hasChild, instance, emit, provider)
                 : renderNavLink(props, innerClasses, innerStyles, isActive, isExpanded, hasChild, instance, emit, provider)
         ),

@@ -40,7 +40,7 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
         const isMobile = ref<boolean>(false);
         const resizeHandler = () => {
             emit("resize");
-            isMobile.value = useBreakpointMax("lg");
+            isMobile.value = useBreakpointMax("md");
         };
         const styles = computed(
             () => {

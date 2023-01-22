@@ -29,7 +29,7 @@ body {
     overflow-x: hidden;
 
     &.#{$prefix}viewport-height {
-        min-height: 100vh;
+        height: 100vh;
     }
 }
 
