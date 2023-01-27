@@ -1,8 +1,9 @@
-import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, nextTick, ref} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, nextTick, ref} from "vue";
 import {useCheckboxClasses, useCheckSelected, useCreateInputCheckbox} from "./mixins/checkboxApi";
 import {checkboxProps} from "./mixins/checkboxProps";
 import {useRenderRadioOrCheckbox} from "../Radio/mixins/radioApi";
-import {TBsCheckbox, TCheckboxOptionProps, TRecord} from "../../types";
+import type {TBsCheckbox, TCheckboxOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCheckbox",

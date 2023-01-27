@@ -1,8 +1,8 @@
-@import "~compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/checkbox";
+@import "~compass-mixins/lib/compass/css3";
 
 .#{$prefix}checkbox {
     --#{$prefix}checkbox-size: #{$checkbox-size};

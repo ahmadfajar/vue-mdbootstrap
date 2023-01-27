@@ -1,6 +1,5 @@
 import {defineComponent} from "vue";
-import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
-import {cssPrefix} from "../../mixins/CommonApi";
+import {cssPrefix, useSimpleRenderWithSlots} from "../../mixins/CommonApi";
 
 export default defineComponent({
     name: "BsAppbarItems",

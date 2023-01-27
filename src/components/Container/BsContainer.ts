@@ -1,19 +1,9 @@
-import {
-    ComponentOptionsMixin,
-    computed,
-    ComputedOptions,
-    defineComponent,
-    EmitsOptions,
-    getCurrentInstance,
-    h,
-    onMounted,
-    ref,
-    withDirectives
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, getCurrentInstance, h, onMounted, ref, withDirectives} from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
 import {baseTagProps} from "../Card/mixins/cardProps";
 import {cssPrefix, useBreakpointMax, useFindParentCmp} from "../../mixins/CommonApi";
-import {TAppContainerOptionProps, TBsContainer, TContainerOptionProps, TRecord, TVueMdb} from "../../types";
+import type {TAppContainerOptionProps, TBsContainer, TContainerOptionProps, TRecord, TVueMdb} from "../../types";
 import Resize from "../../directives/Resize";
 
 export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

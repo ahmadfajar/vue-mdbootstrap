@@ -1,5 +1,5 @@
-import {Directive, DirectiveBinding} from "vue";
-import {IBindingElement, TDirectiveBinding} from "../../types";
+import type {Directive, DirectiveBinding} from "vue";
+import type {IBindingElement, TDirectiveBinding} from "../../types";
 import Helper from "../../utils/Helper";
 
 interface ResizeDirectiveBinding extends Omit<DirectiveBinding, "modifiers"> {

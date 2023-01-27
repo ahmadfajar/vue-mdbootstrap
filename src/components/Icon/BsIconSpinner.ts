@@ -1,8 +1,9 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {defineComponent, h} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {iconSpinnerProps} from "./mixins/iconProps";
 import {spinnerSvgData, useCircleSizeStyles, useCreateSvgNode} from "./mixins/svgApi";
-import {TBsIconSpinner, TRecord} from "../../types";
+import type {TBsIconSpinner, TRecord} from "../../types";
 
 export default defineComponent<TBsIconSpinner, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsIconSpinner",

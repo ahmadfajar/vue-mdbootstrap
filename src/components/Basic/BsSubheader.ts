@@ -1,8 +1,8 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} from "vue";
-import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {defineComponent} from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {TBsSubheader, TRecord} from "../../types";
+import {cssPrefix, useSimpleRenderWithSlots} from "../../mixins/CommonApi";
+import type {TBsSubheader, TRecord} from "../../types";
 
 export default defineComponent<TBsSubheader, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsSubheader",

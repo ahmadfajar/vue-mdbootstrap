@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsRadio from "./BsRadio";
 import BsRadioGroup from "./BsRadioGroup";
 import "../../../scss/_globalvars.scss";

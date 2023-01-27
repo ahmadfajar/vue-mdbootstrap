@@ -3,7 +3,7 @@
 @import "../../../scss/variables";
 
 .#{$prefix}icon, .#{$prefix}toggle-icon {
-    //@include align-self(center);
+    display: inline-block;
 
     > .#{$prefix}svg-inline {
         display: flex;

@@ -1,4 +1,5 @@
-import {ComputedRef, createCommentVNode, h, nextTick, Prop, Ref, Slots, vModelText, VNode, withDirectives} from "vue";
+import type {ComputedRef, Prop, Ref, Slots, VNode} from "vue";
+import {createCommentVNode, h, nextTick, vModelText, withDirectives} from "vue";
 import {
     cssPrefix,
     useRenderSlotWithWrapper,
@@ -15,7 +16,7 @@ import {
     useOnFieldValueCleared,
     useOnFieldValueUpdated
 } from "./fieldEventApi";
-import {
+import type {
     TBsIcon,
     TBsToggleIcon,
     TEmitFn,

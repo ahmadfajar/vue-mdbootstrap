@@ -19,6 +19,7 @@ export function useGenerateId(): string {
 
 /**
  * Check whether IE browser is used or not.
+ *
  * @return {boolean} Returns `true` if IE browser is used otherwise `false`.
  */
 export function useBrowserIE(): boolean {
@@ -114,6 +115,25 @@ export function useRenderSlotWrapperWithCondition(
             slots[name] && (slotArgs ? slots[name](slotArgs) : slots[name]())
         )
         : undefined;
+}
+
+export function useSimpleRenderWithSlots(
+    tag: string,
+    slots?: Slots,
+    classes?: string | Array<string> | TRecord,
+    styles?: string | Array<string> | TRecord,
+): VNode {
+    if (styles) {
+        return h(
+            tag, {class: classes, style: styles},
+            slots ? slots.default && slots.default() : undefined,
+        )
+    } else {
+        return h(
+            tag, {class: classes},
+            slots ? slots.default && slots.default() : undefined,
+        )
+    }
 }
 
 /**

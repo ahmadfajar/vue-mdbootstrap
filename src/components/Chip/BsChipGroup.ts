@@ -1,19 +1,16 @@
-import {
-    ComponentOptionsMixin,
-    computed,
-    ComputedOptions,
-    defineComponent,
-    EmitsOptions,
-    nextTick,
-    onMounted,
-    reactive,
-    ref,
-    watch
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, nextTick, onMounted, reactive, ref, watch} from "vue";
 import {useGenerateId} from "../../mixins/CommonApi";
 import {chipGroupProps} from "./mixins/chipGroupProps";
 import {useChipIsSelected, useRenderChipGroup, useSetSliderSize} from "./mixins/chipGroupApi";
-import {TBsChipGroup, TChipContainer, TChipGroupOptionProps, TChipOptionItem, TChipValue, TRecord} from "../../types";
+import type {
+    TBsChipGroup,
+    TChipContainer,
+    TChipGroupOptionProps,
+    TChipOptionItem,
+    TChipValue,
+    TRecord
+} from "../../types";
 
 export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsChipGroup",

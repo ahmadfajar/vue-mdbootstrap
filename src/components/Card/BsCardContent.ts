@@ -1,7 +1,8 @@
 import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions} from "vue";
-import {useContentTag, useSimpleRenderWithSlots} from "./mixins/cardApi";
+import {useContentTag} from "./mixins/cardApi";
 import {cardContentProps} from "./mixins/cardProps";
 import {TBsCardContent, TRecord} from "../../types";
+import {useSimpleRenderWithSlots} from "../../mixins/CommonApi";
 
 export default defineComponent<TBsCardContent, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCardContent",

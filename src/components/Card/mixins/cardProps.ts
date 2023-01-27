@@ -26,7 +26,7 @@ export const cardProps = {
      */
     imgTopSrc: stringProp,
     /**
-     * Value for the image `alt` attribute.
+     * Text for the image `alt` attribute.
      * @type {string}
      */
     imgTopAlt: stringProp,
@@ -36,7 +36,7 @@ export const cardProps = {
      */
     imgBottomSrc: stringProp,
     /**
-     * Value for the image `alt` attribute.
+     * Text for the image `alt` attribute.
      * @type {string}
      */
     imgBottomAlt: stringProp,

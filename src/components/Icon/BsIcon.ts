@@ -1,8 +1,9 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, Prop} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "vue";
+import {defineComponent, h} from "vue";
 import {useSizeHeight, useSizeStyles, useSizeWidth} from "./mixins/iconApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {iconProps, iconSize as size} from "./mixins/iconProps";
-import {TBsIcon, TBsIconSvg, TIconOptionProps, TRecord} from "../../types";
+import type {TBsIcon, TBsIconSvg, TIconOptionProps, TRecord} from "../../types";
 import BsIconSvg from "./BsIconSvg";
 
 export default defineComponent<TBsIcon, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

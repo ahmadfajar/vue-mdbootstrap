@@ -1,17 +1,10 @@
-import {
-    ComponentOptionsMixin,
-    computed,
-    ComputedOptions,
-    createCommentVNode,
-    defineComponent,
-    EmitsOptions,
-    h, Prop
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "vue";
+import {computed, createCommentVNode, defineComponent, h} from "vue";
 import {cssPrefix, useRenderTransition} from "../../mixins/CommonApi";
 import {maskLoaderProps} from "./mixins/maskLoaderProps";
 import {BsOverlay} from "../Animation";
 import {BsIconSpinner} from "../Icon";
-import {TBsIconSpinner, TBsMaskLoader, TBsOverlay, TBsProgress} from "../../types";
+import type {TBsIconSpinner, TBsMaskLoader, TBsOverlay, TBsProgress} from "../../types";
 import BsProgress from "./BsProgress";
 import Helper from "../../utils/Helper";
 

@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsBadge from "./BsBadge";
 import "./badge.scss";
 import "../../../scss/utilities/_others.scss";

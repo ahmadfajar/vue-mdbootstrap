@@ -8,30 +8,10 @@ import type {TAppbarOptionProps, TBsAppbar, TRecord, TVueMdb} from "../../types"
 export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsAppbar",
     props: {
-        /**
-         * Clipped left side of the `Appbar` or not.
-         * @type {boolean}
-         */
         clippedLeft: booleanProp,
-        /**
-         * Clipped right side of the `Appbar` or not.
-         * @type {boolean}
-         */
         clippedRight: booleanProp,
-        /**
-         * Always stick `Appbar` at top of the page even though user already scrolled down.
-         * @type {boolean}
-         */
         fixedTop: booleanProp,
-        /**
-         * Create shadow effect at the bottom of `Appbar`.
-         * @type {boolean}
-         */
         shadow: booleanProp,
-        /**
-         * Html tag used to create the Appbar.
-         * @type {string}
-         */
         tag: {
             type: String,
             default: "nav"

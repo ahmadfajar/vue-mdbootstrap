@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsChip from "./BsChip";
 import BsChipGroup from "./BsChipGroup";
 import "./chip.scss";

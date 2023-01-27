@@ -1,5 +1,5 @@
-import {h} from "vue";
 import type {Prop, Slots, VNode, VNodeArrayChildren} from "vue";
+import {h} from "vue";
 import {cssPrefix, useGenerateId, useRenderSlot} from "../../../mixins/CommonApi";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
 import {BsIcon} from "../../Icon";

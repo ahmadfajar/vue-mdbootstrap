@@ -1,7 +1,8 @@
-import {createCommentVNode, h, Prop, Ref, Slots, VNode} from "vue";
+import type {Prop, Ref, Slots, VNode} from "vue";
+import {createCommentVNode, h} from "vue";
 import {cssPrefix} from "../../../mixins/CommonApi";
 import {BsButton} from "../../Button";
-import {
+import type {
     TBsButton,
     TBsChip,
     TChipContainer,
@@ -84,10 +85,6 @@ function createChipAttrs(
     item: TChipOptionItem,
 ): TRecord {
     const selected = useChipIsSelected(item, props.modelValue);
-    // if (!item.id) {
-    //     item.id = useGenerateId();
-    // }
-
     const attrs: TRecord = {
         ...item,
         active: selected,

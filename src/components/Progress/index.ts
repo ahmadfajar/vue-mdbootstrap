@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsMaskLoader from "./BsMaskLoader";
 import BsProgress from "./BsProgress";
 import BsProgressBar from "./BsProgressBar";

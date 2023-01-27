@@ -1,10 +1,10 @@
-import {ComputedRef, createCommentVNode, h, Prop, Slots, VNode} from "vue";
-import {cssPrefix, useRenderSlotWithWrapper} from "../../../mixins/CommonApi";
+import type {ComputedRef, Prop, Slots, VNode} from "vue";
+import {createCommentVNode, h} from "vue";
+import {cssPrefix, useRenderSlotWithWrapper, useSimpleRenderWithSlots} from "../../../mixins/CommonApi";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
-import {useSimpleRenderWithSlots} from "../../Card/mixins/cardApi";
 import {BsIcon} from "../../Icon";
 import {BsButton} from "../../Button";
-import {TAlertOptionProps, TBsButton, TBsIcon} from "../../../types";
+import type {TAlertOptionProps, TBsButton, TBsIcon} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 export function useAlertClassNames(

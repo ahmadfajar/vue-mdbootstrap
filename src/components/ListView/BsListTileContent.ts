@@ -1,9 +1,8 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {defineComponent} from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
-import {cssPrefix} from "../../mixins/CommonApi";
+import {cssPrefix, useSimpleRenderWithSlots} from "../../mixins/CommonApi";
 import {baseTagProps} from "../Card/mixins/cardProps";
-import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
 import type {TBsListTileContent, TListTileContentOptionProps, TRecord} from "../../types";
 
 

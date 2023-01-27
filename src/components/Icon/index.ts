@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsIcon from "./BsIcon";
 import BsIconSvg from "./BsIconSvg";
 import BsIconSpinner from "./BsIconSpinner";

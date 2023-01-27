@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsDivider from "./BsDivider";
 import BsImageHolder from "./BsImageHolder";
 import BsSpacer from "./BsSpacer";

@@ -26,3 +26,4 @@ export {
 export {BsProgress, BsProgressBar, BsMaskLoader} from "./Progress";
 export {BsRadio, BsRadioGroup} from "./Radio";
 export {BsTab, BsTabs} from "./Tabs";
+export {BsTooltip} from "./Tooltip";

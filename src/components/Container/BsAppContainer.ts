@@ -1,31 +1,14 @@
-import {
-    ComponentOptionsMixin,
-    ComputedOptions,
-    defineComponent,
-    EmitsOptions,
-    getCurrentInstance,
-    h,
-    onMounted,
-    onUnmounted,
-    ref
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {defineComponent, getCurrentInstance, h, onMounted, onUnmounted, ref} from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
-import {IComponentInstance, TAppContainerOptionProps, TBsAppContainer, TRecord, TVueMdb} from "../../types";
+import type {IComponentInstance, TAppContainerOptionProps, TBsAppContainer, TRecord, TVueMdb} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsAppContainer",
     props: {
-        /**
-         * Use document viewport height or not.
-         * @type {boolean}
-         */
         viewportHeight: booleanProp,
-        /**
-         * Sets the element `ID` attribute. This property value is auto generates.
-         * @type {string}
-         */
         id: {
             type: String,
             default: () => useGenerateId()

@@ -1,5 +1,5 @@
-import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TRecord} from "../../../types";
+import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import type {TRecord} from "../../../types";
 
 export declare type TSideDrawerOptionProps = {
     color?: string;

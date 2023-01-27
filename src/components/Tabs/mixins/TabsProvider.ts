@@ -1,5 +1,5 @@
-import {isRef} from "vue";
 import type {ComponentInternalInstance, Ref} from "vue";
+import {isRef} from "vue";
 import type {
     TAlignment,
     TEmitFn,

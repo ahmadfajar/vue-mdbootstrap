@@ -1,7 +1,8 @@
-import {ComputedRef, h, Transition, VNode} from "vue";
+import type {ComputedRef, VNode} from "vue";
+import {h, Transition} from "vue";
 import {cssPrefix, useBrowserIE} from "../../../mixins/CommonApi";
 import {useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode} from "../../Icon/mixins/svgApi";
-import {ISpinnerElement, TProgressOptionProps, TSpinnerRecord} from "../types";
+import type {ISpinnerElement, TProgressOptionProps, TSpinnerRecord} from "../types";
 import INDETERMINATE_ANIMATION_TEMPLATE from "./ProgressSpinnerAnimation";
 
 const progressSpinner: TSpinnerRecord = {

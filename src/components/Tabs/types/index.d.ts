@@ -14,21 +14,60 @@ export declare type TOrientation = "horizontal" | "vertical";
 export declare type TTabsVariant = "tabs" | "pills" | "modern" | "material";
 
 export declare type TTabsBaseProps = {
+    /**
+     * Tabs style variant. Valid values: `tabs`, `pills`, `material`, `modern`.
+     */
     variant?: TTabsVariant | string;
+    /**
+     * Tabs alignment. Valid values: `left`, `right`, `center`, `justified`.
+     */
     alignment?: TAlignment | string;
+    /**
+     * Tab content display animation transition.
+     */
     contentTransition?: string;
+    /**
+     * TabItem icon position. Valid values: `left`, `right`, `top`, `bottom`.
+     */
     iconPosition?: TPositionType | string;
+    /**
+     * TabItem icon size.
+     */
     iconSize?: string | number;
+    /**
+     * TabItem css class name.
+     */
     tabClass?: string | Array<string>;
+    /**
+     * Tabs position. Valid values: `left`, `right`, `top`, `bottom`.
+     */
     tabPosition?: TPositionType | string;
 }
 
 export declare type TTabsOptionProps = TTabsBaseProps & {
+    /**
+     * Create Tabs with flex styles. Only valid for `tabs` or `pills` variant.
+     */
     flex?: boolean;
+    /**
+     * Tabs color style for tab variant: `modern` and `material`.
+     */
     color?: string;
+    /**
+     * CSS class name for active TabItem.
+     */
     activeClass?: string;
+    /**
+     * Tab content css class name.
+     */
     contentClass?: string | Array<string>;
+    /**
+     * TabItem's container css class name.
+     */
     innerClass?: string | Array<string>;
+    /**
+     * This component activeTab index or activeTab ID.
+     */
     modelValue?: string | number;
 }
 

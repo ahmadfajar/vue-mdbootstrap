@@ -1,18 +1,9 @@
-import {
-    ComponentOptionsMixin,
-    computed,
-    ComputedOptions,
-    createCommentVNode,
-    defineComponent,
-    EmitsOptions,
-    nextTick,
-    ref,
-    watch
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, createCommentVNode, defineComponent, nextTick, ref, watch} from "vue";
 import {useRenderTransition} from "../../mixins/CommonApi";
 import {useAlertClassNames, useAlertColorName, useAlertIconName, useRenderAlert} from "./mixins/alertApi";
 import {alertProps} from "./mixins/alertProps";
-import {TAlertOptionProps, TBsAlert, TRecord} from "../../types";
+import type {TAlertOptionProps, TBsAlert, TRecord} from "../../types";
 
 export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsAlert",

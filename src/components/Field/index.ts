@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsTextField from "./BsTextField";
 import BsTextArea from "./BsTextArea";
 import "../../../scss/_globalvars.scss";

@@ -1,9 +1,10 @@
 import axios from "axios";
-import {h, VNode, VNodeArrayChildren, VNodeProps} from "vue";
+import type {VNode, VNodeArrayChildren, VNodeProps} from "vue";
+import {h} from "vue";
 import {XMLParser} from "fast-xml-parser";
 import {IconLib} from "./IconLib";
 import {cssPrefix} from "../../../mixins/CommonApi";
-import {TIconData, TIconOptionProps, TRecord} from "../../../types";
+import type {TIconData, TIconOptionProps, TRecord} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 /**

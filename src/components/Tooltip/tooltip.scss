@@ -1,0 +1,138 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/mixins/transition";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+
+.#{$prefix}tooltip {
+    --#{$prefix}tooltip-arrow-width: #{$tooltip-arrow-width};
+    --#{$prefix}tooltip-arrow-height: #{$tooltip-arrow-height};
+    --#{$prefix}tooltip-border-radius: #{$tooltip-border-radius};
+    --#{$prefix}tooltip-bg: #{$tooltip-bg};
+    --#{$prefix}tooltip-color: #{$tooltip-color};
+    --#{$prefix}tooltip-opacity: #{$tooltip-opacity};
+    --#{$prefix}tooltip-font-size: 13px;
+
+    @include flexbox((display: flex, align-items: center, justify-content: center));
+    margin: 0;
+    position: fixed;
+
+    > .tooltip-arrow {
+        position: absolute;
+        display: block;
+        width: var(--#{$prefix}tooltip-arrow-width);
+        height: var(--#{$prefix}tooltip-arrow-height);
+
+        &:before {
+            border-color: transparent;
+            border-style: solid;
+            content: "";
+            position: absolute;
+        }
+    }
+
+    > .#{$prefix}tooltip-inner {
+        @include border-radius(var(--#{$prefix}tooltip-border-radius));
+        background-color: var(--#{$prefix}tooltip-bg);
+        color: var(--#{$prefix}tooltip-color);
+        font-size: var(--#{$prefix}tooltip-font-size);
+        opacity: var(--#{$prefix}tooltip-opacity);
+        line-height: 18px;
+        padding: 4px 10px;
+        pointer-events: none;
+    }
+}
+
+.#{$prefix}tooltip-top {
+    padding: var(--#{$prefix}tooltip-arrow-height) 0;
+
+    > .tooltip-arrow {
+        bottom: 0;
+
+        &:before {
+            top: 0;
+            //border-width: var(--#{$prefix}tooltip-arrow-height) calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0;
+            border-width: $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
+            border-top-color: rgba($tooltip-bg, $tooltip-opacity);
+        }
+    }
+}
+
+.#{$prefix}tooltip-bottom {
+    padding: var(--#{$prefix}tooltip-arrow-height) 0;
+
+    > .tooltip-arrow {
+        top: 0;
+
+        &::before {
+            bottom: 0;
+            //border-width: 0 calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height);
+            border-width: 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
+            border-bottom-color: rgba($tooltip-bg, $tooltip-opacity);
+        }
+    }
+}
+
+.#{$prefix}tooltip-left {
+    padding: 0 var(--#{$prefix}tooltip-arrow-height);
+
+    > .tooltip-arrow {
+        right: 0;
+        width: var(--#{$prefix}tooltip-arrow-height);
+        height: var(--#{$prefix}tooltip-arrow-width);
+
+        &::before {
+            left: 0;
+            //border-width: calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0 calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height);
+            border-width: ($tooltip-arrow-width / 2) 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
+            border-left-color: rgba($tooltip-bg, $tooltip-opacity);
+        }
+    }
+}
+
+.#{$prefix}tooltip-right {
+    padding: 0 var(--#{$prefix}tooltip-arrow-height);
+
+    > .tooltip-arrow {
+        left: 0;
+        width: var(--#{$prefix}tooltip-arrow-height);
+        height: var(--#{$prefix}tooltip-arrow-width);
+
+        &:before {
+            right: 0;
+            //border-width: calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height) calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0;
+            border-width: ($tooltip-arrow-width / 2) $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
+            border-right-color: rgba($tooltip-bg, $tooltip-opacity);
+        }
+    }
+}
+
+.#{$prefix}tooltip-top,
+.#{$prefix}tooltip-bottom,
+.#{$prefix}tooltip-left,
+.#{$prefix}tooltip-right {
+    &-enter-active, &-leave-active {
+        transition: transform .3s $transition-easeOut, opacity .3s $transition-easeOut;
+    }
+}
+
+@include enterFrom-leaveActive(#{$prefix}tooltip-top) {
+    @include opacity(0);
+    transform: translate3d(0, 15px, 0);
+}
+
+@include enterFrom-leaveActive(#{$prefix}tooltip-bottom) {
+    @include opacity(0);
+    transform: translate3d(0, -15px, 0);
+}
+
+@include enterFrom-leaveActive(#{$prefix}tooltip-left) {
+    @include opacity(0);
+    transform: translate3d(24px, 0, 0);
+}
+
+@include enterFrom-leaveActive(#{$prefix}tooltip-right) {
+    @include opacity(0);
+    transform: translate3d(-24px, 0, 0);
+}

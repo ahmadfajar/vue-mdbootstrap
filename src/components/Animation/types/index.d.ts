@@ -31,10 +31,25 @@ export declare type TRippleOptionProps = {
 }
 
 export declare type TOverlayOptionProps = {
+    /**
+     * Overlay base color.
+     */
     color?: string;
+    /**
+     * Sets the css-style `position` value. If `true` then css-style `position` is set to `fixed`.
+     */
     fixed?: boolean;
+    /**
+     * Overlay state, show or hide.
+     */
     show?: boolean;
+    /**
+     * Overlay opacity.
+     */
     opacity?: string | number;
+    /**
+     * Overlay inline-css `z-index`.
+     */
     zIndex?: string | number;
 }
 

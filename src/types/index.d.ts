@@ -20,6 +20,7 @@ export * from "../components/ListView/types";
 export * from "../components/Progress/types";
 export * from "../components/Radio/types";
 export * from "../components/Tabs/types";
+export * from "../components/Tooltip/types";
 
 export declare type TBreakpoint = "sm" | "md" | "lg" | "xl";
 
@@ -79,7 +80,18 @@ export declare interface IBindingElement extends Element {
     __scrollListener?: TEventListenerBinding;
     __resizeListener?: EventListenerOrEventListenerObject | CallableFunction;
     __resizeListeners?: Array<CallableFunction>;
+    __mouseEvents?: TRecord;
     __observer?: ResizeObserver;
+}
+
+export declare interface IHTMLEventTarget extends HTMLElement {
+    attachEvent(type: string, callback: EventListenerOrEventListenerObject): void;
+
+    detachEvent(type: string, callback: EventListenerOrEventListenerObject): void;
+}
+
+export declare interface IEventResult {
+    remove(): void;
 }
 
 export declare interface IVNode extends VNode {

@@ -1,6 +1,7 @@
-import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, h} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, h} from "vue";
 import {progressBarProps} from "./mixins/progressBarProps";
-import {TBsProgressBar, TProgressBarOptionProps} from "./types";
+import type {TBsProgressBar, TProgressBarOptionProps} from "./types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsProgressBar, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

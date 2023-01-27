@@ -1,4 +1,5 @@
-import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, onMounted, watch} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, onMounted, watch} from "vue";
 import {
     useAttachStyleTag,
     useBufferMode,
@@ -9,7 +10,7 @@ import {
 } from "./mixins/progressAnimationApi";
 import {useBrowserIE} from "../../mixins/CommonApi";
 import {progressProps} from "./mixins/progressProps";
-import {TBsProgress, TProgressOptionProps} from "./types";
+import type {TBsProgress, TProgressOptionProps} from "./types";
 
 
 export default defineComponent<TBsProgress, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

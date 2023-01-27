@@ -1,11 +1,16 @@
-import {ComputedRef, createCommentVNode, h, Prop, Slots, VNode} from "vue";
-import {cssPrefix, useRenderSlotWithWrapper, useRenderTransition} from "../../../mixins/CommonApi";
+import type {ComputedRef, Prop, Slots, VNode} from "vue";
+import {createCommentVNode, h} from "vue";
+import {
+    cssPrefix,
+    useRenderSlotWithWrapper,
+    useRenderTransition,
+    useSimpleRenderWithSlots
+} from "../../../mixins/CommonApi";
 import {BsRipple} from "../../Animation";
 import {BsButton} from "../../Button";
 import {BsIcon} from "../../Icon";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
-import {useSimpleRenderWithSlots} from "../../Card/mixins/cardApi";
-import {TBsButton, TBsIcon, TBsRipple, TChipOptionProps, TRecord} from "../../../types";
+import type {TBsButton, TBsIcon, TBsRipple, TChipOptionProps, TRecord} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 export function useChipClassNames(

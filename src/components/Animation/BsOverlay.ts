@@ -1,12 +1,19 @@
-import {ComponentOptionsMixin, ComputedOptions, createCommentVNode, defineComponent, EmitsOptions, h} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {createCommentVNode, defineComponent, h} from "vue";
 import {cssPrefix, useRenderTransition} from "../../mixins/CommonApi";
 import {preventEventTarget} from "../../mixins/DomHelper";
-import {overlayProps} from "./mixins/overlayProps";
-import {TBsOverlay, TRecord} from "../../types";
+import {booleanProp, stringProp, validStringOrFloatProp, validStringOrNumberProp} from "../../mixins/CommonProps";
+import type {TBsOverlay, TRecord} from "../../types";
 
 export default defineComponent<TBsOverlay, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsOverlay",
-    props: overlayProps,
+    props: {
+        color: stringProp,
+        fixed: booleanProp,
+        opacity: validStringOrFloatProp,
+        show: booleanProp,
+        zIndex: validStringOrNumberProp,
+    },
     emits: ["click"],
     setup(props, {emit, slots}) {
         return () =>

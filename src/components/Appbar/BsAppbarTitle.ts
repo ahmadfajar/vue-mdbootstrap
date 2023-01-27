@@ -1,24 +1,13 @@
-import {
-    ComponentOptionsMixin,
-    ComputedOptions,
-    createTextVNode,
-    defineComponent,
-    EmitsOptions,
-    h,
-    toDisplayString
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {createTextVNode, defineComponent, h, toDisplayString} from "vue";
 import {cssPrefix, useRenderSlot} from "../../mixins/CommonApi";
 import {stringProp} from "../../mixins/CommonProps";
-import {TAppbarTitleOptionProps, TBsAppbarTitle, TRecord} from "../../types";
+import type {TAppbarTitleOptionProps, TBsAppbarTitle, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsAppbarTitle, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsAppbarTitle",
     props: {
-        /**
-         * The text to display.
-         * @type {string}
-         */
         title: stringProp
     },
     setup(props, {slots}) {

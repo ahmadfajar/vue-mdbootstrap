@@ -1,7 +1,8 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions} from "vue";
-import {useSimpleRenderWithSlots} from "../Card/mixins/cardApi";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {defineComponent} from "vue";
 import {booleanTrueProp, validStringOrNumberProp} from "../../mixins/CommonProps";
-import {TBsSpacer, TRecord} from "../../types";
+import {useSimpleRenderWithSlots} from "../../mixins/CommonApi";
+import type {TBsSpacer, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsSpacer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

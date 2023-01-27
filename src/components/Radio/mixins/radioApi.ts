@@ -1,8 +1,9 @@
-import {ComputedRef, h, Prop, Ref, Slots, VNode, VNodeArrayChildren} from "vue";
+import type {ComputedRef, Prop, Ref, Slots, VNode, VNodeArrayChildren} from "vue";
+import {h} from "vue";
 import {cssPrefix, useRenderSlot, useRenderSlotWithWrapper} from "../../../mixins/CommonApi";
 import {BsRipple} from "../../Animation";
 import {useRenderFieldFeedback} from "./validationApi";
-import {
+import type {
     TBsRadio,
     TBsRipple,
     TInputBaseProps,

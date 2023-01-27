@@ -4,7 +4,7 @@
 
 ## v2.0.0
 
-Released: January xx, 2023
+Released: February xx, 2023
 
 #### Features v2.0.0
 
@@ -24,11 +24,12 @@ Released: January xx, 2023
 - **BsListView**: add property `itemRounded`, `itemRoundedPill`, `individualState`, and `modelValue`.
 - **BsMaskLoader**: add property `variant`.
 - **BsOverlay**: add event `click`.
-- **BsSideDrawer**: add property `position`, `overlayColor`.
+- **BsSideDrawer**: add property `position`, `fixedLayout`, `overlayColor`.
 - **BsTab**: add property `disabled`, `iconSpin`, `iconPulse`, `iconFlip`, `iconRotation`.
 - **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
 - **BsToggleButton**: add property `pill`, and `rounded`.
 - **BsToggleIcon**: add property `size`.
+- **BsTooltip**: add property `show`, `zIndex`.
 
 #### Breaking Changes
 
@@ -44,7 +45,7 @@ Released: January xx, 2023
   - Replaced property `value` with `modelValue`.
 - **BsAvatar**: removed property `center`. 
 - **BsButton**: 
-  - Removed properties `block` 
+  - Removed property `block` 
     see [Bootstrap 5](https://getbootstrap.com/docs/5.2/components/buttons/#block-buttons) on how to achieve 
     the same result.
   - Removed property `iconFixed` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid) 

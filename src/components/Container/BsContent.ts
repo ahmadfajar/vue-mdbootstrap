@@ -1,8 +1,9 @@
-import {ComponentOptionsMixin, ComputedOptions, defineComponent, EmitsOptions, h, VNode} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, VNode} from "vue";
+import {defineComponent, h} from "vue";
 import {booleanProp} from "../../mixins/CommonProps";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {baseTagProps} from "../Card/mixins/cardProps";
-import {TBsContainer, TBsContent, TContainerOptionProps, TRecord} from "../../types";
+import type {TBsContainer, TBsContent, TContainerOptionProps, TRecord} from "../../types";
 import BsContainer from "./BsContainer";
 
 export default defineComponent<TBsContent, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({

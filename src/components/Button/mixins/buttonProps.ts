@@ -61,7 +61,7 @@ export const buttonProps = {
     mode: buttonMode,
     /**
      * Render this button component as dropdowns button or not, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/dropdowns/)}
+     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/dropdowns/)}
      * for details.
      * @type {boolean}
      */
@@ -73,7 +73,7 @@ export const buttonProps = {
     flat: booleanProp,
     /**
      * Render this button with outlined style (Google Material Outlined Button) or not, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#outline-buttons)}
+     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#outline-buttons)}
      * for details.
      * @type {boolean}
      */
@@ -85,7 +85,7 @@ export const buttonProps = {
     raised: booleanProp,
     /**
      * Render this button with rounded style or not, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/)}
+     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/)}
      * for details.
      * @type {boolean}
      */
@@ -103,7 +103,7 @@ export const buttonProps = {
     href: stringProp,
     /**
      * This button size, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#sizes)}
+     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#sizes)}
      * for details.
      * @type {string}
      */
@@ -167,7 +167,7 @@ export const toggleButtonProps = {
     flat: booleanProp,
     /**
      * Render this button with outlined style (Google Material Outlined Button) or not, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#outline-buttons)}
+     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#outline-buttons)}
      * for details.
      * @type {boolean}
      */
@@ -179,7 +179,7 @@ export const toggleButtonProps = {
     raised: booleanProp,
     /**
      * Render this button with rounded style or not, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/)}
+     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/)}
      * for details.
      * @type {boolean}
      */
@@ -191,7 +191,7 @@ export const toggleButtonProps = {
     pill: booleanTrueProp,
     /**
      * This button size, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.2/components/buttons/#sizes)}
+     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#sizes)}
      * for details.
      * @type {string}
      */

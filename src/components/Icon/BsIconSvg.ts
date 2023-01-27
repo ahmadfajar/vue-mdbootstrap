@@ -1,17 +1,9 @@
-import {
-    ComponentOptionsMixin,
-    computed,
-    ComputedOptions,
-    defineComponent,
-    EmitsOptions,
-    onBeforeMount,
-    ref,
-    watch
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, onBeforeMount, ref, watch} from "vue";
 import {findIcon, useGoogleIcon, useRenderSvgIcon, useSvgClasses} from "./mixins/svgApi";
 import {useSizeHeight, useSizeWidth} from "./mixins/iconApi";
 import {iconProps} from "./mixins/iconProps";
-import {TBsIconSvg, TIconData, TIconOptionProps, TRecord} from "../../types";
+import type {TBsIconSvg, TIconData, TIconOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsIconSvg",

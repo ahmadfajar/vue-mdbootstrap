@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsButton from "./BsButton";
 import BsToggleButton from "./BsToggleButton";
 import "./button.scss";

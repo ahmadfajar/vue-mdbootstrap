@@ -1,6 +1,7 @@
-import {ComputedRef, getCurrentInstance, h, nextTick, Ref, Slots, VNode, withDirectives} from "vue";
+import type {ComputedRef, Ref, Slots, VNode} from "vue";
+import {getCurrentInstance, h, nextTick, withDirectives} from "vue";
 import {cssPrefix, useFindParentCmp} from "../../../mixins/CommonApi";
-import {IComponentInstance, TAppbarOptionProps, TAppContainerOptionProps, TRecord, TVueMdb} from "../../../types";
+import type {IComponentInstance, TAppbarOptionProps, TAppContainerOptionProps, TRecord, TVueMdb} from "../../../types";
 import Resize from "../../../directives/Resize";
 
 export function useAppbarStyles(
@@ -34,7 +35,6 @@ export function useAppbarOnMountedHook(
     smoothTransition: Ref<boolean>,
 ): void {
     const instance = getCurrentInstance();
-    // console.log("instance:", instance);
     vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
     const parent = useFindParentCmp(["bs-app-container", "BsAppContainer"], instance, 3);
 

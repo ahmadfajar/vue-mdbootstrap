@@ -1,7 +1,8 @@
-import {h, Prop, VNode, VNodeArrayChildren} from "vue";
+import type {Prop, VNode, VNodeArrayChildren} from "vue";
+import {h} from "vue";
 import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
 import {cssPrefix} from "../../../mixins/CommonApi";
-import {TBsCheckbox, TCheckboxGroupOptionProps, TCheckboxOptionProps, TRadioProps, TRecord} from "../../../types";
+import type {TBsCheckbox, TCheckboxGroupOptionProps, TCheckboxOptionProps, TRadioProps, TRecord} from "../../../types";
 import BsCheckbox from "../BsCheckbox";
 import Helper from "../../../utils/Helper";
 

@@ -1,5 +1,11 @@
-import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TRecord} from "../../../types";
+import type {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions
+} from "vue";
+import type {TRecord} from "../../../types";
 
 export declare type TValidator = {
     validators: TRecord;
@@ -9,43 +15,112 @@ export declare type TValidator = {
 }
 
 export declare type TValidationProps = {
+    /**
+     * The help text to display below the field component.
+     */
     helpText?: string;
+    /**
+     * Show persistent help text or not.
+     */
     persistentHelpText?: boolean;
+    /**
+     * The external validator plugin to be used to validate this field value.
+     */
     validator?: TValidator;
     /**
-     * Deprecated, use `validator` property instead.
+     * @deprecated
+     * Use `validator` property instead.
      */
     externalValidator?: TValidator;
 }
 
 export declare type TInputBaseProps = {
+    /**
+     * Sets the `<input>` element `ID` attribute. This property value is auto generates.
+     */
     id?: string;
+    /**
+     * Sets the `<input>` element `name` attribute.
+     */
     name?: string | number;
+    /**
+     * This input field state.
+     */
     disabled?: boolean;
+    /**
+     * This input field state.
+     */
     readonly?: boolean;
+    /**
+     * Whether this input field is required or not.
+     */
     required?: boolean;
 }
 
 export declare type TRadioProps = {
+    /**
+     * Sets the `<input>` element `ID` attribute. This property value is auto generates.
+     */
     id?: string;
+    /**
+     * Sets the `<input>` element `name` attribute.
+     */
     name?: string | number;
+    /**
+     * This input field state.
+     */
     disabled?: boolean;
+    /**
+     * This input field state.
+     */
     readonly?: boolean;
+    /**
+     * Sets this component color.
+     */
     color?: string;
+    /**
+     * The `<input>` element `value` attribute.
+     */
     value: string | number | boolean | unknown;
+    /**
+     * The text label to display.
+     */
     label: string;
 }
 
 export declare type TInputGroupProps<D, M> = TInputBaseProps & TValidationProps & {
+    /**
+     * Sets this component color.
+     */
     color?: string;
+    /**
+     * Sets the maximum number of columns to display the checkbox. When the number of items
+     * exceed the number of columns, then the remaining items will be displayed on the
+     * next row. The maximum number of columns must be less than 7.
+     */
     column?: string | number;
+    /**
+     * The collection of `<bs-radio>` property-value.
+     */
     items: Array<D>;
+    /**
+     * The value monitored by `v-model` to maintain the checked state.
+     */
     modelValue?: M;
 }
 
 export declare type TRadioOptionProps = TInputBaseProps & {
+    /**
+     * Sets this component color.
+     */
     color?: string;
+    /**
+     * The `<input>` element `value` attribute.
+     */
     value?: string | number | boolean | unknown;
+    /**
+     * The input value to be monitored by `v-model`.
+     */
     modelValue?: string | number | boolean | unknown;
 }
 

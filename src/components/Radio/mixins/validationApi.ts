@@ -1,6 +1,7 @@
-import {createCommentVNode, Fragment, h, Slots, VNode} from "vue";
+import type {Slots, VNode} from "vue";
+import {createCommentVNode, Fragment, h} from "vue";
 import {cssPrefix, useRenderSlot, useRenderTransition} from "../../../mixins/CommonApi";
-import {TValidationProps, TValidator} from "../types";
+import type {TValidationProps, TValidator} from "../types";
 import Helper from "../../../utils/Helper";
 
 export function useGetValidator(props: Readonly<TValidationProps>): TValidator | undefined {

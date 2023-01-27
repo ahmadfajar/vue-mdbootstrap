@@ -1,18 +1,9 @@
-import {
-    ComponentOptionsMixin,
-    computed,
-    ComputedOptions,
-    createCommentVNode,
-    defineComponent,
-    EmitsOptions,
-    nextTick,
-    ref,
-    watch
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, createCommentVNode, defineComponent, nextTick, ref, watch} from "vue";
 import {useRenderTransition} from "../../mixins/CommonApi";
 import {useChipClassNames, useRenderChip} from "./mixins/chipApi";
 import {chipProps} from "./mixins/chipProps";
-import {TBsChip, TChipOptionProps, TRecord} from "../../types";
+import type {TBsChip, TChipOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsChip",

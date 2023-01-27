@@ -1,4 +1,5 @@
-import {defineComponent, EmitsOptions, h, Transition, TransitionProps} from "vue";
+import type {EmitsOptions, TransitionProps} from "vue";
+import {defineComponent, h, Transition} from "vue";
 import {afterEnter, afterLeave, beforeEnter, beforeLeave, onEnter, onLeave} from "./mixins/expandTransitionApi";
 
 export default defineComponent({

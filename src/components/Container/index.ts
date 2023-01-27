@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import registerConfig from "../../mixins/registerConfig";
 import BsAppContainer from "./BsAppContainer";
 import BsContainer from "./BsContainer";

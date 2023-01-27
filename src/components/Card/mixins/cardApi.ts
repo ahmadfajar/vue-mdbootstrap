@@ -1,5 +1,6 @@
-import {h, Slots, VNode} from "vue";
-import {TRecord} from "../../../types";
+import type {VNode} from "vue";
+import {h} from "vue";
+import type {TRecord} from "../../../types";
 
 export function useRenderCardImg(
     imgSrc?: string | undefined,
@@ -20,21 +21,3 @@ export function useContentTag(type?: string | undefined, tag?: string | undefine
     return tag
 }
 
-export function useSimpleRenderWithSlots(
-    tag: string,
-    slots?: Slots,
-    classes?: string | Array<string> | TRecord,
-    styles?: string | Array<string> | TRecord,
-): VNode {
-    if (styles) {
-        return h(
-            tag, {class: classes, style: styles},
-            slots ? slots.default && slots.default() : undefined,
-        )
-    } else {
-        return h(
-            tag, {class: classes},
-            slots ? slots.default && slots.default() : undefined,
-        )
-    }
-}

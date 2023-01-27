@@ -1,4 +1,4 @@
-import {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin as Plugin_2} from "vue";
 import BsExpandTransition from "./BsExpandTransition";
 import BsOverlay from "./BsOverlay";
 import BsRipple from "./BsRipple";

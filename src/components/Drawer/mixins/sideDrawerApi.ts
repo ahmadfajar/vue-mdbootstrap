@@ -1,7 +1,15 @@
-import {ComputedRef, getCurrentInstance, h, nextTick, Prop, Ref, Slots, Teleport, VNode, withDirectives} from "vue";
+import type {ComputedRef, Prop, Ref, Slots, VNode} from "vue";
+import {getCurrentInstance, h, nextTick, Teleport, withDirectives} from "vue";
 import {cssPrefix, useFindParentCmp} from "../../../mixins/CommonApi";
 import {BsOverlay} from "../../Animation";
-import {TAppContainerOptionProps, TBsOverlay, TEmitFn, TRecord, TSideDrawerOptionProps, TVueMdb} from "../../../types";
+import type {
+    TAppContainerOptionProps,
+    TBsOverlay,
+    TEmitFn,
+    TRecord,
+    TSideDrawerOptionProps,
+    TVueMdb
+} from "../../../types";
 import Resize from "../../../directives/Resize";
 import Helper from "../../../utils/Helper";
 

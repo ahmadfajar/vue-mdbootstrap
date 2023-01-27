@@ -1,13 +1,26 @@
-import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TRecord} from "../../../types";
+import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import type {TRecord} from "../../../types";
 
 export declare type TAppContainerOptionProps = {
+    /**
+     * Use document viewport height or not.
+     */
     viewportHeight?: boolean;
+    /**
+     * Sets the element `ID` attribute. This property value is auto generates.
+     */
     id?: string;
 }
 
 export declare type TContainerOptionProps = {
+    /**
+     * Mount this component as part of application container or just ordinary container.
+     * If mount as part of application container, then it will adapt to `SideDrawer` and `Appbar` size.
+     */
     app?: boolean;
+    /**
+     * Html tag used to render this component.
+     */
     tag?: string;
 }
 

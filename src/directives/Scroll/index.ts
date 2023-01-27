@@ -1,5 +1,5 @@
-import {Directive, DirectiveBinding} from "vue";
-import {EventListenerTarget, IBindingElement, TDirectiveBinding} from "../../types";
+import type {Directive, DirectiveBinding} from "vue";
+import type {EventListenerTarget, IBindingElement, TDirectiveBinding} from "../../types";
 import Helper from "../../utils/Helper";
 
 interface ScrollDirectiveBinding extends Omit<DirectiveBinding, "modifiers"> {
