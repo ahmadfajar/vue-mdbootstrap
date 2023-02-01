@@ -1,0 +1,68 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+
+.#{$prefix}-popover {
+    position: fixed;
+    max-height: 100%;
+    max-width: 80%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+
+    &.transition-bottom {
+        transform-origin: center top;
+
+        &.scale-enter-from,
+        &.scale-leave-active {
+            transform: scaleY(.5);
+        }
+    }
+
+    &.transition-bottom-left {
+        transform-origin: left top;
+    }
+
+    &.transition-bottom-right {
+        transform-origin: right top;
+    }
+
+    &.transition-top {
+        transform-origin: center bottom;
+
+        &.scale-enter-from,
+        &.scale-leave-active {
+            transform: scaleY(.5);
+        }
+    }
+
+    &.transition-top-left {
+        transform-origin: left bottom;
+    }
+
+    &.transition-top-right {
+        transform-origin: right bottom;
+    }
+
+    &.transition-left {
+        transform-origin: right center;
+    }
+
+    &.transition-left-top {
+        transform-origin: right top;
+    }
+
+    &.transition-left-bottom {
+        transform-origin: right bottom;
+    }
+
+    &.transition-right {
+        transform-origin: left center;
+    }
+
+    &.transition-right-top {
+        transform-origin: left top;
+    }
+
+    &.transition-right-bottom {
+        transform-origin: left bottom;
+    }
+}

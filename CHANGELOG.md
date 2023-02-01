@@ -4,7 +4,7 @@
 
 ## v2.0.0
 
-Released: February xx, 2023
+Released: March xx, 2023
 
 #### Features v2.0.0
 
@@ -24,6 +24,7 @@ Released: February xx, 2023
 - **BsListView**: add property `itemRounded`, `itemRoundedPill`, `individualState`, and `modelValue`.
 - **BsMaskLoader**: add property `variant`.
 - **BsOverlay**: add event `click`.
+- **BsPopover**: add property `color`.
 - **BsSideDrawer**: add property `position`, `fixedLayout`, `overlayColor`.
 - **BsTab**: add property `disabled`, `iconSpin`, `iconPulse`, `iconFlip`, `iconRotation`.
 - **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
@@ -83,6 +84,7 @@ Released: February xx, 2023
   - Replace event `input` with `update:active`.
 - **BsListView**: Replace property `activeItemBordered` with `itemBorderVariant`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
+- **BsPopover**: Replace property `overlayClose` with `overlayClickClose`.
 - **BsRipple**: removed property `eventTrigger`.
 - **BsTab**: Replace property `value` with `modelValue`.
 - **BsTextField**:

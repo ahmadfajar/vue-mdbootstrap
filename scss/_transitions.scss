@@ -1,8 +1,8 @@
-@import "~compass-mixins/lib/compass/css3";
-@import "~compass-mixins/lib/animation/core";
 @import "colors";
 @import "variables";
 @import "mixins/transition";
+@import "~compass-mixins/lib/compass/css3";
+@import "~compass-mixins/lib/animation/core";
 
 /* VueJs transition animation */
 @include enterActive-leaveActive("fade") {
@@ -11,12 +11,6 @@
 
 @include enterFrom-leaveTo("fade") {
     opacity: 0;
-}
-
-@include enterActive-leaveActive("expand") {
-    @include transition(all $md-transition-easeOut);
-    @include backface-visibility(hidden);
-    @include transform(translate3d(0, 0, 0));
 }
 
 .slide-fade, .slide-fade-reverse {

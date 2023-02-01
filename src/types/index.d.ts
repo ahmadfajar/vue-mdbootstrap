@@ -17,6 +17,7 @@ export * from "../components/Drawer/types";
 export * from "../components/Field/types";
 export * from "../components/Icon/types";
 export * from "../components/ListView/types";
+export * from "../components/Popover/types";
 export * from "../components/Progress/types";
 export * from "../components/Radio/types";
 export * from "../components/Tabs/types";
@@ -29,9 +30,9 @@ export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
 export declare type TRecord = Record<string, unknown>;
 
 export declare type TDirectiveBinding = {
-    handler: VoidFunction | EventListenerTarget;
+    handler: VoidFunction | EventListener | EventListenerTarget;
     debounce?: number;
-    target?: string;
+    target?: string | Element | Document | Window;
 };
 
 export declare type TRouterLinkProps = AllowedComponentProps & VNodeProps & typeof RouterLinkProps;
@@ -44,8 +45,8 @@ export declare type TRouterOptionProps = {
 
 export declare type TEventListenerBinding = {
     handler: EventListenerOrEventListenerObject;
-    options: AddEventListenerOptions;
-    target: Element | Window | undefined;
+    options?: AddEventListenerOptions;
+    target?: Element | Window | null;
 };
 
 export declare type TMdbAppObject = {
@@ -77,6 +78,7 @@ export declare interface EventListenerTarget {
 }
 
 export declare interface IBindingElement extends Element {
+    __clickOutsideListener?: TEventListenerBinding;
     __scrollListener?: TEventListenerBinding;
     __resizeListener?: EventListenerOrEventListenerObject | CallableFunction;
     __resizeListeners?: Array<CallableFunction>;

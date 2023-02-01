@@ -18,7 +18,7 @@ import {
 import {booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {cssPrefix, useRenderTransition} from "../../mixins/CommonApi";
 import {useAddTooltipListener, useRemoveTooltipListener, useSetTooltipPosition} from "./mixins/tooltipApi";
-import type {TBsTooltip, TPlacement, TRecord, TTooltipOptionProps} from "../../types";
+import type {TBsTooltip, TPositionType, TRecord, TTooltipOptionProps} from "../../types";
 import resize from "../../directives/Resize";
 import scroll from "../../directives/Scroll";
 import Helper from "../../utils/Helper";
@@ -30,9 +30,9 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
         disabled: booleanProp,
         show: booleanProp,
         placement: {
-            type: String as PropType<TPlacement>,
+            type: String as PropType<TPositionType>,
             default: "bottom",
-            validator: (v: string) => ["top", "bottom", "left", "right"].indexOf(v) > -1
+            validator: (v: string) => ["top", "bottom", "left", "right"].includes(v)
         },
         width: stringOrNumberProp,
         maxWidth: validStringOrNumberProp,
@@ -54,7 +54,7 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
         const active = ref<boolean>(false);
         const isActive = computed(() => active.value || thisProps.show);
         const setPosition = () => {
-            nextTick().then(() => useSetTooltipPosition(tooltip, thisProps.placement, isActive.value, instance));
+            nextTick().then(() => useSetTooltipPosition(tooltip, instance, thisProps.placement, isActive.value));
         }
         const transitionName = computed(() => `${cssPrefix}tooltip-${thisProps.placement}`);
         const classNames = computed(() => [`${cssPrefix}tooltip`, transitionName.value]);
@@ -68,13 +68,13 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
         watch(
             () => isActive.value,
             (value) => {
-                nextTick().then(() => useSetTooltipPosition(tooltip, thisProps.placement, value, instance));
+                nextTick().then(() => useSetTooltipPosition(tooltip, instance, thisProps.placement, value));
             }
         )
         onMounted(() => {
             instance = getCurrentInstance();
             useAddTooltipListener(instance, active);
-            useSetTooltipPosition(tooltip, thisProps.placement, isActive.value, instance);
+            useSetTooltipPosition(tooltip, instance, thisProps.placement, isActive.value);
         });
         onBeforeUnmount(() => useRemoveTooltipListener(instance));
 

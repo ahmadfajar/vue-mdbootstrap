@@ -9,9 +9,8 @@ export {BsCard, BsCardBody, BsCardContent, BsCardFooter, BsCardHeader, BsCardMed
 export {BsCheckbox, BsCheckboxGroup} from "./Checkbox";
 export {BsChip, BsChipGroup} from "./Chip";
 export {BsContent, BsContainer, BsAppContainer} from "./Container";
-export {BsSideDrawer} from "./Drawer";
-export {BsTextField, BsTextArea} from "./Field";
 export {BsIcon, BsIconSvg, BsIconSpinner, BsToggleIcon} from "./Icon";
+export {BsSideDrawer} from "./Drawer";
 export {
     BsListNav,
     BsListNavItem,
@@ -23,7 +22,9 @@ export {
     BsListTileTitle,
     BsListView
 } from "./ListView";
+export {BsPopover} from "./Popover";
 export {BsProgress, BsProgressBar, BsMaskLoader} from "./Progress";
+export {BsTextField, BsTextArea} from "./Field";
 export {BsRadio, BsRadioGroup} from "./Radio";
 export {BsTab, BsTabs} from "./Tabs";
 export {BsTooltip} from "./Tooltip";

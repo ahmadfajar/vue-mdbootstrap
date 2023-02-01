@@ -1,7 +1,7 @@
 import type {ComponentInternalInstance, Ref, VNode, VNodeArrayChildren} from "vue";
 import {EventListener} from "../../../mixins/DomHelper";
 import {cssPrefix} from "../../../mixins/CommonApi";
-import type {IBindingElement, IEventResult, IHTMLEventTarget, TPlacement} from "../../../types";
+import type {IBindingElement, IEventResult, IHTMLEventTarget, TPositionType} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 const SPACE = 4;
@@ -9,15 +9,15 @@ const SPACE = 4;
 /**
  * Calculate Tooltip left offset.
  *
- * @param {Element} activatorEl     Activator Element
- * @param {number} width            Element width
- * @param {TPlacement} [placement]  Tooltip placement.
+ * @param {Element} activatorEl         Activator Element
+ * @param {number} width                Element width
+ * @param {TPositionType} [placement]   Tooltip placement.
  * @returns {number} Tooltip left offset
  */
 function getTooltipLeftPosition(
     activatorEl: Element,
     width: number,
-    placement?: TPlacement
+    placement?: TPositionType
 ) {
     const offset = activatorEl.getBoundingClientRect();
 
@@ -36,15 +36,15 @@ function getTooltipLeftPosition(
 /**
  * Calculate Tooltip top offset.
  *
- * @param {Element} activatorEl     Activator Element
- * @param {number} height           Element height
- * @param {TPlacement} [placement]  Tooltip placement.
+ * @param {Element} activatorEl         Activator Element
+ * @param {number} height               Element height
+ * @param {TPositionType} [placement]   Tooltip placement.
  * @returns {number} Tooltip top offset
  */
 function getTooltipTopPosition(
     activatorEl: Element,
     height: number,
-    placement?: TPlacement
+    placement?: TPositionType
 ) {
     const rect = activatorEl.getBoundingClientRect();
 
@@ -106,9 +106,9 @@ function findActivatorElement(instance: ComponentInternalInstance): Element | nu
 
 export function useSetTooltipPosition(
     tooltipRef: Ref<Element | null>,
-    placement?: TPlacement,
-    isActive?: boolean,
-    instance?: ComponentInternalInstance | null
+    instance?: ComponentInternalInstance | null,
+    placement?: TPositionType,
+    isActive?: boolean
 ) {
     if (!tooltipRef.value || !instance || !isActive) {
         return;

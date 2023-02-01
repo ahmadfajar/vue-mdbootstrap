@@ -5,9 +5,7 @@ import type {
     DefineComponent,
     EmitsOptions
 } from "vue";
-import type {TRecord} from "../../../types";
-
-export declare type TPlacement = "top" | "bottom" | "left" | "right";
+import type {TPositionType, TRecord} from "../../../types";
 
 export declare type TTooltipOptionProps = {
     /**
@@ -25,7 +23,7 @@ export declare type TTooltipOptionProps = {
     /**
      * This tooltip display placement.
      */
-    placement?: TPlacement;
+    placement?: TPositionType;
     /**
      * This tooltip display width.
      */

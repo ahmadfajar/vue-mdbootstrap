@@ -12,8 +12,8 @@ interface ScrollDirectiveBinding extends Omit<DirectiveBinding, "modifiers"> {
 
 function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
     const callback = Helper.isFunction(binding.value)
-        ? (<EventListenerTarget>binding.value)
-        : (<TDirectiveBinding>binding.value).handler;
+        ? <EventListenerTarget>binding.value
+        : <EventListenerTarget>(<TDirectiveBinding>binding.value).handler;
     const options: AddEventListenerOptions = {
         passive: binding.modifiers?.passive || true,
     }
@@ -24,7 +24,7 @@ function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
         target = el;
     } else if (!Helper.isFunction(binding.value)) {
         const binder = binding.value as TDirectiveBinding;
-        target = binder.target ? document.querySelector(binder.target) : window;
+        target = Helper.isString(binder.target) ? document.querySelector(<string>binder.target) : window;
     } else {
         target = window;
     }
@@ -58,6 +58,7 @@ function updated(el: HTMLElement, binding: ScrollDirectiveBinding): void {
     if (binding.value === binding.oldValue) {
         return;
     }
+
     unmounted(el);
     mounted(el, binding);
 }
