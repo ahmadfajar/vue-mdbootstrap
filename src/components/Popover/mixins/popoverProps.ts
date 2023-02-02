@@ -3,7 +3,8 @@ import {
     booleanTrueProp,
     stringProp,
     validStringOrFloatProp,
-    validStringOrNumberProp
+    validStringOrNumberProp,
+    whiteColorProp
 } from "../../../mixins/CommonProps";
 import type {PropType} from "vue";
 import type {TPopoverPosition} from "../types";
@@ -20,7 +21,7 @@ export const popoverBaseProps = {
 export const popoverProps = {
     ...popoverBaseProps,
     cover: booleanProp,
-    color: stringProp,
+    color: whiteColorProp,
     space: validStringOrNumberProp,
     placement: {
         type: String as PropType<TPopoverPosition>,
@@ -38,7 +39,6 @@ export const popoverProps = {
     },
     trigger: {
         type: [String, Element],
-        default: undefined,
-        required: true,
+        default: undefined
     },
 }

@@ -53,17 +53,22 @@ export const tagProp = {
 
 export const defaultColorProp = {
     type: String,
-    default: 'default'
+    default: "default"
 };
 
 export const primaryColorProp = {
     type: String,
-    default: 'primary'
+    default: "primary"
+};
+
+export const whiteColorProp = {
+    type: String,
+    default: "white"
 };
 
 export const defaultTransitionProp = {
     type: String,
-    default: 'fade'
+    default: "fade"
 };
 
 export const routerProps = {

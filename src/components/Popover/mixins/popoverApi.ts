@@ -122,7 +122,9 @@ export function useSetPopoverPosition(
     }
 
     const popoverEl = <HTMLElement>popoverRef.value;
-    const activatorEl = Helper.isString(props.trigger) ? document.querySelector(<string>props.trigger) : <Element>props.trigger;
+    const activatorEl = Helper.isString(props.trigger)
+        ? document.querySelector(<string>props.trigger)
+        : <Element>props.trigger;
 
     if (activatorEl) {
         const elRect = activatorEl.getBoundingClientRect();

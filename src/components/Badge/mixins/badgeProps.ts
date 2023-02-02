@@ -1,12 +1,11 @@
+import {defaultColorProp} from "../../../mixins/CommonProps";
+
 export const badgeProps = {
     /**
      * The badge color appearance.
      * @type {string}
      */
-    color: {
-        type: String,
-        default: "default",
-    },
+    color: defaultColorProp,
     /**
      * Html tag used to render the badge.
      * @type {string}

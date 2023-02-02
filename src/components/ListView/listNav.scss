@@ -49,6 +49,7 @@
             }
 
             > .#{$prefix}ripple {
+                @include align-items(center);
                 min-height: var(--#{$prefix}tile-minheight);
                 line-height: var(--#{$prefix}nav-item-line-height);
                 padding: var(--#{$prefix}nav-item-padding-y) var(--#{$prefix}nav-item-padding-right) var(--#{$prefix}nav-item-padding-y) var(--#{$prefix}nav-item-padding-left);

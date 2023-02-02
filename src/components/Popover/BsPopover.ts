@@ -5,12 +5,13 @@ import {
     defineComponent,
     getCurrentInstance,
     h,
+    mergeProps,
     nextTick,
     onMounted,
     ref,
     Teleport,
     vShow,
-    watchEffect,
+    watch,
     withDirectives
 } from "vue";
 import {popoverProps} from "./mixins/popoverProps";
@@ -22,10 +23,12 @@ import clickOutside from "../../directives/ClickOutside";
 import resize from "../../directives/Resize";
 import scroll from "../../directives/Scroll";
 import PopupManager from "./mixins/PopupManager";
+import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsPopover",
     props: popoverProps,
+    inheritAttrs: false,
     emits: [
         /**
          * Fired when this Popover state is updated.
@@ -48,28 +51,35 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
             );
         };
         const onClickOutside = (evt: Event) => {
-            if (thisProps.trigger && (<Element>thisProps.trigger).contains(<Node>evt.target)) {
+            if (thisProps.overlay && !thisProps.overlayClickClose) {
                 return;
             }
-            if (thisProps.overlay && !thisProps.overlayClickClose) {
+            const activatorEl = Helper.isString(thisProps.trigger)
+                ? document.querySelector(<string>thisProps.trigger)
+                : <Element>thisProps.trigger;
+            if (activatorEl && activatorEl.contains(<Node>evt.target)) {
                 return;
             }
             usePopoverClose(instance, isActive, "Clicked outside.");
             instance && PopupManager.remove(instance);
-        }
+        };
         const classNames = computed(
             () => [
                 `${cssPrefix}popover`,
                 `transition-${actualPlacement.value}`,
-                thisProps.color ? `bg-${thisProps.color}` : "",
+                `bg-${thisProps.color}`,
             ]
         );
 
-        watchEffect(() => {
-            if (isActive.value) {
-                setPosition();
+        watch(
+            () => <boolean>thisProps.open,
+            (value) => {
+                isActive.value = value;
+                if (value) {
+                    setPosition();
+                }
             }
-        });
+        );
         onMounted(() => {
             instance = getCurrentInstance();
             useSetPopoverPosition(popover, instance, thisProps, actualPlacement, isActive);
@@ -85,11 +95,11 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
                             color: props.overlayColor,
                         }) : createCommentVNode(" v-if-BsPopover-overlay ", true),
                     withDirectives(
-                        h("div", {
-                            class: classNames.value,
-                            style: {"z-index": 1050},
-                            ref: popover,
-                        }, slots.default && slots.default()),
+                        h("div", mergeProps(
+                                {class: classNames.value, ref: popover},
+                                // @ts-ignore
+                                instance?.attrs),
+                            slots.default && slots.default()),
                         [
                             [vShow, isActive.value],
                             [clickOutside, onClickOutside],

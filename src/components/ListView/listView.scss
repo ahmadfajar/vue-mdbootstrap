@@ -8,7 +8,7 @@
     --#{$prefix}listview-padding-x: 0;
     --#{$prefix}listview-padding-y: #{$padding-sm};
 
-    --#{$prefix}tile-minheight: 3rem;
+    --#{$prefix}tile-minheight: 2.5rem;
     --#{$prefix}tile-action-minwidth: 1.5rem;
     --#{$prefix}tile-spacing-x: #{$padding-base - .5};
     --#{$prefix}tile-spacing-y: #{$padding-xs};
@@ -21,7 +21,7 @@
     --#{$prefix}tile-active-indicator-border: 4px;
 
     --#{$prefix}nav-item-padding-x: #{$padding-base};
-    --#{$prefix}nav-item-padding-y: #{$padding-base - .25};
+    --#{$prefix}nav-item-padding-y: #{$padding-xs};
     --#{$prefix}nav-item-line-height: normal;
     --#{$prefix}nav-item-font-size: #{$font-size-base};
     --#{$prefix}nav-item-font-weight: #{$font-weight-normal};

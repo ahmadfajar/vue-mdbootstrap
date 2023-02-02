@@ -23,7 +23,7 @@
     "url": "https://github.com/ahmadfajar/vue-mdbootstrap"
   },
   "peerDependencies": {
-    "vue": "^3.2.45"
+    "vue": "^3.2.47"
   },
   "dependencies": {
     "@types/body-scroll-lock": "^3.1.0",
@@ -38,7 +38,7 @@
     "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.58.0",
     "sass-loader": "^13.2.0",
-    "vue": "^3.2.45"
+    "vue": "^3.2.47"
   },
   "devDependencies": {
     "@babel/core": "^7.20.12",

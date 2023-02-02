@@ -1,10 +1,7 @@
-import {booleanProp, booleanTrueProp} from "../../../mixins/CommonProps";
+import {booleanProp, booleanTrueProp, whiteColorProp} from "../../../mixins/CommonProps";
 
 export const sideDrawerProps = {
-    color: {
-        type: String,
-        default: "white",
-    },
+    color: whiteColorProp,
     clipped: booleanProp,
     mini: booleanProp,
     fixedLayout: booleanProp,

@@ -6,7 +6,8 @@ import {
     stringOrNumberProp,
     stringProp,
     stringRequiredProp,
-    validStringOrNumberProp
+    validStringOrNumberProp,
+    whiteColorProp
 } from "../../../mixins/CommonProps";
 import {useGenerateId} from "../../../mixins/CommonApi";
 import {iconProps} from "../../Avatar/mixins/avatarProps";
@@ -15,10 +16,7 @@ import type {TSpaceAround} from "../types";
 
 
 export const listViewProps = {
-    color: {
-        type: String,
-        default: "white"
-    },
+    color: whiteColorProp,
     overflowHidden: booleanProp,
     itemRounded: booleanProp,
     itemRoundedPill: booleanProp,

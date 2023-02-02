@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "../../../scss/mixins/transition";
@@ -53,7 +54,7 @@
         &:before {
             top: 0;
             //border-width: var(--#{$prefix}tooltip-arrow-height) calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0;
-            border-width: $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
+            border-width: $tooltip-arrow-height (math.div($tooltip-arrow-width, 2)) 0;
             border-top-color: rgba($tooltip-bg, $tooltip-opacity);
         }
     }
@@ -68,7 +69,7 @@
         &::before {
             bottom: 0;
             //border-width: 0 calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height);
-            border-width: 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
+            border-width: 0 math.div($tooltip-arrow-width, 2) $tooltip-arrow-height;
             border-bottom-color: rgba($tooltip-bg, $tooltip-opacity);
         }
     }
@@ -85,7 +86,7 @@
         &::before {
             left: 0;
             //border-width: calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0 calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height);
-            border-width: ($tooltip-arrow-width / 2) 0 ($tooltip-arrow-width / 2) $tooltip-arrow-height;
+            border-width: math.div($tooltip-arrow-width, 2) 0 math.div($tooltip-arrow-width, 2) $tooltip-arrow-height;
             border-left-color: rgba($tooltip-bg, $tooltip-opacity);
         }
     }
@@ -102,7 +103,7 @@
         &:before {
             right: 0;
             //border-width: calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height) calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0;
-            border-width: ($tooltip-arrow-width / 2) $tooltip-arrow-height ($tooltip-arrow-width / 2) 0;
+            border-width: math.div($tooltip-arrow-width, 2) $tooltip-arrow-height math.div($tooltip-arrow-width, 2) 0;
             border-right-color: rgba($tooltip-bg, $tooltip-opacity);
         }
     }
