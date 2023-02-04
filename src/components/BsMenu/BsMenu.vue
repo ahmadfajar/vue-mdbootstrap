@@ -170,9 +170,9 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~compass-sass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
 
 .#{$prefix}menu {
     display: inline-block;
@@ -180,33 +180,16 @@ export default {
     vertical-align: middle;
 
     .#{$prefix}menu-activator {
-        @include align-items(center);
         cursor: pointer;
-        height: 100%;
         position: relative;
-
-        input[readonly] {
-            cursor: pointer;
-        }
-
-        .disabled & {
-            cursor: default;
-            pointer-events: none;
-        }
     }
 }
 
 .#{$prefix}menu-popover {
-    @include border-radius($border-radius-base);
+    @include border-radius($border-radius-sm);
 
     > .#{$prefix}list {
-        @include border-radius($border-radius-base);
-
-        .#{$prefix}list-tile {
-            > .#{$prefix}ripple {
-                min-height: 24px;
-            }
-        }
+        @include border-radius($border-radius-sm);
 
         .#{$prefix}divider {
             margin-bottom: 3px;

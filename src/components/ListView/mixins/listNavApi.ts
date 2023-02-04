@@ -1,21 +1,19 @@
-import type {
-    ComponentInternalInstance,
-    ComponentObjectPropsOptions,
-    ComputedRef,
-    ExtractPropTypes,
-    Prop,
-    Ref,
-    ShallowRef,
-    Slots,
-    VNode
-} from "vue";
+import type {ComponentInternalInstance, ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode} from "vue";
 import {createCommentVNode, createTextVNode, h, toDisplayString} from "vue";
 import {cssPrefix, useHasRouter, useRenderRouter} from "../../../mixins/CommonApi";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
 import {BsRipple} from "../../Animation";
 import {BsBadge} from "../../Badge";
 import {BsIcon} from "../../Icon";
-import type {IListItem, IListViewProvider, TBsRipple, TEmitFn, TListNavItemOptionProps, TRecord} from "../../../types";
+import type {
+    IListItem,
+    IListViewProvider,
+    TBsListNavItem,
+    TBsRipple,
+    TEmitFn,
+    TListNavItemOptionProps,
+    TRecord
+} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 
@@ -63,7 +61,7 @@ export function useNavItemContentStyles(props: Readonly<TListNavItemOptionProps>
 }
 
 function renderNavItemContent(
-    props: Readonly<ExtractPropTypes<ComponentObjectPropsOptions<TListNavItemOptionProps>>>,
+    props: Readonly<ExtractPropTypes<TBsListNavItem>>,
     innerStyles: ComputedRef<string[]>,
     hasChild: Ref<boolean>,
     isExpanded: Ref<boolean>,
@@ -113,7 +111,7 @@ function renderNavItemContent(
 }
 
 function renderNavLink(
-    props: Readonly<ExtractPropTypes<ComponentObjectPropsOptions<TListNavItemOptionProps>>>,
+    props: Readonly<ExtractPropTypes<TBsListNavItem>>,
     classes: ComputedRef<TRecord>,
     innerStyles: ComputedRef<string[]>,
     isActive: Ref<boolean>,
@@ -135,7 +133,7 @@ function renderNavLink(
 }
 
 function renderRouterLink(
-    props: Readonly<ExtractPropTypes<ComponentObjectPropsOptions<TListNavItemOptionProps>>>,
+    props: Readonly<ExtractPropTypes<TBsListNavItem>>,
     classes: ComputedRef<TRecord>,
     innerStyles: ComputedRef<string[]>,
     isActive: Ref<boolean>,
@@ -205,7 +203,7 @@ export async function useAddChild(
 
 export function useRenderListNavItem(
     slots: Slots,
-    props: Readonly<ExtractPropTypes<ComponentObjectPropsOptions<TListNavItemOptionProps>>>,
+    props: Readonly<ExtractPropTypes<TBsListNavItem>>,
     classes: ComputedRef<TRecord>,
     innerClasses: ComputedRef<TRecord>,
     innerStyles: ComputedRef<string[]>,

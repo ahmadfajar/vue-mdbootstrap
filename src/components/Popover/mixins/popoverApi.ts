@@ -1,5 +1,11 @@
-import type {ComponentInternalInstance, Ref} from "vue";
-import type {TPopoverOptionProps, TPopoverPosition} from "../types";
+import type {ComponentInternalInstance, ComputedRef, ExtractPropTypes, Ref, Slots, VNode} from "vue";
+import {createCommentVNode, h, mergeProps, nextTick, Teleport, vShow, withDirectives} from "vue";
+import type {TBsPopover, TPopoverOptionProps, TPopoverPosition} from "../types";
+import {useRenderTransition} from "../../../mixins/CommonApi";
+import {BsOverlay} from "../../Animation";
+import clickOutside from "../../../directives/ClickOutside";
+import resize from "../../../directives/Resize";
+import scroll from "../../../directives/Scroll";
 import Helper from "../../../utils/Helper";
 import PopupManager from "./PopupManager";
 
@@ -130,7 +136,6 @@ export function useSetPopoverPosition(
         const elRect = activatorEl.getBoundingClientRect();
         if (elRect.top < -elRect.height || elRect.top > window.innerHeight) {
             usePopoverClose(instance, isActive, "Activator overflow.");
-            PopupManager.remove(instance);
         }
 
         const shift = shiftedSpace(props.space);
@@ -165,4 +170,72 @@ export function usePopoverClose(
     isActive.value = false;
     instance.emit("update:open", false);
     instance.emit("close", message);
+    PopupManager.remove(instance);
+}
+
+export function useRenderPopover(
+    props: Readonly<ExtractPropTypes<TBsPopover>>,
+    slots: Slots,
+    instance: ComponentInternalInstance | null,
+    classNames: ComputedRef<string[]>,
+    popover: Ref<Element | null>,
+    actualPlacement: Ref<string | undefined>,
+    isActive: Ref<boolean>,
+): VNode {
+    const thisProps = props as Readonly<TPopoverOptionProps>;
+    const internalSetPosition = () => {
+        nextTick().then(() =>
+            useSetPopoverPosition(popover, instance, thisProps, actualPlacement, isActive)
+        );
+    };
+    const internalOnClickOutside = (evt: Event) => {
+        onPopoverClickOutside(thisProps, instance, isActive, evt);
+    }
+
+    return h(Teleport, {to: "body"}, [
+        useRenderTransition({name: thisProps.transition}, [
+            thisProps.overlay
+                ? h(BsOverlay, {
+                    show: props.overlay && props.open,
+                    opacity: props.overlayOpacity,
+                    color: props.overlayColor,
+                    onClick: () => {
+                        if (thisProps.overlayClickClose) {
+                            usePopoverClose(instance, isActive, "Overlay clicked.");
+                        }
+                    },
+                }) : createCommentVNode(" v-if-BsPopover-overlay ", true),
+            withDirectives(
+                h("div", mergeProps(
+                        {class: classNames.value, ref: popover},
+                        // @ts-ignore
+                        instance?.attrs),
+                    slots.default && slots.default()),
+                [
+                    [vShow, isActive.value],
+                    [clickOutside, internalOnClickOutside],
+                    [resize, internalSetPosition],
+                    [scroll, internalSetPosition],
+                ]
+            ),
+        ])
+    ]);
+}
+
+function onPopoverClickOutside(
+    props: Readonly<TPopoverOptionProps>,
+    instance: ComponentInternalInstance | null,
+    isActive: Ref<boolean>,
+    evt: Event,
+): void {
+    if (props.overlay && !props.overlayClickClose) {
+        return;
+    }
+    const activatorEl = Helper.isString(props.trigger)
+        ? document.querySelector(<string>props.trigger)
+        : <Element>props.trigger;
+    if (activatorEl && activatorEl.contains(<Node>evt.target)) {
+        return;
+    }
+    usePopoverClose(instance, isActive, "Clicked outside.");
 }

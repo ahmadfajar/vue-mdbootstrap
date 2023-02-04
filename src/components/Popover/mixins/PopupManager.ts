@@ -65,7 +65,6 @@ const PopupManager = {
 
     if (popupItem.props.escClose) {
         usePopoverClose(popupItem.target, popupItem.active, "Esc pressed.");
-        PopupManager.remove(popupItem.target);
     }
 });
 

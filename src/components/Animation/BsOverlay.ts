@@ -30,8 +30,8 @@ export default defineComponent<TBsOverlay, TRecord, TRecord, ComputedOptions, Co
                     ? h("div", {
                         class: [`${cssPrefix}overlay`],
                         style: styles.value,
-                        onClick() {
-                            emit("click");
+                        onClick(event: Event) {
+                            emit("click", event);
                         },
                         onTouchmove(event: Event) {
                             preventEventTarget(event);

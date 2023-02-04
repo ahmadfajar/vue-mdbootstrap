@@ -64,7 +64,7 @@ export declare type TPopoverOptionProps = TPopupOptions & {
     /**
      * HTML element to calculate this Popover display position.
      */
-    trigger?: string | Element;
+    trigger?: Element | string;
 }
 
 export declare type TBsPopover = ComponentObjectPropsOptions<TPopoverOptionProps>;
