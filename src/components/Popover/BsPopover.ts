@@ -1,5 +1,5 @@
 import type {ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, getCurrentInstance, nextTick, onMounted, ref, watch} from "vue";
+import {computed, defineComponent, getCurrentInstance, nextTick, onMounted, ref, shallowRef, watch} from "vue";
 import {popoverProps} from "./mixins/popoverProps";
 import {useRenderPopover, useSetPopoverPosition} from "./mixins/popoverApi";
 import {cssPrefix} from "../../mixins/CommonApi";
@@ -24,12 +24,8 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
         const isActive = ref<boolean>(<boolean>thisProps.open);
         const actualPlacement = ref<string | undefined>(thisProps.placement);
         const popover = ref<Element | null>(null);
-        let instance: ComponentInternalInstance | null;
-        const setPosition = () => {
-            nextTick().then(() =>
-                useSetPopoverPosition(popover, instance, thisProps, actualPlacement, isActive)
-            );
-        };
+        const instance = shallowRef<ComponentInternalInstance | null>(null);
+
         const classNames = computed(
             () => [
                 `${cssPrefix}popover`,
@@ -43,16 +39,18 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
             (value) => {
                 isActive.value = value;
                 if (value) {
-                    setPosition();
+                    nextTick().then(() =>
+                        useSetPopoverPosition(popover, instance.value, thisProps, actualPlacement, isActive)
+                    );
                 }
             }
         );
         onMounted(() => {
-            instance = getCurrentInstance();
-            useSetPopoverPosition(popover, instance, thisProps, actualPlacement, isActive);
+            instance.value = getCurrentInstance();
+            useSetPopoverPosition(popover, instance.value, thisProps, actualPlacement, isActive);
         });
 
         return () =>
-            useRenderPopover(props, slots, instance, classNames, popover, actualPlacement, isActive)
+            useRenderPopover(slots, props, instance, classNames, popover, actualPlacement, isActive)
     }
 });

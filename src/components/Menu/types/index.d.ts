@@ -7,13 +7,13 @@ import type {
 } from "vue";
 import type {TPopoverPosition, TRecord} from "../../../types";
 
-export declare type TMenuOptionProps = {
+export declare type TDropdownMenuOptionProps = {
     /**
-     * Display this Popup menu at a position which can cover the activator.
+     * Display this Dropdown menu at a position which can cover the activator element.
      */
     cover?: boolean;
     /**
-     * Disable this Popup menu and prevents it from displaying.
+     * Disable this Dropdown menu and prevents it from displaying.
      */
     disabled?: boolean;
     /**
@@ -21,27 +21,31 @@ export declare type TMenuOptionProps = {
      */
     open?: boolean;
     /**
-     * Triggers this popup menu to display when `mouseenter` and hide when `mouseleave`.
+     * Triggers this Dropdown menu to display when `mouseenter` and hide when `mouseleave`.
      */
     openOnHover?: boolean;
     /**
-     * Close or hide this Popup menu when content is clicked.
+     * Close or hide this Dropdown menu when content is clicked.
      */
     contentClickClose?: boolean;
     /**
-     * This Popup menu container background color.
+     * This Dropdown menu container background color.
      */
     color?: string;
     /**
-     * This Popup menu display placement.
+     * Number of pixel to shift the Dropdown display position from the activator element.
+     */
+    space?: string | number;
+    /**
+     * This Dropdown menu display placement.
      */
     placement?: TPopoverPosition | string;
     /**
-     * Transition animation when displaying this popup menu. This animation is effected by `placement` property.
+     * Transition animation when displaying this Dropdown menu. This animation is effected by `placement` property.
      */
     transition?: string;
 }
 
-export declare type TBsMenu = ComponentObjectPropsOptions<TMenuOptionProps>;
+export declare type TBsDropdownMenu = ComponentObjectPropsOptions<TDropdownMenuOptionProps>;
 
-export declare const BsMenu: DefineComponent<TBsMenu, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsDropdownMenu: DefineComponent<TBsDropdownMenu, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

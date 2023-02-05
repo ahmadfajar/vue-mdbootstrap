@@ -2,7 +2,7 @@ import type {App, Plugin as Plugin_2} from "vue";
 import registerConfig from "../../mixins/registerConfig";
 import BsSideDrawer from "./BsSideDrawer";
 import "./sidedrawer.scss";
-import "../../../scss/utilities/_others.scss";
+import "../../../scss/_utilities.scss";
 
 const BsDrawerPlugin: Plugin_2 = {
     install: (app: App): void => {

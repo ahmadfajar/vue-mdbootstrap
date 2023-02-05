@@ -11,7 +11,7 @@ import BsGridToolSearch from "./BsGridToolSearch";
 import BsTreegrid from "./BsTreegrid";
 import BsTreegridCell from "./BsTreegridCell";
 import BsTreegridColumn from "./BsTreegridColumn";
-import '../../../scss/utilities/_others.scss';
+import '../../../scss/_utilities.scss';
 
 export default Vue => {
     Vue.component(BsGrid.name, BsGrid);

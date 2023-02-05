@@ -1,4 +1,4 @@
-import type {ComponentInternalInstance, ComputedRef, ExtractPropTypes, Ref, Slots, VNode} from "vue";
+import type {ComponentInternalInstance, ComputedRef, ExtractPropTypes, Ref, ShallowRef, Slots, VNode} from "vue";
 import {createCommentVNode, h, mergeProps, nextTick, Teleport, vShow, withDirectives} from "vue";
 import type {TBsPopover, TPopoverOptionProps, TPopoverPosition} from "../types";
 import {useRenderTransition} from "../../../mixins/CommonApi";
@@ -174,22 +174,22 @@ export function usePopoverClose(
 }
 
 export function useRenderPopover(
-    props: Readonly<ExtractPropTypes<TBsPopover>>,
     slots: Slots,
-    instance: ComponentInternalInstance | null,
+    props: Readonly<ExtractPropTypes<TBsPopover>>,
+    instance: ShallowRef<ComponentInternalInstance | null>,
     classNames: ComputedRef<string[]>,
     popover: Ref<Element | null>,
     actualPlacement: Ref<string | undefined>,
     isActive: Ref<boolean>,
 ): VNode {
     const thisProps = props as Readonly<TPopoverOptionProps>;
-    const internalSetPosition = () => {
+    const thisSetPosition = () => {
         nextTick().then(() =>
-            useSetPopoverPosition(popover, instance, thisProps, actualPlacement, isActive)
+            useSetPopoverPosition(popover, instance.value, thisProps, actualPlacement, isActive)
         );
     };
-    const internalOnClickOutside = (evt: Event) => {
-        onPopoverClickOutside(thisProps, instance, isActive, evt);
+    const thisOnClickOutside = (evt: Event) => {
+        onPopoverClickOutside(thisProps, instance.value, isActive, evt);
     }
 
     return h(Teleport, {to: "body"}, [
@@ -201,7 +201,7 @@ export function useRenderPopover(
                     color: props.overlayColor,
                     onClick: () => {
                         if (thisProps.overlayClickClose) {
-                            usePopoverClose(instance, isActive, "Overlay clicked.");
+                            usePopoverClose(instance.value, isActive, "Overlay clicked.");
                         }
                     },
                 }) : createCommentVNode(" v-if-BsPopover-overlay ", true),
@@ -209,13 +209,13 @@ export function useRenderPopover(
                 h("div", mergeProps(
                         {class: classNames.value, ref: popover},
                         // @ts-ignore
-                        instance?.attrs),
+                        instance.value?.attrs),
                     slots.default && slots.default()),
                 [
                     [vShow, isActive.value],
-                    [clickOutside, internalOnClickOutside],
-                    [resize, internalSetPosition],
-                    [scroll, internalSetPosition],
+                    [clickOutside, thisOnClickOutside],
+                    [resize, thisSetPosition],
+                    [scroll, thisSetPosition],
                 ]
             ),
         ])

@@ -4,7 +4,7 @@ import BsAppContainer from "./BsAppContainer";
 import BsContainer from "./BsContainer";
 import BsContent from "./BsContent";
 import "./container.scss"
-import "../../../scss/utilities/_others.scss";
+import "../../../scss/_utilities.scss";
 
 const BsContainerPlugin: Plugin_2 = {
     install: (app: App): void => {

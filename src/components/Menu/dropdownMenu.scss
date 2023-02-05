@@ -1,0 +1,29 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+
+.#{$prefix}dropdown-menu {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+
+    .#{$prefix}dropdown-menu-activator {
+        cursor: pointer;
+        position: relative;
+    }
+}
+
+.#{$prefix}popover-dropdown-menu {
+    --#{$prefix}menu-border-radius: #{$border-radius-sm};
+
+    @include border-radius(var(--#{$prefix}menu-border-radius));
+
+    > .#{$prefix}list {
+        @include border-radius(var(--#{$prefix}menu-border-radius));
+
+        .#{$prefix}divider {
+            margin-bottom: 3px;
+            margin-top: 3px;
+        }
+    }
+}

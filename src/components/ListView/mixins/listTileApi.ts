@@ -37,10 +37,10 @@ export function useListTileClassNames(
 function createListTileVnode(
     tagName: string,
     slots: Slots,
+    emit: TEmitFn,
     props: Readonly<TListTileOptionProps>,
     classes: ComputedRef<TRecord>,
     instance: ShallowRef<IListItem | undefined>,
-    emit: TEmitFn,
     provider?: IListViewProvider,
 ): VNode {
     return h(tagName, {
@@ -81,17 +81,17 @@ function createListTileVnode(
 
 function createListTileRouterVnode(
     slots: Slots,
+    emit: TEmitFn,
     props: Readonly<TListTileOptionProps>,
     classes: ComputedRef<TRecord>,
     instance: ShallowRef<IListItem | undefined>,
-    emit: TEmitFn,
     provider?: IListViewProvider,
 ): VNode {
     return useRenderRouter({
             id: props.id,
             class: classes.value,
-            activeClass: props.activeClass,
-            to: !props.disabled ? props.path : undefined,
+            activeClass: props.activeClass || "active",
+            to: props.path,
             onVnodeMounted: (vnode: IVNode) => {
                 instance.value = new ListItem(<string>props.id, "BsListTile", vnode.ctx, emit);
                 provider?.addItem(instance.value);
@@ -124,15 +124,15 @@ function createListTileRouterVnode(
 export function useRenderListTile(
     tagName: string,
     slots: Slots,
+    emit: TEmitFn,
     props: Readonly<TListTileOptionProps>,
     classes: ComputedRef<TRecord>,
     instance: ShallowRef<IListItem | undefined>,
-    emit: TEmitFn,
     provider?: IListViewProvider,
 ): VNode {
-    if (useHasRouter(props)) {
-        return createListTileRouterVnode(slots, props, classes, instance, emit, provider);
+    if (useHasRouter(props) && !props.disabled) {
+        return createListTileRouterVnode(slots, emit, props, classes, instance, provider);
     } else {
-        return createListTileVnode(tagName, slots, props, classes, instance, emit, provider);
+        return createListTileVnode(tagName, slots, emit, props, classes, instance, provider);
     }
 }

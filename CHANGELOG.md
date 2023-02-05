@@ -16,6 +16,7 @@ Released: March xx, 2023
 - **BsAppContainer**: add property `viewportHeight`.
 - **BsButton**: add slot `icon` for placing a custom icon.
 - **BsChip**: add property `iconVariant`, `pill`.
+- **BsDropdownMenu**: add property `space`.
 - **BsListNav**: add property `id`.
 - **BsListNavItem**: add property `id`, `borderOff`, `pillOff`, `roundedOff`, `badgeColor`, and `badgeType`.
 - **BsListTile**: add property `id`, `borderOff`, `pillOff`, and `roundedOff`.
@@ -61,13 +62,6 @@ Released: March xx, 2023
    - Replaced property `columns` with `column`. 
    - Deprecated property `externalValidator`, use property `validator` instead.
    - Replaced event `change` with `update:modelValue`.
-- **BsRadio**: 
-   - Replaced property `checked` with `modelValue`. 
-   - Replaced event `change` with `update:modelValue`.
-- **BsRadioGroup**: 
-   - Replaced property `columns` with `column`. 
-   - Deprecated property `externalValidator`, use property `validator` instead.
-   - Replace event `change` with `update:modelValue`.
 - **BsChip**: 
   - Replaced property `value` with `modelValue`. 
   - Removed `label` property to meet the MD3 design specification. 
@@ -84,7 +78,15 @@ Released: March xx, 2023
   - Replace event `input` with `update:active`.
 - **BsListView**: Replace property `activeItemBordered` with `itemBorderVariant`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
+- **BsMenu**: is deprecated, use **BsDropdownMenu** instead.
 - **BsPopover**: Replace property `overlayClose` with `overlayClickClose`.
+- **BsRadio**:
+  - Replaced property `checked` with `modelValue`.
+  - Replaced event `change` with `update:modelValue`.
+- **BsRadioGroup**:
+  - Replaced property `columns` with `column`.
+  - Deprecated property `externalValidator`, use property `validator` instead.
+  - Replace event `change` with `update:modelValue`.
 - **BsRipple**: removed property `eventTrigger`.
 - **BsTab**: Replace property `value` with `modelValue`.
 - **BsTextField**:

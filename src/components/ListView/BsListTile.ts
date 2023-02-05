@@ -1,8 +1,7 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent, inject, nextTick, onBeforeUpdate, ref, shallowRef, watch} from "vue";
-import {useRoute} from "vue-router";
 import {listTileProps} from "./mixins/listViewProps";
-import {useHasLink, useHasRouter} from "../../mixins/CommonApi";
+import {useGetCurrentRoute, useHasLink, useHasRouter} from "../../mixins/CommonApi";
 import {useListTileClassNames, useRenderListTile} from "./mixins/listTileApi";
 import type {IListItem, IListViewProvider, TBsListTile, TListTileOptionProps, TRecord} from "../../types";
 
@@ -42,16 +41,19 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, C
         );
         onBeforeUpdate(
             () => {
-                if (useHasRouter(cmpProps) && useRoute().path === cmpProps.path) {
-                    isActive.value = true;
-                    nextTick().then(() => {
-                        emit("update:active", true);
-                    });
+                if (useHasRouter(cmpProps)) {
+                    const route = useGetCurrentRoute();
+                    if (route && route.value.path === cmpProps.path) {
+                        isActive.value = true;
+                        nextTick().then(() => {
+                            emit("update:active", true);
+                        });
+                    }
                 }
             }
         );
 
         return () =>
-            useRenderListTile(tagName.value, slots, cmpProps, tileClasses, vm, emit, provider)
+            useRenderListTile(tagName.value, slots, emit, cmpProps, tileClasses, vm, provider)
     }
 });

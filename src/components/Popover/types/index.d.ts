@@ -42,7 +42,7 @@ export declare type TPopupOptions = {
 
 export declare type TPopoverOptionProps = TPopupOptions & {
     /**
-     * Display Popover at a position that covers the activator.
+     * Display Popover at a position that covers the activator element.
      */
     cover?: boolean;
     /**
@@ -54,7 +54,7 @@ export declare type TPopoverOptionProps = TPopupOptions & {
      */
     placement?: TPopoverPosition | string;
     /**
-     * Number of pixel to shift the Popover display position.
+     * Number of pixel to shift the Popover display position from the activator element.
      */
     space?: string | number;
     /**

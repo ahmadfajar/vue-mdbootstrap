@@ -9,6 +9,22 @@ import {
 import type {PropType} from "vue";
 import type {TPopoverPosition} from "../types";
 
+export const popoverPlacementProp = {
+    type: String as PropType<TPopoverPosition>,
+    default: "bottom-left",
+    validator: (value: string) => [
+        "top", "top-left", "top-right",
+        "bottom", "bottom-left", "bottom-right",
+        "left", "left-top", "left-bottom",
+        "right", "right-top", "right-bottom"
+    ].includes(value)
+}
+
+export const popoverDefaultTransitionProp = {
+    type: String,
+    default: "scale"
+}
+
 export const popoverBaseProps = {
     open: booleanProp,
     escClose: booleanTrueProp,
@@ -23,20 +39,8 @@ export const popoverProps = {
     cover: booleanProp,
     color: whiteColorProp,
     space: validStringOrNumberProp,
-    placement: {
-        type: String as PropType<TPopoverPosition>,
-        default: "bottom-left",
-        validator: (value: string) => [
-            "top", "top-left", "top-right",
-            "bottom", "bottom-left", "bottom-right",
-            "left", "left-top", "left-bottom",
-            "right", "right-top", "right-bottom"
-        ].includes(value)
-    },
-    transition: {
-        type: String,
-        default: "scale"
-    },
+    placement: popoverPlacementProp,
+    transition: popoverDefaultTransitionProp,
     trigger: {
         type: [String, Element],
         default: undefined

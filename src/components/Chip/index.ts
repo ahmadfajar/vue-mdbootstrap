@@ -3,7 +3,7 @@ import BsChip from "./BsChip";
 import BsChipGroup from "./BsChipGroup";
 import "./chip.scss";
 import "./chipGroup.scss";
-import "../../../scss/utilities/_others.scss";
+import "../../../scss/_utilities.scss";
 
 const BsChipPlugin: Plugin_2 = {
     install: (app: App): void => {
