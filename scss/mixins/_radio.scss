@@ -1,6 +1,6 @@
 /* BsRadio variants mixins -- sass variables */
 
-@mixin make-radio($name, $color) {
+@mixin make-radio-variant($name, $color) {
     .#{$prefix}radio-#{$name} {
         --#{$prefix}radio-color: currentColor;
         --#{$prefix}radio-active-color: #{$color};

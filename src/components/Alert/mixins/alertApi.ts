@@ -13,9 +13,9 @@ export function useAlertClassNames(
 ): Record<string, boolean | undefined> {
     const solid = props.filled || props.solidFill;
     return {
-        'alert d-flex': true,
-        'align-items-center': true,
-        'alert-dismissible': props.dismissible,
+        "alert d-flex": true,
+        "align-items-center": true,
+        "alert-dismissible": props.dismissible,
         [`alert-${colorName.value}`]: !Helper.isEmpty(colorName.value) && !props.outlined && !solid,
         [`${cssPrefix}alert-solid-${colorName.value}`]: !Helper.isEmpty(colorName.value) && solid && !props.outlined,
         [`${cssPrefix}alert-outline-${colorName.value}`]: props.outlined,
@@ -25,14 +25,14 @@ export function useAlertClassNames(
 export function useAlertColorName(props: Readonly<TAlertOptionProps>): string | undefined {
     const variant = props.variant || props.iconType;
     if (variant) {
-        if (variant === 'help') {
-            return Helper.isEmpty(props.color) ? 'mdb-color' : props.color;
+        if (variant === "help") {
+            return Helper.isEmpty(props.color) ? "mdb-color" : props.color;
         } else {
             return Helper.isEmpty(props.color) ? variant : props.color;
         }
     }
 
-    return Helper.isEmpty(props.color) ? 'primary' : props.color;
+    return Helper.isEmpty(props.color) ? "primary" : props.color;
 }
 
 export function useAlertIconName(props: Readonly<TAlertOptionProps>): string | undefined {
@@ -40,7 +40,7 @@ export function useAlertIconName(props: Readonly<TAlertOptionProps>): string | u
     if (variant) {
         switch (variant) {
             case "help":
-                return props.iconVariant === 'outlined'
+                return props.iconVariant === "outlined"
                     ? `help_outline_${props.iconVariant}`
                     : `help_${props.iconVariant}`;
             // return `help_center_${props.iconVariant}`;
@@ -72,8 +72,8 @@ export function useRenderAlert(
         role: "alert"
     }, [
         useRenderSlotWithWrapper(
-            slots, 'alertIcon', Helper.uuid(), "div",
-            {class: 'alert-icon me-3'},
+            slots, "alertIcon", Helper.uuid(), "div",
+            {class: "alert-icon me-3"},
             alertIconName.value
                 ? h<TBsIcon>(BsIcon, {
                     ...useCreateIconProps(props),
@@ -89,14 +89,14 @@ export function useRenderAlert(
                 color: <Prop<string>>(
                     !(props.filled || props.solidFill)
                         ? alertColorName.value
-                        : ['light', 'light-grey'].includes(<string>props.color)
-                            ? 'dark' : 'light text-white'
+                        : ["light", "light-grey"].includes(<string>props.color)
+                            ? "dark" : "light text-white"
                 ),
                 icon: "close" as Prop<string>,
                 mode: "icon" as Prop<string>,
                 // @ts-ignore
                 flat: true as Prop<boolean>,
-                onClick: (): void => dismissHandler()
+                onClick: dismissHandler
             })
             : createCommentVNode(" v-if-alert-dismissible ", true),
     ]);

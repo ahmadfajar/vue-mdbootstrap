@@ -21,10 +21,13 @@ export * from "../components/Menu/types";
 export * from "../components/Popover/types";
 export * from "../components/Progress/types";
 export * from "../components/Radio/types";
+export * from "../components/Switch/types";
 export * from "../components/Tabs/types";
 export * from "../components/Tooltip/types";
 
 export declare type TBreakpoint = "sm" | "md" | "lg" | "xl";
+
+export declare type TLabelPosition = "left" | "right";
 
 export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
 

@@ -1,7 +1,7 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent, nextTick, ref} from "vue";
 import {radioProps} from "./mixins/radioProps";
-import {useCreateInputRadio, useRadioClasses, useRenderRadioOrCheckbox} from "./mixins/radioApi";
+import {useCreateInputRadioOrCheckbox, useRadioClasses, useRenderRadioOrCheckbox} from "./mixins/radioApi";
 import type {TBsRadio, TRadioOptionProps, TRecord} from "../../types";
 
 
@@ -16,7 +16,7 @@ export default defineComponent<TBsRadio, TRecord, TRecord, ComputedOptions, Comp
         /**
          * Fired when this component's checked value is updated.
          */
-        "update:modelValue",
+        "update:model-value",
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TRadioOptionProps>;
@@ -26,7 +26,7 @@ export default defineComponent<TBsRadio, TRecord, TRecord, ComputedOptions, Comp
             if (!cmpProps.disabled && !cmpProps.readonly) {
                 const checked = cmpProps.value === cmpProps.modelValue;
                 rippleActive.value = true;
-                emit("update:modelValue", checked ? null : cmpProps.value)
+                emit("update:model-value", checked ? null : cmpProps.value)
                 nextTick().then(() => {
                     emit("checked", !checked);
                 });
@@ -36,7 +36,8 @@ export default defineComponent<TBsRadio, TRecord, TRecord, ComputedOptions, Comp
         return () =>
             useRenderRadioOrCheckbox(
                 slots, cmpProps, radioClasses, rippleActive, "radio",
-                useCreateInputRadio(cmpProps), toggleCheckHandler,
+                useCreateInputRadioOrCheckbox(cmpProps, "radio"),
+                toggleCheckHandler,
             );
     }
 });

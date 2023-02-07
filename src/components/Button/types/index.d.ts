@@ -1,5 +1,5 @@
 import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import type {TAvatarIconProps, TInputBaseProps, TRecord} from "../../../types";
+import type {TAvatarIconProps, TInputBaseProps, TLabelPosition, TRecord} from "../../../types";
 
 export declare type TButtonInnerOptionProps = {
     dropdownToggle?: boolean;
@@ -73,7 +73,7 @@ export declare type TButtonOptionProps = TAvatarIconProps & TBaseButtonProps & {
     /**
      * Place icon on the `left` side (before text) or on the `right` side (after text).
      */
-    iconPosition?: string;
+    iconPosition?: TLabelPosition | string;
     /**
      * Render the icon with predefined size.
      */
@@ -122,7 +122,7 @@ export declare type TToggleButtonOptionProps = TInputBaseProps & TBaseButtonProp
     /**
      * Place icon on the `left` side (before text) or on the `right` side (after text).
      */
-    iconPosition?: string;
+    iconPosition?: TLabelPosition | string;
 }
 
 export declare type TBsButtonInner = ComponentObjectPropsOptions<TButtonInnerOptionProps>;

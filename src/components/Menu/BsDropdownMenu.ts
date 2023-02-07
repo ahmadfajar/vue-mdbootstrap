@@ -18,6 +18,16 @@ export default defineComponent<TBsDropdownMenu, TRecord, TRecord, ComputedOption
         placement: popoverPlacementProp,
         transition: popoverDefaultTransitionProp,
     },
+    emits: [
+        /**
+         * Fired when this Popover state is updated.
+         */
+        "update:open",
+        /**
+         * Fired when this Popover closed or hide.
+         */
+        "close",
+    ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TDropdownMenuOptionProps>;
         const activator = ref<Element | null>(null);

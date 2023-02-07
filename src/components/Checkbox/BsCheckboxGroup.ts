@@ -4,7 +4,7 @@ import {checkboxGroupProps} from "./mixins/checkboxProps";
 import {baseInputProps} from "../Field/mixins/fieldProps";
 import {validationProps} from "../Radio/mixins/validationProps";
 import {useCreateCheckboxItems} from "./mixins/checkboxApi";
-import {useInputGroupClasses, useRenderRadioCheckboxGroup} from "../Radio/mixins/radioApi";
+import {useInputGroupClasses, useRenderRadioOrCheckboxGroup} from "../Radio/mixins/radioApi";
 import {
     useGetErrorItems,
     useHasValidated,
@@ -25,7 +25,7 @@ export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptio
         /**
          * Fired when this component's checked value is updated.
          */
-        "update:modelValue",
+        "update:model-value",
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TCheckboxGroupOptionProps>;
@@ -37,24 +37,17 @@ export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptio
             () => useInputGroupClasses(cmpProps, hasValidated.value, hasError.value)
         );
 
-        const toggleCheckHandler = (item: TCheckboxProps): void => {
+        const toggleCheckHandler = (
+            values: string | number | unknown | Array<string | number | unknown>,
+            item: TCheckboxProps,
+        ): void => {
             if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {
-                const selected = cmpProps.modelValue
-                    ? (Array.isArray(cmpProps.modelValue) ? cmpProps.modelValue : [cmpProps.modelValue])
-                    : [];
-
-                const idx = selected.indexOf(item.value);
-                if (idx > -1) {
-                    selected.splice(idx, 1);
-                } else {
-                    selected.push(item.value);
-                }
-                emit("update:modelValue", selected)
+                emit("update:model-value", Array.isArray(values) ? values : [values]);
             }
         }
 
         return () =>
-            useRenderRadioCheckboxGroup(
+            useRenderRadioOrCheckboxGroup(
                 slots, cmpProps, checkboxClasses,
                 useCreateCheckboxItems(cmpProps, toggleCheckHandler),
                 showValidationError.value,

@@ -1,7 +1,9 @@
+import type {PropType} from "vue";
 import {booleanProp, booleanTrueProp, defaultColorProp, stringProp} from "../../../mixins/CommonProps";
 import {width as iconSize} from "../../Icon/mixins/iconProps";
 import {iconProps} from "../../Avatar/mixins/avatarProps";
 import {inputProps} from "../../Field/mixins/fieldProps";
+import type {TLabelPosition} from "../../../types";
 
 export const buttonMode = {
     type: String,
@@ -22,7 +24,7 @@ export const buttonType = {
 }
 
 export const iconPosition = {
-    type: String,
+    type: String as PropType<TLabelPosition>,
     default: "left",
     validator: (value: string): boolean => ["left", "right"].includes(value)
 }

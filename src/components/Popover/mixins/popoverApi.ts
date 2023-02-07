@@ -207,10 +207,10 @@ export function useRenderPopover(
                 }) : createCommentVNode(" v-if-BsPopover-overlay ", true),
             withDirectives(
                 h("div", mergeProps(
-                        {class: classNames.value, ref: popover},
-                        // @ts-ignore
-                        instance.value?.attrs),
-                    slots.default && slots.default()),
+                    {class: classNames.value, ref: popover},
+                    // @ts-ignore
+                    instance.value?.attrs
+                ), slots.default && slots.default()),
                 [
                     [vShow, isActive.value],
                     [clickOutside, thisOnClickOutside],

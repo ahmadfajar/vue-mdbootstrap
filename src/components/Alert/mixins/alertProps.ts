@@ -25,7 +25,7 @@ export const alertProps = {
     iconType: {
         type: String,
         default: undefined,
-        validator: (value: string): boolean => ['success', 'info', 'warning', 'danger', 'help'].includes(value)
+        validator: (value: string): boolean => ["success", "info", "warning", "danger", "help"].includes(value)
     },
     /**
      * Use predefined icon to create contextual alert.
@@ -34,7 +34,7 @@ export const alertProps = {
     variant: {
         type: String,
         default: undefined,
-        validator: (value: string): boolean => ['success', 'info', 'warning', 'danger', 'help'].includes(value)
+        validator: (value: string): boolean => ["success", "info", "warning", "danger", "help"].includes(value)
     },
     /**
      * Create outlined alert style.

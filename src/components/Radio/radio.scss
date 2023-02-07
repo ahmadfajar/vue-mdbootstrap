@@ -172,5 +172,5 @@
 }
 
 @each $name, $color in map-remove($merge-theme-colors, 'black') {
-    @include make-radio($name, $color);
+    @include make-radio-variant($name, $color);
 }

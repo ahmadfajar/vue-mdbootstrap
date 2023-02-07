@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 20/11/2022 1:45
+ * @since  05/07/2018, modified: 06/02/2023 16:51
  */
 class Helper {
     /**
@@ -107,11 +107,14 @@ class Helper {
     /**
      * Check a value is an empty object or not.
      *
-     * @param {object} value The value to check
+     * @param {*} value The value to check
      * @returns {boolean} True if value is empty otherwise False
      */
-    static isEmptyObject(value: object): boolean {
-        return !Helper.isObject(value) || (Helper.isObject(value) && Object.entries(value).length === 0);
+    static isEmptyObject(value: unknown | undefined | null): boolean {
+        return !Helper.isObject(value) ||
+            (value !== undefined && value !== null &&
+                Helper.isObject(value) && Object.entries(value).length === 0
+            );
     }
 
     /**

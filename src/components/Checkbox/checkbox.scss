@@ -193,5 +193,5 @@
 }
 
 @each $name, $color in map-remove($merge-theme-colors, 'black') {
-    @include make-checkbox($name, $color);
+    @include make-checkbox-variant($name, $color);
 }

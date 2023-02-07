@@ -22,10 +22,10 @@ export function useRadioClasses(
     return {
         [`${cssPrefix}radio`]: true,
         [`${cssPrefix}radio-${props.color}`]: props.color !== undefined,
-        'checked': props.value === props.modelValue,
-        'required': props.required,
-        'readonly': props.readonly,
-        'disabled': props.disabled,
+        "checked": props.value === props.modelValue,
+        "required": props.required,
+        "readonly": props.readonly,
+        "disabled": props.disabled,
     }
 }
 
@@ -39,19 +39,40 @@ export function useMakeInputBaseAttrs(props: Readonly<TInputBaseProps>): TRecord
     }
 }
 
-export function useCreateInputRadio(props: Readonly<TRadioOptionProps>): VNode {
+export function useCheckSelected(props: Readonly<TRadioOptionProps>): boolean {
+    if (props.modelValue && Array.isArray(props.modelValue)) {
+        return props.modelValue.includes(props.value);
+    }
+
+    return props.value === props.modelValue;
+}
+
+export function useCreateInputRadioOrCheckbox(
+    props: Readonly<TRadioOptionProps>,
+    inputType: string,
+    otherProps?: TRecord,
+): VNode {
     const thisValue = !Helper.isEmpty(props.value)
         ? (Helper.isObject(props.value) ? JSON.stringify(props.value) : String(props.value))
-        : '';
+        : "";
 
-    return h("input", {
+    let inputProps = {
         ...useMakeInputBaseAttrs(props),
-        type: "radio",
-        role: "radio",
+        type: inputType,
+        role: inputType,
         value: thisValue,
-        'aria-disabled': props.disabled,
-        'aria-checked': props.value === props.modelValue,
-    })
+        "aria-disabled": props.disabled,
+        "aria-checked": useCheckSelected(props),
+    }
+
+    if (!Helper.isEmptyObject(otherProps)) {
+        inputProps = {
+            ...inputProps,
+            ...otherProps,
+        }
+    }
+
+    return h("input", inputProps);
 }
 
 export function useRenderRadioOrCheckbox(
@@ -68,16 +89,14 @@ export function useRenderRadioOrCheckbox(
         }, [
             h("div", {
                 class: `${cssPrefix}${inputType}-inner`,
-                onClick: () => toggleCheckHandler(),
+                onClick: toggleCheckHandler,
             }, [
                 h("div", {class: `${cssPrefix}${inputType}-overlay`}),
+                // @ts-ignore
                 h<TBsRipple>(BsRipple, {
-                    // @ts-ignore
-                    centered: true as Prop<boolean>,
-                    // @ts-ignore
-                    active: <Prop<boolean>>rippleActive.value,
-                    // @ts-ignore
-                    disabled: <Prop<boolean>>props.disabled || <Prop<boolean>>props.readonly,
+                    centered: true,
+                    active: rippleActive.value,
+                    disabled: props.disabled || props.readonly,
                     "onUpdate:active": (value: boolean): void => {
                         rippleActive.value = value
                     }
@@ -91,7 +110,7 @@ export function useRenderRadioOrCheckbox(
                 {
                     "for": props.id,
                     class: `${cssPrefix}${inputType}-label`,
-                    onClickPrevent: () => toggleCheckHandler(),
+                    onClickPrevent: toggleCheckHandler,
                 }
             ),
         ]
@@ -106,11 +125,11 @@ export function useInputGroupClasses<D, M>(
     return {
         [`${cssPrefix}field row`]: true,
         // [`${cssPrefix}radio-group`]: true,
-        'required': props.required,
-        'readonly': props.readonly,
-        'disabled': props.disabled,
-        'has-error': hasError,
-        'has-success': hasValidated && !hasError
+        "required": props.required,
+        "readonly": props.readonly,
+        "disabled": props.disabled,
+        "has-error": hasError,
+        "has-success": hasValidated && !hasError
     }
 }
 
@@ -130,10 +149,10 @@ export function useCreateRadioItems(
                 name: <Prop<string | undefined>>(
                     it.name
                         ? it.name
-                        : (props.name ? (props.name + '[' + idx + ']') : undefined)
+                        : (props.name ? (props.name + "[" + idx + "]") : undefined)
                 ),
                 modelValue: props.modelValue as Prop<string | number | unknown>,
-                "onUpdate:modelValue": (): void => toggleCheckHandler(it)
+                "onUpdate:model-value": (): void => toggleCheckHandler(it)
             }, {
                 default: () => it.label
             }),
@@ -141,7 +160,7 @@ export function useCreateRadioItems(
     });
 }
 
-export function useRenderRadioCheckboxGroup<D, M>(
+export function useRenderRadioOrCheckboxGroup<D, M>(
     slots: Slots,
     props: Readonly<TInputGroupProps<D, M>>,
     classnames: ComputedRef<TRecord>,

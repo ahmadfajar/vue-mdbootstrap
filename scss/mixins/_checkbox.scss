@@ -1,6 +1,6 @@
 /* BsCheckbox variants mixins -- sass variables */
 
-@mixin make-checkbox($name, $color) {
+@mixin make-checkbox-variant($name, $color) {
     .#{$prefix}checkbox-#{$name} {
         $checked-color: set-color-contrast($color, $black, $white, 170);
 

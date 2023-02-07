@@ -1,9 +1,9 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent, nextTick, ref} from "vue";
-import {useCheckboxClasses, useCheckSelected, useCreateInputCheckbox} from "./mixins/checkboxApi";
-import {checkboxProps} from "./mixins/checkboxProps";
-import {useRenderRadioOrCheckbox} from "../Radio/mixins/radioApi";
 import type {TBsCheckbox, TCheckboxOptionProps, TRecord} from "../../types";
+import {useCheckSelected, useCreateInputRadioOrCheckbox, useRenderRadioOrCheckbox} from "../Radio/mixins/radioApi";
+import {useCheckboxClasses} from "./mixins/checkboxApi";
+import {checkboxProps} from "./mixins/checkboxProps";
 
 export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCheckbox",
@@ -16,7 +16,7 @@ export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, C
         /**
          * Fired when this component's checked value is updated.
          */
-        "update:modelValue",
+        "update:model-value",
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TCheckboxOptionProps>;
@@ -26,7 +26,19 @@ export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, C
             if (!cmpProps.disabled && !cmpProps.readonly) {
                 const checked = useCheckSelected(cmpProps);
                 rippleActive.value = true;
-                emit("update:modelValue", (checked ? null : cmpProps.value))
+
+                if (Array.isArray(cmpProps.modelValue)) {
+                    const idx = cmpProps.modelValue.indexOf(cmpProps.value);
+                    if (checked) {
+                        cmpProps.modelValue.splice(idx, 1);
+                    } else {
+                        cmpProps.modelValue.push(cmpProps.value);
+                    }
+                    emit("update:model-value", cmpProps.modelValue);
+                } else {
+                    emit("update:model-value", (checked ? null : cmpProps.value))
+                }
+
                 nextTick().then(() => {
                     emit("checked", !checked);
                 });
@@ -36,7 +48,13 @@ export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, C
         return () =>
             useRenderRadioOrCheckbox(
                 slots, cmpProps, checkboxClasses, rippleActive, "checkbox",
-                useCreateInputCheckbox(cmpProps), toggleCheckHandler,
+                useCreateInputRadioOrCheckbox(
+                    cmpProps, "checkbox", {
+                        indeterminate: props.indeterminate,
+                        "true-value": true,
+                        "false-value": false,
+                    }),
+                toggleCheckHandler,
             );
     }
 });

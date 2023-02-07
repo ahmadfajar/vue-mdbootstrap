@@ -112,12 +112,17 @@ $radio-touch-size:                  $checkbox-touch-size !default;
 $radio-stroke:                      $checkbox-stroke !default;
 $radio-margin:                      $checkbox-margin !default;
 
-$switch-size:                       $checkbox-size !default;
 $switch-touch-size:                 $checkbox-touch-size !default;
-$switch-width:                      34px !default;
-$switch-height:                     14px !default;
-$switch-margin:                     .5rem .25rem .5rem .25rem !default;
-$switch-shadows:                    0 0 6px -1px rgba(#000, .1), 0 1px 1px 1px rgba(#000, .15), 0 1px 3px 0 rgba(#000, 0.12) !default;
+$switch-thumb-size:                 $checkbox-size !default;
+$switch-track-width:                38px !default;
+$switch-track-height:               14px !default;
+$switch-inset-thumb-size:           24px !default;
+$switch-inset-track-width:          52px !default;
+$switch-inset-track-height:         32px !default;
+$switch-outline-stroke:             2px !default;
+$switch-margin:                     .5rem .25rem !default;
+$switch-shadows:                    0 0 6px -1px rgba(#000, .1), 0 1px 1px 1px rgba(#000, .15), 0 1px 3px 0 rgba(#000, .12) !default;
+$switch-disabled-shadows:           0 2px 1px -1px rgba(#000, .2), 0 1px 1px 0 rgba(#000, .14), 0 1px 3px 0 rgba(#000, .12) !default;
 
 $text-field-height:                 3.5rem !default;
 $text-field-padding-top:            1.625rem !default;
@@ -130,9 +135,6 @@ $text-field-support-text-opacity:   .65 !default;
 
 $combobox-checkbox-size:            16px;
 $combobox-checkbox-ripple-size:     40px;
-
-// SideDrawer
-$side-drawer-hover-textcolor:           darken(map_get($theme-colors, "primary"), 15%) !default;
 
 // Tabs
 $tabs-item-spacing:                 .375rem !default;

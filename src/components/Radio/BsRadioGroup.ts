@@ -1,7 +1,7 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent} from "vue";
 import {useGetErrorItems, useHasValidated, useHasValidationError, useShowValidationError} from "./mixins/validationApi";
-import {useCreateRadioItems, useInputGroupClasses, useRenderRadioCheckboxGroup} from "./mixins/radioApi";
+import {useCreateRadioItems, useInputGroupClasses, useRenderRadioOrCheckboxGroup} from "./mixins/radioApi";
 import {radioGroupProps} from "./mixins/radioProps";
 import {validationProps} from "./mixins/validationProps";
 import {baseInputProps} from "../Field/mixins/fieldProps";
@@ -20,7 +20,7 @@ export default defineComponent<TBsRadioGroup, TRecord, TRecord, ComputedOptions,
         /**
          * Fired when this component's checked value is updated.
          */
-        "update:modelValue",
+        "update:model-value",
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TRadioGroupOptionProps>;
@@ -34,12 +34,12 @@ export default defineComponent<TBsRadioGroup, TRecord, TRecord, ComputedOptions,
 
         const toggleCheckHandler = (item: TRadioProps): void => {
             if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {
-                emit("update:modelValue", item.value)
+                emit("update:model-value", item.value)
             }
         };
 
         return () =>
-            useRenderRadioCheckboxGroup(
+            useRenderRadioOrCheckboxGroup(
                 slots, cmpProps, checkboxClasses,
                 useCreateRadioItems(cmpProps, toggleCheckHandler),
                 showValidationError.value,
