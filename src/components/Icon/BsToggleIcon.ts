@@ -12,14 +12,14 @@ export default defineComponent<TBsToggleIcon, TRecord, TRecord, ComputedOptions,
         /**
          * Callback fired when this component is clicked.
          */
-        "update:modelValue",
+        "update:model-value",
     ],
     setup(props, {emit}) {
         const cmpProps = props as Readonly<TToggleIconOptionProps>;
         return () => h(
             "span", {
                 class: [`${cssPrefix}toggle-icon`],
-                onClick: () => emit("update:modelValue", !cmpProps.modelValue),
+                onClick: () => emit("update:model-value", !cmpProps.modelValue),
             },
             h<TBsIconSvg>(BsIconSvg, {
                 icon: (props.modelValue ? props.toggleIcon : props.icon),

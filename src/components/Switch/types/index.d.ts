@@ -6,8 +6,8 @@ export declare type TSwitchOptionProps = TRadioOptionProps & {
     labelClass?: string | string[];
     insetMode?: boolean;
     insetOutlined?: boolean;
-    offIcon?: boolean;
-    onIcon?: boolean;
+    checkoffIcon?: boolean;
+    checkedIcon?: boolean;
 }
 
 export declare type TBsSwitch = ComponentObjectPropsOptions<TSwitchOptionProps>;

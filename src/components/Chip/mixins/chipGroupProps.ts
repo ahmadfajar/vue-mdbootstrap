@@ -54,7 +54,7 @@ export const chipGroupProps = {
     size: {
         type: String,
         default: undefined,
-        validator: (value: string): boolean => ['sm', 'lg'].includes(value)
+        validator: (value: string): boolean => ["sm", "lg"].includes(value)
     },
     /**
      * Show slider's button or not.
@@ -70,7 +70,7 @@ export const chipGroupProps = {
      */
     sliderButtonColor: {
         type: String,
-        default: 'secondary'
+        default: "secondary"
     },
     /**
      * The collection of `<BsChip>` property-value.

@@ -14,8 +14,8 @@ export const switchProps = {
     },
     insetMode: booleanProp,
     insetOutlined: booleanProp,
-    offIcon: booleanProp,
-    onIcon: booleanProp,
+    checkoffIcon: booleanProp,
+    checkedIcon: booleanProp,
     value: {
         type: [String, Number, Boolean, Object],
         default: undefined,

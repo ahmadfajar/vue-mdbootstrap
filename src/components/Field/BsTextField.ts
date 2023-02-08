@@ -100,7 +100,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         /**
          * Fired when this component's value is updated.
          */
-        "update:modelValue",
+        "update:model-value",
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TTextFieldOptionProps>;

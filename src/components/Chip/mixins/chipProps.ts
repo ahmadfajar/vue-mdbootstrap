@@ -4,7 +4,7 @@ import {iconVariant} from "../../Icon/mixins/iconProps";
 
 export const chipDefaultColor = {
     type: String,
-    default: 'grey'
+    default: "grey"
 }
 
 export const chipProps = {
@@ -81,7 +81,7 @@ export const chipProps = {
     size: {
         type: String,
         default: undefined,
-        validator: (value: string): boolean => ['sm', 'lg'].includes(value)
+        validator: (value: string): boolean => ["sm", "lg"].includes(value)
     },
     /**
      * Use predefined icon style to be used inside this component.

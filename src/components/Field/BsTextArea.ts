@@ -89,7 +89,7 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, C
         /**
          * Fired when this component's value is updated.
          */
-        "update:modelValue",
+        "update:model-value",
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TTextAreaOptionProps>;

@@ -20,7 +20,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
         /**
          * Fired when this component's value is updated.
          */
-        "update:modelValue",
+        "update:model-value",
     ],
     setup(props, {emit, attrs, slots}) {
         const cmpProps = props as Readonly<TChipOptionProps>;
@@ -29,7 +29,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
             () => useChipClassNames(cmpProps, attrs)
         );
         const tagName = computed<string>(
-            () => cmpProps.href && !cmpProps.disabled ? 'a' : 'div'
+            () => cmpProps.href && !cmpProps.disabled ? "a" : "div"
         );
         const rippleDisabled = computed<boolean>(
             () => {
@@ -43,7 +43,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
         const dismissedChip = () => {
             dismiss.value = true;
             emit("update:active", false);
-            emit("update:modelValue", false);
+            emit("update:model-value", false);
             nextTick().then(() => emit("close"))
         }
         watch(

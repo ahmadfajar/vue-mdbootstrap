@@ -23,7 +23,7 @@ export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, 
         /**
          * Fired when this component's value is updated.
          */
-        "update:modelValue",
+        "update:model-value",
         /**
          * Fired when this component's item is dismissed (hide).
          */
@@ -52,7 +52,7 @@ export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, 
         );
         const chipCloseHandler = (item: TChipOptionItem): void => {
             // const newItems = cmpProps.items.filter(it => it.id !== item.id);
-            emit('item:close', item);
+            emit("item:close", item);
         }
         const chipClickHandler = (item: TChipOptionItem): void => {
             if (item.disabled) {
@@ -72,12 +72,12 @@ export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, 
                     selectedValues.push(value);
                 }
 
-                emit('change', selectedValues);
-                nextTick().then(() => emit('update:modelValue', selectedValues));
+                emit("change", selectedValues);
+                nextTick().then(() => emit("update:model-value", selectedValues));
             } else {
                 const isSelected = useChipIsSelected(item, cmpProps.modelValue);
-                emit('change', (isSelected ? value : null));
-                nextTick().then(() => emit('update:modelValue', (!isSelected ? value : null)));
+                emit("change", (isSelected ? value : null));
+                nextTick().then(() => emit("update:model-value", (!isSelected ? value : null)));
             }
         }
 

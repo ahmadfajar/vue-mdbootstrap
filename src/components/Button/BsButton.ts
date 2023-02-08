@@ -13,7 +13,7 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
         const cmpProps = props as Readonly<TButtonOptionProps>;
         const buttonType = computed<string | undefined>(() => {
             if (Helper.isEmpty(<string | undefined>props.href)) {
-                return ["icon", "floating"].includes(<string>props.mode) ? 'div' : cmpProps.type;
+                return ["icon", "floating"].includes(<string>props.mode) ? "div" : cmpProps.type;
             }
 
             return undefined;
@@ -30,8 +30,8 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
         const tagName = computed<string>(
             () => (
                 !Helper.isEmpty(<string | undefined>props.href)
-                    ? 'a'
-                    : buttonType.value === 'div' ? 'div' : 'button'
+                    ? "a"
+                    : buttonType.value === "div" ? "div" : "button"
             )
         );
 
@@ -44,7 +44,7 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
                 h<TBsButtonInner>(BsButtonInner, {
                     dropdownToggle: props.dropdownToggle,
                     // @ts-ignore
-                    iconMode: <Prop<boolean>>(cmpProps.mode === 'icon'),
+                    iconMode: <Prop<boolean>>(cmpProps.mode === "icon"),
                     // @ts-ignore
                     hasIcon: <Prop<boolean>>hasIcon.value,
                     // @ts-ignore

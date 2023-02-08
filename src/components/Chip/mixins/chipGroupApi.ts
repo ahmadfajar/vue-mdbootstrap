@@ -40,7 +40,7 @@ function getNewOffset(
     direction: string,
     currentScrollOffset: number,
 ): number {
-    const newOffset = currentScrollOffset + (direction === 'prev' ? -1 : 1) * slider.wrapperWidth;
+    const newOffset = currentScrollOffset + (direction === "prev" ? -1 : 1) * slider.wrapperWidth;
 
     return Math.max(
         Math.min(newOffset, (slider.contentWidth - slider.wrapperWidth)), 0
@@ -63,15 +63,15 @@ function createSliderArrow(
     scrollOffset: Ref<number>,
     slider: TChipContainer,
 ): VNode {
-    return h('div', {
+    return h("div", {
         class: [`${cssPrefix}chip-slide-${direction}`]
     }, [
         h<TBsButton>(BsButton, {
-            mode: 'icon' as Prop<string>,
+            mode: "icon" as Prop<string>,
             // @ts-ignore
             flat: true as Prop<boolean>,
             color: <Prop<string>>props.sliderButtonColor,
-            icon: <Prop<string>>(direction === 'prev' ? 'navigate_before' : 'navigate_next'),
+            icon: <Prop<string>>(direction === "prev" ? "navigate_before" : "navigate_next"),
             iconSize: 24 as Prop<number>,
             // @ts-ignore
             disabled: <Prop<boolean>>(!canScroll),
@@ -97,11 +97,11 @@ function createChipAttrs(
         imgPadding: props.imgPadding,
     }
 
-    delete attrs['value'];
-    delete attrs['text'];
+    delete attrs["value"];
+    delete attrs["text"];
 
     if (props.checkedIcon && selected) {
-        attrs['icon'] = 'done';
+        attrs["icon"] = "done";
     }
 
     return attrs;
@@ -150,22 +150,22 @@ export function useRenderChipGroup(
     clickHandler: (item: TChipOptionItem) => void,
     closeHandler: (item: TChipOptionItem) => void,
 ): VNode {
-    return h('div', {
+    return h("div", {
         class: [
             `${cssPrefix}chip-group`,
-            props.column ? `${cssPrefix}chip-group-column` : '',
+            props.column ? `${cssPrefix}chip-group-column` : "",
         ]
     }, [
         (showSliderButton
-                ? createSliderArrow('prev', hasPrev, props, scrollOffset, slider)
-                : createCommentVNode('v-if-chip-group-arrow')
+                ? createSliderArrow("prev", hasPrev, props, scrollOffset, slider)
+                : createCommentVNode("v-if-chip-group-arrow")
         ),
-        h('div', {
+        h("div", {
             id: slider.wrapperId,
             class: [`${cssPrefix}chip-group-slider`],
         }, [
             h(
-                'div', {
+                "div", {
                     id: slider.contentId,
                     class: [`${cssPrefix}chip-group-content`],
                 },
@@ -178,8 +178,8 @@ export function useRenderChipGroup(
             ),
         ]),
         (showSliderButton
-                ? createSliderArrow('next', hasNext, props, scrollOffset, slider)
-                : createCommentVNode('v-if-chip-group-arrow')
+                ? createSliderArrow("next", hasNext, props, scrollOffset, slider)
+                : createCommentVNode("v-if-chip-group-arrow")
         ),
     ]);
 }

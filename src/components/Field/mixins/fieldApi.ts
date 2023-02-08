@@ -213,7 +213,7 @@ export function useCreateFieldActionIcon(
                         size: iconSize as Prop<number | undefined>,
                         // @ts-ignore
                         modelValue: passwordToggle?.value as Prop<boolean | undefined>,
-                        "onUpdate:modelValue": passwordToggleHandler
+                        "onUpdate:model-value": passwordToggleHandler
                     })
                     : undefined,
             ])

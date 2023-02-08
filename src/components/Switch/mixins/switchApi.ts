@@ -1,9 +1,10 @@
-import type {ComputedRef, ExtractPropTypes, Ref, Slots, VNode} from "vue";
-import {h} from "vue";
+import type {ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode} from "vue";
+import {createCommentVNode, h} from "vue";
 import type {TBsRipple, TBsSwitch, TRecord, TSwitchOptionProps} from "../../../types";
 import {cssPrefix, useRenderSlotWrapperWithCondition} from "../../../mixins/CommonApi";
 import {useCheckSelected, useCreateInputRadioOrCheckbox} from "../../Radio/mixins/radioApi";
 import {BsRipple} from "../../Animation";
+import {BsIconSvg} from "../../Icon";
 import Helper from "../../../utils/Helper";
 
 export function useSwitchClasses(
@@ -21,6 +22,29 @@ export function useSwitchClasses(
         "readonly": props.readonly,
         "disabled": props.disabled,
     }
+}
+
+function createThumbIcon(
+    props: Readonly<TSwitchOptionProps>,
+): VNode {
+    if ((props.insetMode || props.insetOutlined) && (props.checkedIcon || props.checkoffIcon)) {
+        const checked = useCheckSelected(props);
+        if (checked && props.checkedIcon) {
+            return h(BsIconSvg, {
+                icon: "done" as Prop<string>,
+                height: 16 as Prop<number>,
+                width: 16 as Prop<number>,
+            });
+        } else if (!checked && props.checkoffIcon && props.insetMode) {
+            return h(BsIconSvg, {
+                icon: "clear" as Prop<string>,
+                height: 16 as Prop<number>,
+                width: 16 as Prop<number>,
+            });
+        }
+    }
+
+    return createCommentVNode(" v-if-thumb-icon ", true);
 }
 
 function renderSwitchUI(
@@ -48,7 +72,10 @@ function renderSwitchUI(
                         rippleActive.value = value
                     }
                 }, {
-                    default: () => useCreateInputRadioOrCheckbox(props, "checkbox")
+                    default: () => [
+                        createThumbIcon(props),
+                        useCreateInputRadioOrCheckbox(props, "checkbox"),
+                    ]
                 }),
             ])
         ]),

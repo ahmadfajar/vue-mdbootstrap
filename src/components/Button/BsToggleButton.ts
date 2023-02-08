@@ -13,7 +13,7 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
         /**
          * Callback fired when this component's value is updated.
          */
-        'update:modelValue'
+        "update:model-value"
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TToggleButtonOptionProps>;
@@ -28,7 +28,7 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                         // console.log('input:value =', event);
                         if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
                             localValue.value = event;
-                            emit("update:modelValue", localValue.value)
+                            emit("update:model-value", localValue.value)
                         }
                     }
                 }),

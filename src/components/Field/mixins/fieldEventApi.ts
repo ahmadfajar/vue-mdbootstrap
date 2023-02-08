@@ -33,7 +33,7 @@ export function useOnFieldValueCleared<T>(
 ): void {
     localValue.value = null;
     emit("clear");
-    emit("update:modelValue", null);
+    emit("update:model-value", null);
 }
 
 export function useOnFieldValueUpdated<T>(
@@ -42,7 +42,7 @@ export function useOnFieldValueUpdated<T>(
     value: T | undefined | null,
 ): void {
     localValue.value = value;
-    emit("update:modelValue", localValue.value);
+    emit("update:model-value", localValue.value);
 }
 
 export function useOnFieldNodeMounted(
