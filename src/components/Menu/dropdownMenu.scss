@@ -14,7 +14,7 @@
 }
 
 .#{$prefix}popover-dropdown-menu {
-    --#{$prefix}menu-border-radius: #{$border-radius-sm};
+    --#{$prefix}menu-border-radius: var(--#{$bs-prefix}border-radius);
 
     @include border-radius(var(--#{$prefix}menu-border-radius));
 

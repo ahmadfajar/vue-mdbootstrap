@@ -19,7 +19,7 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
          */
         "close",
     ],
-    setup(props, {slots}) {
+    setup(props, {slots, attrs}) {
         const thisProps = props as Readonly<TPopoverOptionProps>;
         const isActive = ref<boolean>(<boolean>thisProps.open);
         const actualPlacement = ref<string | undefined>(thisProps.placement);
@@ -51,6 +51,6 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
         });
 
         return () =>
-            useRenderPopover(slots, props, instance, classNames, popover, actualPlacement, isActive)
+            useRenderPopover(slots, attrs, props, instance, classNames, popover, actualPlacement, isActive)
     }
 });

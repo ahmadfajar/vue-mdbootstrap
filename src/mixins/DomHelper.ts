@@ -1,32 +1,35 @@
-import type {IEventResult, IHTMLEventTarget} from "../types";
+import type {IEventResult, IHTMLElement} from "../types";
 
 export class EventListener {
     /**
      * Listen to DOM events during the bubble phase.
      *
-     * @param {IHTMLEventTarget} target  DOM element to register listener on.
+     * @param {IHTMLElement} context     DOM element to register listener on.
      * @param {string} eventType         Event type, e.g. 'click' or 'mouseover'.
      * @param {function} callback        Callback function.
+     * @param {boolean|AddEventListenerOptions} options Listener options.
      * @returns {object} Object with a `remove` method.
      */
     static listen(
-        target: IHTMLEventTarget,
+        context: IHTMLElement,
         eventType: string,
         callback: EventListenerOrEventListenerObject,
+        options?: boolean | AddEventListenerOptions,
     ): IEventResult | undefined {
-        if (target.addEventListener) {
-            target.addEventListener(eventType, callback, false);
+        if (context.addEventListener) {
+            context.addEventListener(eventType, callback, options);
 
             return {
                 remove() {
-                    target.removeEventListener(eventType, callback, false)
+                    context.removeEventListener(eventType, callback, options)
                 }
             }
-        } else if (target.attachEvent) {
-            target.attachEvent('on' + eventType, callback);
+        } else if (context.attachEvent) {
+            context.attachEvent('on' + eventType, callback);
+
             return {
                 remove() {
-                    target.detachEvent('on' + eventType, callback);
+                    context.detachEvent('on' + eventType, callback);
                 }
             }
         }

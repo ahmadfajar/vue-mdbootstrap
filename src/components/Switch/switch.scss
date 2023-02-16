@@ -78,7 +78,7 @@
                     z-index: 11;
                 }
 
-                .#{$prefix}switch-overlay, .#{$prefix}ripple {
+                .#{$prefix}switch-ripple, .#{$prefix}ripple {
                     @include border-radius($border-radius-circle);
                     @include transform(translate(-50%, -50%));
                     height: var(--#{$prefix}switch-touch-size);
@@ -88,7 +88,7 @@
                     position: absolute;
                 }
 
-                .#{$prefix}switch-overlay {
+                .#{$prefix}switch-ripple {
                     @include transition($transition-hoverable);
                     background-color: var(--#{$prefix}switch-state-overlay-bg);
                     opacity: var(--#{$prefix}switch-state-overlay-opacity);

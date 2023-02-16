@@ -12,6 +12,7 @@ export {BsDrawerPlugin} from "./Drawer";
 export {BsListViewPlugin} from "./ListView";
 export {BsPopoverPlugin} from "./Popover";
 export {BsMenuPlugin} from "./Menu";
+export {BsColorPickerPlugin} from "./ColorPicker";
 export {BsProgressPlugin} from "./Progress";
 export {BsFieldPlugin} from "./Field";
 export {BsCheckboxPlugin} from "./Checkbox";

@@ -1,6 +1,6 @@
 import type {ComponentInternalInstance, ComputedRef, ExtractPropTypes, Ref, ShallowRef, Slots, VNode} from "vue";
 import {createCommentVNode, h, mergeProps, nextTick, Teleport, vShow, withDirectives} from "vue";
-import type {TBsPopover, TPopoverOptionProps, TPopoverPosition} from "../types";
+import type {TBsPopover, TPopoverOptionProps, TPopoverPosition, TRecord} from "../../../types";
 import {useRenderTransition} from "../../../mixins/CommonApi";
 import {BsOverlay} from "../../Animation";
 import clickOutside from "../../../directives/ClickOutside";
@@ -175,6 +175,7 @@ export function usePopoverClose(
 
 export function useRenderPopover(
     slots: Slots,
+    attrs: TRecord,
     props: Readonly<ExtractPropTypes<TBsPopover>>,
     instance: ShallowRef<ComponentInternalInstance | null>,
     classNames: ComputedRef<string[]>,
@@ -206,12 +207,10 @@ export function useRenderPopover(
                     },
                 }) : createCommentVNode(" v-if-BsPopover-overlay ", true),
             withDirectives(
-                h("div", mergeProps(
-                    {class: classNames.value, ref: popover},
-                    // @ts-ignore
-                    instance.value?.attrs
-                ), slots.default && slots.default()),
-                [
+                h("div",
+                    mergeProps({class: classNames.value, ref: popover}, attrs),
+                    slots.default && slots.default()
+                ), [
                     [vShow, isActive.value],
                     [clickOutside, thisOnClickOutside],
                     [resize, thisSetPosition],

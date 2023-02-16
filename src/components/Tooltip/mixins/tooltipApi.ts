@@ -1,7 +1,7 @@
 import type {ComponentInternalInstance, Ref, VNode, VNodeArrayChildren} from "vue";
 import {EventListener} from "../../../mixins/DomHelper";
 import {cssPrefix} from "../../../mixins/CommonApi";
-import type {IBindingElement, IEventResult, IHTMLEventTarget, TPositionType} from "../../../types";
+import type {IBindingElement, IEventResult, IHTMLElement, TPositionType} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 const SPACE = 4;
@@ -153,12 +153,18 @@ export function useAddTooltipListener(instance: ComponentInternalInstance | null
         active.value = false;
     };
 
-    const activatorEl = <IHTMLEventTarget | null>findActivatorElement(instance);
+    const activatorEl = <IHTMLElement | null>findActivatorElement(instance);
 
     if (activatorEl) {
-        (<IBindingElement>activatorEl)['__mouseEvents'] = {
-            "mouseEnter": EventListener.listen(activatorEl, "mouseenter", showTooltip),
-            "mouseLeave": EventListener.listen(activatorEl, "mouseleave", hideTooltip)
+        (<IBindingElement>activatorEl).__mouseEvents = {
+            "mouseEnter": EventListener.listen(
+                activatorEl, "mouseenter",
+                showTooltip, {passive: true}
+            ),
+            "mouseLeave": EventListener.listen(
+                activatorEl, "mouseleave",
+                hideTooltip, {passive: true}
+            )
         }
     }
 }

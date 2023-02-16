@@ -1,11 +1,10 @@
 import type {ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode} from "vue";
 import {createCommentVNode, h} from "vue";
 import type {TBsRipple, TBsSwitch, TRecord, TSwitchOptionProps} from "../../../types";
-import {cssPrefix, useRenderSlotWrapperWithCondition} from "../../../mixins/CommonApi";
+import {cssPrefix, useMergeClass, useRenderSlotWrapperWithCondition} from "../../../mixins/CommonApi";
 import {useCheckSelected, useCreateInputRadioOrCheckbox} from "../../Radio/mixins/radioApi";
 import {BsRipple} from "../../Animation";
 import {BsIconSvg} from "../../Icon";
-import Helper from "../../../utils/Helper";
 
 export function useSwitchClasses(
     props: Readonly<TSwitchOptionProps>,
@@ -62,7 +61,7 @@ function renderSwitchUI(
             h("div", {
                 class: [`${cssPrefix}switch-thumb`]
             }, [
-                h("div", {class: `${cssPrefix}switch-overlay`}),
+                h("div", {class: `${cssPrefix}switch-ripple`}),
                 // @ts-ignore
                 h<TBsRipple>(BsRipple, {
                     centered: true,
@@ -83,15 +82,9 @@ function renderSwitchUI(
 }
 
 function switchLabelClass(props: Readonly<TSwitchOptionProps>, position: string): string[] {
-    let labelClass = [`${cssPrefix}switch-label`, `${cssPrefix}label-${position}`];
+    const labelClass = [`${cssPrefix}switch-label`, `${cssPrefix}label-${position}`];
 
-    if (!Helper.isEmpty(props.labelClass) && Array.isArray(props.labelClass)) {
-        labelClass = labelClass.concat(props.labelClass);
-    } else if (!Helper.isEmpty(props.labelClass)) {
-        labelClass = labelClass.concat([<string>props.labelClass]);
-    }
-
-    return labelClass;
+    return useMergeClass(labelClass, <string|string[]>props.labelClass);
 }
 
 export function useRenderSwitch(

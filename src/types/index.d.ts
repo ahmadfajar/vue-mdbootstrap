@@ -12,6 +12,7 @@ export * from "../components/Button/types";
 export * from "../components/Card/types";
 export * from "../components/Checkbox/types";
 export * from "../components/Chip/types";
+export * from "../components/ColorPicker/types";
 export * from "../components/Container/types";
 export * from "../components/Drawer/types";
 export * from "../components/Field/types";
@@ -87,10 +88,11 @@ export declare interface IBindingElement extends Element {
     __resizeListener?: EventListenerOrEventListenerObject | CallableFunction;
     __resizeListeners?: Array<CallableFunction>;
     __mouseEvents?: TRecord;
+    __touchEvents?: TRecord;
     __observer?: ResizeObserver;
 }
 
-export declare interface IHTMLEventTarget extends HTMLElement {
+export declare interface IHTMLElement extends HTMLElement {
     attachEvent(type: string, callback: EventListenerOrEventListenerObject): void;
 
     detachEvent(type: string, callback: EventListenerOrEventListenerObject): void;

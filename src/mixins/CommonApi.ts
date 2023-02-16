@@ -1,5 +1,5 @@
 import type {ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNodeArrayChildren} from "vue";
-import {createVNode, Fragment, getCurrentInstance, h, resolveComponent, Transition} from "vue";
+import {createVNode, Fragment, getCurrentInstance, h, normalizeClass, resolveComponent, Transition} from "vue";
 import type {RouteLocationNormalizedLoaded} from "vue-router";
 import type {TBreakpoint, TRecord, TRouterLinkProps, TRouterOptionProps} from "../types";
 import Helper from "../utils/Helper";
@@ -284,4 +284,22 @@ export function useFindParentCmp(
     }
 
     return null;
+}
+
+export function useMergeClass(...args: (string | string[])[]): string[] {
+    let result: string[] = [];
+
+    for (let i = 0; i < args.length; i++) {
+        const src = args[i];
+        if (!Helper.isEmpty(src) && Array.isArray(src)) {
+            result = result.concat(src);
+        } else if (!Helper.isEmpty(src) && Helper.isString(src)) {
+            result.push(<string>src);
+        } else {
+            const normalized = normalizeClass(src);
+            result.push(normalized);
+        }
+    }
+
+    return result;
 }

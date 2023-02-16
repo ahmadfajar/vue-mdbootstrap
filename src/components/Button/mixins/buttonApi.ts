@@ -63,10 +63,10 @@ export function useMakeInputItemClasses(
 
     return {
         "btn": true,
-        [`btn-${props.toggleColor}`]: isSelected && props.toggleColor,
-        [`btn-outline-${props.color}`]: props.outlined && !props.toggleColor,
-        [`btn-flat-${props.color}`]: props.flat && !props.outlined && !props.toggleColor,
-        [`btn-${props.color}`]: !props.outlined && !props.flat && !props.toggleColor,
+        [`btn-${props.toggleColor}`]: isSelected && props.toggleColor && !props.disabled && !item.disabled,
+        [`btn-outline-${props.color}`]: props.outlined && (!isSelected || !props.toggleColor),
+        [`btn-flat-${props.color}`]: props.flat && !props.outlined && (!isSelected || !props.toggleColor),
+        [`btn-${props.color}`]: !props.outlined && !props.flat && (!isSelected || !props.toggleColor),
         [`btn-${props.size}`]: props.size,
         [`${cssPrefix}btn-raised`]: props.raised,
         "active": isSelected && !props.toggleColor && !props.disabled && !item.disabled,
