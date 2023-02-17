@@ -4,13 +4,21 @@ import {
     ComputedOptions,
     defineComponent,
     EmitsOptions,
+    nextTick,
     onMounted,
+    reactive,
     ref,
     watch
 } from "vue";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
 import type {TBsColorPicker, TColorPickerData, TColorPickerMode, TColorPickerOptionProps, TRecord} from "../../types";
-import {moveColorMarkerListener, useRenderColorPicker} from "./mixins/colorPickerApi";
+import {
+    moveAlphaSliderThumb,
+    moveColorMarker,
+    moveColorSliderThumb, useReleasePointerEvents,
+    useRenderColorPicker,
+    useUpdateCanvasColor
+} from "./mixins/colorPickerApi";
 import {colorPickerProps} from "./mixins/colorPickerProps";
 
 export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
@@ -30,26 +38,31 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
     setup(props, {emit, attrs}) {
         const thisProps = props as Readonly<TColorPickerOptionProps>;
         const thisData: TColorPickerData = {
-            pickerMode: ref<TColorPickerMode>(<TColorPickerMode>thisProps.mode),
-            pickerValue: ref(thisProps.modelValue),
-            pickerEl: ref<Element | null>(null),
-            colorArea: ref<Element | null>(null),
-            colorAreaRect: {width: 0, height: 0, x: 0, y: 0},
-            colorValues: {r: 0, g: 0, b: 0, h: 0, s: 0, v: 0, a: 1},
-            colorMarker: ref<Element | null>(null),
-            colorPreview: ref<Element | null>(null),
-            colorSlider: ref<Element | null>(null),
-            colorSliderMarker: ref<Element | null>(null),
-            colorSliderValue: ref<number>(0),
-            alphaSlider: ref<Element | null>(null),
-            alphaSliderMarker: ref<Element | null>(null),
-            alphaSliderValue: ref<number>(1),
+            config: reactive({
+                currentColor: {r: 0, g: 0, b: 0, h: 0, s: 0, v: 0, a: 1},
+                colorSlider: 0,
+                alphaSlider: 100,
+                value: thisProps.modelValue,
+                mode: <TColorPickerMode>thisProps.mode,
+            }),
+            pickerEl: ref<HTMLElement | null>(null),
+            colorArea: ref<HTMLElement | null>(null),
+            colorAreaRect: DOMRect.fromRect({width: 0, height: 0, x: 0, y: 0}),
+            colorMarker: ref<HTMLElement | null>(null),
+            colorPreview: ref<HTMLElement | null>(null),
+            colorSlider: ref<HTMLElement | null>(null),
+            colorSliderMarker: ref<HTMLElement | null>(null),
+            // colorSliderValue: ref<number>(0),
+            alphaSlider: ref<HTMLElement | null>(null),
+            alphaSliderMarker: ref<HTMLElement | null>(null),
+            // alphaSliderValue: ref<number>(100),
+            canvasCtx: document.createElement("canvas").getContext("2d"),
         };
         const pickerClasses = computed(() => [
             `${cssPrefix}color-picker`,
             `bg-${thisProps.containerColor}`,
         ]);
-        const inputIDs: TRecord = {
+        const inputIDs: Record<string, string> = {
             "H": useGenerateId(),
             "S": useGenerateId(),
             "L": useGenerateId(),
@@ -60,25 +73,42 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
             "A2": useGenerateId(),
             "HEX": useGenerateId(),
         }
+        const moveColorMarkerHandler = (event: Event) => {
+            moveColorMarker(<UIEvent>event, thisData, emit);
+        }
+        const moveColorSliderThumbHandler = (event: Event) => {
+            moveColorSliderThumb(<UIEvent>event, thisData, emit);
+        }
+        const moveAlphaSliderThumbHandler = (event: Event) => {
+            moveAlphaSliderThumb(<UIEvent>event, thisData, emit);
+        }
 
         watch(
             () => thisProps.mode,
             (value) => {
-                thisData.pickerMode.value = <TColorPickerMode>value;
+                thisData.config.mode = <TColorPickerMode>value;
             }
         );
         onMounted(() => {
-            document.addEventListener(
-                "mouseup",
-                () => moveColorMarkerListener("mousemove", thisData, emit, true)
+            if (thisData.colorArea.value) {
+                thisData.colorAreaRect = thisData.colorArea.value.getBoundingClientRect();
+            }
+            useReleasePointerEvents(
+                moveColorMarkerHandler,
+                moveColorSliderThumbHandler,
+                moveAlphaSliderThumbHandler,
             );
-            document.addEventListener(
-                "touchend",
-                () => moveColorMarkerListener("touchmove", thisData, emit, true, {passive: false})
-            );
+            nextTick().then(() => emit("update:mode", thisData.config.mode));
+            useUpdateCanvasColor(thisData, emit);
         });
 
         return () =>
-            useRenderColorPicker(thisProps, pickerClasses, thisData, inputIDs, attrs, emit)
+            useRenderColorPicker(
+                thisProps, pickerClasses,
+                thisData, inputIDs, attrs, emit,
+                moveColorMarkerHandler,
+                moveColorSliderThumbHandler,
+                moveAlphaSliderThumbHandler,
+            )
     }
 });

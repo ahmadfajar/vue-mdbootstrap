@@ -4,36 +4,40 @@ import type {
     ComputedOptions,
     DefineComponent,
     EmitsOptions,
-    Ref
+    Ref,
+    UnwrapNestedRefs
 } from "vue";
-import type {TColors, TPopoverPosition, TRecord} from "../../../types";
+import type {TColor, TPopoverPosition, TRecord} from "../../../types";
 
-export type {THsla, THsva, TRgba, TColors} from "../mixins/colorUtils";
+export type {HSLA, HSVA, RGBA, TColor} from "../mixins/colorUtils";
 
 export declare type TColorPickerMode = "HEX" | "RGB" | "HSL";
 
-export declare type TElementRect = {
-    width: number;
-    height: number;
-    x: number;
-    y: number;
+declare type TColorPickerValue = {
+    currentColor: TColor;
+    colorSlider: number;
+    alphaSlider: number;
+    mode: TColorPickerMode;
+    value: string | undefined;
 }
 
 export declare type TColorPickerData = {
-    pickerMode: Ref<TColorPickerMode>;
-    pickerValue: Ref<string | undefined>;
-    pickerEl: Ref<Element | null>;
-    colorArea: Ref<Element | null>;
-    colorAreaRect: TElementRect;
-    colorValues: TColors;
-    colorMarker: Ref<Element | null>;
-    colorPreview: Ref<Element | null>;
-    colorSlider: Ref<Element | null>;
-    colorSliderMarker: Ref<Element | null>;
-    colorSliderValue: Ref<number>;
-    alphaSlider: Ref<Element | null>;
-    alphaSliderMarker: Ref<Element | null>;
-    alphaSliderValue: Ref<number>;
+    // currentColor: TColor;
+    // mode: Ref<TColorPickerMode>;
+    // value: Ref<string | undefined>;
+    config: UnwrapNestedRefs<TColorPickerValue>;
+    pickerEl: Ref<HTMLElement | null>;
+    colorArea: Ref<HTMLElement | null>;
+    colorAreaRect: DOMRect;
+    colorMarker: Ref<HTMLElement | null>;
+    colorPreview: Ref<HTMLElement | null>;
+    colorSlider: Ref<HTMLElement | null>;
+    colorSliderMarker: Ref<HTMLElement | null>;
+    // colorSliderValue: Ref<number>;
+    alphaSlider: Ref<HTMLElement | null>;
+    alphaSliderMarker: Ref<HTMLElement | null>;
+    // alphaSliderValue: Ref<number>;
+    canvasCtx?: CanvasRenderingContext2D | null;
 }
 
 export declare type TColorPickerOptionProps = {

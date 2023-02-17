@@ -1,8 +1,11 @@
+@use "sass:color";
+@use "sass:math";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 @import "~compass-mixins/lib/compass/css3";
 
 $cmpCssName: "#{$prefix}color-picker-";
+$markerSize: 14px;
 
 .#{$prefix}color-picker {
     @include border-radius(var(--#{$bs-prefix}border-radius));
@@ -15,17 +18,16 @@ $cmpCssName: "#{$prefix}color-picker-";
         background-image: linear-gradient(rgba(0, 0, 0, 0), #000), linear-gradient(90deg, #fff, currentColor);
         height: 150px;
         width: 100%;
-        cursor: pointer;
 
         > .#{$cmpCssName}canvas-marker {
             @include border-radius($border-radius-circle);
             background-color: currentColor;
-            height: .85rem;
-            width: .85rem;
-            margin: calc(-.85rem / 2) 0 0 calc(-.85rem / 2);
+            height: $markerSize;
+            width: $markerSize;
+            margin: math.div(-$markerSize, 2) 0 0 math.div(-$markerSize, 2);
             border: 1px solid $white;
+            outline: none;
             position: absolute;
-            cursor: pointer;
         }
     }
 
@@ -38,9 +40,9 @@ $cmpCssName: "#{$prefix}color-picker-";
         @include flexbox((display: flex, align-items: center));
 
         > .#{$cmpCssName}preview {
-            height: 2rem;
-            width: 2rem;
-            margin-right: $padding-lg;
+            height: 2.5rem;
+            width: 2.5rem;
+            margin-right: $padding-base;
             position: relative;
 
             > .#{$cmpCssName}selected-color {
@@ -60,12 +62,13 @@ $cmpCssName: "#{$prefix}color-picker-";
 
         > .#{$cmpCssName}sliders {
             @include flexbox((display: flex, flex: 1 0 auto, flex-direction: column));
+            padding: 0 $padding-sm;
         }
     }
 
     .#{$cmpCssName}hue-slider,
     .#{$cmpCssName}alpha-slider {
-        padding: $padding-sm 0;
+        padding: ($markerSize * .75) math.div($markerSize, 2);
         position: relative;
     }
 
@@ -79,11 +82,13 @@ $cmpCssName: "#{$prefix}color-picker-";
         > .#{$cmpCssName}slider-thumb {
             @include border-radius($border-radius-circle);
             @include box-shadow(0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05));
-            background-color: $grey-lighten-4;
-            height: 14px;
-            width: 14px;
+            //@include box-shadow($z-depth-half);
+            background-color: color.scale($grey-base, $lightness: -20%);
+            height: $markerSize;
+            width: $markerSize;
+            margin-left: math.div(-$markerSize, 2);
             position: absolute;
-            pointer-events: none;
+            cursor: pointer;
         }
 
         > .#{$cmpCssName}slider-track-alpha {
@@ -98,10 +103,6 @@ $cmpCssName: "#{$prefix}color-picker-";
         > .#{$cmpCssName}slider-track {
             background-image: linear-gradient(to right, #f00 0%, #ff0 16.66%, #0f0 33.33%, #0ff 50%, #00f 66.66%, #f0f 83.33%, #f00 100%);
         }
-    }
-
-    .#{$cmpCssName}alpha-slider .#{$cmpCssName}slider-thumb {
-        left: calc(100% - 14px);
     }
 
     .#{$cmpCssName}preview > .#{$cmpCssName}selected-color,
