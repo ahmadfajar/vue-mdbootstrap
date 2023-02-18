@@ -8,6 +8,8 @@ $cmpCssName: "#{$prefix}color-picker-";
 $markerSize: 14px;
 
 .#{$prefix}color-picker {
+    --#{$prefix}slider-thumb-color: #{color.scale($grey-base, $lightness: -20%)};
+
     @include border-radius(var(--#{$bs-prefix}border-radius));
     display: inline-block;
     width: 300px;
@@ -66,36 +68,96 @@ $markerSize: 14px;
         }
     }
 
-    .#{$cmpCssName}hue-slider,
-    .#{$cmpCssName}alpha-slider {
+    .#{$prefix}hue-slider,
+    .#{$prefix}alpha-slider {
         padding: ($markerSize * .75) math.div($markerSize, 2);
         position: relative;
     }
 
-    .#{$cmpCssName}slider-track {
+    .#{$prefix}slider-track {
         @include flexbox((display: flex, align-items: center));
         @include border-radius($padding-sm);
         height: .5rem;
         width: 100%;
         position: relative;
 
-        > .#{$cmpCssName}slider-thumb {
+        > .#{$prefix}slider-thumb {
+            --#{$prefix}slider-thumb-surface-opacity: 0;
+            --#{$prefix}slider-thumb-ripple-opacity: 0;
+
             @include border-radius($border-radius-circle);
             @include box-shadow(0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05));
             //@include box-shadow($z-depth-half);
-            background-color: color.scale($grey-base, $lightness: -20%);
+            background-color: var(--#{$prefix}slider-thumb-color);
+            color: var(--#{$prefix}slider-thumb-color);
             height: $markerSize;
             width: $markerSize;
             margin-left: math.div(-$markerSize, 2);
+            outline: none;
             position: absolute;
             cursor: pointer;
+
+            > .#{$prefix}slider-thumb-surface {
+                @include border-radius($border-radius-circle);
+                @include user-select(none);
+                background-color: var(--#{$prefix}slider-thumb-color);
+                height: 100%;
+                width: 100%;
+                cursor: pointer;
+
+                &:before {
+                    @include border-radius($border-radius-circle);
+                    @include transition($md-transition-default);
+                    background-color: currentColor;
+                    content: "";
+                    height: 100%;
+                    width: 100%;
+                    left: 0;
+                    top: 0;
+                    opacity: var(--#{$prefix}slider-thumb-surface-opacity);
+                    position: absolute;
+                    pointer-events: none;
+                }
+            }
+
+            > .#{$prefix}slider-thumb-ripple {
+                @include border-radius($border-radius-circle);
+                @include transform(translate(-50%, -50%));
+                background-color: var(--#{$prefix}slider-thumb-color);
+                opacity: var(--#{$prefix}slider-thumb-ripple-opacity);
+                height: $markerSize * 2;
+                width: $markerSize * 2;
+                left: 50%;
+                top: 50%;
+                cursor: pointer;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            &:hover {
+                --#{$prefix}slider-thumb-surface-opacity: 0.08;
+
+                > .#{$prefix}slider-thumb-surface {
+                    &:before {
+                        transform: scale(2);
+                    }
+                }
+            }
+
+            &.#{$prefix}focused {
+                --#{$prefix}slider-thumb-ripple-opacity: .18;
+            }
+
+            &.#{$prefix}pressed {
+                --#{$prefix}slider-thumb-ripple-opacity: .25;
+            }
 
             &.move-transition {
                 @include transition(0.35s $md-transition-stand-timing);
             }
         }
 
-        > .#{$cmpCssName}slider-track-alpha {
+        > .#{$prefix}slider-track-alpha {
             @include border-radius($padding-sm);
             background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), currentColor);
             height: 100%;
@@ -103,14 +165,14 @@ $markerSize: 14px;
         }
     }
 
-    .#{$cmpCssName}hue-slider {
-        > .#{$cmpCssName}slider-track {
+    .#{$prefix}hue-slider {
+        > .#{$prefix}slider-track {
             background-image: linear-gradient(to right, #f00 0%, #ff0 16.66%, #0f0 33.33%, #0ff 50%, #00f 66.66%, #f0f 83.33%, #f00 100%);
         }
     }
 
     .#{$cmpCssName}preview > .#{$cmpCssName}selected-color,
-    .#{$cmpCssName}alpha-slider > .#{$cmpCssName}slider-track {
+    .#{$prefix}alpha-slider > .#{$prefix}slider-track {
         background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
         background-position: 0 0, 4px 4px;
         background-size: 8px 8px;

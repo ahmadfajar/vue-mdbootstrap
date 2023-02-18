@@ -5,7 +5,7 @@ import type {TBsColorPicker, TColorPickerData, TColorPickerMode, TColorPickerOpt
 import {
     moveAlphaSliderThumb,
     moveColorMarker,
-    moveColorSliderThumb,
+    moveHueSliderThumb,
     useReleasePointerEvents,
     useRenderColorPicker,
     useUpdateCanvasColor
@@ -31,7 +31,7 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
         const thisData: TColorPickerData = {
             config: reactive({
                 currentColor: {r: 0, g: 0, b: 0, h: 0, s: 0, v: 0, a: 1},
-                colorSlider: 0,
+                hueSlider: 0,
                 alphaSlider: 100,
                 value: thisProps.modelValue,
                 mode: <TColorPickerMode>thisProps.mode,
@@ -43,10 +43,10 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
             colorAreaRect: DOMRect.fromRect({width: 0, height: 0, x: 0, y: 0}),
             colorMarker: ref<HTMLElement | null>(null),
             colorPreview: ref<HTMLElement | null>(null),
-            colorSlider: ref<HTMLElement | null>(null),
-            colorSliderMarker: ref<HTMLElement | null>(null),
+            hueSlider: ref<HTMLElement | null>(null),
+            hueSliderThumb: ref<HTMLElement | null>(null),
             alphaSlider: ref<HTMLElement | null>(null),
-            alphaSliderMarker: ref<HTMLElement | null>(null),
+            alphaSliderThumb: ref<HTMLElement | null>(null),
             canvasCtx: document.createElement("canvas").getContext("2d"),
         };
         const pickerClasses = computed(() => [
@@ -67,8 +67,8 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
         const moveColorMarkerHandler = (event: Event) => {
             moveColorMarker(<UIEvent>event, thisData, emit);
         }
-        const moveColorSliderThumbHandler = (event: Event) => {
-            moveColorSliderThumb(<UIEvent>event, thisData, emit);
+        const moveHueSliderThumbHandler = (event: Event) => {
+            moveHueSliderThumb(<UIEvent>event, thisData, emit);
         }
         const moveAlphaSliderThumbHandler = (event: Event) => {
             moveAlphaSliderThumb(<UIEvent>event, thisData, emit);
@@ -85,8 +85,9 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
                 thisData.colorAreaRect = thisData.colorArea.value.getBoundingClientRect();
             }
             useReleasePointerEvents(
+                thisData,
                 moveColorMarkerHandler,
-                moveColorSliderThumbHandler,
+                moveHueSliderThumbHandler,
                 moveAlphaSliderThumbHandler,
             );
             nextTick().then(() => emit("update:mode", thisData.config.mode));
@@ -98,7 +99,7 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
                 thisProps, pickerClasses,
                 thisData, inputIDs, attrs, emit,
                 moveColorMarkerHandler,
-                moveColorSliderThumbHandler,
+                moveHueSliderThumbHandler,
                 moveAlphaSliderThumbHandler,
             )
     }

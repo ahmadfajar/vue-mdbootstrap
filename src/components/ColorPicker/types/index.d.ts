@@ -15,7 +15,7 @@ export declare type TColorPickerMode = "HEX" | "RGB" | "HSL";
 
 declare type TColorPickerValue = {
     currentColor: TColor;
-    colorSlider: number;
+    hueSlider: number;
     alphaSlider: number;
     mode: TColorPickerMode;
     value: string | undefined;
@@ -30,10 +30,10 @@ export declare type TColorPickerData = {
     colorAreaRect: DOMRect;
     colorMarker: Ref<HTMLElement | null>;
     colorPreview: Ref<HTMLElement | null>;
-    colorSlider: Ref<HTMLElement | null>;
-    colorSliderMarker: Ref<HTMLElement | null>;
+    hueSlider: Ref<HTMLElement | null>;
+    hueSliderThumb: Ref<HTMLElement | null>;
     alphaSlider: Ref<HTMLElement | null>;
-    alphaSliderMarker: Ref<HTMLElement | null>;
+    alphaSliderThumb: Ref<HTMLElement | null>;
     canvasCtx?: CanvasRenderingContext2D | null;
 }
 

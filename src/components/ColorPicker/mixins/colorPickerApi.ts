@@ -28,35 +28,51 @@ function renderColorPickerControls(
     pickerData: TColorPickerData,
     cssNamePrefix: string,
     emit: TEmitFn,
-    sliderThumbMoveHandler: EventListener,
+    hueSliderThumbMoveHandler: EventListener,
     alphaSliderThumbMoveHandler: EventListener,
 ): VNode {
     const sliders = [
         h("div", {
-            ref: pickerData.colorSlider,
-            class: [`${cssNamePrefix}hue-slider`],
+            ref: pickerData.hueSlider,
+            class: [`${cssPrefix}hue-slider`],
         }, [
             h("div", {
-                class: [`${cssNamePrefix}slider-track`],
+                class: [`${cssPrefix}slider-track`],
                 onClick: (event: UIEvent) => {
-                    pickerData.colorSliderMarker.value?.classList.add("move-transition");
-                    moveColorSliderThumb(event, pickerData, emit);
+                    pickerData.hueSliderThumb.value?.classList.add("move-transition", `${cssPrefix}focused`);
+                    moveHueSliderThumb(event, pickerData, emit);
                     Helper.defer(() => {
-                        pickerData.colorSliderMarker.value?.classList.remove("move-transition");
+                        pickerData.hueSliderThumb.value?.classList.remove("move-transition");
                     }, 100);
                 },
             }, [
                 h("div", {
                     tabIndex: 0,
-                    ref: pickerData.colorSliderMarker,
-                    class: [`${cssNamePrefix}slider-thumb`],
-                    onMousedown: () => document.addEventListener("mousemove", sliderThumbMoveHandler),
-                    onTouchstart: () => document.addEventListener(
-                        "touchmove",
-                        sliderThumbMoveHandler,
-                        {passive: false},
-                    ),
-                }),
+                    ref: pickerData.hueSliderThumb,
+                    class: [`${cssPrefix}slider-thumb`],
+                    onBlur: (event: Event) => {
+                        (<HTMLElement>event.target).classList.remove(`${cssPrefix}focused`);
+                    },
+                    onMousedown: () => {
+                        pickerData.hueSliderThumb.value?.classList.add(`${cssPrefix}pressed`);
+                        document.addEventListener("mousemove", hueSliderThumbMoveHandler)
+                    },
+                    onTouchstart: () => {
+                        pickerData.hueSliderThumb.value?.classList.add(`${cssPrefix}pressed`);
+                        document.addEventListener(
+                            "touchmove",
+                            hueSliderThumbMoveHandler,
+                            {passive: false},
+                        );
+                    },
+                }, [
+                    h("div", {
+                        class: [`${cssPrefix}slider-thumb-surface`]
+                    }),
+                    h("div", {
+                        class: [`${cssPrefix}slider-thumb-ripple`]
+                    }),
+                ]),
             ]),
         ]),
     ];
@@ -65,32 +81,48 @@ function renderColorPickerControls(
         sliders.push(
             h("div", {
                 ref: pickerData.alphaSlider,
-                class: [`${cssNamePrefix}alpha-slider`],
+                class: [`${cssPrefix}alpha-slider`],
             }, [
                 h("div", {
-                    class: [`${cssNamePrefix}slider-track`],
+                    class: [`${cssPrefix}slider-track`],
                     onClick: (event: UIEvent) => {
-                        pickerData.alphaSliderMarker.value?.classList.add("move-transition");
+                        pickerData.alphaSliderThumb.value?.classList.add("move-transition", `${cssPrefix}focused`);
                         moveAlphaSliderThumb(event, pickerData, emit);
                         Helper.defer(() => {
-                            pickerData.alphaSliderMarker.value?.classList.remove("move-transition");
+                            pickerData.alphaSliderThumb.value?.classList.remove("move-transition");
                         }, 100);
                     },
                 }, [
                     h("div", {
-                        class: [`${cssNamePrefix}slider-track-alpha`],
+                        class: [`${cssPrefix}slider-track-alpha`],
                     }),
                     h("div", {
                         tabIndex: 0,
-                        ref: pickerData.alphaSliderMarker,
-                        class: [`${cssNamePrefix}slider-thumb`],
-                        onMousedown: () => document.addEventListener("mousemove", alphaSliderThumbMoveHandler),
-                        onTouchstart: () => document.addEventListener(
-                            "touchmove",
-                            alphaSliderThumbMoveHandler,
-                            {passive: false},
-                        ),
-                    }),
+                        ref: pickerData.alphaSliderThumb,
+                        class: [`${cssPrefix}slider-thumb`],
+                        onBlur: (event: Event) => {
+                            (<HTMLElement>event.target).classList.remove(`${cssPrefix}focused`);
+                        },
+                        onMousedown: () => {
+                            pickerData.alphaSliderThumb.value?.classList.add(`${cssPrefix}pressed`);
+                            document.addEventListener("mousemove", alphaSliderThumbMoveHandler);
+                        },
+                        onTouchstart: () => {
+                            pickerData.alphaSliderThumb.value?.classList.add(`${cssPrefix}pressed`);
+                            document.addEventListener(
+                                "touchmove",
+                                alphaSliderThumbMoveHandler,
+                                {passive: false},
+                            );
+                        },
+                    }, [
+                        h("div", {
+                            class: [`${cssPrefix}slider-thumb-surface`]
+                        }),
+                        h("div", {
+                            class: [`${cssPrefix}slider-thumb-ripple`]
+                        }),
+                    ]),
                 ]),
             ])
         );
@@ -409,7 +441,7 @@ export function useRenderColorPicker(
     attrs: TRecord,
     emit: TEmitFn,
     colorMarkerMoveHandler: EventListener,
-    sliderThumbMoveHandler: EventListener,
+    hueSliderThumbMoveHandler: EventListener,
     alphaSliderThumbMoveHandler: EventListener,
 ): VNode {
     const cssNamePrefix = `${cssPrefix}color-picker-`;
@@ -441,7 +473,7 @@ export function useRenderColorPicker(
             }, [
                 renderColorPickerControls(
                     props, pickerData, cssNamePrefix, emit,
-                    sliderThumbMoveHandler, alphaSliderThumbMoveHandler,
+                    hueSliderThumbMoveHandler, alphaSliderThumbMoveHandler,
                 ),
                 renderColorPickerInputs(props, pickerData, cssNamePrefix, inputIDs, emit),
                 renderColorPickerModeButtons(props, pickerData, emit),
@@ -450,8 +482,9 @@ export function useRenderColorPicker(
 }
 
 export function useReleasePointerEvents(
+    pickerData: TColorPickerData,
     colorMarkerMoveHandler: EventListener,
-    sliderThumbMoveHandler: EventListener,
+    hueSliderThumbMoveHandler: EventListener,
     alphaSliderThumbMoveHandler: EventListener,
 ) {
     document.addEventListener(
@@ -460,11 +493,21 @@ export function useReleasePointerEvents(
     );
     document.addEventListener(
         "mouseup",
-        () => document.removeEventListener("mousemove", sliderThumbMoveHandler)
+        () => {
+            document.removeEventListener("mousemove", hueSliderThumbMoveHandler);
+            Helper.defer(() => {
+                pickerData.hueSliderThumb.value?.classList.remove(`${cssPrefix}pressed`);
+            }, 75);
+        }
     );
     document.addEventListener(
         "mouseup",
-        () => document.removeEventListener("mousemove", alphaSliderThumbMoveHandler)
+        () => {
+            document.removeEventListener("mousemove", alphaSliderThumbMoveHandler);
+            Helper.defer(() => {
+                pickerData.alphaSliderThumb.value?.classList.remove(`${cssPrefix}pressed`);
+            }, 75);
+        }
     );
     document.addEventListener(
         "touchend",
@@ -476,19 +519,29 @@ export function useReleasePointerEvents(
     );
     document.addEventListener(
         "touchend",
-        () => document.removeEventListener(
-            "touchmove",
-            sliderThumbMoveHandler,
-            {passive: false} as EventListenerOptions
-        )
+        () => {
+            document.removeEventListener(
+                "touchmove",
+                hueSliderThumbMoveHandler,
+                {passive: false} as EventListenerOptions
+            );
+            Helper.defer(() => {
+                pickerData.hueSliderThumb.value?.classList.remove(`${cssPrefix}pressed`);
+            }, 75);
+        }
     );
     document.addEventListener(
         "touchend",
-        () => document.removeEventListener(
-            "touchmove",
-            alphaSliderThumbMoveHandler,
-            {passive: false} as EventListenerOptions
-        )
+        () => {
+            document.removeEventListener(
+                "touchmove",
+                alphaSliderThumbMoveHandler,
+                {passive: false} as EventListenerOptions
+            );
+            Helper.defer(() => {
+                pickerData.alphaSliderThumb.value?.classList.remove(`${cssPrefix}pressed`);
+            }, 75);
+        }
     );
 }
 
@@ -508,16 +561,16 @@ export function moveColorMarker(event: UIEvent, pickerData: TColorPickerData, em
     event.stopPropagation();
 }
 
-export function moveColorSliderThumb(
+export function moveHueSliderThumb(
     event: UIEvent,
     pickerData: TColorPickerData,
     emit: TEmitFn,
 ) {
-    if (!pickerData.colorSlider.value) {
+    if (!pickerData.hueSlider.value) {
         return;
     }
 
-    const child = pickerData.colorSlider.value?.firstElementChild;
+    const child = pickerData.hueSlider.value?.firstElementChild;
     if (!child) {
         return;
     }
@@ -539,10 +592,10 @@ export function moveColorSliderThumb(
 
     // Update UI
     (<HTMLElement>pickerData.colorArea.value).style.color = `hsl(${hsva.h}, 100%, 50%)`;
-    (<HTMLElement>pickerData.colorSliderMarker.value).style.left = `${hueX}%`;
+    (<HTMLElement>pickerData.hueSliderThumb.value).style.left = `${hueX}%`;
     updateColor(pickerData, rgba, hsva);
     updateColorPreview(pickerData, emit);
-    (<HTMLElement>pickerData.colorSliderMarker.value).focus();
+    (<HTMLElement>pickerData.hueSliderThumb.value).focus();
 
     // Prevent scrolling while dragging the Thumb
     event.preventDefault();
@@ -572,13 +625,13 @@ export function moveAlphaSliderThumb(
     const alphaX = Math.round(posX / rect.width * 100);
 
     // Update UI
-    (<HTMLElement>pickerData.alphaSliderMarker.value).style.left = `${alphaX}%`;
+    (<HTMLElement>pickerData.alphaSliderThumb.value).style.left = `${alphaX}%`;
     pickerData.config.alphaSlider = alphaX;
     pickerData.config.currentColor.a = alphaX / 100;
     pickerData.colorHSL.a = alphaX / 100;
     pickerData.colorRGB.a = alphaX / 100;
     updateColorPreview(pickerData, emit);
-    (<HTMLElement>pickerData.alphaSliderMarker.value).focus();
+    (<HTMLElement>pickerData.alphaSliderThumb.value).focus();
 
     // Prevent scrolling while dragging the Thumb
     event.preventDefault();
@@ -625,7 +678,7 @@ function setColorAtPosition(
     posY: number,
 ) {
     const hsva: HSVA = {
-        h: pickerData.config.colorSlider,
+        h: pickerData.config.hueSlider,
         s: posX / pickerData.colorAreaRect.width * 100,
         v: 100 - (posY / pickerData.colorAreaRect.height * 100),
         a: pickerData.config.alphaSlider / 100
@@ -655,7 +708,7 @@ function updateColor(
         }
     }
 
-    pickerData.config.colorSlider = hsva.h;
+    pickerData.config.hueSlider = hsva.h;
     pickerData.config.alphaSlider = hsva.a * 100;
     pickerData.colorRGB = rgba;
 
@@ -726,9 +779,9 @@ function updateCanvasColorUI(pickerData: TColorPickerData, color?: HSVA) {
     (<HTMLElement>pickerData.colorArea.value).style.color = `hsl(${hsva.h}, 100%, 50%)`;
     (<HTMLElement>pickerData.colorMarker.value).style.left = `${pickerData.colorAreaRect.width * hsva.s / 100}px`;
     (<HTMLElement>pickerData.colorMarker.value).style.top = `${pickerData.colorAreaRect.height - (pickerData.colorAreaRect.height * hsva.v / 100)}px`;
-    (<HTMLElement>pickerData.colorSliderMarker.value).style.left = `${hsva.h / 360 * 100}%`;
+    (<HTMLElement>pickerData.hueSliderThumb.value).style.left = `${hsva.h / 360 * 100}%`;
 
-    if (pickerData.alphaSliderMarker.value) {
-        (<HTMLElement>pickerData.alphaSliderMarker.value).style.left = `${hsva.a * 100}%`;
+    if (pickerData.alphaSliderThumb.value) {
+        (<HTMLElement>pickerData.alphaSliderThumb.value).style.left = `${hsva.a * 100}%`;
     }
 }
