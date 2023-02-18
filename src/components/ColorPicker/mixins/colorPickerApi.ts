@@ -53,6 +53,22 @@ function renderColorPickerControls(
                     onBlur: (event: Event) => {
                         (<HTMLElement>event.target).classList.remove(`${cssPrefix}focused`);
                     },
+                    onKeydown: (event: KeyboardEvent) => {
+                        const movements: Record<string, number> = {
+                            ArrowLeft: -1,
+                            ArrowRight: 1
+                        };
+                        if (Object.keys(movements).includes(event.key)) {
+                            pickerData.hueSliderThumb.value?.classList.add(`${cssPrefix}focused`);
+                            moveSliderThumbOnKeydown(
+                                <HTMLElement>pickerData.hueSliderThumb.value,
+                                movements[event.key],
+                                pickerData, emit,
+                                updateHueSliderThumbUI,
+                            );
+                            event.preventDefault();
+                        }
+                    },
                     onMousedown: () => {
                         pickerData.hueSliderThumb.value?.classList.add(`${cssPrefix}pressed`);
                         document.addEventListener("mousemove", hueSliderThumbMoveHandler)
@@ -102,6 +118,22 @@ function renderColorPickerControls(
                         class: [`${cssPrefix}slider-thumb`],
                         onBlur: (event: Event) => {
                             (<HTMLElement>event.target).classList.remove(`${cssPrefix}focused`);
+                        },
+                        onKeydown: (event: KeyboardEvent) => {
+                            const movements: Record<string, number> = {
+                                ArrowLeft: -1,
+                                ArrowRight: 1
+                            };
+                            if (Object.keys(movements).includes(event.key)) {
+                                pickerData.alphaSliderThumb.value?.classList.add(`${cssPrefix}focused`);
+                                moveSliderThumbOnKeydown(
+                                    <HTMLElement>pickerData.alphaSliderThumb.value,
+                                    movements[event.key],
+                                    pickerData, emit,
+                                    updateAlphaSliderThumbUI,
+                                );
+                                event.preventDefault();
+                            }
                         },
                         onMousedown: () => {
                             pickerData.alphaSliderThumb.value?.classList.add(`${cssPrefix}pressed`);
@@ -214,6 +246,7 @@ function onUpdateInputNumber(value: string, label: string, pickerData: TColorPic
     let srcValue = mode === "RGB" && label !== "A"
         ? Number.parseInt(value.trim())
         : Number.parseFloat(value.trim());
+
     let rgba: RGBA | undefined;
     let hsla: HSLA | undefined;
     let hsva: HSVA | undefined;
@@ -460,6 +493,22 @@ export function useRenderColorPicker(
                     tabIndex: 0,
                     ref: pickerData.colorMarker,
                     class: [`${cssNamePrefix}canvas-marker`],
+                    onKeydown: (event: KeyboardEvent) => {
+                        const movements: Record<string, number[]> = {
+                            ArrowUp: [0, -1],
+                            ArrowDown: [0, 1],
+                            ArrowLeft: [-1, 0],
+                            ArrowRight: [1, 0]
+                        };
+                        if (Object.keys(movements).includes(event.key)) {
+                            moveColorMarkerOnKeydown(
+                                pickerData, emit,
+                                movements[event.key][0],
+                                movements[event.key][1],
+                            );
+                            event.preventDefault();
+                        }
+                    },
                     onMousedown: () => document.addEventListener("mousemove", colorMarkerMoveHandler),
                     onTouchstart: () => document.addEventListener(
                         "touchmove",
@@ -561,6 +610,19 @@ export function moveColorMarker(event: UIEvent, pickerData: TColorPickerData, em
     event.stopPropagation();
 }
 
+function moveColorMarkerOnKeydown(
+    pickerData: TColorPickerData,
+    emit: TEmitFn,
+    deltaX: number,
+    deltaY: number,
+) {
+    const colorMarker = <HTMLElement>pickerData.colorMarker.value;
+    const x = parseInt(colorMarker.style.left.replace("px", "")) + deltaX;
+    const y = parseInt(colorMarker.style.top.replace("px", "")) + deltaY;
+
+    setColorMarkerPosition(pickerData, emit, x, y);
+}
+
 export function moveHueSliderThumb(
     event: UIEvent,
     pickerData: TColorPickerData,
@@ -582,8 +644,40 @@ export function moveHueSliderThumb(
     // Make sure the Thumb doesn't go out of bounds
     const posX = (px < 0) ? 0 : (px > rect.width) ? rect.width : px;
     const hueX = posX / rect.width * 100;
+
+    updateHueSliderThumbUI(pickerData, emit, hueX);
+
+    // Prevent scrolling while dragging the Thumb
+    event.preventDefault();
+    event.stopPropagation();
+}
+
+function moveSliderThumbOnKeydown(
+    thumb: HTMLElement,
+    delta: number,
+    pickerData: TColorPickerData,
+    emit: TEmitFn,
+    handlerFn: (pickerData: TColorPickerData, emit: TEmitFn, posX: number) => void
+) {
+    let posX = parseFloat(thumb.style.left.replace("%", "")) + delta;
+
+    // Make sure the Thumb doesn't go out of bounds
+    if (posX < 0) {
+        posX = 0
+    } else if (posX > 100) {
+        posX = 100;
+    }
+
+    handlerFn(pickerData, emit, posX);
+}
+
+function updateHueSliderThumbUI(
+    pickerData: TColorPickerData,
+    emit: TEmitFn,
+    posX: number,
+) {
     const hsva = {
-        h: Math.round(hueX / 100 * 360),
+        h: Math.round(posX / 100 * 360),
         s: pickerData.config.currentColor.s,
         v: pickerData.config.currentColor.v,
         a: pickerData.config.currentColor.a,
@@ -592,14 +686,10 @@ export function moveHueSliderThumb(
 
     // Update UI
     (<HTMLElement>pickerData.colorArea.value).style.color = `hsl(${hsva.h}, 100%, 50%)`;
-    (<HTMLElement>pickerData.hueSliderThumb.value).style.left = `${hueX}%`;
+    (<HTMLElement>pickerData.hueSliderThumb.value).style.left = `${posX}%`;
     updateColor(pickerData, rgba, hsva);
     updateColorPreview(pickerData, emit);
     (<HTMLElement>pickerData.hueSliderThumb.value).focus();
-
-    // Prevent scrolling while dragging the Thumb
-    event.preventDefault();
-    event.stopPropagation();
 }
 
 export function moveAlphaSliderThumb(
@@ -624,18 +714,25 @@ export function moveAlphaSliderThumb(
     const posX = (px < 0) ? 0 : (px > rect.width) ? rect.width : px;
     const alphaX = Math.round(posX / rect.width * 100);
 
-    // Update UI
-    (<HTMLElement>pickerData.alphaSliderThumb.value).style.left = `${alphaX}%`;
-    pickerData.config.alphaSlider = alphaX;
-    pickerData.config.currentColor.a = alphaX / 100;
-    pickerData.colorHSL.a = alphaX / 100;
-    pickerData.colorRGB.a = alphaX / 100;
-    updateColorPreview(pickerData, emit);
-    (<HTMLElement>pickerData.alphaSliderThumb.value).focus();
+    updateAlphaSliderThumbUI(pickerData, emit, alphaX);
 
     // Prevent scrolling while dragging the Thumb
     event.preventDefault();
     event.stopPropagation();
+}
+
+function updateAlphaSliderThumbUI(
+    pickerData: TColorPickerData,
+    emit: TEmitFn,
+    posX: number,
+) {
+    (<HTMLElement>pickerData.alphaSliderThumb.value).style.left = `${posX}%`;
+    pickerData.config.alphaSlider = posX;
+    pickerData.config.currentColor.a = posX / 100;
+    pickerData.colorHSL.a = posX / 100;
+    pickerData.colorRGB.a = posX / 100;
+    updateColorPreview(pickerData, emit);
+    (<HTMLElement>pickerData.alphaSliderThumb.value).focus();
 }
 
 function getPointerPosition(event: UIEvent) {

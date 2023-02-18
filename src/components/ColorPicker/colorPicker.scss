@@ -30,6 +30,10 @@ $markerSize: 14px;
             border: 1px solid $white;
             outline: none;
             position: absolute;
+
+            &:focus {
+                border-width: 2px;
+            }
         }
     }
 
@@ -134,7 +138,7 @@ $markerSize: 14px;
                 pointer-events: none;
             }
 
-            &:hover {
+            &:hover, &:focus {
                 --#{$prefix}slider-thumb-surface-opacity: 0.08;
 
                 > .#{$prefix}slider-thumb-surface {
