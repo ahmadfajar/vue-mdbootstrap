@@ -1,21 +1,12 @@
-import {
-    ComponentOptionsMixin,
-    computed,
-    ComputedOptions,
-    defineComponent,
-    EmitsOptions,
-    nextTick,
-    onMounted,
-    reactive,
-    ref,
-    watch
-} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, nextTick, onMounted, reactive, ref, watch} from "vue";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
 import type {TBsColorPicker, TColorPickerData, TColorPickerMode, TColorPickerOptionProps, TRecord} from "../../types";
 import {
     moveAlphaSliderThumb,
     moveColorMarker,
-    moveColorSliderThumb, useReleasePointerEvents,
+    moveColorSliderThumb,
+    useReleasePointerEvents,
     useRenderColorPicker,
     useUpdateCanvasColor
 } from "./mixins/colorPickerApi";
@@ -45,6 +36,8 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
                 value: thisProps.modelValue,
                 mode: <TColorPickerMode>thisProps.mode,
             }),
+            colorRGB: {r: 0, g: 0, b: 0, a: 1},
+            colorHSL: {h: 0, s: 0, l: 0, a: 1},
             pickerEl: ref<HTMLElement | null>(null),
             colorArea: ref<HTMLElement | null>(null),
             colorAreaRect: DOMRect.fromRect({width: 0, height: 0, x: 0, y: 0}),
@@ -52,10 +45,8 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
             colorPreview: ref<HTMLElement | null>(null),
             colorSlider: ref<HTMLElement | null>(null),
             colorSliderMarker: ref<HTMLElement | null>(null),
-            // colorSliderValue: ref<number>(0),
             alphaSlider: ref<HTMLElement | null>(null),
             alphaSliderMarker: ref<HTMLElement | null>(null),
-            // alphaSliderValue: ref<number>(100),
             canvasCtx: document.createElement("canvas").getContext("2d"),
         };
         const pickerClasses = computed(() => [

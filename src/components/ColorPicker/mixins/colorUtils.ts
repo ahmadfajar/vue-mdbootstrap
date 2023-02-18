@@ -155,7 +155,6 @@ export function rgbaToHsva(color: RGBA) {
  */
 export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: string): RGBA {
     const regex = /^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i;
-    let match: RegExpExecArray | null;
     let rgba: RGBA = {r: 0, g: 0, b: 0, a: 1};
 
     // Default to black for invalid color strings
@@ -163,7 +162,7 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
 
     // Use canvas to convert the string to a valid color string
     canvasCtx.fillStyle = source;
-    match = regex.exec(canvasCtx.fillStyle);
+    const match = regex.exec(canvasCtx.fillStyle);
 
     if (match) {
         rgba = {
@@ -175,19 +174,16 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
 
         // Workaround to mitigate a Chromium bug where the alpha value is rounded incorrectly
         rgba.a = +rgba.a.toFixed(2);
-
     } else {
-        // @ts-ignore
-        match = canvasCtx.fillStyle
+        const match1 = canvasCtx.fillStyle
             .replace("#", "")
-            .match(/.{2}/g)
-            .map(h => parseInt(h, 16));
+            .match(/.{2}/g)?.map(h => parseInt(h, 16));
 
-        if (match) {
+        if (match1) {
             rgba = {
-                r: parseInt(match[0]),
-                g: parseInt(match[1]),
-                b: parseInt(match[2]),
+                r: match1[0],
+                g: match1[1],
+                b: match1[2],
                 a: 1
             };
         }

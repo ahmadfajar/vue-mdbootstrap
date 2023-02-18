@@ -89,6 +89,10 @@ $markerSize: 14px;
             margin-left: math.div(-$markerSize, 2);
             position: absolute;
             cursor: pointer;
+
+            &.move-transition {
+                @include transition(0.35s $md-transition-stand-timing);
+            }
         }
 
         > .#{$cmpCssName}slider-track-alpha {
