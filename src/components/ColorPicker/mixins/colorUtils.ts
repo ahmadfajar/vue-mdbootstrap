@@ -225,7 +225,7 @@ export function rgbaToHex(rgba: RGBA): string {
         }
     }
 
-    return "#" + R + G + B + A;
+    return "#" + (R + G + B + A).toUpperCase();
 }
 
 /**

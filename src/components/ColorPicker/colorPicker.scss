@@ -263,5 +263,6 @@ $markerSize: 14px;
 .#{$prefix}popover {
     &.#{$prefix}popover-color-picker {
         @include border-radius(var(--#{$bs-prefix}border-radius));
+        overflow: hidden;
     }
 }
