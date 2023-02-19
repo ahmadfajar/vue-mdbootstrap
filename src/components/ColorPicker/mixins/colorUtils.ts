@@ -255,3 +255,13 @@ export function hslaToString(hsla: HSLA): string {
         return `hsl(${hsla.h}, ${hsla.s}%, ${hsla.l}%)`;
     }
 }
+
+/**
+ * Get brightness level from RGBA color.
+ *
+ * @param {RGBA} rgba The RGBA color values.
+ * @return {number} The brightness level.
+ */
+export function brightnessLevel(rgba: RGBA): number {
+    return ((rgba.r * 299) + (rgba.g * 587) + (rgba.b * 114)) / 1000;
+}

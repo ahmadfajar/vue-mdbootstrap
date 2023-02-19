@@ -34,7 +34,7 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
          */
         "update:open",
     ],
-    setup(props, {emit, attrs}) {
+    setup(props, {emit, attrs, expose}) {
         const thisProps = props as Readonly<TColorPickerOptionProps>;
         const thisData = initColorPickerData(thisProps);
         const pickerClasses = computed(() => [
@@ -61,6 +61,9 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
         const moveAlphaSliderThumbHandler = (event: Event) => {
             moveAlphaSliderThumb(<UIEvent>event, thisData, emit);
         }
+        const hexColor = () => rgbaToHex(thisData.config.currentColor);
+
+        expose({hexColor, rgbColor: thisData.colorRGB, hslColor: thisData.colorHSL});
 
         watch(
             () => thisProps.mode,
