@@ -10,7 +10,7 @@ Released: March xx, 2023
 
 - Rewrite the components in the TypeScript language.
 - Add support for **Vue 3** and **Bootstrap v5.2**.
-- New components: **BsIconSpinner**, **BsIconSvg**, **BsProgressBar**
+- New components: **BsIconSpinner**, **BsIconSvg**, **BsProgressBar**, **BsColorPicker**
 - **BsAlert**: add property `filled`, `iconVariant`, and `variant`.
 - **BsAppbar**: add property `clippedRight`.
 - **BsAppContainer**: add property `viewportHeight`.
