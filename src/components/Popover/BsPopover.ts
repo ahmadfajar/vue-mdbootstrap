@@ -30,7 +30,7 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
             () => [
                 `${cssPrefix}popover`,
                 `transition-${actualPlacement.value}`,
-                `bg-${thisProps.color}`,
+                thisProps.color ? `bg-${thisProps.color}` : "",
             ]
         );
 

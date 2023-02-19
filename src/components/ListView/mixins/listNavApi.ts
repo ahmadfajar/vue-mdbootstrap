@@ -54,8 +54,8 @@ export function useListNavItemInnerClasses(
 export function useNavItemContentStyles(props: Readonly<TListNavItemOptionProps>): string[] {
     const indent = 16 + (props.depth ? (parseInt(<string>props.depth, 10) * 20) : 0);
     const padding = props.indent
-        ? Helper.sizeUnit(props.indent)
-        : (props.depth ? Helper.sizeUnit(indent, "px") : undefined);
+        ? Helper.cssUnit(props.indent)
+        : (props.depth ? Helper.cssUnit(indent, "px") : undefined);
 
     return padding ? [`padding-left: ${padding}`] : [];
 }

@@ -1,16 +1,20 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, nextTick, onMounted, reactive, ref, watch} from "vue";
+import {computed, defineComponent, h, mergeProps, nextTick, onMounted, watch} from "vue";
 import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
-import type {TBsColorPicker, TColorPickerData, TColorPickerMode, TColorPickerOptionProps, TRecord} from "../../types";
+import type {TBsColorPicker, TColorPickerMode, TColorPickerOptionProps, TRecord} from "../../types";
 import {
+    initColorPickerData,
     moveAlphaSliderThumb,
     moveColorMarker,
     moveHueSliderThumb,
     useReleasePointerEvents,
     useRenderColorPicker,
-    useUpdateCanvasColor
+    useUpdateColorCanvas
 } from "./mixins/colorPickerApi";
 import {colorPickerProps} from "./mixins/colorPickerProps";
+import {hslaToString, hsvaToHsla, rgbaToHex, rgbaToString} from "./mixins/colorUtils";
+import {BsPopover} from "../Popover";
+import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsColorPicker",
@@ -18,37 +22,21 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
     props: colorPickerProps,
     emits: [
         /**
-         * Callback fired when this ColorPicker's mode is updated.
+         * Fired when this ColorPicker's mode is updated.
          */
         "update:mode",
         /**
-         * Callback fired when this ColorPicker's value is updated.
+         * Fired when this ColorPicker's value is updated.
          */
         "update:model-value",
+        /**
+         * Fired when this ColorPicker's popup state is updated.
+         */
+        "update:open",
     ],
     setup(props, {emit, attrs}) {
         const thisProps = props as Readonly<TColorPickerOptionProps>;
-        const thisData: TColorPickerData = {
-            config: reactive({
-                currentColor: {r: 0, g: 0, b: 0, h: 0, s: 0, v: 0, a: 1},
-                hueSlider: 0,
-                alphaSlider: 100,
-                value: thisProps.modelValue,
-                mode: <TColorPickerMode>thisProps.mode,
-            }),
-            colorRGB: {r: 0, g: 0, b: 0, a: 1},
-            colorHSL: {h: 0, s: 0, l: 0, a: 1},
-            pickerEl: ref<HTMLElement | null>(null),
-            colorArea: ref<HTMLElement | null>(null),
-            colorAreaRect: DOMRect.fromRect({width: 0, height: 0, x: 0, y: 0}),
-            colorMarker: ref<HTMLElement | null>(null),
-            colorPreview: ref<HTMLElement | null>(null),
-            hueSlider: ref<HTMLElement | null>(null),
-            hueSliderThumb: ref<HTMLElement | null>(null),
-            alphaSlider: ref<HTMLElement | null>(null),
-            alphaSliderThumb: ref<HTMLElement | null>(null),
-            canvasCtx: document.createElement("canvas").getContext("2d"),
-        };
+        const thisData = initColorPickerData(thisProps);
         const pickerClasses = computed(() => [
             `${cssPrefix}color-picker`,
             `bg-${thisProps.containerColor}`,
@@ -80,6 +68,24 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
                 thisData.config.mode = <TColorPickerMode>value;
             }
         );
+        watch(
+            () => thisProps.modelValue,
+            (value) => {
+                if (thisData.config.value !== value) {
+                    thisData.config.value = value;
+
+                    // Sync internal data with the ColorPicker's Mode
+                    useUpdateColorCanvas(thisData);
+                    if (thisData.config.mode === "HSL") {
+                        thisData.config.value = hslaToString(hsvaToHsla(thisData.config.currentColor));
+                    } else if (thisData.config.mode === "RGB") {
+                        thisData.config.value = rgbaToString(thisData.config.currentColor);
+                    } else {
+                        thisData.config.value = rgbaToHex(thisData.config.currentColor);
+                    }
+                }
+            }
+        );
         onMounted(() => {
             if (thisData.colorArea.value) {
                 thisData.colorAreaRect = thisData.colorArea.value.getBoundingClientRect();
@@ -90,17 +96,38 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
                 moveHueSliderThumbHandler,
                 moveAlphaSliderThumbHandler,
             );
-            nextTick().then(() => emit("update:mode", thisData.config.mode));
-            useUpdateCanvasColor(thisData, emit);
+            nextTick().then(() => {
+                emit("update:mode", thisData.config.mode);
+                useUpdateColorCanvas(thisData, emit);
+            });
         });
 
         return () =>
-            useRenderColorPicker(
-                thisProps, pickerClasses,
-                thisData, inputIDs, attrs, emit,
-                moveColorMarkerHandler,
-                moveHueSliderThumbHandler,
-                moveAlphaSliderThumbHandler,
-            )
+            !Helper.isEmpty(thisProps.activator)
+                ? h(BsPopover, mergeProps({
+                    class: [`${cssPrefix}popover-color-picker`],
+                    color: props.containerColor,
+                    cover: props.cover,
+                    open: props.open,
+                    placement: props.placement,
+                    space: props.space || 4,
+                    transition: props.transition,
+                    trigger: props.activator,
+                    "onUpdate:open": (value: boolean) => emit("update:open", value),
+                }, attrs), {
+                    default: () => useRenderColorPicker(
+                        thisProps, pickerClasses,
+                        thisData, inputIDs, attrs, emit,
+                        moveColorMarkerHandler,
+                        moveHueSliderThumbHandler,
+                        moveAlphaSliderThumbHandler,
+                    )
+                }) : useRenderColorPicker(
+                    thisProps, pickerClasses,
+                    thisData, inputIDs, attrs, emit,
+                    moveColorMarkerHandler,
+                    moveHueSliderThumbHandler,
+                    moveAlphaSliderThumbHandler,
+                )
     }
 });

@@ -50,10 +50,10 @@ export default defineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions,
                                         },
                                         style: {
                                             'border-width': loaderVariant.value === "linear"
-                                                ? Helper.sizeUnit(<string>props.spinnerThickness)
+                                                ? Helper.cssUnit(<string>props.spinnerThickness)
                                                 : null,
-                                            'height': Helper.sizeUnit(<string>props.spinnerDiameter),
-                                            'width': Helper.sizeUnit(<string>props.spinnerDiameter),
+                                            'height': Helper.cssUnit(<string>props.spinnerDiameter),
+                                            'width': Helper.cssUnit(<string>props.spinnerDiameter),
                                         }
                                     })
                             ),

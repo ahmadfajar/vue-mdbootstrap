@@ -623,8 +623,8 @@ export default {
          */
         _popoverStyles() {
             return {
-                'min-width': this.trigger ? Helper.sizeUnit(this._popoverMinWidth) : '',
-                'max-height': Helper.sizeUnit(this.popoverMaxHeight)
+                'min-width': this.trigger ? Helper.cssUnit(this._popoverMinWidth) : '',
+                'max-height': Helper.cssUnit(this.popoverMaxHeight)
             }
         },
         /**
@@ -955,9 +955,9 @@ export default {
 
                 if (hasWidth && label) {
                     const width = label.clientWidth < 80 ? label.clientWidth : label.clientWidth - 8;
-                    this.$refs.legend.style.width = Helper.sizeUnit(width);
+                    this.$refs.legend.style.width = Helper.cssUnit(width);
                 } else {
-                    this.$refs.legend.style.width = Helper.sizeUnit(0);
+                    this.$refs.legend.style.width = Helper.cssUnit(0);
                 }
             }
         },

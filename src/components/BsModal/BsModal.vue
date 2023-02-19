@@ -144,8 +144,8 @@ export default {
          */
         _modalStyles() {
             return {
-                'max-width': this.maxWidth === 'auto' ? undefined : Helper.sizeUnit(this.maxWidth),
-                'width': this.width === 'auto' ? undefined : Helper.sizeUnit(this.width)
+                'max-width': this.maxWidth === 'auto' ? undefined : Helper.cssUnit(this.maxWidth),
+                'width': this.width === 'auto' ? undefined : Helper.cssUnit(this.width)
             }
         },
         /**
@@ -223,10 +223,10 @@ export default {
                 if (titleEl) {
                     maxBodyHeight -= titleEl.offsetHeight;
                 }
-                bodyEl.style.maxHeight = Helper.sizeUnit(maxBodyHeight);
+                bodyEl.style.maxHeight = Helper.cssUnit(maxBodyHeight);
             }
 
-            dialogEl.style.maxHeight = Helper.sizeUnit(contentMaxHeight);
+            dialogEl.style.maxHeight = Helper.cssUnit(contentMaxHeight);
         }
     }
 }

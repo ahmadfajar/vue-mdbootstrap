@@ -23,12 +23,12 @@ export function useSideDrawerStyles(
     const zeroPx = "0px";
     const sbWidth = parseInt(<string>props.width) + 1;
     const properties = {
-        width: Helper.sizeUnit(props.width),
+        width: Helper.cssUnit(props.width),
         // height: isMobile.value ? '100vh' : (props.clipped ? `calc(100% - ${clipHeight.value}px)` : '100%'),
         transform: props.position === "right"
-            ? `translateX(${Helper.sizeUnit(sbWidth)})`
-            : `translateX(-${Helper.sizeUnit(sbWidth)})`,
-        paddingTop: Helper.sizeUnit(clipHeight.value),
+            ? `translateX(${Helper.cssUnit(sbWidth)})`
+            : `translateX(-${Helper.cssUnit(sbWidth)})`,
+        paddingTop: Helper.cssUnit(clipHeight.value),
         left: props.position === "left" ? zeroPx : undefined,
         right: props.position === "right" ? zeroPx : undefined,
         position: props.fixedLayout ? "fixed" : undefined,
@@ -42,17 +42,17 @@ export function useSideDrawerStyles(
 
         return {
             ...properties,
-            width: Helper.sizeUnit(props.modalWidth),
+            width: Helper.cssUnit(props.modalWidth),
             paddingTop: zeroPx,
             position: "fixed",
             top: zeroPx,
-            transform: isOpen.value ? "translateX(0px)" : `translateX(${Helper.sizeUnit(slideWidth)})`,
+            transform: isOpen.value ? "translateX(0px)" : `translateX(${Helper.cssUnit(slideWidth)})`,
             "z-index": zIndex + 1,
         };
     } else if (props.mini && props.miniWidth) {
         return {
             ...properties,
-            width: Helper.sizeUnit(props.miniWidth),
+            width: Helper.cssUnit(props.miniWidth),
             transform: "translateX(0px)",
         };
     } else if (props.width && props.open) {

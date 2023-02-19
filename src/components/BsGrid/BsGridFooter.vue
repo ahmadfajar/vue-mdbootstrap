@@ -64,7 +64,7 @@ export default {
          */
         _tableStyles() {
             return {
-                width: Util.sizeUnit(this.BsGrid.tableWidth)
+                width: Util.cssUnit(this.BsGrid.tableWidth)
             }
         },
         /**
@@ -91,7 +91,7 @@ export default {
          * @private
          */
         _colFooterStyles(col) {
-            return Object.assign({width: Util.sizeUnit(col.width)}, col.headerStyle || {});
+            return Object.assign({width: Util.cssUnit(col.width)}, col.headerStyle || {});
         },
         /**
          * Detect screen size and recalculate footer width.

@@ -16,17 +16,16 @@ export const colorPickerProps = {
     },
     containerColor: whiteColorProp,
     cover: booleanProp,
-    disabled: booleanProp,
     open: booleanProp,
     hideAlpha: booleanProp,
     hideInputs: booleanProp,
     hideModeButton: booleanProp,
-    modeButtonOutlined: booleanProp,
+    outlineModeButton: booleanProp,
     modeButtonColor: {
         type: String,
         default: "grey",
     },
-    modeButtonSelectedColor: stringProp,
+    modeButtonToggleColor: stringProp,
     inputLabelClass: stringOrArrayProp,
     mode: {
         type: String as PropType<TColorPickerMode>,
@@ -37,4 +36,12 @@ export const colorPickerProps = {
     placement: popoverPlacementProp,
     space: validStringOrNumberProp,
     transition: popoverDefaultTransitionProp,
+    swatches: {
+        type: Array,
+        default: undefined
+    },
+    swatchesMaxHeight: {
+        type: [String, Number],
+        default: 80
+    },
 }

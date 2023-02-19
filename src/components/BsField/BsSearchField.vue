@@ -268,7 +268,7 @@ export default {
          */
         _popoverStyles() {
             return {
-                'min-width': this.trigger ? Helper.sizeUnit(this._popoverMinWidth) : ''
+                'min-width': this.trigger ? Helper.cssUnit(this._popoverMinWidth) : ''
             }
         },
     },

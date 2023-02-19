@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 06/02/2023 16:51
+ * @since  05/07/2018, modified: 19/02/2023 15:09
  */
 class Helper {
     /**
@@ -189,13 +189,13 @@ class Helper {
     }
 
     /**
-     * Convert Number or String to any valid html size unit.
+     * Convert Number or String to any valid html css unit size.
      *
      * @param {string|number} value The value to convert
      * @param {string} [unit]       The dimension to add
      * @returns {string|null} Css inline dimension
      */
-    static sizeUnit(
+    static cssUnit(
         value: string | number | undefined | null,
         unit?: string | undefined | null,
     ): string | null {

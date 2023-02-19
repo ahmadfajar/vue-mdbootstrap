@@ -49,7 +49,7 @@ export default {
          */
         _gridStyles() {
             return {
-                height: this.isFixedHeight ? Helper.sizeUnit(this.height) : null
+                height: this.isFixedHeight ? Helper.cssUnit(this.height) : null
             }
         },
         /**
@@ -84,7 +84,7 @@ export default {
          */
         _tableStyles() {
             return {
-                width: Helper.sizeUnit(this.table.tableWidth)
+                width: Helper.cssUnit(this.table.tableWidth)
             }
         },
         /**
@@ -137,7 +137,7 @@ export default {
          * @private
          */
         _colHeaderStyles(col) {
-            return Object.assign({width: Helper.sizeUnit(col.width)}, col.headerStyle || {});
+            return Object.assign({width: Helper.cssUnit(col.width)}, col.headerStyle || {});
         },
         /**
          * Get computed GridCell styles.
@@ -147,7 +147,7 @@ export default {
          * @private
          */
         _colDataStyles(col) {
-            return Object.assign({width: Helper.sizeUnit(col.width)}, col.dataStyle || {});
+            return Object.assign({width: Helper.cssUnit(col.width)}, col.dataStyle || {});
         }
     }
 

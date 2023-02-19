@@ -17,7 +17,7 @@ export default defineComponent<TBsProgressBar, unknown, unknown, ComputedOptions
             return h("div", {
                 class: ["progress", cmpProps.rounded === false ? "rounded-0" : ""],
                 style: {
-                    height: Helper.sizeUnit(cmpProps.height)
+                    height: Helper.cssUnit(cmpProps.height)
                 }
             }, [
                 h("div", {

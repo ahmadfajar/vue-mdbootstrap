@@ -59,8 +59,8 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
         const transitionName = computed(() => `${cssPrefix}tooltip-${thisProps.placement}`);
         const classNames = computed(() => [`${cssPrefix}tooltip`, transitionName.value]);
         const styles = computed(() => ({
-            "width": thisProps.width === "auto" ? undefined : Helper.sizeUnit(thisProps.width),
-            "max-width": Helper.sizeUnit(thisProps.maxWidth),
+            "width": thisProps.width === "auto" ? undefined : Helper.cssUnit(thisProps.width),
+            "max-width": Helper.cssUnit(thisProps.maxWidth),
             "z-index": thisProps.zIndex
         }));
         let instance: ComponentInternalInstance | null;

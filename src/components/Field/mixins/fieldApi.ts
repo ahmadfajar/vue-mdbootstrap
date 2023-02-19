@@ -399,7 +399,7 @@ export function useRenderTextArea(
                     "role": "textbox",
                     "rows": canGrow ? 2 : (props.rows && !props.rowHeight ? props.rows : undefined),
                     "style": rowHeight.value && {
-                        height: Helper.sizeUnit(rowHeight.value)
+                        height: Helper.cssUnit(rowHeight.value)
                     },
                     "onUpdate:modelValue": (value: string | number | undefined | null) =>
                         useOnFieldValueUpdated(emit, localValue, value),
@@ -413,8 +413,8 @@ export function useRenderTextArea(
                             const target = (<HTMLElement>e.target);
                             target.style.height = "auto";
                             nextTick().then(() => {
-                                rowHeight.value = Helper.sizeUnit(target.scrollHeight);
-                                target.style.height = Helper.sizeUnit(target.scrollHeight) || "auto";
+                                rowHeight.value = Helper.cssUnit(target.scrollHeight);
+                                target.style.height = Helper.cssUnit(target.scrollHeight) || "auto";
                             });
                         }
                     }

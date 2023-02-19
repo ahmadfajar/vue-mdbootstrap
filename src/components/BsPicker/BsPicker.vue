@@ -56,7 +56,7 @@ export default {
         },
         _styles() {
             return {
-                width: this.fullWidth ? null : Helper.sizeUnit(this.width)
+                width: this.fullWidth ? null : Helper.cssUnit(this.width)
             }
         }
     }

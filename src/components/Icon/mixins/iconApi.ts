@@ -34,7 +34,7 @@ export function useSizeStyles(props: Readonly<TSizeOptionProps>): object {
     const szWidth = useSizeWidth(props);
 
     return {
-        height: Helper.sizeUnit(szHeight),
-        width: Helper.sizeUnit(szWidth),
+        height: Helper.cssUnit(szHeight),
+        width: Helper.cssUnit(szWidth),
     }
 }

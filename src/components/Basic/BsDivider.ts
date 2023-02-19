@@ -22,9 +22,9 @@ export default defineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, Co
                 `${cssPrefix}divider`,
                 props.dark ? "divider--dark" : "divider--light"
             ], {
-                marginLeft: props.leftIndent ? Helper.sizeUnit(thisProps.leftIndent) : null,
-                marginRight: props.rightIndent ? Helper.sizeUnit(thisProps.rightIndent) : null,
-                height: props.thickness ? Helper.sizeUnit(thisProps.thickness) : null,
+                marginLeft: props.leftIndent ? Helper.cssUnit(thisProps.leftIndent) : null,
+                marginRight: props.rightIndent ? Helper.cssUnit(thisProps.rightIndent) : null,
+                height: props.thickness ? Helper.cssUnit(thisProps.thickness) : null,
             })
     }
 });

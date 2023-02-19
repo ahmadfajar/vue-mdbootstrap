@@ -1,5 +1,6 @@
 import type {App, Plugin as Plugin_2} from "vue";
 import BsColorPicker from "./BsColorPicker";
+import "../../../scss/_transitions.scss";
 import "../../../scss/_utilities.scss";
 import "./colorPicker.scss";
 

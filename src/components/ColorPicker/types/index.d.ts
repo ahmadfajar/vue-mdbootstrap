@@ -21,6 +21,9 @@ declare type TColorPickerValue = {
     value: string | undefined;
 }
 
+/**
+ * ColorPicker internal data structures.
+ */
 export declare type TColorPickerData = {
     config: UnwrapNestedRefs<TColorPickerValue>;
     colorRGB: RGBA;
@@ -42,7 +45,7 @@ export declare type TColorPickerOptionProps = {
      * Display this ColorPicker as a popup dialog and calculate its display
      * position from the activator element.
      *
-     * Leave it `undefined` to display ColorPicker persistently.
+     * Leave it `undefined` to display persistent/inline ColorPicker.
      */
     activator?: Element | string;
     /**
@@ -54,30 +57,59 @@ export declare type TColorPickerOptionProps = {
      */
     cover?: boolean;
     /**
-     * Disable this ColorPicker and prevents changing its values.
+     * Hide alpha slider and alpha input field.
      */
-    disabled?: boolean;
     hideAlpha?: boolean;
+    /**
+     * Hide the input fields.
+     */
     hideInputs?: boolean;
+    /**
+     * Hide toggle mode buttons.
+     */
     hideModeButton?: boolean;
-    modeButtonOutlined?: boolean;
+    /**
+     * Render the toggle mode buttons with outlined style.
+     */
+    outlineModeButton?: boolean;
+    /**
+     * Default the toggle mode button color style.
+     */
     modeButtonColor?: string;
-    modeButtonSelectedColor?: string;
+    /**
+     * Color to apply to the active button.
+     */
+    modeButtonToggleColor?: string;
+    /**
+     * Apply custom css style to the input field label.
+     */
     inputLabelClass?: string | string[];
     /**
-     * This Popover state: show or hide.
+     * This ColorPicker popup state: `show` or `hide`.
+     * Only works if activator element is defined.
      */
     open?: boolean;
+    /**
+     * This ColorPicker mode. Valid values: `HEX`, `RGB`, `HSL`.
+     */
     mode?: TColorPickerMode | string;
     modelValue?: string;
     /**
-     * This ColorPicker display placement when property `activator` is defined..
+     * This ColorPicker display placement when property `activator` is defined.
      */
     placement?: TPopoverPosition | string;
     /**
      * Number of pixel to shift the ColorPicker display position from the activator element.
      */
     space?: string | number;
+    /**
+     * Custom color swatches to display at the bottom ColorPicker.
+     */
+    swatches?: string[];
+    /**
+     * Sets the maximum height of the swatches section.
+     */
+    swatchesMaxHeight?: string | number;
     /**
      * Transition animation when displaying the ColorPicker.
      * This animation is effected by `placement` property.
