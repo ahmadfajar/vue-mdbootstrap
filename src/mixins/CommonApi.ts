@@ -123,17 +123,10 @@ export function useSimpleRenderWithSlots(
     classes?: string | Array<string> | TRecord,
     styles?: string | Array<string> | TRecord,
 ): VNode {
-    if (styles) {
-        return h(
-            tag, {class: classes, style: styles},
-            slots ? slots.default && slots.default() : undefined,
-        )
-    } else {
-        return h(
-            tag, {class: classes},
-            slots ? slots.default && slots.default() : undefined,
-        )
-    }
+    return h(
+        tag, {class: classes, style: styles},
+        slots ? slots.default && slots.default() : undefined,
+    )
 }
 
 /**

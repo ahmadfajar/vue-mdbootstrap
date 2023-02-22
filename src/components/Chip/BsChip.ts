@@ -44,7 +44,6 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
             dismiss.value = true;
             emit("update:active", false);
             emit("update:model-value", false);
-            // emit("close");
             nextTick().then(() => emit("close"));
         }
         watch(
@@ -64,7 +63,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
                         tagName.value, rippleDisabled.value, slots, attrs,
                         cmpProps, classNames, dismissedChip,
                     )
-                    : createCommentVNode(" BsChip ", true)
+                    : createCommentVNode(" BsChip ")
             )
     }
 });

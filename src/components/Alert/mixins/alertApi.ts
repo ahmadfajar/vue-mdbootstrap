@@ -80,7 +80,7 @@ export function useRenderAlert(
                     icon: <Prop<string | undefined>>alertIconName.value,
                     size: 32 as Prop<number>,
                 })
-                : undefined, // createCommentVNode(" v-if-alert-icon ", true),
+                : createCommentVNode(" v-if-alert-icon "),
         ),
         useSimpleRenderWithSlots("div", slots, "flex-fill"),
         props.dismissible

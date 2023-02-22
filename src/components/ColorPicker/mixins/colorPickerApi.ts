@@ -502,6 +502,7 @@ function renderColorPickerSwatches(
                 class: [`${cssNamePrefix}swatches-content`, "d-flex", "flex-wrap", "justify-content-center"]
             }, props.swatches?.map(it => h("button", {
                 type: "button",
+                key: it,
                 title: it,
                 class: [`${cssPrefix}swatch-button`],
                 style: {color: it},

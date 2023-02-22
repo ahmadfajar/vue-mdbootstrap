@@ -111,6 +111,7 @@
         position: relative;
 
         > .#{$prefix}field-activator {
+            @include transition($md-transition-stand);
             @include flexbox((display: flex, flex: 1 0, flex-basis: 0));
             @include align-items(flex-start);
             position: relative;

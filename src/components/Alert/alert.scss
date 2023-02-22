@@ -24,6 +24,15 @@
             padding: .5rem;
         }
     }
+
+    .#{$prefix}btn-icon:last-child {
+        --#{$bs-prefix}btn-state-line-height: #{$padding-xl};
+
+        .#{$prefix}ripple {
+            --#{$bs-prefix}btn-inner-state-width: #{$padding-xl};
+            --#{$bs-prefix}btn-inner-state-height: #{$padding-xl};
+        }
+    }
 }
 
 @each $color-name, $value in $theme-colors {

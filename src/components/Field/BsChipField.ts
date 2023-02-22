@@ -92,6 +92,7 @@ export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, 
         watch(
             () => thisProps.modelValue,
             (value) => {
+                // console.info("Watch values:", value);
                 localValue.value = Array.isArray(value)
                     ? value
                     : (

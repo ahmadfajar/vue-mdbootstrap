@@ -126,11 +126,11 @@ export function useRenderChip(
                 ),
                 props.imgSrc
                     ? renderChipAvatar(props)
-                    : createCommentVNode(" v-if-chip-avatar ", true),
+                    : createCommentVNode(" v-if-chip-avatar "),
                 useSimpleRenderWithSlots("div", slots, `${cssPrefix}chip-text`),
                 props.dismissible
                     ? h<TBsButton>(BsButton, createCloseBtnAttr(props, dismissHandler))
-                    : createCommentVNode(" v-if-chip-dismissible ", true),
+                    : createCommentVNode(" v-if-chip-dismissible "),
             ]
         }),
     ]);

@@ -1,5 +1,5 @@
 import type {ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode} from "vue";
-import {createCommentVNode, createTextVNode, h, nextTick} from "vue";
+import {createCommentVNode, Fragment, h, nextTick, toDisplayString} from "vue";
 import type {TBsChipField, TChipFieldOptionProps, TEmitFn, TRecord, TShapeStyle} from "../../../types";
 import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
 import {useRenderFieldFeedback} from "../../Radio/mixins/validationApi";
@@ -79,48 +79,38 @@ function createFieldChips(
     emit: TEmitFn,
     inputValue: Ref<string>,
     localValue: Ref<string[]>,
-): VNode[] {
+): VNode {
+    if (localValue.value.length === 0) {
+        return createCommentVNode(" v-if-chips ");
+    }
+
     const thisProps = props as Readonly<TChipFieldOptionProps>;
 
-    if (localValue.value.length === 0) {
-        return [createCommentVNode(" v-if-chips ")];
-    }
-    const arrayCopy = Array.from(localValue.value);
-    // console.info("arrayCopy:", arrayCopy);
-
-    return arrayCopy.map(
-        label => h(BsChip, {
-            color: props.chipColor,
-            disabled: props.disabled,
-            pill: props.chipPill,
-            outlined: props.chipOutlined,
-            // @ts-ignore
-            dismissible: <Prop<boolean>>(thisProps.chipDeletable && !thisProps.readonly && !thisProps.disabled),
-            onClose: () => {
-                // const tempVal = inputValue.value;
-                // inputValue.value = "";
-                emit("delete-item", label);
-
-                nextTick().then(() => {
-                    const result = localValue.value.filter(v => v !== label);
-                    if (Array.isArray(props.modelValue)) {
-                        emit("update:model-value", result);
-                    } else {
-                        emit("update:model-value", result.join(", "));
-                    }
-                    // dispatchModelValue(thisProps, emit, inputValue, localValue);
-                    // inputValue.value = tempVal;
-                    // Helper.defer(() => {
-                    //     localValue.value = localValue.value.filter(v => v !== label);
-                    //     dispatchModelValue(thisProps, emit, inputValue, localValue);
-                    //     inputValue.value = tempVal;
-                    // }, 300);
-                });
-            },
-        }, {
-            default: () => createTextVNode(label)
-        })
-    );
+    return h(Fragment, null, localValue.value.map(
+        (label) =>
+            h(BsChip, {
+                key: label,
+                color: props.chipColor,
+                disabled: props.disabled,
+                pill: props.chipPill,
+                outlined: props.chipOutlined,
+                // @ts-ignore
+                dismissible: <Prop<boolean>>(thisProps.chipDeletable && !thisProps.readonly && !thisProps.disabled),
+                onClose: () => {
+                    emit("delete-item", label);
+                    nextTick().then(() => {
+                        const result = localValue.value.filter(v => v !== label);
+                        if (Array.isArray(props.modelValue)) {
+                            emit("update:model-value", result);
+                        } else {
+                            emit("update:model-value", result.join(", "));
+                        }
+                    });
+                },
+            }, {
+                default: () => toDisplayString(label)
+            })
+    ));
 }
 
 export function useRenderChipField(
@@ -166,9 +156,10 @@ export function useRenderChipField(
                         emit("update:model-value", valueAsArray ? [] : "");
                         nextTick().then(() => emit("clear"));
                     },
-                ), createFieldChips(props, emit, inputValue, localValue).concat([
-                    createFieldInput(thisProps, emit, inputValue, localValue, isFocused, autocomplete)
-                ]),
+                ), [
+                    createFieldChips(props, emit, inputValue, localValue),
+                    createFieldInput(thisProps, emit, inputValue, localValue, isFocused, autocomplete),
+                ],
             ),
             useRenderFieldFeedback(
                 slots, thisProps,

@@ -16,6 +16,7 @@ Released: March xx, 2023
 - **BsAppContainer**: add property `viewportHeight`.
 - **BsButton**: add slot `icon` for placing a custom icon.
 - **BsChip**: add property `iconVariant`, `pill`.
+- **BsChipField**: add property `actionIconVariant`, `validationIcon`, `chipPill`.
 - **BsDropdownMenu**: add property `space`.
 - **BsListNav**: add property `id`.
 - **BsListNavItem**: add property `id`, `borderOff`, `pillOff`, `roundedOff`, `badgeColor`, and `badgeType`.
@@ -69,6 +70,16 @@ Released: March xx, 2023
   - Removed property `activeColor`, because it is redundant with property `activeClass`.
   - Removed property `faStyles` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid)
     is removed from package bundle. 
+- **BsChipField**: 
+  - Removed `chipLabeled`, used `chipPill` instead. 
+  - Replaced property `value` with `modelValue`.
+  - Replaced event `input` with `update:modelValue`.
+  - Replaced slot `prependIcon` with `prependInner`.
+  - Replaced slot `prependIconOuter` with `prependOuter`.
+  - Replaced slot `appendIcon` with `appendInner`.
+  - Replaced slot `appendIconOuter` with `appendOuter`.
+  - Removed event `change`, already covered by event `update:modelValue`.
+  - Deprecated property `externalValidator`, use property `validator` instead.
 - **BsIcon**: replace property `rotation` with `rotate`.
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
 - **BsListNavItem**:
