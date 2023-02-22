@@ -12,7 +12,7 @@ import {
     useUpdateColorCanvas
 } from "./mixins/colorPickerApi";
 import {colorPickerProps} from "./mixins/colorPickerProps";
-import {hslaToString, hsvaToHsla, rgbaToHex, rgbaToString} from "./mixins/colorUtils";
+import {hslaToString, hsvaToHsla, rgbaToHex, rgbaToString} from "../../mixins/colorUtils";
 import {BsPopover} from "../Popover";
 import Helper from "../../utils/Helper";
 

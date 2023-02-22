@@ -1,9 +1,9 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent, ref, watch} from "vue";
-import {booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
+import {booleanProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {inputProps, textFieldProps} from "./mixins/fieldProps";
 import {validationProps} from "../Radio/mixins/validationProps";
-import {useFieldWrapperClasses, useRenderTextArea, useShowClearButton} from "./mixins/fieldApi";
+import {useFieldWrapperClasses, useRenderTextArea, useShowClearButton} from "./mixins/textFieldApi";
 import {
     useGetErrorItems,
     useHasValidated,
@@ -21,52 +21,20 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, C
         ...inputProps,
         ...textFieldProps,
         ...validationProps,
-        /**
-         * Sets browsers autocomplete predictions on/off.
-         * @type {string|boolean}
-         */
         autocomplete: {
             type: [String, Boolean],
             default: false
         },
-        /**
-         * Autofocus field when this component is mounted.
-         * @type {boolean}
-         */
         autofocus: booleanProp,
-        /**
-         * Enable/disable `<textarea>` element to auto grow.
-         * @type {boolean}
-         */
         autoGrow: booleanProp,
-        /**
-         * The value monitored by `v-model` to maintain this field value.
-         * @type {string|number}
-         */
-        modelValue: stringOrNumberProp,
-        /**
-         * Disable resizing the `<textarea>` element.
-         * @type {boolean}
-         */
+        modelValue: stringProp,
         noResize: booleanProp,
-        /**
-         * Sets the field placeholder.
-         * @type {string}
-         */
         placeholder: stringProp,
-        /**
-         * Sets `<textarea>` height in rows.
-         * @type {string|number}
-         */
         rows: {
             type: [String, Number],
             default: 2,
             validator: (v: string): boolean => !isNaN(parseInt(v, 10))
         },
-        /**
-         * Sets `<textarea>` height in pixel.
-         * @type {string|number}
-         */
         rowHeight: validStringOrNumberProp,
     },
     emits: [

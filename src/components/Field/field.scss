@@ -227,6 +227,7 @@
 
     &.#{$prefix}floating-label {
         --#{$prefix}field-floating-label-opacity: #{$text-field-opacity};
+        --#{$prefix}field-floating-label-transform: translateY(-8px) scale(.85);
 
         .#{$prefix}field-label {
             @include transition(.25s $md-transition-stand-timing);
@@ -250,7 +251,7 @@
 
         &.active {
             .#{$prefix}field-label {
-                @include transform(translateY(-8px) scale(.85));
+                @include transform(var(--#{$prefix}field-floating-label-transform));
             }
         }
 
@@ -259,7 +260,7 @@
             --#{$prefix}field-floating-label-opacity: 1;
 
             .#{$prefix}field-label {
-                @include transform(translateY(-8px) scale(.85));
+                @include transform(var(--#{$prefix}field-floating-label-transform));
             }
         }
 
@@ -353,16 +354,15 @@
         }
 
         &.active, &.focused {
+            --#{$prefix}field-floating-label-transform: translateY(-26px) scale(.85);
+
             .#{$prefix}field-label {
-                @include transform(translateY(-26px) scale(.85));
-                opacity: 1;
+                opacity: 0;
                 visibility: hidden;
             }
 
             &.prepend-icon {
-                .#{$prefix}field-label {
-                    @include transform(translateY(-26px) translateX(-36px) scale(.85));
-                }
+                --#{$prefix}field-floating-label-transform: translateY(-26px) translateX(-36px) scale(.85);
             }
 
             .#{$prefix}field-outline-control {
@@ -408,14 +408,12 @@
 
         &.#{$prefix}floating-label {
             .#{$prefix}field-label {
-                top: .5rem;
+                top: .375rem;
             }
         }
 
         &.active, &.focused {
-            .#{$prefix}field-label {
-                @include transform(translateY(-16px) scale(.85));
-            }
+            --#{$prefix}field-floating-label-transform: translateY(-16px) scale(.85);
         }
     }
 

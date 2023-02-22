@@ -16,7 +16,7 @@ import {
     useShowHelpText,
     useShowValidationError
 } from "../Radio/mixins/validationApi";
-import {useFieldWrapperClasses, useRenderTextField, useShowClearButton} from "./mixins/fieldApi";
+import {useFieldWrapperClasses, useRenderTextField, useShowClearButton} from "./mixins/textFieldApi";
 import type {TBsTextField, TRecord, TTextFieldOptionProps} from "../../types";
 import Helper from "../../utils/Helper";
 
@@ -27,57 +27,21 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         ...inputProps,
         ...textFieldProps,
         ...validationProps,
-        /**
-         * Sets browsers autocomplete predictions on/off.
-         * @type {string|boolean}
-         */
         autocomplete: {
             type: [String, Boolean],
             default: false
         },
-        /**
-         * Autofocus field when this component is mounted.
-         * @type {boolean}
-         */
         autofocus: booleanProp,
-        /**
-         * Sets <input> element type attribute. Valid values are: `text`, `password`, `email`, `url`, `tel`.
-         * @type {string}
-         */
         type: {
             type: String,
             default: 'text',
             validator: (v: string): boolean => ['text', 'email', 'password', 'tel', 'url'].includes(v)
         } as Prop<'text' | 'email' | 'password' | 'tel' | 'url'>,
-        /**
-         * Sets target `<datalist>` element ID.
-         * @type {string}
-         */
         datalist: stringProp,
-        /**
-         * The value monitored by `v-model` to maintain this field value.
-         * @type {string|number}
-         */
         modelValue: stringOrNumberProp,
-        /**
-         * Enable toggle password field.
-         * @type {boolean}
-         */
         passwordToggle: booleanTrueProp,
-        /**
-         * Sets the field placeholder.
-         * @type {string}
-         */
         placeholder: stringProp,
-        /**
-         * Sets `<input>` element maximum characters allowed.
-         * @type {string|number}
-         */
         maxlength: validStringOrNumberProp,
-        /**
-         * Sets `<input>` element minimum characters allowed.
-         * @type {string|number}
-         */
         minlength: validStringOrNumberProp,
     },
     emits: [
@@ -116,7 +80,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         const showHelpText = computed<boolean>(() => useShowHelpText(cmpProps, isFocused.value));
         const errorItems = computed(() => useGetErrorItems(cmpProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(cmpProps, localValue));
-        const fieldClasses = computed<TRecord>(
+        const fieldWrapperClasses = computed<TRecord>(
             () => useFieldWrapperClasses(
                 cmpProps, hasValidated.value, hasError.value,
             )
@@ -146,7 +110,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         return () =>
             useRenderTextField(
                 slots, emit, cmpProps,
-                fieldClasses,
+                fieldWrapperClasses,
                 fieldType.value,
                 localValue, isFocused,
                 isPasswordToggled,

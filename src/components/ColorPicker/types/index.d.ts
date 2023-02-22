@@ -9,7 +9,7 @@ import type {
 } from "vue";
 import type {HSLA, RGBA, TColor, TPopoverPosition, TRecord} from "../../../types";
 
-export type {HSLA, HSVA, RGBA, TColor} from "../mixins/colorUtils";
+export type {HSLA, HSVA, RGBA, TColor} from "../../../mixins/colorUtils";
 
 export declare type TColorPickerMode = "HEX" | "RGB" | "HSL";
 

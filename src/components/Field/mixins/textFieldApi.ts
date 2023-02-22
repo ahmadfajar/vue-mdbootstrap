@@ -14,8 +14,9 @@ import {
     useOnFieldFocused,
     useOnFieldNodeMounted,
     useOnFieldValueCleared,
-    useOnFieldValueUpdated
-} from "./fieldEventApi";
+    useOnFieldValueUpdated,
+    useOnTextFieldNodeMounted
+} from "./textFieldEventApi";
 import type {
     TBsIcon,
     TBsToggleIcon,
@@ -23,6 +24,7 @@ import type {
     TInputFieldProps,
     TInputTextProps,
     TRecord,
+    TShapeStyle,
     TTextAreaOptionProps,
     TTextFieldOptionProps
 } from "../../../types";
@@ -137,10 +139,24 @@ export function useCreateFieldInnerWrapper(
     slots: Slots,
     props: Readonly<TInputFieldProps>,
     iconSize: number,
-    inputField: VNode,
-    inputAction: VNode,
+    fieldActionElement: VNode,
+    fieldInputElements: VNode[] | VNode,
 ): VNode {
-    return h("div", {class: `${cssPrefix}field-inner`}, [
+    let children = [useRenderSlotWrapperWithCondition(
+        slots, "default",
+        props.floatingLabel === true,
+        {
+            class: `${cssPrefix}field-label`
+        },
+        "div", {id: props.id}
+    )];
+    children = children.concat(
+        Array.isArray(fieldInputElements) ? fieldInputElements : [fieldInputElements]
+    );
+
+    return h("div", {
+        class: `${cssPrefix}field-inner`
+    }, [
         h("div", {class: `${cssPrefix}field-overlay`}),
         useCreateFieldIcon(
             slots, "prependInner",
@@ -149,18 +165,8 @@ export function useCreateFieldInnerWrapper(
         ),
         h("div", {
             class: `${cssPrefix}field-activator`
-        }, [
-            useRenderSlotWrapperWithCondition(
-                slots, "default",
-                props.floatingLabel === true,
-                {
-                    class: `${cssPrefix}field-label`
-                },
-                "div", {id: props.id}
-            ),
-            inputField,
-        ]),
-        inputAction,
+        }, children),
+        fieldActionElement,
         useCreateFieldIcon(
             slots, "appendInner",
             `${cssPrefix}append-inner`,
@@ -174,7 +180,7 @@ export function useCreateFieldActionIcon(
     showClearButton: boolean,
     hasValidated: boolean,
     hasError: boolean,
-    iconVariant: string,
+    iconVariant: TShapeStyle,
     iconSize?: number,
     clearHandler?: () => void,
     showPasswordToggle?: boolean,
@@ -223,7 +229,7 @@ export function useCreateFieldActionIcon(
 
 export function useShowClearButton(
     props: Readonly<TInputFieldProps>,
-    localValue: Ref<string | number | undefined | null>,
+    localValue: Ref<string | number | string[] | undefined | null>,
 ): boolean {
     return props.clearButton === true
         && !Helper.isEmpty(localValue.value)
@@ -231,10 +237,10 @@ export function useShowClearButton(
         && !props.disabled;
 }
 
-function createTextFieldClasses(
+export function useCreateTextFieldClasses(
     slots: Slots,
     props: Readonly<TInputTextProps>,
-    localValue: Ref<string | number | undefined | null>,
+    localValue: Ref<string | string[] | number | undefined | null>,
     isFocused: Ref<boolean>,
     showAppendIcon: boolean,
 ): TRecord {
@@ -250,21 +256,6 @@ function createTextFieldClasses(
         "focused": isFocused.value,
         "readonly": props.readonly,
         "disabled": props.disabled,
-    }
-}
-
-function onTextFieldNodeMounted(
-    props: Readonly<TTextFieldOptionProps>,
-    node: VNode,
-): void {
-    useOnFieldNodeMounted(props, node);
-    const element = <HTMLElement>node.el;
-
-    if (props.autofocus) {
-        nextTick().then(() => {
-            const input = element.querySelector('input');
-            input?.focus();
-        });
     }
 }
 
@@ -295,12 +286,23 @@ export function useRenderTextField(
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
         h("div", {
-            class: createTextFieldClasses(
+            class: useCreateTextFieldClasses(
                 slots, props, localValue, isFocused, showAppendIcon,
             ),
         }, [
             useCreateFieldInnerWrapper(
                 slots, props, iconSize,
+                useCreateFieldActionIcon(
+                    showClearButton,
+                    hasValidated,
+                    hasError,
+                    (<TShapeStyle>props.actionIconVariant),
+                    iconSize,
+                    () => useOnFieldValueCleared(emit, localValue),
+                    showPasswordToggle,
+                    isPasswordToggled,
+                    passwordToggleHandler
+                ),
                 withDirectives(h("input", {
                     ...useMakeInputBaseAttrs(props),
                     ...useInputTextFieldAttrs(props, autocomplete),
@@ -317,19 +319,8 @@ export function useRenderTextField(
                         useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
                     onKeydown: (e: KeyboardEvent) => emit("keydown", e),
                 }), [
-                    [vModelText, localValue.value]
+                    [vModelText, localValue.value, "", {lazy: true}]
                 ]),
-                useCreateFieldActionIcon(
-                    showClearButton,
-                    hasValidated,
-                    hasError,
-                    (<string>props.actionIconVariant),
-                    iconSize,
-                    () => useOnFieldValueCleared(emit, localValue),
-                    showPasswordToggle,
-                    isPasswordToggled,
-                    passwordToggleHandler
-                ),
             ),
             useRenderFieldFeedback(
                 slots, props,
@@ -338,7 +329,7 @@ export function useRenderTextField(
                 hasError, errorItems,
             ),
         ]),
-        (node: VNode) => onTextFieldNodeMounted(props, node),
+        (node: VNode) => useOnTextFieldNodeMounted(props, node),
     );
 }
 
@@ -382,7 +373,7 @@ export function useRenderTextArea(
         slots, iconSize, wrapperCss, props,
         h("div", {
             class: {
-                ...createTextFieldClasses(
+                ...useCreateTextFieldClasses(
                     slots, props, localValue,
                     isFocused, showAppendIcon,
                 ),
@@ -393,6 +384,14 @@ export function useRenderTextArea(
         }, [
             useCreateFieldInnerWrapper(
                 slots, props, iconSize,
+                useCreateFieldActionIcon(
+                    showClearButton,
+                    hasValidated,
+                    hasError,
+                    (<TShapeStyle>props.actionIconVariant),
+                    iconSize,
+                    () => useOnFieldValueCleared(emit, localValue),
+                ),
                 withDirectives(h("textarea", {
                     ...useMakeInputBaseAttrs(props),
                     ...useInputTextFieldAttrs(props, autocomplete),
@@ -419,16 +418,8 @@ export function useRenderTextArea(
                         }
                     }
                 }), [
-                    [vModelText, localValue.value]
+                    [vModelText, localValue.value, "", {lazy: true}]
                 ]),
-                useCreateFieldActionIcon(
-                    showClearButton,
-                    hasValidated,
-                    hasError,
-                    (<string>props.actionIconVariant),
-                    iconSize,
-                    () => useOnFieldValueCleared(emit, localValue),
-                ),
             ),
             useRenderFieldFeedback(
                 slots, props,

@@ -44,7 +44,8 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
             dismiss.value = true;
             emit("update:active", false);
             emit("update:model-value", false);
-            nextTick().then(() => emit("close"))
+            // emit("close");
+            nextTick().then(() => emit("close"));
         }
         watch(
             () => cmpProps.modelValue,

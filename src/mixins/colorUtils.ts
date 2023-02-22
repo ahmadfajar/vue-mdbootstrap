@@ -1,3 +1,5 @@
+import {chunk} from "./StringHelper";
+
 /**
  * Hue, Saturation, Value and Alpha color values.
  */
@@ -105,6 +107,26 @@ export function hsvaToRgba(color: HSVA) {
 }
 
 /**
+ * Convert CSS HEX color format to RGBA color.
+ *
+ * @param {string} color The css HEX color value.
+ * @return {RGBA} The RGBA color values.
+ */
+export function hexToRgba(color: string): RGBA {
+    const hexColor = color.replace("#", "");
+    // console.info('hexColor:', hexColor)
+    // const r = parseInt(hexColor.substring(0, 2), 16);
+    // const g = parseInt(hexColor.substring(2, 4), 16);
+    // const b = parseInt(hexColor.substring(4, 6), 16);
+    // const a = hexColor.length > 6 ? parseInt(hexColor.substring(6, 2), 16) : undefined;
+
+    const [r, g, b, a] = chunk(hexColor, 2).map((c: string) => parseInt(c, 16));
+    const a1 = a === undefined ? 1 : Math.round((a / 255) * 100) / 100;
+
+    return {r, g, b, a: a1}
+}
+
+/**
  * Convert RGBA to HSVA.
  *
  * @param {RGBA} color The RGBA color values.
@@ -193,7 +215,7 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
 }
 
 /**
- * Convert RGB/RGBA color to css HEX color.
+ * Convert RGB/RGBA color to CSS HEX color format.
  *
  * @param {object} rgba The RGBA color values.
  * @return {string} CSS Hex color.
@@ -264,4 +286,41 @@ export function hslaToString(hsla: HSLA): string {
  */
 export function brightnessLevel(rgba: RGBA): number {
     return ((rgba.r * 299) + (rgba.g * 587) + (rgba.b * 114)) / 1000;
+}
+
+/**
+ * Darken or lighten the input color.
+ *
+ * Use negative `lightness` value to darken the input color or otherwise
+ * to lighten the input color.
+ *
+ * @param {string|RGBA} color The color to darken/lighten.
+ * @param {number} lightness  The lightness level.
+ * @return {string} The color result in CSS HEX color format.
+ */
+export function shadeColor(color: string | RGBA, lightness: number): string {
+    let hex;
+
+    if (typeof color === "string" && color.length >= 6) {
+        hex = color.replace("#", "");
+    } else if (typeof color === "object" && Object.keys(color).length > 2 &&
+        Object.keys(color).every(it => ["r", "g", "b", "a"].includes(it))) {
+        hex = rgbaToHex(color).replace("#", "");
+    } else {
+        return color.toString();
+    }
+
+    const decimalColor = parseInt(hex, 16);
+    let r = (decimalColor >> 16) + lightness;
+    r > 255 && (r = 255);
+    r < 0 && (r = 0);
+    let g = (decimalColor & 0x0000ff) + lightness;
+    g > 255 && (g = 255);
+    g < 0 && (g = 0);
+    let b = ((decimalColor >> 8) & 0x00ff) + lightness;
+    b > 255 && (b = 255);
+    b < 0 && (b = 0);
+    const str = (g | (b << 8) | (r << 16)).toString(16).padStart(6, "0");
+
+    return `#${str}`;
 }

@@ -1,6 +1,7 @@
 import type {Ref, VNode} from "vue";
+import {nextTick} from "vue";
 import {cssPrefix} from "../../../mixins/CommonApi";
-import type {TEmitFn, TInputFieldProps} from "../../../types";
+import type {TEmitFn, TInputFieldProps, TInputTextProps} from "../../../types";
 import Helper from "../../../utils/Helper";
 
 export function useOnFieldBlurred(
@@ -32,8 +33,8 @@ export function useOnFieldValueCleared<T>(
     localValue: Ref<T | undefined | null>,
 ): void {
     localValue.value = null;
-    emit("clear");
     emit("update:model-value", null);
+    nextTick().then(() => emit("clear"));
 }
 
 export function useOnFieldValueUpdated<T>(
@@ -73,5 +74,20 @@ export function useOnFieldNodeMounted(
     label = element.querySelector("label");
     if (label && !label.hasAttribute("for")) {
         label.setAttribute("for", <string>props.id);
+    }
+}
+
+export function useOnTextFieldNodeMounted(
+    props: Readonly<TInputTextProps>,
+    node: VNode,
+): void {
+    useOnFieldNodeMounted(props, node);
+    const element = <HTMLElement>node.el;
+
+    if (props.autofocus) {
+        nextTick().then(() => {
+            const input = element.querySelector('input');
+            input?.focus();
+        });
     }
 }

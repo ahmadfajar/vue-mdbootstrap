@@ -10,6 +10,7 @@
         $active-bg: color.scale($color, $lightness: 10%);
         $active-color: set-color-contrast($active-bg, $black, $white);
         $active-box-shadow-color-rgb: to-rgb($chip-color);
+        $active-icon-color: set-color-contrast($active-bg, color.scale($chip-color, $lightness: -25%), $white);
 
         @if($name == 'light') {
             $light-bg-color: darken($color, 2.5%);
@@ -39,6 +40,7 @@
         --#{$prefix}chip-active-border-color: #{$active-bg};
         --#{$prefix}chip-active-color: #{$active-color};
         --#{$prefix}chip-icon-color: #{$icon-color};
+        --#{$prefix}chip-active-icon-color: #{$active-icon-color};
         --#{$prefix}chip-focus-border-color: #{$active-bg};
         --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
     }
@@ -79,6 +81,7 @@
         --#{$prefix}chip-bg: transparent;
         --#{$prefix}chip-border-color: #{$border-color};
         --#{$prefix}chip-icon-color: #{$color};
+        --#{$prefix}chip-active-icon-color: #{$color};
         --#{$prefix}chip-focus-border-color: #{$focus-border};
         --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
     }

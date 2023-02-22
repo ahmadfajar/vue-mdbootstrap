@@ -1,0 +1,110 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+
+.#{$prefix}chip-field {
+    --#{$prefix}field-control-height: 2.5rem;
+    --#{$prefix}field-padding-top: 0;
+    --#{$prefix}field-padding-bottom: #{$padding-xs};
+
+    .#{$prefix}field-control {
+        > .#{$prefix}field-inner {
+            > .#{$prefix}field-activator {
+                @include flexbox((flex: 1 1 auto, align-items: flex-end, flex-wrap: wrap));
+                max-width: 100%;
+            }
+        }
+
+        .#{$prefix}chip {
+            margin-bottom: .375rem;
+            margin-right: .5rem;
+
+            ~ .#{$prefix}chip {
+                margin-left: 0;
+            }
+        }
+
+        input {
+            min-width: 85px;
+            max-width: 100%;
+            width: auto;
+        }
+
+        &.#{$prefix}floating-label {
+            .#{$prefix}field-label {
+                height: auto;
+            }
+
+            &.#{$prefix}field-filled {
+                --#{$prefix}field-floating-label-transform: translateY(-14px) scale(.85);
+                --#{$prefix}field-padding-start: 0;
+                --#{$prefix}field-padding-end: 0;
+
+                > .#{$prefix}field-inner {
+                    padding: 0 $padding-base 0 $padding-base;
+
+                    > .#{$prefix}field-activator {
+                        margin-top: $padding-lg;
+                    }
+                }
+
+                .#{$prefix}field-label {
+                    top: -.35rem;
+                    left: 0;
+                }
+            }
+
+            &.#{$prefix}field-outlined {
+                --#{$prefix}field-floating-label-transform: translateY(-25px) scale(.85);
+                --#{$prefix}field-padding-top: 0;
+                --#{$prefix}field-padding-start: 0;
+                --#{$prefix}field-padding-end: 0;
+
+                > .#{$prefix}field-inner {
+                    min-height: 56px;
+                    padding: 0 $padding-base 0 $padding-base;
+
+                    > .#{$prefix}field-activator {
+                        margin-top: $padding-base - $padding-xs;
+                    }
+                }
+
+                .#{$prefix}chip {
+                    margin-bottom: .75rem;
+                }
+            }
+
+            &.#{$prefix}field-filled, &.#{$prefix}field-outlined {
+                &.prepend-icon {
+                    > .#{$prefix}field-inner {
+                        padding-left: 0;
+
+                        > .#{$prefix}field-activator {
+                            margin-left: $padding-base;
+                        }
+                    }
+                }
+
+                &.append-icon {
+                    > .#{$prefix}field-inner {
+                        padding-right: 0;
+
+                        > .#{$prefix}field-activator {
+                            margin-right: $padding-base;
+                        }
+                    }
+                }
+            }
+
+            &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-filled) {
+                .#{$prefix}field-activator {
+                    margin-top: $padding-base;
+                }
+
+                &.active, &.focused {
+                    --#{$prefix}field-floating-label-transform: translateY(-28px) scale(.85);
+                }
+            }
+        }
+    }
+}

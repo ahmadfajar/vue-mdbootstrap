@@ -8,7 +8,7 @@
     $disabled-bg: lighten($gray-500, 15%);
     $disabled-border-color: lighten($gray-500, 8%);
     --#{$prefix}chip-border-radius: #{$border-radius-lg};
-    --#{$prefix}chip-border-width: thin;
+    --#{$prefix}chip-border-width: 0;
     --#{$prefix}chip-disabled-bg: #{$disabled-bg};
     --#{$prefix}chip-disabled-border-color: #{$disabled-border-color};
     --#{$prefix}chip-disabled-color: #{$gray-900};
@@ -35,17 +35,25 @@
 
     &:not(.disabled) {
         &:hover {
-            @include box-shadow($z-depth-half);
+            @include box-shadow(0 1px 2px 0 rgba(50, 50, 50, 0.25), 0 2px 4px 2px rgba(10, 10, 10, 0.05));
+            //@include box-shadow($z-depth-half);
             background-color: var(--#{$prefix}chip-hover-bg);
             border-color: var(--#{$prefix}chip-hover-border-color);
             color: var(--#{$prefix}chip-hover-color);
         }
 
-        &:focus, &.focused,
+        &:focus,
+        &.focused,
         &.active {
             background-color: var(--#{$prefix}chip-active-bg);
             border-color: var(--#{$prefix}chip-active-border-color);
             color: var(--#{$prefix}chip-active-color);
+
+            > .#{$prefix}chip-content {
+                .#{$prefix}chip-icon {
+                    color: var(--#{$prefix}chip-active-icon-color);
+                }
+            }
 
             &[class*="chip-outline"] {
                 &:hover {
@@ -55,7 +63,7 @@
         }
 
         &:focus, &.focused {
-            @include box-shadow(0 0 0 0.2rem rgba(var(--#{$prefix}chip-focus-shadow-color), .55));
+            @include box-shadow(0 0 0 0.2rem rgba(var(--#{$prefix}chip-focus-shadow-color), .4));
             border-color: var(--#{$prefix}chip-focus-border-color);
         }
     }
@@ -142,6 +150,31 @@
                 margin-right: -($padding-sm + .5);
             }
         }
+    }
+
+    &:not(.#{$prefix}chip-lg):not(.#{$prefix}chip-sm) {
+        .#{$prefix}btn-icon {
+            --#{$bs-prefix}btn-state-line-height: #{$padding-lg};
+
+            .#{$prefix}ripple {
+                --#{$bs-prefix}btn-inner-state-width: #{$padding-lg};
+                --#{$bs-prefix}btn-inner-state-height: #{$padding-lg};
+            }
+        }
+    }
+    &.#{$prefix}chip-sm {
+        .#{$prefix}btn-icon {
+            --#{$bs-prefix}btn-state-line-height: #{$padding-base + .125};
+
+            .#{$prefix}ripple {
+                --#{$bs-prefix}btn-inner-state-width: #{$padding-base + .125};
+                --#{$bs-prefix}btn-inner-state-height: #{$padding-base + .125};
+            }
+        }
+    }
+
+    &[class*="chip-outline"] {
+        --#{$prefix}chip-border-width: thin;
     }
 
     ~ .#{$prefix}chip {

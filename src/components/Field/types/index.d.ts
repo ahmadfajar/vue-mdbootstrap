@@ -1,4 +1,10 @@
-import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import type {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions
+} from "vue";
 import type {TInputBaseProps, TRecord, TShapeStyle, TValidationProps} from "../../../types";
 
 export declare type TInputFieldProps = TInputBaseProps & TValidationProps & {
@@ -78,16 +84,16 @@ export declare type TInputTextProps = TInputFieldProps & {
      */
     autofocus?: boolean;
     /**
-     * The value monitored by `v-model` to maintain this field value.
-     */
-    modelValue?: string | number;
-    /**
      * Sets the field placeholder.
      */
     placeholder?: string;
 }
 
 export declare type TTextFieldOptionProps = TInputTextProps & {
+    /**
+     * The value monitored by `v-model` to maintain this field value.
+     */
+    modelValue?: string | number;
     /**
      * Sets <input> element type attribute. Valid values are: `text`, `password`, `email`, `url`, `tel`.
      */
@@ -120,6 +126,10 @@ export declare type TTextAreaOptionProps = TInputTextProps & {
      */
     noResize?: boolean;
     /**
+     * The value monitored by `v-model` to maintain this field value.
+     */
+    modelValue?: string;
+    /**
      * Sets `<textarea>` height in rows.
      */
     rows?: string | number;
@@ -129,10 +139,37 @@ export declare type TTextAreaOptionProps = TInputTextProps & {
     rowHeight?: string | number;
 }
 
+export declare type TChipFieldOptionProps = TInputTextProps & {
+    /**
+     * The default Chips color to apply.
+     */
+    chipColor?: string;
+    /**
+     * When defined, display the close button on every Chip to delete a Chip.
+     */
+    chipDeletable?: boolean;
+    /**
+     * Render the Chips with rounded-pill style.
+     */
+    chipPill?: boolean;
+    /**
+     * Render the Chips with outlined style.
+     */
+    chipOutlined?: boolean;
+    /**
+     * The value monitored by `v-model` to maintain this field value.
+     */
+    modelValue?: string | string[];
+}
+
 export declare type TBsTextField = ComponentObjectPropsOptions<TTextFieldOptionProps>;
 
 export declare type TBsTextArea = ComponentObjectPropsOptions<TTextAreaOptionProps>;
 
+export declare type TBsChipField = ComponentObjectPropsOptions<TChipFieldOptionProps>;
+
 export declare const BsTextField: DefineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
 export declare const BsTextArea: DefineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsChipField: DefineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

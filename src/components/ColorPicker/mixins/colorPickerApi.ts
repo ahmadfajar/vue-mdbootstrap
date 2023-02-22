@@ -21,7 +21,7 @@ import {
     rgbaToHex,
     rgbaToHsva,
     rgbaToString
-} from "./colorUtils";
+} from "../../../mixins/colorUtils";
 import Helper from "../../../utils/Helper";
 
 export function initColorPickerData(props: Readonly<TColorPickerOptionProps>): TColorPickerData {
@@ -847,14 +847,14 @@ function updateColor(
     hsva: HSVA,
 ) {
     for (const key in rgba) {
-        if (Object.prototype.hasOwnProperty.call(rgba, key)) {
+        if (Object.hasOwn(rgba, key)) {
             // @ts-ignore
             pickerData.config.currentColor[key] = rgba[key];
         }
     }
 
     for (const key in hsva) {
-        if (Object.prototype.hasOwnProperty.call(hsva, key)) {
+        if (Object.hasOwn(hsva, key)) {
             // @ts-ignore
             pickerData.config.currentColor[key] = hsva[key];
         }
