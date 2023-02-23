@@ -59,7 +59,7 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                         key: `btn-${idx}`,
                         tabIndex: 0,
                         class: useMakeInputItemClasses(item, cmpProps),
-                        onClick: (e: Event) => (<HTMLElement>e.target).focus(),
+                        // onClick: (e: Event) => (<HTMLElement>e.target).focus(),
                         onKeydown: (e: KeyboardEvent) => {
                             if (["Space", "Enter"].includes(e.code)) {
                                 (<HTMLElement>e.target).focus();

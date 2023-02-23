@@ -371,3 +371,9 @@
         }
     }
 }
+
+.#{$prefix}toggle-field {
+    .#{$prefix}field-feedback {
+        padding-left: $padding-xs;
+    }
+}

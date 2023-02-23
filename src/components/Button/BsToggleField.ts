@@ -13,6 +13,7 @@ import {
 } from "../Radio/mixins/validationApi";
 import {toggleButtonProps} from "./mixins/buttonProps";
 import BsToggleButton from "./BsToggleButton";
+import Helper from "../../utils/Helper";
 
 
 export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
@@ -42,7 +43,7 @@ export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions
                 "required": thisProps.required,
                 "readonly": thisProps.readonly,
                 "disabled": thisProps.disabled,
-                "has-error": hasError,
+                "has-error": hasError.value,
                 "has-success": hasValidated.value && !hasError.value
 
             })
@@ -77,8 +78,8 @@ export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions
                             color: props.color,
                             toggleColor: props.toggleColor,
                             iconPosition: props.iconPosition,
-                            onMouseenter: () => hasFocused.value = true,
-                            onMouseleave: () => hasFocused.value = false,
+                            onMouseenter: () => !Helper.isEmpty(props.helpText) && !props.persistentHelpText && (hasFocused.value = true),
+                            onMouseleave: () => !Helper.isEmpty(props.helpText) && !props.persistentHelpText && (hasFocused.value = false),
                             "onUpdate:model-value": (value: string | number | boolean) => {
                                 emit("update:model-value", value);
                             }
