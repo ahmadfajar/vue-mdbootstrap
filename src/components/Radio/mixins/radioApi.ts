@@ -113,8 +113,7 @@ export function useRenderRadioOrCheckbox(
                     class: `${cssPrefix}${inputType}-label`,
                     onClickPrevent: toggleCheckHandler,
                     onKeydown: (e: KeyboardEvent) => {
-                        const keys = ["Space", "Enter"];
-                        if (keys.includes(e.key) || keys.includes(e.code)) {
+                        if (["Space", "Enter"].includes(e.code)) {
                             toggleCheckHandler();
                             e.preventDefault();
                         }

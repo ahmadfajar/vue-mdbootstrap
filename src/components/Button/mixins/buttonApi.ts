@@ -1,5 +1,5 @@
 import type {Prop, Slots, VNode, VNodeArrayChildren} from "vue";
-import {h} from "vue";
+import {h, toDisplayString} from "vue";
 import {cssPrefix, useGenerateId, useRenderSlot} from "../../../mixins/CommonApi";
 import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
 import {BsIcon} from "../../Icon";
@@ -56,9 +56,6 @@ export function useMakeInputItemClasses(
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>,
 ): TRecord | object {
-    if (!item.id) {
-        item.id = useGenerateId();
-    }
     const isSelected = isInputItemSelected(item, props);
 
     return {
@@ -80,7 +77,7 @@ export function useMakeInputItemAttrs(
     props: Readonly<TToggleButtonOptionProps>,
 ): TRecord | object {
     const attr = {
-        id: item.id,
+        id: item.id || useGenerateId(),
         role: props.multiple ? "checkbox" : "radio",
         type: props.multiple ? "checkbox" : "radio",
         name: props.multiple ? item.name : props.name,
@@ -169,7 +166,6 @@ export function useRenderToggleItemContent(
     slots: Slots,
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>,
-    // inputField: VNode,
 ): VNodeArrayChildren {
     return [
         (props.iconPosition === "left")
@@ -182,13 +178,12 @@ export function useRenderToggleItemContent(
                 item,
             )
             : "",
-        // inputField,
         useRenderSlot(
             slots, "default",
             {key: Helper.uuid()},
             h("span", {
                 class: `${cssPrefix}btn-text`,
-            }, item.label),
+            }, toDisplayString(item.label)),
             item,
         ),
         (props.iconPosition === "right")

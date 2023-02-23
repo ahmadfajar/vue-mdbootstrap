@@ -80,13 +80,9 @@ export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, 
         const errorItems = computed(() => useGetErrorItems(thisProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
         const wrapperClasses = computed<TRecord>(
-            () => {
-                const classes = useFieldWrapperClasses(
-                    thisProps, hasValidated.value, hasError.value,
-                );
-                classes[`${cssPrefix}chip-field`] = true;
-                return classes;
-            }
+            () => useFieldWrapperClasses(
+                thisProps, hasValidated.value, hasError.value, `${cssPrefix}chip-field`
+            )
         );
 
         watch(

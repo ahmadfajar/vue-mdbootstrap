@@ -24,11 +24,10 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                     class: "d-none",
                     value: item.value,
                     ...useMakeInputItemAttrs(item, cmpProps),
-                    "onUpdate:modelValue": (event: string | number | boolean) => {
-                        // console.log('input:value =', event);
+                    "onUpdate:modelValue": (value: string | number | boolean) => {
                         if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
-                            localValue.value = event;
-                            emit("update:model-value", localValue.value)
+                            localValue.value = value;
+                            emit("update:model-value", localValue.value);
                         }
                     }
                 }),
@@ -58,7 +57,27 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                 cmpProps.items?.map((item: TInputOptionItem, idx: number) => {
                     return h("label", {
                         key: `btn-${idx}`,
+                        tabIndex: 0,
                         class: useMakeInputItemClasses(item, cmpProps),
+                        onClick: (e: Event) => (<HTMLElement>e.target).focus(),
+                        onKeydown: (e: KeyboardEvent) => {
+                            if (["Space", "Enter"].includes(e.code)) {
+                                (<HTMLElement>e.target).focus();
+                                if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {
+                                    if (cmpProps.multiple) {
+                                        if ((<unknown[]>localValue.value).includes(<unknown>item.value)) {
+                                            localValue.value = (<unknown[]>localValue.value).filter(it => it !== item.value);
+                                        } else {
+                                            (<unknown[]>localValue.value).push(item.value);
+                                        }
+                                    } else {
+                                        localValue.value = item.value;
+                                    }
+                                    emit("update:model-value", localValue.value);
+                                }
+                                e.preventDefault();
+                            }
+                        },
                     }, [
                         makeInputEl(item, cmpProps),
                         h<TBsButtonInner>(BsButtonInner, {
