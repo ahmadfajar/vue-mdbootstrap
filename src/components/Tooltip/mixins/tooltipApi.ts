@@ -134,15 +134,17 @@ export function useAddTooltipListener(instance: ComponentInternalInstance | null
     }
 
     let timer: number | undefined;
-    const showTooltip = () => {
+    const showTooltip = (e: Event) => {
         if (timer) {
             clearTimeout(timer);
         }
 
-        timer = setTimeout(() => {
+        timer = Helper.defer(() => {
             instance.emit("update:show", true);
             active.value = true;
         }, 200);
+        // e.preventDefault();
+        e.stopPropagation();
     };
     const hideTooltip = () => {
         if (timer) {
