@@ -106,7 +106,7 @@
         height: var(--#{$prefix}radio-size);
         line-height: var(--#{$prefix}radio-size);
         margin-bottom: 0;
-        padding-left: $padding-base;
+        margin-left: $padding-base;
         position: relative;
         cursor: pointer;
     }

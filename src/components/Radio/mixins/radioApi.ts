@@ -109,8 +109,16 @@ export function useRenderRadioOrCheckbox(
                 Helper.uuid(), "label",
                 {
                     "for": props.id,
+                    tabIndex: 0,
                     class: `${cssPrefix}${inputType}-label`,
                     onClickPrevent: toggleCheckHandler,
+                    onKeydown: (e: KeyboardEvent) => {
+                        const keys = ["Space", "Enter"];
+                        if (keys.includes(e.key) || keys.includes(e.code)) {
+                            toggleCheckHandler();
+                            e.preventDefault();
+                        }
+                    }
                 }
             ),
         ]

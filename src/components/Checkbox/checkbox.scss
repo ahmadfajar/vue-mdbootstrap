@@ -110,7 +110,7 @@
         line-height: var(--#{$prefix}checkbox-size);
         height: var(--#{$prefix}checkbox-size);
         margin-bottom: 0;
-        padding-left: $padding-base;
+        margin-left: $padding-base;
         position: relative;
         cursor: pointer;
     }
