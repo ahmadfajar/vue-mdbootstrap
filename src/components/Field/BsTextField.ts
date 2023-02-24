@@ -16,7 +16,12 @@ import {
     useShowHelpText,
     useShowValidationError
 } from "../Radio/mixins/validationApi";
-import {useFieldWrapperClasses, useRenderTextField, useShowClearButton} from "./mixins/textFieldApi";
+import {
+    useCreateTextFieldClasses,
+    useFieldWrapperClasses,
+    useRenderTextField,
+    useShowClearButton
+} from "./mixins/textFieldApi";
 import type {TBsTextField, TRecord, TTextFieldOptionProps} from "../../types";
 import Helper from "../../utils/Helper";
 
@@ -80,10 +85,14 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         const showHelpText = computed<boolean>(() => useShowHelpText(cmpProps, isFocused.value));
         const errorItems = computed(() => useGetErrorItems(cmpProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(cmpProps, localValue));
-        const fieldWrapperClasses = computed<TRecord>(
-            () => useFieldWrapperClasses(
-                cmpProps, hasValidated.value, hasError.value,
-            )
+        const showAppendIcon = computed(() =>
+            (slots.appendInner !== undefined) || !Helper.isEmpty(cmpProps.appendIcon) || showClearButton.value
+        );
+        const fieldWrapperClasses = computed<TRecord>(() =>
+            useFieldWrapperClasses(cmpProps, hasValidated.value, hasError.value)
+        );
+        const fieldControlClasses = computed<TRecord>(() =>
+            useCreateTextFieldClasses(slots, cmpProps, localValue, isFocused, showAppendIcon.value)
         );
         const showPasswordToggle = computed<boolean>(
             () => cmpProps.type === 'password' && cmpProps.passwordToggle === true
@@ -111,6 +120,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
             useRenderTextField(
                 slots, emit, cmpProps,
                 fieldWrapperClasses,
+                fieldControlClasses,
                 fieldType.value,
                 localValue, isFocused,
                 isPasswordToggled,

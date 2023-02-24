@@ -32,6 +32,7 @@ Released: March xx, 2023
 - **BsTab**: add property `disabled`, `iconSpin`, `iconPulse`, `iconFlip`, `iconRotation`.
 - **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
 - **BsToggleButton**: add property `pill`, and `rounded`.
+- **BsToggleField**: add property `pill`, `rounded`, `actionIconVariant`, and `validationIcon`
 - **BsToggleIcon**: add property `size`.
 - **BsTooltip**: add property `show`, `zIndex`.
 
@@ -54,16 +55,28 @@ Released: March xx, 2023
     the same result.
   - Removed property `iconFixed` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid) 
     is removed from package bundle.
-- **BsButtonToggle**: is deprecated, use **BsToggleButton** instead. Replaced property `value` with `modelValue`.
+- **BsButtonToggle**: 
+  - Deprecated, use **BsToggleButton** instead. 
+  - Replaced property `value` with `modelValue`.
+  - Replaced event `change` with `update:modelValue`.
+- **BsButtonToggleField**: 
+  - Deprecated, use **BsToggleField** instead. 
+  - Replaced property `value` with `modelValue`.
+  - Replaced event `change` with `update:modelValue`.
+  - Replaced slot `prependIcon` with `prependInner`.
+  - Replaced slot `prependIconOuter` with `prependOuter`.
+  - Replaced slot `appendIcon` with `appendInner`.
+  - Replaced slot `appendIconOuter` with `appendOuter`.
+  - Deprecated property `externalValidator`, use property `validator` instead.
 - **BsCard**: replaced property `flat` with `rounded`.
 - **BsCheckbox**: 
-   - Replaced property `checked` with `modelValue`. 
-   - Removed property `falseValue` and `trueValue`.
-   - Replaced event `change` with `update:modelValue`.
+  - Replaced property `checked` with `modelValue`. 
+  - Removed property `falseValue` and `trueValue`.
+  - Replaced event `change` with `update:modelValue`.
 - **BsCheckboxGroup**: 
-   - Replaced property `columns` with `column`. 
-   - Deprecated property `externalValidator`, use property `validator` instead.
-   - Replaced event `change` with `update:modelValue`.
+  - Replaced property `columns` with `column`. 
+  - Deprecated property `externalValidator`, use property `validator` instead.
+  - Replaced event `change` with `update:modelValue`.
 - **BsChip**: 
   - Replaced property `value` with `modelValue`. 
   - Removed `label` property to meet the MD3 design specification. 

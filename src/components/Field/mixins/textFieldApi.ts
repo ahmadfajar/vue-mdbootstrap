@@ -264,6 +264,7 @@ export function useRenderTextField(
     emit: TEmitFn,
     props: Readonly<TTextFieldOptionProps>,
     wrapperCss: ComputedRef<TRecord>,
+    controlCss: ComputedRef<TRecord>,
     fieldType: string | undefined,
     localValue: Ref<string | number | undefined | null>,
     isFocused: Ref<boolean>,
@@ -279,16 +280,10 @@ export function useRenderTextField(
     iconSize: number,
     passwordToggleHandler: (value: boolean) => void,
 ): VNode {
-    const showAppendIcon = (slots.appendInner !== undefined)
-        || !Helper.isEmpty(props.appendIcon)
-        || showClearButton || showPasswordToggle;
-
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
         h("div", {
-            class: useCreateTextFieldClasses(
-                slots, props, localValue, isFocused, showAppendIcon,
-            ),
+            class: controlCss.value,
         }, [
             useCreateFieldInnerWrapper(
                 slots, props, iconSize,
@@ -353,6 +348,7 @@ export function useRenderTextArea(
     emit: TEmitFn,
     props: Readonly<TTextAreaOptionProps>,
     wrapperCss: ComputedRef<TRecord>,
+    controlCss: ComputedRef<TRecord>,
     localValue: Ref<string | number | undefined | null>,
     rowHeight: Ref<string | number | undefined | null>,
     isFocused: Ref<boolean>,
@@ -366,21 +362,11 @@ export function useRenderTextArea(
     iconSize: number,
 ): VNode {
     const canGrow = props.autoGrow && !props.noResize;
-    const showAppendIcon = (slots.appendInner !== undefined)
-        || !Helper.isEmpty(props.appendIcon) || showClearButton;
 
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
         h("div", {
-            class: {
-                ...useCreateTextFieldClasses(
-                    slots, props, localValue,
-                    isFocused, showAppendIcon,
-                ),
-                [`${cssPrefix}textarea`]: true,
-                [`${cssPrefix}textarea-autogrow`]: canGrow,
-                [`${cssPrefix}textarea-noresize`]: props.noResize || canGrow,
-            },
+            class: controlCss.value,
         }, [
             useCreateFieldInnerWrapper(
                 slots, props, iconSize,

@@ -13,7 +13,7 @@ import {
 } from "../Radio/mixins/validationApi";
 import type {TBsChipField, TChipFieldOptionProps, TRecord} from "../../types";
 import {useRenderChipField} from "./mixins/chipFieldApi";
-import {useFieldWrapperClasses, useShowClearButton} from "./mixins/textFieldApi";
+import {useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton} from "./mixins/textFieldApi";
 import Helper from "../../utils/Helper";
 
 
@@ -79,10 +79,17 @@ export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, 
         const showHelpText = computed<boolean>(() => useShowHelpText(thisProps, isFocused.value));
         const errorItems = computed(() => useGetErrorItems(thisProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
-        const wrapperClasses = computed<TRecord>(
-            () => useFieldWrapperClasses(
-                thisProps, hasValidated.value, hasError.value, `${cssPrefix}chip-field`
-            )
+        const showAppendIcon = computed(() =>
+            (slots.appendInner !== undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
+        );
+        const wrapperClasses = computed<TRecord>(() =>
+            useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)
+        );
+        const controlClasses = computed<TRecord>(() =>
+            ({
+                ...useCreateTextFieldClasses(slots, thisProps, localValue, isFocused, showAppendIcon.value),
+                [`${cssPrefix}chip-field`]: true,
+            })
         );
 
         watch(
@@ -101,6 +108,7 @@ export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, 
             useRenderChipField(
                 slots, emit, props,
                 wrapperClasses,
+                controlClasses,
                 inputValue,
                 localValue,
                 isFocused,

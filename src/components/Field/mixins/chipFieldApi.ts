@@ -7,12 +7,10 @@ import {
     useCreateFieldActionIcon,
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
-    useCreateTextFieldClasses,
     useInputTextFieldAttrs
 } from "./textFieldApi";
 import {useOnFieldBlurred, useOnFieldFocused, useOnTextFieldNodeMounted} from "./textFieldEventApi";
 import {BsChip} from "../../Chip";
-import Helper from "../../../utils/Helper";
 
 
 function dispatchModelValue(
@@ -118,6 +116,7 @@ export function useRenderChipField(
     emit: TEmitFn,
     props: Readonly<ExtractPropTypes<TBsChipField>>,
     wrapperCss: ComputedRef<TRecord>,
+    controlCss: ComputedRef<TRecord>,
     inputValue: Ref<string>,
     localValue: Ref<string[]>,
     isFocused: Ref<boolean>,
@@ -131,16 +130,12 @@ export function useRenderChipField(
     errorItems: ComputedRef<string[]>,
 ): VNode {
     const thisProps = props as Readonly<TChipFieldOptionProps>;
-    const showAppendIcon = (slots.appendInner !== undefined)
-        || !Helper.isEmpty(props.appendIcon) || showClearButton.value;
     const valueAsArray = Array.isArray(props.modelValue);
 
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, thisProps,
         h("div", {
-            class: useCreateTextFieldClasses(
-                slots, thisProps, localValue, isFocused, showAppendIcon,
-            ),
+            class: controlCss.value,
         }, [
             useCreateFieldInnerWrapper(
                 slots, thisProps, iconSize,

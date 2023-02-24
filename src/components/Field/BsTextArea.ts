@@ -1,9 +1,15 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent, ref, watch} from "vue";
+import {cssPrefix} from "../../mixins/CommonApi";
 import {booleanProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {inputProps, textFieldProps} from "./mixins/fieldProps";
 import {validationProps} from "../Radio/mixins/validationProps";
-import {useFieldWrapperClasses, useRenderTextArea, useShowClearButton} from "./mixins/textFieldApi";
+import {
+    useCreateTextFieldClasses,
+    useFieldWrapperClasses,
+    useRenderTextArea,
+    useShowClearButton
+} from "./mixins/textFieldApi";
 import {
     useGetErrorItems,
     useHasValidated,
@@ -73,11 +79,24 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, C
         const showHelpText = computed<boolean>(() => useShowHelpText(cmpProps, isFocused.value));
         const errorItems = computed(() => useGetErrorItems(cmpProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(cmpProps, localValue));
-        const textAreaClasses = computed<TRecord>(
-            () => useFieldWrapperClasses(
-                cmpProps, hasValidated.value, hasError.value
-            )
+        const showAppendIcon = computed(() =>
+            (slots.appendInner !== undefined) || !Helper.isEmpty(cmpProps.appendIcon) || showClearButton.value
         );
+        const wrapperClasses = computed<TRecord>(() =>
+            useFieldWrapperClasses(cmpProps, hasValidated.value, hasError.value)
+        );
+        const controlClasses = computed<TRecord>(() =>
+            ({
+                ...useCreateTextFieldClasses(
+                    slots, cmpProps, localValue,
+                    isFocused, showAppendIcon.value,
+                ),
+                [`${cssPrefix}textarea`]: true,
+                [`${cssPrefix}textarea-autogrow`]: cmpProps.autoGrow && !cmpProps.noResize,
+                [`${cssPrefix}textarea-noresize`]: cmpProps.noResize || (cmpProps.autoGrow && !cmpProps.noResize),
+            })
+        );
+
         watch(
             () => cmpProps.modelValue,
             (value) => {
@@ -88,7 +107,8 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, C
         return () =>
             useRenderTextArea(
                 slots, emit, cmpProps,
-                textAreaClasses,
+                wrapperClasses,
+                controlClasses,
                 localValue,
                 rowHeight,
                 isFocused,
