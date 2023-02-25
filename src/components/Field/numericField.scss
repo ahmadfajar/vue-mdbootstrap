@@ -1,0 +1,164 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 7px solid currentColor;
+    display: inline-block;
+}
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid currentColor;
+    display: inline-block;
+}
+
+.#{$prefix}numeric-field {
+    .#{$prefix}field-overlay + .#{$prefix}action-icon {
+        margin-left: .75rem;
+        margin-right: 0;
+    }
+
+    &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-filled) {
+        .#{$prefix}field-overlay + .#{$prefix}action-icon {
+            margin-left: 0;
+            margin-right: .75rem;
+        }
+
+        .#{$prefix}prepend-inner {
+            margin-right: 0;
+
+            + .#{$prefix}action-icon {
+                margin-left: $padding-sm;
+                margin-right: .75rem;
+            }
+        }
+
+        .#{$prefix}action-icon {
+            > .#{$prefix}action-button-left,
+            > .#{$prefix}action-button-right {
+                margin-top: 18px;
+            }
+        }
+    }
+
+    .#{$prefix}action-icon {
+        > .#{$prefix}spin-button-left,
+        > .#{$prefix}spin-button-right {
+            @include flexbox((display: flex, flex-direction: column));
+            width: 1.5rem;
+            margin-top: .625rem;
+
+            > .#{$prefix}spin-down {
+                .triangle-down {
+                    margin-top: 4px;
+                }
+            }
+
+            > .#{$prefix}spin-up {
+                .triangle-up {
+                    margin-top: 6px;
+                }
+            }
+
+            > .#{$prefix}spin-down,
+            > .#{$prefix}spin-up {
+                --#{$bs-prefix}btn-border-radius: 0;
+                --#{$bs-prefix}btn-border-width: 0;
+                --#{$bs-prefix}btn-color: var(--#{$prefix}field-button-color);
+                --#{$bs-prefix}btn-active-bg: var(--#{$prefix}field-button-active-bg);
+                --#{$bs-prefix}btn-hover-bg: var(--#{$prefix}field-button-hover-bg);
+
+                width: 1.5rem;
+                height: 18px;
+
+                > .#{$prefix}ripple {
+                    @include justify-content(center);
+                }
+
+                &:hover {
+                    --#{$bs-prefix}btn-state-box-shadow: none;
+                }
+
+                &:active,
+                &:focus {
+                    --#{$bs-prefix}btn-bg: var(--#{$bs-prefix}btn-hover-bg);
+                    --#{$bs-prefix}btn-state-box-shadow: #{$z-depth-half};
+                }
+            }
+        }
+
+        > .#{$prefix}action-button-left,
+        > .#{$prefix}action-button-right {
+            margin-top: .75rem;
+
+            .#{$prefix}btn-icon {
+                --#{$bs-prefix}btn-color: var(--#{$prefix}field-button-color);
+                --#{$bs-prefix}btn-active-bg: var(--#{$prefix}field-button-active-bg);
+                --#{$bs-prefix}btn-hover-bg: var(--#{$prefix}field-button-hover-bg);
+
+                &:hover {
+                    --#{$bs-prefix}btn-state-box-shadow: none;
+                }
+
+                > .#{$prefix}ripple {
+                    @include flexbox((align-items: center, justify-content: center));
+                }
+
+                + .#{$prefix}btn-icon {
+                    margin-left: -.25rem;
+                }
+            }
+        }
+
+        + .#{$prefix}append-inner {
+            margin-left: -$padding-xs;
+        }
+    }
+
+    .#{$prefix}prepend-inner {
+        + .#{$prefix}action-icon {
+            margin-left: $padding-sm;
+            margin-right: 0;
+        }
+    }
+
+    &.#{$prefix}floating-label {
+        &.#{$prefix}field-outlined {
+            &:not(.prepend-icon) {
+                .#{$prefix}action-icon + .#{$prefix}field-activator {
+                    --#{$prefix}field-floating-label-transform: translateY(-25px) translateX(-36px) scale(.85);
+                }
+
+                .#{$prefix}button-wrapper-left + .#{$prefix}field-activator {
+                    --#{$prefix}field-floating-label-transform: translateY(-25px) translateX(-72px) scale(.85);
+                }
+
+                .#{$prefix}button-wrapper-both + .#{$prefix}field-activator {
+                    --#{$prefix}field-floating-label-transform: translateY(-25px) translateX(-44px) scale(.85);
+                }
+            }
+
+            &.prepend-icon {
+                .#{$prefix}action-icon + .#{$prefix}field-activator {
+                    --#{$prefix}field-floating-label-transform: translateY(-25px) translateX(-68px) scale(.85);
+                }
+
+                .#{$prefix}button-wrapper-left + .#{$prefix}field-activator {
+                    --#{$prefix}field-floating-label-transform: translateY(-25px) translateX(-104px) scale(.85);
+                }
+
+                .#{$prefix}button-wrapper-both + .#{$prefix}field-activator {
+                    --#{$prefix}field-floating-label-transform: translateY(-25px) translateX(-76px) scale(.85);
+                }
+            }
+        }
+    }
+}

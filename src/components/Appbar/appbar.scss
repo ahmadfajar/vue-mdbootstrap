@@ -4,6 +4,7 @@
 @import "~compass-mixins/lib/compass/typography";
 
 .#{$prefix}appbar {
+    --#{$prefix}appbar-color: #{$grey-darken-4};
     --#{$prefix}appbar-bgcolor: #{$white};
     --#{$prefix}appbar-height: 64px;
     --#{$prefix}appbar-margin: #{$padding-sm ($padding-base - .25) $padding-sm $padding-base};

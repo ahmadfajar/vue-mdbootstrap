@@ -77,7 +77,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
             ? cmpProps.autocomplete
             : (cmpProps.autocomplete ? "on" : Helper.uuid());
         const localValue = ref<string | number | undefined | null>(cmpProps.modelValue);
-        const isPasswordToggled = ref(false);
+        const passwordToggled = ref(false);
         const isFocused = ref(false);
         const hasError = computed<boolean>(() => useHasValidationError(cmpProps));
         const hasValidated = computed<boolean>(() => useHasValidated(cmpProps));
@@ -100,7 +100,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         const fieldType = computed<string | undefined>(
             () => {
                 if (showPasswordToggle.value) {
-                    return isPasswordToggled.value ? 'text' : 'password';
+                    return passwordToggled.value ? 'text' : 'password';
                 }
 
                 return cmpProps.type;
@@ -113,7 +113,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
             }
         );
         const onPasswordToggleHandler = (value: boolean): void => {
-            isPasswordToggled.value = value;
+            passwordToggled.value = value;
         };
 
         return () =>
@@ -123,7 +123,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
                 fieldControlClasses,
                 fieldType.value,
                 localValue, isFocused,
-                isPasswordToggled,
+                passwordToggled,
                 autocomplete,
                 showClearButton.value,
                 showPasswordToggle.value,

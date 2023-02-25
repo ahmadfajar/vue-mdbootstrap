@@ -74,7 +74,10 @@ export function useCreateFieldIcon(
     iconSize?: number,
 ): VNode {
     return useRenderSlotWithWrapper(
-        slots, slotName, Helper.uuid(), "div",
+        slots,
+        slotName,
+        iconName ? `${slotName}-${iconName}` : Helper.uuid(),
+        "div",
         {class: cssClass},
         (
             iconName
@@ -139,19 +142,19 @@ export function useCreateFieldInnerWrapper(
     slots: Slots,
     props: Readonly<TInputFieldProps>,
     iconSize: number,
-    fieldActionElement: VNode,
-    fieldInputElements: VNode[] | VNode,
+    inputFieldNodes: VNode[] | VNode,
+    appendActionNode?: VNode,
+    prependActionNode?: VNode,
 ): VNode {
-    let children = [useRenderSlotWrapperWithCondition(
+    const children = [useRenderSlotWrapperWithCondition(
         slots, "default",
         props.floatingLabel === true,
         {
             class: `${cssPrefix}field-label`
         },
         "div", {id: props.id}
-    )];
-    children = children.concat(
-        Array.isArray(fieldInputElements) ? fieldInputElements : [fieldInputElements]
+    )].concat(
+        Array.isArray(inputFieldNodes) ? inputFieldNodes : [inputFieldNodes]
     );
 
     return h("div", {
@@ -163,10 +166,11 @@ export function useCreateFieldInnerWrapper(
             `${cssPrefix}prepend-inner`,
             props.prependIcon, iconSize,
         ),
+        prependActionNode,
         h("div", {
             class: `${cssPrefix}field-activator`
         }, children),
-        fieldActionElement,
+        appendActionNode,
         useCreateFieldIcon(
             slots, "appendInner",
             `${cssPrefix}append-inner`,
@@ -184,12 +188,12 @@ export function useCreateFieldActionIcon(
     iconSize?: number,
     clearHandler?: () => void,
     showPasswordToggle?: boolean,
-    passwordToggle?: Ref<boolean>,
+    passwordToggled?: Ref<boolean>,
     passwordToggleHandler?: (value: boolean) => void,
 ): VNode {
     return useRenderTransition(
         {name: "fade"},
-        (showPasswordToggle || showClearButton)
+        (showClearButton || showPasswordToggle || hasValidated || hasError)
             ? h("div", {class: `${cssPrefix}action-icon`}, [
                 showClearButton
                     ? h<TBsIcon>(BsIcon, {
@@ -199,29 +203,33 @@ export function useCreateFieldActionIcon(
                         onClick: clearHandler
                     })
                     : undefined,
-                (hasValidated && hasError)
-                    ? h<TBsIcon>(BsIcon, {
-                        class: "icon-error text-danger",
-                        icon: (iconVariant === "outlined" ? "error_outline" : "error") as Prop<string>,
-                        size: iconSize as Prop<number | undefined>,
-                    })
-                    : ((hasValidated && !hasError)
-                        ? h<TBsIcon>(BsIcon, {
-                            class: "icon-success text-success",
-                            icon: `check_${iconVariant}` as Prop<string>,
-                            size: iconSize as Prop<number | undefined>,
-                        })
-                        : undefined),
                 showPasswordToggle
                     ? h<TBsToggleIcon>(BsToggleIcon, {
                         icon: `visibility_${iconVariant}` as Prop<string>,
                         toggleIcon: `visibility_off_${iconVariant}` as Prop<string>,
                         size: iconSize as Prop<number | undefined>,
                         // @ts-ignore
-                        modelValue: passwordToggle?.value as Prop<boolean | undefined>,
+                        modelValue: passwordToggled?.value as Prop<boolean | undefined>,
                         "onUpdate:model-value": passwordToggleHandler
                     })
                     : undefined,
+                (hasValidated && hasError)
+                    ? h<TBsIcon>(BsIcon, {
+                        class: "icon-error text-danger",
+                        icon: (iconVariant === "outlined"
+                            ? `error_outline_${iconVariant}`
+                            : `error_${iconVariant}`) as Prop<string>,
+                        size: iconSize as Prop<number | undefined>,
+                    })
+                    : (
+                        (hasValidated && !hasError)
+                            ? h<TBsIcon>(BsIcon, {
+                                class: "icon-success text-success",
+                                icon: `check_${iconVariant}` as Prop<string>,
+                                size: iconSize as Prop<number | undefined>,
+                            })
+                            : undefined
+                    ),
             ])
             : createCommentVNode(" v-if-action-icon ")
     );
@@ -259,6 +267,34 @@ export function useCreateTextFieldClasses(
     }
 }
 
+function createInputTextField(
+    props: Readonly<TTextFieldOptionProps>,
+    type: string | undefined,
+    autocomplete: string | boolean,
+    emit: TEmitFn,
+    localValue: Ref<string | number | undefined | null>,
+    isFocused: Ref<boolean>,
+): VNode {
+    return withDirectives(h("input", {
+        ...useMakeInputBaseAttrs(props),
+        ...useInputTextFieldAttrs(props, autocomplete),
+        "role": "textbox",
+        "type": type,
+        "list": props.datalist,
+        "maxlength": props.maxlength,
+        "minlength": props.minlength,
+        "onUpdate:modelValue": (value: string | number | undefined | null) =>
+            useOnFieldValueUpdated(emit, localValue, value),
+        onBlur: (e: Event) =>
+            useOnFieldBlurred(emit, e, isFocused, (<boolean>props.disabled)),
+        onFocus: (e: Event) =>
+            useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
+        onKeydown: (e: KeyboardEvent) => emit("keydown", e),
+    }), [
+        [vModelText, localValue.value, "", {lazy: true}]
+    ]);
+}
+
 export function useRenderTextField(
     slots: Slots,
     emit: TEmitFn,
@@ -268,7 +304,7 @@ export function useRenderTextField(
     fieldType: string | undefined,
     localValue: Ref<string | number | undefined | null>,
     isFocused: Ref<boolean>,
-    isPasswordToggled: Ref<boolean>,
+    passwordToggled: Ref<boolean>,
     autocomplete: string | boolean,
     showClearButton: boolean,
     showPasswordToggle: boolean,
@@ -286,7 +322,10 @@ export function useRenderTextField(
             class: controlCss.value,
         }, [
             useCreateFieldInnerWrapper(
-                slots, props, iconSize,
+                slots,
+                props,
+                iconSize,
+                createInputTextField(props, fieldType, autocomplete, emit, localValue, isFocused),
                 useCreateFieldActionIcon(
                     showClearButton,
                     hasValidated,
@@ -295,52 +334,61 @@ export function useRenderTextField(
                     iconSize,
                     () => useOnFieldValueCleared(emit, localValue),
                     showPasswordToggle,
-                    isPasswordToggled,
+                    passwordToggled,
                     passwordToggleHandler
                 ),
-                withDirectives(h("input", {
-                    ...useMakeInputBaseAttrs(props),
-                    ...useInputTextFieldAttrs(props, autocomplete),
-                    "role": "textbox",
-                    "type": fieldType,
-                    "list": props.datalist,
-                    "maxlength": props.maxlength,
-                    "minlength": props.minlength,
-                    "onUpdate:modelValue": (value: string | number | undefined | null) =>
-                        useOnFieldValueUpdated(emit, localValue, value),
-                    onBlur: (e: Event) =>
-                        useOnFieldBlurred(emit, e, isFocused, (<boolean>props.disabled)),
-                    onFocus: (e: Event) =>
-                        useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
-                    onKeydown: (e: KeyboardEvent) => emit("keydown", e),
-                }), [
-                    [vModelText, localValue.value, "", {lazy: true}]
-                ]),
             ),
             useRenderFieldFeedback(
-                slots, props,
+                slots,
+                props,
                 showHelpText,
                 showValidationError,
-                hasError, errorItems,
+                hasError,
+                errorItems,
             ),
         ]),
         (node: VNode) => useOnTextFieldNodeMounted(props, node),
     );
 }
 
-function onTextAreaNodeMounted(
-    props: Readonly<TTextFieldOptionProps>,
-    node: VNode,
-): void {
-    useOnFieldNodeMounted(props, node);
-    const element = <HTMLElement>node.el;
+function createInputTextArea(
+    props: Readonly<TTextAreaOptionProps>,
+    emit: TEmitFn,
+    localValue: Ref<string | number | undefined | null>,
+    rowHeight: Ref<string | number | undefined | null>,
+    isFocused: Ref<boolean>,
+    autocomplete: string | boolean,
+): VNode {
+    const canGrow = props.autoGrow && !props.noResize;
 
-    if (props.autofocus) {
-        nextTick().then(() => {
-            const input = element.querySelector('textarea');
-            input?.focus();
-        });
-    }
+    return withDirectives(h("textarea", {
+        ...useMakeInputBaseAttrs(props),
+        ...useInputTextFieldAttrs(props, autocomplete),
+        "role": "textbox",
+        "rows": canGrow ? 2 : (props.rows && !props.rowHeight ? props.rows : undefined),
+        "style": rowHeight.value && {
+            height: Helper.cssUnit(rowHeight.value)
+        },
+        "onUpdate:modelValue": (value: string | number | undefined | null) =>
+            useOnFieldValueUpdated(emit, localValue, value),
+        onBlur: (e: Event) =>
+            useOnFieldBlurred(emit, e, isFocused, (<boolean>props.disabled)),
+        onFocus: (e: Event) =>
+            useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
+        onKeydown: (e: KeyboardEvent) => emit("keydown", e),
+        onInput: (e: InputEvent): void => {
+            if (canGrow) {
+                const target = (<HTMLElement>e.target);
+                target.style.height = "auto";
+                nextTick().then(() => {
+                    rowHeight.value = Helper.cssUnit(target.scrollHeight);
+                    target.style.height = Helper.cssUnit(target.scrollHeight) || "auto";
+                });
+            }
+        }
+    }), [
+        [vModelText, localValue.value, "", {lazy: true}]
+    ]);
 }
 
 export function useRenderTextArea(
@@ -361,15 +409,16 @@ export function useRenderTextArea(
     errorItems: Array<string>,
     iconSize: number,
 ): VNode {
-    const canGrow = props.autoGrow && !props.noResize;
-
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
         h("div", {
             class: controlCss.value,
         }, [
             useCreateFieldInnerWrapper(
-                slots, props, iconSize,
+                slots,
+                props,
+                iconSize,
+                createInputTextArea(props, emit, localValue, rowHeight, isFocused, autocomplete),
                 useCreateFieldActionIcon(
                     showClearButton,
                     hasValidated,
@@ -378,42 +427,31 @@ export function useRenderTextArea(
                     iconSize,
                     () => useOnFieldValueCleared(emit, localValue),
                 ),
-                withDirectives(h("textarea", {
-                    ...useMakeInputBaseAttrs(props),
-                    ...useInputTextFieldAttrs(props, autocomplete),
-                    "role": "textbox",
-                    "rows": canGrow ? 2 : (props.rows && !props.rowHeight ? props.rows : undefined),
-                    "style": rowHeight.value && {
-                        height: Helper.cssUnit(rowHeight.value)
-                    },
-                    "onUpdate:modelValue": (value: string | number | undefined | null) =>
-                        useOnFieldValueUpdated(emit, localValue, value),
-                    onBlur: (e: Event) =>
-                        useOnFieldBlurred(emit, e, isFocused, (<boolean>props.disabled)),
-                    onFocus: (e: Event) =>
-                        useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
-                    onKeydown: (e: KeyboardEvent) => emit("keydown", e),
-                    onInput: (e: InputEvent): void => {
-                        if (canGrow) {
-                            const target = (<HTMLElement>e.target);
-                            target.style.height = "auto";
-                            nextTick().then(() => {
-                                rowHeight.value = Helper.cssUnit(target.scrollHeight);
-                                target.style.height = Helper.cssUnit(target.scrollHeight) || "auto";
-                            });
-                        }
-                    }
-                }), [
-                    [vModelText, localValue.value, "", {lazy: true}]
-                ]),
             ),
             useRenderFieldFeedback(
-                slots, props,
+                slots,
+                props,
                 showHelpText,
                 showValidationError,
-                hasError, errorItems,
+                hasError,
+                errorItems,
             ),
         ]),
         (node: VNode) => onTextAreaNodeMounted(props, node),
     );
+}
+
+function onTextAreaNodeMounted(
+    props: Readonly<TTextFieldOptionProps>,
+    node: VNode,
+): void {
+    useOnFieldNodeMounted(props, node);
+    const element = <HTMLElement>node.el;
+
+    if (props.autofocus) {
+        nextTick().then(() => {
+            const input = element.querySelector('textarea');
+            input?.focus();
+        });
+    }
 }

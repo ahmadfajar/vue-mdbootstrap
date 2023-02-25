@@ -26,7 +26,7 @@ export function findIcon(name: string | undefined): TIconData | undefined {
         : (strIcon.endsWith("_outlined") || strIcon.endsWith("_outline"))
             ? "outlined"
             : (strIcon.endsWith("_sharp") ? "sharp" : "");
-    const realName = strIcon.replace(/_outlined|_outline|_filled|_rounded|_round|_sharp/g, "");
+    const realName = strIcon.replace(/(_outlined|_outline|_filled|_rounded|_round|_sharp)$/, "");
     const found = Object.entries(IconLib).find((el) => {
         const arr = el[0].split("::");
         return arr[1] === realName

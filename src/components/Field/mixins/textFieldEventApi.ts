@@ -6,25 +6,29 @@ import Helper from "../../../utils/Helper";
 
 export function useOnFieldBlurred(
     emit: TEmitFn,
-    event: unknown,
+    event: Event,
     isFocused: Ref<boolean>,
     isDisabled: boolean,
 ): void {
     if (!isDisabled) {
         isFocused.value = false;
         emit("blur", event);
+    } else {
+        event.preventDefault();
     }
 }
 
 export function useOnFieldFocused(
     emit: TEmitFn,
-    event: unknown,
+    event: Event,
     isFocused: Ref<boolean>,
     isDisabled: boolean,
 ): void {
     if (!isDisabled) {
         isFocused.value = true;
         emit("focus", event);
+    } else {
+        event.preventDefault();
     }
 }
 

@@ -6,6 +6,9 @@
     --#{$prefix}field-primary-indicator: #{$default-active-bgcolor};
     --#{$prefix}field-accent-indicator: #{$mdb-default-color-light};
     --#{$prefix}field-active-indicator: var(--#{$prefix}field-primary-indicator);
+    --#{$prefix}field-button-active-bg: rgba(12,12,12,.25);
+    --#{$prefix}field-button-hover-bg: rgba(80,80,80,.2);
+    --#{$prefix}field-button-color: currentColor;
     --#{$prefix}field-disabled-opacity: .4;
     --#{$prefix}field-readonly-opacity: .55;
 }

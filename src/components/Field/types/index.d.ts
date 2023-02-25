@@ -5,7 +5,14 @@ import type {
     DefineComponent,
     EmitsOptions
 } from "vue";
-import type {TInputBaseProps, TRecord, TShapeStyle, TValidationProps} from "../../../types";
+import type {
+    TInputBaseProps,
+    TLabelPosition,
+    TRecord,
+    TShapeStyle,
+    TSpaceAround,
+    TValidationProps
+} from "../../../types";
 
 export declare type TInputFieldProps = TInputBaseProps & TValidationProps & {
     /**
@@ -162,14 +169,75 @@ export declare type TChipFieldOptionProps = TInputTextProps & {
     modelValue?: string | string[];
 }
 
+export declare type TNumericOpsOptions = {
+    locale: string;
+    step: number;
+    maxValue?: number;
+    minValue?: number;
+}
+
+export declare type TNumericFieldOptionProps = TInputTextProps & {
+    /**
+     * The value monitored by `v-model` to maintain this field value.
+     */
+    modelValue?: number;
+    /**
+     * The locale to be used when displaying the numeric value.
+     * Defaults is using browser's locale.
+     */
+    locale?: string;
+    /**
+     * Format the displayed numeric value with digit grouping.
+     */
+    useGrouping?: boolean;
+    /**
+     * Enable and shows the Spinner action buttons which is used to
+     * increment/decrement the numeric value.
+     */
+    spinButton?: boolean;
+    /**
+     * Sets the Spinner action buttons placement, valid values: `left` and `right`.
+     */
+    spinButtonPlacement?: TLabelPosition;
+    /**
+     * Enable and shows the Plus-Minus action buttons which is used to
+     * increment/decrement the numeric value.
+     */
+    actionButton?: boolean;
+    /**
+     * Sets the Plus-Minus action buttons placement, valid values: `left`, `right` and `both`.
+     */
+    actionButtonPlacement?: TSpaceAround;
+    /**
+     * Sets the maximum allowed fraction or decimal digits for the displayed value.
+     */
+    maxFraction?: string | number;
+    /**
+     * Sets the maximum allowed value.
+     */
+    maxValue?: string | number;
+    /**
+     * Sets the minimum allowed value.
+     */
+    minValue?: string | number;
+    /**
+     * Sets the increment/decrement steps value.
+     */
+    step?: string | number;
+}
+
 export declare type TBsTextField = ComponentObjectPropsOptions<TTextFieldOptionProps>;
 
 export declare type TBsTextArea = ComponentObjectPropsOptions<TTextAreaOptionProps>;
 
 export declare type TBsChipField = ComponentObjectPropsOptions<TChipFieldOptionProps>;
 
+export declare type TBsNumericField = ComponentObjectPropsOptions<TNumericFieldOptionProps>;
+
 export declare const BsTextField: DefineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
 export declare const BsTextArea: DefineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
 export declare const BsChipField: DefineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsNumericField: DefineComponent<TBsNumericField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

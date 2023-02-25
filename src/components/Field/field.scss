@@ -355,7 +355,7 @@
         }
 
         &.active, &.focused {
-            --#{$prefix}field-floating-label-transform: translateY(-26px) scale(.85);
+            --#{$prefix}field-floating-label-transform: translateY(-25px) scale(.85);
 
             .#{$prefix}field-label {
                 opacity: 0;

@@ -4,7 +4,7 @@
 
 ## v2.0.0
 
-Released: March xx, 2023
+Released: April xx, 2023
 
 #### Features v2.0.0
 
@@ -25,6 +25,7 @@ Released: March xx, 2023
 - **BsListTileTitle**: add property `rawHtml`.
 - **BsListView**: add property `itemRounded`, `itemRoundedPill`, `individualState`, and `modelValue`.
 - **BsMaskLoader**: add property `variant`.
+- **BsNumericField**: add property `actionIconVariant`, and `validationIcon`.
 - **BsOverlay**: add event `click`.
 - **BsPopover**: add property `color`.
 - **BsSideDrawer**: add property `position`, `fixedLayout`, `overlayColor`.
@@ -104,6 +105,16 @@ Released: March xx, 2023
 - **BsListView**: Replace property `activeItemBordered` with `itemBorderVariant`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
 - **BsMenu**: is deprecated, use **BsDropdownMenu** instead.
+- **BsNumericField**: 
+  - Replaced property `value` with `modelValue`.
+  - Replaced event `input` with `update:modelValue`.
+  - Replaced slot `prependIcon` with `prependInner`.
+  - Replaced slot `prependIconOuter` with `prependOuter`.
+  - Replaced slot `appendIcon` with `appendInner`.
+  - Replaced slot `appendIconOuter` with `appendOuter`.
+  - Removed property `actionButtonColor`.
+  - Removed event `change`, already covered by event `update:modelValue`.
+  - Deprecated property `externalValidator`, use property `validator` instead.
 - **BsPopover**: Replace property `overlayClose` with `overlayClickClose`.
 - **BsRadio**:
   - Replaced property `checked` with `modelValue`.

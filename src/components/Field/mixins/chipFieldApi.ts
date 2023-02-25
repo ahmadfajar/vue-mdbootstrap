@@ -138,7 +138,13 @@ export function useRenderChipField(
             class: controlCss.value,
         }, [
             useCreateFieldInnerWrapper(
-                slots, thisProps, iconSize,
+                slots,
+                thisProps,
+                iconSize,
+                [
+                    createFieldChips(props, emit, inputValue, localValue),
+                    createFieldInput(thisProps, emit, inputValue, localValue, isFocused, autocomplete),
+                ],
                 useCreateFieldActionIcon(
                     showClearButton.value,
                     hasValidated.value,
@@ -151,13 +157,11 @@ export function useRenderChipField(
                         emit("update:model-value", valueAsArray ? [] : "");
                         nextTick().then(() => emit("clear"));
                     },
-                ), [
-                    createFieldChips(props, emit, inputValue, localValue),
-                    createFieldInput(thisProps, emit, inputValue, localValue, isFocused, autocomplete),
-                ],
+                ),
             ),
             useRenderFieldFeedback(
-                slots, thisProps,
+                slots,
+                thisProps,
                 showHelpText.value,
                 showValidationError.value,
                 hasError.value,

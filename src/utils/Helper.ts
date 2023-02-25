@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 19/02/2023 15:09
+ * @since  05/07/2018, modified: 24/02/2023 21:31
  */
 class Helper {
     /**
@@ -186,6 +186,16 @@ class Helper {
      */
     static roundNumber(value: number, fractionDigit: number): number {
         return Number(Math.round(Number(value + 'e' + fractionDigit)) + 'e-' + fractionDigit);
+    }
+
+    static parseFloatLoose(value: string): number | undefined {
+        const result = parseFloat(value);
+        return isNaN(result) ? undefined : result;
+    }
+
+    static parseIntLoose(value: string): number | undefined {
+        const result = parseInt(value);
+        return isNaN(result) ? undefined : result;
     }
 
     /**
