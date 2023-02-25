@@ -195,41 +195,47 @@ export function useCreateFieldActionIcon(
         {name: "fade"},
         (showClearButton || showPasswordToggle || hasValidated || hasError)
             ? h("div", {class: `${cssPrefix}action-icon`}, [
-                showClearButton
-                    ? h<TBsIcon>(BsIcon, {
-                        class: "icon-clear",
-                        icon: `cancel_${iconVariant}` as Prop<string>,
-                        size: iconSize as Prop<number | undefined>,
-                        onClick: clearHandler
-                    })
-                    : undefined,
-                showPasswordToggle
-                    ? h<TBsToggleIcon>(BsToggleIcon, {
-                        icon: `visibility_${iconVariant}` as Prop<string>,
-                        toggleIcon: `visibility_off_${iconVariant}` as Prop<string>,
-                        size: iconSize as Prop<number | undefined>,
-                        // @ts-ignore
-                        modelValue: passwordToggled?.value as Prop<boolean | undefined>,
-                        "onUpdate:model-value": passwordToggleHandler
-                    })
-                    : undefined,
-                (hasValidated && hasError)
-                    ? h<TBsIcon>(BsIcon, {
-                        class: "icon-error text-danger",
-                        icon: (iconVariant === "outlined"
-                            ? `error_outline_${iconVariant}`
-                            : `error_${iconVariant}`) as Prop<string>,
-                        size: iconSize as Prop<number | undefined>,
-                    })
-                    : (
-                        (hasValidated && !hasError)
-                            ? h<TBsIcon>(BsIcon, {
-                                class: "icon-success text-success",
-                                icon: `check_${iconVariant}` as Prop<string>,
-                                size: iconSize as Prop<number | undefined>,
-                            })
-                            : undefined
-                    ),
+                (
+                    showClearButton
+                        ? h<TBsIcon>(BsIcon, {
+                            class: "icon-clear",
+                            icon: `cancel_${iconVariant}` as Prop<string>,
+                            size: iconSize as Prop<number | undefined>,
+                            onClick: clearHandler
+                        })
+                        : undefined
+                ),
+                (
+                    showPasswordToggle
+                        ? h<TBsToggleIcon>(BsToggleIcon, {
+                            icon: `visibility_${iconVariant}` as Prop<string>,
+                            toggleIcon: `visibility_off_${iconVariant}` as Prop<string>,
+                            size: iconSize as Prop<number | undefined>,
+                            // @ts-ignore
+                            modelValue: passwordToggled?.value as Prop<boolean | undefined>,
+                            "onUpdate:model-value": passwordToggleHandler
+                        })
+                        : undefined
+                ),
+                (
+                    (hasValidated && hasError)
+                        ? h<TBsIcon>(BsIcon, {
+                            class: "icon-error text-danger",
+                            icon: (iconVariant === "outlined"
+                                ? `error_outline_${iconVariant}`
+                                : `error_${iconVariant}`) as Prop<string>,
+                            size: iconSize as Prop<number | undefined>,
+                        })
+                        : (
+                            (hasValidated && !hasError)
+                                ? h<TBsIcon>(BsIcon, {
+                                    class: "icon-success text-success",
+                                    icon: `check_${iconVariant}` as Prop<string>,
+                                    size: iconSize as Prop<number | undefined>,
+                                })
+                                : undefined
+                        )
+                ),
             ])
             : createCommentVNode(" v-if-action-icon ")
     );

@@ -161,10 +161,11 @@ function createAppendFieldActionNode(
                         : undefined
                 ),
                 (
-                    (props.spinButton && props.spinButtonPlacement === "right")
+                    (!props.disabled && !props.readonly && props.spinButton && props.spinButtonPlacement === "right")
                         ? createSpinnerButton(props, increaseValueHandler, decreaseValueHandler)
                         : (
-                            (props.actionButton && ["right", "both"].includes(<string>props.actionButtonPlacement))
+                            (!props.disabled && !props.readonly &&
+                                props.actionButton && ["right", "both"].includes(<string>props.actionButtonPlacement))
                                 ? createActionButtons(props, "right", increaseValueHandler, decreaseValueHandler)
                                 : ""
                         )
@@ -198,13 +199,14 @@ function createPrependFieldActionNode(
     increaseValueHandler: () => void,
     decreaseValueHandler: () => void,
 ): VNode {
-    if (props.spinButton && props.spinButtonPlacement === "left") {
+    if (!props.disabled && !props.readonly && props.spinButton && props.spinButtonPlacement === "left") {
         return h("div", {
             class: `${cssPrefix}action-icon`
         }, [
             createSpinnerButton(props, increaseValueHandler, decreaseValueHandler)
         ]);
-    } else if (!props.spinButton && props.actionButton && ["left", "both"].includes(<string>props.actionButtonPlacement)) {
+    } else if (!props.disabled && !props.readonly && !props.spinButton && props.actionButton
+        && ["left", "both"].includes(<string>props.actionButtonPlacement)) {
         return h("div", {
             class: [`${cssPrefix}action-icon`, `${cssPrefix}button-wrapper-${props.actionButtonPlacement}`]
         }, [
@@ -225,7 +227,7 @@ function createFieldInputText(
     autocomplete: string | boolean,
     emit: TEmitFn,
 ): VNode {
-    let displayValue = hasFocus.value
+    let displayValue = hasFocus.value && !props.disabled && !props.readonly
         ? localValue.value?.toString(10)
         : localValue.value?.toLocaleString(numericOptions.locale, formatOptions);
 
