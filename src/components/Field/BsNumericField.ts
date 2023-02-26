@@ -102,6 +102,9 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
         const showAppendIcon = computed(() =>
             (slots.appendInner !== undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
+            || (thisProps.actionButton === true && !thisProps.disabled && !thisProps.readonly)
+            || (thisProps.spinButton === true && thisProps.spinButtonPlacement === "right"
+                && !thisProps.disabled && !thisProps.readonly)
         );
         const fieldWrapperClasses = computed<TRecord>(() =>
             useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)

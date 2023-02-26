@@ -85,17 +85,18 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         const showHelpText = computed<boolean>(() => useShowHelpText(cmpProps, isFocused.value));
         const errorItems = computed(() => useGetErrorItems(cmpProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(cmpProps, localValue));
+        const showPasswordToggle = computed<boolean>(
+            () => cmpProps.type === 'password' && cmpProps.passwordToggle === true
+        );
         const showAppendIcon = computed(() =>
-            (slots.appendInner !== undefined) || !Helper.isEmpty(cmpProps.appendIcon) || showClearButton.value
+            (slots.appendInner !== undefined) || !Helper.isEmpty(cmpProps.appendIcon)
+            || showClearButton.value || showPasswordToggle.value
         );
         const fieldWrapperClasses = computed<TRecord>(() =>
             useFieldWrapperClasses(cmpProps, hasValidated.value, hasError.value)
         );
         const fieldControlClasses = computed<TRecord>(() =>
             useCreateTextFieldClasses(slots, cmpProps, localValue, isFocused, showAppendIcon.value)
-        );
-        const showPasswordToggle = computed<boolean>(
-            () => cmpProps.type === 'password' && cmpProps.passwordToggle === true
         );
         const fieldType = computed<string | undefined>(
             () => {

@@ -240,10 +240,17 @@ function createFieldInputText(
         value: displayValue,
         onBlur: (e: Event) => useOnFieldBlurred(emit, e, hasFocus, (<boolean>props.disabled)),
         onChange: () => {
-            const result = parseFloat((<HTMLInputElement>inputRef.value).value);
-            if (isGreaterOrEqualMinValue(result, numericOptions) && isLessOrEqualMaxValue(result, numericOptions)) {
-                useOnFieldValueUpdated(emit, localValue, result);
-                displayValue = result.toLocaleString(numericOptions.locale, formatOptions);
+            const field = <HTMLInputElement>inputRef.value;
+            if (field.value === null || field.value === "") {
+                useOnFieldValueUpdated(emit, localValue, null);
+                displayValue = "";
+            } else {
+                const result = parseFloat(field.value);
+                if (isGreaterOrEqualMinValue(result, numericOptions)
+                    && isLessOrEqualMaxValue(result, numericOptions)) {
+                    useOnFieldValueUpdated(emit, localValue, result);
+                    displayValue = result.toLocaleString(numericOptions.locale, formatOptions);
+                }
             }
         },
         onFocus: (e: Event) => {

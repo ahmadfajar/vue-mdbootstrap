@@ -32,16 +32,12 @@
             margin-right: .75rem;
         }
 
-        .#{$prefix}prepend-inner {
-            margin-right: 0;
-
-            + .#{$prefix}action-icon {
-                margin-left: $padding-sm;
-                margin-right: .75rem;
-            }
-        }
-
         .#{$prefix}action-icon {
+            > .#{$prefix}spin-button-left,
+            > .#{$prefix}spin-button-right {
+                margin-top: 1rem;
+            }
+
             > .#{$prefix}action-button-left,
             > .#{$prefix}action-button-right {
                 margin-top: 18px;
@@ -118,15 +114,15 @@
             }
         }
 
+        > .#{$prefix}icon {
+            + .#{$prefix}spin-button-right,
+            + .#{$prefix}action-button-right {
+                margin-left: $padding-sm;
+            }
+        }
+
         + .#{$prefix}append-inner {
             margin-left: -$padding-xs;
-        }
-    }
-
-    .#{$prefix}prepend-inner {
-        + .#{$prefix}action-icon {
-            margin-left: $padding-sm;
-            margin-right: 0;
         }
     }
 
