@@ -13,6 +13,7 @@ import type {
     TSpaceAround,
     TValidationProps
 } from "../../../types";
+import {TPopoverPosition} from "../../../types";
 
 export declare type TInputFieldProps = TInputBaseProps & TValidationProps & {
     /**
@@ -198,7 +199,7 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
     /**
      * Sets the Spinner action buttons placement, valid values: `left` and `right`.
      */
-    spinButtonPlacement?: TLabelPosition;
+    spinButtonPlacement?: TLabelPosition | string;
     /**
      * Enable and shows the Plus-Minus action buttons which is used to
      * increment/decrement the numeric value.
@@ -207,7 +208,7 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
     /**
      * Sets the Plus-Minus action buttons placement, valid values: `left`, `right` and `both`.
      */
-    actionButtonPlacement?: TSpaceAround;
+    actionButtonPlacement?: TSpaceAround | string;
     /**
      * Sets the maximum allowed fraction or decimal digits for the displayed value.
      */
@@ -226,6 +227,69 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
     step?: string | number;
 }
 
+export declare type TSearchFieldOptionProps = {
+    /**
+     * Sets `<input>` element ID attribute. This property value is auto generates.
+     */
+    id?: string;
+    /**
+     * Sets `<input>` element name attribute.
+     */
+    name?: string;
+    /**
+     * Enable/disable the component and the `<input>` element.
+     */
+    disabled?: boolean;
+    /**
+     * Put the component in readonly state and sets the `<input>` element readonly attribute.
+     */
+    readonly?: boolean;
+    /**
+     * Autofocus field when document is loaded.
+     */
+    autofocus?: boolean;
+    /**
+     * Enable advance search panel. If true then Popover container will be enabled.
+     */
+    advanceSearch?: boolean;
+    /**
+     * Sets the field placeholder.
+     */
+    placeholder?: string;
+    /**
+     * Adapts search field to the container background color.
+     */
+    darkMode?: boolean;
+    /**
+     * Minimum characters to check before triggers the search event.
+     */
+    minlength?: number | string;
+    /**
+     * The value monitored by v-model to maintain field value.
+     */
+    modelValue?: string;
+    /**
+     * Popover container state: show or hide.
+     */
+    open?: boolean;
+    /**
+     * Custom CSS class for the Popover container.
+     */
+    popoverCls?: string | string[];
+    /**
+     * Sets minimum width for the Popover container.
+     */
+    popoverMinWidth?: number | string;
+    /**
+     * Sets the Popover display placement.
+     */
+    popoverPlacement?: TPopoverPosition | string;
+    /**
+     * Sets animation transition when displaying the Popover container.
+     */
+    transition?: string;
+}
+
 export declare type TBsTextField = ComponentObjectPropsOptions<TTextFieldOptionProps>;
 
 export declare type TBsTextArea = ComponentObjectPropsOptions<TTextAreaOptionProps>;
@@ -234,6 +298,8 @@ export declare type TBsChipField = ComponentObjectPropsOptions<TChipFieldOptionP
 
 export declare type TBsNumericField = ComponentObjectPropsOptions<TNumericFieldOptionProps>;
 
+export declare type TBsSearchField = ComponentObjectPropsOptions<TSearchFieldOptionProps>;
+
 export declare const BsTextField: DefineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
 export declare const BsTextArea: DefineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
@@ -241,3 +307,5 @@ export declare const BsTextArea: DefineComponent<TBsTextArea, TRecord, TRecord, 
 export declare const BsChipField: DefineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
 
 export declare const BsNumericField: DefineComponent<TBsNumericField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsSearchField: DefineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;

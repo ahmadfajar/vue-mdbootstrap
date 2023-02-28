@@ -1,7 +1,16 @@
 import type {Prop, PropType} from "vue";
-import {booleanProp, stringOrNumberProp, stringProp} from "../../../mixins/CommonProps";
+import {
+    booleanProp,
+    booleanTrueProp,
+    numberProp,
+    stringOrNumberProp,
+    stringProp,
+    validStringOrFloatProp
+} from "../../../mixins/CommonProps";
 import {useGenerateId} from "../../../mixins/CommonApi";
-import type {TShapeStyle} from "../../Icon/types";
+import {validationProps} from "../../Radio/mixins/validationProps";
+import type {TLabelPosition, TShapeStyle, TSpaceAround} from "../../../types";
+import {popoverDefaultTransitionProp, popoverPlacementProp} from "../../Popover/mixins/popoverProps";
 
 export const baseInputProps = {
     /**
@@ -118,4 +127,78 @@ export const textFieldProps = {
         default: 'outlined',
         validator: (value: string): boolean => ["outlined", "filled", "round", "sharp"].includes(value),
     } as Prop<'outlined' | 'filled' | 'round' | 'sharp'>,
+}
+
+export const numericFieldProps = {
+    ...inputProps,
+    ...textFieldProps,
+    ...validationProps,
+    autocomplete: {
+        type: [String, Boolean],
+        default: false
+    },
+    autofocus: booleanProp,
+    modelValue: numberProp,
+    placeholder: stringProp,
+    locale: stringProp,
+    useGrouping: booleanTrueProp,
+    spinButton: booleanTrueProp,
+    spinButtonPlacement: {
+        type: String as PropType<TLabelPosition>,
+        default: "right",
+        validator: (v: TLabelPosition) => ["left", "right"].includes(v)
+    },
+    actionButton: booleanProp,
+    actionButtonPlacement: {
+        type: String as PropType<TSpaceAround>,
+        default: "right",
+        validator: (v: TSpaceAround) => ["left", "right", "both"].includes(v)
+    },
+    maxFraction: {
+        type: [Number, String],
+        default: 3,
+        validator: (v: string) => !isNaN(parseInt(v))
+    },
+    maxValue: validStringOrFloatProp,
+    minValue: validStringOrFloatProp,
+    step: {
+        type: [Number, String],
+        default: 1.0,
+        validator: (v: string) => !isNaN(parseFloat(v))
+    },
+}
+
+export const searchFieldProps = {
+    id: {
+        type: String,
+        default: () => useGenerateId()
+    },
+    name: stringProp,
+    disabled: booleanProp,
+    readonly: booleanProp,
+    autofocus: booleanProp,
+    advanceSearch: booleanProp,
+    modelValue: stringProp,
+    open: booleanProp,
+    darkMode: booleanProp,
+    placeholder: {
+        type: String,
+        default: 'Search...'
+    },
+    minlength: {
+        type: [String, Number],
+        default: 4,
+        validator: (value: string) => parseInt(value, 10) > 0
+    },
+    popoverCls: {
+        type: [String, Array],
+        default: "bg-white rounded shadow"
+    },
+    popoverMinWidth: {
+        type: [Number, String],
+        default: 480,
+        validator: (value: string) => parseInt(value, 10) > 0
+    },
+    popoverPlacement: popoverPlacementProp,
+    transition: popoverDefaultTransitionProp,
 }

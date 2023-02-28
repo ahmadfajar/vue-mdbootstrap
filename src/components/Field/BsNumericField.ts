@@ -1,17 +1,7 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, PropType} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent, ref, watch} from "vue";
-import {inputProps, textFieldProps} from "./mixins/fieldProps";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {booleanProp, booleanTrueProp, numberProp, stringProp, validStringOrFloatProp} from "../../mixins/CommonProps";
-import type {
-    TBsNumericField,
-    TLabelPosition,
-    TNumericFieldOptionProps,
-    TNumericOpsOptions,
-    TRecord,
-    TSpaceAround
-} from "../../types";
-import {validationProps} from "../Radio/mixins/validationProps";
+import type {TBsNumericField, TNumericFieldOptionProps, TNumericOpsOptions, TRecord} from "../../types";
 import {
     useGetErrorItems,
     useHasValidated,
@@ -21,49 +11,13 @@ import {
 } from "../Radio/mixins/validationApi";
 import {useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton} from "./mixins/textFieldApi";
 import {useRenderNumericField} from "./mixins/numericFieldApi";
+import {numericFieldProps} from "./mixins/fieldProps";
 import Helper from "../../utils/Helper";
 
 
 export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsNumericField",
-    props: {
-        ...inputProps,
-        ...textFieldProps,
-        ...validationProps,
-        autocomplete: {
-            type: [String, Boolean],
-            default: false
-        },
-        autofocus: booleanProp,
-        modelValue: numberProp,
-        placeholder: stringProp,
-        locale: stringProp,
-        useGrouping: booleanTrueProp,
-        spinButton: booleanTrueProp,
-        spinButtonPlacement: {
-            type: String as PropType<TLabelPosition>,
-            default: "right",
-            validator: (v: TLabelPosition) => ["left", "right"].includes(v)
-        },
-        actionButton: booleanProp,
-        actionButtonPlacement: {
-            type: String as PropType<TSpaceAround>,
-            default: "right",
-            validator: (v: TSpaceAround) => ["left", "right", "both"].includes(v)
-        },
-        maxFraction: {
-            type: [Number, String],
-            default: 3,
-            validator: (v: string) => !isNaN(parseInt(v))
-        },
-        maxValue: validStringOrFloatProp,
-        minValue: validStringOrFloatProp,
-        step: {
-            type: [Number, String],
-            default: 1.0,
-            validator: (v: string) => !isNaN(parseFloat(v))
-        },
-    },
+    props: numericFieldProps,
     emits: [
         /**
          * Fired when this component lost focus.

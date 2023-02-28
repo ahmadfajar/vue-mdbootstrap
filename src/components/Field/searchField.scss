@@ -1,0 +1,85 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/functions";
+@import "../../../scss/mixins/placeholder";
+@import "~compass-mixins/lib/compass/css3";
+
+.#{$prefix}field-searchbox {
+    --#{$prefix}searchbox-bg: #{rgba($black, .015)};
+    --#{$prefix}searchbox-active-bg: #{$white};
+    --#{$prefix}searchbox-border-color: #{rgba($black, .07)};
+    --#{$prefix}searchbox-border-width: thin;
+    --#{$prefix}searchbox-active-border-color: var(--#{$prefix}field-primary-indicator);
+    --#{$prefix}searchbox-focused-shadow-rgba: rgba(98, 0, 238, 0.25);
+    --#{$prefix}searchbox-padding-x: .375rem;
+    --#{$prefix}searchbox-padding-y: .375rem;
+    --#{$prefix}searchbox-text-color: currentColor;
+
+    --#{$prefix}searchbox-state-opacity: 1;
+
+    position: relative;
+    width: 100%;
+
+    .#{$prefix}searchbox-inner {
+        --#{$prefix}searchbox-state-bg: var(--#{$prefix}searchbox-bg);
+        --#{$prefix}searchbox-state-border-color: var(--#{$prefix}searchbox-border-color);
+
+        @include transition(border-color $transition-basic, box-shadow $transition-basic);
+        @include flexbox((display: flex, align-items: center));
+        background-color: var(--#{$prefix}searchbox-state-bg);
+        border: var(--#{$prefix}searchbox-border-width) solid var(--#{$prefix}searchbox-state-border-color);
+        border-radius: var(--#{$bs-prefix}border-radius);
+        opacity: var(--#{$prefix}searchbox-state-opacity);
+        font-size: var(--#{$bs-prefix}body-font-size);
+        font-weight: 400;
+        line-height: 1.5;
+        padding: var(--#{$prefix}searchbox-padding-y) var(--#{$prefix}searchbox-padding-x);
+        position: relative;
+        width: 100%;
+
+        &.focused {
+            --#{$prefix}searchbox-state-bg: var(--#{$prefix}searchbox-active-bg);
+            --#{$prefix}searchbox-state-border-color: var(--#{$prefix}searchbox-active-border-color);
+
+            @include box-shadow(0 0 0.1rem 0.2rem var(--#{$prefix}searchbox-focused-shadow-rgba));
+        }
+
+        &.readonly {
+            --#{$prefix}searchbox-state-opacity: var(--#{$prefix}field-readonly-opacity);
+        }
+
+        &.disabled {
+            --#{$bs-prefix}searchbox-state-opacity: var(--#{$prefix}field-disabled-opacity);
+        }
+
+        label {
+            display: block;
+            margin: 0 0 0 4px;
+            padding: 0;
+            width: 100%;
+        }
+
+        input {
+            @include decorate-input-placeholder();
+            color: var(--#{$prefix}searchbox-text-color);
+            background: transparent;
+            border: 0 transparent;
+            width: 100%;
+            outline: none;
+            padding-left: 2px;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        &.#{$prefix}searchbox-dark {
+            --#{$prefix}searchbox-bg: #{rgba($black, .15)};
+            --#{$prefix}searchbox-active-bg: #{rgba($black, 0.35)};
+            --#{$prefix}searchbox-border-color: #{rgba($black, .085)};
+            --#{$prefix}searchbox-active-border-color: var(--#{$prefix}field-accent-indicator);
+            --#{$prefix}searchbox-focused-shadow-rgba: rgba(185, 156, 225, .32);
+            --#{$prefix}searchbox-text-color: #{$gray-300};
+        }
+    }
+}
