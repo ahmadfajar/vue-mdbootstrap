@@ -200,5 +200,5 @@ export const searchFieldProps = {
         validator: (value: string) => parseInt(value, 10) > 0
     },
     popoverPlacement: popoverPlacementProp,
-    transition: popoverDefaultTransitionProp,
+    popoverTransition: popoverDefaultTransitionProp,
 }

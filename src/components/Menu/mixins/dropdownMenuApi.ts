@@ -91,9 +91,7 @@ export function useRenderDropdownMenu(
             },
             onMouseenter: thisOnMouseEnter,
             onMouseleave: thisOnMouseLeave,
-            "onUpdate:open": (value: boolean) => {
-                isActive.value = value
-            },
+            "onUpdate:open": (value: boolean) => isActive.value = value,
         }, {
             default: () => slots.content && slots.content()
         })

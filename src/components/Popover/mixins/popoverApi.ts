@@ -2,6 +2,7 @@ import type {ComponentInternalInstance, ComputedRef, ExtractPropTypes, Ref, Shal
 import {createCommentVNode, h, mergeProps, nextTick, Teleport, vShow, withDirectives} from "vue";
 import type {TBsPopover, TPopoverOptionProps, TPopoverPosition, TRecord} from "../../../types";
 import {useRenderTransition} from "../../../mixins/CommonApi";
+import {isChildOf, isSVGElement} from "../../../mixins/DomHelper";
 import {BsOverlay} from "../../Animation";
 import clickOutside from "../../../directives/ClickOutside";
 import resize from "../../../directives/Resize";
@@ -233,8 +234,21 @@ function onPopoverClickOutside(
     const activatorEl = Helper.isString(props.trigger)
         ? document.querySelector(<string>props.trigger)
         : <Element>props.trigger;
-    if (activatorEl && activatorEl.contains(<Node>evt.target)) {
+    let target: HTMLElement | null | undefined = <HTMLElement | null>evt.target;
+
+    if (activatorEl && activatorEl.contains(<Node>target)) {
         return;
     }
+    if (activatorEl && isSVGElement(target)) {
+        target = target?.parentElement;
+
+        while (isSVGElement(target)) {
+            target = target?.parentElement;
+        }
+        if (isChildOf(activatorEl, target)) {
+            return;
+        }
+    }
+
     usePopoverClose(instance, isActive, "Clicked outside.");
 }

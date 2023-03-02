@@ -287,7 +287,7 @@ export declare type TSearchFieldOptionProps = {
     /**
      * Sets animation transition when displaying the Popover container.
      */
-    transition?: string;
+    popoverTransition?: string;
 }
 
 export declare type TBsTextField = ComponentObjectPropsOptions<TTextFieldOptionProps>;

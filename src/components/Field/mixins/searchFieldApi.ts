@@ -124,7 +124,7 @@ export function useRenderSearchField(
                     color: null,
                     class: props.popoverCls,
                     placement: props.popoverPlacement,
-                    transition: props.transition,
+                    transition: props.popoverTransition,
                     open: isPopoverOpen.value,
                     trigger: activator.value,
                     style: {

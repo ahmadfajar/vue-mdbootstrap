@@ -99,11 +99,12 @@ export function useMakeInputItemAttrs(
     return attr;
 }
 
-export function useRenderIconWithSlot(
+export function useRenderIconOrSlot(
     slot: Slots,
     name: string,
     btnMode: string,
     props: Readonly<TAvatarIconProps>,
+    iconId: string,
     iconPosition: string,
     iconSize?: number,
     slotArgs?: unknown,
@@ -124,6 +125,7 @@ export function useRenderIconWithSlot(
             {key: Helper.uuid(true)},
             !Helper.isEmpty(props.icon)
                 ? h<TBsIcon>(BsIcon, {
+                    id: !Helper.isEmpty(iconId) ? iconId : undefined,
                     class: {
                         [`${cssPrefix}icon-${iconPosition}`]: btnMode !== "icon" && btnMode !== "floating",
                     },
@@ -138,23 +140,26 @@ export function useRenderIconWithSlot(
 export function useRenderButtonContent(
     slots: Slots,
     props: Readonly<TButtonOptionProps>,
+    iconId: string,
 ): VNodeArrayChildren {
     return [
         (props.iconPosition === "left")
-            ? useRenderIconWithSlot(
+            ? useRenderIconOrSlot(
                 slots, "icon",
                 <string>props.mode,
                 props,
+                iconId,
                 props.iconPosition,
                 <number>props.iconSize,
             )
             : "",
         slots.default && slots.default(),
         (props.iconPosition === "right")
-            ? useRenderIconWithSlot(
+            ? useRenderIconOrSlot(
                 slots, "icon",
                 <string>props.mode,
                 props,
+                iconId,
                 props.iconPosition,
                 <number>props.iconSize,
             )
@@ -169,10 +174,11 @@ export function useRenderToggleItemContent(
 ): VNodeArrayChildren {
     return [
         (props.iconPosition === "left")
-            ? useRenderIconWithSlot(
+            ? useRenderIconOrSlot(
                 slots, "icon",
                 "default",
                 item,
+                (item.id ? `bs-icon-${item.id}` : ""),
                 props.iconPosition,
                 item.iconSize,
                 item,
@@ -187,10 +193,11 @@ export function useRenderToggleItemContent(
             item,
         ),
         (props.iconPosition === "right")
-            ? useRenderIconWithSlot(
+            ? useRenderIconOrSlot(
                 slots, "icon",
                 "default",
                 item,
+                (item.id ? `bs-icon-${item.id}` : ""),
                 props.iconPosition,
                 item.iconSize,
                 item,

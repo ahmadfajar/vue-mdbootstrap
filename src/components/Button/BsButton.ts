@@ -5,6 +5,7 @@ import {buttonProps} from "./mixins/buttonProps";
 import BsButtonInner from "./BsButtonInner";
 import Helper from "../../utils/Helper";
 import type {TBsButton, TBsButtonInner, TButtonOptionProps, TRecord} from "../../types";
+import {useGenerateId} from "../../mixins/CommonApi";
 
 export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsButton",
@@ -34,6 +35,7 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
                     : buttonType.value === "div" ? "div" : "button"
             )
         );
+        const iconId = useGenerateId();
 
         return () => {
             return h(tagName.value, {
@@ -50,7 +52,7 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
                     // @ts-ignore
                     rippleOff: <Prop<boolean>>rippleOff.value,
                 }, {
-                    default: () => useRenderButtonContent(slots, cmpProps)
+                    default: () => useRenderButtonContent(slots, cmpProps, iconId)
                 }),
             ]);
         }

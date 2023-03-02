@@ -1,5 +1,5 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, ref} from "vue";
+import {computed, defineComponent, ref, watch} from "vue";
 import type {TBsSearchField, TRecord, TSearchFieldOptionProps} from "../../types";
 import {searchFieldProps} from "./mixins/fieldProps";
 import {useRenderSearchField, useSearchFieldClasses} from "./mixins/searchFieldApi";
@@ -42,6 +42,15 @@ export default defineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions
         const isPopoverOpen = ref(<boolean>thisProps.open);
         const activator = ref<HTMLElement | null>(null);
         const classes = computed(() => useSearchFieldClasses(thisProps, isFocused))
+
+        watch(
+            () => thisProps.modelValue,
+            (value) => localValue.value = value
+        );
+        watch(
+            () => thisProps.open,
+            (value) => isPopoverOpen.value = <boolean>value
+        );
 
         return () =>
             useRenderSearchField(

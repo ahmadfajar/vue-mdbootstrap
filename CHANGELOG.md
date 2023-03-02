@@ -28,6 +28,7 @@ Released: April xx, 2023
 - **BsNumericField**: add property `actionIconVariant`, and `validationIcon`.
 - **BsOverlay**: add event `click`.
 - **BsPopover**: add property `color`.
+- **BsSearchField**: add property `advanceSearch`, `popoverTransition`.
 - **BsSideDrawer**: add property `position`, `fixedLayout`, `overlayColor`.
 - **BsSwitch**: add property `insetMode`, `insetOutlined`, `checkoffIcon`, `checkedIcon`.
 - **BsTab**: add property `disabled`, `iconSpin`, `iconPulse`, `iconFlip`, `iconRotation`.
@@ -124,6 +125,12 @@ Released: April xx, 2023
   - Deprecated property `externalValidator`, use property `validator` instead.
   - Replace event `change` with `update:modelValue`.
 - **BsRipple**: removed property `eventTrigger`.
+- **BsSearchField**:
+  - Replaced event `input` with `update:modelValue`.
+  - Replaced property `value` with `modelValue`.
+  - Replaced property `searchOptions` with `advanceSearch`.
+  - Replaced property `transition` with `popoverTransition`.
+  - Removed property `innerCls`.
 - **BsSwitch**:
   - Replaced property `checked` with `modelValue`.
   - Removed property `falseValue` and `trueValue`.
