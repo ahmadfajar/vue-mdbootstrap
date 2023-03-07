@@ -14,6 +14,7 @@ export * from "../components/Checkbox/types";
 export * from "../components/Chip/types";
 export * from "../components/ColorPicker/types";
 export * from "../components/Container/types";
+export * from "../components/DatePicker/types";
 export * from "../components/Drawer/types";
 export * from "../components/Field/types";
 export * from "../components/Icon/types";
@@ -33,6 +34,11 @@ export declare type TLabelPosition = "left" | "right";
 export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
 
 export declare type TRecord = Record<string, unknown>;
+
+export declare type TValueText<T> = {
+    value: T;
+    text: string;
+}
 
 export declare type TDirectiveBinding = {
     handler: VoidFunction | EventListener | EventListenerTarget;

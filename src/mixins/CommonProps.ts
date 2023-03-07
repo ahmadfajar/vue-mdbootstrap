@@ -18,6 +18,11 @@ export const numberProp = {
     default: undefined,
 }
 
+export const dateProp = {
+    type: Date,
+    default: undefined,
+}
+
 export const stringRequiredProp = {
     type: String,
     default: undefined,

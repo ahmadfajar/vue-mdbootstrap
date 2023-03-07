@@ -1,5 +1,3 @@
-import {formToJSON} from "axios";
-
 /**
  * Pads the input string with a given string (possibly repeated) so that the resulting string
  * reaches a given length. The padding is applied from the start (left) of the input string.

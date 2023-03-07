@@ -1,5 +1,11 @@
-import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import type {TRecord} from "../../../types";
+import type {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions
+} from "vue";
+import type {TLabelPosition, TRecord} from "../../../types";
 
 export declare type TSideDrawerOptionProps = {
     color?: string;
@@ -10,7 +16,7 @@ export declare type TSideDrawerOptionProps = {
     modalWidth?: number | string;
     open?: boolean;
     overlayColor?: string;
-    position?: "left" | "right" | string;
+    position?: TLabelPosition | string;
     shadow?: boolean;
     tag?: string;
     width?: number | string;

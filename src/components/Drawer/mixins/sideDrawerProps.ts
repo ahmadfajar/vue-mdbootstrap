@@ -1,4 +1,6 @@
+import type {PropType} from "vue";
 import {booleanProp, booleanTrueProp, whiteColorProp} from "../../../mixins/CommonProps";
+import type {TLabelPosition} from "../../../types";
 
 export const sideDrawerProps = {
     color: whiteColorProp,
@@ -21,7 +23,7 @@ export const sideDrawerProps = {
         default: "#000",
     },
     position: {
-        type: String,
+        type: String as PropType<TLabelPosition>,
         default: "left",
         validator: (value: string): boolean => ["left", "right"].includes(value),
     },

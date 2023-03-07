@@ -50,8 +50,7 @@
 }
 
 .slide-left-right, .slide-right-left,
-.slide-bottom-top, .slide-top-bottom,
-.picker-transition, .picker-transition-reverse {
+.slide-bottom-top, .slide-top-bottom {
     &-enter-active, &-leave-active {
         @include transition($md-transition-enter);
     }
@@ -69,8 +68,7 @@
     }
 }
 
-.slide-bottom-top,
-.picker-transition {
+.slide-bottom-top {
     &-enter-from {
         @include transform(translate(0, 100%));
     }
@@ -80,8 +78,7 @@
     }
 }
 
-.slide-top-bottom,
-.picker-transition-reverse {
+.slide-top-bottom {
     &-enter-from {
         @include transform(translate(0, -100%));
     }
