@@ -5,6 +5,7 @@ import type {TBsDatePickerHeader, TDatePickerHeaderProps, TRecord} from "../../t
 import {
     DatePickerConst,
     useDatePickerHeaderStyles,
+    useHeaderTitleFormatOpts,
     useRenderDatePickerHeader,
     useWatchOfDatePickerHeaderProps
 } from "./mixins/datePickerApi";
@@ -19,11 +20,7 @@ export default defineComponent<TBsDatePickerHeader, TRecord, TRecord, ComputedOp
     setup(props, {emit}) {
         const thisProps = props as Readonly<TDatePickerHeaderProps>;
         const reverse = ref(false);
-        const formatOpts = ref<Intl.DateTimeFormatOptions>({
-            weekday: "long",
-            month: "short",
-            day: "numeric"
-        });
+        const formatOpts = ref<Intl.DateTimeFormatOptions>(useHeaderTitleFormatOpts(thisProps.pickerMode));
         const localValue = ref<DateTime>(
             thisProps.modelValue ? DateTime.fromJSDate(thisProps.modelValue) : DateTime.now()
         );
@@ -34,9 +31,7 @@ export default defineComponent<TBsDatePickerHeader, TRecord, TRecord, ComputedOp
             thisProps.displayMode === DatePickerConst.YEAR && !thisProps.readonly
         );
         const isTitleActive = computed(() =>
-                thisProps.displayMode === (
-                    DatePickerConst.DATE || DatePickerConst.MONTH
-                ) && !thisProps.readonly
+            [DatePickerConst.DATE, DatePickerConst.MONTH].includes(<string>thisProps.displayMode) && !thisProps.readonly
         );
         const transitionName = computed(() =>
             reverse.value === true ? "slide-top-bottom" : "slide-bottom-top"

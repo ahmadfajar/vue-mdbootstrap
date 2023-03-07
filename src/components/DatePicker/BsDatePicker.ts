@@ -44,7 +44,9 @@ export default defineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions,
             () => thisProps.modelValue,
             (value) => {
                 localValue.value = useParseDate(value).setLocale(locale.value);
-                calendarDate.value = localValue.value.toJSDate();
+                if (thisProps.mode !== DatePickerConst.YEAR) {
+                    calendarDate.value = localValue.value.toJSDate();
+                }
             }
         );
         watch(

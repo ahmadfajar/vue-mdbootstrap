@@ -20,7 +20,7 @@
     }
 
     .#{$prefix}datepicker-body {
-        @include border-bottom-radius(var(--#{$prefix}datepiker-border-radius));
+        @include border-radius(var(--#{$prefix}datepiker-border-radius));
         min-height: 280px;
         position: relative;
 
@@ -52,7 +52,6 @@
             font-size: var(--#{$prefix}datepiker-title-font-size);
             overflow: hidden;
             position: relative;
-            word-wrap: normal;
         }
 
         > .#{$prefix}datepicker-subtitle {
@@ -150,7 +149,7 @@
         padding: calc(var(--#{$prefix}datepiker-padding-y) / 2) calc(var(--#{$prefix}datepiker-padding-x) - .25rem);
 
         .#{$prefix}picker-times {
-            margin-top: math.div($padding-base, 2);
+            margin-top: $padding-sm;
         }
 
         .#{$prefix}picker-hours {
@@ -164,12 +163,28 @@
             width: 1rem;
             font-size: 22px;
             font-weight: bold;
-            padding-bottom: math.div($padding-base, 4);
+            padding-bottom: $padding-xs;
+        }
+    }
+
+    &:not(.#{$prefix}landscape) {
+        .#{$prefix}datepicker-header {
+            + .#{$prefix}datepicker-body {
+                @include border-top-radius(0);
+            }
         }
     }
 
     &.#{$prefix}landscape {
+        .#{$prefix}datepicker-header {
+            @include border-left-radius(var(--#{$prefix}datepiker-border-radius));
+            @include border-right-radius(0);
+            width: 200px;
 
+            + .#{$prefix}datepicker-body {
+                @include border-left-radius(0);
+            }
+        }
     }
 }
 

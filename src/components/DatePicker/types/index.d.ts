@@ -22,6 +22,7 @@ export declare type TDatePickerHeaderProps = TDatePickerBaseProps & {
     color?: string;
     enableTime?: boolean;
     readonly?: boolean;
+    landscape?: boolean;
 }
 
 export declare type TDatePickerNavProps = TDatePickerBaseProps & {
@@ -37,6 +38,7 @@ export declare type TDatePickerCalendarProps = TDatePickerBaseProps & {
 }
 
 export declare type TTimePickerProps = TDatePickerBaseProps & {
+    backButton?: boolean;
     disabled?: boolean;
     selectedColor?: string;
 }

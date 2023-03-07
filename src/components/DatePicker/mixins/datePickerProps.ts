@@ -21,6 +21,7 @@ export const datePickerHeaderProps = {
     displayMode: pickerModeProp,
     pickerMode: pickerModeProp,
     enableTime: booleanTrueProp,
+    landscape: booleanProp,
     locale: stringProp,
     readonly: booleanProp,
     modelValue: dateProp,
@@ -35,6 +36,7 @@ export const datePickerNavProps = {
 }
 
 export const datePickerTimesProps = {
+    backButton: booleanTrueProp,
     disabled: booleanProp,
     locale: stringProp,
     modelValue: dateProp,
