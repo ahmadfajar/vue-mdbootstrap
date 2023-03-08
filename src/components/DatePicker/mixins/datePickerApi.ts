@@ -194,7 +194,7 @@ export function useRenderDatePickerHeader(
                         }
                     }
                 }, [
-                    [DatePickerConst.MONTH, DatePickerConst.YEAR].includes(<string>props.pickerMode)
+                    [DatePickerConst.MONTH, DatePickerConst.YEAR, DatePickerConst.TIME].includes(<string>props.pickerMode)
                         ? ""
                         : localValue.value.toLocaleString({year: "numeric"})
                 ]
@@ -1066,7 +1066,7 @@ export function useParseDate(value?: string | number | Date): DateTime {
                 try {
                     return DateTime.fromSQL(<string>value);
                 } catch (e) {
-                    return DateTime.now();
+                    return DateTime.now().set({millisecond: 0});
                 }
             }
         } else if (Helper.isNumber(value)) {
@@ -1076,13 +1076,14 @@ export function useParseDate(value?: string | number | Date): DateTime {
         }
     }
 
-    return DateTime.now();
+    return DateTime.now().set({millisecond: 0});
 }
 
 export function useRenderDatePicker(
     props: Readonly<ExtractPropTypes<TBsDatePicker>>,
     emit: TEmitFn,
     showTime: ComputedRef<boolean>,
+    pickerMode: Ref<TDateTimePickerMode>,
     currentView: Ref<TDateTimePickerMode>,
     locale: Ref<string>,
     localValue: Ref<DateTime>,
@@ -1115,7 +1116,7 @@ export function useRenderDatePicker(
                         color: props.headerColor,
                         enableTime: showTime.value,
                         displayMode: currentView.value,
-                        pickerMode: (props.mode || props.viewMode),
+                        pickerMode: pickerMode.value,
                         landscape: props.landscape,
                         locale: locale.value,
                         modelValue: thisValue,
@@ -1130,7 +1131,7 @@ export function useRenderDatePicker(
                 class: {
                     [`${cssPrefix}datepicker-body`]: true,
                     [`bg-${thisProps.surfaceColor}`]: thisProps.surfaceColor,
-                    ["d-flex align-items-center"]: thisProps.mode === DatePickerConst.TIME,
+                    ["d-flex align-items-center"]: pickerMode.value === DatePickerConst.TIME,
                 },
                 style: {
                     width: thisProps.landscape && !thisProps.fullWidth ? Helper.cssUnit(thisProps.width) : undefined
@@ -1147,10 +1148,7 @@ export function useRenderDatePicker(
                                 locale: locale.value,
                                 modelValue: calendarValue.value,
                                 onToggle: (oldMode: TDateTimePickerMode) => {
-                                    currentView.value = nextDisplayMode(
-                                        <TDateTimePickerMode>(thisProps.mode || thisProps.viewMode),
-                                        oldMode
-                                    );
+                                    currentView.value = nextDisplayMode(pickerMode.value, oldMode);
                                 },
                                 "onUpdate:model-value": (value: Date) => {
                                     calendarValue.value = value;
@@ -1172,7 +1170,7 @@ export function useRenderDatePicker(
                                 selectedColor: props.headerColor,
                                 "onUpdate:model-value": (value: Date) => {
                                     calendarValue.value = value;
-                                    emit("update:model-value", value);
+                                    dispatchDatePickerValue(emit, pickerMode.value, value);
                                 },
                             })
                             : undefined
@@ -1187,8 +1185,8 @@ export function useRenderDatePicker(
                                 selectedColor: props.headerColor,
                                 "onUpdate:model-value": (value: Date) => {
                                     calendarValue.value = value;
-                                    emit("update:model-value", value);
-                                    if ([DatePickerConst.DATE, DatePickerConst.DATETIME].includes(<string>thisProps.mode)) {
+                                    dispatchDatePickerValue(emit, pickerMode.value, value);
+                                    if ([DatePickerConst.DATE, DatePickerConst.DATETIME].includes(pickerMode.value)) {
                                         currentView.value = <TDateTimePickerMode>DatePickerConst.DATE;
                                     }
                                 },
@@ -1204,8 +1202,8 @@ export function useRenderDatePicker(
                                 calendarDate: calendarValue.value,
                                 selectedColor: props.headerColor,
                                 "onUpdate:model-value": (value: Date) => {
-                                    emit("update:model-value", value);
-                                    if ([DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(<string>thisProps.mode)) {
+                                    dispatchDatePickerValue(emit, pickerMode.value, value);
+                                    if ([DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(pickerMode.value)) {
                                         currentView.value = <TDateTimePickerMode>DatePickerConst.MONTH;
                                     }
                                 },
@@ -1219,13 +1217,13 @@ export function useRenderDatePicker(
                                 modelValue: thisValue,
                                 disabled: props.readonly,
                                 selectedColor: props.headerColor,
-                                backButton: thisProps.mode !== DatePickerConst.TIME,
+                                backButton: pickerMode.value !== DatePickerConst.TIME,
                                 onClose: () => {
                                     currentView.value = <TDateTimePickerMode>DatePickerConst.DATE;
                                 },
                                 "onUpdate:model-value": (value: Date) => {
                                     calendarValue.value = value;
-                                    emit("update:model-value", value);
+                                    dispatchDatePickerValue(emit, pickerMode.value, value);
                                 },
                             })
                             : undefined
@@ -1234,6 +1232,24 @@ export function useRenderDatePicker(
             ]),
         ])
     ]);
+}
+
+function dispatchDatePickerValue(
+    emit: TEmitFn,
+    pickerMode: TDateTimePickerMode,
+    value: Date,
+) {
+    if (pickerMode === DatePickerConst.YEAR) {
+        emit("update:model-value", value.getFullYear().toString(10));
+    } else if (pickerMode === DatePickerConst.MONTH) {
+        emit("update:model-value", DateTime.fromJSDate(value).toFormat("yyyy-MM"));
+    } else if (pickerMode === DatePickerConst.DATE) {
+        emit("update:model-value", DateTime.fromJSDate(value).toISODate());
+    } else if (pickerMode === DatePickerConst.TIME) {
+        emit("update:model-value", DateTime.fromJSDate(value).toISOTime({suppressMilliseconds: true}));
+    } else {
+        emit("update:model-value", DateTime.fromJSDate(value).toISO({suppressMilliseconds: true}));
+    }
 }
 
 function nextDisplayMode(
