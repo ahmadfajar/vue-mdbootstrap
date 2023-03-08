@@ -31,7 +31,10 @@ export default defineComponent<TBsDatePickerHeader, TRecord, TRecord, ComputedOp
             thisProps.displayMode === DatePickerConst.YEAR && !thisProps.readonly
         );
         const isTitleActive = computed(() =>
-            [DatePickerConst.DATE, DatePickerConst.MONTH].includes(<string>thisProps.displayMode) && !thisProps.readonly
+            ((thisProps.displayMode === DatePickerConst.DATE
+                    && [DatePickerConst.DATE, DatePickerConst.DATETIME].includes(<string>thisProps.pickerMode))
+                || (thisProps.displayMode === DatePickerConst.MONTH && thisProps.pickerMode === DatePickerConst.MONTH)
+            ) && !thisProps.readonly
         );
         const transitionName = computed(() =>
             reverse.value === true ? "slide-top-bottom" : "slide-bottom-top"

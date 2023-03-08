@@ -205,6 +205,7 @@
     &:hover {
         --#{$bs-prefix}btn-state-box-shadow: #{$z-depth-1};
         --#{$bs-prefix}btn-state-bg: var(--#{$bs-prefix}btn-hover-bg);
+        --#{$bs-prefix}btn-state-color: var(--#{$bs-prefix}btn-hover-color);
         --#{$bs-prefix}btn-state-border-color: var(--#{$bs-prefix}btn-hover-border-color);
     }
 

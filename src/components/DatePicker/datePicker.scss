@@ -186,5 +186,32 @@
             }
         }
     }
-}
 
+    .#{$prefix}datepicker-header {
+        &.bg-white, &.bg-light, &.bg-light-grey, &.bg-yellow {
+            --#{$prefix}datepiker-header-color: #{$grey-darken-3};
+        }
+    }
+
+    .#{$prefix}datepicker-body {
+        &:not(.bg-white):not(.bg-light):not(.bg-light-grey):not(.bg-amber):not(.bg-lime):not(.bg-yellow) {
+            --#{$prefix}datepiker-table-header-color: #{$grey-base};
+
+            color: $grey-lighten-4;
+
+            .btn-flat-dark {
+                --#{$bs-prefix}btn-color: #{$grey-lighten-2};
+                --#{$bs-prefix}btn-hover-color: #{$white};
+                --#{$bs-prefix}btn-hover-bg: rgba(70, 70, 70, 0.8);
+            }
+
+            &.bg-grey {
+                --#{$prefix}datepiker-table-header-color: #{$grey-lighten-3};
+
+                .btn-flat-dark {
+                    --#{$bs-prefix}btn-color: #{$grey-lighten-4};
+                }
+            }
+        }
+    }
+}
