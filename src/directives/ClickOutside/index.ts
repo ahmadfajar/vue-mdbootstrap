@@ -41,6 +41,8 @@ function unmounted(el: IBindingElement): void {
         } else {
             document.removeEventListener('click', handler);
         }
+
+        delete el.__clickOutsideListener;
     }
 }
 

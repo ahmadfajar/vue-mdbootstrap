@@ -51,6 +51,8 @@ function unmounted(el: IBindingElement): void {
         } else {
             el.removeEventListener("scroll", handler, options);
         }
+
+        delete el.__scrollListener;
     }
 }
 

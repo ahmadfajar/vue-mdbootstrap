@@ -40,6 +40,11 @@ export declare type TValueText<T> = {
     text: string;
 }
 
+export declare type TDebounce = {
+    timerId?: number;
+    lastExec?: number;
+}
+
 export declare type TDirectiveBinding = {
     handler: VoidFunction | EventListener | EventListenerTarget;
     debounce?: number;

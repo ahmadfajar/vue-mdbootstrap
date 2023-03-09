@@ -1,6 +1,6 @@
 import {DateTime, DateTimeUnit, DurationObjectUnits} from "luxon";
 import type {ComputedRef, ExtractPropTypes, Ref, VNode} from "vue";
-import {computed, createCommentVNode, h, ref, toDisplayString, watch} from "vue";
+import {computed, createCommentVNode, h, ref, toDisplayString, watch, withDirectives} from "vue";
 import {cssPrefix, useRenderTransition} from "../../../mixins/CommonApi";
 import type {
     TBsDatePicker,
@@ -10,6 +10,7 @@ import type {
     TDatePickerNavProps,
     TDatePickerOptionProps,
     TDateTimePickerMode,
+    TDebounce,
     TEmitFn,
     TRecord,
     TTimePickerMode,
@@ -17,6 +18,7 @@ import type {
     TValueText
 } from "../../../types";
 import {BsButton} from "../../Button";
+import Touch from "../../../directives/Touch";
 import Helper from "../../../utils/Helper";
 import BsDatePickerHeader from "../BsDatePickerHeader";
 import BsDatePickerNav from "../BsDatePickerNav";
@@ -444,6 +446,44 @@ export function useDatePickerCalenderSetup(
     return {reverse, localValue, calendarDate, transitionName}
 }
 
+function shiftDatePickerCalendar(
+    mode: TDateTimePickerMode,
+    dateRef: DateTime,
+    emit: TEmitFn,
+    delta: number
+) {
+    let result: DateTime | undefined;
+    const length = delta > 0 ? 1 : (delta < 0 ? -1 : 0);
+
+    if (mode === DatePickerConst.DATE && length !== 0) {
+        result = shiftMonthTo(dateRef, length);
+    } else if (mode === DatePickerConst.MONTH && length !== 0) {
+        result = shiftYearTo(dateRef, length);
+    } else if (mode === DatePickerConst.YEAR && length !== 0) {
+        result = shiftYearTo(dateRef, length * 12);
+    }
+
+    result && emit("change:calendar", result.toJSDate());
+}
+
+function debounceShiftDatePickerCalendar(
+    debounceRef: TDebounce,
+    mode: TDateTimePickerMode,
+    dateRef: Ref<DateTime>,
+    emit: TEmitFn,
+    delay: number,
+    delta: number,
+) {
+    if (!debounceRef.lastExec || ((Date.now() - debounceRef.lastExec) > delay)) {
+        clearTimeout(debounceRef.timerId);
+        debounceRef.lastExec = Date.now();
+        Helper.defer(
+            shiftDatePickerCalendar, delay,
+            mode, dateRef.value, emit, delta
+        );
+    }
+}
+
 export function useRenderDatePickerDays(
     props: Readonly<TDatePickerCalendarProps>,
     emit: TEmitFn,
@@ -451,12 +491,20 @@ export function useRenderDatePickerDays(
     tableDays: ComputedRef<TValueText<DateTime | undefined>[][]>,
     localValue: Ref<DateTime>,
     calendarValue: Ref<DateTime>,
+    debounceRef: TDebounce,
 ): VNode {
     const dayNames = weekdayNames(props.locale);
     const today = DateTime.now();
 
-    return h("div", {
-        class: [`${cssPrefix}datepicker-days`]
+    return withDirectives(h("div", {
+        class: [`${cssPrefix}datepicker-days`],
+        onWheel: (e: WheelEvent) => {
+            e.preventDefault();
+            debounceShiftDatePickerCalendar(
+                debounceRef, <TDateTimePickerMode>DatePickerConst.DATE,
+                calendarValue, emit, 500, e.deltaY,
+            );
+        },
     }, [
         useRenderTransition({
             name: transitionName.value
@@ -496,6 +544,23 @@ export function useRenderDatePickerDays(
                 ),
             ]),
         ]),
+    ]), [
+        [Touch, {
+            left: (e: WheelEvent) => {
+                (e.deltaX < -10 || e.deltaX > 10) &&
+                shiftDatePickerCalendar(
+                    <TDateTimePickerMode>DatePickerConst.DATE,
+                    calendarValue.value, emit, e.deltaX * -1,
+                );
+            },
+            right: (e: WheelEvent) => {
+                (e.deltaX < -10 || e.deltaX > 10) &&
+                shiftDatePickerCalendar(
+                    <TDateTimePickerMode>DatePickerConst.DATE,
+                    calendarValue.value, emit, e.deltaX * -1,
+                );
+            }
+        }],
     ]);
 }
 
@@ -692,11 +757,19 @@ export function useRenderDatePickerMonths(
     tableMonths: ComputedRef<TValueText<DateTime>[][]>,
     localValue: Ref<DateTime>,
     calendarValue: Ref<DateTime>,
+    debounceRef: TDebounce,
 ): VNode {
     const today = DateTime.now();
 
-    return h("div", {
-        class: [`${cssPrefix}datepicker-months`]
+    return withDirectives(h("div", {
+        class: [`${cssPrefix}datepicker-months`],
+        onWheel: (e: WheelEvent) => {
+            e.preventDefault();
+            debounceShiftDatePickerCalendar(
+                debounceRef, <TDateTimePickerMode>DatePickerConst.MONTH,
+                calendarValue, emit, 500, e.deltaY,
+            );
+        },
     }, [
         useRenderTransition({
             name: transitionName.value
@@ -725,7 +798,24 @@ export function useRenderDatePickerMonths(
                 ),
             ]),
         ]),
-    ])
+    ]), [
+        [Touch, {
+            left: (e: WheelEvent) => {
+                (e.deltaX < -10 || e.deltaX > 10) &&
+                shiftDatePickerCalendar(
+                    <TDateTimePickerMode>DatePickerConst.MONTH,
+                    calendarValue.value, emit, e.deltaX * -1,
+                );
+            },
+            right: (e: WheelEvent) => {
+                (e.deltaX < -10 || e.deltaX > 10) &&
+                shiftDatePickerCalendar(
+                    <TDateTimePickerMode>DatePickerConst.MONTH,
+                    calendarValue.value, emit, e.deltaX * -1,
+                );
+            }
+        }],
+    ]);
 }
 
 function createCalendarButton(
@@ -761,11 +851,19 @@ export function useRenderDatePickerYears(
     tableYears: ComputedRef<TValueText<DateTime>[][]>,
     localValue: Ref<DateTime>,
     calendarValue: Ref<DateTime>,
+    debounceRef: TDebounce,
 ): VNode {
     const today = DateTime.now();
 
-    return h("div", {
-        class: [`${cssPrefix}datepicker-years`]
+    return withDirectives(h("div", {
+        class: [`${cssPrefix}datepicker-years`],
+        onWheel: (e: WheelEvent) => {
+            e.preventDefault();
+            debounceShiftDatePickerCalendar(
+                debounceRef, <TDateTimePickerMode>DatePickerConst.YEAR,
+                calendarValue, emit, 500, e.deltaY,
+            );
+        },
     }, [
         useRenderTransition({
             name: transitionName.value
@@ -794,7 +892,24 @@ export function useRenderDatePickerYears(
                 ),
             ]),
         ]),
-    ])
+    ]), [
+        [Touch, {
+            left: (e: WheelEvent) => {
+                (e.deltaX < -10 || e.deltaX > 10) &&
+                shiftDatePickerCalendar(
+                    <TDateTimePickerMode>DatePickerConst.YEAR,
+                    calendarValue.value, emit, e.deltaX * -1,
+                );
+            },
+            right: (e: WheelEvent) => {
+                (e.deltaX < -10 || e.deltaX > 10) &&
+                shiftDatePickerCalendar(
+                    <TDateTimePickerMode>DatePickerConst.YEAR,
+                    calendarValue.value, emit, e.deltaX * -1,
+                );
+            }
+        }],
+    ]);
 }
 
 export function useRenderDatePickerTimes(
@@ -1172,6 +1287,9 @@ export function useRenderDatePicker(
                                     calendarValue.value = value;
                                     dispatchDatePickerValue(emit, pickerMode.value, value);
                                 },
+                                "onChange:calendar": (value: Date) => {
+                                    calendarValue.value = value;
+                                },
                             })
                             : undefined
                     ), (
@@ -1190,6 +1308,9 @@ export function useRenderDatePicker(
                                         currentView.value = <TDateTimePickerMode>DatePickerConst.DATE;
                                     }
                                 },
+                                "onChange:calendar": (value: Date) => {
+                                    calendarValue.value = value;
+                                },
                             })
                             : undefined
                     ), (
@@ -1206,6 +1327,9 @@ export function useRenderDatePicker(
                                     if ([DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(pickerMode.value)) {
                                         currentView.value = <TDateTimePickerMode>DatePickerConst.MONTH;
                                     }
+                                },
+                                "onChange:calendar": (value: Date) => {
+                                    calendarValue.value = value;
                                 },
                             })
                             : undefined
