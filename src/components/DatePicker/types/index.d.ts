@@ -6,6 +6,7 @@ import type {
     EmitsOptions
 } from "vue";
 import type {TRecord} from "../../../types";
+import {TInputFieldProps} from "../../../types";
 
 export declare type TDateTimePickerMode = "date" | "datetime" | "year" | "month" | "time";
 
@@ -95,6 +96,87 @@ export declare type TDatePickerOptionProps = {
     width?: number | string;
 }
 
+export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
+    /**
+     * Autofocus field when this component is mounted.
+     */
+    autofocus?: boolean;
+    /**
+     * Sets the field placeholder.
+     */
+    placeholder?: string;
+    /**
+     * This component's header panel background color.
+     */
+    headerColor?: string;
+    /**
+     * Show or hide header panel.
+     */
+    headerPanel?: boolean;
+    /**
+     * Display DatePicker component in landscape orientation.
+     */
+    landscapeMode?: boolean;
+    /**
+     * Define default locale to be used. Defaults is using browser's locale.
+     */
+    locale?: string;
+    /**
+     * This component's value which is monitored by `v-model`.
+     *
+     * The initial value can be:
+     * - From an ISO 8601 valid string.
+     * - From a number of seconds since the epoch (meaning since 1 January 1970 00:00:00 UTC).
+     */
+    modelValue?: string | number;
+    /**
+     * The format string to display the datetime value.
+     */
+    displayFormat?: string;
+    /**
+     * The format string for the datetime output value and also format pattern to parse the initial `modelValue` data.
+     */
+    valueFormat?: string;
+    /**
+     * DatePicker popup state: show or hide.
+     */
+    open?: boolean;
+    /**
+     * @deprecated
+     * Use `pickerMode` property instead.
+     */
+    viewMode?: TDateTimePickerMode | string;
+    /**
+     * This component's DatePicker view mode, valid values are: `datetime`, `date`, `month`, `year`, `time`
+     */
+    pickerMode?: TDateTimePickerMode | string;
+    /**
+     * Custom CSS class for the DatePicker container.
+     */
+    pickerCls?: string | string[];
+    /**
+     * The DatePicker surface background color.
+     */
+    pickerColor?: string;
+    /**
+     * Sets the DatePicker popup display placement.
+     */
+    pickerPlacement?: string;
+    /**
+     * DatePicker's container width, default is 300px.
+     */
+    pickerWidth?: number | string;
+    /**
+     * Transition animation when showing the DateTime picker. This animation is effected by picker-placement property.
+     */
+    pickerTransition?: string;
+    /**
+     * @deprecated
+     * Use `pickerTransition` property instead.
+     */
+    transition?: string;
+}
+
 export declare type TBsDatePicker = ComponentObjectPropsOptions<TDatePickerOptionProps>;
 
 export declare type TBsDatePickerHeader = ComponentObjectPropsOptions<TDatePickerHeaderProps>;
@@ -105,4 +187,8 @@ export declare type TBsDatePickerCalendar = ComponentObjectPropsOptions<TDatePic
 
 export declare type TBsDatePickerTimes = ComponentObjectPropsOptions<TTimePickerProps>;
 
+export declare type TBsDateTimeField = ComponentObjectPropsOptions<TDateTimeFieldOptionProps>;
+
 export declare const BsDatePicker: DefineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsDateTimeField: DefineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
