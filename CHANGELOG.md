@@ -17,6 +17,7 @@ Released: April xx, 2023
 - **BsButton**: add slot `icon` for placing a custom icon.
 - **BsChip**: add property `iconVariant`, `pill`.
 - **BsChipField**: add property `actionIconVariant`, `validationIcon`, `chipPill`.
+- **BsDatePicker**: add property `surfaceColor`, support mousewheel, touch screen and internationalization.
 - **BsDropdownMenu**: add property `space`.
 - **BsListNav**: add property `id`.
 - **BsListNavItem**: add property `id`, `borderOff`, `pillOff`, `roundedOff`, `badgeColor`, and `badgeType`.
@@ -95,6 +96,15 @@ Released: April xx, 2023
   - Replaced slot `appendIconOuter` with `appendOuter`.
   - Removed event `change`, already covered by event `update:modelValue`.
   - Deprecated property `externalValidator`, use property `validator` instead.
+- **BsDatePicker**: 
+  - Replaced property `value` with `modelValue`.
+  - Replaced event `input` with `update:modelValue`.
+  - Deprecated property `viewMode`, use property `mode` instead.
+  - Removed property `color`.
+  - Removed property `firstDayOfWeek`.
+  - Removed property `format`.
+  - Replaced dependency of `momentjs` with `luxon`.
+  - The output value of the `modelValue` property follows the **ISO 8601** standard.
 - **BsIcon**: replace property `rotation` with `rotate`.
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
 - **BsListNavItem**:
