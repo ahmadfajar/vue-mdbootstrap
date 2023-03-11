@@ -69,7 +69,7 @@ export default class BsModel implements IBsModel {
     private readonly _dataProperty: string;
     private readonly _csrfConfig: Readonly<TCSRFConfig> | undefined;
     private readonly _restUrl: TRestConfig;
-    private readonly _data: TRecord;
+    private _data: TRecord;
     private _schema: TRecord;
     private _proxy: IRestAdapter;
     private _state: TModelState;
@@ -182,15 +182,10 @@ export default class BsModel implements IBsModel {
     }
 
     destroy(): void {
-        this.getFields().forEach(k => {
-            // @ts-ignore
-            this[k] = undefined;
-            // @ts-ignore
-            delete this[k]
-        });
-
         // @ts-ignore
-        this._schema = undefined;
+        delete this._data;
+        // @ts-ignore
+        delete this._schema;
         // @ts-ignore
         this._proxy = undefined;
     }
