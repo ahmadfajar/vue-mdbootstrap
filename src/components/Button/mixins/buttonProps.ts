@@ -56,6 +56,7 @@ export const buttonProps = {
      * @type {boolean}
      */
     disabled: booleanProp,
+    readonly: booleanProp,
     /**
      * This button component mode, valid values are: `default, icon, floating`.
      * @type {string}

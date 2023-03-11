@@ -228,7 +228,7 @@ function onPopoverClickOutside(
     isActive: Ref<boolean>,
     evt: Event,
 ): void {
-    if (props.overlay && !props.overlayClickClose) {
+    if ((props.overlay && !props.overlayClickClose) || !isActive.value) {
         return;
     }
     const activatorEl = Helper.isString(props.trigger)
@@ -245,9 +245,9 @@ function onPopoverClickOutside(
         while (isSVGElement(target)) {
             target = target?.parentElement;
         }
-        if (isChildOf(activatorEl, target)) {
-            return;
-        }
+    }
+    if (isChildOf(activatorEl, target)) {
+        return;
     }
 
     usePopoverClose(instance, isActive, "Clicked outside.");

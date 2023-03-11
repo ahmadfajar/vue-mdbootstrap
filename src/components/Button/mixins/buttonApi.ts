@@ -31,6 +31,7 @@ export function useMakeButtonProps(
             "rounded-pill": props.mode !== "icon" && props.pill,
             "rounded-1": props.mode !== "icon" && !props.pill && !props.rounded,
             "disabled": disabled,
+            "readonly": props.readonly,
             "active": props.active,
         },
         role: "button",

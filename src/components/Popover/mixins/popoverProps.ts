@@ -6,7 +6,7 @@ import {
     validStringOrNumberProp,
     whiteColorProp
 } from "../../../mixins/CommonProps";
-import type {PropType} from "vue";
+import type {Prop, PropType} from "vue";
 import type {TPopoverPosition} from "../types";
 
 export const popoverPlacementProp = {
@@ -18,7 +18,7 @@ export const popoverPlacementProp = {
         "left", "left-top", "left-bottom",
         "right", "right-top", "right-bottom"
     ].includes(value)
-}
+} as Prop<TPopoverPosition>
 
 export const popoverDefaultTransitionProp = {
     type: String,

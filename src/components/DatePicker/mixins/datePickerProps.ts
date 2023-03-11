@@ -1,19 +1,29 @@
-import type {PropType} from "vue";
+import type {Prop, PropType} from "vue";
 import {
     booleanProp,
     booleanTrueProp,
     dateProp,
     primaryColorProp,
+    stringOrNumberProp,
     stringProp,
     whiteColorProp
 } from "../../../mixins/CommonProps";
+import {inputProps, textFieldProps} from "../../Field/mixins/fieldProps";
+import {validationProps} from "../../Radio/mixins/validationProps";
+import {popoverDefaultTransitionProp, popoverPlacementProp} from "../../Popover/mixins/popoverProps";
 import type {TDateTimePickerMode} from "../types";
 import {DatePickerConst} from "./datePickerApi";
 
-export const pickerModeProp = {
+const pickerModeProp = {
     type: String as PropType<TDateTimePickerMode>,
     default: "date",
     validator: (value: TDateTimePickerMode) => DatePickerConst.viewModes.includes(value)
+} as Prop<TDateTimePickerMode>
+
+const pickerWidthProp = {
+    type: [Number, String],
+    default: 300,
+    validator: (value: string) => parseInt(value, 10) > 0
 }
 
 export const datePickerHeaderProps = {
@@ -65,9 +75,36 @@ export const datePickerProps = {
         type: [String, Number, Date],
         default: undefined
     },
-    width: {
-        type: [Number, String],
-        default: 300,
-        validator: (value: string) => parseInt(value, 10) > 0
+    width: pickerWidthProp,
+}
+
+export const dateTimeFieldProps = {
+    ...inputProps,
+    ...textFieldProps,
+    ...validationProps,
+    autofocus: booleanProp,
+    modelValue: stringOrNumberProp,
+    placeholder: stringProp,
+    locale: stringProp,
+    displayFormat: stringProp,
+    valueFormat: {
+        type: String,
+        default: "yyyy-MM-dd",
     },
+    headerColor: primaryColorProp,
+    headerPanel: booleanTrueProp,
+    landscapeMode: booleanProp,
+    open: booleanProp,
+    openOnHover: booleanProp,
+    pickerCls: {
+        type: [String, Array],
+        default: "bg-white rounded shadow"
+    },
+    pickerColor: whiteColorProp,
+    pickerMode: pickerModeProp,
+    viewMode: pickerModeProp,
+    pickerTransition: popoverDefaultTransitionProp,
+    transition: popoverDefaultTransitionProp,
+    pickerPlacement: popoverPlacementProp,
+    pickerWidth: pickerWidthProp,
 }

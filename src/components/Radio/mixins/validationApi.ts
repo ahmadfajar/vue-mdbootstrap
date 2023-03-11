@@ -79,10 +79,12 @@ export function useRenderFieldFeedback(
     showValidationError: boolean,
     hasError: boolean,
     errorItems: Array<string>,
+    onClickHandler?: (evt: Event) => void,
 ): VNode {
     return (props.helpText || showValidationError)
         ? h("div", {
-            class: `${cssPrefix}field-feedback`
+            class: `${cssPrefix}field-feedback`,
+            onClick: onClickHandler
         }, [
             useRenderTransition(
                 {name: "field-feedback"},

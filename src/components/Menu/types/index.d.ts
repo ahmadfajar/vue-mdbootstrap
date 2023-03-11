@@ -39,7 +39,7 @@ export declare type TDropdownMenuOptionProps = {
     /**
      * This Dropdown menu display placement.
      */
-    placement?: TPopoverPosition | string;
+    placement?: TPopoverPosition;
     /**
      * Transition animation when displaying this Dropdown menu. This animation is effected by `placement` property.
      */

@@ -121,7 +121,6 @@ export function useRenderChipField(
     localValue: Ref<string[]>,
     isFocused: Ref<boolean>,
     autocomplete: string | boolean,
-    iconSize: number,
     showClearButton: Ref<boolean>,
     showHelpText: Ref<boolean>,
     showValidationError: Ref<boolean>,
@@ -131,6 +130,7 @@ export function useRenderChipField(
 ): VNode {
     const thisProps = props as Readonly<TChipFieldOptionProps>;
     const valueAsArray = Array.isArray(props.modelValue);
+    const iconSize = 24;
 
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, thisProps,
@@ -140,11 +140,13 @@ export function useRenderChipField(
             useCreateFieldInnerWrapper(
                 slots,
                 thisProps,
-                iconSize,
                 [
                     createFieldChips(props, emit, inputValue, localValue),
                     createFieldInput(thisProps, emit, inputValue, localValue, isFocused, autocomplete),
                 ],
+                iconSize,
+                thisProps.appendIcon,
+                thisProps.prependIcon,
                 useCreateFieldActionIcon(
                     showClearButton.value,
                     hasValidated.value,

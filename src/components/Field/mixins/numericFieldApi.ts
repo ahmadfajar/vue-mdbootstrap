@@ -294,7 +294,6 @@ export function useRenderNumericField(
     inputRef: Ref<HTMLElement | null>,
     hasFocus: Ref<boolean>,
     autocomplete: string | boolean,
-    iconSize: number,
     showClearButton: Ref<boolean>,
     showHelpText: Ref<boolean>,
     showValidationError: Ref<boolean>,
@@ -302,6 +301,8 @@ export function useRenderNumericField(
     hasError: Ref<boolean>,
     errorItems: ComputedRef<string[]>,
 ): VNode {
+    const iconSize = 24;
+
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
         h("div", {
@@ -310,7 +311,6 @@ export function useRenderNumericField(
             useCreateFieldInnerWrapper(
                 slots,
                 props,
-                iconSize,
                 createFieldInputText(
                     props,
                     operationOptions,
@@ -321,6 +321,9 @@ export function useRenderNumericField(
                     autocomplete,
                     emit,
                 ),
+                iconSize,
+                props.appendIcon,
+                props.prependIcon,
                 createAppendFieldActionNode(
                     props,
                     showClearButton.value,

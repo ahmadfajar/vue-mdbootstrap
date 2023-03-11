@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "sass:math";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
@@ -131,6 +132,10 @@
         .#{$prefix}btn-icon {
             --#{$bs-prefix}btn-sm-inner-height: 2.125rem;
             --#{$bs-prefix}btn-sm-inner-width: 2.125rem;
+
+            &.disabled {
+                --#{$bs-prefix}btn-disabled-bg: transparent;
+            }
         }
     }
 
@@ -212,6 +217,15 @@
                     --#{$bs-prefix}btn-color: #{$grey-lighten-4};
                 }
             }
+        }
+    }
+}
+
+.#{$prefix}field-control {
+    &.#{$prefix}datetime-field {
+        .#{$prefix}prepend-inner,
+        .#{$prefix}append-inner {
+            cursor: pointer;
         }
     }
 }

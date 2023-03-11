@@ -1,5 +1,6 @@
 import type {IBindingElement, TDirectiveBinding} from "../../types";
 import type {Directive, DirectiveBinding} from "vue";
+import {isChildOf, isSVGElement} from "../../mixins/DomHelper";
 import Helper from "../../utils/Helper";
 
 function mounted(el: IBindingElement, binding: DirectiveBinding<VoidFunction | TDirectiveBinding>) {
@@ -19,6 +20,20 @@ function mounted(el: IBindingElement, binding: DirectiveBinding<VoidFunction | T
         if (el.contains(<Node>evt.target)) {
             return;
         }
+
+        let eventTarget: HTMLElement | null | undefined = <HTMLElement>evt.target;
+        if (isSVGElement(eventTarget)) {
+            eventTarget = eventTarget?.parentElement;
+
+            while (isSVGElement(eventTarget)) {
+                eventTarget = target?.parentElement;
+            }
+        }
+        if (isChildOf(el, eventTarget)) {
+            return;
+        }
+        // console.info("evtTarget-isSVGElement:", isSVGElement(<HTMLElement>evt.target))
+
         callback(evt);
     };
 

@@ -14,10 +14,11 @@ Released: April xx, 2023
 - **BsAlert**: add property `filled`, `iconVariant`, and `variant`.
 - **BsAppbar**: add property `clippedRight`.
 - **BsAppContainer**: add property `viewportHeight`.
-- **BsButton**: add slot `icon` for placing a custom icon.
+- **BsButton**: add property `readonly`, add slot `icon` for placing a custom icon.
 - **BsChip**: add property `iconVariant`, `pill`.
 - **BsChipField**: add property `actionIconVariant`, `validationIcon`, `chipPill`.
 - **BsDatePicker**: add property `surfaceColor`, support mousewheel, touch screen and internationalization.
+- **BsDateTimeField**: add property `pickerColor`, `pickerCls`, `pickerMode`, `pickerWidth`, `pickerTransition`.
 - **BsDropdownMenu**: add property `space`.
 - **BsListNav**: add property `id`.
 - **BsListNavItem**: add property `id`, `borderOff`, `pillOff`, `roundedOff`, `badgeColor`, and `badgeType`.
@@ -105,6 +106,21 @@ Released: April xx, 2023
   - Removed property `format`.
   - Replaced dependency of `momentjs` with `luxon`.
   - The output value of the `modelValue` property follows the **ISO 8601** standard.
+- **BsDateTimeField**: 
+  - Replaced property `value` with `modelValue`.
+  - Replaced event `input` with `update:modelValue`.
+  - Replaced event `open` with `update:open`.
+  - Deprecated property `viewMode`, use property `pickerMode` instead.
+  - Deprecated property `transition`, use property `pickerTransition` instead.
+  - Deprecated property `externalValidator`, use property `validator` instead.
+  - Replaced slot `prependIcon` with `prependInner`.
+  - Replaced slot `prependIconOuter` with `prependOuter`.
+  - Replaced slot `appendIcon` with `appendInner`.
+  - Replaced slot `appendIconOuter` with `appendOuter`.
+  - Replaced dependency of `momentjs` with `luxon`.
+  - Removed property `color`, use property `pickerColor` instead.
+  - Removed property `firstDayOfWeek`.
+  - Removed event `change`, already covered by event `update:modelValue`.
 - **BsIcon**: replace property `rotation` with `rotate`.
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
 - **BsListNavItem**:

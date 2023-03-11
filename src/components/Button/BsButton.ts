@@ -1,11 +1,11 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "vue";
 import {computed, defineComponent, h} from "vue";
 import {useMakeButtonProps, useRenderButtonContent} from "./mixins/buttonApi";
+import {useGenerateId} from "../../mixins/CommonApi";
 import {buttonProps} from "./mixins/buttonProps";
 import BsButtonInner from "./BsButtonInner";
 import Helper from "../../utils/Helper";
 import type {TBsButton, TBsButtonInner, TButtonOptionProps, TRecord} from "../../types";
-import {useGenerateId} from "../../mixins/CommonApi";
 
 export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsButton",
@@ -26,7 +26,7 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Com
             () => (cmpProps.disabled === true) && Helper.isEmpty(<string | undefined>props.href)
         );
         const rippleOff = computed<boolean>(
-            () => (cmpProps.rippleOff === true) && isDisabled.value
+            () => (cmpProps.rippleOff === true) || isDisabled.value || (cmpProps.readonly === true)
         );
         const tagName = computed<string>(
             () => (

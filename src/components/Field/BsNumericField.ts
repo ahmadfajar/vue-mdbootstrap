@@ -97,7 +97,7 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
                 localValue,
                 inputRef,
                 hasFocus,
-                autocomplete, 24,
+                autocomplete,
                 showClearButton,
                 showHelpText,
                 showValidationError,

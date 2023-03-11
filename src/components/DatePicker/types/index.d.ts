@@ -6,7 +6,7 @@ import type {
     EmitsOptions
 } from "vue";
 import type {TRecord} from "../../../types";
-import {TInputFieldProps} from "../../../types";
+import {TInputFieldProps, TPopoverPosition} from "../../../types";
 
 export declare type TDateTimePickerMode = "date" | "datetime" | "year" | "month" | "time";
 
@@ -18,8 +18,8 @@ export declare type TDatePickerBaseProps = {
 }
 
 export declare type TDatePickerHeaderProps = TDatePickerBaseProps & {
-    displayMode?: TDateTimePickerMode | string;
-    pickerMode?: TDateTimePickerMode | string;
+    displayMode?: TDateTimePickerMode;
+    pickerMode?: TDateTimePickerMode;
     color?: string;
     enableTime?: boolean;
     readonly?: boolean;
@@ -28,7 +28,7 @@ export declare type TDatePickerHeaderProps = TDatePickerBaseProps & {
 
 export declare type TDatePickerNavProps = TDatePickerBaseProps & {
     buttonColor?: string;
-    displayMode?: TDateTimePickerMode | string;
+    displayMode?: TDateTimePickerMode;
     disabled?: boolean;
 }
 
@@ -84,12 +84,12 @@ export declare type TDatePickerOptionProps = {
     /**
      * This component's view mode, valid values are: `datetime`, `date`, `month`, `year`, `time`
      */
-    mode?: TDateTimePickerMode | string;
+    mode?: TDateTimePickerMode;
     /**
      * @deprecated
      * Use `mode` property instead.
      */
-    viewMode?: TDateTimePickerMode | string;
+    viewMode?: TDateTimePickerMode;
     /**
      * DatePicker's container width, default is 300px.
      */
@@ -134,7 +134,8 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
      */
     displayFormat?: string;
     /**
-     * The format string for the datetime output value and also format pattern to parse the initial `modelValue` data.
+     * The format string for the datetime output value and also format pattern to
+     * parse the initial `modelValue` data.
      */
     valueFormat?: string;
     /**
@@ -142,14 +143,19 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
      */
     open?: boolean;
     /**
+     * Triggers the DatePicker to display when `mouseenter`.
+     */
+    openOnHover?: boolean;
+    /**
      * @deprecated
      * Use `pickerMode` property instead.
      */
-    viewMode?: TDateTimePickerMode | string;
+    viewMode?: TDateTimePickerMode;
     /**
-     * This component's DatePicker view mode, valid values are: `datetime`, `date`, `month`, `year`, `time`
+     * This component's DatePicker view mode,
+     * valid values are: `datetime`, `date`, `month`, `year`, `time`
      */
-    pickerMode?: TDateTimePickerMode | string;
+    pickerMode?: TDateTimePickerMode;
     /**
      * Custom CSS class for the DatePicker container.
      */
@@ -161,13 +167,14 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
     /**
      * Sets the DatePicker popup display placement.
      */
-    pickerPlacement?: string;
+    pickerPlacement?: TPopoverPosition;
     /**
      * DatePicker's container width, default is 300px.
      */
     pickerWidth?: number | string;
     /**
-     * Transition animation when showing the DateTime picker. This animation is effected by picker-placement property.
+     * Transition animation when showing the DateTime picker. This animation is
+     * effected by picker-placement property.
      */
     pickerTransition?: string;
     /**

@@ -52,7 +52,7 @@ export declare type TPopoverOptionProps = TPopupOptions & {
     /**
      * Popover display placement.
      */
-    placement?: TPopoverPosition | string;
+    placement?: TPopoverPosition;
     /**
      * Number of pixel to shift the Popover display position from the activator element.
      */

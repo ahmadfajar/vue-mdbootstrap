@@ -132,7 +132,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
                 showValidationError.value,
                 hasValidated.value,
                 hasError.value,
-                errorItems.value, 24,
+                errorItems.value,
                 onPasswordToggleHandler,
             );
     }

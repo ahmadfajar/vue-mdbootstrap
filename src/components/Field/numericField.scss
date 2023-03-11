@@ -53,6 +53,8 @@
             margin-top: .625rem;
 
             > .#{$prefix}spin-down {
+                margin-left: 0;
+
                 .triangle-down {
                     margin-top: 4px;
                 }

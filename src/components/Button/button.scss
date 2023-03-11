@@ -52,6 +52,7 @@
         &:not(.active) {
             background-color: var(--#{$bs-prefix}btn-bg);
             border-color: var(--#{$bs-prefix}btn-border-color);
+            color: var(--#{$bs-prefix}btn-color);
         }
     }
 
@@ -164,6 +165,7 @@
     --#{$bs-prefix}btn-disabled-border-color: #{$border-color};
     --#{$bs-prefix}btn-disabled-color: #{$gray-700};
     --#{$bs-prefix}btn-disabled-opacity: .65;
+    --#{$bs-prefix}btn-readonly-opacity: .75;
     --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), .5);
 
     --#{$bs-prefix}btn-line-height: 2.25rem;     // 36px
@@ -227,10 +229,20 @@
         --#{$bs-prefix}btn-state-box-shadow: #{$z-depth-half};
     }
 
-    &:not([disabled]):not(.disabled):active:focus,
-    &:not([disabled]):not(.disabled).active:focus,
+    &:not([disabled]):not(.disabled):not(.readonly):active:focus,
+    &:not([disabled]):not(.disabled):not(.readonly).active:focus,
     .show > &.dropdown-toggle {
         @include box-shadow(var(--#{$bs-prefix}btn-focus-box-shadow));
+    }
+
+    &.readonly {
+        --#{$bs-prefix}btn-state-box-shadow: none;
+        opacity: var(--#{$bs-prefix}btn-readonly-opacity);
+        cursor: default;
+
+        &:hover {
+            --#{$bs-prefix}btn-state-bg: var(--#{$bs-prefix}btn-bg);
+        }
     }
 
     &:disabled, &.disabled {
@@ -350,7 +362,7 @@
 }
 
 [class*="btn-flat"] {
-    &:not([disabled]), &:not(.disabled) {
+    &:not([disabled]):not(.disabled):not(.readonly) {
         &:hover,
         &:active,
         &:focus {

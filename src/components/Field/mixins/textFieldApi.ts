@@ -72,14 +72,17 @@ export function useCreateFieldIcon(
     cssClass: string,
     iconName?: string,
     iconSize?: number,
+    onClickHandler?: VoidFunction,
 ): VNode {
     return useRenderSlotWithWrapper(
         slots,
         slotName,
         iconName ? `${slotName}-${iconName}` : Helper.uuid(),
         "div",
-        {class: cssClass},
-        (
+        {
+            class: cssClass,
+            onClick: onClickHandler,
+        }, (
             iconName
                 ? h<TBsIcon>(BsIcon, {
                     icon: <Prop<string>>iconName,
@@ -141,10 +144,14 @@ function createOutlineWrapper(
 export function useCreateFieldInnerWrapper(
     slots: Slots,
     props: Readonly<TInputFieldProps>,
-    iconSize: number,
     inputFieldNodes: VNode[] | VNode,
+    iconSize: number,
+    appendIcon?: string,
+    prependIcon?: string,
     appendActionNode?: VNode,
     prependActionNode?: VNode,
+    onAppendIconClick?: VoidFunction,
+    onPrependIconClick?: VoidFunction,
 ): VNode {
     const children = [useRenderSlotWrapperWithCondition(
         slots, "default",
@@ -164,7 +171,8 @@ export function useCreateFieldInnerWrapper(
         useCreateFieldIcon(
             slots, "prependInner",
             `${cssPrefix}prepend-inner`,
-            props.prependIcon, iconSize,
+            prependIcon, iconSize,
+            onPrependIconClick,
         ),
         prependActionNode,
         h("div", {
@@ -174,7 +182,8 @@ export function useCreateFieldInnerWrapper(
         useCreateFieldIcon(
             slots, "appendInner",
             `${cssPrefix}append-inner`,
-            props.appendIcon, iconSize,
+            appendIcon, iconSize,
+            onAppendIconClick,
         ),
         createOutlineWrapper(props),
     ]);
@@ -319,9 +328,10 @@ export function useRenderTextField(
     hasValidated: boolean,
     hasError: boolean,
     errorItems: Array<string>,
-    iconSize: number,
     passwordToggleHandler: (value: boolean) => void,
 ): VNode {
+    const iconSize = 24;
+
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
         h("div", {
@@ -330,8 +340,10 @@ export function useRenderTextField(
             useCreateFieldInnerWrapper(
                 slots,
                 props,
-                iconSize,
                 createInputTextField(props, fieldType, autocomplete, emit, localValue, isFocused),
+                iconSize,
+                props.appendIcon,
+                props.prependIcon,
                 useCreateFieldActionIcon(
                     showClearButton,
                     hasValidated,
@@ -413,8 +425,9 @@ export function useRenderTextArea(
     hasValidated: boolean,
     hasError: boolean,
     errorItems: Array<string>,
-    iconSize: number,
 ): VNode {
+    const iconSize = 24;
+
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
         h("div", {
@@ -423,8 +436,10 @@ export function useRenderTextArea(
             useCreateFieldInnerWrapper(
                 slots,
                 props,
-                iconSize,
                 createInputTextArea(props, emit, localValue, rowHeight, isFocused, autocomplete),
+                iconSize,
+                props.appendIcon,
+                props.prependIcon,
                 useCreateFieldActionIcon(
                     showClearButton,
                     hasValidated,

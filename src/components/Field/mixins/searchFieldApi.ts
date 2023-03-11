@@ -52,7 +52,9 @@ export function useRenderSearchField(
                 mode: "icon",
                 size: "sm",
                 flat: true,
-                onClick: () => dispatchSearch(localValue, emit)
+                onClick: () => {
+                    !thisProps.readonly && !thisProps.disabled && dispatchSearch(localValue, emit);
+                }
             }),
             h("label", withDirectives(
                 h("input", {
@@ -94,7 +96,10 @@ export function useRenderSearchField(
                         mode: "icon",
                         size: "sm",
                         flat: true,
-                        onClick: () => useOnFieldValueCleared(emit, localValue)
+                        onClick: () => {
+                            !thisProps.readonly && !thisProps.disabled &&
+                            useOnFieldValueCleared(emit, localValue);
+                        }
                     })
                     : ""
             ),
@@ -108,9 +113,11 @@ export function useRenderSearchField(
                         size: "sm",
                         flat: true,
                         onClick: () => {
-                            const open = isPopoverOpen.value;
-                            isPopoverOpen.value = !open;
-                            emit("update:open", isPopoverOpen.value);
+                            if (!thisProps.readonly && !thisProps.disabled) {
+                                const open = isPopoverOpen.value;
+                                isPopoverOpen.value = !open;
+                                emit("update:open", isPopoverOpen.value);
+                            }
                         }
                     })
                     : ""

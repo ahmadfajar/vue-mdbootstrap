@@ -119,7 +119,6 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, C
                 hasValidated.value,
                 hasError.value,
                 errorItems.value,
-                24,
             );
     }
 });

@@ -55,6 +55,7 @@ export declare type TButtonOptionProps = TAvatarIconProps & TBaseButtonProps & {
      * Sets this button state: `enabled` or `disabled`.
      */
     disabled?: boolean;
+    readonly ?: boolean;
     /**
      * This button component mode, valid values are: `default, icon, floating`.
      */

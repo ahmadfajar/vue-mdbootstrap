@@ -126,7 +126,7 @@ export const textFieldProps = {
         type: String as PropType<TShapeStyle>,
         default: 'outlined',
         validator: (value: string): boolean => ["outlined", "filled", "round", "sharp"].includes(value),
-    } as Prop<'outlined' | 'filled' | 'round' | 'sharp'>,
+    } as Prop<TShapeStyle>,
 }
 
 export const numericFieldProps = {
