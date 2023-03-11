@@ -11,7 +11,7 @@ import {
     shallowRef,
     watchEffect
 } from "vue";
-import {useGetCurrentRoute, useHasRouter} from "../../mixins/CommonApi";
+import {useCurrentRoute, useHasRouter} from "../../mixins/CommonApi";
 import {
     useAddChild,
     useListNavItemClasses,
@@ -55,7 +55,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
         );
 
         if (useHasRouter(cmpProps)) {
-            const route = useGetCurrentRoute();
+            const route = useCurrentRoute();
             watchEffect(() => {
                 if (provider && route?.value.path === cmpProps.path) {
                     provider.activeItem = refItem.value;
@@ -77,7 +77,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
         onMounted(
             () => {
                 if (useHasRouter(cmpProps)) {
-                    const route = useGetCurrentRoute();
+                    const route = useCurrentRoute();
                     if (route && route.value.path === cmpProps.path) {
                         refItem.value?.setActive(true);
                     }

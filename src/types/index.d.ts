@@ -26,6 +26,7 @@ export * from "../components/Radio/types";
 export * from "../components/Switch/types";
 export * from "../components/Tabs/types";
 export * from "../components/Tooltip/types";
+export * from "../model/types";
 
 export declare type TBreakpoint = "sm" | "md" | "lg" | "xl";
 
@@ -34,6 +35,8 @@ export declare type TLabelPosition = "left" | "right";
 export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
 
 export declare type TRecord = Record<string, unknown>;
+
+export declare type TNever = Record<string, never>;
 
 export declare type TValueText<T> = {
     value: T;
@@ -84,7 +87,7 @@ export declare type TVueMdb = {
 
 export declare interface ObjectBase {
     /**
-     * Dispose each property before destroying this object.
+     * Cleaning up resources and dispose each property before destroying this object.
      */
     destroy(): void;
 }

@@ -1,6 +1,7 @@
 import type {AxiosPromise, RawAxiosRequestConfig} from "axios";
 import axios from "axios";
 import type {App, Plugin as Plugin_2} from "vue";
+import type {TRecord} from "../types";
 
 declare interface IRequestConfig extends RawAxiosRequestConfig {
     requestHandler: CallableFunction;
@@ -9,43 +10,43 @@ declare interface IRequestConfig extends RawAxiosRequestConfig {
     responseErrorHandler: CallableFunction;
 }
 
-declare interface IHttpService {
+export declare interface IHttpService {
     /**
      * Send HTTP GET to the remote server.
      *
      * @param {string} url                      API url
-     * @param {Object} [data]                   The data to be sent
+     * @param {TRecord} [data]                  The data to be sent
      * @param {RawAxiosRequestConfig} [options] Additional options
      * @returns {AxiosPromise} Promise instance
      */
-    get: (url: string, data?: object, options?: RawAxiosRequestConfig) => AxiosPromise;
+    get: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP POST to the remote server.
      *
      * @param {string} url                      API url
-     * @param {Object} data                     The data to be sent
+     * @param {TRecord} data                    The data to be sent
      * @param {RawAxiosRequestConfig} [options] Additional options
      * @returns {AxiosPromise} Promise instance
      */
-    post: (url: string, data: Record<string, unknown>, options?: RawAxiosRequestConfig) => AxiosPromise;
+    post: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP PUT to the remote server.
      *
      * @param {string} url                      API url
-     * @param {Object} data                     The data to be sent
+     * @param {TRecord} data                    The data to be sent
      * @param {RawAxiosRequestConfig} [options] Additional options
      * @returns {AxiosPromise} Promise instance
      */
-    put: (url: string, data: Record<string, unknown>, options?: RawAxiosRequestConfig) => AxiosPromise;
+    put: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP DELETE to the remote server.
      *
      * @param {string} url                      API url
-     * @param {Object} [data]                   The data to be sent
+     * @param {TRecord} [data]                  The data to be sent
      * @param {RawAxiosRequestConfig} [options] Additional options
      * @returns {AxiosPromise} Promise instance
      */
-    delete: (url: string, data?: object, options?: RawAxiosRequestConfig) => AxiosPromise;
+    delete: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
 }
 
 function _axiosPlugin(options?: RawAxiosRequestConfig) {
@@ -77,7 +78,7 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
     );
 
     const http: IHttpService = {
-        get: (url: string, data?: object, options?: RawAxiosRequestConfig) => {
+        get: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => {
             const config = {
                 ...options,
                 params: data,
@@ -85,13 +86,13 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
 
             return service.get(url, config)
         },
-        post: (url: string, data: Record<string, unknown>, options?: RawAxiosRequestConfig) => {
+        post: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => {
             return service.post(url, data, options)
         },
-        put: (url: string, data: Record<string, unknown>, options?: RawAxiosRequestConfig) => {
+        put: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => {
             return service.put(url, data, options)
         },
-        delete: (url: string, data?: object, options?: RawAxiosRequestConfig) => {
+        delete: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => {
             const config = {
                 ...options,
                 data: data

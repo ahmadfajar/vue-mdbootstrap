@@ -1,4 +1,5 @@
-import {DateTime, DateTimeUnit, DurationObjectUnits} from "luxon";
+import type {DateTimeUnit, DurationObjectUnits} from "luxon";
+import {DateTime} from "luxon";
 import type {ComputedRef, ExtractPropTypes, Prop, Ref, VNode} from "vue";
 import {computed, createCommentVNode, h, ref, toDisplayString, watch, withDirectives} from "vue";
 import {cssPrefix, useBreakpointMin, useRenderTransition} from "../../../mixins/CommonApi";

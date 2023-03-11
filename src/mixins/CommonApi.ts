@@ -1,8 +1,11 @@
+import type {AxiosInstance} from "axios";
 import type {ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNodeArrayChildren} from "vue";
 import {createVNode, Fragment, getCurrentInstance, h, normalizeClass, resolveComponent, Transition} from "vue";
 import type {RouteLocationNormalizedLoaded} from "vue-router";
+import type {IHttpService} from "../utils/AxiosPlugin";
 import type {TBreakpoint, TRecord, TRouterLinkProps, TRouterOptionProps} from "../types";
 import Helper from "../utils/Helper";
+
 
 export const cssPrefix = "md-";
 
@@ -188,9 +191,9 @@ export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
 /**
  * Get current active route if exists.
  *
- * @returns {Ref} Current route location.
+ * @returns {Ref<RouteLocationNormalizedLoaded>} The current route location.
  */
-export function useGetCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefined {
+export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefined {
     const vm = getCurrentInstance();
     if (vm !== null) {
         return vm.appContext.config.globalProperties.$router?.currentRoute;
@@ -295,4 +298,34 @@ export function useMergeClass(...args: (string | string[])[]): string[] {
     }
 
     return result;
+}
+
+/**
+ * Retrieve axios plugin instance. Must be called within component and after
+ * it instantiate. For example, called within `onMounted` event.
+ *
+ * @returns {AxiosInstance} Axios instance when the component instance is resolved.
+ */
+export function useAxiosPlugin(): AxiosInstance | undefined {
+    const vm = getCurrentInstance();
+    if (vm !== null) {
+        return vm.appContext.config.globalProperties.$axios;
+    }
+
+    return undefined;
+}
+
+/**
+ * Retrieve HTTP service plugin instance. Must be called within component and after
+ * it instantiate. For example, called within `onMounted` event.
+ *
+ * @returns {IHttpService} Axios instance when the component instance is resolved.
+ */
+export function useHttpService(): IHttpService | undefined {
+    const vm = getCurrentInstance();
+    if (vm !== null) {
+        return vm.appContext.config.globalProperties.$http;
+    }
+
+    return undefined;
 }

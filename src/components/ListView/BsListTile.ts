@@ -1,7 +1,7 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent, inject, nextTick, onBeforeUpdate, ref, shallowRef, watch} from "vue";
 import {listTileProps} from "./mixins/listViewProps";
-import {useGetCurrentRoute, useHasLink, useHasRouter} from "../../mixins/CommonApi";
+import {useCurrentRoute, useHasLink, useHasRouter} from "../../mixins/CommonApi";
 import {useListTileClassNames, useRenderListTile} from "./mixins/listTileApi";
 import type {IListItem, IListViewProvider, TBsListTile, TListTileOptionProps, TRecord} from "../../types";
 
@@ -42,7 +42,7 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, C
         onBeforeUpdate(
             () => {
                 if (useHasRouter(cmpProps)) {
-                    const route = useGetCurrentRoute();
+                    const route = useCurrentRoute();
                     if (route && route.value.path === cmpProps.path) {
                         isActive.value = true;
                         nextTick().then(() => {
