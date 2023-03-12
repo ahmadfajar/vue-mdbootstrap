@@ -1,5 +1,5 @@
 import type {AxiosError, AxiosHeaders, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
-import {reactive} from "vue";
+import {reactive, readonly} from "vue";
 import type {
     IBsModel,
     IRestAdapter,
@@ -54,7 +54,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  * }, adapter);
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 12/03/2023 00:41
+ * @since  09/07/2018 modified: 13/03/2023 01:37
  */
 export default class BsModel implements IBsModel {
     /**
@@ -65,14 +65,22 @@ export default class BsModel implements IBsModel {
      * @returns {void}
      */
 
+    private readonly _proxyErrMsg = "Unable to send request to remote server if REST proxy is not defined.";
+    private readonly _assignErrMsg = `The given field does not exists in this ${this.$_class}.`;
+    private readonly _assignValuesErrMsg = `The given values can not be assigned to ${this.$_class}.`;
+    private readonly _frozenObjErrMsg = `This ${this.$_class} is frozen to prevent any modification.`;
+    private readonly _emptyDataErrMsg = 'Server returns empty data.';
+    private readonly _parsingDataErrMsg = 'Unable to parse data coming from server.';
+
     private readonly _idProperty: string;
     private readonly _dataProperty: string;
     private readonly _csrfConfig: Readonly<TCSRFConfig> | undefined;
     private readonly _restUrl: TRestConfig;
     private _data: TRecord;
     private _schema: TRecord;
-    private _proxy: IRestAdapter;
-    private _state: TModelState;
+    private _proxy: IRestAdapter | undefined;
+    protected _state: TModelState;
+    public state: TModelState;
 
     /**
      * Class constructor.
@@ -84,7 +92,7 @@ export default class BsModel implements IBsModel {
      */
     constructor(
         schema: TRecord | TModelOptions,
-        adapter: AxiosInstance,
+        adapter: AxiosInstance | undefined,
         idProperty = 'id',
         dataProperty = 'data',
     ) {
@@ -101,14 +109,14 @@ export default class BsModel implements IBsModel {
                 this._restUrl[key] = Helper.isObject(value) ? value.url : value;
             }
 
-            this._proxy = new RestProxyAdapter(adapter, _methods);
+            adapter && (this._proxy = new RestProxyAdapter(adapter, _methods));
             this._schema = Object.seal(<TRecord>schema.schema);
 
             if (!Helper.isEmptyObject(schema.csrfConfig)) {
                 this._csrfConfig = Object.freeze(schema.csrfConfig) as Readonly<TCSRFConfig>;
             }
         } else {
-            this._proxy = new RestProxyAdapter(adapter);
+            adapter && (this._proxy = new RestProxyAdapter(adapter));
             this._schema = Object.seal(<TRecord>schema);
         }
 
@@ -122,6 +130,7 @@ export default class BsModel implements IBsModel {
             deleting: false,
             hasError: false,
         });
+        this.state = readonly(this._state);
 
         const _dt: TRecord = {};
         this.getFields().forEach(f => {
@@ -153,14 +162,40 @@ export default class BsModel implements IBsModel {
         return (Object.getPrototypeOf(this)).constructor.name;
     }
 
-    get csrfConfig(): TCSRFConfig | undefined {
+    /**
+     * Get/Override CSRF configuration in the form <code>{key: value}</code>, where the keys are:
+     * <tt>'url', 'tokenName', 'dataField', 'suffix'</tt>.
+     *
+     * @example
+     * return {
+     *    'url'       : '/api/token/{name}',
+     *    'tokenName' : 'token_name',
+     *    'dataField' : 'token',
+     *    'suffix'    : false
+     * }
+     */
+    get csrfConfig(): Readonly<TCSRFConfig> | undefined {
         return this._csrfConfig;
     }
 
-    get proxy(): IRestAdapter {
+    get proxy(): IRestAdapter | undefined {
         return this._proxy;
     }
 
+    /**
+     * Get REST URL configuration in the form <code>{key: url}</code>,
+     * where the keys are: <tt>'save', 'fetch', 'delete', 'update'</tt>.
+     *
+     * Override this function as needed on the inheritance class.
+     *
+     * @example
+     * return {
+     *    'save'  : '/api/user/create',
+     *    'fetch' : '/api/user/{id}',
+     *    'update': '/api/user/{id}/save',
+     *    'delete': '/api/user/{id}/delete'
+     * }
+     */
     get restUrl(): TRestConfig {
         return this._restUrl;
     }
@@ -194,7 +229,7 @@ export default class BsModel implements IBsModel {
         if (field in this._data) {
             this._data[field] = newValue;
         } else {
-            console.error(`The given field does not exists in this ${this.$_class}.`);
+            console.error(this._assignErrMsg);
         }
     }
 
@@ -208,11 +243,15 @@ export default class BsModel implements IBsModel {
                 })
             })
         } else {
-            console.error(`The given values can not be assigned to ${this.$_class}.`);
+            console.error(this._assignValuesErrMsg);
         }
     }
 
     delete(): Promise<AxiosResponse> {
+        if (!this.proxy) {
+            throw Error(this._proxyErrMsg);
+        }
+
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
         let config: AxiosRequestConfig = {};
@@ -240,6 +279,10 @@ export default class BsModel implements IBsModel {
     }
 
     fetch(id?: string | number): Promise<AxiosResponse> {
+        if (!this.proxy) {
+            throw Error(this._proxyErrMsg);
+        }
+
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
         const config: AxiosRequestConfig = {};
@@ -283,7 +326,7 @@ export default class BsModel implements IBsModel {
                 this._data[name] = value;
             }
         } else {
-            throw Error(`This ${this.$_class} is frozen to prevent any modification.`)
+            throw Error(this._frozenObjErrMsg);
         }
     }
 
@@ -376,6 +419,10 @@ export default class BsModel implements IBsModel {
     }
 
     save(): Promise<AxiosResponse> {
+        if (!this.proxy) {
+            throw Error(this._proxyErrMsg);
+        }
+
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
         const url = this.restUrl.save || '';
@@ -417,6 +464,10 @@ export default class BsModel implements IBsModel {
     }
 
     update(): Promise<AxiosResponse> {
+        if (!this.proxy) {
+            throw Error(this._proxyErrMsg);
+        }
+
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
         const url = this.restUrl.update || '';
@@ -450,37 +501,32 @@ export default class BsModel implements IBsModel {
      * @returns {void}
      */
     private _assignFromResponse(response: AxiosResponse) {
-        const _data = response.data;
+        const _data = <never>response.data;
+        const _assign = (values: never) => {
+            this.assignValues(values);
+            this.getFields().forEach(f => this._schema[f] = values[f]);
+            // @ts-ignore
+            if (Helper.isFunction(this['onAfterFetch'])) {
+                // @ts-ignore
+                this['onAfterFetch'](values);
+            }
+        }
 
         if (Helper.isEmpty(_data)) {
-            console.warn('Server returns empty data.');
+            console.warn(this._emptyDataErrMsg);
         } else {
             if (Object.hasOwn(_data, this.getIdProperty())) {
-                this.assignValues(_data);
-                this.getFields().forEach(f => this._schema[f] = _data[f]);
-
-                // @ts-ignore
-                if (Helper.isFunction(this['onAfterFetch'])) {
-                    // @ts-ignore
-                    this['onAfterFetch'](_data);
-                }
+                _assign(_data);
             } else if (Object.hasOwn(_data, this._dataProperty)) {
                 const cdata = _data[this._dataProperty];
 
                 if (Helper.isEmpty(cdata)) {
-                    console.warn('Server returns empty data.');
+                    console.warn(this._emptyDataErrMsg);
                 } else {
-                    this.assignValues(cdata);
-                    this.getFields().forEach(f => this._schema[f] = cdata[f]);
-
-                    // @ts-ignore
-                    if (Helper.isFunction(this['onAfterFetch'])) {
-                        // @ts-ignore
-                        this['onAfterFetch'](cdata);
-                    }
+                    _assign(cdata);
                 }
             } else {
-                console.warn('Unable to parse data coming from server.');
+                console.warn(this._parsingDataErrMsg);
             }
         }
     }
@@ -607,6 +653,10 @@ export default class BsModel implements IBsModel {
         onFailure: (error: AxiosError) => void,
         suffix = '',
     ): Promise<AxiosResponse> {
+        if (!this.proxy) {
+            throw Error(this._proxyErrMsg);
+        }
+
         // @ts-ignore
         const headers = {'X-Requested-With': 'XMLHttpRequest'} as AxiosHeaders;
         let csrfUrl = this.csrfConfig?.url || '';
@@ -652,6 +702,10 @@ export default class BsModel implements IBsModel {
         url: string,
         method: keyof TRestMethodOptions,
     ): void {
+        if (!this.proxy) {
+            throw Error(this._proxyErrMsg);
+        }
+
         const methods = this.proxy.requestMethods();
 
         if (url.includes('{id}') && !Helper.isEmpty(identifier)) {

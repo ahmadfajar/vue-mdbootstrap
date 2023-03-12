@@ -36,7 +36,7 @@ export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
 
 export declare type TRecord = Record<string, unknown>;
 
-export declare type TNever = Record<string, never>;
+export declare type TNever = Record<string, unknown | never>;
 
 export declare type TValueText<T> = {
     value: T;

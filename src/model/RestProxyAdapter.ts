@@ -67,7 +67,7 @@ export default class RestProxyAdapter implements IRestAdapter {
         } else if (error.request) {
             console.warn(error.request);
         } else {
-            console.warn((error && error.message ? error.message : error));
+            console.warn((error.message ? error.message : error));
         }
     }
 
@@ -126,6 +126,7 @@ export default class RestProxyAdapter implements IRestAdapter {
         return new Promise((resolve, reject) => {
             const check = !Helper.isEmpty(config) && !Helper.isEmpty(config.url);
             if (!check) {
+                reject(new Error("Not enough information to send request to remote service."));
                 return;
             }
 
@@ -143,6 +144,8 @@ export default class RestProxyAdapter implements IRestAdapter {
                         }
                         return reject(error);
                     });
+            } else {
+                reject(new Error("Client is busy handling previous request."));
             }
         });
     }

@@ -38,9 +38,11 @@ class Helper {
      * @param {Function} [fallbackFn]   The fallback function
      * @returns {*} The object property value
      */
-    static getNestedValue(obj: never,
-                          path: string[],
-                          fallbackFn?: CallableFunction): CallableFunction | never | unknown {
+    static getNestedValue(
+        obj: unknown,
+        path: string[],
+        fallbackFn?: CallableFunction,
+    ): CallableFunction | never | unknown {
         if (!Array.isArray(path)) {
             return fallbackFn;
         }
@@ -76,7 +78,7 @@ class Helper {
      * @param {Function} [fallbackFn] The fallback function
      * @returns {*} The object property value
      */
-    static getObjectValueByPath(obj: never, path: string, fallbackFn?: CallableFunction) {
+    static getObjectValueByPath(obj: unknown, path: string, fallbackFn?: CallableFunction): unknown {
         if (!path) {
             return fallbackFn;
         }
@@ -96,7 +98,7 @@ class Helper {
      * @returns {boolean} True if value is empty otherwise False
      */
     static isEmpty(
-        value: unknown | undefined | null,
+        value: unknown,
         allowEmptyString = false,
     ): boolean {
         return (value === null) ||
@@ -111,7 +113,7 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} True if value is empty otherwise False
      */
-    static isEmptyObject(value: unknown | undefined | null): boolean {
+    static isEmptyObject(value: unknown): boolean {
         return !Helper.isObject(value) ||
             (value !== undefined && value !== null &&
                 Helper.isObject(value) && Object.entries(value).length === 0
@@ -124,8 +126,8 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an Array otherwise FALSE
      */
-    static isArray(value: unknown | undefined | null): boolean {
-        return (typeof value !== 'undefined' && value !== null && Array.isArray(value));
+    static isArray(value: unknown): boolean {
+        return (value !== undefined && value !== null && Array.isArray(value));
     }
 
     /**
@@ -134,8 +136,8 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is a Function otherwise FALSE
      */
-    static isFunction(value: unknown | undefined | null): boolean {
-        return (value !== null && typeof value !== 'undefined' && typeof value === 'function');
+    static isFunction(value: unknown): boolean {
+        return (value !== null && value !== undefined && typeof value === 'function');
     }
 
     /**
@@ -154,8 +156,8 @@ class Helper {
      * @param {*} value The value to check
      * @returns {boolean} TRUE if the given value is an object otherwise FALSE
      */
-    static isObject(value: object | unknown | undefined | null): boolean {
-        return (value !== null && typeof value !== 'undefined' && typeof value === 'object');
+    static isObject(value: unknown): boolean {
+        return (value !== null && value !== undefined && typeof value === 'object');
     }
 
     /**
@@ -241,8 +243,8 @@ class Helper {
         }
 
         return items.sort((a, b) => {
-            let sortA: never = Helper.getObjectValueByPath(a as never, key) as never;
-            let sortB: never = Helper.getObjectValueByPath(b as never, key) as never;
+            let sortA: never = <never>Helper.getObjectValueByPath(a, key);
+            let sortB: never = <never>Helper.getObjectValueByPath(b, key);
 
             if (isDescending) {
                 [sortA, sortB] = [sortB, sortA]
