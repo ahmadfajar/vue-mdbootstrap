@@ -391,16 +391,6 @@ export declare interface IAbstractStore extends ObjectBase {
     get restUrl(): TRestConfig | undefined;
 
     /**
-     * Returns the number of items on the active page.
-     */
-    get length(): number;
-
-    /**
-     * Returns total number of items in the Store's dataset. (readonly)
-     */
-    get totalCount(): number;
-
-    /**
      * Returns active page number (base-1 index).
      */
     get currentPage(): number;
@@ -411,6 +401,16 @@ export declare interface IAbstractStore extends ObjectBase {
     get pageSize(): number;
 
     set pageSize(value: number);
+
+    /**
+     * Returns the number of items on the active page.
+     */
+    get length(): number;
+
+    /**
+     * Returns total number of items in the Store's dataset. (readonly)
+     */
+    get totalCount(): number;
 
     /**
      * Returns total number of pages.
@@ -601,10 +601,12 @@ export declare interface IAbstractStore extends ObjectBase {
      *
      * @param {string|string[]|TSortOption|TSortOption[]} values  The field for sorting or `TSortOption` objects
      * @param {'asc'|'desc'} direction  The sort direction
+     * @param {boolean} replace         Replace existing sort criteria or not
      */
     createSorters(
         values: string | string[] | TSortOption | TSortOption[],
         direction: TSortDirection = 'asc',
+        replace = false,
     ): TSortOption[];
 
     /**
@@ -618,5 +620,83 @@ export declare interface IAbstractStore extends ObjectBase {
      * Get current query parameter's configuration.
      */
     queryParams(): TQueryParameter;
+
+}
+
+export declare interface IArrayStore extends IAbstractStore {
+    /**
+     * Returns dataset from the active page.
+     *
+     * If a filter or sorter has been applied before,
+     * then the returned dataset will also be affected by it.
+     */
+    get dataItems(): IBsModel[];
+
+    /**
+     * Calculate means or average value based on the given field.
+     *
+     * @param {string} field The field name of the dataset to calculate
+     */
+    aggregateAvg(field: string): number;
+
+    /**
+     * Count number of items in the internal dataset specified by the given criteria.
+     *
+     * @param {string} field The grouping field name criteria
+     * @param {never} value  The grouping value criteria
+     */
+    aggregateCountBy(field: string, value: unknown): number;
+
+    /**
+     * Calculate the SUM or total value based on the given field.
+     *
+     * @param {string} field The field name to be used when calculating value
+     */
+    aggregateSum(field: string): number;
+
+    /**
+     * Append an item to the internal dataset and sorted if needed.
+     *
+     * @param {never} item      Data to append to the Store
+     * @param {boolean} sorted  Sort dataset after appended
+     */
+    append(item: never, sorted = false): void;
+
+    /**
+     * Replace the dataset with new data.
+     *
+     * @param {never|never[]} data The new data to be assigned
+     * @param {boolean} silent     Append the data silently and don't trigger data conversion
+     */
+    assignData(data: never[] | never, silent = false): void;
+
+    /**
+     * Load and sort the new supplied dataset or just sort current
+     * dataset with existing criteria.
+     *
+     * @param {never[]|never} [data]   A record or collection of records to be assigned
+     */
+    load(data?: never[] | never): Promise<IBsModel[]>;
+
+    /**
+     * Sorts the internal dataset with the given criteria and returns it.
+     *
+     * @example
+     * // sort by a single field
+     * let results = myStore.sort('myField', 'asc');
+     *
+     * // sorting by multiple fields
+     * let results = myStore.sort([
+     *  {property: 'age', direction: 'desc'},
+     *  {property: 'name', direction: 'asc'}
+     * ]);
+     *
+     * @param {string|string[]|TSortOption|TSortOption[]} options  The field for sorting or `TSortOption` objects
+     * @param {'asc'|'desc'} [direction]                           The sort direction
+     */
+    sort(
+        options: string | string[] | TSortOption | TSortOption[],
+        direction: TSortDirection = 'asc',
+    ): IBsModel[];
 
 }

@@ -32,7 +32,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
 export default class AbstractStore implements IAbstractStore {
     private _config: TDataStoreConfig;
     private _filters: TFilterOption[];
-    private _items: IBsModel[];
+    protected _items: IBsModel[];
     protected _proxy: IRestAdapter | undefined;
     protected _state: TDataStoreState;
     protected _filteredItems: IBsModel[];
@@ -61,7 +61,7 @@ export default class AbstractStore implements IAbstractStore {
      *
      * @param {TDataStoreConfig} [config]  The configuration properties
      */
-    constructor(config = {}) {
+    constructor(config: TRecord = {}) {
         const cfg: TDataStoreConfig = {
             idProperty: undefined,
             dataProperty: undefined,
@@ -178,14 +178,6 @@ export default class AbstractStore implements IAbstractStore {
         return this._state.currentPage;
     }
 
-    get length(): number {
-        return this._state.length;
-    }
-
-    get totalCount(): number {
-        return this._state.totalCount;
-    }
-
     get pageSize(): number {
         return this._state.pageSize;
     }
@@ -194,13 +186,17 @@ export default class AbstractStore implements IAbstractStore {
         this._state.pageSize = value;
     }
 
+    get length(): number {
+        return this._state.length;
+    }
+
+    get totalCount(): number {
+        return this._state.totalCount;
+    }
+
     get totalPages(): number {
         return Math.ceil(this.totalCount / this.pageSize);
     }
-
-    // get storeState(): TDataStoreState {
-    //     return this._state;
-    // }
 
     get defaultFilters(): TFilterOption[] {
         if (!Helper.isArray(this._config.filters)) {
@@ -435,6 +431,8 @@ export default class AbstractStore implements IAbstractStore {
             throw Error("Parameter 'count' must be greater than '0'.");
         }
 
+        const oldLength = this._items.length;
+        const oldTotal = this._state.totalCount;
         const length = count + 1;
         this._state.deleting = true;
 
@@ -447,9 +445,8 @@ export default class AbstractStore implements IAbstractStore {
 
         this._items.splice(index, count);
         const newLength = this._items.length;
-        const oldTotal = this._state.totalCount;
 
-        if (this._state.totalCount <= this._state.length) {
+        if (oldTotal <= oldLength) {
             this._state.totalCount = newLength;
         } else {
             this._state.totalCount = oldTotal - count;
@@ -500,6 +497,7 @@ export default class AbstractStore implements IAbstractStore {
     createSorters(
         values: string | string[] | TSortOption | TSortOption[],
         direction: TSortDirection = 'asc',
+        replace = false,
     ): TSortOption[] {
         const sorters: TSortOption[] = [];
         const createOption = (opt: TSortOption) => {
@@ -531,6 +529,10 @@ export default class AbstractStore implements IAbstractStore {
                 'property': values,
                 'direction': <TSortDirection>direction.toLowerCase()
             });
+        }
+
+        if (replace) {
+            this._config.sortOptions = sorters;
         }
 
         return sorters;
@@ -624,8 +626,8 @@ export default class AbstractStore implements IAbstractStore {
     /**
      * Assign data to the local dataset and replace the old dataset.
      *
-     * @param {Object|Object[]} source A record or collection of records to be assigned
-     * @param {boolean} silent         Append data silently and doesn't trigger data conversion
+     * @param {Object|Object[]} source  A record or collection of records to be assigned
+     * @param {boolean} [silent]        Append data silently and doesn't trigger data conversion
      * @returns {void}
      */
     protected _assignData(source: never | never[], silent = false): void {

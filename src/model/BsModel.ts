@@ -15,11 +15,12 @@ import type {
 import Helper from "../utils/Helper";
 import RestProxyAdapter from "./RestProxyAdapter";
 
+
 /**
- * Data Model for working with data and remote API.
+ * Data Model class for working with entity object and remote API.
  *
  * @example
- * let model1 = new BsModel({
+ * const model1 = new BsModel({
  *     uid: null,
  *     username: null,
  *     displayName: null,
@@ -29,7 +30,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  *     password: null
  * }, adapter);
  *
- * let model2 = new BsModel({
+ * const model2 = new BsModel({
  *     schema: {
  *         uid: null,
  *         username: null,
@@ -86,13 +87,13 @@ export default class BsModel implements IBsModel {
      * Class constructor.
      *
      * @param {TRecord|TModelOptions} schema  The data model schema
-     * @param {AxiosInstance} adapter         Axios adapter instance
+     * @param {AxiosInstance} [adapter]       Axios adapter instance
      * @param {string} [idProperty]           Data model ID field name
      * @param {string} [dataProperty]         REST response data property
      */
     constructor(
         schema: TRecord | TModelOptions,
-        adapter: AxiosInstance | undefined,
+        adapter?: AxiosInstance,
         idProperty = 'id',
         dataProperty = 'data',
     ) {
