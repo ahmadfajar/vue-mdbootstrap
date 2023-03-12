@@ -135,8 +135,6 @@ export declare interface IBsModel extends ObjectBase {
      * Get REST URL configuration in the form <code>{key: url}</code>,
      * where the keys are: <tt>'save', 'fetch', 'delete', 'update'</tt>.
      *
-     * Override this function as needed on the inheritance class.
-     *
      * @example
      * return {
      *    'save'  : '/api/user/create',

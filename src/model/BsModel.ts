@@ -187,7 +187,9 @@ export default class BsModel implements IBsModel {
      * Get REST URL configuration in the form <code>{key: url}</code>,
      * where the keys are: <tt>'save', 'fetch', 'delete', 'update'</tt>.
      *
-     * Override this function as needed on the inheritance class.
+     * For backward compatibility you can override this function
+     * as needed on the inheritance class or put it on the constructor
+     * of the inheritance class or when instantiate the model.
      *
      * @example
      * return {
