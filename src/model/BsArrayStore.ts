@@ -84,9 +84,12 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
         if (this.sorters.length > 0) {
             this._items = this.localSort();
         }
+        this._onLoadingSuccess();
     }
 
     load(data?: never[] | never): Promise<IBsModel[]> {
+        this._state.loading = true;
+
         return new Promise((resolve) => {
             if (data && !Helper.isEmpty(data)) {
                 this.assignData(data, false);
@@ -95,6 +98,7 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
             }
 
             resolve(this._items);
+            this._onLoadingSuccess();
         });
     }
 

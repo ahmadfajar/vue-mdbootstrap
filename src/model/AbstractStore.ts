@@ -62,7 +62,7 @@ export default class AbstractStore implements IAbstractStore {
      * @param {TDataStoreConfig} [config]  The configuration properties
      */
     constructor(config: TRecord = {}) {
-        const cfg: TDataStoreConfig = {
+        const initialCfg: TDataStoreConfig = {
             idProperty: undefined,
             dataProperty: undefined,
             totalProperty: undefined,
@@ -73,15 +73,15 @@ export default class AbstractStore implements IAbstractStore {
         };
 
         let pgSize = -1;
-        if (cfg.pageSize && !Helper.isEmpty(cfg.pageSize) && Helper.isNumber(cfg.pageSize)) {
-            pgSize = <number>cfg.pageSize;
-            delete cfg.pageSize;
-        } else if (cfg.pageSize) {
-            delete cfg.pageSize;
+        if (initialCfg.pageSize && !Helper.isEmpty(initialCfg.pageSize) && Helper.isNumber(initialCfg.pageSize)) {
+            pgSize = <number>initialCfg.pageSize;
+            delete initialCfg.pageSize;
+        } else if (initialCfg.pageSize) {
+            delete initialCfg.pageSize;
         }
 
-        this._config = cfg;
-        this._filters = Helper.isArray(cfg.filters) ? cfg.filters : [];
+        this._config = initialCfg;
+        this._filters = Helper.isArray(initialCfg.filters) ? initialCfg.filters : [];
         this._filteredItems = [];
         this._items = [];
 
@@ -652,13 +652,12 @@ export default class AbstractStore implements IAbstractStore {
 
         this._state.length = this._items.length;
         this._state.totalCount = this._items.length;
-        this._state.loading = false;
     }
 
     /**
      * @returns {boolean} TRUE if this data store is not in loading state.
      */
-    protected _checkBeforeLoading() {
+    protected _checkBeforeLoading(): boolean {
         if (this._state.loading) {
             return false;
         }
@@ -673,7 +672,7 @@ export default class AbstractStore implements IAbstractStore {
      * @param {AxiosError} error The error object
      * @returns {void}
      */
-    protected _onLoadingFailure(error: AxiosError) {
+    protected _onLoadingFailure(error: AxiosError): void {
         this._state.loading = false;
         this._state.hasError = true;
         RestProxyAdapter.warnResponseError(error);
@@ -684,7 +683,7 @@ export default class AbstractStore implements IAbstractStore {
      *
      * @returns {void}
      */
-    protected _onLoadingSuccess() {
+    protected _onLoadingSuccess(): void {
         this._state.loading = false;
         this._state.hasError = false;
     }
