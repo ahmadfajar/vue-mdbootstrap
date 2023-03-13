@@ -23,19 +23,24 @@ import RestProxyAdapter from "./RestProxyAdapter";
 
 
 /**
- * Class AbstractStore is superclass of {@link BsStore}, {@link BsTreeStore} and {@link BsArrayStore}.
- * It's never used directly, but offers a set of methods used by those subclasses.
+ * Class AbstractStore is superclass of {@link BsArrayStore}, {@link BsStore},
+ * and {@link BsTreeStore}. It's never used directly, but offers a set of
+ * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 13/03/2023 01:47
+ * @since  15/03/2019 modified: 13/03/2023 18:29
  */
 export default class AbstractStore implements IAbstractStore {
-    private _config: TDataStoreConfig;
-    private _filters: TFilterOption[];
+    protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
+    protected readonly _proxyErrMsg = "Unable to send request to remote server if REST proxy is not defined.";
+    protected readonly _emptyDataErrMsg = 'Server returns empty data.';
+    protected readonly _parsingDataErrMsg = 'Unable to parse data coming from server.';
+    protected _config: TDataStoreConfig;
+    protected _filters: TFilterOption[];
+    protected _filteredItems: IBsModel[];
     protected _items: IBsModel[];
     protected _proxy: IRestAdapter | undefined;
     protected _state: TDataStoreState;
-    protected _filteredItems: IBsModel[];
     public storeState: TDataStoreState;
 
     /**
@@ -71,14 +76,10 @@ export default class AbstractStore implements IAbstractStore {
             sortOptions: [],
             ...config
         };
-
-        let pgSize = -1;
-        if (initialCfg.pageSize && !Helper.isEmpty(initialCfg.pageSize) && Helper.isNumber(initialCfg.pageSize)) {
-            pgSize = <number>initialCfg.pageSize;
-            delete initialCfg.pageSize;
-        } else if (initialCfg.pageSize) {
-            delete initialCfg.pageSize;
-        }
+        initialCfg.pageSize = (
+            initialCfg.pageSize && Helper.isNumber(initialCfg.pageSize)
+                ? initialCfg.pageSize : -1
+        );
 
         this._config = initialCfg;
         this._filters = Helper.isArray(initialCfg.filters) ? initialCfg.filters : [];
@@ -92,7 +93,6 @@ export default class AbstractStore implements IAbstractStore {
             deleting: false,
             hasError: false,
             currentPage: 1,
-            pageSize: pgSize,
             length: 0,
             totalCount: 0,
         });
@@ -171,7 +171,7 @@ export default class AbstractStore implements IAbstractStore {
      * }
      */
     get restUrl(): TRestConfig | undefined {
-        return <TRestConfig>(this._config._restUrl || this._config.restProxy);
+        return <TRestConfig>(this._config.restUrl || this._config.restProxy);
     }
 
     get currentPage(): number {
@@ -179,11 +179,11 @@ export default class AbstractStore implements IAbstractStore {
     }
 
     get pageSize(): number {
-        return this._state.pageSize;
+        return <number>this._config.pageSize;
     }
 
     set pageSize(value: number) {
-        this._state.pageSize = value;
+        this._config.pageSize = value;
     }
 
     get length(): number {
@@ -427,7 +427,7 @@ export default class AbstractStore implements IAbstractStore {
         if (index < 0) {
             throw Error("Parameter 'index' is out of bound.");
         }
-        if (count < 0) {
+        if (count < 1) {
             throw Error("Parameter 'count' must be greater than '0'.");
         }
 
@@ -573,13 +573,10 @@ export default class AbstractStore implements IAbstractStore {
             logic: this._config.filterLogic
         };
 
-        let check = Helper.isNumber(this.currentPage) && this.currentPage > 0;
-
-        if (check) {
+        if (this.currentPage > 0) {
             params.page = this.currentPage;
         }
-        check = Helper.isNumber(this.pageSize) && this.pageSize > 0;
-        if (check) {
+        if (this.pageSize > 0) {
             params.limit = this.pageSize;
         }
         if (!Helper.isEmpty(this.filters)) {
@@ -619,7 +616,7 @@ export default class AbstractStore implements IAbstractStore {
                 this._state.length++;
             }
         } else {
-            console.error('Can not assign primitive type to the dataset.')
+            console.error(this._appendErrMsg);
         }
     }
 

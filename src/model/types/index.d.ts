@@ -318,6 +318,12 @@ export declare type TDataStoreConfig = TRecord & {
     idProperty: string | undefined;
     dataProperty: string | undefined;
     totalProperty: string | undefined;
+    pageSize?: number;
+    remoteFilter?: boolean;
+    remotePaging?: boolean;
+    remoteSort?: boolean;
+    restProxy?: TRestUrlOption;
+    csrfConfig?: TCSRFConfig;
     filterLogic: TFilterLogic;
     filters: TFilterOption[];
     sortOptions: TSortOption[];
@@ -326,7 +332,6 @@ export declare type TDataStoreConfig = TRecord & {
 export declare type TDataStoreState = TModelState & {
     length: number;
     totalCount: number;
-    pageSize: number;
     currentPage: number;
 }
 
@@ -559,14 +564,14 @@ export declare interface IAbstractStore extends ObjectBase {
     isCandidateForModel(item: object): boolean;
 
     /**
-     * Removes the specified item(s) from the local dataset.
+     * Removes the specified item(s) from the internal dataset.
      *
      * @param {IBsModel[]|IBsModel} items Model instance or array of model instances to be removed
      */
     remove(items: IBsModel[] | IBsModel): void;
 
     /**
-     * Removes the model instance(s) at the given index from the local dataset.
+     * Removes the model instance(s) at the given index from the internal dataset.
      *
      * @param {number} index Starting index position
      * @param {number} count Number of items to delete
@@ -641,7 +646,7 @@ export declare interface IArrayStore extends IAbstractStore {
      * Count number of items in the internal dataset specified by the given criteria.
      *
      * @param {string} field The grouping field name criteria
-     * @param {never} value  The grouping value criteria
+     * @param {unknown} value  The grouping value criteria
      */
     aggregateCountBy(field: string, value: unknown): number;
 
@@ -697,4 +702,151 @@ export declare interface IArrayStore extends IAbstractStore {
         direction: TSortDirection = 'asc',
     ): IBsModel[];
 
+}
+
+export declare interface IBsStore extends IAbstractStore {
+    /**
+     * Returns dataset from the active page.
+     *
+     * If a filter or sorter has been applied before,
+     * then the returned dataset will also be affected by it.
+     */
+    get dataItems(): IBsModel[];
+
+    /**
+     * Check if the data Store is using server filtering or local filtering.
+     */
+    get remoteFilter(): boolean;
+
+    /**
+     * Enable or disable data Store server filtering.
+     *
+     * @param {boolean} value If TRUE then using local filtering and FALSE otherwise
+     */
+    set remoteFilter(value: boolean);
+
+    /**
+     * Check if the data Store is using server paging or local paging.
+     */
+    get remotePaging(): boolean;
+
+    /**
+     * Enable or disable data Store server paging.
+     *
+     * @param {boolean} value If TRUE then using server paging and FALSE otherwise
+     */
+    set remotePaging(value: boolean);
+
+    /**
+     * Check if the Store is using server sorting or local sorting.
+     */
+    get remoteSort(): boolean;
+
+    /**
+     * Enable or disable data Store server sorting.
+     *
+     * @param {boolean} value If TRUE then using server sorting and FALSE otherwise
+     */
+    set remoteSort(value: boolean);
+
+    /**
+     * Calculate means or average value based on the given field.
+     *
+     * @param {string} field The field name of the dataset to calculate
+     */
+    aggregateAvg(field: string): number;
+
+    /**
+     * Count number of items in the internal dataset specified by the given criteria.
+     *
+     * @param {string} field  The grouping field name criteria
+     * @param {unknown} value The grouping value criteria
+     */
+    aggregateCountBy(field: string, value: unknown): number;
+
+    /**
+     * Calculate the SUM or total value based on the given field.
+     *
+     * @param {string} field The field name to be used when calculating value
+     */
+    aggregateSum(field: string): number;
+
+    /**
+     * Append an item to the internal dataset and also save the item as a new record to the
+     * remote server whenever possible. The item can be saved to the remote server,
+     * if 'restUrl' property contains a 'save' key.
+     *
+     * @param {Object} item Data to append to the internal dataset
+     */
+    append(item: never): void;
+
+    /**
+     * Replace internal dataset with new data. The proses only affected the internal dataset
+     * and nothing is sent to the remote server.
+     *
+     * @param {never[]|never} data  The new data to be assigned
+     * @param {boolean} silent      Append the data silently and don't trigger data conversion
+     */
+    assignData(data: never[] | never, silent = false): void;
+
+    /**
+     * Delete specific item from internal dataset as well as from remote server whenever possible.
+     * The item can be deleted from the remote server, if 'restUrl' property contains a 'delete' key.
+     *
+     * @param {IBsModel} item Data Model instance to be removed
+     */
+    delete(item: IBsModel): Promise<unknown>;
+
+    /**
+     * Delete specific items from internal dataset as well as from remote
+     * server whenever possible. The items can be deleted from the remote
+     * server, if 'restUrl' property contains a 'delete' key.
+     *
+     * @param {BsModel[]} items Collection of data Model instances to be removed
+     */
+    deletes(items: IBsModel[]): Promise<unknown>;
+
+    /**
+     * Fetch specific item from the remote server via REST API and
+     * replace internal dataset with the one comes from the remote service.
+     *
+     * @param {string|number} id The item ID to fetch
+     */
+    fetch(id: string | number): Promise<AxiosResponse>;
+
+    /**
+     * Load data from the remote server or from the given record(s) and
+     * replace internal dataset with the new dataset.
+     *
+     * @param {never[]|never} [data] The record(s) to be assigned
+     */
+    load(data?: never[] | never): Promise<unknown>;
+
+    /**
+     * Load data from the remote server and assign query parameters and configuration.
+     *
+     * @deprecated Use `load` instead.
+     */
+    query(): Promise<unknown>;
+
+    /**
+     * Sorts the internal dataset with the given criteria and returns it.
+     *
+     * @example
+     * // sort by a single field
+     * const results = myStore.sort('myField', 'asc');
+     *
+     * // sorting by multiple fields
+     * const results = myStore.sort([
+     *  {property: 'age', direction: 'desc'},
+     *  {property: 'name', direction: 'asc'}
+     * ]);
+     *
+     * @param {string|string[]|TSortOption|TSortOption[]} options  The field for sorting or `TSortOption` objects
+     * @param {'asc'|'desc'} [direction]                           The sort direction
+     */
+    sort(
+        options: string | string[] | TSortOption | TSortOption[],
+        direction: TSortDirection = 'asc',
+    ): Promise<IBsModel[]>;
 }

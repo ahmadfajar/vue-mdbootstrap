@@ -28,7 +28,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  *     phoneNumber: null,
  *     enabled: true,
  *     password: null
- * }, adapter);
+ * }, adapter, 'uid');
  *
  * const model2 = new BsModel({
  *     schema: {
@@ -52,7 +52,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  *         dataField: 'value',
  *         suffix: false,
  *     },
- * }, adapter);
+ * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
  * @since  09/07/2018 modified: 13/03/2023 01:37

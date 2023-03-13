@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 09/03/2023 05:56
+ * @since  05/07/2018, modified: 13/03/2023 14:55
  */
 class Helper {
     /**
@@ -167,7 +167,12 @@ class Helper {
      * @returns {boolean} True if the data type is primitive otherwise False
      */
     static isPrimitive(value: unknown): boolean {
-        return (typeof value === 'string' || typeof value === 'number' || typeof value === 'boolean');
+        return (
+            typeof value === 'string' ||
+            typeof value === 'number' ||
+            typeof value === 'boolean' ||
+            typeof value === 'symbol'
+        );
     }
 
     /**
