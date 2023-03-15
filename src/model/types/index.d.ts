@@ -129,7 +129,7 @@ export declare interface IBsModel extends ObjectBase {
     /**
      * Get REST proxy adapter which is used to work with remote service.
      */
-    get proxy(): IRestAdapter | undefined;
+    get proxy(): IRestAdapter;
 
     /**
      * Get REST URL configuration in the form <code>{key: url}</code>,

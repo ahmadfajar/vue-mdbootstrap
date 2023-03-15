@@ -55,7 +55,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 13/03/2023 01:37
+ * @since  09/07/2018 modified: 13/03/2023 21:57
  */
 export default class BsModel implements IBsModel {
     /**
@@ -70,6 +70,7 @@ export default class BsModel implements IBsModel {
     private readonly _assignErrMsg = `The given field does not exists in this ${this.$_class}.`;
     private readonly _assignValuesErrMsg = `The given values can not be assigned to ${this.$_class}.`;
     private readonly _frozenObjErrMsg = `This ${this.$_class} is frozen to prevent any modification.`;
+    private readonly _sealedObjErrMsg = `This ${this.$_class} is sealed to prevent adding new properties.`;
     private readonly _emptyDataErrMsg = 'Server returns empty data.';
     private readonly _parsingDataErrMsg = 'Unable to parse data coming from server.';
 
@@ -79,7 +80,7 @@ export default class BsModel implements IBsModel {
     private readonly _restUrl: TRestConfig;
     private _data: TRecord;
     private _schema: TRecord;
-    private _proxy: IRestAdapter | undefined;
+    private _proxy: IRestAdapter;
     protected _state: TModelState;
     public state: TModelState;
 
@@ -110,14 +111,14 @@ export default class BsModel implements IBsModel {
                 this._restUrl[key] = Helper.isObject(value) ? value.url : value;
             }
 
-            adapter && (this._proxy = new RestProxyAdapter(adapter, _methods));
+            this._proxy = new RestProxyAdapter(adapter, _methods);
             this._schema = Object.seal(<TRecord>schema.schema);
 
             if (!Helper.isEmptyObject(schema.csrfConfig)) {
                 this._csrfConfig = Object.freeze(schema.csrfConfig) as Readonly<TCSRFConfig>;
             }
         } else {
-            adapter && (this._proxy = new RestProxyAdapter(adapter));
+            this._proxy = new RestProxyAdapter(adapter);
             this._schema = Object.seal(<TRecord>schema);
         }
 
@@ -179,7 +180,7 @@ export default class BsModel implements IBsModel {
         return this._csrfConfig;
     }
 
-    get proxy(): IRestAdapter | undefined {
+    get proxy(): IRestAdapter {
         return this._proxy;
     }
 
@@ -225,7 +226,7 @@ export default class BsModel implements IBsModel {
         // @ts-ignore
         delete this._schema;
         // @ts-ignore
-        this._proxy = undefined;
+        delete this._proxy;
     }
 
     assignValue(field: string, newValue: unknown): void {
@@ -312,8 +313,8 @@ export default class BsModel implements IBsModel {
 
     set(name: string, value: unknown): void {
         if (!Object.isFrozen(this)) {
-            // if not exists and not sealed
             if (!(name in this._data) && !Object.isSealed(this)) {
+                // if not exists and not sealed
                 this._data[name] = value;
 
                 Object.defineProperty(this, name, {
@@ -327,6 +328,8 @@ export default class BsModel implements IBsModel {
             } else if (name in this._data) {
                 // if already exists
                 this._data[name] = value;
+            } else {
+                throw Error(this._sealedObjErrMsg);
             }
         } else {
             throw Error(this._frozenObjErrMsg);
@@ -656,10 +659,6 @@ export default class BsModel implements IBsModel {
         onFailure: (error: AxiosError) => void,
         suffix = '',
     ): Promise<AxiosResponse> {
-        if (!this.proxy) {
-            throw Error(this._proxyErrMsg);
-        }
-
         // @ts-ignore
         const headers = {'X-Requested-With': 'XMLHttpRequest'} as AxiosHeaders;
         let csrfUrl = this.csrfConfig?.url || '';
@@ -705,10 +704,6 @@ export default class BsModel implements IBsModel {
         url: string,
         method: keyof TRestMethodOptions,
     ): void {
-        if (!this.proxy) {
-            throw Error(this._proxyErrMsg);
-        }
-
         const methods = this.proxy.requestMethods();
 
         if (url.includes('{id}') && !Helper.isEmpty(identifier)) {

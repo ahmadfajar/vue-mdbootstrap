@@ -27,10 +27,10 @@ import type {IBsModel, IBsStore, TRecord, TSortDirection, TSortOption} from "../
  *         dataField: 'value',
  *         suffix: false,
  *     },
- * }, adapter);
+ * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 13/03/2023 19:05
+ * @since  20/07/2018 modified: 13/03/2023 21:49
  */
 export default class BsStore extends AbstractStore implements IBsStore {
     /**
@@ -39,7 +39,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
      * @param {TRecord} config        The configuration properties
      * @param {AxiosInstance} adapter Axios adapter instance
      */
-    constructor(config: TRecord, adapter: AxiosInstance) {
+    constructor(config: TRecord, adapter?: AxiosInstance) {
         const initialCfg = {
             idProperty: 'id',
             dataProperty: 'data',

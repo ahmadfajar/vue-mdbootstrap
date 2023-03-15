@@ -1,13 +1,15 @@
 import type {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
+import axios from "axios";
 import type {AppConfig} from "vue";
 import type {IRestAdapter, TRecord, TRestMethodOptions} from "../types";
+import {useAxiosPlugin} from "../mixins/CommonApi";
 import Helper from "../utils/Helper";
 
 /**
  * Class RestProxyAdapter which is used to load data from the remote server.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 11/03/2023 16:57
+ * @since  20/07/2018 modified: 13/03/2023 21:34
  */
 export default class RestProxyAdapter implements IRestAdapter {
     private readonly _adapter: AxiosInstance;
@@ -25,8 +27,8 @@ export default class RestProxyAdapter implements IRestAdapter {
             throw Error("Parameter 'appConfig' must be defined.");
         }
         if (
-            "globalProperties" in appConfig && appConfig.globalProperties
-            && (!appConfig.globalProperties.$http && !appConfig.globalProperties.$axios)
+            "globalProperties" in appConfig && appConfig.globalProperties &&
+            (!appConfig.globalProperties.$http && !appConfig.globalProperties.$axios)
         ) {
             throw Error("Vue Application doesn't have AxiosPlugin installed. " +
                 "Please define it some where in the application before using RestProxyAdapter.");
@@ -92,8 +94,10 @@ export default class RestProxyAdapter implements IRestAdapter {
      * @param {AxiosInstance} adapter               Axios adapter instance
      * @param {TRestMethodOptions} [httpMethods]    Custom HTTP methods to override the default methods
      */
-    constructor(adapter: AxiosInstance, httpMethods = {}) {
-        this._adapter = adapter;
+    constructor(adapter?: AxiosInstance, httpMethods = {}) {
+        // Resolve and pick axios adapter from available sources
+        this._adapter = adapter ?? (useAxiosPlugin() ?? axios);
+        // Custom http methods
         this._httpMethods = httpMethods;
     }
 

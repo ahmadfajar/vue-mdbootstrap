@@ -66,16 +66,26 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
 
     const service = axios.create(initOptions);
 
-    // Add a request interceptor
-    service.interceptors.request.use(
-        config => initOptions.requestHandler(config),
-        error => initOptions.requestErrorHandler(error)
-    );
-    // Add a response interceptor
-    service.interceptors.response.use(
-        response => initOptions.responseHandler(response),
-        error => initOptions.responseErrorHandler(error)
-    );
+    if (options && Object.keys(options).length > 0) {
+        // Register interceptor if criteria match.
+        const _keys = Object.keys(options);
+
+        if (
+            (_keys.includes("baseURL") && _keys.length > 1) ||
+            !_keys.includes("baseURL")
+        ) {
+            // Add a request interceptor
+            service.interceptors.request.use(
+                config => initOptions.requestHandler(config),
+                error => initOptions.requestErrorHandler(error)
+            );
+            // Add a response interceptor
+            service.interceptors.response.use(
+                response => initOptions.responseHandler(response),
+                error => initOptions.responseErrorHandler(error)
+            );
+        }
+    }
 
     const http: IHttpService = {
         get: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => {
