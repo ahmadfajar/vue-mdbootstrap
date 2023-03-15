@@ -1,4 +1,10 @@
-import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import type {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions
+} from "vue";
 import type {TInputGroupProps, TRadioOptionProps, TRadioProps, TRecord} from "../../../types";
 
 export declare type TCheckboxProps = TRadioProps & {

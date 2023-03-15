@@ -3,7 +3,7 @@ import {meanBy, sumBy} from "lodash";
 import AbstractStore from "./AbstractStore";
 import RestProxyAdapter from "./RestProxyAdapter";
 import Helper from "../utils/Helper";
-import type {IBsModel, IBsStore, TRecord, TSortDirection, TSortOption} from "../types";
+import type {IBsModel, IBsStore, TRecord, TSortDirection, TSortOption, TSuccessResponse} from "../types";
 
 
 /**
@@ -30,7 +30,7 @@ import type {IBsModel, IBsStore, TRecord, TSortDirection, TSortOption} from "../
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 13/03/2023 21:49
+ * @since  20/07/2018 modified: 15/03/2023 19:06
  */
 export default class BsStore extends AbstractStore implements IBsStore {
     /**
@@ -192,7 +192,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
         this._onLoadingSuccess();
     }
 
-    delete(item: IBsModel): Promise<unknown> {
+    delete(item: IBsModel): Promise<AxiosResponse | TSuccessResponse> {
         this._state.deleting = true;
 
         if (
@@ -232,7 +232,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
         }
     }
 
-    deletes(items: IBsModel[]): Promise<unknown> {
+    deletes(items: IBsModel[]): Promise<TSuccessResponse> {
         this._state.deleting = true;
         this._state.hasError = false;
 
@@ -301,7 +301,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
         );
     }
 
-    load(data?: never[] | never): Promise<unknown> {
+    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse> {
         if (data && !Helper.isEmpty(data)) {
             this._state.loading = true;
             return new Promise((resolve) => {

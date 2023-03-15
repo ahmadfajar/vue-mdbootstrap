@@ -1,13 +1,18 @@
-import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import type {TAvatarIconProps} from "../../Avatar/types";
-import type {TRecord} from "../../../types";
+import type {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions
+} from "vue";
+import type {TAvatarIconProps, TIconVariant, TRecord} from "../../../types";
 
 export declare type TAlertOptionProps = TAvatarIconProps & {
     color?: string;
     dismissible?: boolean;
     filled?: boolean;
     iconType?: string;
-    iconVariant?: string;
+    iconVariant?: TIconVariant;
     modelValue?: boolean;
     outlined?: boolean;
     solidFill?: boolean;

@@ -5,7 +5,7 @@ import type {
     DefineComponent,
     EmitsOptions
 } from "vue";
-import type {TRecord, TSizeOptionProps, TSizeProps} from "../../../types";
+import type {TFlipMode, TRecord, TSizeOptionProps, TSizeProps} from "../../../types";
 
 export declare type TImageOptionProps = {
     /**
@@ -60,7 +60,7 @@ export declare type TAvatarIconProps = {
     /**
      * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
      */
-    iconFlip?: string;
+    iconFlip?: TFlipMode;
     /**
      * Rotate the icon, valid values are: `90`, `180`, `270`.
      */

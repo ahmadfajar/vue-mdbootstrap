@@ -1,9 +1,15 @@
-import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import type {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions
+} from "vue";
 import type {TRecord} from "../../../types";
 
 export declare type TFlipMode = "horizontal" | "vertical" | "both";
 
-export declare type TShapeStyle = "outlined" | "filled" | "round" | "sharp";
+export declare type TIconVariant = "outlined" | "filled" | "round" | "sharp";
 
 export declare type TPositionType = "left" | "right" | "top" | "bottom";
 
@@ -58,7 +64,7 @@ export declare type TIconOptionProps = TSizeOptionProps & {
     /**
      * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
      */
-    flip?: string;
+    flip?: TFlipMode;
     /**
      * Rotate the icon, valid values are: `90`, `180`, `270`.
      */

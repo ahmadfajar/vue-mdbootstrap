@@ -6,20 +6,20 @@ import type {
     EmitsOptions
 } from "vue";
 import type {
+    TIconVariant,
     TInputBaseProps,
     TLabelPosition,
+    TPopoverPosition,
     TRecord,
-    TShapeStyle,
     TSpaceAround,
     TValidationProps
 } from "../../../types";
-import {TPopoverPosition} from "../../../types";
 
 export declare type TInputFieldProps = TInputBaseProps & TValidationProps & {
     /**
      * Sets the action icon style variant.
      */
-    actionIconVariant?: TShapeStyle;
+    actionIconVariant?: TIconVariant;
     /**
      * Sets auto show the clear button.
      */
@@ -199,7 +199,7 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
     /**
      * Sets the Spinner action buttons placement, valid values: `left` and `right`.
      */
-    spinButtonPlacement?: TLabelPosition | string;
+    spinButtonPlacement?: TLabelPosition;
     /**
      * Enable and shows the Plus-Minus action buttons which is used to
      * increment/decrement the numeric value.
@@ -208,7 +208,7 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
     /**
      * Sets the Plus-Minus action buttons placement, valid values: `left`, `right` and `both`.
      */
-    actionButtonPlacement?: TSpaceAround | string;
+    actionButtonPlacement?: TSpaceAround;
     /**
      * Sets the maximum allowed fraction or decimal digits for the displayed value.
      */
@@ -283,7 +283,7 @@ export declare type TSearchFieldOptionProps = {
     /**
      * Sets the Popover display placement.
      */
-    popoverPlacement?: TPopoverPosition | string;
+    popoverPlacement?: TPopoverPosition;
     /**
      * Sets animation transition when displaying the Popover container.
      */

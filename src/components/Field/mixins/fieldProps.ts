@@ -9,7 +9,7 @@ import {
 } from "../../../mixins/CommonProps";
 import {useGenerateId} from "../../../mixins/CommonApi";
 import {validationProps} from "../../Radio/mixins/validationProps";
-import type {TLabelPosition, TShapeStyle, TSpaceAround} from "../../../types";
+import type {TIconVariant, TLabelPosition, TSpaceAround} from "../../../types";
 import {popoverDefaultTransitionProp, popoverPlacementProp} from "../../Popover/mixins/popoverProps";
 
 export const baseInputProps = {
@@ -123,10 +123,10 @@ export const textFieldProps = {
      * @type {string}
      */
     actionIconVariant: {
-        type: String as PropType<TShapeStyle>,
+        type: String as PropType<TIconVariant>,
         default: 'outlined',
         validator: (value: string): boolean => ["outlined", "filled", "round", "sharp"].includes(value),
-    } as Prop<TShapeStyle>,
+    } as Prop<TIconVariant>,
 }
 
 export const numericFieldProps = {
@@ -147,13 +147,13 @@ export const numericFieldProps = {
         type: String as PropType<TLabelPosition>,
         default: "right",
         validator: (v: TLabelPosition) => ["left", "right"].includes(v)
-    },
+    } as Prop<TLabelPosition>,
     actionButton: booleanProp,
     actionButtonPlacement: {
         type: String as PropType<TSpaceAround>,
         default: "right",
         validator: (v: TSpaceAround) => ["left", "right", "both"].includes(v)
-    },
+    } as Prop<TSpaceAround>,
     maxFraction: {
         type: [Number, String],
         default: 3,

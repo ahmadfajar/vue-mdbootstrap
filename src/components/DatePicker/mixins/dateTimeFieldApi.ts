@@ -21,7 +21,7 @@ import type {
     TDateTimePickerMode,
     TEmitFn,
     TRecord,
-    TShapeStyle
+    TIconVariant
 } from "../../../types";
 import {useParseDate} from "./datePickerApi";
 import {BsPopover} from "../../Popover";
@@ -133,7 +133,7 @@ export function useRenderDateTimeField(
                         showClearButton.value,
                         hasValidated.value,
                         hasError.value,
-                        (<TShapeStyle>thisProps.actionIconVariant),
+                        (<TIconVariant>thisProps.actionIconVariant),
                         iconSize,
                         () => useOnFieldValueCleared(emit, localFieldValue),
                     ),

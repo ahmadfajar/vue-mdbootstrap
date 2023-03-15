@@ -24,7 +24,7 @@ import type {IArrayStore, IBsModel, TRecord, TSortDirection, TSortOption} from "
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 13/03/2023 04:34
+ * @since  13/03/2019 modified: 15/03/2023 19:07
  */
 export default class BsArrayStore extends AbstractStore implements IArrayStore {
     /**
@@ -97,13 +97,14 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
                 this._items = this.localSort();
             }
 
-            resolve(this._items);
             this._onLoadingSuccess();
+            resolve(this._items);
         });
     }
 
     /**
-     * Sorts the internal dataset with the given criteria and returns it.
+     * Sorts the internal dataset with the given criteria and returns
+     * the reference of the internal dataset.
      *
      * @example
      * // sort by a single field

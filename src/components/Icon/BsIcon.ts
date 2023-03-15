@@ -2,18 +2,15 @@ import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "v
 import {defineComponent, h} from "vue";
 import {useSizeHeight, useSizeStyles, useSizeWidth} from "./mixins/iconApi";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {iconProps, iconSize as size} from "./mixins/iconProps";
+import {validStringOrNumberProp} from "../../mixins/CommonProps";
+import {iconProps} from "./mixins/iconProps";
 import type {TBsIcon, TBsIconSvg, TIconOptionProps, TRecord} from "../../types";
 import BsIconSvg from "./BsIconSvg";
 
 export default defineComponent<TBsIcon, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsIcon",
     props: {
-        /**
-         * Shortcut to create icon with equal height and width.
-         * @type {string|number}
-         */
-        size,
+        size: validStringOrNumberProp,
         ...iconProps,
     },
     setup(props) {

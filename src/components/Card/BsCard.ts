@@ -1,8 +1,9 @@
-import {ComponentOptionsMixin, ComputedOptions, createCommentVNode, defineComponent, EmitsOptions, h} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {createCommentVNode, defineComponent, h} from "vue";
 import {useRenderCardImg} from "./mixins/cardApi";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {cardProps} from "./mixins/cardProps";
-import {TBsCard, TCardOptionProps, TRecord} from "../../types";
+import type {TBsCard, TCardOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsCard, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsCard",

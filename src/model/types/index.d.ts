@@ -82,7 +82,7 @@ export declare interface IBsModel extends ObjectBase {
     /**
      * Returns the reactive state of the DataModel.
      */
-    state: TModelState;
+    readonly state: TModelState;
 
     /**
      * Get the class name of this instance.
@@ -339,7 +339,7 @@ export declare interface IAbstractStore extends ObjectBase {
     /**
      * Returns the reactive state of the DataStore.
      */
-    storeState: TDataStoreState;
+    readonly storeState: TDataStoreState;
 
     /**
      * Get the class name of this instance.
@@ -682,7 +682,8 @@ export declare interface IArrayStore extends IAbstractStore {
     load(data?: never[] | never): Promise<IBsModel[]>;
 
     /**
-     * Sorts the internal dataset with the given criteria and returns it.
+     * Sorts the internal dataset with the given criteria and returns
+     * the reference of the internal dataset.
      *
      * @example
      * // sort by a single field
@@ -702,6 +703,11 @@ export declare interface IArrayStore extends IAbstractStore {
         direction: TSortDirection = 'asc',
     ): IBsModel[];
 
+}
+
+export declare type TSuccessResponse = {
+    success: boolean;
+    message: string;
 }
 
 export declare interface IBsStore extends IAbstractStore {
@@ -795,7 +801,7 @@ export declare interface IBsStore extends IAbstractStore {
      *
      * @param {IBsModel} item Data Model instance to be removed
      */
-    delete(item: IBsModel): Promise<unknown>;
+    delete(item: IBsModel): Promise<AxiosResponse | TSuccessResponse>;
 
     /**
      * Delete specific items from internal dataset as well as from remote
@@ -804,7 +810,7 @@ export declare interface IBsStore extends IAbstractStore {
      *
      * @param {BsModel[]} items Collection of data Model instances to be removed
      */
-    deletes(items: IBsModel[]): Promise<unknown>;
+    deletes(items: IBsModel[]): Promise<TSuccessResponse>;
 
     /**
      * Fetch specific item from the remote server via REST API and
@@ -820,7 +826,7 @@ export declare interface IBsStore extends IAbstractStore {
      *
      * @param {never[]|never} [data] The record(s) to be assigned
      */
-    load(data?: never[] | never): Promise<unknown>;
+    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse>;
 
     /**
      * Load data from the remote server and assign query parameters and configuration.
@@ -830,7 +836,8 @@ export declare interface IBsStore extends IAbstractStore {
     query(): Promise<unknown>;
 
     /**
-     * Sorts the internal dataset with the given criteria and returns it.
+     * Sorts the internal dataset with the given criteria and returns
+     * the reference of the internal dataset.
      *
      * @example
      * // sort by a single field

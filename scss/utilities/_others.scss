@@ -25,3 +25,21 @@
 .#{$prefix}fw-light {
     font-weight: $font-weight-light !important;
 }
+
+.triangle-up {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 7px solid currentColor;
+    display: inline-block;
+}
+
+.triangle-down {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 7px solid currentColor;
+    display: inline-block;
+}

@@ -1,6 +1,6 @@
 import type {AllowedComponentProps, ComponentInternalInstance, ComponentPublicInstance, VNode, VNodeProps} from "vue";
 import type {RouterLinkProps} from "vue-router";
-import ResizeObserver from "resize-observer-polyfill";
+import type ResizeObserver from "resize-observer-polyfill";
 
 export * from "../components/Alert/types";
 export * from "../components/Animation/types";
@@ -13,6 +13,7 @@ export * from "../components/Card/types";
 export * from "../components/Checkbox/types";
 export * from "../components/Chip/types";
 export * from "../components/ColorPicker/types";
+export * from "../components/Combobox/types";
 export * from "../components/Container/types";
 export * from "../components/DatePicker/types";
 export * from "../components/Drawer/types";
@@ -35,8 +36,6 @@ export declare type TLabelPosition = "left" | "right";
 export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
 
 export declare type TRecord = Record<string, unknown>;
-
-export declare type TNever = Record<string, unknown | never>;
 
 export declare type TValueText<T> = {
     value: T;

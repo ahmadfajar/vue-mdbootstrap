@@ -51,6 +51,12 @@ export const validStringOrFloatProp = {
     validator: (value: string): boolean => !isNaN(parseFloat(value)),
 }
 
+export const validNumberGtZeroProp = {
+    type: [String, Number],
+    default: undefined,
+    validator: (value: string) => parseInt(value, 10) > 0
+}
+
 export const tagProp = {
     type: String,
     default: "div",

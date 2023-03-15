@@ -1,4 +1,10 @@
-import type {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import type {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions
+} from "vue";
 import type {TAvatarIconProps, TInputBaseProps, TLabelPosition, TRecord, TValidationProps} from "../../../types";
 
 export declare type TButtonInnerOptionProps = {
@@ -55,7 +61,7 @@ export declare type TButtonOptionProps = TAvatarIconProps & TBaseButtonProps & {
      * Sets this button state: `enabled` or `disabled`.
      */
     disabled?: boolean;
-    readonly ?: boolean;
+    readonly?: boolean;
     /**
      * This button component mode, valid values are: `default, icon, floating`.
      */
@@ -74,7 +80,7 @@ export declare type TButtonOptionProps = TAvatarIconProps & TBaseButtonProps & {
     /**
      * Place icon on the `left` side (before text) or on the `right` side (after text).
      */
-    iconPosition?: TLabelPosition | string;
+    iconPosition?: TLabelPosition;
     /**
      * Render the icon with predefined size.
      */
@@ -123,7 +129,7 @@ export declare type TToggleButtonOptionProps = TInputBaseProps & TBaseButtonProp
     /**
      * Place icon on the `left` side (before text) or on the `right` side (after text).
      */
-    iconPosition?: TLabelPosition | string;
+    iconPosition?: TLabelPosition;
 }
 
 export declare type TToggleFieldOptionProps = TToggleButtonOptionProps & TValidationProps;

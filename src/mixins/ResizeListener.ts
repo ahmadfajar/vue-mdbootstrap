@@ -1,6 +1,6 @@
 import ResizeObserver from 'resize-observer-polyfill';
 import {isServer} from "./CommonApi";
-import {IBindingElement} from "../types";
+import type {IBindingElement} from "../types";
 
 declare type TResizeTarget = {
     target: IBindingElement;

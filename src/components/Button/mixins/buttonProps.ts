@@ -1,4 +1,4 @@
-import type {PropType} from "vue";
+import type {Prop, PropType} from "vue";
 import {booleanProp, booleanTrueProp, defaultColorProp, stringProp} from "../../../mixins/CommonProps";
 import {width as iconSize} from "../../Icon/mixins/iconProps";
 import {iconProps} from "../../Avatar/mixins/avatarProps";
@@ -27,7 +27,7 @@ export const iconPosition = {
     type: String as PropType<TLabelPosition>,
     default: "left",
     validator: (value: string): boolean => ["left", "right"].includes(value)
-}
+} as Prop<TLabelPosition>
 
 export const buttonInnerProps = {
     dropdownToggle: booleanProp,

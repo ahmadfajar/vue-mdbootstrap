@@ -1,6 +1,6 @@
 import type {ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode} from "vue";
 import {createCommentVNode, Fragment, h, nextTick, toDisplayString} from "vue";
-import type {TBsChipField, TChipFieldOptionProps, TEmitFn, TRecord, TShapeStyle} from "../../../types";
+import type {TBsChipField, TChipFieldOptionProps, TEmitFn, TIconVariant, TRecord} from "../../../types";
 import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
 import {useRenderFieldFeedback} from "../../Radio/mixins/validationApi";
 import {
@@ -151,7 +151,7 @@ export function useRenderChipField(
                     showClearButton.value,
                     hasValidated.value,
                     hasError.value,
-                    (<TShapeStyle>thisProps.actionIconVariant),
+                    (<TIconVariant>thisProps.actionIconVariant),
                     iconSize,
                     () => {
                         inputValue.value = "";

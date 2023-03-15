@@ -1,7 +1,7 @@
 import type {Prop, VNode} from "vue";
 import {h} from "vue";
 import {useGetCalcSize, useSizeStyles} from "../../Icon/mixins/iconApi";
-import type {TAvatarIconProps, TAvatarImageOptionProps, TRecord, TSizeOptionProps} from "../../../types";
+import type {TAvatarIconProps, TAvatarImageOptionProps, TFlipMode, TRecord, TSizeOptionProps} from "../../../types";
 
 export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
     const size = useGetCalcSize(props);
@@ -17,11 +17,9 @@ export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
 export function useCreateIconProps(props: Readonly<TAvatarIconProps>): TRecord {
     return {
         icon: <Prop<string | undefined>>props.icon,
-        // @ts-ignore
-        spin: <Prop<boolean>>props.iconSpin,
-        // @ts-ignore
-        pulse: <Prop<boolean>>props.iconPulse,
-        flip: <Prop<boolean>>props.iconFlip,
+        spin: props.iconSpin,
+        pulse: props.iconPulse,
+        flip: <Prop<TFlipMode>>props.iconFlip,
         rotate: <Prop<string | number>>props.iconRotation,
     }
 }

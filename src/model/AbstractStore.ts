@@ -28,7 +28,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 13/03/2023 18:29
+ * @since  15/03/2019 modified: 15/03/2023 19:07
  */
 export default class AbstractStore implements IAbstractStore {
     protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
@@ -256,7 +256,7 @@ export default class AbstractStore implements IAbstractStore {
     setFilters(
         newFilters: TFilterOption[] | TFilterOption,
         includeDefault = false,
-    ): AbstractStore {
+    ): IAbstractStore {
         if (Array.isArray(newFilters)) {
             this.filters = includeDefault ? newFilters.concat(this.defaultFilters) : newFilters;
         } else if (Helper.isObject(newFilters) && AbstractStore.isCandidateForFilterOption(newFilters)) {
@@ -268,7 +268,7 @@ export default class AbstractStore implements IAbstractStore {
         return this;
     }
 
-    setFilterLogic(logic: unknown): AbstractStore {
+    setFilterLogic(logic: unknown): IAbstractStore {
         if (typeof logic === 'string' && logic.trim() !== '') {
             const trimmed = logic.trim().toUpperCase();
 
@@ -382,12 +382,12 @@ export default class AbstractStore implements IAbstractStore {
         return this.length === 0;
     }
 
-    page(value: number): AbstractStore {
+    page(value: number): IAbstractStore {
         this._state.currentPage = value;
         return this;
     }
 
-    previousPage(): AbstractStore {
+    previousPage(): IAbstractStore {
         if (this.currentPage > 1) {
             return this.page(this.currentPage - 1);
         } else {
@@ -395,7 +395,7 @@ export default class AbstractStore implements IAbstractStore {
         }
     }
 
-    nextPage(): AbstractStore {
+    nextPage(): IAbstractStore {
         if (this.currentPage < this.totalPages) {
             return this.page(this.currentPage + 1);
         } else {
@@ -456,12 +456,12 @@ export default class AbstractStore implements IAbstractStore {
         this._state.deleting = false;
     }
 
-    setPageSize(value: number): AbstractStore {
+    setPageSize(value: number): IAbstractStore {
         this.pageSize = value;
         return this;
     }
 
-    setSorters(sortOptions: TSortOption[] | TSortOption): AbstractStore {
+    setSorters(sortOptions: TSortOption[] | TSortOption): IAbstractStore {
         this.sorters = sortOptions;
         return this;
     }
