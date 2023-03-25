@@ -28,7 +28,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 15/03/2023 19:07
+ * @since  15/03/2019 modified: 26/03/2023 04:27
  */
 export default class AbstractStore implements IAbstractStore {
     protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
@@ -82,9 +82,16 @@ export default class AbstractStore implements IAbstractStore {
         );
 
         this._config = initialCfg;
-        this._filters = Helper.isArray(initialCfg.filters) ? initialCfg.filters : [];
         this._filteredItems = [];
         this._items = [];
+
+        if (!Helper.isEmpty(initialCfg.filters)) {
+            const filters = this.createFilters(initialCfg.filters);
+            this._filters = filters;
+            this._config.filters = filters;
+        } else {
+            this._filters = [];
+        }
 
         // Add reactivity to the state.
         this._state = reactive<TDataStoreState>({
@@ -121,6 +128,8 @@ export default class AbstractStore implements IAbstractStore {
         }
 
         this._items = [];
+        this._state.totalCount = 0;
+        this._state.length = 0;
         this.resetState();
     }
 
@@ -195,7 +204,7 @@ export default class AbstractStore implements IAbstractStore {
     }
 
     get totalPages(): number {
-        return Math.ceil(this.totalCount / this.pageSize);
+        return this.pageSize > 0 ? Math.ceil(this.totalCount / this.pageSize) : 1;
     }
 
     get defaultFilters(): TFilterOption[] {
@@ -581,6 +590,23 @@ export default class AbstractStore implements IAbstractStore {
         }
         if (!Helper.isEmpty(this.filters)) {
             params.filters = this.filters;
+
+            if (!Helper.isEmpty(this._config.filters)) {
+                const defFilters = this._config.filters.filter(flt => {
+                    let found = false;
+                    for (const filter of this.filters) {
+                        if (flt.property === filter.property) {
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    return !found;
+                });
+                if (defFilters.length > 0) {
+                    params.filters = params.filters.concat(defFilters);
+                }
+            }
         }
         if (!Helper.isEmpty(this.sorters)) {
             params.sorts = this.sorters;

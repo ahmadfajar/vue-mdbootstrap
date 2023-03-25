@@ -55,7 +55,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 13/03/2023 21:57
+ * @since  09/07/2018 modified: 25/03/2023 02:28
  */
 export default class BsModel implements IBsModel {
     /**
@@ -307,11 +307,11 @@ export default class BsModel implements IBsModel {
         return Object.freeze(this);
     }
 
-    get(name: string): unknown | never {
-        return this._data[name];
+    get(name: string): never {
+        return <never>this._data[name];
     }
 
-    set(name: string, value: unknown): void {
+    set(name: string, value: never): void {
         if (!Object.isFrozen(this)) {
             if (!(name in this._data) && !Object.isSealed(this)) {
                 // if not exists and not sealed

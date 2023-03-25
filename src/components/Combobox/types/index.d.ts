@@ -1,13 +1,5 @@
-import {IAbstractStore, TInputFieldProps, TLabelPosition, TRecord} from "../../../types";
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-
-export declare type TDataListSchemaProps = {
-    displayField: string,
-    valueField: string,
-    imageField: string,
-    cascadeField: string,
-    disableField: string
-}
+import {IArrayStore, IBsStore, TDataListSchemaProps, TInputFieldProps, TLabelPosition, TRecord} from "../../../types";
 
 export declare type TComboboxOptionProps = TInputFieldProps & {
     /**
@@ -29,7 +21,7 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
     /**
      * Sets this component's Listbox data source.
      */
-    dataSource?: IAbstractStore;
+    dataSource?: IBsStore | IArrayStore;
     /**
      * Sets the **no data message** when the Listbox is empty.
      */
@@ -68,11 +60,6 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
      */
     listboxMinWidth?: number | string;
     /**
-     * Define the data schema which will be used to recognize and render
-     * the data items on the Listbox container.
-     */
-    listboxDataSchema?: TDataListSchemaProps;
-    /**
      * @deprecated
      * Use `listboxMaxHeight` instead.
      */
@@ -83,11 +70,11 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
      */
     popoverMinWidth?: number | string;
     /**
-     * Sets the Listbox's checkbox color.
+     * Sets the Listbox checkbox color.
      */
     checkOptionColor?: string;
     /**
-     * Sets the Listbox's checkbox position. Valid values are: `left`, `right`.
+     * Sets the Listbox checkbox position. Valid values are: `left`, `right`.
      */
     checkOptionPosition?: TLabelPosition;
     /**

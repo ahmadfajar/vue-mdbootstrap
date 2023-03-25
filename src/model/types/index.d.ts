@@ -165,7 +165,7 @@ export declare interface IBsModel extends ObjectBase {
      *
      * @param {string} name The field name.
      */
-    get(name: string): unknown | never;
+    get(name: string): never;
 
     /**
      * Define or sets a field with new value.
@@ -175,7 +175,7 @@ export declare interface IBsModel extends ObjectBase {
      * @param {never} value The field value.
      * @throws Error If this data model is frozen.
      */
-    set(name: string, value: unknown): void;
+    set(name: string, value: never): void;
 
     /**
      * Get all the field names.

@@ -30,7 +30,7 @@ import type {IBsModel, IBsStore, TRecord, TSortDirection, TSortOption, TSuccessR
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 15/03/2023 19:06
+ * @since  20/07/2018 modified: 26/03/2023 04:51
  */
 export default class BsStore extends AbstractStore implements IBsStore {
     /**
@@ -70,23 +70,24 @@ export default class BsStore extends AbstractStore implements IBsStore {
     }
 
     get dataItems(): IBsModel[] {
-        const page = this.currentPage > 0 && this.currentPage <= this.totalPages ? this.currentPage - 1 : 0;
-        const offset = page * this.pageSize;
+        const page = (this.currentPage > 0 && this.currentPage <= this.totalPages) ? this.currentPage - 1 : 0;
+        const offset = this.pageSize > 0 ? (page * this.pageSize) : 0;
 
         if (!this.remoteFilter && this.filters.length > 0) {
             if (this._filteredItems.length === 0) {
                 this._filteredItems = this.localFilter();
             }
-            this._state.totalCount = this._filteredItems.length;
+            const result = this._filteredItems.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
+            this._state.length = result.length;
 
-            if (!this.remotePaging) {
-                return this._filteredItems.slice(offset, this.pageSize > 0 ? offset + this.pageSize : undefined);
-            }
-
-            return this._filteredItems;
+            return result;
         }
+
         if (!this.remotePaging) {
-            return this._items.slice(offset, this.pageSize > 0 ? offset + this.pageSize : undefined);
+            const result = this._items.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
+            this._state.length = result.length;
+
+            return result;
         }
 
         return this._items;
