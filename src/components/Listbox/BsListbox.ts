@@ -88,17 +88,19 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
         );
         onMounted(
             () => {
-                dataSource?.load().then(() => {
-                    if (dataItems.value) {
-                        selectedItems.value = dataItems.value.filter(it => {
-                            if (Array.isArray(selectedValues.value)) {
-                                return selectedValues.value.some(v => v === it.get(dataSchema.valueField));
-                            } else {
-                                return selectedValues.value === it.get(dataSchema.valueField);
-                            }
-                        });
-                    }
-                });
+                dataSource?.load()
+                    .then(() => {
+                        if (dataItems.value) {
+                            selectedItems.value = dataItems.value.filter(it => {
+                                if (Array.isArray(selectedValues.value)) {
+                                    return selectedValues.value.some(v => v === it.get(dataSchema.valueField));
+                                } else {
+                                    return selectedValues.value === it.get(dataSchema.valueField);
+                                }
+                            });
+                        }
+                    })
+                    .catch(error => emit("data-error", error));
             }
         );
 

@@ -48,9 +48,7 @@ export function useFilterListboxItems(
                     emit("data-filtered", newFilters);
                     emit("update:search-text", search);
                 })
-                .catch(error => {
-                    emit("data-error", error);
-                });
+                .catch(error => emit("data-error", error));
         }
     } else {
         throw Error("Operation not supported. DataSource.proxy is not instance of AbstractStore");
@@ -218,7 +216,7 @@ function renderListboxItems(
 function dispatchListboxEvent(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
-    dataItems: ComputedRef<IBsModel[]|undefined>,
+    dataItems: ComputedRef<IBsModel[] | undefined>,
     selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
     item: IBsModel,
