@@ -1,15 +1,8 @@
-import {ComputedRef, createCommentVNode, h, Ref, Slots, toDisplayString, vModelText, VNode, withDirectives} from "vue";
+import type {ComputedRef, Ref, Slots, VNode} from "vue";
+import {createCommentVNode, Fragment, h, nextTick, toDisplayString, vModelText, withDirectives} from "vue";
 import {kebabCase} from "lodash";
-import {
-    IArrayStore,
-    IBsModel,
-    IBsStore,
-    TDataListSchemaProps,
-    TEmitFn,
-    TListboxOptionProps,
-    TRecord
-} from "../../../types";
 import {cssPrefix, useRenderSlot} from "../../../mixins/CommonApi";
+import {BsCheckbox} from "../../Checkbox";
 import {
     BsListTile,
     BsListTileAction,
@@ -18,10 +11,19 @@ import {
     BsListTileTitle,
     BsListView
 } from "../../ListView";
+import type {
+    IArrayStore,
+    IBsModel,
+    IBsStore,
+    TDataListSchemaProps,
+    TEmitFn,
+    TListboxOptionProps,
+    TRecord
+} from "../../../types";
 import AbstractStore from "../../../model/AbstractStore";
 import BsStore from "../../../model/BsStore";
 import Helper from "../../../utils/Helper";
-import {BsCheckbox} from "../../Checkbox";
+import {BsDivider} from "../../Basic";
 
 export function useFilterListboxItems(
     emit: TEmitFn,
@@ -103,7 +105,7 @@ export function useRenderListbox(
     showSearchbox: ComputedRef<boolean | undefined>,
     searchboxRef: Ref<HTMLElement | null>,
     selectedItems: IBsModel[],
-    selectedValues: Ref<string | number | string[] | number[] | undefined>,
+    localValue: Ref<string | number | string[] | number[] | undefined>,
     searchRef: Ref<string | undefined>,
 ): VNode {
     return h("div", {
@@ -114,7 +116,10 @@ export function useRenderListbox(
         ]
     }, [
         renderListboxSearchbox(emit, props, schema, showSearchbox, searchboxRef, searchRef),
-        renderListboxView(slots, emit, props, schema, dataItems, listviewStyles, selectedItems),
+        renderListboxView(
+            slots, emit, props, schema, dataItems,
+            listviewStyles, selectedItems, localValue,
+        ),
     ]);
 }
 
@@ -126,6 +131,7 @@ function renderListboxView(
     dataItems: ComputedRef<IBsModel[] | undefined>,
     listviewStyles: ComputedRef<TRecord>,
     selectedItems: IBsModel[],
+    localValue: Ref<string | number | string[] | number[] | undefined>,
 ): VNode {
     const dataSource = props.dataSource?.proxy;
 
@@ -135,20 +141,24 @@ function renderListboxView(
             style: listviewStyles.value,
             individualState: true,
         }, {
-            default: () => dataSource?.length === 0
-                ? h(BsListTile, null, {
-                    default: () =>
-                        useRenderSlot(
-                            slots, "emptyDataMsg",
-                            {key: "emptyDataMessage"},
-                            h(BsListTileTitle, null, {
-                                default: () => toDisplayString(props.emptyDataMessage)
-                            })
-                        )
-                })
-                : (
-                    dataSource?.filters.length && dataSource.filters.length > 0 && dataItems.value?.length === 0
-                        ? h(BsListTile, null, {
+            default: () =>
+                dataSource?.length === 0
+                    ? h(BsListTile, null, {
+                        default: () =>
+                            useRenderSlot(
+                                slots, "emptyDataMsg",
+                                {key: "emptyDataMessage"},
+                                h(BsListTileTitle, null, {
+                                    default: () => toDisplayString(props.emptyDataMessage)
+                                })
+                            )
+                    })
+                    : (
+                        (
+                            dataSource?.filters.length &&
+                            dataSource.filters.length > 0 &&
+                            dataItems.value?.length === 0
+                        ) ? h(BsListTile, null, {
                             default: () =>
                                 useRenderSlot(
                                     slots, "notFoundMsg",
@@ -157,11 +167,10 @@ function renderListboxView(
                                         default: () => toDisplayString(props.notFoundMessage)
                                     })
                                 )
-                        })
-                        : renderListboxItems(
-                            slots, emit, props, schema, dataItems, selectedItems,
+                        }) : renderListboxItems(
+                            slots, emit, props, schema, dataItems, selectedItems, localValue,
                         )
-                )
+                    )
         }
     );
 }
@@ -173,50 +182,104 @@ function renderListboxItems(
     schema: TDataListSchemaProps,
     dataItems: ComputedRef<IBsModel[] | undefined>,
     selectedItems: IBsModel[],
+    localValue: Ref<string | number | string[] | number[] | undefined>,
 ): VNode[] | undefined {
+    const findIndex = (item: IBsModel) => {
+        return selectedItems.findIndex(it =>
+            it.get(schema.valueField) === item.get(schema.valueField)
+        )
+    }
+
     return dataItems.value?.map((item, idx) =>
-        // @ts-ignore
-        h(BsListTile, {
-            key: kebabCase(item.get(schema.displayField)) + "-" + idx.toString(),
-            navigable: !props.readonly && !props.disabled,
-            disabled: props.disabled === true || item.get(schema.disableField) === true,
-            active: selectedItems.findIndex(it => it.get(schema.valueField) === item.get(schema.valueField)) !== -1,
-            "onUpdate:active": (value: boolean) => {
-                if (value) {
-                    selectedItems.push(item);
-                } else {
-                    selectedItems = selectedItems.filter(it => it.get(schema.valueField) !== item.get(schema.valueField));
-                    emit("update:model-value", selectedItems);
-                }
-            },
-        }, {
-            default: () =>
-                props.multiple === true
-                    ? renderListboxCheckableItem(slots, emit, props, schema, selectedItems, item, idx)
-                    : renderListboxItem(slots, props, schema, item, idx)
-        })
+        h(Fragment, [
+            // @ts-ignore
+            h(BsListTile, {
+                key: kebabCase(item.get(schema.displayField)) + "-" + idx,
+                navigable: !props.readonly && !props.disabled,
+                disabled: props.disabled === true || item.get(schema.disableField) === true,
+                active: findIndex(item) !== -1,
+                "onUpdate:active": (value: boolean) =>
+                    dispatchListboxEvent(
+                        emit, props, selectedItems, localValue,
+                        item, schema.valueField, value
+                    ),
+            }, {
+                default: () =>
+                    props.multiple === true
+                        ? createListboxItemContentWithCheckbox(
+                            slots, emit, props, schema, selectedItems,
+                            localValue, item, idx
+                        )
+                        : createListboxItemContent(slots, props, schema, item, idx)
+            }),
+            (
+                props.itemSeparator && (idx + 1 < <number>dataItems.value?.length)
+                    ? h(BsDivider, {key: "divider-" + idx})
+                    : undefined
+            ),
+        ])
     )
 }
 
-function renderListboxCheckableItem(
+function dispatchListboxEvent(
+    emit: TEmitFn,
+    props: Readonly<TListboxOptionProps>,
+    selectedItems: IBsModel[],
+    localValue: Ref<string | number | string[] | number[] | undefined>,
+    item: IBsModel,
+    valueField: string,
+    isSelected: boolean,
+) {
+    if (isSelected) {
+        if (props.multiple === true) {
+            const fdx = selectedItems.findIndex(it =>
+                it.get(valueField) === item.get(valueField)
+            );
+            if (fdx === -1) {
+                selectedItems.push(item);
+            }
+        } else {
+            selectedItems = [item];
+        }
+        emit("select", item);
+    } else {
+        selectedItems = selectedItems.filter(it =>
+            it.get(valueField) !== item.get(valueField)
+        );
+        emit("deselect", item);
+    }
+    if (props.multiple === true) {
+        localValue.value = selectedItems.map(it => it.get(valueField));
+    } else {
+        localValue.value = selectedItems[0].get(valueField);
+    }
+
+    nextTick().then(() => emit("update:model-value", localValue.value));
+}
+
+function createListboxItemContentWithCheckbox(
     slots: Slots,
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
     selectedItems: IBsModel[],
+    localValue: Ref<string | number | string[] | number[] | undefined>,
     item: IBsModel,
     index: number,
 ): VNode[] {
     const nodes: VNode[] = [];
     if (props.useCheckbox === true && props.checkboxPosition !== "right") {
-        nodes.push(createListTileCheckbox(emit, props, selectedItems, item));
+        nodes.push(createListTileCheckbox(emit, props, schema, selectedItems, localValue, item));
     }
-    if (props.showImage === true && Object.hasOwn(item, schema.imageField)) {
+    if (
+        props.showImage === true &&
+        (Object.hasOwn(item, schema.imageField) || item.get(schema.imageField) !== undefined)
+    ) {
         nodes.push(createListTileLeading(props, schema, item));
     }
     nodes.push(createListTileContent(slots, schema, item, index));
     if (props.useCheckbox === true && props.checkboxPosition === "right") {
-        nodes.push(createListTileCheckbox(emit, props, selectedItems, item));
+        nodes.push(createListTileCheckbox(emit, props, schema, selectedItems, localValue, item));
     }
 
     return nodes;
@@ -225,7 +288,9 @@ function renderListboxCheckableItem(
 function createListTileCheckbox(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
+    schema: TDataListSchemaProps,
     selectedItems: IBsModel[],
+    localValue: Ref<string | number | string[] | number[] | undefined>,
     item: IBsModel,
 ): VNode {
     // @ts-ignore
@@ -239,13 +304,14 @@ function createListTileCheckbox(
             modelValue: selectedItems,
             "onUpdate:model-value": (values: IBsModel[]) => {
                 selectedItems = values;
-                emit("update:model-value", values);
+                localValue.value = selectedItems.map(it => it.get(schema.valueField));
+                emit("update:model-value", localValue.value);
             }
         })
     });
 }
 
-function renderListboxItem(
+function createListboxItemContent(
     slots: Slots,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
@@ -253,7 +319,10 @@ function renderListboxItem(
     index: number,
 ): VNode[] {
     const nodes: VNode[] = [];
-    if (props.showImage === true && Object.hasOwn(item, schema.imageField)) {
+    if (
+        props.showImage === true &&
+        (Object.hasOwn(item, schema.imageField) || item.get(schema.imageField) !== undefined)
+    ) {
         nodes.push(createListTileLeading(props, schema, item));
     }
 

@@ -19,6 +19,7 @@ export {BsCheckboxPlugin} from "./Checkbox";
 export {BsRadioPlugin} from "./Radio";
 export {BsChipPlugin} from "./Chip";
 export {BsSwitchPlugin} from "./Switch";
+export {BsListboxPlugin} from "./Listbox";
 export {BsTabsPlugin} from "./Tabs";
 export {BsDatePickerPlugin} from "./DatePicker";
 export {BsTooltipPlugin} from "./Tooltip";

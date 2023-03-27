@@ -24,7 +24,7 @@ import type {IArrayStore, IBsModel, TRecord, TSortDirection, TSortOption} from "
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 26/03/2023 04:51
+ * @since  13/03/2019 modified: 26/03/2023 05:35
  */
 export default class BsArrayStore extends AbstractStore implements IArrayStore {
     /**
@@ -44,16 +44,17 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
     get dataItems(): IBsModel[] {
         const page = (this.currentPage > 0 && this.currentPage <= this.totalPages) ? this.currentPage - 1 : 0;
         const offset = this.pageSize > 0 ? (page * this.pageSize) : 0;
+        let result: IBsModel[];
 
         if (this.filters.length > 0) {
             this._filteredItems = this.localFilter();
-            const result = this._filteredItems.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
-            this._state.length = result.length;
-
-            return result;
+            result = this._filteredItems.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
+        } else {
+            result = this._items.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
         }
 
-        return this._items.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
+        this._state.length = result.length;
+        return result;
     }
 
     aggregateAvg(field: string): number {

@@ -1,12 +1,30 @@
-import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, reactive, ref} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, onMounted, reactive, ref, watch} from "vue";
 import {listboxProps} from "./mixins/listboxProps";
-import {IBsModel, TBsListbox, TDataListSchemaProps, TListboxOptionProps, TRecord} from "../../types";
-import {useRenderListbox} from "./mixins/listboxApi";
+import {useFilterListboxItems, useRenderListbox} from "./mixins/listboxApi";
+import type {
+    IArrayStore,
+    IBsModel,
+    IBsStore,
+    TBsListbox,
+    TDataListSchemaProps,
+    TListboxOptionProps,
+    TRecord
+} from "../../types";
+import Helper from "../../utils/Helper";
 
 export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsListbox",
     props: listboxProps,
     emits: [
+        /**
+         * Fired when an item is selected.
+         */
+        "select",
+        /**
+         * Fired when an item is deselected.
+         */
+        "deselect",
         /**
          * Fired when error loading data items.
          */
@@ -36,17 +54,16 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
         });
         const maxHeight = parseInt(<string>thisProps.maxHeight);
         const minItems = parseInt(<string>thisProps.minSearchLength);
-        const dataItems = computed(() => thisProps.dataSource?.proxy.dataItems);
+        const dataSource = thisProps.dataSource?.proxy;
+        const dataItems = computed(() => dataSource?.dataItems);
         const showSearchbox = computed<boolean | undefined>(
-            () => {
-                const dataSource = thisProps.dataSource?.proxy;
-                return dataSource && (dataSource.totalCount >= minItems);
-            }
+            () => dataSource && (dataSource.totalCount >= minItems)
         );
         const searchboxRef = ref<HTMLElement | null>(null);
         const searchText = ref(thisProps.searchText);
         const selectedValues = ref(thisProps.modelValue);
-        const selectedItems: IBsModel[] = [];
+        let selectedItems: IBsModel[] = [];
+
         const listviewStyles = computed<TRecord>(
             () => ({
                 maxHeight: (
@@ -55,6 +72,34 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
                         : maxHeight
                 ) + "px"
             })
+        );
+
+        watch(
+            () => thisProps.searchText,
+            (value) => {
+                if (Helper.isEmpty(value)) {
+                    useFilterListboxItems(
+                        emit, dataSchema,
+                        <IBsStore | IArrayStore>dataSource,
+                        searchText, ""
+                    );
+                }
+            }
+        );
+        onMounted(
+            () => {
+                dataSource?.load().then(() => {
+                    if (dataItems.value) {
+                        selectedItems = dataItems.value.filter(it => {
+                            if (Array.isArray(selectedValues.value)) {
+                                return selectedValues.value.some(v => v === it.get(dataSchema.valueField));
+                            } else {
+                                return selectedValues.value === it.get(dataSchema.valueField);
+                            }
+                        });
+                    }
+                });
+            }
         );
 
         return () =>
