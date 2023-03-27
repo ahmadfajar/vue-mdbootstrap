@@ -172,10 +172,10 @@ export declare interface IBsModel extends ObjectBase {
      * If the field doesn't exist, then it will be appended.
      *
      * @param {string} name The field name.
-     * @param {never} value The field value.
+     * @param {unknown} value The field value.
      * @throws Error If this data model is frozen.
      */
-    set(name: string, value: never): void;
+    set(name: string, value: unknown): void;
 
     /**
      * Get all the field names.
@@ -446,7 +446,7 @@ export declare interface IAbstractStore extends ObjectBase {
         field: string,
         value: string | number | boolean,
         operator: TFilterOperator,
-    ): IAbstractStore;
+    ): this;
 
     /**
      * Replace old filters and apply new filters to the Store dataset.
@@ -457,14 +457,14 @@ export declare interface IAbstractStore extends ObjectBase {
     setFilters(
         filters: TFilterOption[] | TFilterOption,
         includeDefault = false,
-    ): IAbstractStore;
+    ): this;
 
     /**
      * Define the filter logic to be used when filtering the Store’s dataset.
      *
      * @param {string} logic The filter logic, valid values: 'AND', 'OR'
      */
-    setFilterLogic(logic: unknown): IAbstractStore;
+    setFilterLogic(logic: unknown): this;
 
     /**
      * Get or Set the sorter's object collection to be used
@@ -544,17 +544,17 @@ export declare interface IAbstractStore extends ObjectBase {
      *
      * @param {number} value The new page number, based-1 index.
      */
-    page(value: number): IAbstractStore;
+    page(value: number): this;
 
     /**
      * Sets the previous page to load by the Store.
      */
-    previousPage(): IAbstractStore;
+    previousPage(): this;
 
     /**
      * Sets the next page to load by the Store.
      */
-    nextPage(): IAbstractStore;
+    nextPage(): this;
 
     /**
      * Check if the given item is a DataModel or not.
@@ -583,14 +583,14 @@ export declare interface IAbstractStore extends ObjectBase {
      *
      * @param {number} value Number of items within a page
      */
-    setPageSize(value: number): IAbstractStore;
+    setPageSize(value: number): this;
 
     /**
      * Set sorter's criteria collection.
      *
      * @param {TSortOption[]|TSortOption} sortOptions The sorts method criteria
      */
-    setSorters(sortOptions: TSortOption[] | TSortOption): IAbstractStore;
+    setSorters(sortOptions: TSortOption[] | TSortOption): this;
 
     /**
      * Create an array of FilterOption criteria.
@@ -623,6 +623,14 @@ export declare interface IAbstractStore extends ObjectBase {
      * Get current query parameter's configuration.
      */
     queryParams(): TQueryParameter;
+
+    /**
+     * Load data from the remote server or from the given record(s) and
+     * replace internal dataset with the new dataset.
+     *
+     * @param {never[]|never} [data] The record(s) to be assigned
+     */
+    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse>;
 
 }
 
@@ -672,14 +680,6 @@ export declare interface IArrayStore extends IAbstractStore {
      * @param {boolean} silent     Append the data silently and don't trigger data conversion
      */
     assignData(data: never[] | never, silent = false): void;
-
-    /**
-     * Load and sort the new supplied dataset or just sort current
-     * dataset with existing criteria.
-     *
-     * @param {never[]|never} [data]   A record or collection of records to be assigned
-     */
-    load(data?: never[] | never): Promise<IBsModel[]>;
 
     /**
      * Sorts the internal dataset with the given criteria and returns
@@ -819,14 +819,6 @@ export declare interface IBsStore extends IAbstractStore {
      * @param {string|number} id The item ID to fetch
      */
     fetch(id: string | number): Promise<AxiosResponse>;
-
-    /**
-     * Load data from the remote server or from the given record(s) and
-     * replace internal dataset with the new dataset.
-     *
-     * @param {never[]|never} [data] The record(s) to be assigned
-     */
-    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse>;
 
     /**
      * Load data from the remote server and assign query parameters and configuration.

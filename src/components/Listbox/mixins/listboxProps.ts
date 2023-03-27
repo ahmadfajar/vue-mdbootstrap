@@ -1,7 +1,7 @@
-import {Prop} from "vue";
+import type {Prop} from "vue";
 import {booleanProp, stringProp, validNumberGtZeroProp, whiteColorProp} from "../../../mixins/CommonProps";
 import {iconPosition} from "../../Button/mixins/buttonProps";
-import {TDataSource} from "../types";
+import type {TDataSource} from "../types";
 
 export const listboxMinSearchChars = {
     type: [String, Number],

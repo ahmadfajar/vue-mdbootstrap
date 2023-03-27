@@ -1,12 +1,12 @@
-import {IArrayStore, IBsStore, TLabelPosition, TRecord} from "../../../types";
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
+import {IArrayStore, IBsStore, TLabelPosition, TRecord} from "../../../types";
 
 export declare type TDataListSchemaProps = {
     displayField: string,
     valueField: string,
-    imageField: string,
-    cascadeField: string,
-    disableField: string
+    imageField?: string,
+    cascadeField?: string,
+    disableField?: string
 }
 
 export declare type TDataSource = {

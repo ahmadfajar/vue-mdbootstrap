@@ -2,6 +2,7 @@ import {meanBy, sumBy} from "lodash";
 import AbstractStore from "./AbstractStore";
 import Helper from "../utils/Helper";
 import type {IArrayStore, IBsModel, TRecord, TSortDirection, TSortOption} from "../types";
+import {AxiosResponse} from "axios";
 
 
 /**
@@ -24,16 +25,16 @@ import type {IArrayStore, IBsModel, TRecord, TSortDirection, TSortOption} from "
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 26/03/2023 05:35
+ * @since  13/03/2019 modified: 28/03/2023 01:55
  */
 export default class BsArrayStore extends AbstractStore implements IArrayStore {
     /**
      * Class constructor.
      *
-     * @param {Object[]} [data]  Collection of records to be assigned
+     * @param {unknown[]} [data]  Collection of records to be assigned
      * @param {TRecord} [config] The configuration properties
      */
-    constructor(data: never[], config: TRecord = {}) {
+    constructor(data: unknown[], config: TRecord = {}) {
         super(config);
 
         if (Array.isArray(data) && data.length > 0) {
@@ -83,7 +84,7 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
         }
     }
 
-    assignData(data: never[] | never, silent = false): void {
+    assignData(data: unknown[] | unknown, silent = false): void {
         this._assignData(data, silent);
         if (this.sorters.length > 0) {
             this._items = this.localSort();
@@ -91,7 +92,7 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
         this._onLoadingSuccess();
     }
 
-    load(data?: never[] | never): Promise<IBsModel[]> {
+    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse> {
         this._state.loading = true;
 
         return new Promise((resolve) => {

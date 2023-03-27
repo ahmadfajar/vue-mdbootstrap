@@ -1,5 +1,5 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, onMounted, reactive, ref, watch} from "vue";
+import {computed, defineComponent, onMounted, reactive, ref, shallowRef, watch} from "vue";
 import {listboxProps} from "./mixins/listboxProps";
 import {useFilterListboxItems, useRenderListbox} from "./mixins/listboxApi";
 import type {
@@ -62,7 +62,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
         const searchboxRef = ref<HTMLElement | null>(null);
         const searchText = ref(thisProps.searchText);
         const selectedValues = ref(thisProps.modelValue);
-        let selectedItems: IBsModel[] = [];
+        const selectedItems = shallowRef<IBsModel[]>([]);
 
         const listviewStyles = computed<TRecord>(
             () => ({
@@ -90,7 +90,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
             () => {
                 dataSource?.load().then(() => {
                     if (dataItems.value) {
-                        selectedItems = dataItems.value.filter(it => {
+                        selectedItems.value = dataItems.value.filter(it => {
                             if (Array.isArray(selectedValues.value)) {
                                 return selectedValues.value.some(v => v === it.get(dataSchema.valueField));
                             } else {

@@ -1,4 +1,4 @@
-import type {AxiosError, AxiosInstance} from "axios";
+import type {AxiosError, AxiosInstance, AxiosResponse} from "axios";
 import {orderBy} from "lodash";
 import {reactive, readonly} from "vue";
 import type {
@@ -28,7 +28,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 26/03/2023 04:27
+ * @since  15/03/2019 modified: 28/03/2023 01:54
  */
 export default class AbstractStore implements IAbstractStore {
     protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
@@ -251,7 +251,7 @@ export default class AbstractStore implements IAbstractStore {
         field: string,
         value: string | number | boolean,
         operator?: TFilterOperator,
-    ): AbstractStore {
+    ): this {
         this.filters.push(<TFilterOption>{
             'property': field,
             'value': value,
@@ -265,7 +265,7 @@ export default class AbstractStore implements IAbstractStore {
     setFilters(
         newFilters: TFilterOption[] | TFilterOption,
         includeDefault = false,
-    ): IAbstractStore {
+    ): this {
         if (Array.isArray(newFilters)) {
             this.filters = includeDefault ? newFilters.concat(this.defaultFilters) : newFilters;
         } else if (Helper.isObject(newFilters) && AbstractStore.isCandidateForFilterOption(newFilters)) {
@@ -277,7 +277,7 @@ export default class AbstractStore implements IAbstractStore {
         return this;
     }
 
-    setFilterLogic(logic: unknown): IAbstractStore {
+    setFilterLogic(logic: unknown): this {
         if (typeof logic === 'string' && logic.trim() !== '') {
             const trimmed = logic.trim().toUpperCase();
 
@@ -391,12 +391,12 @@ export default class AbstractStore implements IAbstractStore {
         return this.length === 0;
     }
 
-    page(value: number): IAbstractStore {
+    page(value: number): this {
         this._state.currentPage = value;
         return this;
     }
 
-    previousPage(): IAbstractStore {
+    previousPage(): this {
         if (this.currentPage > 1) {
             return this.page(this.currentPage - 1);
         } else {
@@ -404,7 +404,7 @@ export default class AbstractStore implements IAbstractStore {
         }
     }
 
-    nextPage(): IAbstractStore {
+    nextPage(): this {
         if (this.currentPage < this.totalPages) {
             return this.page(this.currentPage + 1);
         } else {
@@ -465,12 +465,12 @@ export default class AbstractStore implements IAbstractStore {
         this._state.deleting = false;
     }
 
-    setPageSize(value: number): IAbstractStore {
+    setPageSize(value: number): this {
         this.pageSize = value;
         return this;
     }
 
-    setSorters(sortOptions: TSortOption[] | TSortOption): IAbstractStore {
+    setSorters(sortOptions: TSortOption[] | TSortOption): this {
         this.sorters = sortOptions;
         return this;
     }
@@ -615,6 +615,10 @@ export default class AbstractStore implements IAbstractStore {
         return params;
     }
 
+    load(data?: never[]): Promise<IBsModel[] | AxiosResponse> {
+        throw Error("Not supported yet.");
+    }
+
     /**
      * Append an item to the local dataset.
      *
@@ -653,7 +657,7 @@ export default class AbstractStore implements IAbstractStore {
      * @param {boolean} [silent]        Append data silently and doesn't trigger data conversion
      * @returns {void}
      */
-    protected _assignData(source: never | never[], silent = false): void {
+    protected _assignData(source: unknown | unknown[], silent = false): void {
         if (!Array.isArray(source) || !Helper.isObject(source)) {
             this._state.loading = false;
             this._state.hasError = true;
@@ -669,7 +673,7 @@ export default class AbstractStore implements IAbstractStore {
         } else {
             this._items = [];
             items.forEach(v => {
-                this._append(v, true, true);
+                this._append(<never>v, true, true);
             });
         }
 

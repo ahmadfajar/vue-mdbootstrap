@@ -1,7 +1,8 @@
-import type {ComputedRef, Ref, Slots, VNode} from "vue";
+import type {ComputedRef, Ref, ShallowRef, Slots, VNode} from "vue";
 import {createCommentVNode, Fragment, h, nextTick, toDisplayString, vModelText, withDirectives} from "vue";
 import {kebabCase} from "lodash";
 import {cssPrefix, useRenderSlot} from "../../../mixins/CommonApi";
+import {BsDivider} from "../../Basic";
 import {BsCheckbox} from "../../Checkbox";
 import {
     BsListTile,
@@ -21,9 +22,7 @@ import type {
     TRecord
 } from "../../../types";
 import AbstractStore from "../../../model/AbstractStore";
-import BsStore from "../../../model/BsStore";
 import Helper from "../../../utils/Helper";
-import {BsDivider} from "../../Basic";
 
 export function useFilterListboxItems(
     emit: TEmitFn,
@@ -37,14 +36,14 @@ export function useFilterListboxItems(
 
         if (Helper.isEmpty(search)) {
             dataSource.setFilters([], true);
-            (<BsStore>dataSource).load().catch(error => emit("data-error", error));
+            dataSource.load().catch(error => emit("data-error", error));
         } else {
             const newFilters = dataSource.createFilters([
                 {property: schema.displayField, value: search, operator: "contains"},
                 {property: schema.valueField, value: search, operator: "contains"},
             ]);
             dataSource.setFilters(newFilters, true);
-            (<BsStore>dataSource).load()
+            dataSource.load()
                 .then(() => {
                     emit("data-filtered", newFilters);
                     emit("update:search-text", search);
@@ -104,7 +103,7 @@ export function useRenderListbox(
     listviewStyles: ComputedRef<TRecord>,
     showSearchbox: ComputedRef<boolean | undefined>,
     searchboxRef: Ref<HTMLElement | null>,
-    selectedItems: IBsModel[],
+    selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
     searchRef: Ref<string | undefined>,
 ): VNode {
@@ -130,7 +129,7 @@ function renderListboxView(
     schema: TDataListSchemaProps,
     dataItems: ComputedRef<IBsModel[] | undefined>,
     listviewStyles: ComputedRef<TRecord>,
-    selectedItems: IBsModel[],
+    selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
 ): VNode {
     const dataSource = props.dataSource?.proxy;
@@ -181,26 +180,21 @@ function renderListboxItems(
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
     dataItems: ComputedRef<IBsModel[] | undefined>,
-    selectedItems: IBsModel[],
+    selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
 ): VNode[] | undefined {
-    const findIndex = (item: IBsModel) => {
-        return selectedItems.findIndex(it =>
-            it.get(schema.valueField) === item.get(schema.valueField)
-        )
-    }
-
     return dataItems.value?.map((item, idx) =>
         h(Fragment, [
             // @ts-ignore
             h(BsListTile, {
                 key: kebabCase(item.get(schema.displayField)) + "-" + idx,
                 navigable: !props.readonly && !props.disabled,
-                disabled: props.disabled === true || item.get(schema.disableField) === true,
-                active: findIndex(item) !== -1,
+                disabled: props.disabled === true || item.get(<string>schema.disableField) === true,
+                active: item.get("active"),
                 "onUpdate:active": (value: boolean) =>
                     dispatchListboxEvent(
-                        emit, props, selectedItems, localValue,
+                        emit, props, dataItems,
+                        selectedItems, localValue,
                         item, schema.valueField, value
                     ),
             }, {
@@ -224,36 +218,42 @@ function renderListboxItems(
 function dispatchListboxEvent(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
-    selectedItems: IBsModel[],
+    dataItems: ComputedRef<IBsModel[]|undefined>,
+    selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
     item: IBsModel,
     valueField: string,
     isSelected: boolean,
 ) {
+    dataItems.value?.forEach(it => it.set("active", false));
+
     if (isSelected) {
         if (props.multiple === true) {
-            const fdx = selectedItems.findIndex(it =>
+            const fdx = selectedItems.value.findIndex(it =>
                 it.get(valueField) === item.get(valueField)
             );
             if (fdx === -1) {
-                selectedItems.push(item);
+                selectedItems.value = selectedItems.value.concat(item);
             }
         } else {
-            selectedItems = [item];
+            selectedItems.value = [item];
         }
         emit("select", item);
     } else {
-        selectedItems = selectedItems.filter(it =>
+        selectedItems.value = selectedItems.value.filter(it =>
             it.get(valueField) !== item.get(valueField)
         );
         emit("deselect", item);
     }
+
     if (props.multiple === true) {
-        localValue.value = selectedItems.map(it => it.get(valueField));
+        selectedItems.value.forEach(it => it.set("active", true));
+        localValue.value = selectedItems.value.map(it => it.get(valueField));
     } else {
-        localValue.value = selectedItems[0].get(valueField);
+        localValue.value = selectedItems.value.length > 0 ? selectedItems.value[0].get(valueField) : undefined;
     }
 
+    item.set("active", isSelected);
     nextTick().then(() => emit("update:model-value", localValue.value));
 }
 
@@ -262,7 +262,7 @@ function createListboxItemContentWithCheckbox(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
-    selectedItems: IBsModel[],
+    selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
     item: IBsModel,
     index: number,
@@ -271,13 +271,7 @@ function createListboxItemContentWithCheckbox(
     if (props.useCheckbox === true && props.checkboxPosition !== "right") {
         nodes.push(createListTileCheckbox(emit, props, schema, selectedItems, localValue, item));
     }
-    if (
-        props.showImage === true &&
-        (Object.hasOwn(item, schema.imageField) || item.get(schema.imageField) !== undefined)
-    ) {
-        nodes.push(createListTileLeading(props, schema, item));
-    }
-    nodes.push(createListTileContent(slots, schema, item, index));
+    nodes.push(...createListboxItemContent(slots, props, schema, item, index));
     if (props.useCheckbox === true && props.checkboxPosition === "right") {
         nodes.push(createListTileCheckbox(emit, props, schema, selectedItems, localValue, item));
     }
@@ -289,7 +283,7 @@ function createListTileCheckbox(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
-    selectedItems: IBsModel[],
+    selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
     item: IBsModel,
 ): VNode {
@@ -303,8 +297,8 @@ function createListTileCheckbox(
             value: item,
             modelValue: selectedItems,
             "onUpdate:model-value": (values: IBsModel[]) => {
-                selectedItems = values;
-                localValue.value = selectedItems.map(it => it.get(schema.valueField));
+                selectedItems.value = values;
+                localValue.value = selectedItems.value.map(it => it.get(schema.valueField));
                 emit("update:model-value", localValue.value);
             }
         })
@@ -321,11 +315,10 @@ function createListboxItemContent(
     const nodes: VNode[] = [];
     if (
         props.showImage === true &&
-        (Object.hasOwn(item, schema.imageField) || item.get(schema.imageField) !== undefined)
+        (Object.hasOwn(item, <string>schema.imageField) || item.get(<string>schema.imageField) !== undefined)
     ) {
         nodes.push(createListTileLeading(props, schema, item));
     }
-
     nodes.push(createListTileContent(slots, schema, item, index));
 
     return nodes;
@@ -338,7 +331,7 @@ function createListTileLeading(
 ): VNode {
     // @ts-ignore
     return h(BsListTileLeading, {
-        imgSrc: item.get(schema.imageField),
+        imgSrc: item.get(<string>schema.imageField),
         circle: props.circleImage,
         rounded: props.roundedImage,
         size: props.imageSize,

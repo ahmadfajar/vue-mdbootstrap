@@ -30,7 +30,7 @@ import type {IBsModel, IBsStore, TRecord, TSortDirection, TSortOption, TSuccessR
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 26/03/2023 04:51
+ * @since  20/07/2018 modified: 28/03/2023 01:55
  */
 export default class BsStore extends AbstractStore implements IBsStore {
     /**
@@ -184,7 +184,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
         }
     }
 
-    assignData(data: never[] | never, silent = false): void {
+    assignData(data: unknown[] | unknown, silent = false): void {
         this._assignData(data, silent);
 
         if (!this.remoteSort && this.sorters.length > 0) {
