@@ -23,12 +23,12 @@ export function useSideDrawerStyles(
     const zeroPx = "0px";
     const sbWidth = parseInt(<string>props.width) + 1;
     const properties = {
+        height: props.clipped ? `calc(100% - ${clipHeight.value}px)` : undefined,
         width: Helper.cssUnit(props.width),
-        // height: isMobile.value ? '100vh' : (props.clipped ? `calc(100% - ${clipHeight.value}px)` : '100%'),
         transform: props.position === "right"
             ? `translateX(${Helper.cssUnit(sbWidth)})`
             : `translateX(-${Helper.cssUnit(sbWidth)})`,
-        paddingTop: Helper.cssUnit(clipHeight.value),
+        marginTop: Helper.cssUnit(clipHeight.value),
         left: props.position === "left" ? zeroPx : undefined,
         right: props.position === "right" ? zeroPx : undefined,
         position: props.fixedLayout ? "fixed" : undefined,
@@ -42,8 +42,9 @@ export function useSideDrawerStyles(
 
         return {
             ...properties,
+            height: "100%",
             width: Helper.cssUnit(props.modalWidth),
-            paddingTop: zeroPx,
+            marginTop: zeroPx,
             position: "fixed",
             top: zeroPx,
             transform: isOpen.value ? "translateX(0px)" : `translateX(${Helper.cssUnit(slideWidth)})`,
