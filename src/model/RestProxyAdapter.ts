@@ -9,7 +9,7 @@ import Helper from "../utils/Helper";
  * Class RestProxyAdapter which is used to load data from the remote server.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 13/03/2023 21:34
+ * @since  20/07/2018 modified: 23/04/2023 00:12
  */
 export default class RestProxyAdapter implements IRestAdapter {
     private readonly _adapter: AxiosInstance;
@@ -24,7 +24,7 @@ export default class RestProxyAdapter implements IRestAdapter {
      */
     static checkAxios(appConfig: AppConfig | AxiosInstance) {
         if (!appConfig) {
-            throw Error("Parameter 'appConfig' must be defined.");
+            throw Error("Parameter 'appConfig' must be an 'AxiosInstance' or 'Vue AppConfig'.");
         }
         if (
             "globalProperties" in appConfig && appConfig.globalProperties &&
@@ -34,14 +34,12 @@ export default class RestProxyAdapter implements IRestAdapter {
                 "Please define it some where in the application before using RestProxyAdapter.");
         }
         if (
-            ("get" in appConfig && typeof appConfig.get !== "function") &&
-            ("post" in appConfig && typeof appConfig.post !== "function")
+            ("get" in appConfig && !Helper.isFunction(appConfig.get)) &&
+            ("post" in appConfig && !Helper.isFunction(appConfig.post))
         ) {
             throw Error("Axios is not defined. " +
                 "Please define it in the constructor before using RestProxyAdapter.");
         }
-
-        throw Error("Parameter 'appConfig' must be an 'AxiosInstance' or 'Vue AppConfig'.");
     }
 
     /**
@@ -140,13 +138,13 @@ export default class RestProxyAdapter implements IRestAdapter {
                         if (Helper.isFunction(onSuccess)) {
                             onSuccess(response);
                         }
-                        return resolve(response);
+                        resolve(response);
                     })
                     .catch((error) => {
                         if (Helper.isFunction(onFailure)) {
                             onFailure(error);
                         }
-                        return reject(error);
+                        reject(error);
                     });
             } else {
                 reject(new Error("Client is busy handling previous request."));

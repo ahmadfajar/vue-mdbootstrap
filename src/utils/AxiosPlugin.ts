@@ -67,12 +67,12 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
     const service = axios.create(initOptions);
 
     if (options && Object.keys(options).length > 0) {
-        // Register interceptor if criteria match.
         const _keys = Object.keys(options);
 
+        // Register interceptor if criteria matched.
         if (
             (_keys.includes("baseURL") && _keys.length > 1) ||
-            !_keys.includes("baseURL")
+            (!_keys.includes("baseURL") && _keys.length > 0)
         ) {
             // Add a request interceptor
             service.interceptors.request.use(

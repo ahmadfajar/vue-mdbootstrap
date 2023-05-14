@@ -55,9 +55,15 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
         const maxHeight = parseInt(<string>thisProps.maxHeight);
         const minItems = parseInt(<string>thisProps.minSearchLength);
         const dataSource = thisProps.dataSource?.proxy;
-        const dataItems = computed(() => dataSource?.dataItems);
+        const dataItems = computed(() => {
+            if (dataSource && dataSource.storeState.length !== dataSource.totalCount) {
+                return dataSource.dataItems;
+            }
+
+            return dataSource?.dataItems;
+        });
         const showSearchbox = computed<boolean | undefined>(
-            () => dataSource && (dataSource.totalCount >= minItems)
+            () => dataSource && (dataSource.storeState.totalCount >= minItems)
         );
         const searchboxRef = ref<HTMLElement | null>(null);
         const searchText = ref(thisProps.searchText);
@@ -77,11 +83,14 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
         watch(
             () => thisProps.searchText,
             (value) => {
-                if (Helper.isEmpty(value)) {
+                if (
+                    (value && value.length >= parseInt(<string>thisProps.minSearchChars))
+                    || Helper.isEmpty(value)
+                ) {
                     useFilterListboxItems(
                         emit, dataSchema,
                         <IBsStore | IArrayStore>dataSource,
-                        searchText, ""
+                        searchText, value || ""
                     );
                 }
             }
@@ -100,7 +109,10 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
                             });
                         }
                     })
-                    .catch(error => emit("data-error", error));
+                    .catch(error => {
+                        emit("data-error", error);
+                        console.warn(error);
+                    });
             }
         );
 

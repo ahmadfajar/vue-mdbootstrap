@@ -40,7 +40,6 @@ export function useFilterListboxItems(
         } else {
             const newFilters = dataSource.createFilters([
                 {property: schema.displayField, value: search, operator: "contains"},
-                {property: schema.valueField, value: search, operator: "contains"},
             ]);
             dataSource.setFilters(newFilters, true);
             dataSource.load()
@@ -79,7 +78,7 @@ function renderListboxSearchbox(
                 autocomplete: "off",
                 placeholder: props.searchLabel,
                 "onUpdate:modelValue": (value: string) => {
-                    if (value.length >= minChars) {
+                    if (value.length >= minChars || Helper.isEmpty(value)) {
                         useFilterListboxItems(emit, schema, dataSource, searchRef, value);
                     }
                 },
@@ -188,7 +187,7 @@ function renderListboxItems(
                 key: kebabCase(item.get(schema.displayField)) + "-" + idx,
                 navigable: !props.readonly && !props.disabled,
                 disabled: props.disabled === true || item.get(<string>schema.disableField) === true,
-                active: item.get("active"),
+                active: selectedItems.value.find(it => it.get(schema.valueField) === item.get(schema.valueField)) !== undefined, // item.get("active"),
                 "onUpdate:active": (value: boolean) =>
                     dispatchListboxEvent(
                         emit, props, dataItems,
@@ -223,8 +222,6 @@ function dispatchListboxEvent(
     valueField: string,
     isSelected: boolean,
 ) {
-    dataItems.value?.forEach(it => it.set("active", false));
-
     if (isSelected) {
         if (props.multiple === true) {
             const fdx = selectedItems.value.findIndex(it =>
@@ -245,13 +242,11 @@ function dispatchListboxEvent(
     }
 
     if (props.multiple === true) {
-        selectedItems.value.forEach(it => it.set("active", true));
         localValue.value = selectedItems.value.map(it => it.get(valueField));
     } else {
         localValue.value = selectedItems.value.length > 0 ? selectedItems.value[0].get(valueField) : undefined;
     }
 
-    item.set("active", isSelected);
     nextTick().then(() => emit("update:model-value", localValue.value));
 }
 
@@ -291,14 +286,9 @@ function createListTileCheckbox(
     }, {
         // @ts-ignore
         default: () => h(BsCheckbox, {
-            color: props.checkboxColor,
-            value: item,
-            modelValue: selectedItems,
-            "onUpdate:model-value": (values: IBsModel[]) => {
-                selectedItems.value = values;
-                localValue.value = selectedItems.value.map(it => it.get(schema.valueField));
-                emit("update:model-value", localValue.value);
-            }
+            color: props.checkboxColor || "default-color",
+            value: item.get(schema.valueField),
+            modelValue: selectedItems.value.map(it => it.get(schema.valueField)),
         })
     });
 }

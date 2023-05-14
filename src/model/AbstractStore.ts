@@ -17,18 +17,19 @@ import type {
     TSortDirection,
     TSortOption
 } from "../types";
+import {autoBind} from "../utils/AutoBind";
 import Helper from "../utils/Helper";
 import BsModel from "./BsModel";
 import RestProxyAdapter from "./RestProxyAdapter";
 
 
 /**
- * Class AbstractStore is superclass of {@link BsArrayStore}, {@link BsStore},
- * and {@link BsTreeStore}. It's never used directly, but offers a set of
+ * Class AbstractStore is superclass of {@link BsArrayStore}, and {@link BsStore}.
+ * It's never used directly, but offers a set of
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 28/03/2023 01:54
+ * @since  15/03/2019 modified: 23/04/2023 01:11
  */
 export default class AbstractStore implements IAbstractStore {
     protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
@@ -104,6 +105,7 @@ export default class AbstractStore implements IAbstractStore {
             totalCount: 0,
         });
         this.storeState = readonly(this._state);
+        autoBind(this);
     }
 
     get $_class(): string {
@@ -180,7 +182,7 @@ export default class AbstractStore implements IAbstractStore {
      * }
      */
     get restUrl(): TRestConfig | undefined {
-        return <TRestConfig>(this._config.restUrl || this._config.restProxy);
+        return <TRestConfig>(this._config.restProxy || this._config.restUrl);
     }
 
     get currentPage(): number {
@@ -615,6 +617,7 @@ export default class AbstractStore implements IAbstractStore {
         return params;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     load(data?: never[]): Promise<IBsModel[] | AxiosResponse> {
         throw Error("Not supported yet.");
     }

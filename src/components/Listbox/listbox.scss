@@ -1,0 +1,41 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "../../../scss/mixins/placeholder";
+@import "~compass-mixins/lib/compass/css3";
+
+.#{$prefix}listbox {
+    --#{$prefix}searchbox-padding-x: #{$padding-base - .25};
+    --#{$prefix}searchbox-padding-y: #{$padding-sm};
+    --#{$prefix}searchbox-border-color: #{$gray-500};
+    --#{$prefix}searchbox-focused-border-color: #{$default-active-bgcolor};
+    --#{$prefix}searchbox-font-size: 14px;
+    --#{$prefix}searchbox-text-color: #{$gray-900};
+    --#{$prefix}searchbox-focused-shadow-rgba: #{rgba($default-active-bgcolor, 0.2)};
+
+    > .#{$prefix}listbox-search {
+        padding: $padding-base - .25;
+        width: 100%;
+
+        > input {
+            @include decorate-input-placeholder();
+            background: transparent;
+            border: 1px solid var(--#{$prefix}searchbox-border-color);
+            color: var(--#{$prefix}searchbox-text-color);
+            font-size: var(--#{$prefix}searchbox-font-size);
+            padding: var(--#{$prefix}searchbox-padding-y) var(--#{$prefix}searchbox-padding-x);
+            outline: none;
+            width: 100%;
+
+            &:focus {
+                @include box-shadow(0 0 0.15rem 0.25rem var(--#{$prefix}searchbox-focused-shadow-rgba));
+                border-color: var(--#{$prefix}searchbox-focused-border-color);
+            }
+        }
+    }
+
+    &:not(.bg-amber):not(.bg-lime):not(.bg-yellow):not(.bg-light):not(.bg-light-grey):not(.bg-white) {
+        --#{$prefix}searchbox-text-color: #{$white};
+        --#{$prefix}searchbox-focused-border-color: #{$white};
+        --#{$prefix}searchbox-focused-shadow-rgba: #{rgba($gray-400, 0.2)};
+    }
+}

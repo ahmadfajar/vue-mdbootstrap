@@ -12,6 +12,7 @@ import type {
     TRestMethodOptions,
     TUrlOption
 } from "../types";
+import {autoBind} from "../utils/AutoBind";
 import Helper from "../utils/Helper";
 import RestProxyAdapter from "./RestProxyAdapter";
 
@@ -142,7 +143,7 @@ export default class BsModel implements IBsModel {
             _dt[idProperty] = null;
         }
         this._data = reactive(_dt);
-
+        autoBind(this);
         // Initialize magic getters and setters.
         this._initProps();
     }

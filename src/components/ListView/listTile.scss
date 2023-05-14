@@ -68,7 +68,7 @@
         }
 
         .#{$prefix}checkbox {
-            margin-top: $padding-sm;
+            --#{$prefix}checkbox-margin: #{$padding-sm $padding-sm $padding-sm 0};
         }
     }
 
