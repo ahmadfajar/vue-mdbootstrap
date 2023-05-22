@@ -338,13 +338,13 @@ export default class AbstractStore implements IAbstractStore {
                     const operator = <TFilterOperator>flt.operator.toLowerCase();
 
                     if (operator === 'gt') {
-                        equals.push(itemValue > flt.value);
+                        equals.push(itemValue > <number>flt.value);
                     } else if (operator === 'gte') {
-                        equals.push(itemValue >= flt.value);
+                        equals.push(itemValue >= <number>flt.value);
                     } else if (operator === 'lt') {
-                        equals.push(itemValue < flt.value);
+                        equals.push(itemValue < <number>flt.value);
                     } else if (operator === 'lte') {
-                        equals.push(itemValue <= flt.value);
+                        equals.push(itemValue <= <number>flt.value);
                     } else if (operator === 'neq') {
                         equals.push(itemValue !== flt.value);
                     } else if (operator === 'contains' || flt.operator === 'fts') {

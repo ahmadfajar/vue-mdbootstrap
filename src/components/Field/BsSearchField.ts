@@ -27,9 +27,13 @@ export default defineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions
          */
         "search",
         /**
-         * Fired when this Popover state is updated.
+         * Fired when the Popover is show.
          */
-        "update:open",
+        "open",
+        /**
+         * Fired when the Popover is hiding.
+         */
+        "close",
         /**
          * Fired when this component's value is updated.
          */
@@ -39,17 +43,13 @@ export default defineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions
         const thisProps = props as Readonly<TSearchFieldOptionProps>;
         const localValue = ref(thisProps.modelValue);
         const isFocused = ref<boolean>(false);
-        const isPopoverOpen = ref(<boolean>thisProps.open);
+        const isPopoverOpen = ref(false);
         const activator = ref<HTMLElement | null>(null);
         const classes = computed(() => useSearchFieldClasses(thisProps, isFocused))
 
         watch(
             () => thisProps.modelValue,
             (value) => localValue.value = value
-        );
-        watch(
-            () => thisProps.open,
-            (value) => isPopoverOpen.value = <boolean>value
         );
 
         return () =>

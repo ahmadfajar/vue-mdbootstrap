@@ -269,10 +269,6 @@ export declare type TSearchFieldOptionProps = {
      */
     modelValue?: string;
     /**
-     * Popover container state: show or hide.
-     */
-    open?: boolean;
-    /**
      * Custom CSS class for the Popover container.
      */
     popoverCls?: string | string[];

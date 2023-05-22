@@ -116,7 +116,7 @@ export function useRenderSearchField(
                             if (!thisProps.readonly && !thisProps.disabled) {
                                 const open = isPopoverOpen.value;
                                 isPopoverOpen.value = !open;
-                                emit("update:open", isPopoverOpen.value);
+                                emit(isPopoverOpen.value ? "open" : "close");
                             }
                         }
                     })
@@ -139,7 +139,7 @@ export function useRenderSearchField(
                     },
                     "onUpdate:open": (value: boolean) => {
                         isPopoverOpen.value = value;
-                        emit("update:open", value);
+                        emit(value ? "open" : "close");
                     },
                 }, {
                     default: () => slots.popover && slots.popover()

@@ -11,7 +11,7 @@ export function useAlertClassNames(
     props: Readonly<TAlertOptionProps>,
     colorName: ComputedRef<string | undefined>,
 ): Record<string, boolean | undefined> {
-    const solid = props.filled || props.solidFill;
+    const solid = props.solidFill || props.filled;
     return {
         "alert d-flex": true,
         "align-items-center": true,
@@ -36,7 +36,7 @@ export function useAlertColorName(props: Readonly<TAlertOptionProps>): string | 
 }
 
 export function useAlertIconName(props: Readonly<TAlertOptionProps>): string | undefined {
-    const variant = props.variant || props.iconType;
+    const variant = props.iconType || props.variant;
     if (variant) {
         switch (variant) {
             case "help":

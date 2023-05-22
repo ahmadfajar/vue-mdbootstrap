@@ -5,7 +5,7 @@ import {inputProps, textFieldProps} from "../../Field/mixins/fieldProps";
 import {listboxMaxHeight, listboxMinSearchChars, listboxMinSearchLength} from "../../Listbox/mixins/listboxProps";
 import {validationProps} from "../../Radio/mixins/validationProps";
 import {popoverDefaultTransitionProp} from "../../Popover/mixins/popoverProps";
-import type {IArrayStore, IBsStore} from "../../../types";
+import type {TDataSource} from "../../../types";
 
 export const comboboxProps = {
     ...inputProps,
@@ -18,13 +18,13 @@ export const comboboxProps = {
         default: undefined,
     },
     modelValue: {
-        type: [String, Number, Object, Array],
+        type: [String, Number, Array],
         default: undefined,
     },
     dataSource: {
         type: Object,
         default: undefined,
-    } as Prop<IBsStore | IArrayStore>,
+    } as Prop<TDataSource>,
     emptyDataMessage: stringProp,
     notFoundMessage: stringProp,
     minSearchChars: listboxMinSearchChars,

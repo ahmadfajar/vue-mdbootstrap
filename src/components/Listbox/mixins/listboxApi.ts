@@ -36,7 +36,10 @@ export function useFilterListboxItems(
 
         if (Helper.isEmpty(search)) {
             dataSource.setFilters([], true);
-            dataSource.load().catch(error => emit("data-error", error));
+            dataSource.load().catch(error => {
+                emit("data-error", error);
+                console.warn(error);
+            });
         } else {
             const newFilters = dataSource.createFilters([
                 {property: schema.displayField, value: search, operator: "contains"},
@@ -47,7 +50,10 @@ export function useFilterListboxItems(
                     emit("data-filtered", newFilters);
                     emit("update:search-text", search);
                 })
-                .catch(error => emit("data-error", error));
+                .catch(error => {
+                    emit("data-error", error);
+                    console.warn(error);
+                });
         }
     } else {
         throw Error("Operation not supported. DataSource.proxy is not instance of AbstractStore");

@@ -3,12 +3,10 @@ import {defaultColorProp} from "../../../mixins/CommonProps";
 export const badgeProps = {
     /**
      * The badge color appearance.
-     * @type {string}
      */
     color: defaultColorProp,
     /**
      * Html tag used to render the badge.
-     * @type {string}
      */
     tag: {
         type: String,
@@ -16,7 +14,6 @@ export const badgeProps = {
     },
     /**
      * Create badge with `pill` or `label` style.
-     * @type {string}
      */
     type: {
         type: String,
@@ -26,7 +23,6 @@ export const badgeProps = {
     /**
      * Create contextual badge with
      * [Bootstrap theme color](https://getbootstrap.com/docs/5.2/components/badge/#background-colors).
-     * @type {string}
      */
     variant: {
         type: String,

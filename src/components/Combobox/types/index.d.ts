@@ -1,5 +1,5 @@
 import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {IArrayStore, IBsStore, TDataListSchemaProps, TInputFieldProps, TLabelPosition, TRecord} from "../../../types";
+import {TDataSource, TInputFieldProps, TLabelPosition, TRecord} from "../../../types";
 
 export declare type TComboboxOptionProps = TInputFieldProps & {
     /**
@@ -17,11 +17,11 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
     /**
      * The value monitored by `v-model` to maintain this field value.
      */
-    modelValue?: string | number | unknown | string[] | number[];
+    modelValue?: string | number | string[] | number[];
     /**
      * Sets this component's Listbox data source.
      */
-    dataSource?: IBsStore | IArrayStore;
+    dataSource?: TDataSource;
     /**
      * Sets the **no data message** when the Listbox is empty.
      */

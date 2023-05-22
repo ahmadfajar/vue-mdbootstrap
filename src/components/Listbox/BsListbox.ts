@@ -26,6 +26,10 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
          */
         "deselect",
         /**
+         * Fired when data has been fetched.
+         */
+        "data-bind",
+        /**
          * Fired when error loading data items.
          */
         "data-error",
@@ -99,6 +103,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
             () => {
                 dataSource?.load()
                     .then(() => {
+                        emit("data-bind", dataItems.value);
                         if (dataItems.value) {
                             selectedItems.value = dataItems.value.filter(it => {
                                 if (Array.isArray(selectedValues.value)) {

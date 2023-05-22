@@ -26,7 +26,6 @@ export const tabItemProps = {
 export const tabsProps = {
     /**
      * Tabs style variant. Valid values: `tabs`, `pills`, `material`, `modern`.
-     * @type {TTabsVariant}
      */
     variant: {
         type: String as PropType<TTabsVariant>,
@@ -35,7 +34,6 @@ export const tabsProps = {
     },
     /**
      * Tabs alignment. Valid values: `left`, `right`, `center`, `justified`.
-     * @type {TAlignment}
      */
     alignment: {
         type: String as PropType<TAlignment>,
@@ -44,22 +42,18 @@ export const tabsProps = {
     },
     /**
      * Tabs color style for tab variant: `modern` and `material`.
-     * @type {string}
      */
     color: stringProp,
     /**
      * Create Tabs with flex styles. Only valid for `tabs` or `pills` variant.
-     * @type {boolean}
      */
     flex: booleanProp,
     /**
      * TabItem icon size.
-     * @type {string|number}
      */
     iconSize: sizeProp,
     /**
      * TabItem icon position. Valid values: `left`, `right`, `top`, `bottom`.
-     * @type {TPositionType}
      */
     iconPosition: {
         type: String as PropType<TPositionType>,
@@ -68,7 +62,6 @@ export const tabsProps = {
     },
     /**
      * Tabs position. Valid values: `left`, `right`, `top`, `bottom`.
-     * @type {TPositionType}
      */
     tabPosition: {
         type: String as PropType<TPositionType>,
@@ -77,12 +70,10 @@ export const tabsProps = {
     },
     /**
      * TabItem css class name.
-     * @type {string|Array<string>}
      */
     tabClass: stringOrArrayProp,
     /**
      * CSS class name for active TabItem.
-     * @type {String}
      */
     activeClass: {
         type: String,
@@ -90,17 +81,14 @@ export const tabsProps = {
     },
     /**
      * TabItem's container css class name.
-     * @type {string|Array<string>}
      */
     innerClass: stringOrArrayProp,
     /**
      * Tab content css class name.
-     * @type {string|Array<string>}
      */
     contentClass: stringOrArrayProp,
     /**
      * Tab content display animation transition.
-     * @type {string}
      */
     contentTransition: {
         type: String,
@@ -109,7 +97,6 @@ export const tabsProps = {
     },
     /**
      * This component activeTab index or activeTab ID.
-     * @type {string|number}
      */
     modelValue: stringOrNumberProp,
 }

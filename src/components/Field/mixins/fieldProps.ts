@@ -15,22 +15,18 @@ import {popoverDefaultTransitionProp, popoverPlacementProp} from "../../Popover/
 export const baseInputProps = {
     /**
      * Sets the `<input>` element `name` attribute.
-     * @type {string|number}
      */
     name: stringOrNumberProp,
     /**
      * This input field state.
-     * @type {boolean}
      */
     disabled: booleanProp,
     /**
      * This input field state.
-     * @type {boolean}
      */
     readonly: booleanProp,
     /**
      * Whether this input field is required or not.
-     * @type {boolean}
      */
     required: booleanProp
 }
@@ -38,7 +34,6 @@ export const baseInputProps = {
 export const inputProps = {
     /**
      * Sets the `<input>` element `ID` attribute. This property value is auto generates.
-     * @type {string}
      */
     id: {
         type: String,
@@ -51,35 +46,29 @@ export const textFieldProps = {
     /**
      * Create this component with **flat** appearance, and removes the borders.
      * The component appearance will be styled like plain text.
-     * @type {boolean}
      */
     flat: booleanProp,
     /**
      * Create this component with **filled** appearance.
      * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
-     * @type {boolean}
      */
     filled: booleanProp,
     /**
      * Create this component with floating field label.
      * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
-     * @type {boolean}
      */
     floatingLabel: booleanProp,
     /**
      * Create this component with **outlined** appearance.
      * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
-     * @type {boolean}
      */
     outlined: booleanProp,
     /**
      * Sets auto show the clear button.
-     * @type {boolean}
      */
     clearButton: booleanProp,
     /**
      * Display validation icon or not, when this field has been validated.
-     * @type {boolean}
      */
     validationIcon: booleanProp,
     /**
@@ -88,7 +77,6 @@ export const textFieldProps = {
      * Use any valid Google Material icon name, see
      * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
      * for details.
-     * @type {string}
      */
     appendIcon: stringProp,
     /**
@@ -97,7 +85,6 @@ export const textFieldProps = {
      * Use any valid Google Material icon name, see
      * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
      * for details.
-     * @type {string}
      */
     appendIconOuter: stringProp,
     /**
@@ -106,7 +93,6 @@ export const textFieldProps = {
      * Use any valid Google Material icon name, see
      * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
      * for details.
-     * @type {string}
      */
     prependIcon: stringProp,
     /**
@@ -115,12 +101,10 @@ export const textFieldProps = {
      * Use any valid Google Material icon name, see
      * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
      * for details.
-     * @type {string}
      */
     prependIconOuter: stringProp,
     /**
      * Sets the action icon style variant.
-     * @type {string}
      */
     actionIconVariant: {
         type: String as PropType<TIconVariant>,
@@ -179,7 +163,6 @@ export const searchFieldProps = {
     autofocus: booleanProp,
     advanceSearch: booleanProp,
     modelValue: stringProp,
-    open: booleanProp,
     darkMode: booleanProp,
     placeholder: {
         type: String,

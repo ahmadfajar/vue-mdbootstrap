@@ -43,97 +43,80 @@ export const buttonInnerProps = {
 export const buttonProps = {
     /**
      * Sets this button state: `active` or `normal`.
-     * @type {boolean}
      */
     active: booleanProp,
     /**
      * Sets this button color.
-     * @type {string}
      */
     color: defaultColorProp,
     /**
      * Sets this button state: `enabled` or `disabled`.
-     * @type {boolean}
      */
     disabled: booleanProp,
     readonly: booleanProp,
     /**
      * This button component mode, valid values are: `default, icon, floating`.
-     * @type {string}
      */
     mode: buttonMode,
     /**
      * Render this button component as dropdowns button or not, see
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/dropdowns/)}
      * for details.
-     * @type {boolean}
      */
     dropdownToggle: booleanProp,
     /**
      * Render this button with flat style (Google Material Text Button) or not.
-     * @type {boolean}
      */
     flat: booleanProp,
     /**
      * Render this button with outlined style (Google Material Outlined Button) or not, see
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#outline-buttons)}
      * for details.
-     * @type {boolean}
      */
     outlined: booleanProp,
     /**
      * Render this button with raised style (Google Material Elevated Button) or not.
-     * @type {boolean}
      */
     raised: booleanProp,
     /**
      * Render this button with rounded style or not, see
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/)}
      * for details.
-     * @type {boolean}
      */
     rounded: booleanProp,
     /**
      * Render button with rounded-pill style (Google Material Button) or not.
-     * @type {boolean}
      */
     pill: booleanTrueProp,
     /**
      * Render component as `<a>` element and define its `href` property and
      * apply button styles to the element.
-     * @type {string}
      */
     href: stringProp,
     /**
      * This button size, see
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#sizes)}
      * for details.
-     * @type {string}
      */
     size: buttonSize,
     /**
      * Place icon on the `left` side (before text) or on the `right` side (after text).
-     * @type {string}
      */
     iconPosition,
     /**
      * Render the icon with predefined size.
-     * @type {number}
      */
     iconSize,
     /**
      * Enabled or disabled **ripple** effect.
-     * @type {boolean}
      */
     rippleOff: booleanProp,
     /**
      * Render button with transparent style or not.
-     * @type {boolean}
      */
     transparent: booleanProp,
     /**
      * The value to set to the button’s type attribute. Valid values are: `button`, `submit`, `reset`.
-     * @type {string}
      */
     type: buttonType,
     ...iconProps,
@@ -143,7 +126,6 @@ export const toggleButtonProps = {
     ...inputProps,
     /**
      * The number of items stored in the collection.
-     * @type {Array<TInputOptionItem>}
      */
     items: {
         type: Array,
@@ -152,12 +134,10 @@ export const toggleButtonProps = {
     },
     /**
      * Allow multiple choice or not.
-     * @type {boolean}
      */
     multiple: booleanProp,
     /**
      * The input value to be monitored by `v-model`.
-     * @type {string|boolean|Number|Array}
      */
     modelValue: {
         type: [String, Number, Boolean, Array],
@@ -165,53 +145,44 @@ export const toggleButtonProps = {
     },
     /**
      * Render this button with flat style (Google Material Text Button) or not.
-     * @type {boolean}
      */
     flat: booleanProp,
     /**
      * Render this button with outlined style (Google Material Outlined Button) or not, see
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#outline-buttons)}
      * for details.
-     * @type {boolean}
      */
     outlined: booleanProp,
     /**
      * Render this button with raised style (Google Material Elevated Button) or not.
-     * @type {boolean}
      */
     raised: booleanProp,
     /**
      * Render this button with rounded style or not, see
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/)}
      * for details.
-     * @type {boolean}
      */
     rounded: booleanProp,
     /**
      * Render button with rounded-pill style (Google Material Button) or not.
-     * @type {boolean}
      */
     pill: booleanTrueProp,
     /**
      * This button size, see
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#sizes)}
      * for details.
-     * @type {string}
      */
     size: buttonSize,
     /**
      * Sets this button color.
-     * @type {string}
      */
     color: defaultColorProp,
     /**
      * Color to apply when Button is active or selected.
-     * @type {string}
      */
     toggleColor: stringProp,
     /**
      * Place icon at `left` (before text) or at `right` (after text).
-     * @type {string}
      */
     iconPosition,
 }

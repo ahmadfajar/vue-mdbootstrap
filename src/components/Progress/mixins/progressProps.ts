@@ -3,7 +3,6 @@ import {primaryColorProp} from "../../../mixins/CommonProps";
 export const progressProps = {
     /**
      * ProgressBar buffer length.
-     * @type {string|number}
      */
     buffer: {
         type: [String, Number],
@@ -12,12 +11,10 @@ export const progressProps = {
     },
     /**
      * The component color appearance.
-     * @type {string}
      */
     color: primaryColorProp,
     /**
      * Spinner diameter value.
-     * @type {string|number}
      */
     diameter: {
         type: [String, Number],
@@ -26,7 +23,6 @@ export const progressProps = {
     },
     /**
      * ProgressBar thickness.
-     * @type {string|number}
      */
     height: {
         type: [String, Number],
@@ -35,7 +31,6 @@ export const progressProps = {
     },
     /**
      * Spinner thickness.
-     * @type {string|number}
      */
     stroke: {
         type: [String, Number],
@@ -44,7 +39,6 @@ export const progressProps = {
     },
     /**
      * The value monitored by `v-model` to control the progress value.
-     * @type {number}
      */
     modelValue: {
         type: Number,
@@ -53,7 +47,6 @@ export const progressProps = {
     },
     /**
      * ProgressControl mode, valid values are: `determinate`, `indeterminate`, `buffer`.
-     * @type {string}
      */
     mode: {
         type: String,
@@ -62,7 +55,6 @@ export const progressProps = {
     },
     /**
      * ProgressControl type, valid values are: `spinner`, `bar`.
-     * @type {string}
      */
     type: {
         type: String,

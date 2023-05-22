@@ -245,7 +245,7 @@ export function useRenderDatePickerHeader(
                 name: transitionName.value,
             }, [
                 h("div", {
-                    key: localValue.value.toISODate()
+                    key: <string>localValue.value.toISODate()
                 }, [
                     props.landscape === true && useBreakpointMin("lg")
                         ? h("span", {
@@ -358,7 +358,7 @@ function formatDatePickerNavTitle(
 }
 
 function formatYearSpan(value: DateTime): string {
-    const fmt = Intl.NumberFormat(value.locale, {useGrouping: false});
+    const fmt = Intl.NumberFormat(value.locale ?? undefined, {useGrouping: false});
     const year = value.year;
     const y1 = fmt.format(year - 4);
     const y2 = fmt.format(year + 7);
@@ -595,9 +595,9 @@ function createCalendarDayButton(
 }
 
 export function useCalendarTableDays(date: DateTime): TValueText<DateTime | undefined>[][] {
-    const fmt = Intl.NumberFormat(date.locale);
+    const fmt = Intl.NumberFormat(date.locale ?? undefined);
     const rows: TValueText<DateTime | undefined>[][] = [];
-    const numDays = date.daysInMonth + 1;
+    const numDays = (date.daysInMonth ?? 30) + 1;
     const daysBefore: number = (DateTime.local(date.year, date.month, 1).weekday % 7);
     let items: TValueText<DateTime | undefined>[] = [];
 
@@ -678,7 +678,7 @@ export function useCalendarTableYears(date: DateTime): TValueText<DateTime>[][] 
 
 export function useCalendarTableHours(date: DateTime): TValueText<DateTime>[][] {
     const numHours = 24;
-    const fmt = Intl.NumberFormat(date.locale, {minimumIntegerDigits: 2});
+    const fmt = Intl.NumberFormat(date.locale ?? undefined, {minimumIntegerDigits: 2});
     const rows: TValueText<DateTime>[][] = [];
     let items: TValueText<DateTime>[] = [];
 
@@ -703,7 +703,7 @@ export function useCalendarTableHours(date: DateTime): TValueText<DateTime>[][] 
 
 export function useCalendarTableMinutes(date: DateTime): TValueText<DateTime>[][] {
     const numMinutes = 60;
-    const fmt = Intl.NumberFormat(date.locale, {minimumIntegerDigits: 2});
+    const fmt = Intl.NumberFormat(date.locale ?? undefined, {minimumIntegerDigits: 2});
     const rows: TValueText<DateTime>[][] = [];
     let items: TValueText<DateTime>[] = [];
 
@@ -730,7 +730,7 @@ export function useCalendarTableMinutes(date: DateTime): TValueText<DateTime>[][
 
 export function useCalendarTableSeconds(date: DateTime): TValueText<DateTime>[][] {
     const numSeconds = 60;
-    const fmt = Intl.NumberFormat(date.locale, {minimumIntegerDigits: 2});
+    const fmt = Intl.NumberFormat(date.locale ?? undefined, {minimumIntegerDigits: 2});
     const rows: TValueText<DateTime>[][] = [];
     let items: TValueText<DateTime>[] = [];
 
@@ -874,7 +874,7 @@ export function useRenderDatePickerYears(
             name: transitionName.value
         }, [
             h("table", {
-                key: calendarValue.value.toISODate()
+                key: <string>calendarValue.value.toISODate()
             }, [
                 h(
                     "tbody",

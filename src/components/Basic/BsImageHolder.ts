@@ -25,8 +25,8 @@ export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions
                 [`${cssPrefix}anchor-center`]: cmpProps.xPos === "50%",
                 ...useShapeClasses(cmpProps.circle, cmpProps.rounded),
             }, [], false, "xMidYMid slice", null, {
-                height: !szHeight || szHeight < 2 ? "100%" : Helper.cssUnit(szHeight),
-                width: !szWidth || szWidth < 2 ? "100%" : Helper.cssUnit(szWidth),
+                height: !szHeight || (<number>szHeight < 2) ? "100%" : Helper.cssUnit(szHeight),
+                width: !szWidth || (<number>szWidth < 2) ? "100%" : Helper.cssUnit(szWidth),
                 role: "img",
             }, [
                 showText()

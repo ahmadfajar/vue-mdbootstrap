@@ -40,37 +40,30 @@ export const rotate = {
 export const iconProps = {
     /**
      * The icon’s name or alias.
-     * @type {string}
      */
     icon: iconName,
     /**
      * The icon’s height in pixel.
-     * @type {string|number}
      */
     height,
     /**
      * The icon’s width in pixel.
-     * @type {string|number}
      */
     width,
     /**
      * Apply **pulse** animation to the icon.
-     * @type {boolean}
      */
     pulse: booleanProp,
     /**
      * Apply **spin** animation to the icon.
-     * @type {boolean}
      */
     spin: booleanProp,
     /**
      * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
-     * @type {string}
      */
     flip,
     /**
      * Rotate the icon, valid values are: `90`, `180`, `270`.
-     * @type {string|number}
      */
     rotate,
 }
@@ -78,22 +71,18 @@ export const iconProps = {
 export const iconSpinnerProps = {
     /**
      * The Icon color.
-     * @type {string}
      */
     color: stringProp,
     /**
      * The icon’s size in pixel.
-     * @type {string|number}
      */
     size: width,
     /**
      * Apply **pulse** animation to the icon.
-     * @type {boolean}
      */
     pulse: booleanProp,
     /**
      * Apply **spin** animation to the icon.
-     * @type {boolean}
      */
     spin: booleanProp,
 }
@@ -101,22 +90,18 @@ export const iconSpinnerProps = {
 export const toggleIconProps = {
     /**
      * The icon’s name or alias.
-     * @type {string}
      */
     icon: iconName,
     /**
      * The icon to display when `value` property is `true`.
-     * @type {string}
      */
     toggleIcon: iconName,
     /**
      * Value monitored by `v-model` to maintain this component state.
-     * @type {boolean}
      */
     modelValue: booleanProp,
     /**
      * The icon size in pixels.
-     * @type {string|number}
      */
     size: width,
 }
