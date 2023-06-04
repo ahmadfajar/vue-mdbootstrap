@@ -9,7 +9,7 @@ import {
     whiteColorProp
 } from "../../../mixins/CommonProps";
 import {inputProps, textFieldProps} from "../../Field/mixins/fieldProps";
-import {validationProps} from "../../Radio/mixins/validationProps";
+import {validationProps} from "../../Field/mixins/validationProps";
 import {popoverDefaultTransitionProp, popoverPlacementProp} from "../../Popover/mixins/popoverProps";
 import type {TDateTimePickerMode} from "../types";
 import {DatePickerConst} from "./datePickerApi";
@@ -96,15 +96,15 @@ export const dateTimeFieldProps = {
     landscapeMode: booleanProp,
     open: booleanProp,
     openOnHover: booleanProp,
+    viewMode: stringProp as Prop<TDateTimePickerMode>,
+    transition: stringProp,
     pickerCls: {
         type: [String, Array],
         default: "bg-white rounded shadow"
     },
     pickerColor: whiteColorProp,
     pickerMode: pickerModeProp,
-    viewMode: pickerModeProp,
-    pickerTransition: popoverDefaultTransitionProp,
-    transition: popoverDefaultTransitionProp,
     pickerPlacement: popoverPlacementProp,
+    pickerTransition: popoverDefaultTransitionProp,
     pickerWidth: pickerWidthProp,
 }

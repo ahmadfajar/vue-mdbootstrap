@@ -26,7 +26,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
          */
         "deselect",
         /**
-         * Fired when data has been fetched.
+         * Fired when the data has been fetched.
          */
         "data-bind",
         /**
@@ -36,7 +36,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
         /**
          * Fired when the Listbox data items is filtered.
          */
-        "data-filtered",
+        "data-filter",
         /**
          * Fired when the Listbox value is updated.
          */
@@ -45,6 +45,10 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
          * Fired when the Listbox search value is updated.
          */
         "update:search-text",
+        /**
+         * Fired when the Listbox selected value is updated.
+         */
+        "update:selected-value",
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TListboxOptionProps>;

@@ -2,7 +2,7 @@ import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent, h, ref} from "vue";
 import type {TBsToggleField, TRecord, TToggleFieldOptionProps} from "../../types";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {validationProps} from "../Radio/mixins/validationProps";
+import {validationProps} from "../Field/mixins/validationProps";
 import {
     useGetErrorItems,
     useHasValidated,
@@ -10,7 +10,7 @@ import {
     useRenderFieldFeedback,
     useShowHelpText,
     useShowValidationError
-} from "../Radio/mixins/validationApi";
+} from "../Field/mixins/validationApi";
 import {toggleButtonProps} from "./mixins/buttonProps";
 import BsToggleButton from "./BsToggleButton";
 import Helper from "../../utils/Helper";

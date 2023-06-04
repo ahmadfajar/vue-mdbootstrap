@@ -26,9 +26,9 @@ export function useSearchFieldClasses(
 }
 
 export function useRenderSearchField(
-    props: Readonly<ExtractPropTypes<TBsSearchField>>,
     slots: Slots,
     emit: TEmitFn,
+    props: Readonly<ExtractPropTypes<TBsSearchField>>,
     attrs: TRecord,
     cssClasses: ComputedRef<TRecord>,
     activator: Ref<HTMLElement | null>,

@@ -2,7 +2,7 @@ import type {ComputedRef, Prop, Ref, Slots, VNode, VNodeArrayChildren} from "vue
 import {h} from "vue";
 import {cssPrefix, useRenderSlot, useRenderSlotWithWrapper} from "../../../mixins/CommonApi";
 import {BsRipple} from "../../Animation";
-import {useRenderFieldFeedback} from "./validationApi";
+import {useRenderFieldFeedback} from "../../Field/mixins/validationApi";
 import type {
     TBsRadio,
     TBsRipple,

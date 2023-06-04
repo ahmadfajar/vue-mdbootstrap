@@ -8,7 +8,7 @@ import {
     useHasValidationError,
     useShowHelpText,
     useShowValidationError
-} from "../Radio/mixins/validationApi";
+} from "./mixins/validationApi";
 import {useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton} from "./mixins/textFieldApi";
 import {useRenderNumericField} from "./mixins/numericFieldApi";
 import {numericFieldProps} from "./mixins/fieldProps";

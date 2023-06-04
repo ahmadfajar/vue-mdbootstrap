@@ -3,9 +3,9 @@ import {booleanProp, stringProp, validNumberGtZeroProp} from "../../../mixins/Co
 import {iconPosition} from "../../Button/mixins/buttonProps";
 import {inputProps, textFieldProps} from "../../Field/mixins/fieldProps";
 import {listboxMaxHeight, listboxMinSearchChars, listboxMinSearchLength} from "../../Listbox/mixins/listboxProps";
-import {validationProps} from "../../Radio/mixins/validationProps";
+import {validationProps} from "../../Field/mixins/validationProps";
 import {popoverDefaultTransitionProp} from "../../Popover/mixins/popoverProps";
-import type {TDataSource} from "../../../types";
+import type {TDataSource, TLabelPosition} from "../../../types";
 
 export const comboboxProps = {
     ...inputProps,
@@ -34,13 +34,13 @@ export const comboboxProps = {
     listboxColor: stringProp,
     listboxMaxHeight: listboxMaxHeight,
     listboxMinWidth: validNumberGtZeroProp,
+    listboxSearchLabel: stringProp,
     popoverMaxHeight: validNumberGtZeroProp,
     popoverMinWidth: validNumberGtZeroProp,
-    checkOptionColor: {
-        type: String,
-        default: 'purple'
-    },
-    checkOptionPosition: iconPosition,
+    checkboxColor: stringProp,
+    checkboxPosition: iconPosition,
+    checkOptionColor: stringProp,
+    checkOptionPosition: stringProp as Prop<TLabelPosition>,
     chipEnabled: booleanProp,
     chipColor: stringProp,
     chipPill: booleanProp,
@@ -50,6 +50,6 @@ export const comboboxProps = {
     showImage: booleanProp,
     roundedImage: booleanProp,
     circleImage: booleanProp,
+    openOnHover: booleanProp,
     transition: popoverDefaultTransitionProp,
-    valueAsObject: booleanProp,
 }

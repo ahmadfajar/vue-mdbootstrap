@@ -5,34 +5,7 @@ import type {
     DefineComponent,
     EmitsOptions
 } from "vue";
-import type {TRecord} from "../../../types";
-
-export declare type TValidator = {
-    validators: TRecord;
-    messages: TRecord;
-    hasError: boolean;
-    dirty: boolean;
-}
-
-export declare type TValidationProps = {
-    /**
-     * The help text to display below the field component.
-     */
-    helpText?: string;
-    /**
-     * Show persistent help text or not.
-     */
-    persistentHelpText?: boolean;
-    /**
-     * The external validator plugin to be used to validate this field value.
-     */
-    validator?: TValidator;
-    /**
-     * @deprecated
-     * Use `validator` property instead.
-     */
-    externalValidator?: TValidator;
-}
+import type {TRecord, TValidationProps} from "../../../types";
 
 export declare type TInputBaseProps = {
     /**

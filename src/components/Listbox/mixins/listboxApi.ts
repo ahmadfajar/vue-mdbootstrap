@@ -47,7 +47,8 @@ export function useFilterListboxItems(
             dataSource.setFilters(newFilters, true);
             dataSource.load()
                 .then(() => {
-                    emit("data-filtered", newFilters);
+                    // @ts-ignore
+                    emit("data-filter", (<IBsStore | IArrayStore>dataSource).dataItems);
                     emit("update:search-text", search);
                 })
                 .catch(error => {
@@ -56,7 +57,7 @@ export function useFilterListboxItems(
                 });
         }
     } else {
-        throw Error("Operation not supported. DataSource.proxy is not instance of AbstractStore");
+        throw Error("Operation not supported. 'DataSource.proxy' is not instance of AbstractStore");
     }
 }
 
@@ -253,7 +254,10 @@ function dispatchListboxEvent(
         localValue.value = selectedItems.value.length > 0 ? selectedItems.value[0].get(valueField) : undefined;
     }
 
-    nextTick().then(() => emit("update:model-value", localValue.value));
+    nextTick().then(() => {
+        emit("update:model-value", localValue.value);
+        emit("update:selected-value", selectedItems.value);
+    });
 }
 
 function createListboxItemContentWithCheckbox(

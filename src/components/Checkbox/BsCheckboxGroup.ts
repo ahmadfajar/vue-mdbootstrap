@@ -2,7 +2,7 @@ import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
 import {computed, defineComponent} from "vue";
 import {checkboxGroupProps} from "./mixins/checkboxProps";
 import {baseInputProps} from "../Field/mixins/fieldProps";
-import {validationProps} from "../Radio/mixins/validationProps";
+import {validationProps} from "../Field/mixins/validationProps";
 import {useCreateCheckboxItems} from "./mixins/checkboxApi";
 import {useInputGroupClasses, useRenderRadioOrCheckboxGroup} from "../Radio/mixins/radioApi";
 import {
@@ -10,7 +10,7 @@ import {
     useHasValidated,
     useHasValidationError,
     useShowValidationError
-} from "../Radio/mixins/validationApi";
+} from "../Field/mixins/validationApi";
 import type {TBsCheckboxGroup, TCheckboxGroupOptionProps, TCheckboxProps, TRecord} from "../../types";
 import Helper from "../../utils/Helper";
 

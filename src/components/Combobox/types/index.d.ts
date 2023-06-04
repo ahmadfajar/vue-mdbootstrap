@@ -48,17 +48,21 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
      */
     multiple?: boolean;
     /**
-     * Sets the Listbox background color.
+     * Sets this component's Listbox background color.
      */
     listboxColor?: string;
     /**
-     * Sets the Listbox container maximum height.
+     * Sets this component's Listbox container maximum height.
      */
     listboxMaxHeight?: string | number;
     /**
-     * Sets the Listbox container minimum width.
+     * Sets this component's Listbox container minimum width.
      */
     listboxMinWidth?: number | string;
+    /**
+     * Sets the text label on the searchbox.
+     */
+    listboxSearchLabel?: string;
     /**
      * @deprecated
      * Use `listboxMaxHeight` instead.
@@ -70,11 +74,21 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
      */
     popoverMinWidth?: number | string;
     /**
-     * Sets the Listbox checkbox color.
+     * Sets this component's Listbox checkbox color.
+     */
+    checkboxColor?: string;
+    /**
+     * Sets this component's Listbox checkbox position. Valid values are: `left`, `right`.
+     */
+    checkboxPosition?: TLabelPosition;
+    /**
+     * @deprecated
+     * Use `checkboxColor` instead.
      */
     checkOptionColor?: string;
     /**
-     * Sets the Listbox checkbox position. Valid values are: `left`, `right`.
+     * @deprecated
+     * Use `checkboxPosition` instead.
      */
     checkOptionPosition?: TLabelPosition;
     /**
@@ -114,13 +128,13 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
      */
     circleImage?: boolean;
     /**
+     * Show the Listbox on `mouseenter` event.
+     */
+    openOnHover?: boolean;
+    /**
      * Sets transition animation when showing the Listbox container.
      */
     transition?: string;
-    /**
-     * Enable/disable the returns value from `v-model` as object.
-     */
-    valueAsObject?: boolean;
 }
 
 export declare type TBsCombobox = ComponentObjectPropsOptions<TComboboxOptionProps>;

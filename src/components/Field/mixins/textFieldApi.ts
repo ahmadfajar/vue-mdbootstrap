@@ -8,7 +8,7 @@ import {
 } from "../../../mixins/CommonApi";
 import {BsIcon, BsToggleIcon} from "../../Icon";
 import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
-import {useRenderFieldFeedback} from "../../Radio/mixins/validationApi";
+import {useRenderFieldFeedback} from "./validationApi";
 import {
     useOnFieldBlurred,
     useOnFieldFocused,
@@ -252,7 +252,7 @@ export function useCreateFieldActionIcon(
 
 export function useShowClearButton(
     props: Readonly<TInputFieldProps>,
-    localValue: Ref<string | number | string[] | undefined | null>,
+    localValue: Ref<string | string[] | number | number[] | undefined | null>,
 ): boolean {
     return props.clearButton === true
         && !Helper.isEmpty(localValue.value)
@@ -263,7 +263,7 @@ export function useShowClearButton(
 export function useCreateTextFieldClasses(
     slots: Slots,
     props: Readonly<TInputTextProps>,
-    localValue: Ref<string | string[] | number | undefined | null>,
+    localValue: Ref<string | string[] | number | number[] | undefined | null>,
     isFocused: Ref<boolean>,
     showAppendIcon: boolean,
 ): TRecord {

@@ -13,8 +13,8 @@ import {
     useCreateFieldWrapper,
     useInputTextFieldAttrs
 } from "../../Field/mixins/textFieldApi";
+import {useRenderFieldFeedback} from "../../Field/mixins/validationApi";
 import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
-import {useRenderFieldFeedback} from "../../Radio/mixins/validationApi";
 import type {
     TBsDateTimeField,
     TDateTimeFieldOptionProps,
@@ -100,12 +100,12 @@ export function useRenderDateTimeField(
     calendarIcon: Ref<string>,
     isPopoverOpen: Ref<boolean>,
     isFocused: Ref<boolean>,
-    showClearButton: Ref<boolean>,
-    showHelpText: Ref<boolean>,
-    showValidationError: Ref<boolean>,
-    hasValidated: Ref<boolean>,
-    hasError: Ref<boolean>,
-    errorItems: Ref<string[]>,
+    showClearButton: ComputedRef<boolean>,
+    showHelpText: ComputedRef<boolean>,
+    showValidationError: ComputedRef<boolean>,
+    hasValidated: ComputedRef<boolean>,
+    hasError: ComputedRef<boolean>,
+    errorItems: ComputedRef<string[]>,
 ): VNode {
     const thisProps = props as Readonly<TDateTimeFieldOptionProps>;
     const iconSize = 24;
@@ -167,7 +167,7 @@ export function useRenderDateTimeField(
                 space: (thisProps.outlined ? 2 : 1),
                 class: props.pickerCls,
                 placement: props.pickerPlacement,
-                transition: (props.pickerTransition || props.transition),
+                transition: (props.transition || props.pickerTransition),
                 open: isPopoverOpen.value,
                 trigger: activator.value,
                 onClose: () => togglePopoverState(emit, isPopoverOpen, false, true),
@@ -179,7 +179,7 @@ export function useRenderDateTimeField(
                     landscape: props.landscapeMode,
                     locale: <Prop<string>>locale.value,
                     readonly: (props.readonly || props.disabled),
-                    mode: (props.pickerMode || props.viewMode),
+                    mode: (props.viewMode || props.pickerMode),
                     modelValue: <Prop<Date | undefined>>localFieldValue.value?.toJSDate(),
                     width: props.pickerWidth,
                     "onUpdate:model-value": (value: string) => {

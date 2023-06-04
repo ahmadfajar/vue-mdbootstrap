@@ -54,8 +54,8 @@ export default defineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions
 
         return () =>
             useRenderSearchField(
-                props, slots, emit, attrs, classes, activator,
-                localValue, isFocused, isPopoverOpen,
+                slots, emit, props, attrs, classes, activator,
+                localValue, isFocused, isPopoverOpen
             )
     }
 });

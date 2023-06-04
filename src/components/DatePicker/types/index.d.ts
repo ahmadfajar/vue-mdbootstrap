@@ -143,7 +143,7 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
      */
     open?: boolean;
     /**
-     * Triggers the DatePicker to display when `mouseenter`.
+     * Show the DatePicker on `mouseenter` event.
      */
     openOnHover?: boolean;
     /**

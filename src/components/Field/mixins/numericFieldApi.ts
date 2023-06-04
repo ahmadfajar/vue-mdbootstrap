@@ -12,7 +12,7 @@ import {cssPrefix, useRenderTransition} from "../../../mixins/CommonApi";
 import {BsRipple} from "../../Animation";
 import {BsIcon} from "../../Icon";
 import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
-import {useRenderFieldFeedback} from "../../Radio/mixins/validationApi";
+import {useRenderFieldFeedback} from "./validationApi";
 import {useCreateFieldInnerWrapper, useCreateFieldWrapper, useInputTextFieldAttrs} from "./textFieldApi";
 import {
     useOnFieldBlurred,
@@ -294,11 +294,11 @@ export function useRenderNumericField(
     inputRef: Ref<HTMLElement | null>,
     hasFocus: Ref<boolean>,
     autocomplete: string | boolean,
-    showClearButton: Ref<boolean>,
-    showHelpText: Ref<boolean>,
-    showValidationError: Ref<boolean>,
-    hasValidated: Ref<boolean>,
-    hasError: Ref<boolean>,
+    showClearButton: ComputedRef<boolean>,
+    showHelpText: ComputedRef<boolean>,
+    showValidationError: ComputedRef<boolean>,
+    hasValidated: ComputedRef<boolean>,
+    hasError: ComputedRef<boolean>,
     errorItems: ComputedRef<string[]>,
 ): VNode {
     const iconSize = 24;

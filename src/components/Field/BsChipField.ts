@@ -3,14 +3,14 @@ import {computed, defineComponent, ref, watch} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {booleanProp, stringOrArrayProp, stringProp} from "../../mixins/CommonProps";
 import {inputProps, textFieldProps} from "./mixins/fieldProps";
-import {validationProps} from "../Radio/mixins/validationProps";
+import {validationProps} from "./mixins/validationProps";
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowHelpText,
     useShowValidationError
-} from "../Radio/mixins/validationApi";
+} from "./mixins/validationApi";
 import type {TBsChipField, TChipFieldOptionProps, TRecord} from "../../types";
 import {useRenderChipField} from "./mixins/chipFieldApi";
 import {useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton} from "./mixins/textFieldApi";

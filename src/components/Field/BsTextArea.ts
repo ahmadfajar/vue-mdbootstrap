@@ -3,7 +3,7 @@ import {computed, defineComponent, ref, watch} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
 import {booleanProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
 import {inputProps, textFieldProps} from "./mixins/fieldProps";
-import {validationProps} from "../Radio/mixins/validationProps";
+import {validationProps} from "./mixins/validationProps";
 import {
     useCreateTextFieldClasses,
     useFieldWrapperClasses,
@@ -16,7 +16,7 @@ import {
     useHasValidationError,
     useShowHelpText,
     useShowValidationError
-} from "../Radio/mixins/validationApi";
+} from "./mixins/validationApi";
 import type {TBsTextArea, TRecord, TTextAreaOptionProps} from "../../types";
 import Helper from "../../utils/Helper";
 

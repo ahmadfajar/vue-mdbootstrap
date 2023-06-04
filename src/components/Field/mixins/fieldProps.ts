@@ -8,7 +8,7 @@ import {
     validStringOrFloatProp
 } from "../../../mixins/CommonProps";
 import {useGenerateId} from "../../../mixins/CommonApi";
-import {validationProps} from "../../Radio/mixins/validationProps";
+import {validationProps} from "./validationProps";
 import type {TIconVariant, TLabelPosition, TSpaceAround} from "../../../types";
 import {popoverDefaultTransitionProp, popoverPlacementProp} from "../../Popover/mixins/popoverProps";
 

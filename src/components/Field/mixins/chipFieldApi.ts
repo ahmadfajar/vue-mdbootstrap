@@ -2,7 +2,7 @@ import type {ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode} from "vue";
 import {createCommentVNode, Fragment, h, nextTick, toDisplayString} from "vue";
 import type {TBsChipField, TChipFieldOptionProps, TEmitFn, TIconVariant, TRecord} from "../../../types";
 import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
-import {useRenderFieldFeedback} from "../../Radio/mixins/validationApi";
+import {useRenderFieldFeedback} from "./validationApi";
 import {
     useCreateFieldActionIcon,
     useCreateFieldInnerWrapper,
@@ -121,11 +121,11 @@ export function useRenderChipField(
     localValue: Ref<string[]>,
     isFocused: Ref<boolean>,
     autocomplete: string | boolean,
-    showClearButton: Ref<boolean>,
-    showHelpText: Ref<boolean>,
-    showValidationError: Ref<boolean>,
-    hasValidated: Ref<boolean>,
-    hasError: Ref<boolean>,
+    showClearButton: ComputedRef<boolean>,
+    showHelpText: ComputedRef<boolean>,
+    showValidationError: ComputedRef<boolean>,
+    hasValidated: ComputedRef<boolean>,
+    hasError: ComputedRef<boolean>,
     errorItems: ComputedRef<string[]>,
 ): VNode {
     const thisProps = props as Readonly<TChipFieldOptionProps>;
