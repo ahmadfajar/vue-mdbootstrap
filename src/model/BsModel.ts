@@ -142,7 +142,7 @@ export default class BsModel implements IBsModel {
         if (!(idProperty in this._schema)) {
             _dt[idProperty] = null;
         }
-        this._data = reactive(_dt);
+        this._data = _dt; // reactive(_dt);
         autoBind(this);
         // Initialize magic getters and setters.
         this._initProps();

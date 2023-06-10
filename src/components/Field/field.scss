@@ -74,6 +74,7 @@
 
     &.disabled {
         > .col-form-label,
+        .#{$prefix}field-value,
         .#{$prefix}prepend-inner,
         .#{$prefix}append-inner {
             opacity: var(--#{$prefix}field-disabled-opacity);
@@ -114,6 +115,7 @@
             @include transition($md-transition-stand);
             @include flexbox((display: flex, flex: 1 0, flex-basis: 0));
             @include align-items(flex-start);
+            outline: none;
             position: relative;
 
             > input, > textarea {
@@ -130,6 +132,21 @@
                 padding-inline-end: var(--#{$prefix}field-padding-end);
                 padding-top: var(--#{$prefix}field-padding-top);
                 padding-bottom: var(--#{$prefix}field-padding-bottom);
+            }
+
+            > .#{$prefix}field-value,
+            > .#{$prefix}field-placeholder {
+                pointer-events: none;
+                min-height: var(--#{$prefix}field-control-height);
+                padding-top: var(--#{$prefix}field-padding-top);
+                padding-bottom: var(--#{$prefix}field-padding-bottom);
+                padding-left: var(--#{$prefix}field-padding-start);
+            }
+
+            > .#{$prefix}field-placeholder {
+                color: currentColor;
+                font-weight: $font-weight-light;
+                opacity: .5;
             }
         }
 

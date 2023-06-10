@@ -813,7 +813,7 @@ export declare interface IBsStore extends IAbstractStore {
     deletes(items: IBsModel[]): Promise<TSuccessResponse>;
 
     /**
-     * Fetch specific item from the remote server via REST API and
+     * Fetch single item from the remote server via REST API and
      * replace internal dataset with the one comes from the remote service.
      *
      * @param {string|number} id The item ID to fetch

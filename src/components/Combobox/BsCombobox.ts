@@ -1,6 +1,7 @@
-import {ComponentOptionsMixin, computed, ComputedOptions, defineComponent, EmitsOptions, ref, shallowRef} from "vue";
+import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import {computed, defineComponent, ref, shallowRef, watch} from "vue";
 import {cssPrefix} from "../../mixins/CommonApi";
-import {IBsModel, TBsCombobox, TComboboxOptionProps, TRecord} from "../../types";
+import type {IBsModel, TBsCombobox, TComboboxOptionProps, TDataListSchemaProps, TRecord} from "../../types";
 import {
     useGetErrorItems,
     useHasValidated,
@@ -29,6 +30,14 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
          * Fired when this component's value is being cleared.
          */
         "clear",
+        /**
+         * Fired when the Popover is hiding.
+         */
+        "close",
+        /**
+         * Fired when the Popover is show.
+         */
+        "open",
         /**
          * Fired when an item is selected.
          */
@@ -60,6 +69,14 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TComboboxOptionProps>;
+        const dataSchema = <TDataListSchemaProps>{
+            displayField: 'text',
+            valueField: 'value',
+            imageField: 'image',
+            cascadeField: 'parent',
+            disableField: 'disabled',
+            ...thisProps.dataSource?.schema,
+        };
         const fieldValues = ref<string[] | number[]>(
             Array.isArray(thisProps.modelValue)
                 ? thisProps.modelValue
@@ -69,20 +86,6 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
         const isFocused = ref(false);
         const isPopoverOpen = ref(false);
         const activator = ref<HTMLElement | null>(null);
-        const listboxMinWidth = computed(() => {
-                const minWidth = thisProps.popoverMinWidth || thisProps.listboxMinWidth;
-                return minWidth ? parseInt(<string>minWidth, 10) : undefined;
-            }
-        );
-        const popoverMinWidth = computed(() => {
-                if (activator.value && listboxMinWidth.value &&
-                    (listboxMinWidth.value < activator.value.offsetWidth)) {
-                    return activator.value.offsetWidth;
-                }
-
-                return listboxMinWidth.value;
-            }
-        );
         const hasError = computed<boolean>(() => useHasValidationError(thisProps));
         const hasValidated = computed<boolean>(() => useHasValidated(thisProps));
         const showValidationError = computed<boolean>(() => useShowValidationError(thisProps));
@@ -99,7 +102,30 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
             ({
                 ...useCreateTextFieldClasses(slots, thisProps, fieldValues, isFocused, showAppendIcon.value),
                 [`${cssPrefix}combobox-field`]: true,
+                [`${cssPrefix}open`]: isPopoverOpen.value,
+                [`${cssPrefix}chip-enabled`]: thisProps.multiple && thisProps.chipEnabled, // && fieldValues.value.length > 0,
             })
+        );
+
+        watch(
+            () => thisProps.modelValue,
+            (value) => {
+                if (Helper.isEmpty(value)) {
+                    fieldValues.value = [];
+                    selectedItems.value = [];
+                } else {
+                    const ds = thisProps.dataSource?.proxy;
+                    fieldValues.value = thisProps.multiple && Array.isArray(value) ? value : [<string>value];
+
+                    if (!thisProps.multiple && (ds?.filters.length === 0 ||
+                        ds?.defaultFilters.length === ds?.filters.length)
+                    ) {
+                        selectedItems.value = ds?.dataItems.filter(
+                            it => fieldValues.value.some(v => v === it.get(dataSchema.valueField))
+                        ) || [];
+                    }
+                }
+            }
         );
 
         return () =>
@@ -107,7 +133,7 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
                 slots, emit, props,
                 wrapperClasses,
                 controlClasses,
-                popoverMinWidth,
+                dataSchema,
                 activator,
                 fieldValues,
                 selectedItems,

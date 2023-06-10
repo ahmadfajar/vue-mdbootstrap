@@ -7,7 +7,6 @@ import {
     useRenderTransition
 } from "../../../mixins/CommonApi";
 import {BsIcon, BsToggleIcon} from "../../Icon";
-import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
 import {useRenderFieldFeedback} from "./validationApi";
 import {
     useOnFieldBlurred,
@@ -22,6 +21,7 @@ import type {
     TBsToggleIcon,
     TEmitFn,
     TIconVariant,
+    TInputBaseProps,
     TInputFieldProps,
     TInputTextProps,
     TRecord,
@@ -72,7 +72,7 @@ export function useCreateFieldIcon(
     cssClass: string,
     iconName?: string,
     iconSize?: number,
-    onClickHandler?: VoidFunction,
+    onClickHandler?: EventListener,
 ): VNode {
     return useRenderSlotWithWrapper(
         slots,
@@ -150,8 +150,10 @@ export function useCreateFieldInnerWrapper(
     prependIcon?: string,
     appendActionNode?: VNode,
     prependActionNode?: VNode,
-    onAppendIconClick?: VoidFunction,
-    onPrependIconClick?: VoidFunction,
+    innerProps?: TRecord,
+    activatorProps?: TRecord,
+    onAppendIconClick?: EventListener,
+    onPrependIconClick?: EventListener,
 ): VNode {
     const children = [useRenderSlotWrapperWithCondition(
         slots, "default",
@@ -165,7 +167,8 @@ export function useCreateFieldInnerWrapper(
     );
 
     return h("div", {
-        class: `${cssPrefix}field-inner`
+        class: `${cssPrefix}field-inner`,
+        ...innerProps,
     }, [
         h("div", {class: `${cssPrefix}field-overlay`}),
         useCreateFieldIcon(
@@ -176,7 +179,8 @@ export function useCreateFieldInnerWrapper(
         ),
         prependActionNode,
         h("div", {
-            class: `${cssPrefix}field-activator`
+            class: `${cssPrefix}field-activator`,
+            ...activatorProps,
         }, children),
         appendActionNode,
         useCreateFieldIcon(
@@ -195,7 +199,7 @@ export function useCreateFieldActionIcon(
     hasError: boolean,
     iconVariant: TIconVariant,
     iconSize?: number,
-    clearHandler?: () => void,
+    clearHandler?: EventListener,
     showPasswordToggle?: boolean,
     passwordToggled?: Ref<boolean>,
     passwordToggleHandler?: (value: boolean) => void,
@@ -279,6 +283,16 @@ export function useCreateTextFieldClasses(
         "focused": isFocused.value,
         "readonly": props.readonly,
         "disabled": props.disabled,
+    }
+}
+
+export function useMakeInputBaseAttrs(props: Readonly<TInputBaseProps>): TRecord {
+    return {
+        id: props.id,
+        name: props.name,
+        disabled: props.disabled,
+        required: props.required,
+        readonly: props.readonly,
     }
 }
 

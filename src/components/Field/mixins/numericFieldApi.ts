@@ -11,9 +11,13 @@ import type {
 import {cssPrefix, useRenderTransition} from "../../../mixins/CommonApi";
 import {BsRipple} from "../../Animation";
 import {BsIcon} from "../../Icon";
-import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
 import {useRenderFieldFeedback} from "./validationApi";
-import {useCreateFieldInnerWrapper, useCreateFieldWrapper, useInputTextFieldAttrs} from "./textFieldApi";
+import {
+    useCreateFieldInnerWrapper,
+    useCreateFieldWrapper,
+    useInputTextFieldAttrs,
+    useMakeInputBaseAttrs
+} from "./textFieldApi";
 import {
     useOnFieldBlurred,
     useOnFieldFocused,

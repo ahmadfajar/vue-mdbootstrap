@@ -79,7 +79,7 @@ export function useRenderFieldFeedback(
     showValidationError: boolean,
     hasError: boolean,
     errorItems: Array<string>,
-    onClickHandler?: (evt: Event) => void,
+    onClickHandler?: EventListener,
 ): VNode {
     return (props.helpText || showValidationError)
         ? h("div", {

@@ -11,17 +11,17 @@ import {
     useCreateFieldActionIcon,
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
-    useInputTextFieldAttrs
+    useInputTextFieldAttrs,
+    useMakeInputBaseAttrs
 } from "../../Field/mixins/textFieldApi";
 import {useRenderFieldFeedback} from "../../Field/mixins/validationApi";
-import {useMakeInputBaseAttrs} from "../../Radio/mixins/radioApi";
 import type {
     TBsDateTimeField,
     TDateTimeFieldOptionProps,
     TDateTimePickerMode,
     TEmitFn,
-    TRecord,
-    TIconVariant
+    TIconVariant,
+    TRecord
 } from "../../../types";
 import {useParseDate} from "./datePickerApi";
 import {BsPopover} from "../../Popover";
@@ -114,13 +114,7 @@ export function useRenderDateTimeField(
         slots, iconSize, wrapperCss, thisProps,
         h(Fragment, [
             h("div", {
-                ref: activator,
                 class: controlCss.value,
-                onMouseenter: () => {
-                    if (thisProps.openOnHover) {
-                        togglePopoverState(emit, isPopoverOpen, <boolean>thisProps.disabled, false);
-                    }
-                },
             }, [
                 useCreateFieldInnerWrapper(
                     slots,
@@ -138,6 +132,15 @@ export function useRenderDateTimeField(
                         () => useOnFieldValueCleared(emit, localFieldValue),
                     ),
                     undefined,
+                    {
+                        ref: activator,
+                        onMouseenter: () => {
+                            if (thisProps.openOnHover) {
+                                togglePopoverState(emit, isPopoverOpen, <boolean>thisProps.disabled, false);
+                            }
+                        },
+                    },
+                    undefined,
                     () => togglePopoverState(
                         emit, isPopoverOpen, <boolean>thisProps.disabled, isPopoverOpen.value,
                     ),
@@ -152,13 +155,6 @@ export function useRenderDateTimeField(
                     showValidationError.value,
                     hasError.value,
                     errorItems.value,
-                    (evt) => {
-                        evt.preventDefault();
-                        evt.stopPropagation();
-                        if (isPopoverOpen.value) {
-                            togglePopoverState(emit, isPopoverOpen, <boolean>thisProps.disabled, true);
-                        }
-                    }
                 ),
             ]),
             // @ts-ignore

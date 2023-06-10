@@ -331,40 +331,40 @@ export default class AbstractStore implements IAbstractStore {
     localFilter(): IBsModel[] {
         if (this.filters.length > 0) {
             return this._items.filter(item => {
-                const equals = [];
+                const conditions = [];
 
                 for (const flt of this.filters) {
                     const itemValue = <never>Helper.getObjectValueByPath(item, flt.property);
                     const operator = <TFilterOperator>flt.operator.toLowerCase();
 
                     if (operator === 'gt') {
-                        equals.push(itemValue > <number>flt.value);
+                        conditions.push(itemValue > <number>flt.value);
                     } else if (operator === 'gte') {
-                        equals.push(itemValue >= <number>flt.value);
+                        conditions.push(itemValue >= <number>flt.value);
                     } else if (operator === 'lt') {
-                        equals.push(itemValue < <number>flt.value);
+                        conditions.push(itemValue < <number>flt.value);
                     } else if (operator === 'lte') {
-                        equals.push(itemValue <= <number>flt.value);
+                        conditions.push(itemValue <= <number>flt.value);
                     } else if (operator === 'neq') {
-                        equals.push(itemValue !== flt.value);
+                        conditions.push(itemValue !== flt.value);
                     } else if (operator === 'contains' || flt.operator === 'fts') {
-                        equals.push(String(itemValue).toLowerCase().includes(String(flt.value).toLowerCase()));
+                        conditions.push(String(itemValue).toLowerCase().includes(String(flt.value).toLowerCase()));
                     } else if (operator === 'startswith' || flt.operator === 'startwith') {
-                        equals.push(String(itemValue).toLowerCase().startsWith(String(flt.value).toLowerCase()));
+                        conditions.push(String(itemValue).toLowerCase().startsWith(String(flt.value).toLowerCase()));
                     } else if (operator === 'endswith' || flt.operator === 'endwith') {
-                        equals.push(String(itemValue).toLowerCase().endsWith(String(flt.value).toLowerCase()));
+                        conditions.push(String(itemValue).toLowerCase().endsWith(String(flt.value).toLowerCase()));
                     } else if (operator === 'notin' && Array.isArray(flt.value)) {
-                        equals.push(flt.value.includes(itemValue) === false);
+                        conditions.push(!flt.value.includes(itemValue));
                     } else if (operator === 'in' && Array.isArray(flt.value)) {
-                        equals.push(flt.value.includes(itemValue));
+                        conditions.push(flt.value.includes(itemValue));
                     } else {
-                        equals.push(itemValue === flt.value);
+                        conditions.push(itemValue === flt.value);
                     }
                 }
                 if (this._config.filterLogic === 'OR') {
-                    return equals.some(it => it === true);
+                    return conditions.some(it => it === true);
                 } else {
-                    return equals.every(it => it === true);
+                    return conditions.every(it => it === true);
                 }
             });
         } else {
@@ -567,15 +567,15 @@ export default class AbstractStore implements IAbstractStore {
         if (Helper.isEmptyObject(proxyCfg)) {
             return new BsModel(item, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
         } else {
-            const schema: TModelOptions = {
+            const data: TModelOptions = {
                 schema: item,
                 proxy: proxyCfg
             };
             if (!Helper.isEmptyObject(this._config.csrfConfig)) {
-                schema.csrfConfig = <never>this._config.csrfConfig;
+                data.csrfConfig = <never>this._config.csrfConfig;
             }
 
-            return new BsModel(schema, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
+            return new BsModel(data, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
         }
     }
 

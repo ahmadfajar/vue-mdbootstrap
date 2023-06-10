@@ -9,14 +9,14 @@
 
     > .#{$prefix}field-inner {
         > .#{$prefix}field-activator {
-            @include flexbox((flex: 1 1 auto, align-items: flex-end, flex-wrap: wrap));
+            @include flexbox((flex: 1 1 auto, align-items: end, flex-wrap: wrap));
             max-width: 100%;
         }
     }
 
     .#{$prefix}chip {
-        margin-bottom: .375rem;
-        margin-right: .5rem;
+        margin-bottom: $text-field-padding-bottom;
+        margin-right: $padding-sm;
 
         ~ .#{$prefix}chip {
             margin-left: 0;
@@ -27,6 +27,10 @@
         min-width: 85px;
         max-width: 100%;
         width: auto;
+    }
+
+    &.#{$prefix}field-outlined {
+        --#{$prefix}field-padding-bottom: #{$text-field-padding-bottom};
     }
 
     &.#{$prefix}floating-label {
@@ -65,6 +69,7 @@
 
                 > .#{$prefix}field-activator {
                     margin-top: $padding-base - $padding-xs;
+                    margin-bottom: $text-field-padding-bottom;
                 }
             }
 
@@ -72,9 +77,9 @@
                 top: .25rem;
             }
 
-            .#{$prefix}chip {
-                margin-bottom: .75rem;
-            }
+            //.#{$prefix}chip {
+            //    margin-bottom: .75rem;
+            //}
 
             &.prepend-icon {
                 --#{$prefix}field-floating-label-transform: translateY(-27px) translateX(-36px) scale(.85);

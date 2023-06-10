@@ -1,17 +1,8 @@
 import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, onMounted, reactive, ref, shallowRef, watch} from "vue";
+import {defineComponent, reactive, ref, shallowRef} from "vue";
+import {useRegisterListboxWatchers, useRenderListbox} from "./mixins/listboxApi";
 import {listboxProps} from "./mixins/listboxProps";
-import {useFilterListboxItems, useRenderListbox} from "./mixins/listboxApi";
-import type {
-    IArrayStore,
-    IBsModel,
-    IBsStore,
-    TBsListbox,
-    TDataListSchemaProps,
-    TListboxOptionProps,
-    TRecord
-} from "../../types";
-import Helper from "../../utils/Helper";
+import type {IBsModel, TBsListbox, TDataListSchemaProps, TListboxOptionProps, TRecord} from "../../types";
 
 export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsListbox",
@@ -52,84 +43,35 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TListboxOptionProps>;
-        const dataSchema = reactive<TDataListSchemaProps>({
+        const dataSchema: TDataListSchemaProps = {
             displayField: 'text',
             valueField: 'value',
             imageField: 'image',
             cascadeField: 'parent',
             disableField: 'disabled',
             ...thisProps.dataSource?.schema,
-        });
+        };
         const maxHeight = parseInt(<string>thisProps.maxHeight);
-        const minItems = parseInt(<string>thisProps.minSearchLength);
         const dataSource = thisProps.dataSource?.proxy;
-        const dataItems = computed(() => {
-            if (dataSource && dataSource.storeState.length !== dataSource.totalCount) {
-                return dataSource.dataItems;
-            }
-
-            return dataSource?.dataItems;
-        });
-        const showSearchbox = computed<boolean | undefined>(
-            () => dataSource && (dataSource.storeState.totalCount >= minItems)
-        );
+        const cacheItems = shallowRef<IBsModel[]>([]);
+        const showSearchbox = ref<boolean>(false);
         const searchboxRef = ref<HTMLElement | null>(null);
         const searchText = ref(thisProps.searchText);
-        const selectedValues = ref(thisProps.modelValue);
+        const fieldValues = ref(thisProps.modelValue);
         const selectedItems = shallowRef<IBsModel[]>([]);
+        const listviewStyles = reactive<TRecord>({maxHeight: maxHeight + "px"});
 
-        const listviewStyles = computed<TRecord>(
-            () => ({
-                maxHeight: (
-                    showSearchbox.value
-                        ? (maxHeight - (searchboxRef.value?.offsetHeight || 0))
-                        : maxHeight
-                ) + "px"
-            })
-        );
-
-        watch(
-            () => thisProps.searchText,
-            (value) => {
-                if (
-                    (value && value.length >= parseInt(<string>thisProps.minSearchChars))
-                    || Helper.isEmpty(value)
-                ) {
-                    useFilterListboxItems(
-                        emit, dataSchema,
-                        <IBsStore | IArrayStore>dataSource,
-                        searchText, value || ""
-                    );
-                }
-            }
-        );
-        onMounted(
-            () => {
-                dataSource?.load()
-                    .then(() => {
-                        emit("data-bind", dataItems.value);
-                        if (dataItems.value) {
-                            selectedItems.value = dataItems.value.filter(it => {
-                                if (Array.isArray(selectedValues.value)) {
-                                    return selectedValues.value.some(v => v === it.get(dataSchema.valueField));
-                                } else {
-                                    return selectedValues.value === it.get(dataSchema.valueField);
-                                }
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        emit("data-error", error);
-                        console.warn(error);
-                    });
-            }
+        useRegisterListboxWatchers(
+            emit, thisProps, dataSource, dataSchema, cacheItems,
+            selectedItems, fieldValues, listviewStyles,
+            showSearchbox, searchboxRef, searchText,
         );
 
         return () =>
             useRenderListbox(
-                slots, emit, thisProps, dataSchema, dataItems,
+                slots, emit, thisProps, dataSchema, cacheItems,
                 listviewStyles, showSearchbox, searchboxRef,
-                selectedItems, selectedValues, searchText,
+                selectedItems, fieldValues, searchText,
             );
     }
 });

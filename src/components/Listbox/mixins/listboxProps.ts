@@ -21,6 +21,16 @@ export const listboxMaxHeight = {
     validator: (value: string) => parseInt(value, 10) > 0
 }
 
+export const emptyDataMessage = {
+    type: String,
+    default: 'No data to display.',
+}
+
+export const notFoundMessage = {
+    type: String,
+    default: 'Data not found.',
+}
+
 export const listboxProps = {
     borderless: booleanProp,
     color: whiteColorProp,
@@ -42,14 +52,8 @@ export const listboxProps = {
         type: Object,
         default: undefined,
     } as Prop<TDataSource>,
-    emptyDataMessage: {
-        type: String,
-        default: 'No data to display.',
-    },
-    notFoundMessage: {
-        type: String,
-        default: 'Data not found.',
-    },
+    emptyDataMessage: emptyDataMessage,
+    notFoundMessage: notFoundMessage,
     minSearchChars: listboxMinSearchChars,
     minSearchLength: listboxMinSearchLength,
     useCheckbox: booleanProp,

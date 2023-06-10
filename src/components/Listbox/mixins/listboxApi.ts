@@ -1,6 +1,16 @@
-import type {ComputedRef, Ref, ShallowRef, Slots, VNode} from "vue";
-import {createCommentVNode, Fragment, h, nextTick, toDisplayString, vModelText, withDirectives} from "vue";
-import {kebabCase} from "lodash";
+import type {Ref, ShallowRef, Slots, VNode} from "vue";
+import {
+    createCommentVNode,
+    Fragment,
+    h,
+    nextTick,
+    onBeforeMount,
+    toDisplayString,
+    vModelText,
+    watch,
+    watchEffect,
+    withDirectives
+} from "vue";
 import {cssPrefix, useRenderSlot} from "../../../mixins/CommonApi";
 import {BsDivider} from "../../Basic";
 import {BsCheckbox} from "../../Checkbox";
@@ -22,6 +32,7 @@ import type {
     TRecord
 } from "../../../types";
 import AbstractStore from "../../../model/AbstractStore";
+import BsStore from "../../../model/BsStore";
 import Helper from "../../../utils/Helper";
 
 export function useFilterListboxItems(
@@ -45,16 +56,22 @@ export function useFilterListboxItems(
                 {property: schema.displayField, value: search, operator: "contains"},
             ]);
             dataSource.setFilters(newFilters, true);
-            dataSource.load()
-                .then(() => {
-                    // @ts-ignore
-                    emit("data-filter", (<IBsStore | IArrayStore>dataSource).dataItems);
-                    emit("update:search-text", search);
-                })
-                .catch(error => {
-                    emit("data-error", error);
-                    console.warn(error);
-                });
+
+            if ((dataSource instanceof BsStore) && dataSource.remoteFilter) {
+                dataSource.load()
+                    .then(() => {
+                        emit("data-filter", dataSource.dataItems);
+                        emit("update:search-text", search);
+                    })
+                    .catch(error => {
+                        emit("data-error", error);
+                        console.warn(error);
+                    });
+            } else {
+                // @ts-ignore
+                emit("data-filter", (<IBsStore | IArrayStore>dataSource).dataItems);
+                emit("update:search-text", search);
+            }
         }
     } else {
         throw Error("Operation not supported. 'DataSource.proxy' is not instance of AbstractStore");
@@ -65,7 +82,7 @@ function renderListboxSearchbox(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
-    showSearchbox: ComputedRef<boolean | undefined>,
+    showSearchbox: Ref<boolean>,
     searchboxRef: Ref<HTMLElement | null>,
     searchRef: Ref<string | undefined>,
 ): VNode {
@@ -86,7 +103,9 @@ function renderListboxSearchbox(
                 placeholder: props.searchLabel,
                 "onUpdate:modelValue": (value: string) => {
                     if (value.length >= minChars || Helper.isEmpty(value)) {
-                        useFilterListboxItems(emit, schema, dataSource, searchRef, value);
+                        Helper.defer(() => {
+                            useFilterListboxItems(emit, schema, dataSource, searchRef, value);
+                        }, 75);
                     }
                 },
             }), [
@@ -103,9 +122,9 @@ export function useRenderListbox(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
-    dataItems: ComputedRef<IBsModel[] | undefined>,
-    listviewStyles: ComputedRef<TRecord>,
-    showSearchbox: ComputedRef<boolean | undefined>,
+    dataItems: ShallowRef<IBsModel[]>,
+    listviewStyles: TRecord,
+    showSearchbox: Ref<boolean>,
     searchboxRef: Ref<HTMLElement | null>,
     selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
@@ -131,8 +150,8 @@ function renderListboxView(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
-    dataItems: ComputedRef<IBsModel[] | undefined>,
-    listviewStyles: ComputedRef<TRecord>,
+    dataItems: ShallowRef<IBsModel[]>,
+    listviewStyles: TRecord,
     selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
 ): VNode {
@@ -141,7 +160,7 @@ function renderListboxView(
     // @ts-ignore
     return h(BsListView, {
             color: props.color,
-            style: listviewStyles.value,
+            style: listviewStyles,
             individualState: true,
         }, {
             default: () =>
@@ -183,18 +202,20 @@ function renderListboxItems(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
-    dataItems: ComputedRef<IBsModel[] | undefined>,
+    dataItems: ShallowRef<IBsModel[]>,
     selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
 ): VNode[] | undefined {
-    return dataItems.value?.map((item, idx) =>
+    return dataItems.value.map((item, idx) =>
         h(Fragment, [
             // @ts-ignore
             h(BsListTile, {
-                key: kebabCase(item.get(schema.displayField)) + "-" + idx,
+                // key: Helper.uuid(true),
+                key: item.get("_oid"),
                 navigable: !props.readonly && !props.disabled,
                 disabled: props.disabled === true || item.get(<string>schema.disableField) === true,
-                active: selectedItems.value.find(it => it.get(schema.valueField) === item.get(schema.valueField)) !== undefined, // item.get("active"),
+                // active: selectedItems.value.find(it => it.get(schema.valueField) === item.get(schema.valueField)) !== undefined,
+                active: item.get("_selected"),
                 "onUpdate:active": (value: boolean) =>
                     dispatchListboxEvent(
                         emit, props, dataItems,
@@ -222,7 +243,7 @@ function renderListboxItems(
 function dispatchListboxEvent(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
-    dataItems: ComputedRef<IBsModel[] | undefined>,
+    dataItems: ShallowRef<IBsModel[]>,
     selectedItems: ShallowRef<IBsModel[]>,
     localValue: Ref<string | number | string[] | number[] | undefined>,
     item: IBsModel,
@@ -231,12 +252,7 @@ function dispatchListboxEvent(
 ) {
     if (isSelected) {
         if (props.multiple === true) {
-            const fdx = selectedItems.value.findIndex(it =>
-                it.get(valueField) === item.get(valueField)
-            );
-            if (fdx === -1) {
-                selectedItems.value = selectedItems.value.concat(item);
-            }
+            selectedItems.value = selectedItems.value.concat(item);
         } else {
             selectedItems.value = [item];
         }
@@ -253,6 +269,18 @@ function dispatchListboxEvent(
     } else {
         localValue.value = selectedItems.value.length > 0 ? selectedItems.value[0].get(valueField) : undefined;
     }
+
+    dataItems.value = dataItems.value.map(it => {
+        it.set(
+            "_selected",
+            (
+                selectedItems.value.find(
+                    row => row.get(valueField) === it.get(valueField)
+                ) !== undefined
+            )
+        );
+        return it;
+    });
 
     nextTick().then(() => {
         emit("update:model-value", localValue.value);
@@ -298,7 +326,7 @@ function createListTileCheckbox(
         default: () => h(BsCheckbox, {
             color: props.checkboxColor || "default-color",
             value: item.get(schema.valueField),
-            modelValue: selectedItems.value.map(it => it.get(schema.valueField)),
+            modelValue: localValue.value, // selectedItems.value.map(it => it.get(schema.valueField)),
         })
     });
 }
@@ -351,4 +379,133 @@ function createListTileContent(
             {item: item, index: index},
         )
     });
+}
+
+function findSelectedItems(
+    localValue: Ref<string | number | string[] | number[] | undefined>,
+    fieldName: string,
+    dataStore?: IBsStore | IArrayStore
+): IBsModel[] {
+    return dataStore?.dataItems.filter(it => {
+        if (Array.isArray(localValue.value)) {
+            return localValue.value.some(v => v === it.get(fieldName));
+        } else {
+            return localValue.value === it.get(fieldName);
+        }
+    }) || [];
+}
+
+function cloneDataItems(
+    dataSource: IBsStore | IArrayStore,
+    selectedItems: ShallowRef<IBsModel[]>,
+    fieldName: string,
+): IBsModel[] {
+    return dataSource.dataItems.map(it => {
+        const tmpObj = dataSource.createModel(it.toJSON());
+        if (!tmpObj.get("_oid")) {
+            tmpObj.set("_oid", Helper.uuid(true));
+        }
+        tmpObj.set(
+            "_selected",
+            (
+                selectedItems.value.find(row => row.get(fieldName) === it.get(fieldName)) !== undefined
+                // Array.isArray(fieldValues.value)
+                //     ? fieldValues.value.some(v => v === it.get(dataSchema.valueField))
+                //     : fieldValues.value === it.get(dataSchema.valueField)
+            )
+        );
+        return tmpObj;
+    })
+}
+
+export function useRegisterListboxWatchers(
+    emit: TEmitFn,
+    props: Readonly<TListboxOptionProps>,
+    dataSource: IBsStore | IArrayStore | undefined,
+    schema: TDataListSchemaProps,
+    cacheItems: ShallowRef<IBsModel[]>,
+    selectedItems: ShallowRef<IBsModel[]>,
+    localValue: Ref<string | number | string[] | number[] | undefined>,
+    listviewStyles: TRecord,
+    showSearchbox: Ref<boolean>,
+    searchboxRef: Ref<HTMLElement | null>,
+    searchText: Ref<string | undefined>,
+) {
+    const maxHeight = parseInt(<string>props.maxHeight);
+    const minItems = parseInt(<string>props.minSearchLength);
+
+    watchEffect(
+        () => {
+            showSearchbox.value = (dataSource && (dataSource.storeState.totalCount >= minItems)) || false;
+            if (showSearchbox.value && searchboxRef.value) {
+                listviewStyles.maxHeight = maxHeight - (searchboxRef.value.offsetHeight || 63) + "px";
+            }
+        }
+    );
+
+    watch(
+        () => dataSource?.storeState.length,
+        (value) => {
+            if (dataSource && value && value > 0) {
+                cacheItems.value = cloneDataItems(dataSource, selectedItems, schema.valueField);
+            } else {
+                cacheItems.value = [];
+            }
+        }
+    );
+    watch(
+        () => props.searchText,
+        (value) => {
+            if (
+                (value && value.length >= parseInt(<string>props.minSearchChars))
+                || Helper.isEmpty(value)
+            ) {
+                useFilterListboxItems(
+                    emit, schema,
+                    <IBsStore | IArrayStore>dataSource,
+                    searchText, value || ""
+                );
+            }
+        }
+    );
+    watch(
+        () => props.modelValue,
+        (value) => {
+            localValue.value = value;
+            if (Helper.isEmpty(value)) {
+                selectedItems.value = [];
+            } else if (!props.multiple && (dataSource?.filters.length === 0 ||
+                dataSource?.defaultFilters.length === dataSource?.filters.length)
+            ) {
+                selectedItems.value = findSelectedItems(localValue, schema.valueField, dataSource);
+            }
+
+            cacheItems.value = cacheItems.value.map(it => {
+                it.set(
+                    "_selected",
+                    (
+                        selectedItems.value.find(
+                            row => row.get(schema.valueField) === it.get(schema.valueField)
+                        ) !== undefined
+                    )
+                );
+                return it;
+            });
+        }
+    );
+
+    onBeforeMount(
+        () => {
+            dataSource?.load()
+                .then(() => {
+                    selectedItems.value = findSelectedItems(localValue, schema.valueField, dataSource);
+                    cacheItems.value = cloneDataItems(dataSource, selectedItems, schema.valueField);
+                    emit("data-bind", dataSource?.dataItems);
+                })
+                .catch(error => {
+                    emit("data-error", error);
+                    console.warn(error);
+                });
+        }
+    );
 }
