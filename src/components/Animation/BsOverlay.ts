@@ -30,12 +30,8 @@ export default defineComponent<TBsOverlay, TRecord, TRecord, ComputedOptions, Co
                     ? h("div", {
                         class: [`${cssPrefix}overlay`],
                         style: styles.value,
-                        onClick(event: Event) {
-                            emit("click", event);
-                        },
-                        onTouchmove(event: Event) {
-                            preventEventTarget(event);
-                        },
+                        onClick: (event: Event) => emit("click", event),
+                        onTouchmove: (event: Event) => preventEventTarget(event),
                     }, slots.default && slots.default())
                     : createCommentVNode(" BsOverlay ", true)
             )

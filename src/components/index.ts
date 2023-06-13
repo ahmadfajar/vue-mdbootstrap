@@ -24,3 +24,4 @@ export {BsColorPickerPlugin} from "./ColorPicker";
 export {BsDatePickerPlugin} from "./DatePicker";
 export {BsListboxPlugin} from "./Listbox";
 export {BsComboboxPlugin} from "./Combobox";
+export {BsModalPlugin} from "./Modal";

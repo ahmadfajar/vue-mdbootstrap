@@ -19,14 +19,6 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
     props: comboboxProps,
     emits: [
         /**
-         * Fired when this component lost focus.
-         */
-        "blur",
-        /**
-         * Fired when this component got focused.
-         */
-        "focus",
-        /**
          * Fired when this component's value is being cleared.
          */
         "clear",

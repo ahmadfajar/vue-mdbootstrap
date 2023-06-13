@@ -77,19 +77,19 @@ export function useCreateFieldIcon(
     return useRenderSlotWithWrapper(
         slots,
         slotName,
-        iconName ? `${slotName}-${iconName}` : Helper.uuid(),
-        "div",
+        (iconName ? `${slotName}-${iconName}` : Helper.uuid()),
         {
             class: cssClass,
             onClick: onClickHandler,
-        }, (
+        },
+        (
             iconName
                 ? h<TBsIcon>(BsIcon, {
                     icon: <Prop<string>>iconName,
                     size: <Prop<number | undefined>>iconSize,
                 })
                 : undefined
-        ),
+        )
     );
 }
 

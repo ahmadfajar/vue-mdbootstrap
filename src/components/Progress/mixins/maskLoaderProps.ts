@@ -47,7 +47,7 @@ export const maskLoaderProps = {
     /**
      * Mask loader variant type [deprecated], use `variant` instead.
      */
-    spinnerType: maskLoaderVariant,
+    spinnerType: stringProp,
     /**
      * Mask loader variant type.
      */

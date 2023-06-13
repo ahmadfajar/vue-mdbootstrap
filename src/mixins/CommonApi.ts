@@ -63,19 +63,19 @@ export function useRenderSlot(
  * @param {Slots} slots                         The given slot
  * @param {string} name                         The slot name
  * @param {string} key                          Fragment key identifier
- * @param {string} wrapperTag                   The VNode wrapper html Tag name
  * @param {Object} wrapperProps                 The VNode wrapper properties
  * @param {VNode|VNodeArrayChildren} [children] The VNode children
- * @param {*} [slotArgs] The argument for the given slot
+ * @param {string} wrapperTag                   The VNode wrapper html Tag name
+ * @param {*} [slotArgs]                        The argument for the given slot
  * @returns {VNode} The Rendered node.
  */
 export function useRenderSlotWithWrapper(
     slots: Slots,
     name: string,
     key: string,
-    wrapperTag = 'div',
     wrapperProps: Readonly<TRecord> = {},
     children?: VNode | VNodeArrayChildren,
+    wrapperTag = 'div',
     slotArgs?: unknown,
 ): VNode {
     if (slots && slots[name]) {

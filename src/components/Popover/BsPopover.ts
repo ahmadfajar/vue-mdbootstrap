@@ -40,14 +40,14 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
                 isActive.value = value;
                 if (value) {
                     nextTick().then(() =>
-                        useSetPopoverPosition(popover, instance.value, thisProps, actualPlacement, isActive)
+                        useSetPopoverPosition(instance.value, thisProps, popover, actualPlacement, isActive)
                     );
                 }
             }
         );
         onMounted(() => {
             instance.value = getCurrentInstance();
-            useSetPopoverPosition(popover, instance.value, thisProps, actualPlacement, isActive);
+            useSetPopoverPosition(instance.value, thisProps, popover, actualPlacement, isActive);
         });
 
         return () =>

@@ -1,7 +1,7 @@
 import type {ComponentInternalInstance, Ref} from "vue";
 import type {TPopupOptions} from "../types";
 import {clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll} from "body-scroll-lock";
-import {usePopoverClose} from "./popoverApi";
+import {useClosePopover} from "./popoverApi";
 
 declare type TPopupItem = {
     target: ComponentInternalInstance;
@@ -64,7 +64,7 @@ const PopupManager = {
     const popupItem = PopupManager.items[PopupManager.items.length - 1];
 
     if (popupItem.props.escClose) {
-        usePopoverClose(popupItem.target, popupItem.active, "Esc pressed.");
+        useClosePopover(popupItem.target, popupItem.active, "Esc pressed.");
     }
 });
 

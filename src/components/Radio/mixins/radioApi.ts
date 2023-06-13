@@ -95,8 +95,7 @@ export function useRenderRadioOrCheckbox(
                 }),
             ]),
             useRenderSlotWithWrapper(
-                slots, "default",
-                Helper.uuid(), "label",
+                slots, "default", Helper.uuid(),
                 {
                     "for": props.id,
                     tabIndex: 0,
@@ -108,7 +107,8 @@ export function useRenderRadioOrCheckbox(
                             e.preventDefault();
                         }
                     }
-                }
+                },
+                undefined, "label"
             ),
         ]
     );

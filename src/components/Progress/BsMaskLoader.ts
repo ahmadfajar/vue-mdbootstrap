@@ -13,7 +13,7 @@ export default defineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions,
     props: maskLoaderProps,
     setup(props) {
         const loaderVariant = computed<string>(
-            () => (<string>props.variant) || (<string>props.spinnerType)
+            () => <string>(props.spinnerType || props.variant)
         );
 
         return () =>
@@ -30,15 +30,15 @@ export default defineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions,
                         (loaderVariant.value === "progress")
                             ? h<TBsProgress>(BsProgress, {
                                 class: "align-self-center",
-                                color: props.spinnerColor as Prop<string>,
-                                diameter: props.spinnerDiameter as Prop<string | number>,
-                                stroke: props.spinnerThickness as Prop<string | number>,
+                                color: props.spinnerColor,
+                                diameter: props.spinnerDiameter,
+                                stroke: props.spinnerThickness,
                                 type: "spinner" as Prop<string>
                             })
                             : ((loaderVariant.value === "spinner")
                                     ? h<TBsIconSpinner>(BsIconSpinner, {
-                                        color: props.spinnerColor as Prop<string>,
-                                        size: props.spinnerDiameter as Prop<string | number>,
+                                        color: props.spinnerColor,
+                                        size: props.spinnerDiameter,
                                         // @ts-ignore
                                         spin: true as Prop<boolean>,
                                     })
@@ -58,9 +58,9 @@ export default defineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions,
                                     })
                             ),
                         h<TBsOverlay>(BsOverlay, {
-                            color: props.overlayColor as Prop<string>,
-                            opacity: props.overlayOpacity as Prop<string | number>,
-                            show: props.show as Prop<boolean>,
+                            color: props.overlayColor,
+                            opacity: props.overlayOpacity,
+                            show: props.show,
                             zIndex: ((<number>props.zIndex) - 1) as Prop<string | number>,
                         }),
                     ])

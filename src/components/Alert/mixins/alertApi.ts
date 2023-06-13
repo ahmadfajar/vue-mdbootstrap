@@ -72,15 +72,17 @@ export function useRenderAlert(
         role: "alert"
     }, [
         useRenderSlotWithWrapper(
-            slots, "alertIcon", Helper.uuid(), "div",
+            slots, "alertIcon", Helper.uuid(),
             {class: "alert-icon me-3"},
-            alertIconName.value
-                ? h<TBsIcon>(BsIcon, {
-                    ...useCreateIconProps(props),
-                    icon: <Prop<string | undefined>>alertIconName.value,
-                    size: 32 as Prop<number>,
-                })
-                : createCommentVNode(" v-if-alert-icon "),
+            (
+                alertIconName.value
+                    ? h<TBsIcon>(BsIcon, {
+                        ...useCreateIconProps(props),
+                        icon: <Prop<string | undefined>>alertIconName.value,
+                        size: 32 as Prop<number>,
+                    })
+                    : createCommentVNode(" v-if-alert-icon ")
+            )
         ),
         useSimpleRenderWithSlots("div", slots, "flex-fill"),
         props.dismissible

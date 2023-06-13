@@ -1,4 +1,4 @@
-import type {ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions, PropType} from "vue";
+import type {ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "vue";
 import {
     computed,
     createCommentVNode,
@@ -30,10 +30,10 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
         disabled: booleanProp,
         show: booleanProp,
         placement: {
-            type: String as PropType<TPositionType>,
+            type: String,
             default: "bottom",
             validator: (v: string) => ["top", "bottom", "left", "right"].includes(v)
-        },
+        } as Prop<TPositionType>,
         width: stringOrNumberProp,
         maxWidth: validStringOrNumberProp,
         zIndex: {

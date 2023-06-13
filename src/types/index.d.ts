@@ -28,6 +28,7 @@ export * from "../components/Radio/types";
 export * from "../components/Switch/types";
 export * from "../components/Tabs/types";
 export * from "../components/Tooltip/types";
+export * from "../components/Modal/types";
 export * from "../model/types";
 
 export declare type TBreakpoint = "sm" | "md" | "lg" | "xl";

@@ -111,17 +111,19 @@ export function useRenderChip(
                 useRenderTransition(
                     {name: "scale"},
                     useRenderSlotWithWrapper(
-                        slots, "chipIcon", Helper.uuid(), "div",
+                        slots, "chipIcon", Helper.uuid(),
                         {class: `${cssPrefix}chip-icon`},
-                        !Helper.isEmpty(props.icon)
-                            ? h<TBsIcon>(BsIcon, {
-                                ...useCreateIconProps(props),
-                                icon: <Prop<string>>(`${props.icon}_${props.iconVariant}`),
-                                size: <Prop<string | number>>(
-                                    props.size === "sm" ? 18 : (props.size === "lg" ? 40 : 24)
-                                ),
-                            })
-                            : undefined,
+                        (
+                            !Helper.isEmpty(props.icon)
+                                ? h<TBsIcon>(BsIcon, {
+                                    ...useCreateIconProps(props),
+                                    icon: <Prop<string>>(`${props.icon}_${props.iconVariant}`),
+                                    size: <Prop<string | number>>(
+                                        props.size === "sm" ? 18 : (props.size === "lg" ? 40 : 24)
+                                    ),
+                                })
+                                : undefined
+                        )
                     )
                 ),
                 props.imgSrc
