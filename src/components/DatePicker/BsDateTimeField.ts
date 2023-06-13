@@ -36,9 +36,9 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
          */
         "close",
         /**
-         * Fired when the DatePicker popup state is updated.
+         * Fired when the DatePicker popup is open or showed.
          */
-        "update:open",
+        "open",
         /**
          * Fired when this component's value is updated.
          */
@@ -47,7 +47,7 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TDateTimeFieldOptionProps>;
         const isFocused = ref(false);
-        const isPopoverOpen = ref(<boolean>thisProps.open);
+        const isPopoverOpen = ref(false);
         const locale = ref<string>(thisProps.locale || navigator.language);
         const displayFormat = computed(() => thisProps.displayFormat || thisProps.valueFormat);
         const localFieldValue = ref(
@@ -84,10 +84,6 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
             })
         );
 
-        watch(
-            () => thisProps.open,
-            (value) => isPopoverOpen.value = <boolean>value
-        );
         watch(
             () => thisProps.modelValue,
             (value) => {

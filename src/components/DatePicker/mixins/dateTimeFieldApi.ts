@@ -15,6 +15,7 @@ import {
     useMakeInputBaseAttrs
 } from "../../Field/mixins/textFieldApi";
 import {useRenderFieldFeedback} from "../../Field/mixins/validationApi";
+import {useTogglePopoverState} from "../../Combobox/mixins/comboboxApi";
 import type {
     TBsDateTimeField,
     TDateTimeFieldOptionProps,
@@ -82,7 +83,7 @@ function createInputTextField(
         onFocus: (e: Event) =>
             useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
         onClick: () =>
-            togglePopoverState(emit, isPopoverOpen, <boolean>props.disabled, isPopoverOpen.value)
+            useTogglePopoverState(emit, isPopoverOpen, <boolean>props.disabled, isPopoverOpen.value)
     });
 }
 
@@ -135,16 +136,16 @@ export function useRenderDateTimeField(
                     {
                         ref: activator,
                         onMouseenter: () => {
-                            if (thisProps.openOnHover) {
-                                togglePopoverState(emit, isPopoverOpen, <boolean>thisProps.disabled, false);
+                            if (thisProps.openOnHover && !isPopoverOpen.value) {
+                                useTogglePopoverState(emit, isPopoverOpen, <boolean>thisProps.disabled, false);
                             }
                         },
                     },
                     undefined,
-                    () => togglePopoverState(
+                    () => useTogglePopoverState(
                         emit, isPopoverOpen, <boolean>thisProps.disabled, isPopoverOpen.value,
                     ),
-                    () => togglePopoverState(
+                    () => useTogglePopoverState(
                         emit, isPopoverOpen, <boolean>thisProps.disabled, isPopoverOpen.value,
                     ),
                 ),
@@ -166,7 +167,7 @@ export function useRenderDateTimeField(
                 transition: (props.transition || props.pickerTransition),
                 open: isPopoverOpen.value,
                 trigger: activator.value,
-                onClose: () => togglePopoverState(emit, isPopoverOpen, false, true),
+                onClose: () => useTogglePopoverState(emit, isPopoverOpen, false, true),
             }, {
                 default: () => h(BsDatePicker, {
                     surfaceColor: props.pickerColor,
@@ -190,28 +191,4 @@ export function useRenderDateTimeField(
         ]),
         (node: VNode) => useOnTextFieldNodeMounted(thisProps, node),
     );
-}
-
-/**
- * Toggle Popover state: show or hide.
- *
- * @param {TEmitFn} emit                Emitter function
- * @param {Ref<boolean>} isPopoverOpen  The Popover state reference
- * @param {boolean} isDisabled          Is the component in disable state or not
- * @param {boolean} state               Current Popover state. Toggle will inverse this state.
- * @return {void}
- */
-function togglePopoverState(
-    emit: TEmitFn,
-    isPopoverOpen: Ref<boolean>,
-    isDisabled: boolean,
-    state: boolean,
-) {
-    if (!isDisabled) {
-        isPopoverOpen.value = !state;
-        emit("update:open", isPopoverOpen.value);
-        if (!isPopoverOpen.value) {
-            Helper.defer(() => emit("close"), 100);
-        }
-    }
 }

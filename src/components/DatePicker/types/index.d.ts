@@ -139,10 +139,6 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
      */
     valueFormat?: string;
     /**
-     * DatePicker popup state: show or hide.
-     */
-    open?: boolean;
-    /**
      * Show the DatePicker on `mouseenter` event.
      */
     openOnHover?: boolean;

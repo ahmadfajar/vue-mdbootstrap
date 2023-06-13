@@ -75,6 +75,7 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
                 : (Helper.isEmpty(thisProps.modelValue) ? [] : [<string>thisProps.modelValue])
         );
         const selectedItems = shallowRef<IBsModel[]>([]);
+        const parentValue = ref(thisProps.parentValue);
         const isFocused = ref(false);
         const isPopoverOpen = ref(false);
         const activator = ref<HTMLElement | null>(null);
@@ -99,6 +100,40 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
             })
         );
 
+        watch(
+            () => thisProps.parentValue,
+            (value) => {
+                const ds = thisProps.dataSource?.proxy;
+                parentValue.value = value;
+
+                if (ds) {
+                    if (Helper.isEmpty(value)) {
+                        ds.defaultFilters = [];
+                    } else {
+                        let oldFilters = ds.defaultFilters;
+                        const newFilters = ds.createFilters({
+                            property: <string>dataSchema.cascadeField,
+                            value: <string | number>value,
+                            operator: "eq"
+                        });
+                        if (oldFilters.length === 0) {
+                            ds.defaultFilters = newFilters;
+                        } else {
+                            oldFilters = oldFilters.filter(it => it.property !== dataSchema.cascadeField);
+                            ds.defaultFilters = newFilters.concat(oldFilters);
+                        }
+                    }
+
+                    ds.setFilters([], true);
+                    ds.load().then(() => {
+                        emit("data-bind", ds.dataItems);
+                    }).catch((error) => {
+                        emit("data-error", error);
+                        console.warn(error);
+                    });
+                }
+            }
+        );
         watch(
             () => thisProps.modelValue,
             (value) => {

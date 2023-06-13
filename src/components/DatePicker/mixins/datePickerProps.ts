@@ -94,7 +94,6 @@ export const dateTimeFieldProps = {
     headerColor: primaryColorProp,
     headerPanel: booleanTrueProp,
     landscapeMode: booleanProp,
-    open: booleanProp,
     openOnHover: booleanProp,
     viewMode: stringProp as Prop<TDateTimePickerMode>,
     transition: stringProp,

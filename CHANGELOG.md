@@ -4,7 +4,7 @@
 
 ## v2.0.0
 
-Released: June xx, 2023
+Released: July xx, 2023
 
 #### Features v2.0.0
 
@@ -17,7 +17,10 @@ Released: June xx, 2023
 - **BsButton**: add property `readonly`, add slot `icon` for placing a custom icon.
 - **BsChip**: add property `iconVariant`, `pill`.
 - **BsChipField**: add property `actionIconVariant`, `validationIcon`, `chipPill`.
-- **BsDatePicker**: add property `surfaceColor`, support mousewheel, touch screen and internationalization.
+- **BsChipGroup**: add property `sliderButton`, `sliderButtonColor`.
+- **BsCombobox**: add property `minSearchChars`, `minSearchLength`, `listboxMaxHeight`, 
+  `listboxMinWidth`, `listboxSearchLabel`, `checkboxColor`, `checkboxPosition`, `chipPill`.
+- **BsDatePicker**: add property `surfaceColor`, support mousewheel, touch and internationalization.
 - **BsDateTimeField**: add property `pickerColor`, `pickerCls`, `pickerMode`, `pickerWidth`, `pickerTransition`.
 - **BsDropdownMenu**: add property `space`.
 - **BsListNav**: add property `id`.
@@ -27,6 +30,7 @@ Released: June xx, 2023
 - **BsListTileTitle**: add property `rawHtml`.
 - **BsListView**: add property `itemRounded`, `itemRoundedPill`, `individualState`, and `modelValue`.
 - **BsMaskLoader**: add property `variant`.
+- **BsModal**: add property `overlayClickClose`.
 - **BsNumericField**: add property `actionIconVariant`, and `validationIcon`.
 - **BsOverlay**: add event `click`.
 - **BsPopover**: add property `color`.
@@ -88,8 +92,29 @@ Released: June xx, 2023
   - Removed property `faStyles` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid)
     is removed from package bundle. 
 - **BsChipField**: 
-  - Removed `chipLabeled`, used `chipPill` instead. 
+  - Removed property `chipLabeled`, used `chipPill` instead. 
   - Replaced property `value` with `modelValue`.
+  - Replaced event `input` with `update:modelValue`.
+  - Replaced slot `prependIcon` with `prependInner`.
+  - Replaced slot `prependIconOuter` with `prependOuter`.
+  - Replaced slot `appendIcon` with `appendInner`.
+  - Replaced slot `appendIconOuter` with `appendOuter`.
+  - Removed event `change`, already covered by event `update:modelValue`.
+  - Deprecated property `externalValidator`, use property `validator` instead.
+- **BsChipGroup**:
+  - Removed property `sliderArrows`, used property `sliderButton` instead.
+  - Removed property `arrowsColor`, used property `sliderButtonColor` instead.
+  - Removed property `activeColor`, used property `activeClass` instead.
+  - Replaced property `value` with `modelValue`.
+- **BsCombobox**: 
+  - Removed property `open`.
+  - Removed property `chipLabeled`, used `chipPill` instead.
+  - Replaced property `value` with `modelValue`.
+  - Deprecated property `popoverMaxHeight`, use property `listboxMaxHeight` instead.
+  - Deprecated property `popoverMinWidth`, use property `listboxMinWidth` instead.
+  - Deprecated property `checkOptionColor`, use property `checkboxColor` instead.
+  - Deprecated property `checkOptionPosition`, use property `checkboxPosition` instead.
+  - Deprecated property `minimumItemsForSearch`, use property `minSearchLength` instead.
   - Replaced event `input` with `update:modelValue`.
   - Replaced slot `prependIcon` with `prependInner`.
   - Replaced slot `prependIconOuter` with `prependOuter`.
@@ -107,9 +132,9 @@ Released: June xx, 2023
   - Replaced dependency of `momentjs` with `luxon`.
   - The output value of the `modelValue` property follows the **ISO 8601** standard.
 - **BsDateTimeField**: 
+  - Removed property `open`.
   - Replaced property `value` with `modelValue`.
   - Replaced event `input` with `update:modelValue`.
-  - Replaced event `open` with `update:open`.
   - Deprecated property `viewMode`, use property `pickerMode` instead.
   - Deprecated property `transition`, use property `pickerTransition` instead.
   - Deprecated property `externalValidator`, use property `validator` instead.
@@ -131,6 +156,7 @@ Released: June xx, 2023
   - Replace event `input` with `update:active`.
 - **BsListView**: Replace property `activeItemBordered` with `itemBorderVariant`.
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
+- **BsModal**: property `overlayClose` is deprecated, use property `overlayClickClose` instead.
 - **BsMenu**: is deprecated, use **BsDropdownMenu** instead.
 - **BsNumericField**: 
   - Replaced property `value` with `modelValue`.
