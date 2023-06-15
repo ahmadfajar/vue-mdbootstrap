@@ -1,6 +1,7 @@
 import type {AllowedComponentProps, ComponentInternalInstance, ComponentPublicInstance, VNode, VNodeProps} from "vue";
 import type {RouterLinkProps} from "vue-router";
 import type ResizeObserver from "resize-observer-polyfill";
+import {INotificationProvider} from "../components/Notification/types";
 
 export * from "../components/Alert/types";
 export * from "../components/Animation/types";
@@ -29,6 +30,7 @@ export * from "../components/Switch/types";
 export * from "../components/Tabs/types";
 export * from "../components/Tooltip/types";
 export * from "../components/Modal/types";
+export * from "../components/Notification/types";
 export * from "../model/types";
 
 export declare type TBreakpoint = "sm" | "md" | "lg" | "xl";
@@ -83,7 +85,7 @@ export declare type TMdbAppObject = {
 
 export declare type TVueMdb = {
     app: Record<string, TMdbAppObject>;
-    notification: TRecord;
+    notification: INotificationProvider;
 }
 
 export declare interface ObjectBase {

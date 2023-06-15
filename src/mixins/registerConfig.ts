@@ -5,8 +5,9 @@ export default function registerConfig(app: App) {
         app: {},
         notification: {}
     };
-    Object.defineProperty(app.config.globalProperties, "$VueMdb", {
-        enumerable: true,
-        // get: () => unref(xxxx),
-    });
+    // app.config.globalProperties.$notification = app.config.globalProperties.$VueMdb.notification;
+
+    // Object.defineProperty(app.config.globalProperties, "$VueMdb", {
+    //     enumerable: true,
+    // });
 }

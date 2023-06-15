@@ -25,3 +25,4 @@ export {BsDatePickerPlugin} from "./DatePicker";
 export {BsListboxPlugin} from "./Listbox";
 export {BsComboboxPlugin} from "./Combobox";
 export {BsModalPlugin} from "./Modal";
+export {BsNotificationPlugin} from "./Notification";

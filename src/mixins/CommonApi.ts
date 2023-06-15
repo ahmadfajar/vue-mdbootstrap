@@ -3,7 +3,14 @@ import type {ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNod
 import {createVNode, Fragment, getCurrentInstance, h, normalizeClass, resolveComponent, Transition} from "vue";
 import type {RouteLocationNormalizedLoaded} from "vue-router";
 import type {IHttpService} from "../utils/AxiosPlugin";
-import type {TBreakpoint, TRecord, TRouterLinkProps, TRouterOptionProps} from "../types";
+import type {
+    INotificationProvider,
+    TBreakpoint,
+    TRecord,
+    TRouterLinkProps,
+    TRouterOptionProps,
+    TVueMdb
+} from "../types";
 import Helper from "../utils/Helper";
 
 
@@ -325,6 +332,34 @@ export function useHttpService(): IHttpService | undefined {
     const vm = getCurrentInstance();
     if (vm !== null) {
         return vm.appContext.config.globalProperties.$http;
+    }
+
+    return undefined;
+}
+
+/**
+ * Shortcut to retrieve the VueMdb plugin instance.
+ *
+ * @returns {TVueMdb} The VueMdb plugin instance.
+ */
+export function useVueMdbService(): TVueMdb | undefined {
+    const vm = getCurrentInstance();
+    if (vm !== null) {
+        return vm.appContext.config.globalProperties.$VueMdb;
+    }
+
+    return undefined;
+}
+
+/**
+ * Shortcut to retrieve NotificationProvider instance.
+ *
+ * @returns {INotificationProvider | undefined}  The notification provider instance.
+ */
+export function useVueMdbNotification(): INotificationProvider | undefined {
+    const vm = getCurrentInstance();
+    if (vm !== null) {
+        return vm.appContext.config.globalProperties.$VueMdb.notification;
     }
 
     return undefined;

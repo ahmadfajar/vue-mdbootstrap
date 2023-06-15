@@ -158,6 +158,9 @@ Released: July xx, 2023
 - **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
 - **BsModal**: property `overlayClose` is deprecated, use property `overlayClickClose` instead.
 - **BsMenu**: is deprecated, use **BsDropdownMenu** instead.
+- **BsNotification**:
+  - Component must be activated first on the file `app.vue` or `main.vue` before using the method 
+    `this.$notification` or composable api `useVueMdbNotification()`.
 - **BsNumericField**: 
   - Replaced property `value` with `modelValue`.
   - Replaced event `input` with `update:modelValue`.
