@@ -17,7 +17,7 @@ export default defineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, Compo
         /**
          * Fired when this component's modelValue is updated.
          */
-        "update:modelValue",
+        "update:model-value",
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TTabsOptionProps>;

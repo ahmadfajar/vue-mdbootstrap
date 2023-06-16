@@ -7,7 +7,7 @@ import type {
 } from "vue";
 import type {TAvatarIconProps, TPositionType, TRecord, TRouterOptionProps} from "../../../types";
 
-export declare type TAlignment = "left" | "right" | "center" | "justified";
+export declare type TAlignment = "left" | "start" | "right" | "end" | "center" | "justified";
 
 export declare type TOrientation = "horizontal" | "vertical";
 
@@ -17,11 +17,11 @@ export declare type TTabsBaseProps = {
     /**
      * Tabs style variant. Valid values: `tabs`, `pills`, `material`, `modern`.
      */
-    variant?: TTabsVariant | string;
+    variant?: TTabsVariant;
     /**
-     * Tabs alignment. Valid values: `left`, `right`, `center`, `justified`.
+     * Tabs alignment. Valid values: `left`, `right`, `start`, `end`, `center`, `justified`.
      */
-    alignment?: TAlignment | string;
+    alignment?: TAlignment;
     /**
      * Tab content display animation transition.
      */
@@ -29,7 +29,7 @@ export declare type TTabsBaseProps = {
     /**
      * TabItem icon position. Valid values: `left`, `right`, `top`, `bottom`.
      */
-    iconPosition?: TPositionType | string;
+    iconPosition?: TPositionType;
     /**
      * TabItem icon size.
      */
@@ -41,7 +41,7 @@ export declare type TTabsBaseProps = {
     /**
      * Tabs position. Valid values: `left`, `right`, `top`, `bottom`.
      */
-    tabPosition?: TPositionType | string;
+    tabPosition?: TPositionType;
 }
 
 export declare type TTabsOptionProps = TTabsBaseProps & {

@@ -32,7 +32,7 @@ export function useTabViewClassNames(
             : (orientation.value === "vertical" ? "flex-column h-100" : ""),
         props.alignment === "center"
             ? "justify-content-center"
-            : (props.alignment === "right" ? "justify-content-end" : ""),
+            : ((props.alignment === "right" || props.alignment === "end") ? "justify-content-end" : ""),
         props.tabPosition === "top"
             ? `${cssPrefix}tab-top`
             : (

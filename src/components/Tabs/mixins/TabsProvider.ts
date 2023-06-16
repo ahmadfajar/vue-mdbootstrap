@@ -41,16 +41,16 @@ class TabsProvider {
         return this._activeTabIndex;
     }
 
-    get alignment(): TAlignment | string {
-        return this._props.alignment || "left";
+    get alignment(): TAlignment {
+        return this._props.alignment || ("start" as TAlignment);
     }
 
     get contentTransition(): string {
         return this._props.contentTransition || "fade";
     }
 
-    get iconPosition(): TPositionType | string {
-        return this._props.iconPosition || "left";
+    get iconPosition(): TPositionType {
+        return this._props.iconPosition || ("left" as TPositionType);
     }
 
     get iconSize(): number {
@@ -61,7 +61,7 @@ class TabsProvider {
         return this._props.tabClass;
     }
 
-    get tabPosition(): TPositionType | string | undefined {
+    get tabPosition(): TPositionType | undefined {
         return this._props.tabPosition;
     }
 
@@ -176,7 +176,7 @@ class TabsProvider {
         this._emit("change", tab, this.activeTab);
         this._activeTab = tab;
         this._activeTabIndex = index;
-        this._emit("update:modelValue", index);
+        this._emit("update:model-value", index);
     }
 }
 

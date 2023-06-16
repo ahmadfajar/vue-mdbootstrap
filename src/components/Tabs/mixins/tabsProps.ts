@@ -1,4 +1,4 @@
-import type {PropType} from "vue";
+import type {Prop} from "vue";
 import {booleanProp, routerProps, stringOrArrayProp, stringOrNumberProp, stringProp} from "../../../mixins/CommonProps";
 import {iconProps} from "../../Avatar/mixins/avatarProps";
 import {height as sizeProp} from "../../Icon/mixins/iconProps";
@@ -28,18 +28,18 @@ export const tabsProps = {
      * Tabs style variant. Valid values: `tabs`, `pills`, `material`, `modern`.
      */
     variant: {
-        type: String as PropType<TTabsVariant>,
+        type: String,
         default: "tabs",
         validator: (value: string) => ["tabs", "pills", "modern", "material"].includes(value)
-    },
+    } as Prop<TTabsVariant>,
     /**
-     * Tabs alignment. Valid values: `left`, `right`, `center`, `justified`.
+     * Tabs alignment. Valid values: `left`, `right`, `start`, `end`, `center`, `justified`.
      */
     alignment: {
-        type: String as PropType<TAlignment>,
-        default: "left",
-        validator: (value: string) => ["left", "right", "center", "justified"].includes(value)
-    },
+        type: String,
+        default: "start",
+        validator: (value: string) => ["left", "start", "right", "end", "center", "justified"].includes(value)
+    } as Prop<TAlignment>,
     /**
      * Tabs color style for tab variant: `modern` and `material`.
      */
@@ -56,18 +56,18 @@ export const tabsProps = {
      * TabItem icon position. Valid values: `left`, `right`, `top`, `bottom`.
      */
     iconPosition: {
-        type: String as PropType<TPositionType>,
+        type: String,
         default: "left",
         validator: (value: string) => ["left", "right", "top", "bottom"].includes(value)
-    },
+    } as Prop<TPositionType>,
     /**
      * Tabs position. Valid values: `left`, `right`, `top`, `bottom`.
      */
     tabPosition: {
-        type: String as PropType<TPositionType>,
+        type: String,
         default: "top",
         validator: (value: string) => ["left", "right", "top", "bottom"].includes(value)
-    },
+    } as Prop<TPositionType>,
     /**
      * TabItem css class name.
      */
