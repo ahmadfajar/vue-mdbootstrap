@@ -41,16 +41,13 @@ export default defineComponent<TBsModal, TRecord, TRecord, ComputedOptions, Comp
                 if (value) {
                     instance.value && PopupManager.add(instance.value, thisProps, modalOpen);
                     nextTick().then(() => useSetDialogMaxHeight(thisProps, dialogEl, headerEl, bodyEl, footerEl));
-                    // useSetDialogMaxHeight(thisProps, dialogEl, headerEl, bodyEl, footerEl);
                 }
             }
         );
 
-        onMounted(
-            () => {
-                instance.value = getCurrentInstance();
-            }
-        );
+        onMounted(() => {
+            instance.value = getCurrentInstance();
+        });
 
         return () =>
             useRenderModalDialog(

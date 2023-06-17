@@ -1,0 +1,138 @@
+@import "../../../scss/colors";
+@import "../../../scss/variables";
+@import "~compass-mixins/lib/compass/css3";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins/breakpoints";
+
+.#{$prefix}lightbox-wrap {
+    --#{$prefix}lightbox-color: #{$gray-400};
+    --#{$prefix}lightbox-element-padding-x: #{$padding-sm};
+    --#{$prefix}lightbox-title-color: #{$gray-400};
+    --#{$prefix}lightbox-title-size: 1.25rem;
+    --#{$prefix}lightbox-thumbnail-active-border-color: #{$red-base};
+    --#{$prefix}lightbox-thumbnail-active-border-width: 2px;
+
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    position: fixed;
+    z-index: 1022;
+
+    > .#{$prefix}lightbox-display {
+        @include flexbox((display: flex, align-items: center, justify-content: center));
+        position: relative;
+
+        .#{$prefix}lightbox-item {
+            @include flexbox((display: flex, flex-direction: column));
+            background: rgba($black, .3);
+            max-width: 95%;
+            max-height: 99%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .#{$prefix}lightbox-item-img {
+            @include flex(1 1 auto);
+            display: block;
+            overflow: hidden;
+            position: relative;
+
+            > img {
+                @include transition($transition-basic);
+                max-width: 100%;
+                max-height: 100%;
+                z-index: 10;
+            }
+        }
+
+        .#{$prefix}lightbox-item-title {
+            color: var(--#{$prefix}lightbox-title-color);
+            font-size: var(--#{$prefix}lightbox-title-size);
+            background: rgba($black, .7);
+            display: block;
+            line-height: normal;
+            padding: 12px;
+            position: relative;
+        }
+
+        > .#{$prefix}lightbox-controls {
+            @include flexbox((display: flex, justify-content: space-between));
+            position: fixed;
+            left: 0;
+            right: 0;
+            z-index: 10;
+
+            > .#{$prefix}control-prev {
+                @include display-flex(inline-flex);
+                padding-left: var(--#{$prefix}lightbox-element-padding-x);
+            }
+
+            > .#{$prefix}control-next {
+                @include display-flex(inline-flex);
+                padding-right: var(--#{$prefix}lightbox-element-padding-x);
+            }
+        }
+    }
+
+    > .#{$prefix}lightbox-toolbar {
+        @include flexbox((display: flex, justify-content: space-between));
+        top: 0;
+        left: 0;
+        right: 0;
+        position: fixed;
+        z-index: 10;
+
+        .#{$prefix}toolbar-items {
+            background: rgba($black, .9);
+            min-width: 100px;
+            padding: var(--#{$prefix}lightbox-element-padding-x);
+        }
+
+        .#{$prefix}counter {
+            color: var(--#{$prefix}lightbox-color);
+            padding: var(--#{$prefix}lightbox-element-padding-x) $padding-base;
+        }
+    }
+
+    > .#{$prefix}lightbox-thumbnail {
+        background: rgba($black, .5);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow-x: auto;
+        position: fixed;
+        padding: 0 $padding-sm;
+
+        > .#{$prefix}lightbox-thumbnail-row {
+            @include flexbox((display:flex, flex-direction: row));
+
+            > .#{$prefix}lightbox-thumbnails {
+                @include flexbox((display: flex, flex-flow: row nowrap));
+
+                .#{$prefix}thumbnail-item {
+                    border: 1px solid rgba($black, .6);
+                    cursor: pointer;
+                    display: inline-block;
+                    opacity: .5;
+
+                    &:hover {
+                        opacity: 1;
+                    }
+
+                    &.active {
+                        border-color: var(--#{$prefix}lightbox-thumbnail-active-border-color);
+                        border-left-width: var(--#{$prefix}lightbox-thumbnail-active-border-width);
+                        border-right-width: var(--#{$prefix}lightbox-thumbnail-active-border-width);
+                        opacity: 1;
+                    }
+                }
+            }
+
+            @include media-breakpoint-up(lg) {
+                @include flexbox((justify-content: center));
+            }
+        }
+    }
+}

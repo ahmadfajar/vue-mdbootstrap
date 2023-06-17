@@ -66,8 +66,7 @@ export function useRenderModalDialog(
             opacity: props.overlayOpacity,
             show: modalOpen.value && thisProps.overlay,
             fixed: true,
-            zIndex: 1060,
-
+            zIndex: 1027,
         }),
         createModalDialog(
             slots, instance, thisProps, modalOpen, classNames,

@@ -36,5 +36,6 @@ export function useRenderAvatarImage(props: Readonly<TAvatarImageOptionProps>): 
         class: useShapeClasses(props.circle, props.rounded),
         style: useSizeStyles(props),
         src: props.imgSrc,
+        alt: "",
     });
 }

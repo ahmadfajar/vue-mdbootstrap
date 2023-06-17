@@ -23,6 +23,7 @@ Released: July xx, 2023
 - **BsDatePicker**: add property `surfaceColor`, support mousewheel, touch and internationalization.
 - **BsDateTimeField**: add property `pickerColor`, `pickerCls`, `pickerMode`, `pickerWidth`, `pickerTransition`.
 - **BsDropdownMenu**: add property `space`.
+- **BsLightbox**: support navigation using keyboard arrow left/right.
 - **BsListNav**: add property `id`.
 - **BsListNavItem**: add property `id`, `borderOff`, `pillOff`, `roundedOff`, `badgeColor`, and `badgeType`.
 - **BsListTile**: add property `id`, `borderOff`, `pillOff`, and `roundedOff`.
@@ -148,6 +149,9 @@ Released: July xx, 2023
   - Removed event `change`, already covered by event `update:modelValue`.
 - **BsIcon**: replace property `rotation` with `rotate`.
 - **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
+- **BsLightbox**:
+  - Removed method `changeActive`, use `setActive` instead.
+  - Deprecated property `overlayClose`, use property `overlayClickClose` instead.
 - **BsListNavItem**:
   - Removed property `exact`.
   - Replace event `input` with `update:active`.
