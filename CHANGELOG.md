@@ -23,7 +23,7 @@ Released: July xx, 2023
 - **BsDatePicker**: add property `surfaceColor`, support mousewheel, touch and internationalization.
 - **BsDateTimeField**: add property `pickerColor`, `pickerCls`, `pickerMode`, `pickerWidth`, `pickerTransition`.
 - **BsDropdownMenu**: add property `space`.
-- **BsLightbox**: support navigation using keyboard arrow left/right.
+- **BsLightbox**: support navigation using keyboard arrow left/right and touch left/right.
 - **BsListNav**: add property `id`.
 - **BsListNavItem**: add property `id`, `borderOff`, `pillOff`, `roundedOff`, `badgeColor`, and `badgeType`.
 - **BsListTile**: add property `id`, `borderOff`, `pillOff`, and `roundedOff`.

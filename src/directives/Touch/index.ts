@@ -43,7 +43,7 @@ function handleGesture(binding: TouchDirectiveEvent) {
 }
 
 function touchStart(event: TouchEvent, binding: TouchDirectiveEvent) {
-    event.preventDefault();
+    // event.preventDefault();
     const touch = event.changedTouches[0];
     binding.touchstartX = touch.clientX;
     binding.touchstartY = touch.clientY;
@@ -61,7 +61,7 @@ function touchEnd(event: TouchEvent, binding: TouchDirectiveEvent) {
 }
 
 function touchMove(event: TouchEvent, binding: TouchDirectiveEvent) {
-    event.preventDefault();
+    // event.preventDefault();
     const touch = event.changedTouches[0];
     binding.touchmoveX = touch.clientX;
     binding.touchmoveY = touch.clientY;

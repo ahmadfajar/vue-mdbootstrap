@@ -15,7 +15,7 @@ export const lightboxProps = {
     open: booleanProp,
     escClose: booleanTrueProp,
     overlay: booleanTrueProp,
-    overlayClose: booleanTrueProp,
+    overlayClose: booleanProp,
     overlayClickClose: booleanTrueProp,
     overlayColor: {
         type: String,

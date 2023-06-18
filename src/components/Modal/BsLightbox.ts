@@ -39,6 +39,7 @@ export default defineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, C
         const rotate = ref(0);
         const zoom = ref(1);
         const isOpen = ref(false);
+        const transition = ref(<string>thisProps.transition);
         const imgStyles = computed(
             () => useComputeImgStyle(thisProps, rotate, zoom)
         );
@@ -57,10 +58,10 @@ export default defineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, C
             }
         };
         const nextSlide = () => {
-            useNavigateNextSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate);
+            useNavigateNextSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate, transition);
         };
         const prevSlide = () => {
-            useNavigatePrevSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate);
+            useNavigatePrevSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate, transition);
         };
 
         expose({setActive, openAt, nextSlide, prevSlide});
@@ -86,9 +87,13 @@ export default defineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, C
                 "keydown", (evt: Event) => {
                     const evtKey = evt as KeyboardEvent;
                     if (evtKey.key && evtKey.key === "ArrowLeft") {
-                        useNavigatePrevSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate);
+                        isOpen.value && useNavigatePrevSlide(
+                            emit, thisProps, activeItem, itemIndex, zoom, rotate, transition,
+                        );
                     } else if (evtKey.key && evtKey.key === "ArrowRight") {
-                        useNavigateNextSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate);
+                        isOpen.value && useNavigateNextSlide(
+                            emit, thisProps, activeItem, itemIndex, zoom, rotate, transition,
+                        );
                     }
                 });
         });
@@ -97,7 +102,7 @@ export default defineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, C
         return () =>
             useRenderLightbox(
                 slots, emit, instance, thisProps, imgStyles, isOpen,
-                activeItem, itemIndex, rotate, zoom,
+                activeItem, itemIndex, rotate, zoom, transition,
             );
     }
 });

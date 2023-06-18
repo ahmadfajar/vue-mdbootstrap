@@ -1,12 +1,13 @@
 import type {ComponentInternalInstance, ComputedRef, Ref, ShallowRef, Slots, VNode} from "vue";
-import {createCommentVNode, h, Teleport, toDisplayString} from "vue";
+import {createCommentVNode, h, Teleport, toDisplayString, withDirectives} from "vue";
 import type {TEmitFn, TImageDataset, TLightboxOptionProps, TRecord} from "../../../types";
-import {cssPrefix, useRenderTransition} from "../../../mixins/CommonApi";
+import {cssPrefix, useBreakpointMax, useMobileDevice, useRenderTransition} from "../../../mixins/CommonApi";
 import {BsOverlay} from "../../Animation";
 import {BsSpacer} from "../../Basic";
 import {BsButton} from "../../Button";
 import {BsDropdownMenu} from "../../Menu";
 import {useClosePopover} from "../../Popover/mixins/popoverApi";
+import Touch from "../../../directives/Touch";
 import Helper from "../../../utils/Helper";
 
 export function useComputeImgStyle(
@@ -15,13 +16,13 @@ export function useComputeImgStyle(
     zoom: Ref<number>,
 ): TRecord | undefined {
     const scale = zoom.value !== 1 && (zoom.value < 5 || zoom.value > 0.4)
-        ? 'scale(' + zoom.value + ')' : '';
-    const rotation = [0, 360, -360].includes(rotate.value) ? '' : 'rotate(' + rotate.value + 'deg)';
+        ? `scale(${zoom.value})` : '';
+    const rotation = [0, 360, -360].includes(rotate.value) ? '' : `rotate(${rotate.value}deg)`;
 
     if (scale !== '' && rotation !== '') {
         return {
             ...props.imageStyles,
-            transform: scale + ' ' + rotation
+            transform: `${scale} ${rotation}`
         }
     } else if (scale !== '') {
         return {
@@ -49,6 +50,7 @@ export function useRenderLightbox(
     itemIndex: Ref<number>,
     rotate: Ref<number>,
     zoom: Ref<number>,
+    transition: Ref<string>,
 ): VNode {
     return h(Teleport, {to: "body"}, [
         // @ts-ignore
@@ -69,7 +71,7 @@ export function useRenderLightbox(
                     ),
                     createLightboxDisplay(
                         emit, instance, props, imgStyle, isOpen,
-                        activeItem, itemIndex, zoom, rotate,
+                        activeItem, itemIndex, zoom, rotate, transition,
                     ),
                     createLightboxThumbnail(emit, props, activeItem, itemIndex, zoom, rotate),
                 ])
@@ -245,6 +247,7 @@ function createLightboxDisplay(
     itemIndex: Ref<number>,
     zoom: Ref<number>,
     rotate: Ref<number>,
+    transition: Ref<string>,
 ): VNode {
     return h("div", {
         class: `${cssPrefix}lightbox-display`,
@@ -258,16 +261,16 @@ function createLightboxDisplay(
             useClosePopover(instance.value, isOpen, "Overlay clicked.");
         }
     }, [
-        createLightboxNavCtrl(emit, props, activeItem, itemIndex, zoom, rotate),
+        createLightboxNavCtrl(emit, props, activeItem, itemIndex, zoom, rotate, transition),
         useRenderTransition(
-            {name: props.transition, mode: props.transitionMode},
+            {name: transition.value, mode: props.transitionMode},
             (
                 activeItem.value
                     ? h("div", {
                         key: activeItem.value.imageSrc,
                         class: `${cssPrefix}lightbox-item`
                     }, [
-                        h("div", {
+                        withDirectives(h("div", {
                             class: `${cssPrefix}lightbox-item-img`,
                         }, [
                             h("img", {
@@ -278,6 +281,15 @@ function createLightboxDisplay(
                                 rel: "preload",
                                 onClick: (e: Event) => e.stopPropagation(),
                             })
+                        ]), [
+                            [Touch, {
+                                left: () => useNavigateNextSlide(
+                                    emit, props, activeItem, itemIndex, zoom, rotate, transition, true
+                                ),
+                                right: () => useNavigatePrevSlide(
+                                    emit, props, activeItem, itemIndex, zoom, rotate, transition, true
+                                ),
+                            }]
                         ]),
                         (
                             props.showItemTitle === true
@@ -301,6 +313,7 @@ function createLightboxNavCtrl(
     itemIndex: Ref<number>,
     zoom: Ref<number>,
     rotate: Ref<number>,
+    transition: Ref<string>,
 ): VNode {
     if (!props.showNavControl || !props.items?.length) {
         return createCommentVNode(" v-if-navigation ");
@@ -322,7 +335,7 @@ function createLightboxNavCtrl(
                 iconSize: 40,
                 onClick: (e: Event) => {
                     e.stopPropagation();
-                    useNavigatePrevSlide(emit, props, activeItem, itemIndex, zoom, rotate);
+                    useNavigatePrevSlide(emit, props, activeItem, itemIndex, zoom, rotate, transition);
                 }
             })
         ]),
@@ -339,7 +352,7 @@ function createLightboxNavCtrl(
                 iconSize: 40,
                 onClick: (e: Event) => {
                     e.stopPropagation();
-                    useNavigateNextSlide(emit, props, activeItem, itemIndex, zoom, rotate);
+                    useNavigateNextSlide(emit, props, activeItem, itemIndex, zoom, rotate, transition);
                 }
             })
         ]),
@@ -353,7 +366,15 @@ export function useNavigatePrevSlide(
     itemIndex: Ref<number>,
     zoom: Ref<number>,
     rotate: Ref<number>,
+    transition: Ref<string>,
+    touchTriggered?: boolean,
 ) {
+    if (touchTriggered) {
+        transition.value = useMobileDevice() && useBreakpointMax("md")
+            ? "slide-left-right" : <string>props.transition;
+    } else {
+        transition.value = <string>props.transition;
+    }
     if (itemIndex.value === 0) {
         itemIndex.value = (props.items?.length ?? 0) - 1;
     } else {
@@ -370,7 +391,15 @@ export function useNavigateNextSlide(
     itemIndex: Ref<number>,
     zoom: Ref<number>,
     rotate: Ref<number>,
+    transition: Ref<string>,
+    touchTriggered = false,
 ) {
+    if (touchTriggered) {
+        transition.value = useMobileDevice() && useBreakpointMax("md")
+            ? "slide-right-left" : <string>props.transition;
+    } else {
+        transition.value = <string>props.transition;
+    }
     if (itemIndex.value < ((props.items?.length ?? 0) - 1)) {
         itemIndex.value++;
     } else {

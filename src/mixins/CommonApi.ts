@@ -30,10 +30,19 @@ export function useGenerateId(): string {
 /**
  * Check whether IE browser is used or not.
  *
- * @return {boolean} Returns `true` if IE browser is used otherwise `false`.
+ * @returns {boolean} Returns `true` if IE browser is used otherwise `false`.
  */
 export function useBrowserIE(): boolean {
     return !isServer && navigator.userAgent.toLowerCase().includes("trident");
+}
+
+/**
+ * Check whether it is using a mobile browser or not.
+ *
+ * @returns {boolean} Returns `true` if mobile browser is used otherwise `false`.
+ */
+export function useMobileDevice(): boolean {
+    return !isServer && navigator.userAgent.toLowerCase().match(/mobile/i) !== null;
 }
 
 /**
