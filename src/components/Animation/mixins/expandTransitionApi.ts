@@ -2,12 +2,12 @@ function getElSize(size: string | undefined | null): number {
     if (!size) {
         return 0;
     }
-    const index = size.indexOf('px');
-    if (index === -1) {
+    const posPx = size.indexOf('px');
+    if (posPx === -1) {
         return 0;
     }
 
-    return Number(size.substring(0, index));
+    return Number(size.substring(0, posPx));
 }
 
 export function beforeEnter(element: Element) {

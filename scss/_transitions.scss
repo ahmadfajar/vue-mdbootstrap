@@ -190,7 +190,7 @@
     }
 }
 
-.rotate-InOut {
+.rotate-clock-wise {
     &-enter-active {
         @include animation(rotateIn 1s);
     }
@@ -203,13 +203,49 @@
     }
 }
 
-.rotate-InOut-small {
+.rotate-clock-reverse {
     &-enter-active {
         @include animation(rotateInUpLeft 750ms);
     }
 
     &-leave-active {
         @include animation(rotateOutUpLeft 750ms);
+    }
+
+    &-enter-from, &-leave-to {
+        opacity: 0;
+    }
+}
+
+@include keyframes(rollIn) {
+    0% {
+        @include opacity(0);
+        @include transform(translateX(-100%) rotate(-120deg));
+    }
+    100% {
+        @include opacity(1);
+        @include transform(translateX(0px) rotate(0deg));
+    }
+}
+
+@include keyframes(rollOut) {
+    0% {
+        @include opacity(1);
+        @include transform(translateX(0px) rotate(0deg));
+    }
+    100% {
+        @include opacity(0);
+        @include transform(translateX(100%) rotate(120deg));
+    }
+}
+
+.roll-in-out {
+    &-enter-active {
+        @include animation(rollIn 750ms);
+    }
+
+    &-leave-active {
+        @include animation(rollOut 750ms);
     }
 
     &-enter-from, &-leave-to {

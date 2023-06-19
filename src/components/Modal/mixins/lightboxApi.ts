@@ -263,7 +263,7 @@ function createLightboxDisplay(
     }, [
         createLightboxNavCtrl(emit, props, activeItem, itemIndex, zoom, rotate, transition),
         useRenderTransition(
-            {name: transition.value, mode: props.transitionMode},
+            {name: transition.value, mode: props.transitionMode, appear: true},
             (
                 activeItem.value
                     ? h("div", {
