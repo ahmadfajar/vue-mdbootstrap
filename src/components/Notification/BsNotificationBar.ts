@@ -33,13 +33,13 @@ export default defineComponent<TBsNotificationBar, TRecord, TRecord, ComputedOpt
             (value) => {
                 if (value === true) {
                     // console.info("paused at value:", barWidth.value);
-                    clearInterval(intervalId.value);
+                    window.clearInterval(intervalId.value);
                     intervalId.value = undefined;
                 } else if (!intervalId.value) {
                     // etaRef.value = Math.floor((barWidth.value * <number>thisProps.timeout) / 100) + Date.now();
                     etaRef.value = Date.now() + <number>thisProps.timeout;
                     // console.info("continue at value:", etaRef.value);
-                    intervalId.value = setInterval(() => {
+                    intervalId.value = window.setInterval(() => {
                         updateProgressBar();
                     }, 10);
                 }
@@ -49,7 +49,7 @@ export default defineComponent<TBsNotificationBar, TRecord, TRecord, ComputedOpt
             () => {
                 etaRef.value = Date.now() + <number>thisProps.timeout;
                 // console.info("start at value:", etaRef.value);
-                intervalId.value = setInterval(() => {
+                intervalId.value = window.setInterval(() => {
                     updateProgressBar();
                 }, 10);
             }

@@ -1,11 +1,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const CssExtractPlugin = require("mini-css-extract-plugin");
-const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const version = require('./package.json').version;
 
 const sassLoader = [
-    'vue-style-loader',
     {
         loader: CssExtractPlugin.loader,
         options: {
@@ -17,7 +15,6 @@ const sassLoader = [
 ];
 
 const cssLoader = [
-    'vue-style-loader',
     {
         loader: CssExtractPlugin.loader,
         options: {
@@ -27,19 +24,36 @@ const cssLoader = [
     'css-loader',
 ];
 
+const babelLoader = [{
+    loader: "babel-loader",
+    options: {
+        presets: [
+            ["@babel/preset-env", {
+                targets: {
+                    browsers: [
+                        "> 5%",
+                        "last 2 versions",
+                        "not ie <= 9"
+                    ]
+                },
+                modules: 'commonjs',
+            }],
+        ],
+        plugins: [
+            ['@babel/plugin-transform-runtime', {"corejs": 3}]
+        ],
+    }
+}];
+
 const plugins = [
     new webpack.BannerPlugin({
         banner: `/*!
 * Vue MDBootstrap v${version}
 * Released under the BSD-3 License.
-*/ `,
+*/\n
+`,
         raw: true,
         entryOnly: true,
-    }),
-    new VueLoaderPlugin(),
-    new webpack.IgnorePlugin({
-        resourceRegExp: /^\.\/locale$/,
-        contextRegExp: /moment$/
     }),
 ];
 
@@ -47,6 +61,9 @@ const baseConfig = {
     context: path.resolve('./'),
     entry: {
         'vue-mdb': './src/index.ts',
+    },
+    resolve: {
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".vue", ".scss", ".css"],
     },
     module: {
         rules: [
@@ -59,9 +76,14 @@ const baseConfig = {
                 use: sassLoader
             },
             {
-                test: /\.vue$/,
-                loader: 'vue-loader',
+                test: /\.(js|jsx)?$/,
+                use: babelLoader,
                 exclude: /node_modules/
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/,
             },
         ],
     },
@@ -71,8 +93,21 @@ module.exports = {
     ...baseConfig,
     plugins: plugins,
     output: {
-        clean: true,
+        library: {
+            name: 'VueMdb',
+            type: 'umd2',
+        },
+        globalObject: 'this',
+        clean: false,
         pathinfo: false,
         path: path.resolve(__dirname, 'dist'),
+    },
+    externals: {
+        vue: {
+            commonjs: 'vue',
+            commonjs2: 'vue',
+            amd: 'vue',
+            root: 'Vue'
+        }
     },
 }

@@ -1,4 +1,4 @@
-// Create background and text colors classes
+// Create background colors classes
 @each $color_name, $color in $mdb-colors-1 {
     @each $color_type, $color_value in $color {
         @if $color_type == "base" {

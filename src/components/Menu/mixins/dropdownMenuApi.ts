@@ -10,10 +10,10 @@ function hideDropdownMenu(
     emit: TEmitFn,
 ) {
     if (timer.value) {
-        clearTimeout(timer.value);
+        window.clearTimeout(timer.value);
     }
 
-    timer.value = setTimeout(() => {
+    timer.value = window.setTimeout(() => {
         isActive.value = false;
         emit("update:open", false);
         emit("close");
@@ -28,7 +28,7 @@ function showDropdownMenu(
 ) {
     if (!props.disabled) {
         if (timer.value) {
-            clearTimeout(timer.value);
+            window.clearTimeout(timer.value);
         }
 
         isActive.value = true;

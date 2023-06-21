@@ -14,10 +14,6 @@
     @include transition(opacity, transform 0.25s ease-out);
 }
 
-.feedback-leave-to {
-    opacity: 0;
-}
-
 .#{$prefix}field {
     --#{$prefix}field-active-border-color: var(--#{$prefix}field-active-indicator);
     --#{$prefix}field-active-border-width: 2px;

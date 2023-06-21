@@ -115,12 +115,10 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
     return {service, http}
 }
 
-const AxiosPlugin: Plugin_2 = {
+export const AxiosPlugin: Plugin_2 = {
     install: (app: App, options?: RawAxiosRequestConfig): void => {
         const {service, http} = _axiosPlugin(options);
         app.config.globalProperties.$axios = service;
         app.config.globalProperties.$http = http;
     }
 }
-
-export default AxiosPlugin;

@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "./dist/",
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -10,11 +11,8 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "baseUrl": ".",
-    "types": [
-      "webpack-env"
-    ],
     "lib": [
       "esnext",
       "dom",
@@ -25,7 +23,6 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
   ],
