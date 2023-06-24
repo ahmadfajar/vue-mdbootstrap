@@ -1,19 +1,37 @@
-### Covers Operating resource files
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Operating resource files
 .DS_Store
 ._.DS_Store
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-### Covers IDEs: JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
-/.idea/
-/.vscode
-
-
-### Covers project specific files
-/node_modules/
-/dist/*.LICENSE.txt
-npm-debug.log
-yarn.lock
-yarn-error.log
+# Project resource files
+node_modules
+dist-ssr
+coverage
 package-lock.json
+yarn.lock
+*.local
+
+/cypress/videos/
+/cypress/screenshots/
+/dist/*.LICENSE.txt
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

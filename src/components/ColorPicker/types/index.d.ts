@@ -7,14 +7,12 @@ import type {
     Ref,
     UnwrapNestedRefs
 } from "vue";
-import type {HSLA, RGBA, TColor, TPopoverPosition, TRecord} from "../../../types";
-
-export type {HSLA, HSVA, RGBA, TColor} from "../../../mixins/colorUtils";
+import type {Color, TPopoverPosition, TRecord} from "../../../types";
 
 export declare type TColorPickerMode = "HEX" | "RGB" | "HSL";
 
 declare type TColorPickerValue = {
-    currentColor: TColor;
+    currentColor: Color.TColor;
     hueSlider: number;
     alphaSlider: number;
     mode: TColorPickerMode;
@@ -26,8 +24,8 @@ declare type TColorPickerValue = {
  */
 export declare type TColorPickerData = {
     config: UnwrapNestedRefs<TColorPickerValue>;
-    colorRGB: RGBA;
-    colorHSL: HSLA;
+    colorRGB: Color.RGBA;
+    colorHSL: Color.HSLA;
     pickerEl: Ref<HTMLElement | null>;
     colorArea: Ref<HTMLElement | null>;
     colorAreaRect: DOMRect;

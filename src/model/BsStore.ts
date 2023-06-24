@@ -1,9 +1,9 @@
-import type {AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
-import {meanBy, sumBy} from "lodash";
-import AbstractStore from "./AbstractStore";
-import RestProxyAdapter from "./RestProxyAdapter";
-import Helper from "../utils/Helper";
-import type {IBsModel, IBsStore, TRecord, TSortDirection, TSortOption, TSuccessResponse} from "../types";
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { meanBy, sumBy } from 'lodash';
+import type { IBsModel, IBsStore, TRecord, TSortDirection, TSortOption, TSuccessResponse } from '../types';
+import Helper from '../utils/Helper';
+import AbstractStore from './AbstractStore';
+import RestProxyAdapter from './RestProxyAdapter';
 
 
 /**
@@ -30,14 +30,14 @@ import type {IBsModel, IBsStore, TRecord, TSortDirection, TSortOption, TSuccessR
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 28/03/2023 01:55
+ * @since  20/07/2018 modified: 24/06/2023 14:36
  */
 export default class BsStore extends AbstractStore implements IBsStore {
     /**
      * Class constructor.
      *
-     * @param {TRecord} config        The configuration properties
-     * @param {AxiosInstance} adapter Axios adapter instance
+     * @param config  The configuration properties
+     * @param adapter Axios adapter instance
      */
     constructor(config: TRecord, adapter?: AxiosInstance) {
         const initialCfg = {
@@ -240,7 +240,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
         if (Helper.isArray(items) && items.length > 0) {
             return new Promise((resolve, reject) => {
                 try {
-                    for (const item of items) {
+                    for (const item of <IBsModel[]>items) {
                         if (
                             AbstractStore.isModel(item) &&
                             !Helper.isEmpty(item.restUrl?.delete)
@@ -359,8 +359,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
     /**
      * Assign values from REST response's object.
      *
-     * @param {AxiosResponse} response Response object
-     * @returns {void}
+     * @param response Response object
      */
     private _assignFromResponse(response: AxiosResponse) {
         const responseData = <never>response.data;

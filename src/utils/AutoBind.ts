@@ -1,8 +1,7 @@
 /**
  * Binds all methods of a class instance to itself.
  *
- * @param {Object} instance The class instance
- * @returns {void}
+ * @param instance The class instance
  */
 export function autoBind(instance: unknown): void {
     for (let obj = instance; obj; obj = Object.getPrototypeOf(obj)) {

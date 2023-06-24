@@ -16,7 +16,7 @@ export declare type TSideDrawerOptionProps = {
     modalWidth?: number | string;
     open?: boolean;
     overlayColor?: string;
-    position?: TLabelPosition | string;
+    position?: TLabelPosition;
     shadow?: boolean;
     tag?: string;
     width?: number | string;

@@ -1,17 +1,15 @@
-import type {ComputedRef, VNode} from "vue";
-import {createCommentVNode, h, mergeProps, nextTick, reactive, ref} from "vue";
-import {cssPrefix, useMergeClass} from "../../../mixins/CommonApi";
+import type { ComputedRef, VNode } from "vue";
+import { createCommentVNode, h, mergeProps, nextTick, reactive, ref } from "vue";
+import { cssPrefix, useMergeClass } from "../../../mixins/CommonApi";
 import type {
-    HSLA,
-    HSVA,
-    RGBA,
+    Color,
     TColorPickerData,
     TColorPickerMode,
     TColorPickerOptionProps,
     TEmitFn,
     TRecord
 } from "../../../types";
-import {BsToggleButton} from "../../Button";
+import { BsToggleButton } from "../../Button";
 import {
     hslaToHsva,
     hslaToString,
@@ -27,17 +25,17 @@ import Helper from "../../../utils/Helper";
 export function initColorPickerData(props: Readonly<TColorPickerOptionProps>): TColorPickerData {
     return {
         config: reactive({
-            currentColor: {r: 0, g: 0, b: 0, h: 0, s: 0, v: 0, a: 1},
+            currentColor: { r: 0, g: 0, b: 0, h: 0, s: 0, v: 0, a: 1 },
             hueSlider: 0,
             alphaSlider: 100,
             value: props.modelValue,
             mode: <TColorPickerMode>props.mode,
         }),
-        colorRGB: {r: 0, g: 0, b: 0, a: 1},
-        colorHSL: {h: 0, s: 0, l: 0, a: 1},
+        colorRGB: { r: 0, g: 0, b: 0, a: 1 },
+        colorHSL: { h: 0, s: 0, l: 0, a: 1 },
         pickerEl: ref<HTMLElement | null>(null),
         colorArea: ref<HTMLElement | null>(null),
-        colorAreaRect: DOMRect.fromRect({width: 0, height: 0, x: 0, y: 0}),
+        colorAreaRect: DOMRect.fromRect({ width: 0, height: 0, x: 0, y: 0 }),
         colorMarker: ref<HTMLElement | null>(null),
         colorPreview: ref<HTMLElement | null>(null),
         hueSlider: ref<HTMLElement | null>(null),
@@ -103,7 +101,7 @@ function renderColorPickerControls(
                         document.addEventListener(
                             "touchmove",
                             hueSliderThumbMoveHandler,
-                            {passive: false},
+                            { passive: false },
                         );
                     },
                 }, [
@@ -169,7 +167,7 @@ function renderColorPickerControls(
                             document.addEventListener(
                                 "touchmove",
                                 alphaSliderThumbMoveHandler,
-                                {passive: false},
+                                { passive: false },
                             );
                         },
                     }, [
@@ -273,9 +271,9 @@ function onUpdateInputNumber(value: string, label: string, pickerData: TColorPic
         ? Number.parseInt(value.trim())
         : Number.parseFloat(value.trim());
 
-    let rgba: RGBA | undefined;
-    let hsla: HSLA | undefined;
-    let hsva: HSVA | undefined;
+    let rgba: Color.RGBA | undefined;
+    let hsla: Color.HSLA | undefined;
+    let hsva: Color.HSVA | undefined;
 
     // Prevent value from going out of bounds.
     if (srcValue < 0) {
@@ -438,16 +436,16 @@ function renderColorPickerInputs(
     }
 
     return h("div", {
-            class: [`${cssNamePrefix}inputs`, "pt-2"],
-        }, [
-            pickerData.config.mode === "HSL"
-                ? renderInputColorHSL(props, pickerData, cssNamePrefix, inputIDs, emit)
-                : (
-                    pickerData.config.mode === "RGB"
-                        ? renderInputColorRGB(props, pickerData, cssNamePrefix, inputIDs, emit)
-                        : renderInputColorHEX(props, pickerData, cssNamePrefix, inputIDs, emit)
-                )
-        ]
+        class: [`${cssNamePrefix}inputs`, "pt-2"],
+    }, [
+        pickerData.config.mode === "HSL"
+            ? renderInputColorHSL(props, pickerData, cssNamePrefix, inputIDs, emit)
+            : (
+                pickerData.config.mode === "RGB"
+                    ? renderInputColorRGB(props, pickerData, cssNamePrefix, inputIDs, emit)
+                    : renderInputColorHEX(props, pickerData, cssNamePrefix, inputIDs, emit)
+            )
+    ]
     );
 }
 
@@ -470,9 +468,9 @@ function renderColorPickerModeButtons(
             toggleColor: props.modeButtonToggleColor,
             outlined: props.outlineModeButton,
             items: [
-                {value: "HEX", label: "HEX"},
-                {value: "RGB", label: "RGB"},
-                {value: "HSL", label: "HSL"},
+                { value: "HEX", label: "HEX" },
+                { value: "RGB", label: "RGB" },
+                { value: "HSL", label: "HSL" },
             ],
             modelValue: pickerData.config.mode,
             "onUpdate:model-value": (value: TColorPickerMode) => {
@@ -496,21 +494,21 @@ function renderColorPickerSwatches(
 
     return h("div", {
         class: [`${cssNamePrefix}swatches`],
-        style: {"max-height": Helper.cssUnit(props.swatchesMaxHeight)},
+        style: { "max-height": Helper.cssUnit(props.swatchesMaxHeight) },
     }, [
         h("div", {
-                class: [`${cssNamePrefix}swatches-content`, "d-flex", "flex-wrap", "justify-content-center"]
-            }, props.swatches?.map(it => h("button", {
-                type: "button",
-                key: it,
-                title: it,
-                class: [`${cssPrefix}swatch-button`],
-                style: {color: it},
-                onClick: (event: Event) => {
-                    pickerData.config.value = (<HTMLElement>event.target).title;
-                    useUpdateColorCanvas(pickerData, emit);
-                }
-            }))
+            class: [`${cssNamePrefix}swatches-content`, "d-flex", "flex-wrap", "justify-content-center"]
+        }, props.swatches?.map(it => h("button", {
+            type: "button",
+            key: it,
+            title: it,
+            class: [`${cssPrefix}swatch-button`],
+            style: { color: it },
+            onClick: (event: Event) => {
+                pickerData.config.value = (<HTMLElement>event.target).title;
+                useUpdateColorCanvas(pickerData, emit);
+            }
+        }))
         )
     ]);
 }
@@ -531,11 +529,11 @@ export function useRenderColorPicker(
         ? {
             ref: pickerData.pickerEl,
             class: pickerClasses.value,
-            style: props.hideAlpha ? {width: "250px"} : undefined,
+            style: props.hideAlpha ? { width: "250px" } : undefined,
         } : mergeProps({
             ref: pickerData.pickerEl,
             class: pickerClasses.value,
-            style: props.hideAlpha ? {width: "250px"} : undefined,
+            style: props.hideAlpha ? { width: "250px" } : undefined,
         }, attrs);
 
     return h("div", pickerProps, [
@@ -568,7 +566,7 @@ export function useRenderColorPicker(
                 onTouchstart: () => document.addEventListener(
                     "touchmove",
                     colorMarkerMoveHandler,
-                    {passive: false},
+                    { passive: false },
                 ),
             })
         ]),
@@ -619,7 +617,7 @@ export function useReleasePointerEvents(
         () => document.removeEventListener(
             "touchmove",
             colorMarkerMoveHandler,
-            {passive: false} as EventListenerOptions
+            { passive: false } as EventListenerOptions
         )
     );
     document.addEventListener(
@@ -628,7 +626,7 @@ export function useReleasePointerEvents(
             document.removeEventListener(
                 "touchmove",
                 hueSliderThumbMoveHandler,
-                {passive: false} as EventListenerOptions
+                { passive: false } as EventListenerOptions
             );
             Helper.defer(() => {
                 pickerData.hueSliderThumb.value?.classList.remove(`${cssPrefix}pressed`);
@@ -641,7 +639,7 @@ export function useReleasePointerEvents(
             document.removeEventListener(
                 "touchmove",
                 alphaSliderThumbMoveHandler,
-                {passive: false} as EventListenerOptions
+                { passive: false } as EventListenerOptions
             );
             Helper.defer(() => {
                 pickerData.alphaSliderThumb.value?.classList.remove(`${cssPrefix}pressed`);
@@ -830,7 +828,7 @@ function setColorAtPosition(
     posX: number,
     posY: number,
 ) {
-    const hsva: HSVA = {
+    const hsva: Color.HSVA = {
         h: pickerData.config.hueSlider,
         s: posX / pickerData.colorAreaRect.width * 100,
         v: 100 - (posY / pickerData.colorAreaRect.height * 100),
@@ -844,8 +842,8 @@ function setColorAtPosition(
 
 function updateColor(
     pickerData: TColorPickerData,
-    rgba: RGBA,
-    hsva: HSVA,
+    rgba: Color.RGBA,
+    hsva: Color.HSVA,
 ) {
     for (const key in rgba) {
         if (Object.hasOwn(rgba, key)) {
@@ -904,11 +902,11 @@ function dispatchEventModelValue(pickerData: TColorPickerData, emit: TEmitFn, he
 }
 
 export function useUpdateColorCanvas(pickerData: TColorPickerData, emit?: TEmitFn) {
-    let hsva: HSVA | undefined;
-    let rgba: RGBA | undefined;
+    let hsva: Color.HSVA | undefined;
+    let rgba: Color.RGBA | undefined;
 
     if (Helper.isEmpty(pickerData.config.value)) {
-        const hsla: HSLA = {h: 0, s: 100, l: 50, a: 1};
+        const hsla: Color.HSLA = { h: 0, s: 100, l: 50, a: 1 };
         hsva = hslaToHsva(hsla);
         rgba = hsvaToRgba(hsva);
     } else {
@@ -921,8 +919,8 @@ export function useUpdateColorCanvas(pickerData: TColorPickerData, emit?: TEmitF
     updateColorPreview(pickerData, emit);
 }
 
-function updateColorCanvasUI(pickerData: TColorPickerData, color?: HSVA) {
-    const hsva: HSVA = color || {
+function updateColorCanvasUI(pickerData: TColorPickerData, color?: Color.HSVA) {
+    const hsva: Color.HSVA = color || {
         h: pickerData.config.currentColor.h,
         s: pickerData.config.currentColor.s,
         v: pickerData.config.currentColor.v,

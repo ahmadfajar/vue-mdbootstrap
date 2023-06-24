@@ -1,21 +1,6 @@
-import {DateTime} from "luxon";
-import type {ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode} from "vue";
-import {Fragment, h} from "vue";
-import {
-    useOnFieldBlurred,
-    useOnFieldFocused,
-    useOnFieldValueCleared,
-    useOnTextFieldNodeMounted
-} from "../../Field/mixins/textFieldEventApi";
-import {
-    useCreateFieldActionIcon,
-    useCreateFieldInnerWrapper,
-    useCreateFieldWrapper,
-    useInputTextFieldAttrs,
-    useMakeInputBaseAttrs
-} from "../../Field/mixins/textFieldApi";
-import {useRenderFieldFeedback} from "../../Field/mixins/validationApi";
-import {useTogglePopoverState} from "../../Combobox/mixins/comboboxApi";
+import { DateTime } from "luxon";
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from "vue";
+import { Fragment, h } from "vue";
 import type {
     TBsDateTimeField,
     TDateTimeFieldOptionProps,
@@ -24,10 +9,25 @@ import type {
     TIconVariant,
     TRecord
 } from "../../../types";
-import {useParseDate} from "./datePickerApi";
-import {BsPopover} from "../../Popover";
-import BsDatePicker from "../BsDatePicker";
 import Helper from "../../../utils/Helper";
+import { useTogglePopoverState } from "../../Combobox/mixins/comboboxApi";
+import {
+    useCreateFieldActionIcon,
+    useCreateFieldInnerWrapper,
+    useCreateFieldWrapper,
+    useInputTextFieldAttrs,
+    useMakeInputBaseAttrs
+} from "../../Field/mixins/textFieldApi";
+import {
+    useOnFieldBlurred,
+    useOnFieldFocused,
+    useOnFieldValueCleared,
+    useOnTextFieldNodeMounted
+} from "../../Field/mixins/textFieldEventApi";
+import { useRenderFieldFeedback } from "../../Field/mixins/validationApi";
+import { BsPopover } from "../../Popover";
+import BsDatePicker from "../BsDatePicker";
+import { useParseDate } from "./datePickerApi";
 
 export function useParseDateTimeFromFormat(
     value?: string | number | Date,
@@ -38,17 +38,17 @@ export function useParseDateTimeFromFormat(
         if (Helper.isString(value)) {
             try {
                 return !Helper.isEmpty(format)
-                    ? DateTime.fromFormat(<string>value, <string>format, {locale: locale})
-                    : DateTime.fromISO(<string>value, {locale: locale});
+                    ? DateTime.fromFormat(<string>value, <string>format, { locale: locale })
+                    : DateTime.fromISO(<string>value, { locale: locale });
             } catch (e) {
                 try {
-                    return DateTime.fromSQL(<string>value, {locale: locale});
+                    return DateTime.fromSQL(<string>value, { locale: locale });
                 } catch (e) {
                     return undefined;
                 }
             }
         } else if (Helper.isNumber(value)) {
-            return DateTime.fromSeconds(<number>value, {locale: locale});
+            return DateTime.fromSeconds(<number>value, { locale: locale });
         } else if (value instanceof Date) {
             const result = DateTime.fromJSDate(value);
             if (!Helper.isEmpty(locale)) {

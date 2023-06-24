@@ -1,6 +1,6 @@
+@import "/node_modules/compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "~compass-mixins/lib/compass/css3";
 
 .#{$prefix}chip-field {
     --#{$prefix}field-control-height: 2.5rem;

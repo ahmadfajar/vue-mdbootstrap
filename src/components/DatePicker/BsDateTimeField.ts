@@ -58,7 +58,7 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
         );
         const activator = ref<HTMLElement | null>(null);
         const pickerMode = computed(() =>
-            <TDateTimePickerMode>(thisProps.pickerMode || thisProps.viewMode || DatePickerConst.DATE)
+            <TDateTimePickerMode>(thisProps.viewMode || thisProps.pickerMode || DatePickerConst.DATE)
         );
         const calendarIcon = computed(() => {
             return thisProps.appendIcon || `calendar_month_${thisProps.actionIconVariant}`;

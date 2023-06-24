@@ -1,7 +1,7 @@
+@import "/node_modules/compass-mixins/lib/compass/css3";
+@import "../../../scss/mixins/placeholder";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "../../../scss/mixins/placeholder";
-@import "~compass-mixins/lib/compass/css3";
 
 .#{$prefix}listbox {
     --#{$prefix}searchbox-padding-x: #{$padding-base - .25};

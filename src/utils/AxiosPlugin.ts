@@ -1,7 +1,7 @@
-import type {AxiosPromise, RawAxiosRequestConfig} from "axios";
-import axios from "axios";
-import type {App, Plugin as Plugin_2} from "vue";
-import type {TRecord} from "../types";
+import type { AxiosPromise, RawAxiosRequestConfig } from 'axios';
+import axios from 'axios';
+import type { App, Plugin as Plugin_2 } from 'vue';
+import type { TRecord } from '../types';
 
 declare interface IRequestConfig extends RawAxiosRequestConfig {
     requestHandler: CallableFunction;
@@ -14,37 +14,37 @@ export declare interface IHttpService {
     /**
      * Send HTTP GET to the remote server.
      *
-     * @param {string} url                      API url
-     * @param {TRecord} [data]                  The data to be sent
-     * @param {RawAxiosRequestConfig} [options] Additional options
-     * @returns {AxiosPromise} Promise instance
+     * @param url     API url
+     * @param data    The data to be sent
+     * @param options Additional options
+     * @returns Promise instance
      */
     get: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP POST to the remote server.
      *
-     * @param {string} url                      API url
-     * @param {TRecord} data                    The data to be sent
-     * @param {RawAxiosRequestConfig} [options] Additional options
-     * @returns {AxiosPromise} Promise instance
+     * @param url     API url
+     * @param data    The data to be sent
+     * @param options Additional options
+     * @returns Promise instance
      */
     post: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP PUT to the remote server.
      *
-     * @param {string} url                      API url
-     * @param {TRecord} data                    The data to be sent
-     * @param {RawAxiosRequestConfig} [options] Additional options
-     * @returns {AxiosPromise} Promise instance
+     * @param url     API url
+     * @param data    The data to be sent
+     * @param options Additional options
+     * @returns Promise instance
      */
     put: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP DELETE to the remote server.
      *
-     * @param {string} url                      API url
-     * @param {TRecord} [data]                  The data to be sent
-     * @param {RawAxiosRequestConfig} [options] Additional options
-     * @returns {AxiosPromise} Promise instance
+     * @param url     API url
+     * @param data    The data to be sent
+     * @param options Additional options
+     * @returns Promise instance
      */
     delete: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
 }
@@ -71,8 +71,8 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
 
         // Register interceptor if criteria matched.
         if (
-            (_keys.includes("baseURL") && _keys.length > 1) ||
-            (!_keys.includes("baseURL") && _keys.length > 0)
+            (_keys.includes('baseURL') && _keys.length > 1) ||
+            (!_keys.includes('baseURL') && _keys.length > 0)
         ) {
             // Add a request interceptor
             service.interceptors.request.use(

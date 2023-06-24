@@ -1,7 +1,7 @@
+@import "/node_modules/compass-mixins/lib/compass/css3";
+@import "/node_modules/compass-mixins/lib/compass/typography";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "~compass-mixins/lib/compass/css3";
-@import "~compass-mixins/lib/compass/typography";
 
 .#{$prefix}appbar {
     --#{$prefix}appbar-color: #{$grey-darken-4};

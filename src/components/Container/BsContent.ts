@@ -1,38 +1,46 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, VNode} from "vue";
-import {defineComponent, h} from "vue";
-import {booleanProp} from "../../mixins/CommonProps";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {baseTagProps} from "../Card/mixins/cardProps";
-import type {TBsContainer, TBsContent, TContainerOptionProps, TRecord} from "../../types";
-import BsContainer from "./BsContainer";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, VNode } from 'vue';
+import { defineComponent, h } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import { booleanProp } from '../../mixins/CommonProps';
+import type { TBsContainer, TBsContent, TContainerOptionProps, TRecord } from '../../types';
+import { baseTagProps } from '../Card/mixins/cardProps';
+import BsContainer from './BsContainer';
 
-export default defineComponent<TBsContent, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsContent",
+export default defineComponent<
+    TBsContent,
+    TRecord,
+    TRecord,
+    ComputedOptions,
+    ComponentOptionsMixin,
+    EmitsOptions
+>({
+    name: 'BsContent',
     props: {
-        /**
-         * Mount this component as part of application container or just ordinary container.
-         * If mount as part of application container, then it will adapt to `SideDrawer` and `Appbar` size.
-         * @type {boolean}
-         */
         app: booleanProp,
-        ...baseTagProps,
+        ...baseTagProps
     },
-    setup(props, {slots}) {
+    setup(props, { slots }) {
         const cmpProps = props as Readonly<TContainerOptionProps>;
-        const cmpRender = (): VNode => {
-            return h(cmpProps.tag || "div", {
+        const contentRender = (): VNode => h(
+            cmpProps.tag || 'div',
+            {
                 class: `${cssPrefix}content-wrap`
-            }, slots.default && slots.default())
-        }
+            },
+            slots.default && slots.default()
+        );
 
         return () =>
             cmpProps.app
-                ? h<TBsContainer>(BsContainer, {
-                    app: props.app,
-                    tag: props.tag,
-                }, {
-                    default: () => cmpRender()
-                })
-                : cmpRender()
+                ? h<TBsContainer>(
+                      BsContainer,
+                      {
+                          app: props.app,
+                          tag: props.tag
+                      },
+                      {
+                          default: () => contentRender()
+                      }
+                  )
+                : contentRender();
     }
 });

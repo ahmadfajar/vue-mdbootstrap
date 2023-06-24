@@ -70,5 +70,3 @@ export const Scroll: Directive = {
     unmounted,
     updated,
 }
-
-export default Scroll;

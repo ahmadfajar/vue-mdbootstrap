@@ -1,15 +1,15 @@
-import type {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
-import axios from "axios";
-import type {AppConfig} from "vue";
-import type {IRestAdapter, TRecord, TRestMethodOptions} from "../types";
-import {useAxiosPlugin} from "../mixins/CommonApi";
-import Helper from "../utils/Helper";
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios from 'axios';
+import type { AppConfig } from 'vue';
+import { useAxiosPlugin } from '../mixins/CommonApi';
+import type { IRestAdapter, TRecord, TRestMethodOptions } from '../types';
+import Helper from '../utils/Helper';
 
 /**
  * Class RestProxyAdapter which is used to load data from the remote server.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 23/04/2023 00:12
+ * @since  20/07/2018 modified: 24/06/2023 14:30
  */
 export default class RestProxyAdapter implements IRestAdapter {
     private readonly _adapter: AxiosInstance;
@@ -18,35 +18,33 @@ export default class RestProxyAdapter implements IRestAdapter {
     /**
      * Check if axios plugin already installed and defined not.
      *
-     * @param {AppConfig|AxiosInstance} [appConfig] AppConfig or Axios adapter instance
-     * @returns {void}
+     * @param appConfig AppConfig or Axios adapter instance
      * @throws Error If axios doesn't exist
      */
     static checkAxios(appConfig: AppConfig | AxiosInstance) {
         if (!appConfig) {
-            throw Error("Parameter 'appConfig' must be an 'AxiosInstance' or 'Vue AppConfig'.");
+            throw Error('Parameter \'appConfig\' must be an \'AxiosInstance\' or \'Vue AppConfig\'.');
         }
         if (
-            "globalProperties" in appConfig && appConfig.globalProperties &&
+            'globalProperties' in appConfig && appConfig.globalProperties &&
             (!appConfig.globalProperties.$http && !appConfig.globalProperties.$axios)
         ) {
-            throw Error("Vue Application doesn't have AxiosPlugin installed. " +
-                "Please define it some where in the application before using RestProxyAdapter.");
+            throw Error('Vue Application doesn\'t have AxiosPlugin installed. ' +
+                'Please define it some where in the application before using RestProxyAdapter.');
         }
         if (
-            ("get" in appConfig && !Helper.isFunction(appConfig.get)) &&
-            ("post" in appConfig && !Helper.isFunction(appConfig.post))
+            ('get' in appConfig && !Helper.isFunction(appConfig.get)) &&
+            ('post' in appConfig && !Helper.isFunction(appConfig.post))
         ) {
-            throw Error("Axios is not defined. " +
-                "Please define it in the constructor before using RestProxyAdapter.");
+            throw Error('Axios is not defined. ' +
+                'Please define it in the constructor before using RestProxyAdapter.');
         }
     }
 
     /**
      * Check if Rest URL already defined or not.
      *
-     * @param {Object} restUrl The Rest URL to check
-     * @returns {void}
+     * @param restUrl The Rest URL to check
      * @throws URIError If Rest Url is not defined
      */
     static checkRestUrl(restUrl: TRecord) {
@@ -58,8 +56,7 @@ export default class RestProxyAdapter implements IRestAdapter {
     /**
      * Log error response to the console.
      *
-     * @param {AxiosError} error The axios error object.
-     * @returns {void}
+     * @param error The axios error object.
      */
     static warnResponseError(error: AxiosError) {
         if (error.response) {
@@ -74,7 +71,7 @@ export default class RestProxyAdapter implements IRestAdapter {
     /**
      * Default REST request method options. Do not override this property.
      *
-     * @returns {TRestMethodOptions} REST method options
+     * @returns REST method options
      */
     static get defaultHttpMethods(): TRestMethodOptions {
         return {
@@ -89,8 +86,8 @@ export default class RestProxyAdapter implements IRestAdapter {
     /**
      * Class constructor.
      *
-     * @param {AxiosInstance} adapter               Axios adapter instance
-     * @param {TRestMethodOptions} [httpMethods]    Custom HTTP methods to override the default methods
+     * @param adapter      Axios adapter instance
+     * @param httpMethods  Custom HTTP methods to override the default methods
      */
     constructor(adapter?: AxiosInstance, httpMethods = {}) {
         // Resolve and pick axios adapter from available sources
@@ -104,18 +101,18 @@ export default class RestProxyAdapter implements IRestAdapter {
             return this._adapter;
         }
 
-        throw Error("Vue Application doesn't have AxiosPlugin installed. " +
-            "Please define it some where in the application before using RestProxyAdapter.");
+        throw Error('Vue Application doesn\'t have AxiosPlugin installed. ' +
+            'Please define it some where in the application before using RestProxyAdapter.');
     }
 
     /**
      * Perform REST request to the server.
      *
-     * @param {AxiosRequestConfig} config   Request configuration
-     * @param {Function} onRequest          Promise function called before the request is made.
-     * @param {Function} onSuccess          Promise function called when the request was successful.
-     * @param {Function} onFailure          Promise function called when the request was failed.
-     * @returns {Promise<AxiosResponse>}  Promise
+     * @param config     Request configuration
+     * @param onRequest  Promise function called before the request is made.
+     * @param onSuccess  Promise function called when the request was successful.
+     * @param onFailure  Promise function called when the request was failed.
+     * @returns Promise interface instance
      */
     request(
         config: AxiosRequestConfig,
@@ -128,7 +125,7 @@ export default class RestProxyAdapter implements IRestAdapter {
         return new Promise((resolve, reject) => {
             const check = !Helper.isEmpty(config) && !Helper.isEmpty(config.url);
             if (!check) {
-                reject(new Error("Not enough information to send request to remote service."));
+                reject(new Error('Not enough information to send request to remote service.'));
                 return;
             }
 
@@ -147,7 +144,7 @@ export default class RestProxyAdapter implements IRestAdapter {
                         reject(error);
                     });
             } else {
-                reject(new Error("Client is busy handling previous request."));
+                reject(new Error('Client is busy handling previous request.'));
             }
         });
     }
@@ -155,7 +152,7 @@ export default class RestProxyAdapter implements IRestAdapter {
     /**
      * Get REST request methods options.
      *
-     * @returns {TRestMethodOptions} REST request method options
+     * @returns REST request method options
      */
     requestMethods(): TRestMethodOptions {
         return {

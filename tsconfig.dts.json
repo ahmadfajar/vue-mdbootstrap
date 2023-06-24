@@ -1,0 +1,24 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.json",
+  "include": [
+    "src/types/*.d.ts",
+    "src/**/types/*.d.ts",
+    "src/components/Icon/mixins/svgApi.ts",
+    "src/mixins/colorUtils.ts",
+    "src/mixins/CommonApi.ts",
+    "src/mixins/StringHelper.ts",
+    "src/model/index.ts",
+    "src/directives/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "src/**/__tests__/*"
+  ],
+  "compilerOptions": {
+    "outDir": "./types-temp/",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "removeComments": false,
+    "sourceMap": false
+  }
+}

@@ -60,10 +60,10 @@ export declare interface IRestAdapter {
     /**
      * Perform REST request to the remote server.
      *
-     * @param {AxiosRequestConfig} config   Request configuration
-     * @param {Function} onRequest          Promise function called before the request is made.
-     * @param {Function} onSuccess          Promise function called when the request is successful.
-     * @param {Function} onFailure          Promise function called when the request is failed.
+     * @param config    Request configuration
+     * @param onRequest Promise function called before the request is made.
+     * @param onSuccess Promise function called when the request is successful.
+     * @param onFailure Promise function called when the request is failed.
      */
     request(
         config: AxiosRequestConfig,
@@ -148,22 +148,22 @@ export declare interface IBsModel extends ObjectBase {
     /**
      * Assign new value to an existing field name.
      *
-     * @param {string} field The field name
-     * @param {*} newValue   The new value
+     * @param field     The field name
+     * @param newValue  The new value
      */
     assignValue(field: string, newValue: unknown): void;
 
     /**
      * Assign new value to some existing fields.
      *
-     * @param {TRecord} sources Object with format key-value pairs
+     * @param sources Object with format key-value pairs
      */
     assignValues(sources: TRecord): void;
 
     /**
      * Get a field value.
      *
-     * @param {string} name The field name.
+     * @param name The field name.
      */
     get(name: string): never;
 
@@ -171,8 +171,8 @@ export declare interface IBsModel extends ObjectBase {
      * Define or sets a field with new value.
      * If the field doesn't exist, then it will be appended.
      *
-     * @param {string} name The field name.
-     * @param {unknown} value The field value.
+     * @param name The field name.
+     * @param value The field value.
      * @throws Error If this data model is frozen.
      */
     set(name: string, value: unknown): void;
@@ -195,24 +195,24 @@ export declare interface IBsModel extends ObjectBase {
     /**
      * Perform fetch or read record from remote service via REST API.
      *
-     * @param {number|string} id The item ID
+     * @param id The item ID
      */
     fetch(id?: string | number): Promise<AxiosResponse>;
 
     /**
      * Perform custom HTTP request to the remote service via REST API.
      *
-     * @param {string} restKey      The key from restUrl property
-     * @param {string} method       Any valid HTTP method, likes: `get`, `post`, `delete`, `put`, `patch`.
-     *                              The default is `get`.
-     * @param {Object} params       Parameters to append when invoke rest request
-     * @param {Object} data         Data to append when invoke rest request
-     * @param {Function} successCb  Promise function to be called when the request is successful
-     * @param {Function} errorCb    Promise function to be called when the request is failed
+     * @param restKey    The key from restUrl property
+     * @param method     Any valid HTTP method, likes: `get`, `post`, `delete`, `put`, `patch`.
+     *                   The default is `get`.
+     * @param params     Parameters to append when invoke rest request
+     * @param data       Data to append when invoke rest request
+     * @param successCb  Promise function to be called when the request is successful
+     * @param errorCb    Promise function to be called when the request is failed
      */
     request(
         restKey: keyof TRestConfig,
-        method: THttpMethod = 'get',
+        method: THttpMethod,
         params?: TRecord,
         data?: TRecord,
         successCb?: (response: AxiosResponse) => void,
@@ -437,10 +437,10 @@ export declare interface IAbstractStore extends ObjectBase {
     /**
      * Add a filter to the Store.
      *
-     * @param {string} field                The field name to which the filter will be applied.
-     * @param {string|number|boolean} value The filter value
-     * @param {TFilterOperator} [operator]  Filter operator to be used, valid values: eq, neq, gt, gte,
-     *                                      lt, lte, in, notin, startwith, endwith, contains, fts
+     * @param field     The field name to which the filter will be applied.
+     * @param value     The filter value
+     * @param operator  Filter operator to be used, valid values: `eq`, `neq`, `gt`, `gte`,
+     *                  `lt`, `lte`, `in`, `notin`, `startwith`, `endwith`, `contains`, `fts`
      */
     addFilter(
         field: string,
@@ -451,18 +451,18 @@ export declare interface IAbstractStore extends ObjectBase {
     /**
      * Replace old filters and apply new filters to the Store dataset.
      *
-     * @param {TFilterOption[]|TFilterOption} filters  The filters to apply
-     * @param {boolean} includeDefault                 Include default filters or not
+     * @param filters        The filters to apply
+     * @param includeDefault Include default filters or not
      */
     setFilters(
         filters: TFilterOption[] | TFilterOption,
-        includeDefault = false,
+        includeDefault: boolean,
     ): this;
 
     /**
      * Define the filter logic to be used when filtering the Store’s dataset.
      *
-     * @param {string} logic The filter logic, valid values: 'AND', 'OR'
+     * @param logic The filter logic, valid values: 'AND', 'OR'
      */
     setFilterLogic(logic: unknown): this;
 
@@ -493,17 +493,19 @@ export declare interface IAbstractStore extends ObjectBase {
     /**
      * Finds the first matching item in the local dataset by a specific field value.
      *
-     * @param {string} property    The field name to test
-     * @param {unknown} value        The value to match
-     * @param {number} startIndex  The index to start searching at
+     * @param property    The field name to test
+     * @param value       The value to match
+     * @param startIndex  The index to start searching at
      */
-    find(property: string, value: unknown, startIndex = 0): IBsModel | undefined;
+    find(property: string, value: unknown, startIndex: number): IBsModel | undefined;
 
     /**
      * Finds the first matching item in the local dataset by function's predicate.
      * If the predicate returns `true`, it is considered a match.
      *
-     * @param {Function} predicate  Function `(item: IBsModel, index: number) => item is match`
+     * @param predicate  Function to execute on each value in the array
+     * @returns The item of the first element in the array that satisfies
+     * the provided testing function. Otherwise, `undefined` is returned.
      */
     findBy(
         predicate: (value: IBsModel, index: number) => boolean,
@@ -512,15 +514,15 @@ export declare interface IAbstractStore extends ObjectBase {
     /**
      * Finds the index of the first matching Item in the local dataset by a specific field value.
      *
-     * @param {string} property    The field name to test
-     * @param {unknown} value      The value to match
-     * @param {number} startIndex  The index to start searching at
-     * @returns {number} The index of first match element, otherwise -1
+     * @param property   The field name to test
+     * @param value      The value to match
+     * @param startIndex The index to start searching at
+     * @returns The index of first match element, otherwise -1
      */
     findIndex(
         property: string,
         value: unknown,
-        startIndex = 0
+        startIndex: number
     ): number;
 
     /**
@@ -566,56 +568,56 @@ export declare interface IAbstractStore extends ObjectBase {
     /**
      * Removes the specified item(s) from the internal dataset.
      *
-     * @param {IBsModel[]|IBsModel} items Model instance or array of model instances to be removed
+     * @param items Model instance or array of model instances to be removed
      */
     remove(items: IBsModel[] | IBsModel): void;
 
     /**
      * Removes the model instance(s) at the given index from the internal dataset.
      *
-     * @param {number} index Starting index position
-     * @param {number} count Number of items to delete
+     * @param index Starting index position
+     * @param count Number of items to delete
      */
-    removeAt(index: number, count = 1): void;
+    removeAt(index: number, count: number): void;
 
     /**
      * Set the number of items within a page.
      *
-     * @param {number} value Number of items within a page
+     * @param value Number of items within a page
      */
     setPageSize(value: number): this;
 
     /**
      * Set sorter's criteria collection.
      *
-     * @param {TSortOption[]|TSortOption} sortOptions The sorts method criteria
+     * @param sortOptions The sorts method criteria
      */
     setSorters(sortOptions: TSortOption[] | TSortOption): this;
 
     /**
      * Create an array of FilterOption criteria.
      *
-     * @param {TFilterOption|TFilterOption[]} values  The `FilterOption` objects
+     * @param values  The `FilterOption` objects
      */
     createFilters(values: TFilterOption | TFilterOption[]): TFilterOption[];
 
     /**
      * Create an array of SortOption criteria.
      *
-     * @param {string|string[]|TSortOption|TSortOption[]} values  The field for sorting or `TSortOption` objects
-     * @param {'asc'|'desc'} direction  The sort direction
-     * @param {boolean} replace         Replace existing sort criteria or not
+     * @param values    The field for sorting or `TSortOption` objects
+     * @param direction The sort direction
+     * @param replace   Replace existing sort criteria or not
      */
     createSorters(
         values: string | string[] | TSortOption | TSortOption[],
-        direction: TSortDirection = 'asc',
-        replace = false,
+        direction: TSortDirection,
+        replace: boolean,
     ): TSortOption[];
 
     /**
      * Create new DataModel from the given object.
      *
-     * @param {Object} item The data to convert
+     * @param item The data to convert
      */
     createModel(item: TRecord): IBsModel;
 
@@ -628,7 +630,7 @@ export declare interface IAbstractStore extends ObjectBase {
      * Load data from the remote server or from the given record(s) and
      * replace internal dataset with the new dataset.
      *
-     * @param {never[]|never} [data] The record(s) to be assigned
+     * @param data The record(s) to be assigned
      */
     load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse>;
 
@@ -646,40 +648,40 @@ export declare interface IArrayStore extends IAbstractStore {
     /**
      * Calculate means or average value based on the given field.
      *
-     * @param {string} field The field name of the dataset to calculate
+     * @param field The field name of the dataset to calculate
      */
     aggregateAvg(field: string): number;
 
     /**
      * Count number of items in the internal dataset specified by the given criteria.
      *
-     * @param {string} field The grouping field name criteria
-     * @param {unknown} value  The grouping value criteria
+     * @param field The grouping field name criteria
+     * @param value  The grouping value criteria
      */
     aggregateCountBy(field: string, value: unknown): number;
 
     /**
      * Calculate the SUM or total value based on the given field.
      *
-     * @param {string} field The field name to be used when calculating value
+     * @param field The field name to be used when calculating value
      */
     aggregateSum(field: string): number;
 
     /**
      * Append an item to the internal dataset and sorted if needed.
      *
-     * @param {never} item      Data to append to the Store
-     * @param {boolean} sorted  Sort dataset after appended
+     * @param item    Data to append to the Store
+     * @param sorted  Sort dataset after appended
      */
-    append(item: never, sorted = false): void;
+    append(item: never, sorted: boolean): void;
 
     /**
      * Replace the dataset with new data.
      *
-     * @param {never|never[]} data The new data to be assigned
-     * @param {boolean} silent     Append the data silently and don't trigger data conversion
+     * @param data   The new data to be assigned
+     * @param silent Append the data silently and don't trigger data conversion
      */
-    assignData(data: never[] | never, silent = false): void;
+    assignData(data: never[] | never, silent: boolean): void;
 
     /**
      * Sorts the internal dataset with the given criteria and returns
@@ -695,14 +697,13 @@ export declare interface IArrayStore extends IAbstractStore {
      *  {property: 'name', direction: 'asc'}
      * ]);
      *
-     * @param {string|string[]|TSortOption|TSortOption[]} options  The field for sorting or `TSortOption` objects
-     * @param {'asc'|'desc'} [direction]                           The sort direction
+     * @param options   The field for sorting or `TSortOption` objects
+     * @param direction The sort direction
      */
     sort(
         options: string | string[] | TSortOption | TSortOption[],
-        direction: TSortDirection = 'asc',
+        direction: TSortDirection,
     ): IBsModel[];
-
 }
 
 export declare type TSuccessResponse = {
@@ -739,7 +740,7 @@ export declare interface IBsStore extends IAbstractStore {
     /**
      * Enable or disable data Store server paging.
      *
-     * @param {boolean} value If TRUE then using server paging and FALSE otherwise
+     * @param value If TRUE then using server paging and FALSE otherwise
      */
     set remotePaging(value: boolean);
 
@@ -751,29 +752,29 @@ export declare interface IBsStore extends IAbstractStore {
     /**
      * Enable or disable data Store server sorting.
      *
-     * @param {boolean} value If TRUE then using server sorting and FALSE otherwise
+     * @param value If TRUE then using server sorting and FALSE otherwise
      */
     set remoteSort(value: boolean);
 
     /**
      * Calculate means or average value based on the given field.
      *
-     * @param {string} field The field name of the dataset to calculate
+     * @param field The field name of the dataset to calculate
      */
     aggregateAvg(field: string): number;
 
     /**
      * Count number of items in the internal dataset specified by the given criteria.
      *
-     * @param {string} field  The grouping field name criteria
-     * @param {unknown} value The grouping value criteria
+     * @param field  The grouping field name criteria
+     * @param value The grouping value criteria
      */
     aggregateCountBy(field: string, value: unknown): number;
 
     /**
      * Calculate the SUM or total value based on the given field.
      *
-     * @param {string} field The field name to be used when calculating value
+     * @param field The field name to be used when calculating value
      */
     aggregateSum(field: string): number;
 
@@ -782,7 +783,7 @@ export declare interface IBsStore extends IAbstractStore {
      * remote server whenever possible. The item can be saved to the remote server,
      * if 'restUrl' property contains a 'save' key.
      *
-     * @param {Object} item Data to append to the internal dataset
+     * @param item Data to append to the internal dataset
      */
     append(item: never): void;
 
@@ -790,16 +791,16 @@ export declare interface IBsStore extends IAbstractStore {
      * Replace internal dataset with new data. The proses only affected the internal dataset
      * and nothing is sent to the remote server.
      *
-     * @param {never[]|never} data  The new data to be assigned
-     * @param {boolean} silent      Append the data silently and don't trigger data conversion
+     * @param data   The new data to be assigned
+     * @param silent Append the data silently and don't trigger data conversion
      */
-    assignData(data: never[] | never, silent = false): void;
+    assignData(data: never[] | never, silent: boolean): void;
 
     /**
      * Delete specific item from internal dataset as well as from remote server whenever possible.
      * The item can be deleted from the remote server, if 'restUrl' property contains a 'delete' key.
      *
-     * @param {IBsModel} item Data Model instance to be removed
+     * @param item Data Model instance to be removed
      */
     delete(item: IBsModel): Promise<AxiosResponse | TSuccessResponse>;
 
@@ -808,7 +809,7 @@ export declare interface IBsStore extends IAbstractStore {
      * server whenever possible. The items can be deleted from the remote
      * server, if 'restUrl' property contains a 'delete' key.
      *
-     * @param {BsModel[]} items Collection of data Model instances to be removed
+     * @param items Collection of data Model instances to be removed
      */
     deletes(items: IBsModel[]): Promise<TSuccessResponse>;
 
@@ -816,7 +817,7 @@ export declare interface IBsStore extends IAbstractStore {
      * Fetch single item from the remote server via REST API and
      * replace internal dataset with the one comes from the remote service.
      *
-     * @param {string|number} id The item ID to fetch
+     * @param id The item ID to fetch
      */
     fetch(id: string | number): Promise<AxiosResponse>;
 
@@ -841,11 +842,17 @@ export declare interface IBsStore extends IAbstractStore {
      *  {property: 'name', direction: 'asc'}
      * ]);
      *
-     * @param {string|string[]|TSortOption|TSortOption[]} options  The field for sorting or `TSortOption` objects
-     * @param {'asc'|'desc'} [direction]                           The sort direction
+     * @param options   The field for sorting or `TSortOption` objects
+     * @param direction The sort direction
      */
     sort(
         options: string | string[] | TSortOption | TSortOption[],
-        direction: TSortDirection = 'asc',
+        direction: TSortDirection,
     ): Promise<IBsModel[]>;
 }
+
+export {default as AbstractStore} from './AbstractStore';
+export {default as BsArrayStore} from './BsArrayStore';
+export {default as BsStore} from './BsStore';
+export {default as BsModel} from './BsModel';
+export {default as RestProxyAdapter} from './RestProxyAdapter';

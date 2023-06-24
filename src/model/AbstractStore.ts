@@ -1,6 +1,7 @@
-import type {AxiosError, AxiosInstance, AxiosResponse} from "axios";
-import {orderBy} from "lodash";
-import {reactive, readonly} from "vue";
+import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import { orderBy } from 'lodash';
+import { reactive, readonly } from 'vue';
+import { BsModel, RestProxyAdapter } from '../model';
 import type {
     IAbstractStore,
     IBsModel,
@@ -16,11 +17,9 @@ import type {
     TRestUrlOption,
     TSortDirection,
     TSortOption
-} from "../types";
-import {autoBind} from "../utils/AutoBind";
-import Helper from "../utils/Helper";
-import BsModel from "./BsModel";
-import RestProxyAdapter from "./RestProxyAdapter";
+} from '../types';
+import { autoBind } from '../utils/AutoBind';
+import Helper from '../utils/Helper';
 
 
 /**
@@ -29,11 +28,11 @@ import RestProxyAdapter from "./RestProxyAdapter";
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 23/04/2023 01:11
+ * @since  15/03/2019 modified: 24/06/2023 14:04
  */
 export default class AbstractStore implements IAbstractStore {
     protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
-    protected readonly _proxyErrMsg = "Unable to send request to remote server if REST proxy is not defined.";
+    protected readonly _proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
     protected readonly _emptyDataErrMsg = 'Server returns empty data.';
     protected readonly _parsingDataErrMsg = 'Unable to parse data coming from server.';
     protected _config: TDataStoreConfig;
@@ -47,25 +46,25 @@ export default class AbstractStore implements IAbstractStore {
     /**
      * Check if the given item is a data model or not.
      *
-     * @param {BsModel|Object} item The item to check
-     * @returns {boolean} TRUE if the given item is a data model otherwise FALSE
+     * @param item The item to check
+     * @returns TRUE if the given item is a data model otherwise FALSE
      */
-    static isModel(item: object) {
+    static isModel(item: unknown): item is BsModel {
         return item instanceof BsModel;
     }
 
-    static isCandidateForFilterOption(item: TRecord): boolean {
+    static isCandidateForFilterOption(item: TRecord): item is TFilterOption {
         return Object.keys(item).every(k => ['property', 'value', 'operator'].includes(k));
     }
 
-    static isCandidateForSortOption(item: TRecord): boolean {
+    static isCandidateForSortOption(item: TRecord): item is TSortOption {
         return Object.keys(item).every(k => ['property', 'direction'].includes(k));
     }
 
     /**
      * Class constructor.
      *
-     * @param {TDataStoreConfig} [config]  The configuration properties
+     * @param config  The configuration properties
      */
     constructor(config: TRecord = {}) {
         const initialCfg: TDataStoreConfig = {
@@ -83,8 +82,8 @@ export default class AbstractStore implements IAbstractStore {
         );
 
         this._config = initialCfg;
-        this._filteredItems = [];
-        this._items = [];
+        this._filteredItems = [] as IBsModel[];
+        this._items = [] as IBsModel[];
 
         if (!Helper.isEmpty(initialCfg.filters)) {
             const filters = this.createFilters(initialCfg.filters);
@@ -122,7 +121,7 @@ export default class AbstractStore implements IAbstractStore {
 
     clear() {
         if (Helper.isArray(this._items) && this._items.length > 0) {
-            for (const item of this._items) {
+            for (const item of <IBsModel[]>this._items) {
                 if (AbstractStore.isModel(item)) {
                     item.destroy();
                 }
@@ -257,7 +256,7 @@ export default class AbstractStore implements IAbstractStore {
         this.filters.push(<TFilterOption>{
             'property': field,
             'value': value,
-            'operator': (!Helper.isEmpty(operator) ? operator?.toLowerCase : 'eq')
+            'operator': (Helper.isEmpty(operator) ? 'eq' : operator.toLowerCase())
         });
         this._filteredItems = [];
 
@@ -280,7 +279,7 @@ export default class AbstractStore implements IAbstractStore {
     }
 
     setFilterLogic(logic: unknown): this {
-        if (typeof logic === 'string' && logic.trim() !== '') {
+        if (Helper.isString(logic) && logic.trim() !== '') {
             const trimmed = logic.trim().toUpperCase();
 
             if (trimmed === 'AND' || trimmed === 'OR') {
@@ -425,7 +424,7 @@ export default class AbstractStore implements IAbstractStore {
             for (const item of items) {
                 this.remove(item);
             }
-        } else if (AbstractStore.isModel(items) || this.isCandidateForModel(items)) {
+        } else if (this.isCandidateForModel(items) || AbstractStore.isModel(items)) {
             const idProperty = <string>this._config.idProperty;
             const index = this.findIndex(idProperty, items.get(idProperty));
             (index > -1) && this.removeAt(index);
@@ -436,10 +435,10 @@ export default class AbstractStore implements IAbstractStore {
 
     removeAt(index: number, count = 1): void {
         if (index < 0) {
-            throw Error("Parameter 'index' is out of bound.");
+            throw Error('Parameter \'index\' is out of bound.');
         }
         if (count < 1) {
-            throw Error("Parameter 'count' must be greater than '0'.");
+            throw Error('Parameter \'count\' must be greater than \'0\'.');
         }
 
         const oldLength = this._items.length;
@@ -482,22 +481,22 @@ export default class AbstractStore implements IAbstractStore {
 
         if (Array.isArray(values)) {
             for (const flt of values) {
-                if ((typeof flt === "object") && AbstractStore.isCandidateForFilterOption(flt)) {
+                if (Helper.isObject(flt) && AbstractStore.isCandidateForFilterOption(flt)) {
                     filters.push({
                         'property': flt.property,
                         'value': flt.value,
                         'operator': <TFilterOperator>(
-                            !Helper.isEmpty(flt.operator) ? flt.operator.toLowerCase() : "eq"
+                            Helper.isEmpty(flt.operator) ? 'eq' : flt.operator.toLowerCase()
                         )
                     });
                 }
             }
-        } else if ((typeof values === "object") && AbstractStore.isCandidateForFilterOption(values)) {
+        } else if (Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)) {
             filters.push({
                 'property': values.property,
                 'value': values.value,
                 'operator': <TFilterOperator>(
-                    !Helper.isEmpty(values.operator) ? values.operator.toLowerCase() : "eq"
+                    Helper.isEmpty(values.operator) ? 'eq' : values.operator.toLowerCase()
                 )
             });
         }
@@ -524,18 +523,18 @@ export default class AbstractStore implements IAbstractStore {
 
         if (Array.isArray(values)) {
             for (const fld of values) {
-                if ((typeof fld === "object") && AbstractStore.isCandidateForSortOption(fld)) {
+                if (Helper.isObject(fld) && AbstractStore.isCandidateForSortOption(fld)) {
                     sorters.push(createOption(fld));
-                } else if ((typeof fld === "string") && !Helper.isEmpty(fld)) {
+                } else if (Helper.isString(fld) && !Helper.isEmpty(fld)) {
                     sorters.push({
                         'property': fld,
                         'direction': <TSortDirection>direction.toLowerCase()
                     });
                 }
             }
-        } else if ((typeof values === "object") && AbstractStore.isCandidateForSortOption(values)) {
+        } else if (Helper.isObject(values) && AbstractStore.isCandidateForSortOption(values)) {
             sorters.push(createOption(values));
-        } else if ((typeof values === "string") && !Helper.isEmpty(values)) {
+        } else if (Helper.isString(values) && !Helper.isEmpty(values)) {
             sorters.push({
                 'property': values,
                 'direction': <TSortDirection>direction.toLowerCase()
@@ -619,17 +618,16 @@ export default class AbstractStore implements IAbstractStore {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     load(data?: never[]): Promise<IBsModel[] | AxiosResponse> {
-        throw Error("Not supported yet.");
+        throw Error('Not supported yet.');
     }
 
     /**
      * Append an item to the local dataset.
      *
-     * @param {Object} item    Data to append to the dataset
-     * @param {boolean} force  Force adds even if the data supplied
-     *                         is not suitable for the Data Model
-     * @param {boolean} silent Append data silently and doesn't trigger length counting
-     * @returns {void}
+     * @param item   Data to append to the dataset
+     * @param force  Force adds even if the data supplied
+     *               is not suitable for the Data Model
+     * @param silent Append data silently and doesn't trigger length counting
      */
     protected _append(item: never, force = true, silent = false): void {
         if (this.isCandidateForModel(item)) {
@@ -656,16 +654,15 @@ export default class AbstractStore implements IAbstractStore {
     /**
      * Assign data to the local dataset and replace the old dataset.
      *
-     * @param {Object|Object[]} source  A record or collection of records to be assigned
-     * @param {boolean} [silent]        Append data silently and doesn't trigger data conversion
-     * @returns {void}
+     * @param source  A record or collection of records to be assigned
+     * @param silent  Append data silently and doesn't trigger data conversion
      */
     protected _assignData(source: unknown | unknown[], silent = false): void {
         if (!Array.isArray(source) || !Helper.isObject(source)) {
             this._state.loading = false;
             this._state.hasError = true;
 
-            throw Error("The input 'source' must be an Object or an Array.");
+            throw Error('The input \'source\' must be an Object or an Array.');
         }
 
         this._state.loading = true;
@@ -685,7 +682,7 @@ export default class AbstractStore implements IAbstractStore {
     }
 
     /**
-     * @returns {boolean} TRUE if this data store is not in loading state.
+     * @returns TRUE if this data store is not in loading state.
      */
     protected _checkBeforeLoading(): boolean {
         if (this._state.loading) {
@@ -699,8 +696,7 @@ export default class AbstractStore implements IAbstractStore {
     /**
      * Callback function when error loading the dataset from the remote service.
      *
-     * @param {AxiosError} error The error object
-     * @returns {void}
+     * @param error The error object
      */
     protected _onLoadingFailure(error: AxiosError): void {
         this._state.loading = false;
@@ -710,8 +706,6 @@ export default class AbstractStore implements IAbstractStore {
 
     /**
      * Callback function when success loading the dataset from the remote service.
-     *
-     * @returns {void}
      */
     protected _onLoadingSuccess(): void {
         this._state.loading = false;

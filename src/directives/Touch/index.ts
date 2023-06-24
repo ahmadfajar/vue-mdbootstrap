@@ -155,5 +155,3 @@ export const Touch: Directive = {
     mounted,
     unmounted,
 }
-
-export default Touch;

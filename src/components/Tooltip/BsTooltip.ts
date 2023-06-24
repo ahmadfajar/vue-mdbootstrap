@@ -1,27 +1,27 @@
-import type {ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "vue";
+import type { ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop } from "vue";
 import {
+    Fragment,
+    Teleport,
     computed,
     createCommentVNode,
     defineComponent,
-    Fragment,
     getCurrentInstance,
     h,
     nextTick,
     onBeforeUnmount,
     onMounted,
     ref,
-    Teleport,
     toDisplayString,
     watch,
     withDirectives
 } from "vue";
-import {booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
-import {cssPrefix, useRenderTransition} from "../../mixins/CommonApi";
-import {useAddTooltipListener, useRemoveTooltipListener, useSetTooltipPosition} from "./mixins/tooltipApi";
-import type {TBsTooltip, TPositionType, TRecord, TTooltipOptionProps} from "../../types";
-import resize from "../../directives/Resize";
-import scroll from "../../directives/Scroll";
+import { Resize } from "../../directives/Resize";
+import { Scroll } from "../../directives/Scroll";
+import { cssPrefix, useRenderTransition } from "../../mixins/CommonApi";
+import { booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp } from "../../mixins/CommonProps";
+import type { TBsTooltip, TPositionType, TRecord, TTooltipOptionProps } from "../../types";
 import Helper from "../../utils/Helper";
+import { useAddTooltipListener, useRemoveTooltipListener, useSetTooltipPosition } from "./mixins/tooltipApi";
 
 export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsTooltip",
@@ -48,7 +48,7 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
          */
         "update:show",
     ],
-    setup(props, {slots}) {
+    setup(props, { slots }) {
         const thisProps = props as Readonly<TTooltipOptionProps>;
         const tooltip = ref<Element | null>(null);
         const active = ref<boolean>(false);
@@ -81,8 +81,8 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
         return () =>
             h(Fragment, null, [
                 h(Teleport,
-                    {to: "body"},
-                    useRenderTransition({name: transitionName.value}, [
+                    { to: "body" },
+                    useRenderTransition({ name: transitionName.value }, [
                         isActive.value
                             ? withDirectives(
                                 h("div", {
@@ -91,11 +91,11 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
                                     ref: tooltip,
                                     role: "tooltip"
                                 }, [
-                                    h("div", {class: "tooltip-arrow"}),
-                                    h("div", {class: `${cssPrefix}tooltip-inner`}, toDisplayString(thisProps.content)),
+                                    h("div", { class: "tooltip-arrow" }),
+                                    h("div", { class: `${cssPrefix}tooltip-inner` }, toDisplayString(thisProps.content)),
                                 ]), [
-                                    [resize, setPosition], [scroll, setPosition]
-                                ]
+                                [Resize, setPosition], [Scroll, setPosition]
+                            ]
                             ) : createCommentVNode(" BsTooltip ", true),
                     ])
                 ),

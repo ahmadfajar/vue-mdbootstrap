@@ -1,8 +1,8 @@
-import {meanBy, sumBy} from "lodash";
-import AbstractStore from "./AbstractStore";
-import Helper from "../utils/Helper";
-import type {IArrayStore, IBsModel, TRecord, TSortDirection, TSortOption} from "../types";
-import {AxiosResponse} from "axios";
+import type { AxiosResponse } from 'axios';
+import { meanBy, sumBy } from 'lodash';
+import type { IArrayStore, IBsModel, TRecord, TSortDirection, TSortOption } from '../types';
+import Helper from '../utils/Helper';
+import AbstractStore from './AbstractStore';
 
 
 /**
@@ -25,14 +25,14 @@ import {AxiosResponse} from "axios";
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 28/03/2023 01:55
+ * @since  13/03/2019 modified: 24/06/2023 14:07
  */
 export default class BsArrayStore extends AbstractStore implements IArrayStore {
     /**
      * Class constructor.
      *
-     * @param {unknown[]} [data]  Collection of records to be assigned
-     * @param {TRecord} [config] The configuration properties
+     * @param data   Collection of records to be assigned
+     * @param config The configuration properties
      */
     constructor(data: unknown[], config: TRecord = {}) {
         super(config);
@@ -121,9 +121,9 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
      *  {property: 'name', direction: 'asc'}
      * ]);
      *
-     * @param {string|string[]|TSortOption|TSortOption[]} options  The field for sorting or `TSortOption` objects
-     * @param {'asc'|'desc'} [direction]                           The sort direction
-     * @returns {IBsModel[]} The sorted dataset.
+     * @param options    The field for sorting or `TSortOption` objects
+     * @param direction  The sort direction
+     * @returns The sorted dataset.
      */
     sort(
         options: string | string[] | TSortOption | TSortOption[],

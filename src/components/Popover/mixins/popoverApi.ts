@@ -1,13 +1,13 @@
-import type {ComponentInternalInstance, ComputedRef, ExtractPropTypes, Ref, ShallowRef, Slots, VNode} from "vue";
-import {h, mergeProps, nextTick, Teleport, vShow, withDirectives} from "vue";
-import type {TBsPopover, TPopoverOptionProps, TPopoverPosition, TRecord} from "../../../types";
-import {useRenderTransition} from "../../../mixins/CommonApi";
-import {isChildOf, isSVGElement} from "../../../mixins/DomHelper";
-import {BsOverlay} from "../../Animation";
-import clickOutside from "../../../directives/ClickOutside";
-import resize from "../../../directives/Resize";
-import scroll from "../../../directives/Scroll";
+import type { ComponentInternalInstance, ComputedRef, ExtractPropTypes, Ref, ShallowRef, Slots, VNode } from "vue";
+import { Teleport, h, mergeProps, nextTick, vShow, withDirectives } from "vue";
+import { ClickOutside } from "../../../directives/ClickOutside";
+import { Resize } from "../../../directives/Resize";
+import { Scroll } from "../../../directives/Scroll";
+import { useRenderTransition } from "../../../mixins/CommonApi";
+import { isChildOf, isSVGElement } from "../../../mixins/DomHelper";
+import type { TBsPopover, TPopoverOptionProps, TPopoverPosition, TRecord } from "../../../types";
 import Helper from "../../../utils/Helper";
+import { BsOverlay } from "../../Animation";
 import PopupManager from "./PopupManager";
 
 const SPACE = 8;
@@ -194,7 +194,7 @@ export function useRenderPopover(
         onPopoverClickOutside(thisProps, instance.value, isActive, evt);
     }
 
-    return h(Teleport, {to: "body"}, [
+    return h(Teleport, { to: "body" }, [
         // @ts-ignore
         h(BsOverlay, {
             show: props.overlay && isActive.value,
@@ -206,17 +206,17 @@ export function useRenderPopover(
                 }
             },
         }),
-        useRenderTransition({name: thisProps.transition}, [
+        useRenderTransition({ name: thisProps.transition }, [
             withDirectives(
                 h("div",
-                    mergeProps({class: classNames.value, ref: popover}, attrs),
+                    mergeProps({ class: classNames.value, ref: popover }, attrs),
                     slots.default && slots.default()
                 ), [
-                    [vShow, isActive.value],
-                    [clickOutside, thisOnClickOutside],
-                    [resize, thisSetPosition],
-                    [scroll, thisSetPosition],
-                ]
+                [vShow, isActive.value],
+                [ClickOutside, thisOnClickOutside],
+                [Resize, thisSetPosition],
+                [Scroll, thisSetPosition],
+            ]
             ),
         ])
     ]);

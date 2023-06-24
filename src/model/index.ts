@@ -1,8 +1,8 @@
-import RestProxyAdapter from "./RestProxyAdapter";
-import AbstractStore from "./AbstractStore";
-import BsArrayStore from "./BsArrayStore";
-import BsStore from "./BsStore";
-import BsModel from "./BsModel";
+import AbstractStore from './AbstractStore';
+import BsArrayStore from './BsArrayStore';
+import BsModel from './BsModel';
+import BsStore from './BsStore';
+import RestProxyAdapter from './RestProxyAdapter';
 
 export {
     RestProxyAdapter, AbstractStore,

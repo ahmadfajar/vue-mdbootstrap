@@ -1,8 +1,8 @@
-import type {ComputedRef, Ref, Slots, VNode} from "vue";
-import {getCurrentInstance, h, nextTick, withDirectives} from "vue";
-import {cssPrefix, useFindParentCmp} from "../../../mixins/CommonApi";
-import type {IComponentInstance, TAppbarOptionProps, TAppContainerOptionProps, TRecord, TVueMdb} from "../../../types";
-import Resize from "../../../directives/Resize";
+import type { ComputedRef, Ref, Slots, VNode } from "vue";
+import { getCurrentInstance, h, nextTick, withDirectives } from "vue";
+import { Resize } from "../../../directives/Resize";
+import { cssPrefix, useFindParentCmp } from "../../../mixins/CommonApi";
+import type { IComponentInstance, TAppContainerOptionProps, TAppbarOptionProps, TRecord, TVueMdb } from "../../../types";
 
 export function useAppbarStyles(
     props: Readonly<TAppbarOptionProps>,
@@ -76,7 +76,7 @@ export function useRenderAppbar(
                 class: `${cssPrefix}appbar-content`
             }, slots.default && slots.default()),
         ]), [
-            [Resize, resizeHandler]
-        ]
+        [Resize, resizeHandler]
+    ]
     )
 }

@@ -7,7 +7,7 @@ import {BsSpacer} from "../../Basic";
 import {BsButton} from "../../Button";
 import {BsDropdownMenu} from "../../Menu";
 import {useClosePopover} from "../../Popover/mixins/popoverApi";
-import Touch from "../../../directives/Touch";
+import {Touch} from "../../../directives/Touch";
 import Helper from "../../../utils/Helper";
 
 export function useComputeImgStyle(

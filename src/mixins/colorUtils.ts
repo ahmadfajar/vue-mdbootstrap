@@ -1,4 +1,4 @@
-import {chunk} from "./StringHelper";
+import { chunk } from './StringHelper';
 
 /**
  * Hue, Saturation, Value and Alpha color values.
@@ -35,8 +35,8 @@ export declare type TColor = HSVA & RGBA;
 /**
  * Convert HSLA to HSVA.
  *
- * @param {HSLA} color The HSLA color values.
- * @return {HSVA} The HSVA color values.
+ * @param color The HSLA color values.
+ * @return The HSVA color values.
  */
 export function hslaToHsva(color: HSLA): HSVA {
     const s = (color.s >= 0 && color.s <= 1) ? color.s : color.s / 100;
@@ -56,8 +56,8 @@ export function hslaToHsva(color: HSLA): HSVA {
 /**
  * Convert HSVA to HSLA.
  *
- * @param {HSVA} color The HSV color values.
- * @return {HSLA} The HSL color values.
+ * @param color The HSV color values.
+ * @return The HSL color values.
  */
 export function hsvaToHsla(color: HSVA) {
     const value = color.v / 100;
@@ -79,8 +79,8 @@ export function hsvaToHsla(color: HSVA) {
 /**
  * Convert HSVA to RGBA.
  *
- * @param {HSVA} color The HSVA color values.
- * @return {RGBA} The RGBA color values.
+ * @param color The HSVA color values.
+ * @return The RGBA color values.
  */
 export function hsvaToRgba(color: HSVA) {
     const saturation = color.s / 100;
@@ -109,11 +109,11 @@ export function hsvaToRgba(color: HSVA) {
 /**
  * Convert CSS HEX color format to RGBA color.
  *
- * @param {string} color The css HEX color value.
- * @return {RGBA} The RGBA color values.
+ * @param color The css HEX color value.
+ * @return The RGBA color values.
  */
 export function hexToRgba(color: string): RGBA {
-    const hexColor = color.replace("#", "");
+    const hexColor = color.replace('#', '');
     // console.info('hexColor:', hexColor)
     // const r = parseInt(hexColor.substring(0, 2), 16);
     // const g = parseInt(hexColor.substring(2, 4), 16);
@@ -129,8 +129,8 @@ export function hexToRgba(color: string): RGBA {
 /**
  * Convert RGBA to HSVA.
  *
- * @param {RGBA} color The RGBA color values.
- * @return {HSVA} The HSVA color values.
+ * @param color The RGBA color values.
+ * @return The HSVA color values.
  */
 export function rgbaToHsva(color: RGBA) {
     const red = color.r / 255;
@@ -171,16 +171,16 @@ export function rgbaToHsva(color: RGBA) {
 /**
  * Parse a string to RGBA.
  *
- * @param {CanvasRenderingContext2D} canvasCtx  The canvas rendering context
- * @param {string} source                       String representing a color.
- * @return {RGBA} The RGBA color values.
+ * @param canvasCtx  The canvas rendering context
+ * @param source     String representing a color.
+ * @return The RGBA color values.
  */
 export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: string): RGBA {
     const regex = /^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i;
     let rgba: RGBA = {r: 0, g: 0, b: 0, a: 1};
 
     // Default to black for invalid color strings
-    canvasCtx.fillStyle = "#000";
+    canvasCtx.fillStyle = '#000';
 
     // Use canvas to convert the string to a valid color string
     canvasCtx.fillStyle = source;
@@ -198,7 +198,7 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
         rgba.a = +rgba.a.toFixed(2);
     } else {
         const match1 = canvasCtx.fillStyle
-            .replace("#", "")
+            .replace('#', '')
             .match(/.{2}/g)?.map(h => parseInt(h, 16));
 
         if (match1) {
@@ -217,25 +217,25 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
 /**
  * Convert RGB/RGBA color to CSS HEX color format.
  *
- * @param {object} rgba The RGBA color values.
- * @return {string} CSS Hex color.
+ * @param rgba The RGBA color values.
+ * @return CSS Hex color.
  */
 export function rgbaToHex(rgba: RGBA): string {
     let R = rgba.r.toString(16);
     let G = rgba.g.toString(16);
     let B = rgba.b.toString(16);
-    let A = "";
+    let A = '';
 
     if (rgba.r < 16) {
-        R = "0" + R;
+        R = '0' + R;
     }
 
     if (rgba.g < 16) {
-        G = "0" + G;
+        G = '0' + G;
     }
 
     if (rgba.b < 16) {
-        B = "0" + B;
+        B = '0' + B;
     }
 
     if (rgba.a < 1) {
@@ -243,18 +243,18 @@ export function rgbaToHex(rgba: RGBA): string {
         A = alpha.toString(16);
 
         if (alpha < 16) {
-            A = "0" + A;
+            A = '0' + A;
         }
     }
 
-    return "#" + (R + G + B + A).toUpperCase();
+    return '#' + (R + G + B + A).toUpperCase();
 }
 
 /**
  * Convert RGB/RGBA color to string.
  *
- * @param {RGBA} rgba The RGBA color values.
- * @return {string} CSS color string.
+ * @param rgba The RGBA color values.
+ * @return CSS color string.
  */
 export function rgbaToString(rgba: RGBA): string {
     if (rgba.a < 1) {
@@ -267,8 +267,8 @@ export function rgbaToString(rgba: RGBA): string {
 /**
  * Convert HSL/HSLA color to string.
  *
- * @param {HSLA} hsla  The HSLA color values.
- * @return {string} CSS color string.
+ * @param hsla  The HSLA color values.
+ * @return CSS color string.
  */
 export function hslaToString(hsla: HSLA): string {
     if (hsla.a < 1) {
@@ -281,8 +281,8 @@ export function hslaToString(hsla: HSLA): string {
 /**
  * Get brightness level from RGBA color.
  *
- * @param {RGBA} rgba The RGBA color values.
- * @return {number} The brightness level.
+ * @param rgba The RGBA color values.
+ * @return The brightness level.
  */
 export function brightnessLevel(rgba: RGBA): number {
     return ((rgba.r * 299) + (rgba.g * 587) + (rgba.b * 114)) / 1000;
@@ -294,18 +294,18 @@ export function brightnessLevel(rgba: RGBA): number {
  * Use negative `lightness` value to darken the input color or otherwise
  * to lighten the input color.
  *
- * @param {string|RGBA} color The color to darken/lighten.
- * @param {number} lightness  The lightness level.
- * @return {string} The color result in CSS HEX color format.
+ * @param color      The color to darken/lighten.
+ * @param lightness  The lightness level.
+ * @return The color result in CSS HEX color format.
  */
 export function shadeColor(color: string | RGBA, lightness: number): string {
     let hex;
 
-    if (typeof color === "string" && color.length >= 6) {
-        hex = color.replace("#", "");
-    } else if (typeof color === "object" && Object.keys(color).length > 2 &&
-        Object.keys(color).every(it => ["r", "g", "b", "a"].includes(it))) {
-        hex = rgbaToHex(color).replace("#", "");
+    if (typeof color === 'string' && color.length >= 6) {
+        hex = color.replace('#', '');
+    } else if (typeof color === 'object' && Object.keys(color).length > 2 &&
+        Object.keys(color).every(it => ['r', 'g', 'b', 'a'].includes(it))) {
+        hex = rgbaToHex(color).replace('#', '');
     } else {
         return color.toString();
     }
@@ -320,7 +320,7 @@ export function shadeColor(color: string | RGBA, lightness: number): string {
     let b = ((decimalColor >> 8) & 0x00ff) + lightness;
     b > 255 && (b = 255);
     b < 0 && (b = 0);
-    const str = (g | (b << 8) | (r << 16)).toString(16).padStart(6, "0");
+    const str = (g | (b << 8) | (r << 16)).toString(16).padStart(6, '0');
 
     return `#${str}`;
 }

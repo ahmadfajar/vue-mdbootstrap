@@ -1,9 +1,9 @@
-@import "../../../scss/colors";
-@import "../../../scss/variables";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/placeholder";
 @import "../../../scss/mixins/transition";
-@import "~compass-mixins/lib/compass/css3";
+@import "/node_modules/compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
 @include enterActive-leaveActive("field-feedback") {
     @include transition(0.15s ease);

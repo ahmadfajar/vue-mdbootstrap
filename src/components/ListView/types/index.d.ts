@@ -5,7 +5,7 @@ import type {
     ComputedOptions,
     DefineComponent,
     EmitsOptions
-} from "vue";
+} from 'vue';
 import type {
     ObjectBase,
     TAvatarIconProps,
@@ -13,9 +13,9 @@ import type {
     TRecord,
     TRouterOptionProps,
     TTagProps
-} from "../../../types";
+} from '../../../types';
 
-export declare type TSpaceAround = "left" | "right" | "both";
+export declare type TSpaceAround = 'left' | 'right' | 'both';
 
 export declare type TListViewOptionProps = {
     color?: string;
@@ -247,20 +247,20 @@ export declare interface IListItem extends ObjectBase {
 
     get parent(): IListItem | undefined;
 
-    set parent(value: IListItem | undefined): void;
+    set parent(value: IListItem | undefined);
 
     /**
      * Add or register an item to this ListItem registry.
      *
-     * @param {ListItem} child The item to register.
-     * @returns {number} The registry new size or `-1` if the item already exists.
+     * @param child The item to register.
+     * @returns The registry new size or `-1` if the item already exists.
      */
     addChild(child: IListItem): number;
 
     /**
      * Remove an item from this ListItem registry.
      *
-     * @param {string} id The item identifier.
+     * @param id The item identifier.
      */
     removeChild(id: string): void;
 
@@ -287,13 +287,13 @@ export declare interface IListViewProvider extends ObjectBase {
 
     get activeItem(): IListItem | undefined;
 
-    set activeItem(value: IListItem | undefined): void;
+    set activeItem(value: IListItem | undefined);
 
     /**
      * Add an item to the collection.
      *
-     * @param {ListItem} item The item to add.
-     * @returns {number} The collection new length or `-1` if the item already exists.
+     * @param item The item to add.
+     * @returns The collection new length or `-1` if the item already exists.
      */
     addItem(item: IListItem): number;
 
@@ -302,7 +302,7 @@ export declare interface IListViewProvider extends ObjectBase {
      * that satisfies the provided testing function. If no values satisfy the testing function,
      * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined undefined} is returned.
      */
-    findItem(predicate: (value: IListItem, sources: IListItem[]) => boolean, recursive: boolean = false): IListItem | undefined;
+    findItem(predicate: (value: IListItem, sources: IListItem[]) => boolean, recursive: boolean): IListItem | undefined;
 
     /**
      * Execute an action for each item with the provided callback.
@@ -311,7 +311,7 @@ export declare interface IListViewProvider extends ObjectBase {
      * @param recursive        When `TRUE` the callback will be executed for every child.
      * @param stopImmediately  When `TRUE` if the callback returns a result, function will be stopped immediately.
      */
-    execAction(actionFn: (value: IListItem, sources: IListItem[]) => unknown, recursive: boolean = false, stopImmediately: boolean = false): Promise<void>;
+    execAction(actionFn: (value: IListItem, sources: IListItem[]) => unknown, recursive: boolean, stopImmediately: boolean): Promise<void>;
 
     /**
      * Remove an item from the collection.

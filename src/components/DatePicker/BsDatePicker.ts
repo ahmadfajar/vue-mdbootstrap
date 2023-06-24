@@ -19,10 +19,10 @@ export default defineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions,
         const localValue = ref(useParseDate(thisProps.modelValue).setLocale(locale.value));
         const calendarDate = ref<Date>(localValue.value.toJSDate());
         const currentView = ref<TDateTimePickerMode>(
-            <TDateTimePickerMode | undefined>(thisProps.mode || thisProps.viewMode) || "date"
+            <TDateTimePickerMode>(thisProps.viewMode || thisProps.mode || "date")
         );
         const pickerMode = computed(() =>
-            <TDateTimePickerMode>(thisProps.mode || thisProps.viewMode || DatePickerConst.DATE)
+            <TDateTimePickerMode>(thisProps.viewMode || thisProps.mode || DatePickerConst.DATE)
         );
         const showTime = computed(() =>
             ["datetime", "time"].includes(pickerMode.value)
@@ -35,7 +35,7 @@ export default defineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions,
 
         ensureViewMode();
         watch(
-            () => <TDateTimePickerMode>(thisProps.mode || thisProps.viewMode),
+            () => <TDateTimePickerMode>(thisProps.viewMode || thisProps.mode),
             (value) => {
                 value && (currentView.value = value);
                 ensureViewMode();

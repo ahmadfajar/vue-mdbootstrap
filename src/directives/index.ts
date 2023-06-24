@@ -1,4 +1,4 @@
-export {ClickOutside} from "./ClickOutside";
-export {Resize} from "./Resize";
-export {Scroll} from "./Scroll";
-export {Touch} from "./Touch";
+export { ClickOutside } from "./ClickOutside";
+export { Resize } from "./Resize";
+export { Scroll } from "./Scroll";
+export { Touch } from "./Touch";

@@ -1,7 +1,7 @@
-import type {ComputedRef, Prop, Ref, Slots, VNode} from "vue";
-import {getCurrentInstance, h, nextTick, Teleport, withDirectives} from "vue";
-import {cssPrefix, useFindParentCmp} from "../../../mixins/CommonApi";
-import {BsOverlay} from "../../Animation";
+import type { ComputedRef, Prop, Ref, Slots, VNode } from "vue";
+import { Teleport, getCurrentInstance, h, nextTick, withDirectives } from "vue";
+import { Resize } from "../../../directives/Resize";
+import { cssPrefix, useFindParentCmp } from "../../../mixins/CommonApi";
 import type {
     TAppContainerOptionProps,
     TBsOverlay,
@@ -10,8 +10,8 @@ import type {
     TSideDrawerOptionProps,
     TVueMdb
 } from "../../../types";
-import Resize from "../../../directives/Resize";
 import Helper from "../../../utils/Helper";
+import { BsOverlay } from "../../Animation";
 
 export function useSideDrawerStyles(
     props: Readonly<TSideDrawerOptionProps>,
@@ -106,37 +106,37 @@ export function useRenderSideDrawer(
 ): VNode {
     return withDirectives(
         h(props.tag || "aside", {
-                class: {
-                    [`${cssPrefix}side-drawer`]: true,
-                    [`${cssPrefix}mini`]: props.mini,
-                    [`${cssPrefix}open`]: isOpen.value,
-                    [`${cssPrefix}closed`]: !isOpen.value && !props.mini,
-                    [`bg-${props.color}`]: props.color,
-                    shadow: props.shadow
-                },
-                style: styles.value,
-            }, [
-                h(Teleport, {
-                        to: isMobile.value ? "body" : (appId.value ? `#${appId.value}` : "body")
-                    }, h<TBsOverlay>(BsOverlay, {
-                        color: props.overlayColor as Prop<string | undefined>,
-                        // @ts-ignore
-                        fixed: true as Prop<boolean>,
-                        // @ts-ignore
-                        show: (isMobile.value && isOpen.value) as Prop<boolean>,
-                        zIndex: zIndex as Prop<number>,
-                        onClick: () => {
-                            isOpen.value = false;
-                            emit("update:open", false);
-                        }
-                    })
-                ),
-                h("div", {
-                    class: `${cssPrefix}side-drawer-inner`
-                }, slots.default && slots.default())
-            ]
-        ), [
-            [Resize, resizeHandler]
+            class: {
+                [`${cssPrefix}side-drawer`]: true,
+                [`${cssPrefix}mini`]: props.mini,
+                [`${cssPrefix}open`]: isOpen.value,
+                [`${cssPrefix}closed`]: !isOpen.value && !props.mini,
+                [`bg-${props.color}`]: props.color,
+                shadow: props.shadow
+            },
+            style: styles.value,
+        }, [
+            h(Teleport, {
+                to: isMobile.value ? "body" : (appId.value ? `#${appId.value}` : "body")
+            }, h<TBsOverlay>(BsOverlay, {
+                color: props.overlayColor as Prop<string | undefined>,
+                // @ts-ignore
+                fixed: true as Prop<boolean>,
+                // @ts-ignore
+                show: (isMobile.value && isOpen.value) as Prop<boolean>,
+                zIndex: zIndex as Prop<number>,
+                onClick: () => {
+                    isOpen.value = false;
+                    emit("update:open", false);
+                }
+            })
+            ),
+            h("div", {
+                class: `${cssPrefix}side-drawer-inner`
+            }, slots.default && slots.default())
         ]
+        ), [
+        [Resize, resizeHandler]
+    ]
     )
 }

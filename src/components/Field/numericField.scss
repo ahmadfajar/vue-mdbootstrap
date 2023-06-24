@@ -1,6 +1,6 @@
+@import "/node_modules/compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "~compass-mixins/lib/compass/css3";
 
 .#{$prefix}numeric-field {
     .#{$prefix}field-overlay + .#{$prefix}action-icon {

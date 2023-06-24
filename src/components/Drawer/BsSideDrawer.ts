@@ -1,9 +1,9 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, onMounted, ref, watch} from "vue";
-import {useBreakpointMax} from "../../mixins/CommonApi";
-import {useRenderSideDrawer, useSideDrawerOnMountedHook, useSideDrawerStyles} from "./mixins/sideDrawerApi";
-import {sideDrawerProps} from "./mixins/sideDrawerProps";
-import type {TBsSideDrawer, TRecord, TSideDrawerOptionProps, TVueMdb} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions } from "vue";
+import { computed, defineComponent, onMounted, ref, watch } from "vue";
+import { useBreakpointMax } from "../../mixins/CommonApi";
+import type { TBsSideDrawer, TRecord, TSideDrawerOptionProps, TVueMdb } from "../../types";
+import { useRenderSideDrawer, useSideDrawerOnMountedHook, useSideDrawerStyles } from "./mixins/sideDrawerApi";
+import { sideDrawerProps } from "./mixins/sideDrawerProps";
 
 export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsSideDrawer",
@@ -18,7 +18,7 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
          */
         "update:open",
     ],
-    setup(props, {emit, slots}) {
+    setup(props, { emit, slots }) {
         const cmpProps = props as Readonly<TSideDrawerOptionProps>;
         const zIndex = 1020; // see bootstrap: $zindex-sticky
         const vueMdb = ref<TVueMdb>();

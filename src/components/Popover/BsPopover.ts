@@ -1,9 +1,9 @@
-import type {ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, getCurrentInstance, nextTick, onMounted, ref, shallowRef, watch} from "vue";
-import {popoverProps} from "./mixins/popoverProps";
-import {useRenderPopover, useSetPopoverPosition} from "./mixins/popoverApi";
-import {cssPrefix} from "../../mixins/CommonApi";
-import type {TBsPopover, TPopoverOptionProps, TRecord} from "../../types";
+import type { ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions } from "vue";
+import { computed, defineComponent, getCurrentInstance, nextTick, onMounted, ref, shallowRef, watch } from "vue";
+import { cssPrefix } from "../../mixins/CommonApi";
+import type { TBsPopover, TPopoverOptionProps, TRecord } from "../../types";
+import { useRenderPopover, useSetPopoverPosition } from "./mixins/popoverApi";
+import { popoverProps } from "./mixins/popoverProps";
 
 export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
     name: "BsPopover",
@@ -19,7 +19,7 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
          */
         "close",
     ],
-    setup(props, {slots, attrs}) {
+    setup(props, { slots, attrs }) {
         const thisProps = props as Readonly<TPopoverOptionProps>;
         const isActive = ref<boolean>(<boolean>thisProps.open);
         const actualPlacement = ref<string | undefined>(thisProps.placement);

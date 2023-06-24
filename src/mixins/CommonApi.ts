@@ -1,8 +1,7 @@
-import type {AxiosInstance} from "axios";
-import type {ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNodeArrayChildren} from "vue";
-import {createVNode, Fragment, getCurrentInstance, h, normalizeClass, resolveComponent, Transition} from "vue";
-import type {RouteLocationNormalizedLoaded} from "vue-router";
-import type {IHttpService} from "../utils/AxiosPlugin";
+import type { AxiosInstance } from 'axios';
+import type { ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
+import { createVNode, Fragment, getCurrentInstance, h, normalizeClass, resolveComponent, Transition } from 'vue';
+import type { RouteLocationNormalizedLoaded } from 'vue-router';
 import type {
     INotificationProvider,
     TBreakpoint,
@@ -10,51 +9,53 @@ import type {
     TRouterLinkProps,
     TRouterOptionProps,
     TVueMdb
-} from "../types";
-import Helper from "../utils/Helper";
+} from '../types';
+import type { IHttpService } from '../utils/AxiosPlugin';
+import Helper from '../utils/Helper';
 
 
-export const cssPrefix = "md-";
+export const cssPrefix = 'md-';
 
-export const isServer = typeof window === "undefined";
+export const isServer = typeof window === 'undefined';
 
 /**
  * Generate component's ID.
  *
- * @returns {string} The generated ID
+ * @returns The generated ID
  */
 export function useGenerateId(): string {
-    return "bs-" + Helper.uuid(true);
+    return 'bs-' + Helper.uuid(true);
 }
 
 /**
  * Check whether IE browser is used or not.
  *
- * @returns {boolean} Returns `true` if IE browser is used otherwise `false`.
+ * @returns `true` if IE browser is used otherwise `false`.
  */
 export function useBrowserIE(): boolean {
-    return !isServer && navigator.userAgent.toLowerCase().includes("trident");
+    return !isServer && navigator.userAgent.toLowerCase().includes('trident');
 }
 
 /**
  * Check whether it is using a mobile browser or not.
  *
- * @returns {boolean} Returns `true` if mobile browser is used otherwise `false`.
+ * @returns `true` if mobile browser is used otherwise `false`.
  */
 export function useMobileDevice(): boolean {
     return !isServer && navigator.userAgent.toLowerCase().match(/mobile/i) !== null;
 }
 
 /**
- * Simple function to render a VNode children within a given slot name
- * if the given slot doesn't contain any VNode child.
+ * Simple function to render a VNode with custom slot.
+ * If the custom slot doesn't exist or `undefined` then
+ * render default `children`.
  *
- * @param {Slots} slots                         The given slot
- * @param {string} name                         The slot name
- * @param {Object} props                        Fragment key identifier
- * @param {VNode|VNodeArrayChildren} [children] The VNode children
- * @param {*} [slotArgs] The argument for the given slot
- * @returns {VNode} The Rendered node.
+ * @param slots    The given slot
+ * @param name     The slot name
+ * @param props    Fragment key identifier
+ * @param children The VNode children
+ * @param slotArgs The argument for the given slot
+ * @returns The Rendered node.
  */
 export function useRenderSlot(
     slots: Slots,
@@ -64,26 +65,29 @@ export function useRenderSlot(
     slotArgs?: unknown,
 ): VNode {
     // @ts-ignore
-    const validSlot = slots && slots[name] && (slotArgs ? slots[name](slotArgs) : slots[name]());
+    const validSlot = slots ? slots[name] && slots[name](slotArgs) : undefined;
 
     // @ts-ignore
     return h(Fragment,
         {key: props.key || `_${name}`},
-        validSlot || children || [],
+        validSlot ?? children ?? [],
     );
 }
 
 /**
- * Simple function to render a slot with default VNode children inside a VNode wrapper.
+ * Simple function to render a VNode with custom slot and wrap it
+ * with the given `wrapperTag` and properties.
+ * If the custom slot doesn't exist or `undefined` then
+ * render default `children` inside the `wrapperTag`.
  *
- * @param {Slots} slots                         The given slot
- * @param {string} name                         The slot name
- * @param {string} key                          Fragment key identifier
- * @param {Object} wrapperProps                 The VNode wrapper properties
- * @param {VNode|VNodeArrayChildren} [children] The VNode children
- * @param {string} wrapperTag                   The VNode wrapper html Tag name
- * @param {*} [slotArgs]                        The argument for the given slot
- * @returns {VNode} The Rendered node.
+ * @param slots        The given slot
+ * @param name         The slot name
+ * @param key          Fragment key identifier
+ * @param wrapperProps The VNode wrapper properties
+ * @param children     The VNode children
+ * @param wrapperTag   Valid html tag name
+ * @param slotArgs     The argument for the given slot
+ * @returns The Rendered node.
  */
 export function useRenderSlotWithWrapper(
     slots: Slots,
@@ -97,7 +101,7 @@ export function useRenderSlotWithWrapper(
     if (slots && slots[name]) {
         return h(wrapperTag, wrapperProps,
             // @ts-ignore
-            slots[name] && (slotArgs ? slots[name](slotArgs) : slots[name]())
+            slots[name] && slots[name](slotArgs)
         );
     } else {
         return useRenderSlot(
@@ -109,15 +113,16 @@ export function useRenderSlotWithWrapper(
 }
 
 /**
- * Simple function to render a slot with the given condition.
+ * Simple function to render a VNode with custom slot and wrap it
+ * with the given `wrapTag` and properties only if the `condition` is match.
  *
- * @param {Slots} slots        The given slot
- * @param {string} name        The slot name
- * @param {boolean} condition  The given condition
- * @param {Object} wrapProps   The VNode wrapper properties
- * @param {string} [wrapTag]   The VNode wrapper html Tag name
- * @param {*} [slotArgs] The argument for the given slot
- * @returns {VNode} The Rendered node.
+ * @param slots      The given slot
+ * @param name       The slot name
+ * @param condition  The given condition
+ * @param wrapProps  The VNode wrapper properties
+ * @param wrapTag    Valid html tag name
+ * @param slotArgs   The argument for the given slot
+ * @returns The Rendered node.
  */
 export function useRenderSlotWrapperWithCondition(
     slots: Slots,
@@ -129,13 +134,21 @@ export function useRenderSlotWrapperWithCondition(
 ): VNode | undefined {
     return condition
         ? h(
-            wrapTag || 'div', wrapProps,
+            wrapTag ?? 'div', wrapProps,
             // @ts-ignore
-            slots[name] && (slotArgs ? slots[name](slotArgs) : slots[name]())
+            slots ? slots[name] && slots[name](slotArgs) : undefined
         )
         : undefined;
 }
 
+/**
+ * Simple function to render an HTML tag as VNode and apply custom slot to them.
+ *
+ * @param tag      Valid HTML tag name
+ * @param slots    The given slot
+ * @param classes  Custom css classes to apply
+ * @param styles   Custom inline stylesheet to apply
+ */
 export function useSimpleRenderWithSlots(
     tag: string,
     slots?: Slots,
@@ -151,9 +164,9 @@ export function useSimpleRenderWithSlots(
 /**
  * Simple function to render a Transition VNode.
  *
- * @param {TransitionProps} props               The transition properties
- * @param {VNode|VNodeArrayChildren} children   The child nodes
- * @returns {VNode} The Rendered node.
+ * @param props    The transition properties
+ * @param children The child nodes
+ * @returns The Rendered node.
  */
 export function useRenderTransition(
     props: Readonly<TransitionProps> = {},
@@ -167,15 +180,15 @@ export function useRenderTransition(
 /**
  * Simple function to render a RouterLink VNode.
  *
- * @param {TRouterLinkProps} props            The RouterLink's component properties
- * @param {VNode|VNodeArrayChildren} children The child nodes
- * @returns {VNode} The Rendered node.
+ * @param props    The RouterLink's component properties
+ * @param children The child nodes
+ * @returns The Rendered node.
  */
 export function useRenderRouter(
     props: Readonly<TRouterLinkProps>,
     children: VNode | VNodeArrayChildren,
 ): VNode {
-    const routerLinkCmp = resolveComponent("RouterLink");
+    const routerLinkCmp = resolveComponent('RouterLink');
     return createVNode(routerLinkCmp, props, {
         default: () => children
     });
@@ -184,12 +197,12 @@ export function useRenderRouter(
 /**
  * Check if component instance has a `$router` and `path` property has been defined.
  *
- * @param {TRouterOptionProps} props The component properties.
- * @returns {boolean} TRUE when Router property
+ * @param props The component properties.
+ * @returns TRUE when Router property
  */
 export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
     const vm = getCurrentInstance();
-    return vm !== null && !Helper.isEmpty(props.path) &&
+    return vm != null && !Helper.isEmpty(props.path) &&
         ((vm.appContext.config.globalProperties.$router !== null) ||
             (vm.appContext.config.globalProperties.$route !== null));
 }
@@ -197,8 +210,8 @@ export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
 /**
  * Check if component instance has `url` property been defined.
  *
- * @param {TRouterOptionProps} props The component properties.
- * @returns {boolean} TRUE when `url` property has been defined and doesn't have Router.
+ * @param props The component properties.
+ * @returns TRUE when `url` property has been defined and doesn't have Router.
  */
 export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
     return !useHasRouter(props) && !Helper.isEmpty(props.url);
@@ -207,11 +220,11 @@ export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
 /**
  * Get current active route if exists.
  *
- * @returns {Ref<RouteLocationNormalizedLoaded>} The current route location.
+ * @returns The current route location.
  */
 export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefined {
     const vm = getCurrentInstance();
-    if (vm !== null) {
+    if (vm != null) {
         return vm.appContext.config.globalProperties.$router?.currentRoute;
     }
 
@@ -222,19 +235,19 @@ export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefine
  * Simple function to detect whether a device's screen is within allowable
  * maximum screen resolution.
  *
- * @param {TBreakpoint|number} breakpoint Allowable maximum screen resolution.
- * @returns {boolean} TRUE when the screen resolution is within allowable resolution.
+ * @param breakpoint Allowable maximum screen resolution.
+ * @returns TRUE when the screen resolution is within allowable resolution.
  */
 export function useBreakpointMax(breakpoint: TBreakpoint | number): boolean {
     switch (breakpoint) {
-        case "sm":
-            return window.matchMedia("(max-width: 767.98px)").matches;
-        case "md":
-            return window.matchMedia("(max-width: 991.98px)").matches;
-        case "lg":
-            return window.matchMedia("(max-width: 1199.98px)").matches;
-        case "xl":
-            return window.matchMedia("(max-width: 1399.98px)").matches;
+        case 'sm':
+            return window.matchMedia('(max-width: 767.98px)').matches;
+        case 'md':
+            return window.matchMedia('(max-width: 991.98px)').matches;
+        case 'lg':
+            return window.matchMedia('(max-width: 1199.98px)').matches;
+        case 'xl':
+            return window.matchMedia('(max-width: 1399.98px)').matches;
         default:
             if (Helper.isNumber(breakpoint)) {
                 return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
@@ -247,24 +260,24 @@ export function useBreakpointMax(breakpoint: TBreakpoint | number): boolean {
  * Simple function to detect whether a device's screen is within allowable
  * minimum screen resolution.
  *
- * @param {TBreakpoint|number} breakpoint Allowable minimum screen resolution.
- * @returns {boolean} TRUE when the screen resolution is within allowable resolution.
+ * @param breakpoint Allowable minimum screen resolution.
+ * @returns TRUE when the screen resolution is within allowable resolution.
  */
 export function useBreakpointMin(breakpoint: TBreakpoint | number): boolean {
     switch (breakpoint) {
-        case "sm":
-            return window.matchMedia("(min-width: 576px)").matches;
-        case "md":
-            return window.matchMedia("(min-width: 768px)").matches;
-        case "lg":
-            return window.matchMedia("(min-width: 992px)").matches;
-        case "xl":
+        case 'sm':
+            return window.matchMedia('(min-width: 576px)').matches;
+        case 'md':
+            return window.matchMedia('(min-width: 768px)').matches;
+        case 'lg':
+            return window.matchMedia('(min-width: 992px)').matches;
+        case 'xl':
         default:
             if (Helper.isNumber(breakpoint)) {
                 return window.matchMedia(`(min-width: ${breakpoint}px)`).matches;
             }
 
-            return window.matchMedia("(min-width: 1200px)").matches;
+            return window.matchMedia('(min-width: 1200px)').matches;
     }
 }
 
@@ -298,6 +311,11 @@ export function useFindParentCmp(
     return null;
 }
 
+/**
+ * Merge one or more css classes.
+ *
+ * @param args The css classes to be merged.
+ */
 export function useMergeClass(...args: (string | string[])[]): string[] {
     let result: string[] = [];
 
@@ -320,11 +338,11 @@ export function useMergeClass(...args: (string | string[])[]): string[] {
  * Retrieve axios plugin instance. Must be called within component and after
  * it instantiate. For example, called within `onMounted` event.
  *
- * @returns {AxiosInstance} Axios instance when the component instance is resolved.
+ * @returns Axios instance when the component instance is resolved.
  */
 export function useAxiosPlugin(): AxiosInstance | undefined {
     const vm = getCurrentInstance();
-    if (vm !== null) {
+    if (vm != null) {
         return vm.appContext.config.globalProperties.$axios;
     }
 
@@ -335,11 +353,11 @@ export function useAxiosPlugin(): AxiosInstance | undefined {
  * Retrieve HTTP service plugin instance. Must be called within component and after
  * it instantiate. For example, called within `onMounted` event.
  *
- * @returns {IHttpService} Axios instance when the component instance is resolved.
+ * @returns Axios instance when the component instance is resolved.
  */
 export function useHttpService(): IHttpService | undefined {
     const vm = getCurrentInstance();
-    if (vm !== null) {
+    if (vm != null) {
         return vm.appContext.config.globalProperties.$http;
     }
 
@@ -349,11 +367,11 @@ export function useHttpService(): IHttpService | undefined {
 /**
  * Shortcut to retrieve the VueMdb plugin instance.
  *
- * @returns {TVueMdb} The VueMdb plugin instance.
+ * @returns The VueMdb plugin instance.
  */
 export function useVueMdbService(): TVueMdb | undefined {
     const vm = getCurrentInstance();
-    if (vm !== null) {
+    if (vm != null) {
         return vm.appContext.config.globalProperties.$VueMdb;
     }
 
@@ -363,11 +381,11 @@ export function useVueMdbService(): TVueMdb | undefined {
 /**
  * Shortcut to retrieve NotificationProvider instance.
  *
- * @returns {INotificationProvider | undefined}  The notification provider instance.
+ * @returns The notification provider instance.
  */
 export function useVueMdbNotification(): INotificationProvider | undefined {
     const vm = getCurrentInstance();
-    if (vm !== null) {
+    if (vm != null) {
         return vm.appContext.config.globalProperties.$VueMdb.notification;
     }
 

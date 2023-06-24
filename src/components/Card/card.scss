@@ -1,9 +1,9 @@
+@import "/node_modules/compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "~compass-mixins/lib/compass/css3";
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins/breakpoints";
+@import "/node_modules/bootstrap/scss/functions";
+@import "/node_modules/bootstrap/scss/variables";
+@import "/node_modules/bootstrap/scss/mixins/breakpoints";
 
 .card {
     --#{$bs-prefix}card-border-radius: 0.75rem;

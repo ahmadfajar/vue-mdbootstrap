@@ -1,4 +1,4 @@
-import type {Prop, PropType} from "vue";
+import type { Prop, PropType } from "vue";
 import {
     booleanProp,
     booleanTrueProp,
@@ -8,11 +8,11 @@ import {
     stringProp,
     whiteColorProp
 } from "../../../mixins/CommonProps";
-import {inputProps, textFieldProps} from "../../Field/mixins/fieldProps";
-import {validationProps} from "../../Field/mixins/validationProps";
-import {popoverDefaultTransitionProp, popoverPlacementProp} from "../../Popover/mixins/popoverProps";
-import type {TDateTimePickerMode} from "../types";
-import {DatePickerConst} from "./datePickerApi";
+import { inputProps, textFieldProps } from "../../Field/mixins/fieldProps";
+import { validationProps } from "../../Field/mixins/validationProps";
+import { popoverDefaultTransitionProp, popoverPlacementProp } from "../../Popover/mixins/popoverProps";
+import type { TDateTimePickerMode } from "../types";
+import { DatePickerConst } from "./datePickerApi";
 
 const pickerModeProp = {
     type: String as PropType<TDateTimePickerMode>,
@@ -70,7 +70,7 @@ export const datePickerProps = {
     readonly: booleanProp,
     locale: stringProp,
     mode: pickerModeProp,
-    viewMode: pickerModeProp,
+    viewMode: stringProp as Prop<TDateTimePickerMode>,
     modelValue: {
         type: [String, Number, Date],
         default: undefined

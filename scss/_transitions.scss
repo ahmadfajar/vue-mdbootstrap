@@ -1,8 +1,8 @@
+@import "/node_modules/compass-mixins/lib/compass/css3";
+@import "/node_modules/compass-mixins/lib/animation/core";
+@import "mixins/transition";
 @import "colors";
 @import "variables";
-@import "mixins/transition";
-@import "~compass-mixins/lib/compass/css3";
-@import "~compass-mixins/lib/animation/core";
 
 /* VueJs transition animation */
 @include enterActive-leaveActive("fade") {

@@ -1,8 +1,8 @@
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@import "/node_modules/compass-mixins/lib/compass/css3";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/switch";
-@import "~compass-mixins/lib/compass/css3";
+@import "../../../scss/colors";
+@import "../../../scss/variables";
 
 .#{$prefix}switch {
     --#{$prefix}switch-margin: #{$switch-margin};

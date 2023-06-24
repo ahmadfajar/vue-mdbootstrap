@@ -1,41 +1,49 @@
-import type {AllowedComponentProps, ComponentInternalInstance, ComponentPublicInstance, VNode, VNodeProps} from "vue";
-import type {RouterLinkProps} from "vue-router";
-import type ResizeObserver from "resize-observer-polyfill";
-import {INotificationProvider} from "../components/Notification/types";
+import type ResizeObserver from 'resize-observer-polyfill';
+import type {
+    AllowedComponentProps,
+    App,
+    Component,
+    ComponentInternalInstance,
+    ComponentPublicInstance,
+    VNode,
+    VNodeProps
+} from 'vue';
+import type { RouterLinkProps } from 'vue-router';
+import type { INotificationProvider } from '../components/Notification/types';
 
-export * from "../components/Alert/types";
-export * from "../components/Animation/types";
-export * from "../components/Appbar/types";
-export * from "../components/Avatar/types";
-export * from "../components/Badge/types";
-export * from "../components/Basic/types";
-export * from "../components/Button/types";
-export * from "../components/Card/types";
-export * from "../components/Checkbox/types";
-export * from "../components/Chip/types";
-export * from "../components/ColorPicker/types";
-export * from "../components/Combobox/types";
-export * from "../components/Container/types";
-export * from "../components/DatePicker/types";
-export * from "../components/Drawer/types";
-export * from "../components/Field/types";
-export * from "../components/Icon/types";
-export * from "../components/Listbox/types";
-export * from "../components/ListView/types";
-export * from "../components/Menu/types";
-export * from "../components/Popover/types";
-export * from "../components/Progress/types";
-export * from "../components/Radio/types";
-export * from "../components/Switch/types";
-export * from "../components/Tabs/types";
-export * from "../components/Tooltip/types";
-export * from "../components/Modal/types";
-export * from "../components/Notification/types";
-export * from "../model/types";
+export * from '../components/Alert/types';
+export * from '../components/Animation/types';
+export * from '../components/Appbar/types';
+export * from '../components/Avatar/types';
+export * from '../components/Badge/types';
+export * from '../components/Basic/types';
+export * from '../components/Button/types';
+export * from '../components/Card/types';
+export * from '../components/Checkbox/types';
+export * from '../components/Chip/types';
+export * from '../components/ColorPicker/types';
+export * from '../components/Combobox/types';
+export * from '../components/Container/types';
+export * from '../components/DatePicker/types';
+export * from '../components/Drawer/types';
+export * from '../components/Field/types';
+export * from '../components/Icon/types';
+export * from '../components/Listbox/types';
+export * from '../components/ListView/types';
+export * from '../components/Menu/types';
+export * from '../components/Popover/types';
+export * from '../components/Progress/types';
+export * from '../components/Radio/types';
+export * from '../components/Switch/types';
+export * from '../components/Tabs/types';
+export * from '../components/Tooltip/types';
+export * from '../components/Modal/types';
+export * from '../components/Notification/types';
+export * from '../directives/types';
 
-export declare type TBreakpoint = "sm" | "md" | "lg" | "xl";
+export declare type TBreakpoint = 'sm' | 'md' | 'lg' | 'xl';
 
-export declare type TLabelPosition = "left" | "right";
+export declare type TLabelPosition = 'left' | 'right';
 
 export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
 
@@ -126,3 +134,23 @@ export declare interface IVNode extends VNode {
 export declare interface IComponentInstance extends ComponentInternalInstance {
     ctx: ComponentPublicInstance;
 }
+
+/**
+ * Create Vue application then registers all VueMDB components and directives.
+ *
+ * @param rootComponent Root of component instance
+ */
+export declare function createVueMdb(rootComponent: Component): App;
+
+export { IHttpService, AxiosPlugin } from '../utils/types/AxiosPlugin';
+export { default as Helper} from '../utils/types/Helper';
+export * from '../model/types';
+export * as Color from '../mixins/types/colorUtils';
+export * as StringHelper from '../mixins/types/StringHelper';
+
+export {
+    useMobileDevice, useBreakpointMax, useBreakpointMin, useAxiosPlugin,
+    useHttpService, useVueMdbService, useVueMdbNotification, useCurrentRoute,
+    useMergeClass, useRenderSlot, useSimpleRenderWithSlots, useRenderSlotWithWrapper,
+    useRenderSlotWrapperWithCondition, useRenderTransition, useGenerateId
+} from '../mixins/types/CommonApi';

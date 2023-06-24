@@ -1,8 +1,8 @@
-@import "functions";
+@import "/node_modules/compass-mixins/lib/compass/css3";
+
 @import "colors";
 @import "variables";
-@import "~compass-mixins/lib/compass/css3";
-
+@import "functions";
 @import "utilities/color_variants";
 @import "utilities/shadows";
 @import "utilities/others";

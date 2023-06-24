@@ -1,5 +1,5 @@
-import type {AxiosError, AxiosHeaders, AxiosInstance, AxiosRequestConfig, AxiosResponse} from "axios";
-import {reactive, readonly} from "vue";
+import type { AxiosError, AxiosHeaders, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { reactive, readonly } from 'vue';
 import type {
     IBsModel,
     IRestAdapter,
@@ -11,10 +11,10 @@ import type {
     TRestConfig,
     TRestMethodOptions,
     TUrlOption
-} from "../types";
-import {autoBind} from "../utils/AutoBind";
-import Helper from "../utils/Helper";
-import RestProxyAdapter from "./RestProxyAdapter";
+} from '../types';
+import { autoBind } from '../utils/AutoBind';
+import Helper from '../utils/Helper';
+import RestProxyAdapter from './RestProxyAdapter';
 
 
 /**
@@ -56,7 +56,7 @@ import RestProxyAdapter from "./RestProxyAdapter";
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 27/03/2023 23:48
+ * @since  09/07/2018 modified: 24/06/2023 14:21
  */
 export default class BsModel implements IBsModel {
     /**
@@ -67,7 +67,7 @@ export default class BsModel implements IBsModel {
      * @returns {void}
      */
 
-    private readonly _proxyErrMsg = "Unable to send request to remote server if REST proxy is not defined.";
+    private readonly _proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
     private readonly _assignErrMsg = `The given field does not exists in this ${this.$_class}.`;
     private readonly _assignValuesErrMsg = `The given values can not be assigned to ${this.$_class}.`;
     private readonly _frozenObjErrMsg = `This ${this.$_class} is frozen to prevent any modification.`;
@@ -88,10 +88,10 @@ export default class BsModel implements IBsModel {
     /**
      * Class constructor.
      *
-     * @param {TRecord|TModelOptions} schema  The data model schema
-     * @param {AxiosInstance} [adapter]       Axios adapter instance
-     * @param {string} [idProperty]           Data model ID field name
-     * @param {string} [dataProperty]         REST response data property
+     * @param schema       The data model schema
+     * @param adapter      Axios adapter instance
+     * @param idProperty   Data model ID field name
+     * @param dataProperty REST response data property
      */
     constructor(
         schema: TRecord | TModelOptions,
@@ -355,7 +355,7 @@ export default class BsModel implements IBsModel {
     ): Promise<AxiosResponse> {
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
-        let url = this.restUrl[restKey] || '';
+        let url = this.restUrl[restKey] ?? '';
         const config: AxiosRequestConfig = {};
         const parameters: TRecord = {};
 
@@ -392,7 +392,7 @@ export default class BsModel implements IBsModel {
                     : this._checkBeforeLoading
             ),
             (
-                typeof successCb === "function"
+                Helper.isFunction(successCb)
                     ? successCb
                     : (
                         ['post', 'put', 'patch'].includes(config['method'])
@@ -401,7 +401,7 @@ export default class BsModel implements IBsModel {
                     )
             ),
             (
-                typeof errorCb === "function"
+                Helper.isFunction(errorCb)
                     ? errorCb
                     : (
                         ['post', 'put', 'patch'].includes(config['method'])
@@ -432,7 +432,7 @@ export default class BsModel implements IBsModel {
 
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
-        const url = this.restUrl.save || '';
+        const url = this.restUrl.save ?? '';
         const data = this.toJSON();
         const methods = this.proxy.requestMethods();
         const identifier = data[this.getIdProperty()];
@@ -477,7 +477,7 @@ export default class BsModel implements IBsModel {
 
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
-        const url = this.restUrl.update || '';
+        const url = this.restUrl.update ?? '';
         const data = this.toJSON();
         const methods = this.proxy.requestMethods();
         const identifier = data[this.getIdProperty()];
@@ -504,8 +504,7 @@ export default class BsModel implements IBsModel {
     /**
      * Assign data from the remote source to this model.
      *
-     * @param {AxiosResponse} response A response object
-     * @returns {void}
+     * @param response A response object
      */
     private _assignFromResponse(response: AxiosResponse) {
         const _data = <never>response.data;
@@ -539,7 +538,7 @@ export default class BsModel implements IBsModel {
     }
 
     /**
-     * @returns {boolean} TRUE if this data model is not in delete state.
+     * @returns TRUE if this data model is not in delete state.
      */
     private _checkBeforeDelete(): boolean {
         if (this.deleting) {
@@ -551,7 +550,7 @@ export default class BsModel implements IBsModel {
     }
 
     /**
-     * @returns {boolean} TRUE if this data model is not in loading state.
+     * @returns TRUE if this data model is not in loading state.
      */
     private _checkBeforeLoading(): boolean {
         this._state.loading = true;
@@ -559,7 +558,7 @@ export default class BsModel implements IBsModel {
     }
 
     /**
-     * @returns {boolean} TRUE if this data model is not in the process of
+     * @returns TRUE if this data model is not in the process of
      * saving its data to the remote source
      */
     private _checkBeforeSave(): boolean {
@@ -574,8 +573,7 @@ export default class BsModel implements IBsModel {
     /**
      * A callback when delete request is failed.
      *
-     * @param {Object} error The error object
-     * @returns {void}
+     * @param error The error object
      */
     private _onDeleteFailure(error: AxiosError): void {
         this._state.deleting = false;
@@ -585,8 +583,6 @@ export default class BsModel implements IBsModel {
 
     /**
      * A callback when delete request is successful.
-     *
-     * @returns {void}
      */
     private _onDeleteSuccess(): void {
         this.reset();
@@ -597,8 +593,7 @@ export default class BsModel implements IBsModel {
     /**
      * A callback when remote data is failed to load.
      *
-     * @param {AxiosError} error The error object
-     * @returns {void}
+     * @param error The error object
      */
     private _onLoadingFailure(error: AxiosError): void {
         this._state.loading = false;
@@ -609,9 +604,7 @@ export default class BsModel implements IBsModel {
     /**
      * A callback when remote data is successfully loaded.
      *
-     * @param {AxiosResponse} response A response object
-     * @returns {void}
-     * @private
+     * @param response A response object
      */
     private _onLoadingSuccess(response: AxiosResponse): void {
         this._assignFromResponse(response);
@@ -622,8 +615,7 @@ export default class BsModel implements IBsModel {
     /**
      * A callback when saving data to the remote source is failed.
      *
-     * @param {AxiosError} error The error object
-     * @returns {void}
+     * @param error The error object
      */
     private _onSaveFailure(error: AxiosError): void {
         this._state.updating = false;
@@ -634,8 +626,7 @@ export default class BsModel implements IBsModel {
     /**
      * A callback when data is successfully saved to the remote source.
      *
-     * @param {AxiosResponse} response A response object
-     * @returns {void}
+     * @param response A response object
      */
     private _onSaveSuccess(response: AxiosResponse): void {
         this._assignFromResponse(response);
@@ -646,12 +637,12 @@ export default class BsModel implements IBsModel {
     /**
      * Make http request and inject CSRF Token to the headers.
      *
-     * @param {AxiosRequestConfig} config   Request configuration
-     * @param {Function} onRequest          Callback function before the request is made
-     * @param {Function} onSuccess          Callback function when the request was successful
-     * @param {Function} onFailure          Callback when the request failed
-     * @param {string} suffix               Suffix to be appended to the token-name
-     * @returns {Promise<*>}  Promise interface
+     * @param config     Request configuration
+     * @param onRequest  Callback function before the request is made
+     * @param onSuccess  Callback function when the request was successful
+     * @param onFailure  Callback when the request failed
+     * @param suffix     Suffix to be appended to the token-name
+     * @returns Promise interface
      */
     private async _requestWithToken(
         config: AxiosRequestConfig,
@@ -693,11 +684,10 @@ export default class BsModel implements IBsModel {
     /**
      * Update request configuration.
      *
-     * @param {AxiosRequestConfig} config   Request configuration to be updated
-     * @param {never} identifier            The value to be included in the configuration
-     * @param {string} url                  API URL
-     * @param {string} method               Request method: delete, fetch, save, update
-     * @returns {void}
+     * @param config      Request configuration to be updated
+     * @param identifier  The value to be included in the configuration
+     * @param url         API URL
+     * @param method      Request method: delete, fetch, save, update
      */
     private _updateRequestConfig(
         config: AxiosRequestConfig,

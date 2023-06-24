@@ -1,6 +1,8 @@
-import type {ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode} from "vue";
-import {createCommentVNode, Fragment, h, nextTick, toDisplayString, withDirectives} from "vue";
-import {kebabCase} from "lodash";
+import { kebabCase } from "lodash";
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode } from "vue";
+import { Fragment, createCommentVNode, h, nextTick, toDisplayString, withDirectives } from "vue";
+import { ClickOutside } from "../../../directives/ClickOutside";
+import { cssPrefix, useRenderSlot } from "../../../mixins/CommonApi";
 import type {
     IBsModel,
     TBsCombobox,
@@ -10,21 +12,19 @@ import type {
     TIconVariant,
     TRecord
 } from "../../../types";
-import {cssPrefix, useRenderSlot} from "../../../mixins/CommonApi";
+import Helper from "../../../utils/Helper";
+import { BsChip } from "../../Chip";
 import {
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
     useMakeInputBaseAttrs
 } from "../../Field/mixins/textFieldApi";
-import {useOnTextFieldNodeMounted} from "../../Field/mixins/textFieldEventApi";
-import {useRenderFieldFeedback} from "../../Field/mixins/validationApi";
-import {BsChip} from "../../Chip";
-import {BsIcon} from "../../Icon";
-import {BsPopover} from "../../Popover";
-import {BsListbox} from "../../Listbox";
-import {BsListTileTitle} from "../../ListView";
-import clickOutside from "../../../directives/ClickOutside";
-import Helper from "../../../utils/Helper";
+import { useOnTextFieldNodeMounted } from "../../Field/mixins/textFieldEventApi";
+import { useRenderFieldFeedback } from "../../Field/mixins/validationApi";
+import { BsIcon } from "../../Icon";
+import { BsListTileTitle } from "../../ListView";
+import { BsListbox } from "../../Listbox";
+import { BsPopover } from "../../Popover";
 
 function createActionAppendIcons(
     showClearButton: boolean,
@@ -98,7 +98,7 @@ function createChipsOrCsv(
         ));
     } else {
         const text = selectedItems.value.map(it => it.get(schema.displayField));
-        return h("span", {class: `${cssPrefix}field-value`}, toDisplayString(text.join(", ")));
+        return h("span", { class: `${cssPrefix}field-value` }, toDisplayString(text.join(", ")));
     }
 }
 
@@ -114,10 +114,10 @@ function renderComboboxFieldInput(
 
     return [
         (showPlaceholder
-                ? h("span", {
-                    class: `${cssPrefix}field-placeholder`
-                }, toDisplayString(thisProps.placeholder))
-                : createCommentVNode(" v-if-placeholder ")
+            ? h("span", {
+                class: `${cssPrefix}field-placeholder`
+            }, toDisplayString(thisProps.placeholder))
+            : createCommentVNode(" v-if-placeholder ")
         ),
         createChipsOrCsv(props, dataSchema, selectedItems),
         h("select", {
@@ -323,22 +323,22 @@ export function useRenderCombobox(
                         }
                     }, {
                         optionItem: (args: TDataItem) => useRenderSlot(
-                            slots, "optionItem", {key: "list-tile-content"},
+                            slots, "optionItem", { key: "list-tile-content" },
                             h(BsListTileTitle, null, {
                                 default: () => toDisplayString(args.item.get(schema.displayField))
                             }),
-                            {item: args.item, index: args.index},
+                            { item: args.item, index: args.index },
                         ),
                         emptyDataMsg: () => useRenderSlot(
                             slots, "emptyDataMsg",
-                            {key: "emptyDataMessage"},
+                            { key: "emptyDataMessage" },
                             h(BsListTileTitle, null, {
                                 default: () => toDisplayString(props.emptyDataMessage)
                             })
                         ),
                         notFoundMsg: () => useRenderSlot(
                             slots, "notFoundMsg",
-                            {key: "notFoundMessage"},
+                            { key: "notFoundMessage" },
                             h(BsListTileTitle, null, {
                                 default: () => toDisplayString(thisProps.notFoundMessage)
                             })
@@ -348,12 +348,12 @@ export function useRenderCombobox(
             ]),
             (node: VNode) => useOnTextFieldNodeMounted(thisProps, node),
         ), [
-            [clickOutside, () => {
-                if (!thisProps.disabled) {
-                    isFocused.value = false;
-                }
-            }]
-        ]
+        [ClickOutside, () => {
+            if (!thisProps.disabled) {
+                isFocused.value = false;
+            }
+        }]
+    ]
     );
 }
 
