@@ -16,14 +16,14 @@
 </p>
 
 
-**Vue MDBootstrap** is a collection of UI components for **Vue 3** and built according to 
-the [Google Material Design 3](https://m3.material.io/)
-specs. These components library were build in the spirit of **Vue 3 framework**, and 
-utilize **Bootstrap 5** css framework.
+**Vue MDBootstrap** is a collection of UI components for **Vue 3** and built 
+according to the [Google Material Design 3](https://m3.material.io/)
+specifications. This component library is built in the spirit of **Vue 3** framework and 
+leverages the **Bootstrap 5** css framework.
 
 Whether you are building an amazing **Single Page Application (SPA)** or common web page, 
 you have the power at your fingertips. You don't have to be a great programmer and
-have excellent UI design skills. Just use **Vue MDBootstrap**, it's easy to use and
+have excellent UI design skills. Just use **Vue MDBootstrap**. It's easy to use and
 most of the components you need are already there.
 
 
@@ -31,13 +31,13 @@ most of the components you need are already there.
 
 ### Using Module Bundler
 
-If you are building a Single Page Application and you can use module bundler like 
+If you are building a Single Page Application, then you can use module bundler such as 
 [Vite](https://vitejs.dev/), [Vue Cli](https://cli.vuejs.org/) or 
-[Webpack](https://webpack.js.org/) to create and start your project. 
-And use `yarn` or `npm` package manager to get the latest version of **Vue.js**, 
-and **Vue MDBootstrap**. We assume you already create your project using 
+[Webpack](https://webpack.js.org/) to build and jump-start your project. 
+And use `yarn` or `npm` to get the latest version of **Vue.js** 
+and **Vue MDBootstrap**. We assume you have created your project using 
 [Vite + Vue](https://vuejs.org/guide/quick-start.html#creating-a-vue-application). 
-If not yet, please read the 
+If not, please read the 
 [manual](https://vuejs.org/guide/quick-start.html#creating-a-vue-application) first.
 
 
@@ -49,7 +49,7 @@ npm install vue-mdbootstrap --save
 yarn add vue-mdbootstrap
 ```
 
-Then, start create Vue application at your app entry point.
+Create Vue application and mount at `#app` entry point.
 
 ```js
 // file: main.js
