@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TAvatarIconProps, TIconVariant, TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TAvatarIconProps, TIconVariant, TRecord } from '../../../types';
 
 export declare type TAlertOptionProps = TAvatarIconProps & {
     /**
@@ -54,4 +56,6 @@ export declare type TAlertOptionProps = TAvatarIconProps & {
 
 export declare type TBsAlert = ComponentObjectPropsOptions<TAlertOptionProps>;
 
-export declare const BsAlert: DefineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAlert: DefineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsAlertPlugin: Plugin;

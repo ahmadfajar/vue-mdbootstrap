@@ -5,53 +5,63 @@ import { defineConfig } from 'vite'
 import { bannerText } from './banner'
 
 export default defineConfig({
-    mode: 'production',
+    mode: 'library',
     build: {
         lib: {
             // Could also be a dictionary or array of multiple entry points
-            entry: path.resolve(__dirname, 'src/index.ts'),
+            entry: path.resolve(__dirname, 'src/framework.ts'),
+            formats: ['es', 'cjs'],
             name: 'VueMdb',
             fileName: (format) => {
                 switch (format) {
                     case 'es':
                     case 'esm':
-                        return 'vue-mdb.esm.min.js';
-                    case 'umd':
-                        return 'vue-mdb.umd.min.js';
+                        return 'vue-mdb.esm.mjs';
+                    case 'cjs':
+                    case 'commonjs':
+                        return 'vue-mdb.cjs';
                     default:
-                        return 'vue-mdb.min.js';
+                        return 'vue-mdb.mjs';
                 }
             }
         },
         emptyOutDir: false,
-        cssMinify: true,
+        cssMinify: false,
         minify: false,
         rollupOptions: {
             // make sure to externalize deps that shouldn't be bundled into your library
-            external: ['vue'],
+            external: [
+                'axios', 'body-scroll-lock', 'fast-xml-parser',
+                'lodash', 'luxon', 'resize-observer-polyfill', 'vue',
+            ],
             treeshake: {
                 preset: 'recommended'
             },
             output: {
                 // Provide global variables to use in the ES build for externalized deps
                 globals: {
+                    axios: 'axios',
+                    lodash: 'lodash',
+                    luxon: 'luxon',
                     vue: 'Vue',
                 },
                 generatedCode: {
                     constBindings: true
                 },
                 interop: 'auto',
-                assetFileNames: 'vue-mdb.min.[ext]',
-                plugins: [
-                    terser({
-                        compress: true,
-                        ecma: 2020,
-                        format: {
-                            comments: false
-                        }
-                    })
-                ]
+                assetFileNames: 'vue-mdb.[ext]',
             },
+            plugins: [
+                terser({
+                    compress: false,
+                    ecma: 2020,
+                    keep_classnames: true,
+                    keep_fnames: true,
+                    format: {
+                        comments: false,
+                    },
+                })
+            ]
         },
     },
     esbuild: {

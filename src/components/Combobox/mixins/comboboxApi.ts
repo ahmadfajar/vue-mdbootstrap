@@ -1,8 +1,8 @@
-import { kebabCase } from "lodash";
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode } from "vue";
-import { Fragment, createCommentVNode, h, nextTick, toDisplayString, withDirectives } from "vue";
-import { ClickOutside } from "../../../directives/ClickOutside";
-import { cssPrefix, useRenderSlot } from "../../../mixins/CommonApi";
+import { kebabCase } from 'lodash';
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
+import { createCommentVNode, Fragment, h, nextTick, toDisplayString, withDirectives } from 'vue';
+import { ClickOutside } from '../../../directives';
+import { cssPrefix, useRenderSlot } from '../../../mixins/CommonApi';
 import type {
     IBsModel,
     TBsCombobox,
@@ -10,21 +10,22 @@ import type {
     TDataListSchemaProps,
     TEmitFn,
     TIconVariant,
+    TPopoverPosition,
     TRecord
-} from "../../../types";
-import Helper from "../../../utils/Helper";
-import { BsChip } from "../../Chip";
+} from '../../../types';
+import Helper from '../../../utils/Helper';
+import { BsChip } from '../../Chip';
 import {
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
     useMakeInputBaseAttrs
-} from "../../Field/mixins/textFieldApi";
-import { useOnTextFieldNodeMounted } from "../../Field/mixins/textFieldEventApi";
-import { useRenderFieldFeedback } from "../../Field/mixins/validationApi";
-import { BsIcon } from "../../Icon";
-import { BsListTileTitle } from "../../ListView";
-import { BsListbox } from "../../Listbox";
-import { BsPopover } from "../../Popover";
+} from '../../Field/mixins/textFieldApi';
+import { useOnTextFieldNodeMounted } from '../../Field/mixins/textFieldEventApi';
+import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
+import { BsIcon } from '../../Icon';
+import { BsListbox } from '../../Listbox';
+import { BsListTileTitle } from '../../ListView';
+import { BsPopover } from '../../Popover';
 
 function createActionAppendIcons(
     showClearButton: boolean,
@@ -35,24 +36,24 @@ function createActionAppendIcons(
     clearHandler: EventListener,
     popoverHandler: EventListener,
 ): VNode {
-    return h("div", {
+    return h('div', {
         class: `${cssPrefix}action-icon`
     }, [
         (
             showClearButton
                 ? h(BsIcon, {
-                    class: "icon-clear",
+                    class: 'icon-clear',
                     icon: `cancel_${iconVariant}` as Prop<string>,
                     size: iconSize as Prop<number | undefined>,
                     onClick: clearHandler
                 })
-                : ""
+                : ''
         ),
         (
             (hasValidated && hasError)
                 ? h(BsIcon, {
-                    class: "icon-error text-danger",
-                    icon: (iconVariant === "outlined"
+                    class: 'icon-error text-danger',
+                    icon: (iconVariant === 'outlined'
                         ? `error_outline_${iconVariant}`
                         : `error_${iconVariant}`) as Prop<string>,
                     size: iconSize as Prop<number | undefined>,
@@ -60,15 +61,15 @@ function createActionAppendIcons(
                 : (
                     (hasValidated && !hasError)
                         ? h(BsIcon, {
-                            class: "icon-success text-success",
+                            class: 'icon-success text-success',
                             icon: `check_${iconVariant}` as Prop<string>,
                             size: iconSize as Prop<number | undefined>,
                         })
-                        : ""
+                        : ''
                 )
         ),
         h(BsIcon, {
-            class: "icon-expand",
+            class: 'icon-expand',
             icon: `expand_more_${iconVariant}` as Prop<string>,
             size: iconSize as Prop<number | undefined>,
             onClick: popoverHandler
@@ -98,7 +99,7 @@ function createChipsOrCsv(
         ));
     } else {
         const text = selectedItems.value.map(it => it.get(schema.displayField));
-        return h("span", { class: `${cssPrefix}field-value` }, toDisplayString(text.join(", ")));
+        return h('span', {class: `${cssPrefix}field-value`}, toDisplayString(text.join(', ')));
     }
 }
 
@@ -114,26 +115,26 @@ function renderComboboxFieldInput(
 
     return [
         (showPlaceholder
-            ? h("span", {
-                class: `${cssPrefix}field-placeholder`
-            }, toDisplayString(thisProps.placeholder))
-            : createCommentVNode(" v-if-placeholder ")
+                ? h('span', {
+                    class: `${cssPrefix}field-placeholder`
+                }, toDisplayString(thisProps.placeholder))
+                : createCommentVNode(' v-if-placeholder ')
         ),
         createChipsOrCsv(props, dataSchema, selectedItems),
-        h("select", {
+        h('select', {
             ...useMakeInputBaseAttrs(thisProps),
-            class: "d-none",
-            "tabindex": -1,
-            "aria-hidden": true,
-            "multiple": thisProps.multiple,
-            "aria-required": thisProps.required,
-            "aria-disabled": thisProps.disabled
+            class: 'd-none',
+            'tabindex': -1,
+            'aria-hidden': true,
+            'multiple': thisProps.multiple,
+            'aria-required': thisProps.required,
+            'aria-disabled': thisProps.disabled
         }, selectedItems.value.map(
             it =>
-                h("option", {
+                h('option', {
                     key: `item-${it.get(dataSchema.valueField)}`,
                     value: it.get(dataSchema.valueField),
-                    selected: "selected",
+                    selected: 'selected',
                 }, toDisplayString(it.get(dataSchema.displayField)))
         ))
     ]
@@ -156,7 +157,7 @@ export function useTogglePopoverState(
 ) {
     if (!isDisabled) {
         isPopoverOpen.value = !state;
-        emit(isPopoverOpen.value ? "open" : "close");
+        emit(isPopoverOpen.value ? 'open' : 'close');
     }
 }
 
@@ -190,7 +191,7 @@ export function useRenderCombobox(
         useCreateFieldWrapper(
             slots, iconSize, wrapperCss, thisProps,
             h(Fragment, [
-                h("div", {
+                h('div', {
                     class: controlCss.value,
                 }, [
                     useCreateFieldInnerWrapper(
@@ -209,8 +210,8 @@ export function useRenderCombobox(
                             () => {
                                 fieldValues.value = [];
                                 selectedItems.value = [];
-                                emit("update:model-value", thisProps.multiple ? [] : undefined);
-                                nextTick().then(() => emit("clear"));
+                                emit('update:model-value', thisProps.multiple ? [] : undefined);
+                                nextTick().then(() => emit('clear'));
                             },
                             () => {
                                 isFocused.value = !thisProps.disabled;
@@ -260,25 +261,26 @@ export function useRenderCombobox(
                         errorItems.value,
                     ),
                 ]),
-                // @ts-ignore
                 h(BsPopover, {
                     color: null,
-                    space: (thisProps.outlined ? 2 : 1),
-                    class: ["y-overflow-hidden", `${cssPrefix}shadow-1`],
-                    placement: "bottom",
+                    space: (thisProps.outlined ? 2 : 1) as Prop<number>,
+                    class: ['y-overflow-hidden', `${cssPrefix}shadow-1`],
+                    placement: 'bottom' as Prop<TPopoverPosition>,
                     transition: props.transition,
-                    open: isPopoverOpen.value,
-                    trigger: activator.value,
+                    // @ts-ignore
+                    open: isPopoverOpen.value as Prop<boolean>,
+                    trigger: activator.value as Prop<HTMLElement>,
                     style: {
                         minWidth: Helper.cssUnit(Math.max(listboxWidth(), (activator.value ? activator.value.offsetWidth : 0))),
                         // maxHeight: Helper.cssUnit(thisProps.popoverMaxHeight || thisProps.listboxMaxHeight),
                     },
                     onClose: () => useTogglePopoverState(emit, isPopoverOpen, false, true),
                 }, {
-                    // @ts-ignore
                     default: () => h(BsListbox, {
-                        borderless: true,
-                        useCheckbox: true,
+                        // @ts-ignore
+                        borderless: true as Prop<boolean>,
+                        // @ts-ignore
+                        useCheckbox: true as Prop<boolean>,
                         color: props.listboxColor,
                         dataSource: props.dataSource,
                         readonly: props.readonly,
@@ -297,48 +299,48 @@ export function useRenderCombobox(
                         imageSize: props.imageSize,
                         circleImage: props.circleImage,
                         roundedImage: props.roundedImage,
-                        modelValue: thisProps.multiple
+                        modelValue: <Prop<string | number | string[] | number[]>>(thisProps.multiple
                             ? fieldValues.value
-                            : (fieldValues.value.length > 0 ? fieldValues.value[0] : undefined),
-                        "onData-bind": (items: IBsModel[]) => {
+                            : (fieldValues.value.length > 0 ? fieldValues.value[0] : undefined)),
+                        'onData-bind': (items: IBsModel[]) => {
                             selectedItems.value = items.filter(
                                 it => fieldValues.value.some(v => v === it.get(schema.valueField))
                             );
-                            emit("data-bind", items);
+                            emit('data-bind', items);
                         },
-                        "onData-error": (error: unknown) => emit("data-error", error),
-                        "onData-filter": (items: IBsModel[]) => emit("data-filter", items),
-                        "onSelect": (item: IBsModel) => emit("select", item),
-                        "onDeselect": (item: IBsModel) => emit("deselect", item),
-                        "onUpdate:model-value": (values: string | number | string[] | number[] | undefined) => {
+                        'onData-error': (error: unknown) => emit('data-error', error),
+                        'onData-filter': (items: IBsModel[]) => emit('data-filter', items),
+                        'onSelect': (item: IBsModel) => emit('select', item),
+                        'onDeselect': (item: IBsModel) => emit('deselect', item),
+                        'onUpdate:model-value': (values: string | number | string[] | number[] | undefined) => {
                             fieldValues.value = values === undefined ? [] : (Array.isArray(values) ? values : [<string>values]);
-                            emit("update:model-value", values);
+                            emit('update:model-value', values);
                         },
-                        "onUpdate:selected-value": (values: IBsModel[]) => {
+                        'onUpdate:selected-value': (values: IBsModel[]) => {
                             selectedItems.value = values;
-                            emit("update:selected-value", values);
+                            emit('update:selected-value', values);
                             if (!thisProps.multiple) {
                                 useTogglePopoverState(emit, isPopoverOpen, false, true);
                             }
                         }
                     }, {
                         optionItem: (args: TDataItem) => useRenderSlot(
-                            slots, "optionItem", { key: "list-tile-content" },
+                            slots, 'optionItem', {key: 'list-tile-content'},
                             h(BsListTileTitle, null, {
                                 default: () => toDisplayString(args.item.get(schema.displayField))
                             }),
-                            { item: args.item, index: args.index },
+                            {item: args.item, index: args.index},
                         ),
                         emptyDataMsg: () => useRenderSlot(
-                            slots, "emptyDataMsg",
-                            { key: "emptyDataMessage" },
+                            slots, 'emptyDataMsg',
+                            {key: 'emptyDataMessage'},
                             h(BsListTileTitle, null, {
                                 default: () => toDisplayString(props.emptyDataMessage)
                             })
                         ),
                         notFoundMsg: () => useRenderSlot(
-                            slots, "notFoundMsg",
-                            { key: "notFoundMessage" },
+                            slots, 'notFoundMsg',
+                            {key: 'notFoundMessage'},
                             h(BsListTileTitle, null, {
                                 default: () => toDisplayString(thisProps.notFoundMessage)
                             })
@@ -348,12 +350,12 @@ export function useRenderCombobox(
             ]),
             (node: VNode) => useOnTextFieldNodeMounted(thisProps, node),
         ), [
-        [ClickOutside, () => {
-            if (!thisProps.disabled) {
-                isFocused.value = false;
-            }
-        }]
-    ]
+            [ClickOutside, () => {
+                if (!thisProps.disabled) {
+                    isFocused.value = false;
+                }
+            }]
+        ]
     );
 }
 

@@ -1,14 +1,23 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, getCurrentInstance, h, inject, nextTick, onBeforeMount, ref, shallowRef} from "vue";
-import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
-import {booleanProp} from "../../mixins/CommonProps";
-import type {IListItem, IListViewProvider, TBsListNav, TListNavOptionProps, TRecord} from "../../types";
-import {useAddChild} from "./mixins/listNavApi";
-import ListItem from "./mixins/ListItem";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import {
+    computed,
+    defineComponent,
+    getCurrentInstance,
+    h,
+    inject,
+    nextTick,
+    onBeforeMount,
+    ref,
+    shallowRef
+} from 'vue';
+import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
+import { booleanProp } from '../../mixins/CommonProps';
+import type { IListItem, IListViewProvider, TBsListNav, TListNavOptionProps, TRecord } from '../../types';
+import ListItem from './mixins/ListItem';
+import { useAddChild } from './mixins/listNavApi';
 
-
-export default defineComponent<TBsListNav, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsListNav",
+export default defineComponent<TBsListNav, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsListNav',
     props: {
         id: {
             type: String,
@@ -25,20 +34,20 @@ export default defineComponent<TBsListNav, TRecord, TRecord, ComputedOptions, Co
 
         expose({isActive, collapsing, expanded});
 
-        const provider = inject<IListViewProvider>("ListView");
+        const provider = inject<IListViewProvider>('ListView');
         const classNames = computed(
             () => ({
                 [`${cssPrefix}list-nav`]: true,
                 [`${cssPrefix}nav-child`]: cmpProps.child === true,
-                "collapse": cmpProps.child === true && !expanded.value,
-                "collapsing": cmpProps.child === true && collapsing.value,
+                'collapse': cmpProps.child === true && !expanded.value,
+                'collapsing': cmpProps.child === true && collapsing.value,
             })
         );
         onBeforeMount(
             () => {
                 const vm = getCurrentInstance();
                 if (vm) {
-                    refItem.value = new ListItem(<string>cmpProps.id, "BsListNav", vm, emit);
+                    refItem.value = new ListItem(<string>cmpProps.id, 'BsListNav', vm, emit);
 
                     if (provider) {
                         if (cmpProps.child === true) {
@@ -52,7 +61,7 @@ export default defineComponent<TBsListNav, TRecord, TRecord, ComputedOptions, Co
         );
 
         return () =>
-            h("ul", {
+            h('ul', {
                 id: props.id,
                 class: classNames.value,
                 onVnodeBeforeUnmount: () => refItem.value?.destroy(),

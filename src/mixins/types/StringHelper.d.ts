@@ -34,7 +34,23 @@ export declare function padRight(str: string | number, maxLength?: number, fillS
  * @param text The input string.
  * @returns New string that has been transform to Title Case.
  */
-export declare function toTitleCase(text: string): string;
+export declare function titleCase(text: string): string;
+
+/**
+ * Simple function to transform the input string into [camel Case](https://en.wikipedia.org/wiki/Camel_case).
+ *
+ * @param text The input string.
+ * @returns New string that has been transform to "camelCase".
+ */
+export declare function camelCase(text: string): string;
+
+/**
+ * Simple function to transform the input string into [kebab-case](https://en.wikipedia.org/wiki/Letter_case#Use_within_programming_languages).
+ *
+ * @param text The input string.
+ * @returns New string that has been transform to "kebab-case".
+ */
+export declare function kebabCase(text: string): string;
 
 /**
  * Create an array of chunked strings.

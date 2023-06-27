@@ -1,10 +1,20 @@
-import {ComponentObjectPropsOptions, UnwrapNestedRefs} from "vue";
+import {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions,
+    MethodOptions,
+    Plugin,
+    UnwrapNestedRefs
+} from 'vue';
+import { TRecord } from '../../../types';
 
 export declare type TNotificationPosition =
-    "top-right" | "top-left" | "top-center" | "top-full-width" |
-    "bottom-right" | "bottom-left" | "bottom-center" | "bottom-full-width";
+    'top-right' | 'top-left' | 'top-center' | 'top-full-width' |
+    'bottom-right' | 'bottom-left' | 'bottom-center' | 'bottom-full-width';
 
-export declare type TNotificationVariant = "default" | "info" | "success" | "error" | "warning" | "custom";
+export declare type TNotificationVariant = 'default' | 'info' | 'success' | 'error' | 'warning' | 'custom';
 
 export declare type TNotificationOption = {
     message: string;
@@ -107,3 +117,7 @@ export declare interface INotificationProvider {
 export declare type TBsNotificationItem = ComponentObjectPropsOptions<TNotificationItemOptionProps>;
 
 export declare type TBsNotificationBar = ComponentObjectPropsOptions<TNotificationBarOptionProps>;
+
+export declare const BsNotification: DefineComponent<TRecord, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsNotificationPlugin: Plugin;

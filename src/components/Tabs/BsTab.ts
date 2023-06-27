@@ -1,13 +1,23 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, getCurrentInstance, h, inject, onBeforeMount, ref, vShow, withDirectives} from "vue";
-import {tabPanelProps} from "./mixins/tabsProps";
-import {useRenderTransition} from "../../mixins/CommonApi";
-import type {TBsTabPanel, TRecord, TTabItemOptionProps} from "../../types";
-import TabsProvider from "./mixins/TabsProvider";
-import Helper from "../../utils/Helper";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import {
+    computed,
+    defineComponent,
+    getCurrentInstance,
+    h,
+    inject,
+    onBeforeMount,
+    ref,
+    vShow,
+    withDirectives
+} from 'vue';
+import { useRenderTransition } from '../../mixins/CommonApi';
+import type { TBsTabPanel, TRecord, TTabItemOptionProps } from '../../types';
+import Helper from '../../utils/Helper';
+import { tabPanelProps } from './mixins/tabsProps';
+import TabsProvider from './mixins/TabsProvider';
 
-export default defineComponent<TBsTabPanel, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsTab",
+export default defineComponent<TBsTabPanel, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsTab',
     props: {
         ...tabPanelProps,
         id: {
@@ -17,7 +27,7 @@ export default defineComponent<TBsTabPanel, TRecord, TRecord, ComputedOptions, C
     },
     setup(props, {slots, expose}) {
         const cmpProps = props as Readonly<TTabItemOptionProps>;
-        const tabProvider = inject<TabsProvider>("tabs");
+        const tabProvider = inject<TabsProvider>('tabs');
         const isActive = ref<boolean | undefined>(false);
 
         expose({isActive});
@@ -25,7 +35,7 @@ export default defineComponent<TBsTabPanel, TRecord, TRecord, ComputedOptions, C
         const classNames = computed(
             () => {
                 // console.log(`computed-tab-${cmpProps.id}:active`, isActive.value);
-                return ["tab-pane", isActive.value === true ? "active" : ""];
+                return ['tab-pane', isActive.value === true ? 'active' : ''];
             }
         )
 
@@ -42,11 +52,11 @@ export default defineComponent<TBsTabPanel, TRecord, TRecord, ComputedOptions, C
             useRenderTransition(
                 {name: tabProvider?.contentTransition},
                 withDirectives(
-                    h("div", {
+                    h('div', {
                         class: classNames.value,
                         id: props.id,
-                        role: "tabpanel",
-                        "aria-labelledby": props.ariaLabel,
+                        role: 'tabpanel',
+                        'aria-labelledby': props.ariaLabel,
                         onVnodeUnmounted: () => tabProvider && cmpProps.id && tabProvider.unRegisterTab(cmpProps.id),
                     }, slots.default && slots.default()),
                     [[vShow, isActive.value]],

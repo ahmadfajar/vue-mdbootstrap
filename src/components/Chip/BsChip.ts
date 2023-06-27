@@ -1,26 +1,26 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, createCommentVNode, defineComponent, nextTick, ref, watch} from "vue";
-import {useRenderTransition} from "../../mixins/CommonApi";
-import {useChipClassNames, useRenderChip} from "./mixins/chipApi";
-import {chipProps} from "./mixins/chipProps";
-import type {TBsChip, TChipOptionProps, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, createCommentVNode, defineComponent, nextTick, ref, watch } from 'vue';
+import { useRenderTransition } from '../../mixins/CommonApi';
+import type { TBsChip, TChipOptionProps, TRecord } from '../../types';
+import { useChipClassNames, useRenderChip } from './mixins/chipApi';
+import { chipProps } from './mixins/chipProps';
 
-export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsChip",
+export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsChip',
     props: chipProps,
     emits: [
         /**
          * Fired when this component is dismissed (hide).
          */
-        "close",
+        'close',
         /**
          * Fired when this component state is updated.
          */
-        "update:active",
+        'update:active',
         /**
          * Fired when this component's value is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {emit, attrs, slots}) {
         const cmpProps = props as Readonly<TChipOptionProps>;
@@ -29,7 +29,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
             () => useChipClassNames(cmpProps, attrs)
         );
         const tagName = computed<string>(
-            () => cmpProps.href && !cmpProps.disabled ? "a" : "div"
+            () => cmpProps.href && !cmpProps.disabled ? 'a' : 'div'
         );
         const rippleDisabled = computed<boolean>(
             () => {
@@ -42,9 +42,9 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
         const show = computed(() => !dismiss.value && props.modelValue);
         const dismissedChip = () => {
             dismiss.value = true;
-            emit("update:active", false);
-            emit("update:model-value", false);
-            nextTick().then(() => emit("close"));
+            emit('update:active', false);
+            emit('update:model-value', false);
+            nextTick().then(() => emit('close'));
         }
         watch(
             () => cmpProps.modelValue,
@@ -57,13 +57,13 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Compo
 
         return () =>
             useRenderTransition(
-                {name: "fade"},
+                {name: 'fade'},
                 show.value
                     ? useRenderChip(
                         tagName.value, rippleDisabled.value, slots, attrs,
                         cmpProps, classNames, dismissedChip,
                     )
-                    : createCommentVNode(" BsChip ")
+                    : createCommentVNode(' BsChip ')
             )
     }
 });

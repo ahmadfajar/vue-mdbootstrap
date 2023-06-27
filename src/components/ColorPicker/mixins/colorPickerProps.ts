@@ -1,4 +1,4 @@
-import type {PropType} from "vue";
+import type { Prop, PropType } from 'vue';
 import {
     booleanProp,
     stringOrArrayProp,
@@ -28,10 +28,10 @@ export const colorPickerProps = {
     modeButtonToggleColor: stringProp,
     inputLabelClass: stringOrArrayProp,
     mode: {
-        type: String as PropType<TColorPickerMode>,
+        type: String,
         default: "HEX",
-        validator: (v: TColorPickerMode) => ["RGB", "HSL", "HEX"].includes(v),
-    },
+        validator: (v: string) => ["RGB", "HSL", "HEX"].includes(v),
+    } as Prop<TColorPickerMode>,
     modelValue: stringProp,
     placement: popoverPlacementProp,
     space: validStringOrNumberProp,

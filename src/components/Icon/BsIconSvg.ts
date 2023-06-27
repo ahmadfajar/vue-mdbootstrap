@@ -1,12 +1,12 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, onBeforeMount, ref, watch} from "vue";
-import {findIcon, useGoogleIcon, useRenderSvgIcon, useSvgClasses} from "./mixins/svgApi";
-import {useSizeHeight, useSizeWidth} from "./mixins/iconApi";
-import {iconProps} from "./mixins/iconProps";
-import type {TBsIconSvg, TIconData, TIconOptionProps, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue';
+import type { TBsIconSvg, TIconData, TIconOptionProps, TRecord } from '../../types';
+import { useSizeHeight, useSizeWidth } from './mixins/iconApi';
+import { iconProps } from './mixins/iconProps';
+import { findIcon, useGoogleIcon, useRenderSvgIcon, useSvgClasses } from './mixins/svgApi';
 
-export default defineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsIconSvg",
+export default defineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsIconSvg',
     props: iconProps,
     setup(props) {
         const cmpProps = props as Readonly<TIconOptionProps>;

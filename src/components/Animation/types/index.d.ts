@@ -4,9 +4,11 @@ import type {
     ComputedOptions,
     DefineComponent,
     EmitsOptions,
+    MethodOptions,
+    Plugin,
     TransitionProps
-} from "vue";
-import type {TRecord} from "../../../types";
+} from 'vue';
+import type { TRecord } from '../../../types';
 
 
 export declare type TRippleOptionProps = {
@@ -62,6 +64,8 @@ export declare type TBsRipple = ComponentObjectPropsOptions<TRippleOptionProps>;
 
 export declare const BsExpandTransition: DefineComponent<TransitionProps>;
 
-export declare const BsOverlay: DefineComponent<TBsOverlay, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsOverlay: DefineComponent<TBsOverlay, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsRipple: DefineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsRipple: DefineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsAnimationPlugin: Plugin;

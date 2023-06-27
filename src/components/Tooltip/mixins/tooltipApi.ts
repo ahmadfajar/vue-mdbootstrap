@@ -86,24 +86,6 @@ function findActivatorElement(instance: ComponentInternalInstance): Element | nu
     return null;
 }
 
-// function findTooltipElement(instance: ComponentInternalInstance): Element | null {
-//     let element = (<Element>instance.vnode.el).nextElementSibling;
-//
-//     if (element && element.classList.contains(`${cssPrefix}tooltip`)) {
-//         return element;
-//     } else {
-//         const children = instance.subTree.children;
-//         if (children && Array.isArray(children) && children.length > 0) {
-//             element = <Element>(<VNode>children[0]).el;
-//             if (element && element.classList.contains(`${cssPrefix}tooltip`)) {
-//                 return element;
-//             }
-//         }
-//     }
-//
-//     return null;
-// }
-
 export function useSetTooltipPosition(
     tooltipRef: Ref<Element | null>,
     instance?: ComponentInternalInstance | null,
@@ -114,7 +96,6 @@ export function useSetTooltipPosition(
         return;
     }
 
-    // const tooltipEl = <HTMLElement>findTooltipElement(instance);
     const tooltipEl = <HTMLElement>tooltipRef.value;
 
     if (tooltipEl && Helper.isFunction(tooltipEl.getBoundingClientRect)) {

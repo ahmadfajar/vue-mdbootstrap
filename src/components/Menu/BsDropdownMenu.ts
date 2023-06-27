@@ -1,12 +1,12 @@
-import type {ComponentOptionsMixin, ComponentPublicInstance, ComputedOptions, EmitsOptions} from "vue";
-import {defineComponent, ref} from "vue";
-import type {TBsDropdownMenu, TDropdownMenuOptionProps, TRecord} from "../../types";
-import {useRenderDropdownMenu} from "./mixins/dropdownMenuApi";
-import {booleanProp, booleanTrueProp, validStringOrNumberProp, whiteColorProp} from "../../mixins/CommonProps";
-import {popoverDefaultTransitionProp, popoverPlacementProp} from "../Popover/mixins/popoverProps";
+import type { ComponentOptionsMixin, ComponentPublicInstance, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { defineComponent, ref } from 'vue';
+import { booleanProp, booleanTrueProp, validStringOrNumberProp, whiteColorProp } from '../../mixins/CommonProps';
+import type { TBsDropdownMenu, TDropdownMenuOptionProps, TRecord } from '../../types';
+import { popoverDefaultTransitionProp, popoverPlacementProp } from '../Popover/mixins/popoverProps';
+import { useRenderDropdownMenu } from './mixins/dropdownMenuApi';
 
-export default defineComponent<TBsDropdownMenu, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsDropdownMenu",
+export default defineComponent<TBsDropdownMenu, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsDropdownMenu',
     props: {
         cover: booleanProp,
         disabled: booleanProp,
@@ -22,11 +22,11 @@ export default defineComponent<TBsDropdownMenu, TRecord, TRecord, ComputedOption
         /**
          * Fired when this Popover state is updated.
          */
-        "update:open",
+        'update:open',
         /**
          * Fired when this Popover closed or hide.
          */
-        "close",
+        'close',
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TDropdownMenuOptionProps>;

@@ -1,14 +1,14 @@
-import type {ComponentInternalInstance, ComputedRef, Ref, ShallowRef, Slots, VNode} from "vue";
-import {createCommentVNode, h, Teleport, toDisplayString, withDirectives} from "vue";
-import type {TEmitFn, TImageDataset, TLightboxOptionProps, TRecord} from "../../../types";
-import {cssPrefix, useBreakpointMax, useMobileDevice, useRenderTransition} from "../../../mixins/CommonApi";
-import {BsOverlay} from "../../Animation";
-import {BsSpacer} from "../../Basic";
-import {BsButton} from "../../Button";
-import {BsDropdownMenu} from "../../Menu";
-import {useClosePopover} from "../../Popover/mixins/popoverApi";
-import {Touch} from "../../../directives/Touch";
-import Helper from "../../../utils/Helper";
+import type { ComponentInternalInstance, ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
+import { createCommentVNode, h, Teleport, toDisplayString, withDirectives } from 'vue';
+import { Touch } from '../../../directives';
+import { cssPrefix, useBreakpointMax, useMobileDevice, useRenderTransition } from '../../../mixins/CommonApi';
+import type { TEmitFn, TImageDataset, TLightboxOptionProps, TPopoverPosition, TRecord } from '../../../types';
+import Helper from '../../../utils/Helper';
+import { BsOverlay } from '../../Animation';
+import { BsSpacer } from '../../Basic';
+import { BsButton } from '../../Button';
+import { BsDropdownMenu } from '../../Menu';
+import { useClosePopover } from '../../Popover/mixins/popoverApi';
 
 export function useComputeImgStyle(
     props: Readonly<TLightboxOptionProps>,
@@ -52,17 +52,18 @@ export function useRenderLightbox(
     zoom: Ref<number>,
     transition: Ref<string>,
 ): VNode {
-    return h(Teleport, {to: "body"}, [
-        // @ts-ignore
+    return h(Teleport, {to: 'body'}, [
         h(BsOverlay, {
-            color: props.overlayColor,
-            opacity: props.overlayOpacity,
-            show: isOpen.value && props.overlay,
-            fixed: true,
+            color: props.overlayColor as Prop<string>,
+            opacity: props.overlayOpacity as Prop<number>,
+            // @ts-ignore
+            show: (isOpen.value && props.overlay) as Prop<boolean>,
+            // @ts-ignore
+            fixed: true as Prop<boolean>,
         }),
         (
             isOpen.value
-                ? h("div", {
+                ? h('div', {
                     class: `${cssPrefix}lightbox-wrap`
                 }, [
                     createLightboxToolbar(
@@ -75,7 +76,7 @@ export function useRenderLightbox(
                     ),
                     createLightboxThumbnail(emit, props, activeItem, itemIndex, zoom, rotate),
                 ])
-                : createCommentVNode(" BsLightbox ")
+                : createCommentVNode(' BsLightbox ')
         ),
     ]);
 }
@@ -92,42 +93,42 @@ function createLightboxToolbar(
     zoom: Ref<number>,
 ): VNode {
     if (!props.showToolbar && !props.showCounter) {
-        return createCommentVNode(" v-if-toolbar ");
+        return createCommentVNode(' v-if-toolbar ');
     }
 
-    return h("div", {
+    return h('div', {
         class: [`${cssPrefix}lightbox-toolbar`]
     }, [
         (
             props.showCounter === true
-                ? h("div", {
-                    class: [`${cssPrefix}counter`, "d-none", "d-md-flex"]
+                ? h('div', {
+                    class: [`${cssPrefix}counter`, 'd-none', 'd-md-flex']
                 }, [
-                    h("span", {
+                    h('span', {
                         class: [`${cssPrefix}counter-current`]
                     }, toDisplayString(itemIndex.value + 1)),
-                    "/",
-                    h("span", {
+                    '/',
+                    h('span', {
                         class: [`${cssPrefix}counter-all`]
                     }, toDisplayString(props.items?.length || 0)),
                 ])
-                : ""
+                : ''
         ),
         (
             props.showToolbar === true ? h(BsSpacer) : undefined
         ),
         (
             props.showToolbar === true
-                ? h("div", {
-                    class: [`${cssPrefix}toolbar-items`, "d-flex"]
+                ? h('div', {
+                    class: [`${cssPrefix}toolbar-items`, 'd-flex']
                 }, [
                     createButtonItem(
-                        "download",
+                        'download',
                         (activeItem.value !== undefined && props.toolbar?.download === true),
                         () => emit('exec-download', activeItem.value)
                     ),
                     createButtonItem(
-                        "zoom_in",
+                        'zoom_in',
                         (activeItem.value !== undefined && props.toolbar?.zoom === true),
                         () => {
                             if (zoom.value >= 1 && zoom.value < 4) {
@@ -141,7 +142,7 @@ function createLightboxToolbar(
                         }
                     ),
                     createButtonItem(
-                        "zoom_out",
+                        'zoom_out',
                         (activeItem.value !== undefined && props.toolbar?.zoom === true),
                         () => {
                             if (zoom.value > 1 && zoom.value < 4) {
@@ -155,7 +156,7 @@ function createLightboxToolbar(
                         }
                     ),
                     createButtonItem(
-                        "rotate_left",
+                        'rotate_left',
                         (activeItem.value !== undefined && props.toolbar?.rotate === true),
                         () => {
                             if (rotate.value > -270 && rotate.value < 361) {
@@ -167,7 +168,7 @@ function createLightboxToolbar(
                         }
                     ),
                     createButtonItem(
-                        "rotate_right",
+                        'rotate_right',
                         (activeItem.value !== undefined && props.toolbar?.rotate === true),
                         () => {
                             if (rotate.value > -361 && rotate.value < 270) {
@@ -179,43 +180,42 @@ function createLightboxToolbar(
                         }
                     ),
                     createButtonItem(
-                        "info_outlined",
+                        'info_outlined',
                         (activeItem.value !== undefined && props.toolbar?.info === true),
                         () => emit('exec-info', activeItem.value)
                     ),
                     createButtonItem(
-                        "delete_outlined",
+                        'delete_outlined',
                         (activeItem.value !== undefined && props.toolbar?.delete === true),
                         () => emit('exec-delete', activeItem.value)
                     ),
                     (
                         (activeItem.value && props.toolbar?.menubar === true)
-                            // @ts-ignore
                             ? h(BsDropdownMenu, {
-                                color: "transparent",
-                                placement: "bottom-right"
+                                color: 'transparent' as Prop<string>,
+                                placement: 'bottom-right' as Prop<TPopoverPosition>
                             }, {
                                 default: () =>
-                                    // @ts-ignore
                                     h(BsButton, {
-                                        color: "light-grey",
-                                        mode: "icon",
-                                        icon: "more_vert",
-                                        flat: true,
+                                        color: 'light-grey' as Prop<string>,
+                                        mode: 'icon' as Prop<string>,
+                                        icon: 'more_vert' as Prop<string>,
+                                        // @ts-ignore
+                                        flat: true as Prop<boolean>,
                                     }),
                                 content: () => slots.menubar && slots.menubar()
                             })
                             : undefined
                     ),
                     createButtonItem(
-                        "close",
+                        'close',
                         (props.toolbar?.close === true),
                         () => {
-                            useClosePopover(instance.value, isOpen, "Button close clicked.");
+                            useClosePopover(instance.value, isOpen, 'Button close clicked.');
                         }
                     ),
                 ])
-                : ""
+                : ''
         ),
     ]);
 }
@@ -226,12 +226,12 @@ function createButtonItem(
     clickHandler: VoidFunction,
 ): VNode | undefined {
     return condition
-        // @ts-ignore
         ? h(BsButton, {
-            color: "light-grey",
-            mode: "icon",
-            icon: icon,
-            flat: true,
+            color: 'light-grey' as Prop<string>,
+            mode: 'icon' as Prop<string>,
+            icon: icon as Prop<string>,
+            // @ts-ignore
+            flat: true as Prop<boolean>,
             onClick: () => clickHandler()
         })
         : undefined;
@@ -249,7 +249,7 @@ function createLightboxDisplay(
     rotate: Ref<number>,
     transition: Ref<string>,
 ): VNode {
-    return h("div", {
+    return h('div', {
         class: `${cssPrefix}lightbox-display`,
         style: {
             height: props.showThumbnail === true
@@ -258,7 +258,7 @@ function createLightboxDisplay(
         },
         onClick: () => {
             (props.overlayClose || props.overlayClickClose) &&
-            useClosePopover(instance.value, isOpen, "Overlay clicked.");
+            useClosePopover(instance.value, isOpen, 'Overlay clicked.');
         }
     }, [
         createLightboxNavCtrl(emit, props, activeItem, itemIndex, zoom, rotate, transition),
@@ -266,19 +266,19 @@ function createLightboxDisplay(
             {name: transition.value, mode: props.transitionMode, appear: true},
             (
                 activeItem.value
-                    ? h("div", {
+                    ? h('div', {
                         key: activeItem.value.imageSrc,
                         class: `${cssPrefix}lightbox-item`
                     }, [
-                        withDirectives(h("div", {
+                        withDirectives(h('div', {
                             class: `${cssPrefix}lightbox-item-img`,
                         }, [
-                            h("img", {
+                            h('img', {
                                 class: props.imageClass,
                                 style: imgStyle.value,
                                 alt: activeItem.value.title,
                                 src: activeItem.value.imageSrc,
-                                rel: "preload",
+                                rel: 'preload',
                                 onClick: (e: Event) => e.stopPropagation(),
                             })
                         ]), [
@@ -293,14 +293,14 @@ function createLightboxDisplay(
                         ]),
                         (
                             props.showItemTitle === true
-                                ? h("div", {
+                                ? h('div', {
                                     class: [`${cssPrefix}lightbox-item-title`],
                                     onClick: (e: Event) => e.stopPropagation(),
                                 }, toDisplayString(activeItem.value?.title))
-                                : ""
+                                : ''
                         ),
                     ])
-                    : createCommentVNode(" v-if-image ")
+                    : createCommentVNode(' v-if-image ')
             )
         )
     ])
@@ -316,40 +316,40 @@ function createLightboxNavCtrl(
     transition: Ref<string>,
 ): VNode {
     if (!props.showNavControl || !props.items?.length) {
-        return createCommentVNode(" v-if-navigation ");
+        return createCommentVNode(' v-if-navigation ');
     }
 
-    return h("div", {
+    return h('div', {
         class: `${cssPrefix}lightbox-controls`
     }, [
-        h("div", {
+        h('div', {
             class: `${cssPrefix}control-prev`
         }, [
-            // @ts-ignore
             h(BsButton, {
-                color: "light-grey",
-                mode: "icon",
-                icon: "navigate_before",
-                size: "lg",
-                flat: true,
-                iconSize: 40,
+                color: 'light-grey' as Prop<string>,
+                mode: 'icon' as Prop<string>,
+                icon: 'navigate_before' as Prop<string>,
+                size: 'lg' as Prop<string>,
+                // @ts-ignore
+                flat: true as Prop<boolean>,
+                iconSize: 40 as Prop<number>,
                 onClick: (e: Event) => {
                     e.stopPropagation();
                     useNavigatePrevSlide(emit, props, activeItem, itemIndex, zoom, rotate, transition);
                 }
             })
         ]),
-        h("div", {
+        h('div', {
             class: `${cssPrefix}control-next`
         }, [
-            // @ts-ignore
             h(BsButton, {
-                color: "light-grey",
-                mode: "icon",
-                icon: "navigate_next",
-                size: "lg",
-                flat: true,
-                iconSize: 40,
+                color: 'light-grey' as Prop<string>,
+                mode: 'icon' as Prop<string>,
+                icon: 'navigate_next' as Prop<string>,
+                size: 'lg' as Prop<string>,
+                // @ts-ignore
+                flat: true as Prop<boolean>,
+                iconSize: 40 as Prop<number>,
                 onClick: (e: Event) => {
                     e.stopPropagation();
                     useNavigateNextSlide(emit, props, activeItem, itemIndex, zoom, rotate, transition);
@@ -370,8 +370,8 @@ export function useNavigatePrevSlide(
     touchTriggered?: boolean,
 ) {
     if (touchTriggered) {
-        transition.value = useMobileDevice() && useBreakpointMax("md")
-            ? "slide-left-right" : <string>props.transition;
+        transition.value = useMobileDevice() && useBreakpointMax('md')
+            ? 'slide-left-right' : <string>props.transition;
     } else {
         transition.value = <string>props.transition;
     }
@@ -395,8 +395,8 @@ export function useNavigateNextSlide(
     touchTriggered = false,
 ) {
     if (touchTriggered) {
-        transition.value = useMobileDevice() && useBreakpointMax("md")
-            ? "slide-right-left" : <string>props.transition;
+        transition.value = useMobileDevice() && useBreakpointMax('md')
+            ? 'slide-right-left' : <string>props.transition;
     } else {
         transition.value = <string>props.transition;
     }
@@ -423,29 +423,29 @@ function createLightboxThumbnail(
     rotate: Ref<number>,
 ): VNode {
     if (!props.showThumbnail || !props.items?.length) {
-        return createCommentVNode(" v-if-thumbnail ");
+        return createCommentVNode(' v-if-thumbnail ');
     }
 
-    return h("div", {
+    return h('div', {
         class: `${cssPrefix}lightbox-thumbnail`
     }, [
-        h("div", {
+        h('div', {
             class: `${cssPrefix}lightbox-thumbnail-row`
         }, [
-            h("div", {
+            h('div', {
                 class: `${cssPrefix}lightbox-thumbnails`
             }, props.items.map((it, idx) => {
-                return h("div", {
+                return h('div', {
                     key: `item-${idx}`,
-                    class: [`${cssPrefix}thumbnail-item`, (itemIndex.value === idx ? "active" : "")],
+                    class: [`${cssPrefix}thumbnail-item`, (itemIndex.value === idx ? 'active' : '')],
                     onClick: () => useSetActiveLightboxItem(emit, props, activeItem, itemIndex, zoom, rotate, idx),
                 }, [
-                    h("img", {
+                    h('img', {
                         src: it.thumbnail,
                         alt: it.title,
                         style: {
                             height: Helper.cssUnit(props.thumbnailHeight),
-                            width: "auto"
+                            width: 'auto'
                         }
                     })
                 ])
@@ -467,8 +467,8 @@ export function useSetActiveLightboxItem(
         resetZoomRotate(zoom, rotate);
         activeIndex.value = newIndex;
         activeItem.value = props.items.length > 0 ? props.items[newIndex] : undefined;
-        emit("change", activeItem.value, newIndex);
+        emit('change', activeItem.value, newIndex);
     } else {
-        throw Error("The given image index is out of bound.");
+        throw Error('The given image index is out of bound.');
     }
 }

@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TPositionType, TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TPositionType, TRecord } from '../../../types';
 
 export declare type TTooltipOptionProps = {
     /**
@@ -40,4 +42,6 @@ export declare type TTooltipOptionProps = {
 
 export declare type TBsTooltip = ComponentObjectPropsOptions<TTooltipOptionProps>;
 
-export declare const BsTooltip: DefineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsTooltip: DefineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsTooltipPlugin: Plugin;

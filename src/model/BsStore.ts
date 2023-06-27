@@ -1,10 +1,8 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { meanBy, sumBy } from 'lodash';
+import { AbstractStore, RestProxyAdapter } from '../model';
 import type { IBsModel, IBsStore, TRecord, TSortDirection, TSortOption, TSuccessResponse } from '../types';
 import Helper from '../utils/Helper';
-import AbstractStore from './AbstractStore';
-import RestProxyAdapter from './RestProxyAdapter';
-
 
 /**
  * Data Store class to work with collection of entity objects and remote API.
@@ -30,7 +28,7 @@ import RestProxyAdapter from './RestProxyAdapter';
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 24/06/2023 14:36
+ * @since  20/07/2018 modified: 27/06/2023 00:06
  */
 export default class BsStore extends AbstractStore implements IBsStore {
     /**
@@ -77,14 +75,20 @@ export default class BsStore extends AbstractStore implements IBsStore {
             if (this._filteredItems.length === 0) {
                 this._filteredItems = this.localFilter();
             }
-            const result = this._filteredItems.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
+            const result = this._filteredItems.slice(
+                offset,
+                this.pageSize > 0 ? (offset + this.pageSize) : undefined
+            );
             this._state.length = result.length;
 
             return result;
         }
 
         if (!this.remotePaging) {
-            const result = this._items.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
+            const result = this._items.slice(
+                offset,
+                this.pageSize > 0 ? (offset + this.pageSize) : undefined
+            );
             this._state.length = result.length;
 
             return result;

@@ -1,5 +1,7 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, onMounted, watch} from "vue";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, onMounted, watch } from 'vue';
+import { useBrowserIE } from '../../mixins/CommonApi';
+import type { TBsProgress, TProgressOptionProps, TRecord } from '../../types';
 import {
     useAttachStyleTag,
     useBufferMode,
@@ -7,32 +9,29 @@ import {
     useIndeterminateMode,
     useRenderProgressBar,
     useRenderProgressSpinner
-} from "./mixins/progressAnimationApi";
-import {useBrowserIE} from "../../mixins/CommonApi";
-import {progressProps} from "./mixins/progressProps";
-import type {TBsProgress, TProgressOptionProps} from "./types";
+} from './mixins/progressAnimationApi';
+import { progressProps } from './mixins/progressProps';
 
-
-export default defineComponent<TBsProgress, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsProgress",
+export default defineComponent<TBsProgress, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsProgress',
     props: progressProps,
     setup(props) {
         const cmpProps = props as Readonly<TProgressOptionProps>;
         const hasAmountFill = computed<boolean>(() => {
             return useBufferMode(cmpProps) || useDeterminateMode(cmpProps);
         });
-        const isProgressBar = computed<boolean>(() => (<string>props.type).toLowerCase() === "bar");
+        const isProgressBar = computed<boolean>(() => (<string>props.type).toLowerCase() === 'bar');
         const circleRadius = computed<number>(() => {
             return ((<number>props.diameter) - (<number>props.stroke)) / 2;
         });
         const circleCircumference = computed<number>(() => 2 * Math.PI * circleRadius.value);
         const circleStrokeDashOffset = computed<string | undefined>(() => {
             if (useIndeterminateMode(cmpProps) && useBrowserIE()) {
-                return (circleCircumference.value * 0.2) + "px";
+                return (circleCircumference.value * 0.2) + 'px';
             }
 
             if (useDeterminateMode(cmpProps)) {
-                return (circleCircumference.value * (100 - (<number>props.modelValue)) / 100) + "px";
+                return (circleCircumference.value * (100 - (<number>props.modelValue)) / 100) + 'px';
             }
 
             return undefined

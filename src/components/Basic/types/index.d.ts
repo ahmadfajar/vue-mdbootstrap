@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TRecord, TSizeOptionProps} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TRecord, TSizeOptionProps } from '../../../types';
 
 export declare type TDividerOptionProps = {
     /**
@@ -88,10 +90,12 @@ export declare type TBsSpacer = ComponentObjectPropsOptions<TSpacerOptionProps>;
 
 export declare type TBsSubheader = ComponentObjectPropsOptions<TSubheaderOptionProps>;
 
-export declare const BsDivider: DefineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsDivider: DefineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsImageHolder: DefineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsImageHolder: DefineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsSpacer: DefineComponent<TBsSpacer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsSpacer: DefineComponent<TBsSpacer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsSubheader: DefineComponent<TBsSubheader, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsSubheader: DefineComponent<TBsSubheader, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsBasicCmpPlugin: Plugin;

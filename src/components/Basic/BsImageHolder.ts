@@ -1,15 +1,15 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {defineComponent, h, toDisplayString} from "vue";
-import {useSizeHeight, useSizeWidth} from "../Icon/mixins/iconApi";
-import {useCreateSvgNode} from "../Icon/mixins/svgApi";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {imageHolderProps} from "./mixins/imageHolderProps";
-import {useShapeClasses} from "../Avatar/mixins/avatarApi";
-import type {TBsImageHolder, TImageHolderOptionProps, TRecord} from "../../types";
-import Helper from "../../utils/Helper";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { defineComponent, h, toDisplayString } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import type { TBsImageHolder, TImageHolderOptionProps, TRecord } from '../../types';
+import Helper from '../../utils/Helper';
+import { useShapeClasses } from '../Avatar/mixins/avatarApi';
+import { useSizeHeight, useSizeWidth } from '../Icon/mixins/iconApi';
+import { useCreateSvgNode } from '../Icon/mixins/svgApi';
+import { imageHolderProps } from './mixins/imageHolderProps';
 
-export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsImageHolder",
+export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsImageHolder',
     props: imageHolderProps,
     setup(props) {
         const cmpProps = props as Readonly<TImageHolderOptionProps>;
@@ -22,19 +22,19 @@ export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions
         return () => {
             return useCreateSvgNode({
                 [`${cssPrefix}img-holder`]: true,
-                [`${cssPrefix}anchor-center`]: cmpProps.xPos === "50%",
+                [`${cssPrefix}anchor-center`]: cmpProps.xPos === '50%',
                 ...useShapeClasses(cmpProps.circle, cmpProps.rounded),
-            }, [], false, "xMidYMid slice", null, {
-                height: !szHeight || (<number>szHeight < 2) ? "100%" : Helper.cssUnit(szHeight),
-                width: !szWidth || (<number>szWidth < 2) ? "100%" : Helper.cssUnit(szWidth),
-                role: "img",
+            }, [], false, 'xMidYMid slice', null, {
+                height: !szHeight || (<number>szHeight < 2) ? '100%' : Helper.cssUnit(szHeight),
+                width: !szWidth || (<number>szWidth < 2) ? '100%' : Helper.cssUnit(szWidth),
+                role: 'img',
             }, [
                 showText()
-                    ? h("title", toDisplayString(cmpProps.placeholderText || cmpProps.placeHolder))
+                    ? h('title', toDisplayString(cmpProps.placeholderText || cmpProps.placeHolder))
                     : undefined,
-                h("rect", {width: "100%", height: "100%", fill: cmpProps.bgColor}),
+                h('rect', {width: '100%', height: '100%', fill: cmpProps.bgColor}),
                 showText()
-                    ? h("text", {
+                    ? h('text', {
                             fill: cmpProps.textColor,
                             x: Helper.cssUnit(cmpProps.xPos),
                             y: Helper.cssUnit(cmpProps.yPos),

@@ -1,9 +1,8 @@
 import type { AxiosResponse } from 'axios';
 import { meanBy, sumBy } from 'lodash';
+import { AbstractStore } from '../model';
 import type { IArrayStore, IBsModel, TRecord, TSortDirection, TSortOption } from '../types';
 import Helper from '../utils/Helper';
-import AbstractStore from './AbstractStore';
-
 
 /**
  * Data store class to work with collection of entity objects locally.

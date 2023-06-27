@@ -1,14 +1,21 @@
-import type { ComponentInternalInstance, ComputedRef, ExtractPropTypes, Ref, ShallowRef, Slots, VNode } from "vue";
-import { Teleport, h, mergeProps, nextTick, vShow, withDirectives } from "vue";
-import { ClickOutside } from "../../../directives/ClickOutside";
-import { Resize } from "../../../directives/Resize";
-import { Scroll } from "../../../directives/Scroll";
-import { useRenderTransition } from "../../../mixins/CommonApi";
-import { isChildOf, isSVGElement } from "../../../mixins/DomHelper";
-import type { TBsPopover, TPopoverOptionProps, TPopoverPosition, TRecord } from "../../../types";
-import Helper from "../../../utils/Helper";
-import { BsOverlay } from "../../Animation";
-import PopupManager from "./PopupManager";
+import type {
+    ComponentInternalInstance,
+    ComputedRef,
+    ExtractPropTypes,
+    Prop,
+    Ref,
+    ShallowRef,
+    Slots,
+    VNode
+} from 'vue';
+import { h, mergeProps, nextTick, Teleport, vShow, withDirectives } from 'vue';
+import { ClickOutside, Resize, Scroll } from '../../../directives';
+import { useRenderTransition } from '../../../mixins/CommonApi';
+import { isChildOf, isSVGElement } from '../../../mixins/DomHelper';
+import type { TBsPopover, TPopoverOptionProps, TPopoverPosition, TRecord } from '../../../types';
+import Helper from '../../../utils/Helper';
+import { BsOverlay } from '../../Animation';
+import PopupManager from './PopupManager';
 
 const SPACE = 8;
 
@@ -195,9 +202,9 @@ export function useRenderPopover(
     }
 
     return h(Teleport, { to: "body" }, [
-        // @ts-ignore
         h(BsOverlay, {
-            show: props.overlay && isActive.value,
+            // @ts-ignore
+            show: (props.overlay && isActive.value) as Prop<boolean>,
             opacity: props.overlayOpacity,
             color: props.overlayColor,
             onClick: () => {

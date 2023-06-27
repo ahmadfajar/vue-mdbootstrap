@@ -1,22 +1,22 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, createCommentVNode, defineComponent, nextTick, ref, watch} from "vue";
-import {useRenderTransition} from "../../mixins/CommonApi";
-import {useAlertClassNames, useAlertColorName, useAlertIconName, useRenderAlert} from "./mixins/alertApi";
-import {alertProps} from "./mixins/alertProps";
-import type {TAlertOptionProps, TBsAlert, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, createCommentVNode, defineComponent, nextTick, ref, watch } from 'vue';
+import { useRenderTransition } from '../../mixins/CommonApi';
+import type { TAlertOptionProps, TBsAlert, TRecord } from '../../types';
+import { useAlertClassNames, useAlertColorName, useAlertIconName, useRenderAlert } from './mixins/alertApi';
+import { alertProps } from './mixins/alertProps';
 
-export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsAlert",
+export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsAlert',
     props: alertProps,
     emits: [
         /**
          * Event fired when this component is dismissed (hide).
          */
-        "close",
+        'close',
         /**
          * Event fired when this component's value is updated.
          */
-        "update:model-value"
+        'update:model-value'
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TAlertOptionProps>;
@@ -33,8 +33,8 @@ export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, Comp
         const show = computed(() => !dismiss.value && props.modelValue);
         const dismissedAlert = () => {
             dismiss.value = true;
-            emit("update:model-value", false);
-            nextTick().then(() => emit("close"))
+            emit('update:model-value', false);
+            nextTick().then(() => emit('close'))
         }
 
         watch(
@@ -54,7 +54,7 @@ export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, Comp
                         slots, cmpProps, classNames, colorName,
                         alertIconName, dismissedAlert,
                     )
-                    : createCommentVNode(" BsAlert ", true)
+                    : createCommentVNode(' BsAlert ', true)
             )
     }
 });

@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TPopoverPosition, TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TPopoverPosition, TRecord } from '../../../types';
 
 export declare type TDropdownMenuOptionProps = {
     /**
@@ -48,4 +50,6 @@ export declare type TDropdownMenuOptionProps = {
 
 export declare type TBsDropdownMenu = ComponentObjectPropsOptions<TDropdownMenuOptionProps>;
 
-export declare const BsDropdownMenu: DefineComponent<TBsDropdownMenu, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsDropdownMenu: DefineComponent<TBsDropdownMenu, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsMenuPlugin: Plugin;

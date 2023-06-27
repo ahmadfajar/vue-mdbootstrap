@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TRecord, TValidationProps} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TRecord, TValidationProps } from '../../../types';
 
 export declare type TInputBaseProps = {
     /**
@@ -103,6 +105,8 @@ export declare type TBsRadio = ComponentObjectPropsOptions<TRadioOptionProps>;
 
 export declare type TBsRadioGroup = ComponentObjectPropsOptions<TRadioGroupOptionProps>;
 
-export declare const BsRadio: DefineComponent<TBsRadio, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsRadio: DefineComponent<TBsRadio, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsRadioGroup: DefineComponent<TBsRadioGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsRadioGroup: DefineComponent<TBsRadioGroup, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsRadioPlugin: Plugin;

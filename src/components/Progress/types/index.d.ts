@@ -3,13 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-
-export declare type TSpinnerRecord = {
-    styleTag?: ISpinnerElement;
-    diameters: Set<number>;
-}
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import { TRecord } from '../../../types';
 
 export declare type TMaskLoaderOptionProps = {
     /**
@@ -125,18 +123,16 @@ export declare type TProgressBarOptionProps = {
     showValue?: boolean;
 }
 
-export declare interface ISpinnerElement extends Element {
-    sheet?: CSSStyleSheet;
-}
-
 export declare type TBsMaskLoader = ComponentObjectPropsOptions<TMaskLoaderOptionProps>;
 
 export declare type TBsProgress = ComponentObjectPropsOptions<TProgressOptionProps>;
 
 export declare type TBsProgressBar = ComponentObjectPropsOptions<TProgressBarOptionProps>;
 
-export declare const BsMaskLoader: DefineComponent<TBsMaskLoader, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsMaskLoader: DefineComponent<TBsMaskLoader, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsProgress: DefineComponent<TBsProgress, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsProgress: DefineComponent<TBsProgress, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsProgressBar: DefineComponent<TBsProgressBar, unknown, unknown, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsProgressBar: DefineComponent<TBsProgressBar, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsProgressPlugin: Plugin;

@@ -1,11 +1,11 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {defineComponent, h, onMounted, ref, watch} from "vue";
-import {booleanProp} from "../../mixins/CommonProps";
-import {cssPrefix} from "../../mixins/CommonApi";
-import type {TBsNotificationBar, TNotificationBarOptionProps, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { defineComponent, h, onMounted, ref, watch } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import { booleanProp } from '../../mixins/CommonProps';
+import type { TBsNotificationBar, TNotificationBarOptionProps, TRecord } from '../../types';
 
-export default defineComponent<TBsNotificationBar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsNotificationBar",
+export default defineComponent<TBsNotificationBar, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsNotificationBar',
     props: {
         timeout: {
             type: Number,
@@ -56,9 +56,9 @@ export default defineComponent<TBsNotificationBar, TRecord, TRecord, ComputedOpt
         );
 
         return () =>
-            h("div", {
+            h('div', {
                 class: `${cssPrefix}notification-bar`,
-                style: {width: barWidth.value + "%"}
+                style: {width: barWidth.value + '%'}
             });
     }
 });

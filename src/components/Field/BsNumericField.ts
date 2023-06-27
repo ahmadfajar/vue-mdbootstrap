@@ -1,50 +1,50 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, ref, watch} from "vue";
-import {cssPrefix} from "../../mixins/CommonApi";
-import type {TBsNumericField, TNumericFieldOptionProps, TNumericOpsOptions, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import type { TBsNumericField, TNumericFieldOptionProps, TNumericOpsOptions, TRecord } from '../../types';
+import Helper from '../../utils/Helper';
+import { numericFieldProps } from './mixins/fieldProps';
+import { useRenderNumericField } from './mixins/numericFieldApi';
+import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from './mixins/textFieldApi';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowHelpText,
     useShowValidationError
-} from "./mixins/validationApi";
-import {useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton} from "./mixins/textFieldApi";
-import {useRenderNumericField} from "./mixins/numericFieldApi";
-import {numericFieldProps} from "./mixins/fieldProps";
-import Helper from "../../utils/Helper";
+} from './mixins/validationApi';
 
 
-export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsNumericField",
+export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsNumericField',
     props: numericFieldProps,
     emits: [
         /**
          * Fired when this component lost focus.
          */
-        "blur",
+        'blur',
         /**
          * Fired when this component got focused.
          */
-        "focus",
+        'focus',
         /**
          * Fired when this component's value is being cleared.
          */
-        "clear",
+        'clear',
         /**
          * Triggers when cursor is still in the `<input>` element and keyboard key is pressed.
          */
-        "keydown",
+        'keydown',
         /**
          * Fired when this component's value is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TNumericFieldOptionProps>;
         const autocomplete = thisProps.autocomplete && Helper.isString(thisProps.autocomplete)
             ? thisProps.autocomplete
-            : (thisProps.autocomplete ? "on" : Helper.uuid());
+            : (thisProps.autocomplete ? 'on' : Helper.uuid());
         const localValue = ref<number | null>(thisProps.modelValue === undefined ? null : thisProps.modelValue);
         const inputRef = ref<HTMLElement | null>(null);
         const hasFocus = ref(false);
@@ -57,7 +57,7 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
         const showAppendIcon = computed(() =>
             (slots.appendInner !== undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
             || (thisProps.actionButton === true && !thisProps.disabled && !thisProps.readonly)
-            || (thisProps.spinButton === true && thisProps.spinButtonPlacement === "right"
+            || (thisProps.spinButton === true && thisProps.spinButtonPlacement === 'right'
                 && !thisProps.disabled && !thisProps.readonly)
         );
         const fieldWrapperClasses = computed<TRecord>(() =>

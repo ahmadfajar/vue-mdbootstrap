@@ -1,18 +1,17 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "vue";
-import {computed, createCommentVNode, defineComponent, h} from "vue";
-import {cssPrefix, useRenderSlot} from "../../mixins/CommonApi";
-import {booleanProp} from "../../mixins/CommonProps";
-import {iconProps, imageProps} from "../Avatar/mixins/avatarProps";
-import {useCreateIconProps} from "../Avatar/mixins/avatarApi";
-import {useGetCalcSize, useSizeStyles} from "../Icon/mixins/iconApi";
-import {BsAvatar} from "../Avatar";
-import {BsIcon} from "../Icon";
-import type {TBsListTileLeading, TListTileLeadingOptionProps, TRecord} from "../../types";
-import Helper from "../../utils/Helper";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
+import { computed, createCommentVNode, defineComponent, h } from 'vue';
+import { cssPrefix, useRenderSlot } from '../../mixins/CommonApi';
+import { booleanProp } from '../../mixins/CommonProps';
+import type { TBsListTileLeading, TListTileLeadingOptionProps, TRecord } from '../../types';
+import Helper from '../../utils/Helper';
+import { BsAvatar } from '../Avatar';
+import { useCreateIconProps } from '../Avatar/mixins/avatarApi';
+import { iconProps, imageProps } from '../Avatar/mixins/avatarProps';
+import { BsIcon } from '../Icon';
+import { useGetCalcSize, useSizeStyles } from '../Icon/mixins/iconApi';
 
-
-export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsListTileLeading",
+export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsListTileLeading',
     props: {
         ...iconProps,
         ...imageProps,
@@ -28,8 +27,8 @@ export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOpt
             () => {
                 if (cmpProps.icon && (!cmpProps.size || useGetCalcSize(cmpProps) === 48)) {
                     return {
-                        height: "24px",
-                        width: "24px"
+                        height: '24px',
+                        width: '24px'
                     }
                 } else {
                     return useSizeStyles(cmpProps);
@@ -38,16 +37,16 @@ export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOpt
         );
 
         return () =>
-            h("div", {
+            h('div', {
                     class: [
                         `${cssPrefix}list-tile-leading`,
-                        cmpProps.center === true ? "d-flex align-self-center" : "",
-                        !Helper.isEmpty(cmpProps.icon) ? `${cssPrefix}has-icon` : "",
+                        cmpProps.center === true ? 'd-flex align-self-center' : '',
+                        !Helper.isEmpty(cmpProps.icon) ? `${cssPrefix}has-icon` : '',
                     ],
                     style: styles.value,
                 },
                 useRenderSlot(
-                    slots, "default", {key: Helper.uuid()},
+                    slots, 'default', {key: Helper.uuid()},
                     !Helper.isEmpty(cmpProps.imgSrc)
                         ? h(BsAvatar, {
                             imgSrc: props.imgSrc,
@@ -61,7 +60,7 @@ export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOpt
                                     size: ((!cmpProps.size || useGetCalcSize(cmpProps) === 48) ? 24 : useGetCalcSize(cmpProps)) as Prop<string | number>,
                                     ...useCreateIconProps(cmpProps),
                                 })
-                                : createCommentVNode(" v-if-BsIcon ")
+                                : createCommentVNode(' v-if-BsIcon ')
                         )
                 )
             )

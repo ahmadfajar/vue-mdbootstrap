@@ -1,5 +1,13 @@
-import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {IArrayStore, IBsStore, TLabelPosition, TRecord} from "../../../types";
+import {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import { IArrayStore, IBsStore, TLabelPosition, TRecord } from '../../../types';
 
 export declare type TDataListSchemaProps = {
     displayField: string,
@@ -111,4 +119,6 @@ export declare type TListboxOptionProps = {
 
 export declare type TBsListbox = ComponentObjectPropsOptions<TListboxOptionProps>;
 
-export declare const BsListbox: DefineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListbox: DefineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsListboxPlugin: Plugin;

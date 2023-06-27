@@ -1,14 +1,14 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {defineComponent, h, ref, watch} from "vue";
-import {booleanProp} from "../../mixins/CommonProps";
-import {cssPrefix, useGenerateId} from "../../mixins/CommonApi";
-import {baseTagProps} from "../Card/mixins/cardProps";
-import {useCreateRipple} from "./mixins/rippleApi";
-import type {IRippleEvent, TBsRipple, TRecord, TRippleOptionProps} from "../../types";
-import Helper from "../../utils/Helper";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { defineComponent, h, ref, watch } from 'vue';
+import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
+import { booleanProp } from '../../mixins/CommonProps';
+import type { IRippleEvent, TBsRipple, TRecord, TRippleOptionProps } from '../../types';
+import Helper from '../../utils/Helper';
+import { baseTagProps } from '../Card/mixins/cardProps';
+import { useCreateRipple } from './mixins/rippleApi';
 
-export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsRipple",
+export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsRipple',
     props: {
         ...baseTagProps,
         active: booleanProp,
@@ -19,7 +19,7 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Com
         /**
          * Fired when this component's animation state is updated.
          */
-        "update:active",
+        'update:active',
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TRippleOptionProps>;

@@ -1,8 +1,8 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, h, ref} from "vue";
-import type {TBsToggleField, TRecord, TToggleFieldOptionProps} from "../../types";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {validationProps} from "../Field/mixins/validationProps";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, h, ref } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import type { TBsToggleField, TRecord, TToggleFieldOptionProps } from '../../types';
+import Helper from '../../utils/Helper';
 import {
     useGetErrorItems,
     useHasValidated,
@@ -10,14 +10,14 @@ import {
     useRenderFieldFeedback,
     useShowHelpText,
     useShowValidationError
-} from "../Field/mixins/validationApi";
-import {toggleButtonProps} from "./mixins/buttonProps";
-import BsToggleButton from "./BsToggleButton";
-import Helper from "../../utils/Helper";
+} from '../Field/mixins/validationApi';
+import { validationProps } from '../Field/mixins/validationProps';
+import BsToggleButton from './BsToggleButton';
+import { toggleButtonProps } from './mixins/buttonProps';
 
 
-export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsToggleField",
+export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsToggleField',
     props: {
         ...toggleButtonProps,
         ...validationProps,
@@ -26,7 +26,7 @@ export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions
         /**
          * Callback fired when this component's value is updated.
          */
-        "update:model-value"
+        'update:model-value'
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TToggleFieldOptionProps>;
@@ -40,24 +40,24 @@ export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions
             () => ({
                 [`${cssPrefix}field`]: true,
                 [`${cssPrefix}toggle-field row`]: true,
-                "required": thisProps.required,
-                "readonly": thisProps.readonly,
-                "disabled": thisProps.disabled,
-                "has-error": hasError.value,
-                "has-success": hasValidated.value && !hasError.value
+                'required': thisProps.required,
+                'readonly': thisProps.readonly,
+                'disabled': thisProps.disabled,
+                'has-error': hasError.value,
+                'has-success': hasValidated.value && !hasError.value
 
             })
         );
 
         return () =>
-            h("div", {
+            h('div', {
                 class: wrapperClasses.value
             }, [
                 slots.default && slots.default(),
-                h("div", {
-                    class: "col-md",
+                h('div', {
+                    class: 'col-md',
                 }, [
-                    h("div", {
+                    h('div', {
                         class: [`${cssPrefix}field-inner`],
                     }, [
                         h(BsToggleButton, {
@@ -80,8 +80,8 @@ export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions
                             iconPosition: props.iconPosition,
                             onMouseenter: () => !Helper.isEmpty(props.helpText) && !props.persistentHelpText && (hasFocused.value = true),
                             onMouseleave: () => !Helper.isEmpty(props.helpText) && !props.persistentHelpText && (hasFocused.value = false),
-                            "onUpdate:model-value": (value: string | number | boolean) => {
-                                emit("update:model-value", value);
+                            'onUpdate:model-value': (value: string | number | boolean) => {
+                                emit('update:model-value', value);
                             }
                         }),
                     ]),

@@ -1,8 +1,6 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, nextTick, onMounted, reactive, ref, watch} from "vue";
-import {useGenerateId} from "../../mixins/CommonApi";
-import {chipGroupProps} from "./mixins/chipGroupProps";
-import {useChipIsSelected, useRenderChipGroup, useSetSliderSize} from "./mixins/chipGroupApi";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, nextTick, onMounted, reactive, ref, watch } from 'vue';
+import { useGenerateId } from '../../mixins/CommonApi';
 import type {
     TBsChipGroup,
     TChipContainer,
@@ -10,24 +8,26 @@ import type {
     TChipOptionItem,
     TChipValue,
     TRecord
-} from "../../types";
+} from '../../types';
+import { useChipIsSelected, useRenderChipGroup, useSetSliderSize } from './mixins/chipGroupApi';
+import { chipGroupProps } from './mixins/chipGroupProps';
 
-export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsChipGroup",
+export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsChipGroup',
     props: chipGroupProps,
     emits: [
         /**
          * Fired immediately when this component's value is changed.
          */
-        "change",
+        'change',
         /**
          * Fired when this component's value is updated.
          */
-        "update:model-value",
+        'update:model-value',
         /**
          * Fired when this component's item is dismissed (hide).
          */
-        "item:close",
+        'item:close',
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TChipGroupOptionProps>;
@@ -52,7 +52,7 @@ export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, 
         );
         const chipCloseHandler = (item: TChipOptionItem): void => {
             // const newItems = cmpProps.items.filter(it => it.id !== item.id);
-            emit("item:close", item);
+            emit('item:close', item);
         }
         const chipClickHandler = (item: TChipOptionItem): void => {
             if (item.disabled) {
@@ -72,12 +72,12 @@ export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, 
                     selectedValues.push(value);
                 }
 
-                emit("change", selectedValues);
-                nextTick().then(() => emit("update:model-value", selectedValues));
+                emit('change', selectedValues);
+                nextTick().then(() => emit('update:model-value', selectedValues));
             } else {
                 const isSelected = useChipIsSelected(item, cmpProps.modelValue);
-                emit("change", (isSelected ? value : null));
-                nextTick().then(() => emit("update:model-value", (!isSelected ? value : null)));
+                emit('change', (isSelected ? value : null));
+                nextTick().then(() => emit('update:model-value', (!isSelected ? value : null)));
             }
         }
 

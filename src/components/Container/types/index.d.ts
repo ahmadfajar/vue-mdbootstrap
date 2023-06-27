@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TRecord } from '../../../types';
 
 export declare type TAppContainerOptionProps = {
     /**
@@ -36,8 +38,10 @@ export declare type TBsContainer = ComponentObjectPropsOptions<TContainerOptionP
 
 export declare type TBsContent = ComponentObjectPropsOptions<TContainerOptionProps>;
 
-export declare const BsAppContainer: DefineComponent<TBsAppContainer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAppContainer: DefineComponent<TBsAppContainer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsContainer: DefineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsContainer: DefineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsContent: DefineComponent<TBsContent, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsContent: DefineComponent<TBsContent, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsContainerPlugin: Plugin;

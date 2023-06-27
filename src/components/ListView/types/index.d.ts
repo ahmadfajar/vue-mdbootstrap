@@ -4,7 +4,9 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
+    EmitsOptions,
+    MethodOptions,
+    Plugin
 } from 'vue';
 import type {
     ObjectBase,
@@ -221,60 +223,25 @@ export declare type TBsListTileTitle = ComponentObjectPropsOptions<TListTileText
 
 export declare type TBsListTileSubtitle = ComponentObjectPropsOptions<TListTileTextOptionProps>;
 
-export declare const BsListView: DefineComponent<TBsListView, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListView: DefineComponent<TBsListView, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsListNav: DefineComponent<TBsListNav, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListNav: DefineComponent<TBsListNav, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsListNavItem: DefineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListNavItem: DefineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsListTile: DefineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListTile: DefineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsListTileAction: DefineComponent<TBsListTileAction, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListTileAction: DefineComponent<TBsListTileAction, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsListTileContent: DefineComponent<TBsListTileContent, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListTileContent: DefineComponent<TBsListTileContent, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsListTileLeading: DefineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListTileLeading: DefineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsListTileTitle: DefineComponent<TBsListTileTitle, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListTileTitle: DefineComponent<TBsListTileTitle, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsListTileSubtitle: DefineComponent<TBsListTileSubtitle, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListTileSubtitle: DefineComponent<TBsListTileSubtitle, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare interface IListItem extends ObjectBase {
-    readonly uid: string;
-    readonly tag: string;
-    readonly component: ComponentInternalInstance;
-    readonly children: Array<IListItem>;
-
-    get parent(): IListItem | undefined;
-
-    set parent(value: IListItem | undefined);
-
-    /**
-     * Add or register an item to this ListItem registry.
-     *
-     * @param child The item to register.
-     * @returns The registry new size or `-1` if the item already exists.
-     */
-    addChild(child: IListItem): number;
-
-    /**
-     * Remove an item from this ListItem registry.
-     *
-     * @param id The item identifier.
-     */
-    removeChild(id: string): void;
-
-    /**
-     * Check if this ListItem registry size is greater than zero.
-     */
-    hasChild(): boolean;
-
-    fireEvent(name: string, ...args: unknown[]): void;
-
-    setActive(value: boolean): void;
-
-    setRippleOff(value: boolean): void;
-}
+export declare const BsListViewPlugin: Plugin;
 
 export declare interface IListViewProvider extends ObjectBase {
     readonly config: Readonly<TListViewOptionProps>;
@@ -331,4 +298,41 @@ export declare interface IListViewProvider extends ObjectBase {
      * Expand current item and show its child-items.
      */
     expand(item: IListItem): void;
+}
+
+export declare interface IListItem extends ObjectBase {
+    readonly uid: string;
+    readonly tag: string;
+    readonly component: ComponentInternalInstance;
+    readonly children: Array<IListItem>;
+
+    get parent(): IListItem | undefined;
+
+    set parent(value: IListItem | undefined);
+
+    /**
+     * Add or register an item to this ListItem registry.
+     *
+     * @param child The item to register.
+     * @returns The registry new size or `-1` if the item already exists.
+     */
+    addChild(child: IListItem): number;
+
+    /**
+     * Remove an item from this ListItem registry.
+     *
+     * @param id The item identifier.
+     */
+    removeChild(id: string): void;
+
+    /**
+     * Check if this ListItem registry size is greater than zero.
+     */
+    hasChild(): boolean;
+
+    fireEvent(name: string, ...args: unknown[]): void;
+
+    setActive(value: boolean): void;
+
+    setRippleOff(value: boolean): void;
 }

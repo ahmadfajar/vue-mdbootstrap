@@ -1,45 +1,45 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {defineComponent, reactive, ref, shallowRef} from "vue";
-import {useRegisterListboxWatchers, useRenderListbox} from "./mixins/listboxApi";
-import {listboxProps} from "./mixins/listboxProps";
-import type {IBsModel, TBsListbox, TDataListSchemaProps, TListboxOptionProps, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { defineComponent, reactive, ref, shallowRef } from 'vue';
+import type { IBsModel, TBsListbox, TDataListSchemaProps, TListboxOptionProps, TRecord } from '../../types';
+import { useRegisterListboxWatchers, useRenderListbox } from './mixins/listboxApi';
+import { listboxProps } from './mixins/listboxProps';
 
-export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsListbox",
+export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsListbox',
     props: listboxProps,
     emits: [
         /**
          * Fired when an item is selected.
          */
-        "select",
+        'select',
         /**
          * Fired when an item is deselected.
          */
-        "deselect",
+        'deselect',
         /**
          * Fired when the data has been fetched.
          */
-        "data-bind",
+        'data-bind',
         /**
          * Fired when error loading data items.
          */
-        "data-error",
+        'data-error',
         /**
          * Fired when the Listbox data items is filtered.
          */
-        "data-filter",
+        'data-filter',
         /**
          * Fired when the Listbox value is updated.
          */
-        "update:model-value",
+        'update:model-value',
         /**
          * Fired when the Listbox search value is updated.
          */
-        "update:search-text",
+        'update:search-text',
         /**
          * Fired when the Listbox selected value is updated.
          */
-        "update:selected-value",
+        'update:selected-value',
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TListboxOptionProps>;
@@ -59,7 +59,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Co
         const searchText = ref(thisProps.searchText);
         const fieldValues = ref(thisProps.modelValue);
         const selectedItems = shallowRef<IBsModel[]>([]);
-        const listviewStyles = reactive<TRecord>({maxHeight: maxHeight + "px"});
+        const listviewStyles = reactive<TRecord>({maxHeight: maxHeight + 'px'});
 
         useRegisterListboxWatchers(
             emit, thisProps, dataSource, dataSchema, cacheItems,

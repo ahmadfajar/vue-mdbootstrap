@@ -1,5 +1,6 @@
-import type {ComputedRef, Prop, Ref, Slots, VNode} from "vue";
-import {createCommentVNode, h} from "vue";
+import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import { createCommentVNode, h } from 'vue';
+import { cssPrefix, useRenderTransition } from '../../../mixins/CommonApi';
 import type {
     TBsIcon,
     TEmitFn,
@@ -7,40 +8,39 @@ import type {
     TNumericOpsOptions,
     TRecord,
     TSpaceAround
-} from "../../../types";
-import {cssPrefix, useRenderTransition} from "../../../mixins/CommonApi";
-import {BsRipple} from "../../Animation";
-import {BsIcon} from "../../Icon";
-import {useRenderFieldFeedback} from "./validationApi";
+} from '../../../types';
+import { BsRipple } from '../../Animation';
+import { BsIcon } from '../../Icon';
 import {
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
     useInputTextFieldAttrs,
     useMakeInputBaseAttrs
-} from "./textFieldApi";
+} from './textFieldApi';
 import {
     useOnFieldBlurred,
     useOnFieldFocused,
     useOnFieldValueCleared,
     useOnFieldValueUpdated,
     useOnTextFieldNodeMounted
-} from "./textFieldEventApi";
+} from './textFieldEventApi';
+import { useRenderFieldFeedback } from './validationApi';
 
 function createDecValueButton(
     props: Readonly<TNumericFieldOptionProps>,
     decreaseValueHandler: () => void,
 ): VNode {
-    return h("div", {
-            class: [`${cssPrefix}btn-icon`, "btn-sm"],
+    return h('div', {
+            class: [`${cssPrefix}btn-icon`, 'btn-sm'],
             onClick: decreaseValueHandler,
         }, [
-            // @ts-ignore
             h(BsRipple, {
-                disabled: props.disabled,
-                tag: "span",
+                // @ts-ignore
+                disabled: props.disabled as Prop<boolean>,
+                tag: 'span' as Prop<string>,
             }, {
                 default: () => h(BsIcon, {
-                    icon: (props.actionIconVariant === "outlined"
+                    icon: (props.actionIconVariant === 'outlined'
                         ? `remove_circle_outline_${props.actionIconVariant}`
                         : `remove_circle_${props.actionIconVariant}`) as Prop<string>,
                     size: 24 as Prop<number>,
@@ -54,17 +54,17 @@ function createIncValueButton(
     props: Readonly<TNumericFieldOptionProps>,
     increaseValueHandler: () => void,
 ): VNode {
-    return h("div", {
-            class: [`${cssPrefix}btn-icon`, "btn-sm"],
+    return h('div', {
+            class: [`${cssPrefix}btn-icon`, 'btn-sm'],
             onClick: increaseValueHandler,
         }, [
-            // @ts-ignore
             h(BsRipple, {
-                disabled: props.disabled,
-                tag: "span",
+                // @ts-ignore
+                disabled: props.disabled as Prop<boolean>,
+                tag: 'span' as Prop<string>,
             }, {
                 default: () => h(BsIcon, {
-                    icon: (props.actionIconVariant === "outlined"
+                    icon: (props.actionIconVariant === 'outlined'
                         ? `add_circle_outline_${props.actionIconVariant}`
                         : `add_circle_${props.actionIconVariant}`) as Prop<string>,
                     size: 24 as Prop<number>,
@@ -82,9 +82,9 @@ function createActionButtons(
 ) {
     const children = [];
 
-    if (position === "left" && props.actionButtonPlacement === "both") {
+    if (position === 'left' && props.actionButtonPlacement === 'both') {
         children.push(createDecValueButton(props, decreaseValueHandler));
-    } else if (position === "right" && props.actionButtonPlacement === "both") {
+    } else if (position === 'right' && props.actionButtonPlacement === 'both') {
         children.push(createIncValueButton(props, increaseValueHandler));
     } else {
         children.push(
@@ -93,7 +93,7 @@ function createActionButtons(
         );
     }
 
-    return h("div", {
+    return h('div', {
         class: [`${cssPrefix}action-button-${position}`]
     }, children);
 }
@@ -103,34 +103,34 @@ function createSpinnerButton(
     increaseValueHandler: () => void,
     decreaseValueHandler: () => void,
 ): VNode {
-    return h("div", {
+    return h('div', {
         class: [`${cssPrefix}spin-button-${props.spinButtonPlacement}`]
     }, [
-        h("div", {
-            class: ["btn", `${cssPrefix}spin-up`],
+        h('div', {
+            class: ['btn', `${cssPrefix}spin-up`],
             onClick: increaseValueHandler,
         }, [
-            // @ts-ignore
             h(BsRipple, {
-                disabled: props.disabled,
-                tag: "span",
+                // @ts-ignore
+                disabled: props.disabled as Prop<boolean>,
+                tag: 'span' as Prop<string>,
             }, {
-                default: () => h("div", {
-                    class: "triangle-up",
+                default: () => h('div', {
+                    class: 'triangle-up',
                 })
             }),
         ]),
-        h("div", {
-            class: ["btn", `${cssPrefix}spin-down`],
+        h('div', {
+            class: ['btn', `${cssPrefix}spin-down`],
             onClick: decreaseValueHandler,
         }, [
-            // @ts-ignore
             h(BsRipple, {
-                disabled: props.disabled,
-                tag: "span",
+                // @ts-ignore
+                disabled: props.disabled as Prop<boolean>,
+                tag: 'span' as Prop<string>,
             }, {
-                default: () => h("div", {
-                    class: "triangle-down",
+                default: () => h('div', {
+                    class: 'triangle-down',
                 })
             }),
         ]),
@@ -148,16 +148,16 @@ function createAppendFieldActionNode(
     decreaseValueHandler: () => void,
 ): VNode {
     return useRenderTransition(
-        {name: "fade"},
-        (showClearButton || hasValidated || hasError || (props.spinButton && props.spinButtonPlacement === "right") ||
-            (props.actionButton && ["right", "both"].includes(<string>props.actionButtonPlacement)))
-            ? h("div", {
+        {name: 'fade'},
+        (showClearButton || hasValidated || hasError || (props.spinButton && props.spinButtonPlacement === 'right') ||
+            (props.actionButton && ['right', 'both'].includes(<string>props.actionButtonPlacement)))
+            ? h('div', {
                 class: `${cssPrefix}action-icon`
             }, [
                 (
                     showClearButton
                         ? h<TBsIcon>(BsIcon, {
-                            class: "icon-clear",
+                            class: 'icon-clear',
                             icon: `cancel_${props.actionIconVariant}` as Prop<string>,
                             size: iconSize as Prop<number | undefined>,
                             onClick: clearHandler
@@ -165,20 +165,20 @@ function createAppendFieldActionNode(
                         : undefined
                 ),
                 (
-                    (!props.disabled && !props.readonly && props.spinButton && props.spinButtonPlacement === "right")
+                    (!props.disabled && !props.readonly && props.spinButton && props.spinButtonPlacement === 'right')
                         ? createSpinnerButton(props, increaseValueHandler, decreaseValueHandler)
                         : (
                             (!props.disabled && !props.readonly &&
-                                props.actionButton && ["right", "both"].includes(<string>props.actionButtonPlacement))
-                                ? createActionButtons(props, "right", increaseValueHandler, decreaseValueHandler)
-                                : ""
+                                props.actionButton && ['right', 'both'].includes(<string>props.actionButtonPlacement))
+                                ? createActionButtons(props, 'right', increaseValueHandler, decreaseValueHandler)
+                                : ''
                         )
                 ),
                 (
                     (hasValidated && hasError)
                         ? h<TBsIcon>(BsIcon, {
-                            class: "icon-error text-danger",
-                            icon: (props.actionIconVariant === "outlined"
+                            class: 'icon-error text-danger',
+                            icon: (props.actionIconVariant === 'outlined'
                                 ? `error_outline_${props.actionIconVariant}`
                                 : `error_${props.actionIconVariant}`) as Prop<string>,
                             size: iconSize as Prop<number | undefined>,
@@ -186,15 +186,15 @@ function createAppendFieldActionNode(
                         : (
                             (hasValidated && !hasError)
                                 ? h<TBsIcon>(BsIcon, {
-                                    class: "icon-success text-success",
+                                    class: 'icon-success text-success',
                                     icon: `check_${props.actionIconVariant}` as Prop<string>,
                                     size: iconSize as Prop<number | undefined>,
                                 })
-                                : ""
+                                : ''
                         )
                 ),
             ])
-            : createCommentVNode(" v-if-action-icon ")
+            : createCommentVNode(' v-if-action-icon ')
     );
 }
 
@@ -203,22 +203,22 @@ function createPrependFieldActionNode(
     increaseValueHandler: () => void,
     decreaseValueHandler: () => void,
 ): VNode {
-    if (!props.disabled && !props.readonly && props.spinButton && props.spinButtonPlacement === "left") {
-        return h("div", {
+    if (!props.disabled && !props.readonly && props.spinButton && props.spinButtonPlacement === 'left') {
+        return h('div', {
             class: `${cssPrefix}action-icon`
         }, [
             createSpinnerButton(props, increaseValueHandler, decreaseValueHandler)
         ]);
     } else if (!props.disabled && !props.readonly && !props.spinButton && props.actionButton
-        && ["left", "both"].includes(<string>props.actionButtonPlacement)) {
-        return h("div", {
+        && ['left', 'both'].includes(<string>props.actionButtonPlacement)) {
+        return h('div', {
             class: [`${cssPrefix}action-icon`, `${cssPrefix}button-wrapper-${props.actionButtonPlacement}`]
         }, [
-            createActionButtons(props, "left", increaseValueHandler, decreaseValueHandler)
+            createActionButtons(props, 'left', increaseValueHandler, decreaseValueHandler)
         ]);
     }
 
-    return createCommentVNode(" v-if-action-button ");
+    return createCommentVNode(' v-if-action-button ');
 }
 
 function createFieldInputText(
@@ -235,19 +235,19 @@ function createFieldInputText(
         ? localValue.value?.toString(10)
         : localValue.value?.toLocaleString(numericOptions.locale, formatOptions);
 
-    return h("input", {
+    return h('input', {
         ...useMakeInputBaseAttrs(props),
         ...useInputTextFieldAttrs(props, autocomplete),
         ref: inputRef,
-        role: "textbox",
-        type: "text",
+        role: 'textbox',
+        type: 'text',
         value: displayValue,
         onBlur: (e: Event) => useOnFieldBlurred(emit, e, hasFocus, (<boolean>props.disabled)),
         onChange: () => {
             const field = <HTMLInputElement>inputRef.value;
-            if (field.value === null || field.value === "") {
+            if (field.value === null || field.value === '') {
                 useOnFieldValueUpdated(emit, localValue, null);
-                displayValue = "";
+                displayValue = '';
             } else {
                 const result = parseFloat(field.value);
                 if (isGreaterOrEqualMinValue(result, numericOptions)
@@ -272,9 +272,9 @@ function createFieldInputText(
             ];
 
             if (specialKey.includes(e.key)) {
-                emit("keydown", e);
+                emit('keydown', e);
             } else if (/^-?\d*[.]?\d*$/.test(e.key)) {
-                emit("keydown", e);
+                emit('keydown', e);
             } else if (incrementKey.includes(e.key) && !props.disabled && !props.readonly) {
                 incrementValue(props, numericOptions, localValue, emit);
             } else if (decrementKey.includes(e.key) && !props.disabled && !props.readonly) {
@@ -309,7 +309,7 @@ export function useRenderNumericField(
 
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
-        h("div", {
+        h('div', {
             class: controlCss.value,
         }, [
             useCreateFieldInnerWrapper(

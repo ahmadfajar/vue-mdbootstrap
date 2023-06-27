@@ -1,12 +1,12 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {defineComponent, h} from "vue";
-import {BsRipple} from "../Animation";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {buttonInnerProps} from "./mixins/buttonProps";
-import type {TBsButtonInner, TBsRipple, TButtonInnerOptionProps, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { defineComponent, h } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import type { TBsButtonInner, TBsRipple, TButtonInnerOptionProps, TRecord } from '../../types';
+import { BsRipple } from '../Animation';
+import { buttonInnerProps } from './mixins/buttonProps';
 
-export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsButtonInner",
+export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsButtonInner',
     props: buttonInnerProps,
     setup(props, {slots}) {
         const cmpProps = props as Readonly<TButtonInnerOptionProps>;
@@ -18,7 +18,7 @@ export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions
                 tag: props.tagName,
             }, {
                 default: () => h(
-                    "span",
+                    'span',
                     {
                         class: [
                             `${cssPrefix}btn-inner`,

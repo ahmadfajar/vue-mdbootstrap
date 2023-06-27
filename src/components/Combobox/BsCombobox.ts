@@ -1,63 +1,63 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, ref, shallowRef, watch} from "vue";
-import {cssPrefix} from "../../mixins/CommonApi";
-import type {IBsModel, TBsCombobox, TComboboxOptionProps, TDataListSchemaProps, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, ref, shallowRef, watch } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import type { IBsModel, TBsCombobox, TComboboxOptionProps, TDataListSchemaProps, TRecord } from '../../types';
+import Helper from '../../utils/Helper';
+import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from '../Field/mixins/textFieldApi';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowHelpText,
     useShowValidationError
-} from "../Field/mixins/validationApi";
-import {useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton} from "../Field/mixins/textFieldApi";
-import {useRenderCombobox} from "./mixins/comboboxApi";
-import {comboboxProps} from "./mixins/comboboxProps";
-import Helper from "../../utils/Helper";
+} from '../Field/mixins/validationApi';
+import { useRenderCombobox } from './mixins/comboboxApi';
+import { comboboxProps } from './mixins/comboboxProps';
 
-export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsCombobox",
+export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsCombobox',
     props: comboboxProps,
     emits: [
         /**
          * Fired when this component's value is being cleared.
          */
-        "clear",
+        'clear',
         /**
          * Fired when the Popover is hiding.
          */
-        "close",
+        'close',
         /**
          * Fired when the Popover is show.
          */
-        "open",
+        'open',
         /**
          * Fired when an item is selected.
          */
-        "select",
+        'select',
         /**
          * Fired when an item is deselected.
          */
-        "deselect",
+        'deselect',
         /**
          * Fired when the data has been fetched.
          */
-        "data-bind",
+        'data-bind',
         /**
          * Fired when error loading data items.
          */
-        "data-error",
+        'data-error',
         /**
          * Fired when this component's data items is filtered.
          */
-        "data-filter",
+        'data-filter',
         /**
          * Fired when this component's value is updated.
          */
-        "update:model-value",
+        'update:model-value',
         /**
          * Fired when this component's selected value is updated.
          */
-        "update:selected-value",
+        'update:selected-value',
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TComboboxOptionProps>;
@@ -114,7 +114,7 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
                         const newFilters = ds.createFilters({
                             property: <string>dataSchema.cascadeField,
                             value: <string | number>value,
-                            operator: "eq"
+                            operator: 'eq'
                         });
                         if (oldFilters.length === 0) {
                             ds.defaultFilters = newFilters;
@@ -126,9 +126,9 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, C
 
                     ds.setFilters([], true);
                     ds.load().then(() => {
-                        emit("data-bind", ds.dataItems);
+                        emit('data-bind', ds.dataItems);
                     }).catch((error) => {
-                        emit("data-error", error);
+                        emit('data-error', error);
                         console.warn(error);
                     });
                 }

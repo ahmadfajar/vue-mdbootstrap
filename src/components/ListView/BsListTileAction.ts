@@ -1,13 +1,12 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {defineComponent} from "vue";
-import {booleanProp} from "../../mixins/CommonProps";
-import {cssPrefix, useSimpleRenderWithSlots} from "../../mixins/CommonApi";
-import {baseTagProps} from "../Card/mixins/cardProps";
-import type {TBsListTileAction, TListTileActionOptionProps, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { defineComponent } from 'vue';
+import { cssPrefix, useSimpleRenderWithSlots } from '../../mixins/CommonApi';
+import { booleanProp } from '../../mixins/CommonProps';
+import type { TBsListTileAction, TListTileActionOptionProps, TRecord } from '../../types';
+import { baseTagProps } from '../Card/mixins/cardProps';
 
-
-export default defineComponent<TBsListTileAction, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsListTileAction",
+export default defineComponent<TBsListTileAction, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsListTileAction',
     props: {
         ...baseTagProps,
         /**
@@ -28,8 +27,8 @@ export default defineComponent<TBsListTileAction, TRecord, TRecord, ComputedOpti
             useSimpleRenderWithSlots(<string>props.tag, slots, {
                 [`${cssPrefix}list-tile-action`]: true,
                 [`${cssPrefix}action-stack`]: cmpProps.stack === true,
-                "d-flex": !cmpProps.stack && cmpProps.center === true,
-                "align-self-center": cmpProps.center === true,
+                'd-flex': !cmpProps.stack && cmpProps.center === true,
+                'align-self-center': cmpProps.center === true,
             })
     }
 });

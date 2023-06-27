@@ -1,38 +1,44 @@
-import type { ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop } from "vue";
+import type {
+    ComponentInternalInstance,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    EmitsOptions,
+    MethodOptions,
+    Prop
+} from 'vue';
 import {
-    Fragment,
-    Teleport,
     computed,
     createCommentVNode,
     defineComponent,
+    Fragment,
     getCurrentInstance,
     h,
     nextTick,
     onBeforeUnmount,
     onMounted,
     ref,
+    Teleport,
     toDisplayString,
     watch,
     withDirectives
-} from "vue";
-import { Resize } from "../../directives/Resize";
-import { Scroll } from "../../directives/Scroll";
-import { cssPrefix, useRenderTransition } from "../../mixins/CommonApi";
-import { booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp } from "../../mixins/CommonProps";
-import type { TBsTooltip, TPositionType, TRecord, TTooltipOptionProps } from "../../types";
-import Helper from "../../utils/Helper";
-import { useAddTooltipListener, useRemoveTooltipListener, useSetTooltipPosition } from "./mixins/tooltipApi";
+} from 'vue';
+import { Resize, Scroll } from '../../directives';
+import { cssPrefix, useRenderTransition } from '../../mixins/CommonApi';
+import { booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp } from '../../mixins/CommonProps';
+import type { TBsTooltip, TPositionType, TRecord, TTooltipOptionProps } from '../../types';
+import Helper from '../../utils/Helper';
+import { useAddTooltipListener, useRemoveTooltipListener, useSetTooltipPosition } from './mixins/tooltipApi';
 
-export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsTooltip",
+export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsTooltip',
     props: {
         content: stringProp,
         disabled: booleanProp,
         show: booleanProp,
         placement: {
             type: String,
-            default: "bottom",
-            validator: (v: string) => ["top", "bottom", "left", "right"].includes(v)
+            default: 'bottom',
+            validator: (v: string) => ['top', 'bottom', 'left', 'right'].includes(v)
         } as Prop<TPositionType>,
         width: stringOrNumberProp,
         maxWidth: validStringOrNumberProp,
@@ -46,9 +52,9 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
         /**
          * Fired when this Tooltip state is updated.
          */
-        "update:show",
+        'update:show',
     ],
-    setup(props, { slots }) {
+    setup(props, {slots}) {
         const thisProps = props as Readonly<TTooltipOptionProps>;
         const tooltip = ref<Element | null>(null);
         const active = ref<boolean>(false);
@@ -59,9 +65,9 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
         const transitionName = computed(() => `${cssPrefix}tooltip-${thisProps.placement}`);
         const classNames = computed(() => [`${cssPrefix}tooltip`, transitionName.value]);
         const styles = computed(() => ({
-            "width": thisProps.width === "auto" ? undefined : Helper.cssUnit(thisProps.width),
-            "max-width": Helper.cssUnit(thisProps.maxWidth),
-            "z-index": thisProps.zIndex
+            'width': thisProps.width === 'auto' ? undefined : Helper.cssUnit(thisProps.width),
+            'max-width': Helper.cssUnit(thisProps.maxWidth),
+            'z-index': thisProps.zIndex
         }));
         let instance: ComponentInternalInstance | null;
 
@@ -81,22 +87,22 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Co
         return () =>
             h(Fragment, null, [
                 h(Teleport,
-                    { to: "body" },
-                    useRenderTransition({ name: transitionName.value }, [
+                    {to: 'body'},
+                    useRenderTransition({name: transitionName.value}, [
                         isActive.value
                             ? withDirectives(
-                                h("div", {
+                                h('div', {
                                     class: classNames.value,
                                     style: styles.value,
                                     ref: tooltip,
-                                    role: "tooltip"
+                                    role: 'tooltip'
                                 }, [
-                                    h("div", { class: "tooltip-arrow" }),
-                                    h("div", { class: `${cssPrefix}tooltip-inner` }, toDisplayString(thisProps.content)),
+                                    h('div', {class: 'tooltip-arrow'}),
+                                    h('div', {class: `${cssPrefix}tooltip-inner`}, toDisplayString(thisProps.content)),
                                 ]), [
-                                [Resize, setPosition], [Scroll, setPosition]
-                            ]
-                            ) : createCommentVNode(" BsTooltip ", true),
+                                    [Resize, setPosition], [Scroll, setPosition]
+                                ]
+                            ) : createCommentVNode(' BsTooltip ', true),
                     ])
                 ),
                 slots.default && slots.default(),

@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TLabelPosition, TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TLabelPosition, TRecord } from '../../../types';
 
 export declare type TSideDrawerOptionProps = {
     color?: string;
@@ -24,4 +26,6 @@ export declare type TSideDrawerOptionProps = {
 
 export declare type TBsSideDrawer = ComponentObjectPropsOptions<TSideDrawerOptionProps>;
 
-export declare const BsSideDrawer: DefineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsSideDrawer: DefineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsDrawerPlugin: Plugin;

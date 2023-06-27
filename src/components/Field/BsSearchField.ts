@@ -1,43 +1,43 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, ref, watch} from "vue";
-import type {TBsSearchField, TRecord, TSearchFieldOptionProps} from "../../types";
-import {searchFieldProps} from "./mixins/fieldProps";
-import {useRenderSearchField, useSearchFieldClasses} from "./mixins/searchFieldApi";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
+import type { TBsSearchField, TRecord, TSearchFieldOptionProps } from '../../types';
+import { searchFieldProps } from './mixins/fieldProps';
+import { useRenderSearchField, useSearchFieldClasses } from './mixins/searchFieldApi';
 
 
-export default defineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsSearchField",
+export default defineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsSearchField',
     props: searchFieldProps,
     inheritAttrs: false,
     emits: [
         /**
          * Fired when this component lost focus.
          */
-        "blur",
+        'blur',
         /**
          * Fired when this component got focused.
          */
-        "focus",
+        'focus',
         /**
          * Fired when this component's value is being cleared.
          */
-        "clear",
+        'clear',
         /**
          * Asks handler to start searching for the given keyword.
          */
-        "search",
+        'search',
         /**
          * Fired when the Popover is show.
          */
-        "open",
+        'open',
         /**
          * Fired when the Popover is hiding.
          */
-        "close",
+        'close',
         /**
          * Fired when this component's value is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {attrs, emit, slots}) {
         const thisProps = props as Readonly<TSearchFieldOptionProps>;

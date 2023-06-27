@@ -1,13 +1,12 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {defineComponent} from "vue";
-import {booleanProp} from "../../mixins/CommonProps";
-import {cssPrefix, useSimpleRenderWithSlots} from "../../mixins/CommonApi";
-import {baseTagProps} from "../Card/mixins/cardProps";
-import type {TBsListTileContent, TListTileContentOptionProps, TRecord} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { defineComponent } from 'vue';
+import { cssPrefix, useSimpleRenderWithSlots } from '../../mixins/CommonApi';
+import { booleanProp } from '../../mixins/CommonProps';
+import type { TBsListTileContent, TListTileContentOptionProps, TRecord } from '../../types';
+import { baseTagProps } from '../Card/mixins/cardProps';
 
-
-export default defineComponent<TBsListTileContent, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsListTileContent",
+export default defineComponent<TBsListTileContent, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsListTileContent',
     props: {
         ...baseTagProps,
         /**

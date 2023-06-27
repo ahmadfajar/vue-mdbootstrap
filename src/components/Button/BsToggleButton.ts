@@ -1,33 +1,33 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions, Prop} from "vue";
-import {defineComponent, h, ref, vModelCheckbox, vModelRadio, withDirectives} from "vue";
-import {useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemContent} from "./mixins/buttonApi";
-import {toggleButtonProps} from "./mixins/buttonProps";
-import {cssPrefix} from "../../mixins/CommonApi";
-import BsButtonInner from "./BsButtonInner";
-import type {TBsButtonInner, TBsToggleButton, TInputOptionItem, TRecord, TToggleButtonOptionProps} from "../../types";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
+import { defineComponent, h, ref, vModelCheckbox, vModelRadio, withDirectives } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import type { TBsButtonInner, TBsToggleButton, TInputOptionItem, TRecord, TToggleButtonOptionProps } from '../../types';
+import BsButtonInner from './BsButtonInner';
+import { useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemContent } from './mixins/buttonApi';
+import { toggleButtonProps } from './mixins/buttonProps';
 
-export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsToggleButton",
+export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsToggleButton',
     props: toggleButtonProps,
     emits: [
         /**
          * Callback fired when this component's value is updated.
          */
-        "update:model-value"
+        'update:model-value'
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TToggleButtonOptionProps>;
         const localValue = ref<string | number | boolean | Array<unknown> | undefined>(<string | number | boolean | Array<unknown> | undefined>props.modelValue);
         const makeInputEl = (item: TInputOptionItem, props: Readonly<TToggleButtonOptionProps>) => {
             return withDirectives(
-                h("input", {
-                    class: "d-none",
+                h('input', {
+                    class: 'd-none',
                     value: item.value,
                     ...useMakeInputItemAttrs(item, cmpProps),
-                    "onUpdate:modelValue": (value: string | number | boolean) => {
+                    'onUpdate:modelValue': (value: string | number | boolean) => {
                         if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
                             localValue.value = value;
-                            emit("update:model-value", localValue.value);
+                            emit('update:model-value', localValue.value);
                         }
                     }
                 }),
@@ -43,25 +43,25 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
         }
 
         return () => {
-            return h("div", {
+            return h('div', {
                     class: [
-                        "btn-group",
-                        cmpProps.pill ? "rounded-pill" : (!cmpProps.pill && !cmpProps.rounded ? "rounded-1" : ""),
-                        cmpProps.disabled ? `${cssPrefix}disabled` : "",
-                        cmpProps.readonly ? `${cssPrefix}readonly` : "",
-                        cmpProps.required ? `${cssPrefix}required` : "",
+                        'btn-group',
+                        cmpProps.pill ? 'rounded-pill' : (!cmpProps.pill && !cmpProps.rounded ? 'rounded-1' : ''),
+                        cmpProps.disabled ? `${cssPrefix}disabled` : '',
+                        cmpProps.readonly ? `${cssPrefix}readonly` : '',
+                        cmpProps.required ? `${cssPrefix}required` : '',
                     ],
                     id: props.id,
-                    role: "group",
+                    role: 'group',
                 },
                 cmpProps.items?.map((item: TInputOptionItem, idx: number) => {
-                    return h("label", {
+                    return h('label', {
                         key: `btn-${idx}`,
                         tabIndex: 0,
                         class: useMakeInputItemClasses(item, cmpProps),
                         // onClick: (e: Event) => (<HTMLElement>e.target).focus(),
                         onKeydown: (e: KeyboardEvent) => {
-                            if (["Space", "Enter"].includes(e.code)) {
+                            if (['Space', 'Enter'].includes(e.code)) {
                                 (<HTMLElement>e.target).focus();
                                 if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {
                                     if (cmpProps.multiple) {
@@ -73,7 +73,7 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                                     } else {
                                         localValue.value = item.value;
                                     }
-                                    emit("update:model-value", localValue.value);
+                                    emit('update:model-value', localValue.value);
                                 }
                                 e.preventDefault();
                             }

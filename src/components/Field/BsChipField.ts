@@ -1,24 +1,24 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, ref, watch} from "vue";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {booleanProp, stringOrArrayProp, stringProp} from "../../mixins/CommonProps";
-import {inputProps, textFieldProps} from "./mixins/fieldProps";
-import {validationProps} from "./mixins/validationProps";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import { booleanProp, stringOrArrayProp, stringProp } from '../../mixins/CommonProps';
+import type { TBsChipField, TChipFieldOptionProps, TRecord } from '../../types';
+import Helper from '../../utils/Helper';
+import { useRenderChipField } from './mixins/chipFieldApi';
+import { inputProps, textFieldProps } from './mixins/fieldProps';
+import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from './mixins/textFieldApi';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowHelpText,
     useShowValidationError
-} from "./mixins/validationApi";
-import type {TBsChipField, TChipFieldOptionProps, TRecord} from "../../types";
-import {useRenderChipField} from "./mixins/chipFieldApi";
-import {useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton} from "./mixins/textFieldApi";
-import Helper from "../../utils/Helper";
+} from './mixins/validationApi';
+import { validationProps } from './mixins/validationProps';
 
 
-export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsChipField",
+export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsChipField',
     props: {
         ...inputProps,
         ...textFieldProps,
@@ -39,34 +39,34 @@ export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, 
         /**
          * Fired when this ChipField lost focus.
          */
-        "blur",
+        'blur',
         /**
          * Fired when this ChipField got focused.
          */
-        "focus",
+        'focus',
         /**
          * Fired when this ChipField's value is being cleared.
          */
-        "clear",
+        'clear',
         /**
          * Fired when `KeyboardEvent` is triggered from the `<input>` element.
          */
-        "keydown",
+        'keydown',
         /**
          * Fired when a chip is deleted from this ChipField.
          */
-        "delete-item",
+        'delete-item',
         /**
          * Fired when this ChipField's value is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TChipFieldOptionProps>;
         const autocomplete = thisProps.autocomplete && Helper.isString(thisProps.autocomplete)
             ? thisProps.autocomplete
-            : (thisProps.autocomplete ? "on" : Helper.uuid());
-        const inputValue = ref<string>("");
+            : (thisProps.autocomplete ? 'on' : Helper.uuid());
+        const inputValue = ref<string>('');
         const localValue = ref<string[]>(
             Array.isArray(thisProps.modelValue)
                 ? thisProps.modelValue
@@ -99,7 +99,7 @@ export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, 
                 localValue.value = Array.isArray(value)
                     ? value
                     : (
-                        Helper.isEmpty(value) ? [] : (<string>value).split(",").map(v => v.trim())
+                        Helper.isEmpty(value) ? [] : (<string>value).split(',').map(v => v.trim())
                     );
             }
         );

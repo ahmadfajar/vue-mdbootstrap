@@ -1,16 +1,25 @@
-import type {ComponentInternalInstance, ComputedRef, ExtractPropTypes, Ref, ShallowRef, Slots, VNode} from "vue";
-import {createCommentVNode, createTextVNode, h, Teleport} from "vue";
-import type {TBsModal, TEmitFn, TModalOptionProps, TRecord} from "../../../types";
+import type {
+    ComponentInternalInstance,
+    ComputedRef,
+    ExtractPropTypes,
+    Prop,
+    Ref,
+    ShallowRef,
+    Slots,
+    VNode
+} from 'vue';
+import { createCommentVNode, createTextVNode, h, Teleport } from 'vue';
 import {
     cssPrefix,
     useBreakpointMax,
     useMergeClass,
     useRenderSlotWithWrapper,
     useRenderTransition
-} from "../../../mixins/CommonApi";
-import {useClosePopover} from "../../Popover/mixins/popoverApi";
-import {BsOverlay} from "../../Animation";
-import Helper from "../../../utils/Helper";
+} from '../../../mixins/CommonApi';
+import type { TBsModal, TEmitFn, TModalOptionProps, TRecord } from '../../../types';
+import Helper from '../../../utils/Helper';
+import { BsOverlay } from '../../Animation';
+import { useClosePopover } from '../../Popover/mixins/popoverApi';
 
 export function useSetDialogMaxHeight(
     props: Readonly<TModalOptionProps>,
@@ -27,7 +36,7 @@ export function useSetDialogMaxHeight(
         return;
     }
 
-    const contentMaxHeight = useBreakpointMax("sm")
+    const contentMaxHeight = useBreakpointMax('sm')
         ? (window.innerHeight - 64) : (window.innerHeight - 128);
 
     if (bodyEl.value) {
@@ -59,14 +68,15 @@ export function useRenderModalDialog(
 ): VNode {
     const thisProps = props as Readonly<TModalOptionProps>;
 
-    return h(Teleport, {to: "body"}, [
-        // @ts-ignore
+    return h(Teleport, {to: 'body'}, [
         h(BsOverlay, {
             color: props.overlayColor,
             opacity: props.overlayOpacity,
-            show: modalOpen.value && thisProps.overlay,
-            fixed: true,
-            zIndex: 1027,
+            // @ts-ignore
+            show: (modalOpen.value && thisProps.overlay) as Prop<boolean>,
+            // @ts-ignore
+            fixed: true as Prop<boolean>,
+            zIndex: 1027 as Prop<number>,
         }),
         createModalDialog(
             slots, instance, thisProps, modalOpen, classNames,
@@ -86,16 +96,16 @@ function createModalDialog(
     bodyEl: Ref<HTMLElement | null>,
     footerEl: Ref<HTMLElement | null>,
 ): VNode {
-    return useRenderTransition({name: "modal-dialog"},
+    return useRenderTransition({name: 'modal-dialog'},
         modalOpen.value
-            ? h("div", {
+            ? h('div', {
                 class: [`${cssPrefix}modal`],
                 onClick: () => {
                     (props.overlayClose || props.overlayClickClose) &&
-                    useClosePopover(instance.value, modalOpen, "Overlay clicked.");
+                    useClosePopover(instance.value, modalOpen, 'Overlay clicked.');
                 }
             }, [
-                h("div", {
+                h('div', {
                     ref: dialogEl,
                     class: classNames.value,
                     style: {
@@ -106,30 +116,30 @@ function createModalDialog(
                     (
                         !Helper.isEmpty(props.title) || slots.header
                             ? useRenderSlotWithWrapper(
-                                slots, "header", "modal-header", {
+                                slots, 'header', 'modal-header', {
                                     ref: headerEl,
                                     class: useMergeClass(`${cssPrefix}modal-title`, <string>props.headerClass)
                                 },
                                 createTextVNode(props.title)
                             )
-                            : createCommentVNode(" v-if-modal-header ")
+                            : createCommentVNode(' v-if-modal-header ')
                     ),
-                    h("div", {
+                    h('div', {
                         ref: bodyEl,
                         class: useMergeClass(`${cssPrefix}modal-body`, <string>props.bodyClass)
                     }, slots.default && slots.default()),
                     (
                         slots.footer
                             ? useRenderSlotWithWrapper(
-                                slots, "footer", "modal-footer", {
+                                slots, 'footer', 'modal-footer', {
                                     ref: footerEl,
                                     class: useMergeClass(`${cssPrefix}modal-footer`, <string>props.footerClass)
                                 }
                             )
-                            : createCommentVNode(" v-if-modal-footer ")
+                            : createCommentVNode(' v-if-modal-footer ')
                     ),
                 ])
             ])
-            : createCommentVNode(" BsModal ")
+            : createCommentVNode(' BsModal ')
     );
 }

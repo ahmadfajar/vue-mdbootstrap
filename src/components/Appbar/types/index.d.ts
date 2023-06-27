@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TRecord } from '../../../types';
 
 export declare type TAppbarOptionProps = {
     /**
@@ -41,6 +43,8 @@ export declare type TBsAppbar = ComponentObjectPropsOptions<TAppbarOptionProps>;
 
 export declare type TBsAppbarTitle = ComponentObjectPropsOptions<TAppbarTitleOptionProps>;
 
-export declare const BsAppbar: DefineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAppbar: DefineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsAppbarTitle: DefineComponent<TBsAppbarTitle, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAppbarTitle: DefineComponent<TBsAppbarTitle, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsAppbarPlugin: Plugin;

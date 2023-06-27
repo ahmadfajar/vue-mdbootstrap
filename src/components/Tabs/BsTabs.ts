@@ -1,23 +1,28 @@
-import type {ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, nextTick, onMounted, provide, shallowRef, watch} from "vue";
-import {tabsProps} from "./mixins/tabsProps";
-import {useRenderTabView, useTabViewClassNames} from "./mixins/tabsApi";
-import type {TBsTabs, TOrientation, TRecord, TTabsOptionProps} from "../../types";
-import TabsProvider from "./mixins/TabsProvider";
+import type {
+    ComponentInternalInstance,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    EmitsOptions,
+    MethodOptions
+} from 'vue';
+import { computed, defineComponent, nextTick, onMounted, provide, shallowRef, watch } from 'vue';
+import type { TBsTabs, TOrientation, TRecord, TTabsOptionProps } from '../../types';
+import { useRenderTabView, useTabViewClassNames } from './mixins/tabsApi';
+import { tabsProps } from './mixins/tabsProps';
+import TabsProvider from './mixins/TabsProvider';
 
-
-export default defineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsTabs",
+export default defineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsTabs',
     props: tabsProps,
     emits: [
         /**
          * Fired when this component's mutate its modelValue.
          */
-        "change",
+        'change',
         /**
          * Fired when this component's modelValue is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TTabsOptionProps>;
@@ -25,13 +30,13 @@ export default defineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, Compo
         const tabProvider = new TabsProvider(cmpProps, emit, (<number | undefined>cmpProps.modelValue));
         // const uid = Helper.uuid();
 
-        provide<TabsProvider>("tabs", tabProvider);
+        provide<TabsProvider>('tabs', tabProvider);
 
         const orientation = computed<TOrientation>(
-            () => ["left", "right"].includes(<string>cmpProps.tabPosition) ? "vertical" : "horizontal"
+            () => ['left', 'right'].includes(<string>cmpProps.tabPosition) ? 'vertical' : 'horizontal'
         );
         const tagName = computed<string>(
-            () => cmpProps.variant === "pills" ? "ul" : "div"
+            () => cmpProps.variant === 'pills' ? 'ul' : 'div'
         );
         const tabViewClasses = computed(
             () => useTabViewClassNames(cmpProps, orientation)

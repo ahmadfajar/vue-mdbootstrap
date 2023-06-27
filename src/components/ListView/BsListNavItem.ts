@@ -1,4 +1,4 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import {
     computed,
     defineComponent,
@@ -10,29 +10,28 @@ import {
     ref,
     shallowRef,
     watchEffect
-} from "vue";
-import {useCurrentRoute, useHasRouter} from "../../mixins/CommonApi";
+} from 'vue';
+import { useCurrentRoute, useHasRouter } from '../../mixins/CommonApi';
+import type { IListItem, IListViewProvider, TBsListNavItem, TListNavItemOptionProps, TRecord } from '../../types';
+import ListItem from './mixins/ListItem';
 import {
     useAddChild,
     useListNavItemClasses,
     useListNavItemInnerClasses,
     useNavItemContentStyles,
     useRenderListNavItem
-} from "./mixins/listNavApi";
-import {listNavItemProps} from "./mixins/listViewProps";
-import type {IListItem, IListViewProvider, TBsListNavItem, TListNavItemOptionProps, TRecord} from "../../types";
-import ListItem from "./mixins/ListItem";
+} from './mixins/listNavApi';
+import { listNavItemProps } from './mixins/listViewProps';
 
-
-export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsListNavItem",
+export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsListNavItem',
     props: listNavItemProps,
     emits: [
-        "click",
+        'click',
         /**
          * Fired when this component's state is updated.
          */
-        "update:active"
+        'update:active'
     ],
     setup(props, {emit, expose, slots}) {
         const cmpProps = props as Readonly<TListNavItemOptionProps>;
@@ -43,7 +42,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
 
         expose({isActive, expanded});
 
-        const provider = inject<IListViewProvider>("ListView");
+        const provider = inject<IListViewProvider>('ListView');
         const navItemClasses = computed<TRecord>(
             () => useListNavItemClasses(cmpProps, isActive, expanded, hasChild)
         );
@@ -66,7 +65,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
             () => {
                 const instance = getCurrentInstance();
                 if (instance) {
-                    refItem.value = new ListItem(<string>props.id, "BsListNavItem", instance, emit);
+                    refItem.value = new ListItem(<string>props.id, 'BsListNavItem', instance, emit);
 
                     if (provider) {
                         nextTick().then(() => useAddChild(provider, instance?.parent, refItem.value));

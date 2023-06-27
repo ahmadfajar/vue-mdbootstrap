@@ -3,15 +3,17 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TAvatarIconProps, TPositionType, TRecord, TRouterOptionProps} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TAvatarIconProps, TPositionType, TRecord, TRouterOptionProps } from '../../../types';
 
-export declare type TAlignment = "left" | "start" | "right" | "end" | "center" | "justified";
+export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 
-export declare type TOrientation = "horizontal" | "vertical";
+export declare type TOrientation = 'horizontal' | 'vertical';
 
-export declare type TTabsVariant = "tabs" | "pills" | "modern" | "material";
+export declare type TTabsVariant = 'tabs' | 'pills' | 'modern' | 'material';
 
 export declare type TTabsBaseProps = {
     /**
@@ -98,8 +100,8 @@ export declare type TBsTabPanel = ComponentObjectPropsOptions<TTabPanelOptionPro
 
 export declare type TBsTabLabel = ComponentObjectPropsOptions<TTabLabelOptionProps>;
 
-export declare const BsTab: DefineComponent<TBsTabPanel, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsTab: DefineComponent<TBsTabPanel, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsTabs: DefineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsTabs: DefineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsTabLabel: DefineComponent<TBsTabLabel, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsTabPlugin: Plugin;

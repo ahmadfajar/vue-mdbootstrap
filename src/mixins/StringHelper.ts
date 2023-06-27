@@ -1,3 +1,5 @@
+export { kebabCase, camelCase } from 'lodash';
+
 /**
  * Pads the input string with a given string (possibly repeated) so that the resulting string
  * reaches a given length. The padding is applied from the start (left) of the input string.
@@ -50,12 +52,12 @@ export function padRight(str: string | number, maxLength = 2, fillString = '0'):
  * @param text The input string.
  * @returns New string that has been transform to Title Case.
  */
-export function toTitleCase(text: string): string {
+export function titleCase(text: string): string {
     return text.toLowerCase()
-        .split('-')
+        .split(/[-_\s]+/)
         .map(function (word: string) {
-            return word.replace(word[0], word[0].toUpperCase())
-        }).join(' ')
+            return word?.replace(word[0], word[0]?.toUpperCase())
+        }).join(' ').trim();
 }
 
 /**

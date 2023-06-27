@@ -1,8 +1,14 @@
-import type { ComputedRef, Ref, Slots, VNode } from "vue";
-import { getCurrentInstance, h, nextTick, withDirectives } from "vue";
-import { Resize } from "../../../directives/Resize";
-import { cssPrefix, useFindParentCmp } from "../../../mixins/CommonApi";
-import type { IComponentInstance, TAppContainerOptionProps, TAppbarOptionProps, TRecord, TVueMdb } from "../../../types";
+import type { ComputedRef, Ref, Slots, VNode } from 'vue';
+import { getCurrentInstance, h, nextTick, withDirectives } from 'vue';
+import { Resize } from '../../../directives';
+import { cssPrefix, useFindParentCmp } from '../../../mixins/CommonApi';
+import type {
+    IComponentInstance,
+    TAppbarOptionProps,
+    TAppContainerOptionProps,
+    TRecord,
+    TVueMdb
+} from '../../../types';
 
 export function useAppbarStyles(
     props: Readonly<TAppbarOptionProps>,
@@ -10,7 +16,7 @@ export function useAppbarStyles(
     vueMdb: Ref<TVueMdb | undefined>,
     isMobile: Ref<boolean>,
 ): TRecord {
-    const zeroPx = "0px";
+    const zeroPx = '0px';
     return {
         marginLeft: isMobile.value
             ? zeroPx
@@ -36,7 +42,7 @@ export function useAppbarOnMountedHook(
 ): void {
     const instance = getCurrentInstance();
     vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
-    const parent = useFindParentCmp(["bs-app-container", "BsAppContainer"], instance, 3);
+    const parent = useFindParentCmp(['bs-app-container', 'BsAppContainer'], instance, 3);
 
     if (parent) {
         nextTick().then(() => {
@@ -48,7 +54,7 @@ export function useAppbarOnMountedHook(
             }
         });
     } else {
-        console.warn("<BsAppbar> must be used inside <BsAppContainer>");
+        console.warn('<BsAppbar> must be used inside <BsAppContainer>');
     }
     smoothTransition.value = true;
 }
@@ -63,20 +69,20 @@ export function useRenderAppbar(
     resizeHandler: (node: VNode) => void,
 ): VNode {
     return withDirectives(
-        h(props.tag || "nav", {
+        h(props.tag || 'nav', {
             class: {
                 [`${cssPrefix}appbar`]: true,
                 [`${cssPrefix}appbar-shadow`]: props.shadow,
                 [`${cssPrefix}appbar-transition`]: smoothTransition.value,
-                "sticky-top": props.fixedTop
+                'sticky-top': props.fixedTop
             },
             style: styles.value,
         }, [
-            h("div", {
+            h('div', {
                 class: `${cssPrefix}appbar-content`
             }, slots.default && slots.default()),
         ]), [
-        [Resize, resizeHandler]
-    ]
+            [Resize, resizeHandler]
+        ]
     )
 }

@@ -1,22 +1,22 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, nextTick, ref} from "vue";
-import type {TBsSwitch, TRecord, TSwitchOptionProps} from "../../types";
-import {useCheckSelected} from "../Radio/mixins/radioApi";
-import {useRenderSwitch, useSwitchClasses} from "./mixins/switchApi";
-import {switchProps} from "./mixins/switchProps";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, nextTick, ref } from 'vue';
+import type { TBsSwitch, TRecord, TSwitchOptionProps } from '../../types';
+import { useCheckSelected } from '../Radio/mixins/radioApi';
+import { useRenderSwitch, useSwitchClasses } from './mixins/switchApi';
+import { switchProps } from './mixins/switchProps';
 
-export default defineComponent<TBsSwitch, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsSwitch",
+export default defineComponent<TBsSwitch, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsSwitch',
     props: switchProps,
     emits: [
         /**
          * Fired when this component's state is changed.
          */
-        "checked",
+        'checked',
         /**
          * Fired when this component's checked value is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TSwitchOptionProps>;
@@ -34,13 +34,13 @@ export default defineComponent<TBsSwitch, TRecord, TRecord, ComputedOptions, Com
                     } else {
                         thisProps.modelValue.push(thisProps.value);
                     }
-                    emit("update:model-value", thisProps.modelValue);
+                    emit('update:model-value', thisProps.modelValue);
                 } else {
-                    emit("update:model-value", (checked ? null : thisProps.value))
+                    emit('update:model-value', (checked ? null : thisProps.value))
                 }
 
                 nextTick().then(() => {
-                    emit("checked", !checked);
+                    emit('checked', !checked);
                 });
             }
         }

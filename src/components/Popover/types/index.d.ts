@@ -3,15 +3,17 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TRecord } from '../../../types';
 
 export declare type TPopoverPosition =
-    "top" | "top-left" | "top-right" |
-    "bottom" | "bottom-left" | "bottom-right" |
-    "left" | "left-top" | "left-bottom" |
-    "right" | "right-top" | "right-bottom";
+    'top' | 'top-left' | 'top-right' |
+    'bottom' | 'bottom-left' | 'bottom-right' |
+    'left' | 'left-top' | 'left-bottom' |
+    'right' | 'right-top' | 'right-bottom';
 
 export declare type TPopupOptions = {
     /**
@@ -69,4 +71,6 @@ export declare type TPopoverOptionProps = TPopupOptions & {
 
 export declare type TBsPopover = ComponentObjectPropsOptions<TPopoverOptionProps>;
 
-export declare const BsPopover: DefineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsPopover: DefineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsPopoverPlugin: Plugin;

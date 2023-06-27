@@ -1,6 +1,151 @@
 import type { AxiosInstance, AxiosResponse } from 'axios';
-import type { IBsModel, IBsStore, TRecord, TSortDirection, TSortOption, TSuccessResponse } from '../../types';
-import AbstractStore from './AbstractStore';
+import type { TRecord } from '../../types';
+import type { AbstractStore, IAbstractStore, IBsModel, IBsStore, TSortDirection, TSortOption } from '../types';
+
+export declare type TSuccessResponse = {
+    success: boolean;
+    message: string;
+}
+
+export declare interface IBsStore extends IAbstractStore {
+    /**
+     * Returns dataset from the active page.
+     *
+     * If a filter or sorter has been applied before,
+     * then the returned dataset will also be affected by it.
+     */
+    get dataItems(): IBsModel[];
+
+    /**
+     * Check if the data Store is using server filtering or local filtering.
+     */
+    get remoteFilter(): boolean;
+
+    /**
+     * Enable or disable data Store server filtering.
+     *
+     * @param {boolean} value If TRUE then using local filtering and FALSE otherwise
+     */
+    set remoteFilter(value: boolean);
+
+    /**
+     * Check if the data Store is using server paging or local paging.
+     */
+    get remotePaging(): boolean;
+
+    /**
+     * Enable or disable data Store server paging.
+     *
+     * @param value If TRUE then using server paging and FALSE otherwise
+     */
+    set remotePaging(value: boolean);
+
+    /**
+     * Check if the Store is using server sorting or local sorting.
+     */
+    get remoteSort(): boolean;
+
+    /**
+     * Enable or disable data Store server sorting.
+     *
+     * @param value If TRUE then using server sorting and FALSE otherwise
+     */
+    set remoteSort(value: boolean);
+
+    /**
+     * Calculate means or average value based on the given field.
+     *
+     * @param field The field name of the dataset to calculate
+     */
+    aggregateAvg(field: string): number;
+
+    /**
+     * Count number of items in the internal dataset specified by the given criteria.
+     *
+     * @param field  The grouping field name criteria
+     * @param value The grouping value criteria
+     */
+    aggregateCountBy(field: string, value: unknown): number;
+
+    /**
+     * Calculate the SUM or total value based on the given field.
+     *
+     * @param field The field name to be used when calculating value
+     */
+    aggregateSum(field: string): number;
+
+    /**
+     * Append an item to the internal dataset and also save the item as a new record to the
+     * remote server whenever possible. The item can be saved to the remote server,
+     * if 'restUrl' property contains a 'save' key.
+     *
+     * @param item Data to append to the internal dataset
+     */
+    append(item: never): void;
+
+    /**
+     * Replace internal dataset with new data. The proses only affected the internal dataset
+     * and nothing is sent to the remote server.
+     *
+     * @param data   The new data to be assigned
+     * @param silent Append the data silently and don't trigger data conversion
+     */
+    assignData(data: never[] | never, silent: boolean): void;
+
+    /**
+     * Delete specific item from internal dataset as well as from remote server whenever possible.
+     * The item can be deleted from the remote server, if 'restUrl' property contains a 'delete' key.
+     *
+     * @param item Data Model instance to be removed
+     */
+    delete(item: IBsModel): Promise<AxiosResponse | TSuccessResponse>;
+
+    /**
+     * Delete specific items from internal dataset as well as from remote
+     * server whenever possible. The items can be deleted from the remote
+     * server, if 'restUrl' property contains a 'delete' key.
+     *
+     * @param items Collection of data Model instances to be removed
+     */
+    deletes(items: IBsModel[]): Promise<TSuccessResponse>;
+
+    /**
+     * Fetch single item from the remote server via REST API and
+     * replace internal dataset with the one comes from the remote service.
+     *
+     * @param id The item ID to fetch
+     */
+    fetch(id: string | number): Promise<AxiosResponse>;
+
+    /**
+     * Load data from the remote server and assign query parameters and configuration.
+     *
+     * @deprecated Use `load` instead.
+     */
+    query(): Promise<unknown>;
+
+    /**
+     * Sorts the internal dataset with the given criteria and returns
+     * the reference of the internal dataset.
+     *
+     * @example
+     * // sort by a single field
+     * const results = myStore.sort('myField', 'asc');
+     *
+     * // sorting by multiple fields
+     * const results = myStore.sort([
+     *  {property: 'age', direction: 'desc'},
+     *  {property: 'name', direction: 'asc'}
+     * ]);
+     *
+     * @param options   The field for sorting or `TSortOption` objects
+     * @param direction The sort direction
+     */
+    sort(
+        options: string | string[] | TSortOption | TSortOption[],
+        direction: TSortDirection,
+    ): Promise<IBsModel[]>;
+}
 
 /**
  * Data Store class to work with collection of entity objects and remote API.
@@ -24,11 +169,8 @@ import AbstractStore from './AbstractStore';
  *         suffix: false,
  *     },
  * });
- *
- * @author Ahmad Fajar
- * @since  20/07/2018 modified: 24/06/2023 14:36
  */
-export default class BsStore extends AbstractStore implements IBsStore {
+export declare class BsStore extends AbstractStore implements IBsStore {
     /**
      * Class constructor.
      *
@@ -36,28 +178,37 @@ export default class BsStore extends AbstractStore implements IBsStore {
      * @param adapter Axios adapter instance
      */
     constructor(config: TRecord, adapter?: AxiosInstance);
+
     get dataItems(): IBsModel[];
+
     get remoteFilter(): boolean;
     set remoteFilter(value: boolean);
+
     get remotePaging(): boolean;
     set remotePaging(value: boolean);
+
     get remoteSort(): boolean;
     set remoteSort(value: boolean);
+
     aggregateAvg(field: string): number;
+
     aggregateCountBy(field: string, value: unknown): number;
+
     aggregateSum(field: string): number;
+
     append(item: never): void;
+
     assignData(data: unknown[] | unknown, silent?: boolean): void;
+
     delete(item: IBsModel): Promise<AxiosResponse | TSuccessResponse>;
+
     deletes(items: IBsModel[]): Promise<TSuccessResponse>;
+
     fetch(id: string | number): Promise<AxiosResponse>;
+
     load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse>;
+
     query(): Promise<unknown>;
+
     sort(options: string | string[] | TSortOption | TSortOption[], direction?: TSortDirection): Promise<IBsModel[]>;
-    /**
-     * Assign values from REST response's object.
-     *
-     * @param response Response object
-     */
-    private _assignFromResponse;
 }

@@ -1,12 +1,12 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {defineComponent} from "vue";
-import {cssPrefix, useSimpleRenderWithSlots} from "../../mixins/CommonApi";
-import {booleanProp, validStringOrNumberProp} from "../../mixins/CommonProps";
-import type {TBsDivider, TDividerOptionProps, TRecord} from "../../types";
-import Helper from "../../utils/Helper";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { defineComponent } from 'vue';
+import { cssPrefix, useSimpleRenderWithSlots } from '../../mixins/CommonApi';
+import { booleanProp, validStringOrNumberProp } from '../../mixins/CommonProps';
+import type { TBsDivider, TDividerOptionProps, TRecord } from '../../types';
+import Helper from '../../utils/Helper';
 
-export default defineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsDivider",
+export default defineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsDivider',
     props: {
         dark: booleanProp,
         leftIndent: validStringOrNumberProp,
@@ -17,10 +17,10 @@ export default defineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, Co
         const thisProps = props as Readonly<TDividerOptionProps>;
 
         return () => useSimpleRenderWithSlots(
-            "hr", undefined,
+            'hr', undefined,
             [
                 `${cssPrefix}divider`,
-                props.dark ? "divider--dark" : "divider--light"
+                props.dark ? 'divider--dark' : 'divider--light'
             ], {
                 marginLeft: props.leftIndent ? Helper.cssUnit(thisProps.leftIndent) : null,
                 marginRight: props.rightIndent ? Helper.cssUnit(thisProps.rightIndent) : null,

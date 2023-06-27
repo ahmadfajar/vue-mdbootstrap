@@ -5,12 +5,9 @@ import * as _directives from './directives';
 import { AxiosPlugin } from './utils/AxiosPlugin';
 
 export { AxiosPlugin } from './utils/AxiosPlugin';
-export {
-    RestProxyAdapter, AbstractStore,
-    BsArrayStore, BsStore, BsModel
-} from './model';
-export { default as Helper } from './utils/Helper';
+export * from "./model";
 export * from './shared';
+export { default as Helper } from './utils/Helper';
 
 export function createVueMdb(rootComponent: Component): App {
     const vApp = createApp(rootComponent);

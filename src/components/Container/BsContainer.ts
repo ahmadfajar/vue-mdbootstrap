@@ -1,33 +1,12 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions } from 'vue';
-import {
-    computed,
-    defineComponent,
-    getCurrentInstance,
-    h,
-    onMounted,
-    ref,
-    withDirectives
-} from 'vue';
-import { Resize } from '../../directives/Resize';
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, getCurrentInstance, h, onMounted, ref, withDirectives } from 'vue';
+import { Resize } from '../../directives';
 import { cssPrefix, useBreakpointMax, useFindParentCmp } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
-import type {
-    TAppContainerOptionProps,
-    TBsContainer,
-    TContainerOptionProps,
-    TRecord,
-    TVueMdb
-} from '../../types';
+import type { TAppContainerOptionProps, TBsContainer, TContainerOptionProps, TRecord, TVueMdb } from '../../types';
 import { baseTagProps } from '../Card/mixins/cardProps';
 
-export default defineComponent<
-    TBsContainer,
-    TRecord,
-    TRecord,
-    ComputedOptions,
-    ComponentOptionsMixin,
-    EmitsOptions
->({
+export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
     name: 'BsContainer',
     props: {
         app: booleanProp,
@@ -39,7 +18,7 @@ export default defineComponent<
          */
         'resize'
     ],
-    setup(props, { emit, slots }) {
+    setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TContainerOptionProps>;
         const vueMdb = ref<TVueMdb>();
         const appId = ref<string>();
@@ -52,7 +31,7 @@ export default defineComponent<
             if (cmpProps.app && appId.value) {
                 if (vueMdb.value) {
                     // console.log("vueMdb.value", vueMdb.value);
-                    const { leftSideDrawerWidth, rightSideDrawerWidth } =
+                    const {leftSideDrawerWidth, rightSideDrawerWidth} =
                         vueMdb.value.app[appId.value];
 
                     return {

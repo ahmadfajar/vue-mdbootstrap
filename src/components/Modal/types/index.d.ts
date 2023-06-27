@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TPopupOptions, TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TPopupOptions, TRecord } from '../../../types';
 
 export declare type TModalOptionProps = TPopupOptions & {
     /**
@@ -58,9 +60,9 @@ export declare type TImageDataset = {
     title: string;
 }
 
-export declare type TTransitionMode = "in-out" | "out-in";
+export declare type TTransitionMode = 'in-out' | 'out-in';
 
-export declare type TLightboxButtonType = "close" | "delete" | "download" | "info" | "menubar" | "rotate" | "zoom";
+export declare type TLightboxButtonType = 'close' | 'delete' | 'download' | 'info' | 'menubar' | 'rotate' | 'zoom';
 
 export declare type TLightboxToolbarItems = {
     [K in TLightboxButtonType]?: boolean;
@@ -129,6 +131,8 @@ export declare type TBsModal = ComponentObjectPropsOptions<TModalOptionProps>;
 
 export declare type TBsLightbox = ComponentObjectPropsOptions<TLightboxOptionProps>;
 
-export declare const BsModal: DefineComponent<TBsModal, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsModal: DefineComponent<TBsModal, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsLightbox: DefineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsLightbox: DefineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsModalPlugin: Plugin;

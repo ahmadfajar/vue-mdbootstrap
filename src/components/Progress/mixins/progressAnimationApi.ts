@@ -1,9 +1,18 @@
-import type {ComputedRef, VNode} from "vue";
-import {h, Transition} from "vue";
-import {cssPrefix, useBrowserIE} from "../../../mixins/CommonApi";
-import {useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode} from "../../Icon/mixins/svgApi";
-import type {ISpinnerElement, TProgressOptionProps, TSpinnerRecord} from "../types";
-import INDETERMINATE_ANIMATION_TEMPLATE from "./ProgressSpinnerAnimation";
+import type { ComputedRef, VNode } from 'vue';
+import { h, Transition } from 'vue';
+import { cssPrefix, useBrowserIE } from '../../../mixins/CommonApi';
+import { useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode } from '../../Icon/mixins/svgApi';
+import type { TProgressOptionProps } from '../types';
+import INDETERMINATE_ANIMATION_TEMPLATE from './ProgressSpinnerAnimation';
+
+declare interface ISpinnerElement extends Element {
+    sheet?: CSSStyleSheet;
+}
+
+declare type TSpinnerRecord = {
+    styleTag?: ISpinnerElement;
+    diameters: Set<number>;
+}
 
 const progressSpinner: TSpinnerRecord = {
     styleTag: undefined,
@@ -67,7 +76,7 @@ export function useRenderProgressBar(
         appear: true,
     }, {
         default: () => {
-            return h("div", {
+            return h('div', {
                 class: [
                     `${cssPrefix}progress-bar`,
                     `progress-bar-${props.color}`,
@@ -77,15 +86,15 @@ export function useRenderProgressBar(
                     height: `${props.height}px`
                 }
             }, [
-                h("div", {
+                h('div', {
                     class: [`${cssPrefix}progress-bar-track`],
                     style: progressBarTrackStyle.value,
                 }),
-                h("div", {
+                h('div', {
                     class: [`${cssPrefix}progress-bar-fill`],
                     style: progressBarValueStyle.value,
                 }),
-                h("div", {
+                h('div', {
                     class: [`${cssPrefix}progress-bar-buffer`],
                     style: progressBarBufferStyle.value,
                 }),
@@ -105,27 +114,27 @@ export function useRenderProgressSpinner(
         appear: true,
     }, {
         default: () => {
-            return h("div", {
+            return h('div', {
                 class: [
                     `${cssPrefix}progress-spinner`,
                     `spinner-${props.color}`,
-                    useBrowserIE() ? `${cssPrefix}indeterminate-fallback` : "",
+                    useBrowserIE() ? `${cssPrefix}indeterminate-fallback` : '',
                     useDeterminateMode(props) ? `${cssPrefix}determinate` : `${cssPrefix}indeterminate`,
                 ],
             }, [
                 useCreateSvgNode(
                     [`${cssPrefix}progress-spinner-draw`],
                     useCircleSizeStyles(<number>props.diameter),
-                    false, "xMidYMid meet",
+                    false, 'xMidYMid meet',
                     `0 0 ${props.diameter} ${props.diameter}`,
                     {},
                     [useCreateSvgCircleNode(
                         [`${cssPrefix}progress-spinner-circle`],
                         {
-                            "stroke-dashoffset": circleStrokeDashOffset.value,
-                            "stroke-dasharray": `${circleCircumference.value}px`,
-                            "stroke-width": `${props.stroke}px`,
-                            "animation-name": `${cssPrefix}progress-spinner-stroke-rotate-${props.diameter}`
+                            'stroke-dashoffset': circleStrokeDashOffset.value,
+                            'stroke-dasharray': `${circleCircumference.value}px`,
+                            'stroke-width': `${props.stroke}px`,
+                            'animation-name': `${cssPrefix}progress-spinner-stroke-rotate-${props.diameter}`
                         },
                         circleRadius.value
                     )],

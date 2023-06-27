@@ -2,15 +2,34 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } fro
 import type { AppConfig } from 'vue';
 import type { IRestAdapter, TRecord, TRestMethodOptions } from '../../types';
 
+export declare interface IRestAdapter {
+    get adapterInstance(): AxiosInstance;
+
+    /**
+     * Perform REST request to the remote server.
+     *
+     * @param config    Request configuration
+     * @param onRequest Promise function called before the request is made.
+     * @param onSuccess Promise function called when the request is successful.
+     * @param onFailure Promise function called when the request is failed.
+     */
+    request(
+        config: AxiosRequestConfig,
+        onRequest: () => boolean,
+        onSuccess: (response: AxiosResponse) => void,
+        onFailure: (error: AxiosError) => void,
+    ): Promise<AxiosResponse>;
+
+    /**
+     * Get REST request methods options.
+     */
+    requestMethods(): TRestMethodOptions;
+}
+
 /**
  * Class RestProxyAdapter which is used to load data from the remote server.
- *
- * @author Ahmad Fajar
- * @since  20/07/2018 modified: 24/06/2023 14:30
  */
-export default class RestProxyAdapter implements IRestAdapter {
-    private readonly _adapter;
-    private readonly _httpMethods;
+export declare class RestProxyAdapter implements IRestAdapter {
     /**
      * Check if axios plugin already installed and defined not.
      *
@@ -18,6 +37,7 @@ export default class RestProxyAdapter implements IRestAdapter {
      * @throws Error If axios doesn't exist
      */
     static checkAxios(appConfig: AppConfig | AxiosInstance): void;
+
     /**
      * Check if Rest URL already defined or not.
      *
@@ -25,18 +45,21 @@ export default class RestProxyAdapter implements IRestAdapter {
      * @throws URIError If Rest Url is not defined
      */
     static checkRestUrl(restUrl: TRecord): void;
+
     /**
      * Log error response to the console.
      *
      * @param error The axios error object.
      */
     static warnResponseError(error: AxiosError): void;
+
     /**
      * Default REST request method options. Do not override this property.
      *
      * @returns REST method options
      */
     static get defaultHttpMethods(): TRestMethodOptions;
+
     /**
      * Class constructor.
      *
@@ -44,7 +67,9 @@ export default class RestProxyAdapter implements IRestAdapter {
      * @param httpMethods  Custom HTTP methods to override the default methods
      */
     constructor(adapter?: AxiosInstance, httpMethods?: object);
+
     get adapterInstance(): AxiosInstance;
+
     /**
      * Perform REST request to the server.
      *
@@ -54,7 +79,13 @@ export default class RestProxyAdapter implements IRestAdapter {
      * @param onFailure  Promise function called when the request was failed.
      * @returns Promise interface instance
      */
-    request(config: AxiosRequestConfig, onRequest: () => boolean, onSuccess: (response: AxiosResponse) => void, onFailure: (error: AxiosError) => void): Promise<AxiosResponse>;
+    request(
+        config: AxiosRequestConfig,
+        onRequest: () => boolean,
+        onSuccess: (response: AxiosResponse) => void,
+        onFailure: (error: AxiosError) => void
+    ): Promise<AxiosResponse>;
+
     /**
      * Get REST request methods options.
      *

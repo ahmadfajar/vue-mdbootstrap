@@ -21,14 +21,13 @@ import type {
 import { autoBind } from '../utils/AutoBind';
 import Helper from '../utils/Helper';
 
-
 /**
  * Class AbstractStore is superclass of {@link BsArrayStore}, and {@link BsStore}.
  * It's never used directly, but offers a set of
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 24/06/2023 14:04
+ * @since  15/03/2019 modified: 26/06/2023 23:46
  */
 export default class AbstractStore implements IAbstractStore {
     protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
@@ -137,8 +136,6 @@ export default class AbstractStore implements IAbstractStore {
     /**
      * @deprecated
      * Use `clear` instead.
-     *
-     * @returns {void}
      */
     clearData(): void {
         this.clear();
@@ -512,7 +509,7 @@ export default class AbstractStore implements IAbstractStore {
         const sorters: TSortOption[] = [];
         const createOption = (opt: TSortOption) => {
             return {
-                'property': <string>(opt.property || opt.field),
+                'property': <string>(opt.property ?? opt.field),
                 'direction': <TSortDirection>(
                     opt.direction && !Helper.isEmpty(opt.direction)
                         ? opt.direction.toLowerCase()

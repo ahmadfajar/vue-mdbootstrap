@@ -1,22 +1,22 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, nextTick, ref} from "vue";
-import type {TBsCheckbox, TCheckboxOptionProps, TRecord} from "../../types";
-import {useCheckSelected, useCreateInputRadioOrCheckbox, useRenderRadioOrCheckbox} from "../Radio/mixins/radioApi";
-import {useCheckboxClasses} from "./mixins/checkboxApi";
-import {checkboxProps} from "./mixins/checkboxProps";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, nextTick, ref } from 'vue';
+import type { TBsCheckbox, TCheckboxOptionProps, TRecord } from '../../types';
+import { useCheckSelected, useCreateInputRadioOrCheckbox, useRenderRadioOrCheckbox } from '../Radio/mixins/radioApi';
+import { useCheckboxClasses } from './mixins/checkboxApi';
+import { checkboxProps } from './mixins/checkboxProps';
 
-export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsCheckbox",
+export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsCheckbox',
     props: checkboxProps,
     emits: [
         /**
          * Fired when this component's state is changed.
          */
-        "checked",
+        'checked',
         /**
          * Fired when this component's checked value is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TCheckboxOptionProps>;
@@ -34,25 +34,25 @@ export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, C
                     } else {
                         cmpProps.modelValue.push(cmpProps.value);
                     }
-                    emit("update:model-value", cmpProps.modelValue);
+                    emit('update:model-value', cmpProps.modelValue);
                 } else {
-                    emit("update:model-value", (checked ? null : cmpProps.value))
+                    emit('update:model-value', (checked ? null : cmpProps.value))
                 }
 
                 nextTick().then(() => {
-                    emit("checked", !checked);
+                    emit('checked', !checked);
                 });
             }
         }
 
         return () =>
             useRenderRadioOrCheckbox(
-                slots, cmpProps, checkboxClasses, rippleActive, "checkbox",
+                slots, cmpProps, checkboxClasses, rippleActive, 'checkbox',
                 useCreateInputRadioOrCheckbox(
-                    cmpProps, "checkbox", {
+                    cmpProps, 'checkbox', {
                         indeterminate: props.indeterminate,
-                        "true-value": true,
-                        "false-value": false,
+                        'true-value': true,
+                        'false-value': false,
                     }),
                 toggleCheckHandler,
             );

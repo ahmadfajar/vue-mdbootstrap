@@ -1,23 +1,29 @@
-import type {ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, getCurrentInstance, nextTick, onMounted, ref, shallowRef, watch} from "vue";
-import type {TBsModal, TModalOptionProps, TRecord} from "../../types";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {modalProps} from "./mixins/modalProps";
-import {useRenderModalDialog, useSetDialogMaxHeight} from "./mixins/modalApi";
-import PopupManager from "../Popover/mixins/PopupManager";
+import type {
+    ComponentInternalInstance,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    EmitsOptions,
+    MethodOptions
+} from 'vue';
+import { computed, defineComponent, getCurrentInstance, nextTick, onMounted, ref, shallowRef, watch } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import type { TBsModal, TModalOptionProps, TRecord } from '../../types';
+import PopupManager from '../Popover/mixins/PopupManager';
+import { useRenderModalDialog, useSetDialogMaxHeight } from './mixins/modalApi';
+import { modalProps } from './mixins/modalProps';
 
-export default defineComponent<TBsModal, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsModal",
+export default defineComponent<TBsModal, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsModal',
     props: modalProps,
     emits: [
         /**
          * Fired when the modal dialog is hiding.
          */
-        "close",
+        'close',
         /**
          * Fired when this component's state is updated.
          */
-        "update:open",
+        'update:open',
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TModalOptionProps>;

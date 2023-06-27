@@ -1,5 +1,6 @@
 import type { AxiosError, AxiosHeaders, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { reactive, readonly } from 'vue';
+import { RestProxyAdapter } from '../model';
 import type {
     IBsModel,
     IRestAdapter,
@@ -14,8 +15,6 @@ import type {
 } from '../types';
 import { autoBind } from '../utils/AutoBind';
 import Helper from '../utils/Helper';
-import RestProxyAdapter from './RestProxyAdapter';
-
 
 /**
  * Data Model class for working with entity object and remote API.
@@ -56,7 +55,7 @@ import RestProxyAdapter from './RestProxyAdapter';
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 24/06/2023 14:21
+ * @since  09/07/2018 modified: 26/06/2023 23:43
  */
 export default class BsModel implements IBsModel {
     /**
@@ -262,7 +261,7 @@ export default class BsModel implements IBsModel {
         let config: AxiosRequestConfig = {};
         const url = this.restUrl.delete || '';
         const methods = this.proxy.requestMethods();
-        const identifier = this.get(this.getIdProperty());
+        const identifier = this.get(this.idProperty);
 
         if (methods.delete.toLowerCase() === 'delete') {
             config = {
@@ -291,8 +290,8 @@ export default class BsModel implements IBsModel {
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
         const config: AxiosRequestConfig = {};
-        const url = this.restUrl.fetch || '';
-        const identifier = id || this.get(this.getIdProperty());
+        const url = this.restUrl.fetch ?? '';
+        const identifier = id ?? this.get(this.idProperty);
 
         this._updateRequestConfig(config, <never>identifier, url, 'fetch');
 
@@ -341,6 +340,10 @@ export default class BsModel implements IBsModel {
         return Object.keys(this._schema);
     }
 
+    get idProperty(): string {
+        return this._idProperty;
+    };
+
     getIdProperty(): string {
         return this._idProperty;
     }
@@ -359,14 +362,14 @@ export default class BsModel implements IBsModel {
         const config: AxiosRequestConfig = {};
         const parameters: TRecord = {};
 
-        const identifier = params && Object.hasOwn(params, this.getIdProperty())
-            ? params[this.getIdProperty()]
-            : this.get(this.getIdProperty());
+        const identifier = params && Object.hasOwn(params, this.idProperty)
+            ? params[this.idProperty]
+            : this.get(this.idProperty);
 
         if (url.includes('{id}') && !Helper.isEmpty(identifier)) {
             url = url.replace('{id}', <never>identifier);
-            if (params && Object.hasOwn(params, this.getIdProperty())) {
-                delete params[this.getIdProperty()];
+            if (params && Object.hasOwn(params, this.idProperty)) {
+                delete params[this.idProperty];
             }
         } else if (!Helper.isEmpty(identifier)) {
             parameters[this._idProperty] = identifier;
@@ -435,10 +438,10 @@ export default class BsModel implements IBsModel {
         const url = this.restUrl.save ?? '';
         const data = this.toJSON();
         const methods = this.proxy.requestMethods();
-        const identifier = data[this.getIdProperty()];
+        const identifier = data[this.idProperty];
 
         if (url.includes('{id}') || Helper.isEmpty(identifier)) {
-            delete data[this.getIdProperty()];
+            delete data[this.idProperty];
         }
 
         const config: AxiosRequestConfig = {
@@ -480,10 +483,10 @@ export default class BsModel implements IBsModel {
         const url = this.restUrl.update ?? '';
         const data = this.toJSON();
         const methods = this.proxy.requestMethods();
-        const identifier = data[this.getIdProperty()];
+        const identifier = data[this.idProperty];
 
         if (url.includes('{id}') || Helper.isEmpty(identifier)) {
-            delete data[this.getIdProperty()];
+            delete data[this.idProperty];
         }
 
         const config: AxiosRequestConfig = {
@@ -506,7 +509,7 @@ export default class BsModel implements IBsModel {
      *
      * @param response A response object
      */
-    private _assignFromResponse(response: AxiosResponse) {
+    protected _assignFromResponse(response: AxiosResponse): void {
         const _data = <never>response.data;
         const _assign = (values: never) => {
             this.assignValues(values);
@@ -521,7 +524,7 @@ export default class BsModel implements IBsModel {
         if (Helper.isEmpty(_data)) {
             console.warn(this._emptyDataErrMsg);
         } else {
-            if (Object.hasOwn(_data, this.getIdProperty())) {
+            if (Object.hasOwn(_data, this.idProperty)) {
                 _assign(_data);
             } else if (Object.hasOwn(_data, this._dataProperty)) {
                 const cdata = _data[this._dataProperty];
@@ -540,7 +543,7 @@ export default class BsModel implements IBsModel {
     /**
      * @returns TRUE if this data model is not in delete state.
      */
-    private _checkBeforeDelete(): boolean {
+    protected _checkBeforeDelete(): boolean {
         if (this.deleting) {
             return false;
         }
@@ -552,7 +555,7 @@ export default class BsModel implements IBsModel {
     /**
      * @returns TRUE if this data model is not in loading state.
      */
-    private _checkBeforeLoading(): boolean {
+    protected _checkBeforeLoading(): boolean {
         this._state.loading = true;
         return true;
     }
@@ -561,7 +564,7 @@ export default class BsModel implements IBsModel {
      * @returns TRUE if this data model is not in the process of
      * saving its data to the remote source
      */
-    private _checkBeforeSave(): boolean {
+    protected _checkBeforeSave(): boolean {
         if (this.updating) {
             return false;
         }
@@ -575,7 +578,7 @@ export default class BsModel implements IBsModel {
      *
      * @param error The error object
      */
-    private _onDeleteFailure(error: AxiosError): void {
+    protected _onDeleteFailure(error: AxiosError): void {
         this._state.deleting = false;
         this._state.hasError = true;
         RestProxyAdapter.warnResponseError(error);
@@ -584,7 +587,7 @@ export default class BsModel implements IBsModel {
     /**
      * A callback when delete request is successful.
      */
-    private _onDeleteSuccess(): void {
+    protected _onDeleteSuccess(): void {
         this.reset();
         this._state.deleting = false;
         this._state.hasError = false;
@@ -595,7 +598,7 @@ export default class BsModel implements IBsModel {
      *
      * @param error The error object
      */
-    private _onLoadingFailure(error: AxiosError): void {
+    protected _onLoadingFailure(error: AxiosError): void {
         this._state.loading = false;
         this._state.hasError = true;
         RestProxyAdapter.warnResponseError(error);
@@ -606,7 +609,7 @@ export default class BsModel implements IBsModel {
      *
      * @param response A response object
      */
-    private _onLoadingSuccess(response: AxiosResponse): void {
+    protected _onLoadingSuccess(response: AxiosResponse): void {
         this._assignFromResponse(response);
         this._state.loading = false;
         this._state.hasError = false;
@@ -617,7 +620,7 @@ export default class BsModel implements IBsModel {
      *
      * @param error The error object
      */
-    private _onSaveFailure(error: AxiosError): void {
+    protected _onSaveFailure(error: AxiosError): void {
         this._state.updating = false;
         this._state.hasError = true;
         RestProxyAdapter.warnResponseError(error);
@@ -628,7 +631,7 @@ export default class BsModel implements IBsModel {
      *
      * @param response A response object
      */
-    private _onSaveSuccess(response: AxiosResponse): void {
+    protected _onSaveSuccess(response: AxiosResponse): void {
         this._assignFromResponse(response);
         this._state.updating = false;
         this._state.hasError = false;
@@ -644,7 +647,7 @@ export default class BsModel implements IBsModel {
      * @param suffix     Suffix to be appended to the token-name
      * @returns Promise interface
      */
-    private async _requestWithToken(
+    protected async _requestWithToken(
         config: AxiosRequestConfig,
         onRequest: () => boolean,
         onSuccess: (response: AxiosResponse) => void,

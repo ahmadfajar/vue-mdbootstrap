@@ -3,14 +3,16 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TRecord} from "../../../types";
-import {TInputFieldProps, TPopoverPosition} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TRecord } from '../../../types';
+import { TInputFieldProps, TPopoverPosition } from '../../../types';
 
-export declare type TDateTimePickerMode = "date" | "datetime" | "year" | "month" | "time";
+export declare type TDateTimePickerMode = 'date' | 'datetime' | 'year' | 'month' | 'time';
 
-export declare type TTimePickerMode = "time" | "hour" | "minute" | "second";
+export declare type TTimePickerMode = 'time' | 'hour' | 'minute' | 'second';
 
 export declare type TDatePickerBaseProps = {
     locale?: string;
@@ -170,7 +172,7 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
     pickerWidth?: number | string;
     /**
      * Transition animation when showing the DateTime picker. This animation is
-     * effected by picker-placement property.
+     * effected by `pickerPlacement` property.
      */
     pickerTransition?: string;
     /**
@@ -192,6 +194,8 @@ export declare type TBsDatePickerTimes = ComponentObjectPropsOptions<TTimePicker
 
 export declare type TBsDateTimeField = ComponentObjectPropsOptions<TDateTimeFieldOptionProps>;
 
-export declare const BsDatePicker: DefineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsDatePicker: DefineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsDateTimeField: DefineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsDateTimeField: DefineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsDatePickerPlugin: Plugin;

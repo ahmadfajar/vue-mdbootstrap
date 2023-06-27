@@ -3,8 +3,10 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
 import type {
     TIconVariant,
     TInputBaseProps,
@@ -12,7 +14,7 @@ import type {
     TPopoverPosition,
     TRecord,
     TSpaceAround,
-} from "../../../types";
+} from '../../../types';
 
 export declare type TValidator = {
     validators: TRecord;
@@ -322,12 +324,14 @@ export declare type TBsNumericField = ComponentObjectPropsOptions<TNumericFieldO
 
 export declare type TBsSearchField = ComponentObjectPropsOptions<TSearchFieldOptionProps>;
 
-export declare const BsTextField: DefineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsTextField: DefineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsTextArea: DefineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsTextArea: DefineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsChipField: DefineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsChipField: DefineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsNumericField: DefineComponent<TBsNumericField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsNumericField: DefineComponent<TBsNumericField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsSearchField: DefineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsSearchField: DefineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsFieldPlugin: Plugin;

@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TRecord } from '../../../types';
 
 export declare type TBadgeOptionProps = {
     /**
@@ -29,4 +31,6 @@ export declare type TBadgeOptionProps = {
 
 export declare type TBsBadge = ComponentObjectPropsOptions<TBadgeOptionProps>;
 
-export declare const BsBadge: DefineComponent<TBsBadge, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsBadge: DefineComponent<TBsBadge, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsBadgePlugin: Plugin;

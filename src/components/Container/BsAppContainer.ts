@@ -1,24 +1,11 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions } from 'vue';
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent, getCurrentInstance, h, onMounted, onUnmounted, ref } from 'vue';
 import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
-import type {
-    IComponentInstance,
-    TAppContainerOptionProps,
-    TBsAppContainer,
-    TRecord,
-    TVueMdb
-} from '../../types';
+import type { IComponentInstance, TAppContainerOptionProps, TBsAppContainer, TRecord, TVueMdb } from '../../types';
 import Helper from '../../utils/Helper';
 
-export default defineComponent<
-    TBsAppContainer,
-    TRecord,
-    TRecord,
-    ComputedOptions,
-    ComponentOptionsMixin,
-    EmitsOptions
->({
+export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
     name: 'BsAppContainer',
     props: {
         viewportHeight: booleanProp,
@@ -27,7 +14,7 @@ export default defineComponent<
             default: () => useGenerateId()
         }
     },
-    setup(props, { slots }) {
+    setup(props, {slots}) {
         const cmpProps = props as Readonly<TAppContainerOptionProps>;
         const vueMdb = ref<TVueMdb>();
 

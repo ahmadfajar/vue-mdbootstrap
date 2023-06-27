@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TFlipMode, TRecord, TSizeOptionProps, TSizeProps} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TFlipMode, TRecord, TSizeOptionProps, TSizeProps } from '../../../types';
 
 export declare type TImageOptionProps = {
     /**
@@ -73,4 +75,6 @@ export declare type TAvatarOptionProps = TAvatarImageOptionProps & TAvatarIconPr
 
 export declare type TBsAvatar = ComponentObjectPropsOptions<TAvatarOptionProps>;
 
-export declare const BsAvatar: DefineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAvatar: DefineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsAvatarPlugin: Plugin;

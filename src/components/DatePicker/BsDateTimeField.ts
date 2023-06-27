@@ -1,48 +1,48 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, ref, watch} from "vue";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {dateTimeFieldProps} from "./mixins/datePickerProps";
-import {DatePickerConst} from "./mixins/datePickerApi";
-import {useParseDateTimeFromFormat, useRenderDateTimeField} from "./mixins/dateTimeFieldApi";
-import {useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton} from "../Field/mixins/textFieldApi";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import type { TBsDateTimeField, TDateTimeFieldOptionProps, TDateTimePickerMode, TRecord } from '../../types';
+import Helper from '../../utils/Helper';
+import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from '../Field/mixins/textFieldApi';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowHelpText,
     useShowValidationError
-} from "../Field/mixins/validationApi";
-import type {TBsDateTimeField, TDateTimeFieldOptionProps, TDateTimePickerMode, TRecord} from "../../types";
-import Helper from "../../utils/Helper";
+} from '../Field/mixins/validationApi';
+import { DatePickerConst } from './mixins/datePickerApi';
+import { dateTimeFieldProps } from './mixins/datePickerProps';
+import { useParseDateTimeFromFormat, useRenderDateTimeField } from './mixins/dateTimeFieldApi';
 
-export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsDateTimeField",
+export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsDateTimeField',
     props: dateTimeFieldProps,
     emits: [
         /**
          * Fired when this component lost focus.
          */
-        "blur",
+        'blur',
         /**
          * Fired when this component got focused.
          */
-        "focus",
+        'focus',
         /**
          * Fired when this component's value is being cleared.
          */
-        "clear",
+        'clear',
         /**
          * Fired when the DatePicker is closed or hide.
          */
-        "close",
+        'close',
         /**
          * Fired when the DatePicker popup is open or showed.
          */
-        "open",
+        'open',
         /**
          * Fired when this component's value is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TDateTimeFieldOptionProps>;

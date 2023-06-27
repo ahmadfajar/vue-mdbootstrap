@@ -1,5 +1,13 @@
-import {ComponentObjectPropsOptions, ComponentOptionsMixin, ComputedOptions, DefineComponent, EmitsOptions} from "vue";
-import {TDataSource, TInputFieldProps, TLabelPosition, TRecord} from "../../../types";
+import {
+    ComponentObjectPropsOptions,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    DefineComponent,
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import { TDataSource, TInputFieldProps, TLabelPosition, TRecord } from '../../../types';
 
 export declare type TComboboxOptionProps = TInputFieldProps & {
     /**
@@ -139,4 +147,6 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
 
 export declare type TBsCombobox = ComponentObjectPropsOptions<TComboboxOptionProps>;
 
-export declare const BsCombobox: DefineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsCombobox: DefineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsComboboxPlugin: Plugin;

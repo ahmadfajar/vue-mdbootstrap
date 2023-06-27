@@ -1,8 +1,6 @@
-import type {ComputedRef, Prop, Ref, Slots, VNode, VNodeArrayChildren} from "vue";
-import {h} from "vue";
-import {cssPrefix, useRenderSlot, useRenderSlotWithWrapper} from "../../../mixins/CommonApi";
-import {BsRipple} from "../../Animation";
-import {useRenderFieldFeedback} from "../../Field/mixins/validationApi";
+import type { ComputedRef, Prop, Ref, Slots, VNode, VNodeArrayChildren } from 'vue';
+import { h } from 'vue';
+import { cssPrefix, useRenderSlot, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
 import type {
     TBsRadio,
     TBsRipple,
@@ -11,10 +9,12 @@ import type {
     TRadioOptionProps,
     TRadioProps,
     TRecord
-} from "../../../types";
-import {useMakeInputBaseAttrs} from "../../Field/mixins/textFieldApi";
-import BsRadio from "../BsRadio";
-import Helper from "../../../utils/Helper";
+} from '../../../types';
+import Helper from '../../../utils/Helper';
+import { BsRipple } from '../../Animation';
+import { useMakeInputBaseAttrs } from '../../Field/mixins/textFieldApi';
+import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
+import BsRadio from '../BsRadio';
 
 export function useRadioClasses(
     props: Readonly<TRadioOptionProps>,
@@ -22,10 +22,10 @@ export function useRadioClasses(
     return {
         [`${cssPrefix}radio`]: true,
         [`${cssPrefix}radio-${props.color}`]: props.color !== undefined,
-        "checked": props.value === props.modelValue,
-        "required": props.required,
-        "readonly": props.readonly,
-        "disabled": props.disabled,
+        'checked': props.value === props.modelValue,
+        'required': props.required,
+        'readonly': props.readonly,
+        'disabled': props.disabled,
     }
 }
 
@@ -44,15 +44,15 @@ export function useCreateInputRadioOrCheckbox(
 ): VNode {
     const thisValue = !Helper.isEmpty(props.value)
         ? (Helper.isObject(props.value) ? JSON.stringify(props.value) : String(props.value))
-        : "";
+        : '';
 
     let inputProps = {
         ...useMakeInputBaseAttrs(props),
         type: inputType,
         role: inputType,
         value: thisValue,
-        "aria-disabled": props.disabled,
-        "aria-checked": useCheckSelected(props),
+        'aria-disabled': props.disabled,
+        'aria-checked': useCheckSelected(props),
     }
 
     if (!Helper.isEmptyObject(otherProps)) {
@@ -62,7 +62,7 @@ export function useCreateInputRadioOrCheckbox(
         }
     }
 
-    return h("input", inputProps);
+    return h('input', inputProps);
 }
 
 export function useRenderRadioOrCheckbox(
@@ -74,20 +74,22 @@ export function useRenderRadioOrCheckbox(
     inputElement: VNode,
     toggleCheckHandler: VoidFunction,
 ): VNode {
-    return h("div", {
+    return h('div', {
             class: classnames.value,
         }, [
-            h("div", {
+            h('div', {
                 class: `${cssPrefix}${inputType}-inner`,
                 onClick: toggleCheckHandler,
             }, [
-                h("div", {class: `${cssPrefix}${inputType}-overlay`}),
-                // @ts-ignore
+                h('div', {class: `${cssPrefix}${inputType}-overlay`}),
                 h<TBsRipple>(BsRipple, {
-                    centered: true,
-                    active: rippleActive.value,
-                    disabled: props.disabled || props.readonly,
-                    "onUpdate:active": (value: boolean): void => {
+                    // @ts-ignore
+                    centered: true as Prop<boolean>,
+                    // @ts-ignore
+                    active: rippleActive.value as Prop<boolean>,
+                    // @ts-ignore
+                    disabled: (props.disabled || props.readonly) as Prop<boolean>,
+                    'onUpdate:active': (value: boolean): void => {
                         rippleActive.value = value
                     }
                 }, {
@@ -95,20 +97,20 @@ export function useRenderRadioOrCheckbox(
                 }),
             ]),
             useRenderSlotWithWrapper(
-                slots, "default", Helper.uuid(),
+                slots, 'default', Helper.uuid(),
                 {
-                    "for": props.id,
+                    'for': props.id,
                     tabIndex: 0,
                     class: `${cssPrefix}${inputType}-label`,
                     onClickPrevent: toggleCheckHandler,
                     onKeydown: (e: KeyboardEvent) => {
-                        if (["Space", "Enter"].includes(e.code)) {
+                        if (['Space', 'Enter'].includes(e.code)) {
                             toggleCheckHandler();
                             e.preventDefault();
                         }
                     }
                 },
-                undefined, "label"
+                undefined, 'label'
             ),
         ]
     );
@@ -122,11 +124,11 @@ export function useInputGroupClasses<D, M>(
     return {
         [`${cssPrefix}field row`]: true,
         // [`${cssPrefix}radio-group`]: true,
-        "required": props.required,
-        "readonly": props.readonly,
-        "disabled": props.disabled,
-        "has-error": hasError,
-        "has-success": hasValidated && !hasError
+        'required': props.required,
+        'readonly': props.readonly,
+        'disabled': props.disabled,
+        'has-error': hasError,
+        'has-success': hasValidated && !hasError
     }
 }
 
@@ -135,7 +137,7 @@ export function useCreateRadioItems(
     toggleCheckHandler: (item: TRadioProps) => void,
 ): VNodeArrayChildren {
     return props.items.map((it, idx) => {
-        return h("div", {class: "col", key: `radio-${idx}`}, [
+        return h('div', {class: 'col', key: `radio-${idx}`}, [
             h<TBsRadio>(BsRadio, {
                 color: <Prop<string>>(it.color || props.color),
                 // @ts-ignore
@@ -146,10 +148,10 @@ export function useCreateRadioItems(
                 name: <Prop<string | undefined>>(
                     it.name
                         ? it.name
-                        : (props.name ? (props.name + "[" + idx + "]") : undefined)
+                        : (props.name ? (props.name + '[' + idx + ']') : undefined)
                 ),
                 modelValue: props.modelValue as Prop<string | number | unknown>,
-                "onUpdate:model-value": (): void => toggleCheckHandler(it)
+                'onUpdate:model-value': (): void => toggleCheckHandler(it)
             }, {
                 default: () => it.label
             }),
@@ -167,18 +169,18 @@ export function useRenderRadioOrCheckboxGroup<D, M>(
     hasError: boolean,
     errorItems: Array<string>,
 ): VNode {
-    return h("div", {
+    return h('div', {
         class: classnames.value,
     }, [
-        useRenderSlot(slots, "default", {key: Helper.uuid()}),
-        h("div", {
-            class: "col"
+        useRenderSlot(slots, 'default', {key: Helper.uuid()}),
+        h('div', {
+            class: 'col'
         }, [
-            h("div", {
+            h('div', {
                 class: {
-                    "row g-2": true,
-                    "row-cols-auto": !props.column && props.items.length < 4,
-                    "row-cols-1 row-cols-md-2": props.column || props.items.length > 3,
+                    'row g-2': true,
+                    'row-cols-auto': !props.column && props.items.length < 4,
+                    'row-cols-1 row-cols-md-2': props.column || props.items.length > 3,
                     [`row-cols-lg-4`]: (props.column && parseInt(<string>props.column) > 4) && props.items.length > 3,
                     [`row-cols-lg-${props.column}`]: props.column && parseInt(<string>props.column) < 5,
                     [`row-cols-xl-${props.column}`]: props.column !== undefined,

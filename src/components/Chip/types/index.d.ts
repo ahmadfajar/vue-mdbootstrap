@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TAvatarIconProps, TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TAvatarIconProps, TRecord } from '../../../types';
 
 export declare type TChipValue = {
     id: string;
@@ -158,6 +160,9 @@ export declare type TBsChip = ComponentObjectPropsOptions<TChipOptionProps>;
 
 export declare type TBsChipGroup = ComponentObjectPropsOptions<TChipGroupOptionProps>;
 
-export declare const BsChip: DefineComponent<TBsChip, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsChip: DefineComponent<TBsChip, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsChipGroup: DefineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsChipGroup: DefineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsChipPlugin: Plugin;
+

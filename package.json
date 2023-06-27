@@ -7,12 +7,13 @@
     "email": "ahmad.fajar234@hotmail.com"
   },
   "license": "BSD-3-Clause",
-  "main": "dist/vue-mdb.mjs",
-  "module": "dist/vue-mdb.mjs",
+  "type": "module",
+  "main": "dist/vue-mdb.cjs",
+  "module": "dist/vue-mdb.esm.mjs",
   "styles": "dist/vue-mdb.min.css",
   "types": "dist/vue-mdb.d.ts",
-  "unpkg": "dist/vue-mdb.min.umd.js",
-  "jsdelivr": "dist/vue-mdb.min.umd.js",
+  "unpkg": "dist/vue-mdb.umd.min.js",
+  "jsdelivr": "dist/vue-mdb.umd.min.js",
   "files": [
     "dist",
     "package.json",
@@ -20,6 +21,22 @@
     "README.md",
     "LICENSE"
   ],
+  "exports": {
+    ".": {
+      "import": {
+        "style": "./dist/vue-mdb.min.css",
+        "types": "./dist/vue-mdb.d.ts",
+        "node": "./dist/vue-mdb.esm.mjs",
+        "default": "./dist/vue-mdb.esm.mjs"
+      },
+      "require": {
+        "style": "./dist/vue-mdb.min.css",
+        "types": "./dist/vue-mdb.d.ts",
+        "default": "./dist/vue-mdb.cjs"
+      },
+      "styles": "./dist/vue-mdb.min.css"
+    }
+  },
   "keywords": [
     "bootstrap",
     "vue",
@@ -32,10 +49,11 @@
     "url": "https://github.com/ahmadfajar/vue-mdbootstrap"
   },
   "scripts": {
-    "dev": "vite build",
-    "prod": "run-p type-check build-only",
-    "build:dist": "rimraf dist && run-p type-check dev build-only build-types",
-    "build-only": "vite build --config vite.config.prod.ts",
+    "build": "run-p type-check build-prod",
+    "build:dist": "rimraf dist && run-p type-check build-dev build-prod build-lib build-types",
+    "build-dev": "vite build",
+    "build-lib": "vite build --config vite.config.lib.ts",
+    "build-prod": "vite build --config vite.config.prod.ts",
     "build-types": "rollup --config rollup.config.dts.mjs",
     "type-check": "vue-tsc --noEmit -p tsconfig.build.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"

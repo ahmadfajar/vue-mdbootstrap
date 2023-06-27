@@ -1,6 +1,6 @@
-import { DateTime } from "luxon";
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from "vue";
-import { Fragment, h } from "vue";
+import { DateTime } from 'luxon';
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
+import { Fragment, h } from 'vue';
 import type {
     TBsDateTimeField,
     TDateTimeFieldOptionProps,
@@ -8,26 +8,26 @@ import type {
     TEmitFn,
     TIconVariant,
     TRecord
-} from "../../../types";
-import Helper from "../../../utils/Helper";
-import { useTogglePopoverState } from "../../Combobox/mixins/comboboxApi";
+} from '../../../types';
+import Helper from '../../../utils/Helper';
+import { useTogglePopoverState } from '../../Combobox/mixins/comboboxApi';
 import {
     useCreateFieldActionIcon,
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
     useInputTextFieldAttrs,
     useMakeInputBaseAttrs
-} from "../../Field/mixins/textFieldApi";
+} from '../../Field/mixins/textFieldApi';
 import {
     useOnFieldBlurred,
     useOnFieldFocused,
     useOnFieldValueCleared,
     useOnTextFieldNodeMounted
-} from "../../Field/mixins/textFieldEventApi";
-import { useRenderFieldFeedback } from "../../Field/mixins/validationApi";
-import { BsPopover } from "../../Popover";
-import BsDatePicker from "../BsDatePicker";
-import { useParseDate } from "./datePickerApi";
+} from '../../Field/mixins/textFieldEventApi';
+import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
+import { BsPopover } from '../../Popover';
+import BsDatePicker from '../BsDatePicker';
+import { useParseDate } from './datePickerApi';
 
 export function useParseDateTimeFromFormat(
     value?: string | number | Date,
@@ -38,17 +38,17 @@ export function useParseDateTimeFromFormat(
         if (Helper.isString(value)) {
             try {
                 return !Helper.isEmpty(format)
-                    ? DateTime.fromFormat(<string>value, <string>format, { locale: locale })
-                    : DateTime.fromISO(<string>value, { locale: locale });
+                    ? DateTime.fromFormat(<string>value, <string>format, {locale: locale})
+                    : DateTime.fromISO(<string>value, {locale: locale});
             } catch (e) {
                 try {
-                    return DateTime.fromSQL(<string>value, { locale: locale });
+                    return DateTime.fromSQL(<string>value, {locale: locale});
                 } catch (e) {
                     return undefined;
                 }
             }
         } else if (Helper.isNumber(value)) {
-            return DateTime.fromSeconds(<number>value, { locale: locale });
+            return DateTime.fromSeconds(<number>value, {locale: locale});
         } else if (value instanceof Date) {
             const result = DateTime.fromJSDate(value);
             if (!Helper.isEmpty(locale)) {
@@ -68,15 +68,15 @@ function createInputTextField(
     isFocused: Ref<boolean>,
     isPopoverOpen: Ref<boolean>,
 ): VNode {
-    return h("input", {
+    return h('input', {
         ...useMakeInputBaseAttrs(props),
         ...useInputTextFieldAttrs(props, false),
         readonly: true,
-        role: "textbox",
-        type: "text",
+        role: 'textbox',
+        type: 'text',
         value: displayValue.value,
         style: {
-            cursor: "default"
+            cursor: 'default'
         },
         onBlur: (e: Event) =>
             useOnFieldBlurred(emit, e, isFocused, (<boolean>props.disabled)),
@@ -114,7 +114,7 @@ export function useRenderDateTimeField(
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, thisProps,
         h(Fragment, [
-            h("div", {
+            h('div', {
                 class: controlCss.value,
             }, [
                 useCreateFieldInnerWrapper(
@@ -158,15 +158,15 @@ export function useRenderDateTimeField(
                     errorItems.value,
                 ),
             ]),
-            // @ts-ignore
             h(BsPopover, {
                 color: null,
-                space: (thisProps.outlined ? 2 : 1),
+                space: (thisProps.outlined ? 2 : 1) as Prop<number>,
                 class: props.pickerCls,
                 placement: props.pickerPlacement,
                 transition: (props.transition || props.pickerTransition),
-                open: isPopoverOpen.value,
-                trigger: activator.value,
+                // @ts-ignore
+                open: isPopoverOpen.value as Prop<boolean>,
+                trigger: activator.value as Prop<HTMLElement>,
                 onClose: () => useTogglePopoverState(emit, isPopoverOpen, false, true),
             }, {
                 default: () => h(BsDatePicker, {
@@ -179,10 +179,10 @@ export function useRenderDateTimeField(
                     mode: (props.viewMode || props.pickerMode),
                     modelValue: <Prop<Date | undefined>>localFieldValue.value?.toJSDate(),
                     width: props.pickerWidth,
-                    "onUpdate:model-value": (value: string) => {
+                    'onUpdate:model-value': (value: string) => {
                         localFieldValue.value = useParseDate(value).setLocale(locale.value);
                         emit(
-                            "update:model-value",
+                            'update:model-value',
                             localFieldValue.value?.toFormat(<string>thisProps.valueFormat),
                         );
                     },

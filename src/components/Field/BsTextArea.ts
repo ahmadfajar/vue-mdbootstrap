@@ -1,28 +1,28 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, ref, watch} from "vue";
-import {cssPrefix} from "../../mixins/CommonApi";
-import {booleanProp, stringProp, validStringOrNumberProp} from "../../mixins/CommonProps";
-import {inputProps, textFieldProps} from "./mixins/fieldProps";
-import {validationProps} from "./mixins/validationProps";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import { booleanProp, stringProp, validStringOrNumberProp } from '../../mixins/CommonProps';
+import type { TBsTextArea, TRecord, TTextAreaOptionProps } from '../../types';
+import Helper from '../../utils/Helper';
+import { inputProps, textFieldProps } from './mixins/fieldProps';
 import {
     useCreateTextFieldClasses,
     useFieldWrapperClasses,
     useRenderTextArea,
     useShowClearButton
-} from "./mixins/textFieldApi";
+} from './mixins/textFieldApi';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowHelpText,
     useShowValidationError
-} from "./mixins/validationApi";
-import type {TBsTextArea, TRecord, TTextAreaOptionProps} from "../../types";
-import Helper from "../../utils/Helper";
+} from './mixins/validationApi';
+import { validationProps } from './mixins/validationProps';
 
 
-export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsTextArea",
+export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsTextArea',
     props: {
         ...inputProps,
         ...textFieldProps,
@@ -47,29 +47,29 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, C
         /**
          * Fired when this component lost focus.
          */
-        "blur",
+        'blur',
         /**
          * Fired when this component got focused.
          */
-        "focus",
+        'focus',
         /**
          * Fired when this component's value is being cleared.
          */
-        "clear",
+        'clear',
         /**
          * Triggers when cursor is still in the `<textarea>` element and keyboard key is pressed.
          */
-        "keydown",
+        'keydown',
         /**
          * Fired when this component's value is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TTextAreaOptionProps>;
         const autocomplete = cmpProps.autocomplete && Helper.isString(cmpProps.autocomplete)
             ? cmpProps.autocomplete
-            : (cmpProps.autocomplete ? "on" : Helper.uuid());
+            : (cmpProps.autocomplete ? 'on' : Helper.uuid());
         const localValue = ref<string | number | undefined | null>(cmpProps.modelValue);
         const rowHeight = ref<string | number | undefined | null>(cmpProps.rowHeight);
         const isFocused = ref(false);

@@ -13,7 +13,7 @@ function mounted(el: IBindingElement, binding: DirectiveBinding<VoidFunction | T
     if (!Helper.isFunction(binding.value)) {
         const binder = <TDirectiveBinding>binding.value
         target = Helper.isString(binder.target)
-            ? document.querySelector(<string>binder.target)
+            ? document.querySelector(binder.target)
             : <Element | null>binder.target
     }
     const clickHandler = function (evt: Event) {

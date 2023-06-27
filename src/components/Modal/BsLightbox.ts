@@ -1,31 +1,44 @@
-import type {ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, getCurrentInstance, onMounted, onUnmounted, ref, shallowRef, watch} from "vue";
-import {lightboxProps} from "./mixins/lightboxProps";
+import type {
+    ComponentInternalInstance,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    EmitsOptions,
+    MethodOptions
+} from 'vue';
+import { computed, defineComponent, getCurrentInstance, onMounted, onUnmounted, ref, shallowRef, watch } from 'vue';
+import { EventListener } from '../../mixins/DomHelper';
+import type {
+    IEventResult,
+    IHTMLElement,
+    TBsLightbox,
+    TImageDataset,
+    TLightboxOptionProps,
+    TRecord
+} from '../../types';
+import PopupManager from '../Popover/mixins/PopupManager';
 import {
     useComputeImgStyle,
     useNavigateNextSlide,
     useNavigatePrevSlide,
     useRenderLightbox,
     useSetActiveLightboxItem
-} from "./mixins/lightboxApi";
-import type {IEventResult, IHTMLElement, TBsLightbox, TImageDataset, TLightboxOptionProps, TRecord} from "../../types";
-import {EventListener} from "../../mixins/DomHelper";
-import PopupManager from "../Popover/mixins/PopupManager";
+} from './mixins/lightboxApi';
+import { lightboxProps } from './mixins/lightboxProps';
 
-export default defineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsLightbox",
+export default defineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsLightbox',
     props: lightboxProps,
     emits: [
-        "change",
-        "close",
-        "exec-delete",
-        "exec-download",
-        "exec-info",
-        "exec-rotate-left",
-        "exec-rotate-right",
-        "exec-zoomin",
-        "exec-zoomout",
-        "update:open",
+        'change',
+        'close',
+        'exec-delete',
+        'exec-download',
+        'exec-info',
+        'exec-rotate-left',
+        'exec-rotate-right',
+        'exec-zoomin',
+        'exec-zoomout',
+        'update:open',
     ],
     setup(props, {emit, expose, slots}) {
         const thisProps = props as Readonly<TLightboxOptionProps>;
@@ -52,9 +65,9 @@ export default defineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, C
                 itemIndex.value = index;
                 activeItem.value = thisProps.items.length > 0 ? thisProps.items[index] : undefined;
                 isOpen.value = true;
-                emit("update:open", true);
+                emit('update:open', true);
             } else {
-                throw Error("The given image index is out of bound.");
+                throw Error('The given image index is out of bound.');
             }
         };
         const nextSlide = () => {
@@ -84,13 +97,13 @@ export default defineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, C
             instance.value = getCurrentInstance();
             keyEvent = EventListener.listen(
                 <IHTMLElement>document.body,
-                "keydown", (evt: Event) => {
+                'keydown', (evt: Event) => {
                     const evtKey = evt as KeyboardEvent;
-                    if (evtKey.key && evtKey.key === "ArrowLeft") {
+                    if (evtKey.key && evtKey.key === 'ArrowLeft') {
                         isOpen.value && useNavigatePrevSlide(
                             emit, thisProps, activeItem, itemIndex, zoom, rotate, transition,
                         );
-                    } else if (evtKey.key && evtKey.key === "ArrowRight") {
+                    } else if (evtKey.key && evtKey.key === 'ArrowRight') {
                         isOpen.value && useNavigateNextSlide(
                             emit, thisProps, activeItem, itemIndex, zoom, rotate, transition,
                         );

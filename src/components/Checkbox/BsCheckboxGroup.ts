@@ -1,21 +1,21 @@
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent} from "vue";
-import {checkboxGroupProps} from "./mixins/checkboxProps";
-import {baseInputProps} from "../Field/mixins/fieldProps";
-import {validationProps} from "../Field/mixins/validationProps";
-import {useCreateCheckboxItems} from "./mixins/checkboxApi";
-import {useInputGroupClasses, useRenderRadioOrCheckboxGroup} from "../Radio/mixins/radioApi";
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent } from 'vue';
+import type { TBsCheckboxGroup, TCheckboxGroupOptionProps, TCheckboxProps, TRecord } from '../../types';
+import Helper from '../../utils/Helper';
+import { baseInputProps } from '../Field/mixins/fieldProps';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowValidationError
-} from "../Field/mixins/validationApi";
-import type {TBsCheckboxGroup, TCheckboxGroupOptionProps, TCheckboxProps, TRecord} from "../../types";
-import Helper from "../../utils/Helper";
+} from '../Field/mixins/validationApi';
+import { validationProps } from '../Field/mixins/validationProps';
+import { useInputGroupClasses, useRenderRadioOrCheckboxGroup } from '../Radio/mixins/radioApi';
+import { useCreateCheckboxItems } from './mixins/checkboxApi';
+import { checkboxGroupProps } from './mixins/checkboxProps';
 
-export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsCheckboxGroup",
+export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsCheckboxGroup',
     props: {
         ...baseInputProps,
         ...checkboxGroupProps,
@@ -25,7 +25,7 @@ export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptio
         /**
          * Fired when this component's checked value is updated.
          */
-        "update:model-value",
+        'update:model-value',
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TCheckboxGroupOptionProps>;
@@ -42,7 +42,7 @@ export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptio
             item: TCheckboxProps,
         ): void => {
             if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {
-                emit("update:model-value", Array.isArray(values) ? values : [values]);
+                emit('update:model-value', Array.isArray(values) ? values : [values]);
             }
         }
 

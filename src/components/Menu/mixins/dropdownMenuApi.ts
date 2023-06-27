@@ -1,8 +1,8 @@
-import type {ComponentPublicInstance, ExtractPropTypes, Ref, Slots, VNode} from "vue";
-import {h} from "vue";
-import type {TBsDropdownMenu, TBsPopover, TEmitFn, TDropdownMenuOptionProps} from "../../../types";
-import {cssPrefix} from "../../../mixins/CommonApi";
-import {BsPopover} from "../../Popover";
+import type { ComponentPublicInstance, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
+import { h } from 'vue';
+import { cssPrefix } from '../../../mixins/CommonApi';
+import type { TBsDropdownMenu, TBsPopover, TDropdownMenuOptionProps, TEmitFn } from '../../../types';
+import { BsPopover } from '../../Popover';
 
 function hideDropdownMenu(
     isActive: Ref<boolean>,
@@ -15,8 +15,8 @@ function hideDropdownMenu(
 
     timer.value = window.setTimeout(() => {
         isActive.value = false;
-        emit("update:open", false);
-        emit("close");
+        emit('update:open', false);
+        emit('close');
     }, 100);
 }
 
@@ -32,7 +32,7 @@ function showDropdownMenu(
         }
 
         isActive.value = true;
-        emit("update:open", true);
+        emit('update:open', true);
     }
 }
 
@@ -57,10 +57,10 @@ export function useRenderDropdownMenu(
         }
     };
 
-    return h("div", {
+    return h('div', {
         class: [`${cssPrefix}dropdown-menu`]
     }, [
-        h("div", {
+        h('div', {
             ref: activator,
             class: [`${cssPrefix}dropdown-menu-activator`],
             onClick: () => {
@@ -73,17 +73,17 @@ export function useRenderDropdownMenu(
             onMouseenter: thisOnMouseEnter,
             onMouseleave: thisOnMouseLeave,
         }, slots.default && slots.default()),
-        // @ts-ignore
         h<TBsPopover>(BsPopover, {
             ref: popupMenu,
             class: [`${cssPrefix}popover-dropdown-menu`, `${cssPrefix}shadow-1`],
             color: props.color,
             cover: props.cover,
-            open: isActive.value,
+            // @ts-ignore
+            open: isActive.value as Prop<boolean>,
             placement: props.placement,
             space: props.space,
             transition: props.transition,
-            trigger: activator.value,
+            trigger: activator.value as Prop<HTMLElement>,
             onClick: () => {
                 if (thisProps.contentClickClose) {
                     hideDropdownMenu(isActive, timer, emit);
@@ -91,7 +91,7 @@ export function useRenderDropdownMenu(
             },
             onMouseenter: thisOnMouseEnter,
             onMouseleave: thisOnMouseLeave,
-            "onUpdate:open": (value: boolean) => isActive.value = value,
+            'onUpdate:open': (value: boolean) => isActive.value = value,
         }, {
             default: () => slots.content && slots.content()
         })

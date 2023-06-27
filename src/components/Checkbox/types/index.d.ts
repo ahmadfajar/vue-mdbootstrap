@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TInputGroupProps, TRadioOptionProps, TRadioProps, TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TInputGroupProps, TRadioOptionProps, TRadioProps, TRecord } from '../../../types';
 
 export declare type TCheckboxProps = TRadioProps & {
     indeterminate?: boolean;
@@ -23,6 +25,9 @@ export declare type TBsCheckbox = ComponentObjectPropsOptions<TCheckboxOptionPro
 
 export declare type TBsCheckboxGroup = ComponentObjectPropsOptions<TCheckboxGroupOptionProps>;
 
-export declare const BsCheckbox: DefineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsCheckbox: DefineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
 
-export declare const BsCheckboxGroup: DefineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsCheckboxGroup: DefineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsCheckboxPlugin: Plugin;
+

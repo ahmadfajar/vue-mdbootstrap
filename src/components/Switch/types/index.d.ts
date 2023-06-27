@@ -3,9 +3,11 @@ import type {
     ComponentOptionsMixin,
     ComputedOptions,
     DefineComponent,
-    EmitsOptions
-} from "vue";
-import type {TLabelPosition, TRadioOptionProps, TRecord} from "../../../types";
+    EmitsOptions,
+    MethodOptions,
+    Plugin
+} from 'vue';
+import type { TLabelPosition, TRadioOptionProps, TRecord } from '../../../types';
 
 export declare type TSwitchOptionProps = TRadioOptionProps & {
     labelPosition?: TLabelPosition | string;
@@ -18,4 +20,6 @@ export declare type TSwitchOptionProps = TRadioOptionProps & {
 
 export declare type TBsSwitch = ComponentObjectPropsOptions<TSwitchOptionProps>;
 
-export declare const BsSwitch: DefineComponent<TBsSwitch, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsSwitch: DefineComponent<TBsSwitch, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsSwitchPlugin: Plugin;

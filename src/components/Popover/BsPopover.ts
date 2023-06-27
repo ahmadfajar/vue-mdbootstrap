@@ -1,25 +1,31 @@
-import type { ComponentInternalInstance, ComponentOptionsMixin, ComputedOptions, EmitsOptions } from "vue";
-import { computed, defineComponent, getCurrentInstance, nextTick, onMounted, ref, shallowRef, watch } from "vue";
-import { cssPrefix } from "../../mixins/CommonApi";
-import type { TBsPopover, TPopoverOptionProps, TRecord } from "../../types";
-import { useRenderPopover, useSetPopoverPosition } from "./mixins/popoverApi";
-import { popoverProps } from "./mixins/popoverProps";
+import type {
+    ComponentInternalInstance,
+    ComponentOptionsMixin,
+    ComputedOptions,
+    EmitsOptions,
+    MethodOptions
+} from 'vue';
+import { computed, defineComponent, getCurrentInstance, nextTick, onMounted, ref, shallowRef, watch } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
+import type { TBsPopover, TPopoverOptionProps, TRecord } from '../../types';
+import { useRenderPopover, useSetPopoverPosition } from './mixins/popoverApi';
+import { popoverProps } from './mixins/popoverProps';
 
-export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsPopover",
+export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsPopover',
     props: popoverProps,
     inheritAttrs: false,
     emits: [
         /**
          * Fired when this Popover state is updated.
          */
-        "update:open",
+        'update:open',
         /**
          * Fired when this Popover closed or hide.
          */
-        "close",
+        'close',
     ],
-    setup(props, { slots, attrs }) {
+    setup(props, {slots, attrs}) {
         const thisProps = props as Readonly<TPopoverOptionProps>;
         const isActive = ref<boolean>(<boolean>thisProps.open);
         const actualPlacement = ref<string | undefined>(thisProps.placement);
@@ -30,7 +36,7 @@ export default defineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, Co
             () => [
                 `${cssPrefix}popover`,
                 `transition-${actualPlacement.value}`,
-                thisProps.color ? `bg-${thisProps.color}` : "",
+                thisProps.color ? `bg-${thisProps.color}` : '',
             ]
         );
 

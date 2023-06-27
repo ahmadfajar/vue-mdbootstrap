@@ -1,21 +1,21 @@
-import {DateTime} from "luxon";
-import type {ComponentOptionsMixin, ComputedOptions, EmitsOptions} from "vue";
-import {computed, defineComponent, ref} from "vue";
-import type {TBsDatePickerHeader, TDatePickerHeaderProps, TRecord} from "../../types";
+import { DateTime } from 'luxon';
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
+import type { TBsDatePickerHeader, TDatePickerHeaderProps, TRecord } from '../../types';
 import {
     DatePickerConst,
     useDatePickerHeaderStyles,
     useHeaderTitleFormatOpts,
     useRenderDatePickerHeader,
     useWatchOfDatePickerHeaderProps
-} from "./mixins/datePickerApi";
-import {datePickerHeaderProps} from "./mixins/datePickerProps";
+} from './mixins/datePickerApi';
+import { datePickerHeaderProps } from './mixins/datePickerProps';
 
-export default defineComponent<TBsDatePickerHeader, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>({
-    name: "BsDatePickerHeader",
+export default defineComponent<TBsDatePickerHeader, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+    name: 'BsDatePickerHeader',
     props: datePickerHeaderProps,
     emits: [
-        "change-view",
+        'change-view',
     ],
     setup(props, {emit}) {
         const thisProps = props as Readonly<TDatePickerHeaderProps>;
@@ -37,7 +37,7 @@ export default defineComponent<TBsDatePickerHeader, TRecord, TRecord, ComputedOp
             ) && !thisProps.readonly
         );
         const transitionName = computed(() =>
-            reverse.value === true ? "slide-top-bottom" : "slide-bottom-top"
+            reverse.value === true ? 'slide-top-bottom' : 'slide-bottom-top'
         );
         const styles = computed<TRecord>(() =>
             useDatePickerHeaderStyles(thisProps, isYearActive, isTimeActive, isTitleActive)

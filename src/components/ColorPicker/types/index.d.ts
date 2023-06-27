@@ -4,12 +4,14 @@ import type {
     ComputedOptions,
     DefineComponent,
     EmitsOptions,
+    MethodOptions,
+    Plugin,
     Ref,
     UnwrapNestedRefs
-} from "vue";
-import type {Color, TPopoverPosition, TRecord} from "../../../types";
+} from 'vue';
+import type { Color, TPopoverPosition, TRecord } from '../../../types';
 
-export declare type TColorPickerMode = "HEX" | "RGB" | "HSL";
+export declare type TColorPickerMode = 'HEX' | 'RGB' | 'HSL';
 
 declare type TColorPickerValue = {
     currentColor: Color.TColor;
@@ -90,12 +92,12 @@ export declare type TColorPickerOptionProps = {
     /**
      * This ColorPicker mode. Valid values: `HEX`, `RGB`, `HSL`.
      */
-    mode?: TColorPickerMode | string;
+    mode?: TColorPickerMode;
     modelValue?: string;
     /**
      * This ColorPicker display placement when property `activator` is defined.
      */
-    placement?: TPopoverPosition | string;
+    placement?: TPopoverPosition;
     /**
      * Number of pixel to shift the ColorPicker display position from the activator element.
      */
@@ -117,4 +119,6 @@ export declare type TColorPickerOptionProps = {
 
 export declare type TBsColorPicker = ComponentObjectPropsOptions<TColorPickerOptionProps>;
 
-export declare const BsColorPicker: DefineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsColorPicker: DefineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+
+export declare const BsColorPickerPlugin: Plugin;
