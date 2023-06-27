@@ -16,111 +16,137 @@
 </p>
 
 
-**Vue MDBootstrap** is a collection of **Vue 3** components and built according to 
-the <a href="https://m3.material.io/" target="_blank">Google Material Design 3</a> 
-specs. They can be used to built **Single Page Application (SPA)** by using module 
-bundler or built common web page by using the resources from the CDN.
+**Vue MDBootstrap** is a collection of UI components for **Vue 3** and built according to 
+the [Google Material Design 3](https://m3.material.io/)
+specs. These components library were build in the spirit of **Vue 3 framework**, and 
+utilize **Bootstrap 5** css framework.
 
+Whether you are building an amazing **Single Page Application (SPA)** or common web page, 
+you have the power at your fingertips. You don't have to be a great programmer and
+have excellent UI design skills. Just use **Vue MDBootstrap**, it's easy to use and
+most of the components you need are already there.
 
-These components were build in the spirit of **VueJs 3 framework**, and utilize **Bootstrap 5** 
-css framework. Long ago, I use them on all my VueJs projects. Now, I decide to publish 
-these components and hope it will be useful to anyone who wants to use it as an alternative of
-many Vue components out there. 
-
-
-## Notes
-
-We are now working on **version 2**, and still working hard on migrating the components to fully
-support **Vue 3** and **Bootstrap 5**. When the migration is finish, we will publish it on **NPM**.
 
 ## How To Use
 
-### Using Module Bundlers
+### Using Module Bundler
 
-If you are building Single Page Application and using module bundlers like 
-[Webpack](https://webpack.js.org/), [Vue Cli](https://cli.vuejs.org/) or 
-[Symfony Encore](https://symfony.com/doc/current/frontend/encore/installation.html), 
-you may prefer to directly include the package into your project. To get started, 
-use `yarn` or `npm` to get the latest version of Vue.js, and Vue MDBootstrap.
+If you are building a Single Page Application and you can use module bundler like 
+[Vite](https://vitejs.dev/), [Vue Cli](https://cli.vuejs.org/) or 
+[Webpack](https://webpack.js.org/) to create and start your project. 
+And use `yarn` or `npm` package manager to get the latest version of **Vue.js**, 
+and **Vue MDBootstrap**. We assume you already create your project using 
+[Vite + Vue](https://vuejs.org/guide/quick-start.html#creating-a-vue-application). 
+If not yet, please read the 
+[manual](https://vuejs.org/guide/quick-start.html#creating-a-vue-application) first.
+
 
 ```bash
 # With npm
-npm install vue vue-mdbootstrap --save
-npm install node-sass@6.0.1 --save-dev
-npm install sass-loader@10.2.0 --save-dev
+npm install vue-mdbootstrap --save
 
 # With yarn
-yarn add vue vue-mdbootstrap
-yarn add node-sass@6.0.1 --dev
-yarn add sass-loader@10.2.0 --dev
+yarn add vue-mdbootstrap
 ```
 
-Then, register Vue MDBootstrap in your app entry point.
+Then, start create Vue application at your app entry point.
 
 ```js
-// main.js
-import Vue from "vue";
-import VueMdb, { AxiosPlugin } from "vue-mdbootstrap";
+// file: main.js
 
-// Default requirement
-Vue.use(VueMdb);
-// Optionally, install the MDBootstrap Axios plugin
-// only requires if using BsGrid, BsTreeGrid, BsModel, BsStore, BsTreeStore or needs to perform HTTP Request
-Vue.use(AxiosPlugin);
+// import global function to register the components and create Vue application
+import { createVueMdb } from "vue-mdbootstrap";
+
+// Import the main page template
+import App from '@/App.vue';
+
+// Import router navigation, 
+// read vue-router manual on how to setup the navigation
+import router from '@/router'; 
+
+// import components css stylesheet 
+import "vue-mdbootstrap/styles";
+
+// main code start here...
+const app = createVueMdb(App);
+app.use(router).mount('#app');
 ```
 
-Now, you are ready to go. You can use any of **Vue MDBootstrap** components without 
-using `import` statement again. Please note, these components still need css from 
-**Bootstrap4** css framework. 
-
-
-### Using CDN
-
-If you aren't building Single Page Application and not using module bundlers, and 
-your goals is building common web page to display on the web browser, grab the 
-supplied **css** and **js** from the **dist** folder. Or you can get the latest 
-version of the resource from [unpkg.com/vue-mdbootstrap](https://unpkg.com/vue-mdbootstrap)
-and use the js and css files on your html `<head>` section on the page to get started. 
-
-Code below is an example how to load and initialize the components.
+Now, everything is registered and you are ready to go. Please note, 
+this component still requires css from **Bootstrap 5**. 
+Use code below at the HTML `<head>` section to load the Bootstrap css framework.
 
 ```html
-<link rel="stylesheet" href="https://unpkg.com/bootstrap@4.6.0/dist/css/bootstrap.min.css" crossorigin="anonymous">
-<link rel="stylesheet" href="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.min.css" crossorigin="anonymous">
-<script src="https://unpkg.com/vue@2.6.14/dist/vue.min.js" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/vue-mdbootstrap/dist/vue-mdb.min.js" crossorigin="anonymous"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
 ```
 
-If you are using `BsGrid`, `BsTreeGrid`, `BsModel`, `BsStore`, `BsTreeStore` and/or 
-need to perform HTTP Request, you can use example code below in your javascript to 
-initialize MDBootstrap Axios plugin.
 
-```js
-Vue.use(VueMdb.AxiosPlugin, {baseURL: "http://localhost/<api-url>"});
+### Using Vue MDBootstrap from CDN
+
+You can get the latest version of Vue MDBootstrap directly from 
+[unkg](https://unpkg.com/vue-mdbootstrap) or [jsdelivr](https://www.jsdelivr.com/package/npm/vue-mdbootstrap).
+Then use the js and css files on your html `<head>` section to get started. 
+
+Code below is an example on how to create HTML page using Vue MDBootstrap.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+  <link href="https://cdn.jsdelivr.net/npm/vue-mdbootstrap@2/dist/vue-mdb.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue-mdbootstrap@2/dist/vue-mdb.umd.min.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div id="app" class="container">
+    <h3 class="mt-4">Contextual Buttons</h3>
+    <bs-card class="bg-grey-200 border-0 mt-3">
+      <bs-card-body>
+        <div class="d-flex justify-content-center">
+          <bs-button @click="count++">Click me</bs-button>
+          <bs-button color="primary" @click="count++">Click me</bs-button>
+          <bs-button color="secondary" @click="count++">Click me</bs-button>
+          <bs-button color="success" @click="count++">Click me</bs-button>
+          <bs-button color="danger" @click="count++">Click me</bs-button>
+          <bs-button color="warning" @click="count++">Click me</bs-button>
+          <bs-button color="info" @click="count++">Click me</bs-button>
+        </div>
+        <div class="mt-3 text-center md-fw-semibold">Count: {{ count }}</div>
+      </bs-card-body>
+    </bs-card>
+  </div>
+  <script>
+    const { ref } = Vue;
+    const { createVueMdb } = VueMdb;
+    const app = createVueMdb({
+      setup() {
+        const count = ref(0);
+        return {count};
+      }
+    });
+    app.mount('#app');
+  </script>
+</body>
+</html>  
 ```
-
-Now, you can use any of **Vue MDBootstrap** components in your html page.
-
-**Notes**: 
-
-- [FontAwesomeIcon](https://fontawesome.com/icons?d=gallery&s=solid&m=free) and 
-  [Moment.js](https://momentjs.com/) already bundled except **Moment.js localization**.
-- All plugins and classes placed under **VueMdb** namespace. Please refer to 
-  [documentation](https://vue-mdbootstrap.fajarconsultant.com/#/reference). 
-
 
 ## Demos
 
-You can clone the demos from [here](https://github.com/ahmadfajar/vue-mdbootstrap-demos) 
+You can clone the demos from [here](https://github.com/ahmadfajar/vue3-mdb-test) 
 to see it in action.
 
 ## Start coding
 
-Now you have implemented **Vue MDBootstrap** to your project, and it’s time to write your 
-code. Please refer to each component’s 
+Now that you have implemented **Vue MDBootstrap** into your project. 
+And it's time to start writing your code. Please refer to each component’s 
 [documentation](https://vue-mdbootstrap.fajarconsultant.com/#/components) 
 to learn how to use them.
 
 ## Browser Support
 
-Modern browsers and Internet Explorer 10+.
+All major modern browsers.

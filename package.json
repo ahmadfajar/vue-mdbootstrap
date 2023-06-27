@@ -24,17 +24,19 @@
   "exports": {
     ".": {
       "import": {
-        "style": "./dist/vue-mdb.min.css",
+        "style": "./dist/vue-mdb.css",
         "types": "./dist/vue-mdb.d.ts",
         "node": "./dist/vue-mdb.esm.mjs",
-        "default": "./dist/vue-mdb.esm.mjs"
+        "default": "./dist/vue-mdb.esm.min.js"
       },
       "require": {
-        "style": "./dist/vue-mdb.min.css",
+        "style": "./dist/vue-mdb.css",
         "types": "./dist/vue-mdb.d.ts",
         "default": "./dist/vue-mdb.cjs"
-      },
-      "styles": "./dist/vue-mdb.min.css"
+      }
+    },
+    "./styles": {
+      "default": "./dist/vue-mdb.css"
     }
   },
   "keywords": [
