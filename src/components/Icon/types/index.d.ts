@@ -6,7 +6,7 @@ import type {
     VNode,
     VNodeProps
 } from 'vue';
-import { EventUpdateModelValueProps } from '../../../types';
+import type { EventUpdateModelValueProps } from '../../../types';
 
 export declare type TFlipMode = 'horizontal' | 'vertical' | 'both';
 

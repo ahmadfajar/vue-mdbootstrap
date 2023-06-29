@@ -6,7 +6,12 @@ import type {
     VNode,
     VNodeProps
 } from 'vue';
-import { EventClosableProps, EventUpdateModelValueProps, TInputFieldProps, TPopoverPosition } from '../../../types';
+import type {
+    EventClosableProps,
+    EventUpdateModelValueProps,
+    TInputFieldProps,
+    TPopoverPosition
+} from '../../../types';
 
 export declare type TDateTimePickerMode = 'date' | 'datetime' | 'year' | 'month' | 'time';
 

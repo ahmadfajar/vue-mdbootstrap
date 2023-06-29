@@ -6,7 +6,7 @@ import type {
     VNode,
     VNodeProps
 } from 'vue';
-import { EventClosableProps, EventUpdateOpenProps } from '../../../types';
+import type { EventClosableProps, EventUpdateOpenProps } from '../../../types';
 
 export declare type TPopoverPosition =
     'top' | 'top-left' | 'top-right' |

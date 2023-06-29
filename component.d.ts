@@ -1,23 +1,39 @@
-import { AxiosInstance } from 'axios';
-import { BsAlert } from '../components/Alert/types';
-import { BsExpandTransition, BsOverlay, BsRipple } from '../components/Animation/types';
-import { BsAppbar, BsAppbarItems, BsAppbarTitle } from '../components/Appbar/types';
-import { BsAvatar } from '../components/Avatar/types';
-import { BsBadge } from '../components/Badge/types';
-import { BsDivider, BsImageHolder, BsSpacer, BsSubheader } from '../components/Basic/types';
-import { BsButton, BsToggleButton, BsToggleField } from '../components/Button/types';
-import { BsCard, BsCardBody, BsCardContent, BsCardFooter, BsCardHeader, BsCardMedia } from '../components/Card/types';
-import { BsCheckbox, BsCheckboxGroup } from '../components/Checkbox/types';
-import { BsChip, BsChipGroup } from '../components/Chip/types';
-import { BsColorPicker } from '../components/ColorPicker/types';
-import { BsCombobox } from '../components/Combobox/types';
-import { BsAppContainer, BsContainer, BsContent } from '../components/Container/types';
-import { BsDatePicker, BsDateTimeField } from '../components/DatePicker/types';
-import { BsSideDrawer } from '../components/Drawer/types';
-import { BsChipField, BsNumericField, BsSearchField, BsTextArea, BsTextField } from '../components/Field/types';
-import { BsIcon, BsIconSpinner, BsIconSvg, BsToggleIcon } from '../components/Icon/types';
-import { BsListbox } from '../components/Listbox/types';
-import {
+import type { AxiosInstance } from 'axios';
+import type {
+    BsAlert,
+    BsAppbar,
+    BsAppbarItems,
+    BsAppbarTitle,
+    BsAppContainer,
+    BsAvatar,
+    BsBadge,
+    BsButton,
+    BsCard,
+    BsCardBody,
+    BsCardContent,
+    BsCardFooter,
+    BsCardHeader,
+    BsCardMedia,
+    BsCheckbox,
+    BsCheckboxGroup,
+    BsChip,
+    BsChipField,
+    BsChipGroup,
+    BsColorPicker,
+    BsCombobox,
+    BsContainer,
+    BsContent,
+    BsDatePicker,
+    BsDateTimeField,
+    BsDivider,
+    BsDropdownMenu,
+    BsExpandTransition,
+    BsIcon,
+    BsIconSpinner,
+    BsIconSvg,
+    BsImageHolder,
+    BsLightbox,
+    BsListbox,
     BsListNav,
     BsListNavItem,
     BsListTile,
@@ -26,52 +42,35 @@ import {
     BsListTileLeading,
     BsListTileSubtitle,
     BsListTileTitle,
-    BsListView
-} from '../components/ListView/types';
-import { BsDropdownMenu } from '../components/Menu/types';
-import { BsLightbox, BsModal } from '../components/Modal/types';
-import { BsPopover } from '../components/Popover/types';
-import { BsMaskLoader, BsProgress, BsProgressBar } from '../components/Progress/types';
-import { BsRadio, BsRadioGroup } from '../components/Radio/types';
-import { BsSwitch } from '../components/Switch/types';
-import { BsTab, BsTabs } from '../components/Tabs/types';
-import { BsTooltip } from '../components/Tooltip/types';
-import { IHttpService, INotificationProvider, TVueMdb } from './library';
+    BsListView,
+    BsMaskLoader,
+    BsModal,
+    BsNumericField,
+    BsOverlay,
+    BsPopover,
+    BsProgress,
+    BsProgressBar,
+    BsRadio,
+    BsRadioGroup,
+    BsRipple,
+    BsSearchField,
+    BsSideDrawer,
+    BsSpacer,
+    BsSubheader,
+    BsSwitch,
+    BsTab,
+    BsTabs,
+    BsTextArea,
+    BsTextField,
+    BsToggleButton,
+    BsToggleField,
+    BsToggleIcon,
+    BsTooltip,
+    IHttpService,
+    INotificationProvider,
+    TVueMdb
+} from './dist/vue-mdb';
 
-export * from '../components/Alert/types';
-export * from '../components/Animation/types';
-export * from '../components/Appbar/types';
-export * from '../components/Avatar/types';
-export * from '../components/Badge/types';
-export * from '../components/Basic/types';
-export * from '../components/Button/types';
-export * from '../components/Card/types';
-export * from '../components/Checkbox/types';
-export * from '../components/Chip/types';
-export * from '../components/ColorPicker/types';
-export * from '../components/Combobox/types';
-export * from '../components/Container/types';
-export * from '../components/DatePicker/types';
-export * from '../components/Drawer/types';
-export * from '../components/Field/types';
-export * from '../components/Icon/types';
-export * from '../components/Listbox/types';
-export * from '../components/ListView/types';
-export * from '../components/Menu/types';
-export * from '../components/Popover/types';
-export * from '../components/Progress/types';
-export * from '../components/Radio/types';
-export * from '../components/Switch/types';
-export * from '../components/Tabs/types';
-export * from '../components/Tooltip/types';
-export * from '../components/Modal/types';
-export * from '../components/Notification/types';
-export * from '../directives/types';
-export * from './library';
-
-/**
- * @internal
- */
 declare interface TypesConfig {
 }
 
