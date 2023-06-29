@@ -1,15 +1,13 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
     Plugin,
     Ref,
-    UnwrapNestedRefs
+    UnwrapNestedRefs,
+    VNodeProps
 } from 'vue';
-import type { Color, TPopoverPosition, TRecord } from '../../../types';
+import type { Color, EventUpdateModelValueProps, EventUpdateOpenProps, TPopoverPosition } from '../../../types';
 
 export declare type TColorPickerMode = 'HEX' | 'RGB' | 'HSL';
 
@@ -119,6 +117,31 @@ export declare type TColorPickerOptionProps = {
 
 export declare type TBsColorPicker = ComponentObjectPropsOptions<TColorPickerOptionProps>;
 
-export declare const BsColorPicker: DefineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedColorPickerProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateOpenProps & EventUpdateModelValueProps<string> & {
+    'onUpdate:mode'?: (mode: TColorPickerMode) => void;
+}
 
-export declare const BsColorPickerPlugin: Plugin;
+export declare const BsColorPicker: {
+    new(): {
+        $props: AllowedColorPickerProps & TColorPickerOptionProps;
+        $emit: [
+            /**
+             * Fired when this ColorPicker's mode is updated.
+             */
+            'update:mode',
+            /**
+             * Fired when this ColorPicker's value is updated.
+             */
+            'update:model-value',
+            /**
+             * Fired when this ColorPicker's popup state is updated.
+             */
+            'update:open',
+        ];
+    };
+};
+
+export declare const BsColorPickerPlugin: {
+    new(): Plugin;
+};

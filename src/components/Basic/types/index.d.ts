@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TRecord, TSizeOptionProps } from '../../../types';
+import type { TSizeOptionProps } from '../../../types';
 
 export declare type TDividerOptionProps = {
     /**
@@ -90,12 +89,33 @@ export declare type TBsSpacer = ComponentObjectPropsOptions<TSpacerOptionProps>;
 
 export declare type TBsSubheader = ComponentObjectPropsOptions<TSubheaderOptionProps>;
 
-export declare const BsDivider: DefineComponent<TBsDivider, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsDivider: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TDividerOptionProps;
+    };
+};
 
-export declare const BsImageHolder: DefineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsImageHolder: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TImageHolderOptionProps;
+    };
+};
 
-export declare const BsSpacer: DefineComponent<TBsSpacer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsSpacer: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TSpacerOptionProps;
+    };
+};
 
-export declare const BsSubheader: DefineComponent<TBsSubheader, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsSubheader: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TSubheaderOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
 
-export declare const BsBasicCmpPlugin: Plugin;
+export declare const BsBasicCmpPlugin: {
+    new(): Plugin;
+};

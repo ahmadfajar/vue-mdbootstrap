@@ -1,13 +1,11 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TRecord } from '../../../types';
 
 export declare type TAppbarOptionProps = {
     /**
@@ -43,8 +41,38 @@ export declare type TBsAppbar = ComponentObjectPropsOptions<TAppbarOptionProps>;
 
 export declare type TBsAppbarTitle = ComponentObjectPropsOptions<TAppbarTitleOptionProps>;
 
-export declare const BsAppbar: DefineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedAppbarProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
+    onResize?: (node: VNode) => void;
+}
 
-export declare const BsAppbarTitle: DefineComponent<TBsAppbarTitle, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAppbar: {
+    new(): {
+        $props: AllowedAppbarProps & TAppbarOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['resize'];
+    };
+};
 
-export declare const BsAppbarPlugin: Plugin;
+export declare const BsAppbarTitle: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TAppbarTitleOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
+
+export declare const BsAppbarItems: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
+
+export declare const BsAppbarPlugin: {
+    new(): Plugin;
+};

@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TRecord, TValidationProps } from '../../../types';
+import type { EventUpdateModelValueProps, TValidationProps } from '../../../types';
 
 export declare type TInputBaseProps = {
     /**
@@ -105,8 +104,49 @@ export declare type TBsRadio = ComponentObjectPropsOptions<TRadioOptionProps>;
 
 export declare type TBsRadioGroup = ComponentObjectPropsOptions<TRadioGroupOptionProps>;
 
-export declare const BsRadio: DefineComponent<TBsRadio, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedRadioProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateModelValueProps<string | number | boolean> & {
+    onChecked?: (checked: boolean) => void;
+}
 
-export declare const BsRadioGroup: DefineComponent<TBsRadioGroup, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedRadioGroupProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateModelValueProps<string | number>;
 
-export declare const BsRadioPlugin: Plugin;
+export declare const BsRadio: {
+    new(): {
+        $props: AllowedRadioProps & TRadioOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: [
+            /**
+             * Fired when this component's state is changed.
+             */
+            'checked',
+            /**
+             * Fired when this component's checked value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsRadioGroup: {
+    new(): {
+        $props: AllowedRadioGroupProps & TRadioGroupOptionProps;
+        $slots: {
+            default?: () => VNode[];
+            helpText?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when this component's checked value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsRadioPlugin: {
+    new(): Plugin;
+};

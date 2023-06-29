@@ -1,13 +1,11 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TRecord } from '../../../types';
 
 export declare type TAppContainerOptionProps = {
     /**
@@ -38,10 +36,38 @@ export declare type TBsContainer = ComponentObjectPropsOptions<TContainerOptionP
 
 export declare type TBsContent = ComponentObjectPropsOptions<TContainerOptionProps>;
 
-export declare const BsAppContainer: DefineComponent<TBsAppContainer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare type AllowedContainerProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
+    onResize?: (target?: HTMLElement) => void;
+}
 
-export declare const BsContainer: DefineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAppContainer: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TAppContainerOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
 
-export declare const BsContent: DefineComponent<TBsContent, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsContainer: {
+    new(): {
+        $props: AllowedContainerProps & TContainerOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['resize'];
+    };
+};
 
-export declare const BsContainerPlugin: Plugin;
+export declare const BsContent: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TContainerOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
+
+export declare const BsContainerPlugin: {
+    new(): Plugin;
+};

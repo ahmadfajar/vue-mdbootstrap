@@ -1,13 +1,10 @@
-import type {
-    ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
-} from 'vue';
-import { TRecord } from '../../../types';
+import type { AllowedComponentProps, ComponentCustomProps, ComponentObjectPropsOptions, Plugin, VNodeProps } from 'vue';
+
+export declare type TProgressControlMode = 'determinate' | 'indeterminate' | 'buffer';
+
+export declare type TProgressControlVariant = 'spinner' | 'bar';
+
+export declare type TMaskLoaderVariant = 'linear' | 'progress' | 'spinner' | 'grow';
 
 export declare type TMaskLoaderOptionProps = {
     /**
@@ -46,7 +43,7 @@ export declare type TMaskLoaderOptionProps = {
     /**
      * Mask loader variant type.
      */
-    variant?: string;
+    variant?: TMaskLoaderVariant;
     /**
      * The animation transition to be used when displaying the mask loader.
      */
@@ -85,11 +82,11 @@ export declare type TProgressOptionProps = {
     /**
      * ProgressControl mode, valid values are: `determinate`, `indeterminate`, `buffer`.
      */
-    mode?: string;
+    mode?: TProgressControlMode;
     /**
      * ProgressControl type, valid values are: `spinner`, `bar`.
      */
-    type?: string;
+    type?: TProgressControlVariant;
 }
 
 export declare type TProgressBarOptionProps = {
@@ -129,10 +126,24 @@ export declare type TBsProgress = ComponentObjectPropsOptions<TProgressOptionPro
 
 export declare type TBsProgressBar = ComponentObjectPropsOptions<TProgressBarOptionProps>;
 
-export declare const BsMaskLoader: DefineComponent<TBsMaskLoader, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsMaskLoader: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TMaskLoaderOptionProps;
+    };
+};
 
-export declare const BsProgress: DefineComponent<TBsProgress, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsProgress: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TProgressOptionProps;
+    };
+};
 
-export declare const BsProgressBar: DefineComponent<TBsProgressBar, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsProgressBar: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TProgressBarOptionProps;
+    };
+};
 
-export declare const BsProgressPlugin: Plugin;
+export declare const BsProgressPlugin: {
+    new(): Plugin;
+};

@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TAvatarIconProps, TRecord } from '../../../types';
+import type { EventClosableProps, EventUpdateModelValueProps, TAvatarIconProps } from '../../../types';
 
 export declare type TChipValue = {
     id: string;
@@ -160,9 +159,66 @@ export declare type TBsChip = ComponentObjectPropsOptions<TChipOptionProps>;
 
 export declare type TBsChipGroup = ComponentObjectPropsOptions<TChipGroupOptionProps>;
 
-export declare const BsChip: DefineComponent<TBsChip, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedChipProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventClosableProps & EventUpdateModelValueProps<boolean> & {
+    'onUpdate:active'?: (active: boolean) => void;
+}
 
-export declare const BsChipGroup: DefineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedChipGroupProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateModelValueProps<TChipValue | TChipValue[] | null> & {
+    onChange?: (newValue: TChipValue | TChipValue[] | null) => void;
+    'onItem:close'?: (dismissedItem: TChipValue) => void;
+}
 
-export declare const BsChipPlugin: Plugin;
+export declare const BsChip: {
+    new(): {
+        $props: AllowedChipProps & TChipOptionProps;
+        $slots: {
+            default?: () => VNode[];
+            chipIcon?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when this component is dismissed (hide).
+             */
+            'close',
+            /**
+             * Fired when this component state is updated.
+             */
+            'update:active',
+            /**
+             * Fired when this component's value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsChipGroup: {
+    new(): {
+        $props: AllowedChipGroupProps & TChipGroupOptionProps;
+        $slots: {
+            chipText?: (item: TChipOptionItem) => VNode;
+            chipIcon?: (item: TChipOptionItem) => VNode;
+        };
+        $emit: [
+            /**
+             * Fired immediately when this component's value is changed.
+             */
+            'change',
+            /**
+             * Fired when this component's value is updated.
+             */
+            'update:model-value',
+            /**
+             * Fired when this component's item is dismissed (hide).
+             */
+            'item:close',
+        ];
+    };
+};
+
+export declare const BsChipPlugin: {
+    new(): Plugin;
+};
 

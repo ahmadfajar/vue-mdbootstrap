@@ -69,7 +69,7 @@ export function useRenderSlot(
 
     // @ts-ignore
     return h(Fragment,
-        {key: props.key || `_${name}`},
+        {key: props.key ?? `_${name}`},
         validSlot ?? children ?? [],
     );
 }
@@ -203,8 +203,8 @@ export function useRenderRouter(
 export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
     const vm = getCurrentInstance();
     return vm != null && !Helper.isEmpty(props.path) &&
-        ((vm.appContext.config.globalProperties.$router !== null) ||
-            (vm.appContext.config.globalProperties.$route !== null));
+        ((vm.appContext.config.globalProperties.$router != null) ||
+            (vm.appContext.config.globalProperties.$route != null));
 }
 
 /**
@@ -323,11 +323,10 @@ export function useMergeClass(...args: (string | string[])[]): string[] {
         const src = args[i];
         if (!Helper.isEmpty(src) && Array.isArray(src)) {
             result = result.concat(src);
-        } else if (!Helper.isEmpty(src) && Helper.isString(src)) {
-            result.push(<string>src);
+        } else if (Helper.isString(src) && !Helper.isEmpty(src)) {
+            result.push(src);
         } else {
-            const normalized = normalizeClass(src);
-            result.push(normalized);
+            result.push(normalizeClass(src));
         }
     }
 

@@ -1,13 +1,13 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TAvatarIconProps, TIconVariant, TRecord } from '../../../types';
+import { EventClosableProps, EventUpdateModelValueProps, EventUpdateOpenProps } from '../../../types';
+import type { TAvatarIconProps, TIconVariant } from '../../../types';
 
 export declare type TAlertOptionProps = TAvatarIconProps & {
     /**
@@ -56,6 +56,21 @@ export declare type TAlertOptionProps = TAvatarIconProps & {
 
 export declare type TBsAlert = ComponentObjectPropsOptions<TAlertOptionProps>;
 
-export declare const BsAlert: DefineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedAlertProps = AllowedComponentProps &
+    ComponentCustomProps & VNodeProps & EventClosableProps &
+    EventUpdateModelValueProps<boolean>;
 
-export declare const BsAlertPlugin: Plugin;
+export declare const BsAlert: {
+    new(): {
+        $props: AllowedAlertProps & TAlertOptionProps;
+        $slots: {
+            default?: () => VNode[];
+            alertIcon?: () => VNode;
+        };
+        $emit: ['close', 'update:model-value'];
+    };
+};
+
+export declare const BsAlertPlugin: {
+    new(): Plugin;
+};

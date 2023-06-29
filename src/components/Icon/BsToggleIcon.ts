@@ -10,7 +10,7 @@ export default defineComponent<TBsToggleIcon, TRecord, TRecord, ComputedOptions,
     props: toggleIconProps,
     emits: [
         /**
-         * Callback fired when this component is clicked.
+         * Fired when this component's toggle state is updated.
          */
         'update:model-value',
     ],

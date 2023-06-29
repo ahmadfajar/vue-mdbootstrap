@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TFlipMode, TRecord, TSizeOptionProps, TSizeProps } from '../../../types';
+import type { TFlipMode, TSizeOptionProps, TSizeProps } from '../../../types';
 
 export declare type TImageOptionProps = {
     /**
@@ -75,6 +74,15 @@ export declare type TAvatarOptionProps = TAvatarImageOptionProps & TAvatarIconPr
 
 export declare type TBsAvatar = ComponentObjectPropsOptions<TAvatarOptionProps>;
 
-export declare const BsAvatar: DefineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsAvatar: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TAvatarOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
 
-export declare const BsAvatarPlugin: Plugin;
+export declare const BsAvatarPlugin: {
+    new(): Plugin;
+};

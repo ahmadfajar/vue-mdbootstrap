@@ -1,21 +1,14 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentInternalInstance,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    RendererNode,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type {
-    ObjectBase,
-    TAvatarIconProps,
-    TImageOptionProps,
-    TRecord,
-    TRouterOptionProps,
-    TTagProps
-} from '../../../types';
+import type { ObjectBase, TAvatarIconProps, TImageOptionProps, TRouterOptionProps, TTagProps } from '../../../types';
 
 export declare type TSpaceAround = 'left' | 'right' | 'both';
 
@@ -223,25 +216,108 @@ export declare type TBsListTileTitle = ComponentObjectPropsOptions<TListTileText
 
 export declare type TBsListTileSubtitle = ComponentObjectPropsOptions<TListTileTextOptionProps>;
 
-export declare const BsListView: DefineComponent<TBsListView, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedListViewProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
+    onChange?: (value: IListItem, oldValue: IListItem) => void;
+    'onUpdate:modelValue'?: (value: IListItem) => void;
+}
 
-export declare const BsListNav: DefineComponent<TBsListNav, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedListNavProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
+    'onUpdate:active'?: (active: boolean) => void;
+}
 
-export declare const BsListNavItem: DefineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListView: {
+    new(): {
+        $props: AllowedListViewProps & TListViewOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['change', 'update:modelValue'];
+    };
+};
 
-export declare const BsListTile: DefineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListNav: {
+    new(): {
+        $props: AllowedListNavProps & TListNavOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['update:active'];
+    };
+};
 
-export declare const BsListTileAction: DefineComponent<TBsListTileAction, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedListItemProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
+    'onClick'?: (event: Event, node?: RendererNode | null) => void;
+    'onUpdate:active'?: (active: boolean) => void;
+}
 
-export declare const BsListTileContent: DefineComponent<TBsListTileContent, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListNavItem: {
+    new(): {
+        $props: AllowedListItemProps & TListNavItemOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['click', 'update:active'];
+    };
+};
 
-export declare const BsListTileLeading: DefineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListTile: {
+    new(): {
+        $props: AllowedListItemProps & TListTileOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['click', 'update:active'];
+    };
+};
 
-export declare const BsListTileTitle: DefineComponent<TBsListTileTitle, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListTileAction: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileActionOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
 
-export declare const BsListTileSubtitle: DefineComponent<TBsListTileSubtitle, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsListTileContent: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileContentOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
 
-export declare const BsListViewPlugin: Plugin;
+export declare const BsListTileLeading: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileLeadingOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
+
+export declare const BsListTileTitle: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileTextOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
+
+export declare const BsListTileSubtitle: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileTextOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
+
+export declare const BsListViewPlugin: {
+    new(): Plugin;
+};
 
 export declare interface IListViewProvider extends ObjectBase {
     readonly config: Readonly<TListViewOptionProps>;

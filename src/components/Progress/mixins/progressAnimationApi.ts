@@ -1,8 +1,8 @@
-import type { ComputedRef, VNode } from 'vue';
+import type { ComputedRef, Prop, VNode } from 'vue';
 import { h, Transition } from 'vue';
 import { cssPrefix, useBrowserIE } from '../../../mixins/CommonApi';
 import { useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode } from '../../Icon/mixins/svgApi';
-import type { TProgressOptionProps } from '../types';
+import type { TMaskLoaderVariant, TProgressOptionProps } from '../types';
 import INDETERMINATE_ANIMATION_TEMPLATE from './ProgressSpinnerAnimation';
 
 declare interface ISpinnerElement extends Element {
@@ -23,18 +23,18 @@ export const maskLoaderVariant = {
     type: String,
     default: 'linear',
     validator: (value: string): boolean => ['linear', 'progress', 'spinner', 'grow'].includes(value)
-}
+} as Prop<TMaskLoaderVariant>;
 
 export function useBufferMode(props: Readonly<TProgressOptionProps>) {
-    return (props.mode as string).toLowerCase() === 'buffer';
+    return props.mode?.toLowerCase() === 'buffer';
 }
 
 export function useDeterminateMode(props: Readonly<TProgressOptionProps>) {
-    return (props.mode as string).toLowerCase() === 'determinate';
+    return props.mode?.toLowerCase() === 'determinate';
 }
 
 export function useIndeterminateMode(props: Readonly<TProgressOptionProps>) {
-    return (props.mode as string).toLowerCase() === 'indeterminate';
+    return props.mode?.toLowerCase() === 'indeterminate';
 }
 
 export function useGetCSSAnimation(circleCircumference: number, diameter: number) {
@@ -80,7 +80,7 @@ export function useRenderProgressBar(
                 class: [
                     `${cssPrefix}progress-bar`,
                     `progress-bar-${props.color}`,
-                    `${cssPrefix}${(<string>props.mode).toLowerCase()}`,
+                    `${cssPrefix}${props.mode?.toLowerCase()}`,
                 ],
                 style: {
                     height: `${props.height}px`

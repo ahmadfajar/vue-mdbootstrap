@@ -1,7 +1,16 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
 import { computed, createCommentVNode, defineComponent, h } from 'vue';
 import { cssPrefix, useRenderTransition } from '../../mixins/CommonApi';
-import type { TBsIconSpinner, TBsMaskLoader, TBsOverlay, TBsProgress, TRecord } from '../../types';
+import type {
+    TBsIconSpinner,
+    TBsMaskLoader,
+    TBsOverlay,
+    TBsProgress,
+    TMaskLoaderOptionProps,
+    TMaskLoaderVariant,
+    TProgressControlVariant,
+    TRecord
+} from '../../types';
 import Helper from '../../utils/Helper';
 import { BsOverlay } from '../Animation';
 import { BsIconSpinner } from '../Icon';
@@ -12,19 +21,20 @@ export default defineComponent<TBsMaskLoader, TRecord, TRecord, ComputedOptions,
     name: 'BsMaskLoader',
     props: maskLoaderProps,
     setup(props) {
-        const loaderVariant = computed<string>(
-            () => <string>(props.spinnerType || props.variant)
+        const thisProps = props as Readonly<TMaskLoaderOptionProps>;
+        const loaderVariant = computed<TMaskLoaderVariant>(
+            () => <TMaskLoaderVariant>(thisProps.spinnerType ?? thisProps.variant)
         );
 
         return () =>
             useRenderTransition(
-                {name: props.transition as string},
-                props.show
+                {name: thisProps.transition},
+                thisProps.show
                     ? h('div', {
                         class: [`${cssPrefix}mask-loader`],
                         style: {
-                            'position': props.fixedPosition ? 'fixed' : null,
-                            'z-index': props.zIndex
+                            'position': thisProps.fixedPosition ? 'fixed' : null,
+                            'z-index': thisProps.zIndex
                         }
                     }, [
                         (loaderVariant.value === 'progress')
@@ -33,7 +43,7 @@ export default defineComponent<TBsMaskLoader, TRecord, TRecord, ComputedOptions,
                                 color: props.spinnerColor,
                                 diameter: props.spinnerDiameter,
                                 stroke: props.spinnerThickness,
-                                type: 'spinner' as Prop<string>
+                                type: 'spinner' as Prop<TProgressControlVariant>
                             })
                             : ((loaderVariant.value === 'spinner')
                                     ? h<TBsIconSpinner>(BsIconSpinner, {
@@ -46,14 +56,14 @@ export default defineComponent<TBsMaskLoader, TRecord, TRecord, ComputedOptions,
                                         class: {
                                             'spinner-grow': loaderVariant.value === 'grow',
                                             'spinner-border': loaderVariant.value === 'linear',
-                                            [`text-${props.spinnerColor}`]: props.spinnerColor
+                                            [`text-${thisProps.spinnerColor}`]: thisProps.spinnerColor
                                         },
                                         style: {
                                             'border-width': loaderVariant.value === 'linear'
-                                                ? Helper.cssUnit(<string>props.spinnerThickness)
+                                                ? Helper.cssUnit(thisProps.spinnerThickness)
                                                 : null,
-                                            'height': Helper.cssUnit(<string>props.spinnerDiameter),
-                                            'width': Helper.cssUnit(<string>props.spinnerDiameter),
+                                            'height': Helper.cssUnit(thisProps.spinnerDiameter),
+                                            'width': Helper.cssUnit(thisProps.spinnerDiameter),
                                         }
                                     })
                             ),

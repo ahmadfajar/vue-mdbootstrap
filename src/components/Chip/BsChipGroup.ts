@@ -51,7 +51,6 @@ export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, 
             () => scrollOffset.value !== 0
         );
         const chipCloseHandler = (item: TChipOptionItem): void => {
-            // const newItems = cmpProps.items.filter(it => it.id !== item.id);
             emit('item:close', item);
         }
         const chipClickHandler = (item: TChipOptionItem): void => {
@@ -76,7 +75,7 @@ export default defineComponent<TBsChipGroup, TRecord, TRecord, ComputedOptions, 
                 nextTick().then(() => emit('update:model-value', selectedValues));
             } else {
                 const isSelected = useChipIsSelected(item, cmpProps.modelValue);
-                emit('change', (isSelected ? value : null));
+                emit('change', (!isSelected ? value : null));
                 nextTick().then(() => emit('update:model-value', (!isSelected ? value : null)));
             }
         }

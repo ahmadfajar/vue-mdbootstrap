@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TPopupOptions, TRecord } from '../../../types';
+import type { EventClosableProps, EventUpdateOpenProps, TPopupOptions, TRecord } from '../../../types';
 
 export declare type TModalOptionProps = TPopupOptions & {
     /**
@@ -131,8 +130,54 @@ export declare type TBsModal = ComponentObjectPropsOptions<TModalOptionProps>;
 
 export declare type TBsLightbox = ComponentObjectPropsOptions<TLightboxOptionProps>;
 
-export declare const BsModal: DefineComponent<TBsModal, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedModalProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventClosableProps & EventUpdateOpenProps;
 
-export declare const BsLightbox: DefineComponent<TBsLightbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsModal: {
+    new(): {
+        $props: AllowedModalProps & TModalOptionProps;
+        $slots: {
+            default?: () => VNode[];
+            header?: () => VNode;
+            footer?: () => VNode;
+        };
+        $emit: ['close', 'update:open'];
+    };
+};
 
-export declare const BsModalPlugin: Plugin;
+declare type AllowedLightboxProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventClosableProps & EventUpdateOpenProps & {
+    onChange?: (value: TImageDataset, index: number) => void;
+    'onExec-delete'?: (target: TImageDataset) => void;
+    'onExec-download'?: (target: TImageDataset) => void;
+    'onExec-info'?: (target: TImageDataset) => void;
+    'onExec-rotate-left'?: (target: TImageDataset, rotate: number) => void;
+    'onExec-rotate-right'?: (target: TImageDataset, rotate: number) => void;
+    'onExec-zoomin'?: (target: TImageDataset, zoom: number) => void;
+    'onExec-zoomout'?: (target: TImageDataset, zoom: number) => void;
+};
+
+export declare const BsLightbox: {
+    new(): {
+        $props: AllowedLightboxProps & TLightboxOptionProps;
+        $slots: {
+            menubar?: () => VNode[];
+        };
+        $emit: [
+            'change',
+            'close',
+            'exec-delete',
+            'exec-download',
+            'exec-info',
+            'exec-rotate-left',
+            'exec-rotate-right',
+            'exec-zoomin',
+            'exec-zoomout',
+            'update:open',
+        ];
+    };
+};
+
+export declare const BsModalPlugin: {
+    new(): Plugin;
+};

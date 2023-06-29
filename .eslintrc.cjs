@@ -16,6 +16,7 @@ module.exports = {
   },
   rules: {
     "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/no-empty-interface": "off",
     "constructor-super": "error",
     "eol-last": "warn",
     "guard-for-in": "warn"

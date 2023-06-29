@@ -1,13 +1,11 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TRecord } from '../../../types';
 
 export declare type TBadgeOptionProps = {
     /**
@@ -31,6 +29,15 @@ export declare type TBadgeOptionProps = {
 
 export declare type TBsBadge = ComponentObjectPropsOptions<TBadgeOptionProps>;
 
-export declare const BsBadge: DefineComponent<TBsBadge, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsBadge: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TBadgeOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
 
-export declare const BsBadgePlugin: Plugin;
+export declare const BsBadgePlugin: {
+    new(): Plugin;
+};

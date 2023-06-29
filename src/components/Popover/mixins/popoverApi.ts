@@ -36,9 +36,9 @@ function getPopoverLeftPosition(
     const maxLeft = window.innerWidth - SPACE - width;
 
     switch (placement) {
-        case "left":
-        case "left-top":
-        case "left-bottom":
+        case 'left':
+        case 'left-top':
+        case 'left-bottom':
             offsetLeft = activatorRect.left - width - shift;
             if (cover) {
                 offsetLeft += activatorRect.width;
@@ -46,25 +46,25 @@ function getPopoverLeftPosition(
                 offsetLeft = activatorRect.left + activatorRect.width + shift;
             }
             break;
-        case "right":
-        case "right-top":
-        case "right-bottom":
+        case 'right':
+        case 'right-top':
+        case 'right-bottom':
             offsetLeft = cover
                 ? activatorRect.left
                 : activatorRect.left + activatorRect.width > maxLeft
                     ? activatorRect.left - width - shift
                     : activatorRect.left + activatorRect.width + shift;
             break;
-        case "top":
-        case "bottom":
+        case 'top':
+        case 'bottom':
             offsetLeft = activatorRect.left + activatorRect.width / 2 - width / 2;
             break;
-        case "bottom-left":
-        case "top-left":
+        case 'bottom-left':
+        case 'top-left':
             offsetLeft = activatorRect.left;
             break;
-        case "bottom-right":
-        case "top-right":
+        case 'bottom-right':
+        case 'top-right':
             offsetLeft = activatorRect.left + activatorRect.width - width;
             break;
     }
@@ -84,9 +84,9 @@ function getPopoverTopPosition(
     const minTop = SPACE;
 
     switch (placement) {
-        case "top":
-        case "top-left":
-        case "top-right":
+        case 'top':
+        case 'top-left':
+        case 'top-right':
             offsetTop = activatorRect.top - height - shift;
             if (!cover) {
                 if (offsetTop < minTop) {
@@ -96,25 +96,25 @@ function getPopoverTopPosition(
                 offsetTop += activatorRect.height;
             }
             break;
-        case "bottom":
-        case "bottom-left":
-        case "bottom-right":
+        case 'bottom':
+        case 'bottom-left':
+        case 'bottom-right':
             offsetTop = cover
                 ? activatorRect.top
                 : activatorRect.top + activatorRect.height + shift > maxTop
                     ? activatorRect.top - height - shift
                     : activatorRect.top + activatorRect.height + shift;
             break;
-        case "left":
-        case "right":
+        case 'left':
+        case 'right':
             offsetTop = activatorRect.top + activatorRect.height / 2 - height / 2;
             break;
-        case "left-top":
-        case "right-top":
+        case 'left-top':
+        case 'right-top':
             offsetTop = activatorRect.top;
             break;
-        case "left-bottom":
-        case "right-bottom":
+        case 'left-bottom':
+        case 'right-bottom':
             offsetTop = activatorRect.top + activatorRect.height - height;
             break;
     }
@@ -143,7 +143,7 @@ export function useSetPopoverPosition(
     if (activatorEl) {
         const elRect = activatorEl.getBoundingClientRect();
         if (elRect.top < -elRect.height || elRect.top > window.innerHeight) {
-            useClosePopover(instance, isActive, "Activator overflow.");
+            useClosePopover(instance, isActive, 'Activator overflow.');
         }
 
         const shift = shiftedSpace(props.space);
@@ -151,14 +151,14 @@ export function useSetPopoverPosition(
         popoverEl.style.top = getPopoverTopPosition(
             elRect, <TPopoverPosition>props.placement,
             popoverEl.offsetHeight, shift, <boolean>props.cover
-        ) + "px";
+        ) + 'px';
         popoverEl.style.left = getPopoverLeftPosition(
             elRect, <TPopoverPosition>props.placement,
             popoverEl.offsetWidth, shift, <boolean>props.cover
-        ) + "px";
+        ) + 'px';
 
-        if (props.placement?.startsWith("bottom") && maxTop < (elRect.top + elRect.height + shift)) {
-            actualPlacement.value = props.placement.replace("bottom", "top");
+        if (props.placement?.startsWith('bottom') && maxTop < (elRect.top + elRect.height + shift)) {
+            actualPlacement.value = props.placement.replace('bottom', 'top');
         } else {
             actualPlacement.value = props.placement;
         }
@@ -176,8 +176,8 @@ export function useClosePopover(
     }
 
     isActive.value = false;
-    instance.emit("update:open", false);
-    instance.emit("close", message);
+    instance.emit('update:open', false);
+    instance.emit('close', message);
     PopupManager.remove(instance);
 }
 
@@ -201,7 +201,7 @@ export function useRenderPopover(
         onPopoverClickOutside(thisProps, instance.value, isActive, evt);
     }
 
-    return h(Teleport, { to: "body" }, [
+    return h(Teleport, {to: 'body'}, [
         h(BsOverlay, {
             // @ts-ignore
             show: (props.overlay && isActive.value) as Prop<boolean>,
@@ -209,22 +209,21 @@ export function useRenderPopover(
             color: props.overlayColor,
             onClick: () => {
                 if (thisProps.overlayClickClose) {
-                    useClosePopover(instance.value, isActive, "Overlay clicked.");
+                    useClosePopover(instance.value, isActive, 'Overlay clicked.');
                 }
             },
         }),
-        useRenderTransition({ name: thisProps.transition }, [
+        useRenderTransition({name: thisProps.transition}, [
             withDirectives(
-                h("div",
-                    mergeProps({ class: classNames.value, ref: popover }, attrs),
+                h('div',
+                    mergeProps({class: classNames.value, ref: popover}, attrs),
                     slots.default && slots.default()
                 ), [
-                [vShow, isActive.value],
-                [ClickOutside, thisOnClickOutside],
-                [Resize, thisSetPosition],
-                [Scroll, thisSetPosition],
-            ]
-            ),
+                    [vShow, isActive.value],
+                    [ClickOutside, thisOnClickOutside],
+                    [Resize, thisSetPosition],
+                    [Scroll, thisSetPosition],
+                ]),
         ])
     ]);
 }
@@ -257,5 +256,5 @@ function onPopoverClickOutside(
         return;
     }
 
-    useClosePopover(instance, isActive, "Clicked outside.");
+    useClosePopover(instance, isActive, 'Clicked outside.');
 }

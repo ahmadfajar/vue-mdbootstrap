@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TLabelPosition, TRecord } from '../../../types';
+import type { EventUpdateOpenProps, TLabelPosition } from '../../../types';
 
 export declare type TSideDrawerOptionProps = {
     color?: string;
@@ -26,6 +25,30 @@ export declare type TSideDrawerOptionProps = {
 
 export declare type TBsSideDrawer = ComponentObjectPropsOptions<TSideDrawerOptionProps>;
 
-export declare const BsSideDrawer: DefineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedSideDrawerProps = AllowedComponentProps &
+    ComponentCustomProps & VNodeProps & EventUpdateOpenProps & {
+    onResize?: VoidFunction;
+}
 
-export declare const BsDrawerPlugin: Plugin;
+export declare const BsSideDrawer: {
+    new(): {
+        $props: AllowedSideDrawerProps & TSideDrawerOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: [
+            /**
+             * Fired when this component size is changed.
+             */
+            'resize',
+            /**
+             * Fired when this component state is updated.
+             */
+            'update:open',
+        ];
+    };
+};
+
+export declare const BsDrawerPlugin: {
+    new(): Plugin;
+};

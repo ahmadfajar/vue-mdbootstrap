@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TLabelPosition, TRadioOptionProps, TRecord } from '../../../types';
+import type { EventUpdateModelValueProps, TLabelPosition, TRadioOptionProps } from '../../../types';
 
 export declare type TSwitchOptionProps = TRadioOptionProps & {
     labelPosition?: TLabelPosition | string;
@@ -20,6 +19,30 @@ export declare type TSwitchOptionProps = TRadioOptionProps & {
 
 export declare type TBsSwitch = ComponentObjectPropsOptions<TSwitchOptionProps>;
 
-export declare const BsSwitch: DefineComponent<TBsSwitch, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedSwitchProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateModelValueProps<string | number | boolean> & {
+    onChecked?: (checked: boolean) => void;
+}
 
-export declare const BsSwitchPlugin: Plugin;
+export declare const BsSwitch: {
+    new(): {
+        $props: AllowedSwitchProps & TSwitchOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: [
+            /**
+             * Fired when this component's state is changed.
+             */
+            'checked',
+            /**
+             * Fired when this component's checked value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsSwitchPlugin: {
+    new(): Plugin;
+};

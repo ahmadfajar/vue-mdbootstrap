@@ -1,14 +1,11 @@
 import {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
     Plugin,
-    UnwrapNestedRefs
+    UnwrapNestedRefs,
+    VNodeProps
 } from 'vue';
-import { TRecord } from '../../../types';
 
 export declare type TNotificationPosition =
     'top-right' | 'top-left' | 'top-center' | 'top-full-width' |
@@ -118,6 +115,12 @@ export declare type TBsNotificationItem = ComponentObjectPropsOptions<TNotificat
 
 export declare type TBsNotificationBar = ComponentObjectPropsOptions<TNotificationBarOptionProps>;
 
-export declare const BsNotification: DefineComponent<TRecord, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsNotification: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps;
+    };
+};
 
-export declare const BsNotificationPlugin: Plugin;
+export declare const BsNotificationPlugin: {
+    new(): Plugin;
+};

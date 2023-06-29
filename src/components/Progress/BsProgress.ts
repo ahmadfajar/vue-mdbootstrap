@@ -20,37 +20,41 @@ export default defineComponent<TBsProgress, TRecord, TRecord, ComputedOptions, M
         const hasAmountFill = computed<boolean>(() => {
             return useBufferMode(cmpProps) || useDeterminateMode(cmpProps);
         });
-        const isProgressBar = computed<boolean>(() => (<string>props.type).toLowerCase() === 'bar');
+        const isProgressBar = computed<boolean>(
+            () => cmpProps.type?.toLowerCase() === 'bar'
+        );
         const circleRadius = computed<number>(() => {
-            return ((<number>props.diameter) - (<number>props.stroke)) / 2;
+            return ((<number>cmpProps.diameter) - (<number>cmpProps.stroke)) / 2;
         });
-        const circleCircumference = computed<number>(() => 2 * Math.PI * circleRadius.value);
+        const circleCircumference = computed<number>(
+            () => 2 * Math.PI * circleRadius.value
+        );
         const circleStrokeDashOffset = computed<string | undefined>(() => {
             if (useIndeterminateMode(cmpProps) && useBrowserIE()) {
                 return (circleCircumference.value * 0.2) + 'px';
             }
 
             if (useDeterminateMode(cmpProps)) {
-                return (circleCircumference.value * (100 - (<number>props.modelValue)) / 100) + 'px';
+                return (circleCircumference.value * (100 - (<number>cmpProps.modelValue)) / 100) + 'px';
             }
 
             return undefined
         });
         const progressBarTrackStyle = computed<string | undefined>(() => {
             if (hasAmountFill.value) {
-                return `width: ${props.buffer}%`;
+                return `width: ${cmpProps.buffer}%`;
             }
             return undefined;
         });
         const progressBarValueStyle = computed<string | undefined>(() => {
             if (hasAmountFill.value) {
-                return `width: ${props.modelValue}%`;
+                return `width: ${cmpProps.modelValue}%`;
             }
             return undefined;
         });
         const progressBarBufferStyle = computed<string | undefined>(() => {
             if (hasAmountFill.value) {
-                return `left: calc(${props.buffer}% + 8px)`;
+                return `left: calc(${cmpProps.buffer}% + 8px)`;
             }
             return undefined;
         });

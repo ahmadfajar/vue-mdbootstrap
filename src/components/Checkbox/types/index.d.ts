@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TInputGroupProps, TRadioOptionProps, TRadioProps, TRecord } from '../../../types';
+import type { EventUpdateModelValueProps, TInputGroupProps, TRadioOptionProps, TRadioProps } from '../../../types';
 
 export declare type TCheckboxProps = TRadioProps & {
     indeterminate?: boolean;
@@ -25,9 +24,50 @@ export declare type TBsCheckbox = ComponentObjectPropsOptions<TCheckboxOptionPro
 
 export declare type TBsCheckboxGroup = ComponentObjectPropsOptions<TCheckboxGroupOptionProps>;
 
-export declare const BsCheckbox: DefineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedCheckboxProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateModelValueProps<string | number | boolean> & {
+    onChecked?: (checked: boolean) => void;
+}
 
-export declare const BsCheckboxGroup: DefineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedCheckboxGroupProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateModelValueProps<string[] | number[] | unknown[]>;
 
-export declare const BsCheckboxPlugin: Plugin;
+export declare const BsCheckbox: {
+    new(): {
+        $props: AllowedCheckboxProps & TCheckboxOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: [
+            /**
+             * Fired when this component's state is changed.
+             */
+            'checked',
+            /**
+             * Fired when this component's checked value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsCheckboxGroup: {
+    new(): {
+        $props: AllowedCheckboxGroupProps & TCheckboxGroupOptionProps;
+        $slots: {
+            default?: () => VNode[];
+            helpText?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when this component's checked value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsCheckboxPlugin: {
+    new(): Plugin;
+};
 

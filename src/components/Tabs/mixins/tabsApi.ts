@@ -1,8 +1,6 @@
-import type {ComponentInternalInstance, ComputedRef, Prop, Ref, ShallowRef, Slots, VNode} from "vue";
-import {createCommentVNode, h, normalizeClass, toDisplayString} from "vue";
-import {useCreateIconProps} from "../../Avatar/mixins/avatarApi";
-import {cssPrefix, useHasLink, useHasRouter, useRenderRouter} from "../../../mixins/CommonApi";
-import {BsIcon} from "../../Icon";
+import type { ComponentInternalInstance, ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
+import { createCommentVNode, h, normalizeClass, toDisplayString } from 'vue';
+import { cssPrefix, useHasLink, useHasRouter, useMergeClass, useRenderRouter } from '../../../mixins/CommonApi';
 import type {
     IVNode,
     TAvatarIconProps,
@@ -14,39 +12,41 @@ import type {
     TTabItemOptionProps,
     TTabLabelOptionProps,
     TTabsOptionProps
-} from "../../../types";
-import BsTabItem from "../BsTabItem";
-import BsTabLabel from "../BsTabLabel";
-import Helper from "../../../utils/Helper";
-import TabsProvider from "./TabsProvider";
+} from '../../../types';
+import Helper from '../../../utils/Helper';
+import { useCreateIconProps } from '../../Avatar/mixins/avatarApi';
+import { BsIcon } from '../../Icon';
+import BsTabItem from '../BsTabItem';
+import BsTabLabel from '../BsTabLabel';
+import TabsProvider from './TabsProvider';
 
 export function useTabViewClassNames(
     props: Readonly<TTabsOptionProps>,
     orientation: ComputedRef<string>,
 ): Array<string> {
     let cls = [
-        "nav",
+        'nav',
         `nav-${props.variant}`,
-        (props.alignment === "justified" && orientation.value === "horizontal")
-            ? (props.flex ? "flex-column flex-lg-row" : "nav-fill")
-            : (orientation.value === "vertical" ? "flex-column h-100" : ""),
-        props.alignment === "center"
-            ? "justify-content-center"
-            : ((props.alignment === "right" || props.alignment === "end") ? "justify-content-end" : ""),
-        props.tabPosition === "top"
+        (props.alignment === 'justified' && orientation.value === 'horizontal')
+            ? (props.flex ? 'flex-column flex-lg-row' : 'nav-fill')
+            : (orientation.value === 'vertical' ? 'flex-column h-100' : ''),
+        props.alignment === 'center'
+            ? 'justify-content-center'
+            : ((props.alignment === 'right' || props.alignment === 'end') ? 'justify-content-end' : ''),
+        props.tabPosition === 'top'
             ? `${cssPrefix}tab-top`
             : (
-                (props.tabPosition === "bottom")
+                (props.tabPosition === 'bottom')
                     ? `${cssPrefix}tab-bottom order-last`
-                    : (props.tabPosition === "right" ? `${cssPrefix}tab-right` : `${cssPrefix}tab-left`)
+                    : (props.tabPosition === 'right' ? `${cssPrefix}tab-right` : `${cssPrefix}tab-left`)
             ),
-        (["material", "modern"].includes(<string>props.variant) && props.color) ? `bg-${props.color}` : ""
+        (['material', 'modern'].includes(<string>props.variant) && props.color) ? `bg-${props.color}` : ''
     ];
 
-    if (!Helper.isEmpty(props.innerClass) && Helper.isString(props.innerClass)) {
-        cls.push(<string>props.innerClass);
+    if (Helper.isString(props.innerClass) && !Helper.isEmpty(props.innerClass)) {
+        cls.push(props.innerClass);
     } else if (!Helper.isEmpty(props.innerClass)) {
-        cls = cls.concat(<string | Array<string>>props.innerClass);
+        cls = cls.concat(<string | string[]>props.innerClass);
     }
 
     return cls;
@@ -58,13 +58,13 @@ export function useTabItemClassNames(
     tabs?: TabsProvider,
 ): TRecord {
     return {
-        "nav-item": true,
-        "nav-link": tagName.value !== "li",
-        "text-center": tagName.value !== "li",
-        "flex-fill": tabs?.alignment === "justified",
-        "disabled": props.disabled === true,
+        'nav-item': true,
+        'nav-link': tagName.value !== 'li',
+        'text-center': tagName.value !== 'li',
+        'flex-fill': tabs?.alignment === 'justified',
+        'disabled': props.disabled === true,
         [<string>props.activeClass]: props.activeClass && (props.active === true) &&
-        tagName.value !== "li" && !useHasRouter(props),
+        tagName.value !== 'li' && !useHasRouter(props),
     }
 }
 
@@ -73,10 +73,10 @@ export function useItemLinkClassNames(
     tabs?: TabsProvider,
 ): TRecord {
     const classes = {
-        "nav-link": true,
-        "text-center": true,
-        "disabled": props.disabled === true,
-        "flex-fill": tabs?.alignment === "justified",
+        'nav-link': true,
+        'text-center': true,
+        'disabled': props.disabled === true,
+        'flex-fill': tabs?.alignment === 'justified',
         [<string>props.activeClass]: props.activeClass && (props.active === true), // && !useHasRouter(props),
     }
     if (tabs && !Helper.isEmpty(tabs?.tabClass)) {
@@ -98,16 +98,16 @@ export function useRenderIconWithCondition(
             ...useCreateIconProps(props)
         });
     } else {
-        return unMatchCondition ? unMatchCondition : createCommentVNode(" BsIcon ", true)
+        return unMatchCondition ? unMatchCondition : createCommentVNode(' BsIcon ', true)
     }
 }
 
 function tabItemAttrs(props: Readonly<TTabItemOptionProps>): TRecord {
     return {
         id: props.id,
-        role: "tab",
-        "aria-controls": props.ariaLabel,
-        "aria-selected": props.active === true
+        role: 'tab',
+        'aria-controls': props.ariaLabel,
+        'aria-selected': props.active === true
     }
 }
 
@@ -162,7 +162,7 @@ function createItemLink(
         };
     }
 
-    return h("a", thisProps, [
+    return h('a', thisProps, [
         h(BsTabLabel, {
             ...tabLabelAttrs(props, provider),
         })
@@ -207,10 +207,10 @@ export function useRenderTabItem(
     tabIndex: Ref<number | undefined>,
     provider?: TabsProvider,
 ): VNode {
-    if (tagName.value === "li") {
-        return h("li", {
+    if (tagName.value === 'li') {
+        return h('li', {
             class: tabItemClasses.value,
-            role: "presentation",
+            role: 'presentation',
             onVnodeBeforeMount: (vnode) => {
                 const vm = (<IVNode>vnode).ctx;
                 if (vm && provider) {
@@ -235,25 +235,25 @@ export function useRenderTabLabel(
 ): Array<VNode> {
     return [
         useRenderIconWithCondition(
-            (!Helper.isEmpty(props.icon) && ["left", "top"].includes(<string>props.iconPosition)),
+            (!Helper.isEmpty(props.icon) && ['left', 'top'].includes(<string>props.iconPosition)),
             props, props.iconSize
         ),
         props.label
-            ? h((["left", "right"].includes(<string>props.iconPosition)) ? "span" : "div", {
+            ? h((['left', 'right'].includes(<string>props.iconPosition)) ? 'span' : 'div', {
                 class: {
-                    "ms-2": props.iconPosition === "left" && orientation.value === "horizontal",
-                    "me-2": props.iconPosition === "right" && orientation.value === "horizontal",
-                    "ms-3": props.iconPosition === "left" && orientation.value === "vertical",
-                    "me-3": props.iconPosition === "right" && orientation.value === "vertical",
-                    "d-flex": orientation.value === "vertical",
-                    "flex-fill": orientation.value === "vertical",
-                    "mt-1": props.iconPosition === "top",
-                    "mb-1": props.iconPosition === "bottom",
+                    'ms-2': props.iconPosition === 'left' && orientation.value === 'horizontal',
+                    'me-2': props.iconPosition === 'right' && orientation.value === 'horizontal',
+                    'ms-3': props.iconPosition === 'left' && orientation.value === 'vertical',
+                    'me-3': props.iconPosition === 'right' && orientation.value === 'vertical',
+                    'd-flex': orientation.value === 'vertical',
+                    'flex-fill': orientation.value === 'vertical',
+                    'mt-1': props.iconPosition === 'top',
+                    'mb-1': props.iconPosition === 'bottom',
                 }
             }, toDisplayString(props.label))
-            : createCommentVNode(" BsTabLabel ", true),
+            : createCommentVNode(' BsTabLabel ', true),
         useRenderIconWithCondition(
-            (!Helper.isEmpty(props.icon) && ["right", "bottom"].includes(<string>props.iconPosition)),
+            (!Helper.isEmpty(props.icon) && ['right', 'bottom'].includes(<string>props.iconPosition)),
             props, props.iconSize
         ),
     ]
@@ -287,17 +287,17 @@ function renderVerticalTabView(
     tabItems: ShallowRef<ComponentInternalInstance[]>,
     provider: TabsProvider,
 ): VNode {
-    return h("div", {
-        class: [`${cssPrefix}tabs`, "row", "mx-0 px-0", "flex-fill"],
+    return h('div', {
+        class: [`${cssPrefix}tabs`, 'row', 'mx-0 px-0', 'flex-fill'],
         onVnodeBeforeUnmount: () => provider.unRegisterAll()
     }, [
-        h("div", {
-            class: {"col-auto px-0": true, "order-last": props.tabPosition === "right"}
+        h('div', {
+            class: {'col-auto px-0': true, 'order-last': props.tabPosition === 'right'}
         }, [
             h(tagName.value, {
                     class: tabClasses.value,
-                    role: "tablist",
-                    "aria-orientation": "vertical"
+                    role: 'tablist',
+                    'aria-orientation': 'vertical'
                 }, tabItems.value.map((it, idx) => {
                     return h<TBsTabItem>(BsTabItem, {
                         key: `tab-item-${idx}`,
@@ -306,8 +306,8 @@ function renderVerticalTabView(
                 })
             ),
         ]),
-        h("div", {
-            class: props.contentClass ? ["col tab-content"].concat(props.contentClass) : ["col tab-content"],
+        h('div', {
+            class: useMergeClass('col tab-content', <string>props.contentClass),
         }, slots.default && slots.default()),
     ]);
 }
@@ -320,14 +320,14 @@ function renderHorizontalTabView(
     tabItems: ShallowRef<ComponentInternalInstance[]>,
     provider: TabsProvider,
 ): VNode {
-    return h("div", {
-        class: [`${cssPrefix}tabs`, "d-flex", "flex-column", "flex-fill"],
+    return h('div', {
+        class: [`${cssPrefix}tabs`, 'd-flex', 'flex-column', 'flex-fill'],
         onVnodeBeforeUnmount: () => provider.unRegisterAll()
     }, [
         h(tagName.value, {
                 class: tabClasses.value,
-                role: "tablist",
-                "aria-orientation": "horizontal"
+                role: 'tablist',
+                'aria-orientation': 'horizontal'
             }, tabItems.value.map((it, idx) => {
                 return h<TBsTabItem>(BsTabItem, {
                     key: `tab-item-${idx}`,
@@ -335,8 +335,8 @@ function renderHorizontalTabView(
                 });
             })
         ),
-        h("div", {
-            class: props.contentClass ? ["tab-content", "d-flex flex-fill"].concat(props.contentClass) : ["tab-content", "d-flex flex-fill"],
+        h('div', {
+            class: useMergeClass(['tab-content', 'd-flex', 'flex-fill'], <string>props.contentClass),
         }, slots.default && slots.default()),
     ]);
 }
@@ -350,7 +350,7 @@ export function useRenderTabView(
     tabItems: ShallowRef<ComponentInternalInstance[]>,
     provider: TabsProvider,
 ): VNode {
-    if (orientation.value === "vertical") {
+    if (orientation.value === 'vertical') {
         return renderVerticalTabView(slots, props, tagName, tabClasses, tabItems, provider);
     } else {
         return renderHorizontalTabView(slots, props, tagName, tabClasses, tabItems, provider);

@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TPopoverPosition, TRecord } from '../../../types';
+import type { EventClosableProps, EventUpdateOpenProps, TPopoverPosition } from '../../../types';
 
 export declare type TDropdownMenuOptionProps = {
     /**
@@ -50,6 +49,29 @@ export declare type TDropdownMenuOptionProps = {
 
 export declare type TBsDropdownMenu = ComponentObjectPropsOptions<TDropdownMenuOptionProps>;
 
-export declare const BsDropdownMenu: DefineComponent<TBsDropdownMenu, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedDropdownMenuProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventClosableProps & EventUpdateOpenProps;
 
-export declare const BsMenuPlugin: Plugin;
+export declare const BsDropdownMenu: {
+    new(): {
+        $props: AllowedDropdownMenuProps & TDropdownMenuOptionProps;
+        $slots: {
+            content?: () => VNode[];
+            default?: () => VNode[];
+        };
+        $emit: [
+            /**
+             * Fired when this Popover closed or hide.
+             */
+            'close',
+            /**
+             * Fired when this Popover state is updated.
+             */
+            'update:open',
+        ];
+    };
+};
+
+export declare const BsMenuPlugin: {
+    new(): Plugin;
+};

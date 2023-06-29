@@ -8,9 +8,9 @@
   },
   "license": "BSD-3-Clause",
   "type": "module",
-  "main": "dist/vue-mdb.cjs",
+  "main": "dist/vue-mdb.esm.min.js",
   "module": "dist/vue-mdb.esm.mjs",
-  "styles": "dist/vue-mdb.min.css",
+  "styles": "dist/bundle.min.css",
   "types": "dist/vue-mdb.d.ts",
   "unpkg": "dist/vue-mdb.umd.min.js",
   "jsdelivr": "dist/vue-mdb.umd.min.js",
@@ -24,20 +24,17 @@
   "exports": {
     ".": {
       "import": {
-        "style": "./dist/vue-mdb.css",
         "types": "./dist/vue-mdb.d.ts",
-        "node": "./dist/vue-mdb.esm.mjs",
-        "default": "./dist/vue-mdb.esm.min.js"
+        "default": "./dist/vue-mdb.esm.mjs"
       },
       "require": {
-        "style": "./dist/vue-mdb.css",
         "types": "./dist/vue-mdb.d.ts",
         "default": "./dist/vue-mdb.cjs"
       }
     },
-    "./styles": {
-      "default": "./dist/vue-mdb.css"
-    }
+    "./styles": "./dist/bundle.css",
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
   },
   "keywords": [
     "bootstrap",

@@ -42,7 +42,7 @@ export default defineConfig({
                     constBindings: true
                 },
                 interop: 'auto',
-                assetFileNames: 'vue-mdb.[ext]',
+                assetFileNames: 'bundle.[ext]',
             },
             plugins: [
                 terser({

@@ -10,7 +10,7 @@ export default defineComponent<TBsProgressBar, TRecord, TRecord, ComputedOptions
     setup(props) {
         const cmpProps = props as Readonly<TProgressBarOptionProps>;
         const progressBarValueStyle = computed<string>(() => {
-            return `width: ${props.modelValue}%`;
+            return `width: ${cmpProps.modelValue}%`;
         });
 
         return () => {

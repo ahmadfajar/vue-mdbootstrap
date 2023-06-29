@@ -41,7 +41,7 @@ export default defineConfig({
                     constBindings: true
                 },
                 interop: 'auto',
-                assetFileNames: 'vue-mdb.min.[ext]',
+                assetFileNames: 'bundle.min.[ext]',
                 plugins: [
                     terser({
                         compress: true,

@@ -1,4 +1,6 @@
-import {primaryColorProp} from "../../../mixins/CommonProps";
+import type { Prop } from 'vue';
+import { primaryColorProp } from '../../../mixins/CommonProps';
+import type { TProgressControlMode, TProgressControlVariant } from '../types';
 
 export const progressProps = {
     /**
@@ -52,7 +54,7 @@ export const progressProps = {
         type: String,
         default: 'indeterminate',
         validator: (value: string): boolean => ['determinate', 'indeterminate', 'buffer'].includes(value)
-    },
+    } as Prop<TProgressControlMode>,
     /**
      * ProgressControl type, valid values are: `spinner`, `bar`.
      */
@@ -60,5 +62,5 @@ export const progressProps = {
         type: String,
         default: 'bar',
         validator: (value: string): boolean => ['spinner', 'bar'].includes(value)
-    },
+    } as Prop<TProgressControlVariant>,
 }

@@ -1,14 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
     Plugin,
-    VNode
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TRecord } from '../../../types';
+import { EventUpdateModelValueProps } from '../../../types';
 
 export declare type TFlipMode = 'horizontal' | 'vertical' | 'both';
 
@@ -120,16 +118,41 @@ export declare type TBsIconSpinner = ComponentObjectPropsOptions<TIconSpinnerOpt
 
 export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptionProps>;
 
-export declare const BsIcon: DefineComponent<TBsIcon, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
-
-export declare const BsIconSvg: DefineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
-
-export declare const BsIconSpinner: DefineComponent<TBsIconSpinner, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
-
-export declare const BsToggleIcon: DefineComponent<TBsToggleIcon, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
-
-export declare const BsIconPlugin: Plugin;
-
 export declare const spinnerSvgData = 'M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z';
 
 export declare function useCreateSvgComponent(data: string, height: number | string, width: number | string, clazz: unknown): VNode;
+
+export declare const BsIcon: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconOptionProps;
+    };
+};
+
+export declare const BsIconSvg: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconOptionProps;
+    };
+};
+
+export declare const BsIconSpinner: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconSpinnerOptionProps;
+    };
+};
+
+export declare const BsToggleIcon: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps &
+            EventUpdateModelValueProps<boolean> & TToggleIconOptionProps;
+        $emit: [
+            /**
+             * Fired when this component's toggle state is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsIconPlugin: {
+    new(): Plugin;
+};

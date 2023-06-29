@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TRecord } from '../../../types';
+import { EventClosableProps, EventUpdateOpenProps } from '../../../types';
 
 export declare type TPopoverPosition =
     'top' | 'top-left' | 'top-right' |
@@ -71,6 +70,19 @@ export declare type TPopoverOptionProps = TPopupOptions & {
 
 export declare type TBsPopover = ComponentObjectPropsOptions<TPopoverOptionProps>;
 
-export declare const BsPopover: DefineComponent<TBsPopover, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedPopoverProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventClosableProps & EventUpdateOpenProps;
 
-export declare const BsPopoverPlugin: Plugin;
+export declare const BsPopover: {
+    new(): {
+        $props: AllowedPopoverProps & TPopoverOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['close', 'update:open'];
+    };
+};
+
+export declare const BsPopoverPlugin: {
+    new(): Plugin;
+};

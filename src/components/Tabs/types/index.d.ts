@@ -1,13 +1,13 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
+    ComponentInternalInstance,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TAvatarIconProps, TPositionType, TRecord, TRouterOptionProps } from '../../../types';
+import type { EventUpdateModelValueProps, TAvatarIconProps, TPositionType, TRouterOptionProps } from '../../../types';
 
 export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 
@@ -100,8 +100,39 @@ export declare type TBsTabPanel = ComponentObjectPropsOptions<TTabPanelOptionPro
 
 export declare type TBsTabLabel = ComponentObjectPropsOptions<TTabLabelOptionProps>;
 
-export declare const BsTab: DefineComponent<TBsTabPanel, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedTabsProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateModelValueProps<number> & {
+    onChange?: (newTab: ComponentInternalInstance, oldTab?: ComponentInternalInstance) => void;
+};
 
-export declare const BsTabs: DefineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsTab: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TTabPanelOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
 
-export declare const BsTabPlugin: Plugin;
+export declare const BsTabs: {
+    new(): {
+        $props: AllowedTabsProps & TTabsOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: [
+            /**
+             * Fired when this component's mutate its modelValue.
+             */
+            'change',
+            /**
+             * Fired when this component's modelValue is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsTabPlugin: {
+    new(): Plugin;
+};

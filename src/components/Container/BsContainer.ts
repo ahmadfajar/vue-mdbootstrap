@@ -23,8 +23,9 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
         const vueMdb = ref<TVueMdb>();
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
+        const elementRef = ref<HTMLElement | null>(null);
         const resizeHandler = () => {
-            emit('resize');
+            emit('resize', elementRef.value);
             isMobile.value = useBreakpointMax('md');
         };
         const styles = computed((): TRecord | undefined => {
@@ -61,6 +62,7 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
                 h(
                     cmpProps.tag || 'div',
                     {
+                        ref: elementRef,
                         class: `${cssPrefix}container-wrap`,
                         style: styles.value
                     },

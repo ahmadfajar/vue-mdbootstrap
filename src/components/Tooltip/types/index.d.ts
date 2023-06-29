@@ -1,13 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TPositionType, TRecord } from '../../../types';
+import type { TPositionType } from '../../../types';
 
 export declare type TTooltipOptionProps = {
     /**
@@ -42,6 +41,20 @@ export declare type TTooltipOptionProps = {
 
 export declare type TBsTooltip = ComponentObjectPropsOptions<TTooltipOptionProps>;
 
-export declare const BsTooltip: DefineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedTooltipProps = AllowedComponentProps &
+    ComponentCustomProps & VNodeProps & {
+    'onUpdate:show'?: (show: boolean) => void;
+}
+export declare const BsTooltip: {
+    new(): {
+        $props: AllowedTooltipProps & TTooltipOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['update:show'];
+    };
+};
 
-export declare const BsTooltipPlugin: Plugin;
+export declare const BsTooltipPlugin: {
+    new(): Plugin;
+};

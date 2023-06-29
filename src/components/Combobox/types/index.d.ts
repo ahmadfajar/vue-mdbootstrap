@@ -1,13 +1,19 @@
 import {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import { TDataSource, TInputFieldProps, TLabelPosition, TRecord } from '../../../types';
+import {
+    EventClosableProps,
+    EventUpdateModelValueProps,
+    IBsModel,
+    TDataSource,
+    TInputFieldProps,
+    TLabelPosition
+} from '../../../types';
 
 export declare type TComboboxOptionProps = TInputFieldProps & {
     /**
@@ -147,6 +153,78 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
 
 export declare type TBsCombobox = ComponentObjectPropsOptions<TComboboxOptionProps>;
 
-export declare const BsCombobox: DefineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedComboboxProps = AllowedComponentProps &
+    ComponentCustomProps & VNodeProps & EventClosableProps &
+    EventUpdateModelValueProps<string | number | string[] | number[] | undefined> & {
+    onClear?: VoidFunction;
+    onOpen?: VoidFunction;
+    onSelect?: (item: IBsModel) => void;
+    onDeselect?: (item: IBsModel) => void;
+    'onData-bind'?: (data: IBsModel[]) => void;
+    'onData-error'?: (error: unknown) => void;
+    'onData-filter'?: (data: IBsModel[]) => void;
+    'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
+}
 
-export declare const BsComboboxPlugin: Plugin;
+export declare const BsCombobox: {
+    new(): {
+        $props: AllowedComboboxProps & TComboboxOptionProps;
+        $slots: {
+            default?: (arg: { id: string }) => VNode[];
+            optionItem?: (arg: { item: IBsModel, index: number }) => VNode;
+            appendInner?: () => VNode;
+            appendOuter?: () => VNode;
+            prependInner?: () => VNode;
+            prependOuter?: () => VNode;
+            emptyDataMsg?: () => VNode;
+            notFoundMsg?: () => VNode;
+            helpText?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when this component's value is being cleared.
+             */
+            'clear',
+            /**
+             * Fired when the Popover is hiding.
+             */
+            'close',
+            /**
+             * Fired when the Popover is show.
+             */
+            'open',
+            /**
+             * Fired when an item is selected.
+             */
+            'select',
+            /**
+             * Fired when an item is deselected.
+             */
+            'deselect',
+            /**
+             * Fired when the data has been fetched.
+             */
+            'data-bind',
+            /**
+             * Fired when error loading data items.
+             */
+            'data-error',
+            /**
+             * Fired when this component's data items is filtered.
+             */
+            'data-filter',
+            /**
+             * Fired when this component's value is updated.
+             */
+            'update:model-value',
+            /**
+             * Fired when this component's selected value is updated.
+             */
+            'update:selected-value',
+        ];
+    };
+};
+
+export declare const BsComboboxPlugin: {
+    new(): Plugin;
+};

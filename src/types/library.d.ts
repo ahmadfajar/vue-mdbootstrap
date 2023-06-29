@@ -97,6 +97,18 @@ export declare interface IEventResult {
     remove(): void;
 }
 
+export declare type EventClosableProps = {
+    onClose?: VoidFunction;
+}
+
+export declare type EventUpdateOpenProps = {
+    'onUpdate:open'?: (state: boolean) => void;
+}
+
+export declare type EventUpdateModelValueProps<T> = {
+    'onUpdate:model-value'?: (value: T) => void;
+}
+
 export declare interface IVNode extends VNode {
     ctx: ComponentInternalInstance;
 }

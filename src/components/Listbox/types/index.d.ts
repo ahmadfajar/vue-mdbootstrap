@@ -1,13 +1,12 @@
 import {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import { IArrayStore, IBsStore, TLabelPosition, TRecord } from '../../../types';
+import { EventUpdateModelValueProps, IArrayStore, IBsModel, IBsStore, TLabelPosition } from '../../../types';
 
 export declare type TDataListSchemaProps = {
     displayField: string,
@@ -119,6 +118,62 @@ export declare type TListboxOptionProps = {
 
 export declare type TBsListbox = ComponentObjectPropsOptions<TListboxOptionProps>;
 
-export declare const BsListbox: DefineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedListboxProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+    EventUpdateModelValueProps<string | number | string[] | number[] | undefined> & {
+    onSelect?: (item: IBsModel) => void;
+    onDeselect?: (item: IBsModel) => void;
+    'onData-bind'?: (data: IBsModel[]) => void;
+    'onData-error'?: (error: unknown) => void;
+    'onData-filter'?: (data: IBsModel[]) => void;
+    'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
+    'onUpdate:search-text'?: (search?: string) => void;
+}
 
-export declare const BsListboxPlugin: Plugin;
+export declare const BsListbox: {
+    new(): {
+        $props: AllowedListboxProps & TListboxOptionProps;
+        $slots: {
+            optionItem?: (arg: { item: IBsModel, index: number }) => VNode;
+            emptyDataMsg?: () => VNode;
+            notFoundMsg?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when an item is selected.
+             */
+            'select',
+            /**
+             * Fired when an item is deselected.
+             */
+            'deselect',
+            /**
+             * Fired when the data has been fetched.
+             */
+            'data-bind',
+            /**
+             * Fired when error loading data items.
+             */
+            'data-error',
+            /**
+             * Fired when the Listbox data items is filtered.
+             */
+            'data-filter',
+            /**
+             * Fired when the Listbox value is updated.
+             */
+            'update:model-value',
+            /**
+             * Fired when the Listbox search value is updated.
+             */
+            'update:search-text',
+            /**
+             * Fired when the Listbox selected value is updated.
+             */
+            'update:selected-value',
+        ];
+    };
+};
+
+export declare const BsListboxPlugin: {
+    new(): Plugin;
+};

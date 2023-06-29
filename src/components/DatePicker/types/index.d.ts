@@ -1,14 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TRecord } from '../../../types';
-import { TInputFieldProps, TPopoverPosition } from '../../../types';
+import { EventClosableProps, EventUpdateModelValueProps, TInputFieldProps, TPopoverPosition } from '../../../types';
 
 export declare type TDateTimePickerMode = 'date' | 'datetime' | 'year' | 'month' | 'time';
 
@@ -194,8 +192,64 @@ export declare type TBsDatePickerTimes = ComponentObjectPropsOptions<TTimePicker
 
 export declare type TBsDateTimeField = ComponentObjectPropsOptions<TDateTimeFieldOptionProps>;
 
-export declare const BsDatePicker: DefineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedDatePickerProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateModelValueProps<string>;
 
-export declare const BsDateTimeField: DefineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedDateTimeFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+    EventClosableProps & EventUpdateModelValueProps<string> & {
+    onBlur?: (event: Event) => void;
+    onFocus?: (event: Event) => void;
+    onClear?: VoidFunction;
+    onOpen?: VoidFunction;
+}
 
-export declare const BsDatePickerPlugin: Plugin;
+export declare const BsDatePicker: {
+    new(): {
+        $props: AllowedDatePickerProps & TDatePickerOptionProps;
+        $emit: ['update:model-value'];
+    };
+};
+
+export declare const BsDateTimeField: {
+    new(): {
+        $props: AllowedDateTimeFieldProps & TDateTimeFieldOptionProps;
+        $slots: {
+            default?: (arg: { id: string }) => VNode[];
+            appendInner?: () => VNode;
+            appendOuter?: () => VNode;
+            prependInner?: () => VNode;
+            prependOuter?: () => VNode;
+            helpText?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when this component lost focus.
+             */
+            'blur',
+            /**
+             * Fired when this component got focused.
+             */
+            'focus',
+            /**
+             * Fired when this component's value is being cleared.
+             */
+            'clear',
+            /**
+             * Fired when the DatePicker is closed or hide.
+             */
+            'close',
+            /**
+             * Fired when the DatePicker popup is open or showed.
+             */
+            'open',
+            /**
+             * Fired when this component's value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsDatePickerPlugin: {
+    new(): Plugin;
+};

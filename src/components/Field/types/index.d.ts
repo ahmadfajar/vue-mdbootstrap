@@ -1,13 +1,13 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
 import type {
+    EventUpdateModelValueProps,
     TIconVariant,
     TInputBaseProps,
     TLabelPosition,
@@ -324,14 +324,228 @@ export declare type TBsNumericField = ComponentObjectPropsOptions<TNumericFieldO
 
 export declare type TBsSearchField = ComponentObjectPropsOptions<TSearchFieldOptionProps>;
 
-export declare const BsTextField: DefineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedTextFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+    EventUpdateModelValueProps<string | null> & {
+    onBlur?: EventListener;
+    onClear?: VoidFunction;
+    onFocus?: EventListener;
+    onKeydown?: EventListener;
+}
 
-export declare const BsTextArea: DefineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsTextField: {
+    new(): {
+        $props: AllowedTextFieldProps & TTextFieldOptionProps;
+        $slots: {
+            default?: (arg: { id: string }) => VNode[];
+            appendInner?: () => VNode;
+            appendOuter?: () => VNode;
+            prependInner?: () => VNode;
+            prependOuter?: () => VNode;
+            helpText?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when this component lost focus.
+             */
+            'blur',
+            /**
+             * Fired when this component got focused.
+             */
+            'focus',
+            /**
+             * Fired when this component's value is being cleared.
+             */
+            'clear',
+            /**
+             * Triggers when cursor is still in the `<input>` element and keyboard key is pressed.
+             */
+            'keydown',
+            /**
+             * Fired when this component's value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
 
-export declare const BsChipField: DefineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsTextArea: {
+    new(): {
+        $props: AllowedTextFieldProps & TTextAreaOptionProps;
+        $slots: {
+            default?: (arg: { id: string }) => VNode[];
+            appendInner?: () => VNode;
+            appendOuter?: () => VNode;
+            prependInner?: () => VNode;
+            prependOuter?: () => VNode;
+            helpText?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when this component lost focus.
+             */
+            'blur',
+            /**
+             * Fired when this component got focused.
+             */
+            'focus',
+            /**
+             * Fired when this component's value is being cleared.
+             */
+            'clear',
+            /**
+             * Triggers when cursor is still in the `<textarea>` element and keyboard key is pressed.
+             */
+            'keydown',
+            /**
+             * Fired when this component's value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
 
-export declare const BsNumericField: DefineComponent<TBsNumericField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedChipFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+    EventUpdateModelValueProps<string | string[]> & {
+    onBlur?: EventListener;
+    onClear?: VoidFunction;
+    onFocus?: EventListener;
+    onKeydown?: EventListener;
+    'onDelete-item'?: (deletedItem: string) => void;
+}
 
-export declare const BsSearchField: DefineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsChipField: {
+    new(): {
+        $props: AllowedChipFieldProps & TChipFieldOptionProps;
+        $slots: {
+            default?: (arg: { id: string }) => VNode[];
+            appendInner?: () => VNode;
+            appendOuter?: () => VNode;
+            prependInner?: () => VNode;
+            prependOuter?: () => VNode;
+            helpText?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when this ChipField lost focus.
+             */
+            'blur',
+            /**
+             * Fired when this ChipField got focused.
+             */
+            'focus',
+            /**
+             * Fired when this ChipField's value is being cleared.
+             */
+            'clear',
+            /**
+             * Fired when `KeyboardEvent` is triggered from the `<input>` element.
+             */
+            'keydown',
+            /**
+             * Fired when a chip is deleted from this ChipField.
+             */
+            'delete-item',
+            /**
+             * Fired when this ChipField's value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
 
-export declare const BsFieldPlugin: Plugin;
+declare type AllowedNumericFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+    EventUpdateModelValueProps<number | null> & {
+    onBlur?: EventListener;
+    onClear?: VoidFunction;
+    onFocus?: EventListener;
+    onKeydown?: EventListener;
+}
+
+export declare const BsNumericField: {
+    new(): {
+        $props: AllowedNumericFieldProps & TNumericFieldOptionProps;
+        $slots: {
+            default?: (arg: { id: string }) => VNode[];
+            appendInner?: () => VNode;
+            appendOuter?: () => VNode;
+            prependInner?: () => VNode;
+            prependOuter?: () => VNode;
+            helpText?: () => VNode;
+        };
+        $emit: [
+            /**
+             * Fired when this component lost focus.
+             */
+            'blur',
+            /**
+             * Fired when this component got focused.
+             */
+            'focus',
+            /**
+             * Fired when this component's value is being cleared.
+             */
+            'clear',
+            /**
+             * Triggers when cursor is still in the `<input>` element and keyboard key is pressed.
+             */
+            'keydown',
+            /**
+             * Fired when this component's value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+declare type AllowedSearchFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+    EventUpdateModelValueProps<string | null> & {
+    onBlur?: EventListener;
+    onClear?: VoidFunction;
+    onClose?: VoidFunction;
+    onOpen?: VoidFunction;
+    onFocus?: EventListener;
+    onSearch?: (value: string) => void;
+}
+
+export declare const BsSearchField: {
+    new(): {
+        $props: AllowedSearchFieldProps & TSearchFieldOptionProps;
+        $slots: {
+            popover?: () => VNode[];
+        };
+        $emit: [
+            /**
+             * Fired when this component lost focus.
+             */
+            'blur',
+            /**
+             * Fired when this component got focused.
+             */
+            'focus',
+            /**
+             * Fired when this component's value is being cleared.
+             */
+            'clear',
+            /**
+             * Asks handler to start searching for the given keyword.
+             */
+            'search',
+            /**
+             * Fired when the Popover is show.
+             */
+            'open',
+            /**
+             * Fired when the Popover is hiding.
+             */
+            'close',
+            /**
+             * Fired when this component's value is updated.
+             */
+            'update:model-value',
+        ];
+    };
+};
+
+export declare const BsFieldPlugin: {
+    new(): Plugin;
+};

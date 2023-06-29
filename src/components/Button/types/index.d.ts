@@ -1,13 +1,18 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
-    Plugin
+    Plugin,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TAvatarIconProps, TInputBaseProps, TLabelPosition, TRecord, TValidationProps } from '../../../types';
+import type {
+    EventUpdateModelValueProps,
+    TAvatarIconProps,
+    TInputBaseProps,
+    TLabelPosition,
+    TValidationProps
+} from '../../../types';
 
 export declare type TButtonInnerOptionProps = {
     dropdownToggle?: boolean;
@@ -144,10 +149,40 @@ export declare type TBsToggleButton = ComponentObjectPropsOptions<TToggleButtonO
 
 export declare type TBsToggleField = ComponentObjectPropsOptions<TToggleFieldOptionProps>;
 
-export declare const BsButton: DefineComponent<TBsButton, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsButton: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TButtonOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
 
-export declare const BsToggleButton: DefineComponent<TBsToggleButton, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedToggleButtonProps = AllowedComponentProps & ComponentCustomProps &
+    VNodeProps & EventUpdateModelValueProps<string | number | boolean>;
 
-export declare const BsToggleField: DefineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsToggleButton: {
+    new(): {
+        $props: AllowedToggleButtonProps & TToggleButtonOptionProps;
+        $slots: {
+            default?: () => VNode[];
+            icon?: () => VNode;
+        };
+        $emit: ['update:model-value'];
+    };
+};
 
-export declare const BsButtonPlugin: Plugin;
+export declare const BsToggleField: {
+    new(): {
+        $props: AllowedToggleButtonProps & TToggleFieldOptionProps;
+        $slots: {
+            default?: () => VNode[];
+            helpText?: () => VNode;
+        };
+        $emit: ['update:model-value'];
+    };
+};
+
+export declare const BsButtonPlugin: {
+    new(): Plugin;
+};

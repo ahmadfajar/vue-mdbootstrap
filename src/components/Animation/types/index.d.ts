@@ -1,15 +1,12 @@
 import type {
+    AllowedComponentProps,
+    ComponentCustomProps,
     ComponentObjectPropsOptions,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    DefineComponent,
-    EmitsOptions,
-    MethodOptions,
     Plugin,
-    TransitionProps
+    TransitionProps,
+    VNode,
+    VNodeProps
 } from 'vue';
-import type { TRecord } from '../../../types';
-
 
 export declare type TRippleOptionProps = {
     /**
@@ -62,10 +59,39 @@ export declare type TBsOverlay = ComponentObjectPropsOptions<TOverlayOptionProps
 
 export declare type TBsRipple = ComponentObjectPropsOptions<TRippleOptionProps>;
 
-export declare const BsExpandTransition: DefineComponent<TransitionProps>;
+export declare const BsExpandTransition: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TransitionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+    };
+};
 
-export declare const BsOverlay: DefineComponent<TBsOverlay, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+export declare const BsOverlay: {
+    new(): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TOverlayOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['click'];
+    };
+};
 
-export declare const BsRipple: DefineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>;
+declare type AllowedRippleProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
+    'onUpdate:active'?: (value: boolean) => void;
+}
 
-export declare const BsAnimationPlugin: Plugin;
+export declare const BsRipple: {
+    new(): {
+        $props: AllowedRippleProps & TRippleOptionProps;
+        $slots: {
+            default?: () => VNode[];
+        };
+        $emit: ['update:active'];
+    };
+};
+
+export declare const BsAnimationPlugin: {
+    new(): Plugin;
+};
