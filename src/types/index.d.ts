@@ -30,13 +30,14 @@ import {
 } from '../components/ListView/types';
 import { BsDropdownMenu } from '../components/Menu/types';
 import { BsLightbox, BsModal } from '../components/Modal/types';
+import { INotificationProvider } from '../components/Notification/types';
 import { BsPopover } from '../components/Popover/types';
 import { BsMaskLoader, BsProgress, BsProgressBar } from '../components/Progress/types';
 import { BsRadio, BsRadioGroup } from '../components/Radio/types';
 import { BsSwitch } from '../components/Switch/types';
 import { BsTab, BsTabs } from '../components/Tabs/types';
 import { BsTooltip } from '../components/Tooltip/types';
-import { IHttpService, INotificationProvider, TVueMdb } from './library';
+import { IHttpService, TVueMdb } from './library';
 
 export * from '../components/Alert/types';
 export * from '../components/Animation/types';
