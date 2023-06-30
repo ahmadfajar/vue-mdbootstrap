@@ -64,11 +64,11 @@
     "body-scroll-lock": "^4.0.0-beta.0",
     "bootstrap": "5.2.3",
     "compass-mixins": "^0.12.12",
-    "fast-xml-parser": "^4.2.4",
+    "fast-xml-parser": "^4.2.5",
     "lodash": "^4.17.21",
     "luxon": "^3.3.0",
     "resize-observer-polyfill": "^1.5.1",
-    "sass": "^1.63.4",
+    "sass": "^1.63.6",
     "vue": "^3.3.4"
   },
   "devDependencies": {

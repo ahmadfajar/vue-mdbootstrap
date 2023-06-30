@@ -43,10 +43,10 @@ If not, please read the
 
 ```bash
 # With npm
-npm install vue-mdbootstrap --save
+npm install vue-mdbootstrap@next --save
 
 # With yarn
-yarn add vue-mdbootstrap
+yarn add vue-mdbootstrap@next
 ```
 
 Create Vue application and mount at `#app` entry point.
@@ -97,7 +97,7 @@ Code below is an example on how to create HTML page using Vue MDBootstrap.
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
-  <link href="https://cdn.jsdelivr.net/npm/vue-mdbootstrap@2/dist/vue-mdb.min.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/vue-mdbootstrap@2/dist/bundle.min.css" rel="stylesheet" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue-mdbootstrap@2/dist/vue-mdb.umd.min.js" crossorigin="anonymous"></script>
 </head>
@@ -137,7 +137,7 @@ Code below is an example on how to create HTML page using Vue MDBootstrap.
 
 ## Demos
 
-You can clone the demos from [here](https://github.com/ahmadfajar/vue3-mdb-test) 
+You can clone the demos from [here](https://github.com/ahmadfajar/vuemdb-example)
 to see it in action.
 
 ## Start coding

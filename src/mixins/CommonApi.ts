@@ -1,8 +1,18 @@
 import type { AxiosInstance } from 'axios';
 import type { ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
-import { createVNode, Fragment, getCurrentInstance, h, normalizeClass, resolveComponent, Transition } from 'vue';
+import {
+    createCommentVNode,
+    createVNode,
+    Fragment,
+    getCurrentInstance,
+    h,
+    normalizeClass,
+    resolveComponent,
+    Transition
+} from 'vue';
 import type { RouteLocationNormalizedLoaded } from 'vue-router';
 import type {
+    IHttpService,
     INotificationProvider,
     TBreakpoint,
     TRecord,
@@ -10,7 +20,6 @@ import type {
     TRouterOptionProps,
     TVueMdb
 } from '../types';
-import type { IHttpService } from '../utils/AxiosPlugin';
 import Helper from '../utils/Helper';
 
 
@@ -64,13 +73,19 @@ export function useRenderSlot(
     children?: VNode | VNodeArrayChildren,
     slotArgs?: unknown,
 ): VNode {
-    // @ts-ignore
-    const validSlot = slots ? slots[name] && slots[name](slotArgs) : undefined;
+    // const slotProps = {
+    //     ...slotArgs,
+    //     ...props,
+    // } as TRecord;
+    // const fallback = children
+    //     ? () => (Array.isArray(children) ? children : [children])
+    //     : undefined;
+
+    // return renderSlot(slots, name, slotProps, fallback);
 
     // @ts-ignore
-    return h(Fragment,
-        {key: props.key ?? `_${name}`},
-        validSlot ?? children ?? [],
+    return h(Fragment, {key: props.key ?? `_${name}`},
+        slots[name]?.(slotArgs) ?? (children ? (Array.isArray(children) ? children : [children]) : []),
     );
 }
 
@@ -98,17 +113,12 @@ export function useRenderSlotWithWrapper(
     wrapperTag = 'div',
     slotArgs?: unknown,
 ): VNode {
-    if (slots && slots[name]) {
+    if (slots[name] || children) {
         return h(wrapperTag, wrapperProps,
-            // @ts-ignore
-            slots[name] && slots[name](slotArgs)
+            useRenderSlot(slots, name, {key: key}, children, slotArgs)
         );
     } else {
-        return useRenderSlot(
-            slots, name, {key: key},
-            children ? h(wrapperTag, wrapperProps, children) : undefined,
-            slotArgs,
-        );
+        return createCommentVNode(` v-if-${name} `);
     }
 }
 
@@ -135,8 +145,7 @@ export function useRenderSlotWrapperWithCondition(
     return condition
         ? h(
             wrapTag ?? 'div', wrapProps,
-            // @ts-ignore
-            slots ? slots[name] && slots[name](slotArgs) : undefined
+            useRenderSlot(slots, name, undefined, undefined, slotArgs)
         )
         : undefined;
 }

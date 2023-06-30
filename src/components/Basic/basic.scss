@@ -26,14 +26,14 @@
 
 .#{$prefix}subheader {
     --#{$prefix}subheader-font-size: #{$font-size-base};
-    --#{$prefix}subheader-font-size: #{$font-weight-semi-bold};
+    --#{$prefix}subheader-font-weight: #{$font-weight-semi-bold};
     --#{$prefix}subheader-padding-x: #{$padding-base};
     --#{$prefix}subheader-padding-y: 0;
 
     @include flexbox((display: flex, align-items: center));
     color: var(--#{$prefix}subheader-color);
     font-size: var(--#{$prefix}subheader-font-size);
-    font-weight: var(--#{$prefix}subheader-font-size);
+    font-weight: var(--#{$prefix}subheader-font-weight);
     padding: var(--#{$prefix}subheader-padding-y) var(--#{$prefix}subheader-padding-x);
     height: 48px;
 
