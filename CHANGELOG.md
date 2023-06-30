@@ -4,7 +4,7 @@
 
 ## v2.0.0
 
-Released: July 30, 2023
+Released: June 30, 2023
 
 ### Features & Improvements
 

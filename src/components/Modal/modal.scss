@@ -75,7 +75,6 @@
 
 .modal-dialog-enter-active,
 .modal-dialog-leave-active {
-    @include transition();
     transition: opacity $md-transition-easeOut;
 
     .#{$prefix}modal-inner {
