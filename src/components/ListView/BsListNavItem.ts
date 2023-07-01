@@ -82,7 +82,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
                     }
                 }
                 nextTick().then(() => {
-                    hasChild.value = refItem.value !== undefined && refItem.value.hasChild();
+                    hasChild.value = refItem.value != undefined && refItem.value.hasChild();
                 })
             }
         )

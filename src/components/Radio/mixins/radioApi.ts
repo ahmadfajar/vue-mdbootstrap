@@ -1,6 +1,6 @@
 import type { ComputedRef, Prop, Ref, Slots, VNode, VNodeArrayChildren } from 'vue';
-import { h } from 'vue';
-import { cssPrefix, useRenderSlot, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
+import { h, renderSlot } from 'vue';
+import { cssPrefix, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
 import type {
     TBsRadio,
     TBsRipple,
@@ -21,7 +21,7 @@ export function useRadioClasses(
 ): TRecord {
     return {
         [`${cssPrefix}radio`]: true,
-        [`${cssPrefix}radio-${props.color}`]: props.color !== undefined,
+        [`${cssPrefix}radio-${props.color}`]: props.color != undefined,
         'checked': props.value === props.modelValue,
         'required': props.required,
         'readonly': props.readonly,
@@ -172,7 +172,7 @@ export function useRenderRadioOrCheckboxGroup<D, M>(
     return h('div', {
         class: classnames.value,
     }, [
-        useRenderSlot(slots, 'default', {key: Helper.uuid()}),
+        renderSlot(slots, 'default'),
         h('div', {
             class: 'col'
         }, [
@@ -183,7 +183,7 @@ export function useRenderRadioOrCheckboxGroup<D, M>(
                     'row-cols-1 row-cols-md-2': props.column || props.items.length > 3,
                     [`row-cols-lg-4`]: (props.column && parseInt(<string>props.column) > 4) && props.items.length > 3,
                     [`row-cols-lg-${props.column}`]: props.column && parseInt(<string>props.column) < 5,
-                    [`row-cols-xl-${props.column}`]: props.column !== undefined,
+                    [`row-cols-xl-${props.column}`]: props.column != undefined,
                 }
             }, children),
             useRenderFieldFeedback(

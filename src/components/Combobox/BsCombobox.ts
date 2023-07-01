@@ -86,7 +86,7 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
         const errorItems = computed(() => useGetErrorItems(thisProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, fieldValues));
         const showAppendIcon = computed(() =>
-            (slots.appendInner !== undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
+            (slots.appendInner != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
         );
         const wrapperClasses = computed<TRecord>(() =>
             useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)

@@ -34,7 +34,7 @@ export declare function useMobileDevice(): boolean;
  * If the custom slot doesn't exist or `undefined` then
  * render default `children`.
  *
- * @param slots    The given slot
+ * @param slots    The slot instance
  * @param name     The slot name
  * @param props    Fragment key identifier
  * @param children The VNode children
@@ -44,12 +44,22 @@ export declare function useMobileDevice(): boolean;
 export declare function useRenderSlot(slots: Slots, name: string, props?: Readonly<TRecord>, children?: VNode | VNodeArrayChildren, slotArgs?: unknown): VNode;
 
 /**
+ * Simple function to render an HTML tag as VNode and apply default slot to its child.
+ *
+ * @param tag      Valid HTML tag name
+ * @param slots    The slot instance
+ * @param classes  Custom css classes to apply
+ * @param styles   Custom inline stylesheet to apply
+ */
+export declare function useRenderSlotDefault(tag: string, slots?: Slots, classes?: string | Array<string> | TRecord, styles?: string | Array<string> | TRecord): VNode;
+
+/**
  * Simple function to render a VNode with custom slot and wrap it
  * with the given `wrapperTag` and properties.
  * If the custom slot doesn't exist or `undefined` then
  * render default `children` inside the `wrapperTag`.
  *
- * @param slots        The given slot
+ * @param slots        The slot instance
  * @param name         The slot name
  * @param key          Fragment key identifier
  * @param wrapperProps The VNode wrapper properties
@@ -64,7 +74,7 @@ export declare function useRenderSlotWithWrapper(slots: Slots, name: string, key
  * Simple function to render a VNode with custom slot and wrap it
  * with the given `wrapTag` and properties only if the `condition` is match.
  *
- * @param slots      The given slot
+ * @param slots      The slot instance
  * @param name       The slot name
  * @param condition  The given condition
  * @param wrapProps  The VNode wrapper properties
@@ -73,16 +83,6 @@ export declare function useRenderSlotWithWrapper(slots: Slots, name: string, key
  * @returns The Rendered node.
  */
 export declare function useRenderSlotWrapperWithCondition(slots: Slots, name: string, condition: boolean, wrapProps?: Readonly<TRecord>, wrapTag?: string, slotArgs?: unknown): VNode | undefined;
-
-/**
- * Simple function to render an HTML tag as VNode and apply custom slot to them.
- *
- * @param tag      Valid HTML tag name
- * @param slots    The given slot
- * @param classes  Custom css classes to apply
- * @param styles   Custom inline stylesheet to apply
- */
-export declare function useSimpleRenderWithSlots(tag: string, slots?: Slots, classes?: string | Array<string> | TRecord, styles?: string | Array<string> | TRecord): VNode;
 
 /**
  * Simple function to render a Transition VNode.

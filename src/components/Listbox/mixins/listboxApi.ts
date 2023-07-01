@@ -276,7 +276,7 @@ function dispatchListboxEvent(
             (
                 selectedItems.value.find(
                     row => row.get(valueField) === it.get(valueField)
-                ) !== undefined
+                ) != undefined
             )
         );
         return it;
@@ -341,7 +341,7 @@ function createListboxItemContent(
     const nodes: VNode[] = [];
     if (
         props.showImage === true &&
-        (Object.hasOwn(item, <string>schema.imageField) || item.get(<string>schema.imageField) !== undefined)
+        (Object.hasOwn(item, <string>schema.imageField) || item.get(<string>schema.imageField) != undefined)
     ) {
         nodes.push(createListTileLeading(props, schema, item));
     }
@@ -409,7 +409,7 @@ function cloneDataItems(
         tmpObj.set(
             '_selected',
             (
-                selectedItems.value.find(row => row.get(fieldName) === it.get(fieldName)) !== undefined
+                selectedItems.value.find(row => row.get(fieldName) === it.get(fieldName)) != undefined
                 // Array.isArray(fieldValues.value)
                 //     ? fieldValues.value.some(v => v === it.get(dataSchema.valueField))
                 //     : fieldValues.value === it.get(dataSchema.valueField)
@@ -487,7 +487,7 @@ export function useRegisterListboxWatchers(
                     (
                         selectedItems.value.find(
                             row => row.get(schema.valueField) === it.get(schema.valueField)
-                        ) !== undefined
+                        ) != undefined
                     )
                 );
                 return it;

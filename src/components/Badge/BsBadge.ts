@@ -1,6 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent } from 'vue';
-import { useSimpleRenderWithSlots } from '../../mixins/CommonApi';
+import { useRenderSlotDefault } from '../../mixins/CommonApi';
 import type { TBadgeOptionProps, TBsBadge, TRecord } from '../../types';
 import { badgeProps } from './mixins/badgeProps';
 
@@ -10,8 +10,9 @@ export default defineComponent<TBsBadge, TRecord, TRecord, ComputedOptions, Meth
     setup(props, {slots}) {
         const cmpProps = props as Readonly<TBadgeOptionProps>;
 
-        return () => useSimpleRenderWithSlots(
-            cmpProps.tag || 'span', slots,
+        return () => useRenderSlotDefault(
+            cmpProps.tag ?? 'span',
+            slots,
             [
                 'badge',
                 cmpProps.type ? `badge-${cmpProps.type}` : '',

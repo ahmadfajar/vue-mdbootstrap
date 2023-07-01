@@ -56,7 +56,7 @@ export declare const BsCheckboxGroup: {
         $props: AllowedCheckboxGroupProps & TCheckboxGroupOptionProps;
         $slots: {
             default?: () => VNode[];
-            helpText?: () => VNode;
+            'help-text'?: () => VNode;
         };
         $emit: [
             /**

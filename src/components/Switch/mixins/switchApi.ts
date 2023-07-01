@@ -13,7 +13,7 @@ export function useSwitchClasses(
 
     return {
         [`${cssPrefix}switch`]: true,
-        [`${cssPrefix}switch-${props.color}`]: props.color !== undefined,
+        [`${cssPrefix}switch-${props.color}`]: props.color != undefined,
         [`${cssPrefix}switch-inset`]: props.insetMode || props.insetOutlined,
         [`${cssPrefix}switch-outlined`]: props.insetOutlined === true && !checked,
         'checked': checked,
@@ -103,7 +103,7 @@ export function useRenderSwitch(
     }, [
         useRenderSlotWrapperWithCondition(
             slots, 'default',
-            (slots.default !== undefined && thisProps.labelPosition === 'left'),
+            (slots.default != undefined && thisProps.labelPosition === 'left'),
             {
                 for: thisProps.id,
                 class: switchLabelClass(thisProps, 'left'),
@@ -113,7 +113,7 @@ export function useRenderSwitch(
         renderSwitchUI(thisProps, rippleActive, toggleCheckHandler),
         useRenderSlotWrapperWithCondition(
             slots, 'default',
-            (slots.default !== undefined && thisProps.labelPosition === 'right'),
+            (slots.default != undefined && thisProps.labelPosition === 'right'),
             {
                 for: thisProps.id,
                 class: switchLabelClass(thisProps, 'right'),

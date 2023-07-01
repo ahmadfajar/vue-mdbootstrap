@@ -1,7 +1,7 @@
-import type {Prop, VNode} from "vue";
-import {h} from "vue";
-import {useGetCalcSize, useSizeStyles} from "../../Icon/mixins/iconApi";
-import type {TAvatarIconProps, TAvatarImageOptionProps, TFlipMode, TRecord, TSizeOptionProps} from "../../../types";
+import type { Prop, VNode } from 'vue';
+import { h } from 'vue';
+import type { TAvatarIconProps, TAvatarImageOptionProps, TFlipMode, TRecord, TSizeOptionProps } from '../../../types';
+import { useGetCalcSize, useSizeStyles } from '../../Icon/mixins/iconApi';
 
 export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
     const size = useGetCalcSize(props);
@@ -24,10 +24,10 @@ export function useCreateIconProps(props: Readonly<TAvatarIconProps>): TRecord {
     }
 }
 
-export function useShapeClasses(circle?: boolean, rounded?: boolean): object {
+export function useShapeClasses(circle?: boolean, rounded?: boolean): Record<string, boolean | undefined> {
     return {
-        "rounded-circle": circle && !rounded,
-        "rounded": rounded && !circle,
+        'rounded-circle': circle && !rounded,
+        'rounded': rounded && !circle,
     }
 }
 
@@ -36,6 +36,6 @@ export function useRenderAvatarImage(props: Readonly<TAvatarImageOptionProps>): 
         class: useShapeClasses(props.circle, props.rounded),
         style: useSizeStyles(props),
         src: props.imgSrc,
-        alt: "",
+        alt: '',
     });
 }

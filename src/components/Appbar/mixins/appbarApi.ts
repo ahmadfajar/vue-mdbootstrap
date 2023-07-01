@@ -1,7 +1,7 @@
 import type { ComputedRef, Ref, Slots, VNode } from 'vue';
 import { getCurrentInstance, h, nextTick, withDirectives } from 'vue';
 import { Resize } from '../../../directives';
-import { cssPrefix, useFindParentCmp } from '../../../mixins/CommonApi';
+import { cssPrefix, useFindParentCmp, useRenderSlotDefault } from '../../../mixins/CommonApi';
 import type {
     IComponentInstance,
     TAppbarOptionProps,
@@ -42,7 +42,11 @@ export function useAppbarOnMountedHook(
 ): void {
     const instance = getCurrentInstance();
     vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
-    const parent = useFindParentCmp(['bs-app-container', 'BsAppContainer'], instance, 3);
+    const parent = useFindParentCmp(
+        ['bs-app-container', 'BsAppContainer'],
+        instance,
+        3
+    );
 
     if (parent) {
         nextTick().then(() => {
@@ -78,9 +82,7 @@ export function useRenderAppbar(
             },
             style: styles.value,
         }, [
-            h('div', {
-                class: `${cssPrefix}appbar-content`
-            }, slots.default && slots.default()),
+            useRenderSlotDefault('div', slots, `${cssPrefix}appbar-content`),
         ]), [
             [Resize, resizeHandler]
         ]

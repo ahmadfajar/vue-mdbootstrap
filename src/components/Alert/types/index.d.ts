@@ -64,7 +64,7 @@ export declare const BsAlert: {
         $props: AllowedAlertProps & TAlertOptionProps;
         $slots: {
             default?: () => VNode[];
-            alertIcon?: () => VNode;
+            icon?: () => VNode;
         };
         $emit: ['close', 'update:model-value'];
     };

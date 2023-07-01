@@ -1,6 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent } from 'vue';
-import { cssPrefix, useSimpleRenderWithSlots } from '../../mixins/CommonApi';
+import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
 import type { TBsSubheader, TRecord } from '../../types';
 
@@ -14,7 +14,7 @@ export default defineComponent<TBsSubheader, TRecord, TRecord, ComputedOptions, 
         dark: booleanProp,
     },
     setup(props, {slots}) {
-        return () => useSimpleRenderWithSlots(
+        return () => useRenderSlotDefault(
             'div', slots,
             [`${cssPrefix}subheader`, props.dark ? 'subheader--dark' : 'subheader--light'],
         )

@@ -1,6 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent } from 'vue';
-import { cssPrefix, useSimpleRenderWithSlots } from '../../mixins/CommonApi';
+import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
 import type { TBsListTileAction, TListTileActionOptionProps, TRecord } from '../../types';
 import { baseTagProps } from '../Card/mixins/cardProps';
@@ -24,7 +24,7 @@ export default defineComponent<TBsListTileAction, TRecord, TRecord, ComputedOpti
         const cmpProps = props as Readonly<TListTileActionOptionProps>;
 
         return () =>
-            useSimpleRenderWithSlots(<string>props.tag, slots, {
+            useRenderSlotDefault(<string>props.tag, slots, {
                 [`${cssPrefix}list-tile-action`]: true,
                 [`${cssPrefix}action-stack`]: cmpProps.stack === true,
                 'd-flex': !cmpProps.stack && cmpProps.center === true,

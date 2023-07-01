@@ -1,8 +1,8 @@
-import type {Slots, VNode} from "vue";
-import {createCommentVNode, Fragment, h} from "vue";
-import {cssPrefix, useRenderSlot, useRenderTransition} from "../../../mixins/CommonApi";
-import type {TValidationProps, TValidator} from "../types";
-import Helper from "../../../utils/Helper";
+import type { Slots, VNode } from 'vue';
+import { createCommentVNode, Fragment, h } from 'vue';
+import { cssPrefix, useRenderSlot, useRenderTransition } from '../../../mixins/CommonApi';
+import Helper from '../../../utils/Helper';
+import type { TValidationProps, TValidator } from '../types';
 
 export function useGetValidator(props: Readonly<TValidationProps>): TValidator | undefined {
     return props.validator || props.externalValidator;
@@ -10,21 +10,21 @@ export function useGetValidator(props: Readonly<TValidationProps>): TValidator |
 
 export function useHasValidationError(props: Readonly<TValidationProps>): boolean {
     const validator = useGetValidator(props);
-    return validator !== undefined && validator.hasError;
+    return validator != undefined && validator.hasError;
 }
 
 export function useHasValidated(props: Readonly<TValidationProps>): boolean {
     const validator = useGetValidator(props);
-    return (validator && validator.dirty !== undefined) ? validator.dirty : false;
+    return (validator && validator.dirty != undefined) ? validator.dirty : false;
 }
 
 export function useShowValidationError(props: Readonly<TValidationProps>): boolean {
     const validator = useGetValidator(props);
 
-    return validator !== undefined
+    return validator != undefined
         && validator.hasError
-        && validator.messages !== undefined
-        && validator.validators !== undefined
+        && validator.messages != undefined
+        && validator.validators != undefined
 }
 
 export function useShowHelpText(
@@ -51,7 +51,7 @@ function validationErrorMessage(
     field: string,
 ): string {
     const validator = useGetValidator(props);
-    return validator ? <string>validator.messages[field] : "";
+    return validator ? <string>validator.messages[field] : '';
 }
 
 function renderErrorMessage(
@@ -63,13 +63,13 @@ function renderErrorMessage(
         ? h(Fragment,
             {key: Helper.uuid()},
             errorItems.map((field) => {
-                return h("small", {
+                return h('small', {
                     key: `bs-${field}`,
-                    class: "text-danger d-block"
+                    class: 'text-danger d-block'
                 }, validationErrorMessage(props, field))
             })
         )
-        : createCommentVNode(" v-if-field-error ")
+        : createCommentVNode(' v-if-field-error ')
 }
 
 export function useRenderFieldFeedback(
@@ -82,26 +82,26 @@ export function useRenderFieldFeedback(
     onClickHandler?: EventListener,
 ): VNode {
     return (props.helpText || showValidationError)
-        ? h("div", {
+        ? h('div', {
             class: `${cssPrefix}field-feedback`,
             onClick: onClickHandler
         }, [
             useRenderTransition(
-                {name: "field-feedback"},
+                {name: 'field-feedback'},
                 useRenderSlot(
-                    slots, "helpText",
+                    slots, 'help-text',
                     {key: 'feedback-help-text'},
                     (
                         showHelpText
-                            ? h("small", {
+                            ? h('small', {
                                     class: `${cssPrefix}help-text d-block`
                                 }, props.helpText
                             )
-                            : createCommentVNode(" v-if-help-text ")
+                            : createCommentVNode(' v-if-help-text ')
                     )
                 )
             ),
             renderErrorMessage(props, hasError, errorItems),
         ])
-        : createCommentVNode(" v-if-field-feedback ");
+        : createCommentVNode(' v-if-field-feedback ');
 }

@@ -1,8 +1,8 @@
-@import "/node_modules/compass-mixins/lib/compass/css3";
-@import "/node_modules/compass-mixins/lib/animation/core";
-@import "mixins/transition";
-@import "colors";
-@import "variables";
+@import "compass-mixins/lib/compass/css3";
+@import "compass-mixins/lib/animation/core";
+@import "./mixins/transition";
+@import "./colors";
+@import "./variables";
 
 /* VueJs transition animation */
 @include enterActive-leaveActive("fade") {
@@ -45,8 +45,8 @@
 }
 
 @include enterFrom-leaveActive("scale") {
+    @include transform(scale(0.5));
     opacity: 0;
-    transform: scale(0.5);
 }
 
 .slide-left-right, .slide-right-left,
@@ -219,23 +219,23 @@
 
 @include keyframes(rollIn) {
     0% {
-        @include opacity(0);
         @include transform(translateX(-100%) rotate(-120deg));
+        opacity: 0;
     }
     100% {
-        @include opacity(1);
         @include transform(translateX(0px) rotate(0deg));
+        opacity: 1;
     }
 }
 
 @include keyframes(rollOut) {
     0% {
-        @include opacity(1);
         @include transform(translateX(0px) rotate(0deg));
+        opacity: 1;
     }
     100% {
-        @include opacity(0);
         @include transform(translateX(100%) rotate(120deg));
+        opacity: 0;
     }
 }
 

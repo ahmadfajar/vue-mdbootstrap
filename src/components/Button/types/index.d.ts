@@ -22,6 +22,10 @@ export declare type TButtonInnerOptionProps = {
     tagName?: string;
 }
 
+export declare type TButtonMode = 'default' | 'icon' | 'floating';
+export declare type TButtonType = 'button' | 'submit' | 'reset';
+export declare type TButtonSize = 'xs' | 'sm' | 'lg';
+
 export declare type TBaseButtonProps = {
     /**
      * Sets this button color.
@@ -56,7 +60,7 @@ export declare type TBaseButtonProps = {
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#sizes)}
      * for details.
      */
-    size?: string;
+    size?: TButtonSize;
 }
 
 export declare type TButtonOptionProps = TAvatarIconProps & TBaseButtonProps & {
@@ -72,7 +76,7 @@ export declare type TButtonOptionProps = TAvatarIconProps & TBaseButtonProps & {
     /**
      * This button component mode, valid values are: `default, icon, floating`.
      */
-    mode?: string;
+    mode?: TButtonMode;
     /**
      * Render this button component as dropdowns button or not, see
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/dropdowns/)}
@@ -103,7 +107,7 @@ export declare type TButtonOptionProps = TAvatarIconProps & TBaseButtonProps & {
     /**
      * The value to set to the button’s type attribute. Valid values are: `button`, `submit`, `reset`.
      */
-    type?: string;
+    type?: TButtonType;
 }
 
 export declare type TInputOptionItem = TAvatarIconProps & {
@@ -154,6 +158,7 @@ export declare const BsButton: {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TButtonOptionProps;
         $slots: {
             default?: () => VNode[];
+            icon?: () => VNode;
         };
     };
 };
@@ -165,8 +170,8 @@ export declare const BsToggleButton: {
     new(): {
         $props: AllowedToggleButtonProps & TToggleButtonOptionProps;
         $slots: {
-            default?: () => VNode[];
-            icon?: () => VNode;
+            label?: (props: TInputOptionItem) => VNode[];
+            icon?: (props: TInputOptionItem) => VNode;
         };
         $emit: ['update:model-value'];
     };
@@ -177,7 +182,9 @@ export declare const BsToggleField: {
         $props: AllowedToggleButtonProps & TToggleFieldOptionProps;
         $slots: {
             default?: () => VNode[];
-            helpText?: () => VNode;
+            label?: (props: TInputOptionItem) => VNode;
+            icon?: (props: TInputOptionItem) => VNode;
+            'help-text'?: () => VNode;
         };
         $emit: ['update:model-value'];
     };

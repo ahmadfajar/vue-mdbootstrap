@@ -12,37 +12,36 @@ export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions
     name: 'BsImageHolder',
     props: imageHolderProps,
     setup(props) {
-        const cmpProps = props as Readonly<TImageHolderOptionProps>;
+        const thisProps = props as Readonly<TImageHolderOptionProps>;
         const showText = () => {
             return !Helper.isEmpty(props.placeholderText) || !Helper.isEmpty(props.placeHolder);
         };
-        const szHeight = useSizeHeight(cmpProps);
-        const szWidth = useSizeWidth(cmpProps);
+        const szHeight = useSizeHeight(thisProps);
+        const szWidth = useSizeWidth(thisProps);
 
-        return () => {
-            return useCreateSvgNode({
+        return () =>
+            useCreateSvgNode({
                 [`${cssPrefix}img-holder`]: true,
-                [`${cssPrefix}anchor-center`]: cmpProps.xPos === '50%',
-                ...useShapeClasses(cmpProps.circle, cmpProps.rounded),
+                [`${cssPrefix}anchor-center`]: thisProps.xPos === '50%',
+                ...useShapeClasses(thisProps.circle, thisProps.rounded),
             }, [], false, 'xMidYMid slice', null, {
                 height: !szHeight || (<number>szHeight < 2) ? '100%' : Helper.cssUnit(szHeight),
                 width: !szWidth || (<number>szWidth < 2) ? '100%' : Helper.cssUnit(szWidth),
                 role: 'img',
             }, [
                 showText()
-                    ? h('title', toDisplayString(cmpProps.placeholderText || cmpProps.placeHolder))
+                    ? h('title', toDisplayString(thisProps.placeholderText || thisProps.placeHolder))
                     : undefined,
-                h('rect', {width: '100%', height: '100%', fill: cmpProps.bgColor}),
+                h('rect', {width: '100%', height: '100%', fill: thisProps.bgColor}),
                 showText()
                     ? h('text', {
-                            fill: cmpProps.textColor,
-                            x: Helper.cssUnit(cmpProps.xPos),
-                            y: Helper.cssUnit(cmpProps.yPos),
+                            fill: thisProps.textColor,
+                            x: Helper.cssUnit(thisProps.xPos),
+                            y: Helper.cssUnit(thisProps.yPos),
                         },
-                        toDisplayString(cmpProps.placeholderText || cmpProps.placeHolder)
+                        toDisplayString(thisProps.placeholderText || thisProps.placeHolder)
                     )
                     : undefined,
             ]);
-        }
     }
 });

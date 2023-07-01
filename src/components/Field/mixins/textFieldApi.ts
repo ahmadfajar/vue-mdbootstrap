@@ -1,21 +1,11 @@
-import type {ComputedRef, Prop, Ref, Slots, VNode} from "vue";
-import {createCommentVNode, h, nextTick, vModelText, withDirectives} from "vue";
+import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import { createCommentVNode, h, nextTick, vModelText, withDirectives } from 'vue';
 import {
     cssPrefix,
     useRenderSlotWithWrapper,
     useRenderSlotWrapperWithCondition,
     useRenderTransition
-} from "../../../mixins/CommonApi";
-import {BsIcon, BsToggleIcon} from "../../Icon";
-import {useRenderFieldFeedback} from "./validationApi";
-import {
-    useOnFieldBlurred,
-    useOnFieldFocused,
-    useOnFieldNodeMounted,
-    useOnFieldValueCleared,
-    useOnFieldValueUpdated,
-    useOnTextFieldNodeMounted
-} from "./textFieldEventApi";
+} from '../../../mixins/CommonApi';
 import type {
     TBsIcon,
     TBsToggleIcon,
@@ -27,8 +17,18 @@ import type {
     TRecord,
     TTextAreaOptionProps,
     TTextFieldOptionProps
-} from "../../../types";
-import Helper from "../../../utils/Helper";
+} from '../../../types';
+import Helper from '../../../utils/Helper';
+import { BsIcon, BsToggleIcon } from '../../Icon';
+import {
+    useOnFieldBlurred,
+    useOnFieldFocused,
+    useOnFieldNodeMounted,
+    useOnFieldValueCleared,
+    useOnFieldValueUpdated,
+    useOnTextFieldNodeMounted
+} from './textFieldEventApi';
+import { useRenderFieldFeedback } from './validationApi';
 
 export function useFieldWrapperClasses(
     props: Readonly<TInputFieldProps>,
@@ -38,15 +38,15 @@ export function useFieldWrapperClasses(
 ): TRecord {
     return {
         [`${cssPrefix}field row`]: true,
-        [`${clazz}`]: clazz !== undefined,
+        [`${clazz}`]: clazz != undefined,
         [`${cssPrefix}field-filled`]: props.filled,
         [`${cssPrefix}field-outlined`]: props.outlined && !props.filled,
         [`${cssPrefix}field-flat`]: props.flat && !props.filled && !props.outlined,
-        "required": props.required,
-        "readonly": props.readonly,
-        "disabled": props.disabled,
-        "has-error": hasError,
-        "has-success": hasValidated && !hasError
+        'required': props.required,
+        'readonly': props.readonly,
+        'disabled': props.disabled,
+        'has-error': hasError,
+        'has-success': hasValidated && !hasError
     }
 }
 
@@ -57,16 +57,16 @@ export function useInputTextFieldAttrs(
     const showPlaceHolder = !Helper.isEmpty(props.placeholder) && !props.readonly && !props.disabled;
 
     return {
-        "autocomplete": autocomplete,
-        "placeholder": showPlaceHolder ? props.placeholder : undefined,
-        "aria-disabled": props.disabled,
-        "aria-required": props.required,
-        "aria-readonly": props.readonly,
-        "aria-placeholder": showPlaceHolder ? props.placeholder : undefined,
+        'autocomplete': autocomplete,
+        'placeholder': showPlaceHolder ? props.placeholder : undefined,
+        'aria-disabled': props.disabled,
+        'aria-required': props.required,
+        'aria-readonly': props.readonly,
+        'aria-placeholder': showPlaceHolder ? props.placeholder : undefined,
     }
 }
 
-export function useCreateFieldIcon(
+function createFieldIcon(
     slots: Slots,
     slotName: string,
     cssClass: string,
@@ -102,23 +102,23 @@ export function useCreateFieldWrapper(
     nodeMountedHandler?: (node: VNode) => void,
     wrapperID?: string,
 ): VNode {
-    return h("div", {
+    return h('div', {
         id: wrapperID,
         class: cssClass.value,
         onVnodeMounted: nodeMountedHandler,
     }, [
         !props.floatingLabel && slots.default && slots.default({id: props.id}),
-        h("div", {
+        h('div', {
             class: `${cssPrefix}field-wrapper col`
         }, [
-            useCreateFieldIcon(
-                slots, "prependOuter",
+            createFieldIcon(
+                slots, 'prepend-outer',
                 `${cssPrefix}prepend-outer`,
                 props.prependIconOuter, iconSize,
             ),
             fieldElement,
-            useCreateFieldIcon(
-                slots, "appendOuter",
+            createFieldIcon(
+                slots, 'append-outer',
                 `${cssPrefix}append-outer`,
                 props.appendIconOuter, iconSize,
             ),
@@ -130,15 +130,15 @@ function createOutlineWrapper(
     props: Readonly<TInputFieldProps>,
 ): VNode {
     return props.outlined
-        ? h("div", {
+        ? h('div', {
             class: `${cssPrefix}field-outline-control`,
-            "aria-hidden": "true",
+            'aria-hidden': 'true',
         }, [
-            h("div", {class: `${cssPrefix}field-outline-start`}),
-            h("div", {class: `${cssPrefix}field-outline-label`}),
-            h("div", {class: `${cssPrefix}field-outline-end`}),
+            h('div', {class: `${cssPrefix}field-outline-start`}),
+            h('div', {class: `${cssPrefix}field-outline-label`}),
+            h('div', {class: `${cssPrefix}field-outline-end`}),
         ])
-        : createCommentVNode(" v-if-outlined ");
+        : createCommentVNode(' v-if-outlined ');
 }
 
 export function useCreateFieldInnerWrapper(
@@ -156,35 +156,35 @@ export function useCreateFieldInnerWrapper(
     onPrependIconClick?: EventListener,
 ): VNode {
     const children = [useRenderSlotWrapperWithCondition(
-        slots, "default",
+        slots, 'default',
         props.floatingLabel === true,
         {
             class: `${cssPrefix}field-label`
         },
-        "div", {id: props.id}
+        'div', {id: props.id}
     )].concat(
         Array.isArray(inputFieldNodes) ? inputFieldNodes : [inputFieldNodes]
     );
 
-    return h("div", {
+    return h('div', {
         class: `${cssPrefix}field-inner`,
         ...innerProps,
     }, [
-        h("div", {class: `${cssPrefix}field-overlay`}),
-        useCreateFieldIcon(
-            slots, "prependInner",
+        h('div', {class: `${cssPrefix}field-overlay`}),
+        createFieldIcon(
+            slots, 'prepend-inner',
             `${cssPrefix}prepend-inner`,
             prependIcon, iconSize,
             onPrependIconClick,
         ),
         prependActionNode,
-        h("div", {
+        h('div', {
             class: `${cssPrefix}field-activator`,
             ...activatorProps,
         }, children),
         appendActionNode,
-        useCreateFieldIcon(
-            slots, "appendInner",
+        createFieldIcon(
+            slots, 'append-inner',
             `${cssPrefix}append-inner`,
             appendIcon, iconSize,
             onAppendIconClick,
@@ -205,13 +205,13 @@ export function useCreateFieldActionIcon(
     passwordToggleHandler?: (value: boolean) => void,
 ): VNode {
     return useRenderTransition(
-        {name: "fade"},
+        {name: 'fade'},
         (showClearButton || showPasswordToggle || hasValidated || hasError)
-            ? h("div", {class: `${cssPrefix}action-icon`}, [
+            ? h('div', {class: `${cssPrefix}action-icon`}, [
                 (
                     showClearButton
                         ? h<TBsIcon>(BsIcon, {
-                            class: "icon-clear",
+                            class: 'icon-clear',
                             icon: `cancel_${iconVariant}` as Prop<string>,
                             size: iconSize as Prop<number | undefined>,
                             onClick: clearHandler
@@ -226,15 +226,15 @@ export function useCreateFieldActionIcon(
                             size: iconSize as Prop<number | undefined>,
                             // @ts-ignore
                             modelValue: passwordToggled?.value as Prop<boolean | undefined>,
-                            "onUpdate:model-value": passwordToggleHandler
+                            'onUpdate:model-value': passwordToggleHandler
                         })
                         : undefined
                 ),
                 (
                     (hasValidated && hasError)
                         ? h<TBsIcon>(BsIcon, {
-                            class: "icon-error text-danger",
-                            icon: (iconVariant === "outlined"
+                            class: 'icon-error text-danger',
+                            icon: (iconVariant === 'outlined'
                                 ? `error_outline_${iconVariant}`
                                 : `error_${iconVariant}`) as Prop<string>,
                             size: iconSize as Prop<number | undefined>,
@@ -242,7 +242,7 @@ export function useCreateFieldActionIcon(
                         : (
                             (hasValidated && !hasError)
                                 ? h<TBsIcon>(BsIcon, {
-                                    class: "icon-success text-success",
+                                    class: 'icon-success text-success',
                                     icon: `check_${iconVariant}` as Prop<string>,
                                     size: iconSize as Prop<number | undefined>,
                                 })
@@ -250,7 +250,7 @@ export function useCreateFieldActionIcon(
                         )
                 ),
             ])
-            : createCommentVNode(" v-if-action-icon ")
+            : createCommentVNode(' v-if-action-icon ')
     );
 }
 
@@ -277,12 +277,12 @@ export function useCreateTextFieldClasses(
         [`${cssPrefix}field-outlined`]: props.outlined && !props.filled,
         [`${cssPrefix}field-flat`]: props.flat && !props.filled && !props.outlined,
         [`${cssPrefix}floating-label`]: props.floatingLabel,
-        "append-icon": showAppendIcon,
-        "prepend-icon": props.prependIcon || slots.prependInner,
-        "active": !Helper.isEmpty(localValue.value) || !Helper.isEmpty(props.placeholder),
-        "focused": isFocused.value,
-        "readonly": props.readonly,
-        "disabled": props.disabled,
+        'append-icon': showAppendIcon,
+        'prepend-icon': props.prependIcon || slots.prependInner,
+        'active': !Helper.isEmpty(localValue.value) || !Helper.isEmpty(props.placeholder),
+        'focused': isFocused.value,
+        'readonly': props.readonly,
+        'disabled': props.disabled,
     }
 }
 
@@ -304,23 +304,23 @@ function createInputTextField(
     localValue: Ref<string | number | undefined | null>,
     isFocused: Ref<boolean>,
 ): VNode {
-    return withDirectives(h("input", {
+    return withDirectives(h('input', {
         ...useMakeInputBaseAttrs(props),
         ...useInputTextFieldAttrs(props, autocomplete),
-        "role": "textbox",
-        "type": type,
-        "list": props.datalist,
-        "maxlength": props.maxlength,
-        "minlength": props.minlength,
-        "onUpdate:modelValue": (value: string | number | undefined | null) =>
+        'role': 'textbox',
+        'type': type,
+        'list': props.datalist,
+        'maxlength': props.maxlength,
+        'minlength': props.minlength,
+        'onUpdate:modelValue': (value: string | number | undefined | null) =>
             useOnFieldValueUpdated(emit, localValue, value),
         onBlur: (e: Event) =>
             useOnFieldBlurred(emit, e, isFocused, (<boolean>props.disabled)),
         onFocus: (e: Event) =>
             useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
-        onKeydown: (e: KeyboardEvent) => emit("keydown", e),
+        onKeydown: (e: KeyboardEvent) => emit('keydown', e),
     }), [
-        [vModelText, localValue.value, "", {lazy: true}]
+        [vModelText, localValue.value, '', {lazy: true}]
     ]);
 }
 
@@ -348,7 +348,7 @@ export function useRenderTextField(
 
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
-        h("div", {
+        h('div', {
             class: controlCss.value,
         }, [
             useCreateFieldInnerWrapper(
@@ -393,33 +393,33 @@ function createInputTextArea(
 ): VNode {
     const canGrow = props.autoGrow && !props.noResize;
 
-    return withDirectives(h("textarea", {
+    return withDirectives(h('textarea', {
         ...useMakeInputBaseAttrs(props),
         ...useInputTextFieldAttrs(props, autocomplete),
-        "role": "textbox",
-        "rows": canGrow ? 2 : (props.rows && !props.rowHeight ? props.rows : undefined),
-        "style": rowHeight.value && {
+        'role': 'textbox',
+        'rows': canGrow ? 2 : (props.rows && !props.rowHeight ? props.rows : undefined),
+        'style': rowHeight.value && {
             height: Helper.cssUnit(rowHeight.value)
         },
-        "onUpdate:modelValue": (value: string | number | undefined | null) =>
+        'onUpdate:modelValue': (value: string | number | undefined | null) =>
             useOnFieldValueUpdated(emit, localValue, value),
         onBlur: (e: Event) =>
             useOnFieldBlurred(emit, e, isFocused, (<boolean>props.disabled)),
         onFocus: (e: Event) =>
             useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
-        onKeydown: (e: KeyboardEvent) => emit("keydown", e),
+        onKeydown: (e: KeyboardEvent) => emit('keydown', e),
         onInput: (e: InputEvent): void => {
             if (canGrow) {
                 const target = (<HTMLElement>e.target);
-                target.style.height = "auto";
+                target.style.height = 'auto';
                 nextTick().then(() => {
                     rowHeight.value = Helper.cssUnit(target.scrollHeight);
-                    target.style.height = Helper.cssUnit(target.scrollHeight) || "auto";
+                    target.style.height = Helper.cssUnit(target.scrollHeight) || 'auto';
                 });
             }
         }
     }), [
-        [vModelText, localValue.value, "", {lazy: true}]
+        [vModelText, localValue.value, '', {lazy: true}]
     ]);
 }
 
@@ -444,7 +444,7 @@ export function useRenderTextArea(
 
     return useCreateFieldWrapper(
         slots, iconSize, wrapperCss, props,
-        h("div", {
+        h('div', {
             class: controlCss.value,
         }, [
             useCreateFieldInnerWrapper(

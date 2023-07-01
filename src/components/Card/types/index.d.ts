@@ -7,6 +7,8 @@ import type {
     VNodeProps
 } from 'vue';
 
+export declare type TCardContentVariant = 'title' | 'subtitle' | 'text';
+
 export declare type TTagProps = {
     /**
      * Html tag used to render this component.
@@ -45,7 +47,7 @@ export declare type TCardContentOptionProps = TTagProps & {
     /**
      * Card content variations, valid values are: `title`, `subtitle`, `text`.
      */
-    type?: string;
+    type?: TCardContentVariant;
 }
 
 export declare type TCardMediaOptionProps = {

@@ -1,32 +1,32 @@
-import type {Prop, PropType} from "vue";
-import {booleanProp, booleanTrueProp, defaultColorProp, stringProp} from "../../../mixins/CommonProps";
-import {width as iconSize} from "../../Icon/mixins/iconProps";
-import {iconProps} from "../../Avatar/mixins/avatarProps";
-import {inputProps} from "../../Field/mixins/fieldProps";
-import type {TLabelPosition} from "../../../types";
+import type { Prop, PropType } from 'vue';
+import { booleanProp, booleanTrueProp, defaultColorProp, stringProp } from '../../../mixins/CommonProps';
+import type { TButtonMode, TButtonSize, TButtonType, TLabelPosition } from '../../../types';
+import { iconProps } from '../../Avatar/mixins/avatarProps';
+import { inputProps } from '../../Field/mixins/fieldProps';
+import { width as iconSize } from '../../Icon/mixins/iconProps';
 
 export const buttonMode = {
     type: String,
-    default: "default",
-    validator: (value: string): boolean => ["default", "icon", "floating"].includes(value)
-}
+    default: 'default',
+    validator: (value: string): boolean => ['default', 'icon', 'floating'].includes(value)
+} as Prop<TButtonMode>
 
 export const buttonSize = {
     type: String,
     default: undefined,
-    validator: (value: string): boolean => ["xs", "sm", "lg"].includes(value)
-}
+    validator: (value: string): boolean => ['xs', 'sm', 'lg'].includes(value)
+} as Prop<TButtonSize>
 
 export const buttonType = {
     type: String,
-    default: "button",
-    validator: (value: string): boolean => ["button", "submit", "reset", "div"].includes(value)
-}
+    default: 'button',
+    validator: (value: string): boolean => ['button', 'submit', 'reset', 'div'].includes(value)
+} as Prop<TButtonType>
 
 export const iconPosition = {
     type: String as PropType<TLabelPosition>,
-    default: "left",
-    validator: (value: string): boolean => ["left", "right"].includes(value)
+    default: 'left',
+    validator: (value: string): boolean => ['left', 'right'].includes(value)
 } as Prop<TLabelPosition>
 
 export const buttonInnerProps = {
@@ -36,7 +36,7 @@ export const buttonInnerProps = {
     rippleOff: booleanProp,
     tagName: {
         type: String,
-        default: "span",
+        default: 'span',
     }
 }
 

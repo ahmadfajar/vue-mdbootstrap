@@ -1,6 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent } from 'vue';
-import { cssPrefix, useSimpleRenderWithSlots } from '../../mixins/CommonApi';
+import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
 import type { TBsListTileContent, TListTileContentOptionProps, TRecord } from '../../types';
 import { baseTagProps } from '../Card/mixins/cardProps';
@@ -21,7 +21,7 @@ export default defineComponent<TBsListTileContent, TRecord, TRecord, ComputedOpt
         const cmpProps = props as Readonly<TListTileContentOptionProps>;
 
         return () =>
-            useSimpleRenderWithSlots(<string>props.tag, slots, {
+            useRenderSlotDefault(<string>props.tag, slots, {
                 [`${cssPrefix}list-tile-content`]: true,
                 [`${cssPrefix}multiline`]: cmpProps.multiLine === true,
             })

@@ -2,6 +2,30 @@
 
 > All notable changes to this project will be documented in this file.
 
+## v2.0.1
+
+Released: July xx, 2023
+
+### Features & Improvements
+
+- **BsButton**:
+  - Add slot `icon` for placing a custom button icon.
+- **BsChipGroup**:
+  - Add slot `icon` for placing a custom chip icon.
+  - Add slot `text` for placing a custom chip label.
+- **BsToggleButton**:
+  - Add slot `icon` for placing a custom button icon.
+  - Add slot `label` for placing a custom button label.
+- **BsToggleField**:
+  - Add slot `icon` for placing a custom button icon,
+  - Add slot `label` for placing a custom button label.
+
+### Bug Fixes
+
+- Fix custom slot-name doesn't work properly when used as web component using 
+  **UMD/ESM javascript** resource. All custom slot-name now using `kebab-case` naming convention.
+
+
 ## v2.0.0
 
 Released: June 30, 2023
@@ -14,10 +38,10 @@ Released: June 30, 2023
 - **BsAlert**: add property `filled`, `iconVariant`, and `variant`.
 - **BsAppbar**: add property `clippedRight`.
 - **BsAppContainer**: add property `viewportHeight`.
-- **BsButton**: add property `readonly`, add slot `icon` for placing a custom icon.
+- **BsButton**: add property `readonly`. 
 - **BsChip**: add property `iconVariant`, `pill`.
 - **BsChipField**: add property `actionIconVariant`, `validationIcon`, `chipPill`.
-- **BsChipGroup**: add property `sliderButton`, `sliderButtonColor`.
+- **BsChipGroup**: Add property `sliderButton`, `sliderButtonColor`.
 - **BsCombobox**: add property `minSearchChars`, `minSearchLength`, `listboxMaxHeight`, 
   `listboxMinWidth`, `listboxSearchLabel`, `checkboxColor`, `checkboxPosition`, `chipPill`.
 - **BsDatePicker**: add property `surfaceColor`, support mousewheel, touch and internationalization.
@@ -40,8 +64,8 @@ Released: June 30, 2023
 - **BsSwitch**: add property `insetMode`, `insetOutlined`, `checkoffIcon`, `checkedIcon`.
 - **BsTab**: add property `disabled`, `iconSpin`, `iconPulse`, `iconFlip`, `iconRotation`.
 - **BsTextField**: add property `actionIconVariant`, and `validationIcon`.
-- **BsToggleButton**: add property `pill`, and `rounded`.
-- **BsToggleField**: add property `pill`, `rounded`, `actionIconVariant`, and `validationIcon`
+- **BsToggleButton**: add property `pill`, `rounded`.
+- **BsToggleField**: add property `pill`, `rounded`, `actionIconVariant`, `validationIcon`
 - **BsToggleIcon**: add property `size`.
 - **BsTooltip**: add property `show`, `zIndex`.
 
@@ -54,9 +78,10 @@ Released: June 30, 2023
 - All `input` event is replaced with `update:modelValue` event, so it can be integrated with `v-model` directive.
   See [Vue 3 Migration Guide](https://v3-migration.vuejs.org/breaking-changes/v-model.html).
 - **BsAlert**: 
+  - Deprecated property `solid-fill`, use property `filled` instead. 
   - Replaced property `iconOutlined` with `iconVariant` for flexibility.
-  - Property `solid-fill` is deprecated, use property `filled` instead. 
   - Replaced property `value` with `modelValue`.
+  - Replaced slot `alertIcon` with `icon`.
 - **BsAvatar**: removed property `center`. 
 - **BsButton**: 
   - Removed property `block` 
@@ -70,21 +95,18 @@ Released: June 30, 2023
   - Replaced event `change` with `update:modelValue`.
 - **BsButtonToggleField**: 
   - Deprecated, use **BsToggleField** instead. 
+  - Deprecated property `externalValidator`, use property `validator` instead.
   - Replaced property `value` with `modelValue`.
   - Replaced event `change` with `update:modelValue`.
-  - Replaced slot `prependIcon` with `prependInner`.
-  - Replaced slot `prependIconOuter` with `prependOuter`.
-  - Replaced slot `appendIcon` with `appendInner`.
-  - Replaced slot `appendIconOuter` with `appendOuter`.
-  - Deprecated property `externalValidator`, use property `validator` instead.
+  - Replaced slot `helpText` with `help-text`.
 - **BsCard**: replaced property `flat` with `rounded`.
 - **BsCheckbox**: 
   - Replaced property `checked` with `modelValue`. 
   - Removed property `falseValue` and `trueValue`.
   - Replaced event `change` with `update:modelValue`.
 - **BsCheckboxGroup**: 
-  - Replaced property `columns` with `column`. 
   - Deprecated property `externalValidator`, use property `validator` instead.
+  - Replaced property `columns` with `column`. 
   - Replaced event `change` with `update:modelValue`.
 - **BsChip**: 
   - Replaced property `value` with `modelValue`. 
@@ -92,15 +114,16 @@ Released: June 30, 2023
   - Removed property `activeColor`, because it is redundant with property `activeClass`.
   - Removed property `faStyles` as of [FontAwesome](https://fontawesome.com/search?m=free&s=solid)
     is removed from package bundle. 
+  - Replaced slot `chipIcon` with `icon`.
 - **BsChipField**: 
-  - Removed property `chipLabeled`, used `chipPill` instead. 
+  - Removed event `change`, already covered by event `update:modelValue`.
   - Replaced property `value` with `modelValue`.
   - Replaced event `input` with `update:modelValue`.
   - Replaced slot `prependIcon` with `prependInner`.
   - Replaced slot `prependIconOuter` with `prependOuter`.
   - Replaced slot `appendIcon` with `appendInner`.
   - Replaced slot `appendIconOuter` with `appendOuter`.
-  - Removed event `change`, already covered by event `update:modelValue`.
+  - Removed property `chipLabeled`, used `chipPill` instead. 
   - Deprecated property `externalValidator`, use property `validator` instead.
 - **BsChipGroup**:
   - Removed property `sliderArrows`, used property `sliderButton` instead.

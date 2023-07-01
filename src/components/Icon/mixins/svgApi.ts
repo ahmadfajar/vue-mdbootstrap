@@ -32,7 +32,7 @@ export function findIcon(name: string | undefined): TIconData | undefined {
         return arr[1] === realName
     });
 
-    if (found !== undefined) {
+    if (found != undefined) {
         return {
             id: found[1],
             name: realName,

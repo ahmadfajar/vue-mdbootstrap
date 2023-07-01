@@ -1,20 +1,17 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
-import { computed, defineComponent, h, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
 import type { TBsToggleField, TRecord, TToggleFieldOptionProps } from '../../types';
-import Helper from '../../utils/Helper';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
-    useRenderFieldFeedback,
     useShowHelpText,
     useShowValidationError
 } from '../Field/mixins/validationApi';
 import { validationProps } from '../Field/mixins/validationProps';
-import BsToggleButton from './BsToggleButton';
+import { useRenderToggleFieldButton } from './mixins/buttonApi';
 import { toggleButtonProps } from './mixins/buttonProps';
-
 
 export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
     name: 'BsToggleField',
@@ -50,49 +47,9 @@ export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions
         );
 
         return () =>
-            h('div', {
-                class: wrapperClasses.value
-            }, [
-                slots.default && slots.default(),
-                h('div', {
-                    class: 'col-md',
-                }, [
-                    h('div', {
-                        class: [`${cssPrefix}field-inner`],
-                    }, [
-                        h(BsToggleButton, {
-                            id: props.id,
-                            name: props.name,
-                            disabled: props.disabled,
-                            readonly: props.readonly,
-                            required: props.required,
-                            items: props.items,
-                            multiple: props.multiple,
-                            modelValue: props.modelValue,
-                            flat: props.flat,
-                            outlined: props.outlined,
-                            raised: props.raised,
-                            rounded: props.rounded,
-                            pill: props.pill,
-                            size: props.size,
-                            color: props.color,
-                            toggleColor: props.toggleColor,
-                            iconPosition: props.iconPosition,
-                            onMouseenter: () => !Helper.isEmpty(props.helpText) && !props.persistentHelpText && (hasFocused.value = true),
-                            onMouseleave: () => !Helper.isEmpty(props.helpText) && !props.persistentHelpText && (hasFocused.value = false),
-                            'onUpdate:model-value': (value: string | number | boolean) => {
-                                emit('update:model-value', value);
-                            }
-                        }),
-                    ]),
-                    useRenderFieldFeedback(
-                        slots, thisProps,
-                        showHelpText.value,
-                        showValidationError.value,
-                        hasError.value,
-                        errorItems.value,
-                    ),
-                ]),
-            ])
+            useRenderToggleFieldButton(
+                slots, emit, props, wrapperClasses, hasFocused,
+                showHelpText, showValidationError, hasError, errorItems
+            );
     }
 });

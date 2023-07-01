@@ -1,5 +1,5 @@
-import type {TSizeOptionProps, TSizeProps} from "../types";
-import Helper from "../../../utils/Helper";
+import type { TRecord, TSizeOptionProps, TSizeProps } from '../../../types';
+import Helper from '../../../utils/Helper';
 
 export function useGetCalcSize(props: Readonly<TSizeOptionProps>): number {
     if (!props.size && !props.height && !props.width) {
@@ -29,7 +29,7 @@ export function useSizeWidth(props: Readonly<TSizeOptionProps>): string | number
     }
 }
 
-export function useSizeStyles(props: Readonly<TSizeOptionProps>): object {
+export function useSizeStyles(props: Readonly<TSizeOptionProps>): TRecord {
     const szHeight = useSizeHeight(props);
     const szWidth = useSizeWidth(props);
 

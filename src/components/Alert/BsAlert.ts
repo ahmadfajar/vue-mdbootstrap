@@ -1,6 +1,5 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
-import { computed, createCommentVNode, defineComponent, nextTick, ref, watch } from 'vue';
-import { useRenderTransition } from '../../mixins/CommonApi';
+import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 import type { TAlertOptionProps, TBsAlert, TRecord } from '../../types';
 import { useAlertClassNames, useAlertColorName, useAlertIconName, useRenderAlert } from './mixins/alertApi';
 import { alertProps } from './mixins/alertProps';
@@ -19,18 +18,18 @@ export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, Meth
         'update:model-value'
     ],
     setup(props, {emit, slots}) {
-        const cmpProps = props as Readonly<TAlertOptionProps>;
+        const thisProps = props as Readonly<TAlertOptionProps>;
         const dismiss = ref<boolean>(false);
         const colorName = computed<string | undefined>(
-            () => useAlertColorName(cmpProps)
+            () => useAlertColorName(thisProps)
         );
         const alertIconName = computed<string | undefined>(
-            () => useAlertIconName(cmpProps)
+            () => useAlertIconName(thisProps)
         );
         const classNames = computed<Record<string, boolean | undefined>>(
-            () => useAlertClassNames(cmpProps, colorName)
+            () => useAlertClassNames(thisProps, colorName)
         );
-        const show = computed(() => !dismiss.value && props.modelValue);
+        const show = computed(() => !dismiss.value && thisProps.modelValue);
         const dismissedAlert = () => {
             dismiss.value = true;
             emit('update:model-value', false);
@@ -38,23 +37,15 @@ export default defineComponent<TBsAlert, TRecord, TRecord, ComputedOptions, Meth
         }
 
         watch(
-            () => cmpProps.modelValue,
+            () => thisProps.modelValue,
             (value) => {
-                if (props.dismissible) {
+                if (thisProps.dismissible) {
                     dismiss.value = !(value === true);
                 }
             }
         );
 
         return () =>
-            useRenderTransition(
-                {name: cmpProps.transition},
-                show.value
-                    ? useRenderAlert(
-                        slots, cmpProps, classNames, colorName,
-                        alertIconName, dismissedAlert,
-                    )
-                    : createCommentVNode(' BsAlert ', true)
-            )
+            useRenderAlert(slots, thisProps, show, classNames, colorName, alertIconName, dismissedAlert);
     }
 });

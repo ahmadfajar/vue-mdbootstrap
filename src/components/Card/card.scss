@@ -1,9 +1,9 @@
-@import "/node_modules/compass-mixins/lib/compass/css3";
+@import "compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "/node_modules/bootstrap/scss/functions";
-@import "/node_modules/bootstrap/scss/variables";
-@import "/node_modules/bootstrap/scss/mixins/breakpoints";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
 
 .card {
     --#{$bs-prefix}card-border-radius: 0.75rem;
@@ -53,11 +53,11 @@
     }
 
     > .#{$prefix}card-media-overlay {
-        position: absolute;
+        background-color: rgba(0, 0, 0, .54);
         left: 0;
         right: 0;
         padding: $padding-base;
-        background-color: rgba(0, 0, 0, .54);
+        position: absolute;
 
         > .#{$prefix}card-media-title,
         > .#{$prefix}card-media-subtitle {

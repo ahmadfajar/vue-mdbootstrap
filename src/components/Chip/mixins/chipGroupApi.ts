@@ -1,18 +1,22 @@
-import type {Prop, Ref, Slots, VNode} from "vue";
-import {createCommentVNode, h} from "vue";
-import {cssPrefix} from "../../../mixins/CommonApi";
-import {BsButton} from "../../Button";
+import type { Prop, Ref, Slots, VNode } from 'vue';
+import { createCommentVNode, createTextVNode, h, renderSlot, toDisplayString } from 'vue';
+import { cssPrefix } from '../../../mixins/CommonApi';
 import type {
     TBsButton,
     TBsChip,
+    TBsIcon,
+    TButtonMode,
     TChipContainer,
     TChipGroupOptionProps,
     TChipOptionItem,
     TChipValue,
     TRecord
-} from "../../../types";
-import BsChip from "../BsChip";
-import Helper from "../../../utils/Helper";
+} from '../../../types';
+import Helper from '../../../utils/Helper';
+import { useCreateIconProps } from '../../Avatar/mixins/avatarApi';
+import { BsButton } from '../../Button';
+import { BsIcon } from '../../Icon';
+import BsChip from '../BsChip';
 
 export function useSetSliderSize(slider: TChipContainer): void {
     const contentEl = document.getElementById(slider.contentId);
@@ -27,7 +31,7 @@ export function useChipIsSelected(
     modelValue?: TChipValue | Array<TChipValue>,
 ): boolean {
     if (modelValue && Array.isArray(modelValue)) {
-        return modelValue.find(it => it.text === item.text) !== undefined
+        return modelValue.find(it => it.text === item.text) != undefined
     } else if (modelValue) {
         return (<TChipValue>modelValue).text === item.text
     }
@@ -40,7 +44,7 @@ function getNewOffset(
     direction: string,
     currentScrollOffset: number,
 ): number {
-    const newOffset = currentScrollOffset + (direction === "prev" ? -1 : 1) * slider.wrapperWidth;
+    const newOffset = currentScrollOffset + (direction === 'prev' ? -1 : 1) * slider.wrapperWidth;
 
     return Math.max(
         Math.min(newOffset, (slider.contentWidth - slider.wrapperWidth)), 0
@@ -63,15 +67,15 @@ function createSliderArrow(
     scrollOffset: Ref<number>,
     slider: TChipContainer,
 ): VNode {
-    return h("div", {
+    return h('div', {
         class: [`${cssPrefix}chip-slide-${direction}`]
     }, [
         h<TBsButton>(BsButton, {
-            mode: "icon" as Prop<string>,
+            mode: 'icon' as Prop<TButtonMode>,
             // @ts-ignore
             flat: true as Prop<boolean>,
             color: <Prop<string>>props.sliderButtonColor,
-            icon: <Prop<string>>(direction === "prev" ? "navigate_before" : "navigate_next"),
+            icon: <Prop<string>>(direction === 'prev' ? 'navigate_before' : 'navigate_next'),
             iconSize: 24 as Prop<number>,
             // @ts-ignore
             disabled: <Prop<boolean>>(!canScroll),
@@ -97,11 +101,11 @@ function createChipAttrs(
         imgPadding: props.imgPadding,
     }
 
-    delete attrs["value"];
-    delete attrs["text"];
+    delete attrs['value'];
+    delete attrs['text'];
 
     if (props.checkedIcon && selected) {
-        attrs["icon"] = "done";
+        attrs['icon'] = 'done';
     }
 
     return attrs;
@@ -115,28 +119,33 @@ function createChipElement(
     clickHandler: (item: TChipOptionItem) => void,
     closeHandler: (item: TChipOptionItem) => void,
 ): VNode {
-    const itemAttrs = createChipAttrs(props, item);
+    const chipProps = createChipAttrs(props, item);
 
-    if (Helper.isEmpty(<string>itemAttrs.icon) && slots.chipIcon) {
-        return h<TBsChip>(BsChip, {
-            key: `chip-${index}`,
-            ...itemAttrs,
-            onClick: () => clickHandler(item),
-            onClose: () => closeHandler(item),
-        }, {
-            chipIcon: () => slots.chipIcon && slots.chipIcon(item),
-            default: () => slots.chipText ? slots.chipText(item) : item.text,
-        });
-    } else {
-        return h<TBsChip>(BsChip, {
-            key: `chip-${index}`,
-            ...itemAttrs,
-            onClick: () => clickHandler(item),
-            onClose: () => closeHandler(item),
-        }, {
-            default: () => slots.chipText ? slots.chipText(item) : item.text
-        });
-    }
+    return h<TBsChip>(BsChip, {
+        key: `chip-${index}`,
+        ...chipProps,
+        onClick: () => clickHandler(item),
+        onClose: () => closeHandler(item),
+    }, {
+        icon: () => renderSlot(
+            slots, 'icon', item,
+            !Helper.isEmpty(chipProps.icon)
+                ? () => [
+                    h<TBsIcon>(BsIcon, {
+                        ...useCreateIconProps(chipProps),
+                        icon: <Prop<string>>(`${chipProps.icon}_${chipProps.iconVariant}`),
+                        size: <Prop<string | number>>(
+                            chipProps.size === 'sm' ? 18 : (chipProps.size === 'lg' ? 40 : 24)
+                        ),
+                    })
+                ]
+                : undefined
+        ),
+        default: () => renderSlot(
+            slots, 'text', item,
+            () => [createTextVNode(toDisplayString(item.text))]
+        ),
+    });
 }
 
 export function useRenderChipGroup(
@@ -150,22 +159,22 @@ export function useRenderChipGroup(
     clickHandler: (item: TChipOptionItem) => void,
     closeHandler: (item: TChipOptionItem) => void,
 ): VNode {
-    return h("div", {
+    return h('div', {
         class: [
             `${cssPrefix}chip-group`,
-            props.column ? `${cssPrefix}chip-group-column` : "",
+            props.column ? `${cssPrefix}chip-group-column` : '',
         ]
     }, [
         (showSliderButton
-                ? createSliderArrow("prev", hasPrev, props, scrollOffset, slider)
-                : createCommentVNode("v-if-chip-group-arrow")
+                ? createSliderArrow('prev', hasPrev, props, scrollOffset, slider)
+                : createCommentVNode(' v-if-chip-group-arrow ')
         ),
-        h("div", {
+        h('div', {
             id: slider.wrapperId,
             class: [`${cssPrefix}chip-group-slider`],
         }, [
             h(
-                "div", {
+                'div', {
                     id: slider.contentId,
                     class: [`${cssPrefix}chip-group-content`],
                 },
@@ -178,8 +187,8 @@ export function useRenderChipGroup(
             ),
         ]),
         (showSliderButton
-                ? createSliderArrow("next", hasNext, props, scrollOffset, slider)
-                : createCommentVNode("v-if-chip-group-arrow")
+                ? createSliderArrow('next', hasNext, props, scrollOffset, slider)
+                : createCommentVNode(' v-if-chip-group-arrow ')
         ),
     ]);
 }

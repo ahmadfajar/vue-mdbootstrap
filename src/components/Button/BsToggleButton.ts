@@ -82,7 +82,6 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                         makeInputEl(item, cmpProps),
                         h<TBsButtonInner>(BsButtonInner, {
                             rippleOff: <Prop<boolean>>rippleOff(item),
-                            // tagName: "div",
                         }, {
                             default: () => useRenderToggleItemContent(slots, item, cmpProps)
                         }),

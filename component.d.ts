@@ -90,6 +90,8 @@ declare module '@vue/runtime-core' {
         BsSpacer: TypesConfig extends Record<'BsSpacer', infer T> ? T : typeof BsSpacer
         BsSubheader: TypesConfig extends Record<'BsSubheader', infer T> ? T : typeof BsSubheader
         BsButton: TypesConfig extends Record<'BsButton', infer T> ? T : typeof BsButton
+        BsButtonToggle: TypesConfig extends Record<'BsButtonToggle', infer T> ? T : typeof BsToggleButton
+        BsButtonToggleField: TypesConfig extends Record<'BsButtonToggleField', infer T> ? T : typeof BsToggleField
         BsToggleButton: TypesConfig extends Record<'BsToggleButton', infer T> ? T : typeof BsToggleButton
         BsToggleField: TypesConfig extends Record<'BsToggleField', infer T> ? T : typeof BsToggleField
         BsCard: TypesConfig extends Record<'BsCard', infer T> ? T : typeof BsCard

@@ -175,7 +175,7 @@ export declare const BsChip: {
         $props: AllowedChipProps & TChipOptionProps;
         $slots: {
             default?: () => VNode[];
-            chipIcon?: () => VNode;
+            icon?: () => VNode;
         };
         $emit: [
             /**
@@ -198,8 +198,8 @@ export declare const BsChipGroup: {
     new(): {
         $props: AllowedChipGroupProps & TChipGroupOptionProps;
         $slots: {
-            chipText?: (item: TChipOptionItem) => VNode;
-            chipIcon?: (item: TChipOptionItem) => VNode;
+            text?: (props: TChipOptionItem) => VNode;
+            icon?: (props: TChipOptionItem) => VNode;
         };
         $emit: [
             /**

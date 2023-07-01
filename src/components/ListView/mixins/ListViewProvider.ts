@@ -81,7 +81,7 @@ class ListViewProvider implements IListViewProvider {
             } else if (recursive) {
                 const tmpObj = this.iterateChildren(predicate, it, recursive, true);
 
-                if (tmpObj !== undefined) {
+                if (tmpObj != undefined) {
                     result = tmpObj;
                     break;
                 }
@@ -109,7 +109,7 @@ class ListViewProvider implements IListViewProvider {
                 } else if (recursive) {
                     const tmpObj = this.iterateChildren(callbackFn, it, recursive, stopImmediately);
 
-                    if (tmpObj !== undefined) {
+                    if (tmpObj != undefined) {
                         result = tmpObj;
                         if (stopImmediately) {
                             return result;
@@ -133,7 +133,7 @@ class ListViewProvider implements IListViewProvider {
                 } else if (recursive) {
                     const retObj = this.iterateChildren(actionFn, it, recursive, stopImmediately);
 
-                    if (retObj !== undefined && stopImmediately) {
+                    if (retObj != undefined && stopImmediately) {
                         break;
                     }
                 }

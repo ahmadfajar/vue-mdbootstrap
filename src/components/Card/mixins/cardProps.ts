@@ -1,4 +1,6 @@
-import {booleanProp, booleanTrueProp, stringProp, stringRequiredProp, tagProp} from "../../../mixins/CommonProps";
+import type { Prop } from 'vue';
+import { booleanProp, booleanTrueProp, stringProp, stringRequiredProp, tagProp } from '../../../mixins/CommonProps';
+import type { TCardContentVariant } from '../types';
 
 export const baseTagProps = {
     /**
@@ -47,7 +49,7 @@ export const cardContentProps = {
         type: String,
         default: 'text',
         validator: (value: string): boolean => ['title', 'subtitle', 'text'].includes(value)
-    },
+    } as Prop<TCardContentVariant>,
 }
 
 export const cardMediaProps = {

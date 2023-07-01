@@ -1,7 +1,7 @@
 export {
     useMobileDevice, useBreakpointMax, useBreakpointMin, useAxiosPlugin,
     useHttpService, useVueMdbService, useVueMdbNotification, useCurrentRoute,
-    useMergeClass, useRenderSlot, useSimpleRenderWithSlots, useRenderSlotWithWrapper,
+    useMergeClass, useRenderSlot, useRenderSlotDefault, useRenderSlotWithWrapper,
     useRenderSlotWrapperWithCondition, useRenderTransition, useGenerateId
 } from './mixins/CommonApi';
 export * as StringHelper from './mixins/StringHelper';

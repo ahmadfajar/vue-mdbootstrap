@@ -70,7 +70,7 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
         const errorItems = computed(() => useGetErrorItems(thisProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, displayValue));
         const showAppendIcon = computed(() =>
-            (slots.appendInner !== undefined) || !Helper.isEmpty(calendarIcon.value) || showClearButton.value
+            (slots.appendInner != undefined) || !Helper.isEmpty(calendarIcon.value) || showClearButton.value
         );
         const fieldWrapperClasses = computed<TRecord>(() =>
             useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)

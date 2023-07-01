@@ -12,7 +12,7 @@ export function useCheckboxClasses(
 
     return {
         [`${cssPrefix}checkbox`]: true,
-        [`${cssPrefix}checkbox-${props.color}`]: props.color !== undefined,
+        [`${cssPrefix}checkbox-${props.color}`]: props.color != undefined,
         [`${cssPrefix}indeterminate`]: props.indeterminate && !checked,
         "checked": checked,
         "required": props.required,

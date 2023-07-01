@@ -9,21 +9,22 @@ export default defineComponent<TBsCard, TRecord, TRecord, ComputedOptions, Metho
     name: 'BsCard',
     props: cardProps,
     setup(props, {slots}) {
-        const cmpProps = props as Readonly<TCardOptionProps>;
+        const thisProps = props as Readonly<TCardOptionProps>;
+
         return () => h(
-            cmpProps.tag || 'div', {
+            thisProps.tag || 'div', {
                 class: {
                     'card': true,
-                    'rounded-0': cmpProps.rounded === false,
-                    [`${cssPrefix}shadow`]: props.shadow
+                    'rounded-0': thisProps.rounded === false,
+                    [`${cssPrefix}shadow`]: thisProps.shadow
                 }
             }, [
-                cmpProps.imgTopSrc
-                    ? useRenderCardImg(cmpProps.imgTopSrc, cmpProps.imgTopAlt, 'card-img-top')
+                thisProps.imgTopSrc
+                    ? useRenderCardImg(thisProps.imgTopSrc, thisProps.imgTopAlt, 'card-img-top')
                     : createCommentVNode(' v-if-imgTop '),
                 slots.default && slots.default(),
-                cmpProps.imgBottomSrc
-                    ? useRenderCardImg(cmpProps.imgBottomSrc, cmpProps.imgBottomAlt, 'card-img-bottom')
+                thisProps.imgBottomSrc
+                    ? useRenderCardImg(thisProps.imgBottomSrc, thisProps.imgBottomAlt, 'card-img-bottom')
                     : createCommentVNode(' v-if-imgBottom '),
             ]
         )

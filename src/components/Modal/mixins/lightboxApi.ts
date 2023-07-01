@@ -124,12 +124,12 @@ function createLightboxToolbar(
                 }, [
                     createButtonItem(
                         'download',
-                        (activeItem.value !== undefined && props.toolbar?.download === true),
+                        (activeItem.value != undefined && props.toolbar?.download === true),
                         () => emit('exec-download', activeItem.value)
                     ),
                     createButtonItem(
                         'zoom_in',
-                        (activeItem.value !== undefined && props.toolbar?.zoom === true),
+                        (activeItem.value != undefined && props.toolbar?.zoom === true),
                         () => {
                             if (zoom.value >= 1 && zoom.value < 4) {
                                 zoom.value += 1;
@@ -143,7 +143,7 @@ function createLightboxToolbar(
                     ),
                     createButtonItem(
                         'zoom_out',
-                        (activeItem.value !== undefined && props.toolbar?.zoom === true),
+                        (activeItem.value != undefined && props.toolbar?.zoom === true),
                         () => {
                             if (zoom.value > 1 && zoom.value < 4) {
                                 zoom.value -= 1;
@@ -157,7 +157,7 @@ function createLightboxToolbar(
                     ),
                     createButtonItem(
                         'rotate_left',
-                        (activeItem.value !== undefined && props.toolbar?.rotate === true),
+                        (activeItem.value != undefined && props.toolbar?.rotate === true),
                         () => {
                             if (rotate.value > -270 && rotate.value < 361) {
                                 rotate.value -= 90;
@@ -169,7 +169,7 @@ function createLightboxToolbar(
                     ),
                     createButtonItem(
                         'rotate_right',
-                        (activeItem.value !== undefined && props.toolbar?.rotate === true),
+                        (activeItem.value != undefined && props.toolbar?.rotate === true),
                         () => {
                             if (rotate.value > -361 && rotate.value < 270) {
                                 rotate.value += 90;
@@ -181,12 +181,12 @@ function createLightboxToolbar(
                     ),
                     createButtonItem(
                         'info_outlined',
-                        (activeItem.value !== undefined && props.toolbar?.info === true),
+                        (activeItem.value != undefined && props.toolbar?.info === true),
                         () => emit('exec-info', activeItem.value)
                     ),
                     createButtonItem(
                         'delete_outlined',
-                        (activeItem.value !== undefined && props.toolbar?.delete === true),
+                        (activeItem.value != undefined && props.toolbar?.delete === true),
                         () => emit('exec-delete', activeItem.value)
                     ),
                     (

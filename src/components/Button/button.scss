@@ -1,4 +1,4 @@
-@import "/node_modules/compass-mixins/lib/compass/css3";
+@import "compass-mixins/lib/compass/css3";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/button";
 @import "../../../scss/colors";
@@ -191,8 +191,8 @@
     --#{$bs-prefix}btn-inner-state-width: var(--#{$bs-prefix}btn-inner-width);
 
     @include transition($btn-transition);
-    @include border-radius(var(--#{$bs-prefix}btn-border-radius));
     @include flexbox((display: inline-flex, flex: 0 0 auto));
+    @include border-radius(var(--#{$bs-prefix}btn-border-radius));
     @include box-shadow(var(--#{$bs-prefix}btn-state-box-shadow));
 
     background-color: var(--#{$bs-prefix}btn-state-bg);

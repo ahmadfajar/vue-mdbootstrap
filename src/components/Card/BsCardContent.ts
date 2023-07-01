@@ -1,6 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent } from 'vue';
-import { useSimpleRenderWithSlots } from '../../mixins/CommonApi';
+import { useRenderSlotDefault } from '../../mixins/CommonApi';
 import type { TBsCardContent, TRecord } from '../../types';
 import { useContentTag } from './mixins/cardApi';
 import { cardContentProps } from './mixins/cardProps';
@@ -11,7 +11,7 @@ export default defineComponent<TBsCardContent, TRecord, TRecord, ComputedOptions
     setup(props, {slots}) {
         const tagName = computed((): string => useContentTag(<string>props.type, <string>props.tag));
 
-        return () => useSimpleRenderWithSlots(
+        return () => useRenderSlotDefault(
             tagName.value, slots,
             {[`card-${props.type}`]: tagName.value},
         );

@@ -1,5 +1,5 @@
-@import "/node_modules/compass-mixins/lib/compass/css3";
-@import "/node_modules/compass-mixins/lib/compass/typography";
+@import "compass-mixins/lib/compass/css3";
+@import "compass-mixins/lib/compass/typography";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
@@ -8,6 +8,8 @@
     --#{$prefix}appbar-bgcolor: #{$white};
     --#{$prefix}appbar-height: 64px;
     --#{$prefix}appbar-margin: #{$padding-sm ($padding-base - .25) $padding-sm $padding-base};
+    --#{$prefix}appbar-title-font-size: 1.5rem;
+    --#{$prefix}appbar-title-font-weight: #{$font-weight-normal};
 
     @include justify-content(flex-start);
     background-color: var(--#{$prefix}appbar-bgcolor);
@@ -20,8 +22,8 @@
 
         > .#{$prefix}appbar-title {
             @include ellipsis();
-            font-size: 1.5rem;
-            font-weight: $font-weight-normal;
+            font-size: var(--#{$prefix}appbar-title-font-size);
+            font-weight: var(--#{$prefix}appbar-title-font-weight);
             line-height: normal;
             margin: 0 $padding-base;
 

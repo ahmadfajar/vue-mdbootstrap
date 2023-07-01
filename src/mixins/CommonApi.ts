@@ -1,14 +1,16 @@
 import type { AxiosInstance } from 'axios';
 import type { ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
 import {
+    createBlock,
     createCommentVNode,
     createVNode,
-    Fragment,
     getCurrentInstance,
     h,
     normalizeClass,
+    renderSlot,
     resolveComponent,
-    Transition
+    Transition,
+    withCtx
 } from 'vue';
 import type { RouteLocationNormalizedLoaded } from 'vue-router';
 import type {
@@ -51,7 +53,7 @@ export function useBrowserIE(): boolean {
  * @returns `true` if mobile browser is used otherwise `false`.
  */
 export function useMobileDevice(): boolean {
-    return !isServer && navigator.userAgent.toLowerCase().match(/mobile/i) !== null;
+    return !isServer && navigator.userAgent.toLowerCase().match(/mobile/i) != null;
 }
 
 /**
@@ -59,9 +61,9 @@ export function useMobileDevice(): boolean {
  * If the custom slot doesn't exist or `undefined` then
  * render default `children`.
  *
- * @param slots    The given slot
+ * @param slots    The slot instance
  * @param name     The slot name
- * @param props    Fragment key identifier
+ * @param props    VNode property, include slot identifier
  * @param children The VNode children
  * @param slotArgs The argument for the given slot
  * @returns The Rendered node.
@@ -70,23 +72,40 @@ export function useRenderSlot(
     slots: Slots,
     name: string,
     props: Readonly<TRecord> = {},
-    children?: VNode | VNodeArrayChildren,
-    slotArgs?: unknown,
+    children?: VNodeArrayChildren | VNode,
+    slotArgs?: TRecord,
 ): VNode {
-    // const slotProps = {
-    //     ...slotArgs,
-    //     ...props,
-    // } as TRecord;
-    // const fallback = children
-    //     ? () => (Array.isArray(children) ? children : [children])
-    //     : undefined;
+    const slotProps = {
+        ...slotArgs,
+        ...props,
+    } as TRecord;
+    const fallback = children
+        ? () => (Array.isArray(children) ? children : [children])
+        : undefined;
 
-    // return renderSlot(slots, name, slotProps, fallback);
+    return renderSlot(slots, name, slotProps, fallback);
+}
 
-    // @ts-ignore
-    return h(Fragment, {key: props.key ?? `_${name}`},
-        slots[name]?.(slotArgs) ?? (children ? (Array.isArray(children) ? children : [children]) : []),
-    );
+/**
+ * Simple function to render an HTML tag as VNode and apply default slot to its child.
+ *
+ * @param tag      Valid HTML tag name
+ * @param slots    The slot instance
+ * @param classes  Custom css classes to apply
+ * @param styles   Custom inline stylesheet to apply
+ */
+export function useRenderSlotDefault(
+    tag: string,
+    slots?: Slots,
+    classes?: string | Array<string> | TRecord,
+    styles?: string | Array<string> | TRecord,
+): VNode {
+    return slots
+        ? h(
+            tag, {class: classes, style: styles},
+            renderSlot(slots, 'default'),
+        )
+        : h(tag, {class: classes, style: styles});
 }
 
 /**
@@ -95,7 +114,7 @@ export function useRenderSlot(
  * If the custom slot doesn't exist or `undefined` then
  * render default `children` inside the `wrapperTag`.
  *
- * @param slots        The given slot
+ * @param slots        The slot instance
  * @param name         The slot name
  * @param key          Fragment key identifier
  * @param wrapperProps The VNode wrapper properties
@@ -109,11 +128,11 @@ export function useRenderSlotWithWrapper(
     name: string,
     key: string,
     wrapperProps: Readonly<TRecord> = {},
-    children?: VNode | VNodeArrayChildren,
+    children?: VNodeArrayChildren | VNode,
     wrapperTag = 'div',
-    slotArgs?: unknown,
+    slotArgs?: TRecord,
 ): VNode {
-    if (slots[name] || children) {
+    if (slots[name] != null || children) {
         return h(wrapperTag, wrapperProps,
             useRenderSlot(slots, name, {key: key}, children, slotArgs)
         );
@@ -126,7 +145,7 @@ export function useRenderSlotWithWrapper(
  * Simple function to render a VNode with custom slot and wrap it
  * with the given `wrapTag` and properties only if the `condition` is match.
  *
- * @param slots      The given slot
+ * @param slots      The slot instance
  * @param name       The slot name
  * @param condition  The given condition
  * @param wrapProps  The VNode wrapper properties
@@ -140,34 +159,14 @@ export function useRenderSlotWrapperWithCondition(
     condition: boolean,
     wrapProps: Readonly<TRecord> = {},
     wrapTag?: string,
-    slotArgs?: unknown,
+    slotArgs?: TRecord,
 ): VNode | undefined {
     return condition
         ? h(
             wrapTag ?? 'div', wrapProps,
-            useRenderSlot(slots, name, undefined, undefined, slotArgs)
+            renderSlot(slots, name, slotArgs)
         )
         : undefined;
-}
-
-/**
- * Simple function to render an HTML tag as VNode and apply custom slot to them.
- *
- * @param tag      Valid HTML tag name
- * @param slots    The given slot
- * @param classes  Custom css classes to apply
- * @param styles   Custom inline stylesheet to apply
- */
-export function useSimpleRenderWithSlots(
-    tag: string,
-    slots?: Slots,
-    classes?: string | Array<string> | TRecord,
-    styles?: string | Array<string> | TRecord,
-): VNode {
-    return h(
-        tag, {class: classes, style: styles},
-        slots ? slots.default && slots.default() : undefined,
-    )
 }
 
 /**
@@ -175,15 +174,26 @@ export function useSimpleRenderWithSlots(
  *
  * @param props    The transition properties
  * @param children The child nodes
+ * @param asBlock  Render the Transition as block VNode.
+ *                 If `true`, `openBlock()` must be done before executing this method.
  * @returns The Rendered node.
  */
 export function useRenderTransition(
     props: Readonly<TransitionProps> = {},
-    children: VNode | VNodeArrayChildren,
+    children: VNodeArrayChildren | VNode,
+    asBlock?: boolean,
 ): VNode {
-    return h(Transition, props, {
-        default: () => children
-    });
+    if (asBlock) {
+        return createBlock(
+            Transition, props, {
+                default: withCtx(() => Array.isArray(children) ? children : [children])
+            }
+        );
+    } else {
+        return h(Transition, props, {
+            default: () => children
+        });
+    }
 }
 
 /**
@@ -195,7 +205,7 @@ export function useRenderTransition(
  */
 export function useRenderRouter(
     props: Readonly<TRouterLinkProps>,
-    children: VNode | VNodeArrayChildren,
+    children: VNodeArrayChildren | VNode,
 ): VNode {
     const routerLinkCmp = resolveComponent('RouterLink');
     return createVNode(routerLinkCmp, props, {

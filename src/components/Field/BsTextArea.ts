@@ -80,7 +80,7 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, M
         const errorItems = computed(() => useGetErrorItems(cmpProps));
         const showClearButton = computed<boolean>(() => useShowClearButton(cmpProps, localValue));
         const showAppendIcon = computed(() =>
-            (slots.appendInner !== undefined) || !Helper.isEmpty(cmpProps.appendIcon) || showClearButton.value
+            (slots.appendInner != undefined) || !Helper.isEmpty(cmpProps.appendIcon) || showClearButton.value
         );
         const wrapperClasses = computed<TRecord>(() =>
             useFieldWrapperClasses(cmpProps, hasValidated.value, hasError.value)

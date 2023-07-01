@@ -11,22 +11,22 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Met
     name: 'BsButton',
     props: buttonProps,
     setup(props, {slots}) {
-        const cmpProps = props as Readonly<TButtonOptionProps>;
+        const thisProps = props as Readonly<TButtonOptionProps>;
         const buttonType = computed<string | undefined>(() => {
             if (Helper.isEmpty(<string | undefined>props.href)) {
-                return ['icon', 'floating'].includes(<string>props.mode) ? 'div' : cmpProps.type;
+                return ['icon', 'floating'].includes(<string>thisProps.mode) ? 'div' : thisProps.type;
             }
 
             return undefined;
         });
         const hasIcon = computed<boolean>((): boolean => {
-            return (!Helper.isEmpty(props.icon) || (slots.icon !== undefined));
+            return (!Helper.isEmpty(props.icon) || (slots.icon != undefined));
         });
         const isDisabled = computed<boolean>(
-            () => (cmpProps.disabled === true) && Helper.isEmpty(<string | undefined>props.href)
+            () => (thisProps.disabled === true) && Helper.isEmpty(<string | undefined>props.href)
         );
         const rippleOff = computed<boolean>(
-            () => (cmpProps.rippleOff === true) || isDisabled.value || (cmpProps.readonly === true)
+            () => (thisProps.rippleOff === true) || isDisabled.value || (thisProps.readonly === true)
         );
         const tagName = computed<string>(
             () => (
@@ -40,19 +40,19 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Met
         return () => {
             return h(tagName.value, {
                 ...useMakeButtonProps(
-                    cmpProps, isDisabled.value, buttonType.value,
+                    thisProps, isDisabled.value, buttonType.value,
                 ),
             }, [
                 h<TBsButtonInner>(BsButtonInner, {
                     dropdownToggle: props.dropdownToggle,
                     // @ts-ignore
-                    iconMode: <Prop<boolean>>(cmpProps.mode === 'icon'),
+                    iconMode: <Prop<boolean>>(thisProps.mode === 'icon'),
                     // @ts-ignore
                     hasIcon: <Prop<boolean>>hasIcon.value,
                     // @ts-ignore
                     rippleOff: <Prop<boolean>>rippleOff.value,
                 }, {
-                    default: () => useRenderButtonContent(slots, cmpProps, iconId)
+                    default: () => useRenderButtonContent(slots, thisProps, iconId)
                 }),
             ]);
         }

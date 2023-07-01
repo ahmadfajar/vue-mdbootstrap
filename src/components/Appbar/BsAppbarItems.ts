@@ -1,10 +1,10 @@
 import {defineComponent} from "vue";
-import {cssPrefix, useSimpleRenderWithSlots} from "../../mixins/CommonApi";
+import {cssPrefix, useRenderSlotDefault} from "../../mixins/CommonApi";
 
 export default defineComponent({
     name: "BsAppbarItems",
     setup(props, {slots}) {
         return () =>
-            useSimpleRenderWithSlots("div", slots, `${cssPrefix}appbar-items`)
+            useRenderSlotDefault("div", slots, `${cssPrefix}appbar-items`)
     }
 });

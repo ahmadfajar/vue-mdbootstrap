@@ -134,6 +134,6 @@ export { EventListener } from '../mixins/types/DomHelper';
 export {
     useMobileDevice, useBreakpointMax, useBreakpointMin, useAxiosPlugin,
     useHttpService, useVueMdbService, useVueMdbNotification, useCurrentRoute,
-    useMergeClass, useRenderSlot, useSimpleRenderWithSlots, useRenderSlotWithWrapper,
+    useMergeClass, useRenderSlot, useRenderSlotDefault, useRenderSlotWithWrapper,
     useRenderSlotWrapperWithCondition, useRenderTransition, useGenerateId
 } from '../mixins/types/CommonApi';

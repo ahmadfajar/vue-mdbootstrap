@@ -89,7 +89,7 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
             () => cmpProps.type === 'password' && cmpProps.passwordToggle === true
         );
         const showAppendIcon = computed(() =>
-            (slots.appendInner !== undefined) || !Helper.isEmpty(cmpProps.appendIcon)
+            (slots.appendInner != undefined) || !Helper.isEmpty(cmpProps.appendIcon)
             || showClearButton.value || showPasswordToggle.value
         );
         const fieldWrapperClasses = computed<TRecord>(() =>

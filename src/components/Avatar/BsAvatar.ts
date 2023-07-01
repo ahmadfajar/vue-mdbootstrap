@@ -25,7 +25,7 @@ export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, Met
                     style: useSizeStyles(cmpProps),
                 }, useRenderSlot(
                     slots, 'default', {key: Helper.uuid()},
-                    (
+                    [
                         (cmpProps.imgSrc && cmpProps.imgSrc !== '')
                             ? useRenderAvatarImage(cmpProps)
                             : (
@@ -39,7 +39,7 @@ export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, Met
                                         cmpProps.text || '?',
                                     )
                             )
-                    )
+                    ]
                 )
             )
     }
