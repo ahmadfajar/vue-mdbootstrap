@@ -11,7 +11,7 @@ export default defineComponent<TBsBadge, TRecord, TRecord, ComputedOptions, Meth
         const cmpProps = props as Readonly<TBadgeOptionProps>;
 
         return () => useRenderSlotDefault(
-            cmpProps.tag ?? 'span',
+            cmpProps.tag || 'span',
             slots,
             [
                 'badge',

@@ -3,9 +3,9 @@ import { createCommentVNode, h, normalizeClass, toDisplayString } from 'vue';
 import { cssPrefix, useHasLink, useHasRouter, useMergeClass, useRenderRouter } from '../../../mixins/CommonApi';
 import type {
     IVNode,
-    TAvatarIconProps,
     TBsIcon,
     TBsTabItem,
+    TIconProps,
     TOrientation,
     TRecord,
     TRouterLinkProps,
@@ -24,7 +24,7 @@ export function useTabViewClassNames(
     props: Readonly<TTabsOptionProps>,
     orientation: ComputedRef<string>,
 ): Array<string> {
-    let cls = [
+    let cssClasses = [
         'nav',
         `nav-${props.variant}`,
         (props.alignment === 'justified' && orientation.value === 'horizontal')
@@ -44,12 +44,12 @@ export function useTabViewClassNames(
     ];
 
     if (Helper.isString(props.innerClass) && !Helper.isEmpty(props.innerClass)) {
-        cls.push(props.innerClass);
+        cssClasses.push(props.innerClass);
     } else if (!Helper.isEmpty(props.innerClass)) {
-        cls = cls.concat(<string | string[]>props.innerClass);
+        cssClasses = cssClasses.concat(<string | string[]>props.innerClass);
     }
 
-    return cls;
+    return cssClasses;
 }
 
 export function useTabItemClassNames(
@@ -63,8 +63,10 @@ export function useTabItemClassNames(
         'text-center': tagName.value !== 'li',
         'flex-fill': tabs?.alignment === 'justified',
         'disabled': props.disabled === true,
-        [<string>props.activeClass]: props.activeClass && (props.active === true) &&
-        tagName.value !== 'li' && !useHasRouter(props),
+        [<string>props.activeClass]: (
+            props.activeClass && (props.active === true) &&
+            tagName.value !== 'li' && !useHasRouter(props)
+        ),
     }
 }
 
@@ -79,16 +81,16 @@ export function useItemLinkClassNames(
         'flex-fill': tabs?.alignment === 'justified',
         [<string>props.activeClass]: props.activeClass && (props.active === true), // && !useHasRouter(props),
     }
-    if (tabs && !Helper.isEmpty(tabs?.tabClass)) {
-        classes[normalizeClass(tabs.tabClass)] = tabs?.tabClass && !props.active; // && !useHasRouter(props);
+    if (!Helper.isEmpty(tabs?.tabClass)) {
+        classes[normalizeClass(tabs?.tabClass)] = tabs?.tabClass && !props.active; // && !useHasRouter(props);
     }
 
     return classes;
 }
 
-export function useRenderIconWithCondition(
+function renderTabIconWithCondition(
     condition: boolean,
-    props: Readonly<TAvatarIconProps>,
+    props: Readonly<TIconProps>,
     iconSize?: string | number,
     unMatchCondition?: VNode,
 ): VNode {
@@ -98,7 +100,7 @@ export function useRenderIconWithCondition(
             ...useCreateIconProps(props)
         });
     } else {
-        return unMatchCondition ? unMatchCondition : createCommentVNode(' BsIcon ', true)
+        return unMatchCondition ?? createCommentVNode(' BsIcon ', true)
     }
 }
 
@@ -140,7 +142,7 @@ function tabItemOnClick(
     }
 }
 
-function createItemLink(
+function createTabItemLink(
     props: Readonly<TTabItemOptionProps>,
     itemClasses: ComputedRef<TRecord>,
     tabIndex: Ref<number | undefined>,
@@ -169,7 +171,7 @@ function createItemLink(
     ]);
 }
 
-function createItemRouter(
+function createTabItemRouter(
     props: Readonly<TTabItemOptionProps>,
     itemClasses: ComputedRef<TRecord>,
     tabIndex: Ref<number | undefined>,
@@ -219,13 +221,13 @@ export function useRenderTabItem(
             },
         }, [
             useHasRouter(props)
-                ? createItemRouter(props, itemLinkClasses, tabIndex, provider)
-                : createItemLink(props, itemLinkClasses, tabIndex, provider)
+                ? createTabItemRouter(props, itemLinkClasses, tabIndex, provider)
+                : createTabItemLink(props, itemLinkClasses, tabIndex, provider)
         ]);
     } else if (useHasRouter(props)) {
-        return createItemRouter(props, tabItemClasses, tabIndex, provider, true);
+        return createTabItemRouter(props, tabItemClasses, tabIndex, provider, true);
     } else {
-        return createItemLink(props, tabItemClasses, tabIndex, provider, true);
+        return createTabItemLink(props, tabItemClasses, tabIndex, provider, true);
     }
 }
 
@@ -234,7 +236,7 @@ export function useRenderTabLabel(
     orientation: ComputedRef<TOrientation>,
 ): Array<VNode> {
     return [
-        useRenderIconWithCondition(
+        renderTabIconWithCondition(
             (!Helper.isEmpty(props.icon) && ['left', 'top'].includes(<string>props.iconPosition)),
             props, props.iconSize
         ),
@@ -252,7 +254,7 @@ export function useRenderTabLabel(
                 }
             }, toDisplayString(props.label))
             : createCommentVNode(' BsTabLabel ', true),
-        useRenderIconWithCondition(
+        renderTabIconWithCondition(
             (!Helper.isEmpty(props.icon) && ['right', 'bottom'].includes(<string>props.iconPosition)),
             props, props.iconSize
         ),

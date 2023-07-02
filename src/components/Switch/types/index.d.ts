@@ -9,7 +9,7 @@ import type {
 import type { EventUpdateModelValueProps, TLabelPosition, TRadioOptionProps } from '../../../types';
 
 export declare type TSwitchOptionProps = TRadioOptionProps & {
-    labelPosition?: TLabelPosition | string;
+    labelPosition?: TLabelPosition;
     labelClass?: string | string[];
     insetMode?: boolean;
     insetOutlined?: boolean;

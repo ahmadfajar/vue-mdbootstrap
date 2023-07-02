@@ -58,12 +58,18 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Me
         const thisProps = props as Readonly<TTooltipOptionProps>;
         const tooltip = ref<Element | null>(null);
         const active = ref<boolean>(false);
-        const isActive = computed(() => active.value || thisProps.show);
+        const isActive = computed(
+            () => active.value || thisProps.show
+        );
         const setPosition = () => {
             nextTick().then(() => useSetTooltipPosition(tooltip, instance, thisProps.placement, isActive.value));
         }
-        const transitionName = computed(() => `${cssPrefix}tooltip-${thisProps.placement}`);
-        const classNames = computed(() => [`${cssPrefix}tooltip`, transitionName.value]);
+        const transitionName = computed(
+            () => `${cssPrefix}tooltip-${thisProps.placement}`
+        );
+        const classNames = computed(
+            () => [`${cssPrefix}tooltip`, transitionName.value]
+        );
         const styles = computed(() => ({
             'width': thisProps.width === 'auto' ? undefined : Helper.cssUnit(thisProps.width),
             'max-width': Helper.cssUnit(thisProps.maxWidth),
@@ -98,9 +104,14 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Me
                                     role: 'tooltip'
                                 }, [
                                     h('div', {class: 'tooltip-arrow'}),
-                                    h('div', {class: `${cssPrefix}tooltip-inner`}, toDisplayString(thisProps.content)),
+                                    h('div', {
+                                            class: `${cssPrefix}tooltip-inner`
+                                        },
+                                        toDisplayString(thisProps.content)
+                                    ),
                                 ]), [
-                                    [Resize, setPosition], [Scroll, setPosition]
+                                    [Resize, setPosition],
+                                    [Scroll, setPosition],
                                 ]
                             ) : createCommentVNode(' BsTooltip ', true),
                     ])

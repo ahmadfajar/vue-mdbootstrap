@@ -3,7 +3,7 @@ import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode, VNodeArray
 import { h, toDisplayString } from 'vue';
 import { cssPrefix, useGenerateId, useRenderSlot, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
 import type {
-    TAvatarIconProps,
+    TIconProps,
     TBsIcon,
     TBsToggleField,
     TButtonMode,
@@ -111,7 +111,7 @@ function renderIconOrSlot(
     slots: Slots,
     name: string,
     btnMode: TButtonMode | undefined,
-    props: Readonly<TAvatarIconProps>,
+    props: Readonly<TIconProps>,
     iconId: string,
     iconPosition: string,
     iconSize?: number | string,
@@ -281,7 +281,7 @@ export function useRenderToggleFieldButton(
                             slots, 'icon',
                             'default',
                             item,
-                            `bs-icon-${item.id ?? item.label}`,
+                            `bs-icon-${item.id || item.label}`,
                             <string>thisProps.iconPosition,
                             item.iconSize,
                             item,

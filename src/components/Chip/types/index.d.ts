@@ -6,7 +6,7 @@ import type {
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventClosableProps, EventUpdateModelValueProps, TAvatarIconProps } from '../../../types';
+import type { EventClosableProps, EventUpdateModelValueProps, TIconProps } from '../../../types';
 
 export declare type TChipValue = {
     id: string;
@@ -21,7 +21,7 @@ export declare type TChipContainer = {
     wrapperWidth: number;
 }
 
-export declare type TChipOptionItem = TAvatarIconProps & {
+export declare type TChipOptionItem = TIconProps & {
     id?: string;
     disabled?: boolean;
     dismissible?: boolean;
@@ -32,7 +32,7 @@ export declare type TChipOptionItem = TAvatarIconProps & {
     value?: string | number | boolean;
 }
 
-export declare type TChipOptionProps = TAvatarIconProps & {
+export declare type TChipOptionProps = TIconProps & {
     /**
      * Sets this component state: `active` or `normal`.
      */

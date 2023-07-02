@@ -8,7 +8,7 @@ import type {
     VNode,
     VNodeProps
 } from 'vue';
-import type { ObjectBase, TAvatarIconProps, TImageOptionProps, TRouterOptionProps, TTagProps } from '../../../types';
+import type { ObjectBase, TIconProps, TImageProps, TRouterOptionProps, TTagProps } from '../../../types';
 
 export declare type TSpaceAround = 'left' | 'right' | 'both';
 
@@ -60,7 +60,7 @@ export declare type TListNavOptionProps = {
     child?: boolean;
 }
 
-export declare type TListNavItemOptionProps = TAvatarIconProps & TRouterOptionProps & {
+export declare type TListNavItemOptionProps = TIconProps & TRouterOptionProps & {
     /**
      * Sets this component `ID` attribute. This property value is auto generates.
      */
@@ -180,7 +180,7 @@ export declare type TListTileContentOptionProps = TTagProps & {
     multiLine?: boolean;
 }
 
-export declare type TListTileLeadingOptionProps = TAvatarIconProps & TImageOptionProps & {
+export declare type TListTileLeadingOptionProps = TIconProps & TImageProps & {
     /**
      * Center item inside it vertically.
      */

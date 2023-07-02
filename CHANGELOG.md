@@ -13,11 +13,8 @@ Released: July xx, 2023
 - **BsChipGroup**:
   - Add slot `icon` for placing a custom chip icon.
   - Add slot `text` for placing a custom chip label.
-- **BsToggleButton**:
+- **BsToggleButton**, **BsToggleField**:
   - Add slot `icon` for placing a custom button icon.
-  - Add slot `label` for placing a custom button label.
-- **BsToggleField**:
-  - Add slot `icon` for placing a custom button icon,
   - Add slot `label` for placing a custom button label.
 - **BsCombobox**, **BsListbox**:
   - Add slot `empty-data-msg` for placing custom message.
@@ -111,6 +108,7 @@ Released: June 30, 2023
   - Deprecated property `externalValidator`, use property `validator` instead.
   - Replaced event `change` with `update:modelValue`.
   - Rename property `columns` with `column`. 
+  - Replaced slot `helpText` with `help-text`.
 - **BsChip**: 
   - Replaced property `value` with `modelValue`. 
   - Removed `label` property to meet the MD3 design specification. 
@@ -221,6 +219,7 @@ Released: June 30, 2023
   - Replaced property `columns` with `column`.
   - Deprecated property `externalValidator`, use property `validator` instead.
   - Replace event `change` with `update:modelValue`.
+  - Replaced slot `helpText` with `help-text`.
 - **BsRipple**: 
   - Removed property `eventTrigger`.
 - **BsSearchField**:

@@ -8,7 +8,7 @@ import type {
 } from 'vue';
 import type { TFlipMode, TSizeOptionProps, TSizeProps } from '../../../types';
 
-export declare type TImageOptionProps = {
+export declare type TImageProps = {
     /**
      * Create this component with circle shape.
      */
@@ -27,22 +27,7 @@ export declare type TImageOptionProps = {
     size?: string | number | TSizeProps;
 }
 
-export declare type TAvatarImageOptionProps = TSizeOptionProps & {
-    /**
-     * Create this component with circle shape.
-     */
-    circle?: boolean,
-    /**
-     * Create this component with rounded shape.
-     */
-    rounded?: boolean;
-    /**
-     * The image location to place inside this component.
-     */
-    imgSrc?: string;
-}
-
-export declare type TAvatarIconProps = {
+export declare type TIconProps = {
     /**
      * Shortcut to insert component `BsIcon` inside this component.
      * Use any valid Google Material icon name, see
@@ -68,7 +53,22 @@ export declare type TAvatarIconProps = {
     iconRotation?: string | number;
 }
 
-export declare type TAvatarOptionProps = TAvatarImageOptionProps & TAvatarIconProps & {
+export declare type TAvatarImageOptionProps = TSizeOptionProps & {
+    /**
+     * Create this component with circle shape.
+     */
+    circle?: boolean,
+    /**
+     * Create this component with rounded shape.
+     */
+    rounded?: boolean;
+    /**
+     * The image location to place inside this component.
+     */
+    imgSrc?: string;
+}
+
+export declare type TAvatarOptionProps = TAvatarImageOptionProps & TIconProps & {
     text?: string;
 }
 

@@ -136,7 +136,7 @@ export declare const BsRadioGroup: {
         $props: AllowedRadioGroupProps & TRadioGroupOptionProps;
         $slots: {
             default?: () => VNode[];
-            helpText?: () => VNode;
+            'help-text'?: () => VNode;
         };
         $emit: [
             /**

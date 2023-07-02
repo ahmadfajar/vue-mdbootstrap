@@ -291,7 +291,7 @@ export default class BsModel implements IBsModel {
 
         const config: AxiosRequestConfig = {};
         const url = this.restUrl.fetch ?? '';
-        const identifier = id ?? this.get(this.idProperty);
+        const identifier = id || this.get(this.idProperty);
 
         this._updateRequestConfig(config, <never>identifier, url, 'fetch');
 

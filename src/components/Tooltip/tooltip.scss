@@ -1,10 +1,10 @@
 @use "sass:math";
-@import "/node_modules/compass-mixins/lib/compass/css3";
+@import "compass-mixins/lib/compass/css3";
 @import "../../../scss/mixins/transition";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
-@import "/node_modules/bootstrap/scss/functions";
-@import "/node_modules/bootstrap/scss/variables";
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
 
 .#{$prefix}tooltip {
     --#{$prefix}tooltip-arrow-width: #{$tooltip-arrow-width};
@@ -119,21 +119,21 @@
 }
 
 @include enterFrom-leaveActive(#{$prefix}tooltip-top) {
-    @include opacity(0);
+    opacity: 0;
     transform: translate3d(0, 15px, 0);
 }
 
 @include enterFrom-leaveActive(#{$prefix}tooltip-bottom) {
-    @include opacity(0);
+    opacity: 0;
     transform: translate3d(0, -15px, 0);
 }
 
 @include enterFrom-leaveActive(#{$prefix}tooltip-left) {
-    @include opacity(0);
+    opacity: 0;
     transform: translate3d(24px, 0, 0);
 }
 
 @include enterFrom-leaveActive(#{$prefix}tooltip-right) {
-    @include opacity(0);
+    opacity: 0;
     transform: translate3d(-24px, 0, 0);
 }

@@ -163,7 +163,7 @@ export function useRenderSlotWrapperWithCondition(
 ): VNode | undefined {
     return condition
         ? h(
-            wrapTag ?? 'div', wrapProps,
+            wrapTag || 'div', wrapProps,
             renderSlot(slots, name, slotArgs)
         )
         : undefined;

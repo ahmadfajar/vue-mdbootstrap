@@ -1,17 +1,17 @@
-import type {PropType} from "vue";
-import {inputProps} from "../../Field/mixins/fieldProps";
-import {booleanProp, defaultColorProp, stringOrArrayProp} from "../../../mixins/CommonProps";
-import type {TLabelPosition} from "../../../types";
+import type { Prop } from 'vue';
+import { booleanProp, defaultColorProp, stringOrArrayProp } from '../../../mixins/CommonProps';
+import type { TLabelPosition } from '../../../types';
+import { inputProps } from '../../Field/mixins/fieldProps';
 
 export const switchProps = {
     ...inputProps,
     color: defaultColorProp,
     labelClass: stringOrArrayProp,
     labelPosition: {
-        type: String as PropType<TLabelPosition>,
+        type: String,
         default: "right",
         validator: (value: string) => ["left", "right"].includes(value),
-    },
+    } as Prop<TLabelPosition>,
     insetMode: booleanProp,
     insetOutlined: booleanProp,
     checkoffIcon: booleanProp,

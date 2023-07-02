@@ -1,4 +1,4 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, PropType } from 'vue';
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
 import { computed, defineComponent, h, toDisplayString } from 'vue';
 import { booleanProp, stringProp, validStringOrNumberProp } from '../../mixins/CommonProps';
 import type { TBsRipple, TBsTabLabel, TOrientation, TPositionType, TRecord, TTabLabelOptionProps } from '../../types';
@@ -12,41 +12,50 @@ export default defineComponent<TBsTabLabel, TRecord, TRecord, ComputedOptions, M
     props: {
         ...iconProps,
         iconPosition: {
-            type: String as PropType<TPositionType>,
+            type: String,
             default: 'left',
             validator: (value: string): boolean => ['left', 'right', 'top', 'bottom'].includes(value),
-        },
+        } as Prop<TPositionType>,
         iconSize: validStringOrNumberProp,
         label: stringProp,
         tabPosition: {
-            type: String as PropType<TPositionType>,
+            type: String,
             default: 'top',
             validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value)
-        },
+        } as Prop<TPositionType>,
         rippleOff: booleanProp,
     },
     setup(props) {
-        const cmpProps = props as Readonly<TTabLabelOptionProps>;
+        const thisProps = props as Readonly<TTabLabelOptionProps>;
         const orientation = computed<TOrientation>(
-            () => ['left', 'right'].includes(<string>cmpProps.tabPosition) ? 'vertical' : 'horizontal'
+            () => ['left', 'right'].includes(<string>thisProps.tabPosition) ? 'vertical' : 'horizontal'
         );
 
         return () =>
             h<TBsRipple>(BsRipple, {
                 class: [
                     'd-flex', 'align-items-center', 'justify-content-center',
-                    ['top', 'bottom'].includes(<string>cmpProps.iconPosition) ? 'flex-column' : '',
+                    ['top', 'bottom'].includes(<string>thisProps.iconPosition) ? 'flex-column' : '',
                 ],
                 disabled: props.rippleOff,
             }, {
                 default: () =>
-                    (!Helper.isEmpty(cmpProps.icon) && ['left', 'right'].includes(<string>cmpProps.iconPosition))
+                    (
+                        !Helper.isEmpty(thisProps.icon) &&
+                        ['left', 'right'].includes(<string>thisProps.iconPosition)
+                    )
                         ? h('div', {
-                            class: ['text-nowrap', 'd-flex', orientation.value === 'vertical' ? 'flex-fill' : ''],
-                        }, useRenderTabLabel(cmpProps, orientation))
+                            class: [
+                                'text-nowrap', 'd-flex',
+                                orientation.value === 'vertical' ? 'flex-fill' : ''
+                            ],
+                        }, useRenderTabLabel(thisProps, orientation))
                         : (
-                            (!Helper.isEmpty(cmpProps.icon) && ['top', 'bottom'].includes(<string>cmpProps.iconPosition))
-                                ? useRenderTabLabel(cmpProps, orientation)
+                            (
+                                !Helper.isEmpty(thisProps.icon) &&
+                                ['top', 'bottom'].includes(<string>thisProps.iconPosition)
+                            )
+                                ? useRenderTabLabel(thisProps, orientation)
                                 : h('span', toDisplayString(props.label))
                         )
             })

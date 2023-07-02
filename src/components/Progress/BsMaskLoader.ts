@@ -23,7 +23,7 @@ export default defineComponent<TBsMaskLoader, TRecord, TRecord, ComputedOptions,
     setup(props) {
         const thisProps = props as Readonly<TMaskLoaderOptionProps>;
         const loaderVariant = computed<TMaskLoaderVariant>(
-            () => <TMaskLoaderVariant>(thisProps.spinnerType ?? thisProps.variant)
+            () => <TMaskLoaderVariant>(thisProps.spinnerType || thisProps.variant)
         );
 
         return () =>

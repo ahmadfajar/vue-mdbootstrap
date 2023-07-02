@@ -7,7 +7,7 @@ import type {
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventUpdateModelValueProps, TAvatarIconProps, TPositionType, TRouterOptionProps } from '../../../types';
+import type { EventUpdateModelValueProps, TIconProps, TPositionType, TRouterOptionProps } from '../../../types';
 
 export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 
@@ -37,7 +37,7 @@ export declare type TTabsBaseProps = {
      */
     iconSize?: string | number;
     /**
-     * TabItem css class name.
+     * Optional TabItem css classes.
      */
     tabClass?: string | Array<string>;
     /**
@@ -73,7 +73,7 @@ export declare type TTabsOptionProps = TTabsBaseProps & {
     modelValue?: string | number;
 }
 
-export declare type TTabPanelOptionProps = TRouterOptionProps & TAvatarIconProps & {
+export declare type TTabPanelOptionProps = TRouterOptionProps & TIconProps & {
     id?: string;
     ariaLabel?: string;
     disabled?: boolean;
@@ -84,7 +84,7 @@ export declare type TTabItemOptionProps = TTabPanelOptionProps & {
     active?: boolean;
 }
 
-export declare type TTabLabelOptionProps = TAvatarIconProps & {
+export declare type TTabLabelOptionProps = TIconProps & {
     tabPosition?: TPositionType;
     iconPosition?: TPositionType;
     iconSize?: string | number;
@@ -102,7 +102,12 @@ export declare type TBsTabLabel = ComponentObjectPropsOptions<TTabLabelOptionPro
 
 declare type AllowedTabsProps = AllowedComponentProps & ComponentCustomProps &
     VNodeProps & EventUpdateModelValueProps<number> & {
-    onChange?: (newTab: ComponentInternalInstance, oldTab?: ComponentInternalInstance) => void;
+    onChange?: (
+        newTab: ComponentInternalInstance,
+        oldTab?: ComponentInternalInstance,
+        newIndex: number,
+        oldIndex?: number,
+    ) => void;
 };
 
 export declare const BsTab: {

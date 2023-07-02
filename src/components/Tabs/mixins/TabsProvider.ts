@@ -1,5 +1,5 @@
-import type {ComponentInternalInstance, Ref} from "vue";
-import {isRef} from "vue";
+import type { ComponentInternalInstance, Ref } from 'vue';
+import { isRef } from 'vue';
 import type {
     TAlignment,
     TEmitFn,
@@ -8,14 +8,14 @@ import type {
     TTabItemOptionProps,
     TTabsBaseProps,
     TTabsVariant
-} from "../../../types";
-import Helper from "../../../utils/Helper";
+} from '../../../types';
+import Helper from '../../../utils/Helper';
 
 /**
  * Class TabsProvider which is used for BsTab's component dependency injection.
  *
  * @author Ahmad Fajar
- * @since  22/11/2022, modified: 30/11/2022 14:43
+ * @since  22/11/2022, modified: 03/07/2023 00:04
  */
 class TabsProvider {
     private _tabItems: ComponentInternalInstance[];
@@ -135,7 +135,7 @@ class TabsProvider {
      * @returns {void}
      */
     setActiveTab(key: string | number | null | undefined): void {
-        if (key === null || key === undefined) {
+        if (key == null) {
             this._activeTab = undefined;
             this._activeTabIndex = undefined;
             return;
@@ -173,10 +173,10 @@ class TabsProvider {
     }
 
     private triggerEvent(tab: ComponentInternalInstance, index: number) {
-        this._emit("change", tab, this.activeTab);
+        this._emit('change', tab, this.activeTab, index, this.activeTabIndex);
         this._activeTab = tab;
         this._activeTabIndex = index;
-        this._emit("update:model-value", index);
+        this._emit('update:model-value', index);
     }
 }
 

@@ -8,7 +8,7 @@ import type {
 } from 'vue';
 import type {
     EventUpdateModelValueProps,
-    TAvatarIconProps,
+    TIconProps,
     TInputBaseProps,
     TLabelPosition,
     TValidationProps
@@ -63,7 +63,7 @@ export declare type TBaseButtonProps = {
     size?: TButtonSize;
 }
 
-export declare type TButtonOptionProps = TAvatarIconProps & TBaseButtonProps & {
+export declare type TButtonOptionProps = TIconProps & TBaseButtonProps & {
     /**
      * Sets this button state: `active` or `normal`.
      */
@@ -110,7 +110,7 @@ export declare type TButtonOptionProps = TAvatarIconProps & TBaseButtonProps & {
     type?: TButtonType;
 }
 
-export declare type TInputOptionItem = TAvatarIconProps & {
+export declare type TInputOptionItem = TIconProps & {
     id?: string;
     name?: string;
     disabled?: boolean;

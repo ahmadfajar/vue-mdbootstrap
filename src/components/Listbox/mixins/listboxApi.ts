@@ -330,7 +330,7 @@ function createListTileCheckbox(
     }, {
         // @ts-ignore
         default: () => h(BsCheckbox, {
-            color: (props.checkboxColor ?? 'default-color') as Prop<string>,
+            color: (props.checkboxColor || 'default-color') as Prop<string>,
             value: item.get(schema.valueField) as Prop<string | number>,
             modelValue: localValue.value as Prop<string | number>,
         })
