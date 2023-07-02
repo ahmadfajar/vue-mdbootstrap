@@ -2,12 +2,12 @@
 @import "../../../scss/variables";
 
 .#{$prefix}popover {
+    -webkit-overflow-scrolling: touch;
     position: fixed;
     max-height: 100%;
     max-width: 80%;
     overflow: auto;
     z-index: 1060;
-    -webkit-overflow-scrolling: touch;
 
     &.transition-bottom, &.transition-bottom-left, &.transition-bottom-right,
     &.transition-top, &.transition-top-left, &.transition-top-right {

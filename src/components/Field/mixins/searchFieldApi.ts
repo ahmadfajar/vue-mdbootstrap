@@ -1,7 +1,14 @@
 import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h, mergeProps, vModelText, withDirectives } from 'vue';
 import { cssPrefix } from '../../../mixins/CommonApi';
-import type { TBsSearchField, TEmitFn, TRecord, TSearchFieldOptionProps } from '../../../types';
+import type {
+    TBsSearchField,
+    TButtonMode,
+    TButtonSize,
+    TEmitFn,
+    TRecord,
+    TSearchFieldOptionProps
+} from '../../../types';
 import Helper from '../../../utils/Helper';
 import { BsButton } from '../../Button';
 import { BsPopover } from '../../Popover';
@@ -48,8 +55,8 @@ export function useRenderSearchField(
             h(BsButton, {
                 color: (thisProps.darkMode ? 'grey' : 'secondary') as Prop<string>,
                 icon: 'search' as Prop<string>,
-                mode: 'icon' as Prop<string>,
-                size: 'sm' as Prop<string>,
+                mode: 'icon' as Prop<TButtonMode>,
+                size: 'sm' as Prop<TButtonSize>,
                 // @ts-ignore
                 flat: true as Prop<boolean>,
                 onClick: () => {
@@ -92,8 +99,8 @@ export function useRenderSearchField(
                     ? h(BsButton, {
                         color: (thisProps.darkMode ? 'grey' : 'secondary') as Prop<string>,
                         icon: 'clear' as Prop<string>,
-                        mode: 'icon' as Prop<string>,
-                        size: 'sm' as Prop<string>,
+                        mode: 'icon' as Prop<TButtonMode>,
+                        size: 'sm' as Prop<TButtonSize>,
                         // @ts-ignore
                         flat: true as Prop<boolean>,
                         onClick: () => {
@@ -108,8 +115,8 @@ export function useRenderSearchField(
                     ? h(BsButton, {
                         color: (thisProps.darkMode ? 'grey' : 'secondary') as Prop<string>,
                         icon: 'arrow_drop_down' as Prop<string>,
-                        mode: 'icon' as Prop<string>,
-                        size: 'sm' as Prop<string>,
+                        mode: 'icon' as Prop<TButtonMode>,
+                        size: 'sm' as Prop<TButtonSize>,
                         // @ts-ignore
                         flat: true as Prop<boolean>,
                         onClick: () => {
@@ -153,7 +160,7 @@ function popoverWidth(
     props: Readonly<TSearchFieldOptionProps>,
     activator: Ref<HTMLElement | null>,
 ): number {
-    const width = Helper.parseIntLoose(<string>props.popoverMinWidth) || 0;
+    const width = Helper.parseIntLoose(<string>props.popoverMinWidth) ?? 0;
 
     if (activator.value && (width < activator.value?.offsetWidth)) {
         return activator.value?.offsetWidth;

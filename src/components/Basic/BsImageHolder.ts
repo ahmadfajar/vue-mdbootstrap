@@ -30,7 +30,7 @@ export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions
                 role: 'img',
             }, [
                 showText()
-                    ? h('title', toDisplayString(thisProps.placeholderText || thisProps.placeHolder))
+                    ? h('title', toDisplayString(thisProps.placeHolder ?? thisProps.placeholderText))
                     : undefined,
                 h('rect', {width: '100%', height: '100%', fill: thisProps.bgColor}),
                 showText()
@@ -39,7 +39,7 @@ export default defineComponent<TBsImageHolder, TRecord, TRecord, ComputedOptions
                             x: Helper.cssUnit(thisProps.xPos),
                             y: Helper.cssUnit(thisProps.yPos),
                         },
-                        toDisplayString(thisProps.placeholderText || thisProps.placeHolder)
+                        toDisplayString(thisProps.placeHolder ?? thisProps.placeholderText)
                     )
                     : undefined,
             ]);

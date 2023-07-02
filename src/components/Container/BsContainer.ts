@@ -1,7 +1,7 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, getCurrentInstance, h, onMounted, ref, withDirectives } from 'vue';
 import { Resize } from '../../directives';
-import { cssPrefix, useBreakpointMax, useFindParentCmp } from '../../mixins/CommonApi';
+import { cssPrefix, useBreakpointMax, useFindParentCmp, useVueMdbService } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
 import type { TAppContainerOptionProps, TBsContainer, TContainerOptionProps, TRecord, TVueMdb } from '../../types';
 import { baseTagProps } from '../Card/mixins/cardProps';
@@ -46,9 +46,10 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
         });
 
         onMounted(() => {
-            const instance = getCurrentInstance();
-            vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
-            const parent = useFindParentCmp(['bs-app-container', 'BsAppContainer'], instance, 3);
+            vueMdb.value = useVueMdbService();
+            const parent = useFindParentCmp(
+                ['bs-app-container', 'BsAppContainer'], 3
+            );
 
             if (parent) {
                 appId.value = (<Readonly<TAppContainerOptionProps>>parent.props).id;

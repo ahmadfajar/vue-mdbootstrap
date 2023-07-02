@@ -133,9 +133,9 @@ export declare const BsListbox: {
     new(): {
         $props: AllowedListboxProps & TListboxOptionProps;
         $slots: {
-            optionItem?: (arg: { item: IBsModel, index: number }) => VNode;
-            emptyDataMsg?: () => VNode;
-            notFoundMsg?: () => VNode;
+            'option-item'?: (arg: { item: IBsModel, index: number }) => VNode;
+            'empty-data-msg'?: () => VNode;
+            'not-found-msg'?: () => VNode;
         };
         $emit: [
             /**

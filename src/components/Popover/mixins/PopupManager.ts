@@ -1,7 +1,6 @@
-import type {ComponentInternalInstance, Ref} from "vue";
-import type {TPopupOptions} from "../types";
-import {clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll} from "body-scroll-lock";
-import {useClosePopover} from "./popoverApi";
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import type { ComponentInternalInstance, Ref } from 'vue';
+import type { TPopupOptions } from '../types';
 
 declare type TPopupItem = {
     target: ComponentInternalInstance;
@@ -13,7 +12,7 @@ const PopupManager = {
     items: [] as Array<TPopupItem>,
     locked: false,
     allowScrolling() {
-        const body = document.getElementsByTagName("body")[0];
+        const body = document.getElementsByTagName('body')[0];
 
         enableBodyScroll(body);
         clearAllBodyScrollLocks();
@@ -21,7 +20,7 @@ const PopupManager = {
     },
     add(instance: ComponentInternalInstance, props: Readonly<TPopupOptions>, active: Ref<boolean>) {
         // prevent duplicate item
-        if (!instance || this.find(instance) > -1) {
+        if (!instance || this.findItem(instance) > -1) {
             return;
         }
         // if not exists, manage popup instance
@@ -30,14 +29,14 @@ const PopupManager = {
         }
         this.items.push({target: instance, props: props, active: active});
     },
-    find(instance: ComponentInternalInstance): number {
+    findItem(instance: ComponentInternalInstance): number {
         return this.items.findIndex((el) => el.target === instance);
     },
     preventScrolling() {
         if (this.locked) {
             return;
         }
-        const body = document.getElementsByTagName("body")[0];
+        const body = document.getElementsByTagName('body')[0];
 
         disableBodyScroll(body, {
             reserveScrollBarGap: true
@@ -45,7 +44,7 @@ const PopupManager = {
         this.locked = true;
     },
     remove(instance: ComponentInternalInstance) {
-        const index = this.find(instance);
+        const index = this.findItem(instance);
         if (index === -1) {
             return;
         }
@@ -55,16 +54,30 @@ const PopupManager = {
         }
         this.items.splice(index, 1);
     },
+    closePopover(
+        instance: ComponentInternalInstance | null,
+        isActive: Ref<boolean>,
+        message: string,
+    ) {
+        if (!instance || !isActive.value) {
+            return;
+        }
+
+        isActive.value = false;
+        instance.emit('update:open', false);
+        instance.emit('close', message);
+        this.remove(instance);
+    }
 };
 
-(<Document>document).addEventListener("keydown", (evt: KeyboardEvent) => {
-    if (PopupManager.items.length === 0 || (evt.key && evt.key.toLowerCase() !== "escape")) {
+(<Document>document).addEventListener('keydown', (evt: KeyboardEvent) => {
+    if (PopupManager.items.length === 0 || (evt.key && evt.key.toLowerCase() !== 'escape')) {
         return;
     }
     const popupItem = PopupManager.items[PopupManager.items.length - 1];
 
     if (popupItem.props.escClose) {
-        useClosePopover(popupItem.target, popupItem.active, "Esc pressed.");
+        PopupManager.closePopover(popupItem.target, popupItem.active, 'Esc pressed.');
     }
 });
 

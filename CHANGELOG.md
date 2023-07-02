@@ -19,6 +19,9 @@ Released: July xx, 2023
 - **BsToggleField**:
   - Add slot `icon` for placing a custom button icon,
   - Add slot `label` for placing a custom button label.
+- **BsCombobox**, **BsListbox**:
+  - Add slot `empty-data-msg` for placing custom message.
+  - Add slot `not-found-msg` for placing custom message.
 
 ### Bug Fixes
 
@@ -81,7 +84,7 @@ Released: June 30, 2023
   - Deprecated property `solid-fill`, use property `filled` instead. 
   - Replaced property `iconOutlined` with `iconVariant` for flexibility.
   - Replaced property `value` with `modelValue`.
-  - Replaced slot `alertIcon` with `icon`.
+  - Rename slot `alertIcon` with `icon`.
 - **BsAvatar**: removed property `center`. 
 - **BsButton**: 
   - Removed property `block` 
@@ -98,7 +101,7 @@ Released: June 30, 2023
   - Deprecated property `externalValidator`, use property `validator` instead.
   - Replaced property `value` with `modelValue`.
   - Replaced event `change` with `update:modelValue`.
-  - Replaced slot `helpText` with `help-text`.
+  - Rename slot `helpText` with `help-text`.
 - **BsCard**: replaced property `flat` with `rounded`.
 - **BsCheckbox**: 
   - Replaced property `checked` with `modelValue`. 
@@ -106,8 +109,8 @@ Released: June 30, 2023
   - Replaced event `change` with `update:modelValue`.
 - **BsCheckboxGroup**: 
   - Deprecated property `externalValidator`, use property `validator` instead.
-  - Replaced property `columns` with `column`. 
   - Replaced event `change` with `update:modelValue`.
+  - Rename property `columns` with `column`. 
 - **BsChip**: 
   - Replaced property `value` with `modelValue`. 
   - Removed `label` property to meet the MD3 design specification. 
@@ -116,89 +119,101 @@ Released: June 30, 2023
     is removed from package bundle. 
   - Replaced slot `chipIcon` with `icon`.
 - **BsChipField**: 
-  - Removed event `change`, already covered by event `update:modelValue`.
+  - Deprecated property `externalValidator`, use property `validator` instead.
   - Replaced property `value` with `modelValue`.
   - Replaced event `input` with `update:modelValue`.
-  - Replaced slot `prependIcon` with `prependInner`.
-  - Replaced slot `prependIconOuter` with `prependOuter`.
-  - Replaced slot `appendIcon` with `appendInner`.
-  - Replaced slot `appendIconOuter` with `appendOuter`.
+  - Replaced slot `prependIcon` with `prepend-inner`.
+  - Replaced slot `prependIconOuter` with `prepend-outer`.
+  - Replaced slot `appendIcon` with `append-inner`.
+  - Replaced slot `appendIconOuter` with `append-outer`.
+  - Replaced slot `helpText` with `help-text`.
   - Removed property `chipLabeled`, used `chipPill` instead. 
-  - Deprecated property `externalValidator`, use property `validator` instead.
+  - Removed event `change`, already covered by event `update:modelValue`.
 - **BsChipGroup**:
   - Removed property `sliderArrows`, used property `sliderButton` instead.
   - Removed property `arrowsColor`, used property `sliderButtonColor` instead.
   - Removed property `activeColor`, used property `activeClass` instead.
   - Replaced property `value` with `modelValue`.
 - **BsCombobox**: 
-  - Removed property `open`.
-  - Removed property `chipLabeled`, used `chipPill` instead.
-  - Replaced property `value` with `modelValue`.
   - Deprecated property `popoverMaxHeight`, use property `listboxMaxHeight` instead.
   - Deprecated property `popoverMinWidth`, use property `listboxMinWidth` instead.
   - Deprecated property `checkOptionColor`, use property `checkboxColor` instead.
   - Deprecated property `checkOptionPosition`, use property `checkboxPosition` instead.
   - Deprecated property `minimumItemsForSearch`, use property `minSearchLength` instead.
-  - Replaced event `input` with `update:modelValue`.
-  - Replaced slot `prependIcon` with `prependInner`.
-  - Replaced slot `prependIconOuter` with `prependOuter`.
-  - Replaced slot `appendIcon` with `appendInner`.
-  - Replaced slot `appendIconOuter` with `appendOuter`.
-  - Removed event `change`, already covered by event `update:modelValue`.
   - Deprecated property `externalValidator`, use property `validator` instead.
-- **BsDatePicker**: 
   - Replaced property `value` with `modelValue`.
   - Replaced event `input` with `update:modelValue`.
+  - Replaced slot `optionItem` with `option-item`.
+  - Replaced slot `prependIcon` with `prepend-inner`.
+  - Replaced slot `prependIconOuter` with `prepend-outer`.
+  - Replaced slot `appendIcon` with `append-inner`.
+  - Replaced slot `appendIconOuter` with `append-outer`.
+  - Replaced slot `helpText` with `help-text`.
+  - Removed property `open`.
+  - Removed property `chipLabeled`, used `chipPill` instead.
+  - Removed event `change`, already covered by event `update:modelValue`.
+- **BsDatePicker**: 
   - Deprecated property `viewMode`, use property `mode` instead.
+  - Replaced property `value` with `modelValue`.
+  - Replaced event `input` with `update:modelValue`.
+  - Replaced dependency of `momentjs` with `luxon`.
   - Removed property `color`.
   - Removed property `firstDayOfWeek`.
   - Removed property `format`.
-  - Replaced dependency of `momentjs` with `luxon`.
   - The output value of the `modelValue` property follows the **ISO 8601** standard.
 - **BsDateTimeField**: 
-  - Removed property `open`.
-  - Replaced property `value` with `modelValue`.
-  - Replaced event `input` with `update:modelValue`.
   - Deprecated property `viewMode`, use property `pickerMode` instead.
   - Deprecated property `transition`, use property `pickerTransition` instead.
   - Deprecated property `externalValidator`, use property `validator` instead.
-  - Replaced slot `prependIcon` with `prependInner`.
-  - Replaced slot `prependIconOuter` with `prependOuter`.
-  - Replaced slot `appendIcon` with `appendInner`.
-  - Replaced slot `appendIconOuter` with `appendOuter`.
   - Replaced dependency of `momentjs` with `luxon`.
+  - Replaced property `value` with `modelValue`.
+  - Replaced event `input` with `update:modelValue`.
+  - Replaced slot `prependIcon` with `prepend-inner`.
+  - Replaced slot `prependIconOuter` with `prepend-outer`.
+  - Replaced slot `appendIcon` with `append-inner`.
+  - Replaced slot `appendIconOuter` with `append-outer`.
+  - Replaced slot `helpText` with `help-text`.
+  - Removed property `open`.
   - Removed property `color`, use property `pickerColor` instead.
   - Removed property `firstDayOfWeek`.
   - Removed event `change`, already covered by event `update:modelValue`.
 - **BsIcon**: replace property `rotation` with `rotate`.
-- **BsIconToggle**: is deprecated, use **BsToggleIcon** instead. Replaced property `value` with `modelValue`.
+- **BsIconToggle**: 
+  - Deprecated, use **BsToggleIcon** instead.
+  - Replaced property `value` with `modelValue`.
 - **BsLightbox**:
-  - Removed method `changeActive`, use `setActive` instead.
   - Deprecated property `overlayClose`, use property `overlayClickClose` instead.
+  - Removed method `changeActive`, use `setActive` instead.
 - **BsListNavItem**:
   - Removed property `exact`.
   - Replace event `input` with `update:active`.
 - **BsListTile**:
-  - Removed property `exact`.
   - Replace event `input` with `update:active`.
-- **BsListView**: Replace property `activeItemBordered` with `itemBorderVariant`.
-- **BsMaskLoader**: property `spinnerType` is deprecated, use property `variant` instead.
-- **BsModal**: property `overlayClose` is deprecated, use property `overlayClickClose` instead.
-- **BsMenu**: is deprecated, use **BsDropdownMenu** instead.
+  - Removed property `exact`.
+- **BsListView**: 
+  - Replace property `activeItemBordered` with `itemBorderVariant`.
+- **BsMaskLoader**: 
+  - Deprecated property `spinnerType`, use property `variant` instead.
+- **BsModal**: 
+  - Deprecated property `overlayClose`, use property `overlayClickClose` instead.
+- **BsMenu**: 
+  - Deprecated, use **BsDropdownMenu** instead.
 - **BsNotification**:
-  - Component must be activated first on the file `app.vue` or `main.vue` before using the method 
-    `this.$notification` or composable api `useVueMdbNotification()`.
+  - Component must be activated first on the file `app.vue` or `main.vue` before using  
+    `this.$notification` option api or `useVueMdbNotification()` composable api.
 - **BsNumericField**: 
+  - Deprecated property `externalValidator`, use property `validator` instead.
   - Replaced property `value` with `modelValue`.
   - Replaced event `input` with `update:modelValue`.
-  - Replaced slot `prependIcon` with `prependInner`.
-  - Replaced slot `prependIconOuter` with `prependOuter`.
-  - Replaced slot `appendIcon` with `appendInner`.
-  - Replaced slot `appendIconOuter` with `appendOuter`.
+  - Replaced slot `prependIcon` with `prepend-inner`.
+  - Replaced slot `prependIconOuter` with `prepend-outer`.
+  - Replaced slot `appendIcon` with `append-inner`.
+  - Replaced slot `appendIconOuter` with `append-outer`.
+  - Replaced slot `helpText` with `help-text`.
   - Removed property `actionButtonColor`.
   - Removed event `change`, already covered by event `update:modelValue`.
-  - Deprecated property `externalValidator`, use property `validator` instead.
-- **BsPopover**: Replace property `overlayClose` with `overlayClickClose`.
+- **BsPopover**: 
+  - Replace property `overlayClose` with `overlayClickClose`.
 - **BsRadio**:
   - Replaced property `checked` with `modelValue`.
   - Replaced event `change` with `update:modelValue`.
@@ -206,7 +221,8 @@ Released: June 30, 2023
   - Replaced property `columns` with `column`.
   - Deprecated property `externalValidator`, use property `validator` instead.
   - Replace event `change` with `update:modelValue`.
-- **BsRipple**: removed property `eventTrigger`.
+- **BsRipple**: 
+  - Removed property `eventTrigger`.
 - **BsSearchField**:
   - Replaced event `input` with `update:modelValue`.
   - Replaced property `value` with `modelValue`.
@@ -215,18 +231,20 @@ Released: June 30, 2023
   - Removed property `innerCls`.
 - **BsSwitch**:
   - Replaced property `checked` with `modelValue`.
-  - Removed property `falseValue` and `trueValue`.
   - Replaced event `change` with `update:modelValue`.
-- **BsTab**: Replace property `value` with `modelValue`.
-- **BsTextField**:
+  - Removed property `falseValue` and `trueValue`.
+- **BsTab**: 
+  - Replace property `value` with `modelValue`.
+- **BsTextArea**, **BsTextField**:
+  - Deprecated property `externalValidator`, use property `validator` instead.
   - Replaced property `value` with `modelValue`.
   - Replaced event `input` with `update:modelValue`.
-  - Replaced slot `prependIcon` with `prependInner`.
-  - Replaced slot `prependIconOuter` with `prependOuter`.
-  - Replaced slot `appendIcon` with `appendInner`.
-  - Replaced slot `appendIconOuter` with `appendOuter`.
+  - Replaced slot `prependIcon` with `prepend-inner`.
+  - Replaced slot `prependIconOuter` with `prepend-outer`.
+  - Replaced slot `appendIcon` with `append-inner`.
+  - Replaced slot `appendIconOuter` with `append-outer`.
+  - Replaced slot `helpText` with `help-text`.
   - Removed event `change`, already covered by event `update:modelValue`.
-  - Deprecated property `externalValidator`, use property `validator` instead.
 
 
 ## v1.2.1

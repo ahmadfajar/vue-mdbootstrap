@@ -1,4 +1,4 @@
-@import "/node_modules/compass-mixins/lib/compass/css3";
+@import "compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
@@ -138,11 +138,11 @@
             @include box-shadow(0 0 12px var(--#{$prefix}notification-box-shadow-color));
 
             background-color: var(--#{$prefix}notification-background-color);
+            background-position: 15px center;
+            background-repeat: no-repeat;
             color: var(--#{$prefix}notification-color);
             width: var(--#{$prefix}notification-width);
             opacity: var(--#{$prefix}notification-opacity);
-            background-position: 15px center;
-            background-repeat: no-repeat;
             display: block;
             position: relative;
             overflow: hidden;

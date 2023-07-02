@@ -167,11 +167,13 @@ function renderListboxView(
                     ? h(BsListTile, null, {
                         default: () =>
                             useRenderSlot(
-                                slots, 'emptyDataMsg',
+                                slots, 'empty-data-msg',
                                 {key: 'emptyDataMessage'},
-                                h(BsListTileTitle, null, {
-                                    default: () => toDisplayString(props.emptyDataMessage)
-                                })
+                                [
+                                    h(BsListTileTitle, null, {
+                                        default: () => toDisplayString(props.emptyDataMessage)
+                                    })
+                                ]
                             )
                     })
                     : (
@@ -179,18 +181,22 @@ function renderListboxView(
                             dataSource?.filters.length &&
                             dataSource.filters.length > 0 &&
                             dataItems.value?.length === 0
-                        ) ? h(BsListTile, null, {
-                            default: () =>
-                                useRenderSlot(
-                                    slots, 'notFoundMsg',
-                                    {key: 'notFoundMessage'},
-                                    h(BsListTileTitle, null, {
-                                        default: () => toDisplayString(props.notFoundMessage)
-                                    })
-                                )
-                        }) : renderListboxItems(
-                            slots, emit, props, schema, dataItems, selectedItems, localValue,
                         )
+                            ? h(BsListTile, null, {
+                                default: () =>
+                                    useRenderSlot(
+                                        slots, 'not-found-msg',
+                                        {key: 'notFoundMessage'},
+                                        [
+                                            h(BsListTileTitle, null, {
+                                                default: () => toDisplayString(props.notFoundMessage)
+                                            })
+                                        ]
+                                    )
+                            })
+                            : renderListboxItems(
+                                slots, emit, props, schema, dataItems, selectedItems, localValue,
+                            )
                     )
         }
     );
@@ -373,7 +379,7 @@ function createListTileContent(
 ): VNode {
     return h(BsListTileContent, null, {
         default: () => useRenderSlot(
-            slots, 'optionItem', {key: 'list-tile-content'},
+            slots, 'option-item', {key: 'list-tile-content'},
             h(BsListTileTitle, null, {
                 default: () => toDisplayString(item.get(schema.displayField))
             }),

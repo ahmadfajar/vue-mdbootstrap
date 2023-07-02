@@ -1,7 +1,7 @@
-import type { ComputedRef, Prop, Ref, Slots, VNode } from "vue";
-import { Teleport, getCurrentInstance, h, nextTick, withDirectives } from "vue";
-import { Resize } from "../../../directives/Resize";
-import { cssPrefix, useFindParentCmp } from "../../../mixins/CommonApi";
+import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import { h, nextTick, Teleport, withDirectives } from 'vue';
+import { Resize } from '../../../directives';
+import { cssPrefix, useFindParentCmp, useRenderSlotDefault, useVueMdbService } from '../../../mixins/CommonApi';
 import type {
     TAppContainerOptionProps,
     TBsOverlay,
@@ -9,9 +9,9 @@ import type {
     TRecord,
     TSideDrawerOptionProps,
     TVueMdb
-} from "../../../types";
-import Helper from "../../../utils/Helper";
-import { BsOverlay } from "../../Animation";
+} from '../../../types';
+import Helper from '../../../utils/Helper';
+import { BsOverlay } from '../../Animation';
 
 export function useSideDrawerStyles(
     props: Readonly<TSideDrawerOptionProps>,
@@ -20,48 +20,49 @@ export function useSideDrawerStyles(
     clipHeight: Ref<number>,
     zIndex: number,
 ): TRecord {
-    const zeroPx = "0px";
+    const zeroPx = '0px';
     const sbWidth = parseInt(<string>props.width) + 1;
     const properties = {
         height: props.clipped ? `calc(100% - ${clipHeight.value}px)` : undefined,
         width: Helper.cssUnit(props.width),
-        transform: props.position === "right"
+        transform: props.position === 'right'
             ? `translateX(${Helper.cssUnit(sbWidth)})`
             : `translateX(-${Helper.cssUnit(sbWidth)})`,
         marginTop: Helper.cssUnit(clipHeight.value),
-        left: props.position === "left" ? zeroPx : undefined,
-        right: props.position === "right" ? zeroPx : undefined,
-        position: props.fixedLayout ? "fixed" : undefined,
-        "z-index": clipHeight.value > 0 ? (zIndex - 1) : undefined,
+        left: props.position === 'left' ? zeroPx : undefined,
+        right: props.position === 'right' ? zeroPx : undefined,
+        position: props.fixedLayout ? 'fixed' : undefined,
+        'z-index': clipHeight.value > 0 ? (zIndex - 1) : undefined,
     };
 
     if (isMobile.value && !props.mini) {
-        const slideWidth = props.position === "right"
+        const slideWidth = props.position === 'right'
             ? (parseInt(<string>props.modalWidth) + 1)
             : (parseInt(<string>props.modalWidth) + 1) * -1;
 
         return {
             ...properties,
-            height: "100%",
+            height: '100%',
             width: Helper.cssUnit(props.modalWidth),
             marginTop: zeroPx,
-            position: "fixed",
+            position: 'fixed',
             top: zeroPx,
-            transform: isOpen.value ? "translateX(0px)" : `translateX(${Helper.cssUnit(slideWidth)})`,
-            "z-index": zIndex + 1,
+            transform: isOpen.value ? 'translateX(0px)' : `translateX(${Helper.cssUnit(slideWidth)})`,
+            'z-index': zIndex + 1,
         };
     } else if (props.mini && props.miniWidth) {
         return {
             ...properties,
             width: Helper.cssUnit(props.miniWidth),
-            transform: "translateX(0px)",
+            transform: 'translateX(0px)',
         };
     } else if (props.width && props.open) {
         return {
             ...properties,
-            transform: "translateX(0px)",
+            transform: 'translateX(0px)',
         };
     }
+
     return properties;
 }
 
@@ -70,16 +71,17 @@ export function useSideDrawerOnMountedHook(
     vueMdb: Ref<TVueMdb | undefined>,
     props: Readonly<TSideDrawerOptionProps>,
 ): void {
-    const instance = getCurrentInstance();
-    vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
-    const parent = useFindParentCmp(["bs-app-container", "BsAppContainer"], instance, 3);
+    vueMdb.value = useVueMdbService();
+    const parent = useFindParentCmp(
+        ['bs-app-container', 'BsAppContainer'], 3
+    );
 
     if (parent) {
         nextTick().then(() => {
             appId.value = (<Readonly<TAppContainerOptionProps>>parent.props).id;
             // console.log("BsSideDrawer-vueMdb:", vueMdb.value);
             if (appId.value && vueMdb.value) {
-                if (props.position === "right") {
+                if (props.position === 'right') {
                     vueMdb.value.app[appId.value].rightSideDrawerWidth = props.mini
                         ? (<number>props.miniWidth) : (<number>props.width);
                 } else {
@@ -89,54 +91,52 @@ export function useSideDrawerOnMountedHook(
             }
         })
     } else {
-        console.warn("<BsSideDrawer> must be used inside <BsAppContainer>");
+        console.warn('<BsSideDrawer> must be used inside <BsAppContainer>');
     }
 }
 
 export function useRenderSideDrawer(
+    slots: Slots,
+    emit: TEmitFn,
     props: Readonly<TSideDrawerOptionProps>,
     styles: ComputedRef<TRecord>,
     appId: Ref<string | undefined>,
     isMobile: Ref<boolean>,
     isOpen: Ref<boolean>,
     zIndex: number,
-    slots: Slots,
-    emit: TEmitFn,
     resizeHandler: VoidFunction,
 ): VNode {
     return withDirectives(
-        h(props.tag || "aside", {
-            class: {
-                [`${cssPrefix}side-drawer`]: true,
-                [`${cssPrefix}mini`]: props.mini,
-                [`${cssPrefix}open`]: isOpen.value,
-                [`${cssPrefix}closed`]: !isOpen.value && !props.mini,
-                [`bg-${props.color}`]: props.color,
-                shadow: props.shadow
-            },
-            style: styles.value,
-        }, [
-            h(Teleport, {
-                to: isMobile.value ? "body" : (appId.value ? `#${appId.value}` : "body")
-            }, h<TBsOverlay>(BsOverlay, {
-                color: props.overlayColor as Prop<string | undefined>,
-                // @ts-ignore
-                fixed: true as Prop<boolean>,
-                // @ts-ignore
-                show: (isMobile.value && isOpen.value) as Prop<boolean>,
-                zIndex: zIndex as Prop<number>,
-                onClick: () => {
-                    isOpen.value = false;
-                    emit("update:open", false);
-                }
-            })
-            ),
-            h("div", {
-                class: `${cssPrefix}side-drawer-inner`
-            }, slots.default && slots.default())
-        ]
+        h(props.tag || 'aside', {
+                class: {
+                    [`${cssPrefix}side-drawer`]: true,
+                    [`${cssPrefix}mini`]: props.mini,
+                    [`${cssPrefix}open`]: isOpen.value,
+                    [`${cssPrefix}closed`]: !isOpen.value && !props.mini,
+                    [`bg-${props.color}`]: props.color,
+                    shadow: props.shadow
+                },
+                style: styles.value,
+            }, [
+                h(Teleport, {
+                        to: isMobile.value ? 'body' : (appId.value ? `#${appId.value}` : 'body')
+                    }, h<TBsOverlay>(BsOverlay, {
+                        color: props.overlayColor as Prop<string | undefined>,
+                        // @ts-ignore
+                        fixed: true as Prop<boolean>,
+                        // @ts-ignore
+                        show: (isMobile.value && isOpen.value) as Prop<boolean>,
+                        zIndex: zIndex as Prop<number>,
+                        onClick: () => {
+                            isOpen.value = false;
+                            emit('update:open', false);
+                        }
+                    })
+                ),
+                useRenderSlotDefault('div', slots, `${cssPrefix}side-drawer-inner`),
+            ]
         ), [
-        [Resize, resizeHandler]
-    ]
+            [Resize, resizeHandler]
+        ]
     )
 }

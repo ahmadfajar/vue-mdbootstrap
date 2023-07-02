@@ -81,9 +81,8 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
         );
 
         return () => useRenderSideDrawer(
-            cmpProps, styles, appId,
-            isMobile, isOpen, zIndex,
-            slots, emit, resizeHandler,
+            slots, emit, cmpProps, styles, appId,
+            isMobile, isOpen, zIndex, resizeHandler
         )
     }
 });

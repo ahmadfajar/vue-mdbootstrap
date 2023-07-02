@@ -337,11 +337,11 @@ export declare const BsTextField: {
         $props: AllowedTextFieldProps & TTextFieldOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
-            appendInner?: () => VNode;
-            appendOuter?: () => VNode;
-            prependInner?: () => VNode;
-            prependOuter?: () => VNode;
-            helpText?: () => VNode;
+            'append-inner'?: () => VNode;
+            'append-outer'?: () => VNode;
+            'prepend-inner'?: () => VNode;
+            'prepend-outer'?: () => VNode;
+            'help-text'?: () => VNode;
         };
         $emit: [
             /**
@@ -373,11 +373,11 @@ export declare const BsTextArea: {
         $props: AllowedTextFieldProps & TTextAreaOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
-            appendInner?: () => VNode;
-            appendOuter?: () => VNode;
-            prependInner?: () => VNode;
-            prependOuter?: () => VNode;
-            helpText?: () => VNode;
+            'append-inner'?: () => VNode;
+            'append-outer'?: () => VNode;
+            'prepend-inner'?: () => VNode;
+            'prepend-outer'?: () => VNode;
+            'help-text'?: () => VNode;
         };
         $emit: [
             /**
@@ -418,11 +418,11 @@ export declare const BsChipField: {
         $props: AllowedChipFieldProps & TChipFieldOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
-            appendInner?: () => VNode;
-            appendOuter?: () => VNode;
-            prependInner?: () => VNode;
-            prependOuter?: () => VNode;
-            helpText?: () => VNode;
+            'append-inner'?: () => VNode;
+            'append-outer'?: () => VNode;
+            'prepend-inner'?: () => VNode;
+            'prepend-outer'?: () => VNode;
+            'help-text'?: () => VNode;
         };
         $emit: [
             /**
@@ -466,11 +466,11 @@ export declare const BsNumericField: {
         $props: AllowedNumericFieldProps & TNumericFieldOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
-            appendInner?: () => VNode;
-            appendOuter?: () => VNode;
-            prependInner?: () => VNode;
-            prependOuter?: () => VNode;
-            helpText?: () => VNode;
+            'append-inner'?: () => VNode;
+            'append-outer'?: () => VNode;
+            'prepend-inner'?: () => VNode;
+            'prepend-outer'?: () => VNode;
+            'help-text'?: () => VNode;
         };
         $emit: [
             /**

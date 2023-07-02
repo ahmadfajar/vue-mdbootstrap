@@ -171,14 +171,14 @@ export declare const BsCombobox: {
         $props: AllowedComboboxProps & TComboboxOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
-            optionItem?: (arg: { item: IBsModel, index: number }) => VNode;
-            appendInner?: () => VNode;
-            appendOuter?: () => VNode;
-            prependInner?: () => VNode;
-            prependOuter?: () => VNode;
-            emptyDataMsg?: () => VNode;
-            notFoundMsg?: () => VNode;
-            helpText?: () => VNode;
+            'option-item'?: (arg: { item: IBsModel, index: number }) => VNode;
+            'append-inner'?: () => VNode;
+            'append-outer'?: () => VNode;
+            'prepend-inner'?: () => VNode;
+            'prepend-outer'?: () => VNode;
+            'empty-data-msg'?: () => VNode;
+            'not-found-msg'?: () => VNode;
+            'help-text'?: () => VNode;
         };
         $emit: [
             /**

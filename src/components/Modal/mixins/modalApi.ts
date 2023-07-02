@@ -125,9 +125,11 @@ function createModalDialog(
                             : createCommentVNode(' v-if-modal-header ')
                     ),
                     h('div', {
-                        ref: bodyEl,
-                        class: useMergeClass(`${cssPrefix}modal-body`, <string>props.bodyClass)
-                    }, slots.default && slots.default()),
+                            ref: bodyEl,
+                            class: useMergeClass(`${cssPrefix}modal-body`, <string>props.bodyClass)
+                        },
+                        slots.default && slots.default()
+                    ),
                     (
                         slots.footer
                             ? useRenderSlotWithWrapper(

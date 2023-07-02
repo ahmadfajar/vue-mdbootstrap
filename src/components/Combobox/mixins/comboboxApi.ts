@@ -143,11 +143,10 @@ function renderComboboxFieldInput(
 /**
  * Toggle Popover state: show or hide.
  *
- * @param {TEmitFn} emit                Emitter function
- * @param {Ref<boolean>} isPopoverOpen  The Popover state reference
- * @param {boolean} isDisabled          Is the component in disable state or not
- * @param {boolean} state               Current Popover state. Toggle will inverse this state.
- * @return {void}
+ * @param emit           Emitter function
+ * @param isPopoverOpen  The Popover state reference
+ * @param isDisabled     Is the component in disable state or not
+ * @param state          Current Popover state. Toggle will inverse this state.
  */
 export function useTogglePopoverState(
     emit: TEmitFn,
@@ -293,8 +292,8 @@ export function useRenderCombobox(
                         minSearchChars: props.minSearchChars,
                         minSearchLength: (props.minimumItemsForSearch || props.minSearchLength),
                         maxHeight: (props.popoverMaxHeight || props.listboxMaxHeight),
-                        checkboxColor: (props.checkOptionColor || props.checkboxColor),
-                        checkboxPosition: (props.checkOptionPosition || props.checkboxPosition),
+                        checkboxColor: (props.checkOptionColor ?? props.checkboxColor),
+                        checkboxPosition: (props.checkOptionPosition ?? props.checkboxPosition),
                         showImage: props.showImage,
                         imageSize: props.imageSize,
                         circleImage: props.circleImage,
@@ -324,26 +323,32 @@ export function useRenderCombobox(
                             }
                         }
                     }, {
-                        optionItem: (args: TDataItem) => useRenderSlot(
-                            slots, 'optionItem', {key: 'list-tile-content'},
-                            h(BsListTileTitle, null, {
-                                default: () => toDisplayString(args.item.get(schema.displayField))
-                            }),
+                        'option-item': (args: TDataItem) => useRenderSlot(
+                            slots, 'option-item', {key: 'list-tile-content'},
+                            [
+                                h(BsListTileTitle, null, {
+                                    default: () => toDisplayString(args.item.get(schema.displayField))
+                                })
+                            ],
                             {item: args.item, index: args.index},
                         ),
-                        emptyDataMsg: () => useRenderSlot(
-                            slots, 'emptyDataMsg',
+                        'empty-data-msg': () => useRenderSlot(
+                            slots, 'empty-data-msg',
                             {key: 'emptyDataMessage'},
-                            h(BsListTileTitle, null, {
-                                default: () => toDisplayString(props.emptyDataMessage)
-                            })
+                            [
+                                h(BsListTileTitle, null, {
+                                    default: () => toDisplayString(thisProps.emptyDataMessage)
+                                })
+                            ]
                         ),
-                        notFoundMsg: () => useRenderSlot(
-                            slots, 'notFoundMsg',
+                        'not-found-msg': () => useRenderSlot(
+                            slots, 'not-found-msg',
                             {key: 'notFoundMessage'},
-                            h(BsListTileTitle, null, {
-                                default: () => toDisplayString(thisProps.notFoundMessage)
-                            })
+                            [
+                                h(BsListTileTitle, null, {
+                                    default: () => toDisplayString(thisProps.notFoundMessage)
+                                })
+                            ]
                         ),
                     })
                 }),

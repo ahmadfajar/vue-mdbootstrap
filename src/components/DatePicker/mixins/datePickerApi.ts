@@ -6,6 +6,8 @@ import { Touch } from '../../../directives';
 import { cssPrefix, useBreakpointMin, useRenderTransition } from '../../../mixins/CommonApi';
 import type {
     TBsDatePicker,
+    TButtonMode,
+    TButtonSize,
     TDatePickerBaseProps,
     TDatePickerCalendarProps,
     TDatePickerHeaderProps,
@@ -269,7 +271,7 @@ function createCalendarNavButton(
         color: color as Prop<string>,
         icon: icon as Prop<string>,
         iconSize: iconSize as Prop<number>,
-        mode: 'icon' as Prop<string>,
+        mode: 'icon' as Prop<TButtonMode>,
         // @ts-ignore
         readonly: disabled as Prop<boolean>,
         // @ts-ignore
@@ -581,8 +583,8 @@ function createCalendarDayButton(
     const isOutlined = today.hasSame(<DateTime>data.value, 'day') && !selected;
 
     return h(BsButton, {
-        size: 'sm' as Prop<string>,
-        mode: 'icon' as Prop<string>,
+        size: 'sm' as Prop<TButtonSize>,
+        mode: 'icon' as Prop<TButtonMode>,
         // @ts-ignore
         readonly: props.disabled as Prop<boolean>,
         color: (!today.hasSame(data.value, 'day') && !selected ? 'dark' : props.selectedColor) as Prop<string>,

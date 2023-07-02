@@ -23,10 +23,17 @@ export function useListTileClassNames(
     return {
         [`${cssPrefix}list-tile d-flex`]: true,
         [`${cssPrefix}link`]: tagName === 'a' && !props.disabled,
-        [`${cssPrefix}tile-border-${provider?.itemBorderVariant}`]: provider?.itemBorderVariant && !props.borderOff
-        && ['left', 'right', 'left-right', 'top', 'bottom', 'top-bottom'].includes(provider.itemBorderVariant),
-        [`${cssPrefix}tile-space-${provider?.spaceAround}`]: provider?.spaceAround && ['both', 'left', 'right'].includes(provider.spaceAround),
-        [`${props.activeClass}`]: (useHasLink(props) || props.navigable) && props.activeClass && !props.disabled && isActive.value === true,
+        [`${cssPrefix}tile-border-${provider?.itemBorderVariant}`]: (
+            provider?.itemBorderVariant && !props.borderOff &&
+            ['left', 'right', 'left-right', 'top', 'bottom', 'top-bottom'].includes(provider.itemBorderVariant)
+        ),
+        [`${cssPrefix}tile-space-${provider?.spaceAround}`]: (
+            provider?.spaceAround && ['both', 'left', 'right'].includes(provider.spaceAround)
+        ),
+        [`${props.activeClass}`]: (
+            (useHasLink(props) || props.navigable) &&
+            props.activeClass && !props.disabled && isActive.value === true
+        ),
         'active': (useHasLink(props) || props.navigable) && !props.disabled && isActive.value === true,
         'rounded': provider?.itemRounded === true && !props.roundedOff,
         'rounded-pill': provider?.itemRoundedPill === true && !props.pillOff,
@@ -34,7 +41,7 @@ export function useListTileClassNames(
     };
 }
 
-function createListTileVnode(
+function createListTileElement(
     tagName: string,
     slots: Slots,
     emit: TEmitFn,
@@ -79,7 +86,7 @@ function createListTileVnode(
     ]);
 }
 
-function createListTileRouterVnode(
+function createListTileRouterElement(
     slots: Slots,
     emit: TEmitFn,
     props: Readonly<TListTileOptionProps>,
@@ -107,17 +114,19 @@ function createListTileRouterVnode(
                 emit('click', e, instance.value?.component.vnode.el);
             }
         },
-        h<TBsRipple>(BsRipple, {
-            class: [
-                'd-flex',
-                provider?.itemRounded === true && !props.roundedOff ? 'rounded' : '',
-                provider?.itemRoundedPill === true && !props.pillOff ? 'rounded-pill' : '',
-            ],
-            // @ts-ignore
-            disabled: (props.rippleOff || props.disabled) as Prop<boolean>,
-        }, {
-            default: () => slots.default && slots.default()
-        })
+        [
+            h<TBsRipple>(BsRipple, {
+                class: [
+                    'd-flex',
+                    provider?.itemRounded === true && !props.roundedOff ? 'rounded' : '',
+                    provider?.itemRoundedPill === true && !props.pillOff ? 'rounded-pill' : '',
+                ],
+                // @ts-ignore
+                disabled: (props.rippleOff || props.disabled) as Prop<boolean>,
+            }, {
+                default: () => slots.default && slots.default()
+            })
+        ]
     );
 }
 
@@ -131,8 +140,8 @@ export function useRenderListTile(
     provider?: IListViewProvider,
 ): VNode {
     if (useHasRouter(props) && !props.disabled) {
-        return createListTileRouterVnode(slots, emit, props, classes, instance, provider);
+        return createListTileRouterElement(slots, emit, props, classes, instance, provider);
     } else {
-        return createListTileVnode(tagName, slots, emit, props, classes, instance, provider);
+        return createListTileElement(tagName, slots, emit, props, classes, instance, provider);
     }
 }

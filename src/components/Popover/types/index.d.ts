@@ -86,3 +86,5 @@ export declare const BsPopover: {
 export declare const BsPopoverPlugin: {
     new(): Plugin;
 };
+
+export { PopupManager } from './PopupManager';

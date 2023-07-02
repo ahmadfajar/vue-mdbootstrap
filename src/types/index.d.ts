@@ -122,6 +122,7 @@ declare module '@vue/runtime-core' {
         BsIcon: TypesConfig extends Record<'BsIcon', infer T> ? T : typeof BsIcon
         BsIconSpinner: TypesConfig extends Record<'BsIconSpinner', infer T> ? T : typeof BsIconSpinner
         BsIconSvg: TypesConfig extends Record<'BsIconSvg', infer T> ? T : typeof BsIconSvg
+        BsIconToggle: TypesConfig extends Record<'BsIconToggle', infer T> ? T : typeof BsToggleIcon
         BsToggleIcon: TypesConfig extends Record<'BsToggleIcon', infer T> ? T : typeof BsToggleIcon
         BsListbox: TypesConfig extends Record<'BsListbox', infer T> ? T : typeof BsListbox
         BsListView: TypesConfig extends Record<'BsListView', infer T> ? T : typeof BsListView

@@ -61,18 +61,20 @@ export function useRenderDropdownMenu(
         class: [`${cssPrefix}dropdown-menu`]
     }, [
         h('div', {
-            ref: activator,
-            class: [`${cssPrefix}dropdown-menu-activator`],
-            onClick: () => {
-                if (!thisProps.openOnHover) {
-                    isActive.value
-                        ? hideDropdownMenu(isActive, timer, emit)
-                        : showDropdownMenu(thisProps, isActive, timer, emit);
-                }
+                ref: activator,
+                class: [`${cssPrefix}dropdown-menu-activator`],
+                onClick: () => {
+                    if (!thisProps.openOnHover) {
+                        isActive.value
+                            ? hideDropdownMenu(isActive, timer, emit)
+                            : showDropdownMenu(thisProps, isActive, timer, emit);
+                    }
+                },
+                onMouseenter: thisOnMouseEnter,
+                onMouseleave: thisOnMouseLeave,
             },
-            onMouseenter: thisOnMouseEnter,
-            onMouseleave: thisOnMouseLeave,
-        }, slots.default && slots.default()),
+            slots.default && slots.default()
+        ),
         h<TBsPopover>(BsPopover, {
             ref: popupMenu,
             class: [`${cssPrefix}popover-dropdown-menu`, `${cssPrefix}shadow-1`],

@@ -24,7 +24,7 @@ export default defineComponent<TBsListTileAction, TRecord, TRecord, ComputedOpti
         const cmpProps = props as Readonly<TListTileActionOptionProps>;
 
         return () =>
-            useRenderSlotDefault(<string>props.tag, slots, {
+            useRenderSlotDefault(<string>cmpProps.tag, slots, {
                 [`${cssPrefix}list-tile-action`]: true,
                 [`${cssPrefix}action-stack`]: cmpProps.stack === true,
                 'd-flex': !cmpProps.stack && cmpProps.center === true,

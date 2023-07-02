@@ -21,7 +21,7 @@ export default defineComponent<TBsListTileContent, TRecord, TRecord, ComputedOpt
         const cmpProps = props as Readonly<TListTileContentOptionProps>;
 
         return () =>
-            useRenderSlotDefault(<string>props.tag, slots, {
+            useRenderSlotDefault(<string>cmpProps.tag, slots, {
                 [`${cssPrefix}list-tile-content`]: true,
                 [`${cssPrefix}multiline`]: cmpProps.multiLine === true,
             })

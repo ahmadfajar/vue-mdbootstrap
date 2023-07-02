@@ -1,7 +1,7 @@
-import type {ComponentInternalInstance, Ref} from "vue";
-import {isRef} from "vue";
-import type {IListItem, TEmitFn, TRecord} from "../../../types";
-import Helper from "../../../utils/Helper";
+import type { ComponentInternalInstance, Ref } from 'vue';
+import { isRef } from 'vue';
+import type { IListItem, TEmitFn, TRecord } from '../../../types';
+import Helper from '../../../utils/Helper';
 
 
 class ListItem implements IListItem {
@@ -12,8 +12,11 @@ class ListItem implements IListItem {
     private _children: Array<IListItem>;
     private _parent: IListItem | undefined;
 
-    constructor(uid: string, tag: string, component: ComponentInternalInstance,
-                emit: TEmitFn) {
+    constructor(
+        uid: string, tag: string,
+        component: ComponentInternalInstance,
+        emit: TEmitFn
+    ) {
         this.uid = uid;
         this.tag = tag;
         this._component = component;
@@ -81,7 +84,7 @@ class ListItem implements IListItem {
             }
         }
 
-        this.fireEvent("update:active", value);
+        this.fireEvent('update:active', value);
     }
 
     setRippleOff(value: boolean): void {

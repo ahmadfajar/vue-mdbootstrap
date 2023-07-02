@@ -13,6 +13,7 @@ import {
 import { cssPrefix, useMergeClass } from '../../../mixins/CommonApi';
 import type {
     Color,
+    TButtonSize,
     TColorPickerData,
     TColorPickerMode,
     TColorPickerOptionProps,
@@ -463,7 +464,7 @@ function renderColorPickerModeButtons(
         class: ['py-2', 'text-center']
     }, [
         h(BsToggleButton, {
-            size: 'sm' as Prop<string>,
+            size: 'sm' as Prop<TButtonSize>,
             color: props.modeButtonColor as Prop<string>,
             toggleColor: props.modeButtonToggleColor as Prop<string>,
             // @ts-ignore

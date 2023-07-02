@@ -1,7 +1,14 @@
-import type {ComponentInternalInstance, Ref} from "vue";
-import {isRef, unref} from "vue";
-import type {IListItem, IListViewProvider, TEmitFn, TListViewOptionProps, TRecord, TSpaceAround} from "../../../types";
-import Helper from "../../../utils/Helper";
+import type { ComponentInternalInstance, Ref } from 'vue';
+import { isRef, unref } from 'vue';
+import type {
+    IListItem,
+    IListViewProvider,
+    TEmitFn,
+    TListViewOptionProps,
+    TRecord,
+    TSpaceAround
+} from '../../../types';
+import Helper from '../../../utils/Helper';
 
 
 class ListViewProvider implements IListViewProvider {
@@ -122,8 +129,10 @@ class ListViewProvider implements IListViewProvider {
         return result;
     }
 
-    execAction(actionFn: (value: IListItem, sources: IListItem[]) => unknown,
-               recursive = false, stopImmediately = false): Promise<void> {
+    execAction(
+        actionFn: (value: IListItem, sources: IListItem[]) => unknown,
+        recursive = false, stopImmediately = false
+    ): Promise<void> {
         return new Promise((resolve) => {
             for (const it of this.items) {
                 const ret = actionFn(it, this.items);
@@ -154,10 +163,10 @@ class ListViewProvider implements IListViewProvider {
     async setActiveItem(value?: IListItem): Promise<void> {
         if (value === undefined) {
             this._activeItem = undefined;
-            this._emit("update:modelValue", undefined);
+            this._emit('update:modelValue', undefined);
             return;
         }
-        if (this.config.individualState === true && value.tag === "BsListTile") {
+        if (this.config.individualState === true && value.tag === 'BsListTile') {
             return;
         }
 
@@ -170,9 +179,9 @@ class ListViewProvider implements IListViewProvider {
     }
 
     private triggerEvent(newItem: IListItem) {
-        this._emit("change", newItem, this.activeItem);
+        this._emit('change', newItem, this.activeItem);
         this._activeItem = newItem;
-        this._emit("update:modelValue", newItem);
+        this._emit('update:modelValue', newItem);
     }
 
     collapse(item: IListItem): void {
@@ -180,16 +189,16 @@ class ListViewProvider implements IListViewProvider {
             this.collapse(child);
         }
 
-        if (item.tag === "BsListNav") {
+        if (item.tag === 'BsListNav') {
             Helper.defer(() => {
-                this.setExposedValue(item.component, "collapsing", true);
+                this.setExposedValue(item.component, 'collapsing', true);
                 Helper.defer(() => {
-                    this.setExposedValue(item.component, "collapsing", false);
-                    this.setExposedValue(item.component, "expanded", false);
+                    this.setExposedValue(item.component, 'collapsing', false);
+                    this.setExposedValue(item.component, 'expanded', false);
                 }, 200);
             }, 100);
-        } else if (item.tag === "BsListNavItem") {
-            this.setExposedValue(item.component, "expanded", false);
+        } else if (item.tag === 'BsListNavItem') {
+            this.setExposedValue(item.component, 'expanded', false);
             if (!item.hasChild()) {
                 item.setRippleOff(true);
             }
@@ -205,18 +214,18 @@ class ListViewProvider implements IListViewProvider {
     }
 
     private expandItem(item: IListItem): void {
-        this.setExposedValue(item.component, "expanded", true);
+        this.setExposedValue(item.component, 'expanded', true);
         item.setRippleOff(false);
 
         if (item.hasChild()) {
-            this.setExposedValue(item.children[0].component, "expanded", true);
+            this.setExposedValue(item.children[0].component, 'expanded', true);
             item.children[0].children.forEach((it) => it.setRippleOff(false));
         }
     }
 
     expand(item: IListItem): void {
         const cmp = item.component;
-        if (item.hasChild() && ["BsListNav", "BsListNavItem"].includes(item.tag) && !unref((<TRecord>cmp.exposed).expanded)) {
+        if (item.hasChild() && ['BsListNav', 'BsListNavItem'].includes(item.tag) && !unref((<TRecord>cmp.exposed).expanded)) {
             if (this.singleExpand) {
                 if (item.parent) {
                     item.parent.children.forEach((it) => {

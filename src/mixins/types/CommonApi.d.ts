@@ -1,12 +1,17 @@
 import type { AxiosInstance } from 'axios';
-import type { ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
+import type { Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
 import type { RouteLocationNormalizedLoaded } from 'vue-router';
-import type { INotificationProvider, TBreakpoint, TRecord, TRouterLinkProps, TRouterOptionProps, TVueMdb } from '../../types';
+import type {
+    INotificationProvider,
+    TBreakpoint,
+    TRecord,
+    TRouterLinkProps,
+    TRouterOptionProps,
+    TVueMdb
+} from '../../types';
 import type { IHttpService } from '../../utils/types/AxiosPlugin';
 
-export declare const cssPrefix = "md-";
-
-export declare const isServer: boolean;
+export declare const cssPrefix = 'md-';
 
 /**
  * Generate component's ID.
@@ -14,13 +19,6 @@ export declare const isServer: boolean;
  * @returns The generated ID
  */
 export declare function useGenerateId(): string;
-
-/**
- * Check whether IE browser is used or not.
- *
- * @returns `true` if IE browser is used otherwise `false`.
- */
-export declare function useBrowserIE(): boolean;
 
 /**
  * Check whether it is using a mobile browser or not.
@@ -142,8 +140,6 @@ export declare function useBreakpointMax(breakpoint: TBreakpoint | number): bool
  * @returns TRUE when the screen resolution is within allowable resolution.
  */
 export declare function useBreakpointMin(breakpoint: TBreakpoint | number): boolean;
-
-export declare function useFindParentCmp(cmpNames: Array<string>, instance: ComponentInternalInstance | null, maxStep?: number): ComponentInternalInstance | undefined | null;
 
 /**
  * Merge one or more css classes.

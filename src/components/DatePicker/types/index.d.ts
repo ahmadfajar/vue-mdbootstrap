@@ -220,11 +220,11 @@ export declare const BsDateTimeField: {
         $props: AllowedDateTimeFieldProps & TDateTimeFieldOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
-            appendInner?: () => VNode;
-            appendOuter?: () => VNode;
-            prependInner?: () => VNode;
-            prependOuter?: () => VNode;
-            helpText?: () => VNode;
+            'append-inner'?: () => VNode;
+            'append-outer'?: () => VNode;
+            'prepend-inner'?: () => VNode;
+            'prepend-outer'?: () => VNode;
+            'help-text'?: () => VNode;
         };
         $emit: [
             /**

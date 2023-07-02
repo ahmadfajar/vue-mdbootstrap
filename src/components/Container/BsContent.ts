@@ -15,7 +15,7 @@ export default defineComponent<TBsContent, TRecord, TRecord, ComputedOptions, Me
     setup(props, {slots}) {
         const cmpProps = props as Readonly<TContainerOptionProps>;
         const contentRender = (): VNode => h(
-            cmpProps.tag || 'div',
+            cmpProps.tag ?? 'div',
             {
                 class: `${cssPrefix}content-wrap`
             },

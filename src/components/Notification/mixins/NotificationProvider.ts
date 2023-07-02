@@ -1,12 +1,12 @@
-import {reactive} from "vue";
+import { reactive } from 'vue';
+import Helper from '../../../utils/Helper';
 import type {
     INotificationProvider,
     TNotificationItem,
     TNotificationOption,
     TNotificationPosition,
     TNotificationVariant
-} from "../types";
-import Helper from "../../../utils/Helper";
+} from '../types';
 
 export default class NotificationProvider implements INotificationProvider {
     private readonly _item: TNotificationItem;
@@ -81,7 +81,7 @@ export default class NotificationProvider implements INotificationProvider {
 
     error(option: string | TNotificationOption, title?: string): TNotificationOption | null {
         const data = this._createOption(option);
-        data.variant = "error";
+        data.variant = 'error';
         data.title = title;
 
         return this.add(data);
@@ -89,7 +89,7 @@ export default class NotificationProvider implements INotificationProvider {
 
     info(option: string | TNotificationOption, title?: string): TNotificationOption | null {
         const data = this._createOption(option);
-        data.variant = "info";
+        data.variant = 'info';
         data.title = title;
 
         return this.add(data);
@@ -97,7 +97,7 @@ export default class NotificationProvider implements INotificationProvider {
 
     success(option: string | TNotificationOption, title?: string): TNotificationOption | null {
         const data = this._createOption(option);
-        data.variant = "success";
+        data.variant = 'success';
         data.title = title;
 
         return this.add(data);
@@ -105,7 +105,7 @@ export default class NotificationProvider implements INotificationProvider {
 
     warning(option: string | TNotificationOption, title?: string): TNotificationOption | null {
         const data = this._createOption(option);
-        data.variant = "warning";
+        data.variant = 'warning';
         data.title = title;
 
         return this.add(data);
@@ -113,8 +113,8 @@ export default class NotificationProvider implements INotificationProvider {
 
     private _createOption(option: string | TNotificationOption): TNotificationOption {
         const defOpt = {
-            position: "bottom-right" as TNotificationPosition,
-            variant: "default" as TNotificationVariant,
+            position: 'bottom-right' as TNotificationPosition,
+            variant: 'default' as TNotificationVariant,
             oid: Helper.uuid(true),
             clickClose: false,
             closeButton: true,

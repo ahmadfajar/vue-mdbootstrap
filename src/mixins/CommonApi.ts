@@ -222,8 +222,8 @@ export function useRenderRouter(
 export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
     const vm = getCurrentInstance();
     return vm != null && !Helper.isEmpty(props.path) &&
-        ((vm.appContext.config.globalProperties.$router != null) ||
-            (vm.appContext.config.globalProperties.$route != null));
+        (vm.appContext.config.globalProperties.$router != null ||
+            vm.appContext.config.globalProperties.$route != null);
 }
 
 /**
@@ -243,11 +243,7 @@ export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
  */
 export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefined {
     const vm = getCurrentInstance();
-    if (vm != null) {
-        return vm.appContext.config.globalProperties.$router?.currentRoute;
-    }
-
-    return undefined;
+    return vm?.appContext.config.globalProperties.$router?.currentRoute;
 }
 
 /**
@@ -302,12 +298,14 @@ export function useBreakpointMin(breakpoint: TBreakpoint | number): boolean {
 
 export function useFindParentCmp(
     cmpNames: Array<string>,
-    instance: ComponentInternalInstance | null,
-    maxStep = 2
+    maxStep = 2,
+    instance?: ComponentInternalInstance | null
 ): ComponentInternalInstance | undefined | null {
-    if (instance) {
+    const vm = instance ?? getCurrentInstance();
+
+    if (vm) {
         let step = 0;
-        let iterator = instance.parent;
+        let iterator = vm.parent;
 
         while (iterator) {
             // if not found then stops.
@@ -360,11 +358,7 @@ export function useMergeClass(...args: (string | string[])[]): string[] {
  */
 export function useAxiosPlugin(): AxiosInstance | undefined {
     const vm = getCurrentInstance();
-    if (vm != null) {
-        return vm.appContext.config.globalProperties.$axios;
-    }
-
-    return undefined;
+    return vm?.appContext.config.globalProperties.$axios;
 }
 
 /**
@@ -375,11 +369,7 @@ export function useAxiosPlugin(): AxiosInstance | undefined {
  */
 export function useHttpService(): IHttpService | undefined {
     const vm = getCurrentInstance();
-    if (vm != null) {
-        return vm.appContext.config.globalProperties.$http;
-    }
-
-    return undefined;
+    return vm?.appContext.config.globalProperties.$http;
 }
 
 /**
@@ -389,11 +379,7 @@ export function useHttpService(): IHttpService | undefined {
  */
 export function useVueMdbService(): TVueMdb | undefined {
     const vm = getCurrentInstance();
-    if (vm != null) {
-        return vm.appContext.config.globalProperties.$VueMdb;
-    }
-
-    return undefined;
+    return vm?.appContext.config.globalProperties.$VueMdb;
 }
 
 /**
@@ -403,9 +389,5 @@ export function useVueMdbService(): TVueMdb | undefined {
  */
 export function useVueMdbNotification(): INotificationProvider | undefined {
     const vm = getCurrentInstance();
-    if (vm != null) {
-        return vm.appContext.config.globalProperties.$VueMdb.notification;
-    }
-
-    return undefined;
+    return vm?.appContext.config.globalProperties.$VueMdb.notification;
 }

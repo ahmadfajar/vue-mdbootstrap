@@ -46,7 +46,7 @@ export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOpt
                     style: styles.value,
                 },
                 useRenderSlot(
-                    slots, 'default', {key: Helper.uuid()},
+                    slots, 'default', {key: Helper.uuid(true)},
                     !Helper.isEmpty(cmpProps.imgSrc)
                         ? h(BsAvatar, {
                             imgSrc: props.imgSrc,
@@ -57,7 +57,10 @@ export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOpt
                         : (
                             !Helper.isEmpty(cmpProps.icon)
                                 ? h(BsIcon, {
-                                    size: ((!cmpProps.size || useGetCalcSize(cmpProps) === 48) ? 24 : useGetCalcSize(cmpProps)) as Prop<string | number>,
+                                    size: (
+                                        (!cmpProps.size || useGetCalcSize(cmpProps) === 48)
+                                            ? 24 : useGetCalcSize(cmpProps)
+                                    ) as Prop<string | number>,
                                     ...useCreateIconProps(cmpProps),
                                 })
                                 : createCommentVNode(' v-if-BsIcon ')

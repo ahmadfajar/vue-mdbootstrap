@@ -2,7 +2,15 @@ import type { ComponentInternalInstance, ComputedRef, Prop, Ref, ShallowRef, Slo
 import { createCommentVNode, h, Teleport, toDisplayString, withDirectives } from 'vue';
 import { Touch } from '../../../directives';
 import { cssPrefix, useBreakpointMax, useMobileDevice, useRenderTransition } from '../../../mixins/CommonApi';
-import type { TEmitFn, TImageDataset, TLightboxOptionProps, TPopoverPosition, TRecord } from '../../../types';
+import type {
+    TButtonMode,
+    TButtonSize,
+    TEmitFn,
+    TImageDataset,
+    TLightboxOptionProps,
+    TPopoverPosition,
+    TRecord
+} from '../../../types';
 import Helper from '../../../utils/Helper';
 import { BsOverlay } from '../../Animation';
 import { BsSpacer } from '../../Basic';
@@ -198,7 +206,7 @@ function createLightboxToolbar(
                                 default: () =>
                                     h(BsButton, {
                                         color: 'light-grey' as Prop<string>,
-                                        mode: 'icon' as Prop<string>,
+                                        mode: 'icon' as Prop<TButtonMode>,
                                         icon: 'more_vert' as Prop<string>,
                                         // @ts-ignore
                                         flat: true as Prop<boolean>,
@@ -228,7 +236,7 @@ function createButtonItem(
     return condition
         ? h(BsButton, {
             color: 'light-grey' as Prop<string>,
-            mode: 'icon' as Prop<string>,
+            mode: 'icon' as Prop<TButtonMode>,
             icon: icon as Prop<string>,
             // @ts-ignore
             flat: true as Prop<boolean>,
@@ -327,9 +335,9 @@ function createLightboxNavCtrl(
         }, [
             h(BsButton, {
                 color: 'light-grey' as Prop<string>,
-                mode: 'icon' as Prop<string>,
+                mode: 'icon' as Prop<TButtonMode>,
                 icon: 'navigate_before' as Prop<string>,
-                size: 'lg' as Prop<string>,
+                size: 'lg' as Prop<TButtonSize>,
                 // @ts-ignore
                 flat: true as Prop<boolean>,
                 iconSize: 40 as Prop<number>,
@@ -344,9 +352,9 @@ function createLightboxNavCtrl(
         }, [
             h(BsButton, {
                 color: 'light-grey' as Prop<string>,
-                mode: 'icon' as Prop<string>,
+                mode: 'icon' as Prop<TButtonMode>,
                 icon: 'navigate_next' as Prop<string>,
-                size: 'lg' as Prop<string>,
+                size: 'lg' as Prop<TButtonSize>,
                 // @ts-ignore
                 flat: true as Prop<boolean>,
                 iconSize: 40 as Prop<number>,
