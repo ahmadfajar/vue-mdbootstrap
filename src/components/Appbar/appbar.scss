@@ -4,15 +4,15 @@
 @import "../../../scss/variables";
 
 .#{$prefix}appbar {
+    --#{$prefix}appbar-bg: #{$white};
     --#{$prefix}appbar-color: #{$grey-darken-4};
-    --#{$prefix}appbar-bgcolor: #{$white};
     --#{$prefix}appbar-height: 64px;
     --#{$prefix}appbar-margin: #{$padding-sm ($padding-base - .25) $padding-sm $padding-base};
     --#{$prefix}appbar-title-font-size: 1.5rem;
     --#{$prefix}appbar-title-font-weight: #{$font-weight-normal};
 
     @include justify-content(flex-start);
-    background-color: var(--#{$prefix}appbar-bgcolor);
+    background-color: var(--#{$prefix}appbar-bg);
     max-width: 100%;
 
     > .#{$prefix}appbar-content {

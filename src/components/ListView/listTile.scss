@@ -6,7 +6,7 @@
 
 
 .#{$prefix}list-tile {
-    --#{$prefix}tile-state-bgcolor: inherit;
+    --#{$prefix}tile-state-bg: inherit;
     --#{$prefix}tile-state-action-color: var(--#{$prefix}tile-action-color);
     --#{$prefix}tile-state-leading-color: var(--#{$prefix}tile-leading-color);
     --#{$prefix}tile-state-leading-icon-color: var(--#{$prefix}tile-leading-color);
@@ -18,7 +18,7 @@
     @include user-select(none);
     position: relative;
     text-decoration: none;
-    background-color: var(--#{$prefix}tile-state-bgcolor);
+    background-color: var(--#{$prefix}tile-state-bg);
 
     &:active,
     &:focus,
@@ -28,7 +28,7 @@
 
     &:not(.disabled):not(.active) {
         &.#{$prefix}link:hover {
-            --#{$prefix}tile-state-bgcolor: var(--#{$prefix}tile-hover-bg);
+            --#{$prefix}tile-state-bg: var(--#{$prefix}tile-hover-bg);
         }
     }
 
@@ -113,7 +113,7 @@
     }
 
     &.active {
-        --#{$prefix}tile-state-bgcolor: var(--#{$prefix}tile-active-bg);
+        --#{$prefix}tile-state-bg: var(--#{$prefix}tile-active-bg);
         --#{$prefix}tile-state-action-color: var(--#{$prefix}tile-active-action-color);
         --#{$prefix}tile-state-leading-color: var(--#{$prefix}tile-active-leading-color);
         --#{$prefix}tile-state-leading-icon-color: var(--#{$prefix}tile-active-leading-icon-color);

@@ -7,9 +7,15 @@
 
 .#{$prefix}lightbox-wrap {
     --#{$prefix}lightbox-color: #{$gray-400};
+    --#{$prefix}lightbox-display-bg: #{rgba($black, .3)};
+    --#{$prefix}lightbox-toolbar-bg: #{rgba($black, .9)};
     --#{$prefix}lightbox-element-padding-x: #{$padding-sm};
+    --#{$prefix}lightbox-title-bg: #{rgba($black, .7)};
     --#{$prefix}lightbox-title-color: #{$gray-400};
     --#{$prefix}lightbox-title-size: 1.25rem;
+    --#{$prefix}lightbox-thumbnail-bg: #{rgba($black, .5)};
+    --#{$prefix}lightbox-thumbnail-border: #{1px solid rgba($black, .6)};
+    --#{$prefix}lightbox-thumbnail-opacity: 0.5;
     --#{$prefix}lightbox-thumbnail-active-border-color: #{$red-base};
     --#{$prefix}lightbox-thumbnail-active-border-width: 2px;
 
@@ -26,7 +32,7 @@
 
         .#{$prefix}lightbox-item {
             @include flexbox((display: flex, flex-direction: column));
-            background: rgba($black, .3);
+            background: var(--#{$prefix}lightbox-display-bg);
             max-width: 95%;
             max-height: 96%;
             position: relative;
@@ -48,9 +54,9 @@
         }
 
         .#{$prefix}lightbox-item-title {
+            background: var(--#{$prefix}lightbox-title-bg);
             color: var(--#{$prefix}lightbox-title-color);
             font-size: var(--#{$prefix}lightbox-title-size);
-            background: rgba($black, .7);
             display: block;
             line-height: normal;
             padding: 12px;
@@ -85,7 +91,7 @@
         z-index: 10;
 
         .#{$prefix}toolbar-items {
-            background: rgba($black, .9);
+            background: var(--#{$prefix}lightbox-toolbar-bg);
             min-width: 100px;
             padding: var(--#{$prefix}lightbox-element-padding-x);
         }
@@ -97,7 +103,7 @@
     }
 
     > .#{$prefix}lightbox-thumbnail {
-        background: rgba($black, .5);
+        background: var(--#{$prefix}lightbox-thumbnail-bg);
         left: 0;
         right: 0;
         bottom: 0;
@@ -112,20 +118,20 @@
                 @include flexbox((display: flex, flex-flow: row nowrap));
 
                 .#{$prefix}thumbnail-item {
-                    border: 1px solid rgba($black, .6);
+                    border: var(--#{$prefix}lightbox-thumbnail-border);
+                    opacity: var(--#{$prefix}lightbox-thumbnail-opacity);
                     cursor: pointer;
                     display: inline-block;
-                    opacity: .5;
 
                     &:hover {
-                        opacity: 1;
+                        --#{$prefix}lightbox-thumbnail-opacity: 1;
                     }
 
                     &.active {
+                        --#{$prefix}lightbox-thumbnail-opacity: 1;
                         border-color: var(--#{$prefix}lightbox-thumbnail-active-border-color);
                         border-left-width: var(--#{$prefix}lightbox-thumbnail-active-border-width);
                         border-right-width: var(--#{$prefix}lightbox-thumbnail-active-border-width);
-                        opacity: 1;
                     }
                 }
             }
