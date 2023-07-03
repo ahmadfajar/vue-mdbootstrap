@@ -12,7 +12,6 @@ import type {
     TRecord
 } from '../../../types';
 import Helper from '../../../utils/Helper';
-import { BsOverlay } from '../../Animation';
 import { BsSpacer } from '../../Basic';
 import { BsButton } from '../../Button';
 import { BsDropdownMenu } from '../../Menu';
@@ -61,18 +60,13 @@ export function useRenderLightbox(
     transition: Ref<string>,
 ): VNode {
     return h(Teleport, {to: 'body'}, [
-        h(BsOverlay, {
-            color: props.overlayColor as Prop<string>,
-            opacity: props.overlayOpacity as Prop<number>,
-            // @ts-ignore
-            show: (isOpen.value && props.overlay) as Prop<boolean>,
-            // @ts-ignore
-            fixed: true as Prop<boolean>,
-        }),
-        (
+        useRenderTransition({name: 'fade'}, [
             isOpen.value
                 ? h('div', {
-                    class: `${cssPrefix}lightbox-wrap`
+                    class: [
+                        `${cssPrefix}lightbox-wrap`,
+                        props.overlay ? `${cssPrefix}lightbox-overlay` : ''
+                    ]
                 }, [
                     createLightboxToolbar(
                         slots, emit, instance, props, isOpen,
@@ -85,7 +79,7 @@ export function useRenderLightbox(
                     createLightboxThumbnail(emit, props, activeItem, itemIndex, zoom, rotate),
                 ])
                 : createCommentVNode(' BsLightbox ')
-        ),
+        ]),
     ]);
 }
 

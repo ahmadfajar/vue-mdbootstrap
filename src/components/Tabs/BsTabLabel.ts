@@ -1,7 +1,7 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
 import { computed, defineComponent, h, toDisplayString } from 'vue';
 import { booleanProp, stringProp, validStringOrNumberProp } from '../../mixins/CommonProps';
-import type { TBsRipple, TBsTabLabel, TOrientation, TPositionType, TRecord, TTabLabelOptionProps } from '../../types';
+import type { TBsRipple, TBsTabLabel, TOrientation, TPlacementPosition, TRecord, TTabLabelOptionProps } from '../../types';
 import Helper from '../../utils/Helper';
 import { BsRipple } from '../Animation';
 import { iconProps } from '../Avatar/mixins/avatarProps';
@@ -15,14 +15,14 @@ export default defineComponent<TBsTabLabel, TRecord, TRecord, ComputedOptions, M
             type: String,
             default: 'left',
             validator: (value: string): boolean => ['left', 'right', 'top', 'bottom'].includes(value),
-        } as Prop<TPositionType>,
+        } as Prop<TPlacementPosition>,
         iconSize: validStringOrNumberProp,
         label: stringProp,
         tabPosition: {
             type: String,
             default: 'top',
             validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value)
-        } as Prop<TPositionType>,
+        } as Prop<TPlacementPosition>,
         rippleOff: booleanProp,
     },
     setup(props) {

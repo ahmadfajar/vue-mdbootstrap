@@ -12,7 +12,7 @@ export declare type TFlipMode = 'horizontal' | 'vertical' | 'both';
 
 export declare type TIconVariant = 'outlined' | 'filled' | 'round' | 'sharp';
 
-export declare type TPositionType = 'left' | 'right' | 'top' | 'bottom';
+export declare type TPlacementPosition = 'left' | 'right' | 'top' | 'bottom';
 
 export declare type TIconData = {
     id: number;

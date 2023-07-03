@@ -23,7 +23,7 @@ export const lightboxProps = {
     },
     overlayOpacity: {
         type: [Number, String],
-        default: 0.9,
+        default: 0.94,
         validator: (value: string): boolean => !isNaN(parseFloat(value)),
     },
     showCounter: booleanTrueProp,

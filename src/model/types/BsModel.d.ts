@@ -239,6 +239,10 @@ export declare interface IBsModel extends ObjectBase {
     toJSON(): TRecord;
 }
 
+export declare type TBsModel = IBsModel & {
+    [P in string]: never;
+}
+
 /**
  * Data Model class for working with entity object and remote API.
  *

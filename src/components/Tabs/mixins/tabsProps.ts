@@ -6,7 +6,7 @@ import {
     stringOrNumberProp,
     stringProp
 } from '../../../mixins/CommonProps';
-import type { TAlignment, TPositionType, TTabsVariant } from '../../../types';
+import type { TAlignment, TPlacementPosition, TTabsVariant } from '../../../types';
 import { iconProps } from '../../Avatar/mixins/avatarProps';
 import { height as sizeProp } from '../../Icon/mixins/iconProps';
 
@@ -65,7 +65,7 @@ export const tabsProps = {
         type: String,
         default: 'left',
         validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value)
-    } as Prop<TPositionType>,
+    } as Prop<TPlacementPosition>,
     /**
      * Tabs position. Valid values: `left`, `right`, `top`, `bottom`.
      */
@@ -73,7 +73,7 @@ export const tabsProps = {
         type: String,
         default: 'top',
         validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value)
-    } as Prop<TPositionType>,
+    } as Prop<TPlacementPosition>,
     /**
      * TabItem css class name.
      */

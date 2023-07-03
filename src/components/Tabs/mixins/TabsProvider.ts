@@ -3,7 +3,7 @@ import { isRef } from 'vue';
 import type {
     TAlignment,
     TEmitFn,
-    TPositionType,
+    TPlacementPosition,
     TRecord,
     TTabItemOptionProps,
     TTabsBaseProps,
@@ -49,8 +49,8 @@ class TabsProvider {
         return this._props.contentTransition || "fade";
     }
 
-    get iconPosition(): TPositionType {
-        return this._props.iconPosition || ("left" as TPositionType);
+    get iconPosition(): TPlacementPosition {
+        return this._props.iconPosition || ("left" as TPlacementPosition);
     }
 
     get iconSize(): number {
@@ -61,7 +61,7 @@ class TabsProvider {
         return this._props.tabClass;
     }
 
-    get tabPosition(): TPositionType | undefined {
+    get tabPosition(): TPlacementPosition | undefined {
         return this._props.tabPosition;
     }
 

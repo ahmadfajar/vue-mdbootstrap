@@ -7,7 +7,7 @@ import type {
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventUpdateModelValueProps, TIconProps, TPositionType, TRouterOptionProps } from '../../../types';
+import type { EventUpdateModelValueProps, TIconProps, TPlacementPosition, TRouterOptionProps } from '../../../types';
 
 export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 
@@ -31,7 +31,7 @@ export declare type TTabsBaseProps = {
     /**
      * TabItem icon position. Valid values: `left`, `right`, `top`, `bottom`.
      */
-    iconPosition?: TPositionType;
+    iconPosition?: TPlacementPosition;
     /**
      * TabItem icon size.
      */
@@ -43,7 +43,7 @@ export declare type TTabsBaseProps = {
     /**
      * Tabs position. Valid values: `left`, `right`, `top`, `bottom`.
      */
-    tabPosition?: TPositionType;
+    tabPosition?: TPlacementPosition;
 }
 
 export declare type TTabsOptionProps = TTabsBaseProps & {
@@ -85,8 +85,8 @@ export declare type TTabItemOptionProps = TTabPanelOptionProps & {
 }
 
 export declare type TTabLabelOptionProps = TIconProps & {
-    tabPosition?: TPositionType;
-    iconPosition?: TPositionType;
+    tabPosition?: TPlacementPosition;
+    iconPosition?: TPlacementPosition;
     iconSize?: string | number;
     label?: string;
     rippleOff?: boolean;

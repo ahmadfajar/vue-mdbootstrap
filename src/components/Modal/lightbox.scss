@@ -10,10 +10,11 @@
     --#{$prefix}lightbox-display-bg: #{rgba($black, .3)};
     --#{$prefix}lightbox-toolbar-bg: #{rgba($black, .9)};
     --#{$prefix}lightbox-element-padding-x: #{$padding-sm};
+    --#{$prefix}lightbox-overlay-bg: #151515;
     --#{$prefix}lightbox-title-bg: #{rgba($black, .7)};
     --#{$prefix}lightbox-title-color: #{$gray-400};
     --#{$prefix}lightbox-title-size: 1.25rem;
-    --#{$prefix}lightbox-thumbnail-bg: #{rgba($black, .5)};
+    --#{$prefix}lightbox-thumbnail-bg: #{rgba($black, .95)};
     --#{$prefix}lightbox-thumbnail-border: #{1px solid rgba($black, .6)};
     --#{$prefix}lightbox-thumbnail-opacity: 0.5;
     --#{$prefix}lightbox-thumbnail-active-border-color: #{$red-base};
@@ -25,6 +26,10 @@
     bottom: 0;
     position: fixed;
     z-index: 1022;
+
+    &.#{$prefix}lightbox-overlay {
+        background-color: var(--#{$prefix}lightbox-overlay-bg);
+    }
 
     > .#{$prefix}lightbox-display {
         @include flexbox((display: flex, align-items: center, justify-content: center));
@@ -60,7 +65,9 @@
             display: block;
             line-height: normal;
             padding: 12px;
-            position: relative;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
         }
 
         > .#{$prefix}lightbox-controls {

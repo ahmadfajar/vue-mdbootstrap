@@ -133,7 +133,7 @@ function createChipElement(
                 ? () => [
                     h<TBsIcon>(BsIcon, {
                         ...useCreateIconProps(chipProps),
-                        icon: <Prop<string>>(`${chipProps.icon}_${chipProps.iconVariant}`),
+                        icon: <Prop<string>>(`${chipProps.icon + (chipProps.iconVariant ? '_' + chipProps.iconVariant : '')}`),
                         size: <Prop<string | number>>(
                             chipProps.size === 'sm' ? 18 : (chipProps.size === 'lg' ? 40 : 24)
                         ),

@@ -1,6 +1,6 @@
 {
   "name": "vue-mdbootstrap",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Bootstrap5 Material Design Components for Vue.js",
   "author": {
     "name": "Ahmad Fajar",
@@ -51,7 +51,7 @@
   },
   "scripts": {
     "build": "run-p type-check build-prod",
-    "build:dist": "rimraf dist && run-p type-check build-dev build-prod build-lib build-types",
+    "build:dist": "rimraf dist && run-p type-check build-dev build-prod build-lib build-types && cleancss -o dist/bundle.min.css dist/bundle.css && cleancss --format beautify -o dist/bundle.css dist/bundle.css",
     "build-dev": "vite build",
     "build-lib": "vite build --config vite.config.lib.ts",
     "build-prod": "vite build --config vite.config.prod.ts",
@@ -85,6 +85,7 @@
     "@vue/eslint-config-prettier": "^7.1.0",
     "@vue/eslint-config-typescript": "^11.0.3",
     "@vue/tsconfig": "^0.4.0",
+    "clean-css-cli": "^5.6.2",
     "eslint": "^8.43.0",
     "eslint-plugin-es": "^4.1.0",
     "eslint-plugin-vue": "^9.15.0",

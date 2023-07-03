@@ -25,7 +25,7 @@ import {
 import { Resize, Scroll } from '../../directives';
 import { cssPrefix, useRenderTransition } from '../../mixins/CommonApi';
 import { booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp } from '../../mixins/CommonProps';
-import type { TBsTooltip, TPositionType, TRecord, TTooltipOptionProps } from '../../types';
+import type { TBsTooltip, TPlacementPosition, TRecord, TTooltipOptionProps } from '../../types';
 import Helper from '../../utils/Helper';
 import { useAddTooltipListener, useRemoveTooltipListener, useSetTooltipPosition } from './mixins/tooltipApi';
 
@@ -39,7 +39,7 @@ export default defineComponent<TBsTooltip, TRecord, TRecord, ComputedOptions, Me
             type: String,
             default: 'bottom',
             validator: (v: string) => ['top', 'bottom', 'left', 'right'].includes(v)
-        } as Prop<TPositionType>,
+        } as Prop<TPlacementPosition>,
         width: stringOrNumberProp,
         maxWidth: validStringOrNumberProp,
         zIndex: {

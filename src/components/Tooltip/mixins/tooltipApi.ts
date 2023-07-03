@@ -1,7 +1,7 @@
 import type { ComponentInternalInstance, Ref, VNode, VNodeArrayChildren } from "vue";
 import { cssPrefix } from "../../../mixins/CommonApi";
 import { EventListener } from "../../../mixins/DomHelper";
-import type { IBindingElement, IEventResult, IHTMLElement, TPositionType } from "../../../types";
+import type { IBindingElement, IEventResult, IHTMLElement, TPlacementPosition } from "../../../types";
 import Helper from "../../../utils/Helper";
 
 const SPACE = 4;
@@ -9,15 +9,15 @@ const SPACE = 4;
 /**
  * Calculate Tooltip left offset.
  *
- * @param {Element} activatorEl         Activator Element
- * @param {number} width                Element width
- * @param {TPositionType} [placement]   Tooltip placement.
- * @returns {number} Tooltip left offset
+ * @param activatorEl Activator Element
+ * @param width       Element width
+ * @param placement   Tooltip placement.
+ * @returns Tooltip left offset
  */
 function getTooltipLeftPosition(
     activatorEl: Element,
     width: number,
-    placement?: TPositionType
+    placement?: TPlacementPosition
 ) {
     const offset = activatorEl.getBoundingClientRect();
 
@@ -36,15 +36,15 @@ function getTooltipLeftPosition(
 /**
  * Calculate Tooltip top offset.
  *
- * @param {Element} activatorEl         Activator Element
- * @param {number} height               Element height
- * @param {TPositionType} [placement]   Tooltip placement.
- * @returns {number} Tooltip top offset
+ * @param activatorEl  Activator Element
+ * @param height       Element height
+ * @param placement    Tooltip placement.
+ * @returns Tooltip top offset
  */
 function getTooltipTopPosition(
     activatorEl: Element,
     height: number,
-    placement?: TPositionType
+    placement?: TPlacementPosition
 ) {
     const rect = activatorEl.getBoundingClientRect();
 
@@ -63,8 +63,8 @@ function getTooltipTopPosition(
 /**
  * Find first `VNode` within the `BsTooltip` virtual-node subtree.
  *
- * @param {ComponentInternalInstance} instance Component instance search starting point.
- * @returns {Element|null} The DOM Element if found.
+ * @param instance Component instance search starting point.
+ * @returns The DOM Element if found.
  */
 function findActivatorElement(instance: ComponentInternalInstance): Element | null {
     const sibling = (<Element>instance.vnode.el).nextElementSibling
@@ -89,7 +89,7 @@ function findActivatorElement(instance: ComponentInternalInstance): Element | nu
 export function useSetTooltipPosition(
     tooltipRef: Ref<Element | null>,
     instance?: ComponentInternalInstance | null,
-    placement?: TPositionType,
+    placement?: TPlacementPosition,
     isActive?: boolean
 ) {
     if (!tooltipRef.value || !instance || !isActive) {

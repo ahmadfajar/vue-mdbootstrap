@@ -510,7 +510,7 @@ export function useRenderDatePickerDays(
             e.preventDefault();
             debounceShiftDatePickerCalendar(
                 debounceRef, <TDateTimePickerMode>DatePickerConst.DATE,
-                calendarValue, emit, 300, e.deltaY,
+                calendarValue, emit, 300, e.deltaY || e.deltaX,
             );
         },
     }, [
@@ -777,7 +777,7 @@ export function useRenderDatePickerMonths(
             e.preventDefault();
             debounceShiftDatePickerCalendar(
                 debounceRef, <TDateTimePickerMode>DatePickerConst.MONTH,
-                calendarValue, emit, 300, e.deltaY,
+                calendarValue, emit, 300, e.deltaY || e.deltaX,
             );
         },
     }, [
@@ -875,7 +875,7 @@ export function useRenderDatePickerYears(
             e.preventDefault();
             debounceShiftDatePickerCalendar(
                 debounceRef, <TDateTimePickerMode>DatePickerConst.YEAR,
-                calendarValue, emit, 300, e.deltaY,
+                calendarValue, emit, 300, e.deltaY || e.deltaX,
             );
         },
     }, [

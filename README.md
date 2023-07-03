@@ -2,16 +2,16 @@
 
 <p style="text-align: center">
   <a href="https://www.npmjs.com/package/vue-mdbootstrap">
-    <img src="https://flat.badgen.net/npm/v/vue-mdbootstrap" alt="NPM Release">
+    <img src="https://img.shields.io/npm/v/vue-mdbootstrap?logo=npm" alt="NPM Release">
   </a>
   <a href="https://github.com/ahmadfajar/vue-mdbootstrap">
-    <img src="https://flat.badgen.net/github/release/ahmadfajar/vue-mdbootstrap?icon=github" alt="Release">
+    <img src="https://img.shields.io/github/release/ahmadfajar/vue-mdbootstrap?logo=github" alt="Release">
   </a>
   <a href="https://www.npmjs.com/package/vue-mdbootstrap">
-    <img src="https://flat.badgen.net/npm/dt/vue-mdbootstrap" alt="Downloads">
+    <img src="https://img.shields.io/npm/dt/vue-mdbootstrap" alt="Downloads">
   </a>
   <a href="https://www.npmjs.com/package/vue-mdbootstrap">
-    <img src="https://flat.badgen.net/github/license/ahmadfajar/vue-mdbootstrap" alt="License">
+    <img src="https://img.shields.io/github/license/ahmadfajar/vue-mdbootstrap" alt="License">
   </a>
 </p>
 
@@ -137,7 +137,7 @@ Code below is an example on how to create HTML page using Vue MDBootstrap.
 
 ## Demos
 
-You can clone the demos from [here](https://github.com/ahmadfajar/vuemdb-example)
+You can clone the demos from [here](https://github.com/ahmadfajar/vue3-mdb-example)
 to see it in action.
 
 ## Start coding

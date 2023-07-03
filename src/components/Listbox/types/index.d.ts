@@ -6,7 +6,7 @@ import {
     VNode,
     VNodeProps
 } from 'vue';
-import { EventUpdateModelValueProps, IArrayStore, IBsModel, IBsStore, TLabelPosition } from '../../../types';
+import { EventUpdateModelValueProps, IArrayStore, IBsStore, TBsModel, TLabelPosition } from '../../../types';
 
 export declare type TDataListSchemaProps = {
     displayField: string,
@@ -120,12 +120,12 @@ export declare type TBsListbox = ComponentObjectPropsOptions<TListboxOptionProps
 
 declare type AllowedListboxProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
     EventUpdateModelValueProps<string | number | string[] | number[] | undefined> & {
-    onSelect?: (item: IBsModel) => void;
-    onDeselect?: (item: IBsModel) => void;
-    'onData-bind'?: (data: IBsModel[]) => void;
+    onSelect?: (item: TBsModel) => void;
+    onDeselect?: (item: TBsModel) => void;
+    'onData-bind'?: (data: TBsModel[]) => void;
     'onData-error'?: (error: unknown) => void;
-    'onData-filter'?: (data: IBsModel[]) => void;
-    'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
+    'onData-filter'?: (data: TBsModel[]) => void;
+    'onUpdate:selected-value'?: (selected: TBsModel[]) => void;
     'onUpdate:search-text'?: (search?: string) => void;
 }
 
@@ -133,7 +133,7 @@ export declare const BsListbox: {
     new(): {
         $props: AllowedListboxProps & TListboxOptionProps;
         $slots: {
-            'option-item'?: (arg: { item: IBsModel, index: number }) => VNode;
+            'option-item'?: (arg: { item: TBsModel, index: number }) => VNode;
             'empty-data-msg'?: () => VNode;
             'not-found-msg'?: () => VNode;
         };

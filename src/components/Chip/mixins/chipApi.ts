@@ -118,7 +118,9 @@ export function useRenderChip(
                     {name: 'scale'},
                     useRenderSlotWithWrapper(
                         slots, 'icon', Helper.uuid(true),
-                        {class: `${cssPrefix}chip-icon`},
+                        {
+                            class: [`${cssPrefix}chip-icon`, Helper.isEmpty(props.icon) ? `${cssPrefix}empty-icon` : ''],
+                        },
                         (
                             !Helper.isEmpty(props.icon)
                                 ? h<TBsIcon>(BsIcon, {
