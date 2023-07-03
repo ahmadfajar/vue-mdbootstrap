@@ -1,6 +1,6 @@
 # Vue MDBootstrap
 
-<p style="text-align: center">
+<p align="center">
   <a href="https://www.npmjs.com/package/vue-mdbootstrap">
     <img src="https://img.shields.io/npm/v/vue-mdbootstrap?logo=npm" alt="NPM Release">
   </a>
