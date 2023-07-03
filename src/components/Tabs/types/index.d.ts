@@ -104,7 +104,7 @@ declare type AllowedTabsProps = AllowedComponentProps & ComponentCustomProps &
     VNodeProps & EventUpdateModelValueProps<number> & {
     onChange?: (
         newTab: ComponentInternalInstance,
-        oldTab?: ComponentInternalInstance,
+        oldTab: ComponentInternalInstance | undefined,
         newIndex: number,
         oldIndex?: number,
     ) => void;
