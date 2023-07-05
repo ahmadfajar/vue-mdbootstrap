@@ -15,8 +15,11 @@ export default defineComponent<TBsCard, TRecord, TRecord, ComputedOptions, Metho
             thisProps.tag || 'div', {
                 class: {
                     'card': true,
-                    'rounded-0': thisProps.rounded === false,
                     [`${cssPrefix}shadow`]: thisProps.shadow
+                },
+                style: {
+                    ['--bs-card-border-radius']: thisProps.roundedOff === true ? 0 : undefined,
+                    ['--bs-card-border-width']: thisProps.borderOff === true ? 0 : undefined,
                 }
             }, [
                 thisProps.imgTopSrc

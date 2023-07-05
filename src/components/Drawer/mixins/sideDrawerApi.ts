@@ -21,24 +21,19 @@ export function useSideDrawerStyles(
     zIndex: number,
 ): TRecord {
     const zeroPx = '0px';
-    const sbWidth = parseInt(<string>props.width) + 1;
+    const drawerWidth = (parseInt(<string>props.width) + 1) * -1;
     const properties = {
         height: props.clipped ? `calc(100% - ${clipHeight.value}px)` : undefined,
         width: Helper.cssUnit(props.width),
-        transform: props.position === 'right'
-            ? `translateX(${Helper.cssUnit(sbWidth)})`
-            : `translateX(-${Helper.cssUnit(sbWidth)})`,
         marginTop: Helper.cssUnit(clipHeight.value),
-        left: props.position === 'left' ? zeroPx : undefined,
-        right: props.position === 'right' ? zeroPx : undefined,
+        left: props.position === 'left' ? (isOpen.value ? zeroPx : Helper.cssUnit(drawerWidth)) : undefined,
+        right: props.position === 'right' ? (isOpen.value ? zeroPx : Helper.cssUnit(drawerWidth)) : undefined,
         position: props.fixedLayout ? 'fixed' : undefined,
         'z-index': clipHeight.value > 0 ? (zIndex - 1) : undefined,
     };
 
     if (isMobile.value && !props.mini) {
-        const slideWidth = props.position === 'right'
-            ? (parseInt(<string>props.modalWidth) + 1)
-            : (parseInt(<string>props.modalWidth) + 1) * -1;
+        const slideWidth = (parseInt(<string>props.modalWidth) + 1) * -1;
 
         return {
             ...properties,
@@ -47,19 +42,22 @@ export function useSideDrawerStyles(
             marginTop: zeroPx,
             position: 'fixed',
             top: zeroPx,
-            transform: isOpen.value ? 'translateX(0px)' : `translateX(${Helper.cssUnit(slideWidth)})`,
             'z-index': zIndex + 1,
+            left: props.position === 'left'
+                ? (isOpen.value ? zeroPx : Helper.cssUnit(slideWidth)) : undefined,
+            right: props.position === 'right'
+                ? (isOpen.value ? zeroPx : Helper.cssUnit(slideWidth)) : undefined,
         };
     } else if (props.mini && props.miniWidth) {
+        const miniWidth = (parseInt(<string>props.miniWidth) + 1) * -1;
+
         return {
             ...properties,
             width: Helper.cssUnit(props.miniWidth),
-            transform: 'translateX(0px)',
-        };
-    } else if (props.width && props.open) {
-        return {
-            ...properties,
-            transform: 'translateX(0px)',
+            left: props.position === 'left'
+                ? (isOpen.value ? zeroPx : Helper.cssUnit(miniWidth)) : undefined,
+            right: props.position === 'right'
+                ? (isOpen.value ? zeroPx : Helper.cssUnit(miniWidth)) : undefined,
         };
     }
 

@@ -10,7 +10,7 @@ import type {
 } from 'vue';
 import type { ObjectBase, TIconProps, TImageProps, TRouterOptionProps, TTagProps } from '../../../types';
 
-export declare type TSpaceAround = 'left' | 'right' | 'both';
+export declare type TSpaceAround = 'left' | 'right' | 'both' | 'none';
 
 export declare type TListViewOptionProps = {
     color?: string;

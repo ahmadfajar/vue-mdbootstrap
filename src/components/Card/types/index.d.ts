@@ -18,9 +18,13 @@ export declare type TTagProps = {
 
 export declare type TCardOptionProps = TTagProps & {
     /**
-     * Set to `false` to remove the rounded border on the side of the Card component.
+     * Set to `true` to remove the side border of the Card component.
      */
-    rounded?: boolean;
+    borderOff?: boolean;
+    /**
+     * Set to `true` to remove the rounded border on the side of the Card component.
+     */
+    roundedOff?: boolean;
     /**
      * Create card with shadow on its sides.
      */

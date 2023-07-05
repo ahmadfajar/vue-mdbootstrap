@@ -1,5 +1,5 @@
-import {booleanProp, stringProp, validStringOrNumberProp} from "../../../mixins/CommonProps";
-import {flip, rotate} from "../../Icon/mixins/iconProps";
+import { booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp } from '../../../mixins/CommonProps';
+import { flip, rotate } from '../../Icon/mixins/iconProps';
 
 export const iconProps = {
     /**
@@ -50,6 +50,8 @@ export const imageProps = {
 }
 
 export const avatarProps = {
+    border: stringOrNumberProp,
+    borderColor: stringProp,
     /**
      * This component's height.
      */

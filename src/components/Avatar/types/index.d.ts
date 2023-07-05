@@ -66,9 +66,20 @@ export declare type TAvatarImageOptionProps = TSizeOptionProps & {
      * The image location to place inside this component.
      */
     imgSrc?: string;
+    /**
+     * Apply border width to this component.
+     */
+    border?: string | number;
+    /**
+     * Apply border color to this component.
+     */
+    borderColor?: string;
 }
 
 export declare type TAvatarOptionProps = TAvatarImageOptionProps & TIconProps & {
+    /**
+     * Create avatar from a text. The text must be less than 4 characters.
+     */
     text?: string;
 }
 

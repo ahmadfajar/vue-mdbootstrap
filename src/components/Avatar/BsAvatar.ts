@@ -12,31 +12,36 @@ export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, Met
     name: 'BsAvatar',
     props: avatarProps,
     setup(props, {slots}) {
-        const cmpProps = props as Readonly<TAvatarOptionProps>;
+        const thisProps = props as Readonly<TAvatarOptionProps>;
 
         return () =>
             h('div',
                 {
                     class: {
                         [`${cssPrefix}avatar`]: true,
-                        'p-2': useGetCalcSize(cmpProps) > 72,
-                        ...useShapeClasses(cmpProps.circle, cmpProps.rounded),
+                        ...useShapeClasses(thisProps.circle, thisProps.rounded),
+                        'p-2': useGetCalcSize(thisProps) > 72,
+                        [`border-${thisProps.borderColor}`]: thisProps.borderColor && Helper.isEmpty(thisProps.imgSrc),
                     },
-                    style: useSizeStyles(cmpProps),
+                    style: {
+                        ...useSizeStyles(thisProps),
+                        border: thisProps.border && Helper.isEmpty(thisProps.imgSrc)
+                            ? (Helper.cssUnit(thisProps.border) + ' solid') : undefined
+                    },
                 }, useRenderSlot(
                     slots, 'default', {key: Helper.uuid()},
                     [
-                        (cmpProps.imgSrc && cmpProps.imgSrc !== '')
-                            ? useRenderAvatarImage(cmpProps)
+                        !Helper.isEmpty(thisProps.imgSrc)
+                            ? useRenderAvatarImage(thisProps)
                             : (
-                                (cmpProps.icon && cmpProps.icon !== '')
+                                !Helper.isEmpty(thisProps.icon)
                                     ? h<TBsIcon>(BsIcon, {
-                                        size: <Prop<number>>useAvatarIconSize(cmpProps),
-                                        ...useCreateIconProps(cmpProps),
+                                        size: <Prop<number>>useAvatarIconSize(thisProps),
+                                        ...useCreateIconProps(thisProps),
                                     })
                                     : h('span',
                                         {class: [`${cssPrefix}avatar-text`]},
-                                        cmpProps.text || '?',
+                                        thisProps.text || '?',
                                     )
                             )
                     ]

@@ -49,8 +49,10 @@ export function useListNavItemInnerClasses(
 ): TRecord {
     return {
         [`${cssPrefix}nav-item-inner`]: true,
-        [`${cssPrefix}tile-border-${provider?.itemBorderVariant}`]: provider?.itemBorderVariant && !props.borderOff
-        && ['left', 'right', 'left-right', 'top', 'bottom', 'top-bottom'].includes(provider.itemBorderVariant),
+        [`${cssPrefix}tile-border-${provider?.itemBorderVariant}`]: (
+            provider?.itemBorderVariant && !props.borderOff &&
+            ['left', 'right', 'left-right', 'top', 'bottom', 'top-bottom'].includes(provider.itemBorderVariant)
+        ),
         [`${cssPrefix}tile-space-${provider?.spaceAround}`]: (
             provider?.spaceAround &&
             ['both', 'left', 'right'].includes(provider.spaceAround)

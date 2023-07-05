@@ -32,27 +32,29 @@ export declare type TBaseButtonProps = {
      */
     color?: string;
     /**
-     * Render this button with flat style (Google Material Text Button) or not.
+     * Render this button with flat style like Google Material
+     * [Text Button](https://m3.material.io/components/buttons/specs).
      */
     flat?: boolean;
     /**
-     * Render this button with outlined style (Google Material Outlined Button) or not, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#outline-buttons)}
-     * for details.
+     * Render this button with outlined style like Google Material
+     * [Outlined Button](https://m3.material.io/components/buttons/specs).
      */
     outlined?: boolean;
     /**
-     * Render this button with raised style (Google Material Elevated Button) or not.
+     * Render this button with raised style like Google Material
+     * [Elevated Button](https://m3.material.io/components/buttons/specs).
      */
     raised?: boolean;
     /**
-     * Render this button with rounded style or not, see
+     * Render this button with rounded style, see
      * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/)}
      * for details.
      */
     rounded?: boolean;
     /**
-     * Render button with rounded-pill style (Google Material Button) or not.
+     * Render button with rounded-pill style like Google Material
+     * [Button](https://m3.material.io/components/buttons/specs).
      */
     pill?: boolean;
     /**

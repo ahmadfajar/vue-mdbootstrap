@@ -1,6 +1,7 @@
 import type { Prop, VNode } from 'vue';
 import { h } from 'vue';
-import type { TIconProps, TAvatarImageOptionProps, TFlipMode, TRecord, TSizeOptionProps } from '../../../types';
+import type { TAvatarImageOptionProps, TFlipMode, TIconProps, TRecord, TSizeOptionProps } from '../../../types';
+import Helper from '../../../utils/Helper';
 import { useGetCalcSize, useSizeStyles } from '../../Icon/mixins/iconApi';
 
 export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
@@ -33,8 +34,14 @@ export function useShapeClasses(circle?: boolean, rounded?: boolean): Record<str
 
 export function useRenderAvatarImage(props: Readonly<TAvatarImageOptionProps>): VNode {
     return h('img', {
-        class: useShapeClasses(props.circle, props.rounded),
-        style: useSizeStyles(props),
+        class: {
+            ...useShapeClasses(props.circle, props.rounded),
+            [`border-${props.borderColor}`]: props.borderColor,
+        },
+        style: {
+            ...useSizeStyles(props),
+            border: props.border ? (Helper.cssUnit(props.border) + ' solid') : undefined
+        },
         src: props.imgSrc,
         alt: '',
     });

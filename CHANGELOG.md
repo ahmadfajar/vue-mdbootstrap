@@ -2,6 +2,18 @@
 
 > All notable changes to this project will be documented in this file.
 
+## v2.0.2
+
+Released: July xx, 2023
+
+### Features & Improvements
+
+- **BsAvatar**: add property `border`, `borderColor`.
+- **BsCard**: add property `roundedOff`, `borderOff`.
+- **BsListNav**, **BsListTile**: fix padding when `spaceAround` property is set on **BsListView**.
+- **BsSideDrawer**: improve computing of drawer position.
+
+
 ## v2.0.1
 
 Released: July 4, 2023
@@ -20,14 +32,14 @@ Released: July 4, 2023
   - Add slot `empty-data-msg` for placing custom message.
   - Add slot `not-found-msg` for placing custom message.
 - **BsDatePicker**: add touchpad swipe gesture.
-- **BsLightbox**: placed title container on top image like image title overlay
+- **BsLightbox**: placed title container on top image like image title overlay.
 
 ### Bug Fixes
 
 - Fix custom slot-name doesn't work properly when used as web component using 
   **UMD/ESM javascript** resource. All custom slot-name now using `kebab-case` naming convention.
-- **BsChipGroup**: fix checked icon not display correctly
-- **BsCheckboxGroup**, **BsRadioGroup**: fix wrong multi-column  
+- **BsChipGroup**: fix checked icon doesn't display correctly.
+- **BsCheckboxGroup**, **BsRadioGroup**: fix wrong multi-column.  
 
 
 ## v2.0.0

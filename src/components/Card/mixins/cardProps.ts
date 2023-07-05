@@ -12,9 +12,13 @@ export const baseTagProps = {
 export const cardProps = {
     ...baseTagProps,
     /**
-     * Set to `false` to remove the rounded border on the side of the Card component.
+     * Set to `true` to remove the side border of the Card component.
      */
-    rounded: booleanTrueProp,
+    borderOff: booleanProp,
+    /**
+     * Set to `true` to remove the rounded border on the side of the Card component.
+     */
+    roundedOff: booleanProp,
     /**
      * Create card with shadow on its sides.
      */
