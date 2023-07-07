@@ -45,6 +45,7 @@ import type {
     BsListView,
     BsMaskLoader,
     BsModal,
+    BsNotification,
     BsNumericField,
     BsOverlay,
     BsPopover,
@@ -145,6 +146,7 @@ declare module '@vue/runtime-core' {
         BsTooltip: TypesConfig extends Record<'BsTooltip', infer T> ? T : typeof BsTooltip
         BsModal: TypesConfig extends Record<'BsModal', infer T> ? T : typeof BsModal
         BsLightbox: TypesConfig extends Record<'BsLightbox', infer T> ? T : typeof BsLightbox
+        BsNotification: TypesConfig extends Record<'BsNotification', infer T> ? T : typeof BsNotification
     }
 
     export interface ComponentCustomProperties {

@@ -1,7 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import { meanBy, sumBy } from 'lodash';
 import { AbstractStore } from '../model';
-import type { IArrayStore, IBsModel, TRecord, TSortDirection, TSortOption } from '../types';
+import type { IArrayStore, TBsModel, TRecord, TSortDirection, TSortOption } from '../types';
 import Helper from '../utils/Helper';
 
 /**
@@ -24,7 +24,7 @@ import Helper from '../utils/Helper';
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 24/06/2023 14:07
+ * @since  13/03/2019 modified: 07/07/2023 07:29
  */
 export default class BsArrayStore extends AbstractStore implements IArrayStore {
     /**
@@ -41,10 +41,10 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
         }
     }
 
-    get dataItems(): IBsModel[] {
+    get dataItems(): TBsModel[] {
         const page = (this.currentPage > 0 && this.currentPage <= this.totalPages) ? this.currentPage - 1 : 0;
         const offset = this.pageSize > 0 ? (page * this.pageSize) : 0;
-        let result: IBsModel[];
+        let result: TBsModel[];
 
         if (this.filters.length > 0) {
             this._filteredItems = this.localFilter();
@@ -91,7 +91,7 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
         this._onLoadingSuccess();
     }
 
-    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse> {
+    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse> {
         this._state.loading = true;
 
         return new Promise((resolve) => {
@@ -127,7 +127,7 @@ export default class BsArrayStore extends AbstractStore implements IArrayStore {
     sort(
         options: string | string[] | TSortOption | TSortOption[],
         direction: TSortDirection = 'asc',
-    ): IBsModel[] {
+    ): TBsModel[] {
         this.createSorters(options, direction, true);
         this._items = this.localSort();
 

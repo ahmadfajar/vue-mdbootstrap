@@ -6,6 +6,7 @@ import type {
     IAbstractStore,
     IBsModel,
     IRestAdapter,
+    TBsModel,
     TDataStoreConfig,
     TDataStoreState,
     TFilterOperator,
@@ -27,7 +28,7 @@ import Helper from '../utils/Helper';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 26/06/2023 23:46
+ * @since  15/03/2019 modified: 07/07/2023 07:27
  */
 export default class AbstractStore implements IAbstractStore {
     protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
@@ -36,8 +37,8 @@ export default class AbstractStore implements IAbstractStore {
     protected readonly _parsingDataErrMsg = 'Unable to parse data coming from server.';
     protected _config: TDataStoreConfig;
     protected _filters: TFilterOption[];
-    protected _filteredItems: IBsModel[];
-    protected _items: IBsModel[];
+    protected _filteredItems: TBsModel[];
+    protected _items: TBsModel[];
     protected _proxy: IRestAdapter | undefined;
     protected _state: TDataStoreState;
     public storeState: TDataStoreState;
@@ -81,8 +82,8 @@ export default class AbstractStore implements IAbstractStore {
         );
 
         this._config = initialCfg;
-        this._filteredItems = [] as IBsModel[];
-        this._items = [] as IBsModel[];
+        this._filteredItems = [] as TBsModel[];
+        this._items = [] as TBsModel[];
 
         if (!Helper.isEmpty(initialCfg.filters)) {
             const filters = this.createFilters(initialCfg.filters);
@@ -120,7 +121,7 @@ export default class AbstractStore implements IAbstractStore {
 
     clear() {
         if (Helper.isArray(this._items) && this._items.length > 0) {
-            for (const item of <IBsModel[]>this._items) {
+            for (const item of <TBsModel[]>this._items) {
                 if (AbstractStore.isModel(item)) {
                     item.destroy();
                 }
@@ -302,15 +303,15 @@ export default class AbstractStore implements IAbstractStore {
         this._state.hasError = false;
     }
 
-    find(property: string, value: unknown, startIndex = 0): IBsModel | undefined {
+    find(property: string, value: unknown, startIndex = 0): TBsModel | undefined {
         return this._items.find((item, idx) =>
             item.get(property) === value && idx >= startIndex
         );
     }
 
     findBy(
-        predicate: (value: IBsModel, index: number) => boolean,
-    ): IBsModel | undefined {
+        predicate: (value: TBsModel, index: number) => boolean,
+    ): TBsModel | undefined {
         return this._items.find(predicate);
     }
 
@@ -324,7 +325,7 @@ export default class AbstractStore implements IAbstractStore {
         );
     }
 
-    localFilter(): IBsModel[] {
+    localFilter(): TBsModel[] {
         if (this.filters.length > 0) {
             return this._items.filter(item => {
                 const conditions = [];
@@ -368,7 +369,7 @@ export default class AbstractStore implements IAbstractStore {
         }
     }
 
-    localSort(): IBsModel[] {
+    localSort(): TBsModel[] {
         const fields: string[] = [];
         const orders: string[] = [];
 
@@ -416,7 +417,7 @@ export default class AbstractStore implements IAbstractStore {
             && Object.hasOwn(item, <string>this._config.idProperty);
     }
 
-    remove(items: IBsModel[] | IBsModel): void {
+    remove(items: TBsModel[] | TBsModel): void {
         if (Array.isArray(items)) {
             for (const item of items) {
                 this.remove(item);
@@ -614,7 +615,7 @@ export default class AbstractStore implements IAbstractStore {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    load(data?: never[]): Promise<IBsModel[] | AxiosResponse> {
+    load(data?: never[]): Promise<TBsModel[] | AxiosResponse> {
         throw Error('Not supported yet.');
     }
 
@@ -628,14 +629,14 @@ export default class AbstractStore implements IAbstractStore {
      */
     protected _append(item: never, force = true, silent = false): void {
         if (this.isCandidateForModel(item)) {
-            this._items.push(this.createModel(item));
+            this._items.push(<TBsModel>this.createModel(item));
             if (!silent) {
                 this._state.totalCount++;
                 this._state.length++;
             }
         } else if (force && !Helper.isPrimitive(item)) {
             if (Helper.isObject(item)) {
-                this._items.push(this.createModel(item).seal());
+                this._items.push(<TBsModel>this.createModel(item).seal());
             } else {
                 this._items.push(Object.seal(item));
             }

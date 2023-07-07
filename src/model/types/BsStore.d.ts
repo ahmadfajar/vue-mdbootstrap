@@ -1,6 +1,6 @@
 import type { AxiosInstance, AxiosResponse } from 'axios';
 import type { TRecord } from '../../types';
-import type { AbstractStore, IAbstractStore, IBsModel, IBsStore, TSortDirection, TSortOption } from '../types';
+import type { AbstractStore, IAbstractStore, IBsStore, TBsModel, TSortDirection, TSortOption } from '../types';
 
 export declare type TSuccessResponse = {
     success: boolean;
@@ -14,7 +14,7 @@ export declare interface IBsStore extends IAbstractStore {
      * If a filter or sorter has been applied before,
      * then the returned dataset will also be affected by it.
      */
-    get dataItems(): IBsModel[];
+    get dataItems(): TBsModel[];
 
     /**
      * Check if the data Store is using server filtering or local filtering.
@@ -98,7 +98,7 @@ export declare interface IBsStore extends IAbstractStore {
      *
      * @param item Data Model instance to be removed
      */
-    delete(item: IBsModel): Promise<AxiosResponse | TSuccessResponse>;
+    delete(item: TBsModel): Promise<AxiosResponse | TSuccessResponse>;
 
     /**
      * Delete specific items from internal dataset as well as from remote
@@ -107,7 +107,7 @@ export declare interface IBsStore extends IAbstractStore {
      *
      * @param items Collection of data Model instances to be removed
      */
-    deletes(items: IBsModel[]): Promise<TSuccessResponse>;
+    deletes(items: TBsModel[]): Promise<TSuccessResponse>;
 
     /**
      * Fetch single item from the remote server via REST API and
@@ -144,7 +144,7 @@ export declare interface IBsStore extends IAbstractStore {
     sort(
         options: string | string[] | TSortOption | TSortOption[],
         direction: TSortDirection,
-    ): Promise<IBsModel[]>;
+    ): Promise<TBsModel[]>;
 }
 
 /**
@@ -179,7 +179,7 @@ export declare class BsStore extends AbstractStore implements IBsStore {
      */
     constructor(config: TRecord, adapter?: AxiosInstance);
 
-    get dataItems(): IBsModel[];
+    get dataItems(): TBsModel[];
 
     get remoteFilter(): boolean;
     set remoteFilter(value: boolean);
@@ -200,15 +200,15 @@ export declare class BsStore extends AbstractStore implements IBsStore {
 
     assignData(data: unknown[] | unknown, silent?: boolean): void;
 
-    delete(item: IBsModel): Promise<AxiosResponse | TSuccessResponse>;
+    delete(item: TBsModel): Promise<AxiosResponse | TSuccessResponse>;
 
-    deletes(items: IBsModel[]): Promise<TSuccessResponse>;
+    deletes(items: TBsModel[]): Promise<TSuccessResponse>;
 
     fetch(id: string | number): Promise<AxiosResponse>;
 
-    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse>;
+    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse>;
 
     query(): Promise<unknown>;
 
-    sort(options: string | string[] | TSortOption | TSortOption[], direction?: TSortDirection): Promise<IBsModel[]>;
+    sort(options: string | string[] | TSortOption | TSortOption[], direction?: TSortDirection): Promise<TBsModel[]>;
 }

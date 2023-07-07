@@ -17,9 +17,15 @@ export declare type TAppbarOptionProps = {
      */
     clippedRight?: boolean;
     /**
-     * Always stick `Appbar` at top of the page even though user already scrolled down.
+     * Placed `Appbar` fixed at the top of the page.
+     * See {@link [Bootstrap](https://getbootstrap.com/docs/5.3/helpers/position/)}
      */
     fixedTop?: boolean;
+    /**
+     * Always stick `Appbar` at top of the page.
+     * See {@link [Bootstrap](https://getbootstrap.com/docs/5.3/helpers/position/)}
+     */
+    stickyTop?: boolean;
     /**
      * Create shadow effect at the bottom of `Appbar`.
      */

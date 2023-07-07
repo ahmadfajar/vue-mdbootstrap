@@ -30,7 +30,7 @@ import {
 } from '../components/ListView/types';
 import { BsDropdownMenu } from '../components/Menu/types';
 import { BsLightbox, BsModal } from '../components/Modal/types';
-import { INotificationProvider } from '../components/Notification/types';
+import { BsNotification, INotificationProvider } from '../components/Notification/types';
 import { BsPopover } from '../components/Popover/types';
 import { BsMaskLoader, BsProgress, BsProgressBar } from '../components/Progress/types';
 import { BsRadio, BsRadioGroup } from '../components/Radio/types';
@@ -147,6 +147,7 @@ declare module '@vue/runtime-core' {
         BsTooltip: TypesConfig extends Record<'BsTooltip', infer T> ? T : typeof BsTooltip
         BsModal: TypesConfig extends Record<'BsModal', infer T> ? T : typeof BsModal
         BsLightbox: TypesConfig extends Record<'BsLightbox', infer T> ? T : typeof BsLightbox
+        BsNotification: TypesConfig extends Record<'BsNotification', infer T> ? T : typeof BsNotification
     }
 
     export interface ComponentCustomProperties {

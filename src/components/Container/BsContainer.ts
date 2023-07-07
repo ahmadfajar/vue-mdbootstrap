@@ -1,9 +1,10 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
-import { computed, defineComponent, getCurrentInstance, h, onMounted, ref, withDirectives } from 'vue';
+import { computed, defineComponent, h, onMounted, ref, withDirectives } from 'vue';
 import { Resize } from '../../directives';
 import { cssPrefix, useBreakpointMax, useFindParentCmp, useVueMdbService } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
 import type { TAppContainerOptionProps, TBsContainer, TContainerOptionProps, TRecord, TVueMdb } from '../../types';
+import Helper from '../../utils/Helper';
 import { baseTagProps } from '../Card/mixins/cardProps';
 
 export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
@@ -31,13 +32,17 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
         const styles = computed((): TRecord | undefined => {
             if (cmpProps.app && appId.value) {
                 if (vueMdb.value) {
-                    // console.log("vueMdb.value", vueMdb.value);
-                    const {leftSideDrawerWidth, rightSideDrawerWidth} =
-                        vueMdb.value.app[appId.value];
+                    const {
+                        leftSideDrawerWidth, rightSideDrawerWidth,
+                        appbarHeight, appbarFixedTop
+                    } = vueMdb.value.app[appId.value];
 
                     return {
-                        paddingRight: isMobile.value ? `0` : `${rightSideDrawerWidth}px`,
-                        paddingLeft: isMobile.value ? `0` : `${leftSideDrawerWidth}px`
+                        paddingRight: isMobile.value ? 0 : `${rightSideDrawerWidth}px`,
+                        paddingLeft: isMobile.value ? 0 : `${leftSideDrawerWidth}px`,
+                        top: appbarFixedTop === true ? Helper.cssUnit(appbarHeight + 1) : undefined,
+                        bottom: appbarFixedTop === true ? 0 : undefined,
+                        position: appbarFixedTop === true ? 'absolute' : undefined,
                     };
                 }
             }

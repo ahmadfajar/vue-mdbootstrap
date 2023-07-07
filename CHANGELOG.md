@@ -8,10 +8,17 @@ Released: July xx, 2023
 
 ### Features & Improvements
 
+- **BsAppbar**: 
+  - Add property `stickyTop`.
+  - Property `stickyTop` and `fixedTop` is treated like 
+    [Bootstrap position helpers](https://getbootstrap.com/docs/5.3/helpers/position/)
 - **BsAvatar**: add property `border`, `borderColor`.
 - **BsCard**: add property `roundedOff`, `borderOff`.
+- **BsContainer**, **BsContent**: improve css styles when **BsAppbar** `fixedTop` property is set.
 - **BsListNav**, **BsListTile**: fix padding when `spaceAround` property is set on **BsListView**.
+- **BsProgressBar**: add property `valuePosition`.
 - **BsSideDrawer**: improve computing of drawer position.
+- Improve TypeScript definition. 
 
 
 ## v2.0.1

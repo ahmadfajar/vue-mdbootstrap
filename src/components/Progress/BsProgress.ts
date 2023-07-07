@@ -7,9 +7,9 @@ import {
     useBufferMode,
     useDeterminateMode,
     useIndeterminateMode,
-    useRenderProgressBar,
-    useRenderProgressSpinner
-} from './mixins/progressAnimationApi';
+    useRenderAnimatedProgressBar,
+    useRenderAnimatedProgressSpinner
+} from './mixins/progressControlApi';
 import { progressProps } from './mixins/progressProps';
 
 export default defineComponent<TBsProgress, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
@@ -72,11 +72,11 @@ export default defineComponent<TBsProgress, TRecord, TRecord, ComputedOptions, M
         );
 
         return () => {
-            return isProgressBar.value ? useRenderProgressBar(
+            return isProgressBar.value ? useRenderAnimatedProgressBar(
                 cmpProps, progressBarTrackStyle,
                 progressBarValueStyle,
                 progressBarBufferStyle,
-            ) : useRenderProgressSpinner(
+            ) : useRenderAnimatedProgressSpinner(
                 cmpProps, circleStrokeDashOffset,
                 circleCircumference, circleRadius,
             );

@@ -4,8 +4,8 @@ import {
     primaryColorProp,
     stringProp,
     validStringOrFloatProp
-} from "../../../mixins/CommonProps";
-import {maskLoaderVariant} from "./progressAnimationApi";
+} from '../../../mixins/CommonProps';
+import { maskLoaderVariant } from './progressControlApi';
 
 export const maskLoaderProps = {
     /**

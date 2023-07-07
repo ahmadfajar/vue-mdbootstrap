@@ -4,6 +4,8 @@ export declare type TProgressControlMode = 'determinate' | 'indeterminate' | 'bu
 
 export declare type TProgressControlVariant = 'spinner' | 'bar';
 
+export declare type TProgressBarValuePosition = 'start' | 'end' | 'top' | 'bottom' | 'inside';
+
 export declare type TMaskLoaderVariant = 'linear' | 'progress' | 'spinner' | 'grow';
 
 export declare type TMaskLoaderOptionProps = {
@@ -115,9 +117,13 @@ export declare type TProgressBarOptionProps = {
      */
     stripedAnimation?: boolean;
     /**
-     * Display progress bar's value or not.
+     * Display progress bar's value.
      */
     showValue?: boolean;
+    /**
+     * Progress bar's value position.
+     */
+    valuePosition?: TProgressBarValuePosition;
 }
 
 export declare type TBsMaskLoader = ComponentObjectPropsOptions<TMaskLoaderOptionProps>;

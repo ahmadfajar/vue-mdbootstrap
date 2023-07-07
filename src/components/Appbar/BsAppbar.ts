@@ -11,6 +11,7 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Met
         clippedLeft: booleanProp,
         clippedRight: booleanProp,
         fixedTop: booleanProp,
+        stickyTop: booleanProp,
         shadow: booleanProp,
         tag: {
             type: String,
@@ -24,7 +25,7 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Met
         'resize'
     ],
     setup(props, {emit, slots}) {
-        const cmpProps = props as Readonly<TAppbarOptionProps>;
+        const thisProps = props as Readonly<TAppbarOptionProps>;
         const vueMdb = ref<TVueMdb>();
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
@@ -34,15 +35,15 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Met
             emit('resize', node);
         };
         const styles = computed(
-            () => useAppbarStyles(cmpProps, appId, vueMdb, isMobile)
+            () => useAppbarStyles(thisProps, appId, vueMdb, isMobile)
         );
 
         onMounted(
-            () => useAppbarOnMountedHook(appId, vueMdb, smoothTransition)
+            () => useAppbarOnMountedHook(appId, vueMdb, smoothTransition, thisProps)
         );
 
         return () => useRenderAppbar(
-            cmpProps, appId, vueMdb, styles,
+            thisProps, appId, vueMdb, styles,
             smoothTransition, slots, resizeHandler
         )
     }

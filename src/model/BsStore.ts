@@ -1,7 +1,7 @@
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { meanBy, sumBy } from 'lodash';
 import { AbstractStore, RestProxyAdapter } from '../model';
-import type { IBsModel, IBsStore, TRecord, TSortDirection, TSortOption, TSuccessResponse } from '../types';
+import type { IBsStore, TBsModel, TRecord, TSortDirection, TSortOption, TSuccessResponse } from '../types';
 import Helper from '../utils/Helper';
 
 /**
@@ -28,7 +28,7 @@ import Helper from '../utils/Helper';
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 27/06/2023 00:06
+ * @since  20/07/2018 modified: 07/07/2023 07:27
  */
 export default class BsStore extends AbstractStore implements IBsStore {
     /**
@@ -67,7 +67,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
         }
     }
 
-    get dataItems(): IBsModel[] {
+    get dataItems(): TBsModel[] {
         const page = (this.currentPage > 0 && this.currentPage <= this.totalPages) ? this.currentPage - 1 : 0;
         const offset = this.pageSize > 0 ? (page * this.pageSize) : 0;
 
@@ -126,7 +126,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
     }
 
     aggregateCountBy(field: string, value: unknown): number {
-        let results: IBsModel[];
+        let results: TBsModel[];
 
         if (this.remotePaging) {
             results = this.dataItems.filter(item => {
@@ -167,7 +167,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
             // Persist the given item to the remote service before
             // store it on the internal dataset.
             this._state.updating = true;
-            const model = this.createModel(item);
+            const model = <TBsModel>this.createModel(item);
 
             model.save()
                 .catch(error => {
@@ -181,7 +181,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
         } else if (Helper.isObject(item)) {
             // Got incorrect entity object, just store it on the internal dataset.
             this._state.updating = true;
-            this._items.push(this.createModel(item).seal());
+            this._items.push(<TBsModel>this.createModel(item).seal());
             _finalizeAppend();
         } else {
             console.error(this._appendErrMsg);
@@ -197,7 +197,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
         this._onLoadingSuccess();
     }
 
-    delete(item: IBsModel): Promise<AxiosResponse | TSuccessResponse> {
+    delete(item: TBsModel): Promise<AxiosResponse | TSuccessResponse> {
         this._state.deleting = true;
 
         if (
@@ -237,14 +237,14 @@ export default class BsStore extends AbstractStore implements IBsStore {
         }
     }
 
-    deletes(items: IBsModel[]): Promise<TSuccessResponse> {
+    deletes(items: TBsModel[]): Promise<TSuccessResponse> {
         this._state.deleting = true;
         this._state.hasError = false;
 
         if (Helper.isArray(items) && items.length > 0) {
             return new Promise((resolve, reject) => {
                 try {
-                    for (const item of <IBsModel[]>items) {
+                    for (const item of <TBsModel[]>items) {
                         if (
                             AbstractStore.isModel(item) &&
                             !Helper.isEmpty(item.restUrl?.delete)
@@ -306,7 +306,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
         );
     }
 
-    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse> {
+    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse> {
         if (data && !Helper.isEmpty(data)) {
             this._state.loading = true;
             return new Promise((resolve) => {
@@ -348,7 +348,7 @@ export default class BsStore extends AbstractStore implements IBsStore {
     async sort(
         options: string | string[] | TSortOption | TSortOption[],
         direction: TSortDirection = 'asc',
-    ): Promise<IBsModel[]> {
+    ): Promise<TBsModel[]> {
         this.createSorters(options, direction, true);
 
         if (!this.remoteSort) {

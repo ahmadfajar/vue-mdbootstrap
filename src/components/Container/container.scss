@@ -3,13 +3,11 @@
 @import "../../../scss/variables";
 
 html, body {
-    //height: 100%;
     text-rendering: optimizeLegibility;
     -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-    //min-height: 100%;
     margin: 0;
     padding: 0;
 }
@@ -29,6 +27,17 @@ body {
 
     &.#{$prefix}viewport-height {
         height: 100vh;
+    }
+
+    &.#{$prefix}appbar-fixed-top {
+        > .#{$prefix}container-wrap {
+            width: 100%;
+
+            > .#{$prefix}content-wrap {
+                display: block;
+                overflow: auto;
+            }
+        }
     }
 }
 

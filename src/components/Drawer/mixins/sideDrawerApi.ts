@@ -18,7 +18,7 @@ export function useSideDrawerStyles(
     isMobile: Ref<boolean>,
     isOpen: Ref<boolean>,
     clipHeight: Ref<number>,
-    zIndex: number,
+    zIndex: Ref<number>,
 ): TRecord {
     const zeroPx = '0px';
     const drawerWidth = (parseInt(<string>props.width) + 1) * -1;
@@ -29,7 +29,7 @@ export function useSideDrawerStyles(
         left: props.position === 'left' ? (isOpen.value ? zeroPx : Helper.cssUnit(drawerWidth)) : undefined,
         right: props.position === 'right' ? (isOpen.value ? zeroPx : Helper.cssUnit(drawerWidth)) : undefined,
         position: props.fixedLayout ? 'fixed' : undefined,
-        'z-index': clipHeight.value > 0 ? (zIndex - 1) : undefined,
+        'z-index': clipHeight.value > 0 ? (zIndex.value - 1) : undefined,
     };
 
     if (isMobile.value && !props.mini) {
@@ -42,7 +42,7 @@ export function useSideDrawerStyles(
             marginTop: zeroPx,
             position: 'fixed',
             top: zeroPx,
-            'z-index': zIndex + 1,
+            'z-index': zIndex.value + 1,
             left: props.position === 'left'
                 ? (isOpen.value ? zeroPx : Helper.cssUnit(slideWidth)) : undefined,
             right: props.position === 'right'
@@ -68,6 +68,7 @@ export function useSideDrawerOnMountedHook(
     appId: Ref<string | undefined>,
     vueMdb: Ref<TVueMdb | undefined>,
     props: Readonly<TSideDrawerOptionProps>,
+    zIndex: Ref<number>,
 ): void {
     vueMdb.value = useVueMdbService();
     const parent = useFindParentCmp(
@@ -86,6 +87,9 @@ export function useSideDrawerOnMountedHook(
                     vueMdb.value.app[appId.value].leftSideDrawerWidth = props.mini
                         ? (<number>props.miniWidth) : (<number>props.width);
                 }
+                if (vueMdb.value.app[appId.value].appbarFixedTop) {
+                    zIndex.value = 1030;
+                }
             }
         })
     } else {
@@ -101,7 +105,7 @@ export function useRenderSideDrawer(
     appId: Ref<string | undefined>,
     isMobile: Ref<boolean>,
     isOpen: Ref<boolean>,
-    zIndex: number,
+    zIndex: Ref<number>,
     resizeHandler: VoidFunction,
 ): VNode {
     return withDirectives(
@@ -124,7 +128,7 @@ export function useRenderSideDrawer(
                         fixed: true as Prop<boolean>,
                         // @ts-ignore
                         show: (isMobile.value && isOpen.value) as Prop<boolean>,
-                        zIndex: zIndex as Prop<number>,
+                        zIndex: zIndex.value as Prop<number>,
                         onClick: () => {
                             isOpen.value = false;
                             emit('update:open', false);

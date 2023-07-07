@@ -39,6 +39,7 @@ export function useAppbarOnMountedHook(
     appId: Ref<string | undefined>,
     vueMdb: Ref<TVueMdb | undefined>,
     smoothTransition: Ref<boolean>,
+    props: Readonly<TAppbarOptionProps>,
 ): void {
     const instance = getCurrentInstance();
     vueMdb.value = useVueMdbService();
@@ -53,6 +54,8 @@ export function useAppbarOnMountedHook(
             if (appId.value && vueMdb.value) {
                 const rect = (<HTMLElement>(<IComponentInstance>instance).ctx.$el).getBoundingClientRect();
                 vueMdb.value.app[appId.value].appbarHeight = rect.height;
+                vueMdb.value.app[appId.value].appbarFixedTop = props.fixedTop ?? false;
+                vueMdb.value.app[appId.value].appbarStickyTop = props.stickyTop ?? false;
             }
         });
     } else {
@@ -76,7 +79,8 @@ export function useRenderAppbar(
                 [`${cssPrefix}appbar`]: true,
                 [`${cssPrefix}appbar-shadow`]: props.shadow,
                 [`${cssPrefix}appbar-transition`]: smoothTransition.value,
-                'sticky-top': props.fixedTop
+                'fixed-top': props.fixedTop,
+                'sticky-top': props.stickyTop && !props.fixedTop,
             },
             style: styles.value,
         }, [

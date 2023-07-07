@@ -76,7 +76,7 @@ export function useRenderModalDialog(
             show: (modalOpen.value && thisProps.overlay) as Prop<boolean>,
             // @ts-ignore
             fixed: true as Prop<boolean>,
-            zIndex: 1027 as Prop<number>,
+            zIndex: 1037 as Prop<number>,
         }),
         createModalDialog(
             slots, instance, thisProps, modalOpen, classNames,

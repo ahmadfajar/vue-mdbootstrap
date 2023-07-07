@@ -57,6 +57,8 @@ export declare type TMdbAppObject = {
     height: number;
     width: number;
     appbarHeight: number;
+    appbarStickyTop: boolean;
+    appbarFixedTop: boolean;
     leftSideDrawerWidth: number;
     rightSideDrawerWidth: number;
 }

@@ -15,7 +15,7 @@ export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOption
         }
     },
     setup(props, {slots}) {
-        const cmpProps = props as Readonly<TAppContainerOptionProps>;
+        const thisProps = props as Readonly<TAppContainerOptionProps>;
         const vueMdb = ref<TVueMdb>();
 
         onMounted(() => {
@@ -26,7 +26,7 @@ export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOption
                 const rect = (<HTMLElement>(
                     (<IComponentInstance>instance).ctx.$el
                 )).getBoundingClientRect();
-                vueMdb.value.app[<string>cmpProps.id] = {
+                vueMdb.value.app[<string>thisProps.id] = {
                     left: rect.left,
                     right: rect.right,
                     top: rect.top,
@@ -34,6 +34,8 @@ export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOption
                     height: rect.height,
                     width: rect.width,
                     appbarHeight: 0,
+                    appbarFixedTop: false,
+                    appbarStickyTop: false,
                     leftSideDrawerWidth: 0,
                     rightSideDrawerWidth: 0
                 };
@@ -41,8 +43,8 @@ export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOption
         });
         onUnmounted(() => {
             if (vueMdb.value) {
-                if (Helper.isObject(vueMdb.value.app[<string>cmpProps.id])) {
-                    delete vueMdb.value.app[<string>cmpProps.id];
+                if (Helper.isObject(vueMdb.value.app[<string>thisProps.id])) {
+                    delete vueMdb.value.app[<string>thisProps.id];
                 }
             }
         });
@@ -53,9 +55,10 @@ export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOption
                 {
                     class: {
                         [`${cssPrefix}application-wrap`]: true,
-                        [`${cssPrefix}viewport-height`]: cmpProps.viewportHeight
+                        [`${cssPrefix}viewport-height`]: thisProps.viewportHeight,
+                        [`${cssPrefix}appbar-fixed-top`]: vueMdb.value?.app[<string>thisProps.id].appbarFixedTop === true,
                     },
-                    id: cmpProps.id
+                    id: thisProps.id
                 },
                 slots.default && slots.default()
             );

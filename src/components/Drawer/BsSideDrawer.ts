@@ -20,7 +20,8 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
     ],
     setup(props, {emit, slots}) {
         const cmpProps = props as Readonly<TSideDrawerOptionProps>;
-        const zIndex = 1020; // see bootstrap: $zindex-sticky
+        // see bootstrap: $zindex--sticky
+        const zIndex = ref(1020);
         const vueMdb = ref<TVueMdb>();
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
@@ -49,7 +50,7 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
         );
 
         onMounted(
-            () => useSideDrawerOnMountedHook(appId, vueMdb, cmpProps)
+            () => useSideDrawerOnMountedHook(appId, vueMdb, cmpProps, zIndex)
         );
         watch(
             () => cmpProps.mini,

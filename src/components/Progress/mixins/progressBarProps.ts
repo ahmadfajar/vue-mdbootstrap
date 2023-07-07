@@ -1,4 +1,6 @@
-import {booleanProp, booleanTrueProp, stringOrNumberProp, stringProp} from "../../../mixins/CommonProps";
+import type { Prop } from 'vue';
+import { booleanProp, booleanTrueProp, stringOrNumberProp, stringProp } from '../../../mixins/CommonProps';
+import type { TProgressBarValuePosition } from '../types';
 
 export const progressBarProps = {
     /**
@@ -33,4 +35,9 @@ export const progressBarProps = {
      * Display progress bar's value or not.
      */
     showValue: booleanProp,
+    valuePosition: {
+        type: String,
+        default: 'inside',
+        validator: (value: string) => ['start', 'end', 'top', 'bottom', 'inside'].includes(value)
+    } as Prop<TProgressBarValuePosition>
 }

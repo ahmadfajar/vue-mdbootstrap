@@ -1,6 +1,15 @@
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import type { ObjectBase, TRecord } from '../../types';
-import type { BsModel, IBsModel, IRestAdapter, TCSRFConfig, TModelState, TRestConfig, TRestUrlOption } from '../types';
+import type {
+    BsModel,
+    IBsModel,
+    IRestAdapter,
+    TBsModel,
+    TCSRFConfig,
+    TModelState,
+    TRestConfig,
+    TRestUrlOption
+} from '../types';
 
 export declare type TFilterLogic = 'AND' | 'OR';
 
@@ -241,7 +250,7 @@ export declare interface IAbstractStore extends ObjectBase {
      * @param value       The value to match
      * @param startIndex  The index to start searching at
      */
-    find(property: string, value: unknown, startIndex: number): IBsModel | undefined;
+    find(property: string, value: unknown, startIndex: number): TBsModel | undefined;
 
     /**
      * Finds the first matching item in the local dataset by function's predicate.
@@ -252,8 +261,8 @@ export declare interface IAbstractStore extends ObjectBase {
      * the provided testing function. Otherwise, `undefined` is returned.
      */
     findBy(
-        predicate: (value: IBsModel, index: number) => boolean,
-    ): IBsModel | undefined;
+        predicate: (value: TBsModel, index: number) => boolean,
+    ): TBsModel | undefined;
 
     /**
      * Finds the index of the first matching Item in the local dataset by a specific field value.
@@ -273,12 +282,12 @@ export declare interface IAbstractStore extends ObjectBase {
      * Filter the dataset locally and returns new array with
      * all elements that pass the test.
      */
-    localFilter(): IBsModel[];
+    localFilter(): TBsModel[];
 
     /**
      * Sorts the dataset locally and returns new sorted dataset.
      */
-    localSort(): IBsModel[];
+    localSort(): TBsModel[];
 
     /**
      * Check if the data in the local dataset is empty or not.
@@ -314,7 +323,7 @@ export declare interface IAbstractStore extends ObjectBase {
      *
      * @param items Model instance or array of model instances to be removed
      */
-    remove(items: IBsModel[] | IBsModel): void;
+    remove(items: TBsModel[] | TBsModel): void;
 
     /**
      * Removes the model instance(s) at the given index from the internal dataset.
@@ -376,7 +385,7 @@ export declare interface IAbstractStore extends ObjectBase {
      *
      * @param data The record(s) to be assigned
      */
-    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse>;
+    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse>;
 
 }
 
@@ -392,8 +401,8 @@ export declare class AbstractStore implements IAbstractStore {
     protected readonly _parsingDataErrMsg = 'Unable to parse data coming from server.';
     protected _config: TDataStoreConfig;
     protected _filters: TFilterOption[];
-    protected _filteredItems: IBsModel[];
-    protected _items: IBsModel[];
+    protected _filteredItems: TBsModel[];
+    protected _items: TBsModel[];
     protected _proxy: IRestAdapter | undefined;
     protected _state: TDataStoreState;
     storeState: TDataStoreState;
@@ -483,15 +492,15 @@ export declare class AbstractStore implements IAbstractStore {
 
     resetState(): void;
 
-    find(property: string, value: unknown, startIndex?: number): IBsModel | undefined;
+    find(property: string, value: unknown, startIndex?: number): TBsModel | undefined;
 
-    findBy(predicate: (value: IBsModel, index: number) => boolean): IBsModel | undefined;
+    findBy(predicate: (value: TBsModel, index: number) => boolean): TBsModel | undefined;
 
     findIndex(property: string, value: unknown, startIndex?: number): number;
 
-    localFilter(): IBsModel[];
+    localFilter(): TBsModel[];
 
-    localSort(): IBsModel[];
+    localSort(): TBsModel[];
 
     isEmpty(): boolean;
 
@@ -503,7 +512,7 @@ export declare class AbstractStore implements IAbstractStore {
 
     isCandidateForModel(item: object): boolean;
 
-    remove(items: IBsModel[] | IBsModel): void;
+    remove(items: TBsModel[] | TBsModel): void;
 
     removeAt(index: number, count?: number): void;
 
@@ -519,11 +528,11 @@ export declare class AbstractStore implements IAbstractStore {
         replace?: boolean
     ): TSortOption[];
 
-    createModel(item: TRecord): IBsModel;
+    createModel(item: TRecord): TBsModel;
 
     queryParams(): TQueryParameter;
 
-    load(data?: never[]): Promise<IBsModel[] | AxiosResponse>;
+    load(data?: never[]): Promise<TBsModel[] | AxiosResponse>;
 
     /**
      * Append an item to the local dataset.

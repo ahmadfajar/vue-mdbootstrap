@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import type { TRecord } from '../../types';
-import type { AbstractStore, IAbstractStore, IBsModel, TSortDirection, TSortOption } from '../types';
+import type { AbstractStore, IAbstractStore, TBsModel, TSortDirection, TSortOption } from '../types';
 
 export declare interface IArrayStore extends IAbstractStore {
     /**
@@ -9,7 +9,7 @@ export declare interface IArrayStore extends IAbstractStore {
      * If a filter or sorter has been applied before,
      * then the returned dataset will also be affected by it.
      */
-    get dataItems(): IBsModel[];
+    get dataItems(): TBsModel[];
 
     /**
      * Calculate means or average value based on the given field.
@@ -69,7 +69,7 @@ export declare interface IArrayStore extends IAbstractStore {
     sort(
         options: string | string[] | TSortOption | TSortOption[],
         direction: TSortDirection,
-    ): IBsModel[];
+    ): TBsModel[];
 }
 
 /**
@@ -100,7 +100,7 @@ export declare class BsArrayStore extends AbstractStore implements IArrayStore {
      */
     constructor(data: unknown[], config?: TRecord);
 
-    get dataItems(): IBsModel[];
+    get dataItems(): TBsModel[];
 
     aggregateAvg(field: string): number;
 
@@ -112,7 +112,7 @@ export declare class BsArrayStore extends AbstractStore implements IArrayStore {
 
     assignData(data: unknown[] | unknown, silent?: boolean): void;
 
-    load(data?: never[] | never): Promise<IBsModel[] | AxiosResponse>;
+    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse>;
 
     /**
      * Sorts the internal dataset with the given criteria and returns
@@ -132,5 +132,5 @@ export declare class BsArrayStore extends AbstractStore implements IArrayStore {
      * @param direction  The sort direction
      * @returns The sorted dataset.
      */
-    sort(options: string | string[] | TSortOption | TSortOption[], direction?: TSortDirection): IBsModel[];
+    sort(options: string | string[] | TSortOption | TSortOption[], direction?: TSortDirection): TBsModel[];
 }

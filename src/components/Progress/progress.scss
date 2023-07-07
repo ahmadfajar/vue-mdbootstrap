@@ -140,6 +140,21 @@
     position: absolute;
 }
 
+.#{$prefix}progress-wrapper {
+    --#{$prefix}progress-color: currentColor;
+    --#{$prefix}progress-font-size: .75rem;
+    font-size: var(--#{$prefix}progress-font-size);
+
+    .#{$prefix}progress-label {
+        color: var(--#{$prefix}progress-color);
+        text-align: center;
+    }
+
+    .progress {
+        --#{$bs-prefix}progress-font-size: var(--#{$prefix}progress-font-size);
+    }
+}
+
 .#{$prefix}progress-spinner {
     display: inline-flex;
     position: relative;
