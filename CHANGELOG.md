@@ -14,6 +14,11 @@ Released: July xx, 2023
     [Bootstrap position helpers](https://getbootstrap.com/docs/5.3/helpers/position/)
 - **BsAvatar**: add property `border`, `borderColor`.
 - **BsCard**: add property `roundedOff`, `borderOff`.
+- **BsChip**: 
+  - Add property `readonly`, 
+  - Add property `iconPosition`, 
+  - Fix padding and border-radius on small chip size.
+  - Fix margin and icon-size on default chip size.
 - **BsContainer**, **BsContent**: improve css styles when **BsAppbar** `fixedTop` property is set.
 - **BsListNav**, **BsListTile**: fix padding when `spaceAround` property is set on **BsListView**.
 - **BsProgressBar**: add property `valuePosition`.

@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "compass-mixins/lib/compass/css3";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/chip";
@@ -13,6 +14,7 @@
     --#{$prefix}chip-disabled-border-color: #{$disabled-border-color};
     --#{$prefix}chip-disabled-color: #{$gray-900};
     --#{$prefix}chip-disabled-opacity: .5;
+    --#{$prefix}chip-padding-x: #{$padding-base};
 
     @include flexbox((display: inline-flex, align-items: center));
     @include border-radius(var(--#{$prefix}chip-border-radius));
@@ -33,7 +35,7 @@
     transition-property: all, opacity;
     transition-timing-function: $md-transition-drop-timing;
 
-    &:not(.disabled) {
+    &:not(.disabled):not(.readonly) {
         &:hover {
             @include box-shadow(0 1px 2px 0 rgba(50, 50, 50, 0.25), 0 2px 4px 2px rgba(10, 10, 10, 0.05));
             background-color: var(--#{$prefix}chip-hover-bg);
@@ -74,7 +76,7 @@
         opacity: var(--#{$prefix}chip-disabled-opacity);
     }
 
-    &.#{$prefix}chip-clickable:not(.disabled) {
+    &.#{$prefix}chip-clickable:not(.disabled):not(.readonly) {
         @include user-select(none);
         cursor: pointer;
     }
@@ -82,8 +84,19 @@
     > .#{$prefix}chip-content {
         @include flexbox((display: inline-flex, align-items: center));
         @include border-radius(var(--#{$prefix}chip-border-radius));
-        padding: 0 $padding-base;
+        padding: 0 var(--#{$prefix}chip-padding-x);
         max-width: 100%;
+
+        > .#{$prefix}chip-text {
+            > .caret-up,
+            > .caret-down,
+            > .triangle-up,
+            > .triangle-down {
+                &:last-child {
+                    margin-right: -$padding-xs;
+                }
+            }
+        }
 
         .#{$prefix}chip-icon {
             color: var(--#{$prefix}chip-icon-color);
@@ -107,6 +120,11 @@
             margin-right: $padding-sm;
             width: 100%;
 
+            &.order-1 {
+                margin-left: $padding-sm;
+                margin-right: math.div(-$padding-xs, 2);
+            }
+
             &.#{$prefix}empty-icon {
                 width: 0;
             }
@@ -127,7 +145,9 @@
     }
 
     &.#{$prefix}chip-sm {
-        font-size: 80%;
+        --#{$prefix}chip-border-radius: #{$border-radius-base};
+        --#{$prefix}chip-padding-x: .75rem;
+        font-size: 85%;
         height: 1.56rem;
     }
 

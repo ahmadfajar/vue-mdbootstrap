@@ -23,18 +23,18 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Metho
         'update:model-value',
     ],
     setup(props, {emit, attrs, slots}) {
-        const cmpProps = props as Readonly<TChipOptionProps>;
+        const thisProps = props as Readonly<TChipOptionProps>;
         const dismiss = ref<boolean>(false);
         const classNames = computed<TRecord>(
-            () => useChipClassNames(cmpProps, attrs)
+            () => useChipClassNames(thisProps, attrs)
         );
         const tagName = computed<string>(
-            () => cmpProps.href && !cmpProps.disabled ? 'a' : 'div'
+            () => thisProps.href && !thisProps.disabled && thisProps.readonly ? 'a' : 'div'
         );
         const rippleDisabled = computed<boolean>(
             () => {
                 return (
-                    cmpProps.rippleOff || cmpProps.disabled ||
+                    thisProps.rippleOff || thisProps.disabled || thisProps.readonly ||
                     (!attrs.click && !attrs.onclick && !attrs.onClick && !props.href)
                 );
             }
@@ -47,7 +47,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Metho
             nextTick().then(() => emit('close'));
         }
         watch(
-            () => cmpProps.modelValue,
+            () => thisProps.modelValue,
             (value) => {
                 if (props.dismissible) {
                     dismiss.value = !(value === true);
@@ -61,7 +61,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Metho
                 show.value
                     ? useRenderChip(
                         tagName.value, rippleDisabled.value, slots, attrs,
-                        cmpProps, classNames, dismissedChip,
+                        thisProps, classNames, dismissedChip,
                     )
                     : createCommentVNode(' BsChip ')
             )

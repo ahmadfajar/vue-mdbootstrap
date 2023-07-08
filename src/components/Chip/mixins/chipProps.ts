@@ -1,10 +1,11 @@
-import {booleanProp, booleanTrueProp, stringProp} from "../../../mixins/CommonProps";
-import {iconProps} from "../../Avatar/mixins/avatarProps";
-import {iconVariant} from "../../Icon/mixins/iconProps";
+import { booleanProp, booleanTrueProp, stringProp } from '../../../mixins/CommonProps';
+import { iconProps } from '../../Avatar/mixins/avatarProps';
+import { iconPosition } from '../../Button/mixins/buttonProps';
+import { iconVariant } from '../../Icon/mixins/iconProps';
 
 export const chipDefaultColor = {
     type: String,
-    default: "grey"
+    default: 'grey'
 }
 
 export const chipProps = {
@@ -21,9 +22,13 @@ export const chipProps = {
      */
     color: chipDefaultColor,
     /**
-     * Sets this component state: `enabled` or `disabled`.
+     * Sets this component state to `disabled`.
      */
     disabled: booleanProp,
+    /**
+     * Sets this component state to `readonly`.
+     */
+    readonly: booleanProp,
     /**
      * When sets, display the close button to dismiss/hide this component.
      */
@@ -67,8 +72,12 @@ export const chipProps = {
     size: {
         type: String,
         default: undefined,
-        validator: (value: string): boolean => ["sm", "lg"].includes(value)
+        validator: (value: string): boolean => ['sm', 'lg'].includes(value)
     },
+    /**
+     * Place icon on the `left` side (before text) or on the `right` side (after text).
+     */
+    iconPosition,
     /**
      * Use predefined icon style to be used inside this component.
      */

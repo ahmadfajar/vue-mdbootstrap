@@ -6,6 +6,7 @@ import type {
     VNode,
     VNodeProps
 } from 'vue';
+import { TLabelPosition } from '../../../types';
 import type { EventClosableProps, EventUpdateModelValueProps, TIconProps } from '../../../types';
 
 export declare type TChipValue = {
@@ -46,9 +47,13 @@ export declare type TChipOptionProps = TIconProps & {
      */
     color?: string;
     /**
-     * Sets this component state: `enabled` or `disabled`.
+     * Sets this component state to `disabled`.
      */
     disabled?: boolean;
+    /**
+     * Sets this component state to `readonly`.
+     */
+    readonly?: boolean;
     /**
      * When sets, display the close button to dismiss/hide this component.
      */
@@ -57,6 +62,10 @@ export declare type TChipOptionProps = TIconProps & {
      * Render as `<a>` element and define its `href` property and apply chip styles to the element.
      */
     href?: string;
+    /**
+     * Place icon on the `left` side (before text) or on the `right` side (after text).
+     */
+    iconPosition?: TLabelPosition;
     /**
      * Use predefined icon style to be used inside this component.
      */

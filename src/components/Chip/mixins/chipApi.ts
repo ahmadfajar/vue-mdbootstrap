@@ -23,7 +23,7 @@ export function useChipClassNames(
         [`${cssPrefix}chip-lg`]: props.size === 'lg',
         [`${cssPrefix}chip-pill`]: props.pill,
         [`${cssPrefix}chip-clickable`]: (
-            (props.href || attrs.click || attrs.onclick || attrs.onClick) && !props.disabled
+            (props.href || attrs.click || attrs.onclick || attrs.onClick) && !props.disabled && !props.readonly
         ),
         [`${cssPrefix}chip-${props.color}`]: (
             props.color && !props.outlined &&
@@ -36,6 +36,7 @@ export function useChipClassNames(
         [<string>props.activeClass]: props.activeClass && (props.active === true) && !props.disabled,
         'active': (props.active === true) && !props.disabled && !props.activeClass,
         'disabled': props.disabled === true,
+        'readonly': props.readonly === true && !props.disabled,
     }
 }
 
@@ -106,7 +107,7 @@ export function useRenderChip(
 ): VNode {
     return h(tagName, {
         class: classNames.value,
-        href: (props.href && !props.disabled) ? props.href : undefined
+        href: (props.href && !props.disabled && !props.readonly) ? props.href : undefined
     }, [
         h<TBsRipple>(BsRipple, {
             // @ts-ignore
@@ -119,7 +120,15 @@ export function useRenderChip(
                     useRenderSlotWithWrapper(
                         slots, 'icon', Helper.uuid(true),
                         {
-                            class: [`${cssPrefix}chip-icon`, Helper.isEmpty(props.icon) ? `${cssPrefix}empty-icon` : ''],
+                            class: [
+                                `${cssPrefix}chip-icon`,
+                                Helper.isEmpty(props.icon) ? `${cssPrefix}empty-icon` : '',
+                                props.iconPosition === 'right' ? 'order-1' : '',
+                            ],
+                            style: {
+                                width: !props.size ? '18px' : undefined,
+                                height: !props.size ? '18px' : undefined,
+                            },
                         },
                         (
                             !Helper.isEmpty(props.icon)
@@ -127,7 +136,7 @@ export function useRenderChip(
                                     ...useCreateIconProps(props),
                                     icon: <Prop<string>>(`${props.icon}_${props.iconVariant}`),
                                     size: <Prop<string | number>>(
-                                        props.size === 'sm' ? 18 : (props.size === 'lg' ? 40 : 24)
+                                        props.size === 'sm' ? 18 : (props.size === 'lg' ? 40 : 22)
                                     ),
                                 })
                                 : undefined
@@ -137,7 +146,7 @@ export function useRenderChip(
                 props.imgSrc
                     ? createChipAvatar(props)
                     : createCommentVNode(' v-if-chip-avatar '),
-                useRenderSlotDefault('div', slots, `${cssPrefix}chip-text`),
+                useRenderSlotDefault('div', slots, [`${cssPrefix}chip-text`, 'd-flex align-items-center']),
                 props.dismissible
                     ? h<TBsButton>(BsButton, createCloseBtnAttr(props, dismissHandler))
                     : createCommentVNode(' v-if-chip-dismissible '),

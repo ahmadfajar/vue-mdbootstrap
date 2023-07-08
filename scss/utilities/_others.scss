@@ -26,20 +26,20 @@
     font-weight: $font-weight-light !important;
 }
 
-.triangle-up {
+.triangle-up, .caret-up {
     width: 0;
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-bottom: 7px solid currentColor;
+    border-bottom: 6px solid currentColor;
     display: inline-block;
 }
 
-.triangle-down {
+.triangle-down, .caret-down {
     width: 0;
     height: 0;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    border-top: 7px solid currentColor;
+    border-top: 6px solid currentColor;
     display: inline-block;
 }
