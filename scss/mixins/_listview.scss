@@ -11,7 +11,9 @@
         --#{$prefix}subheader-color: #{$subheader-color};
 
         @if (brightness($color) < 160) {
-            --#{$prefix}divider-color: #{rgba($white, 0.4)};
+            .#{$prefix}divider {
+                --#{$prefix}divider-color: #{rgba($white, 0.4)};
+            }
 
             .dropdown-menu {
                 --#{$bs-prefix}dropdown-divider-bg: #{rgba($white, 0.15)};

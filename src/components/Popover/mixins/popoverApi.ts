@@ -34,6 +34,7 @@ function getPopoverLeftPosition(
 ): number {
     let offsetLeft = 0;
     const maxLeft = window.innerWidth - SPACE - width;
+    const minLeft = SPACE;
 
     switch (placement) {
         case 'left':
@@ -69,7 +70,7 @@ function getPopoverLeftPosition(
             break;
     }
 
-    return offsetLeft;
+    return Math.max(minLeft, offsetLeft);
 }
 
 function getPopoverTopPosition(
