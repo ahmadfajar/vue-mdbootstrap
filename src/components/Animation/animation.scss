@@ -3,11 +3,11 @@
 @import "../../../scss/variables";
 @import "../../../scss/mixins/transition";
 
-@keyframes ripple {
-    to {
-        @include transform(scale(3));
-        opacity: 0;
-    }
+
+@include enterActive-leaveActive("expand") {
+    @include backface-visibility(hidden);
+    @include transform(translate3d(0, 0, 0));
+    @include transition(all .85s $transition-easeOut);
 }
 
 .#{$prefix}overlay {
@@ -22,26 +22,45 @@
 }
 
 .#{$prefix}ripple {
-    @include transition(background 400ms);
     width: 100%;
     height: 100%;
     position: relative;
     overflow: hidden;
+    mask-image: radial-gradient(circle, #fff 100%, #000 100%);
 }
 
-.#{$prefix}ripple-animation {
-    @include border-radius($border-radius-circle);
-    @include transform(scale(0));
-    @include transition($md-transition-easeOut);
-    //background-color: rgba(255, 255, 255, .6);
-    background-color: currentColor;
+.#{$prefix}ripple-wave {
+    transform: scale(2) translateZ(0);
+    background: currentColor;
+    border-radius: 50%;
+    pointer-events: none;
     position: absolute;
-    opacity: .2;
-    animation: ripple 600ms linear;
+    opacity: 0;
+    z-index: 1;
+
+    &.#{$prefix}center {
+        animation-duration: 1.2s;
+        top: 50%;
+        left: 50%;
+    }
+
+    ~ *:not(.#{$prefix}ripple-wave) {
+        position: relative;
+        z-index: 2;
+    }
 }
 
-@include enterActive-leaveActive("expand") {
-    @include backface-visibility(hidden);
-    @include transform(translate3d(0, 0, 0));
-    @include transition(all .85s $transition-easeOut);
+.#{$prefix}ripple-enter-active {
+    transition: .8s $md-transition-stand-timing;
+    transition-property: opacity, transform;
+    will-change: opacity, transform;
+
+    &.#{$prefix}center {
+        transition-duration: 1.2s;
+    }
+}
+
+.#{$prefix}ripple-enter-from {
+    transform: scale(.26) translateZ(0);
+    opacity: .26;
 }

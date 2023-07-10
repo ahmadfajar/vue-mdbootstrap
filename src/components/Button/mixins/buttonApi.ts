@@ -3,12 +3,12 @@ import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode, VNodeArray
 import { h, toDisplayString } from 'vue';
 import { cssPrefix, useGenerateId, useRenderSlot, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
 import type {
-    TIconProps,
     TBsIcon,
     TBsToggleField,
     TButtonMode,
     TButtonOptionProps,
     TEmitFn,
+    TIconProps,
     TInputOptionItem,
     TRecord,
     TToggleButtonOptionProps,
@@ -116,14 +116,16 @@ function renderIconOrSlot(
     iconPosition: string,
     iconSize?: number | string,
     slotArgs?: TRecord,
+    applyIconClass?: boolean,
 ): VNode {
     if (slots && slots[name]) {
         return useRenderSlotWithWrapper(
             slots, name, iconId, {
                 class: {
-                    [`${cssPrefix}icon`]: true,
+                    [`${cssPrefix}icon`]: applyIconClass,
                     [`${cssPrefix}icon-${iconPosition}`]: btnMode !== 'icon' && btnMode !== 'floating',
-                }
+                },
+                style: applyIconClass ? undefined : {display: 'contents'},
             },
             undefined, 'span', slotArgs
         );
@@ -159,6 +161,8 @@ export function useRenderButtonContent(
                 iconId,
                 props.iconPosition,
                 props.iconSize,
+                undefined,
+                true,
             )
             : '',
         slots.default && slots.default(),
@@ -170,6 +174,8 @@ export function useRenderButtonContent(
                 iconId,
                 props.iconPosition,
                 props.iconSize,
+                undefined,
+                true
             )
             : '',
     ]

@@ -31,9 +31,9 @@
     white-space: nowrap;
     vertical-align: middle;
     text-decoration: none !important;
-    transition-duration: .75s;
+    transition-duration: .3s;
     transition-property: all, opacity;
-    transition-timing-function: $md-transition-drop-timing;
+    //transition-timing-function: $md-transition-drop-timing;
 
     &:not(.disabled):not(.readonly) {
         &:hover {
@@ -104,7 +104,7 @@
 
         > .#{$prefix}chip-avatar {
             @include flexbox((display: flex, align-self: center, align-items: center));
-            @include transition(.3s $md-transition-stand-timing, visibility);
+            @include transition(visibility .3s $md-transition-leave-timing);
             margin-left: -($padding-base - .25);
             margin-right: $padding-sm;
 
@@ -115,7 +115,7 @@
 
         > .#{$prefix}chip-icon {
             @include flexbox((display: flex, align-self: center, align-items: center));
-            @include transition(width visibility 150ms 0ms $md-transition-default-timing);
+            @include transition(width visibility 200ms 0ms $md-transition-default-timing);
             margin-left: -$padding-sm;
             margin-right: $padding-sm;
             width: 100%;
@@ -201,8 +201,9 @@
         --#{$prefix}chip-border-width: thin;
     }
 
-    ~ .#{$prefix}chip {
-        margin-left: $padding-sm;
+    ~ .#{$prefix}chip,
+    ~ .#{$prefix}dropdown-menu {
+        margin-left: $padding-xs;
     }
 }
 

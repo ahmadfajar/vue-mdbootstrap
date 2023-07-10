@@ -36,7 +36,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
     setup(props, {emit, expose, slots}) {
         const cmpProps = props as Readonly<TListNavItemOptionProps>;
         const refItem = shallowRef<IListItem>();
-        const isActive = ref<boolean>(false);
+        const isActive = ref<boolean | undefined>(cmpProps.active);
         const expanded = ref<boolean>(false);
         const hasChild = ref<boolean>(false);
 

@@ -221,10 +221,6 @@ declare type AllowedListViewProps = AllowedComponentProps & ComponentCustomProps
     'onUpdate:modelValue'?: (value: IListItem) => void;
 }
 
-declare type AllowedListNavProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
-    'onUpdate:active'?: (active: boolean) => void;
-}
-
 export declare const BsListView: {
     new(): {
         $props: AllowedListViewProps & TListViewOptionProps;
@@ -237,11 +233,10 @@ export declare const BsListView: {
 
 export declare const BsListNav: {
     new(): {
-        $props: AllowedListNavProps & TListNavOptionProps;
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListNavOptionProps;
         $slots: {
             default?: () => VNode[];
         };
-        $emit: ['update:active'];
     };
 };
 

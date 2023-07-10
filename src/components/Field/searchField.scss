@@ -9,8 +9,8 @@
     --#{$prefix}searchbox-active-bg: #{$white};
     --#{$prefix}searchbox-border-color: #{rgba($black, .07)};
     --#{$prefix}searchbox-border-width: thin;
-    --#{$prefix}searchbox-active-border-color: var(--#{$prefix}field-primary-indicator);
-    --#{$prefix}searchbox-focused-shadow-rgba: rgba(98, 0, 238, 0.25);
+    --#{$prefix}searchbox-active-border-color: rgb(var(--#{$prefix}field-primary-indicator-rgb));
+    --#{$prefix}searchbox-focused-shadow-rgba: rgba(var(--#{$prefix}field-primary-indicator-rgb), 0.25);
     --#{$prefix}searchbox-padding-x: .375rem;
     --#{$prefix}searchbox-padding-y: .375rem;
     --#{$prefix}searchbox-text-color: currentColor;
@@ -77,7 +77,7 @@
             --#{$prefix}searchbox-bg: #{rgba($black, .15)};
             --#{$prefix}searchbox-active-bg: #{rgba($black, 0.35)};
             --#{$prefix}searchbox-border-color: #{rgba($black, .085)};
-            --#{$prefix}searchbox-active-border-color: var(--#{$prefix}field-accent-indicator);
+            --#{$prefix}searchbox-active-border-color: rgb(var(--#{$prefix}field-accent-indicator-rgb));
             --#{$prefix}searchbox-focused-shadow-rgba: rgba(185, 156, 225, .32);
             --#{$prefix}searchbox-text-color: #{$gray-300};
         }

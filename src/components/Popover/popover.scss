@@ -1,3 +1,4 @@
+@import "compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
@@ -8,6 +9,24 @@
     max-width: 80%;
     overflow: auto;
     z-index: 1060;
+
+    .dropdown-menu {
+        --#{$bs-prefix}dropdown-border-width: 0;
+        display: block;
+        position: relative;
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            width: auto;
+        }
+
+        .dropdown-header {
+            @include user-select(none);
+            font-size: 13px;
+            font-weight: 500;
+        }
+    }
 
     &.transition-bottom, &.transition-bottom-left, &.transition-bottom-right,
     &.transition-top, &.transition-top-left, &.transition-top-right {

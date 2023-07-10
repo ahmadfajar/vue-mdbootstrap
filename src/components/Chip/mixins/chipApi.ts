@@ -1,11 +1,6 @@
 import type { ComputedRef, Prop, Slots, VNode } from 'vue';
 import { createCommentVNode, h } from 'vue';
-import {
-    cssPrefix,
-    useRenderSlotDefault,
-    useRenderSlotWithWrapper,
-    useRenderTransition
-} from '../../../mixins/CommonApi';
+import { cssPrefix, useRenderSlotDefault, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
 import type { TBsButton, TBsIcon, TBsRipple, TChipOptionProps, TRecord } from '../../../types';
 import Helper from '../../../utils/Helper';
 import { BsRipple } from '../../Animation';
@@ -97,12 +92,12 @@ function createCloseBtnAttr(
 }
 
 export function useRenderChip(
-    tagName: string,
-    rippleDisabled: boolean,
     slots: Slots,
     attrs: TRecord,
     props: Readonly<TChipOptionProps>,
     classNames: ComputedRef<TRecord>,
+    tagName: string,
+    rippleDisabled: boolean,
     dismissHandler: VoidFunction,
 ): VNode {
     return h(tagName, {
@@ -115,32 +110,31 @@ export function useRenderChip(
             class: `${cssPrefix}chip-content`
         }, {
             default: () => [
-                useRenderTransition(
-                    {name: 'scale'},
-                    useRenderSlotWithWrapper(
-                        slots, 'icon', Helper.uuid(true),
-                        {
-                            class: [
-                                `${cssPrefix}chip-icon`,
-                                Helper.isEmpty(props.icon) ? `${cssPrefix}empty-icon` : '',
-                                props.iconPosition === 'right' ? 'order-1' : '',
-                            ],
-                            style: {
-                                width: !props.size ? '18px' : undefined,
-                                height: !props.size ? '18px' : undefined,
-                            },
+                useRenderSlotWithWrapper(
+                    slots,
+                    'icon',
+                    !Helper.isEmpty(props.icon) ? `key-${props.icon}` : Helper.uuid(true),
+                    {
+                        class: [
+                            `${cssPrefix}chip-icon`,
+                            Helper.isEmpty(props.icon) ? `${cssPrefix}empty-icon` : '',
+                            props.iconPosition === 'right' && !Helper.isEmpty(props.icon) ? 'order-1' : '',
+                        ],
+                        style: {
+                            width: !props.size && !Helper.isEmpty(props.icon) ? '18px' : undefined,
+                            height: !props.size && !Helper.isEmpty(props.icon) ? '18px' : undefined,
                         },
-                        (
-                            !Helper.isEmpty(props.icon)
-                                ? h<TBsIcon>(BsIcon, {
-                                    ...useCreateIconProps(props),
-                                    icon: <Prop<string>>(`${props.icon}_${props.iconVariant}`),
-                                    size: <Prop<string | number>>(
-                                        props.size === 'sm' ? 18 : (props.size === 'lg' ? 40 : 22)
-                                    ),
-                                })
-                                : undefined
-                        )
+                    },
+                    (
+                        !Helper.isEmpty(props.icon)
+                            ? h<TBsIcon>(BsIcon, {
+                                ...useCreateIconProps(props),
+                                icon: <Prop<string>>(`${props.icon}_${props.iconVariant}`),
+                                size: <Prop<string | number>>(
+                                    props.size === 'sm' ? 18 : (props.size === 'lg' ? 40 : 22)
+                                ),
+                            })
+                            : undefined
                     )
                 ),
                 props.imgSrc

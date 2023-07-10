@@ -16,22 +16,22 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, M
         'update:active'
     ],
     setup(props, {emit, expose, slots}) {
-        const cmpProps = props as Readonly<TListTileOptionProps>;
+        const thisProps = props as Readonly<TListTileOptionProps>;
         const vm = shallowRef<IListItem>();
-        const isActive = ref<boolean | undefined>(cmpProps.active);
+        const isActive = ref<boolean | undefined>(thisProps.active);
 
         expose({isActive});
 
         const provider = inject<IListViewProvider>('ListView');
         const tagName = computed<string>(
-            () => useHasRouter(cmpProps) || useHasLink(cmpProps) || cmpProps.navigable ? 'a' : 'div'
+            () => useHasRouter(thisProps) || useHasLink(thisProps) || thisProps.navigable ? 'a' : 'div'
         );
         const tileClasses = computed<TRecord>(
-            () => useListTileClassNames(tagName.value, cmpProps, isActive, provider)
+            () => useListTileClassNames(tagName.value, thisProps, isActive, provider)
         );
 
         watch(
-            () => cmpProps.active,
+            () => thisProps.active,
             (value) => {
                 if (provider && provider.config.individualState === true) {
                     isActive.value = value
@@ -40,9 +40,9 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, M
         );
         onBeforeUpdate(
             () => {
-                if (useHasRouter(cmpProps)) {
+                if (useHasRouter(thisProps)) {
                     const route = useCurrentRoute();
-                    if (route && route.value.path === cmpProps.path) {
+                    if (route && route.value.path === thisProps.path) {
                         isActive.value = true;
                         nextTick().then(() => {
                             emit('update:active', true);
@@ -53,6 +53,6 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, M
         );
 
         return () =>
-            useRenderListTile(tagName.value, slots, emit, cmpProps, tileClasses, vm, provider)
+            useRenderListTile(tagName.value, slots, emit, thisProps, tileClasses, vm, provider)
     }
 });

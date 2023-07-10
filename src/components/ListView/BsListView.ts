@@ -24,6 +24,7 @@ export default defineComponent<TBsListView, TRecord, TRecord, ComputedOptions, M
             () => ({
                 [`${cssPrefix}list`]: true,
                 [`${cssPrefix}list-${props.color}`]: props.color,
+                [`${cssPrefix}list-space-${props.spaceAround}`]: ['both', 'left', 'right'].includes(<string>props.spaceAround),
                 'overflow-hidden': props.overflowHidden,
             })
         );

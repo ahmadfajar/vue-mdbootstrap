@@ -15,7 +15,7 @@
 }
 
 .#{$prefix}field {
-    --#{$prefix}field-active-border-color: var(--#{$prefix}field-active-indicator);
+    --#{$prefix}field-active-border-color: rgb(var(--#{$prefix}field-active-indicator));
     --#{$prefix}field-active-border-width: 2px;
     --#{$prefix}field-border-color: currentColor;
     --#{$prefix}field-border-width: 1px;

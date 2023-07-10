@@ -28,7 +28,7 @@ import { BsIcon } from '../../Icon';
 
 export function useListNavItemClasses(
     props: Readonly<TListNavItemOptionProps>,
-    isActive: Ref<boolean>,
+    isActive: Ref<boolean | undefined>,
     expanded: Ref<boolean>,
     hasChild: Ref<boolean>,
 ): TRecord {
@@ -44,7 +44,7 @@ export function useListNavItemClasses(
 
 export function useListNavItemInnerClasses(
     props: Readonly<TListNavItemOptionProps>,
-    isActive: Ref<boolean>,
+    isActive: Ref<boolean | undefined>,
     provider?: IListViewProvider,
 ): TRecord {
     return {
@@ -128,7 +128,7 @@ function renderNavLink(
     props: Readonly<ExtractPropTypes<TBsListNavItem>>,
     classes: ComputedRef<TRecord>,
     innerStyles: ComputedRef<string[]>,
-    isActive: Ref<boolean>,
+    isActive: Ref<boolean | undefined>,
     isExpanded: Ref<boolean>,
     hasChild: Ref<boolean>,
     instance: ShallowRef<IListItem | undefined>,
@@ -150,7 +150,7 @@ function renderRouterLink(
     props: Readonly<ExtractPropTypes<TBsListNavItem>>,
     classes: ComputedRef<TRecord>,
     innerStyles: ComputedRef<string[]>,
-    isActive: Ref<boolean>,
+    isActive: Ref<boolean | undefined>,
     isExpanded: Ref<boolean>,
     hasChild: Ref<boolean>,
     instance: ShallowRef<IListItem | undefined>,
@@ -171,7 +171,7 @@ function renderRouterLink(
 
 function onVNodeClickHandler(
     props: Readonly<TListNavItemOptionProps>,
-    isActive: Ref<boolean>,
+    isActive: Ref<boolean | undefined>,
     isExpanded: Ref<boolean>,
     instance: ShallowRef<IListItem | undefined>,
     event: Event,
@@ -221,7 +221,7 @@ export function useRenderListNavItem(
     classes: ComputedRef<TRecord>,
     innerClasses: ComputedRef<TRecord>,
     innerStyles: ComputedRef<string[]>,
-    isActive: Ref<boolean>,
+    isActive: Ref<boolean | undefined>,
     isExpanded: Ref<boolean>,
     hasChild: Ref<boolean>,
     instance: ShallowRef<IListItem | undefined>,

@@ -151,7 +151,8 @@
         }
     }
 
-    ~ .btn {
+    ~ .btn,
+    ~ .#{$prefix}dropdown-menu {
         margin-left: $padding-sm;
     }
 }

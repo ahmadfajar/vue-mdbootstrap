@@ -1,4 +1,4 @@
-import type {ComponentInternalInstance, PropType} from "vue";
+import type { ComponentInternalInstance, Prop, PropType } from 'vue';
 import {
     booleanProp,
     booleanTrueProp,
@@ -8,11 +8,11 @@ import {
     stringRequiredProp,
     validStringOrNumberProp,
     whiteColorProp
-} from "../../../mixins/CommonProps";
-import {useGenerateId} from "../../../mixins/CommonApi";
-import {iconProps} from "../../Avatar/mixins/avatarProps";
-import {width} from "../../Icon/mixins/iconProps";
-import type {TSpaceAround} from "../types";
+} from '../../../mixins/CommonProps';
+import { useGenerateId } from '../../../mixins/CommonApi';
+import { iconProps } from '../../Avatar/mixins/avatarProps';
+import { width } from '../../Icon/mixins/iconProps';
+import type { TSpaceAround } from '../types';
 
 
 export const listViewProps = {
@@ -23,7 +23,7 @@ export const listViewProps = {
     itemBorderVariant: {
         type: String,
         default: undefined,
-        validator: (v: string) => ["left", "right", "left-right", "top", "bottom", "top-bottom"].includes(v)
+        validator: (v: string) => ['left', 'right', 'left-right', 'top', 'bottom', 'top-bottom'].includes(v)
     },
     modelValue: {
         type: Object as PropType<ComponentInternalInstance>,
@@ -32,10 +32,10 @@ export const listViewProps = {
     singleExpand: booleanTrueProp,
     individualState: booleanProp,
     spaceAround: {
-        type: String as PropType<TSpaceAround>,
+        type: String,
         default: undefined,
-        validator: (v: string) => ["both", "left", "right"].includes(v)
-    }
+        validator: (v: string) => ['none', 'both', 'left', 'right'].includes(v)
+    } as Prop<TSpaceAround>
 }
 
 export const listNavItemProps = {
@@ -45,7 +45,7 @@ export const listNavItemProps = {
         type: String,
         default: () => useGenerateId()
     },
-    // active: booleanProp,
+    active: booleanProp,
     disabled: booleanProp,
     depth: validStringOrNumberProp,
     indent: stringOrNumberProp,

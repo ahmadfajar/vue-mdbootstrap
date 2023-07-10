@@ -35,8 +35,37 @@
     background-color: var(--#{$prefix}listview-bg);
     padding: var(--#{$prefix}listview-padding-y) var(--#{$prefix}listview-padding-x);
 
-    .#{$prefix}-subheader {
+    .#{$prefix}subheader {
         @include user-select(none);
+    }
+
+    .dropdown-menu {
+        --#{$bs-prefix}dropdown-padding-y: 0;
+        --#{$bs-prefix}dropdown-item-padding-y: var(--#{$prefix}tile-padding-y);
+        --#{$bs-prefix}dropdown-header-color: var(--#{$prefix}subheader-color);
+    }
+
+    &.#{$prefix}list-space-both,
+    &.#{$prefix}list-space-left,
+    &.#{$prefix}list-space-right {
+        .dropdown-item {
+            margin-bottom: calc(var(--#{$prefix}tile-spacing-y) * .5);
+            margin-top: calc(var(--#{$prefix}tile-spacing-y) * .5);
+        }
+    }
+
+    &.#{$prefix}list-space-both,
+    &.#{$prefix}list-space-left {
+        .dropdown-item {
+            margin-left: var(--#{$prefix}tile-spacing-x);
+        }
+    }
+
+    &.#{$prefix}list-space-both,
+    &.#{$prefix}list-space-right {
+        .dropdown-item {
+            margin-right: var(--#{$prefix}tile-spacing-x);
+        }
     }
 }
 

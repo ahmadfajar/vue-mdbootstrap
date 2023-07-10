@@ -19,13 +19,13 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
         'update:open',
     ],
     setup(props, {emit, slots}) {
-        const cmpProps = props as Readonly<TSideDrawerOptionProps>;
-        // see bootstrap: $zindex--sticky
+        const thisProps = props as Readonly<TSideDrawerOptionProps>;
+        // see bootstrap: $zIndex-sticky
         const zIndex = ref(1020);
         const vueMdb = ref<TVueMdb>();
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
-        const isOpen = ref<boolean>(true);
+        const isOpen = ref<boolean>(<boolean>thisProps.open);
         const resizeHandler = () => {
             emit('resize');
             isMobile.value = useBreakpointMax('md');
@@ -39,50 +39,50 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
         };
         const clipHeight = computed(
             () => {
-                if (cmpProps.clipped && appId.value && vueMdb.value) {
+                if (thisProps.clipped && appId.value && vueMdb.value) {
                     return vueMdb.value.app[appId.value].appbarHeight + 1;
                 }
                 return 0;
             }
         );
         const styles = computed(
-            () => useSideDrawerStyles(cmpProps, isMobile, isOpen, clipHeight, zIndex)
+            () => useSideDrawerStyles(thisProps, isMobile, isOpen, clipHeight, zIndex)
         );
 
         onMounted(
-            () => useSideDrawerOnMountedHook(appId, vueMdb, cmpProps, zIndex)
+            () => useSideDrawerOnMountedHook(appId, vueMdb, thisProps, zIndex)
         );
         watch(
-            () => cmpProps.mini,
+            () => thisProps.mini,
             (value) => {
                 emit('resize');
                 if (appId.value && vueMdb.value) {
-                    if (cmpProps.position === 'right') {
+                    if (thisProps.position === 'right') {
                         vueMdb.value.app[appId.value].rightSideDrawerWidth = value
-                            ? (<number>cmpProps.miniWidth) : (<number>cmpProps.width);
+                            ? (<number>thisProps.miniWidth) : (<number>thisProps.width);
                     } else {
                         vueMdb.value.app[appId.value].leftSideDrawerWidth = value
-                            ? (<number>cmpProps.miniWidth) : (<number>cmpProps.width);
+                            ? (<number>thisProps.miniWidth) : (<number>thisProps.width);
                     }
                 }
             }
         );
         watch(
-            () => cmpProps.open,
+            () => thisProps.open,
             (value) => {
                 isOpen.value = <boolean>value;
                 if (appId.value && vueMdb.value) {
-                    if (cmpProps.position === 'right') {
-                        vueMdb.value.app[appId.value].rightSideDrawerWidth = !value ? 0 : (<number>cmpProps.width);
+                    if (thisProps.position === 'right') {
+                        vueMdb.value.app[appId.value].rightSideDrawerWidth = !value ? 0 : (<number>thisProps.width);
                     } else {
-                        vueMdb.value.app[appId.value].leftSideDrawerWidth = !value ? 0 : (<number>cmpProps.width);
+                        vueMdb.value.app[appId.value].leftSideDrawerWidth = !value ? 0 : (<number>thisProps.width);
                     }
                 }
             }
         );
 
         return () => useRenderSideDrawer(
-            slots, emit, cmpProps, styles, appId,
+            slots, emit, thisProps, styles, appId,
             isMobile, isOpen, zIndex, resizeHandler
         )
     }

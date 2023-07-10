@@ -1,4 +1,4 @@
-@import "/node_modules/compass-mixins/lib/compass/css3";
+@import "compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
@@ -10,6 +10,16 @@
     .#{$prefix}dropdown-menu-activator {
         cursor: pointer;
         position: relative;
+    }
+
+    ~ .#{$prefix}btn-icon,
+    ~ .#{$prefix}dropdown-menu,
+    ~ .#{$prefix}chip {
+        margin-left: $padding-xs;
+    }
+
+    ~ .btn {
+        margin-left: $padding-sm;
     }
 }
 

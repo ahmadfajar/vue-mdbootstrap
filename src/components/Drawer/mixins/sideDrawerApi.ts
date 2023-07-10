@@ -49,15 +49,11 @@ export function useSideDrawerStyles(
                 ? (isOpen.value ? zeroPx : Helper.cssUnit(slideWidth)) : undefined,
         };
     } else if (props.mini && props.miniWidth) {
-        const miniWidth = (parseInt(<string>props.miniWidth) + 1) * -1;
-
         return {
             ...properties,
             width: Helper.cssUnit(props.miniWidth),
-            left: props.position === 'left'
-                ? (isOpen.value ? zeroPx : Helper.cssUnit(miniWidth)) : undefined,
-            right: props.position === 'right'
-                ? (isOpen.value ? zeroPx : Helper.cssUnit(miniWidth)) : undefined,
+            left: props.position === 'left' ? zeroPx : undefined,
+            right: props.position === 'right' ? zeroPx : undefined,
         };
     }
 

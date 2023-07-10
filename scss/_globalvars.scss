@@ -3,9 +3,11 @@
 
 /* Global css variables */
 :root {
-    --#{$prefix}field-primary-indicator: #{$default-active-bgcolor};
-    --#{$prefix}field-accent-indicator: #{$mdb-default-color-light};
-    --#{$prefix}field-active-indicator: var(--#{$prefix}field-primary-indicator);
+    --#{$prefix}field-primary-indicator-rgb: 98, 0, 238;
+    --#{$prefix}field-primary-indicator: rgb(var(--#{$prefix}field-primary-indicator-rgb));
+    --#{$prefix}field-accent-indicator-rgb: 185,156,225;
+    --#{$prefix}field-accent-indicator: rgb(var(--#{$prefix}field-accent-indicator-rgb));
+    --#{$prefix}field-active-indicator: var(--#{$prefix}field-primary-indicator-rgb);
     --#{$prefix}field-button-active-bg: rgba(12,12,12,.25);
     --#{$prefix}field-button-hover-bg: rgba(80,80,80,.2);
     --#{$prefix}field-button-color: currentColor;

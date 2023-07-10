@@ -12,7 +12,7 @@ export declare type TRippleOptionProps = {
     /**
      * Ripple animation state.
      */
-    active?: boolean;
+    active?: boolean | Event;
     /**
      * Start animation from center or from mouse click position.
      * If true then animation always start from center, otherwise animation
@@ -50,9 +50,6 @@ export declare type TOverlayOptionProps = {
      * Overlay inline-css `z-index`.
      */
     zIndex?: string | number;
-}
-
-export declare interface IRippleEvent extends MouseEvent, TouchEvent {
 }
 
 export declare type TBsOverlay = ComponentObjectPropsOptions<TOverlayOptionProps>;

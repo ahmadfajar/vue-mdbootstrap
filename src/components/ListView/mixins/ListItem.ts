@@ -15,12 +15,12 @@ class ListItem implements IListItem {
     constructor(
         uid: string, tag: string,
         component: ComponentInternalInstance,
-        emit: TEmitFn
+        emitter: TEmitFn
     ) {
         this.uid = uid;
         this.tag = tag;
         this._component = component;
-        this._emit = emit;
+        this._emit = emitter;
         this._children = [];
     }
 
@@ -70,7 +70,7 @@ class ListItem implements IListItem {
     }
 
     fireEvent(name: string, ...args: unknown[]): void {
-        this._emit(name, args);
+        this._emit(name, ...args);
     }
 
     setActive(value: boolean): void {

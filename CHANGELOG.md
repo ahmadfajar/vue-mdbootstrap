@@ -20,8 +20,11 @@ Released: July xx, 2023
   - Fix padding and border-radius on small chip size.
   - Fix margin and icon-size on default chip size.
 - **BsContainer**, **BsContent**: improve css styles when **BsAppbar** `fixedTop` property is set.
+- **BsDropdownMenu**: bug fix when `v-model:open` is defined.
 - **BsListNav**, **BsListTile**: fix padding when `spaceAround` property is set on **BsListView**.
+- **BsListNavItem**: bug fix when `v-model:active` is defined.
 - **BsProgressBar**: add property `valuePosition`.
+- **BsRipple**: fix unnecessary animation effect when parent component becomes visible.
 - **BsSideDrawer**: improve computing of drawer position.
 - Improve TypeScript definition. 
 
