@@ -4,7 +4,6 @@ import { cssPrefix } from '../../../mixins/CommonApi';
 import type {
     TBsButton,
     TBsChip,
-    TBsIcon,
     TButtonMode,
     TChipContainer,
     TChipGroupOptionProps,
@@ -12,10 +11,7 @@ import type {
     TChipValue,
     TRecord
 } from '../../../types';
-import Helper from '../../../utils/Helper';
-import { useCreateIconProps } from '../../Avatar/mixins/avatarApi';
 import { BsButton } from '../../Button';
-import { BsIcon } from '../../Icon';
 import BsChip from '../BsChip';
 
 export function useSetSliderSize(slider: TChipContainer): void {
@@ -127,20 +123,9 @@ function createChipElement(
         onClick: () => clickHandler(item),
         onClose: () => closeHandler(item),
     }, {
-        icon: () => renderSlot(
-            slots, 'icon', item,
-            !Helper.isEmpty(chipProps.icon)
-                ? () => [
-                    h<TBsIcon>(BsIcon, {
-                        ...useCreateIconProps(chipProps),
-                        icon: <Prop<string>>(`${chipProps.icon + (chipProps.iconVariant ? '_' + chipProps.iconVariant : '')}`),
-                        size: <Prop<string | number>>(
-                            chipProps.size === 'sm' ? 18 : (chipProps.size === 'lg' ? 40 : 24)
-                        ),
-                    })
-                ]
-                : undefined
-        ),
+        icon: slots.icon
+            ? () => renderSlot(slots, 'icon', item)
+            : undefined,
         default: () => renderSlot(
             slots, 'text', item,
             () => [createTextVNode(toDisplayString(item.text))]

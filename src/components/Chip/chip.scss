@@ -8,7 +8,7 @@
 .#{$prefix}chip {
     $disabled-bg: lighten($gray-500, 15%);
     $disabled-border-color: lighten($gray-500, 8%);
-    --#{$prefix}chip-border-radius: #{$border-radius-lg};
+    --#{$prefix}chip-border-radius: #{$border-radius-base};
     --#{$prefix}chip-border-width: 0;
     --#{$prefix}chip-disabled-bg: #{$disabled-bg};
     --#{$prefix}chip-disabled-border-color: #{$disabled-border-color};
@@ -82,6 +82,13 @@
     }
 
     > .#{$prefix}chip-content {
+        --#{$prefix}chip-avatar-margin-left: #{-($padding-sm + .175)};
+        --#{$prefix}chip-avatar-margin-right: #{$padding-sm};
+        --#{$prefix}chip-icon-margin-left: #{-$padding-sm};
+        --#{$prefix}chip-icon-margin-right: #{$padding-sm};
+        --#{$prefix}chip-dismiss-btn-margin-left: #{$padding-sm};
+        --#{$prefix}chip-dismiss-btn-margin-right: #{-($padding-sm + .25)};
+
         @include flexbox((display: inline-flex, align-items: center));
         @include border-radius(var(--#{$prefix}chip-border-radius));
         padding: 0 var(--#{$prefix}chip-padding-x);
@@ -105,19 +112,19 @@
         > .#{$prefix}chip-avatar {
             @include flexbox((display: flex, align-self: center, align-items: center));
             @include transition(visibility .3s $md-transition-leave-timing);
-            margin-left: -($padding-base - .25);
-            margin-right: $padding-sm;
+            margin-left: var(--#{$prefix}chip-avatar-margin-left);
+            margin-right: var(--#{$prefix}chip-avatar-margin-right);
 
             &.#{$prefix}chip-avatar-bounded {
-                margin-left: -$padding-base;
+                margin-left: calc(var(--#{$prefix}chip-padding-x) * -1);
             }
         }
 
         > .#{$prefix}chip-icon {
             @include flexbox((display: flex, align-self: center, align-items: center));
             @include transition(width visibility 200ms 0ms $md-transition-default-timing);
-            margin-left: -$padding-sm;
-            margin-right: $padding-sm;
+            margin-left: var(--#{$prefix}chip-icon-margin-left);
+            margin-right: var(--#{$prefix}chip-icon-margin-right);
             width: 100%;
 
             &.order-1 {
@@ -135,44 +142,44 @@
         }
 
         > .#{$prefix}btn-icon {
-            margin-left: $padding-sm;
-            margin-right: -($padding-sm + .25);
+            margin-left: var(--#{$prefix}chip-dismiss-btn-margin-left);
+            margin-right: var(--#{$prefix}chip-dismiss-btn-margin-right);
         }
-    }
-
-    &.#{$prefix}chip-pill {
-        --#{$prefix}chip-border-radius: #{$border-radius-pill};
     }
 
     &.#{$prefix}chip-sm {
         --#{$prefix}chip-border-radius: #{$border-radius-base};
         --#{$prefix}chip-padding-x: .75rem;
+
         font-size: 85%;
         height: 1.56rem;
+
+        > .#{$prefix}chip-content {
+            --#{$prefix}chip-avatar-margin-left: #{-$padding-sm};
+            --#{$prefix}chip-dismiss-btn-margin-right: #{-($padding-sm + .15)};
+        }
+
+        .#{$prefix}btn-icon {
+            --#{$bs-prefix}btn-state-line-height: #{$padding-base + .125};
+
+            .#{$prefix}ripple {
+                --#{$bs-prefix}btn-inner-state-width: #{$padding-base + .125};
+                --#{$bs-prefix}btn-inner-state-height: #{$padding-base + .125};
+            }
+        }
     }
 
     &.#{$prefix}chip-lg {
+        --#{$prefix}chip-border-radius: #{$border-radius-lg};
+        --#{$prefix}chip-padding-x: #{$padding-lg};
+
         font-size: 120%;
         height: 3rem;
 
         > .#{$prefix}chip-content {
-            padding: 0 $padding-lg;
-
-            > .#{$prefix}chip-icon {
-                margin-left: -.625rem; // -10px
-            }
-
-            > .#{$prefix}chip-avatar {
-                margin-left: -($padding-base + .125); // -18px
-
-                &.#{$prefix}chip-avatar-bounded {
-                    margin-left: -$padding-lg;
-                }
-            }
-
-            > .#{$prefix}btn-icon {
-                margin-right: -($padding-sm + .5);
-            }
+            --#{$prefix}chip-avatar-margin-left: #{-($padding-base + .125)};   // -18px
+            --#{$prefix}chip-icon-margin-left: #{-($padding-sm + .125)};       // -10px
+            --#{$prefix}chip-dismiss-btn-margin-right: #{-($padding-sm + .5)};
         }
     }
 
@@ -186,15 +193,9 @@
             }
         }
     }
-    &.#{$prefix}chip-sm {
-        .#{$prefix}btn-icon {
-            --#{$bs-prefix}btn-state-line-height: #{$padding-base + .125};
 
-            .#{$prefix}ripple {
-                --#{$bs-prefix}btn-inner-state-width: #{$padding-base + .125};
-                --#{$bs-prefix}btn-inner-state-height: #{$padding-base + .125};
-            }
-        }
+    &.#{$prefix}chip-pill {
+        --#{$prefix}chip-border-radius: #{$border-radius-pill};
     }
 
     &[class*="chip-outline"] {

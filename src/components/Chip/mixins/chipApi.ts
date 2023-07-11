@@ -117,8 +117,8 @@ export function useRenderChip(
                     {
                         class: [
                             `${cssPrefix}chip-icon`,
-                            Helper.isEmpty(props.icon) ? `${cssPrefix}empty-icon` : '',
-                            props.iconPosition === 'right' && !Helper.isEmpty(props.icon) ? 'order-1' : '',
+                            Helper.isEmpty(props.icon) && !slots.icon ? `${cssPrefix}empty-icon` : '',
+                            props.iconPosition === 'right' ? 'order-1' : '',
                         ],
                         style: {
                             width: !props.size && !Helper.isEmpty(props.icon) ? '18px' : undefined,

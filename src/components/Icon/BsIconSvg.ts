@@ -9,27 +9,27 @@ export default defineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, Me
     name: 'BsIconSvg',
     props: iconProps,
     setup(props) {
-        const cmpProps = props as Readonly<TIconOptionProps>;
+        let iconData: TIconData | undefined;
+        const thisProps = props as Readonly<TIconOptionProps>;
         const svgIcon = ref<TIconData>();
-        const iconData = computed<TIconData | undefined>(
-            () => findIcon(cmpProps.icon)
-        );
         const svgClasses = computed<TRecord>(
-            () => useSvgClasses(cmpProps)
+            () => useSvgClasses(thisProps)
         );
 
         watch(
-            () => iconData.value,
+            () => thisProps.icon,
             async (value) => {
-                if (value) {
-                    svgIcon.value = await useGoogleIcon(value);
+                iconData = findIcon(value);
+                if (iconData) {
+                    svgIcon.value = await useGoogleIcon(iconData);
                 }
             }
         );
         onBeforeMount(
             async () => {
-                if (iconData.value) {
-                    svgIcon.value = await useGoogleIcon(iconData.value);
+                iconData = findIcon(thisProps.icon);
+                if (iconData) {
+                    svgIcon.value = await useGoogleIcon(iconData);
                 }
             }
         )
@@ -37,8 +37,8 @@ export default defineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, Me
         return () =>
             useRenderSvgIcon(
                 svgIcon.value,
-                useSizeHeight(cmpProps),
-                useSizeWidth(cmpProps),
+                useSizeHeight(thisProps),
+                useSizeWidth(thisProps),
                 svgClasses.value,
             )
     }

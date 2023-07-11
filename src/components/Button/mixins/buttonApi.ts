@@ -115,13 +115,14 @@ function renderIconOrSlot(
     iconId: string,
     iconPosition: string,
     iconSize?: number | string,
-    slotArgs?: TRecord,
     applyIconClass?: boolean,
+    slotArgs?: TRecord,
 ): VNode {
     if (slots && slots[name]) {
         return useRenderSlotWithWrapper(
             slots, name, iconId, {
                 class: {
+                    'd-flex': applyIconClass,
                     [`${cssPrefix}icon`]: applyIconClass,
                     [`${cssPrefix}icon-${iconPosition}`]: btnMode !== 'icon' && btnMode !== 'floating',
                 },
@@ -161,8 +162,8 @@ export function useRenderButtonContent(
                 iconId,
                 props.iconPosition,
                 props.iconSize,
-                undefined,
                 true,
+                undefined,
             )
             : '',
         slots.default && slots.default(),
@@ -174,8 +175,8 @@ export function useRenderButtonContent(
                 iconId,
                 props.iconPosition,
                 props.iconSize,
+                true,
                 undefined,
-                true
             )
             : '',
     ]
@@ -192,9 +193,10 @@ export function useRenderToggleItemContent(
                 slots, 'icon',
                 'default',
                 item,
-                (item.id ? `bs-icon-${item.id}` : ''),
+                `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
                 props.iconPosition,
                 item.iconSize,
+                true,
                 item,
             )
             : '',
@@ -213,9 +215,10 @@ export function useRenderToggleItemContent(
                 slots, 'icon',
                 'default',
                 item,
-                (item.id ? `bs-icon-${item.id}` : ''),
+                `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
                 props.iconPosition,
                 item.iconSize,
+                true,
                 item,
             )
             : '',
@@ -271,27 +274,12 @@ export function useRenderToggleFieldButton(
                         emit('update:model-value', value);
                     }
                 }, {
-                    label: (item: TInputOptionItem) =>
-                        useRenderSlot(
-                            slots, 'label',
-                            {key: kebabCase(item.label)},
-                            [
-                                h('span', {
-                                    class: `${cssPrefix}btn-text`,
-                                }, toDisplayString(item.label))
-                            ],
-                            item,
-                        ),
-                    icon: (item: TInputOptionItem) =>
-                        renderIconOrSlot(
-                            slots, 'icon',
-                            'default',
-                            item,
-                            `bs-icon-${item.id || item.label}`,
-                            <string>thisProps.iconPosition,
-                            item.iconSize,
-                            item,
-                        ),
+                    label: slots.label
+                        ? (item: TInputOptionItem) => useRenderSlot(slots, 'label', item)
+                        : undefined,
+                    icon: slots.icon
+                        ? (item: TInputOptionItem) => useRenderSlot(slots, 'icon', item)
+                        : undefined,
                 }),
             ]),
             useRenderFieldFeedback(

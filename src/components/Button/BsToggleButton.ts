@@ -1,6 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
 import { defineComponent, h, ref, vModelCheckbox, vModelRadio, withDirectives } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
+import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
 import type { TBsButtonInner, TBsToggleButton, TInputOptionItem, TRecord, TToggleButtonOptionProps } from '../../types';
 import BsButtonInner from './BsButtonInner';
 import { useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemContent } from './mixins/buttonApi';
@@ -16,14 +16,14 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
         'update:model-value'
     ],
     setup(props, {emit, slots}) {
-        const cmpProps = props as Readonly<TToggleButtonOptionProps>;
+        const thisProps = props as Readonly<TToggleButtonOptionProps>;
         const localValue = ref<string | number | boolean | Array<unknown> | undefined>(<string | number | boolean | Array<unknown> | undefined>props.modelValue);
         const makeInputEl = (item: TInputOptionItem, props: Readonly<TToggleButtonOptionProps>) => {
             return withDirectives(
                 h('input', {
                     class: 'd-none',
                     value: item.value,
-                    ...useMakeInputItemAttrs(item, cmpProps),
+                    ...useMakeInputItemAttrs(item, thisProps),
                     'onUpdate:modelValue': (value: string | number | boolean) => {
                         if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
                             localValue.value = value;
@@ -46,25 +46,27 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
             return h('div', {
                     class: [
                         'btn-group',
-                        cmpProps.pill ? 'rounded-pill' : (!cmpProps.pill && !cmpProps.rounded ? 'rounded-1' : ''),
-                        cmpProps.disabled ? `${cssPrefix}disabled` : '',
-                        cmpProps.readonly ? `${cssPrefix}readonly` : '',
-                        cmpProps.required ? `${cssPrefix}required` : '',
+                        thisProps.pill ? 'rounded-pill' : (!thisProps.pill && !thisProps.rounded ? 'rounded-1' : ''),
+                        thisProps.disabled ? `${cssPrefix}disabled` : '',
+                        thisProps.readonly ? `${cssPrefix}readonly` : '',
+                        thisProps.required ? `${cssPrefix}required` : '',
                     ],
                     id: props.id,
                     role: 'group',
                 },
-                cmpProps.items?.map((item: TInputOptionItem, idx: number) => {
+                thisProps.items?.map((item: TInputOptionItem, idx: number) => {
+                    item.id ??= useGenerateId();
+
                     return h('label', {
                         key: `btn-${idx}`,
                         tabIndex: 0,
-                        class: useMakeInputItemClasses(item, cmpProps),
+                        class: useMakeInputItemClasses(item, thisProps),
                         // onClick: (e: Event) => (<HTMLElement>e.target).focus(),
                         onKeydown: (e: KeyboardEvent) => {
                             if (['Space', 'Enter'].includes(e.code)) {
                                 (<HTMLElement>e.target).focus();
-                                if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {
-                                    if (cmpProps.multiple) {
+                                if (!thisProps.disabled && !thisProps.readonly && !item.disabled && !item.readonly) {
+                                    if (thisProps.multiple) {
                                         if ((<unknown[]>localValue.value).includes(<unknown>item.value)) {
                                             localValue.value = (<unknown[]>localValue.value).filter(it => it !== item.value);
                                         } else {
@@ -79,11 +81,11 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                             }
                         },
                     }, [
-                        makeInputEl(item, cmpProps),
+                        makeInputEl(item, thisProps),
                         h<TBsButtonInner>(BsButtonInner, {
                             rippleOff: <Prop<boolean>>rippleOff(item),
                         }, {
-                            default: () => useRenderToggleItemContent(slots, item, cmpProps)
+                            default: () => useRenderToggleItemContent(slots, item, thisProps)
                         }),
                     ]);
                 })
