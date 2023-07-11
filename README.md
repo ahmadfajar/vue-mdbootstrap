@@ -137,8 +137,12 @@ Code below is an example on how to create HTML page using Vue MDBootstrap.
 
 ## Demos
 
-You can clone the demos from [here](https://github.com/ahmadfajar/vue3-mdb-example)
-to see it in action.
+You can clone the demos from github repository and run it by your self to see it in action. 
+1. [vue3-mdb-example](https://github.com/ahmadfajar/vue3-mdb-example) - Vue MDBootstrap v2.0 
+   component demos.
+2. [vue3-mdb-starter](https://github.com/ahmadfajar/vue3-mdb-starter) - Vue MDBootstrap v2.0 
+   starter kit project template.
+
 
 ## Start coding
 
