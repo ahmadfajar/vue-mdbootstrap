@@ -1,3 +1,4 @@
+import type { Prop, PropType } from 'vue';
 import {
     booleanProp,
     booleanTrueProp,
@@ -5,24 +6,23 @@ import {
     validStringOrFloatProp,
     validStringOrNumberProp,
     whiteColorProp
-} from "../../../mixins/CommonProps";
-import type {Prop, PropType} from "vue";
-import type {TPopoverPosition} from "../types";
+} from '../../../mixins/CommonProps';
+import type { TPopoverPosition } from '../types';
 
 export const popoverPlacementProp = {
     type: String as PropType<TPopoverPosition>,
-    default: "bottom-left",
+    default: 'bottom-left',
     validator: (value: string) => [
-        "top", "top-left", "top-right",
-        "bottom", "bottom-left", "bottom-right",
-        "left", "left-top", "left-bottom",
-        "right", "right-top", "right-bottom"
+        'top', 'top-left', 'top-right',
+        'bottom', 'bottom-left', 'bottom-right',
+        'left', 'left-top', 'left-bottom',
+        'right', 'right-top', 'right-bottom'
     ].includes(value)
 } as Prop<TPopoverPosition>
 
 export const popoverDefaultTransitionProp = {
     type: String,
-    default: "scale"
+    default: 'scale'
 }
 
 export const popoverBaseProps = {
@@ -42,7 +42,7 @@ export const popoverProps = {
     placement: popoverPlacementProp,
     transition: popoverDefaultTransitionProp,
     trigger: {
-        type: [String, Element],
+        type: [String, Object],
         default: undefined
-    },
+    } as Prop<string | Element>,
 }

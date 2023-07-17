@@ -27,7 +27,8 @@ export declare type TAlertOptionProps = TIconProps & {
      */
     iconType?: string;
     /**
-     * Use predefined icon style to create contextual alert.
+     * Use predefined icon style, valid values are: `outlined`, `filled`, `round`, `sharp`.
+     * See [Google Material Icons](https://fonts.google.com/icons?icon.set=Material+Icons).
      */
     iconVariant?: TIconVariant;
     /**
