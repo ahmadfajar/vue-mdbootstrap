@@ -10,7 +10,8 @@ export declare type TMaskLoaderVariant = 'linear' | 'linear-alt' | 'progress' | 
 
 export declare type TMaskLoaderOptionProps = {
     /**
-     * Sets the css-style `position` value. If `true` then css-style `position` is set to `fixed`.
+     * Sets the inline css-style `position` property. If `true` then the inline
+     * css-style `position` property is set to `fixed`.
      */
     fixedPosition?: boolean;
     /**
@@ -47,7 +48,8 @@ export declare type TMaskLoaderOptionProps = {
      */
     type?: TMaskLoaderVariant;
     /**
-     * Alias of `type` property.
+     * @deprecated
+     * Use `type` instead.
      */
     variant?: TMaskLoaderVariant;
     /**

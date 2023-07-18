@@ -1,11 +1,5 @@
 import type { Prop } from 'vue';
-import {
-    booleanProp,
-    defaultTransitionProp,
-    primaryColorProp,
-    stringProp,
-    validStringOrFloatProp
-} from '../../../mixins/CommonProps';
+import { booleanProp, defaultTransitionProp, primaryColorProp, stringProp } from '../../../mixins/CommonProps';
 import type { TMaskLoaderVariant } from '../types';
 
 const maskLoaderVariant = {
@@ -56,7 +50,7 @@ export const maskLoaderProps = {
         validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
     },
     /**
-     * Mask loader variant type [deprecated], use `variant` instead.
+     * Mask loader variant type [deprecated], use `type` instead.
      */
     spinnerType: stringProp as Prop<TMaskLoaderVariant>,
     /**
