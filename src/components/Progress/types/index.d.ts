@@ -6,7 +6,7 @@ export declare type TProgressControlVariant = 'spinner' | 'bar';
 
 export declare type TProgressBarValuePosition = 'start' | 'end' | 'top' | 'bottom' | 'inside';
 
-export declare type TMaskLoaderVariant = 'linear' | 'progress' | 'spinner' | 'grow';
+export declare type TMaskLoaderVariant = 'linear' | 'linear-alt' | 'progress' | 'spinner' | 'grow';
 
 export declare type TMaskLoaderOptionProps = {
     /**
@@ -39,11 +39,15 @@ export declare type TMaskLoaderOptionProps = {
     spinnerThickness?: string | number;
     /**
      * @deprecated
-     * Use `variant` instead.
+     * Use `type` instead.
      */
     spinnerType?: string;
     /**
      * Mask loader variant type.
+     */
+    type?: TMaskLoaderVariant;
+    /**
+     * Alias of `type` property.
      */
     variant?: TMaskLoaderVariant;
     /**

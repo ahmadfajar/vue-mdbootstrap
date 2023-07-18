@@ -2,6 +2,16 @@
 
 > All notable changes to this project will be documented in this file.
 
+## v2.0.4
+
+Released: July xx, 2023
+
+### Features & Improvements
+
+- **BsMaskLoader**: refactor property `variant` to `type`, and change its valid 
+  values to: `linear`, `linear-alt`, `spinner`, `grow`.
+
+
 ## v2.0.3
 
 Released: July 12, 2023

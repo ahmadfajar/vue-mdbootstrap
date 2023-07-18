@@ -1,9 +1,9 @@
-import type { ComputedRef, Prop, VNode } from 'vue';
+import type { ComputedRef, VNode } from 'vue';
 import { h, Transition } from 'vue';
 import { cssPrefix, useBrowserIE } from '../../../mixins/CommonApi';
 import Helper from '../../../utils/Helper';
 import { useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode } from '../../Icon/mixins/svgApi';
-import type { TMaskLoaderVariant, TProgressBarOptionProps, TProgressOptionProps } from '../types';
+import type { TProgressBarOptionProps, TProgressOptionProps } from '../types';
 import INDETERMINATE_ANIMATION_TEMPLATE from './ProgressSpinnerAnimation';
 
 declare interface ISpinnerElement extends Element {
@@ -19,12 +19,6 @@ const progressSpinner: TSpinnerRecord = {
     styleTag: undefined,
     diameters: new Set<number>(),
 };
-
-export const maskLoaderVariant = {
-    type: String,
-    default: 'linear',
-    validator: (value: string): boolean => ['linear', 'progress', 'spinner', 'grow'].includes(value)
-} as Prop<TMaskLoaderVariant>;
 
 export function useBufferMode(props: Readonly<TProgressOptionProps>) {
     return props.mode?.toLowerCase() === 'buffer';

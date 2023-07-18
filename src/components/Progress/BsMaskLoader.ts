@@ -23,7 +23,7 @@ export default defineComponent<TBsMaskLoader, TRecord, TRecord, ComputedOptions,
     setup(props) {
         const thisProps = props as Readonly<TMaskLoaderOptionProps>;
         const loaderVariant = computed<TMaskLoaderVariant>(
-            () => <TMaskLoaderVariant>(thisProps.spinnerType || thisProps.variant)
+            () => <TMaskLoaderVariant>(thisProps.spinnerType || thisProps.variant || thisProps.type)
         );
 
         return () =>
@@ -37,7 +37,7 @@ export default defineComponent<TBsMaskLoader, TRecord, TRecord, ComputedOptions,
                             'z-index': thisProps.zIndex
                         }
                     }, [
-                        (loaderVariant.value === 'progress')
+                        ['linear-alt', 'progress'].includes(loaderVariant.value)
                             ? h<TBsProgress>(BsProgress, {
                                 class: 'align-self-center',
                                 color: props.spinnerColor,
@@ -45,7 +45,8 @@ export default defineComponent<TBsMaskLoader, TRecord, TRecord, ComputedOptions,
                                 stroke: props.spinnerThickness,
                                 type: 'spinner' as Prop<TProgressControlVariant>
                             })
-                            : ((loaderVariant.value === 'spinner')
+                            : (
+                                (loaderVariant.value === 'spinner')
                                     ? h<TBsIconSpinner>(BsIconSpinner, {
                                         color: props.spinnerColor,
                                         size: props.spinnerDiameter,

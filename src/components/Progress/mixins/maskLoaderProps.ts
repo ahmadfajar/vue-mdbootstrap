@@ -1,3 +1,4 @@
+import type { Prop } from 'vue';
 import {
     booleanProp,
     defaultTransitionProp,
@@ -5,7 +6,13 @@ import {
     stringProp,
     validStringOrFloatProp
 } from '../../../mixins/CommonProps';
-import { maskLoaderVariant } from './progressControlApi';
+import type { TMaskLoaderVariant } from '../types';
+
+const maskLoaderVariant = {
+    type: String,
+    default: 'linear',
+    validator: (value: string): boolean => ['linear', 'linear-alt', 'progress', 'spinner', 'grow'].includes(value)
+} as Prop<TMaskLoaderVariant>;
 
 export const maskLoaderProps = {
     /**
@@ -19,7 +26,11 @@ export const maskLoaderProps = {
     /**
      * Backdrop overlay opacity value.
      */
-    overlayOpacity: validStringOrFloatProp,
+    overlayOpacity: {
+        type: [String, Number],
+        default: 0.5,
+        validator: (value: string): boolean => !isNaN(parseFloat(value))
+    },
     /**
      * Backdrop overlay color.
      */
@@ -47,11 +58,12 @@ export const maskLoaderProps = {
     /**
      * Mask loader variant type [deprecated], use `variant` instead.
      */
-    spinnerType: stringProp,
+    spinnerType: stringProp as Prop<TMaskLoaderVariant>,
     /**
      * Mask loader variant type.
      */
-    variant: maskLoaderVariant,
+    type: maskLoaderVariant,
+    variant: stringProp as Prop<TMaskLoaderVariant>,
     /**
      * The animation transition to be used when displaying the mask loader.
      */
