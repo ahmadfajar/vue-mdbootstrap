@@ -1,4 +1,5 @@
-export { kebabCase, camelCase } from 'lodash';
+import loCamelCase from 'lodash/camelCase';
+import loKebabCase from 'lodash/kebabCase';
 
 /**
  * Pads the input string with a given string (possibly repeated) so that the resulting string
@@ -75,4 +76,12 @@ export function chunk(source: string, size = 1): string[] {
     }
 
     return chunked;
+}
+
+export function camelCase(text: string): string {
+    return loCamelCase(text);
+}
+
+export function kebabCase(text: string): string {
+    return loKebabCase(text);
 }

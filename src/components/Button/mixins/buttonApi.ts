@@ -1,7 +1,7 @@
-import { kebabCase } from 'lodash';
 import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode, VNodeArrayChildren } from 'vue';
 import { h, toDisplayString } from 'vue';
 import { cssPrefix, useGenerateId, useRenderSlot, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
+import { kebabCase } from '../../../mixins/StringHelper';
 import type {
     TBsIcon,
     TBsToggleField,

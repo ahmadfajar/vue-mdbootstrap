@@ -1,5 +1,5 @@
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-import { orderBy } from 'lodash';
+import orderBy from 'lodash/orderBy';
 import { reactive, readonly } from 'vue';
 import { BsModel, RestProxyAdapter } from '../model';
 import type {
@@ -28,7 +28,7 @@ import Helper from '../utils/Helper';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 07/07/2023 07:27
+ * @since  15/03/2019 modified: 20/07/2023 01:25
  */
 export default class AbstractStore implements IAbstractStore {
     protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';

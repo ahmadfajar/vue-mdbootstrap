@@ -1,8 +1,8 @@
-import { kebabCase } from 'lodash';
 import type { ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
 import { createCommentVNode, Fragment, h, nextTick, toDisplayString, withDirectives } from 'vue';
 import { ClickOutside } from '../../../directives';
 import { cssPrefix, useRenderSlot } from '../../../mixins/CommonApi';
+import { kebabCase } from '../../../mixins/StringHelper';
 import type {
     IBsModel,
     TBsCombobox,

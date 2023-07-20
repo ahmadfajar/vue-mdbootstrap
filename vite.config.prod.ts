@@ -2,6 +2,7 @@ import terser from '@rollup/plugin-terser'
 import path from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
+// @ts-ignore
 import { bannerText } from './banner'
 
 export default defineConfig({
@@ -43,9 +44,10 @@ export default defineConfig({
                 interop: 'auto',
                 assetFileNames: 'bundle.min.[ext]',
                 plugins: [
+                    // @ts-ignore
                     terser({
                         compress: true,
-                        ecma: 2020,
+                        ecma: 2021,
                         format: {
                             comments: false
                         }

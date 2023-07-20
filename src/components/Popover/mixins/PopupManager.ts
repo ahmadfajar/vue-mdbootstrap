@@ -1,5 +1,6 @@
 import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import type { ComponentInternalInstance, Ref } from 'vue';
+import { isServer } from '../../../mixins/CommonApi';
 import type { TPopupOptions } from '../types';
 
 declare type TPopupItem = {
@@ -70,15 +71,17 @@ const PopupManager = {
     }
 };
 
-(<Document>document).addEventListener('keydown', (evt: KeyboardEvent) => {
-    if (PopupManager.items.length === 0 || (evt.key && evt.key.toLowerCase() !== 'escape')) {
-        return;
-    }
-    const popupItem = PopupManager.items[PopupManager.items.length - 1];
+if (!isServer) {
+    (<Document>document).addEventListener('keydown', (evt: KeyboardEvent) => {
+        if (PopupManager.items.length === 0 || (evt.key && evt.key.toLowerCase() !== 'escape')) {
+            return;
+        }
+        const popupItem = PopupManager.items[PopupManager.items.length - 1];
 
-    if (popupItem.props.escClose) {
-        PopupManager.closePopover(popupItem.target, popupItem.active, 'Esc pressed.');
-    }
-});
+        if (popupItem.props.escClose) {
+            PopupManager.closePopover(popupItem.target, popupItem.active, 'Esc pressed.');
+        }
+    });
+}
 
 export default PopupManager;

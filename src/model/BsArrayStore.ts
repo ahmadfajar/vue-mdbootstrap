@@ -1,5 +1,6 @@
 import type { AxiosResponse } from 'axios';
-import { meanBy, sumBy } from 'lodash';
+import meanBy from 'lodash/meanBy';
+import sumBy from 'lodash/sumBy';
 import { AbstractStore } from '../model';
 import type { IArrayStore, TBsModel, TRecord, TSortDirection, TSortOption } from '../types';
 import Helper from '../utils/Helper';
@@ -24,7 +25,7 @@ import Helper from '../utils/Helper';
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 07/07/2023 07:29
+ * @since  13/03/2019 modified: 20/07/2023 01:27
  */
 export default class BsArrayStore extends AbstractStore implements IArrayStore {
     /**
