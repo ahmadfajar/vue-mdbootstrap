@@ -3,14 +3,16 @@ import { defineComponent, h } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
 import type { TBsContainer, TBsContent, TContainerOptionProps, TRecord } from '../../types';
-import { baseTagProps } from '../Card/mixins/cardProps';
 import BsContainer from './BsContainer';
 
 export default defineComponent<TBsContent, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
     name: 'BsContent',
     props: {
         app: booleanProp,
-        ...baseTagProps
+        tag: {
+            type: String,
+            default: 'main'
+        },
     },
     setup(props, {slots}) {
         const cmpProps = props as Readonly<TContainerOptionProps>;

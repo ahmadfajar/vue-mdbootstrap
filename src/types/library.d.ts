@@ -49,6 +49,25 @@ export declare type TEventListenerBinding = {
     target?: Element | Window | null;
 };
 
+declare type TRect = {
+    width: number;
+    height?: number;
+    left?: number;
+    right?: number;
+    top?: number;
+    bottom?: number;
+}
+
+declare type TAppBar = {
+    height: number;
+    stickyTop: boolean;
+    fixedTop: boolean;
+}
+
+declare type TSideDrawer = {
+    [K in TLabelPosition]: TRect;
+}
+
 export declare type TMdbAppObject = {
     left: number;
     right: number;
@@ -56,11 +75,8 @@ export declare type TMdbAppObject = {
     bottom: number;
     height: number;
     width: number;
-    appbarHeight: number;
-    appbarStickyTop: boolean;
-    appbarFixedTop: boolean;
-    leftSideDrawerWidth: number;
-    rightSideDrawerWidth: number;
+    appbar: TAppBar;
+    sideDrawer: TSideDrawer;
 }
 
 export declare type TVueMdb = {

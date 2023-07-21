@@ -20,29 +20,26 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
         'resize'
     ],
     setup(props, {emit, slots}) {
-        const cmpProps = props as Readonly<TContainerOptionProps>;
+        const thisProps = props as Readonly<TContainerOptionProps>;
+        const thisElement = ref<HTMLElement | null>(null);
         const vueMdb = ref<TVueMdb>();
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
-        const elementRef = ref<HTMLElement | null>(null);
         const resizeHandler = () => {
-            emit('resize', elementRef.value);
+            emit('resize', thisElement.value);
             isMobile.value = useBreakpointMax('md');
         };
         const styles = computed((): TRecord | undefined => {
-            if (cmpProps.app && appId.value) {
+            if (thisProps.app && appId.value) {
                 if (vueMdb.value) {
-                    const {
-                        leftSideDrawerWidth, rightSideDrawerWidth,
-                        appbarHeight, appbarFixedTop
-                    } = vueMdb.value.app[appId.value];
+                    const {sideDrawer, appbar} = vueMdb.value.app[appId.value];
 
                     return {
-                        paddingRight: isMobile.value ? 0 : `${rightSideDrawerWidth}px`,
-                        paddingLeft: isMobile.value ? 0 : `${leftSideDrawerWidth}px`,
-                        top: appbarFixedTop === true ? Helper.cssUnit(appbarHeight + 1) : undefined,
-                        bottom: appbarFixedTop === true ? 0 : undefined,
-                        position: appbarFixedTop === true ? 'absolute' : undefined,
+                        paddingRight: isMobile.value ? 0 : `${sideDrawer.right.width}px`,
+                        paddingLeft: isMobile.value ? 0 : `${sideDrawer.left.width}px`,
+                        top: appbar.fixedTop === true ? Helper.cssUnit(appbar.height + 1) : undefined,
+                        bottom: appbar.fixedTop === true ? 0 : undefined,
+                        position: appbar.fixedTop === true ? 'absolute' : undefined,
                     };
                 }
             }
@@ -66,9 +63,9 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
         return () =>
             withDirectives(
                 h(
-                    cmpProps.tag || 'div',
+                    thisProps.tag || 'div',
                     {
-                        ref: elementRef,
+                        ref: thisElement,
                         class: `${cssPrefix}container-wrap`,
                         style: styles.value
                     },

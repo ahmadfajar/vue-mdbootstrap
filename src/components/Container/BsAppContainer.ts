@@ -16,29 +16,37 @@ export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOption
     },
     setup(props, {slots}) {
         const thisProps = props as Readonly<TAppContainerOptionProps>;
+        const thisElement = ref<HTMLElement | null>(null);
         const vueMdb = ref<TVueMdb>();
 
         onMounted(() => {
             const instance = getCurrentInstance();
             vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
-            // console.log("vueMdb.value:", vueMdb.value);
+
             if (instance && vueMdb.value) {
-                const rect = (<HTMLElement>(
+                // console.info('ctx.$el:', (<IComponentInstance>instance).ctx.$el);
+                const rect = (<HTMLElement | null>(
                     (<IComponentInstance>instance).ctx.$el
-                )).getBoundingClientRect();
+                ))?.getBoundingClientRect() ?? thisElement.value?.getBoundingClientRect();
+
                 vueMdb.value.app[<string>thisProps.id] = {
-                    left: rect.left,
-                    right: rect.right,
-                    top: rect.top,
-                    bottom: rect.bottom,
-                    height: rect.height,
-                    width: rect.width,
-                    appbarHeight: 0,
-                    appbarFixedTop: false,
-                    appbarStickyTop: false,
-                    leftSideDrawerWidth: 0,
-                    rightSideDrawerWidth: 0
+                    left: rect?.left ?? 0,
+                    right: rect?.right ?? 0,
+                    top: rect?.top ?? 0,
+                    bottom: rect?.bottom ?? 0,
+                    height: rect?.height ?? 0,
+                    width: rect?.width ?? 0,
+                    appbar: {
+                        height: 0,
+                        fixedTop: false,
+                        stickyTop: false
+                    },
+                    sideDrawer: {
+                        left: {width: 0},
+                        right: {width: 0},
+                    }
                 };
+                // console.info('$VueMdb:', instance?.appContext.config.globalProperties.$VueMdb);
             }
         });
         onUnmounted(() => {
@@ -53,10 +61,11 @@ export default defineComponent<TBsAppContainer, TRecord, TRecord, ComputedOption
             h(
                 'div',
                 {
+                    ref: thisElement,
                     class: {
                         [`${cssPrefix}application-wrap`]: true,
                         [`${cssPrefix}viewport-height`]: thisProps.viewportHeight,
-                        [`${cssPrefix}appbar-fixed-top`]: vueMdb.value?.app[<string>thisProps.id].appbarFixedTop === true,
+                        [`${cssPrefix}appbar-fixed-top`]: vueMdb.value?.app[<string>thisProps.id].appbar.fixedTop === true,
                     },
                     id: thisProps.id
                 },

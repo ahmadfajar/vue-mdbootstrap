@@ -6,6 +6,7 @@ import type {
     TAppContainerOptionProps,
     TBsOverlay,
     TEmitFn,
+    TLabelPosition,
     TRecord,
     TSideDrawerOptionProps,
     TVueMdb
@@ -74,18 +75,16 @@ export function useSideDrawerOnMountedHook(
     if (parent) {
         nextTick().then(() => {
             appId.value = (<Readonly<TAppContainerOptionProps>>parent.props).id;
-            // console.log("BsSideDrawer-vueMdb:", vueMdb.value);
+
             if (appId.value && vueMdb.value) {
-                if (props.position === 'right') {
-                    vueMdb.value.app[appId.value].rightSideDrawerWidth = props.mini
-                        ? (<number>props.miniWidth) : (<number>props.width);
-                } else {
-                    vueMdb.value.app[appId.value].leftSideDrawerWidth = props.mini
-                        ? (<number>props.miniWidth) : (<number>props.width);
-                }
-                if (vueMdb.value.app[appId.value].appbarFixedTop) {
+                const position: TLabelPosition = props.position === 'right' ? 'right' : 'left';
+                vueMdb.value.app[appId.value].sideDrawer[position].width =
+                    props.mini ? parseInt(<string>props.miniWidth, 10) : parseInt(<string>props.width, 10);
+
+                if (vueMdb.value.app[appId.value].appbar.fixedTop) {
                     zIndex.value = 1030;
                 }
+                // console.log('BsSideDrawer-vueMdb:', vueMdb.value);
             }
         })
     } else {

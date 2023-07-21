@@ -2,13 +2,7 @@ import type { ComputedRef, Ref, Slots, VNode } from 'vue';
 import { getCurrentInstance, h, nextTick, withDirectives } from 'vue';
 import { Resize } from '../../../directives';
 import { cssPrefix, useFindParentCmp, useRenderSlotDefault, useVueMdbService } from '../../../mixins/CommonApi';
-import type {
-    IComponentInstance,
-    TAppbarOptionProps,
-    TAppContainerOptionProps,
-    TRecord,
-    TVueMdb
-} from '../../../types';
+import type { TAppbarOptionProps, TAppContainerOptionProps, TRecord, TVueMdb } from '../../../types';
 
 export function useAppbarStyles(
     props: Readonly<TAppbarOptionProps>,
@@ -22,14 +16,14 @@ export function useAppbarStyles(
             ? zeroPx
             : (
                 (props.clippedLeft && appId.value)
-                    ? (vueMdb.value?.app[appId.value].leftSideDrawerWidth || 0) + 'px'
+                    ? (vueMdb.value?.app[appId.value].sideDrawer.left.width ?? 0) + 'px'
                     : zeroPx
             ),
         marginRight: isMobile.value
             ? zeroPx
             : (
                 (props.clippedRight && appId.value)
-                    ? (vueMdb.value?.app[appId.value].rightSideDrawerWidth || 0) + 'px'
+                    ? (vueMdb.value?.app[appId.value].sideDrawer.right.width ?? 0) + 'px'
                     : zeroPx
             ),
     }
@@ -37,6 +31,7 @@ export function useAppbarStyles(
 
 export function useAppbarOnMountedHook(
     appId: Ref<string | undefined>,
+    appbar: Ref<HTMLElement | null>,
     vueMdb: Ref<TVueMdb | undefined>,
     smoothTransition: Ref<boolean>,
     props: Readonly<TAppbarOptionProps>,
@@ -52,10 +47,11 @@ export function useAppbarOnMountedHook(
             appId.value = (<Readonly<TAppContainerOptionProps>>parent.props).id;
 
             if (appId.value && vueMdb.value) {
-                const rect = (<HTMLElement>(<IComponentInstance>instance).ctx.$el).getBoundingClientRect();
-                vueMdb.value.app[appId.value].appbarHeight = rect.height;
-                vueMdb.value.app[appId.value].appbarFixedTop = props.fixedTop ?? false;
-                vueMdb.value.app[appId.value].appbarStickyTop = props.stickyTop ?? false;
+                const rect = appbar.value?.getBoundingClientRect()
+                vueMdb.value.app[appId.value].appbar.height = rect!.height;
+                vueMdb.value.app[appId.value].appbar.fixedTop = props.fixedTop ?? false;
+                vueMdb.value.app[appId.value].appbar.stickyTop = props.stickyTop ?? false;
+                // console.info('appbar-vueMdb:', vueMdb.value);
             }
         });
     } else {
@@ -67,6 +63,7 @@ export function useAppbarOnMountedHook(
 export function useRenderAppbar(
     props: Readonly<TAppbarOptionProps>,
     appId: Ref<string | undefined>,
+    appbar: Ref<HTMLElement | null>,
     vueMdb: Ref<TVueMdb | undefined>,
     styles: ComputedRef<TRecord>,
     smoothTransition: Ref<boolean>,
@@ -75,6 +72,7 @@ export function useRenderAppbar(
 ): VNode {
     return withDirectives(
         h(props.tag || 'nav', {
+            ref: appbar,
             class: {
                 [`${cssPrefix}appbar`]: true,
                 [`${cssPrefix}appbar-shadow`]: props.shadow,

@@ -1,7 +1,7 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import { useBreakpointMax } from '../../mixins/CommonApi';
-import type { TBsSideDrawer, TRecord, TSideDrawerOptionProps, TVueMdb } from '../../types';
+import type { TBsSideDrawer, TLabelPosition, TRecord, TSideDrawerOptionProps, TVueMdb } from '../../types';
 import { useRenderSideDrawer, useSideDrawerOnMountedHook, useSideDrawerStyles } from './mixins/sideDrawerApi';
 import { sideDrawerProps } from './mixins/sideDrawerProps';
 
@@ -40,7 +40,7 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
         const clipHeight = computed(
             () => {
                 if (thisProps.clipped && appId.value && vueMdb.value) {
-                    return vueMdb.value.app[appId.value].appbarHeight + 1;
+                    return vueMdb.value.app[appId.value].appbar.height + 1;
                 }
                 return 0;
             }
@@ -57,13 +57,10 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
             (value) => {
                 emit('resize');
                 if (appId.value && vueMdb.value) {
-                    if (thisProps.position === 'right') {
-                        vueMdb.value.app[appId.value].rightSideDrawerWidth = value
-                            ? (<number>thisProps.miniWidth) : (<number>thisProps.width);
-                    } else {
-                        vueMdb.value.app[appId.value].leftSideDrawerWidth = value
-                            ? (<number>thisProps.miniWidth) : (<number>thisProps.width);
-                    }
+                    const position: TLabelPosition = thisProps.position === 'right' ? 'right' : 'left';
+                    vueMdb.value.app[appId.value].sideDrawer[position].width =
+                        value ? parseInt(<string>thisProps.miniWidth, 10)
+                            : parseInt(<string>thisProps.width, 10);
                 }
             }
         );
@@ -72,11 +69,9 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
             (value) => {
                 isOpen.value = <boolean>value;
                 if (appId.value && vueMdb.value) {
-                    if (thisProps.position === 'right') {
-                        vueMdb.value.app[appId.value].rightSideDrawerWidth = !value ? 0 : (<number>thisProps.width);
-                    } else {
-                        vueMdb.value.app[appId.value].leftSideDrawerWidth = !value ? 0 : (<number>thisProps.width);
-                    }
+                    const position: TLabelPosition = thisProps.position === 'right' ? 'right' : 'left';
+                    vueMdb.value.app[appId.value].sideDrawer[position].width =
+                        !value ? 0 : parseInt(<string>thisProps.width, 10);
                 }
             }
         );

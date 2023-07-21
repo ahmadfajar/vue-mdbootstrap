@@ -27,6 +27,7 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Met
     setup(props, {emit, slots}) {
         const thisProps = props as Readonly<TAppbarOptionProps>;
         const vueMdb = ref<TVueMdb>();
+        const appbar = ref<HTMLElement | null>(null);
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
         const smoothTransition = ref<boolean>(false);
@@ -39,11 +40,11 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Met
         );
 
         onMounted(
-            () => useAppbarOnMountedHook(appId, vueMdb, smoothTransition, thisProps)
+            () => useAppbarOnMountedHook(appId, appbar, vueMdb, smoothTransition, thisProps)
         );
 
         return () => useRenderAppbar(
-            thisProps, appId, vueMdb, styles,
+            thisProps, appId, appbar, vueMdb, styles,
             smoothTransition, slots, resizeHandler
         )
     }

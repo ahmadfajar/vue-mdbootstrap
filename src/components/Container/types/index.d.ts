@@ -13,7 +13,7 @@ export declare type TAppContainerOptionProps = {
      */
     viewportHeight?: boolean;
     /**
-     * Sets the element `ID` attribute. This property value is auto generates.
+     * Sets the element `ID` attribute. This property value is auto generate.
      */
     id?: string;
 }
