@@ -1,9 +1,9 @@
 import type { Directive, DirectiveBinding } from 'vue'
-import type { IBindingElement, TDirectiveBinding } from '../../types'
+import type { EventListenerTarget, IBindingElement, TDirectiveBinding } from '../../types'
 import Helper from '../../utils/Helper'
 
 interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
-    value: VoidFunction | TDirectiveBinding
+    value: EventListenerTarget | TDirectiveBinding
     modifiers?: {
         active?: boolean
         quiet?: boolean
@@ -12,37 +12,38 @@ interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
 
 function mounted(el: IBindingElement, binding: ResizeDirectiveBinding): void {
     const callback = Helper.isFunction(binding.value)
-        ? <VoidFunction>binding.value
-        : (<TDirectiveBinding>binding.value).handler
+        ? binding.value
+        : (<TDirectiveBinding>binding.value).handler;
     const debounce = !Helper.isFunction(binding.value)
         ? (<TDirectiveBinding>binding.value)?.debounce || 50
-        : 50
+        : 50;
     const options: AddEventListenerOptions = {
         passive: !binding.modifiers?.active
-    }
+    };
 
-    let debounceTimeout: number
-    const onResizeHandler = () => {
+    let debounceTimeout: number;
+
+    const onResizeHandler = (evt?: Event) => {
         if (debounceTimeout) {
-            clearTimeout(debounceTimeout)
+            clearTimeout(debounceTimeout);
         }
-        debounceTimeout = setTimeout(callback, debounce)
+        debounceTimeout = window.setTimeout(() => callback((<Element & Event>el), evt), debounce);
     }
 
-    window.addEventListener('resize', onResizeHandler, options)
-    el.__resizeListener = onResizeHandler
+    window.addEventListener('resize', onResizeHandler, options);
+    el.__resizeListener = onResizeHandler;
 
     if (!binding.modifiers?.quiet) {
-        onResizeHandler()
+        onResizeHandler();
     }
 }
 
 function unmounted(el: IBindingElement): void {
     if (el.__resizeListener) {
-        const handler = el.__resizeListener as EventListenerObject
+        const handler = el.__resizeListener as EventListenerObject;
 
-        window.removeEventListener('resize', handler)
-        delete el.__resizeListener
+        window.removeEventListener('resize', handler);
+        delete el.__resizeListener;
     }
 }
 

@@ -31,9 +31,9 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Met
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
         const smoothTransition = ref<boolean>(false);
-        const resizeHandler = (node: VNode) => {
+        const resizeHandler = (el: Element) => {
             isMobile.value = useBreakpointMax('md');
-            emit('resize', node);
+            emit('resize', el);
         };
         const styles = computed(
             () => useAppbarStyles(thisProps, appId, vueMdb, isMobile)

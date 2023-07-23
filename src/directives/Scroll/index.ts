@@ -1,9 +1,9 @@
-import type {Directive, DirectiveBinding} from "vue";
-import type {EventListenerTarget, IBindingElement, TDirectiveBinding} from "../../types";
-import Helper from "../../utils/Helper";
+import type { Directive, DirectiveBinding } from 'vue';
+import type { EventListenerTarget, IBindingElement, TDirectiveBinding } from '../../types';
+import Helper from '../../utils/Helper';
 
-interface ScrollDirectiveBinding extends Omit<DirectiveBinding, "modifiers"> {
-    value: VoidFunction | TDirectiveBinding;
+interface ScrollDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
+    value: EventListenerTarget | TDirectiveBinding;
     modifiers?: {
         passive?: boolean;
         self?: boolean;
@@ -12,13 +12,13 @@ interface ScrollDirectiveBinding extends Omit<DirectiveBinding, "modifiers"> {
 
 function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
     const callback = Helper.isFunction(binding.value)
-        ? <EventListenerTarget>binding.value
-        : <EventListenerTarget>(<TDirectiveBinding>binding.value).handler;
+        ? binding.value
+        : (<TDirectiveBinding>binding.value).handler;
     const options: AddEventListenerOptions = {
-        passive: binding.modifiers?.passive || true,
+        passive: binding.modifiers?.passive ?? true,
     }
-    const self = binding.modifiers?.self || false;
-    let target: IBindingElement | Window | null;
+    const self = binding.modifiers?.self ?? false;
+    let target: Element | Window | null;
 
     if (self) {
         target = el;
@@ -30,10 +30,10 @@ function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
     }
 
     if (target) {
-        const scrollHandler = (e: Event) => {
-            callback(target, e);
+        const scrollHandler = (evt: Event) => {
+            callback((<Element & Event>target), evt);
         };
-        target.addEventListener("scroll", scrollHandler, options);
+        target.addEventListener('scroll', scrollHandler, options);
         el.__scrollListener = {
             handler: scrollHandler,
             target: self ? undefined : target,
@@ -47,9 +47,9 @@ function unmounted(el: IBindingElement): void {
         const {handler, options, target} = el.__scrollListener;
 
         if (target) {
-            target.removeEventListener("scroll", handler, options);
+            target.removeEventListener('scroll', handler, options);
         } else {
-            el.removeEventListener("scroll", handler, options);
+            el.removeEventListener('scroll', handler, options);
         }
 
         delete el.__scrollListener;

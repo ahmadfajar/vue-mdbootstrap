@@ -101,7 +101,7 @@ export function useRenderSideDrawer(
     isMobile: Ref<boolean>,
     isOpen: Ref<boolean>,
     zIndex: Ref<number>,
-    resizeHandler: VoidFunction,
+    resizeHandler: (el: Element) => void,
 ): VNode {
     return withDirectives(
         h(props.tag || 'aside', {

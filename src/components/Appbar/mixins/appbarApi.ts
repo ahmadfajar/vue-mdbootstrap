@@ -68,7 +68,7 @@ export function useRenderAppbar(
     styles: ComputedRef<TRecord>,
     smoothTransition: Ref<boolean>,
     slots: Slots,
-    resizeHandler: (node: VNode) => void,
+    resizeHandler: (el: Element, evt: Event) => void,
 ): VNode {
     return withDirectives(
         h(props.tag || 'nav', {

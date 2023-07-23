@@ -48,7 +48,7 @@ export declare type TBsAppbar = ComponentObjectPropsOptions<TAppbarOptionProps>;
 export declare type TBsAppbarTitle = ComponentObjectPropsOptions<TAppbarTitleOptionProps>;
 
 declare type AllowedAppbarProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
-    onResize?: (node: VNode) => void;
+    onResize?: (target: HTMLElement) => void;
 }
 
 export declare const BsAppbar: {

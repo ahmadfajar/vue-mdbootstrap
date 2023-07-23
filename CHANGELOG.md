@@ -11,6 +11,12 @@ Released: July xx, 2023
 - **BsMaskLoader**: refactor property `variant` to `type`, and change its valid 
   values to: `linear`, `linear-alt`, `spinner`, `grow`.
 
+### Bug Fixes
+
+- **BsAppContainer**, **BsContainer**, **BsContent**, **BsAppbar**, **BsSideDrawer**: 
+  fix bug unable to get element size on non-SPA environment.
+- **BsAppbar**, **BsSideDrawer**: fix onResize event arguments.
+- **Resize**, **Scroll** directive: fix wrong callback arguments. 
 
 ## v2.0.3
 
@@ -24,19 +30,21 @@ Released: July 12, 2023
     [Bootstrap position helpers](https://getbootstrap.com/docs/5.3/helpers/position/)
 - **BsAvatar**: add property `border`, `borderColor`.
 - **BsCard**: add property `roundedOff`, `borderOff`.
-- **BsChip**: 
-  - Add property `readonly`, 
-  - Add property `iconPosition`, 
+- **BsChip**: add property `readonly`, `iconPosition`, 
+- **BsContainer**, **BsContent**: improve css styles when **BsAppbar** `fixedTop` property is set.
+- **BsProgressBar**: add property `valuePosition`.
+- **BsSideDrawer**: improve computing of drawer position.
+- Improve TypeScript definition. 
+
+### Bug Fixes
+
+- **BsChip**:
   - Fix padding and border-radius on small chip size.
   - Fix margin and icon-size on default chip size.
-- **BsContainer**, **BsContent**: improve css styles when **BsAppbar** `fixedTop` property is set.
 - **BsDropdownMenu**: bug fix when `v-model:open` is defined.
 - **BsListNav**, **BsListTile**: fix padding when `spaceAround` property is set on **BsListView**.
 - **BsListNavItem**: bug fix when `v-model:active` is defined.
-- **BsProgressBar**: add property `valuePosition`.
 - **BsRipple**: fix unnecessary animation effect when parent component becomes visible.
-- **BsSideDrawer**: improve computing of drawer position.
-- Improve TypeScript definition. 
 
 
 ## v2.0.1

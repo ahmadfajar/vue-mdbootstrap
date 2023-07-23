@@ -26,8 +26,8 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
         const appId = ref<string>();
         const isMobile = ref<boolean>(false);
         const isOpen = ref<boolean>(<boolean>thisProps.open);
-        const resizeHandler = () => {
-            emit('resize');
+        const resizeHandler = (el: Element) => {
+            emit('resize', el);
             isMobile.value = useBreakpointMax('md');
             if (isMobile.value) {
                 isOpen.value = false;
@@ -55,7 +55,6 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
         watch(
             () => thisProps.mini,
             (value) => {
-                emit('resize');
                 if (appId.value && vueMdb.value) {
                     const position: TLabelPosition = thisProps.position === 'right' ? 'right' : 'left';
                     vueMdb.value.app[appId.value].sideDrawer[position].width =
