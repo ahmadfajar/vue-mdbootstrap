@@ -1,5 +1,7 @@
+import type { Prop } from 'vue';
 import { booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp } from '../../../mixins/CommonProps';
 import { flip, rotate } from '../../Icon/mixins/iconProps';
+import type { TSizeProps } from '../../Icon/types';
 
 export const iconProps = {
     /**
@@ -46,7 +48,7 @@ export const imageProps = {
     size: {
         type: [Number, String, Object],
         default: 48,
-    },
+    } as Prop<string | number | TSizeProps>,
 }
 
 export const avatarProps = {

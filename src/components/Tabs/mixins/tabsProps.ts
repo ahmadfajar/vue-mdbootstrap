@@ -8,7 +8,7 @@ import {
 } from '../../../mixins/CommonProps';
 import type { TAlignment, TPlacementPosition, TTabsVariant } from '../../../types';
 import { iconProps } from '../../Avatar/mixins/avatarProps';
-import { height as sizeProp } from '../../Icon/mixins/iconProps';
+import { iconSizeProp } from '../../Icon/mixins/iconProps';
 
 export const tabPanelProps = {
     ...routerProps,
@@ -57,7 +57,7 @@ export const tabsProps = {
     /**
      * TabItem icon size.
      */
-    iconSize: sizeProp,
+    iconSize: iconSizeProp,
     /**
      * TabItem icon position. Valid values: `left`, `right`, `top`, `bottom`.
      */

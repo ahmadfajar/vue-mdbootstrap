@@ -1,4 +1,5 @@
 import type { ComponentInternalInstance, Prop, PropType } from 'vue';
+import { useGenerateId } from '../../../mixins/CommonApi';
 import {
     booleanProp,
     booleanTrueProp,
@@ -9,9 +10,8 @@ import {
     validStringOrNumberProp,
     whiteColorProp
 } from '../../../mixins/CommonProps';
-import { useGenerateId } from '../../../mixins/CommonApi';
 import { iconProps } from '../../Avatar/mixins/avatarProps';
-import { width } from '../../Icon/mixins/iconProps';
+import { iconSizeProp } from '../../Icon/mixins/iconProps';
 import type { TSpaceAround } from '../types';
 
 
@@ -49,7 +49,7 @@ export const listNavItemProps = {
     disabled: booleanProp,
     depth: validStringOrNumberProp,
     indent: stringOrNumberProp,
-    iconSize: width,
+    iconSize: iconSizeProp,
     label: stringRequiredProp,
     badge: stringProp,
     badgeColor: stringProp,

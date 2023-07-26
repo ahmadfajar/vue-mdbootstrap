@@ -16,6 +16,7 @@ Released: July xx, 2023
 - **BsAppContainer**, **BsContainer**, **BsContent**, **BsAppbar**, **BsSideDrawer**: 
   fix bug unable to get element size on non-SPA environment.
 - **BsAppbar**, **BsSideDrawer**: fix onResize event arguments.
+- **BsAvatar**, **BsIcon**: fix property conflict when calculating component's dimension.
 - **Resize**, **Scroll** directive: fix wrong callback arguments. 
 
 ## v2.0.3

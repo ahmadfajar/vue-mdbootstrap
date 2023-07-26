@@ -27,7 +27,7 @@ export declare type TBsSideDrawer = ComponentObjectPropsOptions<TSideDrawerOptio
 
 declare type AllowedSideDrawerProps = AllowedComponentProps &
     ComponentCustomProps & VNodeProps & EventUpdateOpenProps & {
-    onResize?: VoidFunction;
+    onResize?: (target: HTMLElement) => void;
 }
 
 export declare const BsSideDrawer: {

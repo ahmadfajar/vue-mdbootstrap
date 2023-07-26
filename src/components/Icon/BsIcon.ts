@@ -1,16 +1,15 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
 import { defineComponent, h } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
-import { validStringOrNumberProp } from '../../mixins/CommonProps';
 import type { TBsIcon, TBsIconSvg, TIconOptionProps, TRecord } from '../../types';
 import BsIconSvg from './BsIconSvg';
 import { useSizeHeight, useSizeStyles, useSizeWidth } from './mixins/iconApi';
-import { iconProps } from './mixins/iconProps';
+import { iconProps, iconSizeProp } from './mixins/iconProps';
 
 export default defineComponent<TBsIcon, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
     name: 'BsIcon',
     props: {
-        size: validStringOrNumberProp,
+        size: iconSizeProp,
         ...iconProps,
     },
     setup(props) {

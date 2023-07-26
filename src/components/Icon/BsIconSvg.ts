@@ -37,8 +37,8 @@ export default defineComponent<TBsIconSvg, TRecord, TRecord, ComputedOptions, Me
         return () =>
             useRenderSvgIcon(
                 svgIcon.value,
-                useSizeHeight(thisProps),
-                useSizeWidth(thisProps),
+                useSizeHeight(thisProps) ?? 24,
+                useSizeWidth(thisProps) ?? 24,
                 svgClasses.value,
             )
     }

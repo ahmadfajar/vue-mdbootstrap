@@ -9,29 +9,29 @@ import type {
 
 export declare type TAppbarOptionProps = {
     /**
-     * Clipped left side of this `Appbar` or not.
+     * Cut off the left side of the component.
      */
     clippedLeft?: boolean;
     /**
-     * Clipped right side of this `Appbar` or not.
+     * Cut off the right side of the component.
      */
     clippedRight?: boolean;
     /**
      * Placed `Appbar` fixed at the top of the page.
-     * See {@link [Bootstrap](https://getbootstrap.com/docs/5.3/helpers/position/)}
+     * See [Bootstrap Position](https://getbootstrap.com/docs/5.3/helpers/position/) documentation.
      */
     fixedTop?: boolean;
     /**
      * Always stick `Appbar` at top of the page.
-     * See {@link [Bootstrap](https://getbootstrap.com/docs/5.3/helpers/position/)}
+     * See [Bootstrap Position](https://getbootstrap.com/docs/5.3/helpers/position/) documentation.
      */
     stickyTop?: boolean;
     /**
-     * Create shadow effect at the bottom of `Appbar`.
+     * Add shadow effect to this component.
      */
     shadow?: boolean;
     /**
-     * Html tag used to create this Appbar.
+     * Html tag used to render this component.
      */
     tag?: string;
 }

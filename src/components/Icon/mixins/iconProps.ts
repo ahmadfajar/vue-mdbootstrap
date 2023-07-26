@@ -1,14 +1,8 @@
 import type {Prop, PropType} from "vue";
 import type {TFlipMode, TIconVariant} from "../types";
-import {booleanProp, stringProp} from "../../../mixins/CommonProps";
+import { booleanProp, stringProp, validStringOrNumberProp } from '../../../mixins/CommonProps';
 
-export const height = {
-    type: [String, Number],
-    default: 24,
-    validator: (value: string): boolean => !isNaN(parseInt(value, 10))
-}
-
-export const width = {
+export const iconSizeProp = {
     type: [String, Number],
     default: 24,
     validator: (value: string): boolean => !isNaN(parseInt(value, 10))
@@ -45,11 +39,11 @@ export const iconProps = {
     /**
      * The icon’s height in pixel.
      */
-    height,
+    height: validStringOrNumberProp,
     /**
      * The icon’s width in pixel.
      */
-    width,
+    width: validStringOrNumberProp,
     /**
      * Apply **pulse** animation to the icon.
      */
@@ -76,7 +70,7 @@ export const iconSpinnerProps = {
     /**
      * The icon’s size in pixel.
      */
-    size: width,
+    size: iconSizeProp,
     /**
      * Apply **pulse** animation to the icon.
      */
@@ -103,5 +97,5 @@ export const toggleIconProps = {
     /**
      * The icon size in pixels.
      */
-    size: width,
+    size: iconSizeProp,
 }
