@@ -11,6 +11,7 @@ import {
     whiteColorProp
 } from '../../../mixins/CommonProps';
 import { iconProps } from '../../Avatar/mixins/avatarProps';
+import type { TBadgeType } from '../../Badge/types';
 import { iconSizeProp } from '../../Icon/mixins/iconProps';
 import type { TSpaceAround } from '../types';
 
@@ -53,7 +54,7 @@ export const listNavItemProps = {
     label: stringRequiredProp,
     badge: stringProp,
     badgeColor: stringProp,
-    badgeType: stringProp,
+    badgeType: stringProp as Prop<TBadgeType>,
     badgeVariant: stringProp,
     borderOff: booleanProp,
     pillOff: booleanProp,

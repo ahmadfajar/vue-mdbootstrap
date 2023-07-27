@@ -7,11 +7,17 @@ import type {
     VNodeProps
 } from 'vue';
 
+export declare type TBadgeType = 'label' | 'pill';
+
 export declare type TBadgeOptionProps = {
     /**
      * This badge color appearance.
      */
     color?: string;
+    /**
+     * Create outlined badge style.
+     */
+    outlined?: boolean;
     /**
      * Html tag used to render this badge.
      */
@@ -19,10 +25,10 @@ export declare type TBadgeOptionProps = {
     /**
      * Create badge with `pill` or `label` style.
      */
-    type?: string;
+    type?: TBadgeType;
     /**
      * Create contextual badge with
-     * [Bootstrap theme color](https://getbootstrap.com/docs/5.2/components/badge/#background-colors).
+     * [Bootstrap badge color](https://getbootstrap.com/docs/5.2/components/badge/#background-colors).
      */
     variant?: string;
 }

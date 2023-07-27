@@ -26,6 +26,10 @@
     font-weight: $font-weight-light !important;
 }
 
+.#{$prefix}border {
+    border: thin solid !important;
+}
+
 .triangle-up, .caret-up {
     width: 0;
     height: 0;

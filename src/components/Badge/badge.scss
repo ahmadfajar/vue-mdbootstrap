@@ -7,16 +7,15 @@
     --#{$bs-prefix}badge-font-weight: #{$font-weight-semi-bold};
 
     &.badge-label {
-        --#{$bs-prefix}badge-font-size: 85%;
-        --#{$bs-prefix}badge-font-weight: #{$font-weight-normal};
+        --#{$bs-prefix}badge-font-size: .8em;
         padding: $padding-xs ($padding-sm + .1) .4rem;
     }
 
     &.badge-pill {
-        $base-padding: $padding-base - .25;
+        $badge-padding: $padding-base - .25;
         --#{$bs-prefix}badge-border-radius: #{$border-radius-pill};
-        --#{$bs-prefix}badge-font-size: 80%;
-        --#{$bs-prefix}badge-padding-x: #{$base-padding};
+        --#{$bs-prefix}badge-font-size: .8em;
+        --#{$bs-prefix}badge-padding-x: #{$badge-padding};
     }
 
     ~ .badge {
@@ -32,6 +31,7 @@ a {
             &.text-bg-#{$color} {
                 &:focus, &:hover {
                     background-color: darken($value, 10%) !important;
+                    text-decoration: none;
                 }
                 &:focus {
                     @include box-shadow(0 0 0 .2rem rgba($value, .5));

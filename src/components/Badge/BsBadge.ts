@@ -1,6 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent } from 'vue';
-import { useRenderSlotDefault } from '../../mixins/CommonApi';
+import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
 import type { TBadgeOptionProps, TBsBadge, TRecord } from '../../types';
 import { badgeProps } from './mixins/badgeProps';
 
@@ -8,16 +8,18 @@ export default defineComponent<TBsBadge, TRecord, TRecord, ComputedOptions, Meth
     name: 'BsBadge',
     props: badgeProps,
     setup(props, {slots}) {
-        const cmpProps = props as Readonly<TBadgeOptionProps>;
+        const thisProps = props as Readonly<TBadgeOptionProps>;
 
         return () => useRenderSlotDefault(
-            cmpProps.tag || 'span',
+            thisProps.tag || 'span',
             slots,
-            [
-                'badge',
-                cmpProps.type ? `badge-${cmpProps.type}` : '',
-                cmpProps.variant ? `text-bg-${cmpProps.variant}` : `bg-${cmpProps.color}`,
-            ]
+            {
+              'badge': true,
+                [`badge-${thisProps.type}`]: thisProps.type,
+                [`text-bg-${thisProps.variant}`]: !thisProps.outlined && thisProps.variant,
+                [`bg-${thisProps.color}`]: !thisProps.outlined && !thisProps.variant && thisProps.color,
+                [`${cssPrefix}border text-${thisProps.variant || thisProps.color}`]: thisProps.outlined,
+            }
         )
     }
 });

@@ -8,7 +8,7 @@ import type {
     VNode,
     VNodeProps
 } from 'vue';
-import type { ObjectBase, TIconProps, TImageProps, TRouterOptionProps, TTagProps } from '../../../types';
+import type { ObjectBase, TBadgeType, TIconProps, TImageProps, TRouterOptionProps, TTagProps } from '../../../types';
 
 export declare type TSpaceAround = 'left' | 'right' | 'both' | 'none';
 
@@ -100,7 +100,7 @@ export declare type TListNavItemOptionProps = TIconProps & TRouterOptionProps & 
     /**
      * The Badge with `pill` or `label` style.
      */
-    badgeType?: string;
+    badgeType?: TBadgeType;
     /**
      * The Badge variant, valid values: `primary`, `secondary`, `success`, `danger`, `warning`,
      * `info`, `light`, `dark`.

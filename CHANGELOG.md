@@ -8,6 +8,7 @@ Released: July xx, 2023
 
 ### Features & Improvements
 
+- **BsBadge**: add property `outlined`.
 - **BsMaskLoader**: refactor property `variant` to `type`, and change its valid 
   values to: `linear`, `linear-alt`, `spinner`, `grow`.
 
