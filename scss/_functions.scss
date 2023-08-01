@@ -11,11 +11,11 @@
     @return color.mix($color-base, $color, $level * $theme-color-interval);
 }
 
-@function set-color-contrast($bgColor, $textOnLightBgColor, $textOnDarkBgColor, $brightnessLevel: 165) {
+@function set-color-contrast($bgColor, $textOnLightBg, $textOnDarkBg, $brightnessLevel: 165) {
     @if (brightness($bgColor) > $brightnessLevel) {
-        @return $textOnLightBgColor;
+        @return $textOnLightBg;
     } @else {
-        @return $textOnDarkBgColor;
+        @return $textOnDarkBg;
     }
 }
 

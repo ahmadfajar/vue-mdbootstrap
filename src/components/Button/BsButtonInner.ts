@@ -20,7 +20,7 @@ export default defineComponent<TBsButtonInner, TRecord, TRecord, ComputedOptions
                 default: () => useRenderSlotDefault(
                     'span', slots, [
                         `${cssPrefix}btn-inner`,
-                        thisProps.hasIcon ? `${cssPrefix}has-icon` : '',
+                        thisProps.hasIcon ? 'has-icon' : '',
                     ]
                 )
             });

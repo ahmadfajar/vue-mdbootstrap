@@ -26,6 +26,7 @@
     height: 100%;
     position: relative;
     overflow: hidden;
+    -webkit-mask-image: radial-gradient(circle, #fff 100%, #000 100%);
     mask-image: radial-gradient(circle, #fff 100%, #000 100%);
 }
 

@@ -46,7 +46,7 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
             return h('div', {
                     class: [
                         'btn-group',
-                        thisProps.pill ? 'rounded-pill' : (!thisProps.pill && !thisProps.rounded ? 'rounded-1' : ''),
+                        // thisProps.pill ? 'rounded-pill' : (!thisProps.pill && !thisProps.rounded ? 'rounded-1' : ''),
                         thisProps.disabled ? `${cssPrefix}disabled` : '',
                         thisProps.readonly ? `${cssPrefix}readonly` : '',
                         thisProps.required ? `${cssPrefix}required` : '',

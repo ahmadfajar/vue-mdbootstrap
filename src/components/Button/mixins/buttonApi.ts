@@ -27,16 +27,22 @@ export function useMakeButtonProps(
 ) {
     return {
         class: {
-            'btn': !['icon', 'floating'].includes(<string>props.mode),
-            [`${cssPrefix}btn-${props.mode}`]: ['icon', 'floating'].includes(<string>props.mode),
-            [`btn-outline-${props.color}`]: props.outlined && props.color && !props.transparent,
-            [`btn-flat-${props.color}`]: !props.outlined && props.flat && props.color && !props.transparent,
-            [`${cssPrefix}btn-transparent`]: !props.outlined && !props.flat && props.transparent,
-            [`btn-${props.color}`]: !props.outlined && !props.flat && !props.transparent && props.color,
-            [`${cssPrefix}btn-raised`]: props.raised,
+            'btn': props.mode !== 'icon',
+            [`${cssPrefix}btn-${props.mode}`]: props.mode === 'icon',
+            [`btn-outline-${props.color}`]: props.outlined && props.color && !props.tonal,
+            [`btn-flat-${props.color}`]: props.flat && props.color && !props.outlined && !props.tonal,
+            [`btn-${props.color}`]: !props.outlined && !props.flat && props.color,
             [`btn-${props.size}`]: !Helper.isEmpty(props.size),
-            'rounded-pill': props.mode !== 'icon' && props.pill,
-            'rounded-1': props.mode !== 'icon' && !props.pill && !props.rounded,
+            [`${cssPrefix}btn-raised`]: props.raised,
+            [`${cssPrefix}btn-tonal`]: props.tonal,
+            [`${cssPrefix}btn-fab`]: ['fab', 'floating'].includes(<string>props.mode),
+            [`${cssPrefix}rounded-pill`]: (
+                props.pill && !['icon', 'fab', 'floating'].includes(<string>props.mode)
+            ),
+            [`${cssPrefix}rounded-sm`]: (
+                !props.pill && !props.rounded &&
+                !['icon', 'fab', 'floating'].includes(<string>props.mode)
+            ),
             'disabled': disabled,
             'readonly': props.readonly,
             'active': props.active,
@@ -124,7 +130,9 @@ function renderIconOrSlot(
                 class: {
                     'd-flex': applyIconClass,
                     [`${cssPrefix}icon`]: applyIconClass,
-                    [`${cssPrefix}icon-${iconPosition}`]: btnMode !== 'icon' && btnMode !== 'floating',
+                    [`${cssPrefix}icon-${iconPosition}`]: (
+                        ['default', 'fab', 'floating'].includes(<string>btnMode) && slots.default
+                    ),
                 },
                 style: applyIconClass ? undefined : {display: 'contents'},
             },
@@ -138,7 +146,9 @@ function renderIconOrSlot(
                 ? h<TBsIcon>(BsIcon, {
                     id: iconId,
                     class: {
-                        [`${cssPrefix}icon-${iconPosition}`]: btnMode !== 'icon' && btnMode !== 'floating',
+                        [`${cssPrefix}icon-${iconPosition}`]: (
+                            ['default', 'fab', 'floating'].includes(<string>btnMode) && slots.default
+                        ),
                     },
                     size: <Prop<string | number | undefined>>iconSize,
                     ...useCreateIconProps(props),

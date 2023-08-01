@@ -9,6 +9,12 @@ Released: July xx, 2023
 ### Features & Improvements
 
 - **BsBadge**: add property `outlined`.
+- **BsButton**: 
+  - Add property `tonal` to enable **Filled Tonal** button style variant.
+  - Improve `background-color`, `border-color`, `color`, `box-shadow` on various button state
+    (like: `hover`, `active`, `focus`, etc) and style variants.
+  - Improve `padding` on text button style variant to meet **Google Material 
+    Design 3 - Text Button** style.
 - **BsMaskLoader**: refactor property `variant` to `type`, and change its valid 
   values to: `linear`, `linear-alt`, `spinner`, `grow`.
 

@@ -22,7 +22,7 @@ export declare type TButtonInnerOptionProps = {
     tagName?: string;
 }
 
-export declare type TButtonMode = 'default' | 'icon' | 'floating';
+export declare type TButtonMode = 'default' | 'icon' | 'fab' | 'floating';
 export declare type TButtonType = 'button' | 'submit' | 'reset';
 export declare type TButtonSize = 'xs' | 'sm' | 'lg';
 
@@ -47,9 +47,8 @@ export declare type TBaseButtonProps = {
      */
     raised?: boolean;
     /**
-     * Render this button with rounded style, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/)}
-     * for details.
+     * Render this button with rounded style.
+     * @see [Bootstrap Buttons](https://getbootstrap.com/docs/5.2/components/buttons/)
      */
     rounded?: boolean;
     /**
@@ -58,9 +57,8 @@ export declare type TBaseButtonProps = {
      */
     pill?: boolean;
     /**
-     * This button size, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/buttons/#sizes)}
-     * for details.
+     * This button size.
+     * @see [Bootstrap Button Size](https://getbootstrap.com/docs/5.2/components/buttons/#sizes)
      */
     size?: TButtonSize;
 }
@@ -76,13 +74,13 @@ export declare type TButtonOptionProps = TIconProps & TBaseButtonProps & {
     disabled?: boolean;
     readonly?: boolean;
     /**
-     * This button component mode, valid values are: `default, icon, floating`.
+     * This button component mode, valid values are: `default, icon, fab, floating`.
+     * `floating` is deprecated, use `fab` instead.
      */
     mode?: TButtonMode;
     /**
-     * Render this button component as dropdowns button or not, see
-     * {@link [Bootstrap](https://getbootstrap.com/docs/5.3/components/dropdowns/)}
-     * for details.
+     * Render this button component as dropdowns button.
+     * @see [Bootstrap Dropdowns](https://getbootstrap.com/docs/5.2/components/dropdowns/)
      */
     dropdownToggle?: boolean;
     /**
@@ -99,13 +97,17 @@ export declare type TButtonOptionProps = TIconProps & TBaseButtonProps & {
      */
     iconSize?: string | number;
     /**
-     * Enabled or disabled **ripple** effect.
+     * Disable the **ripple** effect.
      */
     rippleOff?: boolean;
     /**
-     * Render button with transparent style or not.
+     * Enable filled tonal button style.
      */
-    transparent?: boolean;
+    tonal?: boolean;
+    // /**
+    //  * Render button with transparent style.
+    //  */
+    // transparent?: boolean;
     /**
      * The value to set to the button’s type attribute. Valid values are: `button`, `submit`, `reset`.
      */

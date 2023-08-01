@@ -13,8 +13,8 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Met
     setup(props, {slots}) {
         const thisProps = props as Readonly<TButtonOptionProps>;
         const buttonType = computed<string | undefined>(() => {
-            if (Helper.isEmpty(<string | undefined>props.href)) {
-                return ['icon', 'floating'].includes(<string>thisProps.mode) ? 'div' : thisProps.type;
+            if (Helper.isEmpty(props.href)) {
+                return ['icon', 'fab', 'floating'].includes(<string>thisProps.mode) ? 'div' : thisProps.type;
             }
 
             return undefined;

@@ -19,6 +19,24 @@
         --#{$bs-prefix}btn-hover-color: #{$text-color};
         --#{$bs-prefix}btn-hover-border-color: #{$hover-color};
         --#{$bs-prefix}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
+
+        &.#{$prefix}btn-fab,
+        &.#{$prefix}btn-tonal {
+            $text-color: color.scale($color, $lightness: -10%);
+            $bg-color: color.scale($color, $lightness: 80%);
+            $hover-color: color.scale($color, $lightness: 70%);
+            $active-color: color.scale($color, $lightness: 60%);
+
+            --#{$bs-prefix}btn-bg: #{$bg-color};
+            --#{$bs-prefix}btn-color: #{$text-color};
+            --#{$bs-prefix}btn-border-color: #{$bg-color};
+            --#{$bs-prefix}btn-active-bg: #{$active-color};
+            --#{$bs-prefix}btn-active-color: #{$text-color};
+            --#{$bs-prefix}btn-active-border-color: #{$active-color};
+            --#{$bs-prefix}btn-hover-bg: #{$hover-color};
+            --#{$bs-prefix}btn-hover-color: #{$text-color};
+            --#{$bs-prefix}btn-hover-border-color: #{$hover-color};
+        }
     }
 }
 
@@ -43,15 +61,16 @@
             --#{$bs-prefix}btn-hover-border-color: #{$active-border-color-rgba};
         } @else {
             $active-bg-rgba: rgba(color.scale($color, $lightness: 5%), .4);
-            $active-color-rgba: set-color-contrast($active-bg-rgba, $white, color.scale($color, $lightness: -40%), 220);
+            $active-color: set-color-contrast($active-bg-rgba, color.scale($color, $lightness: -70%), $white);
             $hover-bg-rgba: rgba(color.scale($color, $lightness: 45%), .35);
+            $hover-color-rgba: set-color-contrast($active-bg-rgba, $white, color.scale($color, $lightness: -30%), 220);
             $hover-border-color: lighten($color, 10%);
             --#{$bs-prefix}btn-color: #{$color};
             --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-active-color: #{$active-color-rgba};
+            --#{$bs-prefix}btn-active-color: #{$active-color};
             --#{$bs-prefix}btn-active-border-color: #{$color};
             --#{$bs-prefix}btn-hover-bg: #{$hover-bg-rgba};
-            --#{$bs-prefix}btn-hover-color: #{$active-color-rgba};
+            --#{$bs-prefix}btn-hover-color: #{$hover-color-rgba};
             --#{$bs-prefix}btn-hover-border-color: #{$hover-border-color};
         }
     }
@@ -59,11 +78,13 @@
 
 @mixin make-flat-button-variant($name, $color) {
     .btn-flat-#{$name} {
+        $active-box-shadow-color-rgb: to-rgb(color.scale($color, $lightness: 10%));
         --#{$bs-prefix}btn-bg: transparent;
         --#{$bs-prefix}btn-border-color: transparent;
         --#{$bs-prefix}btn-border-width: 0;
         --#{$bs-prefix}btn-color: #{$color};
         --#{$bs-prefix}btn-hover-color: #{color.scale($color, $lightness: -20%)};
+        --#{$bs-prefix}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
 
         @if ($name == 'light' or $name == 'light-grey') {
             $active-bg-rgba: rgba($gray-500, .2);
@@ -72,7 +93,7 @@
             --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
         } @else {
             $active-bg-color: rgba(color.scale($color, $lightness: 10%), .3);
-            $active-color: darken($color, 10%);
+            $active-color: set-color-contrast($active-bg-color, darken($color, 10%), $white); // darken($color, 10%);
             $hover-bg-rgba: set-color-contrast($color, rgba(color.scale($color, $lightness: 15%), .3), rgba(color.scale($color, $lightness: 20%), .2));
 
             --#{$bs-prefix}btn-active-bg: #{$active-bg-color};
