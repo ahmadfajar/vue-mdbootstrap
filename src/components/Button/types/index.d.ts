@@ -47,6 +47,10 @@ export declare type TBaseButtonProps = {
      */
     raised?: boolean;
     /**
+     * Enable filled tonal button style.
+     */
+    tonal?: boolean;
+    /**
      * Render this button with rounded style.
      * @see [Bootstrap Buttons](https://getbootstrap.com/docs/5.2/components/buttons/)
      */
@@ -100,14 +104,6 @@ export declare type TButtonOptionProps = TIconProps & TBaseButtonProps & {
      * Disable the **ripple** effect.
      */
     rippleOff?: boolean;
-    /**
-     * Enable filled tonal button style.
-     */
-    tonal?: boolean;
-    // /**
-    //  * Render button with transparent style.
-    //  */
-    // transparent?: boolean;
     /**
      * The value to set to the button’s type attribute. Valid values are: `button`, `submit`, `reset`.
      */
@@ -174,8 +170,8 @@ export declare const BsToggleButton: {
     new(): {
         $props: AllowedToggleButtonProps & TToggleButtonOptionProps;
         $slots: {
-            label?: (props: TInputOptionItem) => VNode[];
-            icon?: (props: TInputOptionItem) => VNode;
+            label?: (item: TInputOptionItem) => VNode[];
+            icon?: (item: TInputOptionItem) => VNode;
         };
         $emit: ['update:model-value'];
     };

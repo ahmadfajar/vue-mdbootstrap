@@ -30,6 +30,22 @@
     border: thin solid !important;
 }
 
+.rounded-top-0 {
+    @include border-top-radius(0 !important);
+}
+
+.rounded-bottom-0 {
+    @include border-bottom-radius(0 !important);
+}
+
+.rounded-start-0 {
+    @include border-left-radius(0 !important);
+}
+
+.rounded-end-0 {
+    @include border-right-radius(0 !important);
+}
+
 .triangle-up, .caret-up {
     width: 0;
     height: 0;

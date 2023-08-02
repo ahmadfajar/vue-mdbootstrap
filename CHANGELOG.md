@@ -17,6 +17,7 @@ Released: July xx, 2023
     Design 3 - Text Button** style.
 - **BsMaskLoader**: refactor property `variant` to `type`, and change its valid 
   values to: `linear`, `linear-alt`, `spinner`, `grow`.
+- **BsToggleButton**: add property `tonal`.
 
 ### Bug Fixes
 

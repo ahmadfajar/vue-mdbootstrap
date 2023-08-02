@@ -70,8 +70,15 @@
         cursor: default;
     }
 
+    &.#{$prefix}btn-tonal,
+    &[class*="btn-outline"] {
+        --#{$bs-prefix}btn-active-box-shadow: none;
+    }
+
     &[class*="btn-outline"] {
         --#{$bs-prefix}btn-hover-box-shadow: #{$z-depth-half};
+        --#{$bs-prefix}btn-disabled-bg: transparent;
+        --#{$bs-prefix}btn-disabled-color: #{$gray-500};
     }
 
     &.#{$prefix}btn-raised {
@@ -101,7 +108,7 @@
             }
 
             > .#{$prefix}btn-inner {
-                padding: $btn-margin-basic ($padding-base - .2) $btn-margin-basic $padding-lg;
+                padding-right: calc(var(--#{$bs-prefix}btn-state-padding-x) - .2rem);
             }
         }
     }
@@ -111,6 +118,10 @@
         line-height: var(--#{$bs-prefix}btn-line-height);
         padding: var(--#{$bs-prefix}btn-state-padding-y) var(--#{$bs-prefix}btn-state-padding-x);
         width: 100%;
+
+        > .#{$prefix}icon > * {
+            transition: $md-transition-enter;
+        }
 
         .#{$prefix}icon-left {
             margin-right: $padding-sm;
@@ -152,9 +163,21 @@
     }
 
     &[class*="btn-flat"] {
+        --#{$bs-prefix}btn-disabled-bg: transparent;
+        --#{$bs-prefix}btn-disabled-color: #{$gray-500};
         --#{$bs-prefix}btn-inner-padding-x: .75rem;
         --#{$bs-prefix}btn-lg-inner-padding-x: .875rem;
         --#{$bs-prefix}btn-sm-inner-padding-x: .625rem;
+
+        .#{$prefix}btn-inner {
+            .#{$prefix}icon-left {
+                margin-left: 0;
+            }
+
+            .#{$prefix}icon-right {
+                margin-right: 0;
+            }
+        }
     }
 
     &.#{$prefix}btn-fab,
@@ -372,38 +395,11 @@
     }
 }
 
-.btn-group {
-    > .btn:not(:last-child) {
-        .#{$prefix}ripple {
-            @include border-right-radius(0);
-        }
-    }
-    > .btn:not(:first-child) {
-        .#{$prefix}ripple {
-            @include border-left-radius(0);
-        }
-    }
-}
-
 @each $btn_name, $color_value in map-remove($merge-theme-colors, 'black') {
     @include make-button-variant($btn_name, $color_value);
     @include make-outline-button-variant($btn_name, $color_value);
     @include make-flat-button-variant($btn_name, $color_value);
 }
-
-//.#{$prefix}btn-transparent {
-//    $border-color: rgba(250, 250, 250, .15);
-//    --#{$bs-prefix}btn-bg: transparent;
-//    --#{$bs-prefix}btn-border-color: transparent;
-//    --#{$bs-prefix}btn-border-width: 1px;
-//    --#{$bs-prefix}btn-color: rgba(255, 255, 255, .5);
-//    --#{$bs-prefix}btn-active-bg: rgba(25, 25, 25, .15);
-//    --#{$bs-prefix}btn-active-color: rgba(255, 255, 255, .8);
-//    --#{$bs-prefix}btn-active-border-color: #{$border-color};
-//    --#{$bs-prefix}btn-hover-bg: rgba(25, 25, 25, .15);
-//    --#{$bs-prefix}btn-hover-color: rgba(255, 255, 255, .8);
-//    --#{$bs-prefix}btn-hover-border-color: #{$border-color};
-//}
 
 [class*="btn-flat"] {
     --#{$bs-prefix}btn-initial-box-shadow: none;
@@ -416,6 +412,51 @@
         --#{$bs-prefix}btn-active-box-shadow: #{$z-depth-1};
         --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), .5);
         --#{$bs-prefix}btn-hover-box-shadow: #{$z-depth-1-half};
+    }
+}
+
+.btn-group {
+    > .btn:not(:last-child) {
+        .#{$prefix}ripple {
+            @include border-right-radius(0);
+        }
+    }
+
+    > .btn:not(:first-child) {
+        .#{$prefix}ripple {
+            @include border-left-radius(0);
+        }
+    }
+
+    > .btn ~ .#{$prefix}dropdown-menu {
+        margin-left: 0;
+    }
+
+    > .#{$prefix}dropdown-menu {
+        &:not(:last-child) {
+            > .#{$prefix}dropdown-menu-activator {
+                > .btn,
+                > .btn > .#{$prefix}ripple {
+                    @include border-right-radius(0);
+                }
+            }
+        }
+
+        &:not(:first-child) {
+            > .#{$prefix}dropdown-menu-activator {
+                > .btn,
+                > .btn > .#{$prefix}ripple {
+                    @include border-left-radius(0);
+                }
+            }
+        }
+    }
+
+    > .btn,
+    > .#{$prefix}dropdown-menu .btn {
+        &[class*="btn-outline"] {
+            --#{$bs-prefix}btn-color: #{$gray-600};
+        }
     }
 }
 

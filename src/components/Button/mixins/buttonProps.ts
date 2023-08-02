@@ -54,12 +54,11 @@ export const buttonProps = {
     pill: booleanTrueProp,
     href: stringProp,
     size: buttonSize,
-    iconPosition,
     iconSize: iconSizeProp,
     rippleOff: booleanProp,
     tonal: booleanProp,
-    // transparent: booleanProp,
     type: buttonType,
+    iconPosition,
     ...iconProps,
 }
 
@@ -82,6 +81,7 @@ export const toggleButtonProps = {
     pill: booleanTrueProp,
     size: buttonSize,
     color: defaultColorProp,
+    tonal: booleanProp,
     toggleColor: stringProp,
     iconPosition,
 }

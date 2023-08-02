@@ -75,11 +75,14 @@ export function useMakeInputItemClasses(
     return {
         'btn': true,
         [`btn-${props.toggleColor}`]: isSelected && props.toggleColor && !props.disabled && !item.disabled,
-        [`btn-outline-${props.color}`]: props.outlined && (!isSelected || !props.toggleColor),
-        [`btn-flat-${props.color}`]: props.flat && !props.outlined && (!isSelected || !props.toggleColor),
+        [`btn-outline-${props.color}`]: props.outlined && !props.tonal && (!isSelected || !props.toggleColor),
+        [`btn-flat-${props.color}`]: props.flat && !props.outlined && !props.tonal && (!isSelected || !props.toggleColor),
         [`btn-${props.color}`]: !props.outlined && !props.flat && (!isSelected || !props.toggleColor),
-        [`btn-${props.size}`]: props.size,
+        [`btn-${props.size}`]: !Helper.isEmpty(props.size),
         [`${cssPrefix}btn-raised`]: props.raised,
+        [`${cssPrefix}btn-tonal`]: props.tonal,
+        [`${cssPrefix}rounded-pill`]: props.pill,
+        [`${cssPrefix}rounded-sm`]: !props.pill && !props.rounded,
         'active': isSelected && !props.toggleColor && !props.disabled && !item.disabled,
         'disabled': props.disabled || item.disabled,
         'readonly': props.readonly || item.readonly,
@@ -131,7 +134,8 @@ function renderIconOrSlot(
                     'd-flex': applyIconClass,
                     [`${cssPrefix}icon`]: applyIconClass,
                     [`${cssPrefix}icon-${iconPosition}`]: (
-                        ['default', 'fab', 'floating'].includes(<string>btnMode) && slots.default
+                        btnMode === 'default' ||
+                        (['fab', 'floating'].includes(<string>btnMode) && slots.default)
                     ),
                 },
                 style: applyIconClass ? undefined : {display: 'contents'},
@@ -147,7 +151,8 @@ function renderIconOrSlot(
                     id: iconId,
                     class: {
                         [`${cssPrefix}icon-${iconPosition}`]: (
-                            ['default', 'fab', 'floating'].includes(<string>btnMode) && slots.default
+                            btnMode === 'default' ||
+                            (['fab', 'floating'].includes(<string>btnMode) && slots.default)
                         ),
                     },
                     size: <Prop<string | number | undefined>>iconSize,
