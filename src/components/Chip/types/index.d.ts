@@ -79,9 +79,14 @@ export declare type TChipOptionProps = TIconProps & {
      */
     imgCircle?: boolean;
     /**
-     * Adjust avatar size to match the component's height by eliminating the margin around the avatar.
+     * @deprecated
+     * Use `imgPaddingOff` property instead.
      */
     imgPadding?: boolean;
+    /**
+     * Adjust avatar size to match the component's height by eliminating the margin around the avatar.
+     */
+    imgPaddingOff?: boolean;
     /**
      * The value monitored by `v-model` to show or hide this component.
      */
@@ -127,9 +132,14 @@ export declare type TChipGroupOptionProps = {
      */
     imgCircle?: boolean;
     /**
-     * Adjust Chip's avatar size to match the Chip height by eliminating the margin around the avatar.
+     * @deprecated
+     * Use `imgPaddingOff` property instead.
      */
     imgPadding?: boolean;
+    /**
+     * Adjust avatar size to match the component's height by eliminating the margin around the avatar.
+     */
+    imgPaddingOff?: boolean;
     /**
      * The collection of `<BsChip>` property-value.
      */

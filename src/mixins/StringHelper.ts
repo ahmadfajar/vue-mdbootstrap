@@ -85,3 +85,11 @@ export function camelCase(text: string): string {
 export function kebabCase(text: string): string {
     return loKebabCase(text);
 }
+
+export function isEndWith(str?: string, searches?: string[]): boolean {
+    if (str && searches) {
+        return searches.some(s => str.endsWith(s));
+    }
+
+    return false;
+}

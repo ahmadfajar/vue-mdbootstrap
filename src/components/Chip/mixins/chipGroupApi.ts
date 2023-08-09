@@ -95,6 +95,7 @@ function createChipAttrs(
         activeClass: props.activeClass,
         imgCircle: props.imgCircle,
         imgPadding: props.imgPadding,
+        imgPaddingOff: props.imgPaddingOff,
     }
 
     delete attrs['value'];

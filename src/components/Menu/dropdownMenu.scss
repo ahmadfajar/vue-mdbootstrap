@@ -3,23 +3,17 @@
 @import "../../../scss/variables";
 
 .#{$prefix}dropdown-menu {
-    display: inline-block;
+    @include flexbox((display: flex, align-items: center));
     position: relative;
-    vertical-align: middle;
+    margin-right: $padding-sm;
 
     .#{$prefix}dropdown-menu-activator {
         cursor: pointer;
         position: relative;
     }
 
-    ~ .#{$prefix}btn-icon,
-    ~ .#{$prefix}dropdown-menu,
-    ~ .#{$prefix}chip {
+    ~ .#{$prefix}btn-icon {
         margin-left: $padding-xs;
-    }
-
-    ~ .btn {
-        margin-left: $padding-sm;
     }
 }
 

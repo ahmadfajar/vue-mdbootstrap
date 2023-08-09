@@ -28,7 +28,7 @@ export function useCreateIconProps(props: Readonly<TIconProps>): TRecord {
 export function useShapeClasses(circle?: boolean, rounded?: boolean): Record<string, boolean | undefined> {
     return {
         'rounded-circle': circle && !rounded,
-        'rounded': rounded && !circle,
+        'rounded': rounded,
     }
 }
 

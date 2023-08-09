@@ -119,8 +119,12 @@
         padding: var(--#{$bs-prefix}btn-state-padding-y) var(--#{$bs-prefix}btn-state-padding-x);
         width: 100%;
 
-        > .#{$prefix}icon > * {
-            transition: $md-transition-enter;
+        .#{$prefix}icon-left, .#{$prefix}icon-right {
+            @include transition(width 200ms $md-transition-default-timing, visibility 0ms $md-transition-default-timing);
+
+            &.#{$prefix}empty-icon {
+                width: 0;
+            }
         }
 
         .#{$prefix}icon-left {
@@ -433,6 +437,8 @@
     }
 
     > .#{$prefix}dropdown-menu {
+        margin-right: 0;
+
         &:not(:last-child) {
             > .#{$prefix}dropdown-menu-activator {
                 > .btn,

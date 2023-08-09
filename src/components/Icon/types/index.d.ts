@@ -10,7 +10,7 @@ import type { EventUpdateModelValueProps } from '../../../types';
 
 export declare type TFlipMode = 'horizontal' | 'vertical' | 'both';
 
-export declare type TIconVariant = 'outlined' | 'filled' | 'round' | 'sharp';
+export declare type TIconVariant = 'outlined' | 'filled' | 'rounded' | 'sharp';
 
 export declare type TPlacementPosition = 'left' | 'right' | 'top' | 'bottom';
 

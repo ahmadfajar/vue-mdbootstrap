@@ -1,5 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, createCommentVNode, defineComponent, nextTick, ref, watch } from 'vue';
+import { Helper } from '../../index';
 import { useRenderTransition } from '../../mixins/CommonApi';
 import type { TBsChip, TChipOptionProps, TRecord } from '../../types';
 import { useChipClassNames, useRenderChip } from './mixins/chipApi';
@@ -24,12 +25,13 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Metho
     ],
     setup(props, {emit, attrs, slots}) {
         const thisProps = props as Readonly<TChipOptionProps>;
-        const dismiss = ref<boolean>(false);
+        const dismissed = ref<boolean>(false);
         const classNames = computed<TRecord>(
             () => useChipClassNames(thisProps, attrs)
         );
         const tagName = computed<string>(
-            () => thisProps.href && !thisProps.disabled && thisProps.readonly ? 'a' : 'div'
+            () => !Helper.isEmpty(thisProps.href) && !thisProps.disabled
+            && !thisProps.readonly ? 'a' : 'div'
         );
         const rippleDisabled = computed<boolean>(
             () => {
@@ -39,9 +41,9 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Metho
                 );
             }
         )
-        const show = computed(() => !dismiss.value && props.modelValue);
+        const show = computed(() => !dismissed.value && props.modelValue);
         const dismissHandler = () => {
-            dismiss.value = true;
+            dismissed.value = true;
             emit('update:active', false);
             emit('update:model-value', false);
             nextTick().then(() => emit('close'));
@@ -50,7 +52,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Metho
             () => thisProps.modelValue,
             (value) => {
                 if (props.dismissible) {
-                    dismiss.value = !(value === true);
+                    dismissed.value = !(value === true);
                 }
             }
         );
@@ -60,7 +62,7 @@ export default defineComponent<TBsChip, TRecord, TRecord, ComputedOptions, Metho
                 {name: 'fade'},
                 show.value
                     ? useRenderChip(
-                        slots, attrs, thisProps, classNames, tagName.value,
+                        slots, thisProps, classNames, tagName.value,
                         rippleDisabled.value, dismissHandler
                     )
                     : createCommentVNode(' BsChip ')

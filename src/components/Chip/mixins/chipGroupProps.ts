@@ -26,6 +26,7 @@ export const chipGroupProps = {
      * Adjust Chip's avatar size to match the Chip height by eliminating the margin around the avatar.
      */
     imgPadding: booleanTrueProp,
+    imgPaddingOff: booleanProp,
     /**
      * Render this component with rounded-pill style.
      */

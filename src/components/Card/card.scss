@@ -42,6 +42,13 @@
 }
 
 .#{$prefix}card-media {
+    --#{$bs-prefix}card-media-bg: rgba(0, 0, 0, .54);
+    --#{$bs-prefix}card-media-color: rgba(255, 255, 255, .8);
+    --#{$bs-prefix}card-media-title-font-size: 1.5rem;
+    --#{$bs-prefix}card-media-title-font-weight: #{$font-weight-semi-bold};
+    --#{$bs-prefix}card-media-subtitle-font-size: 1.125rem;
+    --#{$bs-prefix}card-media-subtitle-font-weight: #{$font-weight-light};
+
     position: relative;
 
     > img {
@@ -53,7 +60,7 @@
     }
 
     > .#{$prefix}card-media-overlay {
-        background-color: rgba(0, 0, 0, .54);
+        background-color: var(--#{$bs-prefix}card-media-bg);
         left: 0;
         right: 0;
         padding: $padding-base;
@@ -61,17 +68,17 @@
 
         > .#{$prefix}card-media-title,
         > .#{$prefix}card-media-subtitle {
-            color: rgba(255, 255, 255, .8);
+            color: var(--#{$bs-prefix}card-media-color);
         }
 
         > .#{$prefix}card-media-title {
-            font-size: 1.5rem;
-            font-weight: $font-weight-semi-bold;
+            font-size: var(--#{$bs-prefix}card-media-title-font-size);
+            font-weight: var(--#{$bs-prefix}card-media-title-font-weight);
         }
 
         > .#{$prefix}card-media-subtitle {
-            font-size: 1.125rem;
-            font-weight: $font-weight-light;
+            font-size: var(--#{$bs-prefix}card-media-subtitle-font-size);
+            font-weight: var(--#{$bs-prefix}card-media-subtitle-font-weight);
         }
     }
 }

@@ -1,7 +1,8 @@
+import type { Prop, PropType } from 'vue';
 import { booleanProp, booleanTrueProp, stringProp } from '../../../mixins/CommonProps';
 import { iconProps } from '../../Avatar/mixins/avatarProps';
 import { iconPosition } from '../../Button/mixins/buttonProps';
-import { iconVariant } from '../../Icon/mixins/iconProps';
+import type { TIconVariant } from '../../Icon/types';
 
 export const chipDefaultColor = {
     type: String,
@@ -49,6 +50,7 @@ export const chipProps = {
      * Adjust avatar size to match the Chip height by eliminating the margin around the avatar.
      */
     imgPadding: booleanTrueProp,
+    imgPaddingOff: booleanProp,
     /**
      * The value monitored by `v-model` to show or hide the Chip component.
      */
@@ -75,12 +77,16 @@ export const chipProps = {
         validator: (value: string): boolean => ['sm', 'lg'].includes(value)
     },
     /**
+     * Use predefined icon style to be used inside this component.
+     */
+    iconVariant: {
+        type: String as PropType<TIconVariant>,
+        default: undefined,
+        validator: (value: string): boolean => ['outlined', 'filled', 'round', 'sharp'].includes(value),
+    } as Prop<TIconVariant>,
+    /**
      * Place icon on the `left` side (before text) or on the `right` side (after text).
      */
     iconPosition,
-    /**
-     * Use predefined icon style to be used inside this component.
-     */
-    iconVariant,
     ...iconProps,
 }

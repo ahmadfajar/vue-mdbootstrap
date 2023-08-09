@@ -17,6 +17,7 @@ Released: July xx, 2023
     Design 3 - Text Button** style.
 - **BsMaskLoader**: refactor property `variant` to `type`, and change its valid 
   values to: `linear`, `linear-alt`, `spinner`, `grow`.
+- **BsChip**, **BsChipGroup**: add property `imgPaddingOff` and improve css styles.
 - **BsToggleButton**: add property `tonal`.
 
 ### Bug Fixes
@@ -25,6 +26,7 @@ Released: July xx, 2023
   fix bug unable to get element size on non-SPA environment.
 - **BsAppbar**, **BsSideDrawer**: fix onResize event arguments.
 - **BsAvatar**, **BsIcon**: fix property conflict when calculating component's dimension.
+- **BsButton**, **BsChip**: when `href` attribute is defined component didn't render as `<a>` element. 
 - **Resize**, **Scroll** directive: fix wrong callback arguments. 
 
 ## v2.0.3

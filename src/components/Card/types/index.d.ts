@@ -26,7 +26,7 @@ export declare type TCardOptionProps = TTagProps & {
      */
     roundedOff?: boolean;
     /**
-     * Create card with shadow on its sides.
+     * Apply shadow effect to the component.
      */
     shadow?: boolean;
     /**

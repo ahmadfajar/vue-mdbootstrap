@@ -1,6 +1,7 @@
 import type { ComputedRef, Prop, Slots, VNode } from 'vue';
 import { createCommentVNode, h } from 'vue';
 import { cssPrefix, useRenderSlotDefault, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
+import { isEndWith } from '../../../mixins/StringHelper';
 import type { TBsButton, TBsIcon, TBsRipple, TChipOptionProps, TRecord } from '../../../types';
 import Helper from '../../../utils/Helper';
 import { BsRipple } from '../../Animation';
@@ -37,16 +38,16 @@ export function useChipClassNames(
 
 function getChipAvatarSize(
     chipSize: string | undefined,
-    hasPadding: boolean | undefined,
+    paddingOff: boolean | undefined,
 ) {
     let imgSize: string;
 
     if (chipSize === 'sm') {
-        imgSize = hasPadding ? '1.125rem' : '1.56rem';
+        imgSize = paddingOff ? '1.56rem' : '1.125rem';
     } else if (chipSize === 'lg') {
-        imgSize = hasPadding ? '2.375rem' : '3rem';
+        imgSize = paddingOff ? '3rem' : '2.375rem';
     } else {
-        imgSize = hasPadding ? '1.5rem' : '2rem';
+        imgSize = paddingOff ? '2rem' : '1.5rem';
     }
 
     return {
@@ -59,16 +60,14 @@ function createChipAvatar(props: Readonly<TChipOptionProps>): VNode {
     return h('div', {
         class: [
             `${cssPrefix}chip-avatar`,
-            props.imgPadding === false ? `${cssPrefix}chip-avatar-bounded` : '',
+            props.imgPadding === false || props.imgPaddingOff ? `${cssPrefix}chip-avatar-bounded` : '',
         ]
     }, [
         h('img', {
             src: props.imgSrc,
             alt: 'Chip Avatar',
-            class: [
-                props.imgCircle || props.pill ? 'rounded-circle' : 'rounded'
-            ],
-            style: getChipAvatarSize(props.size, props.imgPadding)
+            class: props.imgCircle || props.pill ? 'rounded-circle' : undefined,
+            style: getChipAvatarSize(props.size, (props.imgPadding === false || props.imgPaddingOff))
         })
     ]);
 }
@@ -93,7 +92,6 @@ function createCloseBtnAttr(
 
 export function useRenderChip(
     slots: Slots,
-    attrs: TRecord,
     props: Readonly<TChipOptionProps>,
     classNames: ComputedRef<TRecord>,
     tagName: string,
@@ -102,7 +100,7 @@ export function useRenderChip(
 ): VNode {
     return h(tagName, {
         class: classNames.value,
-        href: (props.href && !props.disabled && !props.readonly) ? props.href : undefined
+        href: (!Helper.isEmpty(props.href) && !props.disabled && !props.readonly) ? props.href : undefined
     }, [
         h<TBsRipple>(BsRipple, {
             // @ts-ignore
@@ -129,7 +127,7 @@ export function useRenderChip(
                         !Helper.isEmpty(props.icon)
                             ? h<TBsIcon>(BsIcon, {
                                 ...useCreateIconProps(props),
-                                icon: <Prop<string>>(`${props.icon}_${props.iconVariant}`),
+                                icon: <Prop<string | undefined>>(properIconName(props.icon, props.iconVariant)),
                                 size: <Prop<string | number>>(
                                     props.size === 'sm' ? 18 : (props.size === 'lg' ? 40 : 22)
                                 ),
@@ -147,4 +145,16 @@ export function useRenderChip(
             ]
         }),
     ]);
+}
+
+function properIconName(name?: string, variant?: string) {
+    if (name && variant) {
+        if (isEndWith(name, ['_outlined', '_filled', '_rounded', '_sharp'])) {
+            return name;
+        } else {
+            return `${name}_${variant}`;
+        }
+    }
+
+    return name;
 }

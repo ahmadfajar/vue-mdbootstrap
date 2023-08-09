@@ -30,7 +30,7 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Met
         );
         const tagName = computed<string>(
             () => (
-                !Helper.isEmpty(<string | undefined>props.href)
+                !Helper.isEmpty(thisProps.href) && !thisProps.disabled && !thisProps.readonly
                     ? 'a'
                     : buttonType.value === 'div' ? 'div' : 'button'
             )

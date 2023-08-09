@@ -15,12 +15,13 @@
     }
 
     .#{$prefix}chip {
-        margin-bottom: $text-field-padding-bottom;
-        margin-right: $padding-sm;
-
-        ~ .#{$prefix}chip {
-            margin-left: 0;
-        }
+        --#{$prefix}chip-gutter-y: #{$text-field-padding-bottom};
+        margin-top: 0;
+        //margin-bottom: $text-field-padding-bottom;
+        //margin-right: $padding-sm;
+        //~ .#{$prefix}chip {
+        //    margin-left: 0;
+        //}
     }
 
     input {
@@ -76,10 +77,6 @@
             .#{$prefix}field-label {
                 top: .25rem;
             }
-
-            //.#{$prefix}chip {
-            //    margin-bottom: .75rem;
-            //}
 
             &.prepend-icon {
                 --#{$prefix}field-floating-label-transform: translateY(-27px) translateX(-36px) scale(.85);

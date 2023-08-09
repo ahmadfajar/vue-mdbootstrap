@@ -48,6 +48,7 @@ export function useMakeButtonProps(
             'active': props.active,
         },
         role: 'button',
+        href: (!Helper.isEmpty(props.href) && !props.disabled && !props.readonly) ? props.href : undefined,
         type: buttonType === 'div' ? undefined : buttonType,
         disabled: buttonType === 'div' ? undefined : disabled,
         'aria-disabled': buttonType === 'div' ? undefined : disabled,
@@ -116,7 +117,7 @@ export function useMakeInputItemAttrs(
     return attr;
 }
 
-function renderIconOrSlot(
+function renderSlotIcon(
     slots: Slots,
     name: string,
     btnMode: TButtonMode | undefined,
@@ -124,21 +125,25 @@ function renderIconOrSlot(
     iconId: string,
     iconPosition: string,
     iconSize?: number | string,
-    applyIconClass?: boolean,
     slotArgs?: TRecord,
 ): VNode {
     if (slots && slots[name]) {
         return useRenderSlotWithWrapper(
             slots, name, iconId, {
                 class: {
-                    'd-flex': applyIconClass,
-                    [`${cssPrefix}icon`]: applyIconClass,
+                    'd-inline-block': true,
                     [`${cssPrefix}icon-${iconPosition}`]: (
                         btnMode === 'default' ||
                         (['fab', 'floating'].includes(<string>btnMode) && slots.default)
                     ),
+                    [`${cssPrefix}empty-icon`]: (
+                        Helper.isEmpty(slots[name]) || !Helper.isFunction(slots[name])
+                    ),
                 },
-                style: applyIconClass ? undefined : {display: 'contents'},
+                style: iconSize && slots[name]?.call(undefined) != null ? {
+                    height: Helper.cssUnit(iconSize),
+                    width: Helper.cssUnit(iconSize),
+                } : undefined,
             },
             undefined, 'span', slotArgs
         );
@@ -170,28 +175,24 @@ export function useRenderButtonContent(
 ): VNodeArrayChildren {
     return [
         (props.iconPosition === 'left')
-            ? renderIconOrSlot(
+            ? renderSlotIcon(
                 slots, 'icon',
                 props.mode,
                 props,
                 iconId,
                 props.iconPosition,
                 props.iconSize,
-                true,
-                undefined,
             )
             : '',
         slots.default && slots.default(),
         (props.iconPosition === 'right')
-            ? renderIconOrSlot(
+            ? renderSlotIcon(
                 slots, 'icon',
                 props.mode,
                 props,
                 iconId,
                 props.iconPosition,
                 props.iconSize,
-                true,
-                undefined,
             )
             : '',
     ]
@@ -204,14 +205,13 @@ export function useRenderToggleItemContent(
 ): VNodeArrayChildren {
     return [
         (props.iconPosition === 'left')
-            ? renderIconOrSlot(
+            ? renderSlotIcon(
                 slots, 'icon',
                 'default',
                 item,
                 `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
                 props.iconPosition,
                 item.iconSize,
-                true,
                 item,
             )
             : '',
@@ -226,14 +226,13 @@ export function useRenderToggleItemContent(
             item,
         ),
         (props.iconPosition === 'right')
-            ? renderIconOrSlot(
+            ? renderSlotIcon(
                 slots, 'icon',
                 'default',
                 item,
                 `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
                 props.iconPosition,
                 item.iconSize,
-                true,
                 item,
             )
             : '',

@@ -37,7 +37,8 @@ export declare function padRight(str: string | number, maxLength?: number, fillS
 export declare function titleCase(text: string): string;
 
 /**
- * Simple function to transform the input string into [camel Case](https://en.wikipedia.org/wiki/Camel_case).
+ * Simple function to transform the input string into
+ * [camel Case](https://en.wikipedia.org/wiki/Camel_case).
  *
  * @param text The input string to transform.
  * @returns New string that has been transform to "camelCase".
@@ -45,7 +46,8 @@ export declare function titleCase(text: string): string;
 export declare function camelCase(text: string): string;
 
 /**
- * Simple function to transform the input string into [kebab-case](https://en.wikipedia.org/wiki/Letter_case#Use_within_programming_languages).
+ * Simple function to transform the input string into
+ * [kebab-case](https://en.wikipedia.org/wiki/Letter_case#Use_within_programming_languages).
  *
  * @param text The input string to transform.
  * @returns New string that has been transform to "kebab-case".
@@ -60,3 +62,14 @@ export declare function kebabCase(text: string): string;
  * @returns Array of chunked strings.
  */
 export declare function chunk(source: string, size?: number): string[];
+
+/**
+ * Determines whether a string ends with the specified string,
+ * returning true or false as appropriate.
+ *
+ * @param source   The input string.
+ * @param searches Collection of string to search at the end of string.
+ * @returns true   if the given characters are found at the end of the string,
+ *                 otherwise, `false`.
+ */
+export declare function isEndWith(source?: string, searches?: string[]): boolean;

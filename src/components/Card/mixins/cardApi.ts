@@ -3,8 +3,8 @@ import {h} from "vue";
 import type {TRecord} from "../../../types";
 
 export function useRenderCardImg(
-    imgSrc?: string | undefined,
-    altText?: string | undefined,
+    imgSrc?: string,
+    altText?: string,
     classes?: string | Array<string> | TRecord,
 ): VNode {
     return h("img", {
@@ -14,7 +14,7 @@ export function useRenderCardImg(
     })
 }
 
-export function useContentTag(type?: string | undefined, tag?: string | undefined): string {
+export function useContentTag(type?: string, tag?: string): string {
     if (!tag) {
         return (type === 'title' ? 'h4' : type === 'subtitle' ? 'h5' : 'p');
     }

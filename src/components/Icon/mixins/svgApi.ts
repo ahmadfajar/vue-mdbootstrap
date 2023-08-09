@@ -23,10 +23,10 @@ export function findIcon(name: string | undefined): TIconData | undefined {
         .replace('-', '_');
     const variant = (strIcon.endsWith('_rounded') || strIcon.endsWith('_round'))
         ? 'round'
-        : (strIcon.endsWith('_outlined') || strIcon.endsWith('_outline'))
+        : strIcon.endsWith('_outlined')
             ? 'outlined'
             : (strIcon.endsWith('_sharp') ? 'sharp' : '');
-    const realName = strIcon.replace(/(_outlined|_outline|_filled|_rounded|_round|_sharp)$/, '');
+    const realName = strIcon.replace(/(_outlined|_filled|_rounded|_round|_sharp)$/, '');
     const found = Object.entries(IconLib).find((el) => {
         const arr = el[0].split('::');
         return arr[1] === realName

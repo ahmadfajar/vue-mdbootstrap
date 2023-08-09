@@ -16,7 +16,7 @@ export const iconName = {
 export const iconVariant = {
     type: String as PropType<TIconVariant>,
     default: "filled",
-    validator: (value: string): boolean => ["outlined", "filled", "round", "sharp"].includes(value),
+    validator: (value: string): boolean => ["outlined", "filled", "rounded", "sharp"].includes(value),
 } as Prop<TIconVariant>
 
 export const flip = {
