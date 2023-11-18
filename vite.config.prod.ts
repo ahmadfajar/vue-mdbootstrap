@@ -31,7 +31,7 @@ export default defineConfig({
             // make sure to externalize deps that shouldn't be bundled into your library
             external: ['vue'],
             treeshake: {
-                preset: 'recommended'
+                preset: 'smallest'
             },
             output: {
                 // Provide global variables to use in the ES build for externalized deps

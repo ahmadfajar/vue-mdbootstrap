@@ -36,7 +36,7 @@ export default defineConfig({
                 'luxon', 'resize-observer-polyfill', 'vue',
             ],
             treeshake: {
-                preset: 'recommended'
+                preset: 'smallest'
             },
             output: {
                 // Provide global variables to use in the ES build for externalized deps

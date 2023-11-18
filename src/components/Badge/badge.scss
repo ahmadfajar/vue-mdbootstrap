@@ -8,7 +8,8 @@
 
     &.badge-label {
         --#{$bs-prefix}badge-font-size: .8em;
-        padding: $padding-xs ($padding-sm + .1) .4rem;
+        line-height: 1;
+        padding: .3rem ($padding-sm + .1);
     }
 
     &.badge-pill {

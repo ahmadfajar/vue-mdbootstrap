@@ -37,6 +37,10 @@ export declare type TFilterOption = {
      * Filter operator, default: <tt>eq</tt>.
      */
     operator: TFilterOperator;
+    /**
+     * ORM custom data type, ex: 'ulid'.
+     */
+    type?: string;
 }
 
 export declare type TSortDirection = 'asc' | 'desc';
@@ -145,6 +149,7 @@ export declare interface IAbstractStore extends ObjectBase {
      * }
      */
     get restUrl(): TRestConfig | undefined;
+    set restUrl(option: TRestConfig);
 
     /**
      * Returns active page number (base-1 index).
@@ -463,6 +468,7 @@ export declare class AbstractStore implements IAbstractStore {
      * }
      */
     get restUrl(): TRestConfig | undefined;
+    set restUrl(option: TRestConfig);
 
     get currentPage(): number;
 

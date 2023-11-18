@@ -4,7 +4,7 @@
 
 ## v2.0.4
 
-Released: July xx, 2023
+Released: December xx, 2023
 
 ### Features & Improvements
 
@@ -26,7 +26,11 @@ Released: July xx, 2023
   fix bug unable to get element size on non-SPA environment.
 - **BsAppbar**, **BsSideDrawer**: fix onResize event arguments.
 - **BsAvatar**, **BsIcon**: fix property conflict when calculating component's dimension.
+- **BsBadge**: fix badge-label css.
 - **BsButton**, **BsChip**: when `href` attribute is defined component didn't render as `<a>` element. 
+- **BsListNavItem**: fix item could not resolve route path that caused wrong active item when page reloaded.
+- **BSSideDrawer**: fix marginTop and height.
+- **BsModel**: remove data from body when performing DELETE request, fix dynamic properties reactivity issue.
 - **Resize**, **Scroll** directive: fix wrong callback arguments. 
 
 ## v2.0.3
@@ -93,7 +97,7 @@ Released: June 30, 2023
 ### Features & Improvements
 
 - Rewrite the components in the TypeScript language.
-- Add support for **VueJs 3** and **Bootstrap v5.2**.
+- Add support for **Vue.js 3** and **Bootstrap v5.2**.
 - New components: **BsIconSpinner**, **BsIconSvg**, **BsProgressBar**, **BsColorPicker**, **BsListbox**
 - **BsAlert**: add property `filled`, `iconVariant`, and `variant`.
 - **BsAppbar**: add property `clippedRight`.

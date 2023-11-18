@@ -40,7 +40,7 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
         const clipHeight = computed(
             () => {
                 if (thisProps.clipped && appId.value && vueMdb.value) {
-                    return vueMdb.value.app[appId.value].appbar.height + 1;
+                    return vueMdb.value.app[appId.value].appbar.height;
                 }
                 return 0;
             }

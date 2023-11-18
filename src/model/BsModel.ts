@@ -55,7 +55,7 @@ import Helper from '../utils/Helper';
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 26/06/2023 23:43
+ * @since  09/07/2018 modified: 17/11/2023 22:21
  */
 export default class BsModel implements IBsModel {
     /**
@@ -141,7 +141,7 @@ export default class BsModel implements IBsModel {
         if (!(idProperty in this._schema)) {
             _dt[idProperty] = null;
         }
-        this._data = _dt; // reactive(_dt);
+        this._data = reactive(_dt);
         autoBind(this);
         // Initialize magic getters and setters.
         this._initProps();
@@ -267,7 +267,7 @@ export default class BsModel implements IBsModel {
             config = {
                 url: url.replace('{id}', <never>identifier),
                 method: methods.delete,
-                data: this.toJSON()
+                // data: this.toJSON()
             };
         } else {
             this._updateRequestConfig(config, <never>identifier, url, 'delete');

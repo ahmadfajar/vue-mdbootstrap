@@ -182,6 +182,10 @@ export default class AbstractStore implements IAbstractStore {
         return <TRestConfig>(this._config.restProxy || this._config.restUrl);
     }
 
+    set restUrl(option: TRestConfig) {
+        this._config.restProxy = option;
+    }
+
     get currentPage(): number {
         return this._state.currentPage;
     }
@@ -250,12 +254,17 @@ export default class AbstractStore implements IAbstractStore {
         field: string,
         value: string | number | boolean,
         operator?: TFilterOperator,
+        type?: string,
     ): this {
-        this.filters.push(<TFilterOption>{
+        const flt: TFilterOption = {
             'property': field,
             'value': value,
-            'operator': (Helper.isEmpty(operator) ? 'eq' : operator.toLowerCase())
-        });
+            'operator': <TFilterOperator>(Helper.isEmpty(operator) ? 'eq' : operator.toLowerCase())
+        };
+        if (type) {
+            flt.type = type;
+        }
+        this.filters.push(flt);
         this._filteredItems = [];
 
         return this;
@@ -480,23 +489,31 @@ export default class AbstractStore implements IAbstractStore {
         if (Array.isArray(values)) {
             for (const flt of values) {
                 if (Helper.isObject(flt) && AbstractStore.isCandidateForFilterOption(flt)) {
-                    filters.push({
+                    const cFilter: TFilterOption = {
                         'property': flt.property,
                         'value': flt.value,
                         'operator': <TFilterOperator>(
                             Helper.isEmpty(flt.operator) ? 'eq' : flt.operator.toLowerCase()
                         )
-                    });
+                    };
+                    if (flt.type) {
+                        cFilter.type = flt.type;
+                    }
+                    filters.push(cFilter);
                 }
             }
         } else if (Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)) {
-            filters.push({
+            const vFilter: TFilterOption = {
                 'property': values.property,
                 'value': values.value,
                 'operator': <TFilterOperator>(
                     Helper.isEmpty(values.operator) ? 'eq' : values.operator.toLowerCase()
                 )
-            });
+            };
+            if (values.type) {
+                vFilter.type = values.type;
+            }
+            filters.push(vFilter);
         }
 
         return filters;

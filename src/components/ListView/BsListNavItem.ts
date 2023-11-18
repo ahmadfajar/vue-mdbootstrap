@@ -56,7 +56,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
         if (useHasRouter(cmpProps)) {
             const route = useCurrentRoute();
             watchEffect(() => {
-                if (provider && route?.value.path === cmpProps.path) {
+                if (provider && (route?.value.path === cmpProps.path || route?.value.path.startsWith(cmpProps.path!))) {
                     provider.activeItem = refItem.value;
                 }
             });
@@ -77,7 +77,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
             () => {
                 if (useHasRouter(cmpProps)) {
                     const route = useCurrentRoute();
-                    if (route && route.value.path === cmpProps.path) {
+                    if (route && (route.value.path === cmpProps.path || route?.value.path.startsWith(cmpProps.path!))) {
                         refItem.value?.setActive(true);
                     }
                 }

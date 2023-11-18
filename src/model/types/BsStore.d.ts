@@ -1,6 +1,6 @@
 import type { AxiosInstance, AxiosResponse } from 'axios';
 import type { TRecord } from '../../types';
-import type { AbstractStore, IAbstractStore, IBsStore, TBsModel, TSortDirection, TSortOption } from '../types';
+import type { AbstractStore, IAbstractStore, TBsModel, TSortDirection, TSortOption } from '../types';
 
 export declare type TSuccessResponse = {
     success: boolean;
