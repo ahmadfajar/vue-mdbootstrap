@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -546,6 +546,4 @@ export declare const BsSearchField: {
     };
 };
 
-export declare const BsFieldPlugin: {
-    new(): Plugin;
-};
+export declare const BsFieldPlugin = Plugin_1;

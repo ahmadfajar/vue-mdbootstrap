@@ -47,7 +47,7 @@ export default defineConfig({
                     // @ts-ignore
                     terser({
                         compress: true,
-                        ecma: 2021,
+                        ecma: 2022,
                         format: {
                             comments: false
                         }

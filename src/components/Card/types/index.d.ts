@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -135,6 +135,4 @@ export declare const BsCardMedia: {
     };
 };
 
-export declare const BsCardPlugin: {
-    new(): Plugin;
-};
+export declare const BsCardPlugin = Plugin_1;

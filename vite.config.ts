@@ -49,7 +49,7 @@ export default defineConfig({
                 // @ts-ignore
                 terser({
                     compress: false,
-                    ecma: 2021,
+                    ecma: 2022,
                     keep_classnames: true,
                     keep_fnames: true,
                     format: {

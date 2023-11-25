@@ -181,6 +181,13 @@ export declare interface IBsModel extends ObjectBase {
     fetch(id?: string | number): Promise<AxiosResponse>;
 
     /**
+     * Action triggered after data was fetched from the remote server.
+     *
+     * @param data The response data
+     */
+    onAfterFetch?(data: AxiosResponse): void;
+
+    /**
      * Perform custom HTTP request to the remote service via REST API.
      *
      * @param restKey    The key from restUrl property
@@ -390,7 +397,7 @@ export declare class BsModel implements IBsModel {
      *
      * @param data The response data
      */
-    onAfterFetch(data: AxiosResponse): void;
+    onAfterFetch?(data: AxiosResponse): void;
 
     /**
      * Assign data from the remote source to this model.

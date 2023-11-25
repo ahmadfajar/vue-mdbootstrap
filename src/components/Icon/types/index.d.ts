@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -153,6 +153,4 @@ export declare const BsToggleIcon: {
     };
 };
 
-export declare const BsIconPlugin: {
-    new(): Plugin;
-};
+export declare const BsIconPlugin = Plugin_1;

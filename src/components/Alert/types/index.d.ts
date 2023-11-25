@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -71,6 +71,4 @@ export declare const BsAlert: {
     };
 };
 
-export declare const BsAlertPlugin: {
-    new(): Plugin;
-};
+export declare const BsAlertPlugin = Plugin_1;

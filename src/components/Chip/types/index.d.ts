@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -237,7 +237,4 @@ export declare const BsChipGroup: {
     };
 };
 
-export declare const BsChipPlugin: {
-    new(): Plugin;
-};
-
+export declare const BsChipPlugin = Plugin_1;

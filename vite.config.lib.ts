@@ -35,9 +35,11 @@ export default defineConfig({
                 'axios', 'body-scroll-lock', 'fast-xml-parser',
                 'luxon', 'resize-observer-polyfill', 'vue',
             ],
+            // treeshake: false,
             treeshake: {
                 preset: 'smallest'
             },
+            // preserveEntrySignatures: 'strict',
             output: {
                 // Provide global variables to use in the ES build for externalized deps
                 globals: {
@@ -56,7 +58,7 @@ export default defineConfig({
                 // @ts-ignore
                 terser({
                     compress: false,
-                    ecma: 2021,
+                    ecma: 2022,
                     keep_classnames: true,
                     keep_fnames: true,
                     format: {

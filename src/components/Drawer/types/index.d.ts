@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -49,6 +49,4 @@ export declare const BsSideDrawer: {
     };
 };
 
-export declare const BsDrawerPlugin: {
-    new(): Plugin;
-};
+export declare const BsDrawerPlugin = Plugin_1;

@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     Ref,
     UnwrapNestedRefs,
     VNodeProps
@@ -142,6 +142,4 @@ export declare const BsColorPicker: {
     };
 };
 
-export declare const BsColorPickerPlugin: {
-    new(): Plugin;
-};
+export declare const BsColorPickerPlugin = Plugin_1;

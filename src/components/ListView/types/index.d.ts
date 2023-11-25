@@ -3,7 +3,7 @@ import type {
     ComponentCustomProps,
     ComponentInternalInstance,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     RendererNode,
     VNode,
     VNodeProps
@@ -310,9 +310,7 @@ export declare const BsListTileSubtitle: {
     };
 };
 
-export declare const BsListViewPlugin: {
-    new(): Plugin;
-};
+export declare const BsListViewPlugin = Plugin_1;
 
 export declare interface IListViewProvider extends ObjectBase {
     readonly config: Readonly<TListViewOptionProps>;

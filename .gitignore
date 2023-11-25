@@ -24,7 +24,7 @@ yarn.lock
 
 /cypress/videos/
 /cypress/screenshots/
-/dist/*.LICENSE.txt
+/dist/
 
 # Editor directories and files
 .vscode/*

@@ -1,9 +1,9 @@
-import type {App, Plugin as Plugin_2} from "vue";
-import BsChip from "./BsChip";
-import BsChipGroup from "./BsChipGroup";
-import "./chip.scss";
-import "./chipGroup.scss";
-import "../../../scss/_utilities.scss";
+import type { App, Plugin as Plugin_2 } from 'vue';
+import BsChip from './BsChip';
+import BsChipGroup from './BsChipGroup';
+import './chip.scss';
+import './chipGroup.scss';
+import '../../../scss/_utilities.scss';
 
 const BsChipPlugin: Plugin_2 = {
     install: (app: App): void => {
@@ -12,4 +12,4 @@ const BsChipPlugin: Plugin_2 = {
     }
 }
 
-export {BsChipPlugin, BsChip, BsChipGroup}
+export { BsChipPlugin, BsChip, BsChipGroup }

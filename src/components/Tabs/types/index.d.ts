@@ -3,7 +3,7 @@ import type {
     ComponentCustomProps,
     ComponentInternalInstance,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -138,6 +138,4 @@ export declare const BsTabs: {
     };
 };
 
-export declare const BsTabPlugin: {
-    new(): Plugin;
-};
+export declare const BsTabPlugin = Plugin_1;

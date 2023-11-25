@@ -58,14 +58,6 @@ import Helper from '../utils/Helper';
  * @since  09/07/2018 modified: 17/11/2023 22:21
  */
 export default class BsModel implements IBsModel {
-    /**
-     * Action triggered after data was fetched from the remote server.
-     *
-     * @method onAfterFetch
-     * @param {AxiosResponse} data The response data
-     * @returns {void}
-     */
-
     private readonly _proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
     private readonly _assignErrMsg = `The given field does not exists in this ${this.$_class}.`;
     private readonly _assignValuesErrMsg = `The given values can not be assigned to ${this.$_class}.`;

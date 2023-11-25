@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -72,6 +72,4 @@ export declare const BsDropdownMenu: {
     };
 };
 
-export declare const BsMenuPlugin: {
-    new(): Plugin;
-};
+export declare const BsMenuPlugin = Plugin_1;

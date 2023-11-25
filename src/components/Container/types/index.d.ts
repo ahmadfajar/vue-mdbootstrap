@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -68,6 +68,4 @@ export declare const BsContent: {
     };
 };
 
-export declare const BsContainerPlugin: {
-    new(): Plugin;
-};
+export declare const BsContainerPlugin = Plugin_1;

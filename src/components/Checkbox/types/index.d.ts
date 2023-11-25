@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -67,7 +67,5 @@ export declare const BsCheckboxGroup: {
     };
 };
 
-export declare const BsCheckboxPlugin: {
-    new(): Plugin;
-};
+export declare const BsCheckboxPlugin = Plugin_1;
 

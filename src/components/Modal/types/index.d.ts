@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -178,6 +178,4 @@ export declare const BsLightbox: {
     };
 };
 
-export declare const BsModalPlugin: {
-    new(): Plugin;
-};
+export declare const BsModalPlugin = Plugin_1;

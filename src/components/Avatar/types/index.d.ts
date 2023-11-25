@@ -2,7 +2,7 @@ import type {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -94,6 +94,4 @@ export declare const BsAvatar: {
     };
 };
 
-export declare const BsAvatarPlugin: {
-    new(): Plugin;
-};
+export declare const BsAvatarPlugin = Plugin_1;

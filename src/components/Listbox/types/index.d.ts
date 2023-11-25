@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    Plugin as Plugin_1,
     VNode,
     VNodeProps
 } from 'vue';
@@ -174,6 +174,4 @@ export declare const BsListbox: {
     };
 };
 
-export declare const BsListboxPlugin: {
-    new(): Plugin;
-};
+export declare const BsListboxPlugin = Plugin_1;
