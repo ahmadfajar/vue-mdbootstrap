@@ -4,6 +4,7 @@ import { RestProxyAdapter } from '../model';
 import type {
     IBsModel,
     IRestAdapter,
+    ObjectBase,
     TCSRFConfig,
     THttpMethod,
     TModelOptions,
@@ -55,9 +56,9 @@ import Helper from '../utils/Helper';
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 17/11/2023 22:21
+ * @since  09/07/2018 modified: 10/12/2023 20:29
  */
-export default class BsModel implements IBsModel {
+export default class BsModel implements ObjectBase {
     private readonly _proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
     private readonly _assignErrMsg = `The given field does not exists in this ${this.$_class}.`;
     private readonly _assignValuesErrMsg = `The given values can not be assigned to ${this.$_class}.`;
@@ -295,7 +296,7 @@ export default class BsModel implements IBsModel {
         );
     }
 
-    freeze(): Readonly<IBsModel> {
+    freeze(): Readonly<IBsModel | BsModel> {
         return Object.freeze(this);
     }
 
@@ -334,7 +335,7 @@ export default class BsModel implements IBsModel {
 
     get idProperty(): string {
         return this._idProperty;
-    };
+    }
 
     getIdProperty(): string {
         return this._idProperty;
@@ -428,7 +429,7 @@ export default class BsModel implements IBsModel {
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
         const url = this.restUrl.save ?? '';
-        const data = this.toJSON();
+        const data = this.toObject();
         const methods = this.proxy.requestMethods();
         const identifier = data[this.idProperty];
 
@@ -451,11 +452,11 @@ export default class BsModel implements IBsModel {
         );
     }
 
-    seal(): IBsModel {
+    seal(): IBsModel | BsModel {
         return Object.seal(this);
     }
 
-    toJSON(): TRecord {
+    toObject(): TRecord {
         const data: TRecord = {};
 
         this.getFields().forEach(f => {
@@ -473,7 +474,7 @@ export default class BsModel implements IBsModel {
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
         const url = this.restUrl.update ?? '';
-        const data = this.toJSON();
+        const data = this.toObject();
         const methods = this.proxy.requestMethods();
         const identifier = data[this.idProperty];
 

@@ -1,13 +1,46 @@
 import type { AxiosInstance, AxiosResponse } from 'axios';
 import type { TRecord } from '../../types';
-import type { AbstractStore, IAbstractStore, TBsModel, TSortDirection, TSortOption } from '../types';
+import type { AbstractStore, TBsModel, TSortDirection, TSortOption } from '../types';
 
 export declare type TSuccessResponse = {
     success: boolean;
     message: string;
 }
 
-export declare interface IBsStore extends IAbstractStore {
+/**
+ * Data Store class to work with collection of entity objects and remote API.
+ *
+ * @example
+ * const dsStore = new BsStore({
+ *     idProperty: 'id',
+ *     dataProperty: 'data',
+ *     totalProperty: 'total',
+ *     pageSize: 15,
+ *     restProxy: {
+ *         browse: '/api/users',
+ *         delete: {url: './api/users', method: 'delete'},
+ *         save: {url: './api/users', method: 'post'},
+ *         update: {url: './api/users', method: 'put'}
+ *     },
+ *     csrfConfig: {
+ *         url: '/api/token/{name}',
+ *         tokenName: 'token_name',
+ *         dataField: 'value',
+ *         suffix: false,
+ *     },
+ * });
+ *
+ * @author Ahmad Fajar
+ */
+export declare class BsStore extends AbstractStore {
+    /**
+     * Class constructor.
+     *
+     * @param config  The configuration properties
+     * @param adapter Axios adapter instance
+     */
+    constructor(config: TRecord, adapter?: AxiosInstance);
+
     /**
      * Returns dataset from the active page.
      *
@@ -20,7 +53,6 @@ export declare interface IBsStore extends IAbstractStore {
      * Check if the data Store is using server filtering or local filtering.
      */
     get remoteFilter(): boolean;
-
     /**
      * Enable or disable data Store server filtering.
      *
@@ -32,7 +64,6 @@ export declare interface IBsStore extends IAbstractStore {
      * Check if the data Store is using server paging or local paging.
      */
     get remotePaging(): boolean;
-
     /**
      * Enable or disable data Store server paging.
      *
@@ -44,7 +75,6 @@ export declare interface IBsStore extends IAbstractStore {
      * Check if the Store is using server sorting or local sorting.
      */
     get remoteSort(): boolean;
-
     /**
      * Enable or disable data Store server sorting.
      *
@@ -90,7 +120,7 @@ export declare interface IBsStore extends IAbstractStore {
      * @param data   The new data to be assigned
      * @param silent Append the data silently and don't trigger data conversion
      */
-    assignData(data: never[] | never, silent: boolean): void;
+    assignData(data: unknown[] | unknown, silent?: boolean): void;
 
     /**
      * Delete specific item from internal dataset as well as from remote server whenever possible.
@@ -117,6 +147,8 @@ export declare interface IBsStore extends IAbstractStore {
      */
     fetch(id: string | number): Promise<AxiosResponse>;
 
+    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse>;
+
     /**
      * Load data from the remote server and assign query parameters and configuration.
      *
@@ -141,74 +173,7 @@ export declare interface IBsStore extends IAbstractStore {
      * @param options   The field for sorting or `TSortOption` objects
      * @param direction The sort direction
      */
-    sort(
-        options: string | string[] | TSortOption | TSortOption[],
-        direction: TSortDirection,
-    ): Promise<TBsModel[]>;
-}
-
-/**
- * Data Store class to work with collection of entity objects and remote API.
- *
- * @example
- * const dsStore = new BsStore({
- *     idProperty: 'id',
- *     dataProperty: 'data',
- *     totalProperty: 'total',
- *     pageSize: 15,
- *     restProxy: {
- *         browse: '/api/users',
- *         delete: {url: './api/users', method: 'delete'},
- *         save: {url: './api/users', method: 'post'},
- *         update: {url: './api/users', method: 'put'}
- *     },
- *     csrfConfig: {
- *         url: '/api/token/{name}',
- *         tokenName: 'token_name',
- *         dataField: 'value',
- *         suffix: false,
- *     },
- * });
- */
-export declare class BsStore extends AbstractStore implements IBsStore {
-    /**
-     * Class constructor.
-     *
-     * @param config  The configuration properties
-     * @param adapter Axios adapter instance
-     */
-    constructor(config: TRecord, adapter?: AxiosInstance);
-
-    get dataItems(): TBsModel[];
-
-    get remoteFilter(): boolean;
-    set remoteFilter(value: boolean);
-
-    get remotePaging(): boolean;
-    set remotePaging(value: boolean);
-
-    get remoteSort(): boolean;
-    set remoteSort(value: boolean);
-
-    aggregateAvg(field: string): number;
-
-    aggregateCountBy(field: string, value: unknown): number;
-
-    aggregateSum(field: string): number;
-
-    append(item: never): void;
-
-    assignData(data: unknown[] | unknown, silent?: boolean): void;
-
-    delete(item: TBsModel): Promise<AxiosResponse | TSuccessResponse>;
-
-    deletes(items: TBsModel[]): Promise<TSuccessResponse>;
-
-    fetch(id: string | number): Promise<AxiosResponse>;
-
-    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse>;
-
-    query(): Promise<unknown>;
-
     sort(options: string | string[] | TSortOption | TSortOption[], direction?: TSortDirection): Promise<TBsModel[]>;
 }
+
+export declare interface IBsStore extends BsStore {}

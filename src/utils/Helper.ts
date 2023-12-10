@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 24/06/2023 13:46
+ * @since  05/07/2018, modified: 11/12/2023 00:42
  */
 export default class Helper {
     /**
@@ -212,7 +212,7 @@ export default class Helper {
     static cssUnit(
         value: string | number | undefined | null,
         unit?: string | undefined | null,
-    ): string | null {
+    ): string | undefined {
         const _px = unit || 'px';
 
         if (Helper.isString(value)) {
@@ -230,7 +230,7 @@ export default class Helper {
             return value + _px;
         }
 
-        return null;
+        return undefined;
     }
 
     /**

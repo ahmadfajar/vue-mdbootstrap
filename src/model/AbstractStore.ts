@@ -3,9 +3,9 @@ import orderBy from 'lodash/orderBy';
 import { reactive, readonly } from 'vue';
 import { BsModel, RestProxyAdapter } from '../model';
 import type {
-    IAbstractStore,
     IBsModel,
     IRestAdapter,
+    ObjectBase,
     TBsModel,
     TDataStoreConfig,
     TDataStoreState,
@@ -28,9 +28,9 @@ import Helper from '../utils/Helper';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 20/07/2023 01:25
+ * @since  15/03/2019 modified: 10/12/2023 20:28
  */
-export default class AbstractStore implements IAbstractStore {
+export default class AbstractStore implements ObjectBase {
     protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
     protected readonly _proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
     protected readonly _emptyDataErrMsg = 'Server returns empty data.';
@@ -54,7 +54,7 @@ export default class AbstractStore implements IAbstractStore {
     }
 
     static isCandidateForFilterOption(item: TRecord): item is TFilterOption {
-        return Object.keys(item).every(k => ['property', 'value', 'operator'].includes(k));
+        return Object.keys(item).every(k => ['property', 'value', 'operator', 'type'].includes(k));
     }
 
     static isCandidateForSortOption(item: TRecord): item is TSortOption {
@@ -177,6 +177,7 @@ export default class AbstractStore implements IAbstractStore {
      *    'update': '/api/user/{id}/save',
      *    'delete': '/api/user/{id}/delete'
      * }
+     *
      */
     get restUrl(): TRestConfig | undefined {
         return <TRestConfig>(this._config.restProxy || this._config.restUrl);
@@ -563,7 +564,7 @@ export default class AbstractStore implements IAbstractStore {
         return sorters;
     }
 
-    createModel(item: TRecord): IBsModel {
+    createModel(item: TRecord): IBsModel | BsModel {
         const proxyCfg: TRestUrlOption = {};
 
         if (this.restUrl) {

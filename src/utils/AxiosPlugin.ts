@@ -28,7 +28,7 @@ export declare interface IHttpService {
      * @param options Additional options
      * @returns Promise instance
      */
-    post: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
+    post: (url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP PUT to the remote server.
      *
@@ -37,7 +37,7 @@ export declare interface IHttpService {
      * @param options Additional options
      * @returns Promise instance
      */
-    put: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => AxiosPromise;
+    put: (url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig) => AxiosPromise;
     /**
      * Send HTTP DELETE to the remote server.
      *
@@ -96,10 +96,10 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
 
             return service.get(url, config)
         },
-        post: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => {
+        post: (url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig) => {
             return service.post(url, data, options)
         },
-        put: (url: string, data: TRecord, options?: RawAxiosRequestConfig) => {
+        put: (url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig) => {
             return service.put(url, data, options)
         },
         delete: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => {

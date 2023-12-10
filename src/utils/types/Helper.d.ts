@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 24/06/2023 13:46
+ * @since  05/07/2018, modified: 11/12/2023 00:42
  */
 export default class Helper {
     /**
@@ -116,7 +116,7 @@ export default class Helper {
      * @param unit  The dimension to add
      * @returns Css inline dimension
      */
-    static cssUnit(value: string | number | undefined | null, unit?: string | undefined | null): string | null;
+    static cssUnit(value: string | number | undefined | null, unit?: string | undefined | null): string | undefined;
     /**
      * Sort an array of object.
      *

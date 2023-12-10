@@ -408,7 +408,7 @@ function cloneDataItems(
     fieldName: string,
 ): IBsModel[] {
     return dataSource.dataItems.map(it => {
-        const tmpObj = dataSource.createModel(it.toJSON());
+        const tmpObj = dataSource.createModel(it.toObject());
         if (!tmpObj.get('_oid')) {
             tmpObj.set('_oid', Helper.uuid(true));
         }

@@ -124,6 +124,7 @@
             > .triangle-up,
             > .triangle-down {
                 &:last-child {
+                    margin-left: .65rem;
                     margin-right: -$padding-xs;
                 }
             }

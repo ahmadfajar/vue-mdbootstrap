@@ -2,7 +2,7 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import meanBy from 'lodash/meanBy';
 import sumBy from 'lodash/sumBy';
 import { AbstractStore, RestProxyAdapter } from '../model';
-import type { IBsStore, TBsModel, TRecord, TSortDirection, TSortOption, TSuccessResponse } from '../types';
+import type { TBsModel, TRecord, TSortDirection, TSortOption, TSuccessResponse } from '../types';
 import Helper from '../utils/Helper';
 
 /**
@@ -31,7 +31,7 @@ import Helper from '../utils/Helper';
  * @author Ahmad Fajar
  * @since  20/07/2018 modified: 20/07/2023 01:27
  */
-export default class BsStore extends AbstractStore implements IBsStore {
+export default class BsStore extends AbstractStore {
     /**
      * Class constructor.
      *
