@@ -4,6 +4,7 @@ import sumBy from 'lodash/sumBy';
 import { AbstractStore, RestProxyAdapter } from '../model';
 import type { TBsModel, TRecord, TSortDirection, TSortOption, TSuccessResponse } from '../types';
 import Helper from '../utils/Helper';
+import { appendErrMsg, emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from './AbstractStore';
 
 /**
  * Data Store class to work with collection of entity objects and remote API.
@@ -29,7 +30,7 @@ import Helper from '../utils/Helper';
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 20/07/2023 01:27
+ * @since  20/07/2018 modified: 16/12/2023 14:45
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -185,7 +186,7 @@ export default class BsStore extends AbstractStore {
             this._items.push(<TBsModel>this.createModel(item).seal());
             _finalizeAppend();
         } else {
-            console.error(this._appendErrMsg);
+            console.error(appendErrMsg);
         }
     }
 
@@ -278,7 +279,7 @@ export default class BsStore extends AbstractStore {
 
     fetch(id: string | number): Promise<AxiosResponse> {
         if (!this.proxy || !this.restUrl) {
-            throw Error(this._proxyErrMsg);
+            throw Error(proxyErrMsg);
         }
 
         RestProxyAdapter.checkRestUrl(this.restUrl);
@@ -317,7 +318,7 @@ export default class BsStore extends AbstractStore {
             });
         } else {
             if (!this.proxy || !this.restUrl) {
-                throw Error(this._proxyErrMsg);
+                throw Error(proxyErrMsg);
             }
 
             RestProxyAdapter.checkRestUrl(this.restUrl);
@@ -370,7 +371,7 @@ export default class BsStore extends AbstractStore {
         const responseData = <never>response.data;
 
         if (Helper.isEmpty(responseData)) {
-            console.warn(this._emptyDataErrMsg);
+            console.warn(emptyDataErrMsg);
         } else {
             if (Object.hasOwn(responseData, <string>this._config.dataProperty)) {
                 this.assignData(responseData[<string>this._config.dataProperty]);
@@ -379,7 +380,7 @@ export default class BsStore extends AbstractStore {
                     this._state.totalCount = responseData[this._config.totalProperty];
                 }
             } else {
-                console.warn(this._parsingDataErrMsg);
+                console.warn(parsingDataErrMsg);
             }
         }
     }

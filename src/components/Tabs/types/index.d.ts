@@ -37,7 +37,7 @@ export declare type TTabsBaseProps = {
      */
     iconSize?: string | number;
     /**
-     * Optional TabItem css classes.
+     * Optional TabItem css classes when TabItem isn't in active state.
      */
     tabClass?: string | Array<string>;
     /**

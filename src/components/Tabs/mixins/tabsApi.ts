@@ -67,6 +67,7 @@ export function useTabItemClassNames(
             props.activeClass && (props.active === true) &&
             tagName.value !== 'li' && !useHasRouter(props)
         ),
+        [normalizeClass(tabs?.tabClass)]: !Helper.isEmpty(tabs?.tabClass) && !props.active,
     }
 }
 
@@ -338,7 +339,7 @@ function renderHorizontalTabView(
             })
         ),
         h('div', {
-            class: useMergeClass(['tab-content', 'd-flex', 'flex-fill'], <string>props.contentClass),
+            class: useMergeClass(['tab-content'], <string>props.contentClass),
         }, slots.default && slots.default()),
     ]);
 }

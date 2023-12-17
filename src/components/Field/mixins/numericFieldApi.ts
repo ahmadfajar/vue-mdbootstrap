@@ -9,6 +9,7 @@ import type {
     TRecord,
     TSpaceAround
 } from '../../../types';
+import Helper from '../../../utils/Helper';
 import { BsRipple } from '../../Animation';
 import { BsIcon } from '../../Icon';
 import {
@@ -387,9 +388,9 @@ function incrementValue(
 }
 
 function isLessOrEqualMaxValue(value: number, options: TNumericOpsOptions): boolean {
-    return !options.maxValue ? true : value <= options.maxValue;
+    return !Helper.isNumber(options.maxValue) ? true : value <= options.maxValue;
 }
 
 function isGreaterOrEqualMinValue(value: number, options: TNumericOpsOptions): boolean {
-    return !options.minValue ? true : value >= options.minValue;
+    return !Helper.isNumber(options.minValue) ? true : value >= options.minValue;
 }

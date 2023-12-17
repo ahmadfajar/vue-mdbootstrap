@@ -32,6 +32,10 @@
 
     @include transition($md-transition-leave);
 
+    @include media-breakpoint-down(sm) {
+        --#{$prefix}tabs-content-padding: #{$padding-base + .25} #{$padding-xs};
+    }
+
     .nav {
         --#{$bs-prefix}nav-link-color: #{mix($default-active-bgcolor, rgba($gray-800, .8), 30%)};
         --#{$bs-prefix}nav-link-hover-color: rgb(var(--#{$prefix}field-primary-indicator-rgb));

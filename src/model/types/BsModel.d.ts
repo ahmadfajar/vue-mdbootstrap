@@ -128,6 +128,10 @@ export declare class BsModel implements ObjectBase {
      *    'dataField' : 'token',
      *    'suffix'    : false
      * }
+     *
+     * For backward compatibility you can override this function
+     * as needed on the inheritance class or put it on the constructor
+     * of the inheritance class or when instantiate the model.
      */
     get csrfConfig(): Readonly<TCSRFConfig> | undefined;
 
@@ -140,10 +144,6 @@ export declare class BsModel implements ObjectBase {
      * Get REST URL configuration in the form <code>{key: url}</code>,
      * where the keys are: <tt>'save', 'fetch', 'delete', 'update'</tt>.
      *
-     * For backward compatibility you can override this function
-     * as needed on the inheritance class or put it on the constructor
-     * of the inheritance class or when instantiate the model.
-     *
      * @example
      * return {
      *    'save'  : '/api/user/create',
@@ -151,8 +151,13 @@ export declare class BsModel implements ObjectBase {
      *    'update': '/api/user/{id}/save',
      *    'delete': '/api/user/{id}/delete'
      * }
+     *
+     * For backward compatibility you can override this function
+     * as needed on the inheritance class or put it on the constructor
+     * of the inheritance class or when instantiate the model.
      */
     get restUrl(): TRestConfig;
+    set restUrl(option: TRestConfig);
 
     /**
      * Readonly data Model state, whether it is still loading data or not.

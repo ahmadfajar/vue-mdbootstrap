@@ -16,6 +16,7 @@ import type {
 } from '../types';
 import { autoBind } from '../utils/AutoBind';
 import Helper from '../utils/Helper';
+import { emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from './AbstractStore';
 
 /**
  * Data Model class for working with entity object and remote API.
@@ -56,21 +57,17 @@ import Helper from '../utils/Helper';
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 10/12/2023 20:29
+ * @since  09/07/2018 modified: 16/12/2023 14:49
  */
 export default class BsModel implements ObjectBase {
-    private readonly _proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
     private readonly _assignErrMsg = `The given field does not exists in this ${this.$_class}.`;
     private readonly _assignValuesErrMsg = `The given values can not be assigned to ${this.$_class}.`;
     private readonly _frozenObjErrMsg = `This ${this.$_class} is frozen to prevent any modification.`;
     private readonly _sealedObjErrMsg = `This ${this.$_class} is sealed to prevent adding new properties.`;
-    private readonly _emptyDataErrMsg = 'Server returns empty data.';
-    private readonly _parsingDataErrMsg = 'Unable to parse data coming from server.';
-
     private readonly _idProperty: string;
     private readonly _dataProperty: string;
     private readonly _csrfConfig: Readonly<TCSRFConfig> | undefined;
-    private readonly _restUrl: TRestConfig;
+    private _restUrl: TRestConfig;
     private _data: TRecord;
     private _schema: TRecord;
     private _proxy: IRestAdapter;
@@ -197,6 +194,10 @@ export default class BsModel implements ObjectBase {
         return this._restUrl;
     }
 
+    set restUrl(option: TRestConfig) {
+        this._restUrl = option;
+    }
+
     get loading(): boolean {
         return this._state.loading;
     }
@@ -246,7 +247,7 @@ export default class BsModel implements ObjectBase {
 
     delete(): Promise<AxiosResponse> {
         if (!this.proxy) {
-            throw Error(this._proxyErrMsg);
+            throw Error(proxyErrMsg);
         }
 
         RestProxyAdapter.checkRestUrl(this.restUrl);
@@ -277,7 +278,7 @@ export default class BsModel implements ObjectBase {
 
     fetch(id?: string | number): Promise<AxiosResponse> {
         if (!this.proxy) {
-            throw Error(this._proxyErrMsg);
+            throw Error(proxyErrMsg);
         }
 
         RestProxyAdapter.checkRestUrl(this.restUrl);
@@ -423,7 +424,7 @@ export default class BsModel implements ObjectBase {
 
     save(): Promise<AxiosResponse> {
         if (!this.proxy) {
-            throw Error(this._proxyErrMsg);
+            throw Error(proxyErrMsg);
         }
 
         RestProxyAdapter.checkRestUrl(this.restUrl);
@@ -468,7 +469,7 @@ export default class BsModel implements ObjectBase {
 
     update(): Promise<AxiosResponse> {
         if (!this.proxy) {
-            throw Error(this._proxyErrMsg);
+            throw Error(proxyErrMsg);
         }
 
         RestProxyAdapter.checkRestUrl(this.restUrl);
@@ -515,7 +516,7 @@ export default class BsModel implements ObjectBase {
         }
 
         if (Helper.isEmpty(_data)) {
-            console.warn(this._emptyDataErrMsg);
+            console.warn(emptyDataErrMsg);
         } else {
             if (Object.hasOwn(_data, this.idProperty)) {
                 _assign(_data);
@@ -523,12 +524,12 @@ export default class BsModel implements ObjectBase {
                 const cdata = _data[this._dataProperty];
 
                 if (Helper.isEmpty(cdata)) {
-                    console.warn(this._emptyDataErrMsg);
+                    console.warn(emptyDataErrMsg);
                 } else {
                     _assign(cdata);
                 }
             } else {
-                console.warn(this._parsingDataErrMsg);
+                console.warn(parsingDataErrMsg);
             }
         }
     }

@@ -2,6 +2,23 @@
 
 > All notable changes to this project will be documented in this file.
 
+## v2.0.5
+
+Released: December xx, 2023
+
+### Features & Improvements
+
+- **AbstractStore**, **BsStore**, **BsModel**: improve data-model processing and 
+  make property `restUrl` writable.
+- **BsTabs**: improve css padding on small-screen device.
+- Improve TypeScript definition.
+
+### Bug Fixes
+
+- **BsNumericField**: fix `maxValue` and `minValue` property not implement correctly. 
+- **BsTabs**: fix `tabClass` for custom css not applied.
+
+
 ## v2.0.4
 
 Released: November 25, 2023
@@ -26,12 +43,13 @@ Released: November 25, 2023
   fix bug unable to get element size on non-SPA environment.
 - **BsAppbar**, **BsSideDrawer**: fix onResize event arguments.
 - **BsAvatar**, **BsIcon**: fix property conflict when calculating component's dimension.
-- **BsBadge**: fix badge-label css.
+- **BsBadge**: fix `badge-label` css.
 - **BsButton**, **BsChip**: when `href` attribute is defined component didn't render as `<a>` element. 
 - **BsListNavItem**: fix item could not resolve route path that caused wrong active item when page reloaded.
-- **BSSideDrawer**: fix marginTop and height.
+- **BSSideDrawer**: fix `marginTop` and height.
 - **BsModel**: remove data from body when performing DELETE request, fix dynamic properties reactivity issue.
 - **Resize**, **Scroll** directive: fix wrong callback arguments. 
+
 
 ## v2.0.3
 

@@ -22,19 +22,20 @@ import type {
 import { autoBind } from '../utils/AutoBind';
 import Helper from '../utils/Helper';
 
+export const appendErrMsg = 'Can not assign primitive type to the dataset.';
+export const proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
+export const emptyDataErrMsg = 'Server returns empty data.';
+export const parsingDataErrMsg = 'Unable to parse data coming from server.';
+
 /**
  * Class AbstractStore is superclass of {@link BsArrayStore}, and {@link BsStore}.
  * It's never used directly, but offers a set of
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 10/12/2023 20:28
+ * @since  15/03/2019 modified: 16/12/2023 14:45
  */
 export default class AbstractStore implements ObjectBase {
-    protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
-    protected readonly _proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
-    protected readonly _emptyDataErrMsg = 'Server returns empty data.';
-    protected readonly _parsingDataErrMsg = 'Unable to parse data coming from server.';
     protected _config: TDataStoreConfig;
     protected _filters: TFilterOption[];
     protected _filteredItems: TBsModel[];
@@ -178,6 +179,9 @@ export default class AbstractStore implements ObjectBase {
      *    'delete': '/api/user/{id}/delete'
      * }
      *
+     * For backward compatibility you can override this function
+     * as needed on the inheritance class or put it on the constructor
+     * of the inheritance class or when instantiate the model.
      */
     get restUrl(): TRestConfig | undefined {
         return <TRestConfig>(this._config.restProxy || this._config.restUrl);
@@ -663,7 +667,7 @@ export default class AbstractStore implements ObjectBase {
                 this._state.length++;
             }
         } else {
-            console.error(this._appendErrMsg);
+            console.error(appendErrMsg);
         }
     }
 

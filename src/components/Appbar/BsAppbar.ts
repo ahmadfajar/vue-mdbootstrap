@@ -1,4 +1,4 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, VNode } from 'vue';
+import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, onMounted, ref } from 'vue';
 import { useBreakpointMax } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
