@@ -100,9 +100,6 @@
 @mixin make-flat-button-variant($name, $color) {
     .btn-flat-#{$name} {
         $active-box-shadow-color-rgb: to-rgb(color.scale($color, $lightness: 10%));
-        --#{$bs-prefix}btn-bg: transparent;
-        --#{$bs-prefix}btn-border-color: transparent;
-        --#{$bs-prefix}btn-border-width: 0;
         --#{$bs-prefix}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
 
         @if ($name == 'light' or $name == 'light-grey') {

@@ -410,6 +410,10 @@
     --#{$bs-prefix}btn-active-box-shadow: none;
     --#{$bs-prefix}btn-focus-box-shadow: #{$z-depth-half};
     --#{$bs-prefix}btn-hover-box-shadow: none;
+    --#{$bs-prefix}btn-bg: transparent;
+    --#{$bs-prefix}btn-border-color: transparent;
+    --#{$bs-prefix}btn-active-border-color: transparent;
+    --#{$bs-prefix}btn-hover-border-color: transparent;
 
     &.#{$prefix}btn-raised {
         --#{$bs-prefix}btn-initial-box-shadow: #{$z-depth-half};
