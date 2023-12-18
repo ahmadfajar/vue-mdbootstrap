@@ -147,7 +147,7 @@ You can clone the demos from github repository and run it by your self to see it
 ## Start coding
 
 Now that you have implemented **Vue MDBootstrap** into your project. 
-And it's time to start writing your code. Please refer to the   
+And it's time to start writing your code. Please refer to the 
 [documentation](https://ahmadfajar.github.io/) to learn more about this component's library.
 
 ## Browser Support
