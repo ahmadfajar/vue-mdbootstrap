@@ -7,6 +7,17 @@
     "email": "ahmad.fajar234@hotmail.com"
   },
   "license": "BSD-3-Clause",
+  "keywords": [
+    "bootstrap",
+    "vue",
+    "vue-component",
+    "vue-mdbootstrap"
+  ],
+  "homepage": "https://ahmadfajar.github.io",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahmadfajar/vue-mdbootstrap"
+  },
   "type": "module",
   "main": "dist/vue-mdb.esm.min.js",
   "module": "dist/vue-mdb.esm.mjs",
@@ -38,17 +49,6 @@
     "./dist/*": "./dist/*",
     "./package.json": "./package.json"
   },
-  "keywords": [
-    "bootstrap",
-    "vue",
-    "vue-component",
-    "vue-mdbootstrap"
-  ],
-  "homepage": "https://ahmadfajar.github.io",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ahmadfajar/vue-mdbootstrap"
-  },
   "scripts": {
     "build": "run-p type-check build:prod",
     "build:dist": "rimraf dist && run-p type-check build:dev build:prod && run-p build:lib && run-p build:types && run-p css:beauty && run-p css:minify",
@@ -68,7 +68,7 @@
     "luxon": "^3.4.4",
     "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.69.5",
-    "vue": "^3.3.12"
+    "vue": "^3.3.13"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -78,11 +78,11 @@
     "@types/body-scroll-lock": "^3.1.2",
     "@types/lodash": "^4.14.202",
     "@types/luxon": "^3.3.7",
-    "@types/node": "^20.10.4",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@types/node": "^20.10.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
     "@vitejs/plugin-vue": "^4.5.2",
     "@vue/eslint-config-typescript": "^12.0.0",
-    "@vue/tsconfig": "^0.4.0",
+    "@vue/tsconfig": "^0.5.1",
     "bootstrap": "5.2.3",
     "clean-css-cli": "^5.6.3",
     "compass-mixins": "^0.12.12",

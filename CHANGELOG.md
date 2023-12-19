@@ -15,6 +15,7 @@ Released: December xx, 2023
 
 ### Bug Fixes
 
+- **BsButton**: fix border style on `flat` button variant.
 - **BsNumericField**: fix `maxValue` and `minValue` property not implement correctly. 
 - **BsTabs**: fix `tabClass` for custom css not applied.
 

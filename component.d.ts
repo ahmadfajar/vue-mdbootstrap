@@ -78,23 +78,15 @@ declare interface TypesConfig {
 declare module '@vue/runtime-core' {
     export interface GlobalComponents {
         BsAlert: TypesConfig extends Record<'BsAlert', infer T> ? T : typeof BsAlert
-        BsExpandTransition: TypesConfig extends Record<'BsExpandTransition', infer T> ? T : typeof BsExpandTransition
-        BsOverlay: TypesConfig extends Record<'BsOverlay', infer T> ? T : typeof BsOverlay
-        BsRipple: TypesConfig extends Record<'BsRipple', infer T> ? T : typeof BsRipple
+        BsAppContainer: TypesConfig extends Record<'BsAppContainer', infer T> ? T : typeof BsAppContainer
         BsAppbar: TypesConfig extends Record<'BsAppbar', infer T> ? T : typeof BsAppbar
-        BsAppbarTitle: TypesConfig extends Record<'BsAppbarTitle', infer T> ? T : typeof BsAppbarTitle
         BsAppbarItems: TypesConfig extends Record<'BsAppbarItems', infer T> ? T : typeof BsAppbarItems
+        BsAppbarTitle: TypesConfig extends Record<'BsAppbarTitle', infer T> ? T : typeof BsAppbarTitle
         BsAvatar: TypesConfig extends Record<'BsAvatar', infer T> ? T : typeof BsAvatar
         BsBadge: TypesConfig extends Record<'BsBadge', infer T> ? T : typeof BsBadge
-        BsDivider: TypesConfig extends Record<'BsDivider', infer T> ? T : typeof BsDivider
-        BsImageHolder: TypesConfig extends Record<'BsImageHolder', infer T> ? T : typeof BsImageHolder
-        BsSpacer: TypesConfig extends Record<'BsSpacer', infer T> ? T : typeof BsSpacer
-        BsSubheader: TypesConfig extends Record<'BsSubheader', infer T> ? T : typeof BsSubheader
         BsButton: TypesConfig extends Record<'BsButton', infer T> ? T : typeof BsButton
         BsButtonToggle: TypesConfig extends Record<'BsButtonToggle', infer T> ? T : typeof BsToggleButton
         BsButtonToggleField: TypesConfig extends Record<'BsButtonToggleField', infer T> ? T : typeof BsToggleField
-        BsToggleButton: TypesConfig extends Record<'BsToggleButton', infer T> ? T : typeof BsToggleButton
-        BsToggleField: TypesConfig extends Record<'BsToggleField', infer T> ? T : typeof BsToggleField
         BsCard: TypesConfig extends Record<'BsCard', infer T> ? T : typeof BsCard
         BsCardBody: TypesConfig extends Record<'BsCardBody', infer T> ? T : typeof BsCardBody
         BsCardContent: TypesConfig extends Record<'BsCardContent', infer T> ? T : typeof BsCardContent
@@ -104,27 +96,23 @@ declare module '@vue/runtime-core' {
         BsCheckbox: TypesConfig extends Record<'BsCheckbox', infer T> ? T : typeof BsCheckbox
         BsCheckboxGroup: TypesConfig extends Record<'BsCheckboxGroup', infer T> ? T : typeof BsCheckboxGroup
         BsChip: TypesConfig extends Record<'BsChip', infer T> ? T : typeof BsChip
+        BsChipField: TypesConfig extends Record<'BsChipField', infer T> ? T : typeof BsChipField
         BsChipGroup: TypesConfig extends Record<'BsChipGroup', infer T> ? T : typeof BsChipGroup
         BsColorPicker: TypesConfig extends Record<'BsColorPicker', infer T> ? T : typeof BsColorPicker
         BsCombobox: TypesConfig extends Record<'BsCombobox', infer T> ? T : typeof BsCombobox
-        BsAppContainer: TypesConfig extends Record<'BsAppContainer', infer T> ? T : typeof BsAppContainer
         BsContainer: TypesConfig extends Record<'BsContainer', infer T> ? T : typeof BsContainer
         BsContent: TypesConfig extends Record<'BsContent', infer T> ? T : typeof BsContent
         BsDatePicker: TypesConfig extends Record<'BsDatePicker', infer T> ? T : typeof BsDatePicker
         BsDateTimeField: TypesConfig extends Record<'BsDateTimeField', infer T> ? T : typeof BsDateTimeField
-        BsSideDrawer: TypesConfig extends Record<'BsSideDrawer', infer T> ? T : typeof BsSideDrawer
-        BsChipField: TypesConfig extends Record<'BsChipField', infer T> ? T : typeof BsChipField
-        BsSearchField: TypesConfig extends Record<'BsSearchField', infer T> ? T : typeof BsSearchField
-        BsNumericField: TypesConfig extends Record<'BsNumericField', infer T> ? T : typeof BsNumericField
-        BsTextField: TypesConfig extends Record<'BsTextField', infer T> ? T : typeof BsTextField
-        BsTextArea: TypesConfig extends Record<'BsTextArea', infer T> ? T : typeof BsTextArea
+        BsDivider: TypesConfig extends Record<'BsDivider', infer T> ? T : typeof BsDivider
+        BsDropdownMenu: TypesConfig extends Record<'BsDropdownMenu', infer T> ? T : typeof BsDropdownMenu
+        BsExpandTransition: TypesConfig extends Record<'BsExpandTransition', infer T> ? T : typeof BsExpandTransition
         BsIcon: TypesConfig extends Record<'BsIcon', infer T> ? T : typeof BsIcon
         BsIconSpinner: TypesConfig extends Record<'BsIconSpinner', infer T> ? T : typeof BsIconSpinner
         BsIconSvg: TypesConfig extends Record<'BsIconSvg', infer T> ? T : typeof BsIconSvg
         BsIconToggle: TypesConfig extends Record<'BsIconToggle', infer T> ? T : typeof BsToggleIcon
-        BsToggleIcon: TypesConfig extends Record<'BsToggleIcon', infer T> ? T : typeof BsToggleIcon
-        BsListbox: TypesConfig extends Record<'BsListbox', infer T> ? T : typeof BsListbox
-        BsListView: TypesConfig extends Record<'BsListView', infer T> ? T : typeof BsListView
+        BsImageHolder: TypesConfig extends Record<'BsImageHolder', infer T> ? T : typeof BsImageHolder
+        BsLightbox: TypesConfig extends Record<'BsLightbox', infer T> ? T : typeof BsLightbox
         BsListNav: TypesConfig extends Record<'BsListNav', infer T> ? T : typeof BsListNav
         BsListNavItem: TypesConfig extends Record<'BsListNavItem', infer T> ? T : typeof BsListNavItem
         BsListTile: TypesConfig extends Record<'BsListTile', infer T> ? T : typeof BsListTile
@@ -133,20 +121,32 @@ declare module '@vue/runtime-core' {
         BsListTileLeading: TypesConfig extends Record<'BsListTileLeading', infer T> ? T : typeof BsListTileLeading
         BsListTileSubtitle: TypesConfig extends Record<'BsListTileSubtitle', infer T> ? T : typeof BsListTileSubtitle
         BsListTileTitle: TypesConfig extends Record<'BsListTileTitle', infer T> ? T : typeof BsListTileTitle
-        BsDropdownMenu: TypesConfig extends Record<'BsDropdownMenu', infer T> ? T : typeof BsDropdownMenu
-        BsPopover: TypesConfig extends Record<'BsPopover', infer T> ? T : typeof BsPopover
+        BsListView: TypesConfig extends Record<'BsListView', infer T> ? T : typeof BsListView
+        BsListbox: TypesConfig extends Record<'BsListbox', infer T> ? T : typeof BsListbox
         BsMaskLoader: TypesConfig extends Record<'BsMaskLoader', infer T> ? T : typeof BsMaskLoader
+        BsModal: TypesConfig extends Record<'BsModal', infer T> ? T : typeof BsModal
+        BsNotification: TypesConfig extends Record<'BsNotification', infer T> ? T : typeof BsNotification
+        BsNumericField: TypesConfig extends Record<'BsNumericField', infer T> ? T : typeof BsNumericField
+        BsOverlay: TypesConfig extends Record<'BsOverlay', infer T> ? T : typeof BsOverlay
+        BsPopover: TypesConfig extends Record<'BsPopover', infer T> ? T : typeof BsPopover
         BsProgress: TypesConfig extends Record<'BsProgress', infer T> ? T : typeof BsProgress
         BsProgressBar: TypesConfig extends Record<'BsProgressBar', infer T> ? T : typeof BsProgressBar
         BsRadio: TypesConfig extends Record<'BsRadio', infer T> ? T : typeof BsRadio
         BsRadioGroup: TypesConfig extends Record<'BsRadioGroup', infer T> ? T : typeof BsRadioGroup
+        BsRipple: TypesConfig extends Record<'BsRipple', infer T> ? T : typeof BsRipple
+        BsSearchField: TypesConfig extends Record<'BsSearchField', infer T> ? T : typeof BsSearchField
+        BsSideDrawer: TypesConfig extends Record<'BsSideDrawer', infer T> ? T : typeof BsSideDrawer
+        BsSpacer: TypesConfig extends Record<'BsSpacer', infer T> ? T : typeof BsSpacer
+        BsSubheader: TypesConfig extends Record<'BsSubheader', infer T> ? T : typeof BsSubheader
         BsSwitch: TypesConfig extends Record<'BsSwitch', infer T> ? T : typeof BsSwitch
         BsTab: TypesConfig extends Record<'BsTab', infer T> ? T : typeof BsTab
         BsTabs: TypesConfig extends Record<'BsTabs', infer T> ? T : typeof BsTabs
+        BsTextArea: TypesConfig extends Record<'BsTextArea', infer T> ? T : typeof BsTextArea
+        BsTextField: TypesConfig extends Record<'BsTextField', infer T> ? T : typeof BsTextField
+        BsToggleButton: TypesConfig extends Record<'BsToggleButton', infer T> ? T : typeof BsToggleButton
+        BsToggleField: TypesConfig extends Record<'BsToggleField', infer T> ? T : typeof BsToggleField
+        BsToggleIcon: TypesConfig extends Record<'BsToggleIcon', infer T> ? T : typeof BsToggleIcon
         BsTooltip: TypesConfig extends Record<'BsTooltip', infer T> ? T : typeof BsTooltip
-        BsModal: TypesConfig extends Record<'BsModal', infer T> ? T : typeof BsModal
-        BsLightbox: TypesConfig extends Record<'BsLightbox', infer T> ? T : typeof BsLightbox
-        BsNotification: TypesConfig extends Record<'BsNotification', infer T> ? T : typeof BsNotification
     }
 
     export interface ComponentCustomProperties {
