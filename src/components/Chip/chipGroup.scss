@@ -30,6 +30,7 @@
 
         > .#{$prefix}btn-icon {
             --#{$bs-prefix}btn-disabled-bg: transparent;
+            --#{$bs-prefix}btn-disabled-border-color: transparent;
         }
 
         @include media-breakpoint-up(lg) {

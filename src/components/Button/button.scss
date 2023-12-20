@@ -104,7 +104,8 @@
         &.dropdown-toggle {
             &::after {
                 @include align-self(center);
-                margin-right: $padding-base - .25;
+                margin-right: .875rem;
+                margin-left: 0;
             }
 
             > .#{$prefix}btn-inner {
