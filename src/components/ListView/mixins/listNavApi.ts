@@ -15,7 +15,6 @@ import type {
     IListViewProvider,
     TBsListNavItem,
     TBsRipple,
-    TEmitFn,
     TListNavItemOptionProps,
     TRecord
 } from '../../../types';
@@ -78,7 +77,6 @@ function renderNavItemContent(
     props: Readonly<ExtractPropTypes<TBsListNavItem>>,
     innerStyles: ComputedRef<string[]>,
     hasChild: Ref<boolean>,
-    isExpanded: Ref<boolean>,
     provider?: IListViewProvider,
 ): VNode {
     const cmpProps = props as Readonly<TListNavItemOptionProps>;
@@ -132,17 +130,16 @@ function renderNavLink(
     isExpanded: Ref<boolean>,
     hasChild: Ref<boolean>,
     instance: ShallowRef<IListItem | undefined>,
-    emit: TEmitFn,
     provider?: IListViewProvider,
 ): VNode {
     const cmpProps = props as Readonly<TListNavItemOptionProps>;
 
-    return h('a', {
+    return h(!cmpProps.disabled ? 'a' : 'div', {
         class: classes.value,
         href: !cmpProps.disabled ? cmpProps.url : undefined,
         onClick: (evt: Event) => onVNodeClickHandler(cmpProps, isActive, isExpanded, instance, evt, provider),
     }, [
-        renderNavItemContent(props, innerStyles, hasChild, isExpanded, provider),
+        renderNavItemContent(props, innerStyles, hasChild, provider),
     ]);
 }
 
@@ -154,7 +151,6 @@ function renderRouterLink(
     isExpanded: Ref<boolean>,
     hasChild: Ref<boolean>,
     instance: ShallowRef<IListItem | undefined>,
-    emit: TEmitFn,
     provider?: IListViewProvider,
 ): VNode {
     const cmpProps = props as Readonly<TListNavItemOptionProps>;
@@ -165,7 +161,7 @@ function renderRouterLink(
             to: cmpProps.path,
             onClick: (evt: Event) => onVNodeClickHandler(cmpProps, isActive, isExpanded, instance, evt, provider)
         },
-        renderNavItemContent(props, innerStyles, hasChild, isExpanded, provider),
+        renderNavItemContent(props, innerStyles, hasChild, provider),
     );
 }
 
@@ -225,7 +221,6 @@ export function useRenderListNavItem(
     isExpanded: Ref<boolean>,
     hasChild: Ref<boolean>,
     instance: ShallowRef<IListItem | undefined>,
-    emit: TEmitFn,
     provider?: IListViewProvider,
 ): VNode {
     const cmpProps = props as Readonly<TListNavItemOptionProps>;
@@ -235,8 +230,8 @@ export function useRenderListNavItem(
         class: classes.value,
     }, [
         (useHasRouter(cmpProps) && !props.disabled
-                ? renderRouterLink(props, innerClasses, innerStyles, isActive, isExpanded, hasChild, instance, emit, provider)
-                : renderNavLink(props, innerClasses, innerStyles, isActive, isExpanded, hasChild, instance, emit, provider)
+                ? renderRouterLink(props, innerClasses, innerStyles, isActive, isExpanded, hasChild, instance, provider)
+                : renderNavLink(props, innerClasses, innerStyles, isActive, isExpanded, hasChild, instance, provider)
         ),
         slots.default && slots.default(),
     ]);

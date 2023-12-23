@@ -90,7 +90,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
         return () =>
             useRenderListNavItem(
                 slots, props, navItemClasses, navItemInnerClasses, navItemInnerStyles,
-                isActive, expanded, hasChild, refItem, emit, provider,
+                isActive, expanded, hasChild, refItem, provider,
             );
     }
 });

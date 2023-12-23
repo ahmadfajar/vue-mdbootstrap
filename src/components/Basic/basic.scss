@@ -20,7 +20,7 @@
     }
 
     &.divider--light {
-        --#{$prefix}divider-color: #{rgba($black, 0.25)};
+        --#{$prefix}divider-color: #{rgba($black, 0.35)};
     }
 }
 
