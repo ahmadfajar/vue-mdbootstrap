@@ -4,19 +4,23 @@
 
 ## v2.0.5
 
-Released: December xx, 2023
+Released: January xx, 2024
 
 ### Features & Improvements
 
 - **AbstractStore**, **BsStore**, **BsModel**: improve data-model processing and 
   make property `restUrl` writable.
-- **BsTabs**: improve css padding on small-screen device.
+- **BsButton**: improve css styles when `dropdown-toggle` property is defined.
+- **BsTabs**: improve padding on small-screen device.
 - Improve TypeScript definition.
 
 ### Bug Fixes
 
 - **BsButton**: fix border style on `flat` button variant.
-- **BsNumericField**: fix `maxValue` and `minValue` property not implement correctly. 
+- **BsListNavItem**: fix incorrect html tag when component is disabled.
+- **BsNumericField**: 
+  - Fix `maxValue` and `minValue` property not implement correctly. 
+  - Fix classic form field styles.
 - **BsTabs**: fix `tabClass` for custom css not applied.
 
 

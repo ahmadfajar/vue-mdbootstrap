@@ -124,6 +124,7 @@ declare module '@vue/runtime-core' {
         BsListView: TypesConfig extends Record<'BsListView', infer T> ? T : typeof BsListView
         BsListbox: TypesConfig extends Record<'BsListbox', infer T> ? T : typeof BsListbox
         BsMaskLoader: TypesConfig extends Record<'BsMaskLoader', infer T> ? T : typeof BsMaskLoader
+        BsMenu: TypesConfig extends Record<'BsMenu', infer T> ? T : typeof BsDropdownMenu
         BsModal: TypesConfig extends Record<'BsModal', infer T> ? T : typeof BsModal
         BsNotification: TypesConfig extends Record<'BsNotification', infer T> ? T : typeof BsNotification
         BsNumericField: TypesConfig extends Record<'BsNumericField', infer T> ? T : typeof BsNumericField

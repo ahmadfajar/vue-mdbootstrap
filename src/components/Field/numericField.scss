@@ -13,26 +13,21 @@
             margin-left: 0;
             margin-right: .75rem;
         }
-
-        .#{$prefix}action-icon {
-            > .#{$prefix}spin-button-left,
-            > .#{$prefix}spin-button-right {
-                margin-top: 1rem;
-            }
-
-            > .#{$prefix}action-button-left,
-            > .#{$prefix}action-button-right {
-                margin-top: 18px;
-            }
-        }
     }
 
     .#{$prefix}action-icon {
+        > .#{$prefix}action-button-left,
+        > .#{$prefix}action-button-right {
+            display: flex;
+            align-items: center;
+        }
+
         > .#{$prefix}spin-button-left,
         > .#{$prefix}spin-button-right {
             @include flexbox((display: flex, flex-direction: column));
             width: 1.5rem;
-            margin-top: .625rem;
+            margin-top: .3rem;
+            margin-bottom: .15rem;
 
             > .#{$prefix}spin-down {
                 margin-left: 0;
@@ -77,7 +72,7 @@
 
         > .#{$prefix}action-button-left,
         > .#{$prefix}action-button-right {
-            margin-top: .75rem;
+            // margin-top: .75rem;
 
             .#{$prefix}btn-icon {
                 --#{$bs-prefix}btn-color: var(--#{$prefix}field-button-color);
@@ -110,7 +105,39 @@
         }
     }
 
+    &:not(.#{$prefix}floating-label) {
+        &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-filled) {
+            .#{$prefix}action-icon {
+                > .#{$prefix}spin-button-left,
+                > .#{$prefix}spin-button-right {
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+
     &.#{$prefix}floating-label {
+        .#{$prefix}action-icon {
+            > .#{$prefix}spin-button-left,
+            > .#{$prefix}spin-button-right {
+                margin-top: .625rem;
+            }
+        }
+
+        &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-filled) {
+            .#{$prefix}action-icon {
+                > .#{$prefix}spin-button-left,
+                > .#{$prefix}spin-button-right {
+                    margin-top: 1rem;
+                }
+
+                > .#{$prefix}action-button-left,
+                > .#{$prefix}action-button-right {
+                    margin-top: 12px;
+                }
+            }
+        }
+
         &.#{$prefix}field-outlined {
             &:not(.prepend-icon) {
                 .#{$prefix}action-icon + .#{$prefix}field-activator {
