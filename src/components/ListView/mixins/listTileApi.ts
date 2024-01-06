@@ -22,7 +22,7 @@ export function useListTileClassNames(
 ): TRecord {
     return {
         [`${cssPrefix}list-tile d-flex`]: true,
-        [`${cssPrefix}link`]: tagName === 'a' && !props.disabled,
+        [`${cssPrefix}link`]: (tagName === 'a' || props.navigable) && !props.disabled,
         [`${cssPrefix}tile-border-${provider?.itemBorderVariant}`]: (
             provider?.itemBorderVariant && !props.borderOff &&
             ['left', 'right', 'left-right', 'top', 'bottom', 'top-bottom'].includes(provider.itemBorderVariant)
@@ -54,14 +54,14 @@ function createListTileElement(
         id: props.id,
         class: classes.value,
         href: tagName === 'a' ? props.url : undefined,
-        onVnodeMounted: (vnode: VNode) => {
-            instance.value = new ListItem(<string>props.id, 'BsListTile', (<IVNode>vnode).ctx, emit);
+        onVnodeMounted: (vNode: VNode) => {
+            instance.value = new ListItem(<string>props.id, 'BsListTile', (<IVNode>vNode).ctx, emit);
             provider?.addItem(instance.value);
         },
         onVnodeBeforeUnmount: () => instance.value && provider?.removeItem(instance.value),
         onClick: (e: Event) => {
             // console.log("tile-instance", instance.value);
-            if (tagName === 'a') {
+            if (tagName === 'a' || props.navigable) {
                 if (provider) {
                     provider.activeItem = instance.value;
                 }
@@ -79,7 +79,7 @@ function createListTileElement(
                 provider?.itemRoundedPill === true && !props.pillOff ? 'rounded-pill' : '',
             ],
             // @ts-ignore
-            disabled: (props.rippleOff || props.disabled || tagName !== 'a') as Prop<boolean>,
+            disabled: (props.rippleOff || props.disabled || !(tagName === 'a' || props.navigable)) as Prop<boolean>,
         }, {
             default: () => slots.default && slots.default()
         })
@@ -99,8 +99,8 @@ function createListTileRouterElement(
             class: classes.value,
             activeClass: props.activeClass || 'active',
             to: props.path,
-            onVnodeMounted: (vnode: IVNode) => {
-                instance.value = new ListItem(<string>props.id, 'BsListTile', vnode.ctx, emit);
+            onVnodeMounted: (vNode: IVNode) => {
+                instance.value = new ListItem(<string>props.id, 'BsListTile', vNode.ctx, emit);
                 provider?.addItem(instance.value);
             },
             onVnodeBeforeUnmount: () => instance.value && provider?.removeItem(instance.value),

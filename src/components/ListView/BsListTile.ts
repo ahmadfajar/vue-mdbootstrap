@@ -24,7 +24,7 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, M
 
         const provider = inject<IListViewProvider>('ListView');
         const tagName = computed<string>(
-            () => useHasRouter(thisProps) || useHasLink(thisProps) || thisProps.navigable ? 'a' : 'div'
+            () => useHasRouter(thisProps) || useHasLink(thisProps) ? 'a' : 'div'
         );
         const tileClasses = computed<TRecord>(
             () => useListTileClassNames(tagName.value, thisProps, isActive, provider)

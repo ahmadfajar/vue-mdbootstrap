@@ -11,6 +11,7 @@ Released: January xx, 2024
 - **AbstractStore**, **BsStore**, **BsModel**: improve data-model processing and 
   make property `restUrl` writable.
 - **BsButton**: improve css styles when `dropdown-toggle` property is defined.
+- **BsListTile**: improve when `navigable` property is defined.
 - **BsTabs**: improve padding on small-screen device.
 - Improve TypeScript definition.
 
