@@ -1,5 +1,5 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
-import { computed, defineComponent, inject, nextTick, onBeforeUpdate, ref, shallowRef, watch } from 'vue';
+import { computed, defineComponent, inject, nextTick, onBeforeUpdate, onMounted, ref, shallowRef, watch } from 'vue';
 import { useCurrentRoute, useHasLink, useHasRouter } from '../../mixins/CommonApi';
 import type { IListItem, IListViewProvider, TBsListTile, TListTileOptionProps, TRecord } from '../../types';
 import { useListTileClassNames, useRenderListTile } from './mixins/listTileApi';
@@ -19,15 +19,17 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, M
         const thisProps = props as Readonly<TListTileOptionProps>;
         const vm = shallowRef<IListItem>();
         const isActive = ref<boolean | undefined>(thisProps.active);
+        const hasRouter = ref<boolean>(useHasRouter(thisProps));
+        const hasLink = ref<boolean>(useHasLink(thisProps));
 
         expose({isActive});
 
         const provider = inject<IListViewProvider>('ListView');
         const tagName = computed<string>(
-            () => useHasRouter(thisProps) || useHasLink(thisProps) ? 'a' : 'div'
+            () => hasRouter.value || hasLink.value ? 'a' : 'div'
         );
         const tileClasses = computed<TRecord>(
-            () => useListTileClassNames(tagName.value, thisProps, isActive, provider)
+            () => useListTileClassNames(tagName.value, thisProps, isActive, hasLink, provider)
         );
 
         watch(
@@ -40,7 +42,7 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, M
         );
         onBeforeUpdate(
             () => {
-                if (useHasRouter(thisProps)) {
+                if (hasRouter.value) {
                     const route = useCurrentRoute();
                     if (route && route.value.path === thisProps.path) {
                         isActive.value = true;
@@ -51,6 +53,10 @@ export default defineComponent<TBsListTile, TRecord, TRecord, ComputedOptions, M
                 }
             }
         );
+        onMounted(() => {
+            hasRouter.value = useHasRouter(thisProps);
+            hasLink.value = useHasLink(thisProps);
+        });
 
         return () =>
             useRenderListTile(tagName.value, slots, emit, thisProps, tileClasses, vm, provider)

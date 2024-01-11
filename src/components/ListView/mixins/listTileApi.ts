@@ -1,6 +1,6 @@
 import type { ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
 import { h } from 'vue';
-import { cssPrefix, useHasLink, useHasRouter, useRenderRouter } from '../../../mixins/CommonApi';
+import { cssPrefix, useHasRouter, useRenderRouter } from '../../../mixins/CommonApi';
 import type {
     IListItem,
     IListViewProvider,
@@ -18,6 +18,7 @@ export function useListTileClassNames(
     tagName: string,
     props: Readonly<TListTileOptionProps>,
     isActive: Ref<boolean | undefined>,
+    hasLink: Ref<boolean>,
     provider?: IListViewProvider,
 ): TRecord {
     return {
@@ -31,10 +32,10 @@ export function useListTileClassNames(
             provider?.spaceAround && ['both', 'left', 'right'].includes(provider.spaceAround)
         ),
         [`${props.activeClass}`]: (
-            (useHasLink(props) || props.navigable) &&
+            (hasLink.value || props.navigable) &&
             props.activeClass && !props.disabled && isActive.value === true
         ),
-        'active': (useHasLink(props) || props.navigable) && !props.disabled && isActive.value === true,
+        'active': (hasLink.value || props.navigable) && !props.disabled && isActive.value === true,
         'rounded': provider?.itemRounded === true && !props.roundedOff,
         'rounded-pill': provider?.itemRoundedPill === true && !props.pillOff,
         'disabled': props.disabled === true,

@@ -44,6 +44,7 @@ export function useListNavItemClasses(
 export function useListNavItemInnerClasses(
     props: Readonly<TListNavItemOptionProps>,
     isActive: Ref<boolean | undefined>,
+    hasRouter: Ref<boolean>,
     provider?: IListViewProvider,
 ): TRecord {
     return {
@@ -56,8 +57,8 @@ export function useListNavItemInnerClasses(
             provider?.spaceAround &&
             ['both', 'left', 'right'].includes(provider.spaceAround)
         ),
-        [`${props.activeClass}`]: !useHasRouter(props) && props.activeClass && !props.disabled && isActive.value,
-        'active': !useHasRouter(props) && !props.disabled && isActive.value,
+        [`${props.activeClass}`]: hasRouter.value && props.activeClass && !props.disabled && isActive.value,
+        'active': !hasRouter.value && !props.disabled && isActive.value,
         'rounded': provider?.itemRounded === true && !props.roundedOff,
         'rounded-pill': provider?.itemRoundedPill === true && !props.pillOff,
         'disabled': props.disabled === true,

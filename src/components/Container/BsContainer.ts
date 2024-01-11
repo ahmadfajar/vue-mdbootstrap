@@ -37,7 +37,7 @@ export default defineComponent<TBsContainer, TRecord, TRecord, ComputedOptions, 
                     return {
                         paddingRight: isMobile.value ? 0 : `${sideDrawer.right.width}px`,
                         paddingLeft: isMobile.value ? 0 : `${sideDrawer.left.width}px`,
-                        top: appbar.fixedTop === true ? Helper.cssUnit(appbar.height + 1) : undefined,
+                        top: appbar.fixedTop === true ? Helper.cssUnit(appbar.height) : undefined,
                         bottom: appbar.fixedTop === true ? 0 : undefined,
                         position: appbar.fixedTop === true ? 'absolute' : undefined,
                     };

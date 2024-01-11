@@ -39,6 +39,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
         const isActive = ref<boolean | undefined>(cmpProps.active);
         const expanded = ref<boolean>(false);
         const hasChild = ref<boolean>(false);
+        const hasRouter = ref<boolean>(false);
 
         expose({isActive, expanded});
 
@@ -47,7 +48,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
             () => useListNavItemClasses(cmpProps, isActive, expanded, hasChild)
         );
         const navItemInnerClasses = computed<TRecord>(
-            () => useListNavItemInnerClasses(cmpProps, isActive, provider)
+            () => useListNavItemInnerClasses(cmpProps, isActive, hasRouter, provider)
         );
         const navItemInnerStyles = computed<string[]>(
             () => useNavItemContentStyles(cmpProps)
@@ -75,7 +76,8 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
         );
         onMounted(
             () => {
-                if (useHasRouter(cmpProps)) {
+                hasRouter.value = useHasRouter(cmpProps);
+                if (hasRouter.value) {
                     const route = useCurrentRoute();
                     if (route && (route.value.path === cmpProps.path || route?.value.path.startsWith(cmpProps.path!))) {
                         refItem.value?.setActive(true);
