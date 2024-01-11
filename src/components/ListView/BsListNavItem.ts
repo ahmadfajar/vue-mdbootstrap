@@ -59,6 +59,12 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
             watchEffect(() => {
                 if (provider && (route?.value.path === cmpProps.path || route?.value.path.startsWith(cmpProps.path!))) {
                     provider.activeItem = refItem.value;
+                    let parent = refItem.value?.parent;
+                    while (parent) {
+                        parent.setActive(true);
+                        provider.expand(parent);
+                        parent = parent.parent;
+                    }
                 }
             });
         }
@@ -85,6 +91,14 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
                 }
                 nextTick().then(() => {
                     hasChild.value = refItem.value != undefined && refItem.value.hasChild();
+                    if (hasRouter.value && !hasChild.value && isActive.value) {
+                        let parent = refItem.value?.parent;
+                        while (parent) {
+                            parent.setActive(true);
+                            provider?.expand(parent);
+                            parent = parent.parent;
+                        }
+                    }
                 })
             }
         )
