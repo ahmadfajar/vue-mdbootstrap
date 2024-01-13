@@ -255,6 +255,8 @@ export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefine
  */
 export function useBreakpointMax(breakpoint: TBreakpoint | number): boolean {
     switch (breakpoint) {
+        case 'xs':
+            return window.matchMedia('(max-width: 575.98px)').matches;
         case 'sm':
             return window.matchMedia('(max-width: 767.98px)').matches;
         case 'md':

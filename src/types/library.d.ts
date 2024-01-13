@@ -11,7 +11,7 @@ import {
 import { RouterLinkProps } from 'vue-router';
 import { INotificationProvider } from '../components/Notification/types';
 
-export declare type TBreakpoint = 'sm' | 'md' | 'lg' | 'xl';
+export declare type TBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xs';
 
 export declare type TLabelPosition = 'left' | 'right';
 

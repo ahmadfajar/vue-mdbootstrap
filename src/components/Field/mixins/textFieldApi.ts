@@ -54,7 +54,7 @@ export function useInputTextFieldAttrs(
     props: Readonly<TInputTextProps>,
     autocomplete: string | boolean,
 ): TRecord {
-    const showPlaceHolder = !Helper.isEmpty(props.placeholder) && !props.readonly && !props.disabled;
+    const showPlaceHolder = !Helper.isEmpty(props.placeholder); // && !props.readonly && !props.disabled;
 
     return {
         'autocomplete': autocomplete,
@@ -106,6 +106,7 @@ export function useCreateFieldWrapper(
         id: wrapperID,
         class: cssClass.value,
         onVnodeMounted: nodeMountedHandler,
+        onVnodeUpdated: (node: VNode) => useOnFieldNodeMounted(props, node),
     }, [
         !props.floatingLabel && slots.default && slots.default({id: props.id}),
         h('div', {

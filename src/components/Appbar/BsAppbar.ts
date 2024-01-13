@@ -15,7 +15,7 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Met
         shadow: booleanProp,
         tag: {
             type: String,
-            default: 'nav'
+            default: 'header'
         },
     },
     emits: [
@@ -44,7 +44,7 @@ export default defineComponent<TBsAppbar, TRecord, TRecord, ComputedOptions, Met
         );
 
         return () => useRenderAppbar(
-            thisProps, appId, appbar, vueMdb, styles,
+            thisProps, appbar, styles,
             smoothTransition, slots, resizeHandler
         )
     }

@@ -62,16 +62,14 @@ export function useAppbarOnMountedHook(
 
 export function useRenderAppbar(
     props: Readonly<TAppbarOptionProps>,
-    appId: Ref<string | undefined>,
     appbar: Ref<HTMLElement | null>,
-    vueMdb: Ref<TVueMdb | undefined>,
     styles: ComputedRef<TRecord>,
     smoothTransition: Ref<boolean>,
     slots: Slots,
     resizeHandler: (el: Element, evt: Event) => void,
 ): VNode {
     return withDirectives(
-        h(props.tag || 'nav', {
+        h(props.tag ?? 'header', {
             ref: appbar,
             class: {
                 [`${cssPrefix}appbar`]: true,
@@ -82,7 +80,7 @@ export function useRenderAppbar(
             },
             style: styles.value,
         }, [
-            useRenderSlotDefault('div', slots, `${cssPrefix}appbar-content`),
+            useRenderSlotDefault('nav', slots, `${cssPrefix}appbar-content`),
         ]), [
             [Resize, resizeHandler]
         ]

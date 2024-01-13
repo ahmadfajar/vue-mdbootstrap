@@ -41,8 +41,7 @@ export default defineComponent<TBsToggleField, TRecord, TRecord, ComputedOptions
                 'readonly': thisProps.readonly,
                 'disabled': thisProps.disabled,
                 'has-error': hasError.value,
-                'has-success': hasValidated.value && !hasError.value
-
+                'has-success': hasValidated.value && !hasError.value,
             })
         );
 

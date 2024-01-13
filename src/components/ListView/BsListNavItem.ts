@@ -62,7 +62,6 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
                     let parent = refItem.value?.parent;
                     while (parent) {
                         parent.setActive(true);
-                        provider.expand(parent);
                         parent = parent.parent;
                     }
                 }
