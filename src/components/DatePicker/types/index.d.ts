@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type {
+import {
     EventClosableProps,
     EventUpdateModelValueProps,
     TInputFieldProps,
@@ -255,4 +255,4 @@ export declare const BsDateTimeField: {
     };
 };
 
-export declare const BsDatePickerPlugin = Plugin_1;
+export declare const BsDatePickerPlugin: Plugin;

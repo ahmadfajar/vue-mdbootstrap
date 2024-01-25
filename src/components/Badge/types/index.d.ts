@@ -1,8 +1,8 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
@@ -44,4 +44,4 @@ export declare const BsBadge: {
     };
 };
 
-export declare const BsBadgePlugin = Plugin_1;
+export declare const BsBadgePlugin: Plugin;

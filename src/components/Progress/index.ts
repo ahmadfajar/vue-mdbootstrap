@@ -1,11 +1,11 @@
-import type {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin} from "vue";
 import BsMaskLoader from "./BsMaskLoader";
 import BsProgress from "./BsProgress";
 import BsProgressBar from "./BsProgressBar";
 import "./progress.scss";
 import "../../../scss/_utilities.scss";
 
-const BsProgressPlugin: Plugin_2 = {
+const BsProgressPlugin: Plugin = {
     install: (app: App): void => {
         app.component(BsMaskLoader.name, BsMaskLoader);
         app.component(BsProgress.name, BsProgress);

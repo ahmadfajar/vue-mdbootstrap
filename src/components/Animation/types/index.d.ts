@@ -1,8 +1,8 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     TransitionProps,
     VNode,
     VNodeProps
@@ -89,4 +89,4 @@ export declare const BsRipple: {
     };
 };
 
-export declare const BsAnimationPlugin = Plugin_1;
+export declare const BsAnimationPlugin: Plugin;

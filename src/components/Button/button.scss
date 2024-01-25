@@ -72,11 +72,11 @@
 
     &.#{$prefix}btn-tonal,
     &[class*="btn-outline"] {
+        --#{$bs-prefix}btn-hover-box-shadow: #{$z-depth-half};
         --#{$bs-prefix}btn-active-box-shadow: none;
     }
 
     &[class*="btn-outline"] {
-        --#{$bs-prefix}btn-hover-box-shadow: #{$z-depth-half};
         --#{$bs-prefix}btn-disabled-bg: transparent;
         --#{$bs-prefix}btn-disabled-color: #{$gray-500};
     }

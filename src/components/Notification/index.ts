@@ -1,10 +1,10 @@
-import type { App, Plugin as Plugin_2 } from 'vue';
+import type { App, Plugin } from 'vue';
 import registerConfig from '../../mixins/registerConfig';
 import BsNotification from './BsNotification';
 import NotificationProvider from './mixins/NotificationProvider';
 import './notification.scss';
 
-const BsNotificationPlugin: Plugin_2 = {
+const BsNotificationPlugin: Plugin = {
     install: (app: App): void => {
         registerConfig(app);
         app.config.globalProperties.$VueMdb.notification = new NotificationProvider();

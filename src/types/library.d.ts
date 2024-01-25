@@ -35,7 +35,9 @@ export declare type TDirectiveBinding = {
     target?: string | Element | Document | Window;
 };
 
-export declare type TRouterLinkProps = AllowedComponentProps & VNodeProps & typeof RouterLinkProps;
+export declare type TRouterLinkProps = AllowedComponentProps & VNodeProps & typeof RouterLinkProps & {
+    href?: string;
+};
 
 export declare type TRouterOptionProps = {
     activeClass?: string;
@@ -147,7 +149,7 @@ export { default as Helper } from '../utils/types/Helper';
 export * from '../model/types';
 export * as Color from '../mixins/types/colorUtils';
 export * as StringHelper from '../mixins/types/StringHelper';
-export { EventListener } from '../mixins/types/DomHelper';
+export { EventListener, useAddResizeListener, useRemoveResizeListener } from '../mixins/types/DomHelper';
 
 export {
     useMobileDevice, useBreakpointMax, useBreakpointMin, useAxiosPlugin,

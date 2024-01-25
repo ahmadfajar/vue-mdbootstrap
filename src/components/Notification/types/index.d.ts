@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     UnwrapNestedRefs,
     VNodeProps
 } from 'vue';
@@ -121,4 +121,4 @@ export declare const BsNotification: {
     };
 };
 
-export declare const BsNotificationPlugin = Plugin_1;
+export declare const BsNotificationPlugin: Plugin;

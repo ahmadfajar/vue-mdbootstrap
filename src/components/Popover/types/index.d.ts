@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventClosableProps, EventUpdateOpenProps } from '../../../types';
+import { EventClosableProps, EventUpdateOpenProps } from '../../../types';
 
 export declare type TPopoverPosition =
     'top' | 'top-left' | 'top-right' |
@@ -83,6 +83,6 @@ export declare const BsPopover: {
     };
 };
 
-export declare const BsPopoverPlugin = Plugin_1;
+export declare const BsPopoverPlugin: Plugin;
 
 export { PopupManager } from './PopupManager';

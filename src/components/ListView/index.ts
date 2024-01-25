@@ -1,4 +1,4 @@
-import type {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin} from "vue";
 import BsListView from "./BsListView";
 import BsListNav from "./BsListNav";
 import BsListNavItem from "./BsListNavItem";
@@ -14,7 +14,7 @@ import "./listNav.scss";
 import "./listTile.scss";
 
 
-const BsListViewPlugin: Plugin_2 = {
+const BsListViewPlugin: Plugin = {
     install: (app: App): void => {
         app.component(BsListView.name, BsListView);
         app.component(BsListNav.name, BsListNav);

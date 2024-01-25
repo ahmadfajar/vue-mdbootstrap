@@ -179,12 +179,14 @@ export function useRenderRadioOrCheckboxGroup<D, M>(
             h('div', {
                 class: {
                     'row g-2': true,
-                    'row-cols-auto': !props.column && props.items.length < 4,
-                    'row-cols-1 row-cols-md-2': props.column || props.items.length > 3,
-                    'row-cols-lg-3 row-cols-xl-4': props.column == null,
+                    'row-cols-1': !props.column || (props.column && props.items.length > 0),
+                    'row-cols-sm-auto': !props.column && props.items.length < 4,
+                    'row-cols-sm-2': !props.column && props.items.length > 3,
+                    'row-cols-lg-3 row-cols-xl-4': !props.column,
+                    'row-cols-md-2': props.column && props.items.length > 3,
                     [`row-cols-lg-4`]: (props.column && parseInt(<string>props.column) > 4) && props.items.length > 3,
                     [`row-cols-lg-${props.column}`]: props.column && parseInt(<string>props.column) < 5,
-                    [`row-cols-xl-${props.column}`]: props.column != null,
+                    [`row-cols-xl-${props.column}`]: props.column && parseInt(<string>props.column) > 1,
                 }
             }, children),
             useRenderFieldFeedback(

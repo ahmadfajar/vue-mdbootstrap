@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { TSizeOptionProps } from '../../../types';
+import { TSizeOptionProps } from '../../../types';
 
 export declare type TDividerOptionProps = {
     /**
@@ -116,4 +116,4 @@ export declare const BsSubheader: {
     };
 };
 
-export declare const BsBasicCmpPlugin = Plugin_1;
+export declare const BsBasicCmpPlugin: Plugin;

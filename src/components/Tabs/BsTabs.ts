@@ -51,6 +51,12 @@ export default defineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, Metho
                 }
             }
         );
+        watch(
+            () => cmpProps.modelValue,
+            (value) => {
+                value && tabProvider.setActiveTab(<string | number>value);
+            }
+        );
         onMounted(
             () => {
                 nextTick().then(() => {

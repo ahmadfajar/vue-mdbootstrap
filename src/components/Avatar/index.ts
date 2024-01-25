@@ -1,8 +1,8 @@
-import type {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin} from "vue";
 import BsAvatar from "./BsAvatar";
 import "./avatar.scss";
 
-const BsAvatarPlugin: Plugin_2 = {
+const BsAvatarPlugin: Plugin = {
     install: (app: App): void => {
         app.component(BsAvatar.name, BsAvatar);
     }

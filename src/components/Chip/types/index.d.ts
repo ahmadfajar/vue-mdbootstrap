@@ -1,13 +1,13 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
 import { TLabelPosition } from '../../../types';
-import type { EventClosableProps, EventUpdateModelValueProps, TIconProps } from '../../../types';
+import { EventClosableProps, EventUpdateModelValueProps, TIconProps } from '../../../types';
 
 export declare type TChipValue = {
     id: string;
@@ -237,4 +237,4 @@ export declare const BsChipGroup: {
     };
 };
 
-export declare const BsChipPlugin = Plugin_1;
+export declare const BsChipPlugin: Plugin;

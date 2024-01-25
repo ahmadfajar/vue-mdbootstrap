@@ -1,5 +1,5 @@
-import type { VNode, VNodeArrayChildren } from "vue";
-import type { TIconData, TIconOptionProps, TRecord } from "../../../types";
+import { VNode, VNodeArrayChildren } from "vue";
+import { TIconData, TIconOptionProps, TRecord } from "../../../types";
 /**
  * Find an icon on the Google's icon library.
  *

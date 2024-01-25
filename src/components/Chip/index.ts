@@ -1,11 +1,11 @@
-import type { App, Plugin as Plugin_2 } from 'vue';
+import type { App, Plugin } from 'vue';
 import BsChip from './BsChip';
 import BsChipGroup from './BsChipGroup';
 import './chip.scss';
 import './chipGroup.scss';
 import '../../../scss/_utilities.scss';
 
-const BsChipPlugin: Plugin_2 = {
+const BsChipPlugin: Plugin = {
     install: (app: App): void => {
         app.component(BsChip.name, BsChip);
         app.component(BsChipGroup.name, BsChipGroup);

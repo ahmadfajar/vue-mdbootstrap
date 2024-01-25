@@ -1,13 +1,13 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentInternalInstance,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventUpdateModelValueProps, TIconProps, TPlacementPosition, TRouterOptionProps } from '../../../types';
+import { EventUpdateModelValueProps, TIconProps, TPlacementPosition, TRouterOptionProps } from '../../../types';
 
 export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 
@@ -138,4 +138,4 @@ export declare const BsTabs: {
     };
 };
 
-export declare const BsTabPlugin = Plugin_1;
+export declare const BsTabPlugin: Plugin;

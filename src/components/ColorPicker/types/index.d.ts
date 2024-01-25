@@ -1,13 +1,13 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     Ref,
     UnwrapNestedRefs,
     VNodeProps
 } from 'vue';
-import type { Color, EventUpdateModelValueProps, EventUpdateOpenProps, TPopoverPosition } from '../../../types';
+import { Color, EventUpdateModelValueProps, EventUpdateOpenProps, TPopoverPosition } from '../../../types';
 
 export declare type TColorPickerMode = 'HEX' | 'RGB' | 'HSL';
 
@@ -142,4 +142,4 @@ export declare const BsColorPicker: {
     };
 };
 
-export declare const BsColorPickerPlugin = Plugin_1;
+export declare const BsColorPickerPlugin: Plugin;

@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventUpdateModelValueProps } from '../../../types';
+import { EventUpdateModelValueProps } from '../../../types';
 
 export declare type TFlipMode = 'horizontal' | 'vertical' | 'both';
 
@@ -153,4 +153,4 @@ export declare const BsToggleIcon: {
     };
 };
 
-export declare const BsIconPlugin = Plugin_1;
+export declare const BsIconPlugin: Plugin;

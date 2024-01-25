@@ -1,10 +1,10 @@
-import type {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin} from "vue";
 import BsColorPicker from "./BsColorPicker";
 import "../../../scss/_transitions.scss";
 import "../../../scss/_utilities.scss";
 import "./colorPicker.scss";
 
-const BsColorPickerPlugin: Plugin_2 = {
+const BsColorPickerPlugin: Plugin = {
     install: (app: App): void => {
         app.component(BsColorPicker.name, BsColorPicker);
     }

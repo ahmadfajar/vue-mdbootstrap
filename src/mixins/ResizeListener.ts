@@ -17,7 +17,7 @@ const resizeHandler = function (entries: Array<TResizeTarget>) {
     }
 };
 
-export function addResizeListener(el: IBindingElement, fn: CallableFunction) {
+export function useAddResizeListener(el: IBindingElement, fn: CallableFunction) {
     if (isServer) {
         return;
     }
@@ -30,7 +30,7 @@ export function addResizeListener(el: IBindingElement, fn: CallableFunction) {
     el.__resizeListeners.push(fn);
 }
 
-export function removeResizeListener(el: IBindingElement, fn?: CallableFunction) {
+export function useRemoveResizeListener(el: IBindingElement, fn?: CallableFunction) {
     if (el && el.__resizeListeners) {
         if (fn) {
             el.__resizeListeners.splice(el.__resizeListeners.indexOf(fn), 1);

@@ -1,5 +1,5 @@
-import type { ComponentInternalInstance, Ref } from 'vue';
-import type { TPopupOptions } from './index';
+import { ComponentInternalInstance, Ref } from 'vue';
+import { TPopupOptions } from './index';
 
 declare type TPopupItem = {
     target: ComponentInternalInstance;

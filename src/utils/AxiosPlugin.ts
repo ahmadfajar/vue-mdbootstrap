@@ -1,6 +1,6 @@
 import type { AxiosPromise, RawAxiosRequestConfig } from 'axios';
 import axios from 'axios';
-import type { App, Plugin as Plugin_2 } from 'vue';
+import type { App, Plugin } from 'vue';
 import type { TRecord } from '../types';
 
 declare interface IRequestConfig extends RawAxiosRequestConfig {
@@ -115,7 +115,7 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
     return {service, http}
 }
 
-export const AxiosPlugin: Plugin_2 = {
+export const AxiosPlugin: Plugin = {
     install: (app: App, options?: RawAxiosRequestConfig): void => {
         const {service, http} = _axiosPlugin(options);
         app.config.globalProperties.$axios = service;

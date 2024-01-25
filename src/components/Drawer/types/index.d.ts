@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventUpdateOpenProps, TLabelPosition } from '../../../types';
+import { EventUpdateOpenProps, TLabelPosition } from '../../../types';
 
 export declare type TSideDrawerOptionProps = {
     color?: string;
@@ -49,4 +49,4 @@ export declare const BsSideDrawer: {
     };
 };
 
-export declare const BsDrawerPlugin = Plugin_1;
+export declare const BsDrawerPlugin: Plugin;

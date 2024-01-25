@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventUpdateModelValueProps, TInputGroupProps, TRadioOptionProps, TRadioProps } from '../../../types';
+import { EventUpdateModelValueProps, TInputGroupProps, TRadioOptionProps, TRadioProps } from '../../../types';
 
 export declare type TCheckboxProps = TRadioProps & {
     indeterminate?: boolean;
@@ -67,5 +67,5 @@ export declare const BsCheckboxGroup: {
     };
 };
 
-export declare const BsCheckboxPlugin = Plugin_1;
+export declare const BsCheckboxPlugin: Plugin;
 

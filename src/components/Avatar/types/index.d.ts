@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { TFlipMode, TSizeOptionProps, TSizeProps } from '../../../types';
+import { TFlipMode, TSizeOptionProps, TSizeProps } from '../../../types';
 
 export declare type TImageProps = {
     /**
@@ -94,4 +94,4 @@ export declare const BsAvatar: {
     };
 };
 
-export declare const BsAvatarPlugin = Plugin_1;
+export declare const BsAvatarPlugin: Plugin;

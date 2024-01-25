@@ -1,4 +1,4 @@
-import type { IEventResult, IHTMLElement } from "../../types";
+import { IBindingElement, IEventResult, IHTMLElement } from '../../types';
 
 export declare class EventListener {
     /**
@@ -12,6 +12,10 @@ export declare class EventListener {
      */
     static listen(context: IHTMLElement, eventType: string, callback: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): IEventResult | undefined;
 }
+
+export declare function useAddResizeListener(el: IBindingElement, fn: CallableFunction): void;
+
+export declare function useRemoveResizeListener(el: IBindingElement, fn?: CallableFunction): void;
 
 export declare function preventEventTarget(event: Event): void;
 

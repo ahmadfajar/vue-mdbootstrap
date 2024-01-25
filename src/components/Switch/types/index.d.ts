@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventUpdateModelValueProps, TLabelPosition, TRadioOptionProps } from '../../../types';
+import { EventUpdateModelValueProps, TLabelPosition, TRadioOptionProps } from '../../../types';
 
 export declare type TSwitchOptionProps = TRadioOptionProps & {
     labelPosition?: TLabelPosition;
@@ -43,4 +43,4 @@ export declare const BsSwitch: {
     };
 };
 
-export declare const BsSwitchPlugin = Plugin_1;
+export declare const BsSwitchPlugin: Plugin;

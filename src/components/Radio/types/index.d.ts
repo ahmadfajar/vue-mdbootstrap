@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventUpdateModelValueProps, TValidationProps } from '../../../types';
+import { EventUpdateModelValueProps, TValidationProps } from '../../../types';
 
 export declare type TInputBaseProps = {
     /**
@@ -147,4 +147,4 @@ export declare const BsRadioGroup: {
     };
 };
 
-export declare const BsRadioPlugin = Plugin_1;
+export declare const BsRadioPlugin: Plugin;

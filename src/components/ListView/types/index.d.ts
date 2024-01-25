@@ -1,14 +1,14 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentInternalInstance,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     RendererNode,
     VNode,
     VNodeProps
 } from 'vue';
-import type { ObjectBase, TBadgeType, TIconProps, TImageProps, TRouterOptionProps, TTagProps } from '../../../types';
+import { ObjectBase, TBadgeType, TIconProps, TImageProps, TRouterOptionProps, TTagProps } from '../../../types';
 
 export declare type TSpaceAround = 'left' | 'right' | 'both' | 'none';
 
@@ -310,7 +310,7 @@ export declare const BsListTileSubtitle: {
     };
 };
 
-export declare const BsListViewPlugin = Plugin_1;
+export declare const BsListViewPlugin: Plugin;
 
 export declare interface IListViewProvider extends ObjectBase {
     readonly config: Readonly<TListViewOptionProps>;

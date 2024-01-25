@@ -1,4 +1,4 @@
-import type { AllowedComponentProps, ComponentCustomProps, ComponentObjectPropsOptions, Plugin as Plugin_1, VNodeProps } from 'vue';
+import { AllowedComponentProps, ComponentCustomProps, ComponentObjectPropsOptions, Plugin, VNodeProps } from 'vue';
 
 export declare type TProgressControlMode = 'determinate' | 'indeterminate' | 'buffer';
 
@@ -156,4 +156,4 @@ export declare const BsProgressBar: {
     };
 };
 
-export declare const BsProgressPlugin = Plugin_1;
+export declare const BsProgressPlugin: Plugin;

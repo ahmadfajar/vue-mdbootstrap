@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type {
+import {
     EventUpdateModelValueProps,
     TIconProps,
     TInputBaseProps,
@@ -190,4 +190,4 @@ export declare const BsToggleField: {
     };
 };
 
-export declare const BsButtonPlugin = Plugin_1;
+export declare const BsButtonPlugin: Plugin;

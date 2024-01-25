@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { TPlacementPosition } from '../../../types';
+import { TPlacementPosition } from '../../../types';
 
 export declare type TTooltipOptionProps = {
     /**
@@ -55,4 +55,4 @@ export declare const BsTooltip: {
     };
 };
 
-export declare const BsTooltipPlugin = Plugin_1;
+export declare const BsTooltipPlugin: Plugin;

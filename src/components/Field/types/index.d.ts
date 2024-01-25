@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type {
+import {
     EventUpdateModelValueProps,
     TIconVariant,
     TInputBaseProps,
@@ -546,4 +546,4 @@ export declare const BsSearchField: {
     };
 };
 
-export declare const BsFieldPlugin = Plugin_1;
+export declare const BsFieldPlugin: Plugin;

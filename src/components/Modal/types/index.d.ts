@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventClosableProps, EventUpdateOpenProps, TPopupOptions, TRecord } from '../../../types';
+import { EventClosableProps, EventUpdateOpenProps, TPopupOptions, TRecord } from '../../../types';
 
 export declare type TModalOptionProps = TPopupOptions & {
     /**
@@ -178,4 +178,4 @@ export declare const BsLightbox: {
     };
 };
 
-export declare const BsModalPlugin = Plugin_1;
+export declare const BsModalPlugin: Plugin;

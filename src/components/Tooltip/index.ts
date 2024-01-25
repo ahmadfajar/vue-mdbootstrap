@@ -1,8 +1,8 @@
-import type {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin} from "vue";
 import BsTooltip from "./BsTooltip";
 import "./tooltip.scss";
 
-const BsTooltipPlugin: Plugin_2 = {
+const BsTooltipPlugin: Plugin = {
     install: (app: App): void => {
         app.component(BsTooltip.name, BsTooltip);
     }

@@ -1,12 +1,12 @@
-import type {
+import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin as Plugin_1,
+    Plugin,
     VNode,
     VNodeProps
 } from 'vue';
-import type { EventClosableProps, EventUpdateOpenProps, TPopoverPosition } from '../../../types';
+import { EventClosableProps, EventUpdateOpenProps, TPopoverPosition } from '../../../types';
 
 export declare type TDropdownMenuOptionProps = {
     /**
@@ -72,4 +72,4 @@ export declare const BsDropdownMenu: {
     };
 };
 
-export declare const BsMenuPlugin = Plugin_1;
+export declare const BsMenuPlugin: Plugin;

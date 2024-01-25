@@ -1,11 +1,11 @@
-import type {App, Plugin as Plugin_2} from "vue";
+import type {App, Plugin} from "vue";
 import BsDivider from "./BsDivider";
 import BsImageHolder from "./BsImageHolder";
 import BsSpacer from "./BsSpacer";
 import BsSubheader from "./BsSubheader";
 import "./basic.scss";
 
-const BsBasicCmpPlugin: Plugin_2 = {
+const BsBasicCmpPlugin: Plugin = {
     install: (app: App): void => {
         app.component(BsDivider.name, BsDivider);
         app.component(BsImageHolder.name, BsImageHolder);
