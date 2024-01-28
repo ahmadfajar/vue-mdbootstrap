@@ -321,7 +321,7 @@ function createInputTextField(
             useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
         onKeydown: (e: KeyboardEvent) => emit('keydown', e),
     }), [
-        [vModelText, localValue.value, '', {lazy: true}]
+        [vModelText, localValue.value]
     ]);
 }
 
