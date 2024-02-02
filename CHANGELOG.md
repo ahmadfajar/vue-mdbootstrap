@@ -4,15 +4,17 @@
 
 ## v2.0.5
 
-Released: January xx, 2024
+Released: February xx, 2024
 
 ### Features & Improvements
 
 - **AbstractStore**, **BsStore**, **BsModel**: improve data-model processing and 
   make property `restUrl` writable.
 - **BsButton**: improve css styles when `dropdown-toggle` property is defined.
-- **BsListTile**: improve when `navigable` property is defined.
-- **BsTabs**: improve padding on small-screen device.
+- **BsListTile**: improvement when the `navigable` property is defined.
+- **BsTabs**: 
+  - Improve padding on small-screen device. 
+  - Support sliding on horizontal tabs when the sum of tabs width exceed the container width. 
 - Improve TypeScript definition.
 
 ### Bug Fixes

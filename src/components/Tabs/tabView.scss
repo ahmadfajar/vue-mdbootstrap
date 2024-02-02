@@ -54,6 +54,20 @@
             }
         }
 
+        &.#{$prefix}tab-top,
+        &.#{$prefix}tab-bottom {
+            flex-wrap: nowrap;
+            overflow-x: hidden;
+            position: relative;
+
+            > .tab-sliding {
+                display: flex;
+                flex: 1 0 auto;
+                position: relative;
+                transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.5, 1);
+            }
+        }
+
         &.nav-tabs {
             &.#{$prefix}tab-left {
                 background-color: var(--#{$bs-prefix}card-cap-bg);
@@ -87,16 +101,37 @@
                 }
             }
 
+            &.#{$prefix}tab-top,
+            &.#{$prefix}tab-bottom {
+                > .tab-sliding {
+                    padding-left: var(--#{$prefix}tabs-nav-margin-x);
+                    padding-right: var(--#{$prefix}tabs-nav-margin-x);
+                }
+            }
+
             &.#{$prefix}tab-top {
-                padding: var(--#{$prefix}tabs-nav-margin-y) var(--#{$prefix}tabs-nav-margin-x) 0 var(--#{$prefix}tabs-nav-margin-x);
+                //padding: var(--#{$prefix}tabs-nav-margin-y) var(--#{$prefix}tabs-nav-margin-x) 0 var(--#{$prefix}tabs-nav-margin-x);
+                padding: var(--#{$prefix}tabs-nav-margin-y) 0 0 0;
+                border-bottom-width: 0;
+
+                > .tab-sliding {
+                    border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
+                }
             }
 
             &.#{$prefix}tab-bottom {
-                padding: 0 var(--#{$prefix}tabs-nav-margin-x) var(--#{$prefix}tabs-nav-margin-y) var(--#{$prefix}tabs-nav-margin-x);
+                //padding: 0 var(--#{$prefix}tabs-nav-margin-x) var(--#{$prefix}tabs-nav-margin-y) var(--#{$prefix}tabs-nav-margin-x);
+                padding: 0 0 var(--#{$prefix}tabs-nav-margin-y) 0;
+                border-bottom-width: 0;
+                border-top-width: 0;
 
-                > .nav-item {
+                > .tab-sliding {
+                    border-top: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
+                }
+
+                .nav-item {
                     @include border-top-radius(0);
-                    @include border-bottom-radius(--#{$bs-prefix}nav-tabs-border-radius);
+                    @include border-bottom-radius(var(--#{$bs-prefix}nav-tabs-border-radius));
                     margin-bottom: 0;
                     margin-top: -1px;
 
@@ -135,7 +170,7 @@
         &.nav-material {
             position: relative;
 
-            > .nav-link {
+            .nav-link {
                 @include transition($md-transition-default);
                 @include border-radius(0);
                 background-color: transparent;
@@ -165,7 +200,7 @@
             &.#{$prefix}tab-top {
                 @include box-shadow(var(--#{$prefix}tabs-placement-top-shadow));
 
-                > .nav-link {
+                .nav-link {
                     border-bottom-width: var(--#{$prefix}tabs-material-indicator-border);
 
                     &.active {
@@ -177,7 +212,7 @@
             &.#{$prefix}tab-bottom {
                 @include box-shadow(var(--#{$prefix}tabs-placement-bottom-shadow));
 
-                > .nav-link {
+                .nav-link {
                     border-top-width: var(--#{$prefix}tabs-material-indicator-border);
 
                     &.active {
@@ -212,7 +247,7 @@
 
             &.#{$prefix}tab-top,
             &.#{$prefix}tab-bottom {
-                > .nav-link {
+                .nav-link {
                     @include media-breakpoint-up(lg) {
                         &:first-child {
                             margin-left: var(--#{$prefix}tabs-material-margin-start);

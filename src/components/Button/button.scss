@@ -145,6 +145,16 @@
         --#{$bs-prefix}btn-line-height: 1;
         --#{$bs-prefix}btn-state-padding-x: var(--#{$bs-prefix}btn-xs-inner-padding-x);
         --#{$bs-prefix}btn-state-padding-y: var(--#{$bs-prefix}btn-xs-inner-padding-y);
+
+        .#{$prefix}btn-inner {
+            .#{$prefix}icon-left {
+                margin-left: -$padding-xs;
+            }
+
+            .#{$prefix}icon-right {
+                margin-right: -$padding-xs;
+            }
+        }
     }
 
     &.btn-sm {

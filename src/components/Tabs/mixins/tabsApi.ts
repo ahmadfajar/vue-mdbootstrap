@@ -1,5 +1,6 @@
 import type { ComponentInternalInstance, ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
-import { createCommentVNode, h, normalizeClass, toDisplayString } from 'vue';
+import { createCommentVNode, h, normalizeClass, toDisplayString, withDirectives } from 'vue';
+import { Touch } from '../../../directives';
 import { cssPrefix, useHasLink, useHasRouter, useMergeClass, useRenderRouter } from '../../../mixins/CommonApi';
 import type {
     IVNode,
@@ -315,28 +316,87 @@ function renderVerticalTabView(
     ]);
 }
 
+function tabOnSlidingHandler(scrollOffset: Ref<number>, deltaX: number, target?: HTMLElement): void {
+    const parent = target?.parentElement;
+
+    if (target && parent) {
+        const styles = getComputedStyle(parent);
+        const borderW = parseFloat(styles.borderLeftWidth) + parseFloat(styles.borderRightWidth);
+        const paddingW = parseFloat(styles.paddingLeft) + parseFloat(styles.paddingRight);
+        const parentWidth = parent.clientWidth - paddingW - borderW;
+        const contentWidth = target.clientWidth ?? parent.clientWidth;
+
+        if (contentWidth > parentWidth) {
+            const newOffset = scrollOffset.value + deltaX;
+            const deltaW = (contentWidth - parentWidth) + (parseFloat(styles.paddingRight) / 2);
+            const deltaW1 = deltaW + 200;
+            scrollOffset.value = newOffset > 200 ? 200 : Math.abs(newOffset) > deltaW1 ? -deltaW1 : newOffset;
+            target.style.transform = `translateX(${scrollOffset.value}px)`;
+
+            if (scrollOffset.value > 0 || scrollOffset.value < -deltaW) {
+                window.requestAnimationFrame(() => {
+                    if (scrollOffset.value > 0) {
+                        scrollOffset.value = 0;
+                        target.style.transform = `translateX(${scrollOffset.value}px)`;
+                    } else if (scrollOffset.value < -deltaW) {
+                        scrollOffset.value = -deltaW;
+                        target.style.transform = `translateX(${scrollOffset.value}px)`;
+                    }
+                });
+            }
+        }
+    }
+}
+
+function tabOnWheel(scrollOffset: Ref<number>, event: WheelEvent, target?: HTMLElement): void {
+    (event.deltaX < 0 || event.deltaX > 0) && event.preventDefault();
+    window.requestAnimationFrame(() =>
+        tabOnSlidingHandler(scrollOffset, event.deltaX * -1, target)
+    );
+}
+
 function renderHorizontalTabView(
     slots: Slots,
     props: Readonly<TTabsOptionProps>,
     tagName: ComputedRef<string>,
     tabClasses: ComputedRef<string[]>,
     tabItems: ShallowRef<ComponentInternalInstance[]>,
+    sliderRef: Ref<HTMLElement | undefined>,
+    scrollOffset: Ref<number>,
     provider: TabsProvider,
 ): VNode {
     return h('div', {
         class: [`${cssPrefix}tabs`, 'd-flex', 'flex-column', 'flex-fill'],
         onVnodeBeforeUnmount: () => provider.unRegisterAll()
     }, [
-        h(tagName.value, {
-                class: tabClasses.value,
-                role: 'tablist',
-                'aria-orientation': 'horizontal'
-            }, tabItems.value.map((it, idx) => {
-                return h<TBsTabItem>(BsTabItem, {
-                    key: `tab-item-${idx}`,
-                    ...createTabItemProps(props, (<Readonly<TTabItemOptionProps>>it.props), provider, idx),
-                });
-            })
+        withDirectives(
+            h(tagName.value, {
+                    class: tabClasses.value,
+                    role: 'tablist',
+                    'aria-orientation': 'horizontal',
+                    onWheel: (evt: WheelEvent) => tabOnWheel(scrollOffset, evt, sliderRef.value),
+                }, [
+                    h('div', {
+                            ref: sliderRef,
+                            class: 'tab-sliding',
+                        }, tabItems.value.map((it, idx) =>
+                            h<TBsTabItem>(BsTabItem, {
+                                key: `tab-item-${idx}`,
+                                ...createTabItemProps(
+                                    props,
+                                    (<Readonly<TTabItemOptionProps>>it.props),
+                                    provider, idx
+                                ),
+                            })
+                        )
+                    ),
+                ],
+            ), [
+                [Touch, {
+                    left: (evt: WheelEvent) => tabOnSlidingHandler(scrollOffset, evt.deltaX, sliderRef.value),
+                    right: (evt: WheelEvent) => tabOnSlidingHandler(scrollOffset, evt.deltaX, sliderRef.value)
+                }]
+            ]
         ),
         h('div', {
             class: useMergeClass(['tab-content'], <string>props.contentClass),
@@ -351,11 +411,16 @@ export function useRenderTabView(
     tagName: ComputedRef<string>,
     tabClasses: ComputedRef<string[]>,
     tabItems: ShallowRef<ComponentInternalInstance[]>,
+    sliderRef: Ref<HTMLElement | undefined>,
+    scrollOffset: Ref<number>,
     provider: TabsProvider,
 ): VNode {
     if (orientation.value === 'vertical') {
         return renderVerticalTabView(slots, props, tagName, tabClasses, tabItems, provider);
     } else {
-        return renderHorizontalTabView(slots, props, tagName, tabClasses, tabItems, provider);
+        return renderHorizontalTabView(
+            slots, props, tagName, tabClasses,
+            tabItems, sliderRef, scrollOffset, provider,
+        );
     }
 }

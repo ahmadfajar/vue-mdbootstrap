@@ -5,7 +5,7 @@ import type {
     EmitsOptions,
     MethodOptions
 } from 'vue';
-import { computed, defineComponent, nextTick, onMounted, provide, shallowRef, watch } from 'vue';
+import { computed, defineComponent, nextTick, onMounted, provide, ref, shallowRef, watch } from 'vue';
 import type { TBsTabs, TOrientation, TRecord, TTabsOptionProps } from '../../types';
 import { useRenderTabView, useTabViewClassNames } from './mixins/tabsApi';
 import { tabsProps } from './mixins/tabsProps';
@@ -28,7 +28,8 @@ export default defineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, Metho
         const cmpProps = props as Readonly<TTabsOptionProps>;
         const tabPanels = shallowRef<ComponentInternalInstance[]>([]);
         const tabProvider = new TabsProvider(cmpProps, emit, (<number | undefined>cmpProps.modelValue));
-        // const uid = Helper.uuid();
+        const tabSlidingRef = ref<HTMLElement>();
+        const scrollOffset = ref<number>(0);
 
         provide<TabsProvider>('tabs', tabProvider);
 
@@ -67,6 +68,10 @@ export default defineComponent<TBsTabs, TRecord, TRecord, ComputedOptions, Metho
         );
 
         return () =>
-            useRenderTabView(slots, cmpProps, orientation, tagName, tabViewClasses, tabPanels, tabProvider)
+            useRenderTabView(
+                slots, cmpProps, orientation, tagName,
+                tabViewClasses, tabPanels, tabSlidingRef,
+                scrollOffset, tabProvider,
+            )
     }
 });
