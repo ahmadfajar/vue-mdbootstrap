@@ -346,7 +346,7 @@
 
             > .#{$prefix}field-outline-label {
                 border: var(--#{$prefix}field-outline-border-width) solid var(--#{$prefix}field-outline-border-color);
-                border-width: 0 0 var(--md-field-outline-border-width) 0;
+                border-width: 0 0 var(--#{$prefix}field-outline-border-width) 0;
                 opacity: var(--#{$prefix}field-outline-opacity);
                 color: var(--#{$prefix}field-floating-label-color);
                 display: none;
