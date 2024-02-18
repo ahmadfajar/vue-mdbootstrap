@@ -1,4 +1,4 @@
-import ResizeObserver from 'resize-observer-polyfill';
+// import ResizeObserver from 'resize-observer-polyfill';
 import {isServer} from "./CommonApi";
 import type {IBindingElement} from "../types";
 

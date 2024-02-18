@@ -1,36 +1,5 @@
 import { chunk } from './StringHelper';
-
-/**
- * Hue, Saturation, Value and Alpha color values.
- */
-export declare type HSVA = {
-    h: number;
-    s: number;
-    v: number;
-    a: number;
-};
-
-/**
- * Hue, Saturation, Lightness and Alpha color values.
- */
-export declare type HSLA = {
-    h: number;
-    s: number;
-    l: number;
-    a: number;
-};
-
-/**
- * Red, Green, Blue and Alpha color values.
- */
-export declare type RGBA = {
-    r: number;
-    g: number;
-    b: number;
-    a: number;
-};
-
-export declare type TColor = HSVA & RGBA;
+import type { HSLA, HSVA, RGBA } from './types/colorUtils';
 
 /**
  * Convert HSLA to HSVA.
@@ -59,7 +28,7 @@ export function hslaToHsva(color: HSLA): HSVA {
  * @param color The HSV color values.
  * @return The HSL color values.
  */
-export function hsvaToHsla(color: HSVA) {
+export function hsvaToHsla(color: HSVA): HSLA {
     const value = color.v / 100;
     const lightness = value * (1 - (color.s / 100) / 2);
     let saturation: number | undefined;
@@ -82,7 +51,7 @@ export function hsvaToHsla(color: HSVA) {
  * @param color The HSVA color values.
  * @return The RGBA color values.
  */
-export function hsvaToRgba(color: HSVA) {
+export function hsvaToRgba(color: HSVA): RGBA {
     const saturation = color.s / 100;
     const value = color.v / 100;
     const hueBy60 = color.h / 60;
@@ -132,7 +101,7 @@ export function hexToRgba(color: string): RGBA {
  * @param color The RGBA color values.
  * @return The HSVA color values.
  */
-export function rgbaToHsva(color: RGBA) {
+export function rgbaToHsva(color: RGBA): HSVA {
     const red = color.r / 255;
     const green = color.g / 255;
     const blue = color.b / 255;

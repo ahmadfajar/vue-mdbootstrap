@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 // @ts-ignore
 import { bannerText } from './banner'
 
+// @ts-ignore
 export default defineConfig({
     mode: 'development',
     build: {
@@ -46,10 +47,9 @@ export default defineConfig({
                 assetFileNames: 'bundle.[ext]',
             },
             plugins: [
-                // @ts-ignore
                 terser({
                     compress: false,
-                    ecma: 2022,
+                    ecma: 2020,
                     keep_classnames: true,
                     keep_fnames: true,
                     format: {

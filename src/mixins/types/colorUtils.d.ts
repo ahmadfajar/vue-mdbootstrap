@@ -44,12 +44,7 @@ export declare function hslaToHsva(color: HSLA): HSVA;
  * @param color The HSV color values.
  * @return The HSL color values.
  */
-export declare function hsvaToHsla(color: HSVA): {
-    h: number;
-    s: number;
-    l: number;
-    a: number;
-};
+export declare function hsvaToHsla(color: HSVA): HSLA;
 
 /**
  * Convert HSVA to RGBA.
@@ -57,12 +52,7 @@ export declare function hsvaToHsla(color: HSVA): {
  * @param color The HSVA color values.
  * @return The RGBA color values.
  */
-export declare function hsvaToRgba(color: HSVA): {
-    r: number;
-    g: number;
-    b: number;
-    a: number;
-};
+export declare function hsvaToRgba(color: HSVA): RGBA;
 
 /**
  * Convert CSS HEX color format to RGBA color.
@@ -78,12 +68,7 @@ export declare function hexToRgba(color: string): RGBA;
  * @param color The RGBA color values.
  * @return The HSVA color values.
  */
-export declare function rgbaToHsva(color: RGBA): {
-    h: number;
-    s: number;
-    v: number;
-    a: number;
-};
+export declare function rgbaToHsva(color: RGBA): HSVA;
 
 /**
  * Parse a string to RGBA.

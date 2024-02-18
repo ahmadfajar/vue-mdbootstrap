@@ -1,9 +1,9 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
   "include": [
-    "env.d.ts", 
-    "src/**/*", 
-    "src/**/*.ts", 
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.ts",
     "src/**/*.vue"
   ],
   "exclude": [
@@ -16,6 +16,7 @@
     "declaration": false,
     "removeComments": true,
     "sourceMap": false,
+    "esModuleInterop": true,
     "lib": [
       "ES2022",
       "DOM",

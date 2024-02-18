@@ -1,4 +1,5 @@
 import terser from '@rollup/plugin-terser'
+// @ts-ignore
 import path from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
@@ -42,14 +43,14 @@ export default defineConfig({
                     constBindings: true
                 },
                 interop: 'auto',
+                banner: bannerText,
                 assetFileNames: 'bundle.min.[ext]',
                 plugins: [
-                    // @ts-ignore
                     terser({
                         compress: true,
-                        ecma: 2022,
+                        ecma: 2020,
                         format: {
-                            comments: false
+                            comments: /^\/*!/
                         }
                     })
                 ]
@@ -57,11 +58,12 @@ export default defineConfig({
         },
     },
     esbuild: {
-        banner: bannerText,
+        // banner: bannerText,
         treeShaking: true,
     },
     resolve: {
         alias: {
+            // @ts-ignore
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     }

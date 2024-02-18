@@ -1,4 +1,5 @@
 import terser from '@rollup/plugin-terser'
+// @ts-ignore
 import path from 'node:path'
 import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
@@ -55,10 +56,9 @@ export default defineConfig({
                 assetFileNames: 'bundle.[ext]',
             },
             plugins: [
-                // @ts-ignore
                 terser({
                     compress: false,
-                    ecma: 2022,
+                    ecma: 2020,
                     keep_classnames: true,
                     keep_fnames: true,
                     format: {
@@ -74,6 +74,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
+            // @ts-ignore
             '@': fileURLToPath(new URL('./src', import.meta.url))
         }
     }
