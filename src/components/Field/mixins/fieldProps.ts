@@ -125,6 +125,7 @@ export const numericFieldProps = {
     modelValue: numberProp,
     placeholder: stringProp,
     locale: stringProp,
+    rounded: booleanProp,
     useGrouping: booleanTrueProp,
     spinButton: booleanTrueProp,
     spinButtonPlacement: {

@@ -2,6 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
+    ComputedRef,
     Plugin,
     VNode,
     VNodeProps
@@ -12,15 +13,26 @@ import {
     TInputBaseProps,
     TLabelPosition,
     TPopoverPosition,
-    TRecord,
     TSpaceAround,
 } from '../../../types';
 
+export declare type TFieldType = 'text' | 'email' | 'password' | 'tel' | 'url';
+declare type TBoolRecord = Record<string, boolean>;
+declare type TStringRecord = Record<string, string>;
+
 export declare type TValidator = {
-    validators: TRecord;
-    messages: TRecord;
+    validators: TBoolRecord;
+    messages: TStringRecord;
     hasError: boolean;
     dirty: boolean;
+}
+
+export declare interface TComputedValidationResult {
+    hasError: ComputedRef<boolean>;
+    hasValidated: ComputedRef<boolean>;
+    showValidationError: ComputedRef<boolean>;
+    showHelpText: ComputedRef<boolean>;
+    errorItems: ComputedRef<string[]>;
 }
 
 export declare type TValidationProps = {
@@ -133,7 +145,7 @@ export declare type TTextFieldOptionProps = TInputTextProps & {
     /**
      * Sets <input> element type attribute. Valid values are: `text`, `password`, `email`, `url`, `tel`.
      */
-    type?: string;
+    type?: TFieldType;
     /**
      * Sets target `<datalist>` element ID.
      */
@@ -150,6 +162,10 @@ export declare type TTextFieldOptionProps = TInputTextProps & {
      * Sets `<input>` element minimum characters allowed.
      */
     minlength?: string | number;
+    /**
+     * Create this component with **rounded-pill** appearance.
+     */
+    rounded?: boolean;
 }
 
 export declare type TTextAreaOptionProps = TInputTextProps & {
@@ -253,6 +269,10 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
      * Sets the increment/decrement steps value.
      */
     step?: string | number;
+    /**
+     * Create this component with **rounded-pill** appearance.
+     */
+    rounded?: boolean;
 }
 
 export declare type TSearchFieldOptionProps = {

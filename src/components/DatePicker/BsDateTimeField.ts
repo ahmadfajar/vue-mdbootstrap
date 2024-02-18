@@ -4,13 +4,7 @@ import { cssPrefix } from '../../mixins/CommonApi';
 import type { TBsDateTimeField, TDateTimeFieldOptionProps, TDateTimePickerMode, TRecord } from '../../types';
 import Helper from '../../utils/Helper';
 import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from '../Field/mixins/textFieldApi';
-import {
-    useGetErrorItems,
-    useHasValidated,
-    useHasValidationError,
-    useShowHelpText,
-    useShowValidationError
-} from '../Field/mixins/validationApi';
+import { useGetValidationResult } from '../Field/mixins/validationApi';
 import { DatePickerConst } from './mixins/datePickerApi';
 import { dateTimeFieldProps } from './mixins/datePickerProps';
 import { useParseDateTimeFromFormat, useRenderDateTimeField } from './mixins/dateTimeFieldApi';
@@ -63,17 +57,13 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
         const calendarIcon = computed(() => {
             return thisProps.appendIcon || `calendar_month_${thisProps.actionIconVariant}`;
         });
-        const hasError = computed<boolean>(() => useHasValidationError(thisProps));
-        const hasValidated = computed<boolean>(() => useHasValidated(thisProps));
-        const showValidationError = computed<boolean>(() => useShowValidationError(thisProps));
-        const showHelpText = computed<boolean>(() => useShowHelpText(thisProps, isFocused.value));
-        const errorItems = computed(() => useGetErrorItems(thisProps));
+        const validator = useGetValidationResult(thisProps, isFocused);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, displayValue));
         const showAppendIcon = computed(() =>
             (slots.appendInner != undefined) || !Helper.isEmpty(calendarIcon.value) || showClearButton.value
         );
         const fieldWrapperClasses = computed<TRecord>(() =>
-            useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)
+            useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
         );
         const fieldControlClasses = computed<TRecord>(() =>
             ({
@@ -108,11 +98,11 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
                 isPopoverOpen,
                 isFocused,
                 showClearButton,
-                showHelpText,
-                showValidationError,
-                hasValidated,
-                hasError,
-                errorItems,
+                validator.showHelpText,
+                validator.showValidationError,
+                validator.hasValidated,
+                validator.hasError,
+                validator.errorItems,
             )
     }
 });

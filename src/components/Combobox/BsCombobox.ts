@@ -4,13 +4,7 @@ import { cssPrefix } from '../../mixins/CommonApi';
 import type { IBsModel, TBsCombobox, TComboboxOptionProps, TDataListSchemaProps, TRecord } from '../../types';
 import Helper from '../../utils/Helper';
 import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from '../Field/mixins/textFieldApi';
-import {
-    useGetErrorItems,
-    useHasValidated,
-    useHasValidationError,
-    useShowHelpText,
-    useShowValidationError
-} from '../Field/mixins/validationApi';
+import { useGetValidationResult } from '../Field/mixins/validationApi';
 import { useRenderCombobox } from './mixins/comboboxApi';
 import { comboboxProps } from './mixins/comboboxProps';
 
@@ -79,17 +73,13 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
         const isFocused = ref(false);
         const isPopoverOpen = ref(false);
         const activator = ref<HTMLElement | null>(null);
-        const hasError = computed<boolean>(() => useHasValidationError(thisProps));
-        const hasValidated = computed<boolean>(() => useHasValidated(thisProps));
-        const showValidationError = computed<boolean>(() => useShowValidationError(thisProps));
-        const showHelpText = computed<boolean>(() => useShowHelpText(thisProps, isFocused.value));
-        const errorItems = computed(() => useGetErrorItems(thisProps));
+        const validator = useGetValidationResult(thisProps, isFocused);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, fieldValues));
         const showAppendIcon = computed(() =>
             (slots.appendInner != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
         );
         const wrapperClasses = computed<TRecord>(() =>
-            useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)
+            useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
         );
         const controlClasses = computed<TRecord>(() =>
             ({
@@ -167,11 +157,11 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
                 isPopoverOpen,
                 isFocused,
                 showClearButton,
-                showHelpText,
-                showValidationError,
-                hasValidated,
-                hasError,
-                errorItems,
+                validator.showHelpText,
+                validator.showValidationError,
+                validator.hasValidated,
+                validator.hasError,
+                validator.errorItems,
             )
     }
 });

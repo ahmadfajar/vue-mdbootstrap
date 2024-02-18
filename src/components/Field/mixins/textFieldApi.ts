@@ -34,11 +34,9 @@ export function useFieldWrapperClasses(
     props: Readonly<TInputFieldProps>,
     hasValidated: boolean,
     hasError: boolean,
-    clazz?: string,
 ): TRecord {
     return {
         [`${cssPrefix}field row`]: true,
-        [`${clazz}`]: clazz != undefined,
         [`${cssPrefix}field-filled`]: props.filled,
         [`${cssPrefix}field-outlined`]: props.outlined && !props.filled,
         [`${cssPrefix}field-flat`]: props.flat && !props.filled && !props.outlined,

@@ -11,13 +11,7 @@ import {
     useRenderTextArea,
     useShowClearButton
 } from './mixins/textFieldApi';
-import {
-    useGetErrorItems,
-    useHasValidated,
-    useHasValidationError,
-    useShowHelpText,
-    useShowValidationError
-} from './mixins/validationApi';
+import { useGetValidationResult } from './mixins/validationApi';
 import { validationProps } from './mixins/validationProps';
 
 
@@ -66,39 +60,35 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, M
         'update:model-value',
     ],
     setup(props, {emit, slots}) {
-        const cmpProps = props as Readonly<TTextAreaOptionProps>;
-        const autocomplete = cmpProps.autocomplete && Helper.isString(cmpProps.autocomplete)
-            ? cmpProps.autocomplete
-            : (cmpProps.autocomplete ? 'on' : Helper.uuid());
-        const localValue = ref<string | number | undefined | null>(cmpProps.modelValue);
-        const rowHeight = ref<string | number | undefined | null>(cmpProps.rowHeight);
+        const thisProps = props as Readonly<TTextAreaOptionProps>;
+        const autocomplete = thisProps.autocomplete && Helper.isString(thisProps.autocomplete)
+            ? thisProps.autocomplete
+            : (thisProps.autocomplete ? 'on' : Helper.uuid());
+        const localValue = ref<string | number | undefined | null>(thisProps.modelValue);
+        const rowHeight = ref<string | number | undefined | null>(thisProps.rowHeight);
         const isFocused = ref(false);
-        const hasError = computed<boolean>(() => useHasValidationError(cmpProps));
-        const hasValidated = computed<boolean>(() => useHasValidated(cmpProps));
-        const showValidationError = computed<boolean>(() => useShowValidationError(cmpProps));
-        const showHelpText = computed<boolean>(() => useShowHelpText(cmpProps, isFocused.value));
-        const errorItems = computed(() => useGetErrorItems(cmpProps));
-        const showClearButton = computed<boolean>(() => useShowClearButton(cmpProps, localValue));
+        const validator = useGetValidationResult(thisProps, isFocused);
+        const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
         const showAppendIcon = computed(() =>
-            (slots.appendInner != undefined) || !Helper.isEmpty(cmpProps.appendIcon) || showClearButton.value
+            (slots.appendInner != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
         );
         const wrapperClasses = computed<TRecord>(() =>
-            useFieldWrapperClasses(cmpProps, hasValidated.value, hasError.value)
+            useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
         );
         const controlClasses = computed<TRecord>(() =>
             ({
                 ...useCreateTextFieldClasses(
-                    slots, cmpProps, localValue,
+                    slots, thisProps, localValue,
                     isFocused, showAppendIcon.value,
                 ),
                 [`${cssPrefix}textarea`]: true,
-                [`${cssPrefix}textarea-autogrow`]: cmpProps.autoGrow && !cmpProps.noResize,
-                [`${cssPrefix}textarea-noresize`]: cmpProps.noResize || (cmpProps.autoGrow && !cmpProps.noResize),
+                [`${cssPrefix}textarea-autogrow`]: thisProps.autoGrow && !thisProps.noResize,
+                [`${cssPrefix}textarea-noresize`]: thisProps.noResize || (thisProps.autoGrow && !thisProps.noResize),
             })
         );
 
         watch(
-            () => cmpProps.modelValue,
+            () => thisProps.modelValue,
             (value) => {
                 localValue.value = value;
             }
@@ -106,7 +96,7 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, M
 
         return () =>
             useRenderTextArea(
-                slots, emit, cmpProps,
+                slots, emit, thisProps,
                 wrapperClasses,
                 controlClasses,
                 localValue,
@@ -114,11 +104,11 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, M
                 isFocused,
                 autocomplete,
                 showClearButton.value,
-                showHelpText.value,
-                showValidationError.value,
-                hasValidated.value,
-                hasError.value,
-                errorItems.value,
+                validator.showHelpText.value,
+                validator.showValidationError.value,
+                validator.hasValidated.value,
+                validator.hasError.value,
+                validator.errorItems.value,
             );
     }
 });

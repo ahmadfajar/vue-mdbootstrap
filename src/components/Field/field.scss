@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "compass-mixins/lib/compass/css3";
 @import "../../../scss/functions";
 @import "../../../scss/mixins/placeholder";
@@ -317,6 +318,43 @@
         &.disabled {
             --#{$prefix}field-overlay-opacity: .02;
         }
+
+        &.#{$prefix}field-rounded {
+            &.#{$prefix}text-field, &.#{$prefix}numeric-field {
+                --#{$prefix}field-padding-start: #{math.div($text-field-height, 2)};
+
+                .#{$prefix}field-overlay {
+                    @include border-radius($border-radius-pill);
+                }
+
+                > .#{$prefix}field-inner {
+                    --#{$prefix}field-state-border-width: 0;
+
+                    &:before {
+                        @include border-radius($border-radius-pill);
+                        opacity: 1;
+                        height: 100%;
+                        width: 100%;
+                        left: 0;
+                        background-color: transparent;
+                        border: var(--#{$prefix}field-state-border-width) solid var(--#{$prefix}field-active-border-color);
+                    }
+
+                    &:after {
+                        left: 0;
+                        height: 100%;
+                        width: 0;
+                        background-color: transparent;
+                    }
+                }
+
+                &.focused {
+                    > .#{$prefix}field-inner {
+                        --#{$prefix}field-state-border-width: var(--#{$prefix}field-active-border-width);
+                    }
+                }
+            }
+        }
     }
 
     &.#{$prefix}field-outlined {
@@ -324,6 +362,7 @@
         --#{$prefix}field-padding-bottom: #{$padding-base};
         --#{$prefix}field-outline-border-color: var(--#{$prefix}field-border-color);
         --#{$prefix}field-outline-border-width: var(--#{$prefix}field-border-width);
+        --#{$prefix}field-outline-border-radius: #{$text-field-border-radius};
         --#{$prefix}field-outline-opacity: #{$text-field-opacity};
 
         .#{$prefix}field-outline-control {
@@ -336,7 +375,7 @@
             height: 100%;
 
             > .#{$prefix}field-outline-start {
-                @include border-left-radius($text-field-border-radius);
+                @include border-left-radius(var(--#{$prefix}field-outline-border-radius));
                 @include display-flex(inline-flex);
                 border: var(--#{$prefix}field-outline-border-width) solid var(--#{$prefix}field-outline-border-color);
                 border-width: var(--#{$prefix}field-outline-border-width) 0 var(--#{$prefix}field-outline-border-width) var(--#{$prefix}field-outline-border-width);
@@ -356,7 +395,7 @@
             }
 
             > .#{$prefix}field-outline-end {
-                @include border-right-radius($text-field-border-radius);
+                @include border-right-radius(var(--#{$prefix}field-outline-border-radius));
                 @include flex(1 1 auto);
                 border: var(--#{$prefix}field-outline-border-width) solid var(--#{$prefix}field-outline-border-color);
                 border-width: var(--#{$prefix}field-outline-border-width) var(--#{$prefix}field-outline-border-width) var(--#{$prefix}field-outline-border-width) 0;
@@ -402,6 +441,19 @@
 
         &.disabled {
             --#{$prefix}field-outline-opacity: calc(var(--#{$prefix}field-disabled-opacity) - .2);
+        }
+
+        &.#{$prefix}field-rounded {
+            &.#{$prefix}text-field, &.#{$prefix}numeric-field {
+                --#{$prefix}field-outline-border-radius: #{$border-radius-pill};
+                --#{$prefix}field-padding-start: #{math.div($text-field-height, 2)};
+
+                .#{$prefix}field-outline-control {
+                    > .#{$prefix}field-outline-start {
+                        width: math.div($text-field-height, 2);
+                    }
+                }
+            }
         }
     }
 
@@ -461,7 +513,7 @@
             }
 
             > .#{$prefix}action-icon {
-                > .#{$prefix}icon, > .#{$prefix}toggle-icon  {
+                > .#{$prefix}icon, > .#{$prefix}toggle-icon {
                     @include align-self(center);
                     margin-top: 0;
                 }
@@ -533,7 +585,7 @@
             }
 
             > .#{$prefix}action-icon {
-                > .#{$prefix}icon, > .#{$prefix}toggle-icon  {
+                > .#{$prefix}icon, > .#{$prefix}toggle-icon {
                     @include align-self(flex-start);
                     margin-top: .75rem;
                 }

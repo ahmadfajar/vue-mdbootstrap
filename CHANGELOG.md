@@ -4,13 +4,16 @@
 
 ## v2.0.5
 
-Released: February xx, 2024
+Released: March xx, 2024
 
 ### Features & Improvements
 
 - **AbstractStore**, **BsStore**, **BsModel**: improve data-model processing and 
   make property `restUrl` writable.
-- **BsButton**: improve css styles when `dropdown-toggle` property is defined.
+- **BsButton**: 
+  - Improve css styles when `dropdown-toggle` and `tonal` property is defined.
+  - improve css styles on `xs` (small) button size.
+- **BsNumericField**: improve classic form field styles.
 - **BsListTile**: improvement when the `navigable` property is defined.
 - **BsTabs**: 
   - Improve padding on small-screen device. 
@@ -20,11 +23,18 @@ Released: February xx, 2024
 ### Bug Fixes
 
 - **BsButton**: fix border style on `flat` button variant.
+- **BsCheckboxGroup**, **BsRadioGroup**: bug fix when `column` props is defined.
 - **BsListNavItem**: fix incorrect html tag when component is disabled.
+- **BsTabs**: 
+  - Fix `tabClass` property for custom css not applied.
+  - Fix activeTab not sync when `model-value` is changed programmatically.
 - **BsNumericField**: 
-  - Fix `maxValue` and `minValue` property not implement correctly. 
-  - Fix classic form field styles.
-- **BsTabs**: fix `tabClass` for custom css not applied.
+  - Fix `maxValue` and `minValue` property not implement correctly.
+  - Fix validation using external validator
+- **BsTextField**: 
+  - Fix field value doesn't change immediately when the type props is `password`
+  - Fix validation using external validator
+- **BsTextArea**, **BsChipField**, **BsCombobox**: Fix validation using external validator.
 
 
 ## v2.0.4

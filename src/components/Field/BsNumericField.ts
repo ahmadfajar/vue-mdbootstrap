@@ -6,13 +6,7 @@ import Helper from '../../utils/Helper';
 import { numericFieldProps } from './mixins/fieldProps';
 import { useRenderNumericField } from './mixins/numericFieldApi';
 import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from './mixins/textFieldApi';
-import {
-    useGetErrorItems,
-    useHasValidated,
-    useHasValidationError,
-    useShowHelpText,
-    useShowValidationError
-} from './mixins/validationApi';
+import { useGetValidationResult } from './mixins/validationApi';
 
 
 export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
@@ -48,11 +42,7 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
         const localValue = ref<number | null>(thisProps.modelValue === undefined ? null : thisProps.modelValue);
         const inputRef = ref<HTMLElement | null>(null);
         const hasFocus = ref(false);
-        const hasError = computed<boolean>(() => useHasValidationError(thisProps));
-        const hasValidated = computed<boolean>(() => useHasValidated(thisProps));
-        const showValidationError = computed<boolean>(() => useShowValidationError(thisProps));
-        const showHelpText = computed<boolean>(() => useShowHelpText(thisProps, hasFocus.value));
-        const errorItems = computed(() => useGetErrorItems(thisProps));
+        const validator = useGetValidationResult(thisProps, hasFocus);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
         const showAppendIcon = computed(() =>
             (slots.appendInner != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
@@ -61,11 +51,12 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
                 && !thisProps.disabled && !thisProps.readonly)
         );
         const fieldWrapperClasses = computed<TRecord>(() =>
-            useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)
+            useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
         );
         const fieldControlClasses = computed<TRecord>(() =>
             ({
                 ...useCreateTextFieldClasses(slots, thisProps, localValue, hasFocus, showAppendIcon.value),
+                [`${cssPrefix}field-rounded`]: (thisProps.outlined || thisProps.filled) && thisProps.rounded,
                 [`${cssPrefix}numeric-field`]: true,
             })
         );
@@ -99,11 +90,11 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
                 hasFocus,
                 autocomplete,
                 showClearButton,
-                showHelpText,
-                showValidationError,
-                hasValidated,
-                hasError,
-                errorItems,
+                validator.showHelpText,
+                validator.showValidationError,
+                validator.hasValidated,
+                validator.hasError,
+                validator.errorItems,
             );
     }
 });

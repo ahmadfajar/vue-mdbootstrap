@@ -7,13 +7,7 @@ import Helper from '../../utils/Helper';
 import { useRenderChipField } from './mixins/chipFieldApi';
 import { inputProps, textFieldProps } from './mixins/fieldProps';
 import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from './mixins/textFieldApi';
-import {
-    useGetErrorItems,
-    useHasValidated,
-    useHasValidationError,
-    useShowHelpText,
-    useShowValidationError
-} from './mixins/validationApi';
+import { useGetValidationResult } from './mixins/validationApi';
 import { validationProps } from './mixins/validationProps';
 
 
@@ -73,17 +67,13 @@ export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, 
                 : (Helper.isEmpty(thisProps.modelValue) ? [] : [<string>thisProps.modelValue])
         );
         const isFocused = ref(false);
-        const hasError = computed<boolean>(() => useHasValidationError(thisProps));
-        const hasValidated = computed<boolean>(() => useHasValidated(thisProps));
-        const showValidationError = computed<boolean>(() => useShowValidationError(thisProps));
-        const showHelpText = computed<boolean>(() => useShowHelpText(thisProps, isFocused.value));
-        const errorItems = computed(() => useGetErrorItems(thisProps));
+        const validator = useGetValidationResult(thisProps, isFocused);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
         const showAppendIcon = computed(() =>
             (slots.appendInner != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
         );
         const wrapperClasses = computed<TRecord>(() =>
-            useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)
+            useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
         );
         const controlClasses = computed<TRecord>(() =>
             ({
@@ -114,11 +104,11 @@ export default defineComponent<TBsChipField, TRecord, TRecord, ComputedOptions, 
                 isFocused,
                 autocomplete,
                 showClearButton,
-                showHelpText,
-                showValidationError,
-                hasValidated,
-                hasError,
-                errorItems,
+                validator.showHelpText,
+                validator.showValidationError,
+                validator.hasValidated,
+                validator.hasError,
+                validator.errorItems,
             );
     }
 });
