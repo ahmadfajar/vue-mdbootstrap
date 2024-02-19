@@ -18,6 +18,7 @@
 .#{$prefix}field {
     --#{$prefix}field-active-border-color: rgb(var(--#{$prefix}field-active-indicator));
     --#{$prefix}field-active-border-width: 2px;
+    --#{$prefix}field-color-bg: currentColor;
     --#{$prefix}field-border-color: currentColor;
     --#{$prefix}field-border-width: 1px;
     --#{$prefix}field-control-height: #{$text-field-height};
@@ -295,7 +296,7 @@
         .#{$prefix}field-overlay {
             @include border-top-radius($text-field-border-radius);
             @include transition(opacity $md-transition-default);
-            background-color: currentColor;
+            background-color: var(--#{$prefix}field-color-bg);
             top: 0;
             left: 0;
             width: 100%;
@@ -321,7 +322,9 @@
 
         &.#{$prefix}field-rounded {
             &.#{$prefix}text-field, &.#{$prefix}numeric-field {
-                --#{$prefix}field-padding-start: #{math.div($text-field-height, 2)};
+                &:not(.prepend-icon) {
+                    --#{$prefix}field-padding-start: #{math.div($text-field-height, 2)};
+                }
 
                 .#{$prefix}field-overlay {
                     @include border-radius($border-radius-pill);
@@ -329,6 +332,15 @@
 
                 > .#{$prefix}field-inner {
                     --#{$prefix}field-state-border-width: 0;
+
+                    > .#{$prefix}prepend-inner {
+                        margin-left: $padding-base;
+                    }
+                    > .#{$prefix}action-icon, > .#{$prefix}append-inner {
+                        &:last-child {
+                            margin-right: $padding-base;
+                        }
+                    }
 
                     &:before {
                         @include border-radius($border-radius-pill);
@@ -445,12 +457,33 @@
 
         &.#{$prefix}field-rounded {
             &.#{$prefix}text-field, &.#{$prefix}numeric-field {
+                &:not(.prepend-icon) {
+                    --#{$prefix}field-padding-start: #{math.div($text-field-height, 2)};
+                }
+
                 --#{$prefix}field-outline-border-radius: #{$border-radius-pill};
-                --#{$prefix}field-padding-start: #{math.div($text-field-height, 2)};
 
                 .#{$prefix}field-outline-control {
                     > .#{$prefix}field-outline-start {
                         width: math.div($text-field-height, 2);
+                    }
+                }
+
+                > .#{$prefix}field-inner {
+                    > .#{$prefix}prepend-inner {
+                        margin-left: $padding-base;
+                    }
+
+                    > .#{$prefix}append-inner {
+                        margin-right: $padding-base;
+                    }
+
+                    > .#{$prefix}action-icon {
+                        margin-right: $padding-base;
+
+                        + .#{$prefix}append-inner {
+                            margin-left: -$padding-xs;
+                        }
                     }
                 }
             }
