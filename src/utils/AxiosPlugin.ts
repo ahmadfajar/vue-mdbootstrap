@@ -10,7 +10,7 @@ declare interface IRequestConfig extends RawAxiosRequestConfig {
     responseErrorHandler: CallableFunction;
 }
 
-export declare interface IHttpService {
+declare interface IHttpService {
     /**
      * Send HTTP GET to the remote server.
      *
@@ -56,12 +56,12 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
         requestErrorHandler: (error: unknown) => Promise.reject(error),
         // response interceptor handler
         responseHandler: (response: unknown) => response,
-        responseErrorHandler: (error: unknown) => Promise.reject(error)
+        responseErrorHandler: (error: unknown) => Promise.reject(error),
     };
 
     const initOptions: IRequestConfig = {
         ...defaultOptions,
-        ...options
+        ...options,
     };
 
     const service = axios.create(initOptions);
@@ -76,13 +76,13 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
         ) {
             // Add a request interceptor
             service.interceptors.request.use(
-                config => initOptions.requestHandler(config),
-                error => initOptions.requestErrorHandler(error)
+                (config) => initOptions.requestHandler(config),
+                (error) => initOptions.requestErrorHandler(error)
             );
             // Add a response interceptor
             service.interceptors.response.use(
-                response => initOptions.responseHandler(response),
-                error => initOptions.responseErrorHandler(error)
+                (response) => initOptions.responseHandler(response),
+                (error) => initOptions.responseErrorHandler(error)
             );
         }
     }
@@ -94,31 +94,31 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
                 params: data,
             };
 
-            return service.get(url, config)
+            return service.get(url, config);
         },
         post: (url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig) => {
-            return service.post(url, data, options)
+            return service.post(url, data, options);
         },
         put: (url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig) => {
-            return service.put(url, data, options)
+            return service.put(url, data, options);
         },
         delete: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => {
             const config = {
                 ...options,
-                data: data
+                data: data,
             };
 
-            return service.delete(url, config)
-        }
+            return service.delete(url, config);
+        },
     };
 
-    return {service, http}
+    return { service, http };
 }
 
 export const AxiosPlugin: Plugin = {
     install: (app: App, options?: RawAxiosRequestConfig): void => {
-        const {service, http} = _axiosPlugin(options);
+        const { service, http } = _axiosPlugin(options);
         app.config.globalProperties.$axios = service;
         app.config.globalProperties.$http = http;
-    }
-}
+    },
+};

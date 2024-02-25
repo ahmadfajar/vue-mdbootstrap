@@ -2,14 +2,15 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } fro
 import axios from 'axios';
 import type { AppConfig } from 'vue';
 import { useAxiosPlugin } from '../mixins/CommonApi';
-import type { IRestAdapter, TRecord, TRestMethodOptions } from '../types';
+import type { TRecord } from '../types';
 import Helper from '../utils/Helper';
+import type { IRestAdapter, TRestMethodOptions } from './types';
 
 /**
  * Class RestProxyAdapter which is used to load data from the remote server.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 24/06/2023 14:30
+ * @since  20/07/2018 modified: 26/02/2024 03:24
  */
 export default class RestProxyAdapter implements IRestAdapter {
     private readonly _adapter: AxiosInstance;
@@ -23,7 +24,7 @@ export default class RestProxyAdapter implements IRestAdapter {
      */
     static checkAxios(appConfig: AppConfig | AxiosInstance) {
         if (!appConfig) {
-            throw Error('Parameter \'appConfig\' must be an \'AxiosInstance\' or \'Vue AppConfig\'.');
+            throw Error('Parameter "appConfig" must be an "AxiosInstance" or "Vue AppConfig".');
         }
         if (
             'globalProperties' in appConfig && appConfig.globalProperties &&

@@ -2,9 +2,16 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import meanBy from 'lodash/meanBy';
 import sumBy from 'lodash/sumBy';
 import { AbstractStore, RestProxyAdapter } from '../model';
-import type { TBsModel, TRecord, TSortDirection, TSortOption, TSuccessResponse } from '../types';
+import type { TRecord } from '../types';
 import Helper from '../utils/Helper';
 import { appendErrMsg, emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from './AbstractStore';
+import type {
+    TBsModel,
+    TDataStoreConfig,
+    TSortDirection,
+    TSortOption,
+    TSuccessResponse,
+} from './types';
 
 /**
  * Data Store class to work with collection of entity objects and remote API.
@@ -30,7 +37,7 @@ import { appendErrMsg, emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from '.
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 16/12/2023 14:45
+ * @since  20/07/2018 modified: 26/02/2024 03:17
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -39,20 +46,20 @@ export default class BsStore extends AbstractStore {
      * @param config  The configuration properties
      * @param adapter Axios adapter instance
      */
-    constructor(config: TRecord, adapter?: AxiosInstance) {
-        const initialCfg = {
+    constructor(config: TDataStoreConfig, adapter?: AxiosInstance) {
+        const initialCfg: TDataStoreConfig = {
             idProperty: 'id',
             dataProperty: 'data',
             totalProperty: 'total',
             filterLogic: 'AND',
             restProxy: {
-                'browse': '',
-                'delete': '',
-                'fetch': '',
-                'save': '',
-                'update': ''
+                browse: '',
+                delete: '',
+                fetch: '',
+                save: '',
+                update: '',
             },
-            ...config
+            ...config,
         };
 
         super(initialCfg);
@@ -70,8 +77,9 @@ export default class BsStore extends AbstractStore {
     }
 
     get dataItems(): TBsModel[] {
-        const page = (this.currentPage > 0 && this.currentPage <= this.totalPages) ? this.currentPage - 1 : 0;
-        const offset = this.pageSize > 0 ? (page * this.pageSize) : 0;
+        const page =
+            this.currentPage > 0 && this.currentPage <= this.totalPages ? this.currentPage - 1 : 0;
+        const offset = this.pageSize > 0 ? page * this.pageSize : 0;
 
         if (!this.remoteFilter && this.filters.length > 0) {
             if (this._filteredItems.length === 0) {
@@ -79,7 +87,7 @@ export default class BsStore extends AbstractStore {
             }
             const result = this._filteredItems.slice(
                 offset,
-                this.pageSize > 0 ? (offset + this.pageSize) : undefined
+                this.pageSize > 0 ? offset + this.pageSize : undefined
             );
             this._state.length = result.length;
 
@@ -89,7 +97,7 @@ export default class BsStore extends AbstractStore {
         if (!this.remotePaging) {
             const result = this._items.slice(
                 offset,
-                this.pageSize > 0 ? (offset + this.pageSize) : undefined
+                this.pageSize > 0 ? offset + this.pageSize : undefined
             );
             this._state.length = result.length;
 
@@ -124,18 +132,18 @@ export default class BsStore extends AbstractStore {
     }
 
     aggregateAvg(field: string): number {
-        return meanBy((this.remotePaging ? this.dataItems : this._items), field);
+        return meanBy(this.remotePaging ? this.dataItems : this._items, field);
     }
 
     aggregateCountBy(field: string, value: unknown): number {
         let results: TBsModel[];
 
         if (this.remotePaging) {
-            results = this.dataItems.filter(item => {
+            results = this.dataItems.filter((item) => {
                 return value === Helper.getObjectValueByPath(item, field);
             });
         } else {
-            results = this._items.filter(item => {
+            results = this._items.filter((item) => {
                 return value === Helper.getObjectValueByPath(item, field);
             });
         }
@@ -144,7 +152,7 @@ export default class BsStore extends AbstractStore {
     }
 
     aggregateSum(field: string): number {
-        return sumBy((this.remotePaging ? this.dataItems : this._items), field);
+        return sumBy(this.remotePaging ? this.dataItems : this._items, field);
     }
 
     append(item: never): void {
@@ -161,7 +169,7 @@ export default class BsStore extends AbstractStore {
             }
 
             this._state.updating = false;
-        }
+        };
         this._state.hasError = false;
 
         if (this.isCandidateForModel(item)) {
@@ -171,8 +179,9 @@ export default class BsStore extends AbstractStore {
             this._state.updating = true;
             const model = <TBsModel>this.createModel(item);
 
-            model.save()
-                .catch(error => {
+            model
+                .save()
+                .catch((error) => {
                     this._state.hasError = true;
                     RestProxyAdapter.warnResponseError(error);
                 })
@@ -202,10 +211,7 @@ export default class BsStore extends AbstractStore {
     delete(item: TBsModel): Promise<AxiosResponse | TSuccessResponse> {
         this._state.deleting = true;
 
-        if (
-            AbstractStore.isModel(item) &&
-            !Helper.isEmpty(item.restUrl?.delete)
-        ) {
+        if (AbstractStore.isModel(item) && !Helper.isEmpty(item.restUrl?.delete)) {
             return new Promise((resolve, reject) => {
                 item.delete()
                     .then((response) => {
@@ -228,7 +234,7 @@ export default class BsStore extends AbstractStore {
                     this._state.hasError = false;
                     resolve({
                         success: true,
-                        message: 'Item has been removed from local store.'
+                        message: 'Item has been removed from local store.',
                     });
                 } catch (e) {
                     this._state.deleting = false;
@@ -247,10 +253,7 @@ export default class BsStore extends AbstractStore {
             return new Promise((resolve, reject) => {
                 try {
                     for (const item of <TBsModel[]>items) {
-                        if (
-                            AbstractStore.isModel(item) &&
-                            !Helper.isEmpty(item.restUrl?.delete)
-                        ) {
+                        if (AbstractStore.isModel(item) && !Helper.isEmpty(item.restUrl?.delete)) {
                             item.delete()
                                 .then(() => this.remove(item))
                                 .catch((error) => {
@@ -263,7 +266,7 @@ export default class BsStore extends AbstractStore {
 
                     resolve({
                         success: true,
-                        message: 'Items have been successfully removed.'
+                        message: 'Items have been successfully removed.',
                     });
                 } catch (e) {
                     this._state.hasError = true;
@@ -326,7 +329,7 @@ export default class BsStore extends AbstractStore {
             const methods = this.proxy.requestMethods();
             const config: AxiosRequestConfig = {
                 url: this.restUrl.browse || '',
-                method: methods.browse
+                method: methods.browse,
             };
 
             const params = this.queryParams();
@@ -338,7 +341,7 @@ export default class BsStore extends AbstractStore {
                 config,
                 this._checkBeforeLoading,
                 this._assignFromResponse,
-                this._onLoadingFailure,
+                this._onLoadingFailure
             );
         }
     }
@@ -349,7 +352,7 @@ export default class BsStore extends AbstractStore {
 
     async sort(
         options: string | string[] | TSortOption | TSortOption[],
-        direction: TSortDirection = 'asc',
+        direction: TSortDirection = 'asc'
     ): Promise<TBsModel[]> {
         this.createSorters(options, direction, true);
 

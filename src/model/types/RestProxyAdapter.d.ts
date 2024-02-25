@@ -1,6 +1,6 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import type { AppConfig } from 'vue';
-import type { TRecord, TRestMethodOptions } from '../../types';
+import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { AppConfig } from 'vue';
+import { TRecord, TRestMethodOptions } from '../../types';
 
 export declare interface IRestAdapter {
     get adapterInstance(): AxiosInstance;

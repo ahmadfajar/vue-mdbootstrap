@@ -1,6 +1,6 @@
-import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-import type { ObjectBase, TRecord } from '../../types';
-import type {
+import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import { ObjectBase, TRecord } from '../../types';
+import {
     BsModel,
     IBsModel,
     IRestAdapter,
@@ -8,21 +8,31 @@ import type {
     TCSRFConfig,
     TModelState,
     TRestConfig,
-    TRestUrlOption
+    TRestUrlOption,
 } from '../types';
 
 export declare type TFilterLogic = 'AND' | 'OR';
 
 export declare type TFilterOperator =
-    | 'eq' | 'neq'
-    | 'gt' | 'gte'
-    | 'lt' | 'lte'
-    | 'contains' | 'fts' | 'tsquery'
-    | 'startsWith' | 'startswith'
-    | 'startWith' | 'startwith'
-    | 'endsWith' | 'endswith'
-    | 'endWith' | 'endwith'
-    | 'notin' | 'in';
+    | 'eq'
+    | 'neq'
+    | 'gt'
+    | 'gte'
+    | 'lt'
+    | 'lte'
+    | 'contains'
+    | 'fts'
+    | 'tsquery'
+    | 'startsWith'
+    | 'startswith'
+    | 'startWith'
+    | 'startwith'
+    | 'endsWith'
+    | 'endswith'
+    | 'endWith'
+    | 'endwith'
+    | 'notin'
+    | 'in';
 
 export declare type TFilterOption = {
     /**
@@ -41,7 +51,7 @@ export declare type TFilterOption = {
      * ORM custom data type, ex: 'ulid'.
      */
     type?: string;
-}
+};
 
 export declare type TSortDirection = 'asc' | 'desc';
 
@@ -61,7 +71,7 @@ export declare type TSortOption = {
      * Sort direction, valid values: <tt>asc, desc</tt>
      */
     direction: TSortDirection;
-}
+};
 
 export declare type TQueryParameter = {
     page?: number;
@@ -69,28 +79,28 @@ export declare type TQueryParameter = {
     filters?: TFilterOption[];
     sorts?: TSortOption[];
     logic: TFilterLogic;
-}
+};
 
 export declare type TDataStoreConfig = TRecord & {
-    idProperty: string | undefined;
-    dataProperty: string | undefined;
-    totalProperty: string | undefined;
+    idProperty?: string;
+    dataProperty?: string;
+    totalProperty?: string;
     pageSize?: number;
     remoteFilter?: boolean;
     remotePaging?: boolean;
     remoteSort?: boolean;
     restProxy?: TRestUrlOption;
     csrfConfig?: TCSRFConfig;
-    filterLogic: TFilterLogic;
-    filters: TFilterOption[];
-    sortOptions: TSortOption[];
-}
+    filterLogic?: TFilterLogic;
+    filters?: TFilterOption[];
+    sortOptions?: TSortOption[];
+};
 
 export declare type TDataStoreState = TModelState & {
     length: number;
     totalCount: number;
     currentPage: number;
-}
+};
 
 /**
  * Class AbstractStore is superclass of {@link BsArrayStore}, and {@link BsStore}.
@@ -98,10 +108,6 @@ export declare type TDataStoreState = TModelState & {
  * methods used by those subclasses.
  */
 export declare class AbstractStore implements ObjectBase {
-    protected readonly _appendErrMsg = 'Can not assign primitive type to the dataset.';
-    protected readonly _proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
-    protected readonly _emptyDataErrMsg = 'Server returns empty data.';
-    protected readonly _parsingDataErrMsg = 'Unable to parse data coming from server.';
     protected _config: TDataStoreConfig;
     protected _filters: TFilterOption[];
     protected _filteredItems: TBsModel[];
@@ -131,7 +137,7 @@ export declare class AbstractStore implements ObjectBase {
      *
      * @param config  The configuration properties
      */
-    constructor(config?: TRecord);
+    constructor(config?: TDataStoreConfig);
 
     /**
      * Get the class name of this instance.

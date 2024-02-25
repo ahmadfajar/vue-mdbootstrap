@@ -1,11 +1,10 @@
-import type { AxiosInstance, AxiosResponse } from 'axios';
-import type { TRecord } from '../../types';
-import type { AbstractStore, TBsModel, TSortDirection, TSortOption } from '../types';
+import { AxiosInstance, AxiosResponse } from 'axios';
+import { AbstractStore, TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from '../types';
 
 export declare type TSuccessResponse = {
     success: boolean;
     message: string;
-}
+};
 
 /**
  * Data Store class to work with collection of entity objects and remote API.
@@ -39,7 +38,7 @@ export declare class BsStore extends AbstractStore {
      * @param config  The configuration properties
      * @param adapter Axios adapter instance
      */
-    constructor(config: TRecord, adapter?: AxiosInstance);
+    constructor(config: TDataStoreConfig, adapter?: AxiosInstance);
 
     /**
      * Returns dataset from the active page.
@@ -173,7 +172,10 @@ export declare class BsStore extends AbstractStore {
      * @param options   The field for sorting or `TSortOption` objects
      * @param direction The sort direction
      */
-    sort(options: string | string[] | TSortOption | TSortOption[], direction?: TSortDirection): Promise<TBsModel[]>;
+    sort(
+        options: string | string[] | TSortOption | TSortOption[],
+        direction?: TSortDirection
+    ): Promise<TBsModel[]>;
 }
 
 export declare interface IBsStore extends BsStore {}

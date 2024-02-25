@@ -117,6 +117,9 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
                     ds.setFilters([], true);
                     ds.load().then(() => {
                         emit('data-bind', ds.dataItems);
+                        fieldValues.value = [];
+                        selectedItems.value = [];
+                        emit('update:model-value', thisProps.multiple ? [] : undefined);
                     }).catch((error) => {
                         emit('data-error', error);
                         console.warn(error);

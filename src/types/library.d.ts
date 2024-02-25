@@ -6,9 +6,9 @@ import {
     ComponentInternalInstance,
     ComponentPublicInstance,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
-import { RouterLinkProps } from 'vue-router';
+import { RouteLocationRaw } from 'vue-router';
 import { INotificationProvider } from '../components/Notification/types';
 
 export declare type TBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xs';
@@ -22,12 +22,12 @@ export declare type TRecord = Record<string, unknown>;
 export declare type TValueText<T> = {
     value: T;
     text: string;
-}
+};
 
 export declare type TDebounce = {
     timerId?: number;
     lastExec?: number;
-}
+};
 
 export declare type TDirectiveBinding = {
     handler: VoidFunction | EventListener | EventListenerTarget;
@@ -35,15 +35,34 @@ export declare type TDirectiveBinding = {
     target?: string | Element | Document | Window;
 };
 
-export declare type TRouterLinkProps = AllowedComponentProps & VNodeProps & typeof RouterLinkProps & {
-    href?: string;
-};
+export declare type TRouterLinkProps = AllowedComponentProps &
+    VNodeProps & {
+        id?: string;
+        href?: string;
+        /**
+         * Route Location the link should navigate to when clicked on.
+         */
+        to?: RouteLocationRaw;
+        /**
+         * Calls `router.replace` instead of `router.push`.
+         */
+        replace?: boolean;
+        /**
+         * Class to apply when the link is active
+         */
+        activeClass?: string;
+        /**
+         * Class to apply when the link is exact active
+         */
+        exactActiveClass?: string;
+        onClick?: (evt: Event) => void;
+    };
 
 export declare type TRouterOptionProps = {
     activeClass?: string;
     path?: string;
     url?: string;
-}
+};
 
 export declare type TEventListenerBinding = {
     handler: EventListenerOrEventListenerObject;
@@ -58,17 +77,17 @@ declare type TRect = {
     right?: number;
     top?: number;
     bottom?: number;
-}
+};
 
 declare type TAppBar = {
     height: number;
     stickyTop: boolean;
     fixedTop: boolean;
-}
+};
 
 declare type TSideDrawer = {
     [K in TLabelPosition]: TRect;
-}
+};
 
 export declare type TMdbAppObject = {
     left: number;
@@ -79,12 +98,12 @@ export declare type TMdbAppObject = {
     width: number;
     appbar: TAppBar;
     sideDrawer: TSideDrawer;
-}
+};
 
 export declare type TVueMdb = {
     app: Record<string, TMdbAppObject>;
     notification: INotificationProvider;
-}
+};
 
 export declare interface ObjectBase {
     /**
@@ -119,15 +138,15 @@ export declare interface IEventResult {
 
 export declare type EventClosableProps = {
     onClose?: VoidFunction;
-}
+};
 
 export declare type EventUpdateOpenProps = {
     'onUpdate:open'?: (state: boolean) => void;
-}
+};
 
 export declare type EventUpdateModelValueProps<T> = {
     'onUpdate:model-value'?: (value: T) => void;
-}
+};
 
 export declare interface IVNode extends VNode {
     ctx: ComponentInternalInstance;
@@ -144,16 +163,31 @@ export declare interface IComponentInstance extends ComponentInternalInstance {
  */
 export declare function createVueMdb(rootComponent: Component): App;
 
-export { IHttpService, AxiosPlugin } from '../utils/types/AxiosPlugin';
-export { default as Helper } from '../utils/types/Helper';
-export * from '../model/types';
-export * as Color from '../mixins/types/colorUtils';
+export {
+    EventListener,
+    useAddResizeListener,
+    useRemoveResizeListener,
+} from '../mixins/types/DomHelper';
 export * as StringHelper from '../mixins/types/StringHelper';
-export { EventListener, useAddResizeListener, useRemoveResizeListener } from '../mixins/types/DomHelper';
+export * as Color from '../mixins/types/colorUtils';
+export * from '../model/types';
+export { AxiosPlugin, IHttpService } from '../utils/types/AxiosPlugin';
+export { default as Helper } from '../utils/types/Helper';
 
 export {
-    useMobileDevice, useBreakpointMax, useBreakpointMin, useAxiosPlugin,
-    useHttpService, useVueMdbService, useVueMdbNotification, useCurrentRoute,
-    useMergeClass, useRenderSlot, useRenderSlotDefault, useRenderSlotWithWrapper,
-    useRenderSlotWrapperWithCondition, useRenderTransition, useGenerateId
+    useAxiosPlugin,
+    useBreakpointMax,
+    useBreakpointMin,
+    useCurrentRoute,
+    useGenerateId,
+    useHttpService,
+    useMergeClass,
+    useMobileDevice,
+    useRenderSlot,
+    useRenderSlotDefault,
+    useRenderSlotWithWrapper,
+    useRenderSlotWrapperWithCondition,
+    useRenderTransition,
+    useVueMdbNotification,
+    useVueMdbService,
 } from '../mixins/types/CommonApi';

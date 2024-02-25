@@ -42,7 +42,7 @@ export declare type TMaskLoaderOptionProps = {
      * @deprecated
      * Use `type` instead.
      */
-    spinnerType?: string;
+    spinnerType?: TMaskLoaderVariant;
     /**
      * Mask loader variant type.
      */

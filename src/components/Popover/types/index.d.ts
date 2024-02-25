@@ -4,15 +4,23 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 import { EventClosableProps, EventUpdateOpenProps } from '../../../types';
 
 export declare type TPopoverPosition =
-    'top' | 'top-left' | 'top-right' |
-    'bottom' | 'bottom-left' | 'bottom-right' |
-    'left' | 'left-top' | 'left-bottom' |
-    'right' | 'right-top' | 'right-bottom';
+    | 'top'
+    | 'top-left'
+    | 'top-right'
+    | 'bottom'
+    | 'bottom-left'
+    | 'bottom-right'
+    | 'left'
+    | 'left-top'
+    | 'left-bottom'
+    | 'right'
+    | 'right-top'
+    | 'right-bottom';
 
 export declare type TPopupOptions = {
     /**
@@ -39,7 +47,7 @@ export declare type TPopupOptions = {
      * The backdrop overlay opacity.
      */
     overlayOpacity?: string | number;
-}
+};
 
 export declare type TPopoverOptionProps = TPopupOptions & {
     /**
@@ -66,15 +74,18 @@ export declare type TPopoverOptionProps = TPopupOptions & {
      * HTML element to calculate this Popover display position.
      */
     trigger?: Element | string;
-}
+};
 
 export declare type TBsPopover = ComponentObjectPropsOptions<TPopoverOptionProps>;
 
-declare type AllowedPopoverProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventClosableProps & EventUpdateOpenProps;
+declare type AllowedPopoverProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventClosableProps &
+    EventUpdateOpenProps;
 
 export declare const BsPopover: {
-    new(): {
+    new (): {
         $props: AllowedPopoverProps & TPopoverOptionProps;
         $slots: {
             default?: () => VNode[];

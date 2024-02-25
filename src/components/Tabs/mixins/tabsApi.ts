@@ -158,8 +158,8 @@ function createTabItemLink(
         // onClick: (e: Event) => tabItemOnClick(props, provider, tabIndex.value, e),
     };
     if (mountedEvent) {
-        thisProps.onVnodeBeforeMount = (vnode: IVNode) => {
-            const vm = vnode.ctx;
+        thisProps.onVnodeBeforeMount = (vnode: VNode) => {
+            const vm = (vnode as IVNode).ctx;
             if (vm && provider) {
                 tabIndex.value = provider.registerTabItem(vm) - 1;
             }
@@ -188,8 +188,8 @@ function createTabItemRouter(
         // onClick: (e: Event) => tabItemOnClick(props, provider, tabIndex.value, e),
     };
     if (mountedEvent) {
-        thisProps.onVnodeBeforeMount = (vnode: IVNode) => {
-            const vm = vnode.ctx;
+        thisProps.onVnodeBeforeMount = (vnode: VNode) => {
+            const vm = (vnode as IVNode).ctx;
             if (vm && provider) {
                 tabIndex.value = provider.registerTabItem(vm) - 1;
             }

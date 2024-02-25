@@ -443,7 +443,9 @@ export function useRegisterListboxWatchers(
 
     watchEffect(
         () => {
-            showSearchbox.value = (dataSource && (dataSource.storeState.totalCount >= minItems)) || false;
+            if (showSearchbox.value === false) {
+                showSearchbox.value = (dataSource && (dataSource.storeState.totalCount >= minItems)) || false;    
+            }
             if (showSearchbox.value && searchboxRef.value) {
                 listviewStyles.maxHeight = maxHeight - (searchboxRef.value.offsetHeight || 63) + 'px';
             }

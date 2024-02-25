@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 11/12/2023 00:42
+ * @since  05/07/2018, modified: 26/02/2024 03:41
  */
 export default class Helper {
     /**
@@ -32,7 +32,11 @@ export default class Helper {
      * @param fallbackFn  The fallback function
      * @returns The object property value
      */
-    static getNestedValue(obj: unknown, path: string[], fallbackFn?: CallableFunction): CallableFunction | never | unknown;
+    static getNestedValue(
+        obj: unknown,
+        path: string[],
+        fallbackFn?: CallableFunction
+    ): CallableFunction | never | unknown;
     /**
      * Get a value from an Object property.
      *
@@ -49,21 +53,21 @@ export default class Helper {
      * @param allowEmptyString  Allow empty string or not
      * @returns TRUE if value is empty otherwise False
      */
-    static isEmpty(value: unknown, allowEmptyString?: boolean): value is (null | undefined | [] | '');
+    static isEmpty(value: unknown, allowEmptyString?: boolean): value is null | undefined | [] | '';
     /**
      * Check a value is an empty object or not.
      *
      * @param value The value to check
      * @returns TRUE if value is empty otherwise False
      */
-    static isEmptyObject(value: unknown): value is (null | undefined);
+    static isEmptyObject(value: unknown): value is null | undefined;
     /**
      * Check the type of value is Array or not. NULL value is considered as not an Array.
      *
      * @param value The value to check
      * @returns TRUE if the given value is an Array otherwise FALSE
      */
-    static isArray(value: unknown): value is [];
+    static isArray(value: unknown): value is any[];
     /**
      * Check the type of value is Function or not. NULL or UNDEFINED is considered as not a Function.
      *
@@ -91,7 +95,7 @@ export default class Helper {
      * @param value The value to check
      * @returns TRUE if the data type is primitive otherwise False
      */
-    static isPrimitive(value: unknown): value is (string | number | boolean | symbol);
+    static isPrimitive(value: unknown): value is string | number | boolean | symbol;
     /**
      * Check the type of value, whether it is a string or not.
      *
@@ -116,7 +120,10 @@ export default class Helper {
      * @param unit  The dimension to add
      * @returns Css inline dimension
      */
-    static cssUnit(value: string | number | undefined | null, unit?: string | undefined | null): string | undefined;
+    static cssUnit(
+        value: string | number | undefined | null,
+        unit?: string | undefined | null
+    ): string | undefined;
     /**
      * Sort an array of object.
      *

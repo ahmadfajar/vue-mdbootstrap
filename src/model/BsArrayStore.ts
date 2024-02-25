@@ -2,7 +2,7 @@ import type { AxiosResponse } from 'axios';
 import meanBy from 'lodash/meanBy';
 import sumBy from 'lodash/sumBy';
 import { AbstractStore } from '../model';
-import type { TBsModel, TRecord, TSortDirection, TSortOption } from '../types';
+import type { TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from './types';
 import Helper from '../utils/Helper';
 
 /**
@@ -25,7 +25,7 @@ import Helper from '../utils/Helper';
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 11/12/2023 00:20
+ * @since  13/03/2019 modified: 26/02/2024 03:16
  */
 export default class BsArrayStore extends AbstractStore {
     /**
@@ -34,7 +34,7 @@ export default class BsArrayStore extends AbstractStore {
      * @param data   Collection of records to be assigned
      * @param config The configuration properties
      */
-    constructor(data: unknown[], config: TRecord = {}) {
+    constructor(data: unknown[], config: TDataStoreConfig = {}) {
         super(config);
 
         if (Array.isArray(data) && data.length > 0) {
@@ -43,15 +43,22 @@ export default class BsArrayStore extends AbstractStore {
     }
 
     get dataItems(): TBsModel[] {
-        const page = (this.currentPage > 0 && this.currentPage <= this.totalPages) ? this.currentPage - 1 : 0;
-        const offset = this.pageSize > 0 ? (page * this.pageSize) : 0;
+        const page =
+            this.currentPage > 0 && this.currentPage <= this.totalPages ? this.currentPage - 1 : 0;
+        const offset = this.pageSize > 0 ? page * this.pageSize : 0;
         let result: TBsModel[];
 
         if (this.filters.length > 0) {
             this._filteredItems = this.localFilter();
-            result = this._filteredItems.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
+            result = this._filteredItems.slice(
+                offset,
+                this.pageSize > 0 ? offset + this.pageSize : undefined
+            );
         } else {
-            result = this._items.slice(offset, this.pageSize > 0 ? (offset + this.pageSize) : undefined);
+            result = this._items.slice(
+                offset,
+                this.pageSize > 0 ? offset + this.pageSize : undefined
+            );
         }
 
         this._state.length = result.length;
@@ -63,8 +70,8 @@ export default class BsArrayStore extends AbstractStore {
     }
 
     aggregateCountBy(field: string, value: unknown): number {
-        const results = this._items.filter(item =>
-            value === Helper.getObjectValueByPath(item, field)
+        const results = this._items.filter(
+            (item) => value === Helper.getObjectValueByPath(item, field)
         );
 
         return results.length;
@@ -127,7 +134,7 @@ export default class BsArrayStore extends AbstractStore {
      */
     sort(
         options: string | string[] | TSortOption | TSortOption[],
-        direction: TSortDirection = 'asc',
+        direction: TSortDirection = 'asc'
     ): TBsModel[] {
         this.createSorters(options, direction, true);
         this._items = this.localSort();

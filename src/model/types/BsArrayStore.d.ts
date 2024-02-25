@@ -1,6 +1,5 @@
-import type { AxiosResponse } from 'axios';
-import type { TRecord } from '../../types';
-import type { AbstractStore, TBsModel, TSortDirection, TSortOption } from '../types';
+import { AxiosResponse } from 'axios';
+import { AbstractStore, TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from '../types';
 
 /**
  * Data store class to work with collection of entity objects locally.
@@ -28,7 +27,7 @@ export declare class BsArrayStore extends AbstractStore {
      * @param data   Collection of records to be assigned
      * @param config The configuration properties
      */
-    constructor(data: unknown[], config?: TRecord);
+    constructor(data: unknown[], config?: TDataStoreConfig);
 
     /**
      * Returns dataset from the active page.
@@ -96,8 +95,10 @@ export declare class BsArrayStore extends AbstractStore {
      * @param direction  The sort direction
      * @returns The sorted dataset.
      */
-    sort(options: string | string[] | TSortOption | TSortOption[], direction?: TSortDirection): TBsModel[];
+    sort(
+        options: string | string[] | TSortOption | TSortOption[],
+        direction?: TSortDirection
+    ): TBsModel[];
 }
 
-export declare interface IArrayStore extends BsArrayStore {
-}
+export declare interface IArrayStore extends BsArrayStore {}

@@ -100,8 +100,8 @@ function createListTileRouterElement(
             class: classes.value,
             activeClass: props.activeClass || 'active',
             to: props.path,
-            onVnodeMounted: (vNode: IVNode) => {
-                instance.value = new ListItem(<string>props.id, 'BsListTile', vNode.ctx, emit);
+            onVnodeMounted: (vNode: VNode) => {
+                instance.value = new ListItem(<string>props.id, 'BsListTile', (vNode as IVNode).ctx, emit);
                 provider?.addItem(instance.value);
             },
             onVnodeBeforeUnmount: () => instance.value && provider?.removeItem(instance.value),

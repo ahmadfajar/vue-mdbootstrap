@@ -13,6 +13,7 @@ Released: March xx, 2024
 - **BsButton**: 
   - Improve css styles when `dropdown-toggle` and `tonal` property is defined.
   - improve css styles on `xs` (small) button size.
+- **BsCombobox**, **BsPopover**: improve popover display placement coordinates.
 - **BsNumericField**: improve classic form field styles.
 - **BsListTile**: improvement when the `navigable` property is defined.
 - **BsTabs**: 
@@ -24,16 +25,17 @@ Released: March xx, 2024
 
 - **BsButton**: fix border style on `flat` button variant.
 - **BsCheckboxGroup**, **BsRadioGroup**: bug fix when `column` props is defined.
+- **BsListbox**: fix searchbox visibility.
 - **BsListNavItem**: fix incorrect html tag when component is disabled.
 - **BsTabs**: 
   - Fix `tabClass` property for custom css not applied.
   - Fix activeTab not sync when `model-value` is changed programmatically.
 - **BsNumericField**: 
   - Fix `maxValue` and `minValue` property not implement correctly.
-  - Fix validation using external validator
+  - Fix validation using external validator.
 - **BsTextField**: 
-  - Fix field value doesn't change immediately when the type props is `password`
-  - Fix validation using external validator
+  - Fix field value doesn't change immediately when the type props is `password`.
+  - Fix validation using external validator.
 - **BsTextArea**, **BsChipField**, **BsCombobox**: Fix validation using external validator.
 
 

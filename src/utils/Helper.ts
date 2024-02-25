@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 11/12/2023 00:42
+ * @since  05/07/2018, modified: 26/02/2024 03:41
  */
 export default class Helper {
     /**
@@ -12,7 +12,7 @@ export default class Helper {
      * @returns Array of numbers
      */
     static createRange(length: number): number[] {
-        return Array.from({length}, (v, k) => k);
+        return Array.from({ length }, (v, k) => k);
     }
 
     /**
@@ -41,7 +41,7 @@ export default class Helper {
     static getNestedValue(
         obj: unknown,
         path: string[],
-        fallbackFn?: CallableFunction,
+        fallbackFn?: CallableFunction
     ): CallableFunction | never | unknown {
         if (!Array.isArray(path)) {
             return fallbackFn;
@@ -78,7 +78,11 @@ export default class Helper {
      * @param fallbackFn The fallback function
      * @returns The object property value
      */
-    static getObjectValueByPath(obj: unknown, path: string, fallbackFn?: CallableFunction): unknown {
+    static getObjectValueByPath(
+        obj: unknown,
+        path: string,
+        fallbackFn?: CallableFunction
+    ): unknown {
         if (!path) {
             return fallbackFn;
         }
@@ -97,13 +101,13 @@ export default class Helper {
      * @param allowEmptyString  Allow empty string or not
      * @returns TRUE if value is empty otherwise False
      */
-    static isEmpty(
-        value: unknown,
-        allowEmptyString = false,
-    ): value is (null | undefined | [] | '') {
-        return (value == null) ||
+    static isEmpty(value: unknown, allowEmptyString = false): value is null | undefined | [] | '' {
+        return (
+            value == null ||
+            typeof value === 'undefined' ||
             (!allowEmptyString ? value === '' : false) ||
-            (Array.isArray(value) && value.length === 0);
+            (Array.isArray(value) && value.length === 0)
+        );
     }
 
     /**
@@ -112,8 +116,12 @@ export default class Helper {
      * @param value The value to check
      * @returns TRUE if value is empty otherwise False
      */
-    static isEmptyObject(value: unknown): value is (null | undefined) {
-        return value == null || (Helper.isObject(value) && Object.entries(value).length === 0);
+    static isEmptyObject(value: unknown): value is null | undefined {
+        return (
+            value == null ||
+            typeof value === 'undefined' ||
+            (Helper.isObject(value) && Object.entries(value).length === 0)
+        );
     }
 
     /**
@@ -122,8 +130,8 @@ export default class Helper {
      * @param value The value to check
      * @returns TRUE if the given value is an Array otherwise FALSE
      */
-    static isArray(value: unknown): value is [] {
-        return (value != null && Array.isArray(value));
+    static isArray(value: unknown): value is any[] {
+        return value != null && Array.isArray(value);
     }
 
     /**
@@ -133,7 +141,7 @@ export default class Helper {
      * @returns TRUE if the given value is a Function otherwise FALSE
      */
     static isFunction(value: unknown): value is CallableFunction {
-        return value != null && (typeof value === 'function');
+        return value != null && typeof value === 'function';
     }
 
     /**
@@ -143,7 +151,7 @@ export default class Helper {
      * @returns TRUE if the given value is a Number otherwise FALSE
      */
     static isNumber(value: unknown): value is number {
-        return value != null && (typeof value === 'number');
+        return value != null && typeof value === 'number';
     }
 
     /**
@@ -153,7 +161,7 @@ export default class Helper {
      * @returns TRUE if the given value is an object otherwise FALSE
      */
     static isObject(value: unknown): value is object {
-        return value != null && (typeof value === 'object');
+        return value != null && typeof value === 'object';
     }
 
     /**
@@ -162,12 +170,13 @@ export default class Helper {
      * @param value The value to check
      * @returns TRUE if the data type is primitive otherwise False
      */
-    static isPrimitive(value: unknown): value is (string | number | boolean | symbol) {
-        return value != null && (
-            typeof value === 'string' ||
-            typeof value === 'number' ||
-            typeof value === 'boolean' ||
-            typeof value === 'symbol'
+    static isPrimitive(value: unknown): value is string | number | boolean | symbol {
+        return (
+            value != null &&
+            (typeof value === 'string' ||
+                typeof value === 'number' ||
+                typeof value === 'boolean' ||
+                typeof value === 'symbol')
         );
     }
 
@@ -178,7 +187,7 @@ export default class Helper {
      * @returns TRUE if the given value is a String otherwise FALSE
      */
     static isString(value: unknown): value is string {
-        return value != null && (typeof value === 'string');
+        return value != null && typeof value === 'string';
     }
 
     /**
@@ -211,7 +220,7 @@ export default class Helper {
      */
     static cssUnit(
         value: string | number | undefined | null,
-        unit?: string | undefined | null,
+        unit?: string | null
     ): string | undefined {
         const _px = unit || 'px';
 
@@ -219,8 +228,10 @@ export default class Helper {
             if (value.toLowerCase() === 'auto') {
                 return value;
             } else if (
-                value.endsWith('px') || value.endsWith('em') ||
-                value.endsWith('rem') || value.endsWith('%')
+                value.endsWith('px') ||
+                value.endsWith('em') ||
+                value.endsWith('rem') ||
+                value.endsWith('%')
             ) {
                 return value;
             } else {
@@ -251,7 +262,7 @@ export default class Helper {
             let sortB: never = <never>Helper.getObjectValueByPath(b, key);
 
             if (isDescending) {
-                [sortA, sortB] = [sortB, sortA]
+                [sortA, sortB] = [sortB, sortA];
             }
 
             // Check if both are numbers
@@ -265,10 +276,10 @@ export default class Helper {
             }
 
             // @ts-ignore
-            [sortA, sortB] = [sortA, sortB].map(s => (
+            [sortA, sortB] = [sortA, sortB].map((s) =>
                 // @ts-ignore
                 (s || '').toString().toLocaleLowerCase()
-            ));
+            );
 
             if (sortA > sortB) {
                 return 1;
@@ -289,23 +300,28 @@ export default class Helper {
      */
     static uuid(standard = false): string {
         if (standard) {
-            if (crypto != null && typeof crypto.getRandomValues === 'function') {
+            if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
                 // @ts-ignore
-                return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g,
+                return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(
+                    /[018]/g,
                     // @ts-ignore
-                    c => (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-                )
+                    (c) =>
+                        (
+                            c ^
+                            (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
+                        ).toString(16)
+                );
             } else {
                 let value = Date.now();
                 if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
                     value = performance.now(); // use high-precision timer if available
                 }
 
-                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+                return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
                     const r = (value + Math.random() * 16) % 16 | 0;
                     value = Math.floor(value / 16);
 
-                    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                    return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16);
                 });
             }
         }

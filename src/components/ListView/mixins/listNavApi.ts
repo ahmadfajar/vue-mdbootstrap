@@ -158,7 +158,7 @@ function renderRouterLink(
 
     return useRenderRouter({
             class: classes.value,
-            activeClass: props.activeClass || 'active',
+            activeClass: cmpProps.activeClass || 'active',
             to: cmpProps.path,
             onClick: (evt: Event) => onVNodeClickHandler(cmpProps, isActive, isExpanded, instance, evt, provider)
         },

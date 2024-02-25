@@ -9,6 +9,7 @@ import type {
     TBsModel,
     TDataStoreConfig,
     TDataStoreState,
+    TFilterLogic,
     TFilterOperator,
     TFilterOption,
     TModelOptions,
@@ -17,7 +18,7 @@ import type {
     TRestConfig,
     TRestUrlOption,
     TSortDirection,
-    TSortOption
+    TSortOption,
 } from '../types';
 import { autoBind } from '../utils/AutoBind';
 import Helper from '../utils/Helper';
@@ -33,7 +34,7 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 16/12/2023 14:45
+ * @since  15/03/2019 modified: 26/02/2024 00:36
  */
 export default class AbstractStore implements ObjectBase {
     protected _config: TDataStoreConfig;
@@ -55,11 +56,13 @@ export default class AbstractStore implements ObjectBase {
     }
 
     static isCandidateForFilterOption(item: TRecord): item is TFilterOption {
-        return Object.keys(item).every(k => ['property', 'value', 'operator', 'type'].includes(k));
+        return Object.keys(item).every((k) =>
+            ['property', 'value', 'operator', 'type'].includes(k)
+        );
     }
 
     static isCandidateForSortOption(item: TRecord): item is TSortOption {
-        return Object.keys(item).every(k => ['property', 'direction'].includes(k));
+        return Object.keys(item).every((k) => ['property', 'direction'].includes(k));
     }
 
     /**
@@ -67,7 +70,7 @@ export default class AbstractStore implements ObjectBase {
      *
      * @param config  The configuration properties
      */
-    constructor(config: TRecord = {}) {
+    constructor(config: TDataStoreConfig = {}) {
         const initialCfg: TDataStoreConfig = {
             idProperty: undefined,
             dataProperty: undefined,
@@ -75,12 +78,10 @@ export default class AbstractStore implements ObjectBase {
             filterLogic: 'AND',
             filters: [],
             sortOptions: [],
-            ...config
+            ...config,
         };
-        initialCfg.pageSize = (
-            initialCfg.pageSize && Helper.isNumber(initialCfg.pageSize)
-                ? initialCfg.pageSize : -1
-        );
+        initialCfg.pageSize =
+            initialCfg.pageSize && Helper.isNumber(initialCfg.pageSize) ? initialCfg.pageSize : -1;
 
         this._config = initialCfg;
         this._filteredItems = [] as TBsModel[];
@@ -109,7 +110,7 @@ export default class AbstractStore implements ObjectBase {
     }
 
     get $_class(): string {
-        return (Object.getPrototypeOf(this)).constructor.name;
+        return Object.getPrototypeOf(this).constructor.name;
     }
 
     destroy() {
@@ -226,14 +227,13 @@ export default class AbstractStore implements ObjectBase {
     set defaultFilters(values: TFilterOption[] | TFilterOption) {
         this._config.filters = Array.isArray(values)
             ? values
-            : (
-                Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)
-                    ? [values] : []
-            );
+            : Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)
+            ? [values]
+            : [];
 
-        const newFilters = this.filters.filter(flt => {
+        const newFilters = this.filters.filter((flt) => {
             let found = false;
-            for (const filter of this._config.filters) {
+            for (const filter of this._config.filters as TFilterOption[]) {
                 if (flt.property === filter.property) {
                     found = true;
                     break;
@@ -259,12 +259,12 @@ export default class AbstractStore implements ObjectBase {
         field: string,
         value: string | number | boolean,
         operator?: TFilterOperator,
-        type?: string,
+        type?: string
     ): this {
         const flt: TFilterOption = {
-            'property': field,
-            'value': value,
-            'operator': <TFilterOperator>(Helper.isEmpty(operator) ? 'eq' : operator.toLowerCase())
+            property: field,
+            value: value,
+            operator: <TFilterOperator>(Helper.isEmpty(operator) ? 'eq' : operator.toLowerCase()),
         };
         if (type) {
             flt.type = type;
@@ -275,13 +275,13 @@ export default class AbstractStore implements ObjectBase {
         return this;
     }
 
-    setFilters(
-        newFilters: TFilterOption[] | TFilterOption,
-        includeDefault = false,
-    ): this {
+    setFilters(newFilters: TFilterOption[] | TFilterOption, includeDefault = false): this {
         if (Array.isArray(newFilters)) {
             this.filters = includeDefault ? newFilters.concat(this.defaultFilters) : newFilters;
-        } else if (Helper.isObject(newFilters) && AbstractStore.isCandidateForFilterOption(newFilters)) {
+        } else if (
+            Helper.isObject(newFilters) &&
+            AbstractStore.isCandidateForFilterOption(newFilters)
+        ) {
             this.filters = includeDefault ? [newFilters].concat(this.defaultFilters) : [newFilters];
         } else {
             this.filters = includeDefault ? this.defaultFilters : [];
@@ -303,7 +303,7 @@ export default class AbstractStore implements ObjectBase {
     }
 
     get sorters(): TSortOption[] {
-        return this._config.sortOptions;
+        return this._config.sortOptions as TSortOption[];
     }
 
     set sorters(sortOptions: TSortOption[] | TSortOption) {
@@ -318,30 +318,22 @@ export default class AbstractStore implements ObjectBase {
     }
 
     find(property: string, value: unknown, startIndex = 0): TBsModel | undefined {
-        return this._items.find((item, idx) =>
-            item.get(property) === value && idx >= startIndex
-        );
+        return this._items.find((item, idx) => item.get(property) === value && idx >= startIndex);
     }
 
-    findBy(
-        predicate: (value: TBsModel, index: number) => boolean,
-    ): TBsModel | undefined {
+    findBy(predicate: (value: TBsModel, index: number) => boolean): TBsModel | undefined {
         return this._items.find(predicate);
     }
 
-    findIndex(
-        property: string,
-        value: unknown,
-        startIndex = 0
-    ): number {
-        return this._items.findIndex((item, idx) =>
-            item.get(property) === value && idx >= startIndex
+    findIndex(property: string, value: unknown, startIndex = 0): number {
+        return this._items.findIndex(
+            (item, idx) => item.get(property) === value && idx >= startIndex
         );
     }
 
     localFilter(): TBsModel[] {
         if (this.filters.length > 0) {
-            return this._items.filter(item => {
+            return this._items.filter((item) => {
                 const conditions = [];
 
                 for (const flt of this.filters) {
@@ -359,11 +351,23 @@ export default class AbstractStore implements ObjectBase {
                     } else if (operator === 'neq') {
                         conditions.push(itemValue !== flt.value);
                     } else if (operator === 'contains' || flt.operator === 'fts') {
-                        conditions.push(String(itemValue).toLowerCase().includes(String(flt.value).toLowerCase()));
+                        conditions.push(
+                            String(itemValue)
+                                .toLowerCase()
+                                .includes(String(flt.value).toLowerCase())
+                        );
                     } else if (operator === 'startswith' || flt.operator === 'startwith') {
-                        conditions.push(String(itemValue).toLowerCase().startsWith(String(flt.value).toLowerCase()));
+                        conditions.push(
+                            String(itemValue)
+                                .toLowerCase()
+                                .startsWith(String(flt.value).toLowerCase())
+                        );
                     } else if (operator === 'endswith' || flt.operator === 'endwith') {
-                        conditions.push(String(itemValue).toLowerCase().endsWith(String(flt.value).toLowerCase()));
+                        conditions.push(
+                            String(itemValue)
+                                .toLowerCase()
+                                .endsWith(String(flt.value).toLowerCase())
+                        );
                     } else if (operator === 'notin' && Array.isArray(flt.value)) {
                         conditions.push(!flt.value.includes(itemValue));
                     } else if (operator === 'in' && Array.isArray(flt.value)) {
@@ -373,9 +377,9 @@ export default class AbstractStore implements ObjectBase {
                     }
                 }
                 if (this._config.filterLogic === 'OR') {
-                    return conditions.some(it => it === true);
+                    return conditions.some((it) => it === true);
                 } else {
-                    return conditions.every(it => it === true);
+                    return conditions.every((it) => it === true);
                 }
             });
         } else {
@@ -426,9 +430,11 @@ export default class AbstractStore implements ObjectBase {
     }
 
     isCandidateForModel(item: object): boolean {
-        return Helper.isObject(item)
-            && !Helper.isEmpty(this._config.idProperty)
-            && Object.hasOwn(item, <string>this._config.idProperty);
+        return (
+            Helper.isObject(item) &&
+            !Helper.isEmpty(this._config.idProperty) &&
+            Object.hasOwn(item, <string>this._config.idProperty)
+        );
     }
 
     remove(items: TBsModel[] | TBsModel): void {
@@ -439,7 +445,7 @@ export default class AbstractStore implements ObjectBase {
         } else if (this.isCandidateForModel(items) || AbstractStore.isModel(items)) {
             const idProperty = <string>this._config.idProperty;
             const index = this.findIndex(idProperty, items.get(idProperty));
-            (index > -1) && this.removeAt(index);
+            index > -1 && this.removeAt(index);
         } else {
             throw Error('Item must be instance of BsModel.');
         }
@@ -447,10 +453,10 @@ export default class AbstractStore implements ObjectBase {
 
     removeAt(index: number, count = 1): void {
         if (index < 0) {
-            throw Error('Parameter \'index\' is out of bound.');
+            throw Error("Parameter 'index' is out of bound.");
         }
         if (count < 1) {
-            throw Error('Parameter \'count\' must be greater than \'0\'.');
+            throw Error("Parameter 'count' must be greater than '0'.");
         }
 
         const oldLength = this._items.length;
@@ -495,11 +501,11 @@ export default class AbstractStore implements ObjectBase {
             for (const flt of values) {
                 if (Helper.isObject(flt) && AbstractStore.isCandidateForFilterOption(flt)) {
                     const cFilter: TFilterOption = {
-                        'property': flt.property,
-                        'value': flt.value,
-                        'operator': <TFilterOperator>(
-                            Helper.isEmpty(flt.operator) ? 'eq' : flt.operator.toLowerCase()
-                        )
+                        property: flt.property,
+                        value: flt.value,
+                        operator: <TFilterOperator>(
+                            (Helper.isEmpty(flt.operator) ? 'eq' : flt.operator.toLowerCase())
+                        ),
                     };
                     if (flt.type) {
                         cFilter.type = flt.type;
@@ -509,11 +515,11 @@ export default class AbstractStore implements ObjectBase {
             }
         } else if (Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)) {
             const vFilter: TFilterOption = {
-                'property': values.property,
-                'value': values.value,
-                'operator': <TFilterOperator>(
-                    Helper.isEmpty(values.operator) ? 'eq' : values.operator.toLowerCase()
-                )
+                property: values.property,
+                value: values.value,
+                operator: <TFilterOperator>(
+                    (Helper.isEmpty(values.operator) ? 'eq' : values.operator.toLowerCase())
+                ),
             };
             if (values.type) {
                 vFilter.type = values.type;
@@ -527,19 +533,19 @@ export default class AbstractStore implements ObjectBase {
     createSorters(
         values: string | string[] | TSortOption | TSortOption[],
         direction: TSortDirection = 'asc',
-        replace = false,
+        replace = false
     ): TSortOption[] {
         const sorters: TSortOption[] = [];
         const createOption = (opt: TSortOption) => {
             return {
-                'property': <string>(opt.property ?? opt.field),
-                'direction': <TSortDirection>(
-                    opt.direction && !Helper.isEmpty(opt.direction)
+                property: <string>(opt.property ?? opt.field),
+                direction: <TSortDirection>(
+                    (opt.direction && !Helper.isEmpty(opt.direction)
                         ? opt.direction.toLowerCase()
-                        : direction.toLowerCase()
-                )
-            }
-        }
+                        : direction.toLowerCase())
+                ),
+            };
+        };
 
         if (Array.isArray(values)) {
             for (const fld of values) {
@@ -547,8 +553,8 @@ export default class AbstractStore implements ObjectBase {
                     sorters.push(createOption(fld));
                 } else if (Helper.isString(fld) && !Helper.isEmpty(fld)) {
                     sorters.push({
-                        'property': fld,
-                        'direction': <TSortDirection>direction.toLowerCase()
+                        property: fld,
+                        direction: <TSortDirection>direction.toLowerCase(),
                     });
                 }
             }
@@ -556,8 +562,8 @@ export default class AbstractStore implements ObjectBase {
             sorters.push(createOption(values));
         } else if (Helper.isString(values) && !Helper.isEmpty(values)) {
             sorters.push({
-                'property': values,
-                'direction': <TSortDirection>direction.toLowerCase()
+                property: values,
+                direction: <TSortDirection>direction.toLowerCase(),
             });
         }
 
@@ -584,23 +590,33 @@ export default class AbstractStore implements ObjectBase {
         }
 
         if (Helper.isEmptyObject(proxyCfg)) {
-            return new BsModel(item, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
+            return new BsModel(
+                item,
+                this.adapterInstance,
+                this._config.idProperty,
+                this._config.dataProperty
+            );
         } else {
             const data: TModelOptions = {
                 schema: item,
-                proxy: proxyCfg
+                proxy: proxyCfg,
             };
             if (!Helper.isEmptyObject(this._config.csrfConfig)) {
                 data.csrfConfig = <never>this._config.csrfConfig;
             }
 
-            return new BsModel(data, this.adapterInstance, this._config.idProperty, this._config.dataProperty);
+            return new BsModel(
+                data,
+                this.adapterInstance,
+                this._config.idProperty,
+                this._config.dataProperty
+            );
         }
     }
 
     queryParams(): TQueryParameter {
         const params: TQueryParameter = {
-            logic: this._config.filterLogic
+            logic: this._config.filterLogic as TFilterLogic,
         };
 
         if (this.currentPage > 0) {
@@ -613,7 +629,7 @@ export default class AbstractStore implements ObjectBase {
             params.filters = this.filters;
 
             if (!Helper.isEmpty(this._config.filters)) {
-                const defFilters = this._config.filters.filter(flt => {
+                const defFilters = this._config.filters.filter((flt) => {
                     let found = false;
                     for (const filter of this.filters) {
                         if (flt.property === filter.property) {
@@ -682,7 +698,7 @@ export default class AbstractStore implements ObjectBase {
             this._state.loading = false;
             this._state.hasError = true;
 
-            throw Error('The input \'source\' must be an Object or an Array.');
+            throw Error("The input 'source' must be an Object or an Array.");
         }
 
         this._state.loading = true;
@@ -692,7 +708,7 @@ export default class AbstractStore implements ObjectBase {
             this._items = items;
         } else {
             this._items = [];
-            items.forEach(v => {
+            items.forEach((v) => {
                 this._append(<never>v, true, true);
             });
         }
@@ -731,5 +747,4 @@ export default class AbstractStore implements ObjectBase {
         this._state.loading = false;
         this._state.hasError = false;
     }
-
 }

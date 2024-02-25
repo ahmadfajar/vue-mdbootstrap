@@ -1,4 +1,10 @@
-import type { AxiosError, AxiosHeaders, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import type {
+    AxiosError,
+    AxiosHeaders,
+    AxiosInstance,
+    AxiosRequestConfig,
+    AxiosResponse,
+} from 'axios';
 import { reactive, readonly } from 'vue';
 import { RestProxyAdapter } from '../model';
 import type {
@@ -12,7 +18,7 @@ import type {
     TRecord,
     TRestConfig,
     TRestMethodOptions,
-    TUrlOption
+    TUrlOption,
 } from '../types';
 import { autoBind } from '../utils/AutoBind';
 import Helper from '../utils/Helper';
@@ -86,7 +92,7 @@ export default class BsModel implements ObjectBase {
         schema: TRecord | TModelOptions,
         adapter?: AxiosInstance,
         idProperty = 'id',
-        dataProperty = 'data',
+        dataProperty = 'data'
     ) {
         this._restUrl = {} as TRestConfig;
 
@@ -125,7 +131,7 @@ export default class BsModel implements ObjectBase {
         this.state = readonly(this._state);
 
         const _dt: TRecord = {};
-        this.getFields().forEach(f => {
+        this.getFields().forEach((f) => {
             _dt[f] = this._schema[f];
         });
         if (!(idProperty in this._schema)) {
@@ -138,20 +144,20 @@ export default class BsModel implements ObjectBase {
     }
 
     private _initProps() {
-        this.getFields().forEach(f => {
+        this.getFields().forEach((f) => {
             Object.defineProperty(this, f, {
                 get(): never {
                     return this._data[f] as never;
                 },
                 set(v: never): void {
                     this._data[f] = v;
-                }
-            })
+                },
+            });
         });
     }
 
     get $_class(): string {
-        return (Object.getPrototypeOf(this)).constructor.name;
+        return Object.getPrototypeOf(this).constructor.name;
     }
 
     /**
@@ -233,13 +239,13 @@ export default class BsModel implements ObjectBase {
 
     assignValues(sources: TRecord): void {
         if (Helper.isObject(sources)) {
-            this.getFields().forEach(f => {
-                Object.keys(sources).forEach(k => {
+            this.getFields().forEach((f) => {
+                Object.keys(sources).forEach((k) => {
                     if (f === k) {
                         this._data[f] = sources[k];
                     }
-                })
-            })
+                });
+            });
         } else {
             console.error(this._assignValuesErrMsg);
         }
@@ -293,7 +299,7 @@ export default class BsModel implements ObjectBase {
             config,
             this._checkBeforeLoading,
             this._onLoadingSuccess,
-            this._onLoadingFailure,
+            this._onLoadingFailure
         );
     }
 
@@ -317,7 +323,7 @@ export default class BsModel implements ObjectBase {
                     },
                     set(v: never): void {
                         this._data[name] = v;
-                    }
+                    },
                 });
             } else if (name in this._data) {
                 // if already exists
@@ -348,7 +354,7 @@ export default class BsModel implements ObjectBase {
         params?: TRecord,
         data?: TRecord,
         successCb?: (response: AxiosResponse) => void,
-        errorCb?: (error: AxiosError) => void,
+        errorCb?: (error: AxiosError) => void
     ): Promise<AxiosResponse> {
         RestProxyAdapter.checkRestUrl(this.restUrl);
 
@@ -356,9 +362,10 @@ export default class BsModel implements ObjectBase {
         const config: AxiosRequestConfig = {};
         const parameters: TRecord = {};
 
-        const identifier = params && Object.hasOwn(params, this.idProperty)
-            ? params[this.idProperty]
-            : this.get(this.idProperty);
+        const identifier =
+            params && Object.hasOwn(params, this.idProperty)
+                ? params[this.idProperty]
+                : this.get(this.idProperty);
 
         if (url.includes('{id}') && !Helper.isEmpty(identifier)) {
             url = url.replace('{id}', <never>identifier);
@@ -373,7 +380,7 @@ export default class BsModel implements ObjectBase {
         config['method'] = method.toLowerCase();
 
         if (!Helper.isEmptyObject(params) && !Helper.isEmptyObject(parameters)) {
-            config['params'] = {...parameters, ...params};
+            config['params'] = { ...parameters, ...params };
         } else if (!Helper.isEmptyObject(params)) {
             config['params'] = params;
         }
@@ -383,34 +390,24 @@ export default class BsModel implements ObjectBase {
 
         return this._requestWithToken(
             config,
-            (
-                ['post', 'put', 'patch'].includes(config['method'])
-                    ? this._checkBeforeSave
-                    : this._checkBeforeLoading
-            ),
-            (
-                Helper.isFunction(successCb)
-                    ? successCb
-                    : (
-                        ['post', 'put', 'patch'].includes(config['method'])
-                            ? this._onSaveSuccess
-                            : this._onLoadingSuccess
-                    )
-            ),
-            (
-                Helper.isFunction(errorCb)
-                    ? errorCb
-                    : (
-                        ['post', 'put', 'patch'].includes(config['method'])
-                            ? this._onSaveFailure
-                            : this._onLoadingFailure
-                    )
-            )
+            ['post', 'put', 'patch'].includes(config['method'])
+                ? this._checkBeforeSave
+                : this._checkBeforeLoading,
+            Helper.isFunction(successCb)
+                ? successCb
+                : ['post', 'put', 'patch'].includes(config['method'])
+                ? this._onSaveSuccess
+                : this._onLoadingSuccess,
+            Helper.isFunction(errorCb)
+                ? errorCb
+                : ['post', 'put', 'patch'].includes(config['method'])
+                ? this._onSaveFailure
+                : this._onLoadingFailure
         );
     }
 
     reset(): void {
-        this.getFields().forEach(k => {
+        this.getFields().forEach((k) => {
             this._data[k] = this._schema[k];
         });
     }
@@ -441,7 +438,7 @@ export default class BsModel implements ObjectBase {
         const config: AxiosRequestConfig = {
             url: url.replace('{id}', <never>identifier),
             method: methods.save,
-            data: data
+            data: data,
         };
 
         return this._requestWithToken(
@@ -449,7 +446,7 @@ export default class BsModel implements ObjectBase {
             this._checkBeforeSave,
             this._onSaveSuccess,
             this._onSaveFailure,
-            '-create',
+            '-create'
         );
     }
 
@@ -460,7 +457,7 @@ export default class BsModel implements ObjectBase {
     toObject(): TRecord {
         const data: TRecord = {};
 
-        this.getFields().forEach(f => {
+        this.getFields().forEach((f) => {
             data[f] = this._data[f];
         });
 
@@ -486,7 +483,7 @@ export default class BsModel implements ObjectBase {
         const config: AxiosRequestConfig = {
             url: url.replace('{id}', <never>identifier),
             method: methods.update,
-            data: data
+            data: data,
         };
 
         return this._requestWithToken(
@@ -494,7 +491,7 @@ export default class BsModel implements ObjectBase {
             this._checkBeforeSave,
             this._onSaveSuccess,
             this._onSaveFailure,
-            '-update',
+            '-update'
         );
     }
 
@@ -507,13 +504,13 @@ export default class BsModel implements ObjectBase {
         const _data = <never>response.data;
         const _assign = (values: never) => {
             this.assignValues(values);
-            this.getFields().forEach(f => this._schema[f] = values[f]);
+            this.getFields().forEach((f) => (this._schema[f] = values[f]));
             // @ts-ignore
             if (Helper.isFunction(this['onAfterFetch'])) {
                 // @ts-ignore
                 this['onAfterFetch'](values);
             }
-        }
+        };
 
         if (Helper.isEmpty(_data)) {
             console.warn(emptyDataErrMsg);
@@ -646,21 +643,15 @@ export default class BsModel implements ObjectBase {
         onRequest: () => boolean,
         onSuccess: (response: AxiosResponse) => void,
         onFailure: (error: AxiosError) => void,
-        suffix = '',
+        suffix = ''
     ): Promise<AxiosResponse> {
         // @ts-ignore
-        const headers = {'X-Requested-With': 'XMLHttpRequest'} as AxiosHeaders;
+        const headers = { 'X-Requested-With': 'XMLHttpRequest' } as AxiosHeaders;
         let csrfUrl = this.csrfConfig?.url || '';
 
-        if (
-            csrfUrl.includes('{name}') &&
-            !Helper.isEmpty(this.csrfConfig?.tokenName)
-        ) {
+        if (csrfUrl.includes('{name}') && !Helper.isEmpty(this.csrfConfig?.tokenName)) {
             if (this.csrfConfig?.suffix === true) {
-                csrfUrl = csrfUrl.replace(
-                    '{name}',
-                    this.csrfConfig.tokenName + suffix,
-                );
+                csrfUrl = csrfUrl.replace('{name}', this.csrfConfig.tokenName + suffix);
             } else {
                 csrfUrl = csrfUrl.replace('{name}', <string>this.csrfConfig?.tokenName);
             }
@@ -668,7 +659,8 @@ export default class BsModel implements ObjectBase {
 
         if (csrfUrl !== '') {
             const response = await this.proxy.adapterInstance.get(csrfUrl);
-            headers['X-CSRF-TOKEN'] = response.data[<string>this.csrfConfig?.dataField] ||
+            headers['X-CSRF-TOKEN'] =
+                response.data[<string>this.csrfConfig?.dataField] ||
                 response.data[<string>this.csrfConfig?.responseField];
             config['headers'] = headers;
 
@@ -690,7 +682,7 @@ export default class BsModel implements ObjectBase {
         config: AxiosRequestConfig,
         identifier: never,
         url: string,
-        method: keyof TRestMethodOptions,
+        method: keyof TRestMethodOptions
     ): void {
         const methods = this.proxy.requestMethods();
 

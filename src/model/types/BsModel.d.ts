@@ -1,15 +1,24 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import type { IRestAdapter, ObjectBase, TRecord } from '../../types';
+import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { ObjectBase, TRecord } from '../../types';
+import { IRestAdapter } from '../types';
 
 export declare type THttpMethod =
-    | 'get' | 'GET'
-    | 'delete' | 'DELETE'
-    | 'head' | 'HEAD'
-    | 'options' | 'OPTIONS'
-    | 'post' | 'POST'
-    | 'put' | 'PUT'
-    | 'patch' | 'PATCH'
-    | 'purge' | 'PURGE';
+    | 'get'
+    | 'GET'
+    | 'delete'
+    | 'DELETE'
+    | 'head'
+    | 'HEAD'
+    | 'options'
+    | 'OPTIONS'
+    | 'post'
+    | 'POST'
+    | 'put'
+    | 'PUT'
+    | 'patch'
+    | 'PATCH'
+    | 'purge'
+    | 'PURGE';
 
 export declare type TRestMethodOptions = {
     browse: THttpMethod;
@@ -17,12 +26,12 @@ export declare type TRestMethodOptions = {
     save: THttpMethod;
     update: THttpMethod;
     delete: THttpMethod;
-}
+};
 
 export declare type TUrlOption = {
     url: string;
-    method: string;
-}
+    method: THttpMethod;
+};
 
 export declare type TRestUrlOption = {
     [P in keyof TRestMethodOptions]?: TUrlOption | string;
@@ -39,20 +48,20 @@ export declare type TCSRFConfig = {
      */
     responseField?: string;
     suffix?: boolean;
-}
+};
 
 export declare type TModelOptions = {
-    schema: TRecord,
+    schema: TRecord;
     proxy: TRestUrlOption;
     csrfConfig?: TCSRFConfig;
-}
+};
 
 export declare type TModelState = {
     loading: boolean;
     updating: boolean;
     deleting: boolean;
     hasError: boolean;
-}
+};
 
 /**
  * Data Model class for working with entity object and remote API.
@@ -103,7 +112,12 @@ export declare class BsModel implements ObjectBase {
      * @param idProperty   Data model ID field name
      * @param dataProperty REST response data property
      */
-    constructor(schema: TRecord | TModelOptions, adapter?: AxiosInstance, idProperty?: string, dataProperty?: string);
+    constructor(
+        schema: TRecord | TModelOptions,
+        adapter?: AxiosInstance,
+        idProperty?: string,
+        dataProperty?: string
+    );
 
     protected _state: TModelState;
 
@@ -391,9 +405,8 @@ export declare class BsModel implements ObjectBase {
     ): Promise<AxiosResponse>;
 }
 
-export declare interface IBsModel extends BsModel {
-}
+export declare interface IBsModel extends BsModel {}
 
 export declare type TBsModel = IBsModel & {
     [P in string]: never;
-}
+};
