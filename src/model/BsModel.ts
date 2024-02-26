@@ -432,7 +432,7 @@ export default class BsModel implements ObjectBase {
         const identifier = data[this.idProperty];
 
         if (url.includes('{id}') || Helper.isEmpty(identifier)) {
-            delete data[this.idProperty];
+            Object.hasOwn(data, this.idProperty) && delete data[this.idProperty];
         }
 
         const config: AxiosRequestConfig = {
@@ -477,7 +477,7 @@ export default class BsModel implements ObjectBase {
         const identifier = data[this.idProperty];
 
         if (url.includes('{id}') || Helper.isEmpty(identifier)) {
-            delete data[this.idProperty];
+            Object.hasOwn(data, this.idProperty) && delete data[this.idProperty];
         }
 
         const config: AxiosRequestConfig = {

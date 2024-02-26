@@ -307,6 +307,7 @@ export declare class BsModel implements ObjectBase {
 
     /**
      * Convert field attributes into Javascript plain object.
+     * This method can be overridden on inherited classes to produce the desired data.
      */
     toObject(): TRecord;
 
@@ -317,11 +318,11 @@ export declare class BsModel implements ObjectBase {
 
     /**
      * Action triggered after data was fetched from the remote server.
-     * This method can be overridden on the inherited classes.
+     * This method can be overridden on inherited classes.
      *
      * @param data The response data
      */
-    onAfterFetch?(data: AxiosResponse): void;
+    onAfterFetch?(data: TRecord): void;
 
     /**
      * Assign data from the remote source to this model.
