@@ -8,8 +8,11 @@
     margin-right: $padding-sm;
 
     .#{$prefix}dropdown-menu-activator {
-        cursor: pointer;
         position: relative;
+
+        > * {
+            cursor: pointer;
+        }
     }
 
     ~ .#{$prefix}btn-icon {

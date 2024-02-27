@@ -82,6 +82,7 @@ function getPopoverTopPosition(
     shift: number,
     cover: boolean
 ): number {
+    const posY = activatorRect.top + activatorRect.height + shift;
     let offsetTop = 0;
     const spaceAvailable = window.innerHeight - SPACE - height;
     const minTop = SPACE;
@@ -104,9 +105,9 @@ function getPopoverTopPosition(
         case 'bottom-right':
             offsetTop = cover
                 ? activatorRect.top
-                : activatorRect.top + activatorRect.height + shift > spaceAvailable
-                ? activatorRect.top - height - shift
-                : activatorRect.top + activatorRect.height + shift;
+                : posY > spaceAvailable
+                ? posY - Math.abs(window.innerHeight - posY - height)
+                : posY;
             break;
         case 'left':
         case 'right':
@@ -129,26 +130,17 @@ function getPopoverTopPosition(
 
 function getPopoverBottomPosition(
     activatorRect: DOMRect,
-    placement: TPopoverPosition,
     height: number,
     shift: number,
     cover: boolean
 ): number {
-    let offsetBottom = 0;
+    let offsetBottom = window.innerHeight - activatorRect.top - shift + 4;
 
-    switch (placement) {
-        case 'top':
-        case 'top-left':
-        case 'top-right':
-            offsetBottom = window.innerHeight - activatorRect.top - shift + 4;
-            if (cover) {
-                offsetBottom += activatorRect.height / 2 - height / 2;
-            }
-            break;
-        case 'left-top':
-        case 'right-top':
-            offsetBottom = window.innerHeight - activatorRect.top - shift + 4;
-            break;
+    if (cover) {
+        offsetBottom += activatorRect.height / 2 - height / 2;
+    }
+    if (window.innerHeight < offsetBottom + height) {
+        offsetBottom -= Math.abs(window.innerHeight - offsetBottom - height);
     }
 
     return offsetBottom;
@@ -177,23 +169,22 @@ export function useSetPopoverPosition(
         }
 
         const shift = shiftedSpace(props.space);
-        const spaceAvailable = window.innerHeight - SPACE - popoverEl.offsetHeight;
+        const deltaYTop = elRect.top - popoverEl.offsetHeight - shift;
+        const deltaYBottom = window.innerHeight - (elRect.top + popoverEl.offsetHeight + shift);
 
-        if (
-            props.placement?.startsWith('bottom') &&
-            spaceAvailable < elRect.top + elRect.height + shift
-        ) {
+        if (props.placement?.startsWith('bottom') && deltaYBottom < deltaYTop) {
             actualPlacement.value = props.placement.replace('bottom', 'top') as TPopoverPosition;
+        } else if (props.placement?.startsWith('top') && deltaYTop < deltaYBottom) {
+            actualPlacement.value = props.placement.replace('top', 'bottom') as TPopoverPosition;
         } else {
             actualPlacement.value = props.placement;
         }
 
-        if (actualPlacement.value?.includes('top')) {
+        if (actualPlacement.value?.startsWith('top')) {
             popoverEl.style.top = '';
             popoverEl.style.bottom =
                 getPopoverBottomPosition(
                     elRect,
-                    actualPlacement.value,
                     popoverEl.offsetHeight,
                     shift,
                     <boolean>props.cover

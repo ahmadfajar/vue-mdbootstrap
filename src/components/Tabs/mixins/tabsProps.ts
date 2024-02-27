@@ -36,7 +36,7 @@ export const tabsProps = {
     variant: {
         type: String,
         default: 'tabs',
-        validator: (value: string) => ['tabs', 'pills', 'modern', 'material'].includes(value)
+        // validator: (value: string) => ['tabs', 'pills', 'modern', 'material'].includes(value)
     } as Prop<TTabsVariant>,
     /**
      * Tabs alignment. Valid values: `left`, `right`, `start`, `end`, `center`, `justified`.
