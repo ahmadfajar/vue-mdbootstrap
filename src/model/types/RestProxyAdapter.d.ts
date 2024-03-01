@@ -1,6 +1,6 @@
 import { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { AppConfig } from 'vue';
-import { TRecord, TRestMethodOptions } from '../../types';
+import { TRecord, TRestKey, TRestMethodOptions } from '../../types';
 
 export declare interface IRestAdapter {
     get adapterInstance(): AxiosInstance;
@@ -17,7 +17,7 @@ export declare interface IRestAdapter {
         config: AxiosRequestConfig,
         onRequest: () => boolean,
         onSuccess: (response: AxiosResponse) => void,
-        onFailure: (error: AxiosError) => void,
+        onFailure: (error: AxiosError) => void
     ): Promise<AxiosResponse>;
 
     /**
@@ -66,7 +66,7 @@ export declare class RestProxyAdapter implements IRestAdapter {
      * @param adapter      Axios adapter instance
      * @param httpMethods  Custom HTTP methods to override the default methods
      */
-    constructor(adapter?: AxiosInstance, httpMethods?: object);
+    constructor(adapter?: AxiosInstance | null, httpMethods?: TRestKey);
 
     get adapterInstance(): AxiosInstance;
 
@@ -91,5 +91,5 @@ export declare class RestProxyAdapter implements IRestAdapter {
      *
      * @returns REST request method options
      */
-    requestMethods(): TRestMethodOptions;
+    requestMethods(): TRestMethodOptions & TRestKey;
 }

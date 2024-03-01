@@ -1,4 +1,5 @@
 import { AxiosResponse } from 'axios';
+import { TRecord } from '../../types';
 import { AbstractStore, TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from '../types';
 
 /**
@@ -22,7 +23,7 @@ import { AbstractStore, TBsModel, TDataStoreConfig, TSortDirection, TSortOption 
  */
 export declare class BsArrayStore extends AbstractStore {
     /**
-     * Class constructor.
+     * Construct new {@link BsArrayStore} object instance.
      *
      * @param data   Collection of records to be assigned
      * @param config The configuration properties
@@ -65,7 +66,7 @@ export declare class BsArrayStore extends AbstractStore {
      * @param item    Data to append to the Store
      * @param sorted  Sort dataset after appended
      */
-    append(item: never, sorted?: boolean): void;
+    append(item: TRecord, sorted?: boolean): void;
 
     /**
      * Replace the dataset with new data.
@@ -73,9 +74,9 @@ export declare class BsArrayStore extends AbstractStore {
      * @param data   The new data to be assigned
      * @param silent Append the data silently and don't trigger data conversion
      */
-    assignData(data: unknown[] | unknown, silent?: boolean): void;
+    assignData(data: unknown, silent?: boolean): void;
 
-    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse>;
+    load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
 
     /**
      * Sorts the internal dataset with the given criteria and returns

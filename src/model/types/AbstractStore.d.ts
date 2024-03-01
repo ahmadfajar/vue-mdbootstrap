@@ -107,7 +107,7 @@ export declare type TDataStoreState = TModelState & {
  * It's never used directly, but offers a set of
  * methods used by those subclasses.
  */
-export declare class AbstractStore implements ObjectBase {
+export declare abstract class AbstractStore implements ObjectBase {
     protected _config: TDataStoreConfig;
     protected _filters: TFilterOption[];
     protected _filteredItems: TBsModel[];
@@ -118,7 +118,7 @@ export declare class AbstractStore implements ObjectBase {
     /**
      * Returns the reactive state of the DataStore.
      */
-    readonly storeState: TDataStoreState;
+    readonly storeState: Readonly<TDataStoreState>;
 
     /**
      * Check if the given item is a data model or not.
@@ -197,7 +197,7 @@ export declare class AbstractStore implements ObjectBase {
      *    'fetch' : '/api/user/{id}',
      *    'update': '/api/user/{id}/save',
      *    'delete': '/api/user/{id}/delete'
-     * }
+     * };
      */
     get restUrl(): TRestConfig | undefined;
     set restUrl(option: TRestConfig);
@@ -263,7 +263,7 @@ export declare class AbstractStore implements ObjectBase {
      *
      * @param logic The filter logic, valid values: 'AND', 'OR'
      */
-    setFilterLogic(logic: unknown): this;
+    setFilterLogic(logic: TFilterLogic): this;
 
     /**
      * Get or Set the sorter's object collection to be used
@@ -336,7 +336,7 @@ export declare class AbstractStore implements ObjectBase {
     /**
      * Sets the current active page.
      *
-     * @param {number} value The new page number, based-1 index.
+     * @param value The new page number, based-1 index.
      */
     page(value: number): this;
 
@@ -353,9 +353,9 @@ export declare class AbstractStore implements ObjectBase {
     /**
      * Check if the given item is a DataModel or not.
      *
-     * @param {Object} item The item to check
+     * @param item The item to check
      */
-    isCandidateForModel(item: object): boolean;
+    isCandidateForModel(item: TRecord): boolean;
 
     /**
      * Removes the specified item(s) from the internal dataset.
@@ -424,7 +424,7 @@ export declare class AbstractStore implements ObjectBase {
      *
      * @param data The record(s) to be assigned
      */
-    load(data?: never[]): Promise<TBsModel[] | AxiosResponse>;
+    load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
 
     /**
      * Append an item to the local dataset.
@@ -434,7 +434,7 @@ export declare class AbstractStore implements ObjectBase {
      *               is not suitable for the Data Model
      * @param silent Append data silently and doesn't trigger length counting
      */
-    protected _append(item: never, force?: boolean, silent?: boolean): void;
+    protected _append(item: TRecord, force?: boolean, silent?: boolean): void;
 
     /**
      * Assign data to the local dataset and replace the old dataset.
@@ -442,7 +442,7 @@ export declare class AbstractStore implements ObjectBase {
      * @param source  A record or collection of records to be assigned
      * @param silent  Append data silently and doesn't trigger data conversion
      */
-    protected _assignData(source: unknown | unknown[], silent?: boolean): void;
+    protected _assignData(source: unknown, silent?: boolean): void;
 
     /**
      * @returns TRUE if this data store is not in loading state.

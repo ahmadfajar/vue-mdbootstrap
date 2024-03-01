@@ -34,16 +34,16 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 26/02/2024 00:36
+ * @since  15/03/2019 modified: 01/03/2024 21:09
  */
-export default class AbstractStore implements ObjectBase {
+export default abstract class AbstractStore implements ObjectBase {
     protected _config: TDataStoreConfig;
     protected _filters: TFilterOption[];
     protected _filteredItems: TBsModel[];
     protected _items: TBsModel[];
     protected _proxy: IRestAdapter | undefined;
     protected _state: TDataStoreState;
-    public storeState: TDataStoreState;
+    public storeState: Readonly<TDataStoreState>;
 
     /**
      * Check if the given item is a data model or not.
@@ -70,7 +70,7 @@ export default class AbstractStore implements ObjectBase {
      *
      * @param config  The configuration properties
      */
-    constructor(config: TDataStoreConfig = {}) {
+    protected constructor(config: TDataStoreConfig = {}) {
         const initialCfg: TDataStoreConfig = {
             idProperty: undefined,
             dataProperty: undefined,
@@ -185,7 +185,7 @@ export default class AbstractStore implements ObjectBase {
      * of the inheritance class or when instantiate the model.
      */
     get restUrl(): TRestConfig | undefined {
-        return <TRestConfig>(this._config.restProxy || this._config.restUrl);
+        return <TRestConfig>(this._config.restProxy ?? this._config.restUrl);
     }
 
     set restUrl(option: TRestConfig) {
@@ -228,8 +228,8 @@ export default class AbstractStore implements ObjectBase {
         this._config.filters = Array.isArray(values)
             ? values
             : Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)
-            ? [values]
-            : [];
+              ? [values]
+              : [];
 
         const newFilters = this.filters.filter((flt) => {
             let found = false;
@@ -290,7 +290,7 @@ export default class AbstractStore implements ObjectBase {
         return this;
     }
 
-    setFilterLogic(logic: unknown): this {
+    setFilterLogic(logic: TFilterLogic): this {
         if (Helper.isString(logic) && logic.trim() !== '') {
             const trimmed = logic.trim().toUpperCase();
 
@@ -429,11 +429,11 @@ export default class AbstractStore implements ObjectBase {
         }
     }
 
-    isCandidateForModel(item: object): boolean {
+    isCandidateForModel(item: TRecord): boolean {
         return (
             Helper.isObject(item) &&
             !Helper.isEmpty(this._config.idProperty) &&
-            Object.hasOwn(item, <string>this._config.idProperty)
+            Object.hasOwn(item, this._config.idProperty)
         );
     }
 
@@ -652,10 +652,7 @@ export default class AbstractStore implements ObjectBase {
         return params;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    load(data?: never[]): Promise<TBsModel[] | AxiosResponse> {
-        throw Error('Not supported yet.');
-    }
+    abstract load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
 
     /**
      * Append an item to the local dataset.
@@ -665,7 +662,7 @@ export default class AbstractStore implements ObjectBase {
      *               is not suitable for the Data Model
      * @param silent Append data silently and doesn't trigger length counting
      */
-    protected _append(item: never, force = true, silent = false): void {
+    protected _append(item: TRecord, force = true, silent = false): void {
         if (this.isCandidateForModel(item)) {
             this._items.push(<TBsModel>this.createModel(item));
             if (!silent) {
@@ -693,7 +690,7 @@ export default class AbstractStore implements ObjectBase {
      * @param source  A record or collection of records to be assigned
      * @param silent  Append data silently and doesn't trigger data conversion
      */
-    protected _assignData(source: unknown | unknown[], silent = false): void {
+    protected _assignData(source: unknown, silent = false): void {
         if (!Array.isArray(source) || !Helper.isObject(source)) {
             this._state.loading = false;
             this._state.hasError = true;
@@ -709,7 +706,7 @@ export default class AbstractStore implements ObjectBase {
         } else {
             this._items = [];
             items.forEach((v) => {
-                this._append(<never>v, true, true);
+                this._append(v, true, true);
             });
         }
 

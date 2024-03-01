@@ -1,7 +1,8 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
+import { TRecord } from '../../types';
 import { AbstractStore, TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from '../types';
 
-export declare type TSuccessResponse = {
+export declare type TMessageResponse = {
     success: boolean;
     message: string;
 };
@@ -33,12 +34,12 @@ export declare type TSuccessResponse = {
  */
 export declare class BsStore extends AbstractStore {
     /**
-     * Class constructor.
+     * Construct {@link BsStore} object instance.
      *
      * @param config  The configuration properties
      * @param adapter Axios adapter instance
      */
-    constructor(config: TDataStoreConfig, adapter?: AxiosInstance);
+    constructor(config: TDataStoreConfig, adapter?: AxiosInstance | null);
 
     /**
      * Returns dataset from the active page.
@@ -52,6 +53,7 @@ export declare class BsStore extends AbstractStore {
      * Check if the data Store is using server filtering or local filtering.
      */
     get remoteFilter(): boolean;
+
     /**
      * Enable or disable data Store server filtering.
      *
@@ -63,6 +65,7 @@ export declare class BsStore extends AbstractStore {
      * Check if the data Store is using server paging or local paging.
      */
     get remotePaging(): boolean;
+
     /**
      * Enable or disable data Store server paging.
      *
@@ -110,7 +113,7 @@ export declare class BsStore extends AbstractStore {
      *
      * @param item Data to append to the internal dataset
      */
-    append(item: never): void;
+    append(item: TRecord): void;
 
     /**
      * Replace internal dataset with new data. The proses only affected the internal dataset
@@ -119,7 +122,7 @@ export declare class BsStore extends AbstractStore {
      * @param data   The new data to be assigned
      * @param silent Append the data silently and don't trigger data conversion
      */
-    assignData(data: unknown[] | unknown, silent?: boolean): void;
+    assignData(data: unknown, silent?: boolean): void;
 
     /**
      * Delete specific item from internal dataset as well as from remote server whenever possible.
@@ -127,7 +130,7 @@ export declare class BsStore extends AbstractStore {
      *
      * @param item Data Model instance to be removed
      */
-    delete(item: TBsModel): Promise<AxiosResponse | TSuccessResponse>;
+    delete(item: TBsModel): Promise<AxiosResponse | TMessageResponse>;
 
     /**
      * Delete specific items from internal dataset as well as from remote
@@ -136,7 +139,7 @@ export declare class BsStore extends AbstractStore {
      *
      * @param items Collection of data Model instances to be removed
      */
-    deletes(items: TBsModel[]): Promise<TSuccessResponse>;
+    deletes(items: TBsModel[]): Promise<TMessageResponse>;
 
     /**
      * Fetch single item from the remote server via REST API and
@@ -146,14 +149,21 @@ export declare class BsStore extends AbstractStore {
      */
     fetch(id: string | number): Promise<AxiosResponse>;
 
-    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse>;
+    /**
+     * Load data from the remote server or assign new data directly.
+     * The internal dataset will be replaced by the loaded data.
+     *
+     * @param data The new data to replace the internal dataset
+     */
+    load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
 
     /**
      * Load data from the remote server and assign query parameters and configuration.
      *
-     * @deprecated Use `load` instead.
+     * @deprecated
+     * Use `load` instead.
      */
-    query(): Promise<unknown>;
+    query(): Promise<TBsModel[] | AxiosResponse>;
 
     /**
      * Sorts the internal dataset with the given criteria and returns

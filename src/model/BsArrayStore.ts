@@ -2,8 +2,9 @@ import type { AxiosResponse } from 'axios';
 import meanBy from 'lodash/meanBy';
 import sumBy from 'lodash/sumBy';
 import { AbstractStore } from '../model';
-import type { TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from './types';
+import type { TRecord } from '../types';
 import Helper from '../utils/Helper';
+import type { TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from './types';
 
 /**
  * Data store class to work with collection of entity objects locally.
@@ -29,7 +30,7 @@ import Helper from '../utils/Helper';
  */
 export default class BsArrayStore extends AbstractStore {
     /**
-     * Class constructor.
+     * Construct new {@link BsArrayStore} object instance.
      *
      * @param data   Collection of records to be assigned
      * @param config The configuration properties
@@ -81,7 +82,7 @@ export default class BsArrayStore extends AbstractStore {
         return sumBy(this._items, field);
     }
 
-    append(item: never, sorted = false): void {
+    append(item: TRecord, sorted = false): void {
         if (!Helper.isEmpty(item)) {
             this._append(item, false);
 
@@ -91,7 +92,7 @@ export default class BsArrayStore extends AbstractStore {
         }
     }
 
-    assignData(data: unknown[] | unknown, silent = false): void {
+    assignData(data: unknown, silent = false): void {
         this._assignData(data, silent);
         if (this.sorters.length > 0) {
             this._items = this.localSort();
@@ -99,7 +100,7 @@ export default class BsArrayStore extends AbstractStore {
         this._onLoadingSuccess();
     }
 
-    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse> {
+    load(data?: unknown): Promise<TBsModel[] | AxiosResponse> {
         this._state.loading = true;
 
         return new Promise((resolve) => {

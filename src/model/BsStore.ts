@@ -8,9 +8,9 @@ import { appendErrMsg, emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from '.
 import type {
     TBsModel,
     TDataStoreConfig,
+    TMessageResponse,
     TSortDirection,
     TSortOption,
-    TSuccessResponse,
 } from './types';
 
 /**
@@ -37,16 +37,16 @@ import type {
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 26/02/2024 03:17
+ * @since  20/07/2018 modified: 01/03/2024 21:09
  */
 export default class BsStore extends AbstractStore {
     /**
-     * Class constructor.
+     * Construct {@link BsStore} object instance.
      *
      * @param config  The configuration properties
      * @param adapter Axios adapter instance
      */
-    constructor(config: TDataStoreConfig, adapter?: AxiosInstance) {
+    constructor(config: TDataStoreConfig, adapter?: AxiosInstance | null) {
         const initialCfg: TDataStoreConfig = {
             idProperty: 'id',
             dataProperty: 'data',
@@ -155,8 +155,8 @@ export default class BsStore extends AbstractStore {
         return sumBy(this.remotePaging ? this.dataItems : this._items, field);
     }
 
-    append(item: never): void {
-        if (Helper.isEmpty(item)) {
+    append(item: TRecord): void {
+        if (Helper.isEmptyObject(item)) {
             return;
         }
 
@@ -190,7 +190,7 @@ export default class BsStore extends AbstractStore {
                     _finalizeAppend();
                 });
         } else if (Helper.isObject(item)) {
-            // Got incorrect entity object, just store it on the internal dataset.
+            // Got incorrect entity object, just store as is on the internal dataset.
             this._state.updating = true;
             this._items.push(<TBsModel>this.createModel(item).seal());
             _finalizeAppend();
@@ -199,7 +199,7 @@ export default class BsStore extends AbstractStore {
         }
     }
 
-    assignData(data: unknown[] | unknown, silent = false): void {
+    assignData(data: unknown, silent = false): void {
         this._assignData(data, silent);
 
         if (!this.remoteSort && this.sorters.length > 0) {
@@ -208,7 +208,7 @@ export default class BsStore extends AbstractStore {
         this._onLoadingSuccess();
     }
 
-    delete(item: TBsModel): Promise<AxiosResponse | TSuccessResponse> {
+    delete(item: TBsModel): Promise<AxiosResponse | TMessageResponse> {
         this._state.deleting = true;
 
         if (AbstractStore.isModel(item) && !Helper.isEmpty(item.restUrl?.delete)) {
@@ -245,7 +245,7 @@ export default class BsStore extends AbstractStore {
         }
     }
 
-    deletes(items: TBsModel[]): Promise<TSuccessResponse> {
+    deletes(items: TBsModel[]): Promise<TMessageResponse> {
         this._state.deleting = true;
         this._state.hasError = false;
 
@@ -276,6 +276,7 @@ export default class BsStore extends AbstractStore {
                 this._state.deleting = false;
             });
         } else {
+            this._state.deleting = false;
             throw Error('Parameter "items" must be an array of BsModel instances.');
         }
     }
@@ -290,7 +291,7 @@ export default class BsStore extends AbstractStore {
         const config: AxiosRequestConfig = {};
         const methods = this.proxy.requestMethods();
         const identifier = <string>this._config.idProperty;
-        let url = this.restUrl.fetch || '';
+        let url = this.restUrl.fetch ?? '';
 
         if (url.includes('{id}') && !Helper.isEmpty(id)) {
             url = url.replace('{id}', id.toString());
@@ -311,7 +312,7 @@ export default class BsStore extends AbstractStore {
         );
     }
 
-    load(data?: never[] | never): Promise<TBsModel[] | AxiosResponse> {
+    load(data?: unknown): Promise<TBsModel[] | AxiosResponse> {
         if (data && !Helper.isEmpty(data)) {
             this._state.loading = true;
             return new Promise((resolve) => {
@@ -328,7 +329,7 @@ export default class BsStore extends AbstractStore {
 
             const methods = this.proxy.requestMethods();
             const config: AxiosRequestConfig = {
-                url: this.restUrl.browse || '',
+                url: this.restUrl.browse ?? '',
                 method: methods.browse,
             };
 
@@ -346,7 +347,7 @@ export default class BsStore extends AbstractStore {
         }
     }
 
-    query(): Promise<unknown> {
+    query(): Promise<TBsModel[] | AxiosResponse> {
         return this.load();
     }
 
@@ -371,7 +372,7 @@ export default class BsStore extends AbstractStore {
      * @param response Response object
      */
     private _assignFromResponse(response: AxiosResponse) {
-        const responseData = <never>response.data;
+        const responseData = response.data;
 
         if (Helper.isEmpty(responseData)) {
             console.warn(emptyDataErrMsg);

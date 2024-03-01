@@ -2,15 +2,14 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } fro
 import axios from 'axios';
 import type { AppConfig } from 'vue';
 import { useAxiosPlugin } from '../mixins/CommonApi';
-import type { TRecord } from '../types';
+import type { IRestAdapter, TRecord, TRestKey, TRestMethodOptions } from '../types';
 import Helper from '../utils/Helper';
-import type { IRestAdapter, TRestMethodOptions } from './types';
 
 /**
  * Class RestProxyAdapter which is used to load data from the remote server.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 26/02/2024 03:24
+ * @since  20/07/2018 modified: 01/03/2024 14:37
  */
 export default class RestProxyAdapter implements IRestAdapter {
     private readonly _adapter: AxiosInstance;
@@ -27,18 +26,26 @@ export default class RestProxyAdapter implements IRestAdapter {
             throw Error('Parameter "appConfig" must be an "AxiosInstance" or "Vue AppConfig".');
         }
         if (
-            'globalProperties' in appConfig && appConfig.globalProperties &&
-            (!appConfig.globalProperties.$http && !appConfig.globalProperties.$axios)
+            'globalProperties' in appConfig &&
+            appConfig.globalProperties &&
+            !appConfig.globalProperties.$http &&
+            !appConfig.globalProperties.$axios
         ) {
-            throw Error('Vue Application doesn\'t have AxiosPlugin installed. ' +
-                'Please define it some where in the application before using RestProxyAdapter.');
+            throw Error(
+                "Vue Application doesn't have AxiosPlugin installed. " +
+                    'Please define it some where in the application before using RestProxyAdapter.'
+            );
         }
         if (
-            ('get' in appConfig && !Helper.isFunction(appConfig.get)) &&
-            ('post' in appConfig && !Helper.isFunction(appConfig.post))
+            'get' in appConfig &&
+            !Helper.isFunction(appConfig.get) &&
+            'post' in appConfig &&
+            !Helper.isFunction(appConfig.post)
         ) {
-            throw Error('Axios is not defined. ' +
-                'Please define it in the constructor before using RestProxyAdapter.');
+            throw Error(
+                'Axios is not defined. ' +
+                    'Please define it in the constructor before using RestProxyAdapter.'
+            );
         }
     }
 
@@ -65,7 +72,7 @@ export default class RestProxyAdapter implements IRestAdapter {
         } else if (error.request) {
             console.warn(error.request);
         } else {
-            console.warn((error.message ? error.message : error));
+            console.warn(error.message ? error.message : error);
         }
     }
 
@@ -80,8 +87,8 @@ export default class RestProxyAdapter implements IRestAdapter {
             fetch: 'get',
             save: 'post',
             update: 'post',
-            delete: 'delete'
-        }
+            delete: 'delete',
+        };
     }
 
     /**
@@ -90,20 +97,22 @@ export default class RestProxyAdapter implements IRestAdapter {
      * @param adapter      Axios adapter instance
      * @param httpMethods  Custom HTTP methods to override the default methods
      */
-    constructor(adapter?: AxiosInstance, httpMethods = {}) {
-        // Resolve and pick axios adapter from available sources
-        this._adapter = adapter ?? (useAxiosPlugin() ?? axios);
-        // Custom http methods
+    constructor(adapter?: AxiosInstance | null, httpMethods = {} as TRestKey) {
+        // Resolve and pick axios adapter from any available sources
+        this._adapter = adapter ?? useAxiosPlugin() ?? axios;
+        // Define custom http methods
         this._httpMethods = httpMethods;
     }
 
-    get adapterInstance() {
+    get adapterInstance(): AxiosInstance {
         if (this._adapter) {
             return this._adapter;
         }
 
-        throw Error('Vue Application doesn\'t have AxiosPlugin installed. ' +
-            'Please define it some where in the application before using RestProxyAdapter.');
+        throw Error(
+            "Vue Application doesn't have AxiosPlugin installed. " +
+                'Please define it some where in the application before using RestProxyAdapter.'
+        );
     }
 
     /**
@@ -119,7 +128,7 @@ export default class RestProxyAdapter implements IRestAdapter {
         config: AxiosRequestConfig,
         onRequest: () => boolean,
         onSuccess: (response: AxiosResponse) => void,
-        onFailure: (error: AxiosError) => void,
+        onFailure: (error: AxiosError) => void
     ): Promise<AxiosResponse> {
         RestProxyAdapter.checkAxios(this._adapter);
 
@@ -155,10 +164,10 @@ export default class RestProxyAdapter implements IRestAdapter {
      *
      * @returns REST request method options
      */
-    requestMethods(): TRestMethodOptions {
+    requestMethods(): TRestMethodOptions & TRestKey {
         return {
             ...RestProxyAdapter.defaultHttpMethods,
-            ...this._httpMethods
-        }
+            ...this._httpMethods,
+        };
     }
 }

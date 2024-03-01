@@ -68,7 +68,7 @@
     "luxon": "^3.4.4",
     "resize-observer-polyfill": "^1.5.1",
     "sass": "^1.71.1",
-    "vue": "^3.4.20"
+    "vue": "^3.4.21"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -78,8 +78,8 @@
     "@types/body-scroll-lock": "^3.1.2",
     "@types/lodash": "^4.14.202",
     "@types/luxon": "^3.4.2",
-    "@types/node": "^20.11.20",
-    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vue/eslint-config-typescript": "^12.0.0",
     "@vue/tsconfig": "^0.5.1",

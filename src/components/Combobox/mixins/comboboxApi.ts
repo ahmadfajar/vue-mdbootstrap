@@ -88,7 +88,7 @@ function createChipsOrCsv(
         return h(Fragment, null, selectedItems.value.map(
             (it) =>
                 h(BsChip, {
-                    key: kebabCase(it.get(schema.displayField)),
+                    key: kebabCase(it.get(schema.displayField) as string),
                     color: props.chipColor,
                     disabled: props.disabled,
                     pill: props.chipPill,

@@ -37,6 +37,8 @@ export declare type TRestUrlOption = {
     [P in keyof TRestMethodOptions]?: TUrlOption | string;
 };
 
+export declare type TRestKey = Record<string, THttpMethod>;
+
 export declare type TRestConfig = Record<keyof TRestMethodOptions, string>;
 
 export declare type TCSRFConfig = {
@@ -105,7 +107,7 @@ export declare type TModelState = {
  */
 export declare class BsModel implements ObjectBase {
     /**
-     * Class constructor.
+     * Construct {@link BsModel} object instance.
      *
      * @param schema       The data model schema
      * @param adapter      Axios adapter instance
@@ -113,8 +115,8 @@ export declare class BsModel implements ObjectBase {
      * @param dataProperty REST response data property
      */
     constructor(
-        schema: TRecord | TModelOptions,
-        adapter?: AxiosInstance,
+        schema: TModelOptions | TRecord,
+        adapter?: AxiosInstance | null,
         idProperty?: string,
         dataProperty?: string
     );
@@ -124,7 +126,7 @@ export declare class BsModel implements ObjectBase {
     /**
      * Returns the reactive state of the DataModel.
      */
-    readonly state: TModelState;
+    readonly state: Readonly<TModelState>;
 
     /**
      * Get the class name of this instance.
@@ -207,7 +209,7 @@ export declare class BsModel implements ObjectBase {
     assignValue(field: string, newValue: unknown): void;
 
     /**
-     * Assign new value to some existing fields.
+     * Assign new values to some existing fields.
      *
      * @param sources Object with format key-value pairs
      */
@@ -228,14 +230,14 @@ export declare class BsModel implements ObjectBase {
     /**
      * Freeze this data model instance, makes it Readonly and prevents any modification.
      */
-    freeze(): Readonly<IBsModel>;
+    freeze(): Readonly<IBsModel | BsModel>;
 
     /**
      * Get a field value.
      *
      * @param name The field name.
      */
-    get(name: string): never;
+    get(name: string): unknown;
 
     /**
      * Define or sets a field with new value.
@@ -250,7 +252,7 @@ export declare class BsModel implements ObjectBase {
     /**
      * Get all the field names.
      */
-    getFields(): string[];
+    getFields(): IterableIterator<string>;
 
     /**
      * Returns the ID field name for this data model.
@@ -258,7 +260,9 @@ export declare class BsModel implements ObjectBase {
     get idProperty(): string;
 
     /**
-     * Get ID field name for this data model.
+     * Get ID field name for this data model. (for backward compatibility)
+     *
+     * @deprecated
      */
     getIdProperty(): string;
 
@@ -274,16 +278,16 @@ export declare class BsModel implements ObjectBase {
      * @param errorCb    Promise function to be called when the request is failed
      */
     request(
-        restKey: keyof TRestConfig,
-        method?: THttpMethod,
-        params?: TRecord,
-        data?: TRecord,
+        restKey: keyof TRestMethodOptions,
+        method?: THttpMethod | null,
+        params?: TRecord | null,
+        data?: TRecord | null,
         successCb?: (response: AxiosResponse) => void,
         errorCb?: (error: AxiosError) => void
     ): Promise<AxiosResponse>;
 
     /**
-     * Reset all fields value to its default.
+     * Reset all fields value to their default.
      */
     reset(): void;
 
@@ -303,10 +307,10 @@ export declare class BsModel implements ObjectBase {
      *
      * Values of present properties can still be changed as long as they are writable.
      */
-    seal(): IBsModel;
+    seal(): IBsModel | BsModel;
 
     /**
-     * Convert field attributes into Javascript plain object.
+     * Convert field attributes that exists in the schema definition into a Javascript plain object.
      * This method can be overridden on inherited classes to produce the desired data.
      */
     toObject(): TRecord;
@@ -329,7 +333,7 @@ export declare class BsModel implements ObjectBase {
      *
      * @param response A response object
      */
-    protected _assignFromResponse(response): void;
+    protected _assignFromResponse(response: AxiosResponse): void;
 
     /**
      * @returns TRUE if this data model is not in delete state.
@@ -409,5 +413,5 @@ export declare class BsModel implements ObjectBase {
 export declare interface IBsModel extends BsModel {}
 
 export declare type TBsModel = IBsModel & {
-    [P in string]: never;
+    [P in string]: unknown;
 };
