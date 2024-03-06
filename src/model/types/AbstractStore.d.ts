@@ -10,6 +10,7 @@ import {
     TRestConfig,
     TRestUrlOption,
 } from '../types';
+import { UnwrapNestedRefs } from 'vue';
 
 export declare type TFilterLogic = 'AND' | 'OR';
 
@@ -113,12 +114,12 @@ export declare abstract class AbstractStore implements ObjectBase {
     protected _filteredItems: TBsModel[];
     protected _items: TBsModel[];
     protected _proxy: IRestAdapter | undefined;
-    protected _state: TDataStoreState;
+    protected _state: UnwrapNestedRefs<TDataStoreState>;
 
     /**
      * Returns the reactive state of the DataStore.
      */
-    readonly storeState: Readonly<TDataStoreState>;
+    readonly storeState: Readonly<UnwrapNestedRefs<TDataStoreState>>;
 
     /**
      * Check if the given item is a data model or not.
@@ -424,7 +425,15 @@ export declare abstract class AbstractStore implements ObjectBase {
      *
      * @param data The record(s) to be assigned
      */
-    load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
+    abstract load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
+
+    /**
+     * Returns dataset from the active page.
+     *
+     * If a filter or sorter has been applied before,
+     * then the returned dataset will also be affected by it.
+     */
+    abstract get dataItems(): TBsModel[];
 
     /**
      * Append an item to the local dataset.

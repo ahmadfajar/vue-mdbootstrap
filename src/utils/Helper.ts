@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 26/02/2024 03:41
+ * @since  05/07/2018, modified: 04/03/2024 01:31
  */
 export default class Helper {
     /**
@@ -258,8 +258,8 @@ export default class Helper {
         }
 
         return items.sort((a, b) => {
-            let sortA: never = <never>Helper.getObjectValueByPath(a, key);
-            let sortB: never = <never>Helper.getObjectValueByPath(b, key);
+            let sortA = Helper.getObjectValueByPath(a, key) as never;
+            let sortB = Helper.getObjectValueByPath(b, key) as never;
 
             if (isDescending) {
                 [sortA, sortB] = [sortB, sortA];

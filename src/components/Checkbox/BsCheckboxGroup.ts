@@ -38,7 +38,7 @@ export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptio
         );
 
         const toggleCheckHandler = (
-            values: string | number | unknown | Array<string | number | unknown>,
+            values: string | number | TRecord | Array<string | number | TRecord>,
             item: TCheckboxProps,
         ): void => {
             if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {

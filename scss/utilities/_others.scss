@@ -49,17 +49,17 @@
 .triangle-up, .caret-up {
     width: 0;
     height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-bottom: 6px solid currentColor;
+    border-left: var(--#{$prefix}caret-size) solid transparent;
+    border-right: var(--#{$prefix}caret-size) solid transparent;
+    border-bottom: var(--#{$prefix}caret-size) solid currentColor;
     display: inline-block;
 }
 
 .triangle-down, .caret-down {
     width: 0;
     height: 0;
-    border-left: 6px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 6px solid currentColor;
+    border-left: var(--#{$prefix}caret-size) solid transparent;
+    border-right: var(--#{$prefix}caret-size) solid transparent;
+    border-top: var(--#{$prefix}caret-size) solid currentColor;
     display: inline-block;
 }

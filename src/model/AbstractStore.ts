@@ -1,6 +1,6 @@
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import orderBy from 'lodash/orderBy';
-import { reactive, readonly } from 'vue';
+import { reactive, readonly, type UnwrapNestedRefs } from 'vue';
 import { BsModel, RestProxyAdapter } from '../model';
 import type {
     IBsModel,
@@ -34,7 +34,7 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 01/03/2024 21:09
+ * @since  15/03/2019 modified: 04/03/2024 01:32
  */
 export default abstract class AbstractStore implements ObjectBase {
     protected _config: TDataStoreConfig;
@@ -42,8 +42,8 @@ export default abstract class AbstractStore implements ObjectBase {
     protected _filteredItems: TBsModel[];
     protected _items: TBsModel[];
     protected _proxy: IRestAdapter | undefined;
-    protected _state: TDataStoreState;
-    public storeState: Readonly<TDataStoreState>;
+    protected _state: UnwrapNestedRefs<TDataStoreState>;
+    public storeState: Readonly<UnwrapNestedRefs<TDataStoreState>>;
 
     /**
      * Check if the given item is a data model or not.
@@ -654,6 +654,8 @@ export default abstract class AbstractStore implements ObjectBase {
 
     abstract load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
 
+    abstract get dataItems(): TBsModel[];
+    
     /**
      * Append an item to the local dataset.
      *

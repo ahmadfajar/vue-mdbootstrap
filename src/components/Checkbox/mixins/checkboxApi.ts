@@ -23,7 +23,7 @@ export function useCheckboxClasses(
 
 export function useCreateCheckboxItems(
     props: Readonly<TCheckboxGroupOptionProps>,
-    toggleCheckHandler: (values: string | number | unknown | Array<string | number | unknown>, item: TRadioProps) => void,
+    toggleCheckHandler: (values: string | number | TRecord | Array<string | number | TRecord>, item: TRadioProps) => void,
 ): VNodeArrayChildren {
     return props.items.map((it, idx) => {
         return h("div", {class: "col", key: `checkbox-${idx}`}, [
@@ -35,14 +35,14 @@ export function useCreateCheckboxItems(
                 readonly: <Prop<boolean>>(it.readonly || props.readonly),
                 // @ts-ignore
                 indeterminate: <Prop<boolean>>(it.indeterminate || props.indeterminate),
-                value: <Prop<string | number | unknown>>it.value,
+                value: <Prop<string | number | TRecord>>it.value,
                 name: <Prop<string | undefined>>(
                     it.name
                         ? it.name
                         : (props.name ? (props.name + "[" + idx + "]") : undefined)
                 ),
-                modelValue: props.modelValue as Prop<string | number | unknown | Array<string | number | unknown>>,
-                "onUpdate:model-value": (value: string | number | unknown | Array<string | number | unknown>): void => toggleCheckHandler(value, it)
+                modelValue: props.modelValue as Prop<string | number | TRecord | Array<string | number | TRecord>>,
+                "onUpdate:model-value": (value: string | number | TRecord | Array<string | number | TRecord>): void => toggleCheckHandler(value, it)
             }, {
                 default: () => it.label
             }),

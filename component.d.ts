@@ -72,7 +72,7 @@ import type {
     TVueMdb,
 } from './dist/vue-mdb';
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
     export interface GlobalComponents {
         BsAlert: typeof BsAlert;
         BsAppContainer: typeof BsAppContainer;
