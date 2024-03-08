@@ -3,24 +3,24 @@
     &::placeholder {
         color: currentColor;
         font-weight: $font-weight-light;
-        opacity: .35;
+        opacity: .65;
     }
 
     &::-moz-placeholder {
         color: currentColor;
         font-weight: $font-weight-light;
-        opacity: .35;
+        opacity: .65;
     }
 
     &::-webkit-input-placeholder {
         color: currentColor;
         font-weight: $font-weight-light;
-        opacity: .35;
+        opacity: .65;
     }
 
     &:-ms-input-placeholder {
         color: currentColor;
         font-weight: $font-weight-light;
-        opacity: .35;
+        opacity: .65;
     }
 }

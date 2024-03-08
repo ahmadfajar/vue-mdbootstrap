@@ -4,10 +4,11 @@ import { cssPrefix, useRenderTransition } from '../../../mixins/CommonApi';
 import type {
     TBsIcon,
     TEmitFn,
+    TIconVariant,
     TNumericFieldOptionProps,
     TNumericOpsOptions,
     TRecord,
-    TSpaceAround
+    TSpaceAround,
 } from '../../../types';
 import Helper from '../../../utils/Helper';
 import { BsRipple } from '../../Animation';
@@ -15,15 +16,16 @@ import { BsIcon } from '../../Icon';
 import {
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
+    useCreateValidationIcon,
     useInputTextFieldAttrs,
-    useMakeInputBaseAttrs
+    useMakeInputBaseAttrs,
 } from './textFieldApi';
 import {
     useOnFieldBlurred,
     useOnFieldFocused,
     useOnFieldValueCleared,
     useOnFieldValueUpdated,
-    useOnTextFieldNodeMounted
+    useOnTextFieldNodeMounted,
 } from './textFieldEventApi';
 import { useRenderFieldFeedback } from './validationApi';
 
@@ -175,25 +177,6 @@ function createAppendFieldActionNode(
                                 : ''
                         )
                 ),
-                (
-                    (hasValidated && hasError)
-                        ? h<TBsIcon>(BsIcon, {
-                            class: 'icon-error text-danger',
-                            icon: (props.actionIconVariant === 'outlined'
-                                ? `error_outline_${props.actionIconVariant}`
-                                : `error_${props.actionIconVariant}`) as Prop<string>,
-                            size: iconSize as Prop<number | undefined>,
-                        })
-                        : (
-                            (hasValidated && !hasError)
-                                ? h<TBsIcon>(BsIcon, {
-                                    class: 'icon-success text-success',
-                                    icon: `check_${props.actionIconVariant}` as Prop<string>,
-                                    size: iconSize as Prop<number | undefined>,
-                                })
-                                : ''
-                        )
-                ),
             ])
             : createCommentVNode(' v-if-action-icon ')
     );
@@ -329,6 +312,13 @@ export function useRenderNumericField(
                 iconSize,
                 props.appendIcon,
                 props.prependIcon,
+                useCreateValidationIcon(
+                    <TIconVariant>props.actionIconVariant,
+                    hasValidated.value,
+                    hasError.value,
+                    <boolean>props.validationIcon,
+                    iconSize,
+                ),
                 createAppendFieldActionNode(
                     props,
                     showClearButton.value,

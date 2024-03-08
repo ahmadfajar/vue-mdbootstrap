@@ -88,7 +88,6 @@ export declare function useRenderSlotWrapperWithCondition(slots: Slots, name: st
  * @param props    The transition properties
  * @param children The child nodes
  * @param asBlock  Render the Transition as block VNode.
- *                 If `true`, `openBlock()` must be done before executing this method.
  * @returns The Rendered node.
  */
 export declare function useRenderTransition(props: Readonly<TransitionProps> | undefined, children: VNode | VNodeArrayChildren, asBlock?: boolean): VNode;

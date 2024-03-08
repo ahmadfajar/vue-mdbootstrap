@@ -60,7 +60,7 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
         const validator = useGetValidationResult(thisProps, isFocused);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, displayValue));
         const showAppendIcon = computed(() =>
-            (slots.appendInner != undefined) || !Helper.isEmpty(calendarIcon.value) || showClearButton.value
+            (slots['append-inner'] != undefined) || !Helper.isEmpty(calendarIcon.value) || showClearButton.value
         );
         const fieldWrapperClasses = computed<TRecord>(() =>
             useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)

@@ -7,7 +7,7 @@ import type {
     TDateTimePickerMode,
     TEmitFn,
     TIconVariant,
-    TRecord
+    TRecord,
 } from '../../../types';
 import Helper from '../../../utils/Helper';
 import { useTogglePopoverState } from '../../Combobox/mixins/comboboxApi';
@@ -15,14 +15,15 @@ import {
     useCreateFieldActionIcon,
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
+    useCreateValidationIcon,
     useInputTextFieldAttrs,
-    useMakeInputBaseAttrs
+    useMakeInputBaseAttrs,
 } from '../../Field/mixins/textFieldApi';
 import {
     useOnFieldBlurred,
     useOnFieldFocused,
     useOnFieldValueCleared,
-    useOnTextFieldNodeMounted
+    useOnTextFieldNodeMounted,
 } from '../../Field/mixins/textFieldEventApi';
 import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
 import { BsPopover } from '../../Popover';
@@ -124,11 +125,16 @@ export function useRenderDateTimeField(
                     iconSize,
                     calendarIcon.value,
                     thisProps.prependIcon,
-                    useCreateFieldActionIcon(
-                        showClearButton.value,
+                    useCreateValidationIcon(
+                        <TIconVariant>thisProps.actionIconVariant,
                         hasValidated.value,
                         hasError.value,
-                        (<TIconVariant>thisProps.actionIconVariant),
+                        <boolean>thisProps.validationIcon,
+                        iconSize,
+                    ),
+                    useCreateFieldActionIcon(
+                        showClearButton.value,
+                        <TIconVariant>thisProps.actionIconVariant,
                         iconSize,
                         () => useOnFieldValueCleared(emit, localFieldValue),
                     ),

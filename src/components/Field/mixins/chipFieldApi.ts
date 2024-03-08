@@ -1,16 +1,27 @@
-import type {ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode} from "vue";
-import {createCommentVNode, Fragment, h, nextTick, toDisplayString} from "vue";
-import type {TBsChipField, TChipFieldOptionProps, TEmitFn, TIconVariant, TRecord} from "../../../types";
-import {useRenderFieldFeedback} from "./validationApi";
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
+import { createCommentVNode, Fragment, h, nextTick, toDisplayString } from 'vue';
+import type {
+    TBsChipField,
+    TChipFieldOptionProps,
+    TEmitFn,
+    TIconVariant,
+    TRecord,
+} from '../../../types';
+import { BsChip } from '../../Chip';
 import {
     useCreateFieldActionIcon,
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
+    useCreateValidationIcon,
     useInputTextFieldAttrs,
-    useMakeInputBaseAttrs
-} from "./textFieldApi";
-import {useOnFieldBlurred, useOnFieldFocused, useOnTextFieldNodeMounted} from "./textFieldEventApi";
-import {BsChip} from "../../Chip";
+    useMakeInputBaseAttrs,
+} from './textFieldApi';
+import {
+    useOnFieldBlurred,
+    useOnFieldFocused,
+    useOnTextFieldNodeMounted,
+} from './textFieldEventApi';
+import { useRenderFieldFeedback } from './validationApi';
 
 
 function dispatchModelValue(
@@ -147,11 +158,16 @@ export function useRenderChipField(
                 iconSize,
                 thisProps.appendIcon,
                 thisProps.prependIcon,
-                useCreateFieldActionIcon(
-                    showClearButton.value,
+                useCreateValidationIcon(
+                    <TIconVariant>thisProps.actionIconVariant,
                     hasValidated.value,
                     hasError.value,
-                    (<TIconVariant>thisProps.actionIconVariant),
+                    <boolean>thisProps.validationIcon,
+                    iconSize,
+                ),
+                useCreateFieldActionIcon(
+                    showClearButton.value,
+                    <TIconVariant>thisProps.actionIconVariant,
                     iconSize,
                     () => {
                         inputValue.value = "";

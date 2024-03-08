@@ -35,6 +35,7 @@
         @include display-flex();
 
         .#{$prefix}action-icon,
+        .#{$prefix}validation-icon,
         .#{$prefix}prepend-inner,
         .#{$prefix}prepend-outer,
         .#{$prefix}append-inner,
@@ -154,6 +155,7 @@
         }
 
         > .#{$prefix}action-icon,
+        > .#{$prefix}validation-icon,
         > .#{$prefix}append-inner {
             margin-right: $padding-base - .25;
         }

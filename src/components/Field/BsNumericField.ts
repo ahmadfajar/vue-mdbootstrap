@@ -45,7 +45,7 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
         const validator = useGetValidationResult(thisProps, hasFocus);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
         const showAppendIcon = computed(() =>
-            (slots.appendInner != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
+            (slots['append-inner'] != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
             || (thisProps.actionButton === true && !thisProps.disabled && !thisProps.readonly)
             || (thisProps.spinButton === true && thisProps.spinButtonPlacement === 'right'
                 && !thisProps.disabled && !thisProps.readonly)

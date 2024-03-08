@@ -160,9 +160,9 @@ declare type AllowedComboboxProps = AllowedComponentProps &
     onOpen?: VoidFunction;
     onSelect?: (item: TBsModel) => void;
     onDeselect?: (item: TBsModel) => void;
-    'onData-bind'?: (data: TBsModel[]) => void;
-    'onData-error'?: (error: unknown) => void;
-    'onData-filter'?: (data: TBsModel[]) => void;
+    onDataBind?: (data: TBsModel[]) => void;
+    onDataError?: (error: unknown) => void;
+    onDataFilter?: (data: TBsModel[]) => void;
     'onUpdate:selected-value'?: (selected: TBsModel[]) => void;
 }
 

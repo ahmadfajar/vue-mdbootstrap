@@ -1,5 +1,12 @@
 import type { AxiosInstance } from 'axios';
-import type { ComponentInternalInstance, Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
+import type {
+    ComponentInternalInstance,
+    Ref,
+    Slots,
+    TransitionProps,
+    VNode,
+    VNodeArrayChildren,
+} from 'vue';
 import {
     createBlock,
     createCommentVNode,
@@ -7,10 +14,11 @@ import {
     getCurrentInstance,
     h,
     normalizeClass,
+    openBlock,
     renderSlot,
     resolveComponent,
     Transition,
-    withCtx
+    withCtx,
 } from 'vue';
 import type { RouteLocationNormalizedLoaded } from 'vue-router';
 import type {
@@ -20,10 +28,9 @@ import type {
     TRecord,
     TRouterLinkProps,
     TRouterOptionProps,
-    TVueMdb
+    TVueMdb,
 } from '../types';
 import Helper from '../utils/Helper';
-
 
 export const cssPrefix = 'md-';
 
@@ -73,15 +80,13 @@ export function useRenderSlot(
     name: string,
     props: Readonly<TRecord> = {},
     children?: VNodeArrayChildren | VNode,
-    slotArgs?: TRecord,
+    slotArgs?: TRecord
 ): VNode {
     const slotProps = {
         ...slotArgs,
         ...props,
     } as TRecord;
-    const fallback = children
-        ? () => (Array.isArray(children) ? children : [children])
-        : undefined;
+    const fallback = children ? () => (Array.isArray(children) ? children : [children]) : undefined;
 
     return renderSlot(slots, name, slotProps, fallback);
 }
@@ -98,14 +103,11 @@ export function useRenderSlotDefault(
     tag: string,
     slots?: Slots,
     classes?: string | Array<string> | TRecord,
-    styles?: string | Array<string> | TRecord,
+    styles?: string | Array<string> | TRecord
 ): VNode {
     return slots
-        ? h(
-            tag, {class: classes, style: styles},
-            renderSlot(slots, 'default'),
-        )
-        : h(tag, {class: classes, style: styles});
+        ? h(tag, { class: classes, style: styles }, renderSlot(slots, 'default'))
+        : h(tag, { class: classes, style: styles });
 }
 
 /**
@@ -130,11 +132,13 @@ export function useRenderSlotWithWrapper(
     wrapperProps: Readonly<TRecord> = {},
     children?: VNodeArrayChildren | VNode,
     wrapperTag = 'div',
-    slotArgs?: TRecord,
+    slotArgs?: TRecord
 ): VNode {
     if (slots[name] != null || children) {
-        return h(wrapperTag, wrapperProps,
-            useRenderSlot(slots, name, {key: key}, children, slotArgs)
+        return h(
+            wrapperTag,
+            wrapperProps,
+            useRenderSlot(slots, name, { key: key }, children, slotArgs)
         );
     } else {
         return createCommentVNode(` v-if-${name} `);
@@ -159,13 +163,10 @@ export function useRenderSlotWrapperWithCondition(
     condition: boolean,
     wrapProps: Readonly<TRecord> = {},
     wrapTag?: string,
-    slotArgs?: TRecord,
+    slotArgs?: TRecord
 ): VNode | undefined {
     return condition
-        ? h(
-            wrapTag || 'div', wrapProps,
-            renderSlot(slots, name, slotArgs)
-        )
+        ? h(wrapTag || 'div', wrapProps, renderSlot(slots, name, slotArgs))
         : undefined;
 }
 
@@ -175,23 +176,23 @@ export function useRenderSlotWrapperWithCondition(
  * @param props    The transition properties
  * @param children The child nodes
  * @param asBlock  Render the Transition as block VNode.
- *                 If `true`, `openBlock()` must be done before executing this method.
  * @returns The Rendered node.
  */
 export function useRenderTransition(
     props: Readonly<TransitionProps> = {},
     children: VNodeArrayChildren | VNode,
-    asBlock?: boolean,
+    asBlock?: boolean
 ): VNode {
     if (asBlock) {
-        return createBlock(
-            Transition, props, {
-                default: withCtx(() => Array.isArray(children) ? children : [children])
-            }
+        return (
+            openBlock(),
+            createBlock(Transition, props, {
+                default: withCtx(() => (Array.isArray(children) ? children : [children])),
+            })
         );
     } else {
         return h(Transition, props, {
-            default: () => children
+            default: () => children,
         });
     }
 }
@@ -205,11 +206,11 @@ export function useRenderTransition(
  */
 export function useRenderRouter(
     props: Readonly<TRouterLinkProps>,
-    children: VNodeArrayChildren | VNode,
+    children: VNodeArrayChildren | VNode
 ): VNode {
     const routerLinkCmp = resolveComponent('RouterLink');
     return createVNode(routerLinkCmp, props, {
-        default: () => children
+        default: () => children,
     });
 }
 
@@ -221,9 +222,12 @@ export function useRenderRouter(
  */
 export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
     const vm = getCurrentInstance();
-    return vm != null && !Helper.isEmpty(props.path) &&
+    return (
+        vm != null &&
+        !Helper.isEmpty(props.path) &&
         (vm.appContext.config.globalProperties.$router != null ||
-            vm.appContext.config.globalProperties.$route != null);
+            vm.appContext.config.globalProperties.$route != null)
+    );
 }
 
 /**
@@ -311,12 +315,12 @@ export function useFindParentCmp(
 
         while (iterator) {
             // if not found then stops.
-            if (maxStep > 0 && step === (maxStep + 1)) {
+            if (maxStep > 0 && step === maxStep + 1) {
                 iterator = null;
                 break;
             }
             // Found match parent: stop iterate upward
-            if (cmpNames.includes((<string>iterator.type.name))) {
+            if (cmpNames.includes(<string>iterator.type.name)) {
                 break;
             }
             // Not found: iterate $parent and increase step counter

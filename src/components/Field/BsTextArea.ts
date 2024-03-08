@@ -70,7 +70,7 @@ export default defineComponent<TBsTextArea, TRecord, TRecord, ComputedOptions, M
         const validator = useGetValidationResult(thisProps, isFocused);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
         const showAppendIcon = computed(() =>
-            (slots.appendInner != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
+            (slots['append-inner'] != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
         );
         const wrapperClasses = computed<TRecord>(() =>
             useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)

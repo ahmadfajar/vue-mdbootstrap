@@ -11,14 +11,15 @@ import type {
     TEmitFn,
     TIconVariant,
     TPopoverPosition,
-    TRecord
+    TRecord,
 } from '../../../types';
 import Helper from '../../../utils/Helper';
 import { BsChip } from '../../Chip';
 import {
     useCreateFieldInnerWrapper,
     useCreateFieldWrapper,
-    useMakeInputBaseAttrs
+    useCreateValidationIcon,
+    useMakeInputBaseAttrs,
 } from '../../Field/mixins/textFieldApi';
 import { useOnTextFieldNodeMounted } from '../../Field/mixins/textFieldEventApi';
 import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
@@ -29,8 +30,6 @@ import { BsPopover } from '../../Popover';
 
 function createActionAppendIcons(
     showClearButton: boolean,
-    hasValidated: boolean,
-    hasError: boolean,
     iconVariant: TIconVariant,
     iconSize: number,
     clearHandler: EventListener,
@@ -48,25 +47,6 @@ function createActionAppendIcons(
                     onClick: clearHandler
                 })
                 : ''
-        ),
-        (
-            (hasValidated && hasError)
-                ? h(BsIcon, {
-                    class: 'icon-error text-danger',
-                    icon: (iconVariant === 'outlined'
-                        ? `error_outline_${iconVariant}`
-                        : `error_${iconVariant}`) as Prop<string>,
-                    size: iconSize as Prop<number | undefined>,
-                })
-                : (
-                    (hasValidated && !hasError)
-                        ? h(BsIcon, {
-                            class: 'icon-success text-success',
-                            icon: `check_${iconVariant}` as Prop<string>,
-                            size: iconSize as Prop<number | undefined>,
-                        })
-                        : ''
-                )
         ),
         h(BsIcon, {
             class: 'icon-expand',
@@ -200,11 +180,16 @@ export function useRenderCombobox(
                         iconSize,
                         thisProps.appendIcon,
                         thisProps.prependIcon,
-                        createActionAppendIcons(
-                            showClearButton.value,
+                        useCreateValidationIcon(
+                            <TIconVariant>thisProps.actionIconVariant,
                             hasValidated.value,
                             hasError.value,
-                            (<TIconVariant>thisProps.actionIconVariant),
+                            <boolean>thisProps.validationIcon,
+                            iconSize,
+                        ),
+                        createActionAppendIcons(
+                            showClearButton.value,
+                            <TIconVariant>thisProps.actionIconVariant,
                             iconSize,
                             () => {
                                 fieldValues.value = [];
@@ -301,16 +286,16 @@ export function useRenderCombobox(
                         modelValue: <Prop<string | number | string[] | number[]>>(thisProps.multiple
                             ? fieldValues.value
                             : (fieldValues.value.length > 0 ? fieldValues.value[0] : undefined)),
-                        'onData-bind': (items: IBsModel[]) => {
+                        onDataBind: (items: IBsModel[]) => {
                             selectedItems.value = items.filter(
                                 it => fieldValues.value.some(v => v === it.get(schema.valueField))
                             );
                             emit('data-bind', items);
                         },
-                        'onData-error': (error: unknown) => emit('data-error', error),
-                        'onData-filter': (items: IBsModel[]) => emit('data-filter', items),
-                        'onSelect': (item: IBsModel) => emit('select', item),
-                        'onDeselect': (item: IBsModel) => emit('deselect', item),
+                        onDataError: (error: unknown) => emit('data-error', error),
+                        onDataFilter: (items: IBsModel[]) => emit('data-filter', items),
+                        onSelect: (item: IBsModel) => emit('select', item),
+                        onDeselect: (item: IBsModel) => emit('deselect', item),
                         'onUpdate:model-value': (values: string | number | string[] | number[] | undefined) => {
                             fieldValues.value = values === undefined ? [] : (Array.isArray(values) ? values : [<string>values]);
                             emit('update:model-value', values);

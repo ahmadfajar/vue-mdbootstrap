@@ -1,14 +1,33 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, ref, shallowRef, watch } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
-import type { IBsModel, TBsCombobox, TComboboxOptionProps, TDataListSchemaProps, TRecord } from '../../types';
+import type {
+    IBsModel,
+    TBsCombobox,
+    TComboboxOptionProps,
+    TDataListSchemaProps,
+    TRecord,
+} from '../../types';
 import Helper from '../../utils/Helper';
-import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from '../Field/mixins/textFieldApi';
+import {
+    useCreateTextFieldClasses,
+    useFieldWrapperClasses,
+    useShowClearButton,
+} from '../Field/mixins/textFieldApi';
 import { useGetValidationResult } from '../Field/mixins/validationApi';
 import { useRenderCombobox } from './mixins/comboboxApi';
 import { comboboxProps } from './mixins/comboboxProps';
 
-export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<
+    TBsCombobox,
+    TRecord,
+    TRecord,
+    ComputedOptions,
+    MethodOptions,
+    ComponentOptionsMixin,
+    ComponentOptionsMixin,
+    EmitsOptions
+>({
     name: 'BsCombobox',
     props: comboboxProps,
     emits: [
@@ -53,7 +72,7 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
          */
         'update:selected-value',
     ],
-    setup(props, {emit, slots}) {
+    setup(props, { emit, slots }) {
         const thisProps = props as Readonly<TComboboxOptionProps>;
         const dataSchema = <TDataListSchemaProps>{
             displayField: 'text',
@@ -66,7 +85,9 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
         const fieldValues = ref<string[] | number[]>(
             Array.isArray(thisProps.modelValue)
                 ? thisProps.modelValue
-                : (Helper.isEmpty(thisProps.modelValue) ? [] : [<string>thisProps.modelValue])
+                : Helper.isEmpty(thisProps.modelValue)
+                  ? []
+                  : [<string>thisProps.modelValue]
         );
         const selectedItems = shallowRef<IBsModel[]>([]);
         const parentValue = ref(thisProps.parentValue);
@@ -75,20 +96,31 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
         const activator = ref<HTMLElement | null>(null);
         const validator = useGetValidationResult(thisProps, isFocused);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, fieldValues));
-        const showAppendIcon = computed(() =>
-            (slots.appendInner != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
+        const showAppendIcon = computed(
+            () =>
+                slots['append-inner'] != undefined ||
+                !Helper.isEmpty(thisProps.appendIcon) ||
+                showClearButton.value
         );
         const wrapperClasses = computed<TRecord>(() =>
-            useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
+            useFieldWrapperClasses(
+                thisProps,
+                validator.hasValidated.value,
+                validator.hasError.value
+            )
         );
-        const controlClasses = computed<TRecord>(() =>
-            ({
-                ...useCreateTextFieldClasses(slots, thisProps, fieldValues, isFocused, showAppendIcon.value),
-                [`${cssPrefix}combobox-field`]: true,
-                [`${cssPrefix}open`]: isPopoverOpen.value,
-                [`${cssPrefix}chip-enabled`]: thisProps.multiple && thisProps.chipEnabled, // && fieldValues.value.length > 0,
-            })
-        );
+        const controlClasses = computed<TRecord>(() => ({
+            ...useCreateTextFieldClasses(
+                slots,
+                thisProps,
+                fieldValues,
+                isFocused,
+                showAppendIcon.value
+            ),
+            [`${cssPrefix}combobox-field`]: true,
+            [`${cssPrefix}open`]: isPopoverOpen.value,
+            [`${cssPrefix}chip-enabled`]: thisProps.multiple && thisProps.chipEnabled, // && fieldValues.value.length > 0,
+        }));
 
         watch(
             () => thisProps.parentValue,
@@ -104,26 +136,30 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
                         const newFilters = ds.createFilters({
                             property: <string>dataSchema.cascadeField,
                             value: <string | number>value,
-                            operator: 'eq'
+                            operator: 'eq',
                         });
                         if (oldFilters.length === 0) {
                             ds.defaultFilters = newFilters;
                         } else {
-                            oldFilters = oldFilters.filter(it => it.property !== dataSchema.cascadeField);
+                            oldFilters = oldFilters.filter(
+                                (it) => it.property !== dataSchema.cascadeField
+                            );
                             ds.defaultFilters = newFilters.concat(oldFilters);
                         }
                     }
 
                     ds.setFilters([], true);
-                    ds.load().then(() => {
-                        emit('data-bind', ds.dataItems);
-                        fieldValues.value = [];
-                        selectedItems.value = [];
-                        emit('update:model-value', thisProps.multiple ? [] : undefined);
-                    }).catch((error) => {
-                        emit('data-error', error);
-                        console.warn(error);
-                    });
+                    ds.load()
+                        .then(() => {
+                            emit('data-bind', ds.dataItems);
+                            fieldValues.value = [];
+                            selectedItems.value = [];
+                            emit('update:model-value', thisProps.multiple ? [] : undefined);
+                        })
+                        .catch((error) => {
+                            emit('data-error', error);
+                            console.warn(error);
+                        });
                 }
             }
         );
@@ -135,14 +171,18 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
                     selectedItems.value = [];
                 } else {
                     const ds = thisProps.dataSource?.proxy;
-                    fieldValues.value = thisProps.multiple && Array.isArray(value) ? value : [<string>value];
+                    fieldValues.value =
+                        thisProps.multiple && Array.isArray(value) ? value : [<string>value];
 
-                    if (!thisProps.multiple && (ds?.filters.length === 0 ||
-                        ds?.defaultFilters.length === ds?.filters.length)
+                    if (
+                        !thisProps.multiple &&
+                        (ds?.filters.length === 0 ||
+                            ds?.defaultFilters.length === ds?.filters.length)
                     ) {
-                        selectedItems.value = ds?.dataItems.filter(
-                            it => fieldValues.value.some(v => v === it.get(dataSchema.valueField))
-                        ) || [];
+                        selectedItems.value =
+                            ds?.dataItems.filter((it) =>
+                                fieldValues.value.some((v) => v === it.get(dataSchema.valueField))
+                            ) || [];
                     }
                 }
             }
@@ -150,7 +190,9 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
 
         return () =>
             useRenderCombobox(
-                slots, emit, props,
+                slots,
+                emit,
+                props,
                 wrapperClasses,
                 controlClasses,
                 dataSchema,
@@ -164,7 +206,7 @@ export default defineComponent<TBsCombobox, TRecord, TRecord, ComputedOptions, M
                 validator.showValidationError,
                 validator.hasValidated,
                 validator.hasError,
-                validator.errorItems,
-            )
-    }
+                validator.errorItems
+            );
+    },
 });
