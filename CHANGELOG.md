@@ -12,9 +12,11 @@ Released: March xx, 2024
   make property `restUrl` writable.
 - **BsButton**: 
   - Improve css styles when `dropdown-toggle` and `tonal` property is defined.
-  - improve css styles on `xs` (small) button size.
+  - improve css styles on `xs` (extra-small) button size.
 - **BsCombobox**, **BsPopover**: improve popover display placement coordinates.
 - **BsNumericField**: improve classic form field styles.
+- **BsTextArea**, **BsTextField**, **BsChipField**, **BsCombobox**, **BsNumericField**, 
+  **BsDateTimeField** : move the placement of the validation icon to always be on the right at the end
 - **BsListTile**: improvement when the `navigable` property is defined.
 - **BsTabs**: 
   - Improve padding on small-screen device. 
@@ -30,13 +32,11 @@ Released: March xx, 2024
 - **BsTabs**: 
   - Fix `tabClass` property for custom css not applied.
   - Fix activeTab not sync when `model-value` is changed programmatically.
-- **BsNumericField**: 
-  - Fix `maxValue` and `minValue` property not implement correctly.
+- **BsNumericField**: fix `maxValue` and `minValue` property not implement correctly.
+- **BsTextField**: fix field value doesn't change immediately when the type props is `password`.
+- **BsTextArea**, **BsTextField**, **BsChipField**, **BsCombobox**, **BsNumericField**, **BsDateTimeField**: 
   - Fix validation using external validator.
-- **BsTextField**: 
-  - Fix field value doesn't change immediately when the type props is `password`.
-  - Fix validation using external validator.
-- **BsTextArea**, **BsChipField**, **BsCombobox**: Fix validation using external validator.
+  - Fix `validationIcon` property not implement correctly
 
 
 ## v2.0.4
