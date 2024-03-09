@@ -136,7 +136,7 @@ export function useCreateFieldWrapper(
 }
 
 function createOutlineWrapper(props: Readonly<TInputFieldProps>): VNode {
-    return props.outlined
+    return props.outlined && !props.filled
         ? h(
               'div',
               {

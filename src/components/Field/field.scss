@@ -631,10 +631,10 @@
 
 .#{$prefix}field {
     &.has-success {
-        $textSuccess: lighten($success-color, 8%);
-        --#{$prefix}field-active-border-color: #{$textSuccess};
-        --#{$prefix}field-border-color: #{$textSuccess};
-        --#{$prefix}field-floating-label-color: #{$textSuccess};
+        //$textSuccess: lighten($success-color, 8%);
+        --#{$prefix}field-active-border-color: #{$success-color};
+        --#{$prefix}field-border-color: #{$success-color};
+        --#{$prefix}field-floating-label-color: #{$success-color};
     }
 
     &.has-error {
