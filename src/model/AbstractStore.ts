@@ -228,8 +228,8 @@ export default abstract class AbstractStore implements ObjectBase {
         this._config.filters = Array.isArray(values)
             ? values
             : Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)
-              ? [values]
-              : [];
+            ? [values]
+            : [];
 
         const newFilters = this.filters.filter((flt) => {
             let found = false;
@@ -469,6 +469,8 @@ export default abstract class AbstractStore implements ObjectBase {
             if (AbstractStore.isModel(item)) {
                 item.destroy();
             }
+            // @ts-ignore
+            this._items[index + i] = null;
         }
 
         this._items.splice(index, count);
@@ -655,7 +657,7 @@ export default abstract class AbstractStore implements ObjectBase {
     abstract load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
 
     abstract get dataItems(): TBsModel[];
-    
+
     /**
      * Append an item to the local dataset.
      *
