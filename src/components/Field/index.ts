@@ -14,11 +14,11 @@ import "./searchField.scss";
 
 const BsFieldPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsTextField.name, BsTextField);
-        app.component(BsTextArea.name, BsTextArea);
-        app.component(BsChipField.name, BsChipField);
-        app.component(BsNumericField.name, BsNumericField);
-        app.component(BsSearchField.name, BsSearchField);
+        app.component(<string>BsTextField.name, BsTextField);
+        app.component(<string>BsTextArea.name, BsTextArea);
+        app.component(<string>BsChipField.name, BsChipField);
+        app.component(<string>BsNumericField.name, BsNumericField);
+        app.component(<string>BsSearchField.name, BsSearchField);
     }
 }
 

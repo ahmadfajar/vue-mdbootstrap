@@ -1,5 +1,5 @@
 import type {Prop} from "vue";
-import {booleanProp, stringProp, validNumberGtZeroProp, whiteColorProp} from "../../../mixins/CommonProps";
+import {booleanProp, booleanTrueProp, stringProp, validNumberGtZeroProp, whiteColorProp} from "../../../mixins/CommonProps";
 import {iconPosition} from "../../Button/mixins/buttonProps";
 import type {TDataSource} from "../types";
 
@@ -32,6 +32,7 @@ export const notFoundMessage = {
 }
 
 export const listboxProps = {
+    autoload: booleanTrueProp,
     borderless: booleanProp,
     color: whiteColorProp,
     disabled: booleanProp,

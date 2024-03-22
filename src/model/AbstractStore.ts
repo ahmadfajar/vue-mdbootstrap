@@ -3,8 +3,11 @@ import orderBy from 'lodash/orderBy';
 import { reactive, readonly, type UnwrapNestedRefs } from 'vue';
 import { BsModel, RestProxyAdapter } from '../model';
 import type {
+    ErrorCallbackFn,
     IBsModel,
     IRestAdapter,
+    ListenerFn,
+    LoadedCallbackFn,
     ObjectBase,
     TBsModel,
     TDataStoreConfig,
@@ -34,9 +37,10 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 04/03/2024 01:32
+ * @since  15/03/2019 modified: 21/03/2024 21:53
  */
 export default abstract class AbstractStore implements ObjectBase {
+    private _eventMap: Map<string, ListenerFn<any>[]>;
     protected _config: TDataStoreConfig;
     protected _filters: TFilterOption[];
     protected _filteredItems: TBsModel[];
@@ -95,6 +99,10 @@ export default abstract class AbstractStore implements ObjectBase {
             this._filters = [];
         }
 
+        this._eventMap = new Map();
+        this._eventMap.set('loaded', []);
+        this._eventMap.set('error', []);
+
         // Add reactivity to the state.
         this._state = reactive<TDataStoreState>({
             loading: false,
@@ -115,6 +123,7 @@ export default abstract class AbstractStore implements ObjectBase {
 
     destroy() {
         this.clear();
+        this._eventMap.clear();
         this._filters = [];
         this._filteredItems = [];
         // @ts-ignore
@@ -253,6 +262,25 @@ export default abstract class AbstractStore implements ObjectBase {
     set filters(newFilters: TFilterOption[] | TFilterOption) {
         this._filters = this.createFilters(newFilters);
         this._filteredItems = [];
+    }
+
+    addListener<T>(event: string, fn: ListenerFn<T>): void {
+        let listeners = this._eventMap.get(event);
+        if (!listeners) {
+            listeners = [fn];
+        } else {
+            listeners.push(fn);
+        }
+
+        this._eventMap.set(event, listeners);
+    }
+
+    onError(fn: ErrorCallbackFn): void {
+        this.addListener('error', fn);
+    }
+
+    onLoaded(fn: LoadedCallbackFn): void {
+        this.addListener('loaded', fn);
     }
 
     addFilter(
@@ -503,29 +531,17 @@ export default abstract class AbstractStore implements ObjectBase {
             for (const flt of values) {
                 if (Helper.isObject(flt) && AbstractStore.isCandidateForFilterOption(flt)) {
                     const cFilter: TFilterOption = {
-                        property: flt.property,
-                        value: flt.value,
-                        operator: <TFilterOperator>(
-                            (Helper.isEmpty(flt.operator) ? 'eq' : flt.operator.toLowerCase())
-                        ),
+                        ...flt,
+                        operator: (flt.operator?.toLowerCase() as TFilterOperator) || 'eq',
                     };
-                    if (flt.type) {
-                        cFilter.type = flt.type;
-                    }
                     filters.push(cFilter);
                 }
             }
         } else if (Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)) {
             const vFilter: TFilterOption = {
-                property: values.property,
-                value: values.value,
-                operator: <TFilterOperator>(
-                    (Helper.isEmpty(values.operator) ? 'eq' : values.operator.toLowerCase())
-                ),
+                ...values,
+                operator: (values.operator?.toLowerCase() as TFilterOperator) || 'eq',
             };
-            if (values.type) {
-                vFilter.type = values.type;
-            }
             filters.push(vFilter);
         }
 
@@ -627,25 +643,27 @@ export default abstract class AbstractStore implements ObjectBase {
         if (this.pageSize > 0) {
             params.limit = this.pageSize;
         }
-        if (!Helper.isEmpty(this.filters)) {
-            params.filters = this.filters;
 
-            if (!Helper.isEmpty(this._config.filters)) {
-                const defFilters = this._config.filters.filter((flt) => {
-                    let found = false;
-                    for (const filter of this.filters) {
-                        if (flt.property === filter.property) {
-                            found = true;
-                            break;
-                        }
+        let filterOptions = this.filters;
+        if (!Helper.isEmpty(this._config.filters)) {
+            const defFilters = this._config.filters.filter((flt) => {
+                let found = false;
+                for (const filter of this.filters) {
+                    if (flt.property === filter.property) {
+                        found = true;
+                        break;
                     }
-
-                    return !found;
-                });
-                if (defFilters.length > 0) {
-                    params.filters = params.filters.concat(defFilters);
                 }
+
+                return !found;
+            });
+            if (defFilters.length > 0) {
+                filterOptions = filterOptions.concat(defFilters);
             }
+        }
+
+        if (filterOptions.length > 0) {
+            params.filters = filterOptions;
         }
         if (!Helper.isEmpty(this.sorters)) {
             params.sorts = this.sorters;
@@ -738,6 +756,7 @@ export default abstract class AbstractStore implements ObjectBase {
     protected _onLoadingFailure(error: AxiosError): void {
         this._state.loading = false;
         this._state.hasError = true;
+        this._fireEvent('error', error);
         RestProxyAdapter.warnResponseError(error);
     }
 
@@ -747,5 +766,16 @@ export default abstract class AbstractStore implements ObjectBase {
     protected _onLoadingSuccess(): void {
         this._state.loading = false;
         this._state.hasError = false;
+        this._fireEvent('loaded', this.dataItems);
+    }
+
+    protected _fireEvent<T>(event: string, arg: T) {
+        const listeners = this._eventMap.get(event);
+
+        if (listeners) {
+            for (let idx = 0; idx < listeners.length; idx++) {
+                listeners[idx](arg);
+            }
+        }
     }
 }

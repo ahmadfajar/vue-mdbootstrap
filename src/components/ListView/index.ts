@@ -16,15 +16,15 @@ import "./listTile.scss";
 
 const BsListViewPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsListView.name, BsListView);
-        app.component(BsListNav.name, BsListNav);
-        app.component(BsListNavItem.name, BsListNavItem);
-        app.component(BsListTile.name, BsListTile);
-        app.component(BsListTileAction.name, BsListTileAction);
-        app.component(BsListTileContent.name, BsListTileContent);
-        app.component(BsListTileLeading.name, BsListTileLeading);
-        app.component(BsListTileSubtitle.name, BsListTileSubtitle);
-        app.component(BsListTileTitle.name, BsListTileTitle);
+        app.component(<string>BsListView.name, BsListView);
+        app.component(<string>BsListNav.name, BsListNav);
+        app.component(<string>BsListNavItem.name, BsListNavItem);
+        app.component(<string>BsListTile.name, BsListTile);
+        app.component(<string>BsListTileAction.name, BsListTileAction);
+        app.component(<string>BsListTileContent.name, BsListTileContent);
+        app.component(<string>BsListTileLeading.name, BsListTileLeading);
+        app.component(<string>BsListTileSubtitle.name, BsListTileSubtitle);
+        app.component(<string>BsListTileTitle.name, BsListTileTitle);
     }
 }
 

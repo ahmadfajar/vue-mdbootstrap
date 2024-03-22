@@ -1,4 +1,4 @@
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import meanBy from 'lodash/meanBy';
 import sumBy from 'lodash/sumBy';
 import { AbstractStore, RestProxyAdapter } from '../model';
@@ -37,7 +37,7 @@ import type {
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 01/03/2024 21:09
+ * @since  20/07/2018 modified: 21/03/2024 00:41
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -219,11 +219,13 @@ export default class BsStore extends AbstractStore {
                         this._state.deleting = false;
                         this._state.hasError = false;
                         resolve(response);
+                        this._fireEvent('loaded', this.dataItems);
                     })
                     .catch((error) => {
                         this._state.deleting = false;
                         this._state.hasError = true;
                         reject(error);
+                        this._fireEvent('error', error);
                     });
             });
         } else {
@@ -236,6 +238,7 @@ export default class BsStore extends AbstractStore {
                         success: true,
                         message: 'Item has been removed from local store.',
                     });
+                    this._fireEvent('loaded', this.dataItems);
                 } catch (e) {
                     this._state.deleting = false;
                     this._state.hasError = true;
@@ -263,14 +266,15 @@ export default class BsStore extends AbstractStore {
                             this.remove(item);
                         }
                     }
-
+                    this._fireEvent('loaded', this.dataItems);
                     resolve({
                         success: true,
                         message: 'Items have been successfully removed.',
                     });
-                } catch (e) {
+                } catch (error) {
+                    this._fireEvent('error', error as AxiosError);
                     this._state.hasError = true;
-                    reject(e);
+                    reject(error);
                 }
 
                 this._state.deleting = false;

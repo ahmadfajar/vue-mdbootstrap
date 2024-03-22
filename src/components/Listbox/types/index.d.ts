@@ -27,6 +27,10 @@ export declare type TDataSource = {
 
 export declare type TListboxOptionProps = {
     /**
+     * Autoload data from the configured `dataSource`, default is `true`.
+     */
+    autoload?: boolean;
+    /**
      * Hide the Listbox container borders.
      */
     borderless?: boolean;

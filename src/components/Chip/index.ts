@@ -7,8 +7,8 @@ import '../../../scss/_utilities.scss';
 
 const BsChipPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsChip.name, BsChip);
-        app.component(BsChipGroup.name, BsChipGroup);
+        app.component(<string>BsChip.name, BsChip);
+        app.component(<string>BsChipGroup.name, BsChipGroup);
     }
 }
 

@@ -4,7 +4,7 @@ import "./tooltip.scss";
 
 const BsTooltipPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsTooltip.name, BsTooltip);
+        app.component(<string>BsTooltip.name, BsTooltip);
     }
 }
 

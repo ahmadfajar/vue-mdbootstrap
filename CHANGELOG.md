@@ -14,10 +14,14 @@ Released: March xx, 2024
 - **BsButton**: 
   - Improve css styles when `dropdown-toggle` and `tonal` property is defined.
   - improve css styles on `xs` (extra-small) button size.
-- **BsCombobox**, **BsPopover**: improve popover display placement coordinates.
+- **BsCombobox**: 
+  - Improve popover display placement coordinates.
+  - Improve chain loading dataset when `parentValue` is defined.
 - **BsIcon**, **BsIconSvg**: cache loaded icon using CacheManager to improve performance. 
 - **BsNumericField**: improve classic form field styles.
+- **BsListbox**: add property `autoload` to turn-off the autoloading dataset from the dataStore.
 - **BsListTile**: improvement when the `navigable` property is defined.
+- **BsPopover**: improve popover display placement coordinates.
 - **BsTabs**: 
   - Improve padding on small-screen device. 
   - Support sliding on horizontal tabs when the sum of tabs width exceed the container width. 

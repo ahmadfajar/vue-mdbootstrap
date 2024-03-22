@@ -8,7 +8,7 @@ import "./sidedrawer.scss";
 const BsDrawerPlugin: Plugin = {
     install: (app: App): void => {
         registerConfig(app);
-        app.component(BsSideDrawer.name, BsSideDrawer);
+        app.component(<string>BsSideDrawer.name, BsSideDrawer);
     }
 }
 

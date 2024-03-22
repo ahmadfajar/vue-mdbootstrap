@@ -8,8 +8,8 @@ import "./lightbox.scss";
 
 const BsModalPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsModal.name, BsModal);
-        app.component(BsLightbox.name, BsLightbox);
+        app.component(<string>BsModal.name, BsModal);
+        app.component(<string>BsLightbox.name, BsLightbox);
     }
 }
 

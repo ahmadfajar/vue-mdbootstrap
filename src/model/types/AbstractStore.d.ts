@@ -103,6 +103,12 @@ export declare type TDataStoreState = TModelState & {
     currentPage: number;
 };
 
+export declare type ListenerFn<T> = (arg: T) => void;
+
+export declare type ErrorCallbackFn = (error: AxiosError) => void;
+
+export declare type LoadedCallbackFn = (data: TBsModel[]) => void;
+
 /**
  * Class AbstractStore is superclass of {@link BsArrayStore}, and {@link BsStore}.
  * It's never used directly, but offers a set of
@@ -434,6 +440,28 @@ export declare abstract class AbstractStore implements ObjectBase {
      * then the returned dataset will also be affected by it.
      */
     abstract get dataItems(): TBsModel[];
+
+    /**
+     * Register event listener.
+     *
+     * @param event The event name, valid values are: `error`, and `loaded`.
+     * @param fn    The event callback function
+     */
+    addListener<T>(event: string, fn: ListenerFn<T>): void;
+
+    /**
+     * Shortcut function to register `error` event listener.
+     *
+     * @param fn Callback function when error occured
+     */
+    onError(fn: ErrorCallbackFn): void;
+
+    /**
+     * Shortcut function to register `loaded` event listener.
+     *
+     * @param fn Callback function when data is successfully loaded to this store dataset
+     */
+    onLoaded(fn: LoadedCallbackFn): void;
 
     /**
      * Append an item to the local dataset.

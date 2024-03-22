@@ -154,7 +154,9 @@ export default class RestProxyAdapter implements IRestAdapter {
                         reject(error);
                     });
             } else {
-                reject(new Error('Client is busy handling previous request.'));
+                const message = 'Client is busy handling previous request.';
+                console.warn(message);
+                reject(new Error(message));
             }
         });
     }

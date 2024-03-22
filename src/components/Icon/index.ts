@@ -8,10 +8,10 @@ import "./icon.scss";
 
 const BsIconPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsIcon.name, BsIcon);
-        app.component(BsIconSvg.name, BsIconSvg);
-        app.component(BsIconSpinner.name, BsIconSpinner);
-        app.component(BsToggleIcon.name, BsToggleIcon);
+        app.component(<string>BsIcon.name, BsIcon);
+        app.component(<string>BsIconSvg.name, BsIconSvg);
+        app.component(<string>BsIconSpinner.name, BsIconSpinner);
+        app.component(<string>BsToggleIcon.name, BsToggleIcon);
         // Backward compatibility
         app.component("BsIconToggle", BsToggleIcon);
     },

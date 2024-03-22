@@ -4,7 +4,7 @@ import "./listbox.scss";
 
 const BsListboxPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsListbox.name, BsListbox);
+        app.component(<string>BsListbox.name, BsListbox);
     }
 }
 

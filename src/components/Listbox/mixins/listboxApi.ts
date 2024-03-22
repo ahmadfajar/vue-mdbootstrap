@@ -1,10 +1,10 @@
 import type { Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
 import {
-    createCommentVNode,
     Fragment,
+    createCommentVNode,
     h,
     nextTick,
-    onBeforeMount,
+    onMounted,
     toDisplayString,
     vModelText,
     watch,
@@ -17,6 +17,8 @@ import type {
     IArrayStore,
     IBsModel,
     IBsStore,
+    LoadedCallbackFn,
+    TBsModel,
     TDataListSchemaProps,
     TEmitFn,
     TListboxOptionProps,
@@ -198,25 +200,25 @@ function renderListboxView(
                               ]),
                       })
                     : dataSource?.filters.length &&
-                        dataSource.filters.length > 0 &&
-                        dataItems.value?.length === 0
-                      ? h(BsListTile, null, {
-                            default: () =>
-                                useRenderSlot(slots, 'not-found-msg', { key: 'notFoundMessage' }, [
-                                    h(BsListTileTitle, null, {
-                                        default: () => toDisplayString(props.notFoundMessage),
-                                    }),
-                                ]),
-                        })
-                      : renderListboxItems(
-                            slots,
-                            emit,
-                            props,
-                            schema,
-                            dataItems,
-                            selectedItems,
-                            localValue
-                        ),
+                      dataSource.filters.length > 0 &&
+                      dataItems.value?.length === 0
+                    ? h(BsListTile, null, {
+                          default: () =>
+                              useRenderSlot(slots, 'not-found-msg', { key: 'notFoundMessage' }, [
+                                  h(BsListTileTitle, null, {
+                                      default: () => toDisplayString(props.notFoundMessage),
+                                  }),
+                              ]),
+                      })
+                    : renderListboxItems(
+                          slots,
+                          emit,
+                          props,
+                          schema,
+                          dataItems,
+                          selectedItems,
+                          localValue
+                      ),
         }
     );
 }
@@ -476,6 +478,20 @@ export function useRegisterListboxWatchers(
     const maxHeight = parseInt(<string>props.maxHeight);
     const minItems = parseInt(<string>props.minSearchLength);
 
+    if (dataSource) {
+        const listener: LoadedCallbackFn = (data: TBsModel[]) => {
+            if (data.length == 0) {
+                cacheItems.value = [];
+            } else {
+                selectedItems.value = findSelectedItems(localValue, schema.valueField, dataSource);
+                cacheItems.value = cloneDataItems(dataSource, selectedItems, schema.valueField);
+            }
+            emit('data-bind', data);
+        };
+
+        dataSource.onLoaded(listener);
+    }
+
     watchEffect(() => {
         if (showSearchbox.value === false) {
             showSearchbox.value =
@@ -486,16 +502,6 @@ export function useRegisterListboxWatchers(
         }
     });
 
-    watch(
-        () => dataSource?.storeState.length,
-        (value) => {
-            if (dataSource && value && value > 0) {
-                cacheItems.value = cloneDataItems(dataSource, selectedItems, schema.valueField);
-            } else {
-                cacheItems.value = [];
-            }
-        }
-    );
     watch(
         () => props.searchText,
         (value) => {
@@ -539,17 +545,17 @@ export function useRegisterListboxWatchers(
         }
     );
 
-    onBeforeMount(() => {
-        dataSource
-            ?.load()
-            .then(() => {
-                selectedItems.value = findSelectedItems(localValue, schema.valueField, dataSource);
-                cacheItems.value = cloneDataItems(dataSource, selectedItems, schema.valueField);
-                emit('data-bind', dataSource?.dataItems);
-            })
-            .catch((error) => {
+    onMounted(() => {
+        if (!dataSource || !props.autoload) return;
+
+        queueMicrotask(async () => {
+            try {
+                if (dataSource.storeState.length == 0) {
+                    await dataSource.load();
+                }
+            } catch (error) {
                 emit('data-error', error);
-                console.warn(error);
-            });
+            }
+        });
     });
 }

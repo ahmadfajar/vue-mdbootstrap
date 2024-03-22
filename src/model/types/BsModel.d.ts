@@ -321,7 +321,7 @@ export declare class BsModel implements ObjectBase {
     update(): Promise<AxiosResponse>;
 
     /**
-     * Action triggered after data was fetched from the remote server.
+     * Event triggered after data was fetched from the remote server.
      * This method can be overridden on inherited classes.
      *
      * @param data The response data

@@ -8,9 +8,9 @@ import "./button.scss";
 
 const BsButtonPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsButton.name, BsButton);
-        app.component(BsToggleButton.name, BsToggleButton);
-        app.component(BsToggleField.name, BsToggleField);
+        app.component(<string>BsButton.name, BsButton);
+        app.component(<string>BsToggleButton.name, BsToggleButton);
+        app.component(<string>BsToggleField.name, BsToggleField);
         // Backward compatibility
         app.component("BsButtonToggle", BsToggleButton);
         app.component("BsButtonToggleField", BsToggleField);

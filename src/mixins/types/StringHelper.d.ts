@@ -11,7 +11,11 @@
  *                   part will be applied. The default value for this parameter is " " (U+0020).
  * @returns New String that has been padded on the left side.
  */
-export declare function padLeft(str: string | number, maxLength?: number, fillString?: string): string;
+export declare function padLeft(
+    str: string | number,
+    maxLength?: number,
+    fillString?: string
+): string;
 
 /**
  * Pads the input string with a given string (possibly repeated) so that the resulting string
@@ -26,7 +30,11 @@ export declare function padLeft(str: string | number, maxLength?: number, fillSt
  *                   part will be applied. The default value for this parameter is " " (U+0020).
  * @returns New String that has been padded on the right side.
  */
-export declare function padRight(str: string | number, maxLength?: number, fillString?: string): string;
+export declare function padRight(
+    str: string | number,
+    maxLength?: number,
+    fillString?: string
+): string;
 
 /**
  * Simple function to transform the input string into Title Case.
@@ -34,7 +42,7 @@ export declare function padRight(str: string | number, maxLength?: number, fillS
  * @param text The input string to transform.
  * @returns New string that has been transform to Title Case.
  */
-export declare function titleCase(text: string): string;
+export declare function titleCase(text?: string): string;
 
 /**
  * Simple function to transform the input string into

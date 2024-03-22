@@ -6,7 +6,7 @@ import "./colorPicker.scss";
 
 const BsColorPickerPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsColorPicker.name, BsColorPicker);
+        app.component(<string>BsColorPicker.name, BsColorPicker);
     }
 };
 

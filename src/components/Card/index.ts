@@ -10,12 +10,12 @@ import "../../../scss/_utilities.scss";
 
 const BsCardPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsCard.name, BsCard);
-        app.component(BsCardBody.name, BsCardBody);
-        app.component(BsCardContent.name, BsCardContent);
-        app.component(BsCardFooter.name, BsCardFooter);
-        app.component(BsCardHeader.name, BsCardHeader);
-        app.component(BsCardMedia.name, BsCardMedia);
+        app.component(<string>BsCard.name, BsCard);
+        app.component(<string>BsCardBody.name, BsCardBody);
+        app.component(<string>BsCardContent.name, BsCardContent);
+        app.component(<string>BsCardFooter.name, BsCardFooter);
+        app.component(<string>BsCardHeader.name, BsCardHeader);
+        app.component(<string>BsCardMedia.name, BsCardMedia);
     },
 }
 

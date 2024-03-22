@@ -9,8 +9,8 @@ import "./datePicker.scss";
 
 const BsDatePickerPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsDatePicker.name, BsDatePicker);
-        app.component(BsDateTimeField.name, BsDateTimeField);
+        app.component(<string>BsDatePicker.name, BsDatePicker);
+        app.component(<string>BsDateTimeField.name, BsDateTimeField);
     }
 }
 

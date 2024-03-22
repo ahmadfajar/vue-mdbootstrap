@@ -6,7 +6,7 @@ import "./popover.scss";
 
 const BsPopoverPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsPopover.name, BsPopover);
+        app.component(<string>BsPopover.name, BsPopover);
     }
 }
 

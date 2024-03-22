@@ -26,7 +26,7 @@ import type { TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from './
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 26/02/2024 03:16
+ * @since  13/03/2019 modified: 21/03/2024 00:41
  */
 export default class BsArrayStore extends AbstractStore {
     /**
@@ -108,9 +108,9 @@ export default class BsArrayStore extends AbstractStore {
                 this.assignData(data, false);
             } else if (this.sorters.length > 0) {
                 this._items = this.localSort();
+                this._onLoadingSuccess();
             }
-
-            this._onLoadingSuccess();
+            
             resolve(this._items);
         });
     }

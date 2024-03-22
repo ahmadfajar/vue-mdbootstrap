@@ -84,6 +84,8 @@ export function useRenderSearchField(
                         useOnFieldValueUpdated(emit, localValue, value);
                         if (value.length >= <number>thisProps.minlength) {
                             dispatchSearch(localValue, emit);
+                        } else if (value.length == 0) {
+                            emit('clear');
                         }
                     },
                     onBlur: (e: Event) =>
@@ -175,5 +177,7 @@ function dispatchSearch(
 ) {
     if (!Helper.isEmpty(localValue.value)) {
         emit('search', localValue.value);
+    } else {
+        emit('clear');
     }
 }

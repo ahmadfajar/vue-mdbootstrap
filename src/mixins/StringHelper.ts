@@ -18,10 +18,10 @@ export function padLeft(str: string | number, maxLength = 2, fillString = '0'): 
     const outString = String(str);
 
     if (outString.length >= maxLength) {
-        return outString
+        return outString;
     }
 
-    return outString.padStart(maxLength, fillString)
+    return outString.padStart(maxLength, fillString);
 }
 
 /**
@@ -41,10 +41,10 @@ export function padRight(str: string | number, maxLength = 2, fillString = '0'):
     const outString = String(str);
 
     if (outString.length >= maxLength) {
-        return outString
+        return outString;
     }
 
-    return outString.padEnd(maxLength, fillString)
+    return outString.padEnd(maxLength, fillString);
 }
 
 /**
@@ -53,12 +53,17 @@ export function padRight(str: string | number, maxLength = 2, fillString = '0'):
  * @param text The input string.
  * @returns New string that has been transform to Title Case.
  */
-export function titleCase(text: string): string {
-    return text.toLowerCase()
-        .split(/[-_\s]+/)
-        .map(function (word: string) {
-            return word?.replace(word[0], word[0]?.toUpperCase())
-        }).join(' ').trim();
+export function titleCase(text?: string): string {
+    return (
+        text
+            ?.toLowerCase()
+            .split(/[-_\s]+/)
+            .map(function (word: string) {
+                return word?.replace(word[0], word[0]?.toUpperCase());
+            })
+            .join(' ')
+            .trim() ?? ''
+    );
 }
 
 /**
@@ -88,7 +93,7 @@ export function kebabCase(text: string): string {
 
 export function isEndWith(str?: string, searches?: string[]): boolean {
     if (str && searches) {
-        return searches.some(s => str.endsWith(s));
+        return searches.some((s) => str.endsWith(s));
     }
 
     return false;

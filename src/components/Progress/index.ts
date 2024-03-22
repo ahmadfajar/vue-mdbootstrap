@@ -7,9 +7,9 @@ import "../../../scss/_utilities.scss";
 
 const BsProgressPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsMaskLoader.name, BsMaskLoader);
-        app.component(BsProgress.name, BsProgress);
-        app.component(BsProgressBar.name, BsProgressBar);
+        app.component(<string>BsMaskLoader.name, BsMaskLoader);
+        app.component(<string>BsProgress.name, BsProgress);
+        app.component(<string>BsProgressBar.name, BsProgressBar);
     }
 }
 

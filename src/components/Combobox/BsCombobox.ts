@@ -1,9 +1,10 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
-import { computed, defineComponent, ref, shallowRef, watch } from 'vue';
+import { computed, defineComponent, onMounted, ref, shallowRef, watch } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
 import type {
     IBsModel,
     TBsCombobox,
+    TBsModel,
     TComboboxOptionProps,
     TDataListSchemaProps,
     TRecord,
@@ -15,7 +16,7 @@ import {
     useShowClearButton,
 } from '../Field/mixins/textFieldApi';
 import { useGetValidationResult } from '../Field/mixins/validationApi';
-import { useRenderCombobox } from './mixins/comboboxApi';
+import { useFetchData, useRenderCombobox } from './mixins/comboboxApi';
 import { comboboxProps } from './mixins/comboboxProps';
 
 export default defineComponent<
@@ -82,15 +83,15 @@ export default defineComponent<
             disableField: 'disabled',
             ...thisProps.dataSource?.schema,
         };
+        const dataSource = thisProps.dataSource?.proxy;
         const fieldValues = ref<string[] | number[]>(
             Array.isArray(thisProps.modelValue)
                 ? thisProps.modelValue
                 : Helper.isEmpty(thisProps.modelValue)
-                  ? []
-                  : [<string>thisProps.modelValue]
+                ? []
+                : [<string>thisProps.modelValue]
         );
         const selectedItems = shallowRef<IBsModel[]>([]);
-        const parentValue = ref(thisProps.parentValue);
         const isFocused = ref(false);
         const isPopoverOpen = ref(false);
         const activator = ref<HTMLElement | null>(null);
@@ -119,48 +120,19 @@ export default defineComponent<
             ),
             [`${cssPrefix}combobox-field`]: true,
             [`${cssPrefix}open`]: isPopoverOpen.value,
-            [`${cssPrefix}chip-enabled`]: thisProps.multiple && thisProps.chipEnabled, // && fieldValues.value.length > 0,
+            [`${cssPrefix}chip-enabled`]: thisProps.multiple && thisProps.chipEnabled,
         }));
+        const uid = ref<number>();
 
         watch(
             () => thisProps.parentValue,
             (value) => {
-                const ds = thisProps.dataSource?.proxy;
-                parentValue.value = value;
-
-                if (ds) {
-                    if (Helper.isEmpty(value)) {
-                        ds.defaultFilters = [];
-                    } else {
-                        let oldFilters = ds.defaultFilters;
-                        const newFilters = ds.createFilters({
-                            property: <string>dataSchema.cascadeField,
-                            value: <string | number>value,
-                            operator: 'eq',
-                        });
-                        if (oldFilters.length === 0) {
-                            ds.defaultFilters = newFilters;
-                        } else {
-                            oldFilters = oldFilters.filter(
-                                (it) => it.property !== dataSchema.cascadeField
-                            );
-                            ds.defaultFilters = newFilters.concat(oldFilters);
-                        }
+                uid.value = window.setInterval(async () => {
+                    if (dataSource?.storeState.loading === false) {
+                        await useFetchData(emit, dataSchema, value, dataSource);
+                        window.clearInterval(uid.value);
                     }
-
-                    ds.setFilters([], true);
-                    ds.load()
-                        .then(() => {
-                            emit('data-bind', ds.dataItems);
-                            fieldValues.value = [];
-                            selectedItems.value = [];
-                            emit('update:model-value', thisProps.multiple ? [] : undefined);
-                        })
-                        .catch((error) => {
-                            emit('data-error', error);
-                            console.warn(error);
-                        });
-                }
+                }, 100);
             }
         );
         watch(
@@ -170,17 +142,16 @@ export default defineComponent<
                     fieldValues.value = [];
                     selectedItems.value = [];
                 } else {
-                    const ds = thisProps.dataSource?.proxy;
                     fieldValues.value =
                         thisProps.multiple && Array.isArray(value) ? value : [<string>value];
 
                     if (
                         !thisProps.multiple &&
-                        (ds?.filters.length === 0 ||
-                            ds?.defaultFilters.length === ds?.filters.length)
+                        (dataSource?.filters.length === 0 ||
+                            dataSource?.defaultFilters.length === dataSource?.filters.length)
                     ) {
                         selectedItems.value =
-                            ds?.dataItems.filter((it) =>
+                            dataSource?.dataItems.filter((it) =>
                                 fieldValues.value.some((v) => v === it.get(dataSchema.valueField))
                             ) || [];
                     }

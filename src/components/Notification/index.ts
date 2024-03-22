@@ -9,7 +9,7 @@ const BsNotificationPlugin: Plugin = {
         registerConfig(app);
         app.config.globalProperties.$VueMdb.notification = new NotificationProvider();
         app.config.globalProperties.$notification = app.config.globalProperties.$VueMdb.notification;
-        app.component(BsNotification.name, BsNotification);
+        app.component(<string>BsNotification.name, BsNotification);
     }
 }
 

@@ -7,8 +7,8 @@ import "./checkbox.scss";
 
 const BsCheckboxPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsCheckbox.name, BsCheckbox);
-        app.component(BsCheckboxGroup.name, BsCheckboxGroup);
+        app.component(<string>BsCheckbox.name, BsCheckbox);
+        app.component(<string>BsCheckboxGroup.name, BsCheckboxGroup);
     }
 }
 

@@ -7,8 +7,8 @@ import "./tabView.scss";
 
 const BsTabsPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsTab.name, BsTab);
-        app.component(BsTabs.name, BsTabs);
+        app.component(<string>BsTab.name, BsTab);
+        app.component(<string>BsTabs.name, BsTabs);
     }
 }
 

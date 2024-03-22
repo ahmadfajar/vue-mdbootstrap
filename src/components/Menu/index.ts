@@ -4,7 +4,7 @@ import "./dropdownMenu.scss";
 
 const BsMenuPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsDropdownMenu.name, BsDropdownMenu);
+        app.component(<string>BsDropdownMenu.name, BsDropdownMenu);
         // Backward compatibility
         app.component("BsMenu", BsDropdownMenu);
     }

@@ -9,9 +9,9 @@ import "../../../scss/_utilities.scss";
 const BsContainerPlugin: Plugin = {
     install: (app: App): void => {
         registerConfig(app);
-        app.component(BsAppContainer.name, BsAppContainer);
-        app.component(BsContainer.name, BsContainer);
-        app.component(BsContent.name, BsContent);
+        app.component(<string>BsAppContainer.name, BsAppContainer);
+        app.component(<string>BsContainer.name, BsContainer);
+        app.component(<string>BsContent.name, BsContent);
     }
 }
 

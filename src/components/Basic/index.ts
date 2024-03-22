@@ -7,10 +7,10 @@ import "./basic.scss";
 
 const BsBasicCmpPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsDivider.name, BsDivider);
-        app.component(BsImageHolder.name, BsImageHolder);
-        app.component(BsSpacer.name, BsSpacer);
-        app.component(BsSubheader.name, BsSubheader);
+        app.component(<string>BsDivider.name, BsDivider);
+        app.component(<string>BsImageHolder.name, BsImageHolder);
+        app.component(<string>BsSpacer.name, BsSpacer);
+        app.component(<string>BsSubheader.name, BsSubheader);
     }
 };
 

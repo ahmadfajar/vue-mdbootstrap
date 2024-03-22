@@ -7,8 +7,8 @@ import "./radio.scss";
 
 const BsRadioPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsRadio.name, BsRadio);
-        app.component(BsRadioGroup.name, BsRadioGroup);
+        app.component(<string>BsRadio.name, BsRadio);
+        app.component(<string>BsRadioGroup.name, BsRadioGroup);
     }
 }
 

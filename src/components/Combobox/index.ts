@@ -8,7 +8,7 @@ import "./combobox.scss";
 
 const BsComboboxPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsCombobox.name, BsCombobox);
+        app.component(<string>BsCombobox.name, BsCombobox);
     }
 }
 

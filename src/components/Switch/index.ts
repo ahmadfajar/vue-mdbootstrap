@@ -5,7 +5,7 @@ import "./switch.scss";
 
 const BsSwitchPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsSwitch.name, BsSwitch);
+        app.component(<string>BsSwitch.name, BsSwitch);
     }
 }
 

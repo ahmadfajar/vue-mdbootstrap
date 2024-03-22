@@ -4,7 +4,7 @@ import "./avatar.scss";
 
 const BsAvatarPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(BsAvatar.name, BsAvatar);
+        app.component(<string>BsAvatar.name, BsAvatar);
     }
 }
 
