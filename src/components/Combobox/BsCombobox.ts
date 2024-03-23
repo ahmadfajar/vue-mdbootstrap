@@ -1,13 +1,12 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
-import { computed, defineComponent, onMounted, ref, shallowRef, watch } from 'vue';
+import { computed, defineComponent, ref, shallowRef, watch } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
 import type {
     IBsModel,
     TBsCombobox,
-    TBsModel,
     TComboboxOptionProps,
     TDataListSchemaProps,
-    TRecord,
+    TRecord
 } from '../../types';
 import Helper from '../../utils/Helper';
 import {

@@ -311,7 +311,7 @@ export declare class BsModel implements ObjectBase {
 
     /**
      * Convert field attributes that exists in the schema definition into a Javascript plain object.
-     * This method can be overridden on inherited classes to produce the desired data.
+     * This method can be overridden on inherited classes to produce the desired DTO.
      */
     toObject(): TRecord;
 
