@@ -552,6 +552,10 @@ export function useRegisterListboxWatchers(
             try {
                 if (dataSource.storeState.length == 0) {
                     await dataSource.load();
+                } else {
+                    selectedItems.value = findSelectedItems(localValue, schema.valueField, dataSource);
+                    cacheItems.value = cloneDataItems(dataSource, selectedItems, schema.valueField);
+                    emit('data-bind', dataSource.dataItems);
                 }
             } catch (error) {
                 emit('data-error', error);
