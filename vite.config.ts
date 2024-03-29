@@ -1,11 +1,10 @@
-import terser from '@rollup/plugin-terser'
-import path from 'node:path'
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig } from 'vite'
+import terser from '@rollup/plugin-terser';
+import path from 'node:path';
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite';
 // @ts-ignore
-import { bannerText } from './banner'
+import { bannerText } from './banner';
 
-// @ts-ignore
 export default defineConfig({
     mode: 'development',
     build: {
@@ -24,7 +23,7 @@ export default defineConfig({
                     default:
                         return 'vue-mdb.js';
                 }
-            }
+            },
         },
         emptyOutDir: false,
         cssMinify: false,
@@ -33,7 +32,7 @@ export default defineConfig({
             // make sure to externalize deps that shouldn't be bundled into your library
             external: ['vue'],
             treeshake: {
-                preset: 'smallest'
+                preset: 'smallest',
             },
             output: {
                 // Provide global variables to use in the ES build for externalized deps
@@ -41,7 +40,7 @@ export default defineConfig({
                     vue: 'Vue',
                 },
                 generatedCode: {
-                    constBindings: true
+                    constBindings: true,
                 },
                 interop: 'auto',
                 assetFileNames: 'bundle.[ext]',
@@ -55,8 +54,8 @@ export default defineConfig({
                     format: {
                         comments: false,
                     },
-                })
-            ]
+                }),
+            ],
         },
     },
     esbuild: {
@@ -68,7 +67,7 @@ export default defineConfig({
     // ],
     resolve: {
         alias: {
-            '@': fileURLToPath(new URL('./src', import.meta.url))
-        }
-    }
-})
+            '@': fileURLToPath(new URL('./src', import.meta.url)),
+        },
+    },
+});

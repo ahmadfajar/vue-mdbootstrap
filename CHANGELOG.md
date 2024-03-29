@@ -19,7 +19,7 @@ Released: March xx, 2024
   - Improve chain loading dataset when `parentValue` is defined.
 - **BsIcon**, **BsIconSvg**: cache loaded icon using CacheManager to improve performance. 
 - **BsNumericField**: improve classic form field styles.
-- **BsListbox**: add property `autoload` to turn-off the autoloading dataset from the dataStore.
+- **BsListbox**: add property `autoload` to turn-off the autoloading dataset from remote source.
 - **BsListTile**: improvement when the `navigable` property is defined.
 - **BsPopover**: improve popover display placement coordinates.
 - **BsTabs**: 

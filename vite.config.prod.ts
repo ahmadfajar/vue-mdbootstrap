@@ -1,10 +1,8 @@
-import terser from '@rollup/plugin-terser'
-// @ts-ignore
-import path from 'node:path'
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig } from 'vite'
-// @ts-ignore
-import { bannerText } from './banner'
+import terser from '@rollup/plugin-terser';
+import path from 'node:path';
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite';
+import { bannerText } from './banner';
 
 export default defineConfig({
     mode: 'production',
@@ -23,7 +21,7 @@ export default defineConfig({
                     default:
                         return 'vue-mdb.min.js';
                 }
-            }
+            },
         },
         emptyOutDir: false,
         cssMinify: true,
@@ -32,7 +30,7 @@ export default defineConfig({
             // make sure to externalize deps that shouldn't be bundled into your library
             external: ['vue'],
             treeshake: {
-                preset: 'smallest'
+                preset: 'smallest',
             },
             output: {
                 // Provide global variables to use in the ES build for externalized deps
@@ -40,7 +38,7 @@ export default defineConfig({
                     vue: 'Vue',
                 },
                 generatedCode: {
-                    constBindings: true
+                    constBindings: true,
                 },
                 interop: 'auto',
                 banner: bannerText,
@@ -50,10 +48,10 @@ export default defineConfig({
                         compress: true,
                         ecma: 2020,
                         format: {
-                            comments: /^\/*!/
-                        }
-                    })
-                ]
+                            comments: /^\/*!/,
+                        },
+                    }),
+                ],
             },
         },
     },
@@ -63,8 +61,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            // @ts-ignore
-            '@': fileURLToPath(new URL('./src', import.meta.url))
-        }
-    }
-})
+            '@': fileURLToPath(new URL('./src', import.meta.url)),
+        },
+    },
+});

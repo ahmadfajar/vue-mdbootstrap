@@ -1,10 +1,8 @@
-import terser from '@rollup/plugin-terser'
-// @ts-ignore
-import path from 'node:path'
-import { fileURLToPath, URL } from 'node:url'
-import { defineConfig } from 'vite'
-// @ts-ignore
-import { bannerText } from './banner'
+import terser from '@rollup/plugin-terser';
+import path from 'node:path';
+import { fileURLToPath, URL } from 'node:url';
+import { defineConfig } from 'vite';
+import { bannerText } from './banner';
 
 export default defineConfig({
     mode: 'library',
@@ -25,7 +23,7 @@ export default defineConfig({
                     default:
                         return 'vue-mdb.mjs';
                 }
-            }
+            },
         },
         emptyOutDir: false,
         cssMinify: false,
@@ -33,12 +31,17 @@ export default defineConfig({
         rollupOptions: {
             // make sure to externalize deps that shouldn't be bundled into your library
             external: [
-                'axios', 'body-scroll-lock', 'fast-xml-parser',
-                'luxon', 'resize-observer-polyfill', 'vue',
+                'axios',
+                'body-scroll-lock',
+                'fast-xml-parser',
+                'lodash',
+                'luxon',
+                'resize-observer-polyfill',
+                'vue',
             ],
             // treeshake: false,
             treeshake: {
-                preset: 'smallest'
+                preset: 'smallest',
             },
             // preserveEntrySignatures: 'strict',
             output: {
@@ -50,7 +53,7 @@ export default defineConfig({
                     vue: 'Vue',
                 },
                 generatedCode: {
-                    constBindings: true
+                    constBindings: true,
                 },
                 interop: 'auto',
                 assetFileNames: 'bundle.[ext]',
@@ -64,8 +67,8 @@ export default defineConfig({
                     format: {
                         comments: false,
                     },
-                })
-            ]
+                }),
+            ],
         },
     },
     esbuild: {
@@ -74,8 +77,7 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            // @ts-ignore
-            '@': fileURLToPath(new URL('./src', import.meta.url))
-        }
-    }
-})
+            '@': fileURLToPath(new URL('./src', import.meta.url)),
+        },
+    },
+});
