@@ -1,10 +1,20 @@
-import type { Directive } from 'vue';
+import { ObjectDirective } from 'vue';
 
-export declare const ClickOutside: Directive;
+export declare const vClickOutside: ObjectDirective<HTMLElement> & {
+    name?: 'click-outside';
+};
 
-export declare const Resize: Directive;
+export declare const vResize: ObjectDirective<HTMLElement> & {
+    name?: 'resize';
+};
 
-export declare const Scroll: Directive;
+export declare const vScroll: ObjectDirective<HTMLElement> & {
+    name?: 'scroll';
+};
+
+export declare const vTouch: ObjectDirective<HTMLElement> & {
+    name?: 'touch';
+};
 
 export declare interface TouchDirectiveEvent {
     touchstartX: number;
@@ -23,4 +33,3 @@ export declare interface TouchDirectiveEvent {
     move?: (evt: TouchDirectiveEvent) => void;
     end?: (evt: TouchDirectiveEvent) => void;
 }
-export declare const Touch: Directive;

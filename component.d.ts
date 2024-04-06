@@ -1,10 +1,10 @@
 import type { AxiosInstance } from 'axios';
 import type {
     BsAlert,
+    BsAppContainer,
     BsAppbar,
     BsAppbarItems,
     BsAppbarTitle,
-    BsAppContainer,
     BsAvatar,
     BsBadge,
     BsButton,
@@ -33,7 +33,6 @@ import type {
     BsIconSvg,
     BsImageHolder,
     BsLightbox,
-    BsListbox,
     BsListNav,
     BsListNavItem,
     BsListTile,
@@ -43,6 +42,7 @@ import type {
     BsListTileSubtitle,
     BsListTileTitle,
     BsListView,
+    BsListbox,
     BsMaskLoader,
     BsModal,
     BsNotification,
@@ -67,9 +67,13 @@ import type {
     BsToggleField,
     BsToggleIcon,
     BsTooltip,
+    vClickOutside,
     IHttpService,
     INotificationProvider,
+    vResize,
+    vScroll,
     TVueMdb,
+    vTouch,
 } from './dist/vue-mdb';
 
 declare module 'vue' {
@@ -145,6 +149,20 @@ declare module 'vue' {
         BsToggleField: typeof BsToggleField;
         BsToggleIcon: typeof BsToggleIcon;
         BsTooltip: typeof BsTooltip;
+    }
+
+    export interface GlobalDirectives {
+        vClickOutside: typeof vClickOutside;
+        vResize: typeof vResize;
+        vScroll: typeof vScroll;
+        vTouch: typeof vTouch;
+    }
+
+    export interface ComponentCustomDirectives {
+        vClickOutside: typeof vClickOutside;
+        vResize: typeof vResize;
+        vScroll: typeof vScroll;
+        vTouch: typeof vTouch;
     }
 
     export interface ComponentCustomProperties {

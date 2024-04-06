@@ -71,7 +71,7 @@ export declare type TPopoverOptionProps = TPopupOptions & {
      */
     transition?: string;
     /**
-     * HTML element to calculate this Popover display position.
+     * HTML element or element ID which is used to activate and calculate this Popover display position.
      */
     trigger?: Element | string;
 };
