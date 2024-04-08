@@ -4,7 +4,7 @@
 
 ## v2.0.5
 
-Released: March xx, 2024
+Released: April 8, 2024
 
 ### Features & Improvements
 
@@ -21,7 +21,7 @@ Released: March xx, 2024
 - **BsNumericField**: improve classic form field styles.
 - **BsListbox**: add property `autoload` to turn-off the autoloading dataset from remote source.
 - **BsListTile**: improvement when the `navigable` property is defined.
-- **BsPopover**: improve popover display placement coordinates.
+- **BsPopover**: improve display placement coordinates.
 - **BsTabs**: 
   - Improve padding on small-screen device. 
   - Support sliding on horizontal tabs when the sum of tabs width exceed the container width. 
