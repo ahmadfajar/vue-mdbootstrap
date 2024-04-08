@@ -33,7 +33,7 @@
     @include transition($md-transition-leave);
 
     @include media-breakpoint-down(sm) {
-        --#{$prefix}tabs-content-padding: #{$padding-base + .25} #{$padding-xs};
+        --#{$prefix}tabs-content-padding: #{$padding-base + .25} #{$padding-base - .25};
     }
 
     .nav {

@@ -22,12 +22,16 @@
         //~ .#{$prefix}chip {
         //    margin-left: 0;
         //}
+
+        + input {
+            width: auto !important;
+        }
     }
 
     input {
         min-width: 85px;
         max-width: 100%;
-        width: auto;
+        // width: auto;
     }
 
     &.#{$prefix}field-outlined {

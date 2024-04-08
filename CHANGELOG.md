@@ -2,6 +2,17 @@
 
 > All notable changes to this project will be documented in this file.
 
+
+## v2.0.6
+
+Released: April XX, 2024
+
+### Bug Fixes
+
+- **BsTabs**: fix tab alignment not working properly.
+- **BsChipField**: fix input field width.
+
+
 ## v2.0.5
 
 Released: April 8, 2024
