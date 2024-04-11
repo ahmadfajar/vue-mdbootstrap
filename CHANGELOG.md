@@ -5,11 +5,11 @@
 
 ## v2.0.6
 
-Released: April XX, 2024
+Released: April 11, 2024
 
 ### Bug Fixes
 
-- **BsTabs**: fix tab alignment not working properly.
+- **BsTabs**: fix tab alignment not working properly on horizontal tabs.
 - **BsChipField**: fix input field width.
 
 
