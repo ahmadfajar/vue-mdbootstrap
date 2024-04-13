@@ -22,11 +22,12 @@
     --#{$prefix}field-border-color: currentColor;
     --#{$prefix}field-border-width: 1px;
     --#{$prefix}field-control-height: #{$text-field-height};
+    --#{$prefix}field-label-color: currentColor;
+    --#{$prefix}field-outline-bg: transparent;
     --#{$prefix}field-padding-start: #{$padding-base};
     --#{$prefix}field-padding-end: #{$padding-base};
     --#{$prefix}field-padding-top: #{$text-field-padding-top};
     --#{$prefix}field-padding-bottom: #{$text-field-padding-bottom};
-    --#{$prefix}field-label-color: currentColor;
     --#{$prefix}field-floating-label-color: var(--#{$prefix}field-label-color);
 
     position: relative;
@@ -378,6 +379,9 @@
         --#{$prefix}field-outline-border-width: var(--#{$prefix}field-border-width);
         --#{$prefix}field-outline-border-radius: #{$text-field-border-radius};
         --#{$prefix}field-outline-opacity: #{$text-field-opacity};
+
+        @include border-radius($text-field-border-radius);
+        background-color: var(--#{$prefix}field-outline-bg);
 
         .#{$prefix}field-outline-control {
             @include border-radius($text-field-border-radius);
