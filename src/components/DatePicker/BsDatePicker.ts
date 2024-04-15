@@ -15,7 +15,7 @@ export default defineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions,
     ],
     setup(props, {emit}) {
         const thisProps = props as Readonly<TDatePickerOptionProps>;
-        const locale = ref<string>(thisProps.locale || navigator.language);
+        const locale = ref<string>(thisProps.locale || window?.navigator.language);
         const localValue = ref(useParseDate(thisProps.modelValue).setLocale(locale.value));
         const calendarDate = ref<Date>(localValue.value.toJSDate());
         const currentView = ref<TDateTimePickerMode>(

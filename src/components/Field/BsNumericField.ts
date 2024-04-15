@@ -61,7 +61,7 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
             })
         );
         const operationOptions: TNumericOpsOptions = {
-            locale: thisProps.locale || navigator.language,
+            locale: thisProps.locale || window?.navigator.language,
             maxValue: Helper.parseFloatLoose(<string>thisProps.maxValue),
             minValue: Helper.parseFloatLoose(<string>thisProps.minValue),
             step: Helper.parseFloatLoose(<string>thisProps.step) || 1.0,

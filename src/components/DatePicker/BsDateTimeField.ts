@@ -42,7 +42,7 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
         const thisProps = props as Readonly<TDateTimeFieldOptionProps>;
         const isFocused = ref(false);
         const isPopoverOpen = ref(false);
-        const locale = ref<string>(thisProps.locale || navigator.language);
+        const locale = ref<string>(thisProps.locale || window?.navigator.language);
         const displayFormat = computed(() => thisProps.displayFormat || thisProps.valueFormat);
         const localFieldValue = ref(
             useParseDateTimeFromFormat(thisProps.modelValue, thisProps.valueFormat, locale.value)
