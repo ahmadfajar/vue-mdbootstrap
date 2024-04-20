@@ -15,6 +15,10 @@
         }
     }
 
+    .#{$prefix}prepend-inner + .#{$prefix}action-icon {
+        margin-left: .5rem;
+    }
+
     .#{$prefix}action-icon {
         > .#{$prefix}action-button-left,
         > .#{$prefix}action-button-right {

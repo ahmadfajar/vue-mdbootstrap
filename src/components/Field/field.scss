@@ -155,7 +155,7 @@
             margin-left: $padding-base - .25;
         }
 
-        > .#{$prefix}action-icon,
+        > .#{$prefix}field-activator + .#{$prefix}action-icon,
         > .#{$prefix}validation-icon,
         > .#{$prefix}append-inner {
             margin-right: $padding-base - .25;
@@ -327,6 +327,10 @@
             &.#{$prefix}text-field, &.#{$prefix}numeric-field {
                 &:not(.prepend-icon) {
                     --#{$prefix}field-padding-start: #{math.div($text-field-height, 2)};
+
+                    &:not(.#{$prefix}floating-label) {
+                        --#{$prefix}field-padding-start: 1.375rem;
+                    }
                 }
 
                 .#{$prefix}field-overlay {
@@ -465,6 +469,10 @@
             &.#{$prefix}text-field, &.#{$prefix}numeric-field {
                 &:not(.prepend-icon) {
                     --#{$prefix}field-padding-start: #{math.div($text-field-height, 2)};
+
+                    &:not(.#{$prefix}floating-label) {
+                        --#{$prefix}field-padding-start: 1.375rem;
+                    }
                 }
 
                 --#{$prefix}field-outline-border-radius: #{$border-radius-pill};
@@ -484,7 +492,7 @@
                         margin-right: $padding-base;
                     }
 
-                    > .#{$prefix}action-icon {
+                    > .#{$prefix}field-activator + .#{$prefix}action-icon {
                         margin-right: $padding-base;
 
                         + .#{$prefix}append-inner {

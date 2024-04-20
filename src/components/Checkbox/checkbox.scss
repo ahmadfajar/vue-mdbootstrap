@@ -13,6 +13,10 @@
     --#{$prefix}checkbox-indeterminate-width: #{$checkbox-indeterminate-width};
     --#{$prefix}checkbox-disabled-bg: transparent;
     --#{$prefix}checkbox-disabled-opacity: calc(var(--#{$prefix}field-disabled-opacity) - .2);
+    --#{$prefix}checkbox-checkmark-height: 13px; 
+    --#{$prefix}checkbox-checkmark-width: 7px; 
+    --#{$prefix}checkbox-checkmark-pos-x: 4px; 
+    --#{$prefix}checkbox-checkmark-pos-y: 0;
     --#{$prefix}checkbox-state-bg: transparent;
     --#{$prefix}checkbox-state-color: currentColor;
     --#{$prefix}checkbox-state-opacity: 1;
@@ -64,10 +68,10 @@
             border: var(--#{$prefix}checkbox-stroke) solid var(--#{$prefix}checkbox-state-inner-color);
             border-top: 0;
             border-left: 0;
-            height: 13px;
-            width: 7px;
-            left: 4px;
-            top: 0;
+            height: var(--#{$prefix}checkbox-checkmark-height);
+            width: var(--#{$prefix}checkbox-checkmark-width);
+            left: var(--#{$prefix}checkbox-checkmark-pos-x);
+            top: var(--#{$prefix}checkbox-checkmark-pos-y);
             z-index: 12;
         }
 

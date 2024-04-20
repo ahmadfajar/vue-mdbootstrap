@@ -3,6 +3,21 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.0.7
+
+Released: April 20, 2024
+
+### Improvements
+
+- **BsCheckbox**: improve css variables to enable changing the checkbox appearance.
+
+
+### Bug Fixes
+
+- **BsNumericField**: fix UI when `rounded` property is enabled and `prepend-icon` 
+  property is defined or action buttons is placed at left or both side.
+
+
 ## v2.0.6
 
 Released: April 11, 2024

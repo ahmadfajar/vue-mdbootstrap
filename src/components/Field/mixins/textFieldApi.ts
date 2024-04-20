@@ -308,7 +308,8 @@ export function useCreateTextFieldClasses(
     props: Readonly<TInputTextProps>,
     localValue: Ref<string | string[] | number | number[] | undefined | null>,
     isFocused: Ref<boolean>,
-    showAppendIcon: boolean
+    showAppendIcon: boolean,
+    showPrependIcon?: boolean,
 ): TRecord {
     return {
         [`${cssPrefix}field-control`]: true,
@@ -317,7 +318,7 @@ export function useCreateTextFieldClasses(
         [`${cssPrefix}field-flat`]: props.flat && !props.filled && !props.outlined,
         [`${cssPrefix}floating-label`]: props.floatingLabel,
         'append-icon': showAppendIcon,
-        'prepend-icon': props.prependIcon || slots['prepend-inner'],
+        'prepend-icon': props.prependIcon || showPrependIcon || slots['prepend-inner'],
         active: !Helper.isEmpty(localValue.value) || !Helper.isEmpty(props.placeholder),
         focused: isFocused.value,
         readonly: props.readonly,

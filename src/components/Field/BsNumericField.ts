@@ -44,10 +44,25 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
         const hasFocus = ref(false);
         const validator = useGetValidationResult(thisProps, hasFocus);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
-        const showAppendIcon = computed(() =>
-            (slots['append-inner'] != undefined) || !Helper.isEmpty(thisProps.appendIcon) || showClearButton.value
-            || (thisProps.actionButton === true && !thisProps.disabled && !thisProps.readonly)
-            || (thisProps.spinButton === true && thisProps.spinButtonPlacement === 'right'
+        const showAppendIcon = computed(
+            () =>
+                (slots['append-inner'] != undefined) || 
+                !Helper.isEmpty(thisProps.appendIcon) || 
+                showClearButton.value || 
+                (thisProps.actionButton === true && thisProps.actionButtonPlacement === 'right' 
+                && !thisProps.disabled && !thisProps.readonly) || 
+                (thisProps.spinButton === true && thisProps.spinButtonPlacement === 'right'
+                && !thisProps.disabled && !thisProps.readonly)
+        );
+        const showPrependIcon = computed(
+            () =>
+                (slots['prepend-inner'] != undefined) || 
+                !Helper.isEmpty(thisProps.prependIcon) || 
+                (!thisProps.disabled && !thisProps.readonly &&
+                    thisProps.actionButton === true && thisProps.actionButtonPlacement === 'left') || 
+                (!thisProps.disabled && !thisProps.readonly && 
+                    thisProps.actionButton === true && thisProps.actionButtonPlacement === 'both') || 
+                (thisProps.spinButton === true && thisProps.spinButtonPlacement === 'left'
                 && !thisProps.disabled && !thisProps.readonly)
         );
         const fieldWrapperClasses = computed<TRecord>(() =>
@@ -55,7 +70,10 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
         );
         const fieldControlClasses = computed<TRecord>(() =>
             ({
-                ...useCreateTextFieldClasses(slots, thisProps, localValue, hasFocus, showAppendIcon.value),
+                ...useCreateTextFieldClasses(
+                    slots, thisProps, localValue, hasFocus, 
+                    showAppendIcon.value, showPrependIcon.value
+                ),
                 [`${cssPrefix}field-rounded`]: (thisProps.outlined || thisProps.filled) && thisProps.rounded,
                 [`${cssPrefix}numeric-field`]: true,
             })
