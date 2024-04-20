@@ -1,6 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
+import { cssPrefix, isServer } from '../../mixins/CommonApi';
 import type { TBsNumericField, TNumericFieldOptionProps, TNumericOpsOptions, TRecord } from '../../types';
 import Helper from '../../utils/Helper';
 import { numericFieldProps } from './mixins/fieldProps';
@@ -79,7 +79,7 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
             })
         );
         const operationOptions: TNumericOpsOptions = {
-            locale: thisProps.locale || window?.navigator.language,
+            locale: thisProps.locale || (isServer ? 'en-US' : window.navigator.language),
             maxValue: Helper.parseFloatLoose(<string>thisProps.maxValue),
             minValue: Helper.parseFloatLoose(<string>thisProps.minValue),
             step: Helper.parseFloatLoose(<string>thisProps.step) || 1.0,

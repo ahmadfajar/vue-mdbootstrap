@@ -1,6 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
+import { cssPrefix, isServer } from '../../mixins/CommonApi';
 import type { TBsDateTimeField, TDateTimeFieldOptionProps, TDateTimePickerMode, TRecord } from '../../types';
 import Helper from '../../utils/Helper';
 import { useCreateTextFieldClasses, useFieldWrapperClasses, useShowClearButton } from '../Field/mixins/textFieldApi';
@@ -42,7 +42,7 @@ export default defineComponent<TBsDateTimeField, TRecord, TRecord, ComputedOptio
         const thisProps = props as Readonly<TDateTimeFieldOptionProps>;
         const isFocused = ref(false);
         const isPopoverOpen = ref(false);
-        const locale = ref<string>(thisProps.locale || window?.navigator.language);
+        const locale = ref<string>(thisProps.locale || (isServer ? 'en-US' : window.navigator.language));
         const displayFormat = computed(() => thisProps.displayFormat || thisProps.valueFormat);
         const localFieldValue = ref(
             useParseDateTimeFromFormat(thisProps.modelValue, thisProps.valueFormat, locale.value)

@@ -3,6 +3,7 @@ import { computed, defineComponent, ref, watch } from 'vue';
 import type { TBsDatePicker, TDatePickerOptionProps, TDateTimePickerMode, TRecord } from '../../types';
 import { DatePickerConst, useParseDate, useRenderDatePicker } from './mixins/datePickerApi';
 import { datePickerProps } from './mixins/datePickerProps';
+import { isServer } from '../../mixins/CommonApi';
 
 export default defineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
     name: 'BsDatePicker',
@@ -15,7 +16,7 @@ export default defineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions,
     ],
     setup(props, {emit}) {
         const thisProps = props as Readonly<TDatePickerOptionProps>;
-        const locale = ref<string>(thisProps.locale || window?.navigator.language);
+        const locale = ref<string>(thisProps.locale || (isServer ? 'en-US' : window.navigator.language));
         const localValue = ref(useParseDate(thisProps.modelValue).setLocale(locale.value));
         const calendarDate = ref<Date>(localValue.value.toJSDate());
         const currentView = ref<TDateTimePickerMode>(
