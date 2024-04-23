@@ -93,6 +93,11 @@
         }
     }
 
+    &.#{$prefix}checkbox-group, 
+    &.#{$prefix}radio-group {
+        --#{$prefix}field-padding-start: 0;
+    }
+
     .#{$prefix}field-feedback {
         padding: #{$padding-xs} var(--#{$prefix}field-padding-start) 0 var(--#{$prefix}field-padding-start);
         min-height: 25px;

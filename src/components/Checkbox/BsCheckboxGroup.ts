@@ -1,5 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
 import type { TBsCheckboxGroup, TCheckboxGroupOptionProps, TCheckboxProps, TRecord } from '../../types';
 import Helper from '../../utils/Helper';
 import { baseInputProps } from '../Field/mixins/fieldProps';
@@ -33,8 +34,11 @@ export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptio
         const hasValidated = computed<boolean>(() => useHasValidated(cmpProps));
         const showValidationError = computed<boolean>(() => useShowValidationError(cmpProps));
         const errorItems = computed(() => useGetErrorItems(cmpProps));
-        const checkboxClasses = computed(
-            () => useInputGroupClasses(cmpProps, hasValidated.value, hasError.value)
+        const checkboxClasses = computed(() => 
+            ({
+                ...useInputGroupClasses(cmpProps, hasValidated.value, hasError.value),
+                [`${cssPrefix}checkbox-group`]: true,
+            })
         );
 
         const toggleCheckHandler = (

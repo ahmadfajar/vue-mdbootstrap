@@ -1,8 +1,8 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
-@import "../../../scss/mixins/button";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@import 'compass-mixins/lib/compass/css3';
+@import '../../../scss/functions';
+@import '../../../scss/mixins/button';
+@import '../../../scss/colors';
+@import '../../../scss/variables';
 
 .btn {
     $disabled-bg: lighten($gray-500, 20%);
@@ -14,15 +14,15 @@
     --#{$bs-prefix}btn-disabled-border-color: #{$border-color};
     --#{$bs-prefix}btn-disabled-color: #{$gray-700};
     //--#{$bs-prefix}btn-disabled-opacity: .65;
-    --#{$bs-prefix}btn-readonly-opacity: .75;
+    --#{$bs-prefix}btn-readonly-opacity: 0.75;
 
     --#{$bs-prefix}btn-inner-padding-x: #{$padding-lg};
-    --#{$bs-prefix}btn-inner-padding-y: .425rem;
+    --#{$bs-prefix}btn-inner-padding-y: 0.425rem;
     --#{$bs-prefix}btn-lg-inner-padding-x: #{$padding-lg};
     --#{$bs-prefix}btn-lg-inner-padding-y: #{$padding-sm};
     --#{$bs-prefix}btn-sm-inner-padding-x: #{$padding-base};
-    --#{$bs-prefix}btn-sm-inner-padding-y: .4rem;
-    --#{$bs-prefix}btn-xs-inner-padding-x: #{$padding-sm + .25};
+    --#{$bs-prefix}btn-sm-inner-padding-y: 0.4rem;
+    --#{$bs-prefix}btn-xs-inner-padding-x: #{$padding-sm + 0.25};
     --#{$bs-prefix}btn-xs-inner-padding-y: #{$btn-margin-basic};
 
     --#{$bs-prefix}btn-initial-box-shadow: none;
@@ -65,18 +65,20 @@
         }
     }
 
-    &.readonly, &.disabled, &:disabled {
+    &.readonly,
+    &.disabled,
+    &:disabled {
         --#{$bs-prefix}btn-state-box-shadow: none;
         cursor: default;
     }
 
     &.#{$prefix}btn-tonal,
-    &[class*="btn-outline"] {
+    &[class*='btn-outline'] {
         --#{$bs-prefix}btn-hover-box-shadow: #{$z-depth-half};
         --#{$bs-prefix}btn-active-box-shadow: none;
     }
 
-    &[class*="btn-outline"] {
+    &[class*='btn-outline'] {
         --#{$bs-prefix}btn-disabled-bg: transparent;
         --#{$bs-prefix}btn-disabled-color: #{$gray-500};
     }
@@ -84,10 +86,12 @@
     &.#{$prefix}btn-raised {
         --#{$bs-prefix}btn-initial-box-shadow: #{$z-depth-1};
         --#{$bs-prefix}btn-active-box-shadow: #{$z-depth-1};
-        --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), .5);
+        --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), 0.5);
         --#{$bs-prefix}btn-hover-box-shadow: #{$z-depth-1-half};
 
-        &.readonly, &.disabled, &:disabled {
+        &.readonly,
+        &.disabled,
+        &:disabled {
             &:active,
             &:focus,
             &:hover {
@@ -104,24 +108,34 @@
         &.dropdown-toggle {
             &::after {
                 @include align-self(center);
-                margin-right: .875rem;
+                margin-right: 0.875rem;
                 margin-left: 0;
             }
 
             > .#{$prefix}btn-inner {
-                padding-right: calc(var(--#{$bs-prefix}btn-state-padding-x) - .2rem);
+                padding-right: calc(var(--#{$bs-prefix}btn-state-padding-x) - 0.2rem);
             }
         }
     }
 
     .#{$prefix}btn-inner {
-        @include flexbox((display: flex, justify-content: center, align-items: center));
+        @include flexbox(
+            (
+                display: flex,
+                justify-content: center,
+                align-items: center,
+            )
+        );
         line-height: var(--#{$bs-prefix}btn-line-height);
         padding: var(--#{$bs-prefix}btn-state-padding-y) var(--#{$bs-prefix}btn-state-padding-x);
         width: 100%;
 
-        .#{$prefix}icon-left, .#{$prefix}icon-right {
-            @include transition(width 200ms $md-transition-default-timing, visibility 0ms $md-transition-default-timing);
+        .#{$prefix}icon-left,
+        .#{$prefix}icon-right {
+            @include transition(
+                width 200ms $md-transition-default-timing,
+                visibility 0ms $md-transition-default-timing
+            );
 
             &.#{$prefix}empty-icon {
                 width: 0;
@@ -141,7 +155,7 @@
 
     &.btn-xs {
         --#{$bs-prefix}btn-border-radius: #{$border-radius-sm};
-        --#{$bs-prefix}btn-font-size: .75rem;
+        --#{$bs-prefix}btn-font-size: 0.75rem;
         --#{$bs-prefix}btn-line-height: 1;
         --#{$bs-prefix}btn-state-padding-x: var(--#{$bs-prefix}btn-xs-inner-padding-x);
         --#{$bs-prefix}btn-state-padding-y: var(--#{$bs-prefix}btn-xs-inner-padding-y);
@@ -177,12 +191,12 @@
         --#{$bs-prefix}btn-border-radius: #{$border-radius-pill};
     }
 
-    &[class*="btn-flat"] {
+    &[class*='btn-flat'] {
         --#{$bs-prefix}btn-disabled-bg: transparent;
         --#{$bs-prefix}btn-disabled-color: #{$gray-500};
-        --#{$bs-prefix}btn-inner-padding-x: .75rem;
-        --#{$bs-prefix}btn-lg-inner-padding-x: .875rem;
-        --#{$bs-prefix}btn-sm-inner-padding-x: .625rem;
+        --#{$bs-prefix}btn-inner-padding-x: 0.75rem;
+        --#{$bs-prefix}btn-lg-inner-padding-x: 0.875rem;
+        --#{$bs-prefix}btn-sm-inner-padding-x: 0.625rem;
 
         .#{$prefix}btn-inner {
             .#{$prefix}icon-left {
@@ -196,8 +210,8 @@
     }
 
     &.#{$prefix}btn-fab,
-    &[class*="btn-flat"],
-    &[class*="btn-outline"] {
+    &[class*='btn-flat'],
+    &[class*='btn-outline'] {
         &:active {
             color: var(--#{$bs-prefix}btn-hover-color);
         }
@@ -205,8 +219,8 @@
 
     &.#{$prefix}btn-fab,
     &.#{$prefix}btn-tonal,
-    &[class*="btn-flat"],
-    &[class*="btn-outline"] {
+    &[class*='btn-flat'],
+    &[class*='btn-outline'] {
         --#{$bs-prefix}btn-font-weight: 500;
     }
 
@@ -215,18 +229,18 @@
         --#{$bs-prefix}btn-inner-padding-y: #{$padding-base};
         --#{$bs-prefix}btn-lg-inner-padding-x: #{$padding-lg};
         --#{$bs-prefix}btn-lg-inner-padding-y: #{$padding-lg};
-        --#{$bs-prefix}btn-sm-inner-padding-x: .625rem;
-        --#{$bs-prefix}btn-sm-inner-padding-y: .625rem;
-        --#{$bs-prefix}btn-xs-inner-padding-x: .375rem;
-        --#{$bs-prefix}btn-xs-inner-padding-y: .375rem;
+        --#{$bs-prefix}btn-sm-inner-padding-x: 0.625rem;
+        --#{$bs-prefix}btn-sm-inner-padding-y: 0.625rem;
+        --#{$bs-prefix}btn-xs-inner-padding-x: 0.375rem;
+        --#{$bs-prefix}btn-xs-inner-padding-y: 0.375rem;
         --#{$bs-prefix}btn-border-radius: var(--#{$bs-prefix}btn-inner-padding-x);
         //position: absolute;
 
-        &:not([class*="btn-flat"]):not(.#{$prefix}btn-raised) {
+        &:not([class*='btn-flat']):not(.#{$prefix}btn-raised) {
             --#{$bs-prefix}btn-initial-box-shadow: #{$z-depth-half};
         }
 
-        &[class*="btn-outline"]:not(.#{$prefix}btn-raised) {
+        &[class*='btn-outline']:not(.#{$prefix}btn-raised) {
             --#{$bs-prefix}btn-active-box-shadow: #{$z-depth-1};
             --#{$bs-prefix}btn-hover-box-shadow: #{$z-depth-1};
         }
@@ -239,7 +253,8 @@
             margin-right: -$padding-xs;
         }
 
-        &.btn-xs, &.btn-sm {
+        &.btn-xs,
+        &.btn-sm {
             .#{$prefix}icon-left {
                 margin-left: 0;
                 margin-right: $padding-xs;
@@ -256,7 +271,9 @@
         }
 
         &.btn-sm {
-            --#{$bs-prefix}btn-border-radius: calc(var(--#{$bs-prefix}btn-sm-inner-padding-x) + .25rem);
+            --#{$bs-prefix}btn-border-radius: calc(
+                var(--#{$bs-prefix}btn-sm-inner-padding-x) + 0.25rem
+            );
         }
 
         &.btn-lg {
@@ -278,27 +295,28 @@
     --#{$bs-prefix}btn-disabled-bg: #{$disabled-bg};
     --#{$bs-prefix}btn-disabled-border-color: #{$border-color};
     --#{$bs-prefix}btn-disabled-color: #{$gray-700};
-    --#{$bs-prefix}btn-disabled-opacity: .65;
-    --#{$bs-prefix}btn-readonly-opacity: .75;
+    --#{$bs-prefix}btn-disabled-opacity: 0.65;
+    --#{$bs-prefix}btn-readonly-opacity: 0.75;
 
     --#{$bs-prefix}btn-initial-box-shadow: none;
     --#{$bs-prefix}btn-active-box-shadow: #{$z-depth-half};
-    --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), .5);
+    --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem
+        rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), 0.5);
     --#{$bs-prefix}btn-hover-box-shadow: #{$z-depth-1};
 
-    --#{$bs-prefix}btn-line-height: 2.25rem;     // 36px
-    --#{$bs-prefix}btn-lg-line-height: 3.5rem;   // 56px
-    --#{$bs-prefix}btn-sm-line-height: 2rem;     // 32px
-    --#{$bs-prefix}btn-xs-line-height: 1.5rem;   // 24px
+    --#{$bs-prefix}btn-line-height: 2.25rem;   // 36px
+    --#{$bs-prefix}btn-lg-line-height: 3.5rem; // 56px
+    --#{$bs-prefix}btn-sm-line-height: 2rem;   // 32px
+    --#{$bs-prefix}btn-xs-line-height: 1.5rem; // 24px
 
-    --#{$bs-prefix}btn-height: 2.75rem;    // 44px
-    --#{$bs-prefix}btn-width: 2.75rem;     // 44px
-    --#{$bs-prefix}btn-lg-height: 3.5rem;  // 56px
-    --#{$bs-prefix}btn-lg-width: 3.5rem;   // 56px
-    --#{$bs-prefix}btn-sm-height: 2rem;    // 32px
-    --#{$bs-prefix}btn-sm-width: 2rem;     // 32px
-    --#{$bs-prefix}btn-xs-height: 1.5rem;  // 24px
-    --#{$bs-prefix}btn-xs-width: 1.5rem;   // 24px
+    --#{$bs-prefix}btn-height: 2.75rem;   // 44px
+    --#{$bs-prefix}btn-width: 2.75rem;    // 44px
+    --#{$bs-prefix}btn-lg-height: 3.5rem; // 56px
+    --#{$bs-prefix}btn-lg-width: 3.5rem;  // 56px
+    --#{$bs-prefix}btn-sm-height: 2rem;   // 32px
+    --#{$bs-prefix}btn-sm-width: 2rem;    // 32px
+    --#{$bs-prefix}btn-xs-height: 1.5rem; // 24px
+    --#{$bs-prefix}btn-xs-width: 1.5rem;  // 24px
 
     --#{$bs-prefix}btn-state-box-shadow: var(--#{$bs-prefix}btn-initial-box-shadow);
     --#{$bs-prefix}btn-state-bg: var(--#{$bs-prefix}btn-bg);
@@ -309,7 +327,12 @@
     --#{$bs-prefix}btn-inner-state-width: var(--#{$bs-prefix}btn-width);
 
     @include transition($btn-transition);
-    @include flexbox((display: inline-flex, flex: 0 0 auto));
+    @include flexbox(
+        (
+            display: inline-flex,
+            flex: 0 0 auto,
+        )
+    );
     @include border-radius(var(--#{$bs-prefix}btn-border-radius));
     @include box-shadow(var(--#{$bs-prefix}btn-state-box-shadow));
 
@@ -358,7 +381,8 @@
         }
     }
 
-    &:disabled, &.disabled {
+    &:disabled,
+    &.disabled {
         --#{$bs-prefix}btn-state-box-shadow: none;
         --#{$bs-prefix}btn-state-bg: var(--#{$bs-prefix}btn-disabled-bg);
         --#{$bs-prefix}btn-state-border-color: var(--#{$bs-prefix}btn-disabled-border-color);
@@ -377,7 +401,13 @@
         height: var(--#{$bs-prefix}btn-inner-state-height);
 
         > .#{$prefix}btn-inner {
-            @include flexbox((display: flex, justify-content: center, align-items: center));
+            @include flexbox(
+                (
+                    display: flex,
+                    justify-content: center,
+                    align-items: center,
+                )
+            );
             width: 100%;
             position: relative;
         }
@@ -416,7 +446,7 @@
     @include make-flat-button-variant($btn_name, $color_value);
 }
 
-[class*="btn-flat"] {
+[class*='btn-flat'] {
     --#{$bs-prefix}btn-initial-box-shadow: none;
     --#{$bs-prefix}btn-active-box-shadow: none;
     --#{$bs-prefix}btn-focus-box-shadow: #{$z-depth-half};
@@ -429,7 +459,7 @@
     &.#{$prefix}btn-raised {
         --#{$bs-prefix}btn-initial-box-shadow: #{$z-depth-half};
         --#{$bs-prefix}btn-active-box-shadow: #{$z-depth-1};
-        --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), .5);
+        --#{$bs-prefix}btn-focus-box-shadow: 0 0 0 0.25rem rgba(var(--#{$bs-prefix}btn-focus-shadow-rgb), 0.5);
         --#{$bs-prefix}btn-hover-box-shadow: #{$z-depth-1-half};
     }
 }
@@ -475,14 +505,14 @@
 
     > .btn,
     > .#{$prefix}dropdown-menu .btn {
-        &[class*="btn-outline"] {
+        &[class*='btn-outline'] {
             --#{$bs-prefix}btn-color: #{$gray-600};
         }
     }
 }
 
-.#{$prefix}toggle-field {
-    .#{$prefix}field-feedback {
-        padding-left: $padding-xs;
+.#{$prefix}field {
+    &.#{$prefix}toggle-field {
+        --#{$prefix}field-padding-start: #{$padding-xs};
     }
 }

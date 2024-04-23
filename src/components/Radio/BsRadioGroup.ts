@@ -1,5 +1,6 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent } from 'vue';
+import { cssPrefix } from '../../mixins/CommonApi';
 import type { TBsRadioGroup, TRadioGroupOptionProps, TRadioProps, TRecord } from '../../types';
 import Helper from '../../utils/Helper';
 import { baseInputProps } from '../Field/mixins/fieldProps';
@@ -32,8 +33,11 @@ export default defineComponent<TBsRadioGroup, TRecord, TRecord, ComputedOptions,
         const hasValidated = computed<boolean>(() => useHasValidated(cmpProps));
         const showValidationError = computed<boolean>(() => useShowValidationError(cmpProps));
         const errorItems = computed(() => useGetErrorItems(cmpProps));
-        const checkboxClasses = computed(
-            () => useInputGroupClasses(cmpProps, hasValidated.value, hasError.value)
+        const checkboxClasses = computed(() => 
+            ({
+                ...useInputGroupClasses(cmpProps, hasValidated.value, hasError.value),
+                [`${cssPrefix}radio-group`]: true,
+            })
         );
 
         const toggleCheckHandler = (item: TRadioProps): void => {
