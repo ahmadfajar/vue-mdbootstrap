@@ -3,6 +3,20 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.0.8
+
+Released: June XX, 2024
+
+### Improvements
+
+- **BsNumericField**: transform internal value to integer when `max-fraction` property set to `0`.
+- **BsCheckboxGroup**, **BsRadioGroup**, **BsToggleField**: improve padding on feedback message.
+
+### Bug Fixes
+
+- **BsNumericField**, **BsDatePicker**, **BsDateTimerField**: fix locale resolver on SSR.
+
+
 ## v2.0.7
 
 Released: April 20, 2024

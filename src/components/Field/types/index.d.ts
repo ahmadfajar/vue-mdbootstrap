@@ -141,7 +141,7 @@ export declare type TTextFieldOptionProps = TInputTextProps & {
     /**
      * The value monitored by `v-model` to maintain this field value.
      */
-    modelValue?: string | number;
+    modelValue?: string | number | null;
     /**
      * Sets <input> element type attribute. Valid values are: `text`, `password`, `email`, `url`, `tel`.
      */
@@ -180,7 +180,7 @@ export declare type TTextAreaOptionProps = TInputTextProps & {
     /**
      * The value monitored by `v-model` to maintain this field value.
      */
-    modelValue?: string;
+    modelValue?: string | null;
     /**
      * Sets `<textarea>` height in rows.
      */
@@ -225,7 +225,7 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
     /**
      * The value monitored by `v-model` to maintain this field value.
      */
-    modelValue?: number;
+    modelValue?: number | null;
     /**
      * The locale to be used when displaying the numeric value.
      * Defaults is using browser's locale.

@@ -39,7 +39,7 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
         const autocomplete = thisProps.autocomplete && Helper.isString(thisProps.autocomplete)
             ? thisProps.autocomplete
             : (thisProps.autocomplete ? 'on' : Helper.uuid());
-        const localValue = ref<number | null>(thisProps.modelValue === undefined ? null : thisProps.modelValue);
+        const localValue = ref<number | null | undefined>(thisProps.modelValue);
         const inputRef = ref<HTMLElement | null>(null);
         const hasFocus = ref(false);
         const validator = useGetValidationResult(thisProps, hasFocus);
@@ -85,7 +85,7 @@ export default defineComponent<TBsNumericField, TRecord, TRecord, ComputedOption
             step: Helper.parseFloatLoose(<string>thisProps.step) || 1.0,
         };
         const formatOptions: Intl.NumberFormatOptions = {
-            maximumFractionDigits: Helper.parseIntLoose(<string>thisProps.maxFraction) || 3,
+            maximumFractionDigits: Helper.parseIntLoose(<string>thisProps.maxFraction) ?? 3,
             useGrouping: thisProps.useGrouping
         };
 
