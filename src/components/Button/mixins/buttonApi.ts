@@ -273,6 +273,7 @@ export function useRenderToggleFieldButton(
                     modelValue: props.modelValue,
                     flat: props.flat,
                     outlined: props.outlined,
+                    tonal: props.tonal,
                     raised: props.raised,
                     rounded: props.rounded,
                     pill: props.pill,

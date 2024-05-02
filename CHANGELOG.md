@@ -15,6 +15,7 @@ Released: June XX, 2024
 ### Bug Fixes
 
 - **BsNumericField**, **BsDatePicker**, **BsDateTimerField**: fix locale resolver on SSR.
+- **BsToggleField**: fix `tonal` property not working properly.
 
 
 ## v2.0.7
