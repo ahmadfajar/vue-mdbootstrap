@@ -60,15 +60,15 @@ export declare type TTabsOptionProps = TTabsBaseProps & {
      */
     activeClass?: string;
     /**
-     * Tab content css class name.
+     * Optional, Tab content css classes.
      */
     contentClass?: string | Array<string>;
     /**
-     * TabItem's container css class name.
+     * Optional, TabItem's container css classes.
      */
     innerClass?: string | Array<string>;
     /**
-     * This component activeTab index or activeTab ID.
+     * The activeTab index or activeTab ID that monitored by `v-model`.
      */
     modelValue?: string | number;
 }
