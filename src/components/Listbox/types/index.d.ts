@@ -129,8 +129,8 @@ declare type AllowedListboxProps = AllowedComponentProps & ComponentCustomProps 
     onDataBind?: (data: TBsModel[]) => void;
     onDataError?: (error: unknown) => void;
     onDataFilter?: (data: TBsModel[]) => void;
-    'onUpdate:selected-value'?: (selected: TBsModel[]) => void;
     'onUpdate:search-text'?: (search?: string) => void;
+    'onUpdate:selected-value'?: (selected: TBsModel[]) => void;
 }
 
 export declare const BsListbox: {

@@ -1,7 +1,7 @@
 import type { Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
 import {
-    Fragment,
     createCommentVNode,
+    Fragment,
     h,
     nextTick,
     onMounted,
@@ -36,10 +36,12 @@ import {
     BsListView,
 } from '../../ListView';
 
-export function useFilterListboxItems(
+function filterListboxItems(
     emit: TEmitFn,
     schema: TDataListSchemaProps,
     dataSource: IBsStore | IArrayStore | AbstractStore,
+    cacheItems: ShallowRef<IBsModel[]>,
+    selectedItems: ShallowRef<IBsModel[]>,
     searchRef: Ref<string | undefined>,
     search: string
 ) {
@@ -71,7 +73,8 @@ export function useFilterListboxItems(
                     });
             } else {
                 // @ts-ignore
-                emit('data-filter', (<IBsStore | IArrayStore>dataSource).dataItems);
+                cacheItems.value = cloneDataItems(dataSource, selectedItems, schema.valueField);
+                emit('data-filter', dataSource.dataItems);
                 emit('update:search-text', search);
             }
         }
@@ -84,6 +87,8 @@ function renderListboxSearchbox(
     emit: TEmitFn,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
+    cacheItems: ShallowRef<IBsModel[]>,
+    selectedItems: ShallowRef<IBsModel[]>,
     showSearchbox: Ref<boolean>,
     searchboxRef: Ref<HTMLElement | null>,
     searchRef: Ref<string | undefined>
@@ -110,10 +115,12 @@ function renderListboxSearchbox(
                         'onUpdate:modelValue': (value: string) => {
                             if (value.length >= minChars || Helper.isEmpty(value)) {
                                 Helper.defer(() => {
-                                    useFilterListboxItems(
+                                    filterListboxItems(
                                         emit,
                                         schema,
                                         dataSource,
+                                        cacheItems,
+                                        selectedItems,
                                         searchRef,
                                         value
                                     );
@@ -128,44 +135,6 @@ function renderListboxSearchbox(
     } else {
         return createCommentVNode(' v-if-searchbox ');
     }
-}
-
-export function useRenderListbox(
-    slots: Slots,
-    emit: TEmitFn,
-    props: Readonly<TListboxOptionProps>,
-    schema: TDataListSchemaProps,
-    dataItems: ShallowRef<IBsModel[]>,
-    listviewStyles: TRecord,
-    showSearchbox: Ref<boolean>,
-    searchboxRef: Ref<HTMLElement | null>,
-    selectedItems: ShallowRef<IBsModel[]>,
-    localValue: Ref<string | number | string[] | number[] | undefined>,
-    searchRef: Ref<string | undefined>
-): VNode {
-    return h(
-        'div',
-        {
-            class: [
-                `${cssPrefix}listbox`,
-                props.color ? `bg-${props.color}` : '',
-                !props.borderless ? 'border' : '',
-            ],
-        },
-        [
-            renderListboxSearchbox(emit, props, schema, showSearchbox, searchboxRef, searchRef),
-            renderListboxView(
-                slots,
-                emit,
-                props,
-                schema,
-                dataItems,
-                listviewStyles,
-                selectedItems,
-                localValue
-            ),
-        ]
-    );
 }
 
 function renderListboxView(
@@ -200,25 +169,25 @@ function renderListboxView(
                               ]),
                       })
                     : dataSource?.filters.length &&
-                      dataSource.filters.length > 0 &&
-                      dataItems.value?.length === 0
-                    ? h(BsListTile, null, {
-                          default: () =>
-                              useRenderSlot(slots, 'not-found-msg', { key: 'notFoundMessage' }, [
-                                  h(BsListTileTitle, null, {
-                                      default: () => toDisplayString(props.notFoundMessage),
-                                  }),
-                              ]),
-                      })
-                    : renderListboxItems(
-                          slots,
-                          emit,
-                          props,
-                          schema,
-                          dataItems,
-                          selectedItems,
-                          localValue
-                      ),
+                        dataSource.filters.length > 0 &&
+                        dataItems.value?.length === 0
+                      ? h(BsListTile, null, {
+                            default: () =>
+                                useRenderSlot(slots, 'not-found-msg', { key: 'notFoundMessage' }, [
+                                    h(BsListTileTitle, null, {
+                                        default: () => toDisplayString(props.notFoundMessage),
+                                    }),
+                                ]),
+                        })
+                      : renderListboxItems(
+                            slots,
+                            emit,
+                            props,
+                            schema,
+                            dataItems,
+                            selectedItems,
+                            localValue
+                        ),
         }
     );
 }
@@ -244,7 +213,6 @@ function renderListboxItems(
                     // @ts-ignore
                     disabled: (props.disabled === true ||
                         item.get(<string>schema.disableField) === true) as Prop<boolean>,
-                    // active: selectedItems.value.find(it => it.get(schema.valueField) === item.get(schema.valueField)) !== undefined,
                     active: item.get('_selected') as Prop<boolean>,
                     'onUpdate:active': (value: boolean) =>
                         dispatchListboxEvent(
@@ -454,12 +422,56 @@ function cloneDataItems(
         tmpObj.set(
             '_selected',
             selectedItems.value.find((row) => row.get(fieldName) === it.get(fieldName)) != undefined
-            // Array.isArray(fieldValues.value)
-            //     ? fieldValues.value.some(v => v === it.get(dataSchema.valueField))
-            //     : fieldValues.value === it.get(dataSchema.valueField)
         );
         return tmpObj;
     });
+}
+
+export function useRenderListbox(
+    slots: Slots,
+    emit: TEmitFn,
+    props: Readonly<TListboxOptionProps>,
+    schema: TDataListSchemaProps,
+    cacheItems: ShallowRef<IBsModel[]>,
+    selectedItems: ShallowRef<IBsModel[]>,
+    listviewStyles: TRecord,
+    showSearchbox: Ref<boolean>,
+    searchboxRef: Ref<HTMLElement | null>,
+    localValue: Ref<string | number | string[] | number[] | undefined>,
+    searchRef: Ref<string | undefined>
+): VNode {
+    return h(
+        'div',
+        {
+            class: [
+                `${cssPrefix}listbox`,
+                props.color ? `bg-${props.color}` : '',
+                !props.borderless ? 'border' : '',
+            ],
+        },
+        [
+            renderListboxSearchbox(
+                emit,
+                props,
+                schema,
+                cacheItems,
+                selectedItems,
+                showSearchbox,
+                searchboxRef,
+                searchRef
+            ),
+            renderListboxView(
+                slots,
+                emit,
+                props,
+                schema,
+                cacheItems,
+                listviewStyles,
+                selectedItems,
+                localValue
+            ),
+        ]
+    );
 }
 
 export function useRegisterListboxWatchers(
@@ -495,7 +507,10 @@ export function useRegisterListboxWatchers(
     watchEffect(() => {
         if (showSearchbox.value === false) {
             showSearchbox.value =
-                (dataSource && dataSource.storeState.totalCount >= minItems) || false;
+                (dataSource &&
+                    dataSource.storeState.length >= minItems &&
+                    dataSource.filters.length == 0) ||
+                false;
         }
         if (showSearchbox.value && searchboxRef.value) {
             listviewStyles.maxHeight = maxHeight - (searchboxRef.value.offsetHeight || 63) + 'px';
@@ -509,10 +524,12 @@ export function useRegisterListboxWatchers(
                 (value && value.length >= parseInt(<string>props.minSearchChars)) ||
                 Helper.isEmpty(value)
             ) {
-                useFilterListboxItems(
+                filterListboxItems(
                     emit,
                     schema,
                     <IBsStore | IArrayStore>dataSource,
+                    cacheItems,
+                    selectedItems,
                     searchText,
                     value || ''
                 );
@@ -546,14 +563,20 @@ export function useRegisterListboxWatchers(
     );
 
     onMounted(() => {
-        if (!dataSource || !props.autoload) return;
+        if (!dataSource || !props.autoload) {
+            return;
+        }
 
         queueMicrotask(async () => {
             try {
                 if (dataSource.storeState.length == 0) {
                     await dataSource.load();
                 } else {
-                    selectedItems.value = findSelectedItems(localValue, schema.valueField, dataSource);
+                    selectedItems.value = findSelectedItems(
+                        localValue,
+                        schema.valueField,
+                        dataSource
+                    );
                     cacheItems.value = cloneDataItems(dataSource, selectedItems, schema.valueField);
                     emit('data-bind', dataSource.dataItems);
                 }

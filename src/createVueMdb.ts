@@ -14,7 +14,7 @@ export function createVueMdb(rootComponent: Component): App {
     }
 
     vApp.use(AxiosPlugin);
-    for (const [key, plg] of Object.entries(_cmpPlugins)) {
+    for (const [_key, plg] of Object.entries(_cmpPlugins)) {
         // console.info(`${key}: ${plg}`);
         plg && vApp.use(plg);
     }

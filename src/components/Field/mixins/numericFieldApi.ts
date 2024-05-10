@@ -98,7 +98,7 @@ function createActionButtons(
     position: TSpaceAround,
     increaseValueHandler: () => void,
     decreaseValueHandler: () => void
-) {
+): VNode {
     const children = [];
 
     if (position === 'left' && props.actionButtonPlacement === 'both') {
@@ -219,16 +219,16 @@ function createAppendFieldActionNode(
                       props.spinButtonPlacement === 'right'
                           ? createSpinnerButton(props, increaseValueHandler, decreaseValueHandler)
                           : !props.disabled &&
-                            !props.readonly &&
-                            props.actionButton &&
-                            ['right', 'both'].includes(<string>props.actionButtonPlacement)
-                          ? createActionButtons(
-                                props,
-                                'right',
-                                increaseValueHandler,
-                                decreaseValueHandler
-                            )
-                          : '',
+                              !props.readonly &&
+                              props.actionButton &&
+                              ['right', 'both'].includes(<string>props.actionButtonPlacement)
+                            ? createActionButtons(
+                                  props,
+                                  'right',
+                                  increaseValueHandler,
+                                  decreaseValueHandler
+                              )
+                            : '',
                   ]
               )
             : createCommentVNode(' v-if-action-icon ')
@@ -449,9 +449,12 @@ function decrementValue(
     options: TNumericOpsOptions,
     localValue: Ref<number | null | undefined>,
     emit: TEmitFn
-) {
+): void {
     if (!props.disabled && !props.readonly) {
-        const result = (localValue.value || 0.0) - options.step;
+        let result = (localValue.value || 0.0) - options.step;
+        if (parseInt(<string>props.maxFraction) == 0) {
+            result = Math.round(result);
+        }
 
         if (isGreaterOrEqualMinValue(result, options) && isLessOrEqualMaxValue(result, options)) {
             useOnFieldValueUpdated(emit, localValue, result);
@@ -464,9 +467,12 @@ function incrementValue(
     options: TNumericOpsOptions,
     localValue: Ref<number | null | undefined>,
     emit: TEmitFn
-) {
+): void {
     if (!props.disabled && !props.readonly) {
-        const result = (localValue.value || 0.0) + options.step;
+        let result = (localValue.value ?? 0.0) + options.step;
+        if (parseInt(<string>props.maxFraction) == 0) {
+            result = Math.round(result);
+        }
 
         if (isGreaterOrEqualMinValue(result, options) && isLessOrEqualMaxValue(result, options)) {
             useOnFieldValueUpdated(emit, localValue, result);

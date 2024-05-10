@@ -62,16 +62,32 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Me
         const listviewStyles = reactive<TRecord>({maxHeight: maxHeight + 'px'});
 
         useRegisterListboxWatchers(
-            emit, thisProps, dataSource, dataSchema, cacheItems,
-            selectedItems, fieldValues, listviewStyles,
-            showSearchbox, searchboxRef, searchText,
+            emit,
+            thisProps,
+            dataSource,
+            dataSchema,
+            cacheItems,
+            selectedItems,
+            fieldValues,
+            listviewStyles,
+            showSearchbox,
+            searchboxRef,
+            searchText,
         );
 
         return () =>
             useRenderListbox(
-                slots, emit, thisProps, dataSchema, cacheItems,
-                listviewStyles, showSearchbox, searchboxRef,
-                selectedItems, fieldValues, searchText,
+                slots,
+                emit,
+                thisProps,
+                dataSchema,
+                cacheItems,
+                selectedItems,
+                listviewStyles,
+                showSearchbox,
+                searchboxRef,
+                fieldValues,
+                searchText,
             );
     }
 });

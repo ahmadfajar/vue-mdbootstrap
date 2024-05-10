@@ -9,11 +9,12 @@ Released: June XX, 2024
 
 ### Improvements
 
-- **BsNumericField**: transform internal value to integer when `max-fraction` property set to `0`.
+- **BsNumericField**: transform internal value to integer when `max-fraction` property is set to `0`.
 - **BsCheckboxGroup**, **BsRadioGroup**, **BsToggleField**: improve padding on feedback message.
 
 ### Bug Fixes
 
+- **BsListbox**: fix filter searchbox not working properly.
 - **BsNumericField**, **BsDatePicker**, **BsDateTimerField**: fix locale resolver on SSR.
 - **BsToggleField**: fix `tonal` property not working properly.
 
@@ -60,7 +61,7 @@ Released: April 8, 2024
   - Improve chain loading dataset when `parentValue` is defined.
 - **BsIcon**, **BsIconSvg**: cache loaded icon using CacheManager to improve performance. 
 - **BsNumericField**: improve classic form field styles.
-- **BsListbox**: add property `autoload` to turn-off the autoloading dataset from remote source.
+- **BsListbox**: add property `autoload` to turn off the autoload dataset from remote source.
 - **BsListTile**: improvement when the `navigable` property is defined.
 - **BsPopover**: improve display placement coordinates.
 - **BsTabs**: 
