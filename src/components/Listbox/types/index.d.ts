@@ -111,11 +111,11 @@ export declare type TListboxOptionProps = {
      */
     showImage?: boolean;
     /**
-     * Sets **rounded** effect for the displayed image from Listbox item.
+     * Display image with **rounded** shape for each Listbox item that has image property
      */
     roundedImage?: boolean;
     /**
-     * Sets **circle** effect for the displayed image from Listbox item.
+     * Display image with **circle** shape for each Listbox item that has image property
      */
     circleImage?: boolean;
 }
