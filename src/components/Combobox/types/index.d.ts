@@ -33,7 +33,7 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
      */
     modelValue?: string | number | string[] | number[];
     /**
-     * Sets this component's Listbox data source.
+     * Sets the data source configuration.
      */
     dataSource?: TDataSource;
     /**
@@ -62,7 +62,7 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
      */
     multiple?: boolean;
     /**
-     * Sets this component's Listbox background color.
+     * Sets the Listbox background color.
      */
     listboxColor?: string;
     /**
@@ -134,11 +134,11 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
      */
     showImage?: boolean;
     /**
-     * Sets **rounded** effect for the displayed image from Listbox item.
+     * Display image with **rounded** shape for each item that has image property
      */
     roundedImage?: boolean;
     /**
-     * Sets **circle** effect for the displayed image from Listbox item.
+     * Display image with **circle** shape for each item that has image property
      */
     circleImage?: boolean;
     /**

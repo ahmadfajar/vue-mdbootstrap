@@ -67,7 +67,7 @@ export declare type TListboxOptionProps = {
      */
     searchText?: string;
     /**
-     * Sets this component's data source.
+     * Sets the data source configuration.
      */
     dataSource?: TDataSource;
     /**
@@ -111,11 +111,11 @@ export declare type TListboxOptionProps = {
      */
     showImage?: boolean;
     /**
-     * Display image with **rounded** shape for each Listbox item that has image property
+     * Display image with **rounded** shape for each item that has image property
      */
     roundedImage?: boolean;
     /**
-     * Display image with **circle** shape for each Listbox item that has image property
+     * Display image with **circle** shape for each item that has image property
      */
     circleImage?: boolean;
 }

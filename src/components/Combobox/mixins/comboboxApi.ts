@@ -440,7 +440,7 @@ export function useRenderCombobox(
 }
 
 /**
- * Fetch data from remote service and additionaly create filters based on parentValue.
+ * Fetch data from remote service and additionally create filters based on parentValue.
  */
 export async function useFetchData(
     emit: TEmitFn,
@@ -468,7 +468,7 @@ export async function useFetchData(
             }
         }
 
-        dataSource.filters = [];
+        dataSource.setFilters([], true);
 
         try {
             await dataSource.load();
