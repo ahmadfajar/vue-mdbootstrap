@@ -507,9 +507,8 @@ export function useRegisterListboxWatchers(
     watchEffect(() => {
         if (showSearchbox.value === false) {
             showSearchbox.value =
-                (dataSource &&
-                    dataSource.storeState.length >= minItems &&
-                    dataSource.filters.length == 0) ||
+                (dataSource && dataSource.storeState.length >= minItems) ||
+                !Helper.isEmpty(searchText.value) ||
                 false;
         }
         if (showSearchbox.value && searchboxRef.value) {
