@@ -6,8 +6,8 @@
     --#{$prefix}notification-background-color: #{darken($gray-900, 5%)};
     --#{$prefix}notification-bar-color: #{$warning-color};
     --#{$prefix}notification-border-radius: #{$border-radius-base};
-    --#{$prefix}notification-box-shadow-color: #{$grey-base};
-    --#{$prefix}notification-box-shadow-hover-color: #{$black};
+    --#{$prefix}notification-box-shadow-color: rgba(0, 0, 0, 0.2);
+    --#{$prefix}notification-box-shadow-hover-color: rgba(0, 0, 0, 0.45);
     --#{$prefix}notification-color: #{$white};
     --#{$prefix}notification-font-size: .9rem;
     --#{$prefix}notification-hover-color: #{$gray-300};
@@ -136,7 +136,7 @@
 
         > .#{$prefix}notification-dialog {
             @include border-radius(var(--#{$prefix}notification-border-radius));
-            @include box-shadow(0 0 12px var(--#{$prefix}notification-box-shadow-color));
+            @include box-shadow(0 0.25rem 1rem var(--#{$prefix}notification-box-shadow-color));
 
             background-color: var(--#{$prefix}notification-background-color);
             background-position: 15px center;
