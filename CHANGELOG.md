@@ -5,15 +5,20 @@
 
 ## v2.0.8
 
-Released: June XX, 2024
+Released: May 18, 2024
 
 ### Improvements
 
-- **BsNumericField**: transform internal value to integer when `max-fraction` property is set to `0`.
+- **BsChipField**: improve UI padding on **filled** and **outlined** style variant.
+- **BsCombobox**: 
+  - Improve floating label css.
+  - Improve UI padding when **chip mode** is active.
 - **BsCheckboxGroup**, **BsRadioGroup**, **BsToggleField**: improve padding on feedback message.
+- **BsNumericField**: transform internal value to integer when `max-fraction` property is set to `0`.
 
 ### Bug Fixes
 
+- **BsCombobox**: fix cascade selection when `remoteFilter` property is set to `false`.
 - **BsListbox**: fix filter searchbox not working properly.
 - **BsNumericField**, **BsDatePicker**, **BsDateTimerField**: fix locale resolver on SSR.
 - **BsToggleField**: fix `tonal` property not working properly.
@@ -26,7 +31,6 @@ Released: April 20, 2024
 ### Improvements
 
 - **BsCheckbox**: improve css variables to enable changing the checkbox appearance.
-
 
 ### Bug Fixes
 

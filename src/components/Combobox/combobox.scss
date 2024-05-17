@@ -3,6 +3,27 @@
 @import "../../../scss/variables";
 
 .#{$prefix}combobox-field {
+    &.#{$prefix}field-control {
+        &.focused:not(.active) {
+            --#{$prefix}field-floating-label-transform: none;
+        }
+
+        &.#{$prefix}field-outlined {
+            &.focused:not(.active) {
+                .#{$prefix}field-label {
+                    opacity: 1;
+                    visibility: initial;
+                }
+
+                .#{$prefix}field-outline-control {
+                    > .#{$prefix}field-outline-label {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+
     &.#{$prefix}floating-label {
         .#{$prefix}field-label {
             height: var(--#{$prefix}field-control-height);
@@ -34,11 +55,33 @@
 
     &.#{$prefix}chip-enabled {
         > .#{$prefix}field-inner {
-            min-height: 58px;
+            //min-height: 58px;
 
             > .#{$prefix}field-activator {
                 @include flexbox((flex: 1 1 auto, align-items: end, flex-wrap: wrap));
                 max-width: 100%;
+            }
+        }
+
+        &.#{$prefix}field-filled, &.#{$prefix}field-outlined {
+            &:not(.#{$prefix}floating-label) {
+                .#{$prefix}field-activator {
+                    --#{$prefix}field-padding-start: 0;
+
+                    align-items: center;
+                    padding-left: 1rem;
+                    padding-top: 0.5rem;
+                    padding-bottom: 0.25rem;
+                }
+
+                > .#{$prefix}field-inner {
+                    > .#{$prefix}action-icon, > .#{$prefix}validation-icon {
+                        > .#{$prefix}icon {
+                            align-self: flex-start;
+                            margin-top: 1rem;
+                        }
+                    }
+                }
             }
         }
 
@@ -69,7 +112,7 @@
                     }
                 }
 
-                &.active, &.focused {
+                &.active {
                     --#{$prefix}field-floating-label-transform: translateY(-24px) scale(.85);
                     --#{$prefix}field-padding-top: 1.25rem;
                 }
@@ -95,6 +138,14 @@
             }
 
             &.#{$prefix}field-filled {
+                .#{$prefix}action-icon,
+                .#{$prefix}append-inner,
+                .#{$prefix}prepend-inner {
+                    > .#{$prefix}icon {
+                        margin-top: 22px;
+                    }
+                }
+
                 .#{$prefix}field-activator {
                     min-height: 4.125rem;
                     padding-top: $padding-base + .75;
@@ -108,7 +159,7 @@
                     }
                 }
 
-                &.active, &.focused {
+                &.active {
                     --#{$prefix}field-floating-label-transform: translateY(-14px) scale(.85);
                 }
             }

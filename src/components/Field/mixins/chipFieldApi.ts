@@ -86,7 +86,6 @@ function createFieldInput(
 function createFieldChips(
     props: Readonly<ExtractPropTypes<TBsChipField>>,
     emit: TEmitFn,
-    inputValue: Ref<string>,
     localValue: Ref<string[]>,
 ): VNode {
     if (localValue.value.length === 0) {
@@ -152,7 +151,7 @@ export function useRenderChipField(
                 slots,
                 thisProps,
                 [
-                    createFieldChips(props, emit, inputValue, localValue),
+                    createFieldChips(props, emit, localValue),
                     createFieldInput(thisProps, emit, inputValue, localValue, isFocused, autocomplete),
                 ],
                 iconSize,
