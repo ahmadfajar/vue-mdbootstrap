@@ -19,7 +19,7 @@ import type {
     TRecord,
     TTimePickerMode,
     TTimePickerProps,
-    TValueText
+    TValueText,
 } from '../../../types';
 import Helper from '../../../utils/Helper';
 import { BsButton } from '../../Button';
@@ -29,7 +29,6 @@ import BsDatePickerMonths from '../BsDatePickerMonths';
 import BsDatePickerNav from '../BsDatePickerNav';
 import BsDatePickerTimes from '../BsDatePickerTimes';
 import BsDatePickerYears from '../BsDatePickerYears';
-
 
 export const DatePickerConst = {
     viewModes: ['datetime', 'date', 'month', 'year', 'time'] as TDateTimePickerMode[],
@@ -55,36 +54,48 @@ export function useDatePickerHeaderStyles(
     props: Readonly<TDatePickerHeaderProps>,
     isYearActive: ComputedRef<boolean>,
     isTimeActive: ComputedRef<boolean>,
-    isTitleActive: ComputedRef<boolean>,
+    isTitleActive: ComputedRef<boolean>
 ): TRecord {
     const initial = {
         'pointer-events': props.readonly ? 'none' : undefined,
     };
     const yearStyle = {
         ...initial,
-        'cursor': [DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(<TDateTimePickerMode>props.pickerMode)
-        && !isYearActive.value ? 'pointer' : undefined,
+        cursor:
+            [DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(
+                <TDateTimePickerMode>props.pickerMode
+            ) && !isYearActive.value
+                ? 'pointer'
+                : undefined,
     };
     const timeStyle = {
         ...initial,
-        'cursor': [DatePickerConst.DATE, DatePickerConst.DATETIME].includes(<TDateTimePickerMode>props.pickerMode)
-        && !isTimeActive.value ? 'pointer' : undefined,
+        cursor:
+            [DatePickerConst.DATE, DatePickerConst.DATETIME].includes(
+                <TDateTimePickerMode>props.pickerMode
+            ) && !isTimeActive.value
+                ? 'pointer'
+                : undefined,
     };
     const titleStyle = {
         ...initial,
-        'cursor': [DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(<TDateTimePickerMode>props.pickerMode)
-        && !isTitleActive.value ? 'pointer' : undefined,
+        cursor:
+            [DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(
+                <TDateTimePickerMode>props.pickerMode
+            ) && !isTitleActive.value
+                ? 'pointer'
+                : undefined,
     };
 
-    return {year: yearStyle, time: timeStyle, title: titleStyle}
+    return { year: yearStyle, time: timeStyle, title: titleStyle };
 }
 
 export function useWatchOfDatePickerBaseProps(
     props: Readonly<TDatePickerBaseProps>,
     localValue: Ref<DateTime>,
     reverse?: Ref<boolean>,
-    dateRef?: Ref<DateTime>,
-) {
+    dateRef?: Ref<DateTime>
+): void {
     watch(
         () => props.modelValue,
         (value, oldValue) => {
@@ -106,19 +117,21 @@ export function useWatchOfDatePickerBaseProps(
     );
 }
 
-export function useHeaderTitleFormatOpts(value?: TDateTimePickerMode | string): Intl.DateTimeFormatOptions {
+export function useHeaderTitleFormatOpts(
+    value?: TDateTimePickerMode | string
+): Intl.DateTimeFormatOptions {
     if (value === DatePickerConst.YEAR) {
-        return {year: 'numeric'};
+        return { year: 'numeric' };
     } else if (value === DatePickerConst.MONTH) {
-        return {month: 'long', year: 'numeric'}
+        return { month: 'long', year: 'numeric' };
     } else if (value === DatePickerConst.TIME) {
         return DateTime.DATE_SHORT;
     } else {
         return {
             weekday: 'long',
             month: 'short',
-            day: 'numeric'
-        }
+            day: 'numeric',
+        };
     }
 }
 
@@ -126,8 +139,8 @@ export function useWatchOfDatePickerHeaderProps(
     props: Readonly<TDatePickerHeaderProps>,
     formatOpts: Ref<Intl.DateTimeFormatOptions>,
     localValue: Ref<DateTime>,
-    reverse: Ref<boolean>,
-) {
+    reverse: Ref<boolean>
+): void {
     useWatchOfDatePickerBaseProps(props, localValue, reverse);
 
     watch(
@@ -142,20 +155,20 @@ export function useWatchOfDatePickerNavProps(
     props: Readonly<TDatePickerNavProps>,
     formatOpts: Ref<Intl.DateTimeFormatOptions>,
     localValue: Ref<DateTime>,
-    reverse: Ref<boolean>,
-) {
+    reverse: Ref<boolean>
+): void {
     useWatchOfDatePickerBaseProps(props, localValue, reverse);
 
     watch(
         () => props.displayMode,
         (value) => {
             if (value === DatePickerConst.YEAR || value === DatePickerConst.MONTH) {
-                formatOpts.value = {year: 'numeric'};
+                formatOpts.value = { year: 'numeric' };
             } else {
                 formatOpts.value = {
                     month: 'long',
-                    year: 'numeric'
-                }
+                    year: 'numeric',
+                };
             }
         }
     );
@@ -170,94 +183,118 @@ export function useRenderDatePickerHeader(
     isTitleActive: ComputedRef<boolean>,
     transitionName: ComputedRef<string>,
     formatOpts: Ref<Intl.DateTimeFormatOptions>,
-    localValue: Ref<DateTime>,
+    localValue: Ref<DateTime>
 ): VNode {
-    return h('div', {
-        class: {
-            [`${cssPrefix}datepicker-header`]: true,
-            [`bg-${props.color}`]: props.color,
-        }
-    }, [
-        h('div', {
-            class: [
-                `${cssPrefix}datepicker-subtitle`,
-                'd-flex justify-content-between',
-            ]
-        }, [
+    return h(
+        'div',
+        {
+            class: {
+                [`${cssPrefix}datepicker-header`]: true,
+                [`bg-${props.color}`]: props.color,
+            },
+        },
+        [
             h(
                 'div',
                 {
-                    class: [
-                        `${cssPrefix}datepicker-year`,
-                        'd-inline-block',
-                        isYearActive.value ? 'active' : ''
-                    ],
-                    style: styles.value.year,
-                    onClick: () => {
-                        if (!isYearActive.value && ['date', 'datetime', 'month'].includes(<string>props.pickerMode)) {
-                            emit('change-view', DatePickerConst.YEAR);
-                        }
-                    }
-                }, [
-                    [DatePickerConst.MONTH, DatePickerConst.YEAR, DatePickerConst.TIME].includes(<string>props.pickerMode)
-                        ? ''
-                        : localValue.value.toLocaleString({year: 'numeric'})
-                ]
-            ),
-            (
-                props.enableTime
-                    ? h(
+                    class: [`${cssPrefix}datepicker-subtitle`, 'd-flex justify-content-between'],
+                },
+                [
+                    h(
                         'div',
                         {
                             class: [
-                                `${cssPrefix}datepicker-time`,
+                                `${cssPrefix}datepicker-year`,
                                 'd-inline-block',
-                                isTimeActive.value ? 'active' : ''
+                                isYearActive.value ? 'active' : '',
                             ],
-                            style: styles.value.time,
+                            style: styles.value.year,
                             onClick: () => {
-                                if (!isTimeActive.value) {
-                                    emit('change-view', DatePickerConst.TIME);
+                                if (
+                                    !isYearActive.value &&
+                                    ['date', 'datetime', 'month'].includes(<string>props.pickerMode)
+                                ) {
+                                    emit('change-view', DatePickerConst.YEAR);
                                 }
-                            }
+                            },
                         },
-                        localValue.value.toLocaleString(DateTime.TIME_SIMPLE)
-                    )
-                    : createCommentVNode(' v-if-time ')
+                        [
+                            [
+                                DatePickerConst.MONTH,
+                                DatePickerConst.YEAR,
+                                DatePickerConst.TIME,
+                            ].includes(<string>props.pickerMode)
+                                ? ''
+                                : localValue.value.toLocaleString({ year: 'numeric' }),
+                        ]
+                    ),
+                    props.enableTime
+                        ? h(
+                              'div',
+                              {
+                                  class: [
+                                      `${cssPrefix}datepicker-time`,
+                                      'd-inline-block',
+                                      isTimeActive.value ? 'active' : '',
+                                  ],
+                                  style: styles.value.time,
+                                  onClick: () => {
+                                      if (!isTimeActive.value) {
+                                          emit('change-view', DatePickerConst.TIME);
+                                      }
+                                  },
+                              },
+                              localValue.value.toLocaleString(DateTime.TIME_SIMPLE)
+                          )
+                        : createCommentVNode(' v-if-time '),
+                ]
             ),
-        ]),
-        h('div', {
-            class: [
-                `${cssPrefix}datepicker-title`,
-                isTitleActive.value ? 'active' : ''
-            ],
-            style: styles.value.title,
-            onClick: () => {
-                if (!isTitleActive.value && ['date', 'datetime', 'month'].includes(<string>props.pickerMode)) {
-                    emit(
-                        'change-view',
-                        props.pickerMode === DatePickerConst.MONTH
-                            ? DatePickerConst.MONTH
-                            : DatePickerConst.DATE
-                    );
-                }
-            }
-        }, [
-            useRenderTransition({
-                name: transitionName.value,
-            }, [
-                h('div', {
-                    key: <string>localValue.value.toISODate()
-                }, [
-                    props.landscape === true && useBreakpointMin('lg')
-                        ? h('span', {
-                            innerHTML: localValue.value.toLocaleString(formatOpts.value).replace(', ', ',<br/>')
-                        })
-                        : localValue.value.toLocaleString(formatOpts.value)
-                ])
-            ]),
-        ])
-    ])
+            h(
+                'div',
+                {
+                    class: [`${cssPrefix}datepicker-title`, isTitleActive.value ? 'active' : ''],
+                    style: styles.value.title,
+                    onClick: () => {
+                        if (
+                            !isTitleActive.value &&
+                            ['date', 'datetime', 'month'].includes(<string>props.pickerMode)
+                        ) {
+                            emit(
+                                'change-view',
+                                props.pickerMode === DatePickerConst.MONTH
+                                    ? DatePickerConst.MONTH
+                                    : DatePickerConst.DATE
+                            );
+                        }
+                    },
+                },
+                [
+                    useRenderTransition(
+                        {
+                            name: transitionName.value,
+                        },
+                        [
+                            h(
+                                'div',
+                                {
+                                    key: <string>localValue.value.toISODate(),
+                                },
+                                [
+                                    props.landscape === true && useBreakpointMin('lg')
+                                        ? h('span', {
+                                              innerHTML: localValue.value
+                                                  .toLocaleString(formatOpts.value)
+                                                  .replace(', ', ',<br/>'),
+                                          })
+                                        : localValue.value.toLocaleString(formatOpts.value),
+                                ]
+                            ),
+                        ]
+                    ),
+                ]
+            ),
+        ]
+    );
 }
 
 function createCalendarNavButton(
@@ -265,7 +302,7 @@ function createCalendarNavButton(
     icon: string,
     iconSize: number,
     disabled?: boolean,
-    clickHandler?: (evt: Event) => void,
+    clickHandler?: (evt: Event) => void
 ): VNode {
     return h(BsButton, {
         color: color as Prop<string>,
@@ -280,8 +317,8 @@ function createCalendarNavButton(
             evt.preventDefault();
             evt.stopPropagation();
             clickHandler?.call(undefined, evt);
-        }
-    })
+        },
+    });
 }
 
 export function useRenderDatePickerNav(
@@ -289,54 +326,74 @@ export function useRenderDatePickerNav(
     emit: TEmitFn,
     transitionName: ComputedRef<string>,
     formatOpts: Ref<Intl.DateTimeFormatOptions>,
-    localValue: Ref<DateTime>,
+    localValue: Ref<DateTime>
 ): VNode {
     const text = formatDatePickerNavTitle(props, formatOpts, localValue);
 
-    return h('div', {
-        class: [`${cssPrefix}datepicker-nav`]
-    }, [
-        createCalendarNavButton(
-            (props.buttonColor || 'dark'),
-            'chevron_left', 30,
-            props.disabled,
-            () => datePickerNavButtonHandler(props, localValue, emit, -1),
-        ),
-        h('div', {
-            class: [`${cssPrefix}datepicker-nav-title`, props.disabled ? 'disabled' : ''],
-            onClick: () => {
-                !props.disabled && emit('toggle', props.displayMode);
-            },
-        }, [
-            useRenderTransition({
-                name: transitionName.value
-            }, [
-                h('div', {
-                    key: text,
-                    class: [`${cssPrefix}fw-bold`]
-                }, text)
-            ])
-        ]),
-        createCalendarNavButton(
-            (props.buttonColor || 'dark'),
-            'chevron_right', 30,
-            props.disabled,
-            () => datePickerNavButtonHandler(props, localValue, emit, 1),
-        ),
-    ])
+    return h(
+        'div',
+        {
+            class: [`${cssPrefix}datepicker-nav`],
+        },
+        [
+            createCalendarNavButton(
+                props.buttonColor || 'dark',
+                'chevron_left',
+                30,
+                props.disabled,
+                () => datePickerNavButtonHandler(props, localValue, emit, -1)
+            ),
+            h(
+                'div',
+                {
+                    class: [`${cssPrefix}datepicker-nav-title`, props.disabled ? 'disabled' : ''],
+                    onClick: () => {
+                        !props.disabled && emit('toggle', props.displayMode);
+                    },
+                },
+                [
+                    useRenderTransition(
+                        {
+                            name: transitionName.value,
+                        },
+                        [
+                            h(
+                                'div',
+                                {
+                                    key: text,
+                                    class: [`${cssPrefix}fw-bold`],
+                                },
+                                text
+                            ),
+                        ]
+                    ),
+                ]
+            ),
+            createCalendarNavButton(
+                props.buttonColor || 'dark',
+                'chevron_right',
+                30,
+                props.disabled,
+                () => datePickerNavButtonHandler(props, localValue, emit, 1)
+            ),
+        ]
+    );
 }
 
 function datePickerNavButtonHandler(
     props: Readonly<TDatePickerNavProps>,
     localValue: Ref<DateTime>,
     emit: TEmitFn,
-    movement: number,
-) {
+    movement: number
+): void {
     if (props.disabled) {
         return;
     }
     if (props.displayMode === DatePickerConst.YEAR) {
-        localValue.value = shiftYearTo(localValue.value, (movement > 0 ? 12 : (movement < 0 ? -12 : 0)));
+        localValue.value = shiftYearTo(
+            localValue.value,
+            movement > 0 ? 12 : movement < 0 ? -12 : 0
+        );
     } else if (props.displayMode === DatePickerConst.MONTH) {
         localValue.value = shiftYearTo(localValue.value, movement);
     } else {
@@ -349,19 +406,19 @@ function datePickerNavButtonHandler(
 function formatDatePickerNavTitle(
     props: Readonly<TDatePickerNavProps>,
     formatOpts: Ref<Intl.DateTimeFormatOptions>,
-    localValue: Ref<DateTime>,
+    localValue: Ref<DateTime>
 ): string {
     if (props.displayMode === DatePickerConst.DATE) {
         return localValue.value.toLocaleString(formatOpts.value);
     } else if (props.displayMode === DatePickerConst.MONTH) {
-        return localValue.value.toLocaleString({year: 'numeric'});
+        return localValue.value.toLocaleString({ year: 'numeric' });
     } else {
         return formatYearSpan(localValue.value);
     }
 }
 
 function formatYearSpan(value: DateTime): string {
-    const fmt = Intl.NumberFormat(value.locale ?? undefined, {useGrouping: false});
+    const fmt = Intl.NumberFormat(value.locale ?? undefined, { useGrouping: false });
     const year = value.year;
     const y1 = fmt.format(year - 4);
     const y2 = fmt.format(year + 7);
@@ -369,11 +426,7 @@ function formatYearSpan(value: DateTime): string {
     return `${y1} - ${y2}`;
 }
 
-function dispatchDateTimeValue(
-    emit: TEmitFn,
-    value: DateTime,
-    isDisabled?: boolean,
-) {
+function dispatchDateTimeValue(emit: TEmitFn, value: DateTime, isDisabled?: boolean) {
     if (!isDisabled) {
         emit('update:model-value', value.toJSDate());
     }
@@ -381,7 +434,7 @@ function dispatchDateTimeValue(
 
 function shiftMonthTo(date: DateTime, length: number): DateTime {
     if (length !== 0) {
-        return date.plus({months: length})
+        return date.plus({ months: length });
     }
 
     return date;
@@ -389,15 +442,19 @@ function shiftMonthTo(date: DateTime, length: number): DateTime {
 
 function shiftYearTo(date: DateTime, length: number): DateTime {
     if (length !== 0) {
-        return date.plus({years: length})
+        return date.plus({ years: length });
     }
 
     return date;
 }
 
-function shiftDateTimeTo(date: DateTime, unit: keyof DurationObjectUnits, length: number): DateTime {
+function shiftDateTimeTo(
+    date: DateTime,
+    unit: keyof DurationObjectUnits,
+    length: number
+): DateTime {
     if (length !== 0) {
-        return date.plus({[`${unit}`]: length})
+        return date.plus({ [`${unit}`]: length });
     }
 
     return date;
@@ -408,8 +465,8 @@ function shiftDateTimeThenDispatch(
     value: DateTime,
     unit: keyof DurationObjectUnits,
     length: number,
-    isDisabled?: boolean,
-) {
+    isDisabled?: boolean
+): void {
     if (!isDisabled) {
         const result = shiftDateTimeTo(value, unit, length);
         dispatchDateTimeValue(emit, result, isDisabled);
@@ -417,14 +474,12 @@ function shiftDateTimeThenDispatch(
 }
 
 function weekdayNames(locale?: string): string[] {
-    const formatter = new Intl.DateTimeFormat(locale, {weekday: 'narrow'});
+    const formatter = new Intl.DateTimeFormat(locale, { weekday: 'narrow' });
     // create weekday names. 2017-01-15 is Sunday
-    return Helper.createRange(7).map(i => formatter.format(new Date(2017, 0, i + 15)));
+    return Helper.createRange(7).map((i) => formatter.format(new Date(2017, 0, i + 15)));
 }
 
-export function useDatePickerCalenderSetup(
-    props: Readonly<TDatePickerCalendarProps>,
-) {
+export function useDatePickerCalenderSetup(props: Readonly<TDatePickerCalendarProps>) {
     const reverse = ref(false);
     const localValue = ref<DateTime>(
         props.modelValue ? DateTime.fromJSDate(props.modelValue) : DateTime.now()
@@ -451,7 +506,7 @@ export function useDatePickerCalenderSetup(
         }
     );
 
-    return {reverse, localValue, calendarDate, transitionName}
+    return { reverse, localValue, calendarDate, transitionName };
 }
 
 function shiftDatePickerCalendar(
@@ -459,9 +514,9 @@ function shiftDatePickerCalendar(
     dateRef: DateTime,
     emit: TEmitFn,
     delta: number
-) {
+): void {
     let result: DateTime | undefined;
-    const length = delta > 0 ? 1 : (delta < 0 ? -1 : 0);
+    const length = delta > 0 ? 1 : delta < 0 ? -1 : 0;
 
     if (mode === DatePickerConst.DATE && length !== 0) {
         result = shiftMonthTo(dateRef, length);
@@ -480,14 +535,18 @@ function debounceShiftDatePickerCalendar(
     dateRef: Ref<DateTime>,
     emit: TEmitFn,
     delay: number,
-    delta: number,
-) {
-    if (!debounceRef.lastExec || ((Date.now() - debounceRef.lastExec) > delay)) {
+    delta: number
+): void {
+    if (!debounceRef.lastExec || Date.now() - debounceRef.lastExec > delay) {
         clearTimeout(debounceRef.timerId);
         debounceRef.lastExec = Date.now();
         debounceRef.timerId = Helper.defer(
-            shiftDatePickerCalendar, delay,
-            mode, dateRef.value, emit, delta
+            shiftDatePickerCalendar,
+            delay,
+            mode,
+            dateRef.value,
+            emit,
+            delta
         );
     }
 }
@@ -499,77 +558,121 @@ export function useRenderDatePickerDays(
     tableDays: ComputedRef<TValueText<DateTime | undefined>[][]>,
     localValue: Ref<DateTime>,
     calendarValue: Ref<DateTime>,
-    debounceRef: TDebounce,
+    debounceRef: TDebounce
 ): VNode {
     const dayNames = weekdayNames(props.locale);
     const today = DateTime.now();
 
-    return withDirectives(h('div', {
-        class: [`${cssPrefix}datepicker-days`],
-        onWheel: (e: WheelEvent) => {
-            e.preventDefault();
-            debounceShiftDatePickerCalendar(
-                debounceRef, <TDateTimePickerMode>DatePickerConst.DATE,
-                calendarValue, emit, 300, e.deltaY || e.deltaX,
-            );
-        },
-    }, [
-        useRenderTransition({
-            name: transitionName.value
-        }, [
-            h('table', {
-                key: calendarValue.value.toFormat(DatePickerConst.yearMonthISO)
-            }, [
-                h('thead', [
-                    h(
-                        'tr',
-                        dayNames.map(el =>
-                            h('th', {
-                                key: `th-${el}`
-                            }, toDisplayString(el))
-                        ),
-                    ),
-                ]),
-                h(
-                    'tbody',
-                    tableDays.value.map((row, idx) =>
-                        h('tr', {
-                                key: `tr-${idx}`
-                            },
-                            row.map((it, k) =>
-                                h('td', {
-                                    key: `td-${idx}-${k}`
-                                }, [
-                                    it.value
-                                        ? createCalendarDayButton(
-                                            props, localValue, <TValueText<DateTime>>it, today,
-                                            () => dispatchDateTimeValue(emit, <DateTime>it.value, props.disabled),
-                                        ) : '',
-                                ])
-                            )
-                        )
-                    ),
-                ),
-            ]),
-        ]),
-    ]), [
-        [Touch, {
-            left: (e: WheelEvent) => {
-                (e.deltaX < -10 || e.deltaX > 10) &&
-                shiftDatePickerCalendar(
-                    <TDateTimePickerMode>DatePickerConst.DATE,
-                    calendarValue.value, emit, e.deltaX * -1,
-                );
+    return withDirectives(
+        h(
+            'div',
+            {
+                class: [`${cssPrefix}datepicker-days`],
+                onWheel: (e: WheelEvent) => {
+                    e.preventDefault();
+                    debounceShiftDatePickerCalendar(
+                        debounceRef,
+                        <TDateTimePickerMode>DatePickerConst.DATE,
+                        calendarValue,
+                        emit,
+                        300,
+                        e.deltaY || e.deltaX
+                    );
+                },
             },
-            right: (e: WheelEvent) => {
-                (e.deltaX < -10 || e.deltaX > 10) &&
-                shiftDatePickerCalendar(
-                    <TDateTimePickerMode>DatePickerConst.DATE,
-                    calendarValue.value, emit, e.deltaX * -1,
-                );
-            }
-        }],
-    ]);
+            [
+                useRenderTransition(
+                    {
+                        name: transitionName.value,
+                    },
+                    [
+                        h(
+                            'table',
+                            {
+                                key: calendarValue.value.toFormat(DatePickerConst.yearMonthISO),
+                            },
+                            [
+                                h('thead', [
+                                    h(
+                                        'tr',
+                                        dayNames.map((el) =>
+                                            h(
+                                                'th',
+                                                {
+                                                    key: `th-${el}`,
+                                                },
+                                                toDisplayString(el)
+                                            )
+                                        )
+                                    ),
+                                ]),
+                                h(
+                                    'tbody',
+                                    tableDays.value.map((row, idx) =>
+                                        h(
+                                            'tr',
+                                            {
+                                                key: `tr-${idx}`,
+                                            },
+                                            row.map((it, k) =>
+                                                h(
+                                                    'td',
+                                                    {
+                                                        key: `td-${idx}-${k}`,
+                                                    },
+                                                    [
+                                                        it.value
+                                                            ? createCalendarDayButton(
+                                                                  props,
+                                                                  localValue,
+                                                                  <TValueText<DateTime>>it,
+                                                                  today,
+                                                                  () =>
+                                                                      dispatchDateTimeValue(
+                                                                          emit,
+                                                                          <DateTime>it.value,
+                                                                          props.disabled
+                                                                      )
+                                                              )
+                                                            : '',
+                                                    ]
+                                                )
+                                            )
+                                        )
+                                    )
+                                ),
+                            ]
+                        ),
+                    ]
+                ),
+            ]
+        ),
+        [
+            [
+                Touch,
+                {
+                    left: (e: WheelEvent) => {
+                        (e.deltaX < -10 || e.deltaX > 10) &&
+                            shiftDatePickerCalendar(
+                                <TDateTimePickerMode>DatePickerConst.DATE,
+                                calendarValue.value,
+                                emit,
+                                e.deltaX * -1
+                            );
+                    },
+                    right: (e: WheelEvent) => {
+                        (e.deltaX < -10 || e.deltaX > 10) &&
+                            shiftDatePickerCalendar(
+                                <TDateTimePickerMode>DatePickerConst.DATE,
+                                calendarValue.value,
+                                emit,
+                                e.deltaX * -1
+                            );
+                    },
+                },
+            ],
+        ]
+    );
 }
 
 function createCalendarDayButton(
@@ -577,43 +680,49 @@ function createCalendarDayButton(
     dateRef: Ref<DateTime>,
     data: TValueText<DateTime>,
     today: DateTime,
-    clickHandler: VoidFunction,
+    clickHandler: VoidFunction
 ): VNode {
     const selected = dateRef.value.hasSame(<DateTime>data.value, 'day');
     const isOutlined = today.hasSame(<DateTime>data.value, 'day') && !selected;
 
-    return h(BsButton, {
-        size: 'sm' as Prop<TButtonSize>,
-        mode: 'icon' as Prop<TButtonMode>,
-        // @ts-ignore
-        readonly: props.disabled as Prop<boolean>,
-        color: (!today.hasSame(data.value, 'day') && !selected ? 'dark' : props.selectedColor) as Prop<string>,
-        class: isOutlined ? `${cssPrefix}btn-today` : undefined,
-        // @ts-ignore
-        flat: (!today.hasSame(data.value, 'day') && !selected) as Prop<boolean>,
-        // @ts-ignore
-        outlined: isOutlined as Prop<boolean>,
-        onClick: clickHandler,
-    }, {
-        default: () => toDisplayString(data.text)
-    });
+    return h(
+        BsButton,
+        {
+            size: 'sm' as Prop<TButtonSize>,
+            mode: 'icon' as Prop<TButtonMode>,
+            // @ts-ignore
+            readonly: props.disabled as Prop<boolean>,
+            color: (!today.hasSame(data.value, 'day') && !selected
+                ? 'dark'
+                : props.selectedColor) as Prop<string>,
+            class: isOutlined ? `${cssPrefix}btn-today` : undefined,
+            // @ts-ignore
+            flat: (!today.hasSame(data.value, 'day') && !selected) as Prop<boolean>,
+            // @ts-ignore
+            outlined: isOutlined as Prop<boolean>,
+            onClick: clickHandler,
+        },
+        {
+            default: () => toDisplayString(data.text),
+        }
+    );
 }
 
 export function useCalendarTableDays(date: DateTime): TValueText<DateTime | undefined>[][] {
     const fmt = Intl.NumberFormat(date.locale ?? undefined);
     const rows: TValueText<DateTime | undefined>[][] = [];
     const numDays = (date.daysInMonth ?? 30) + 1;
-    const daysBefore: number = (DateTime.local(date.year, date.month, 1).weekday % 7);
+    const daysBefore: number = DateTime.local(date.year, date.month, 1).weekday % 7;
     let items: TValueText<DateTime | undefined>[] = [];
 
     for (let i = 0; i < daysBefore; i++) {
-        items.push({text: '0', value: undefined});
+        items.push({ text: '0', value: undefined });
     }
 
     for (let day = 1; day < numDays; day++) {
         items.push({
             text: fmt.format(day),
-            value: date.set({day: day})
+            value: date.set({ day: day }),
         });
 
         if (items.length % 7 === 0) {
@@ -623,7 +732,7 @@ export function useCalendarTableDays(date: DateTime): TValueText<DateTime | unde
     }
     if (items.length > 0) {
         for (let d = items.length; d < 7; d++) {
-            items.push({text: '0', value: undefined});
+            items.push({ text: '0', value: undefined });
         }
         rows.push(items);
     }
@@ -632,16 +741,16 @@ export function useCalendarTableDays(date: DateTime): TValueText<DateTime | unde
 }
 
 export function useCalendarTableMonths(date: DateTime): TValueText<DateTime>[][] {
-    const formatOpts: Intl.DateTimeFormatOptions = {month: 'short'};
+    const formatOpts: Intl.DateTimeFormatOptions = { month: 'short' };
     const numMonths = 12;
     const rows: TValueText<DateTime>[][] = [];
     let items: TValueText<DateTime>[] = [];
 
     for (let month = 0; month < numMonths; month++) {
-        const dateMonth = date.set({month: month + 1});
+        const dateMonth = date.set({ month: month + 1 });
         items.push({
             value: dateMonth,
-            text: dateMonth.toLocaleString(formatOpts)
+            text: dateMonth.toLocaleString(formatOpts),
         });
 
         if (items.length % 3 === 0) {
@@ -663,10 +772,10 @@ export function useCalendarTableYears(date: DateTime): TValueText<DateTime>[][] 
     let items: TValueText<DateTime>[] = [];
 
     for (let year = startYear; year <= endYear; year++) {
-        const dateYear = date.set({year: year});
+        const dateYear = date.set({ year: year });
         items.push({
             value: dateYear,
-            text: dateYear.toLocaleString({year: 'numeric'})
+            text: dateYear.toLocaleString({ year: 'numeric' }),
         });
 
         if (items.length % 3 === 0) {
@@ -683,15 +792,15 @@ export function useCalendarTableYears(date: DateTime): TValueText<DateTime>[][] 
 
 export function useCalendarTableHours(date: DateTime): TValueText<DateTime>[][] {
     const numHours = 24;
-    const fmt = Intl.NumberFormat(date.locale ?? undefined, {minimumIntegerDigits: 2});
+    const fmt = Intl.NumberFormat(date.locale ?? undefined, { minimumIntegerDigits: 2 });
     const rows: TValueText<DateTime>[][] = [];
     let items: TValueText<DateTime>[] = [];
 
     for (let num = 0; num < numHours; num++) {
-        const dateTime = date.set({hour: num});
+        const dateTime = date.set({ hour: num });
         items.push({
             value: dateTime,
-            text: fmt.format(num)
+            text: fmt.format(num),
         });
 
         if (items.length % 4 === 0) {
@@ -708,16 +817,16 @@ export function useCalendarTableHours(date: DateTime): TValueText<DateTime>[][] 
 
 export function useCalendarTableMinutes(date: DateTime): TValueText<DateTime>[][] {
     const numMinutes = 60;
-    const fmt = Intl.NumberFormat(date.locale ?? undefined, {minimumIntegerDigits: 2});
+    const fmt = Intl.NumberFormat(date.locale ?? undefined, { minimumIntegerDigits: 2 });
     const rows: TValueText<DateTime>[][] = [];
     let items: TValueText<DateTime>[] = [];
 
     for (let num = 0; num < numMinutes; num++) {
         if (num === 0 || num % 5 === 0) {
-            const dateTime = date.set({minute: num});
+            const dateTime = date.set({ minute: num });
             items.push({
                 value: dateTime,
-                text: fmt.format(num)
+                text: fmt.format(num),
             });
 
             if (items.length % 3 === 0) {
@@ -735,16 +844,16 @@ export function useCalendarTableMinutes(date: DateTime): TValueText<DateTime>[][
 
 export function useCalendarTableSeconds(date: DateTime): TValueText<DateTime>[][] {
     const numSeconds = 60;
-    const fmt = Intl.NumberFormat(date.locale ?? undefined, {minimumIntegerDigits: 2});
+    const fmt = Intl.NumberFormat(date.locale ?? undefined, { minimumIntegerDigits: 2 });
     const rows: TValueText<DateTime>[][] = [];
     let items: TValueText<DateTime>[] = [];
 
     for (let sec = 0; sec < numSeconds; sec++) {
         if (sec === 0 || sec % 5 === 0) {
-            const dateTime = date.set({second: sec});
+            const dateTime = date.set({ second: sec });
             items.push({
                 value: dateTime,
-                text: fmt.format(sec)
+                text: fmt.format(sec),
             });
 
             if (items.length % 3 === 0) {
@@ -767,65 +876,105 @@ export function useRenderDatePickerMonths(
     tableMonths: ComputedRef<TValueText<DateTime>[][]>,
     localValue: Ref<DateTime>,
     calendarValue: Ref<DateTime>,
-    debounceRef: TDebounce,
+    debounceRef: TDebounce
 ): VNode {
     const today = DateTime.now();
 
-    return withDirectives(h('div', {
-        class: [`${cssPrefix}datepicker-months`],
-        onWheel: (e: WheelEvent) => {
-            e.preventDefault();
-            debounceShiftDatePickerCalendar(
-                debounceRef, <TDateTimePickerMode>DatePickerConst.MONTH,
-                calendarValue, emit, 300, e.deltaY || e.deltaX,
-            );
-        },
-    }, [
-        useRenderTransition({
-            name: transitionName.value
-        }, [
-            h('table', {
-                key: calendarValue.value.toFormat(DatePickerConst.yearISO)
-            }, [
-                h(
-                    'tbody',
-                    tableMonths.value.map((row, idx) =>
-                        h('tr', {
-                                key: `tr-${idx}`
-                            },
-                            row.map((it, k) =>
-                                h('td', {
-                                    key: `td-${idx}-${k}`
-                                }, [
-                                    createCalendarButton(
-                                        props, localValue, it, today, 'month',
-                                        () => dispatchDateTimeValue(emit, it.value, props.disabled),
-                                    ),
-                                ])
-                            )
-                        )
-                    ),
-                ),
-            ]),
-        ]),
-    ]), [
-        [Touch, {
-            left: (e: WheelEvent) => {
-                (e.deltaX < -10 || e.deltaX > 10) &&
-                shiftDatePickerCalendar(
-                    <TDateTimePickerMode>DatePickerConst.MONTH,
-                    calendarValue.value, emit, e.deltaX * -1,
-                );
+    return withDirectives(
+        h(
+            'div',
+            {
+                class: [`${cssPrefix}datepicker-months`],
+                onWheel: (e: WheelEvent) => {
+                    e.preventDefault();
+                    debounceShiftDatePickerCalendar(
+                        debounceRef,
+                        <TDateTimePickerMode>DatePickerConst.MONTH,
+                        calendarValue,
+                        emit,
+                        300,
+                        e.deltaY || e.deltaX
+                    );
+                },
             },
-            right: (e: WheelEvent) => {
-                (e.deltaX < -10 || e.deltaX > 10) &&
-                shiftDatePickerCalendar(
-                    <TDateTimePickerMode>DatePickerConst.MONTH,
-                    calendarValue.value, emit, e.deltaX * -1,
-                );
-            }
-        }],
-    ]);
+            [
+                useRenderTransition(
+                    {
+                        name: transitionName.value,
+                    },
+                    [
+                        h(
+                            'table',
+                            {
+                                key: calendarValue.value.toFormat(DatePickerConst.yearISO),
+                            },
+                            [
+                                h(
+                                    'tbody',
+                                    tableMonths.value.map((row, idx) =>
+                                        h(
+                                            'tr',
+                                            {
+                                                key: `tr-${idx}`,
+                                            },
+                                            row.map((it, k) =>
+                                                h(
+                                                    'td',
+                                                    {
+                                                        key: `td-${idx}-${k}`,
+                                                    },
+                                                    [
+                                                        createCalendarButton(
+                                                            props,
+                                                            localValue,
+                                                            it,
+                                                            today,
+                                                            'month',
+                                                            () =>
+                                                                dispatchDateTimeValue(
+                                                                    emit,
+                                                                    it.value,
+                                                                    props.disabled
+                                                                )
+                                                        ),
+                                                    ]
+                                                )
+                                            )
+                                        )
+                                    )
+                                ),
+                            ]
+                        ),
+                    ]
+                ),
+            ]
+        ),
+        [
+            [
+                Touch,
+                {
+                    left: (e: WheelEvent) => {
+                        (e.deltaX < -10 || e.deltaX > 10) &&
+                            shiftDatePickerCalendar(
+                                <TDateTimePickerMode>DatePickerConst.MONTH,
+                                calendarValue.value,
+                                emit,
+                                e.deltaX * -1
+                            );
+                    },
+                    right: (e: WheelEvent) => {
+                        (e.deltaX < -10 || e.deltaX > 10) &&
+                            shiftDatePickerCalendar(
+                                <TDateTimePickerMode>DatePickerConst.MONTH,
+                                calendarValue.value,
+                                emit,
+                                e.deltaX * -1
+                            );
+                    },
+                },
+            ],
+        ]
+    );
 }
 
 function createCalendarButton(
@@ -834,28 +983,34 @@ function createCalendarButton(
     data: TValueText<DateTime>,
     today: DateTime,
     unit: DateTimeUnit,
-    clickHandler: VoidFunction,
+    clickHandler: VoidFunction
 ): VNode {
     const selected = dateRef.value.hasSame(data.value, unit);
     const isOutlined = today.hasSame(data.value, unit) && !selected;
 
-    return h(BsButton, {
-        // @ts-ignore
-        readonly: props.disabled as Prop<boolean>,
-        class: isOutlined ? `${cssPrefix}btn-today` : undefined,
-        color: (!today.hasSame(data.value, unit) && !selected ? 'dark' : props.selectedColor) as Prop<string>,
-        // @ts-ignore
-        flat: (!today.hasSame(data.value, unit) && !selected) as Prop<boolean>,
-        // @ts-ignore
-        outlined: isOutlined as Prop<boolean>,
-        // @ts-ignore
-        pill: false as Prop<boolean>,
-        // @ts-ignore
-        rounded: true as Prop<boolean>,
-        onClick: clickHandler,
-    }, {
-        default: () => toDisplayString(data.text)
-    });
+    return h(
+        BsButton,
+        {
+            // @ts-ignore
+            readonly: props.disabled as Prop<boolean>,
+            class: isOutlined ? `${cssPrefix}btn-today` : undefined,
+            color: (!today.hasSame(data.value, unit) && !selected
+                ? 'dark'
+                : props.selectedColor) as Prop<string>,
+            // @ts-ignore
+            flat: (!today.hasSame(data.value, unit) && !selected) as Prop<boolean>,
+            // @ts-ignore
+            outlined: isOutlined as Prop<boolean>,
+            // @ts-ignore
+            pill: false as Prop<boolean>,
+            // @ts-ignore
+            rounded: true as Prop<boolean>,
+            onClick: clickHandler,
+        },
+        {
+            default: () => toDisplayString(data.text),
+        }
+    );
 }
 
 export function useRenderDatePickerYears(
@@ -865,65 +1020,105 @@ export function useRenderDatePickerYears(
     tableYears: ComputedRef<TValueText<DateTime>[][]>,
     localValue: Ref<DateTime>,
     calendarValue: Ref<DateTime>,
-    debounceRef: TDebounce,
+    debounceRef: TDebounce
 ): VNode {
     const today = DateTime.now();
 
-    return withDirectives(h('div', {
-        class: [`${cssPrefix}datepicker-years`],
-        onWheel: (e: WheelEvent) => {
-            e.preventDefault();
-            debounceShiftDatePickerCalendar(
-                debounceRef, <TDateTimePickerMode>DatePickerConst.YEAR,
-                calendarValue, emit, 300, e.deltaY || e.deltaX,
-            );
-        },
-    }, [
-        useRenderTransition({
-            name: transitionName.value
-        }, [
-            h('table', {
-                key: <string>calendarValue.value.toISODate()
-            }, [
-                h(
-                    'tbody',
-                    tableYears.value.map((row, idx) =>
-                        h('tr', {
-                                key: `tr-${idx}`
-                            },
-                            row.map((it, k) =>
-                                h('td', {
-                                    key: `td-${idx}-${k}`
-                                }, [
-                                    createCalendarButton(
-                                        props, localValue, it, today, 'year',
-                                        () => dispatchDateTimeValue(emit, it.value, props.disabled),
-                                    ),
-                                ])
-                            )
-                        )
-                    ),
-                ),
-            ]),
-        ]),
-    ]), [
-        [Touch, {
-            left: (e: WheelEvent) => {
-                (e.deltaX < -10 || e.deltaX > 10) &&
-                shiftDatePickerCalendar(
-                    <TDateTimePickerMode>DatePickerConst.YEAR,
-                    calendarValue.value, emit, e.deltaX * -1,
-                );
+    return withDirectives(
+        h(
+            'div',
+            {
+                class: [`${cssPrefix}datepicker-years`],
+                onWheel: (e: WheelEvent) => {
+                    e.preventDefault();
+                    debounceShiftDatePickerCalendar(
+                        debounceRef,
+                        <TDateTimePickerMode>DatePickerConst.YEAR,
+                        calendarValue,
+                        emit,
+                        300,
+                        e.deltaY || e.deltaX
+                    );
+                },
             },
-            right: (e: WheelEvent) => {
-                (e.deltaX < -10 || e.deltaX > 10) &&
-                shiftDatePickerCalendar(
-                    <TDateTimePickerMode>DatePickerConst.YEAR,
-                    calendarValue.value, emit, e.deltaX * -1,
-                );
-            }
-        }],
-    ]);
+            [
+                useRenderTransition(
+                    {
+                        name: transitionName.value,
+                    },
+                    [
+                        h(
+                            'table',
+                            {
+                                key: <string>calendarValue.value.toISODate(),
+                            },
+                            [
+                                h(
+                                    'tbody',
+                                    tableYears.value.map((row, idx) =>
+                                        h(
+                                            'tr',
+                                            {
+                                                key: `tr-${idx}`,
+                                            },
+                                            row.map((it, k) =>
+                                                h(
+                                                    'td',
+                                                    {
+                                                        key: `td-${idx}-${k}`,
+                                                    },
+                                                    [
+                                                        createCalendarButton(
+                                                            props,
+                                                            localValue,
+                                                            it,
+                                                            today,
+                                                            'year',
+                                                            () =>
+                                                                dispatchDateTimeValue(
+                                                                    emit,
+                                                                    it.value,
+                                                                    props.disabled
+                                                                )
+                                                        ),
+                                                    ]
+                                                )
+                                            )
+                                        )
+                                    )
+                                ),
+                            ]
+                        ),
+                    ]
+                ),
+            ]
+        ),
+        [
+            [
+                Touch,
+                {
+                    left: (e: WheelEvent) => {
+                        (e.deltaX < -10 || e.deltaX > 10) &&
+                            shiftDatePickerCalendar(
+                                <TDateTimePickerMode>DatePickerConst.YEAR,
+                                calendarValue.value,
+                                emit,
+                                e.deltaX * -1
+                            );
+                    },
+                    right: (e: WheelEvent) => {
+                        (e.deltaX < -10 || e.deltaX > 10) &&
+                            shiftDatePickerCalendar(
+                                <TDateTimePickerMode>DatePickerConst.YEAR,
+                                calendarValue.value,
+                                emit,
+                                e.deltaX * -1
+                            );
+                    },
+                },
+            ],
+        ]
+    );
 }
 
 export function useRenderDatePickerTimes(
@@ -933,202 +1128,232 @@ export function useRenderDatePickerTimes(
     tableMinutes: ComputedRef<TValueText<DateTime>[][]>,
     tableSeconds: ComputedRef<TValueText<DateTime>[][]>,
     currentView: Ref<TTimePickerMode>,
-    localValue: Ref<DateTime>,
+    localValue: Ref<DateTime>
 ): VNode {
-    return h('div', {
-        class: [`${cssPrefix}datepicker-times`]
-    }, [
-        (
+    return h(
+        'div',
+        {
+            class: [`${cssPrefix}datepicker-times`],
+        },
+        [
             props.backButton
-                ? h('div', {
-                    class: [`${cssPrefix}datepicker-toolbar`]
-                }, [
-                    createCalendarNavButton(
-                        'dark',
-                        'arrow_back', 24,
-                        false,
-                        () => {
-                            if (currentView.value === DatePickerConst.TIME) {
-                                emit('close');
-                            } else {
-                                currentView.value = DatePickerConst.TIME;
-                            }
-                        },
-                    ),
-                ]) : undefined
-        ),
-        useRenderTransition({
-            name: 'fade', mode: 'out-in'
-        }, [(
-            currentView.value === DatePickerConst.TIME
-                ? renderPickerTimes(props, emit, currentView, localValue)
-                : undefined
-        ), (
-            currentView.value === DatePickerConst.HOUR
-                ? renderPickerTimesUnit(
-                    props, emit, [`${cssPrefix}picker-hours`],
-                    tableHours, currentView, localValue, 'hour',
-                )
-                : undefined
-        ), (
-            currentView.value === DatePickerConst.MINUTE
-                ? renderPickerTimesUnit(
-                    props, emit, [`${cssPrefix}picker-minutes`],
-                    tableMinutes, currentView, localValue, 'minute',
-                )
-                : undefined
-        ), (
-            currentView.value === DatePickerConst.SECOND
-                ? renderPickerTimesUnit(
-                    props, emit, [`${cssPrefix}picker-seconds`],
-                    tableSeconds, currentView, localValue, 'second',
-                )
-                : undefined
-        )])
-    ])
+                ? h(
+                      'div',
+                      {
+                          class: [`${cssPrefix}datepicker-toolbar`],
+                      },
+                      [
+                          createCalendarNavButton('dark', 'arrow_back', 24, false, () => {
+                              if (currentView.value === DatePickerConst.TIME) {
+                                  emit('close');
+                              } else {
+                                  currentView.value = DatePickerConst.TIME;
+                              }
+                          }),
+                      ]
+                  )
+                : undefined,
+            useRenderTransition(
+                {
+                    name: 'fade',
+                    mode: 'out-in',
+                },
+                [
+                    currentView.value === DatePickerConst.TIME
+                        ? renderPickerTimes(props, emit, currentView, localValue)
+                        : undefined,
+                    currentView.value === DatePickerConst.HOUR
+                        ? renderPickerTimesUnit(
+                              props,
+                              emit,
+                              [`${cssPrefix}picker-hours`],
+                              tableHours,
+                              currentView,
+                              localValue,
+                              'hour'
+                          )
+                        : undefined,
+                    currentView.value === DatePickerConst.MINUTE
+                        ? renderPickerTimesUnit(
+                              props,
+                              emit,
+                              [`${cssPrefix}picker-minutes`],
+                              tableMinutes,
+                              currentView,
+                              localValue,
+                              'minute'
+                          )
+                        : undefined,
+                    currentView.value === DatePickerConst.SECOND
+                        ? renderPickerTimesUnit(
+                              props,
+                              emit,
+                              [`${cssPrefix}picker-seconds`],
+                              tableSeconds,
+                              currentView,
+                              localValue,
+                              'second'
+                          )
+                        : undefined,
+                ]
+            ),
+        ]
+    );
 }
 
 function renderPickerTimes(
     props: Readonly<TTimePickerProps>,
     emit: TEmitFn,
     currentView: Ref<TTimePickerMode>,
-    localValue: Ref<DateTime>,
+    localValue: Ref<DateTime>
 ): VNode {
-    return h('table', {
-        class: [`${cssPrefix}picker-times`, !props.backButton ? 'mt-0' : '']
-    }, [
-        h('colgroup', [
-            h('col'),
-            h('col', {
-                class: [`${cssPrefix}picker-times-sep`]
-            }),
-            h('col'),
-            h('col', {
-                class: [`${cssPrefix}picker-times-sep`]
-            }),
-            h('col'),
-        ]),
-        h('tbody', [
-            h('tr', [
-                h('td', [
-                    createCalendarNavButton(
-                        'dark',
-                        'arrow_drop_up', 32,
-                        props.disabled,
-                        () => shiftDateTimeThenDispatch(
-                            emit, localValue.value,
-                            'hours', 1, props.disabled
+    return h(
+        'table',
+        {
+            class: [`${cssPrefix}picker-times`, !props.backButton ? 'mt-0' : ''],
+        },
+        [
+            h('colgroup', [
+                h('col'),
+                h('col', {
+                    class: [`${cssPrefix}picker-times-sep`],
+                }),
+                h('col'),
+                h('col', {
+                    class: [`${cssPrefix}picker-times-sep`],
+                }),
+                h('col'),
+            ]),
+            h('tbody', [
+                h('tr', [
+                    h('td', [
+                        createCalendarNavButton('dark', 'arrow_drop_up', 32, props.disabled, () =>
+                            shiftDateTimeThenDispatch(
+                                emit,
+                                localValue.value,
+                                'hours',
+                                1,
+                                props.disabled
+                            )
                         ),
-                    )
+                    ]),
+                    h('td', ' '),
+                    h('td', [
+                        createCalendarNavButton('dark', 'arrow_drop_up', 32, props.disabled, () =>
+                            shiftDateTimeThenDispatch(
+                                emit,
+                                localValue.value,
+                                'minutes',
+                                1,
+                                props.disabled
+                            )
+                        ),
+                    ]),
+                    h('td', ' '),
+                    h('td', [
+                        createCalendarNavButton('dark', 'arrow_drop_up', 32, props.disabled, () =>
+                            shiftDateTimeThenDispatch(
+                                emit,
+                                localValue.value,
+                                'seconds',
+                                1,
+                                props.disabled
+                            )
+                        ),
+                    ]),
                 ]),
-                h('td', ' '),
-                h('td', [
-                    createCalendarNavButton(
-                        'dark',
-                        'arrow_drop_up', 32,
-                        props.disabled,
-                        () => shiftDateTimeThenDispatch(
-                            emit, localValue.value,
-                            'minutes', 1, props.disabled
+                h('tr', [
+                    h('td', [
+                        createPickerTimeButton(
+                            localValue.value,
+                            'HH',
+                            <boolean>props.disabled,
+                            () => {
+                                if (!props.disabled) {
+                                    currentView.value = DatePickerConst.HOUR;
+                                }
+                            }
                         ),
-                    )
+                    ]),
+                    h(
+                        'td',
+                        {
+                            class: [`${cssPrefix}picker-times-sep`],
+                        },
+                        ':'
+                    ),
+                    h('td', [
+                        createPickerTimeButton(
+                            localValue.value,
+                            'mm',
+                            <boolean>props.disabled,
+                            () => {
+                                if (!props.disabled) {
+                                    currentView.value = DatePickerConst.MINUTE;
+                                }
+                            }
+                        ),
+                    ]),
+                    h(
+                        'td',
+                        {
+                            class: [`${cssPrefix}picker-times-sep`],
+                        },
+                        ':'
+                    ),
+                    h('td', [
+                        createPickerTimeButton(
+                            localValue.value,
+                            'ss',
+                            <boolean>props.disabled,
+                            () => {
+                                if (!props.disabled) {
+                                    currentView.value = DatePickerConst.SECOND;
+                                }
+                            }
+                        ),
+                    ]),
                 ]),
-                h('td', ' '),
-                h('td', [
-                    createCalendarNavButton(
-                        'dark',
-                        'arrow_drop_up', 32,
-                        props.disabled,
-                        () => shiftDateTimeThenDispatch(
-                            emit, localValue.value,
-                            'seconds', 1, props.disabled
+                h('tr', [
+                    h('td', [
+                        createCalendarNavButton('dark', 'arrow_drop_down', 32, props.disabled, () =>
+                            shiftDateTimeThenDispatch(
+                                emit,
+                                localValue.value,
+                                'hours',
+                                -1,
+                                props.disabled
+                            )
                         ),
-                    )
+                    ]),
+                    h('td', ' '),
+                    h('td', [
+                        createCalendarNavButton('dark', 'arrow_drop_down', 32, props.disabled, () =>
+                            shiftDateTimeThenDispatch(
+                                emit,
+                                localValue.value,
+                                'minutes',
+                                -1,
+                                props.disabled
+                            )
+                        ),
+                    ]),
+                    h('td', ' '),
+                    h('td', [
+                        createCalendarNavButton('dark', 'arrow_drop_down', 32, props.disabled, () =>
+                            shiftDateTimeThenDispatch(
+                                emit,
+                                localValue.value,
+                                'seconds',
+                                -1,
+                                props.disabled
+                            )
+                        ),
+                    ]),
                 ]),
             ]),
-            h('tr', [
-                h('td', [
-                    createPickerTimeButton(
-                        localValue.value,
-                        'HH',
-                        <boolean>props.disabled,
-                        () => {
-                            if (!props.disabled) {
-                                currentView.value = DatePickerConst.HOUR;
-                            }
-                        }
-                    )
-                ]),
-                h('td', {
-                    class: [`${cssPrefix}picker-times-sep`]
-                }, ':'),
-                h('td', [
-                    createPickerTimeButton(
-                        localValue.value,
-                        'mm',
-                        <boolean>props.disabled,
-                        () => {
-                            if (!props.disabled) {
-                                currentView.value = DatePickerConst.MINUTE;
-                            }
-                        }
-                    )
-                ]),
-                h('td', {
-                    class: [`${cssPrefix}picker-times-sep`]
-                }, ':'),
-                h('td', [
-                    createPickerTimeButton(
-                        localValue.value,
-                        'ss',
-                        <boolean>props.disabled,
-                        () => {
-                            if (!props.disabled) {
-                                currentView.value = DatePickerConst.SECOND;
-                            }
-                        }
-                    )
-                ]),
-            ]),
-            h('tr', [
-                h('td', [
-                    createCalendarNavButton(
-                        'dark',
-                        'arrow_drop_down', 32,
-                        props.disabled,
-                        () => shiftDateTimeThenDispatch(
-                            emit, localValue.value,
-                            'hours', -1, props.disabled
-                        ),
-                    )
-                ]),
-                h('td', ' '),
-                h('td', [
-                    createCalendarNavButton(
-                        'dark',
-                        'arrow_drop_down', 32,
-                        props.disabled,
-                        () => shiftDateTimeThenDispatch(
-                            emit, localValue.value,
-                            'minutes', -1, props.disabled
-                        ),
-                    )
-                ]),
-                h('td', ' '),
-                h('td', [
-                    createCalendarNavButton(
-                        'dark',
-                        'arrow_drop_down', 32,
-                        props.disabled,
-                        () => shiftDateTimeThenDispatch(
-                            emit, localValue.value,
-                            'seconds', -1, props.disabled
-                        ),
-                    )
-                ]),
-            ]),
-        ]),
-    ])
+        ]
+    );
 }
 
 function renderPickerTimesUnit(
@@ -1138,67 +1363,86 @@ function renderPickerTimesUnit(
     tableData: ComputedRef<TValueText<DateTime>[][]>,
     currentView: Ref<TTimePickerMode>,
     localValue: Ref<DateTime>,
-    timeUnit: DateTimeUnit,
+    timeUnit: DateTimeUnit
 ): VNode {
-    return h('table', {
-        class: classes
-    }, [
-        h('tbody',
-            tableData.value.map((row, idx) =>
-                h('tr', {
-                        key: `tr-${idx}`
-                    },
-                    row.map((it, k) =>
-                        h('td', {
-                            key: `td-${idx}-${k}`
-                        }, [
-                            createCalendarButton(
-                                props, localValue, it, localValue.value, timeUnit,
-                                () => {
-                                    dispatchDateTimeValue(emit, it.value);
-                                    currentView.value = DatePickerConst.TIME;
+    return h(
+        'table',
+        {
+            class: classes,
+        },
+        [
+            h(
+                'tbody',
+                tableData.value.map((row, idx) =>
+                    h(
+                        'tr',
+                        {
+                            key: `tr-${idx}`,
+                        },
+                        row.map((it, k) =>
+                            h(
+                                'td',
+                                {
+                                    key: `td-${idx}-${k}`,
                                 },
-                            ),
-                        ])
+                                [
+                                    createCalendarButton(
+                                        props,
+                                        localValue,
+                                        it,
+                                        localValue.value,
+                                        timeUnit,
+                                        () => {
+                                            dispatchDateTimeValue(emit, it.value);
+                                            currentView.value = DatePickerConst.TIME;
+                                        }
+                                    ),
+                                ]
+                            )
+                        )
                     )
                 )
-            )
-        )
-    ])
+            ),
+        ]
+    );
 }
 
 function createPickerTimeButton(
     value: DateTime,
     formatOpts: string,
     isDisabled: boolean,
-    clickHandler: VoidFunction,
+    clickHandler: VoidFunction
 ): VNode {
-    return h(BsButton, {
-        // @ts-ignore
-        readonly: isDisabled as Prop<boolean>,
-        color: 'dark' as Prop<string>,
-        // @ts-ignore
-        flat: true as Prop<boolean>,
-        // @ts-ignore
-        pill: false as Prop<boolean>,
-        // @ts-ignore
-        rounded: true as Prop<boolean>,
-        onClick: clickHandler,
-    }, {
-        default: () => toDisplayString(value.toFormat(formatOpts))
-    });
+    return h(
+        BsButton,
+        {
+            // @ts-ignore
+            readonly: isDisabled as Prop<boolean>,
+            color: 'dark' as Prop<string>,
+            // @ts-ignore
+            flat: true as Prop<boolean>,
+            // @ts-ignore
+            pill: false as Prop<boolean>,
+            // @ts-ignore
+            rounded: true as Prop<boolean>,
+            onClick: clickHandler,
+        },
+        {
+            default: () => toDisplayString(value.toFormat(formatOpts)),
+        }
+    );
 }
 
 export function useParseDate(value?: string | number | Date): DateTime {
     if (value) {
         if (Helper.isString(value)) {
             try {
-                return DateTime.fromISO(<string>value)
+                return DateTime.fromISO(<string>value);
             } catch (e) {
                 try {
                     return DateTime.fromSQL(<string>value);
                 } catch (e) {
-                    return DateTime.now().set({millisecond: 0});
+                    return DateTime.now().set({ millisecond: 0 });
                 }
             }
         } else if (Helper.isNumber(value)) {
@@ -1208,7 +1452,7 @@ export function useParseDate(value?: string | number | Date): DateTime {
         }
     }
 
-    return DateTime.now().set({millisecond: 0});
+    return DateTime.now().set({ millisecond: 0 });
 }
 
 export function useRenderDatePicker(
@@ -1219,165 +1463,225 @@ export function useRenderDatePicker(
     currentView: Ref<TDateTimePickerMode>,
     locale: Ref<string>,
     localValue: Ref<DateTime>,
-    calendarValue: Ref<Date>,
+    calendarValue: Ref<Date>
 ): VNode {
     const thisProps = props as Readonly<TDatePickerOptionProps>;
     const thisValue = localValue.value.toJSDate();
 
-    return h('div', {
-        class: {
-            [`${cssPrefix}datepicker`]: true,
-            [`${cssPrefix}landscape`]: thisProps.landscape === true && useBreakpointMin('lg') && !thisProps.fullWidth,
-            'd-inline-flex': thisProps.landscape === true && useBreakpointMin('lg') && !thisProps.fullWidth,
-            'd-flex': thisProps.fullWidth === true,
-        },
-        style: {
-            width: (!thisProps.landscape && !thisProps.fullWidth)
-            || (thisProps.landscape === true && !useBreakpointMin('lg') && !thisProps.fullWidth)
-                ? Helper.cssUnit(thisProps.width) : undefined
-        }
-    }, [
-        h('div', {
+    return h(
+        'div',
+        {
             class: {
-                [`${cssPrefix}datepicker-inner`]: true,
-                'd-flex': thisProps.landscape === true && useBreakpointMin('lg'),
-            }
-        }, [
-            (
-                thisProps.headerPanel === true
-                    ? h(BsDatePickerHeader, {
-                        color: props.headerColor,
-                        // @ts-ignore
-                        enableTime: <Prop<boolean>>showTime.value,
-                        displayMode: <Prop<TDateTimePickerMode>>currentView.value,
-                        pickerMode: <Prop<TDateTimePickerMode>>pickerMode.value,
-                        landscape: props.landscape,
-                        locale: <Prop<string>>locale.value,
-                        modelValue: <Prop<Date>>thisValue,
-                        // readonly: props.readonly,
-                        'onChange-view': (mode: TDateTimePickerMode) => {
-                            currentView.value = mode;
-                        }
-                    })
-                    : undefined
-            ),
-            h('div', {
-                class: {
-                    [`${cssPrefix}datepicker-body`]: true,
-                    [`bg-${thisProps.surfaceColor}`]: thisProps.surfaceColor,
-                    ['d-flex align-items-center']: pickerMode.value === DatePickerConst.TIME,
+                [`${cssPrefix}datepicker`]: true,
+                [`${cssPrefix}landscape`]:
+                    thisProps.landscape === true && useBreakpointMin('md') && !thisProps.fullWidth,
+                'd-inline-flex':
+                    thisProps.landscape === true && useBreakpointMin('md') && !thisProps.fullWidth,
+                'd-flex': thisProps.fullWidth === true,
+            },
+            style: {
+                width:
+                    (!thisProps.landscape && !thisProps.fullWidth) ||
+                    (thisProps.landscape === true &&
+                        !useBreakpointMin('md') &&
+                        !thisProps.fullWidth)
+                        ? Helper.cssUnit(thisProps.width)
+                        : undefined,
+            },
+        },
+        [
+            h(
+                'div',
+                {
+                    class: {
+                        [`${cssPrefix}datepicker-inner`]: true,
+                        'd-flex': thisProps.landscape === true && useBreakpointMin('md'),
+                    },
                 },
-                style: {
-                    width: thisProps.landscape && useBreakpointMin('lg') && !thisProps.fullWidth ? Helper.cssUnit(thisProps.width) : undefined
-                }
-            }, [
-                useRenderTransition({
-                        name: 'fade'
-                    }, [(
-                        currentView.value !== DatePickerConst.TIME
-                            ? h(BsDatePickerNav, {
-                                displayMode: <Prop<TDateTimePickerMode>>currentView.value,
-                                // disabled: props.readonly,
-                                locale: <Prop<string>>locale.value,
-                                modelValue: <Prop<Date>>calendarValue.value,
-                                onToggle: (oldMode: TDateTimePickerMode) => {
-                                    currentView.value = nextDisplayMode(pickerMode.value, oldMode);
+                [
+                    thisProps.headerPanel === true
+                        ? h(BsDatePickerHeader, {
+                              color: props.headerColor,
+                              // @ts-ignore
+                              enableTime: <Prop<boolean>>showTime.value,
+                              displayMode: <Prop<TDateTimePickerMode>>currentView.value,
+                              pickerMode: <Prop<TDateTimePickerMode>>pickerMode.value,
+                              landscape: props.landscape,
+                              locale: <Prop<string>>locale.value,
+                              modelValue: <Prop<Date>>thisValue,
+                              // readonly: props.readonly,
+                              'onChange-view': (mode: TDateTimePickerMode) => {
+                                  currentView.value = mode;
+                              },
+                          })
+                        : undefined,
+                    h(
+                        'div',
+                        {
+                            class: {
+                                [`${cssPrefix}datepicker-body`]: true,
+                                [`bg-${thisProps.surfaceColor}`]: thisProps.surfaceColor,
+                                ['d-flex align-items-center']:
+                                    pickerMode.value === DatePickerConst.TIME,
+                            },
+                            style: {
+                                width:
+                                    thisProps.landscape &&
+                                    useBreakpointMin('md') &&
+                                    !thisProps.fullWidth
+                                        ? Helper.cssUnit(thisProps.width)
+                                        : undefined,
+                            },
+                        },
+                        [
+                            useRenderTransition(
+                                {
+                                    name: 'fade',
                                 },
-                                'onUpdate:model-value': (value: Date) => {
-                                    calendarValue.value = value;
+                                [
+                                    currentView.value !== DatePickerConst.TIME
+                                        ? h(BsDatePickerNav, {
+                                              displayMode: <Prop<TDateTimePickerMode>>(
+                                                  currentView.value
+                                              ),
+                                              // disabled: props.readonly,
+                                              locale: <Prop<string>>locale.value,
+                                              modelValue: <Prop<Date>>calendarValue.value,
+                                              onToggle: (oldMode: TDateTimePickerMode) => {
+                                                  currentView.value = nextDisplayMode(
+                                                      pickerMode.value,
+                                                      oldMode
+                                                  );
+                                              },
+                                              'onUpdate:model-value': (value: Date) => {
+                                                  calendarValue.value = value;
+                                              },
+                                          })
+                                        : undefined,
+                                ]
+                            ),
+                            useRenderTransition(
+                                {
+                                    name: 'fade',
+                                    mode: 'out-in',
                                 },
-                            })
-                            : undefined
-                    )]
-                ),
-                useRenderTransition({
-                        name: 'fade', mode: 'out-in'
-                    }, [(
-                        currentView.value === DatePickerConst.DATE
-                            ? h(BsDatePickerDays, {
-                                locale: <Prop<string>>locale.value,
-                                modelValue: <Prop<Date>>thisValue,
-                                disabled: props.readonly,
-                                calendarDate: <Prop<Date>>calendarValue.value,
-                                selectedColor: props.headerColor,
-                                'onUpdate:model-value': (value: Date) => {
-                                    // calendarValue.value = value;
-                                    dispatchDatePickerValue(emit, pickerMode.value, value);
-                                },
-                                'onChange:calendar': (value: Date) => {
-                                    calendarValue.value = value;
-                                },
-                            })
-                            : undefined
-                    ), (
-                        currentView.value === DatePickerConst.MONTH
-                            ? h(BsDatePickerMonths, {
-                                locale: <Prop<string>>locale.value,
-                                modelValue: <Prop<Date>>thisValue,
-                                disabled: props.readonly,
-                                calendarDate: <Prop<Date>>calendarValue.value,
-                                selectedColor: props.headerColor,
-                                'onUpdate:model-value': (value: Date) => {
-                                    calendarValue.value = value;
-                                    dispatchDatePickerValue(emit, pickerMode.value, value);
-                                    if ([DatePickerConst.DATE, DatePickerConst.DATETIME].includes(pickerMode.value)) {
-                                        currentView.value = <TDateTimePickerMode>DatePickerConst.DATE;
-                                    }
-                                },
-                                'onChange:calendar': (value: Date) => {
-                                    calendarValue.value = value;
-                                },
-                            })
-                            : undefined
-                    ), (
-                        currentView.value === DatePickerConst.YEAR
-                            ? h(BsDatePickerYears, {
-                                locale: <Prop<string>>locale.value,
-                                modelValue: <Prop<Date>>thisValue,
-                                disabled: props.readonly,
-                                calendarDate: <Prop<Date>>calendarValue.value,
-                                selectedColor: props.headerColor,
-                                'onUpdate:model-value': (value: Date) => {
-                                    dispatchDatePickerValue(emit, pickerMode.value, value);
-                                    if ([DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(pickerMode.value)) {
-                                        currentView.value = <TDateTimePickerMode>DatePickerConst.MONTH;
-                                    }
-                                },
-                                'onChange:calendar': (value: Date) => {
-                                    calendarValue.value = value;
-                                },
-                            })
-                            : undefined
-                    ), (
-                        currentView.value === DatePickerConst.TIME
-                            ? h(BsDatePickerTimes, {
-                                locale: <Prop<string>>locale.value,
-                                modelValue: <Prop<Date>>thisValue,
-                                disabled: props.readonly,
-                                selectedColor: props.headerColor,
-                                // @ts-ignore
-                                backButton: <Prop<boolean>>(pickerMode.value !== DatePickerConst.TIME),
-                                onClose: () => {
-                                    currentView.value = <TDateTimePickerMode>DatePickerConst.DATE;
-                                },
-                                'onUpdate:model-value': (value: Date) => {
-                                    calendarValue.value = value;
-                                    dispatchDatePickerValue(emit, pickerMode.value, value);
-                                },
-                            })
-                            : undefined
-                    )]
-                ),
-            ]),
-        ])
-    ]);
+                                [
+                                    currentView.value === DatePickerConst.DATE
+                                        ? h(BsDatePickerDays, {
+                                              locale: <Prop<string>>locale.value,
+                                              modelValue: <Prop<Date>>thisValue,
+                                              disabled: props.readonly,
+                                              calendarDate: <Prop<Date>>calendarValue.value,
+                                              selectedColor: props.headerColor,
+                                              'onUpdate:model-value': (value: Date) => {
+                                                  // calendarValue.value = value;
+                                                  dispatchDatePickerValue(
+                                                      emit,
+                                                      pickerMode.value,
+                                                      value
+                                                  );
+                                              },
+                                              'onChange:calendar': (value: Date) => {
+                                                  calendarValue.value = value;
+                                              },
+                                          })
+                                        : undefined,
+                                    currentView.value === DatePickerConst.MONTH
+                                        ? h(BsDatePickerMonths, {
+                                              locale: <Prop<string>>locale.value,
+                                              modelValue: <Prop<Date>>thisValue,
+                                              disabled: props.readonly,
+                                              calendarDate: <Prop<Date>>calendarValue.value,
+                                              selectedColor: props.headerColor,
+                                              'onUpdate:model-value': (value: Date) => {
+                                                  calendarValue.value = value;
+                                                  dispatchDatePickerValue(
+                                                      emit,
+                                                      pickerMode.value,
+                                                      value
+                                                  );
+                                                  if (
+                                                      [
+                                                          DatePickerConst.DATE,
+                                                          DatePickerConst.DATETIME,
+                                                      ].includes(pickerMode.value)
+                                                  ) {
+                                                      currentView.value = <TDateTimePickerMode>(
+                                                          DatePickerConst.DATE
+                                                      );
+                                                  }
+                                              },
+                                              'onChange:calendar': (value: Date) => {
+                                                  calendarValue.value = value;
+                                              },
+                                          })
+                                        : undefined,
+                                    currentView.value === DatePickerConst.YEAR
+                                        ? h(BsDatePickerYears, {
+                                              locale: <Prop<string>>locale.value,
+                                              modelValue: <Prop<Date>>thisValue,
+                                              disabled: props.readonly,
+                                              calendarDate: <Prop<Date>>calendarValue.value,
+                                              selectedColor: props.headerColor,
+                                              'onUpdate:model-value': (value: Date) => {
+                                                  dispatchDatePickerValue(
+                                                      emit,
+                                                      pickerMode.value,
+                                                      value
+                                                  );
+                                                  if (
+                                                      [
+                                                          DatePickerConst.DATE,
+                                                          DatePickerConst.DATETIME,
+                                                          DatePickerConst.MONTH,
+                                                      ].includes(pickerMode.value)
+                                                  ) {
+                                                      currentView.value = <TDateTimePickerMode>(
+                                                          DatePickerConst.MONTH
+                                                      );
+                                                  }
+                                              },
+                                              'onChange:calendar': (value: Date) => {
+                                                  calendarValue.value = value;
+                                              },
+                                          })
+                                        : undefined,
+                                    currentView.value === DatePickerConst.TIME
+                                        ? h(BsDatePickerTimes, {
+                                              locale: <Prop<string>>locale.value,
+                                              modelValue: <Prop<Date>>thisValue,
+                                              disabled: props.readonly,
+                                              selectedColor: props.headerColor,
+                                              // @ts-ignore
+                                              backButton: <Prop<boolean>>(
+                                                  (pickerMode.value !== DatePickerConst.TIME)
+                                              ),
+                                              onClose: () => {
+                                                  currentView.value = <TDateTimePickerMode>(
+                                                      DatePickerConst.DATE
+                                                  );
+                                              },
+                                              'onUpdate:model-value': (value: Date) => {
+                                                  calendarValue.value = value;
+                                                  dispatchDatePickerValue(
+                                                      emit,
+                                                      pickerMode.value,
+                                                      value
+                                                  );
+                                              },
+                                          })
+                                        : undefined,
+                                ]
+                            ),
+                        ]
+                    ),
+                ]
+            ),
+        ]
+    );
 }
 
-function dispatchDatePickerValue(
-    emit: TEmitFn,
-    pickerMode: TDateTimePickerMode,
-    value: Date,
-) {
+function dispatchDatePickerValue(emit: TEmitFn, pickerMode: TDateTimePickerMode, value: Date): void {
     if (pickerMode === DatePickerConst.YEAR) {
         emit('update:model-value', value.getFullYear().toString(10));
     } else if (pickerMode === DatePickerConst.MONTH) {
@@ -1385,26 +1689,34 @@ function dispatchDatePickerValue(
     } else if (pickerMode === DatePickerConst.DATE) {
         emit('update:model-value', DateTime.fromJSDate(value).toISODate());
     } else if (pickerMode === DatePickerConst.TIME) {
-        emit('update:model-value', DateTime.fromJSDate(value).toISOTime({suppressMilliseconds: true}));
+        emit(
+            'update:model-value',
+            DateTime.fromJSDate(value).toISOTime({ suppressMilliseconds: true })
+        );
     } else {
-        emit('update:model-value', DateTime.fromJSDate(value).toISO({suppressMilliseconds: true}));
+        emit(
+            'update:model-value',
+            DateTime.fromJSDate(value).toISO({ suppressMilliseconds: true })
+        );
     }
 }
 
 function nextDisplayMode(
     pickerMode: TDateTimePickerMode,
-    currentMode: TDateTimePickerMode,
+    currentMode: TDateTimePickerMode
 ): TDateTimePickerMode {
     if (pickerMode === 'time') {
         return 'time';
     }
 
-    let modes = DatePickerConst.viewModes.filter(m => m !== 'datetime' && m !== 'time');
+    let modes: TDateTimePickerMode[] = DatePickerConst.viewModes.filter(
+        (m) => m !== 'datetime' && m !== 'time'
+    );
 
     if (pickerMode === 'month') {
-        modes = modes.filter(m => m !== 'date');
+        modes = modes.filter((m) => m !== 'date');
     } else if (pickerMode === 'year') {
-        modes = modes.filter(m => m !== 'date' && m !== 'month');
+        modes = modes.filter((m) => m !== 'date' && m !== 'month');
     } else if (pickerMode === 'datetime') {
         modes.push('time');
     }

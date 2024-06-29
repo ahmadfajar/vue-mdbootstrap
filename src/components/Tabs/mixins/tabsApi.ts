@@ -309,6 +309,10 @@ function createTabItemProps(
     return {
         id: tabPane.id ? `tabItem-${tabPane.id}` : undefined,
         icon: tabPane.icon,
+        iconFlip: tabPane.iconFlip,
+        iconRotation: tabPane.iconRotation,
+        iconPulse: tabPane.iconPulse,
+        iconSpin: tabPane.iconSpin,
         label: tabPane.label,
         path: tabPane.path,
         url: tabPane.url,

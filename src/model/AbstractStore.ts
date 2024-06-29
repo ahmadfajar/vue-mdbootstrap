@@ -37,7 +37,7 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 21/03/2024 21:53
+ * @since  15/03/2019 modified: 24/05/2024 23:17
  */
 export default abstract class AbstractStore implements ObjectBase {
     private _eventMap: Map<string, ListenerFn<any>[]>;
@@ -61,7 +61,7 @@ export default abstract class AbstractStore implements ObjectBase {
 
     static isCandidateForFilterOption(item: TRecord): item is TFilterOption {
         return Object.keys(item).every((k) =>
-            ['property', 'value', 'operator', 'type'].includes(k)
+            ['property', 'value', 'operator', 'type', 'logic'].includes(k)
         );
     }
 
@@ -234,15 +234,22 @@ export default abstract class AbstractStore implements ObjectBase {
     }
 
     set defaultFilters(values: TFilterOption[] | TFilterOption) {
+        let oldFilters = !Helper.isEmpty(this._config.filters)
+            ? ([] as TFilterOption[]).concat(...this._config.filters)
+            : [];
         this._config.filters = Array.isArray(values)
             ? values
             : Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)
             ? [values]
             : [];
 
+        oldFilters =
+            this._config.filters.length > 0
+                ? oldFilters.concat(...this._config.filters)
+                : oldFilters;
         const newFilters = this.filters.filter((flt) => {
             let found = false;
-            for (const filter of this._config.filters as TFilterOption[]) {
+            for (const filter of oldFilters as TFilterOption[]) {
                 if (flt.property === filter.property) {
                     found = true;
                     break;
@@ -287,15 +294,19 @@ export default abstract class AbstractStore implements ObjectBase {
         field: string,
         value: string | number | boolean,
         operator?: TFilterOperator,
-        type?: string
+        type?: string,
+        logic?: TFilterLogic
     ): this {
         const flt: TFilterOption = {
             property: field,
             value: value,
-            operator: <TFilterOperator>(Helper.isEmpty(operator) ? 'eq' : operator.toLowerCase()),
+            operator: (Helper.isEmpty(operator) ? 'eq' : operator.toLowerCase()) as TFilterOperator,
         };
         if (type) {
             flt.type = type;
+        }
+        if (logic) {
+            flt.logic = logic;
         }
         this.filters.push(flt);
         this._filteredItems = [];
@@ -365,8 +376,8 @@ export default abstract class AbstractStore implements ObjectBase {
                 const conditions = [];
 
                 for (const flt of this.filters) {
-                    const itemValue = <never>Helper.getObjectValueByPath(item, flt.property);
-                    const operator = <TFilterOperator>flt.operator.toLowerCase();
+                    const itemValue = Helper.getObjectValueByPath(item, flt.property) as never;
+                    const operator = flt.operator.toLowerCase() as TFilterOperator;
 
                     if (operator === 'gt') {
                         conditions.push(itemValue > <number>flt.value);

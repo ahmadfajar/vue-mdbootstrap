@@ -1,4 +1,4 @@
-import type {IEventResult, IHTMLElement} from "../types";
+import type { IEventResult, IHTMLElement } from '../types';
 
 export class EventListener {
     /**
@@ -14,24 +14,24 @@ export class EventListener {
         context: IHTMLElement,
         eventType: string,
         callback: EventListenerOrEventListenerObject,
-        options?: boolean | AddEventListenerOptions,
+        options?: boolean | AddEventListenerOptions
     ): IEventResult | undefined {
         if (context.addEventListener) {
             context.addEventListener(eventType, callback, options);
 
             return {
                 remove() {
-                    context.removeEventListener(eventType, callback, options)
-                }
-            }
+                    context.removeEventListener(eventType, callback, options);
+                },
+            };
         } else if (context.attachEvent) {
             context.attachEvent('on' + eventType, callback);
 
             return {
                 remove() {
                     context.detachEvent('on' + eventType, callback);
-                }
-            }
+                },
+            };
         }
     }
 }
@@ -71,8 +71,11 @@ export function isChildOf(parent: HTMLElement | Node | null, target?: HTMLElemen
     for (let i = 0; i < children.length; i++) {
         const el = children.item(i);
 
-        if ((el?.id && target.id && (el?.id === target.id))
-            || (el === target) || isChildOf(el, target)) {
+        if (
+            (el?.id && target.id && el?.id === target.id) ||
+            el === target ||
+            isChildOf(el, target)
+        ) {
             result = true;
             return result;
         }

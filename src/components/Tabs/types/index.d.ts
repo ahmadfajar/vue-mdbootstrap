@@ -127,7 +127,7 @@ export declare const BsTabs: {
         };
         $emit: [
             /**
-             * Fired when this component's mutate its modelValue.
+             * Fired when active tab is changed.
              */
             'change',
             /**

@@ -1,18 +1,23 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
-import { computed, defineComponent, h, mergeProps, nextTick, onMounted, watch } from 'vue';
+import { computed, defineComponent, h, mergeProps, onMounted, watch } from 'vue';
 import { hslaToString, hsvaToHsla, rgbaToHex, rgbaToString } from '../../mixins/colorUtils';
 import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
-import type { TBsColorPicker, TColorPickerMode, TColorPickerOptionProps, TRecord } from '../../types';
+import type {
+    TBsColorPicker,
+    TColorPickerMode,
+    TColorPickerOptionProps,
+    TRecord,
+} from '../../types';
 import Helper from '../../utils/Helper';
 import { BsPopover } from '../Popover';
 import {
-    initColorPickerData,
-    moveAlphaSliderThumb,
-    moveColorMarker,
-    moveHueSliderThumb,
+    useInitColorPickerData,
+    useMoveAlphaSliderThumb,
+    useMoveColorMarker,
+    useMoveHueSliderThumb,
     useReleasePointerEvents,
     useRenderColorPicker,
-    useUpdateColorCanvas
+    useUpdateColorCanvas,
 } from './mixins/colorPickerApi';
 import { colorPickerProps } from './mixins/colorPickerProps';
 
@@ -36,7 +41,7 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
     ],
     setup(props, {emit, attrs, expose}) {
         const thisProps = props as Readonly<TColorPickerOptionProps>;
-        const thisData = initColorPickerData(thisProps);
+        const thisData = useInitColorPickerData(thisProps);
         const pickerClasses = computed(() => [
             `${cssPrefix}color-picker`,
             `bg-${thisProps.containerColor}`,
@@ -53,14 +58,14 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
             'HEX': useGenerateId(),
         }
         const moveColorMarkerHandler = (event: Event) => {
-            moveColorMarker(<UIEvent>event, thisData, emit);
-        }
+            useMoveColorMarker(<UIEvent>event, emit, thisData);
+        };
         const moveHueSliderThumbHandler = (event: Event) => {
-            moveHueSliderThumb(<UIEvent>event, thisData, emit);
-        }
+            useMoveHueSliderThumb(<UIEvent>event, emit, thisData);
+        };
         const moveAlphaSliderThumbHandler = (event: Event) => {
-            moveAlphaSliderThumb(<UIEvent>event, thisData, emit);
-        }
+            useMoveAlphaSliderThumb(<UIEvent>event, emit, thisData);
+        };
         const hexColor = () => rgbaToHex(thisData.config.currentColor);
 
         expose({hexColor, rgbColor: thisData.colorRGB, hslColor: thisData.colorHSL});
@@ -99,10 +104,10 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
                 moveHueSliderThumbHandler,
                 moveAlphaSliderThumbHandler,
             );
-            nextTick().then(() => {
+            Helper.defer(() => {
                 emit('update:mode', thisData.config.mode);
                 useUpdateColorCanvas(thisData, emit);
-            });
+            }, 100);
         });
 
         return () =>

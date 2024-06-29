@@ -5,15 +5,15 @@
 @import "../../../scss/variables";
 
 .#{$prefix}datepicker {
-    --#{$prefix}datepiker-border-radius: #{$border-radius-base};
-    --#{$prefix}datepiker-padding-x: #{$padding-base};
-    --#{$prefix}datepiker-padding-y: #{$padding-base};
-    --#{$prefix}datepiker-header-color: #{$white};
-    --#{$prefix}datepiker-table-header-color: #{$gray-600};
-    --#{$prefix}datepiker-title-font-size: 1.8rem;
-    --#{$prefix}datepiker-subtitle-font-size: 1.25rem;
+    --#{$prefix}datepicker-border-radius: #{$border-radius-base};
+    --#{$prefix}datepicker-padding-x: #{$padding-base};
+    --#{$prefix}datepicker-padding-y: #{$padding-base};
+    --#{$prefix}datepicker-header-color: #{$white};
+    --#{$prefix}datepicker-table-header-color: #{$gray-600};
+    --#{$prefix}datepicker-title-font-size: 1.8rem;
+    --#{$prefix}datepicker-subtitle-font-size: 1.25rem;
 
-    @include border-radius(var(--#{$prefix}datepiker-border-radius));
+    @include border-radius(var(--#{$prefix}datepicker-border-radius));
     position: relative;
 
     > .#{$prefix}datepicker-inner {
@@ -21,43 +21,52 @@
     }
 
     .#{$prefix}datepicker-body {
-        @include border-radius(var(--#{$prefix}datepiker-border-radius));
+        @include border-radius(var(--#{$prefix}datepicker-border-radius));
         min-height: 280px;
         position: relative;
 
         table {
             @include transition($md-transition-stand);
+            display: table;
             table-layout: fixed;
             width: 100%;
 
+            tr {
+                background-color: inherit;
+                border-width: 0;
+            }
+
             td, th {
+                background-color: inherit;
+                border-width: 0;
                 position: relative;
                 text-align: center;
+                padding: 0;
             }
         }
     }
 
     .#{$prefix}datepicker-header,
     .#{$prefix}datepicker-days {
-        padding: var(--#{$prefix}datepiker-padding-y) var(--#{$prefix}datepiker-padding-x);
+        padding: var(--#{$prefix}datepicker-padding-y) var(--#{$prefix}datepicker-padding-x);
     }
 
     .#{$prefix}datepicker-header {
-        @include border-top-radius(var(--#{$prefix}datepiker-border-radius));
+        @include border-top-radius(var(--#{$prefix}datepicker-border-radius));
 
-        color: var(--#{$prefix}datepiker-header-color);
+        color: var(--#{$prefix}datepicker-header-color);
         font-weight: $font-weight-semi-bold;
         line-height: normal;
 
         > .#{$prefix}datepicker-title {
-            font-size: var(--#{$prefix}datepiker-title-font-size);
+            font-size: var(--#{$prefix}datepicker-title-font-size);
             overflow: hidden;
             position: relative;
         }
 
         > .#{$prefix}datepicker-subtitle {
-            font-size: var(--#{$prefix}datepiker-subtitle-font-size);
-            margin-bottom: calc(var(--#{$prefix}datepiker-padding-y) / 4);
+            font-size: var(--#{$prefix}datepicker-subtitle-font-size);
+            margin-bottom: calc(var(--#{$prefix}datepicker-padding-y) / 4);
         }
 
         .#{$prefix}datepicker-year,
@@ -78,7 +87,7 @@
 
     .#{$prefix}datepicker-nav {
         @include flexbox((display: flex, justify-content: space-between, align-items: center));
-        padding: calc(var(--#{$prefix}datepiker-padding-y) / 2) var(--#{$prefix}datepiker-padding-x);
+        padding: calc(var(--#{$prefix}datepicker-padding-y) / 2) var(--#{$prefix}datepicker-padding-x);
 
         > .#{$prefix}datepicker-nav-title {
             @include flex(1);
@@ -104,10 +113,23 @@
         }
     }
 
+    .#{$prefix}picker-seconds,
+    .#{$prefix}picker-minutes,
+    .#{$prefix}picker-hours,
     .#{$prefix}datepicker-days,
     .#{$prefix}datepicker-months,
     .#{$prefix}datepicker-years {
-        padding: 0 calc(var(--#{$prefix}datepiker-padding-x) - .25rem) calc(var(--#{$prefix}datepiker-padding-y) - .25rem);
+        .btn {
+            &[class*='btn-flat'] {
+                --#{$bs-prefix}btn-inner-padding-x: 1.5rem;
+            }
+        }
+    }
+
+    .#{$prefix}datepicker-days,
+    .#{$prefix}datepicker-months,
+    .#{$prefix}datepicker-years {
+        padding: 0 calc(var(--#{$prefix}datepicker-padding-x) - .25rem) calc(var(--#{$prefix}datepicker-padding-y) - .25rem);
         position: relative;
         overflow: hidden;
 
@@ -119,8 +141,9 @@
     .#{$prefix}datepicker-days {
         th {
             @include user-select(none);
-            color: var(--#{$prefix}datepiker-table-header-color);
-            padding: calc(var(--#{$prefix}datepiker-padding-y) / 2) 0;
+            color: var(--#{$prefix}datepicker-table-header-color);
+            font-weight: 700;
+            padding: calc(var(--#{$prefix}datepicker-padding-y) / 2) 0;
             pointer-events: none;
         }
 
@@ -151,7 +174,7 @@
     }
 
     .#{$prefix}datepicker-times {
-        padding: calc(var(--#{$prefix}datepiker-padding-y) / 2) calc(var(--#{$prefix}datepiker-padding-x) - .25rem);
+        padding: calc(var(--#{$prefix}datepicker-padding-y) / 2) calc(var(--#{$prefix}datepicker-padding-x) - .25rem);
 
         .#{$prefix}picker-times {
             margin-top: $padding-sm;
@@ -182,7 +205,7 @@
 
     &.#{$prefix}landscape {
         .#{$prefix}datepicker-header {
-            @include border-left-radius(var(--#{$prefix}datepiker-border-radius));
+            @include border-left-radius(var(--#{$prefix}datepicker-border-radius));
             @include border-right-radius(0);
             width: 200px;
 
@@ -194,13 +217,13 @@
 
     .#{$prefix}datepicker-header {
         &.bg-white, &.bg-light, &.bg-light-grey, &.bg-yellow {
-            --#{$prefix}datepiker-header-color: #{$grey-darken-3};
+            --#{$prefix}datepicker-header-color: #{$grey-darken-3};
         }
     }
 
     .#{$prefix}datepicker-body {
         &:not(.bg-white):not(.bg-light):not(.bg-light-grey):not(.bg-amber):not(.bg-lime):not(.bg-yellow) {
-            --#{$prefix}datepiker-table-header-color: #{$grey-base};
+            --#{$prefix}datepicker-table-header-color: #{$grey-base};
 
             color: $grey-lighten-4;
 
@@ -211,7 +234,7 @@
             }
 
             &.bg-grey {
-                --#{$prefix}datepiker-table-header-color: #{$grey-lighten-3};
+                --#{$prefix}datepicker-table-header-color: #{$grey-lighten-3};
 
                 .btn-flat-dark {
                     --#{$bs-prefix}btn-color: #{$grey-lighten-4};

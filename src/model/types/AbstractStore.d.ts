@@ -52,6 +52,11 @@ export declare type TFilterOption = {
      * ORM custom data type, ex: 'ulid'.
      */
     type?: string;
+    /**
+     * Optional logic operator to be used when combined with another filters.
+     * If it is not defined, global filter logic will be used.
+     */
+    logic?: TFilterLogic;
 };
 
 export declare type TSortDirection = 'asc' | 'desc';
@@ -254,8 +259,16 @@ export declare abstract class AbstractStore implements ObjectBase {
      * @param value     The filter value
      * @param operator  Filter operator to be used, valid values: `eq`, `neq`, `gt`, `gte`,
      *                  `lt`, `lte`, `in`, `notin`, `startwith`, `endwith`, `contains`, `fts`
+     * @param type      Optional, ORM custom data type
+     * @param logic     Optional, logic to be used when mixing two or more filters.
      */
-    addFilter(field: string, value: string | number | boolean, operator?: TFilterOperator): this;
+    addFilter(
+        field: string,
+        value: string | number | boolean,
+        operator?: TFilterOperator,
+        type?: string,
+        logic?: TFilterLogic
+    ): this;
 
     /**
      * Replace old filters and apply new filters to the Store dataset.

@@ -3,6 +3,22 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.0.9
+
+Released: July XX, 2024
+
+### Improvements
+
+- **BsDatePicker**: landscape mode now works on medium-screen.
+- **BsStore**: remote filter can have mixed logic **and/or** via filter options.
+
+### Bug Fixes
+
+- **BsColorPicker**: fix color thumb strange behaviour on VitePress.
+- **BsDatePicker**: fix picker element hover size.
+- **BsTab**: fix `icon-flip`, `icon-pulse`, `icon-spin`, `icon-rotation` properties not working properly.
+
+
 ## v2.0.8
 
 Released: May 18, 2024
