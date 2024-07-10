@@ -5,7 +5,7 @@
 
 ## v2.0.9
 
-Released: July XX, 2024
+Released: July 10, 2024
 
 ### Improvements
 
@@ -16,6 +16,7 @@ Released: July XX, 2024
 
 - **BsColorPicker**: fix color thumb strange behaviour on VitePress.
 - **BsDatePicker**: fix picker element hover size.
+- **BsDateTimeField**: prevent closing popup DatePicker when time element is clicked.
 - **BsTab**: fix `icon-flip`, `icon-pulse`, `icon-spin`, `icon-rotation` properties not working properly.
 
 

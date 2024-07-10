@@ -18,7 +18,7 @@
         opacity: .65;
     }
 
-    &:-ms-input-placeholder {
+    &::-ms-input-placeholder {
         color: currentColor;
         font-weight: $font-weight-light;
         opacity: .65;

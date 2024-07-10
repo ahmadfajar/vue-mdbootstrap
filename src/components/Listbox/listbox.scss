@@ -18,13 +18,16 @@
 
         > input {
             @include decorate-input-placeholder();
-            background: transparent;
-            border: 1px solid var(--#{$prefix}searchbox-border-color);
-            color: var(--#{$prefix}searchbox-text-color);
-            font-size: var(--#{$prefix}searchbox-font-size);
-            padding: var(--#{$prefix}searchbox-padding-y) var(--#{$prefix}searchbox-padding-x);
-            outline: none;
-            width: 100%;
+
+            & {
+                background: transparent;
+                border: 1px solid var(--#{$prefix}searchbox-border-color);
+                color: var(--#{$prefix}searchbox-text-color);
+                font-size: var(--#{$prefix}searchbox-font-size);
+                padding: var(--#{$prefix}searchbox-padding-y) var(--#{$prefix}searchbox-padding-x);
+                outline: none;
+                width: 100%;
+            }
 
             &:focus {
                 @include box-shadow(0 0 0.15rem 0.25rem var(--#{$prefix}searchbox-focused-shadow-rgba));

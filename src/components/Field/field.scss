@@ -93,7 +93,7 @@
         }
     }
 
-    &.#{$prefix}checkbox-group, 
+    &.#{$prefix}checkbox-group,
     &.#{$prefix}radio-group {
         --#{$prefix}field-padding-start: 0;
     }
@@ -124,20 +124,23 @@
             position: relative;
 
             > input, > textarea {
+                @include transition(opacity $md-transition-default);
                 @include decorate-input-placeholder();
                 // @include flexbox((display: flex, flex: 1 1 auto));
-                @include transition(opacity $md-transition-default);
-                background-color: transparent;
-                border-width: 0;
-                color: inherit;
-                outline: 0 none;
-                opacity: 0.5;
-                min-height: var(--#{$prefix}field-control-height);
-                padding-inline-start: var(--#{$prefix}field-padding-start);
-                padding-inline-end: var(--#{$prefix}field-padding-end);
-                padding-top: var(--#{$prefix}field-padding-top);
-                padding-bottom: var(--#{$prefix}field-padding-bottom);
-                width: 100%;
+
+                & {
+                    background-color: transparent;
+                    border-width: 0;
+                    color: inherit;
+                    outline: 0 none;
+                    opacity: 0.5;
+                    min-height: var(--#{$prefix}field-control-height);
+                    padding-inline-start: var(--#{$prefix}field-padding-start);
+                    padding-inline-end: var(--#{$prefix}field-padding-end);
+                    padding-top: var(--#{$prefix}field-padding-top);
+                    padding-bottom: var(--#{$prefix}field-padding-bottom);
+                    width: 100%;
+                }
             }
 
             > .#{$prefix}field-value,
@@ -472,6 +475,8 @@
 
         &.#{$prefix}field-rounded {
             &.#{$prefix}text-field, &.#{$prefix}numeric-field {
+                --#{$prefix}field-outline-border-radius: #{$border-radius-pill};
+
                 &:not(.prepend-icon) {
                     --#{$prefix}field-padding-start: #{math.div($text-field-height, 2)};
 
@@ -479,8 +484,6 @@
                         --#{$prefix}field-padding-start: 1.375rem;
                     }
                 }
-
-                --#{$prefix}field-outline-border-radius: #{$border-radius-pill};
 
                 .#{$prefix}field-outline-control {
                     > .#{$prefix}field-outline-start {

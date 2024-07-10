@@ -180,10 +180,10 @@ export function useRenderDateTimeField(
                     headerColor: props.headerColor,
                     headerPanel: props.headerPanel,
                     landscape: props.landscapeMode,
-                    locale: <Prop<string>>locale.value,
+                    locale: locale.value as Prop<string>,
                     readonly: (props.readonly || props.disabled),
-                    mode: (props.viewMode || props.pickerMode),
-                    modelValue: <Prop<Date | undefined>>localFieldValue.value?.toJSDate(),
+                    mode: pickerMode.value as Prop<TDateTimePickerMode>,
+                    modelValue: localFieldValue.value?.toJSDate() as Prop<Date | undefined>,
                     width: props.pickerWidth,
                     'onUpdate:model-value': (value: string) => {
                         localFieldValue.value = useParseDate(value).setLocale(locale.value);

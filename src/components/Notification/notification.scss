@@ -24,10 +24,12 @@
     }
 
     .#{$prefix}notification-message {
-        --#{$prefix}notification-link-color: --#{$prefix}notification-color;
-
         @include word-break(break-word);
-        font-size: var(--#{$prefix}notification-font-size);
+
+        & {
+            --#{$prefix}notification-link-color: --#{$prefix}notification-color;
+            font-size: var(--#{$prefix}notification-font-size);
+        }
 
         a, label {
             color: var(--#{$prefix}notification-link-color);
@@ -39,7 +41,6 @@
     }
 
     .#{$prefix}btn-close {
-        @include text-shadow(0 1px 0 rgba($white, 1));
         color: var(--#{$prefix}notification-color);
         opacity: var(--#{$prefix}notification-opacity);
         position: relative;
@@ -48,6 +49,7 @@
         float: right;
         font-size: 20px;
         font-weight: $font-weight-normal;
+        text-shadow: 0 1px 0 rgba($white, 1);
 
         &:hover,
         &:focus {

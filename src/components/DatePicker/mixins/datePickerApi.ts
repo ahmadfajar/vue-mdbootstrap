@@ -4,6 +4,7 @@ import type { ComputedRef, ExtractPropTypes, Prop, Ref, VNode } from 'vue';
 import { computed, createCommentVNode, h, ref, toDisplayString, watch, withDirectives } from 'vue';
 import { Touch } from '../../../directives';
 import { cssPrefix, useBreakpointMin, useRenderTransition } from '../../../mixins/CommonApi';
+import { preventEventTarget } from '../../../mixins/DomHelper';
 import type {
     TBsDatePicker,
     TButtonMode,
@@ -314,8 +315,7 @@ function createCalendarNavButton(
         // @ts-ignore
         flat: true as Prop<boolean>,
         onClick: (evt: Event) => {
-            evt.preventDefault();
-            evt.stopPropagation();
+            preventEventTarget(evt);
             clickHandler?.call(undefined, evt);
         },
     });
@@ -1005,7 +1005,10 @@ function createCalendarButton(
             pill: false as Prop<boolean>,
             // @ts-ignore
             rounded: true as Prop<boolean>,
-            onClick: clickHandler,
+            onClick: (evt: Event) => {
+                preventEventTarget(evt);
+                clickHandler();
+            },
         },
         {
             default: () => toDisplayString(data.text),
@@ -1425,7 +1428,10 @@ function createPickerTimeButton(
             pill: false as Prop<boolean>,
             // @ts-ignore
             rounded: true as Prop<boolean>,
-            onClick: clickHandler,
+            onClick: (evt: Event) => {
+                preventEventTarget(evt);
+                clickHandler();
+            },
         },
         {
             default: () => toDisplayString(value.toFormat(formatOpts)),
@@ -1459,7 +1465,7 @@ export function useRenderDatePicker(
     props: Readonly<ExtractPropTypes<TBsDatePicker>>,
     emit: TEmitFn,
     showTime: ComputedRef<boolean>,
-    pickerMode: Ref<TDateTimePickerMode>,
+    pickerMode: ComputedRef<TDateTimePickerMode>,
     currentView: Ref<TDateTimePickerMode>,
     locale: Ref<string>,
     localValue: Ref<DateTime>,
@@ -1606,9 +1612,8 @@ export function useRenderDatePicker(
                                                           DatePickerConst.DATETIME,
                                                       ].includes(pickerMode.value)
                                                   ) {
-                                                      currentView.value = <TDateTimePickerMode>(
-                                                          DatePickerConst.DATE
-                                                      );
+                                                      currentView.value =
+                                                          DatePickerConst.DATE as TDateTimePickerMode;
                                                   }
                                               },
                                               'onChange:calendar': (value: Date) => {
@@ -1636,9 +1641,8 @@ export function useRenderDatePicker(
                                                           DatePickerConst.MONTH,
                                                       ].includes(pickerMode.value)
                                                   ) {
-                                                      currentView.value = <TDateTimePickerMode>(
-                                                          DatePickerConst.MONTH
-                                                      );
+                                                      currentView.value =
+                                                          DatePickerConst.MONTH as TDateTimePickerMode;
                                                   }
                                               },
                                               'onChange:calendar': (value: Date) => {
@@ -1668,6 +1672,12 @@ export function useRenderDatePicker(
                                                       pickerMode.value,
                                                       value
                                                   );
+                                                  if (
+                                                      pickerMode.value == DatePickerConst.DATETIME
+                                                  ) {
+                                                      currentView.value =
+                                                          DatePickerConst.TIME as TDateTimePickerMode;
+                                                  }
                                               },
                                           })
                                         : undefined,
@@ -1681,7 +1691,11 @@ export function useRenderDatePicker(
     );
 }
 
-function dispatchDatePickerValue(emit: TEmitFn, pickerMode: TDateTimePickerMode, value: Date): void {
+function dispatchDatePickerValue(
+    emit: TEmitFn,
+    pickerMode: TDateTimePickerMode,
+    value: Date
+): void {
     if (pickerMode === DatePickerConst.YEAR) {
         emit('update:model-value', value.getFullYear().toString(10));
     } else if (pickerMode === DatePickerConst.MONTH) {
