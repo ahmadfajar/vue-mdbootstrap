@@ -99,7 +99,7 @@ export const dateTimeFieldProps = {
     transition: stringProp,
     pickerCls: {
         type: [String, Array],
-        default: "bg-white rounded shadow"
+        default: "rounded shadow"
     },
     pickerColor: whiteColorProp,
     pickerMode: pickerModeProp,
