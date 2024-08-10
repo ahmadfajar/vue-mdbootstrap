@@ -131,7 +131,7 @@ export declare type TProgressBarOptionProps = {
      */
     modelValue?: number;
     /**
-     * Set to `true` to remove the rounded side border of the progress bar.
+     * Remove the rounded side border of the progress bar.
      */
     roundedOff?: boolean;
     /**
