@@ -61,7 +61,7 @@ export default abstract class AbstractStore implements ObjectBase {
 
     static isCandidateForFilterOption(item: TRecord): item is TFilterOption {
         return Object.keys(item).every((k) =>
-            ['property', 'value', 'operator', 'type', 'logic'].includes(k)
+            ['property', 'value', 'operator', 'type', 'logic', 'expression'].includes(k)
         );
     }
 

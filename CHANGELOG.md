@@ -3,6 +3,22 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.0.10
+
+Released: August XX, 2024
+
+### Features & Improvements
+
+- **BsProgressBar**: 
+  - Add properties `label`, `label-alignment`, `label-position` and `inner-cls`.
+  - Replace property: `rounded` with `rounded-off`.
+- **BsStore**: add `expression` property on `TFilterOption` object.
+
+### Bug Fixes
+
+- **BsModel**: fix error when destroyed from BsStore.
+
+
 ## v2.0.9
 
 Released: July 10, 2024

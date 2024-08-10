@@ -1,8 +1,18 @@
 import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 import { useBreakpointMax } from '../../mixins/CommonApi';
-import type { TBsSideDrawer, TLabelPosition, TRecord, TSideDrawerOptionProps, TVueMdb } from '../../types';
-import { useRenderSideDrawer, useSideDrawerOnMountedHook, useSideDrawerStyles } from './mixins/sideDrawerApi';
+import type {
+    TBsSideDrawer,
+    TRecord,
+    TSideDrawerOptionProps,
+    TSideDrawerPosition,
+    TVueMdb,
+} from '../../types';
+import {
+    useRenderSideDrawer,
+    useSideDrawerOnMountedHook,
+    useSideDrawerStyles,
+} from './mixins/sideDrawerApi';
 import { sideDrawerProps } from './mixins/sideDrawerProps';
 
 export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
@@ -56,7 +66,7 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
             () => thisProps.mini,
             (value) => {
                 if (appId.value && vueMdb.value) {
-                    const position: TLabelPosition = thisProps.position === 'right' ? 'right' : 'left';
+                    const position: TSideDrawerPosition = thisProps.position === 'right' ? 'right' : 'left';
                     vueMdb.value.app[appId.value].sideDrawer[position].width =
                         value ? parseInt(<string>thisProps.miniWidth, 10)
                             : parseInt(<string>thisProps.width, 10);
@@ -68,7 +78,7 @@ export default defineComponent<TBsSideDrawer, TRecord, TRecord, ComputedOptions,
             (value) => {
                 isOpen.value = <boolean>value;
                 if (appId.value && vueMdb.value) {
-                    const position: TLabelPosition = thisProps.position === 'right' ? 'right' : 'left';
+                    const position: TSideDrawerPosition = thisProps.position === 'right' ? 'right' : 'left';
                     vueMdb.value.app[appId.value].sideDrawer[position].width =
                         !value ? 0 : parseInt(<string>thisProps.width, 10);
                 }

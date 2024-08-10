@@ -2,8 +2,16 @@ import type { ComputedRef, VNode } from 'vue';
 import { h, Transition } from 'vue';
 import { cssPrefix, useBrowserIE } from '../../../mixins/CommonApi';
 import Helper from '../../../utils/Helper';
-import { useCircleSizeStyles, useCreateSvgCircleNode, useCreateSvgNode } from '../../Icon/mixins/svgApi';
-import type { TProgressBarOptionProps, TProgressOptionProps } from '../types';
+import {
+    useCircleSizeStyles,
+    useCreateSvgCircleNode,
+    useCreateSvgNode,
+} from '../../Icon/mixins/svgApi';
+import type {
+    TProgressBarLabelPosition,
+    TProgressBarOptionProps,
+    TProgressOptionProps,
+} from '../types';
 import INDETERMINATE_ANIMATION_TEMPLATE from './ProgressSpinnerAnimation';
 
 declare interface ISpinnerElement extends Element {
@@ -13,7 +21,7 @@ declare interface ISpinnerElement extends Element {
 declare type TSpinnerRecord = {
     styleTag?: ISpinnerElement;
     diameters: Set<number>;
-}
+};
 
 const progressSpinner: TSpinnerRecord = {
     styleTag: undefined,
@@ -33,8 +41,7 @@ export function useIndeterminateMode(props: Readonly<TProgressOptionProps>) {
 }
 
 export function useGetCSSAnimation(circleCircumference: number, diameter: number) {
-    return INDETERMINATE_ANIMATION_TEMPLATE
-        .replace(/START_VALUE/g, `${0.95 * circleCircumference}`)
+    return INDETERMINATE_ANIMATION_TEMPLATE.replace(/START_VALUE/g, `${0.95 * circleCircumference}`)
         .replace(/END_VALUE/g, `${0.2 * circleCircumference}`)
         .replace(/DIAMETER/g, `${diameter}`);
 }
@@ -64,104 +71,125 @@ export function useRenderAnimatedProgressBar(
     props: Readonly<TProgressOptionProps>,
     progressBarTrackStyle: ComputedRef<string | undefined>,
     progressBarValueStyle: ComputedRef<string | undefined>,
-    progressBarBufferStyle: ComputedRef<string | undefined>,
+    progressBarBufferStyle: ComputedRef<string | undefined>
 ): VNode {
-    return h(Transition, {
-        name: `${cssPrefix}progress-bar`,
-        appear: true,
-    }, {
-        default: () => {
-            return h('div', {
-                class: [
-                    `${cssPrefix}progress-bar`,
-                    `progress-bar-${props.color}`,
-                    `${cssPrefix}${props.mode?.toLowerCase()}`,
-                ],
-                style: {
-                    height: `${props.height}px`
-                }
-            }, [
-                h('div', {
-                    class: [`${cssPrefix}progress-bar-track`],
-                    style: progressBarTrackStyle.value,
-                }),
-                h('div', {
-                    class: [`${cssPrefix}progress-bar-fill`],
-                    style: progressBarValueStyle.value,
-                }),
-                h('div', {
-                    class: [`${cssPrefix}progress-bar-buffer`],
-                    style: progressBarBufferStyle.value,
-                }),
-            ]);
+    return h(
+        Transition,
+        {
+            name: `${cssPrefix}progress-bar`,
+            appear: true,
+        },
+        {
+            default: () => {
+                return h(
+                    'div',
+                    {
+                        class: [
+                            `${cssPrefix}progress-bar`,
+                            `progress-bar-${props.color}`,
+                            `${cssPrefix}${props.mode?.toLowerCase()}`,
+                        ],
+                        style: {
+                            height: `${props.height}px`,
+                        },
+                    },
+                    [
+                        h('div', {
+                            class: [`${cssPrefix}progress-bar-track`],
+                            style: progressBarTrackStyle.value,
+                        }),
+                        h('div', {
+                            class: [`${cssPrefix}progress-bar-fill`],
+                            style: progressBarValueStyle.value,
+                        }),
+                        h('div', {
+                            class: [`${cssPrefix}progress-bar-buffer`],
+                            style: progressBarBufferStyle.value,
+                        }),
+                    ]
+                );
+            },
         }
-    });
+    );
 }
 
 export function useRenderAnimatedProgressSpinner(
     props: Readonly<TProgressOptionProps>,
     circleStrokeDashOffset: ComputedRef<string | undefined>,
     circleCircumference: ComputedRef<number>,
-    circleRadius: ComputedRef<number>,
+    circleRadius: ComputedRef<number>
 ): VNode {
-    return h(Transition, {
-        name: `${cssPrefix}progress-spinner`,
-        appear: true,
-    }, {
-        default: () => {
-            return h('div', {
-                class: [
-                    `${cssPrefix}progress-spinner`,
-                    `spinner-${props.color}`,
-                    useBrowserIE() ? `${cssPrefix}indeterminate-fallback` : '',
-                    useDeterminateMode(props) ? `${cssPrefix}determinate` : `${cssPrefix}indeterminate`,
-                ],
-            }, [
-                useCreateSvgNode(
-                    [`${cssPrefix}progress-spinner-draw`],
-                    useCircleSizeStyles(<number>props.diameter),
-                    false, 'xMidYMid meet',
-                    `0 0 ${props.diameter} ${props.diameter}`,
-                    {},
-                    [useCreateSvgCircleNode(
-                        [`${cssPrefix}progress-spinner-circle`],
-                        {
-                            'stroke-dashoffset': circleStrokeDashOffset.value,
-                            'stroke-dasharray': `${circleCircumference.value}px`,
-                            'stroke-width': `${props.stroke}px`,
-                            'animation-name': `${cssPrefix}progress-spinner-stroke-rotate-${props.diameter}`
-                        },
-                        circleRadius.value
-                    )],
-                ),
-            ]);
+    return h(
+        Transition,
+        {
+            name: `${cssPrefix}progress-spinner`,
+            appear: true,
+        },
+        {
+            default: () => {
+                return h(
+                    'div',
+                    {
+                        class: [
+                            `${cssPrefix}progress-spinner`,
+                            `spinner-${props.color}`,
+                            useBrowserIE() ? `${cssPrefix}indeterminate-fallback` : '',
+                            useDeterminateMode(props)
+                                ? `${cssPrefix}determinate`
+                                : `${cssPrefix}indeterminate`,
+                        ],
+                    },
+                    [
+                        useCreateSvgNode(
+                            [`${cssPrefix}progress-spinner-draw`],
+                            useCircleSizeStyles(<number>props.diameter),
+                            false,
+                            'xMidYMid meet',
+                            `0 0 ${props.diameter} ${props.diameter}`,
+                            {},
+                            [
+                                useCreateSvgCircleNode(
+                                    [`${cssPrefix}progress-spinner-circle`],
+                                    {
+                                        'stroke-dashoffset': circleStrokeDashOffset.value,
+                                        'stroke-dasharray': `${circleCircumference.value}px`,
+                                        'stroke-width': `${props.stroke}px`,
+                                        'animation-name': `${cssPrefix}progress-spinner-stroke-rotate-${props.diameter}`,
+                                    },
+                                    circleRadius.value
+                                ),
+                            ]
+                        ),
+                    ]
+                );
+            },
         }
-    });
+    );
 }
 
-export function useRenderProgressBar(
-    props: Readonly<TProgressBarOptionProps>,
-): VNode {
-    if (props.showValue && props.valuePosition !== 'inside') {
-        return h('div', {
-            class: [`${cssPrefix}progress-wrapper`, 'd-flex', 'align-items-center']
-        }, [
-            props.valuePosition === 'start'
-                ? h('div', {class: `${cssPrefix}progress-label me-2`}, `${props.modelValue}%`)
+export function useRenderProgressBar(props: Readonly<TProgressBarOptionProps>): VNode {
+    if (props.label || (props.showValue && props.valuePosition !== 'inside')) {
+        return h('div', { class: `${cssPrefix}progress-wrapper` }, [
+            props.labelPosition === 'top' || props.valuePosition === 'top'
+                ? createProgressBarLabel(props, 'top')
                 : undefined,
-            h('div', {
-                class: 'd-flex flex-fill flex-column'
-            }, [
-                props.valuePosition === 'top'
-                    ? h('div', {class: `${cssPrefix}progress-label`}, `${props.modelValue}%`)
-                    : undefined,
-                createProgressBar(props),
-                props.valuePosition === 'bottom'
-                    ? h('div', {class: `${cssPrefix}progress-label`}, `${props.modelValue}%`)
-                    : undefined,
-            ]),
-            props.valuePosition === 'end'
-                ? h('div', {class: `${cssPrefix}progress-label ms-2`}, `${props.modelValue}%`)
+            h(
+                'div',
+                {
+                    class: 'd-flex',
+                },
+                [
+                    props.labelPosition === 'start' || props.valuePosition === 'start'
+                        ? createProgressBarLabel(props, 'start')
+                        : undefined,
+                    createProgressBar(props),
+                    props.labelPosition === 'end' || props.valuePosition === 'end'
+                        ? createProgressBarLabel(props, 'end')
+                        : undefined,
+                ]
+            ),
+            props.labelPosition === 'bottom' || props.valuePosition === 'bottom'
+                ? createProgressBarLabel(props, 'bottom')
                 : undefined,
         ]);
     } else {
@@ -169,33 +197,81 @@ export function useRenderProgressBar(
     }
 }
 
-function createProgressBar(
-    props: Readonly<TProgressBarOptionProps>,
-): VNode {
-    return h('div', {
-        class: ['progress', props.rounded === false ? 'rounded-0' : ''],
-        style: {
-            height: Helper.cssUnit(props.height)
-        }
-    }, [
-        h('div', {
-                class: [
-                    'progress-bar',
-                    props.striped ? 'progress-bar-striped' : '',
-                    props.stripedAnimation ? 'progress-bar-animated' : '',
-                    props.color ? `bg-${props.color}` : '',
-                ],
-                style: {
-                    width: `${props.modelValue}%`
-                },
-                'role': 'progressbar',
-                'aria-label': 'progressbar',
-                'aria-valuenow': props.modelValue,
-                'aria-valuemin': 0,
-                'aria-valuemax': 100,
+function createProgressBar(props: Readonly<TProgressBarOptionProps>): VNode {
+    return h(
+        'div',
+        {
+            class: ['progress flex-grow-1', props.roundedOff ? 'rounded-0' : ''],
+            style: {
+                height: Helper.cssUnit(props.height),
             },
-            props.showValue && props.valuePosition === 'inside'
-                ? `${props.modelValue}%` : ''
-        )
-    ]);
+        },
+        [
+            h(
+                'div',
+                {
+                    class: [
+                        'progress-bar',
+                        props.striped ? 'progress-bar-striped' : '',
+                        props.stripedAnimation ? 'progress-bar-animated' : '',
+                        props.color ? `bg-${props.color}` : '',
+                        props.innerCls ?? '',
+                    ],
+                    style: {
+                        width: `${props.modelValue}%`,
+                    },
+                    role: 'progressbar',
+                    'aria-label': props.label ?? 'progressbar',
+                    'aria-valuenow': props.modelValue,
+                    'aria-valuemin': 0,
+                    'aria-valuemax': 100,
+                },
+                props.showValue && props.valuePosition === 'inside' ? `${props.modelValue}%` : ''
+            ),
+        ]
+    );
+}
+
+function createProgressBarLabel(
+    props: Readonly<TProgressBarOptionProps>,
+    position: TProgressBarLabelPosition
+): VNode {
+    return h(
+        'div',
+        {
+            class: [
+                `${cssPrefix}progress-label`,
+                props.labelPosition === 'start' || props.valuePosition === 'start' ? 'me-2' : '',
+                props.labelPosition === 'end' ||
+                (props.valuePosition === 'end' && props.valuePosition === position)
+                    ? 'ms-2'
+                    : '',
+                props.labelAlignment === 'start' &&
+                props.labelPosition === position &&
+                ['top', 'bottom'].includes(props.labelPosition as string)
+                    ? 'text-start'
+                    : '',
+                props.labelAlignment === 'end' &&
+                props.labelPosition === position &&
+                ['top', 'bottom'].includes(props.labelPosition as string)
+                    ? 'text-end'
+                    : '',
+            ],
+        },
+        [
+            props.label && props.labelPosition === position
+                ? h('span', { class: ['text-label'] }, props.label)
+                : undefined,
+            props.valuePosition === position && props.label && props.labelPosition === position
+                ? h('span', { class: 'ms-1' }, ':')
+                : undefined,
+            props.valuePosition === position
+                ? h(
+                      'span',
+                      { class: props.label && props.labelPosition === position ? 'ms-2' : null },
+                      `${props.modelValue}%`
+                  )
+                : undefined,
+        ]
+    );
 }

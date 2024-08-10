@@ -39,7 +39,7 @@ export declare type TRestUrlOption = {
 
 export declare type TRestKey = Record<string, THttpMethod>;
 
-export declare type TRestConfig = Record<keyof TRestMethodOptions, string>;
+export declare type TRestConfig = Record<keyof TRestMethodOptions | string, string>;
 
 export declare type TCSRFConfig = {
     url?: string;
@@ -211,6 +211,9 @@ export declare class BsModel implements ObjectBase {
     /**
      * Assign new values to some existing fields.
      *
+     * This method checked the schema definition when constructing the object,
+     * and only fields that exists on the schema will get assign new value.
+     *
      * @param sources Object with format key-value pairs
      */
     assignValues(sources: TRecord): void;
@@ -311,6 +314,9 @@ export declare class BsModel implements ObjectBase {
 
     /**
      * Convert field attributes that exists in the schema definition into a Javascript plain object.
+     *
+     * The result of this method is used on REST method like: {@link save } and {@link update }.
+     *
      * This method can be overridden on inherited classes to produce the desired DTO.
      */
     toObject(): TRecord;
@@ -413,5 +419,5 @@ export declare class BsModel implements ObjectBase {
 export declare interface IBsModel extends BsModel {}
 
 export declare type TBsModel = IBsModel & {
-    [P in string]: unknown;
+    [P: string]: unknown;
 };

@@ -45,7 +45,7 @@ export declare type TFilterOption = {
      */
     value: string | number | boolean;
     /**
-     * Filter operator, default: <tt>eq</tt>.
+     * Filter operator, default: `eq`.
      */
     operator: TFilterOperator;
     /**
@@ -57,6 +57,10 @@ export declare type TFilterOption = {
      * If it is not defined, global filter logic will be used.
      */
     logic?: TFilterLogic;
+    /**
+     * Optional, indicate the `value` is an expression or field expression.
+     */
+    expression?: boolean;
 };
 
 export declare type TSortDirection = 'asc' | 'desc';

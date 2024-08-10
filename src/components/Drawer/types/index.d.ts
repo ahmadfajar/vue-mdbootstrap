@@ -4,9 +4,11 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
-import { EventUpdateOpenProps, TLabelPosition } from '../../../types';
+import { EventUpdateOpenProps } from '../../../types';
+
+export declare type TSideDrawerPosition = 'left' | 'right';
 
 export declare type TSideDrawerOptionProps = {
     color?: string;
@@ -17,21 +19,23 @@ export declare type TSideDrawerOptionProps = {
     modalWidth?: number | string;
     open?: boolean;
     overlayColor?: string;
-    position?: TLabelPosition;
+    position?: TSideDrawerPosition;
     shadow?: boolean;
     tag?: string;
     width?: number | string;
-}
+};
 
 export declare type TBsSideDrawer = ComponentObjectPropsOptions<TSideDrawerOptionProps>;
 
 declare type AllowedSideDrawerProps = AllowedComponentProps &
-    ComponentCustomProps & VNodeProps & EventUpdateOpenProps & {
-    onResize?: (target: HTMLElement) => void;
-}
+    ComponentCustomProps &
+    VNodeProps &
+    EventUpdateOpenProps & {
+        onResize?: (target: HTMLElement) => void;
+    };
 
 export declare const BsSideDrawer: {
-    new(): {
+    new (): {
         $props: AllowedSideDrawerProps & TSideDrawerOptionProps;
         $slots: {
             default?: () => VNode[];

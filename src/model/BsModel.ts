@@ -70,7 +70,7 @@ const _sealedObjErrMsg = 'This {1} is sealed to prevent adding new properties.';
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 01/03/2024 15:39
+ * @since  09/07/2018 modified: 23/07/2024 18:46
  */
 export default class BsModel implements ObjectBase {
     private readonly _idProperty: string;
@@ -121,11 +121,10 @@ export default class BsModel implements ObjectBase {
         ) {
             const _methods = {} as TRestKey;
 
-            for (const [key, value] of Object.entries((<TModelOptions>schema).proxy)) {
+            for (const [key, value] of Object.entries((schema as TModelOptions).proxy)) {
                 if (Helper.isObject(value)) {
-                    _methods[key] = (<TUrlOption>value).method;
+                    _methods[key] = (value as TUrlOption).method;
                 }
-                // @ts-ignore
                 this._restUrl[key] = Helper.isObject(value) ? value.url : value;
             }
 
@@ -229,12 +228,9 @@ export default class BsModel implements ObjectBase {
         this._schema.clear();
         this._data.clear();
 
-        // @ts-ignore
-        delete this._data;
-        // @ts-ignore
-        delete this._schema;
-        // @ts-ignore
-        delete this._proxy;
+        // delete this._data;
+        // delete this._schema;
+        // delete this._proxy;
     }
 
     assignValue(field: string, newValue: unknown): void {
@@ -660,7 +656,7 @@ export default class BsModel implements ObjectBase {
             if (this.csrfConfig?.suffix === true) {
                 csrfUrl = csrfUrl.replace('{name}', this.csrfConfig.tokenName + suffix);
             } else {
-                csrfUrl = csrfUrl.replace('{name}', <string>this.csrfConfig?.tokenName);
+                csrfUrl = csrfUrl.replace('{name}', this.csrfConfig?.tokenName as string);
             }
         }
 
@@ -694,7 +690,7 @@ export default class BsModel implements ObjectBase {
         const methods = this.proxy.requestMethods();
 
         if (url.includes('{id}') && !Helper.isEmpty(identifier)) {
-            url = url.replace('{id}', <string>identifier);
+            url = url.replace('{id}', identifier as string);
         } else if (!Helper.isEmpty(identifier)) {
             const params: TRecord = {};
             params[this._idProperty] = identifier;

@@ -4,7 +4,11 @@ export declare type TProgressControlMode = 'determinate' | 'indeterminate' | 'bu
 
 export declare type TProgressControlVariant = 'spinner' | 'bar';
 
+export declare type TProgressBarLabelPosition = 'start' | 'end' | 'top' | 'bottom';
+
 export declare type TProgressBarValuePosition = 'start' | 'end' | 'top' | 'bottom' | 'inside';
+
+export declare type TTextLabelAlignment = 'start' | 'end' | 'center';
 
 export declare type TMaskLoaderVariant = 'linear' | 'linear-alt' | 'progress' | 'spinner' | 'grow';
 
@@ -99,7 +103,7 @@ export declare type TProgressOptionProps = {
 
 export declare type TProgressBarOptionProps = {
     /**
-     * The component color appearance.
+     * The control bar color appearance.
      */
     color?: string;
     /**
@@ -107,27 +111,43 @@ export declare type TProgressBarOptionProps = {
      */
     height?: string | number;
     /**
+     * Optional, control bar css classes.
+     */
+    innerCls?: string;
+    /**
+     * The ProgressBar text label.
+     */
+    label?: string;
+    /**
+     * The ProgressBar text label alignment.
+     */
+    labelAlignment?: TTextLabelAlignment;
+    /**
+     * The ProgressBar label position.
+     */
+    labelPosition?: TProgressBarLabelPosition;
+    /**
      * The value monitored by `v-model` to control the progress bar value.
      */
     modelValue?: number;
     /**
-     * Set to `false` to remove the rounded border on the side of the progress bar.
+     * Set to `true` to remove the rounded side border of the progress bar.
      */
-    rounded?: boolean;
+    roundedOff?: boolean;
     /**
-     * Create striped ProgressBar.
+     * Create striped progress bar.
      */
     striped?: boolean;
     /**
-     * Create animated stripe ProgressBar.
+     * Create animated stripe progress bar.
      */
     stripedAnimation?: boolean;
     /**
-     * Display progress bar's value.
+     * Display progress bar's text value.
      */
     showValue?: boolean;
     /**
-     * Progress bar's value position.
+     * Progress bar's text value position.
      */
     valuePosition?: TProgressBarValuePosition;
 }

@@ -76,7 +76,7 @@ import type {
     vTouch,
 } from './dist/vue-mdb';
 
-declare module 'vue' {
+declare module '@vue/runtime-core' {
     export interface GlobalComponents {
         BsAlert: typeof BsAlert;
         BsAppContainer: typeof BsAppContainer;
