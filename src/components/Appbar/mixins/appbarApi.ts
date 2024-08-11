@@ -44,7 +44,7 @@ export function useAppbarOnMountedHook(
 
     if (parent) {
         nextTick().then(() => {
-            appId.value = (<Readonly<TAppContainerOptionProps>>parent.props).id;
+            appId.value = (parent.props as Readonly<TAppContainerOptionProps>).id;
 
             if (appId.value && vueMdb.value) {
                 const rect = appbar.value?.getBoundingClientRect()

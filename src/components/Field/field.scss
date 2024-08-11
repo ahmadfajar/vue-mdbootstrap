@@ -29,6 +29,7 @@
     --#{$prefix}field-padding-top: #{$text-field-padding-top};
     --#{$prefix}field-padding-bottom: #{$text-field-padding-bottom};
     --#{$prefix}field-floating-label-color: var(--#{$prefix}field-label-color);
+    --#{$prefix}field-inline-text-font-weight: #{$font-weight-semi-bold};
 
     position: relative;
 
@@ -157,6 +158,21 @@
                 font-weight: $font-weight-light;
                 opacity: .5;
             }
+        }
+
+        .#{$prefix}field-prefix, .#{$prefix}field-suffix, {
+            opacity: $text-field-opacity;
+            font-weight: var(--#{$prefix}field-inline-text-font-weight);
+            padding-top: var(--#{$prefix}field-padding-top);
+            white-space: nowrap;
+        }
+
+        .#{$prefix}field-prefix, {
+            padding-left: var(--#{$prefix}field-padding-start);
+        }
+
+        .#{$prefix}field-suffix, {
+            padding-right: var(--#{$prefix}field-padding-end);
         }
 
         > .#{$prefix}prepend-inner {
@@ -517,6 +533,14 @@
 
         &:not(.append-icon) {
             --#{$prefix}field-padding-end: 0;
+
+            .#{$prefix}field-suffix, {
+                padding-left: $padding-sm + 0.125rem;
+            }
+        }
+
+        .#{$prefix}field-prefix, {
+            padding-right: $padding-sm + 0.125rem;
         }
 
         .#{$prefix}prepend-inner {

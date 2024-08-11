@@ -166,6 +166,14 @@ export declare type TTextFieldOptionProps = TInputTextProps & {
      * Create this component with **rounded-pill** appearance.
      */
     rounded?: boolean;
+    /**
+     * Prepend inline non-modifiable text before the input field.
+     */
+    prefix?: string;
+    /**
+     * Append inline non-modifiable text after the input field.
+     */
+    suffix?: string;
 }
 
 export declare type TTextAreaOptionProps = TInputTextProps & {
@@ -273,6 +281,14 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
      * Create this component with **rounded-pill** appearance.
      */
     rounded?: boolean;
+    /**
+     * Prepend inline non-modifiable text before the input field.
+     */
+    prefix?: string;
+    /**
+     * Append inline non-modifiable text after the input field.
+     */
+    suffix?: string;
 }
 
 export declare type TSearchFieldOptionProps = {

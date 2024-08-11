@@ -1,5 +1,5 @@
 import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
-import { createCommentVNode, h } from 'vue';
+import { createCommentVNode, h, toDisplayString } from 'vue';
 import { cssPrefix, useRenderTransition } from '../../../mixins/CommonApi';
 import type {
     TBsIcon,
@@ -198,7 +198,7 @@ function createAppendFieldActionNode(
             hasValidated ||
             hasError ||
             (props.spinButton && props.spinButtonPlacement === 'right') ||
-            (props.actionButton && ['right', 'both'].includes(<string>props.actionButtonPlacement))
+            (props.actionButton && ['right', 'both'].includes(props.actionButtonPlacement as string))
             ? h(
                   'div',
                   {
@@ -221,7 +221,7 @@ function createAppendFieldActionNode(
                           : !props.disabled &&
                               !props.readonly &&
                               props.actionButton &&
-                              ['right', 'both'].includes(<string>props.actionButtonPlacement)
+                              ['right', 'both'].includes(props.actionButtonPlacement as string)
                             ? createActionButtons(
                                   props,
                                   'right',
@@ -258,7 +258,7 @@ function createPrependFieldActionNode(
         !props.readonly &&
         !props.spinButton &&
         props.actionButton &&
-        ['left', 'both'].includes(<string>props.actionButtonPlacement)
+        ['left', 'both'].includes(props.actionButtonPlacement as string)
     ) {
         return h(
             'div',
@@ -275,7 +275,7 @@ function createPrependFieldActionNode(
     return createCommentVNode(' v-if-action-button ');
 }
 
-function createFieldInputText(
+function createNumericInputField(
     props: Readonly<TNumericFieldOptionProps>,
     numericOptions: TNumericOpsOptions,
     formatOptions: Intl.NumberFormatOptions,
@@ -284,79 +284,87 @@ function createFieldInputText(
     hasFocus: Ref<boolean>,
     autocomplete: string | boolean,
     emit: TEmitFn
-): VNode {
+): VNode[] {
     let displayValue =
         hasFocus.value && !props.disabled && !props.readonly
             ? localValue.value?.toString(10)
             : localValue.value?.toLocaleString(numericOptions.locale, formatOptions);
 
-    return h('input', {
-        ...useMakeInputBaseAttrs(props),
-        ...useInputTextFieldAttrs(props, autocomplete),
-        ref: inputRef,
-        role: 'textbox',
-        type: 'text',
-        value: displayValue,
-        onBlur: (e: Event) => useOnFieldBlurred(emit, e, hasFocus, <boolean>props.disabled),
-        onChange: () => {
-            const field = <HTMLInputElement>inputRef.value;
-            if (field.value === null || field.value === '') {
-                useOnFieldValueUpdated(emit, localValue, null);
-                displayValue = '';
-            } else {
-                const result = parseFloat(field.value);
-                if (
-                    isGreaterOrEqualMinValue(result, numericOptions) &&
-                    isLessOrEqualMaxValue(result, numericOptions)
-                ) {
-                    useOnFieldValueUpdated(emit, localValue, result);
-                    displayValue = result.toLocaleString(numericOptions.locale, formatOptions);
+    return [
+        props.prefix && (hasFocus.value || localValue.value)
+            ? h('div', { class: `${cssPrefix}field-prefix` }, toDisplayString(props.prefix))
+            : createCommentVNode(' v-if-prefix '),
+        h('input', {
+            ...useMakeInputBaseAttrs(props),
+            ...useInputTextFieldAttrs(props, autocomplete),
+            ref: inputRef,
+            role: 'textbox',
+            type: 'text',
+            value: displayValue,
+            onBlur: (e: Event) => useOnFieldBlurred(emit, e, hasFocus, props.disabled as boolean),
+            onChange: () => {
+                const field = <HTMLInputElement>inputRef.value;
+                if (field.value === null || field.value === '') {
+                    useOnFieldValueUpdated(emit, localValue, null);
+                    displayValue = '';
+                } else {
+                    const result = parseFloat(field.value);
+                    if (
+                        isGreaterOrEqualMinValue(result, numericOptions) &&
+                        isLessOrEqualMaxValue(result, numericOptions)
+                    ) {
+                        useOnFieldValueUpdated(emit, localValue, result);
+                        displayValue = result.toLocaleString(numericOptions.locale, formatOptions);
+                    }
                 }
-            }
-        },
-        onFocus: (e: Event) => {
-            if (!props.disabled && !props.readonly) {
-                displayValue = localValue.value?.toString();
-            }
-            useOnFieldFocused(emit, e, hasFocus, <boolean>props.disabled);
-        },
-        onKeydown: (e: KeyboardEvent) => {
-            const incrementKey = ['Up', 'ArrowUp'];
-            const decrementKey = ['Down', 'ArrowDown'];
-            const specialKey = [
-                'Left',
-                'ArrowLeft',
-                'Right',
-                'ArrowRight',
-                'Esc',
-                'Escape',
-                'End',
-                'Tab',
-                'Enter',
-                'Home',
-                'PageDown',
-                'PageUp',
-                'Backspace',
-                'Clear',
-                'Delete',
-                'Copy',
-                'Cut',
-                'EraseEof',
-            ];
+            },
+            onFocus: (e: Event) => {
+                if (!props.disabled && !props.readonly) {
+                    displayValue = localValue.value?.toString();
+                }
+                useOnFieldFocused(emit, e, hasFocus, props.disabled as boolean);
+            },
+            onKeydown: (e: KeyboardEvent) => {
+                const incrementKey = ['Up', 'ArrowUp'];
+                const decrementKey = ['Down', 'ArrowDown'];
+                const specialKey = [
+                    'Left',
+                    'ArrowLeft',
+                    'Right',
+                    'ArrowRight',
+                    'Esc',
+                    'Escape',
+                    'End',
+                    'Tab',
+                    'Enter',
+                    'Home',
+                    'PageDown',
+                    'PageUp',
+                    'Backspace',
+                    'Clear',
+                    'Delete',
+                    'Copy',
+                    'Cut',
+                    'EraseEof',
+                ];
 
-            if (specialKey.includes(e.key)) {
-                emit('keydown', e);
-            } else if (/^-?\d*[.]?\d*$/.test(e.key)) {
-                emit('keydown', e);
-            } else if (incrementKey.includes(e.key) && !props.disabled && !props.readonly) {
-                incrementValue(props, numericOptions, localValue, emit);
-            } else if (decrementKey.includes(e.key) && !props.disabled && !props.readonly) {
-                decrementValue(props, numericOptions, localValue, emit);
-            } else {
-                e.preventDefault();
-            }
-        },
-    });
+                if (specialKey.includes(e.key)) {
+                    emit('keydown', e);
+                } else if (/^-?\d*[.]?\d*$/.test(e.key)) {
+                    emit('keydown', e);
+                } else if (incrementKey.includes(e.key) && !props.disabled && !props.readonly) {
+                    incrementValue(props, numericOptions, localValue, emit);
+                } else if (decrementKey.includes(e.key) && !props.disabled && !props.readonly) {
+                    decrementValue(props, numericOptions, localValue, emit);
+                } else {
+                    e.preventDefault();
+                }
+            },
+        }),
+        props.suffix && (hasFocus.value || localValue.value)
+            ? h('div', { class: `${cssPrefix}field-suffix` }, toDisplayString(props.suffix))
+            : createCommentVNode(' v-if-suffix '),
+    ];
 }
 
 export function useRenderNumericField(
@@ -394,7 +402,7 @@ export function useRenderNumericField(
                 useCreateFieldInnerWrapper(
                     slots,
                     props,
-                    createFieldInputText(
+                    createNumericInputField(
                         props,
                         operationOptions,
                         formatOptions,
@@ -408,10 +416,10 @@ export function useRenderNumericField(
                     props.appendIcon,
                     props.prependIcon,
                     useCreateValidationIcon(
-                        <TIconVariant>props.actionIconVariant,
+                        props.actionIconVariant as TIconVariant,
                         hasValidated.value,
                         hasError.value,
-                        <boolean>props.validationIcon,
+                        props.validationIcon as boolean,
                         iconSize
                     ),
                     createAppendFieldActionNode(

@@ -37,7 +37,7 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 24/05/2024 23:17
+ * @since  15/03/2019 modified: 12/08/2024 00:28
  */
 export default abstract class AbstractStore implements ObjectBase {
     private _eventMap: Map<string, ListenerFn<any>[]>;
@@ -132,7 +132,7 @@ export default abstract class AbstractStore implements ObjectBase {
 
     clear() {
         if (Helper.isArray(this._items) && this._items.length > 0) {
-            for (const item of <TBsModel[]>this._items) {
+            for (const item of this._items) {
                 if (AbstractStore.isModel(item)) {
                     item.destroy();
                 }
@@ -194,7 +194,7 @@ export default abstract class AbstractStore implements ObjectBase {
      * of the inheritance class or when instantiate the model.
      */
     get restUrl(): TRestConfig | undefined {
-        return <TRestConfig>(this._config.restProxy ?? this._config.restUrl);
+        return (this._config.restProxy ?? this._config.restUrl) as TRestConfig;
     }
 
     set restUrl(option: TRestConfig) {
@@ -697,14 +697,14 @@ export default abstract class AbstractStore implements ObjectBase {
      */
     protected _append(item: TRecord, force = true, silent = false): void {
         if (this.isCandidateForModel(item)) {
-            this._items.push(<TBsModel>this.createModel(item));
+            this._items.push(this.createModel(item) as TBsModel);
             if (!silent) {
                 this._state.totalCount++;
                 this._state.length++;
             }
         } else if (force && !Helper.isPrimitive(item)) {
             if (Helper.isObject(item)) {
-                this._items.push(<TBsModel>this.createModel(item).seal());
+                this._items.push(this.createModel(item).seal() as TBsModel);
             } else {
                 this._items.push(Object.seal(item));
             }

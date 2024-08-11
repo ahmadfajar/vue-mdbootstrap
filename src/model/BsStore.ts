@@ -37,7 +37,7 @@ import type {
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 21/03/2024 00:41
+ * @since  20/07/2018 modified: 11/08/2024 23:45
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -108,7 +108,7 @@ export default class BsStore extends AbstractStore {
     }
 
     get remoteFilter(): boolean {
-        return <boolean>this._config.remoteFilter;
+        return this._config.remoteFilter as boolean;
     }
 
     set remoteFilter(value: boolean) {
@@ -116,7 +116,7 @@ export default class BsStore extends AbstractStore {
     }
 
     get remotePaging(): boolean {
-        return <boolean>this._config.remotePaging;
+        return this._config.remotePaging as boolean;
     }
 
     set remotePaging(value: boolean) {
@@ -124,7 +124,7 @@ export default class BsStore extends AbstractStore {
     }
 
     get remoteSort(): boolean {
-        return <boolean>this._config.remoteSort;
+        return this._config.remoteSort as boolean;
     }
 
     set remoteSort(value: boolean) {
@@ -177,7 +177,7 @@ export default class BsStore extends AbstractStore {
             // Persist the given item to the remote service before
             // store it on the internal dataset.
             this._state.updating = true;
-            const model = <TBsModel>this.createModel(item);
+            const model = this.createModel(item) as TBsModel;
 
             model
                 .save()
@@ -192,7 +192,7 @@ export default class BsStore extends AbstractStore {
         } else if (Helper.isObject(item)) {
             // Got incorrect entity object, just store as is on the internal dataset.
             this._state.updating = true;
-            this._items.push(<TBsModel>this.createModel(item).seal());
+            this._items.push(this.createModel(item).seal() as TBsModel);
             _finalizeAppend();
         } else {
             console.error(appendErrMsg);
@@ -255,7 +255,7 @@ export default class BsStore extends AbstractStore {
         if (Helper.isArray(items) && items.length > 0) {
             return new Promise((resolve, reject) => {
                 try {
-                    for (const item of <TBsModel[]>items) {
+                    for (const item of items) {
                         if (AbstractStore.isModel(item) && !Helper.isEmpty(item.restUrl?.delete)) {
                             item.delete()
                                 .then(() => this.remove(item))
@@ -294,7 +294,7 @@ export default class BsStore extends AbstractStore {
 
         const config: AxiosRequestConfig = {};
         const methods = this.proxy.requestMethods();
-        const identifier = <string>this._config.idProperty;
+        const identifier = this._config.idProperty as string;
         let url = this.restUrl.fetch ?? '';
 
         if (url.includes('{id}') && !Helper.isEmpty(id)) {
@@ -381,8 +381,8 @@ export default class BsStore extends AbstractStore {
         if (Helper.isEmpty(responseData)) {
             console.warn(emptyDataErrMsg);
         } else {
-            if (Object.hasOwn(responseData, <string>this._config.dataProperty)) {
-                this.assignData(responseData[<string>this._config.dataProperty]);
+            if (Object.hasOwn(responseData, this._config.dataProperty as string)) {
+                this.assignData(responseData[this._config.dataProperty as string]);
 
                 if (this._config.totalProperty && responseData[this._config.totalProperty]) {
                     this._state.totalCount = responseData[this._config.totalProperty];

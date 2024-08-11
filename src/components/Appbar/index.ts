@@ -9,9 +9,9 @@ import "../../../scss/_utilities.scss";
 const BsAppbarPlugin: Plugin = {
     install: (app: App): void => {
         registerConfig(app);
-        app.component(<string>BsAppbar.name, BsAppbar);
-        app.component(<string>BsAppbarItems.name, BsAppbarItems);
-        app.component(<string>BsAppbarTitle.name, BsAppbarTitle);
+        app.component(BsAppbar.name as string, BsAppbar);
+        app.component(BsAppbarItems.name as string, BsAppbarItems);
+        app.component(BsAppbarTitle.name as string, BsAppbarTitle);
     }
 }
 

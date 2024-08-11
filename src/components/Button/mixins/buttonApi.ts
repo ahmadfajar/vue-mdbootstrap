@@ -35,13 +35,13 @@ export function useMakeButtonProps(
             [`btn-${props.size}`]: !Helper.isEmpty(props.size),
             [`${cssPrefix}btn-raised`]: props.raised,
             [`${cssPrefix}btn-tonal`]: props.tonal,
-            [`${cssPrefix}btn-fab`]: ['fab', 'floating'].includes(<string>props.mode),
+            [`${cssPrefix}btn-fab`]: ['fab', 'floating'].includes(props.mode as string),
             [`${cssPrefix}rounded-pill`]: (
-                props.pill && !['icon', 'fab', 'floating'].includes(<string>props.mode)
+                props.pill && !['icon', 'fab', 'floating'].includes(props.mode as string)
             ),
             [`${cssPrefix}rounded-sm`]: (
                 !props.pill && !props.rounded &&
-                !['icon', 'fab', 'floating'].includes(<string>props.mode)
+                !['icon', 'fab', 'floating'].includes(props.mode as string)
             ),
             'disabled': disabled,
             'readonly': props.readonly,
@@ -134,7 +134,7 @@ function renderSlotIcon(
                     'd-inline-block': true,
                     [`${cssPrefix}icon-${iconPosition}`]: (
                         btnMode === 'default' ||
-                        (['fab', 'floating'].includes(<string>btnMode) && slots.default)
+                        (['fab', 'floating'].includes(btnMode as string) && slots.default)
                     ),
                     [`${cssPrefix}empty-icon`]: (
                         Helper.isEmpty(slots[name]) || !Helper.isFunction(slots[name])
@@ -157,10 +157,10 @@ function renderSlotIcon(
                     class: {
                         [`${cssPrefix}icon-${iconPosition}`]: (
                             btnMode === 'default' ||
-                            (['fab', 'floating'].includes(<string>btnMode) && slots.default)
+                            (['fab', 'floating'].includes(btnMode as string) && slots.default)
                         ),
                     },
-                    size: <Prop<string | number | undefined>>iconSize,
+                    size: iconSize as Prop<string | number | undefined>,
                     ...useCreateIconProps(props),
                 }) : [],
             slotArgs,

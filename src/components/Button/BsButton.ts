@@ -14,7 +14,7 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Met
         const thisProps = props as Readonly<TButtonOptionProps>;
         const buttonType = computed<string | undefined>(() => {
             if (Helper.isEmpty(props.href)) {
-                return ['icon', 'fab', 'floating'].includes(<string>thisProps.mode) ? 'div' : thisProps.type;
+                return ['icon', 'fab', 'floating'].includes(thisProps.mode as string) ? 'div' : thisProps.type;
             }
 
             return undefined;
@@ -23,7 +23,7 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Met
             return (!Helper.isEmpty(props.icon) || (slots.icon != undefined));
         });
         const isDisabled = computed<boolean>(
-            () => (thisProps.disabled === true) && Helper.isEmpty(<string | undefined>props.href)
+            () => (thisProps.disabled === true) && Helper.isEmpty(props.href)
         );
         const rippleOff = computed<boolean>(
             () => (thisProps.rippleOff === true) || isDisabled.value || (thisProps.readonly === true)
@@ -46,11 +46,11 @@ export default defineComponent<TBsButton, TRecord, TRecord, ComputedOptions, Met
                 h<TBsButtonInner>(BsButtonInner, {
                     dropdownToggle: props.dropdownToggle,
                     // @ts-ignore
-                    iconMode: <Prop<boolean>>(thisProps.mode === 'icon'),
+                    iconMode: (thisProps.mode === 'icon') as Prop<boolean>,
                     // @ts-ignore
-                    hasIcon: <Prop<boolean>>hasIcon.value,
+                    hasIcon: hasIcon.value as Prop<boolean>,
                     // @ts-ignore
-                    rippleOff: <Prop<boolean>>rippleOff.value,
+                    rippleOff: rippleOff.value as Prop<boolean>,
                 }, {
                     default: () => useRenderButtonContent(slots, thisProps, iconId)
                 }),

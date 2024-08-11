@@ -36,7 +36,7 @@ export default defineComponent<TBsAvatar, TRecord, TRecord, ComputedOptions, Met
                             : (
                                 !Helper.isEmpty(thisProps.icon)
                                     ? h<TBsIcon>(BsIcon, {
-                                        size: <Prop<number>>useAvatarIconSize(thisProps),
+                                        size: useAvatarIconSize(thisProps) as Prop<number>,
                                         ...useCreateIconProps(thisProps),
                                     })
                                     : h('span',

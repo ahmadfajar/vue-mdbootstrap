@@ -44,6 +44,8 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         maxlength: validStringOrNumberProp,
         minlength: validStringOrNumberProp,
         rounded: booleanProp,
+        prefix: stringProp,
+        suffix: stringProp,
     },
     emits: [
         /**

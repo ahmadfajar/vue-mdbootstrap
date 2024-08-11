@@ -70,16 +70,16 @@ const _sealedObjErrMsg = 'This {1} is sealed to prevent adding new properties.';
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 23/07/2024 18:46
+ * @since  09/07/2018 modified: 11/08/2024 23:57
  */
 export default class BsModel implements ObjectBase {
     private readonly _idProperty: string;
     private readonly _dataProperty: string;
     private readonly _csrfConfig: Readonly<TCSRFConfig> | undefined;
+    private readonly _data: UnwrapNestedRefs<Map<string, unknown>>;
+    private readonly _proxy: IRestAdapter;
     private _restUrl: TRestConfig;
-    private _data: UnwrapNestedRefs<Map<string, unknown>>;
     private _schema: Map<string, unknown>;
-    private _proxy: IRestAdapter;
     protected _state: TModelState;
     public state: Readonly<TModelState>;
 
@@ -227,10 +227,6 @@ export default class BsModel implements ObjectBase {
     destroy(): void {
         this._schema.clear();
         this._data.clear();
-
-        // delete this._data;
-        // delete this._schema;
-        // delete this._proxy;
     }
 
     assignValue(field: string, newValue: unknown): void {
@@ -663,8 +659,8 @@ export default class BsModel implements ObjectBase {
         if (csrfUrl !== '') {
             const response = await this.proxy.adapterInstance.get(csrfUrl);
             headers['X-CSRF-TOKEN'] =
-                response.data[<string>this.csrfConfig?.dataField] ??
-                response.data[<string>this.csrfConfig?.responseField];
+                response.data[this.csrfConfig?.dataField as string] ??
+                response.data[this.csrfConfig?.responseField as string];
             config['headers'] = headers;
 
             return this.proxy.request(config, onRequest, onSuccess, onFailure);

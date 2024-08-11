@@ -33,27 +33,27 @@ import { useParseDate } from './datePickerApi';
 export function useParseDateTimeFromFormat(
     value?: string | number | Date,
     format?: string,
-    locale?: string,
+    locale?: string
 ): DateTime | undefined {
     if (value) {
         if (Helper.isString(value)) {
             try {
                 return !Helper.isEmpty(format)
-                    ? DateTime.fromFormat(<string>value, <string>format, {locale: locale})
-                    : DateTime.fromISO(<string>value, {locale: locale});
+                    ? DateTime.fromFormat(value, format, { locale: locale })
+                    : DateTime.fromISO(value, { locale: locale });
             } catch (e) {
                 try {
-                    return DateTime.fromSQL(<string>value, {locale: locale});
+                    return DateTime.fromSQL(value, { locale: locale });
                 } catch (e) {
                     return undefined;
                 }
             }
         } else if (Helper.isNumber(value)) {
-            return DateTime.fromSeconds(<number>value, {locale: locale});
+            return DateTime.fromSeconds(value, { locale: locale });
         } else if (value instanceof Date) {
             const result = DateTime.fromJSDate(value);
             if (!Helper.isEmpty(locale)) {
-                return result.setLocale(<string>locale);
+                return result.setLocale(locale);
             }
             return result;
         }
@@ -62,12 +62,12 @@ export function useParseDateTimeFromFormat(
     return undefined;
 }
 
-function createInputTextField(
+function createDateTimeInputField(
     emit: TEmitFn,
     props: Readonly<TDateTimeFieldOptionProps>,
     displayValue: Ref<string | undefined>,
     isFocused: Ref<boolean>,
-    isPopoverOpen: Ref<boolean>,
+    isPopoverOpen: Ref<boolean>
 ): VNode {
     return h('input', {
         ...useMakeInputBaseAttrs(props),
@@ -77,14 +77,17 @@ function createInputTextField(
         type: 'text',
         value: displayValue.value,
         style: {
-            cursor: 'default'
+            cursor: 'default',
         },
-        onBlur: (e: Event) =>
-            useOnFieldBlurred(emit, e, isFocused, (<boolean>props.disabled)),
-        onFocus: (e: Event) =>
-            useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
+        onBlur: (e: Event) => useOnFieldBlurred(emit, e, isFocused, props.disabled as boolean),
+        onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, props.disabled as boolean),
         onClick: () =>
-            useTogglePopoverState(emit, isPopoverOpen, <boolean>props.disabled, isPopoverOpen.value)
+            useTogglePopoverState(
+                emit,
+                isPopoverOpen,
+                (props.disabled || props.readonly) as boolean,
+                isPopoverOpen.value
+            ),
     });
 }
 
@@ -107,94 +110,125 @@ export function useRenderDateTimeField(
     showValidationError: ComputedRef<boolean>,
     hasValidated: ComputedRef<boolean>,
     hasError: ComputedRef<boolean>,
-    errorItems: ComputedRef<string[]>,
+    errorItems: ComputedRef<string[]>
 ): VNode {
     const thisProps = props as Readonly<TDateTimeFieldOptionProps>;
     const iconSize = 24;
 
     return useCreateFieldWrapper(
-        slots, iconSize, wrapperCss, thisProps,
+        slots,
+        iconSize,
+        wrapperCss,
+        thisProps,
         h(Fragment, [
-            h('div', {
-                class: controlCss.value,
-            }, [
-                useCreateFieldInnerWrapper(
-                    slots,
-                    thisProps,
-                    createInputTextField(emit, thisProps, displayValue, isFocused, isPopoverOpen),
-                    iconSize,
-                    calendarIcon.value,
-                    thisProps.prependIcon,
-                    useCreateValidationIcon(
-                        <TIconVariant>thisProps.actionIconVariant,
-                        hasValidated.value,
-                        hasError.value,
-                        <boolean>thisProps.validationIcon,
+            h(
+                'div',
+                {
+                    class: controlCss.value,
+                },
+                [
+                    useCreateFieldInnerWrapper(
+                        slots,
+                        thisProps,
+                        createDateTimeInputField(
+                            emit,
+                            thisProps,
+                            displayValue,
+                            isFocused,
+                            isPopoverOpen
+                        ),
                         iconSize,
-                    ),
-                    useCreateFieldActionIcon(
-                        showClearButton.value,
-                        <TIconVariant>thisProps.actionIconVariant,
-                        iconSize,
-                        () => useOnFieldValueCleared(emit, localFieldValue),
-                    ),
-                    undefined,
-                    {
-                        ref: activator,
-                        onMouseenter: () => {
-                            if (thisProps.openOnHover && !isPopoverOpen.value) {
-                                useTogglePopoverState(emit, isPopoverOpen, <boolean>thisProps.disabled, false);
-                            }
+                        calendarIcon.value,
+                        thisProps.prependIcon,
+                        useCreateValidationIcon(
+                            thisProps.actionIconVariant as TIconVariant,
+                            hasValidated.value,
+                            hasError.value,
+                            thisProps.validationIcon as boolean,
+                            iconSize
+                        ),
+                        useCreateFieldActionIcon(
+                            showClearButton.value,
+                            <TIconVariant>thisProps.actionIconVariant,
+                            iconSize,
+                            () => useOnFieldValueCleared(emit, localFieldValue)
+                        ),
+                        undefined,
+                        {
+                            ref: activator,
+                            onMouseenter: () => {
+                                if (thisProps.openOnHover && !isPopoverOpen.value) {
+                                    useTogglePopoverState(
+                                        emit,
+                                        isPopoverOpen,
+                                        (thisProps.disabled || thisProps.readonly) as boolean,
+                                        false
+                                    );
+                                }
+                            },
                         },
-                    },
-                    undefined,
-                    () => useTogglePopoverState(
-                        emit, isPopoverOpen, <boolean>thisProps.disabled, isPopoverOpen.value,
+                        undefined,
+                        () =>
+                            useTogglePopoverState(
+                                emit,
+                                isPopoverOpen,
+                                (thisProps.disabled || thisProps.readonly) as boolean,
+                                isPopoverOpen.value
+                            ),
+                        () =>
+                            useTogglePopoverState(
+                                emit,
+                                isPopoverOpen,
+                                (thisProps.disabled || thisProps.readonly) as boolean,
+                                isPopoverOpen.value
+                            )
                     ),
-                    () => useTogglePopoverState(
-                        emit, isPopoverOpen, <boolean>thisProps.disabled, isPopoverOpen.value,
+                    useRenderFieldFeedback(
+                        slots,
+                        thisProps,
+                        showHelpText.value,
+                        showValidationError.value,
+                        hasError.value,
+                        errorItems.value
                     ),
-                ),
-                useRenderFieldFeedback(
-                    slots,
-                    thisProps,
-                    showHelpText.value,
-                    showValidationError.value,
-                    hasError.value,
-                    errorItems.value,
-                ),
-            ]),
-            h(BsPopover, {
-                color: null,
-                space: (thisProps.outlined ? 2 : 1) as Prop<number>,
-                class: props.pickerCls,
-                placement: props.pickerPlacement,
-                transition: (props.transition || props.pickerTransition),
-                // @ts-ignore
-                open: isPopoverOpen.value as Prop<boolean>,
-                trigger: activator.value as Prop<HTMLElement>,
-                onClose: () => useTogglePopoverState(emit, isPopoverOpen, false, true),
-            }, {
-                default: () => h(BsDatePicker, {
-                    surfaceColor: props.pickerColor,
-                    headerColor: props.headerColor,
-                    headerPanel: props.headerPanel,
-                    landscape: props.landscapeMode,
-                    locale: locale.value as Prop<string>,
-                    readonly: (props.readonly || props.disabled),
-                    mode: pickerMode.value as Prop<TDateTimePickerMode>,
-                    modelValue: localFieldValue.value?.toJSDate() as Prop<Date | undefined>,
-                    width: props.pickerWidth,
-                    'onUpdate:model-value': (value: string) => {
-                        localFieldValue.value = useParseDate(value).setLocale(locale.value);
-                        emit(
-                            'update:model-value',
-                            localFieldValue.value?.toFormat(<string>thisProps.valueFormat),
-                        );
-                    },
-                })
-            })
+                ]
+            ),
+            h(
+                BsPopover,
+                {
+                    color: null,
+                    space: (thisProps.outlined ? 2 : 1) as Prop<number>,
+                    class: props.pickerCls,
+                    placement: props.pickerPlacement,
+                    transition: props.transition || props.pickerTransition,
+                    // @ts-ignore
+                    open: isPopoverOpen.value as Prop<boolean>,
+                    trigger: activator.value as Prop<HTMLElement>,
+                    onClose: () => useTogglePopoverState(emit, isPopoverOpen, false, true),
+                },
+                {
+                    default: () =>
+                        h(BsDatePicker, {
+                            surfaceColor: props.pickerColor,
+                            headerColor: props.headerColor,
+                            headerPanel: props.headerPanel,
+                            landscape: props.landscapeMode,
+                            locale: locale.value as Prop<string>,
+                            readonly: props.readonly || props.disabled,
+                            mode: pickerMode.value as Prop<TDateTimePickerMode>,
+                            modelValue: localFieldValue.value?.toJSDate() as Prop<Date | undefined>,
+                            width: props.pickerWidth,
+                            'onUpdate:model-value': (value: string) => {
+                                localFieldValue.value = useParseDate(value).setLocale(locale.value);
+                                emit(
+                                    'update:model-value',
+                                    localFieldValue.value?.toFormat(thisProps.valueFormat as string)
+                                );
+                            },
+                        }),
+                }
+            ),
         ]),
-        (node: VNode) => useOnTextFieldNodeMounted(thisProps, node),
+        (node: VNode) => useOnTextFieldNodeMounted(thisProps, node)
     );
 }

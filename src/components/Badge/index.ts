@@ -5,7 +5,7 @@ import "./badge.scss";
 
 const BsBadgePlugin: Plugin = {
     install: (app: App): void => {
-        app.component(<string>BsBadge.name, BsBadge);
+        app.component(BsBadge.name as string, BsBadge);
     }
 }
 

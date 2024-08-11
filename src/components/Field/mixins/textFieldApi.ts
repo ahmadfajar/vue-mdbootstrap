@@ -1,5 +1,5 @@
 import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
-import { createCommentVNode, h, nextTick, vModelText, withDirectives } from 'vue';
+import { createCommentVNode, h, nextTick, toDisplayString, vModelText, withDirectives } from 'vue';
 import {
     cssPrefix,
     useRenderSlotWithWrapper,
@@ -82,8 +82,8 @@ function createFieldIcon(
         },
         iconName
             ? h<TBsIcon>(BsIcon, {
-                  icon: <Prop<string>>iconName,
-                  size: <Prop<number | undefined>>iconSize,
+                  icon: iconName as Prop<string>,
+                  size: iconSize as Prop<number | undefined>,
               })
             : undefined
     );
@@ -309,7 +309,7 @@ export function useCreateTextFieldClasses(
     localValue: Ref<string | string[] | number | number[] | undefined | null>,
     isFocused: Ref<boolean>,
     showAppendIcon: boolean,
-    showPrependIcon?: boolean,
+    showPrependIcon?: boolean
 ): TRecord {
     return {
         [`${cssPrefix}field-control`]: true,
@@ -336,31 +336,41 @@ export function useMakeInputBaseAttrs(props: Readonly<TInputBaseProps>): TRecord
     };
 }
 
-function createInputTextField(
+function createTextInputField(
     props: Readonly<TTextFieldOptionProps>,
     type: string | undefined,
     autocomplete: string | boolean,
     emit: TEmitFn,
     localValue: Ref<string | number | undefined | null>,
     isFocused: Ref<boolean>
-): VNode {
-    return withDirectives(
-        h('input', {
-            ...useMakeInputBaseAttrs(props),
-            ...useInputTextFieldAttrs(props, autocomplete),
-            role: 'textbox',
-            type: type,
-            list: props.datalist,
-            maxlength: props.maxlength,
-            minlength: props.minlength,
-            'onUpdate:modelValue': (value: string | number | undefined | null) =>
-                useOnFieldValueUpdated(emit, localValue, value),
-            onBlur: (e: Event) => useOnFieldBlurred(emit, e, isFocused, <boolean>props.disabled),
-            onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, <boolean>props.disabled),
-            onKeydown: (e: KeyboardEvent) => emit('keydown', e),
-        }),
-        [[vModelText, localValue.value]]
-    );
+): VNode[] {
+    return [
+        props.prefix && (isFocused.value || localValue.value)
+            ? h('div', { class: `${cssPrefix}field-prefix` }, toDisplayString(props.prefix))
+            : createCommentVNode(' v-if-prefix '),
+        withDirectives(
+            h('input', {
+                ...useMakeInputBaseAttrs(props),
+                ...useInputTextFieldAttrs(props, autocomplete),
+                role: 'textbox',
+                type: type,
+                list: props.datalist,
+                maxlength: props.maxlength,
+                minlength: props.minlength,
+                'onUpdate:modelValue': (value: string | number | undefined | null) =>
+                    useOnFieldValueUpdated(emit, localValue, value),
+                onBlur: (e: Event) =>
+                    useOnFieldBlurred(emit, e, isFocused, props.disabled as boolean),
+                onFocus: (e: Event) =>
+                    useOnFieldFocused(emit, e, isFocused, props.disabled as boolean),
+                onKeydown: (e: KeyboardEvent) => emit('keydown', e),
+            }),
+            [[vModelText, localValue.value]]
+        ),
+        props.suffix && (isFocused.value || localValue.value)
+            ? h('div', { class: `${cssPrefix}field-suffix` }, toDisplayString(props.suffix))
+            : createCommentVNode(' v-if-suffix '),
+    ];
 }
 
 export function useRenderTextField(
@@ -399,7 +409,7 @@ export function useRenderTextField(
                 useCreateFieldInnerWrapper(
                     slots,
                     props,
-                    createInputTextField(
+                    createTextInputField(
                         props,
                         fieldType,
                         autocomplete,
@@ -411,15 +421,15 @@ export function useRenderTextField(
                     props.appendIcon,
                     props.prependIcon,
                     useCreateValidationIcon(
-                        <TIconVariant>props.actionIconVariant,
+                        props.actionIconVariant as TIconVariant,
                         hasValidated,
                         hasError,
-                        <boolean>props.validationIcon,
+                        props.validationIcon as boolean,
                         iconSize
                     ),
                     useCreateFieldActionIcon(
                         showClearButton,
-                        <TIconVariant>props.actionIconVariant,
+                        props.actionIconVariant as TIconVariant,
                         iconSize,
                         () => useOnFieldValueCleared(emit, localValue),
                         showPasswordToggle,
@@ -441,7 +451,7 @@ export function useRenderTextField(
     );
 }
 
-function createInputTextArea(
+function createTextAreaInputField(
     props: Readonly<TTextAreaOptionProps>,
     emit: TEmitFn,
     localValue: Ref<string | number | undefined | null>,
@@ -462,12 +472,12 @@ function createInputTextArea(
             },
             'onUpdate:modelValue': (value: string | number | undefined | null) =>
                 useOnFieldValueUpdated(emit, localValue, value),
-            onBlur: (e: Event) => useOnFieldBlurred(emit, e, isFocused, <boolean>props.disabled),
-            onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, <boolean>props.disabled),
+            onBlur: (e: Event) => useOnFieldBlurred(emit, e, isFocused, props.disabled as boolean),
+            onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, props.disabled as boolean),
             onKeydown: (e: KeyboardEvent) => emit('keydown', e),
             onInput: (e: InputEvent): void => {
                 if (canGrow) {
-                    const target = <HTMLElement>e.target;
+                    const target = e.target as HTMLElement;
                     target.style.height = 'auto';
                     nextTick().then(() => {
                         rowHeight.value = Helper.cssUnit(target.scrollHeight);
@@ -513,7 +523,7 @@ export function useRenderTextArea(
                 useCreateFieldInnerWrapper(
                     slots,
                     props,
-                    createInputTextArea(
+                    createTextAreaInputField(
                         props,
                         emit,
                         localValue,
@@ -525,15 +535,15 @@ export function useRenderTextArea(
                     props.appendIcon,
                     props.prependIcon,
                     useCreateValidationIcon(
-                        <TIconVariant>props.actionIconVariant,
+                        props.actionIconVariant as TIconVariant,
                         hasValidated,
                         hasError,
-                        <boolean>props.validationIcon,
+                        props.validationIcon as boolean,
                         iconSize
                     ),
                     useCreateFieldActionIcon(
                         showClearButton,
-                        <TIconVariant>props.actionIconVariant,
+                        props.actionIconVariant as TIconVariant,
                         iconSize,
                         () => useOnFieldValueCleared(emit, localValue)
                     )
@@ -552,9 +562,9 @@ export function useRenderTextArea(
     );
 }
 
-function onTextAreaNodeMounted(props: Readonly<TTextFieldOptionProps>, node: VNode): void {
+function onTextAreaNodeMounted(props: Readonly<TInputTextProps>, node: VNode): void {
     useOnFieldNodeMounted(props, node);
-    const element = <HTMLElement>node.el;
+    const element = node.el as HTMLElement;
 
     if (props.autofocus) {
         nextTick().then(() => {

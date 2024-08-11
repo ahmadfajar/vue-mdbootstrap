@@ -8,7 +8,7 @@
 .#{$prefix}chip, a.#{$prefix}chip {
     $disabled-bg: lighten($gray-500, 15%);
     $disabled-border-color: lighten($gray-500, 8%);
-    --#{$prefix}chip-border-radius: #{$border-radius-base};
+    --#{$prefix}chip-border-radius: #{$border-radius-lg};
     --#{$prefix}chip-border-width: 0;
     --#{$prefix}chip-font-weight: #{$font-weight-normal};
 
@@ -199,7 +199,7 @@
     }
 
     &.#{$prefix}chip-lg {
-        --#{$prefix}chip-border-radius: #{$border-radius-lg};
+        --#{$prefix}chip-border-radius: #{$border-radius-lg + .25};
         --#{$prefix}chip-padding-x: #{$padding-lg};
 
         font-size: var(--#{$prefix}chip-lg-font-size);

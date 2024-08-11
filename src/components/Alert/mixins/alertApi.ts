@@ -96,12 +96,12 @@ function doRenderAlert(
         props.dismissible
             ? h<TBsButton>(BsButton, {
                 class: 'ms-auto',
-                color: <Prop<string>>(
+                color: (
                     !(props.filled || props.solidFill)
                         ? alertColorName.value
-                        : ['light', 'light-grey'].includes(<string>props.color)
+                        : ['light', 'light-grey'].includes(props.color as string)
                             ? 'dark' : 'light text-white'
-                ),
+                ) as Prop<string>,
                 icon: 'close' as Prop<string>,
                 mode: 'icon' as Prop<TButtonMode>,
                 // @ts-ignore

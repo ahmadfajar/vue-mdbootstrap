@@ -151,6 +151,8 @@ export const numericFieldProps = {
         default: 1.0,
         validator: (v: string) => !isNaN(parseFloat(v))
     },
+    prefix: stringProp,
+    suffix: stringProp,
 }
 
 export const searchFieldProps = {

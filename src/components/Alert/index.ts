@@ -5,7 +5,7 @@ import "./alert.scss";
 
 const BsAlertPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(<string>BsAlert.name, BsAlert);
+        app.component(BsAlert.name as string, BsAlert);
     }
 }
 

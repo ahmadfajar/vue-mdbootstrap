@@ -17,11 +17,11 @@ export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
 
 export function useCreateIconProps(props: Readonly<TIconProps>): TRecord {
     return {
-        icon: <Prop<string | undefined>>props.icon,
+        icon: props.icon as Prop<string | undefined>,
         spin: props.iconSpin,
         pulse: props.iconPulse,
-        flip: <Prop<TFlipMode>>props.iconFlip,
-        rotate: <Prop<string | number>>props.iconRotation,
+        flip: props.iconFlip as Prop<TFlipMode>,
+        rotate: props.iconRotation as Prop<string | number>,
     }
 }
 

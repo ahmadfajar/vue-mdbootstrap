@@ -64,13 +64,13 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                         // onClick: (e: Event) => (<HTMLElement>e.target).focus(),
                         onKeydown: (e: KeyboardEvent) => {
                             if (['Space', 'Enter'].includes(e.code)) {
-                                (<HTMLElement>e.target).focus();
+                                (e.target as HTMLElement).focus();
                                 if (!thisProps.disabled && !thisProps.readonly && !item.disabled && !item.readonly) {
                                     if (thisProps.multiple) {
-                                        if ((<unknown[]>localValue.value).includes(<unknown>item.value)) {
-                                            localValue.value = (<unknown[]>localValue.value).filter(it => it !== item.value);
+                                        if ((localValue.value as unknown[]).includes(item.value)) {
+                                            localValue.value = (localValue.value as unknown[]).filter(it => it !== item.value);
                                         } else {
-                                            (<unknown[]>localValue.value).push(item.value);
+                                            (localValue.value as unknown[]).push(item.value);
                                         }
                                     } else {
                                         localValue.value = item.value;
@@ -83,7 +83,7 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                     }, [
                         makeInputEl(item, thisProps),
                         h<TBsButtonInner>(BsButtonInner, {
-                            rippleOff: <Prop<boolean>>rippleOff(item),
+                            rippleOff: rippleOff(item) as Prop<boolean>,
                         }, {
                             default: () => useRenderToggleItemContent(slots, item, thisProps)
                         }),
