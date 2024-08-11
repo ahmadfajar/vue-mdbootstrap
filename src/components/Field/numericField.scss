@@ -8,6 +8,14 @@
         margin-right: 0;
     }
 
+    &.#{$prefix}field-outlined, &.#{$prefix}field-filled {
+        &.readonly, &.disabled {
+            .#{$prefix}field-suffix, {
+                padding-right: 0.25rem;
+            }
+        }
+    }
+
     &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-filled) {
         .#{$prefix}field-overlay + .#{$prefix}action-icon {
             margin-left: 0;
