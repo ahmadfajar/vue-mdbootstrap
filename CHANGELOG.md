@@ -13,7 +13,7 @@ Released: August XX, 2024
   - Add properties `label`, `label-alignment`, `label-position` and `inner-cls`.
   - Replace property: `rounded` with `rounded-off`.
 - **BsTextField**, **BsNumericField**: add properties `prefix` and `suffix`.
-- **BsChip**: improve border-radius to comply material design spec.
+- **BsChip**: improve UI border-radius to comply material design spec.
 - **BsDateTimeField**: prevents the DatePicker from being displayed when the field is in read-only state.
 - **BsStore**: add `expression` property on `TFilterOption` object.
 
