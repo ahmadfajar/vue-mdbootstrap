@@ -192,6 +192,8 @@ export default abstract class AbstractStore implements ObjectBase {
      *    'update': '/api/user/{id}/save',
      *    'delete': '/api/user/{id}/delete'
      * };
+     *
+     * // above is an example of the returns data
      */
     get restUrl(): TRestConfig | undefined {
         return (this._config.restProxy ?? this._config.restUrl) as TRestConfig;

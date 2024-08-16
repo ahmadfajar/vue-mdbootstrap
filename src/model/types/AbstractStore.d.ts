@@ -217,6 +217,8 @@ export declare abstract class AbstractStore implements ObjectBase {
      *    'update': '/api/user/{id}/save',
      *    'delete': '/api/user/{id}/delete'
      * };
+     *
+     * // above is an example of the returns data
      */
     get restUrl(): TRestConfig | undefined;
     set restUrl(option: TRestConfig);
@@ -311,7 +313,7 @@ export declare abstract class AbstractStore implements ObjectBase {
     clearData(): void;
 
     /**
-     * Reset this model state back to their initial states, ie. `loading`, etc.
+     * Reset this model state back to their initial states, like `loading`, etc.
      */
     resetState(): void;
 
