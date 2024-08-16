@@ -3,7 +3,6 @@
   "include": [
     "src/types/*.d.ts",
     "src/**/types/*.d.ts",
-    "src/components/Icon/mixins/svgApi.ts",
     "src/components/Popover/mixins/PopupManager.ts",
     "src/mixins/colorUtils.ts",
     "src/mixins/CommonApi.ts",

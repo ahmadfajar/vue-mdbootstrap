@@ -50,25 +50,26 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "run-p type-check build:prod",
-    "build:dist": "rimraf dist && run-p type-check build:dev build:prod && run-p build:lib && run-p build:types && run-p css:beauty && run-p css:minify",
+    "dev": "rimraf dist && npm-run-all -s type-check build:dev",
+    "prod": "rimraf dist && npm-run-all -s type-check build:prod",
+    "dist": "rimraf dist && npm-run-all -s type-check build:* css:beauty css:minify",
     "build:dev": "vite build",
     "build:lib": "vite build --config vite.config.lib.ts",
     "build:prod": "vite build --config vite.config.prod.ts",
     "build:types": "rollup --config rollup.config.dts.mjs",
     "css:beauty": "cleancss --format beautify -o dist/bundle.css dist/bundle.css",
     "css:minify": "cleancss -o dist/bundle.min.css dist/bundle.css",
-    "type-check": "vue-tsc --noEmit -p tsconfig.build.json --composite false",
+    "type-check": "tsc --noEmit -p tsconfig.build.json --composite false",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "axios": "^1.7.3",
+    "axios": "^1.7.4",
     "body-scroll-lock": "^4.0.0-beta.0",
     "fast-xml-parser": "^4.4.1",
     "lodash": "^4.17.21",
     "luxon": "^3.5.0",
     "resize-observer-polyfill": "^1.5.1",
-    "vue": "^3.4.37"
+    "vue": "^3.4.38"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -77,26 +78,22 @@
     "@types/body-scroll-lock": "^3.1.2",
     "@types/lodash": "^4.17.7",
     "@types/luxon": "^3.4.2",
-    "@types/node": "^22.2.0",
-    "@typescript-eslint/eslint-plugin": "^8.0.1",
-    "@vitejs/plugin-vue": "^5.1.2",
-    "@vue/eslint-config-typescript": "^13.0.0",
+    "@types/node": "^22.4.0",
+    "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@vue/tsconfig": "^0.5.1",
     "bootstrap": "5.2.3",
     "clean-css-cli": "^5.6.3",
     "compass-mixins": "^0.12.12",
     "eslint": "^9.9.0",
     "eslint-plugin-es": "^4.1.0",
-    "eslint-plugin-vue": "^9.27.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^6.0.1",
     "rollup-plugin-dts": "^6.1.1",
     "sass": "^1.77.8",
-    "terser": "^5.31.5",
+    "terser": "^5.31.6",
     "typescript": "^5.5.4",
-    "vite": "^5.4.0",
-    "vue-router": "^4.4.3",
-    "vue-tsc": "^2.0.29"
+    "vite": "^5.4.1",
+    "vue-router": "^4.4.3"
   },
   "browserslist": [
     "> 5%",

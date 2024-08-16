@@ -1,6 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { TRecord } from '../../types';
-import { AbstractStore, TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from '../types';
+import { AbstractStore, IBsModel, TDataStoreConfig, TSortDirection, TSortOption } from '../types';
 
 /**
  * Data store class to work with collection of entity objects locally.
@@ -36,7 +36,7 @@ export declare class BsArrayStore extends AbstractStore {
      * If a filter or sorter has been applied before,
      * then the returned dataset will also be affected by it.
      */
-    get dataItems(): TBsModel[];
+    get dataItems(): IBsModel[];
 
     /**
      * Calculate means or average value based on the given field.
@@ -76,7 +76,7 @@ export declare class BsArrayStore extends AbstractStore {
      */
     assignData(data: unknown, silent?: boolean): void;
 
-    load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
+    load(data?: unknown): Promise<IBsModel[] | AxiosResponse>;
 
     /**
      * Sorts the internal dataset with the given criteria and returns
@@ -99,7 +99,7 @@ export declare class BsArrayStore extends AbstractStore {
     sort(
         options: string | string[] | TSortOption | TSortOption[],
         direction?: TSortDirection
-    ): TBsModel[];
+    ): IBsModel[];
 }
 
 export declare interface IArrayStore extends BsArrayStore {}

@@ -9,7 +9,7 @@ import {
 import {
     EventClosableProps,
     EventUpdateModelValueProps,
-    TBsModel,
+    IBsModel,
     TDataSource,
     TInputFieldProps,
     TLabelPosition
@@ -158,12 +158,12 @@ declare type AllowedComboboxProps = AllowedComponentProps &
     EventUpdateModelValueProps<string | number | string[] | number[] | undefined> & {
     onClear?: VoidFunction;
     onOpen?: VoidFunction;
-    onSelect?: (item: TBsModel) => void;
-    onDeselect?: (item: TBsModel) => void;
-    onDataBind?: (data: TBsModel[]) => void;
+    onSelect?: (item: IBsModel) => void;
+    onDeselect?: (item: IBsModel) => void;
+    onDataBind?: (data: IBsModel[]) => void;
     onDataError?: (error: unknown) => void;
-    onDataFilter?: (data: TBsModel[]) => void;
-    'onUpdate:selected-value'?: (selected: TBsModel[]) => void;
+    onDataFilter?: (data: IBsModel[]) => void;
+    'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
 }
 
 export declare const BsCombobox: {
@@ -171,7 +171,7 @@ export declare const BsCombobox: {
         $props: AllowedComboboxProps & TComboboxOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
-            'option-item'?: (arg: { item: TBsModel, index: number }) => VNode;
+            'option-item'?: (arg: { item: IBsModel, index: number }) => VNode;
             'append-inner'?: () => VNode;
             'append-outer'?: () => VNode;
             'prepend-inner'?: () => VNode;

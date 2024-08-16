@@ -4,7 +4,7 @@ import sumBy from 'lodash/sumBy';
 import { AbstractStore } from '../model';
 import type { TRecord } from '../types';
 import Helper from '../utils/Helper';
-import type { TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from './types';
+import type { IBsModel, TDataStoreConfig, TSortDirection, TSortOption } from './types';
 
 /**
  * Data store class to work with collection of entity objects locally.
@@ -26,7 +26,7 @@ import type { TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from './
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 21/03/2024 00:41
+ * @since  13/03/2019 modified: 17/08/2024 04:09
  */
 export default class BsArrayStore extends AbstractStore {
     /**
@@ -43,11 +43,11 @@ export default class BsArrayStore extends AbstractStore {
         }
     }
 
-    get dataItems(): TBsModel[] {
+    get dataItems(): IBsModel[] {
         const page =
             this.currentPage > 0 && this.currentPage <= this.totalPages ? this.currentPage - 1 : 0;
         const offset = this.pageSize > 0 ? page * this.pageSize : 0;
-        let result: TBsModel[];
+        let result: IBsModel[];
 
         if (this.filters.length > 0) {
             this._filteredItems = this.localFilter();
@@ -100,7 +100,7 @@ export default class BsArrayStore extends AbstractStore {
         this._onLoadingSuccess();
     }
 
-    load(data?: unknown): Promise<TBsModel[] | AxiosResponse> {
+    load(data?: unknown): Promise<IBsModel[] | AxiosResponse> {
         this._state.loading = true;
 
         return new Promise((resolve) => {
@@ -110,7 +110,7 @@ export default class BsArrayStore extends AbstractStore {
                 this._items = this.localSort();
                 this._onLoadingSuccess();
             }
-            
+
             resolve(this._items);
         });
     }
@@ -136,7 +136,7 @@ export default class BsArrayStore extends AbstractStore {
     sort(
         options: string | string[] | TSortOption | TSortOption[],
         direction: TSortDirection = 'asc'
-    ): TBsModel[] {
+    ): IBsModel[] {
         this.createSorters(options, direction, true);
         this._items = this.localSort();
 

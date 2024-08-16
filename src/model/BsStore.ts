@@ -6,7 +6,7 @@ import type { TRecord } from '../types';
 import Helper from '../utils/Helper';
 import { appendErrMsg, emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from './AbstractStore';
 import type {
-    TBsModel,
+    IBsModel,
     TDataStoreConfig,
     TMessageResponse,
     TSortDirection,
@@ -37,7 +37,7 @@ import type {
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 11/08/2024 23:45
+ * @since  20/07/2018 modified: 17/08/2024 04:10
  */
 export default class BsStore extends AbstractStore {
     /**
@@ -76,7 +76,7 @@ export default class BsStore extends AbstractStore {
         }
     }
 
-    get dataItems(): TBsModel[] {
+    get dataItems(): IBsModel[] {
         const page =
             this.currentPage > 0 && this.currentPage <= this.totalPages ? this.currentPage - 1 : 0;
         const offset = this.pageSize > 0 ? page * this.pageSize : 0;
@@ -136,7 +136,7 @@ export default class BsStore extends AbstractStore {
     }
 
     aggregateCountBy(field: string, value: unknown): number {
-        let results: TBsModel[];
+        let results: IBsModel[];
 
         if (this.remotePaging) {
             results = this.dataItems.filter((item) => {
@@ -177,7 +177,7 @@ export default class BsStore extends AbstractStore {
             // Persist the given item to the remote service before
             // store it on the internal dataset.
             this._state.updating = true;
-            const model = this.createModel(item) as TBsModel;
+            const model = this.createModel(item) as IBsModel;
 
             model
                 .save()
@@ -192,7 +192,7 @@ export default class BsStore extends AbstractStore {
         } else if (Helper.isObject(item)) {
             // Got incorrect entity object, just store as is on the internal dataset.
             this._state.updating = true;
-            this._items.push(this.createModel(item).seal() as TBsModel);
+            this._items.push(this.createModel(item).seal() as IBsModel);
             _finalizeAppend();
         } else {
             console.error(appendErrMsg);
@@ -208,7 +208,7 @@ export default class BsStore extends AbstractStore {
         this._onLoadingSuccess();
     }
 
-    delete(item: TBsModel): Promise<AxiosResponse | TMessageResponse> {
+    delete(item: IBsModel): Promise<AxiosResponse | TMessageResponse> {
         this._state.deleting = true;
 
         if (AbstractStore.isModel(item) && !Helper.isEmpty(item.restUrl?.delete)) {
@@ -248,7 +248,7 @@ export default class BsStore extends AbstractStore {
         }
     }
 
-    deletes(items: TBsModel[]): Promise<TMessageResponse> {
+    deletes(items: IBsModel[]): Promise<TMessageResponse> {
         this._state.deleting = true;
         this._state.hasError = false;
 
@@ -316,7 +316,7 @@ export default class BsStore extends AbstractStore {
         );
     }
 
-    load(data?: unknown): Promise<TBsModel[] | AxiosResponse> {
+    load(data?: unknown): Promise<IBsModel[] | AxiosResponse> {
         if (data && !Helper.isEmpty(data)) {
             this._state.loading = true;
             return new Promise((resolve) => {
@@ -351,14 +351,14 @@ export default class BsStore extends AbstractStore {
         }
     }
 
-    query(): Promise<TBsModel[] | AxiosResponse> {
+    query(): Promise<IBsModel[] | AxiosResponse> {
         return this.load();
     }
 
     async sort(
         options: string | string[] | TSortOption | TSortOption[],
         direction: TSortDirection = 'asc'
-    ): Promise<TBsModel[]> {
+    ): Promise<IBsModel[]> {
         this.createSorters(options, direction, true);
 
         if (!this.remoteSort) {

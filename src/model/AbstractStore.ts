@@ -1,4 +1,5 @@
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import type { Many } from 'lodash';
 import orderBy from 'lodash/orderBy';
 import { reactive, readonly, type UnwrapNestedRefs } from 'vue';
 import { BsModel, RestProxyAdapter } from '../model';
@@ -9,7 +10,6 @@ import type {
     ListenerFn,
     LoadedCallbackFn,
     ObjectBase,
-    TBsModel,
     TDataStoreConfig,
     TDataStoreState,
     TFilterLogic,
@@ -37,14 +37,14 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
  * methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 12/08/2024 00:28
+ * @since  15/03/2019 modified: 17/08/2024 03:19
  */
 export default abstract class AbstractStore implements ObjectBase {
     private _eventMap: Map<string, ListenerFn<any>[]>;
     protected _config: TDataStoreConfig;
     protected _filters: TFilterOption[];
-    protected _filteredItems: TBsModel[];
-    protected _items: TBsModel[];
+    protected _filteredItems: IBsModel[];
+    protected _items: IBsModel[];
     protected _proxy: IRestAdapter | undefined;
     protected _state: UnwrapNestedRefs<TDataStoreState>;
     public storeState: Readonly<UnwrapNestedRefs<TDataStoreState>>;
@@ -88,8 +88,8 @@ export default abstract class AbstractStore implements ObjectBase {
             initialCfg.pageSize && Helper.isNumber(initialCfg.pageSize) ? initialCfg.pageSize : -1;
 
         this._config = initialCfg;
-        this._filteredItems = [] as TBsModel[];
-        this._items = [] as TBsModel[];
+        this._filteredItems = [] as IBsModel[];
+        this._items = [] as IBsModel[];
 
         if (!Helper.isEmpty(initialCfg.filters)) {
             const filters = this.createFilters(initialCfg.filters);
@@ -181,17 +181,17 @@ export default abstract class AbstractStore implements ObjectBase {
      * Get REST URL configuration in the form <code>{key: url}</code>,
      * where the keys are: <tt>'save', 'fetch', 'delete', 'update'</tt>.
      *
+     * For backward compatibility you can override this function
+     * as needed on the inheritance class or put it on the constructor
+     * of the inheritance class or when instantiate the model.
+     *
      * @example
      * return {
      *    'save'  : '/api/user/create',
      *    'fetch' : '/api/user/{id}',
      *    'update': '/api/user/{id}/save',
      *    'delete': '/api/user/{id}/delete'
-     * }
-     *
-     * For backward compatibility you can override this function
-     * as needed on the inheritance class or put it on the constructor
-     * of the inheritance class or when instantiate the model.
+     * };
      */
     get restUrl(): TRestConfig | undefined {
         return (this._config.restProxy ?? this._config.restUrl) as TRestConfig;
@@ -206,7 +206,7 @@ export default abstract class AbstractStore implements ObjectBase {
     }
 
     get pageSize(): number {
-        return <number>this._config.pageSize;
+        return this._config.pageSize as number;
     }
 
     set pageSize(value: number) {
@@ -240,8 +240,8 @@ export default abstract class AbstractStore implements ObjectBase {
         this._config.filters = Array.isArray(values)
             ? values
             : Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)
-            ? [values]
-            : [];
+              ? [values]
+              : [];
 
         oldFilters =
             this._config.filters.length > 0
@@ -356,11 +356,11 @@ export default abstract class AbstractStore implements ObjectBase {
         this._state.hasError = false;
     }
 
-    find(property: string, value: unknown, startIndex = 0): TBsModel | undefined {
+    find(property: string, value: unknown, startIndex = 0): IBsModel | undefined {
         return this._items.find((item, idx) => item.get(property) === value && idx >= startIndex);
     }
 
-    findBy(predicate: (value: TBsModel, index: number) => boolean): TBsModel | undefined {
+    findBy(predicate: (value: IBsModel, index: number) => boolean): IBsModel | undefined {
         return this._items.find(predicate);
     }
 
@@ -370,7 +370,7 @@ export default abstract class AbstractStore implements ObjectBase {
         );
     }
 
-    localFilter(): TBsModel[] {
+    localFilter(): IBsModel[] {
         if (this.filters.length > 0) {
             return this._items.filter((item) => {
                 const conditions = [];
@@ -426,17 +426,16 @@ export default abstract class AbstractStore implements ObjectBase {
         }
     }
 
-    localSort(): TBsModel[] {
+    localSort(): IBsModel[] {
         const fields: string[] = [];
-        const orders: string[] = [];
+        const orders: Many<'asc' | 'desc'> = [];
 
         for (const sorter of this.sorters) {
             fields.push(<string>(sorter.property || sorter.field));
-            orders.push(sorter.direction.toLowerCase());
+            (orders as string[]).push(sorter.direction.toLowerCase());
         }
 
         if (fields.length > 0 && orders.length > 0) {
-            // @ts-ignore
             return orderBy(this._items, fields, orders);
         }
 
@@ -476,12 +475,12 @@ export default abstract class AbstractStore implements ObjectBase {
         );
     }
 
-    remove(items: TBsModel[] | TBsModel): void {
+    remove(items: IBsModel[] | IBsModel): void {
         if (Array.isArray(items)) {
             for (const item of items) {
                 this.remove(item);
             }
-        } else if (this.isCandidateForModel(items) || AbstractStore.isModel(items)) {
+        } else if (this.isCandidateForModel(items as TRecord) || AbstractStore.isModel(items)) {
             const idProperty = <string>this._config.idProperty;
             const index = this.findIndex(idProperty, items.get(idProperty));
             index > -1 && this.removeAt(index);
@@ -683,9 +682,9 @@ export default abstract class AbstractStore implements ObjectBase {
         return params;
     }
 
-    abstract load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
+    abstract load(data?: unknown): Promise<IBsModel[] | AxiosResponse>;
 
-    abstract get dataItems(): TBsModel[];
+    abstract get dataItems(): IBsModel[];
 
     /**
      * Append an item to the local dataset.
@@ -697,14 +696,14 @@ export default abstract class AbstractStore implements ObjectBase {
      */
     protected _append(item: TRecord, force = true, silent = false): void {
         if (this.isCandidateForModel(item)) {
-            this._items.push(this.createModel(item) as TBsModel);
+            this._items.push(this.createModel(item) as IBsModel);
             if (!silent) {
                 this._state.totalCount++;
                 this._state.length++;
             }
         } else if (force && !Helper.isPrimitive(item)) {
             if (Helper.isObject(item)) {
-                this._items.push(this.createModel(item).seal() as TBsModel);
+                this._items.push(this.createModel(item).seal() as IBsModel);
             } else {
                 this._items.push(Object.seal(item));
             }

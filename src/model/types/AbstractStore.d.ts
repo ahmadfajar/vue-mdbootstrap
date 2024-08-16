@@ -1,16 +1,15 @@
 import { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import { UnwrapNestedRefs } from 'vue';
 import { ObjectBase, TRecord } from '../../types';
 import {
     BsModel,
     IBsModel,
     IRestAdapter,
-    TBsModel,
     TCSRFConfig,
     TModelState,
     TRestConfig,
     TRestUrlOption,
 } from '../types';
-import { UnwrapNestedRefs } from 'vue';
 
 export declare type TFilterLogic = 'AND' | 'OR';
 
@@ -116,7 +115,7 @@ export declare type ListenerFn<T> = (arg: T) => void;
 
 export declare type ErrorCallbackFn = (error: AxiosError) => void;
 
-export declare type LoadedCallbackFn = (data: TBsModel[]) => void;
+export declare type LoadedCallbackFn = (data: IBsModel[]) => void;
 
 /**
  * Class AbstractStore is superclass of {@link BsArrayStore}, and {@link BsStore}.
@@ -126,8 +125,8 @@ export declare type LoadedCallbackFn = (data: TBsModel[]) => void;
 export declare abstract class AbstractStore implements ObjectBase {
     protected _config: TDataStoreConfig;
     protected _filters: TFilterOption[];
-    protected _filteredItems: TBsModel[];
-    protected _items: TBsModel[];
+    protected _filteredItems: IBsModel[];
+    protected _items: IBsModel[];
     protected _proxy: IRestAdapter | undefined;
     protected _state: UnwrapNestedRefs<TDataStoreState>;
 
@@ -206,6 +205,10 @@ export declare abstract class AbstractStore implements ObjectBase {
     /**
      * Get REST URL configuration in the form <code>{key: url}</code>,
      * where the keys are: <tt>'save', 'fetch', 'delete', 'update'</tt>.
+     *
+     * For backward compatibility you can override this function
+     * as needed on the inheritance class or put it on the constructor
+     * of the inheritance class or when instantiate the model.
      *
      * @example
      * return {
@@ -319,7 +322,7 @@ export declare abstract class AbstractStore implements ObjectBase {
      * @param value       The value to match
      * @param startIndex  The index to start searching at
      */
-    find(property: string, value: unknown, startIndex?: number): TBsModel | undefined;
+    find(property: string, value: unknown, startIndex?: number): IBsModel | undefined;
 
     /**
      * Finds the first matching item in the local dataset by function's predicate.
@@ -329,7 +332,7 @@ export declare abstract class AbstractStore implements ObjectBase {
      * @returns The item of the first element in the array that satisfies
      * the provided testing function. Otherwise, `undefined` is returned.
      */
-    findBy(predicate: (value: TBsModel, index: number) => boolean): TBsModel | undefined;
+    findBy(predicate: (value: IBsModel, index: number) => boolean): IBsModel | undefined;
 
     /**
      * Finds the index of the first matching Item in the local dataset by a specific field value.
@@ -345,12 +348,12 @@ export declare abstract class AbstractStore implements ObjectBase {
      * Filter the dataset locally and returns new array with
      * all elements that pass the test.
      */
-    localFilter(): TBsModel[];
+    localFilter(): IBsModel[];
 
     /**
      * Sorts the dataset locally and returns new sorted dataset.
      */
-    localSort(): TBsModel[];
+    localSort(): IBsModel[];
 
     /**
      * Check if the data in the local dataset is empty or not.
@@ -386,7 +389,7 @@ export declare abstract class AbstractStore implements ObjectBase {
      *
      * @param items Model instance or array of model instances to be removed
      */
-    remove(items: TBsModel[] | TBsModel): void;
+    remove<T extends BsModel>(items: T[] | T): void;
 
     /**
      * Removes the model instance(s) at the given index from the internal dataset.
@@ -448,7 +451,7 @@ export declare abstract class AbstractStore implements ObjectBase {
      *
      * @param data The record(s) to be assigned
      */
-    abstract load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
+    abstract load(data?: unknown): Promise<IBsModel[] | AxiosResponse>;
 
     /**
      * Returns dataset from the active page.
@@ -456,7 +459,7 @@ export declare abstract class AbstractStore implements ObjectBase {
      * If a filter or sorter has been applied before,
      * then the returned dataset will also be affected by it.
      */
-    abstract get dataItems(): TBsModel[];
+    abstract get dataItems(): IBsModel[];
 
     /**
      * Register event listener.

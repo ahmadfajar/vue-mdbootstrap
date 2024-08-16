@@ -41,6 +41,7 @@ export default defineConfig({
                 },
                 generatedCode: {
                     constBindings: true,
+                    preset: 'es2015'
                 },
                 interop: 'auto',
                 assetFileNames: 'bundle.[ext]',
@@ -62,9 +63,6 @@ export default defineConfig({
         banner: bannerText,
         treeShaking: true,
     },
-    // plugins: [
-    //   vue(),
-    // ],
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('./src', import.meta.url)),

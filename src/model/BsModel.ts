@@ -9,7 +9,6 @@ import type { UnwrapNestedRefs } from 'vue';
 import { reactive, readonly } from 'vue';
 import { RestProxyAdapter } from '../model';
 import type {
-    IBsModel,
     IRestAdapter,
     ObjectBase,
     TCSRFConfig,
@@ -70,7 +69,7 @@ const _sealedObjErrMsg = 'This {1} is sealed to prevent adding new properties.';
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 11/08/2024 23:57
+ * @since  09/07/2018 modified: 17/08/2024 02:45
  */
 export default class BsModel implements ObjectBase {
     private readonly _idProperty: string;
@@ -301,7 +300,7 @@ export default class BsModel implements ObjectBase {
         );
     }
 
-    freeze(): Readonly<IBsModel | BsModel> {
+    freeze(): Readonly<BsModel> {
         return Object.freeze(this);
     }
 
@@ -451,7 +450,7 @@ export default class BsModel implements ObjectBase {
         );
     }
 
-    seal(): IBsModel | BsModel {
+    seal(): BsModel {
         return Object.seal(this);
     }
 

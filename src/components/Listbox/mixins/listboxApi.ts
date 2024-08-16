@@ -18,7 +18,6 @@ import type {
     IBsModel,
     IBsStore,
     LoadedCallbackFn,
-    TBsModel,
     TDataListSchemaProps,
     TEmitFn,
     TListboxOptionProps,
@@ -415,7 +414,7 @@ function cloneDataItems(
     fieldName: string
 ): IBsModel[] {
     return dataSource.dataItems.map((it) => {
-        const tmpObj = dataSource.createModel(it.toObject());
+        const tmpObj = dataSource.createModel(it.toObject()) as IBsModel;
         if (!tmpObj.get('_oid')) {
             tmpObj.set('_oid', Helper.uuid(true));
         }
@@ -423,6 +422,7 @@ function cloneDataItems(
             '_selected',
             selectedItems.value.find((row) => row.get(fieldName) === it.get(fieldName)) != undefined
         );
+
         return tmpObj;
     });
 }
@@ -491,7 +491,7 @@ export function useRegisterListboxWatchers(
     const minItems = parseInt(<string>props.minSearchLength);
 
     if (dataSource) {
-        const listener: LoadedCallbackFn = (data: TBsModel[]) => {
+        const listener: LoadedCallbackFn = (data: IBsModel[]) => {
             if (data.length == 0) {
                 cacheItems.value = [];
             } else {

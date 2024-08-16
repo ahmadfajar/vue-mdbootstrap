@@ -4,26 +4,32 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
-import { EventUpdateModelValueProps, IArrayStore, IBsStore, TBsModel, TLabelPosition } from '../../../types';
+import {
+    EventUpdateModelValueProps,
+    IArrayStore,
+    IBsModel,
+    IBsStore,
+    TLabelPosition,
+} from '../../../types';
 
 export declare type TDataListSchemaProps = {
-    displayField: string,
-    valueField: string,
-    imageField?: string,
-    cascadeField?: string,
-    disableField?: string
-}
+    displayField: string;
+    valueField: string;
+    imageField?: string;
+    cascadeField?: string;
+    disableField?: string;
+};
 
 export declare type TDataSource = {
-    proxy: IBsStore | IArrayStore,
+    proxy: IBsStore | IArrayStore;
     /**
      * The data schema which will be used to recognize and render
      * the data items on the Listbox container.
      */
-    schema?: TDataListSchemaProps,
-}
+    schema?: TDataListSchemaProps;
+};
 
 export declare type TListboxOptionProps = {
     /**
@@ -118,26 +124,28 @@ export declare type TListboxOptionProps = {
      * Display image with **circle** shape for each item that has image property
      */
     circleImage?: boolean;
-}
+};
 
 export declare type TBsListbox = ComponentObjectPropsOptions<TListboxOptionProps>;
 
-declare type AllowedListboxProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+declare type AllowedListboxProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
     EventUpdateModelValueProps<string | number | string[] | number[] | undefined> & {
-    onSelect?: (item: TBsModel) => void;
-    onDeselect?: (item: TBsModel) => void;
-    onDataBind?: (data: TBsModel[]) => void;
-    onDataError?: (error: unknown) => void;
-    onDataFilter?: (data: TBsModel[]) => void;
-    'onUpdate:search-text'?: (search?: string) => void;
-    'onUpdate:selected-value'?: (selected: TBsModel[]) => void;
-}
+        onSelect?: (item: IBsModel) => void;
+        onDeselect?: (item: IBsModel) => void;
+        onDataBind?: (data: IBsModel[]) => void;
+        onDataError?: (error: unknown) => void;
+        onDataFilter?: (data: IBsModel[]) => void;
+        'onUpdate:search-text'?: (search?: string) => void;
+        'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
+    };
 
 export declare const BsListbox: {
-    new(): {
+    new (): {
         $props: AllowedListboxProps & TListboxOptionProps;
         $slots: {
-            'option-item'?: (arg: { item: TBsModel, index: number }) => VNode;
+            'option-item'?: (arg: { item: IBsModel; index: number }) => VNode;
             'empty-data-msg'?: () => VNode;
             'not-found-msg'?: () => VNode;
         };

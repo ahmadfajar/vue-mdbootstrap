@@ -54,6 +54,7 @@ export default defineConfig({
                 },
                 generatedCode: {
                     constBindings: true,
+                    preset: 'es2015'
                 },
                 interop: 'auto',
                 assetFileNames: 'bundle.[ext]',

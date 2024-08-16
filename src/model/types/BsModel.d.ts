@@ -46,6 +46,7 @@ export declare type TCSRFConfig = {
     tokenName?: string;
     dataField?: string;
     /**
+     * @deprecated
      * Backward compatibility.
      */
     responseField?: string;
@@ -233,7 +234,7 @@ export declare class BsModel implements ObjectBase {
     /**
      * Freeze this data model instance, makes it Readonly and prevents any modification.
      */
-    freeze(): Readonly<IBsModel | BsModel>;
+    freeze(): Readonly<BsModel>;
 
     /**
      * Get a field value.
@@ -310,7 +311,7 @@ export declare class BsModel implements ObjectBase {
      *
      * Values of present properties can still be changed as long as they are writable.
      */
-    seal(): IBsModel | BsModel;
+    seal(): BsModel;
 
     /**
      * Convert field attributes that exists in the schema definition into a Javascript plain object.
@@ -416,8 +417,6 @@ export declare class BsModel implements ObjectBase {
     ): Promise<AxiosResponse>;
 }
 
-export declare interface IBsModel extends BsModel {}
-
-export declare type TBsModel = IBsModel & {
+export declare interface IBsModel extends BsModel {
     [P: string]: unknown;
-};
+}

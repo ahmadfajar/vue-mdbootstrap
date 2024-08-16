@@ -1,6 +1,13 @@
 import { AxiosInstance, AxiosResponse } from 'axios';
 import { TRecord } from '../../types';
-import { AbstractStore, TBsModel, TDataStoreConfig, TSortDirection, TSortOption } from '../types';
+import {
+    AbstractStore,
+    BsModel,
+    IBsModel,
+    TDataStoreConfig,
+    TSortDirection,
+    TSortOption,
+} from '../types';
 
 export declare type TMessageResponse = {
     success: boolean;
@@ -47,7 +54,7 @@ export declare class BsStore extends AbstractStore {
      * If a filter or sorter has been applied before,
      * then the returned dataset will also be affected by it.
      */
-    get dataItems(): TBsModel[];
+    get dataItems(): IBsModel[];
 
     /**
      * Check if the data Store is using server filtering or local filtering.
@@ -130,7 +137,7 @@ export declare class BsStore extends AbstractStore {
      *
      * @param item Data Model instance to be removed
      */
-    delete(item: TBsModel): Promise<AxiosResponse | TMessageResponse>;
+    delete<T extends BsModel>(item: T): Promise<AxiosResponse | TMessageResponse>;
 
     /**
      * Delete specific items from internal dataset as well as from remote
@@ -139,7 +146,7 @@ export declare class BsStore extends AbstractStore {
      *
      * @param items Collection of data Model instances to be removed
      */
-    deletes(items: TBsModel[]): Promise<TMessageResponse>;
+    deletes<T extends BsModel>(items: T[]): Promise<TMessageResponse>;
 
     /**
      * Fetch single item from the remote server via REST API and
@@ -155,7 +162,7 @@ export declare class BsStore extends AbstractStore {
      *
      * @param data The new data to replace the internal dataset
      */
-    load(data?: unknown): Promise<TBsModel[] | AxiosResponse>;
+    load(data?: unknown): Promise<IBsModel[] | AxiosResponse>;
 
     /**
      * Load data from the remote server and assign query parameters and configuration.
@@ -163,7 +170,7 @@ export declare class BsStore extends AbstractStore {
      * @deprecated
      * Use `load` instead.
      */
-    query(): Promise<TBsModel[] | AxiosResponse>;
+    query(): Promise<IBsModel[] | AxiosResponse>;
 
     /**
      * Sorts the internal dataset with the given criteria and returns
@@ -185,7 +192,7 @@ export declare class BsStore extends AbstractStore {
     sort(
         options: string | string[] | TSortOption | TSortOption[],
         direction?: TSortDirection
-    ): Promise<TBsModel[]>;
+    ): Promise<IBsModel[]>;
 }
 
 export declare interface IBsStore extends BsStore {}
