@@ -55,14 +55,14 @@ export default class Helper {
         }
 
         for (let i = 0; i < last; i++) {
-            if (_temp === null) {
+            if (_temp == null) {
                 return fallbackFn;
             }
             // @ts-ignore
             _temp = _temp[path[i]];
         }
 
-        if (_temp === null) {
+        if (_temp == null) {
             return fallbackFn;
         }
 
@@ -118,7 +118,7 @@ export default class Helper {
      */
     static isEmptyObject(value: unknown): value is null | undefined {
         return (
-            value === null ||
+            value == null ||
             typeof value === 'undefined' ||
             (Helper.isObject(value) && Object.entries(value).length === 0)
         );
@@ -131,7 +131,7 @@ export default class Helper {
      * @returns TRUE if the given value is an Array otherwise FALSE
      */
     static isArray(value: unknown): value is any[] {
-        return value !== null && Array.isArray(value);
+        return value != null && Array.isArray(value);
     }
 
     /**
@@ -141,7 +141,7 @@ export default class Helper {
      * @returns TRUE if the given value is a Function otherwise FALSE
      */
     static isFunction(value: unknown): value is CallableFunction {
-        return value !== null && typeof value === 'function';
+        return value != null && typeof value === 'function';
     }
 
     /**
@@ -151,7 +151,7 @@ export default class Helper {
      * @returns TRUE if the given value is a Number otherwise FALSE
      */
     static isNumber(value: unknown): value is number {
-        return value !== null && typeof value === 'number';
+        return value != null && typeof value === 'number';
     }
 
     /**
@@ -161,7 +161,7 @@ export default class Helper {
      * @returns TRUE if the given value is an object otherwise FALSE
      */
     static isObject(value: unknown): value is object {
-        return value !== null && typeof value === 'object';
+        return value != null && typeof value === 'object';
     }
 
     /**
@@ -172,7 +172,7 @@ export default class Helper {
      */
     static isPrimitive(value: unknown): value is string | number | boolean | symbol {
         return (
-            value !== null &&
+            value != null &&
             (typeof value === 'string' ||
                 typeof value === 'number' ||
                 typeof value === 'boolean' ||
@@ -187,7 +187,7 @@ export default class Helper {
      * @returns TRUE if the given value is a String otherwise FALSE
      */
     static isString(value: unknown): value is string {
-        return value !== null && typeof value === 'string';
+        return value != null && typeof value === 'string';
     }
 
     /**
@@ -253,7 +253,7 @@ export default class Helper {
      * @returns The sorted array
      */
     static sortArrayObj(items: Array<object>, key: string, isDescending = false) {
-        if (key === null) {
+        if (key == null) {
             return items;
         }
 
@@ -271,7 +271,7 @@ export default class Helper {
             }
 
             // Check if both cannot be evaluated
-            if (sortA === null && sortB === null) {
+            if (sortA == null && sortB == null) {
                 return 0;
             }
 
