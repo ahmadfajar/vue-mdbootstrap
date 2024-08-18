@@ -7,7 +7,7 @@ import type {
     TRecord,
     TTabItemOptionProps,
     TTabsBaseProps,
-    TTabsVariant
+    TTabsVariant,
 } from '../../../types';
 import Helper from '../../../utils/Helper';
 
@@ -15,7 +15,7 @@ import Helper from '../../../utils/Helper';
  * Class TabsProvider which is used for BsTab's component dependency injection.
  *
  * @author Ahmad Fajar
- * @since  22/11/2022, modified: 03/07/2023 00:04
+ * @since  22/11/2022, modified: 18/08/2024 19:57
  */
 class TabsProvider {
     private _tabItems: ComponentInternalInstance[];
@@ -42,19 +42,19 @@ class TabsProvider {
     }
 
     get alignment(): TAlignment {
-        return this._props.alignment || ("start" as TAlignment);
+        return this._props.alignment || ('start' as TAlignment);
     }
 
     get contentTransition(): string {
-        return this._props.contentTransition || "fade";
+        return this._props.contentTransition || 'fade';
     }
 
     get iconPosition(): TPlacementPosition {
-        return this._props.iconPosition || ("left" as TPlacementPosition);
+        return this._props.iconPosition || ('left' as TPlacementPosition);
     }
 
     get iconSize(): number {
-        return (<number | undefined>this._props.iconSize) || 24;
+        return <number | undefined>this._props.iconSize || 24;
     }
 
     get tabClass(): string | string[] | undefined {
@@ -115,12 +115,16 @@ class TabsProvider {
      */
     unRegisterTab(key: string | number): void {
         if (Helper.isNumber(key)) {
-            this._tabItems.splice(<number>key, 1);
-            this._tabPanels.splice(<number>key, 1);
+            this._tabItems.splice(key, 1);
+            this._tabPanels.splice(key, 1);
         } else {
-            let idx = this._tabPanels.findIndex(el => (<TTabItemOptionProps>el.props).id === key);
+            let idx = this._tabPanels.findIndex(
+                (el) => (el.props as TTabItemOptionProps).id === key
+            );
             if (idx === -1) {
-                idx = this._tabItems.findIndex(el => (<TTabItemOptionProps>el.props).id === key);
+                idx = this._tabItems.findIndex(
+                    (el) => (el.props as TTabItemOptionProps).id === key
+                );
             }
 
             this._tabItems.splice(idx, 1);
@@ -143,29 +147,30 @@ class TabsProvider {
 
         this.tabItems.forEach((el, idx) => {
             const pid = (<TTabItemOptionProps>el.props).id;
-            if (Helper.isNumber(key) && (key === idx)) {
-                (<TTabItemOptionProps>el.props).active = true;
+            if (Helper.isNumber(key) && key === idx) {
+                (el.props as TTabItemOptionProps).active = true;
             } else {
-                (<TTabItemOptionProps>el.props).active = Helper.isString(key) && pid === `tabItem-${key}`;
+                (el.props as TTabItemOptionProps).active =
+                    Helper.isString(key) && pid === `tabItem-${key}`;
             }
         });
         this.tabPanels.forEach((el, idx) => {
-            const pid = (<TTabItemOptionProps>el.props).id;
-            if ((Helper.isNumber(key) && (key === idx)) || (Helper.isString(key) && pid === key)) {
-                (<TTabItemOptionProps>el.props).active = true;
-                if (isRef((<TRecord>el.exposed).isActive)) {
-                    (<Ref<boolean>>(<TRecord>el.exposed).isActive).value = true;
+            const pid = (el.props as TTabItemOptionProps).id;
+            if ((Helper.isNumber(key) && key === idx) || (Helper.isString(key) && pid === key)) {
+                (el.props as TTabItemOptionProps).active = true;
+                if (isRef((el.exposed as TRecord).isActive)) {
+                    ((el.exposed as TRecord).isActive as Ref<boolean>).value = true;
                 } else {
-                    (<TRecord>el.exposed).isActive = true;
+                    (el.exposed as TRecord).isActive = true;
                 }
 
                 this.triggerEvent(el, idx);
             } else {
-                (<TTabItemOptionProps>el.props).active = false;
-                if (isRef((<TRecord>el.exposed).isActive)) {
-                    (<Ref<boolean>>(<TRecord>el.exposed).isActive).value = false;
+                (el.props as TTabItemOptionProps).active = false;
+                if (isRef((el.exposed as TRecord).isActive)) {
+                    ((el.exposed as TRecord).isActive as Ref<boolean>).value = false;
                 } else {
-                    (<TRecord>el.exposed).isActive = false;
+                    (el.exposed as TRecord).isActive = false;
                 }
             }
             // console.log(`tabPane-${pid}:active`, (<TTabItemOptionProps>el.props).active);

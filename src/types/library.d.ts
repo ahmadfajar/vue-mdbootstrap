@@ -8,7 +8,7 @@ import {
     VNode,
     VNodeProps,
 } from 'vue';
-import { RouteLocationRaw } from 'vue-router';
+import { RouteLocationAsRelativeGeneric, RouteLocationRaw } from 'vue-router';
 import { INotificationProvider } from '../components/Notification/types';
 
 export declare type TBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xs';
@@ -59,8 +59,28 @@ export declare type TRouterLinkProps = AllowedComponentProps &
     };
 
 export declare type TRouterOptionProps = {
+    /**
+     * Css class when element is active.
+     */
     activeClass?: string;
+    /**
+     * Create `to` property for the `<RouterLink>` component,
+     * if [vue-router](https://router.vuejs.org/) exist.
+     */
+    location?: RouteLocationAsRelativeGeneric;
+    /**
+     * Shortcut to create `to` property for the `<RouterLink>` component with only the given **path**,
+     * if [vue-router](https://router.vuejs.org/) exist.
+     */
     path?: string;
+    /**
+     * Shortcut to create `to` property for the `<RouterLink>` component with only the given
+     * **path-name**, if [vue-router](https://router.vuejs.org/) exist.
+     */
+    pathName?: string;
+    /**
+     * Absolute or relative url when [vue-router](https://router.vuejs.org/) doesn't exist.
+     */
     url?: string;
 };
 

@@ -3,6 +3,16 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.0.11
+
+Released: August XX, 2024
+
+### Features & Improvements
+
+- **BsListNavItem**, **BsListTile**, **BsTab**, **BsTabItem**:
+  - Add `path-name` and `location` properties to better accommodate the `<RouterLink>` property.
+
+
 ## v2.0.10
 
 Released: August 12, 2024
@@ -10,7 +20,7 @@ Released: August 12, 2024
 ### Features & Improvements
 
 - **BsProgressBar**: 
-  - Add properties `label`, `label-alignment`, `label-position` and `inner-cls`.
+  - Add properties: `label`, `label-alignment`, `label-position` and `inner-cls`.
   - Replace property: `rounded` with `rounded-off`.
 - **BsTextField**, **BsNumericField**: add properties `prefix` and `suffix`.
 - **BsChip**: improve UI border-radius to comply material design spec.

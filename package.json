@@ -1,6 +1,6 @@
 {
   "name": "vue-mdbootstrap",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Bootstrap5 Material Design Components for Vue.js",
   "author": {
     "name": "Ahmad Fajar",
@@ -30,8 +30,8 @@
     "component.d.ts",
     "package.json",
     "CHANGELOG.md",
-    "README.md",
-    "LICENSE.md"
+    "LICENSE.md",
+    "README.md"
   ],
   "exports": {
     ".": {

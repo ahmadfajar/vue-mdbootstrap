@@ -47,22 +47,22 @@ export function useTabViewClassNames(
                 ? 'flex-column flex-lg-row'
                 : 'nav-fill'
             : orientation.value === 'vertical'
-            ? 'flex-column h-100'
-            : '',
+              ? 'flex-column h-100'
+              : '',
         props.alignment === 'center' && ['left', 'right'].includes(props.tabPosition as string)
             ? 'justify-content-center'
             : ['right', 'end'].includes(props.alignment as string) &&
-              ['left', 'right'].includes(props.tabPosition as string)
-            ? 'justify-content-end'
-            : '',
+                ['left', 'right'].includes(props.tabPosition as string)
+              ? 'justify-content-end'
+              : '',
         props.tabPosition === 'top'
             ? `${cssPrefix}tab-top`
             : props.tabPosition === 'bottom'
-            ? `${cssPrefix}tab-bottom order-last`
-            : props.tabPosition === 'right'
-            ? `${cssPrefix}tab-right`
-            : `${cssPrefix}tab-left`,
-        ['material', 'modern'].includes(<string>props.variant) && props.color
+              ? `${cssPrefix}tab-bottom order-last`
+              : props.tabPosition === 'right'
+                ? `${cssPrefix}tab-right`
+                : `${cssPrefix}tab-left`,
+        ['material', 'modern'].includes(props.variant as string) && props.color
             ? `bg-${props.color}`
             : '',
     ];
@@ -70,7 +70,7 @@ export function useTabViewClassNames(
     if (Helper.isString(props.innerClass) && !Helper.isEmpty(props.innerClass)) {
         cssClasses.push(props.innerClass);
     } else if (!Helper.isEmpty(props.innerClass)) {
-        cssClasses = cssClasses.concat(<string | string[]>props.innerClass);
+        cssClasses = cssClasses.concat(props.innerClass as string | string[]);
     }
 
     return cssClasses;
@@ -208,7 +208,9 @@ function createTabItemRouter(
         ...tabItemAttrs(props),
         class: itemClasses.value,
         activeClass: props.activeClass,
-        to: !props.disabled ? props.path : undefined,
+        to: !props.disabled
+            ? (props.location ?? (props.pathName ? { name: props.pathName } : props.path))
+            : undefined,
         // onClick: (e: Event) => tabItemOnClick(props, provider, tabIndex.value, e),
     };
     if (mountedEvent) {
@@ -267,13 +269,13 @@ export function useRenderTabLabel(
 ): Array<VNode> {
     return [
         renderTabIconWithCondition(
-            !Helper.isEmpty(props.icon) && ['left', 'top'].includes(<string>props.iconPosition),
+            !Helper.isEmpty(props.icon) && ['left', 'top'].includes(props.iconPosition as string),
             props,
             props.iconSize
         ),
         props.label
             ? h(
-                  ['left', 'right'].includes(<string>props.iconPosition) ? 'span' : 'div',
+                  ['left', 'right'].includes(props.iconPosition as string) ? 'span' : 'div',
                   {
                       class: {
                           'ms-2':
@@ -293,7 +295,7 @@ export function useRenderTabLabel(
               )
             : createCommentVNode(' BsTabLabel ', true),
         renderTabIconWithCondition(
-            !Helper.isEmpty(props.icon) && ['right', 'bottom'].includes(<string>props.iconPosition),
+            !Helper.isEmpty(props.icon) && ['right', 'bottom'].includes(props.iconPosition as string),
             props,
             props.iconSize
         ),
@@ -357,7 +359,7 @@ function renderVerticalTabView(
                                 key: `tab-item-${idx}`,
                                 ...createTabItemProps(
                                     props,
-                                    <Readonly<TTabItemOptionProps>>it.props,
+                                    it.props as Readonly<TTabItemOptionProps>,
                                     provider,
                                     idx
                                 ),
@@ -369,7 +371,7 @@ function renderVerticalTabView(
             h(
                 'div',
                 {
-                    class: useMergeClass('col tab-content', <string>props.contentClass),
+                    class: useMergeClass('col tab-content', props.contentClass as string),
                 },
                 slots.default && slots.default()
             ),
@@ -458,8 +460,8 @@ function renderHorizontalTabView(
                                     props.alignment === 'center'
                                         ? 'justify-content-center'
                                         : ['right', 'end'].includes(props.alignment as string)
-                                        ? 'justify-content-end'
-                                        : '',
+                                          ? 'justify-content-end'
+                                          : '',
                                 ],
                             },
                             tabItems.value.map((it, idx) =>
@@ -467,7 +469,7 @@ function renderHorizontalTabView(
                                     key: `tab-item-${idx}`,
                                     ...createTabItemProps(
                                         props,
-                                        <Readonly<TTabItemOptionProps>>it.props,
+                                        it.props as Readonly<TTabItemOptionProps>,
                                         provider,
                                         idx
                                     ),
@@ -491,7 +493,7 @@ function renderHorizontalTabView(
             h(
                 'div',
                 {
-                    class: useMergeClass(['tab-content'], <string>props.contentClass),
+                    class: useMergeClass(['tab-content'], props.contentClass as string),
                 },
                 slots.default && slots.default()
             ),

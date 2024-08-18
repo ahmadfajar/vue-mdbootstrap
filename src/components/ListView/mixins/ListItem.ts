@@ -3,7 +3,6 @@ import { isRef } from 'vue';
 import type { IListItem, TEmitFn, TRecord } from '../../../types';
 import Helper from '../../../utils/Helper';
 
-
 class ListItem implements IListItem {
     public readonly uid: string;
     public readonly tag: string;
@@ -12,11 +11,7 @@ class ListItem implements IListItem {
     private _children: Array<IListItem>;
     private _parent: IListItem | undefined;
 
-    constructor(
-        uid: string, tag: string,
-        component: ComponentInternalInstance,
-        emitter: TEmitFn
-    ) {
+    constructor(uid: string, tag: string, component: ComponentInternalInstance, emitter: TEmitFn) {
         this.uid = uid;
         this.tag = tag;
         this._component = component;
@@ -49,7 +44,7 @@ class ListItem implements IListItem {
     }
 
     addChild(child: IListItem): number {
-        const idx = this._children.findIndex(it => it.uid === child.uid);
+        const idx = this._children.findIndex((it) => it.uid === child.uid);
         if (idx === -1) {
             return this._children.push(child);
         }
@@ -58,7 +53,7 @@ class ListItem implements IListItem {
     }
 
     removeChild(id: string): void {
-        const idx = this._children.findIndex(it => it.uid === id);
+        const idx = this._children.findIndex((it) => it.uid === id);
         if (idx > -1) {
             this._children[idx].destroy();
             this._children.splice(idx, 1);
@@ -66,7 +61,7 @@ class ListItem implements IListItem {
     }
 
     hasChild(): boolean {
-        return this.children.length > 0
+        return this.children.length > 0;
     }
 
     fireEvent(name: string, ...args: unknown[]): void {
@@ -77,10 +72,10 @@ class ListItem implements IListItem {
         this.component.props.active = value;
 
         if (!Helper.isEmpty(this.component.exposed)) {
-            if (isRef((<TRecord>this.component.exposed).isActive)) {
-                (<Ref<boolean>>(<TRecord>this.component.exposed).isActive).value = value;
+            if (isRef((this.component.exposed as TRecord).isActive)) {
+                ((this.component.exposed as TRecord).isActive as Ref<boolean>).value = value;
             } else {
-                (<TRecord>this.component.exposed).isActive = value;
+                (this.component.exposed as TRecord).isActive = value;
             }
         }
 

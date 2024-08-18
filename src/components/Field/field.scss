@@ -160,18 +160,18 @@
             }
         }
 
-        .#{$prefix}field-prefix, .#{$prefix}field-suffix, {
+        .#{$prefix}field-prefix, .#{$prefix}field-suffix {
             opacity: $text-field-opacity;
             font-weight: var(--#{$prefix}field-inline-text-font-weight);
             padding-top: var(--#{$prefix}field-padding-top);
             white-space: nowrap;
         }
 
-        .#{$prefix}field-prefix, {
+        .#{$prefix}field-prefix {
             padding-left: var(--#{$prefix}field-padding-start);
         }
 
-        .#{$prefix}field-suffix, {
+        .#{$prefix}field-suffix {
             padding-right: var(--#{$prefix}field-padding-end);
         }
 
@@ -534,12 +534,12 @@
         &:not(.append-icon) {
             --#{$prefix}field-padding-end: 0;
 
-            .#{$prefix}field-suffix, {
+            .#{$prefix}field-suffix {
                 padding-left: $padding-sm + 0.125rem;
             }
         }
 
-        .#{$prefix}field-prefix, {
+        .#{$prefix}field-prefix {
             padding-right: $padding-sm + 0.125rem;
         }
 

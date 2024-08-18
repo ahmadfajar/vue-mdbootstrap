@@ -215,7 +215,8 @@ export function useRenderRouter(
 }
 
 /**
- * Check if component instance has a `$router` and `path` property has been defined.
+ * Check if `$router` exists within the application context and one of component
+ * property that related to `<RouterLink>` has been defined.
  *
  * @param props The component properties.
  * @returns TRUE when Router property
@@ -223,8 +224,10 @@ export function useRenderRouter(
 export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
     const vm = getCurrentInstance();
     return (
-        vm != null &&
-        !Helper.isEmpty(props.path) &&
+        vm !== null &&
+        (!Helper.isEmpty(props.path) ||
+            !Helper.isEmpty(props.pathName) ||
+            Helper.isObject(props.location)) &&
         (vm.appContext.config.globalProperties.$router != null ||
             vm.appContext.config.globalProperties.$route != null)
     );
@@ -248,6 +251,24 @@ export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
 export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefined {
     const vm = getCurrentInstance();
     return vm?.appContext.config.globalProperties.$router?.currentRoute;
+}
+
+/**
+ * Check if the given route match the navigation element.
+ *
+ * @param route     The current route to check
+ * @param navTarget The navigation element
+ */
+export function useIsRouteMatch(
+    route: Ref<RouteLocationNormalizedLoaded>,
+    navTarget: TRouterOptionProps
+): boolean {
+    return (
+        navTarget.path === route.value.path ||
+        `${navTarget.path}/` === route.value.path ||
+        route.value.name === navTarget.pathName ||
+        route.value.name === navTarget.location?.name
+    );
 }
 
 /**

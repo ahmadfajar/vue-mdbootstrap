@@ -11,7 +11,7 @@ import {
     shallowRef,
     watchEffect
 } from 'vue';
-import { useCurrentRoute, useHasRouter } from '../../mixins/CommonApi';
+import { useCurrentRoute, useHasRouter, useIsRouteMatch } from '../../mixins/CommonApi';
 import type { IListItem, IListViewProvider, TBsListNavItem, TListNavItemOptionProps, TRecord } from '../../types';
 import ListItem from './mixins/ListItem';
 import {
@@ -57,7 +57,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
         if (useHasRouter(cmpProps)) {
             const route = useCurrentRoute();
             watchEffect(() => {
-                if (provider && (route?.value.path === cmpProps.path || route?.value.path.startsWith(cmpProps.path!))) {
+                if (provider && route && useIsRouteMatch(route, cmpProps)) {
                     provider.activeItem = refItem.value;
                     let parent = refItem.value?.parent;
                     while (parent) {
@@ -84,7 +84,7 @@ export default defineComponent<TBsListNavItem, TRecord, TRecord, ComputedOptions
                 hasRouter.value = useHasRouter(cmpProps);
                 if (hasRouter.value) {
                     const route = useCurrentRoute();
-                    if (route && (route.value.path === cmpProps.path || route?.value.path.startsWith(cmpProps.path!))) {
+                    if (route && useIsRouteMatch(route, cmpProps)) {
                         refItem.value?.setActive(true);
                     }
                 }

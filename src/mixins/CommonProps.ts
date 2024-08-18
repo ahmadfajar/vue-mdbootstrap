@@ -57,6 +57,11 @@ export const validNumberGtZeroProp = {
     validator: (value: string) => parseInt(value, 10) > 0
 }
 
+export const objectProp = {
+    type: Object,
+    default: undefined,
+}
+
 export const tagProp = {
     type: String,
     default: "div",
@@ -85,10 +90,20 @@ export const defaultTransitionProp = {
 export const routerProps = {
     activeClass: stringProp,
     /**
+     * Internal, the `to` property of `<RouterLink>` component.
+     * @type {Object}
+     */
+    location: objectProp,
+    /**
      * Internal, router or navigation path.
      * @type {string}
      */
     path: stringProp,
+    /**
+     * Internal, router or navigation path name.
+     * @type {string}
+     */
+    pathName: stringProp,
     /**
      * Navigation url.
      * @type {string}
