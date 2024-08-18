@@ -255,13 +255,18 @@ export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefine
     return vm?.appContext.config.globalProperties.$router?.currentRoute;
 }
 
-function findRouteByName(search: TRouterOptionProps) {
+/**
+ * Find a route from the existing loaded routes.
+ *
+ * @param search The route name to search
+ */
+function findRouteByName(search: string) {
     const router = useRouter();
     const routes = router.getRoutes();
 
     const findMatches = (children: RouteRecordRaw[]) =>
         children.find((it): boolean => {
-            if (it.name === search.pathName) {
+            if (it.name === search) {
                 return true;
             } else if (it.children && it.children.length > 0) {
                 return !!findMatches(it.children);
@@ -271,7 +276,7 @@ function findRouteByName(search: TRouterOptionProps) {
         });
 
     return routes.find((it): boolean => {
-        if (it.name === search.pathName) {
+        if (it.name === search) {
             return true;
         } else if (it.children.length > 0) {
             return !!findMatches(it.children);
@@ -297,7 +302,7 @@ export function useIsRouteMatch(
             return true;
         }
 
-        const result = findRouteByName(navTarget);
+        const result = findRouteByName(navTarget.pathName);
         if (result) {
             return result.path === _route.path || _route.path.startsWith(`${result.path}/`);
         }
