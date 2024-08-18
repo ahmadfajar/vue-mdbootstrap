@@ -18,9 +18,11 @@ import {
     renderSlot,
     resolveComponent,
     Transition,
+    unref,
     withCtx,
 } from 'vue';
-import type { RouteLocationNormalizedLoaded } from 'vue-router';
+import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router';
+import { useRouter } from 'vue-router';
 import type {
     IHttpService,
     INotificationProvider,
@@ -253,8 +255,33 @@ export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefine
     return vm?.appContext.config.globalProperties.$router?.currentRoute;
 }
 
+function findRouteByName(search: TRouterOptionProps) {
+    const router = useRouter();
+    const routes = router.getRoutes();
+
+    const findMatches = (children: RouteRecordRaw[]) =>
+        children.find((it): boolean => {
+            if (it.name === search.pathName) {
+                return true;
+            } else if (it.children && it.children.length > 0) {
+                return !!findMatches(it.children);
+            }
+
+            return false;
+        });
+
+    return routes.find((it): boolean => {
+        if (it.name === search.pathName) {
+            return true;
+        } else if (it.children.length > 0) {
+            return !!findMatches(it.children);
+        }
+        return false;
+    });
+}
+
 /**
- * Check if the given route match the navigation element.
+ * Check if the given route match the navigation component.
  *
  * @param route     The current route to check
  * @param navTarget The navigation element
@@ -263,11 +290,25 @@ export function useIsRouteMatch(
     route: Ref<RouteLocationNormalizedLoaded>,
     navTarget: TRouterOptionProps
 ): boolean {
+    const _route = unref(route);
+
+    if (navTarget.pathName) {
+        if (_route.name === navTarget.pathName) {
+            return true;
+        }
+
+        const result = findRouteByName(navTarget);
+        if (result) {
+            return result.path === _route.path || _route.path.startsWith(`${result.path}/`);
+        }
+    }
+
     return (
-        navTarget.path === route.value.path ||
-        `${navTarget.path}/` === route.value.path ||
-        route.value.name === navTarget.pathName ||
-        route.value.name === navTarget.location?.name
+        navTarget.path === _route.path ||
+        (navTarget.path && _route.path.startsWith(`${navTarget.path}/`)) ||
+        navTarget.location?.path === _route.path ||
+        (navTarget.location?.path && _route.path.startsWith(`${navTarget.location.path}/`)) ||
+        navTarget.location?.name === _route.name
     );
 }
 
