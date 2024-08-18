@@ -59,8 +59,7 @@
     "build:types": "rollup --config rollup.config.dts.mjs",
     "css:beauty": "cleancss --format beautify -o dist/bundle.css dist/bundle.css",
     "css:minify": "cleancss -o dist/bundle.min.css dist/bundle.css",
-    "type-check": "tsc --noEmit -p tsconfig.build.json --composite false",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore"
+    "type-check": "tsc --noEmit -p tsconfig.build.json --composite false"
   },
   "dependencies": {
     "axios": "^1.7.4",
@@ -79,13 +78,10 @@
     "@types/lodash": "^4.17.7",
     "@types/luxon": "^3.4.2",
     "@types/node": "^22.4.0",
-    "@typescript-eslint/eslint-plugin": "^8.1.0",
     "@vue/tsconfig": "^0.5.1",
     "bootstrap": "5.2.3",
     "clean-css-cli": "^5.6.3",
     "compass-mixins": "^0.12.12",
-    "eslint": "^9.9.0",
-    "eslint-plugin-es": "^4.1.0",
     "npm-run-all": "^4.1.5",
     "rimraf": "^6.0.1",
     "rollup-plugin-dts": "^6.1.1",
