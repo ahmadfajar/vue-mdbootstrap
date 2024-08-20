@@ -139,6 +139,13 @@ declare type AllowedListboxProps = AllowedComponentProps &
         onDataFilter?: (data: IBsModel[]) => void;
         'onUpdate:search-text'?: (search?: string) => void;
         'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
+        '@select'?: (item: IBsModel) => void;
+        '@deselect'?: (item: IBsModel) => void;
+        '@data-bind'?: (data: IBsModel[]) => void;
+        '@data-error'?: (error: unknown) => void;
+        '@data-filter'?: (data: IBsModel[]) => void;
+        '@update:search-text'?: (search?: string) => void;
+        '@update:selected-value'?: (selected: IBsModel[]) => void;
     };
 
 export declare const BsListbox: {

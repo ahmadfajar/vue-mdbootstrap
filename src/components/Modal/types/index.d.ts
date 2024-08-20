@@ -155,6 +155,14 @@ declare type AllowedLightboxProps = AllowedComponentProps & ComponentCustomProps
     'onExec-rotate-right'?: (target: TImageDataset, rotate: number) => void;
     'onExec-zoomin'?: (target: TImageDataset, zoom: number) => void;
     'onExec-zoomout'?: (target: TImageDataset, zoom: number) => void;
+    '@change'?: (value: TImageDataset, index: number) => void;
+    '@exec-delete'?: (target: TImageDataset) => void;
+    '@exec-download'?: (target: TImageDataset) => void;
+    '@exec-info'?: (target: TImageDataset) => void;
+    '@exec-rotate-left'?: (target: TImageDataset, rotate: number) => void;
+    '@exec-rotate-right'?: (target: TImageDataset, rotate: number) => void;
+    '@exec-zoomin'?: (target: TImageDataset, zoom: number) => void;
+    '@exec-zoomout'?: (target: TImageDataset, zoom: number) => void;
 };
 
 export declare const BsLightbox: {

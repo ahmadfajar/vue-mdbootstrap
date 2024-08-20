@@ -38,6 +38,7 @@ export declare type TBsContent = ComponentObjectPropsOptions<TContainerOptionPro
 
 export declare type AllowedContainerProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
     onResize?: (target: HTMLElement) => void;
+    '@resize'?: (target: HTMLElement) => void;
 }
 
 export declare const BsAppContainer: {

@@ -6,7 +6,7 @@ import {
     VNode,
     VNodeProps
 } from 'vue';
-import { EventClosableProps, EventUpdateOpenProps, TPopoverPosition } from '../../../types';
+import { EventUpdateOpenProps, EventVoidClosableProps, TPopoverPosition } from '../../../types';
 
 export declare type TDropdownMenuOptionProps = {
     /**
@@ -50,7 +50,7 @@ export declare type TDropdownMenuOptionProps = {
 export declare type TBsDropdownMenu = ComponentObjectPropsOptions<TDropdownMenuOptionProps>;
 
 declare type AllowedDropdownMenuProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventClosableProps & EventUpdateOpenProps;
+    VNodeProps & EventVoidClosableProps & EventUpdateOpenProps;
 
 export declare const BsDropdownMenu: {
     new(): {

@@ -2,6 +2,7 @@ import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOption
 import {
     computed,
     defineComponent,
+    getCurrentInstance,
     inject,
     nextTick,
     onBeforeUpdate,
@@ -42,7 +43,8 @@ export default defineComponent<
     ],
     setup(props, { emit, expose, slots }) {
         const thisProps = props as Readonly<TListTileOptionProps>;
-        const vm = shallowRef<IListItem>();
+        const instance = shallowRef(getCurrentInstance());
+        const listItem = shallowRef<IListItem>();
         const isActive = ref<boolean | undefined>(thisProps.active);
         const hasRouter = ref<boolean>(useHasRouter(thisProps));
         const hasLink = ref<boolean>(useHasLink(thisProps));
@@ -63,10 +65,11 @@ export default defineComponent<
                 }
             }
         );
+
         onBeforeUpdate(() => {
             if (hasRouter.value) {
                 const route = useCurrentRoute();
-                if (route && useIsRouteMatch(route, thisProps)) {
+                if (route && useIsRouteMatch(instance, route, thisProps)) {
                     isActive.value = true;
                     nextTick().then(() => {
                         emit('update:active', true);
@@ -74,12 +77,22 @@ export default defineComponent<
                 }
             }
         });
+        
         onMounted(() => {
+            instance.value = getCurrentInstance();
             hasRouter.value = useHasRouter(thisProps);
             hasLink.value = useHasLink(thisProps);
         });
 
         return () =>
-            useRenderListTile(tagName.value, slots, emit, thisProps, tileClasses, vm, provider);
+            useRenderListTile(
+                tagName.value,
+                slots,
+                emit,
+                thisProps,
+                tileClasses,
+                listItem,
+                provider
+            );
     },
 });

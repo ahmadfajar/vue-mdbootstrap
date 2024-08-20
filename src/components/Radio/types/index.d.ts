@@ -107,6 +107,7 @@ export declare type TBsRadioGroup = ComponentObjectPropsOptions<TRadioGroupOptio
 declare type AllowedRadioProps = AllowedComponentProps & ComponentCustomProps &
     VNodeProps & EventUpdateModelValueProps<string | number | boolean> & {
     onChecked?: (checked: boolean) => void;
+    '@checked'?: (checked: boolean) => void;
 }
 
 declare type AllowedRadioGroupProps = AllowedComponentProps & ComponentCustomProps &

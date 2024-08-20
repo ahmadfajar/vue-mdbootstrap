@@ -219,6 +219,8 @@ export declare type TBsListTileSubtitle = ComponentObjectPropsOptions<TListTileT
 declare type AllowedListViewProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
     onChange?: (value: IListItem, oldValue: IListItem) => void;
     'onUpdate:modelValue'?: (value: IListItem) => void;
+    '@change'?: (value: IListItem, oldValue: IListItem) => void;
+    '@update:modelValue'?: (value: IListItem) => void;
 }
 
 export declare const BsListView: {
@@ -243,6 +245,8 @@ export declare const BsListNav: {
 declare type AllowedListItemProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
     'onClick'?: (event: Event, node?: RendererNode | null) => void;
     'onUpdate:active'?: (active: boolean) => void;
+    '@click'?: (event: Event, node?: RendererNode | null) => void;
+    '@update:active'?: (active: boolean) => void;
 }
 
 export declare const BsListNavItem: {

@@ -44,6 +44,7 @@ export declare type TBsTooltip = ComponentObjectPropsOptions<TTooltipOptionProps
 declare type AllowedTooltipProps = AllowedComponentProps &
     ComponentCustomProps & VNodeProps & {
     'onUpdate:show'?: (show: boolean) => void;
+    '@update:show'?: (show: boolean) => void;
 }
 export declare const BsTooltip: {
     new(): {

@@ -11,6 +11,7 @@ Released: August XX, 2024
 
 - **BsListNavItem**, **BsListTile**, **BsTab**, **BsTabItem**:
   - Add `path-name` and `location` properties to better accommodate the `<RouterLink>` property.
+- **BsListNavItem**, **BsListTile**: improve route matcher
 
 
 ## v2.0.10

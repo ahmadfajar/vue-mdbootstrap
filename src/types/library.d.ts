@@ -157,15 +157,23 @@ export declare interface IEventResult {
 }
 
 export declare type EventClosableProps = {
+    onClose?: (msg: string) => void;
+    '@close'?: (msg: string) => void;
+};
+
+export declare type EventVoidClosableProps = {
     onClose?: VoidFunction;
+    '@close'?: VoidFunction;
 };
 
 export declare type EventUpdateOpenProps = {
     'onUpdate:open'?: (state: boolean) => void;
+    '@update:open'?: (state: boolean) => void;
 };
 
 export declare type EventUpdateModelValueProps<T> = {
     'onUpdate:model-value'?: (value: T) => void;
+    '@update:model-value'?: (value: T) => void;
 };
 
 export declare interface IVNode extends VNode {

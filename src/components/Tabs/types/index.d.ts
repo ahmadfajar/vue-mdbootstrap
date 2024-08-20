@@ -108,6 +108,12 @@ declare type AllowedTabsProps = AllowedComponentProps & ComponentCustomProps &
         newIndex: number,
         oldIndex?: number,
     ) => void;
+    '@change'?: (
+        newTab: ComponentInternalInstance,
+        oldTab: ComponentInternalInstance | undefined,
+        newIndex: number,
+        oldIndex?: number,
+    ) => void;
 };
 
 export declare const BsTab: {

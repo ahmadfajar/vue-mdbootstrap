@@ -7,8 +7,8 @@ import {
     VNodeProps
 } from 'vue';
 import {
-    EventClosableProps,
     EventUpdateModelValueProps,
+    EventVoidClosableProps,
     TInputFieldProps,
     TPopoverPosition
 } from '../../../types';
@@ -201,11 +201,15 @@ declare type AllowedDatePickerProps = AllowedComponentProps & ComponentCustomPro
     VNodeProps & EventUpdateModelValueProps<string>;
 
 declare type AllowedDateTimeFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
-    EventClosableProps & EventUpdateModelValueProps<string> & {
+    EventVoidClosableProps & EventUpdateModelValueProps<string> & {
     onBlur?: (event: Event) => void;
     onFocus?: (event: Event) => void;
     onClear?: VoidFunction;
     onOpen?: VoidFunction;
+    '@blur'?: (event: Event) => void;
+    '@focus'?: (event: Event) => void;
+    '@clear'?: VoidFunction;
+    '@open'?: VoidFunction;
 }
 
 export declare const BsDatePicker: {

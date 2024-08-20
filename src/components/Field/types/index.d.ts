@@ -366,6 +366,10 @@ declare type AllowedTextFieldProps = AllowedComponentProps & ComponentCustomProp
     onClear?: VoidFunction;
     onFocus?: EventListener;
     onKeydown?: EventListener;
+    '@blur'?: EventListener;
+    '@clear'?: VoidFunction;
+    '@focus'?: EventListener;
+    '@keydown'?: EventListener;
 }
 
 export declare const BsTextField: {
@@ -447,6 +451,11 @@ declare type AllowedChipFieldProps = AllowedComponentProps & ComponentCustomProp
     onFocus?: EventListener;
     onKeydown?: EventListener;
     'onDelete-item'?: (deletedItem: string) => void;
+    '@blur'?: EventListener;
+    '@clear'?: VoidFunction;
+    '@focus'?: EventListener;
+    '@keydown'?: EventListener;
+    '@delete-item'?: (deletedItem: string) => void;
 }
 
 export declare const BsChipField: {
@@ -495,6 +504,10 @@ declare type AllowedNumericFieldProps = AllowedComponentProps & ComponentCustomP
     onClear?: VoidFunction;
     onFocus?: EventListener;
     onKeydown?: EventListener;
+    '@blur'?: EventListener;
+    '@clear'?: VoidFunction;
+    '@focus'?: EventListener;
+    '@keydown'?: EventListener;
 }
 
 export declare const BsNumericField: {
@@ -541,6 +554,12 @@ declare type AllowedSearchFieldProps = AllowedComponentProps & ComponentCustomPr
     onOpen?: VoidFunction;
     onFocus?: EventListener;
     onSearch?: (value: string) => void;
+    '@blur'?: EventListener;
+    '@clear'?: VoidFunction;
+    '@close'?: VoidFunction;
+    '@open'?: VoidFunction;
+    '@focus'?: EventListener;
+    '@search'?: (value: string) => void;
 }
 
 export declare const BsSearchField: {

@@ -6,8 +6,7 @@ import {
     VNode,
     VNodeProps
 } from 'vue';
-import { TLabelPosition } from '../../../types';
-import { EventClosableProps, EventUpdateModelValueProps, TIconProps } from '../../../types';
+import { EventUpdateModelValueProps, EventVoidClosableProps, TIconProps, TLabelPosition } from '../../../types';
 
 export declare type TChipValue = {
     id: string;
@@ -179,14 +178,17 @@ export declare type TBsChip = ComponentObjectPropsOptions<TChipOptionProps>;
 export declare type TBsChipGroup = ComponentObjectPropsOptions<TChipGroupOptionProps>;
 
 declare type AllowedChipProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventClosableProps & EventUpdateModelValueProps<boolean> & {
+    VNodeProps & EventVoidClosableProps & EventUpdateModelValueProps<boolean> & {
     'onUpdate:active'?: (active: boolean) => void;
+    '@update:active'?: (active: boolean) => void;
 }
 
 declare type AllowedChipGroupProps = AllowedComponentProps & ComponentCustomProps &
     VNodeProps & EventUpdateModelValueProps<TChipValue | TChipValue[] | null> & {
     onChange?: (newValue: TChipValue | TChipValue[] | null) => void;
     'onItem:close'?: (dismissedItem: TChipValue) => void;
+    '@change'?: (newValue: TChipValue | TChipValue[] | null) => void;
+    '@item:close'?: (dismissedItem: TChipValue) => void;
 }
 
 export declare const BsChip: {

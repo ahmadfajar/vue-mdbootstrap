@@ -120,6 +120,7 @@ export declare type TBsColorPicker = ComponentObjectPropsOptions<TColorPickerOpt
 declare type AllowedColorPickerProps = AllowedComponentProps & ComponentCustomProps &
     VNodeProps & EventUpdateOpenProps & EventUpdateModelValueProps<string> & {
     'onUpdate:mode'?: (mode: TColorPickerMode) => void;
+    '@update:mode'?: (mode: TColorPickerMode) => void;
 }
 
 export declare const BsColorPicker: {

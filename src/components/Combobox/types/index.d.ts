@@ -7,8 +7,8 @@ import {
     VNodeProps
 } from 'vue';
 import {
-    EventClosableProps,
     EventUpdateModelValueProps,
+    EventVoidClosableProps,
     IBsModel,
     TDataSource,
     TInputFieldProps,
@@ -154,7 +154,7 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
 export declare type TBsCombobox = ComponentObjectPropsOptions<TComboboxOptionProps>;
 
 declare type AllowedComboboxProps = AllowedComponentProps &
-    ComponentCustomProps & VNodeProps & EventClosableProps &
+    ComponentCustomProps & VNodeProps & EventVoidClosableProps &
     EventUpdateModelValueProps<string | number | string[] | number[] | undefined> & {
     onClear?: VoidFunction;
     onOpen?: VoidFunction;
@@ -164,6 +164,14 @@ declare type AllowedComboboxProps = AllowedComponentProps &
     onDataError?: (error: unknown) => void;
     onDataFilter?: (data: IBsModel[]) => void;
     'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
+    '@clear'?: VoidFunction;
+    '@open'?: VoidFunction;
+    '@select'?: (item: IBsModel) => void;
+    '@deselect'?: (item: IBsModel) => void;
+    '@data-bind'?: (data: IBsModel[]) => void;
+    '@data-error'?: (error: unknown) => void;
+    '@data-filter'?: (data: IBsModel[]) => void;
+    '@update:selected-value'?: (selected: IBsModel[]) => void;
 }
 
 export declare const BsCombobox: {

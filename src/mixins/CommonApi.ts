@@ -2,6 +2,7 @@ import type { AxiosInstance } from 'axios';
 import type {
     ComponentInternalInstance,
     Ref,
+    ShallowRef,
     Slots,
     TransitionProps,
     VNode,
@@ -21,8 +22,11 @@ import {
     unref,
     withCtx,
 } from 'vue';
-import type { RouteLocationNormalizedLoaded, RouteRecordRaw } from 'vue-router';
-import { useRouter } from 'vue-router';
+import type {
+    RouteLocationAsRelativeGeneric,
+    RouteLocationNormalizedLoaded,
+    RouteRecordRaw,
+} from 'vue-router';
 import type {
     IHttpService,
     INotificationProvider,
@@ -258,11 +262,13 @@ export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefine
 /**
  * Find a route from the existing loaded routes.
  *
+ * @param vm     Component internal instance
  * @param search The route name to search
  */
-function findRouteByName(search: string) {
-    const router = useRouter();
-    const routes = router.getRoutes();
+function findRouteByName(vm: ShallowRef<ComponentInternalInstance | null>, search: string) {
+    const router = vm.value?.appContext.config.globalProperties.$router;
+    const routes = router?.getRoutes();
+    // console.log('routes:', routes);
 
     const findMatches = (children: RouteRecordRaw[]) =>
         children.find((it): boolean => {
@@ -275,7 +281,7 @@ function findRouteByName(search: string) {
             return false;
         });
 
-    return routes.find((it): boolean => {
+    return routes?.find((it): boolean => {
         if (it.name === search) {
             return true;
         } else if (it.children.length > 0) {
@@ -286,35 +292,106 @@ function findRouteByName(search: string) {
 }
 
 /**
+ * Check if a location match the current route.
+ *
+ * @param vm        Component internal instance
+ * @param route     Current route to check
+ * @param location  The location to check
+ * @returns TRUE if all property of `location` match with the given `route`.
+ */
+function isRouteMatchByLocation(
+    vm: ShallowRef<ComponentInternalInstance | null>,
+    route: RouteLocationNormalizedLoaded,
+    location?: RouteLocationAsRelativeGeneric
+): boolean {
+    if (!location) {
+        return false;
+    }
+
+    if (
+        location.path === route.path ||
+        (location.path &&
+            (route.path.startsWith(`${location.path}/`) ||
+                route.path.startsWith(`${location.path}?`)))
+    ) {
+        return true;
+    }
+
+    if (location.name) {
+        if (location.params) {
+            const entries1 = Object.entries(route.params);
+            const entries2 = Object.entries(location.params as object);
+
+            const found = entries1.every((el1): boolean => {
+                return entries2.some((el2): boolean => {
+                    return el1[0] == el2[0] && el1[1] == el2[1];
+                });
+            });
+
+            if (found && route.name === location.name) {
+                return true;
+            }
+        }
+
+        if (route.name === location.name) {
+            return true;
+        }
+
+        // fallback using partial match
+        const result = findRouteByName(vm, location.name.toString());
+        // console.log('found-route:', result);
+        if (result) {
+            return (
+                result.path === route.path ||
+                route.path.startsWith(`${result.path}/`) ||
+                route.path.startsWith(`${result.path}?`)
+            );
+        }
+    }
+
+    return false;
+}
+
+/**
  * Check if the given route match the navigation component.
  *
- * @param route     The current route to check
- * @param navTarget The navigation element
+ * @param vm        Component internal instance
+ * @param route     Current route to check
+ * @param navTarget The navigation properties
  */
 export function useIsRouteMatch(
+    vm: ShallowRef<ComponentInternalInstance | null>,
     route: Ref<RouteLocationNormalizedLoaded>,
     navTarget: TRouterOptionProps
 ): boolean {
     const _route = unref(route);
 
+    if (
+        navTarget.path === _route.path ||
+        (navTarget.path &&
+            (_route.path.startsWith(`${navTarget.path}/`) ||
+                _route.path.startsWith(`${navTarget.path}?`)))
+    ) {
+        return true;
+    }
     if (navTarget.pathName) {
         if (_route.name === navTarget.pathName) {
             return true;
         }
 
-        const result = findRouteByName(navTarget.pathName);
+        // fallback using partial match
+        const result = findRouteByName(vm, navTarget.pathName);
+        // console.log('found-route:', result);
         if (result) {
-            return result.path === _route.path || _route.path.startsWith(`${result.path}/`);
+            return (
+                result.path === _route.path ||
+                _route.path.startsWith(`${result.path}/`) ||
+                _route.path.startsWith(`${result.path}?`)
+            );
         }
     }
 
-    return (
-        navTarget.path === _route.path ||
-        (navTarget.path && _route.path.startsWith(`${navTarget.path}/`)) ||
-        navTarget.location?.path === _route.path ||
-        (navTarget.location?.path && _route.path.startsWith(`${navTarget.location.path}/`)) ||
-        navTarget.location?.name === _route.name
-    );
+    return isRouteMatchByLocation(vm, _route, navTarget.location);
 }
 
 /**

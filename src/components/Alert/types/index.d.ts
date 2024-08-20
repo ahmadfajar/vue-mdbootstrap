@@ -6,7 +6,7 @@ import {
     VNode,
     VNodeProps
 } from 'vue';
-import { EventClosableProps, EventUpdateModelValueProps, TIconProps, TIconVariant } from '../../../types';
+import { EventVoidClosableProps, EventUpdateModelValueProps, TIconProps, TIconVariant } from '../../../types';
 
 export declare type TAlertOptionProps = TIconProps & {
     /**
@@ -57,7 +57,7 @@ export declare type TAlertOptionProps = TIconProps & {
 export declare type TBsAlert = ComponentObjectPropsOptions<TAlertOptionProps>;
 
 declare type AllowedAlertProps = AllowedComponentProps &
-    ComponentCustomProps & VNodeProps & EventClosableProps &
+    ComponentCustomProps & VNodeProps & EventVoidClosableProps &
     EventUpdateModelValueProps<boolean>;
 
 export declare const BsAlert: {

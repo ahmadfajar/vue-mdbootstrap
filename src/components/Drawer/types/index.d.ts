@@ -32,6 +32,7 @@ declare type AllowedSideDrawerProps = AllowedComponentProps &
     VNodeProps &
     EventUpdateOpenProps & {
         onResize?: (target: HTMLElement) => void;
+        '@resize'?: (target: HTMLElement) => void;
     };
 
 export declare const BsSideDrawer: {
