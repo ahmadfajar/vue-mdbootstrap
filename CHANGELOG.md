@@ -13,6 +13,7 @@ Released: September 08, 2024
   - Add `path-name` and `location` properties to better accommodate the `<RouterLink>` property.
 - **BsListNavItem**, **BsListTile**: improve route matcher
 - **BsSideDrawer**: improvement when there are multiple `<BsApp>` and `<BsSideDrawer>` instances.
+- Replace `<BsAppContainer>` with `<BsApp>` and marked `<BsAppContainer>` as deprecated.
 
 ### Bug Fixes
 
