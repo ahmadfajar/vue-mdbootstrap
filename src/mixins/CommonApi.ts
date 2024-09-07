@@ -40,7 +40,7 @@ import Helper from '../utils/Helper';
 
 export const cssPrefix = 'md-';
 
-export const isServer = typeof window === 'undefined';
+export const isServer = typeof window == 'undefined';
 
 /**
  * Generate component's ID.
@@ -108,8 +108,8 @@ export function useRenderSlot(
 export function useRenderSlotDefault(
     tag: string,
     slots?: Slots,
-    classes?: string | Array<string> | TRecord,
-    styles?: string | Array<string> | TRecord
+    classes?: string | string[] | TRecord,
+    styles?: TRecord
 ): VNode {
     return slots
         ? h(tag, { class: classes, style: styles }, renderSlot(slots, 'default'))
@@ -230,7 +230,7 @@ export function useRenderRouter(
 export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
     const vm = getCurrentInstance();
     return (
-        vm !== null &&
+        vm != null &&
         (!Helper.isEmpty(props.path) ||
             !Helper.isEmpty(props.pathName) ||
             Helper.isObject(props.location)) &&
@@ -464,7 +464,7 @@ export function useFindParentCmp(
                 break;
             }
             // Found match parent: stop iterate upward
-            if (cmpNames.includes(<string>iterator.type.name)) {
+            if (cmpNames.includes(iterator.type.name as string)) {
                 break;
             }
             // Not found: iterate $parent and increase step counter

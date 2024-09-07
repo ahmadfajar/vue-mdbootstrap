@@ -8,13 +8,12 @@ import {
     stringProp,
     stringRequiredProp,
     validStringOrNumberProp,
-    whiteColorProp
+    whiteColorProp,
 } from '../../../mixins/CommonProps';
 import { iconProps } from '../../Avatar/mixins/avatarProps';
 import type { TBadgeType } from '../../Badge/types';
 import { iconSizeProp } from '../../Icon/mixins/iconProps';
 import type { TSpaceAround } from '../types';
-
 
 export const listViewProps = {
     color: whiteColorProp,
@@ -24,27 +23,28 @@ export const listViewProps = {
     itemBorderVariant: {
         type: String,
         default: undefined,
-        validator: (v: string) => ['left', 'right', 'left-right', 'top', 'bottom', 'top-bottom'].includes(v)
+        validator: (v: string) =>
+            ['left', 'right', 'left-right', 'top', 'bottom', 'top-bottom'].includes(v),
     },
     modelValue: {
         type: Object as PropType<ComponentInternalInstance>,
-        default: undefined
+        default: undefined,
     },
     singleExpand: booleanTrueProp,
     individualState: booleanProp,
     spaceAround: {
         type: String,
         default: undefined,
-        validator: (v: string) => ['none', 'both', 'left', 'right'].includes(v)
-    } as Prop<TSpaceAround>
-}
+        validator: (v: string) => ['none', 'both', 'left', 'right'].includes(v),
+    } as Prop<TSpaceAround>,
+};
 
 export const listNavItemProps = {
     ...iconProps,
     ...routerProps,
     id: {
         type: String,
-        default: () => useGenerateId()
+        default: () => useGenerateId(),
     },
     active: booleanProp,
     disabled: booleanProp,
@@ -60,13 +60,13 @@ export const listNavItemProps = {
     pillOff: booleanProp,
     rippleOff: booleanProp,
     roundedOff: booleanProp,
-}
+};
 
 export const listTileProps = {
     ...routerProps,
     id: {
         type: String,
-        default: () => useGenerateId()
+        default: () => useGenerateId(),
     },
     active: booleanProp,
     disabled: booleanProp,
@@ -75,4 +75,4 @@ export const listTileProps = {
     pillOff: booleanProp,
     rippleOff: booleanProp,
     roundedOff: booleanProp,
-}
+};

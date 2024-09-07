@@ -6,8 +6,8 @@ import type { TIconVariant } from '../../Icon/types';
 
 export const chipDefaultColor = {
     type: String,
-    default: 'grey'
-}
+    default: 'grey',
+};
 
 export const chipProps = {
     /**
@@ -74,7 +74,7 @@ export const chipProps = {
     size: {
         type: String,
         default: undefined,
-        validator: (value: string): boolean => ['sm', 'lg'].includes(value)
+        validator: (value: string): boolean => ['sm', 'lg'].includes(value),
     },
     /**
      * Use predefined icon style to be used inside this component.
@@ -82,11 +82,12 @@ export const chipProps = {
     iconVariant: {
         type: String as PropType<TIconVariant>,
         default: undefined,
-        validator: (value: string): boolean => ['outlined', 'filled', 'round', 'sharp'].includes(value),
+        validator: (value: string): boolean =>
+            ['outlined', 'filled', 'round', 'sharp'].includes(value),
     } as Prop<TIconVariant>,
     /**
      * Place icon on the `left` side (before text) or on the `right` side (after text).
      */
     iconPosition,
     ...iconProps,
-}
+};

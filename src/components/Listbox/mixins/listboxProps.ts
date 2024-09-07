@@ -1,35 +1,41 @@
-import type {Prop} from "vue";
-import {booleanProp, booleanTrueProp, stringProp, validNumberGtZeroProp, whiteColorProp} from "../../../mixins/CommonProps";
-import {iconPosition} from "../../Button/mixins/buttonProps";
-import type {TDataSource} from "../types";
+import type { Prop } from 'vue';
+import {
+    booleanProp,
+    booleanTrueProp,
+    stringProp,
+    validNumberGtZeroProp,
+    whiteColorProp,
+} from '../../../mixins/CommonProps';
+import { iconPosition } from '../../Button/mixins/buttonProps';
+import type { TDataSource } from '../types';
 
 export const listboxMinSearchChars = {
     type: [String, Number],
     default: 2,
-    validator: (value: string) => parseInt(value, 10) > 0
-}
+    validator: (value: string) => parseInt(value, 10) > 0,
+};
 
 export const listboxMinSearchLength = {
     type: [String, Number],
     default: 15,
-    validator: (value: string) => parseInt(value, 10) > 0
-}
+    validator: (value: string) => parseInt(value, 10) > 0,
+};
 
 export const listboxMaxHeight = {
     type: [String, Number],
     default: 300,
-    validator: (value: string) => parseInt(value, 10) > 0
-}
+    validator: (value: string) => parseInt(value, 10) > 0,
+};
 
 export const emptyDataMessage = {
     type: String,
     default: 'No data to display.',
-}
+};
 
 export const notFoundMessage = {
     type: String,
     default: 'Data not found.',
-}
+};
 
 export const listboxProps = {
     autoload: booleanTrueProp,
@@ -64,4 +70,4 @@ export const listboxProps = {
     showImage: booleanProp,
     roundedImage: booleanProp,
     circleImage: booleanProp,
-}
+};

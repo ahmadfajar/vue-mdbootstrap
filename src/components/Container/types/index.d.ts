@@ -4,19 +4,19 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 
 export declare type TAppContainerOptionProps = {
     /**
-     * Use document viewport height or not.
-     */
-    viewportHeight?: boolean;
-    /**
      * Sets the element `ID` attribute. This property value is auto generate.
      */
     id?: string;
-}
+    /**
+     * Use document viewport height or not.
+     */
+    viewportHeight?: boolean;
+};
 
 export declare type TContainerOptionProps = {
     /**
@@ -28,7 +28,7 @@ export declare type TContainerOptionProps = {
      * Html tag used to render this component.
      */
     tag?: string;
-}
+};
 
 export declare type TBsAppContainer = ComponentObjectPropsOptions<TAppContainerOptionProps>;
 
@@ -36,22 +36,34 @@ export declare type TBsContainer = ComponentObjectPropsOptions<TContainerOptionP
 
 export declare type TBsContent = ComponentObjectPropsOptions<TContainerOptionProps>;
 
-export declare type AllowedContainerProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
-    onResize?: (target: HTMLElement) => void;
-    '@resize'?: (target: HTMLElement) => void;
-}
+export declare type AllowedContainerProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps & {
+        onResize?: (target: HTMLElement) => void;
+        '@resize'?: (target: HTMLElement) => void;
+    };
 
-export declare const BsAppContainer: {
-    new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TAppContainerOptionProps;
+export declare interface _BsApp {
+    new (): {
+        $props: AllowedComponentProps &
+            ComponentCustomProps &
+            VNodeProps &
+            TAppContainerOptionProps;
         $slots: {
             default?: () => VNode[];
         };
     };
-};
+}
+
+export declare const BsApp: _BsApp;
+
+/**
+ * @deprecated use `<BsApp>` instead.
+ */
+export declare const BsAppContainer: _BsApp;
 
 export declare const BsContainer: {
-    new(): {
+    new (): {
         $props: AllowedContainerProps & TContainerOptionProps;
         $slots: {
             default?: () => VNode[];
@@ -61,7 +73,7 @@ export declare const BsContainer: {
 };
 
 export declare const BsContent: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TContainerOptionProps;
         $slots: {
             default?: () => VNode[];

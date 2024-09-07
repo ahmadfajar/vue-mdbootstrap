@@ -17,16 +17,16 @@ export const checkboxProps = {
     value: {
         type: [String, Number, Boolean, Object],
         default: undefined,
-        required: true
+        required: true,
     },
     /**
      * The input value to be monitored by `v-model`.
      */
     modelValue: {
         type: [String, Number, Boolean, Object],
-        default: undefined
+        default: undefined,
     },
-}
+};
 
 export const checkboxGroupProps = {
     /**
@@ -41,7 +41,8 @@ export const checkboxGroupProps = {
     column: {
         type: [String, Number],
         default: undefined,
-        validator: (value: string | number): boolean => (value as number) > 0 && (value as number) < 7
+        validator: (value: string | number): boolean =>
+            (value as number) > 0 && (value as number) < 7,
     },
     /**
      * Sets this component state type.
@@ -53,13 +54,13 @@ export const checkboxGroupProps = {
     items: {
         type: Array,
         default: undefined,
-        required: true
+        required: true,
     },
     /**
      * The value monitored by `v-model` to maintain the checked state.
      */
     modelValue: {
         type: Array,
-        default: undefined
+        default: undefined,
     },
-}
+};

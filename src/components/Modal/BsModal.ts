@@ -1,18 +1,21 @@
-import type {
-    ComponentInternalInstance,
-    ComponentOptionsMixin,
-    ComputedOptions,
-    EmitsOptions,
-    MethodOptions
+import type { ComponentInternalInstance } from 'vue';
+import {
+    computed,
+    defineComponent,
+    getCurrentInstance,
+    nextTick,
+    onMounted,
+    ref,
+    shallowRef,
+    watch,
 } from 'vue';
-import { computed, defineComponent, getCurrentInstance, nextTick, onMounted, ref, shallowRef, watch } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
 import type { TBsModal, TModalOptionProps, TRecord } from '../../types';
 import PopupManager from '../Popover/mixins/PopupManager';
 import { useRenderModalDialog, useSetDialogMaxHeight } from './mixins/modalApi';
 import { modalProps } from './mixins/modalProps';
 
-export default defineComponent<TBsModal, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsModal>({
     name: 'BsModal',
     props: modalProps,
     emits: [
@@ -25,7 +28,7 @@ export default defineComponent<TBsModal, TRecord, TRecord, ComputedOptions, Meth
          */
         'update:open',
     ],
-    setup(props, {emit, slots}) {
+    setup(props, { slots }) {
         const thisProps = props as Readonly<TModalOptionProps>;
         const instance = shallowRef<ComponentInternalInstance | null>(null);
         const dialogEl = ref<HTMLElement | null>(null);
@@ -37,7 +40,7 @@ export default defineComponent<TBsModal, TRecord, TRecord, ComputedOptions, Meth
             [`${cssPrefix}modal-inner`]: true,
             [`${cssPrefix}modal-fullscreen`]: thisProps.fullPage,
             [`${cssPrefix}modal-scrollable`]: thisProps.scrollable,
-            [`${cssPrefix + thisProps.transition}`]: true
+            [`${cssPrefix + thisProps.transition}`]: true,
         }));
 
         watch(
@@ -46,7 +49,9 @@ export default defineComponent<TBsModal, TRecord, TRecord, ComputedOptions, Meth
                 modalOpen.value = value;
                 if (value) {
                     instance.value && PopupManager.add(instance.value, thisProps, modalOpen);
-                    nextTick().then(() => useSetDialogMaxHeight(thisProps, dialogEl, headerEl, bodyEl, footerEl));
+                    nextTick().then(() =>
+                        useSetDialogMaxHeight(thisProps, dialogEl, headerEl, bodyEl, footerEl)
+                    );
                 }
             }
         );
@@ -57,8 +62,15 @@ export default defineComponent<TBsModal, TRecord, TRecord, ComputedOptions, Meth
 
         return () =>
             useRenderModalDialog(
-                slots, emit, instance, props, modalOpen, classNames,
-                dialogEl, headerEl, bodyEl, footerEl,
-            )
-    }
+                slots,
+                instance,
+                props,
+                modalOpen,
+                classNames,
+                dialogEl,
+                headerEl,
+                bodyEl,
+                footerEl
+            );
+    },
 });

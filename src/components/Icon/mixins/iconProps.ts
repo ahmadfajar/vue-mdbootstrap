@@ -1,35 +1,37 @@
-import type {Prop, PropType} from "vue";
-import type {TFlipMode, TIconVariant} from "../types";
+import type { Prop, PropType } from 'vue';
 import { booleanProp, stringProp, validStringOrNumberProp } from '../../../mixins/CommonProps';
+import type { TFlipMode, TIconVariant } from '../types';
 
 export const iconSizeProp = {
     type: [String, Number],
     default: 24,
-    validator: (value: string): boolean => !isNaN(parseInt(value, 10))
-}
+    validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
+};
 
 export const iconName = {
     type: String,
-    required: true
-}
+    required: true,
+};
 
 export const iconVariant = {
     type: String as PropType<TIconVariant>,
-    default: "filled",
-    validator: (value: string): boolean => ["outlined", "filled", "rounded", "sharp"].includes(value),
-} as Prop<TIconVariant>
+    default: 'filled',
+    validator: (value: string): boolean =>
+        ['outlined', 'filled', 'rounded', 'sharp'].includes(value),
+} as Prop<TIconVariant>;
 
 export const flip = {
     type: String as PropType<TFlipMode>,
     default: undefined,
-    validator: (value: string): boolean => ["horizontal", "vertical", "both"].includes(value),
-} as Prop<TFlipMode>
+    validator: (value: string): boolean => ['horizontal', 'vertical', 'both'].includes(value),
+} as Prop<TFlipMode>;
 
 export const rotate = {
     type: [String, Number],
     default: undefined,
-    validator: (value: string | number): boolean => [90, 180, 270].includes(parseInt(String(value), 10))
-}
+    validator: (value: string | number): boolean =>
+        [90, 180, 270].includes(parseInt(String(value), 10)),
+};
 
 export const iconProps = {
     /**
@@ -60,7 +62,7 @@ export const iconProps = {
      * Rotate the icon, valid values are: `90`, `180`, `270`.
      */
     rotate,
-}
+};
 
 export const iconSpinnerProps = {
     /**
@@ -79,7 +81,7 @@ export const iconSpinnerProps = {
      * Apply **spin** animation to the icon.
      */
     spin: booleanProp,
-}
+};
 
 export const toggleIconProps = {
     /**
@@ -98,4 +100,4 @@ export const toggleIconProps = {
      * The icon size in pixels.
      */
     size: iconSizeProp,
-}
+};

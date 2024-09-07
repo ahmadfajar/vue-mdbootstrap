@@ -4,7 +4,7 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 import { EventUpdateOpenProps, EventVoidClosableProps, TPopoverPosition } from '../../../types';
 
@@ -45,15 +45,18 @@ export declare type TDropdownMenuOptionProps = {
      * Transition animation when displaying this Dropdown menu. This animation is effected by `placement` property.
      */
     transition?: string;
-}
+};
 
 export declare type TBsDropdownMenu = ComponentObjectPropsOptions<TDropdownMenuOptionProps>;
 
-declare type AllowedDropdownMenuProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventVoidClosableProps & EventUpdateOpenProps;
+declare type AllowedDropdownMenuProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventVoidClosableProps &
+    EventUpdateOpenProps;
 
 export declare const BsDropdownMenu: {
-    new(): {
+    new (): {
         $props: AllowedDropdownMenuProps & TDropdownMenuOptionProps;
         $slots: {
             content?: () => VNode[];

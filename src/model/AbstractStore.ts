@@ -568,12 +568,10 @@ export default abstract class AbstractStore implements ObjectBase {
         const sorters: TSortOption[] = [];
         const createOption = (opt: TSortOption) => {
             return {
-                property: <string>(opt.property ?? opt.field),
-                direction: <TSortDirection>(
-                    (opt.direction && !Helper.isEmpty(opt.direction)
-                        ? opt.direction.toLowerCase()
-                        : direction.toLowerCase())
-                ),
+                property: opt.property ?? opt.field,
+                direction: (opt.direction && !Helper.isEmpty(opt.direction)
+                    ? opt.direction.toLowerCase()
+                    : direction.toLowerCase()) as TSortDirection,
             };
         };
 
@@ -584,7 +582,7 @@ export default abstract class AbstractStore implements ObjectBase {
                 } else if (Helper.isString(fld) && !Helper.isEmpty(fld)) {
                     sorters.push({
                         property: fld,
-                        direction: <TSortDirection>direction.toLowerCase(),
+                        direction: direction.toLowerCase() as TSortDirection,
                     });
                 }
             }
@@ -593,7 +591,7 @@ export default abstract class AbstractStore implements ObjectBase {
         } else if (Helper.isString(values) && !Helper.isEmpty(values)) {
             sorters.push({
                 property: values,
-                direction: <TSortDirection>direction.toLowerCase(),
+                direction: direction.toLowerCase() as TSortDirection,
             });
         }
 
@@ -632,7 +630,7 @@ export default abstract class AbstractStore implements ObjectBase {
                 proxy: proxyCfg,
             };
             if (!Helper.isEmptyObject(this._config.csrfConfig)) {
-                data.csrfConfig = <never>this._config.csrfConfig;
+                data.csrfConfig = this._config.csrfConfig;
             }
 
             return new BsModel(

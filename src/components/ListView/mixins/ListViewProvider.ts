@@ -6,10 +6,9 @@ import type {
     TEmitFn,
     TListViewOptionProps,
     TRecord,
-    TSpaceAround
+    TSpaceAround,
 } from '../../../types';
 import Helper from '../../../utils/Helper';
-
 
 class ListViewProvider implements IListViewProvider {
     private readonly _emit: TEmitFn;
@@ -67,7 +66,7 @@ class ListViewProvider implements IListViewProvider {
     }
 
     addItem(item: IListItem): number {
-        const idx = this._items.findIndex(it => it.uid === item.uid);
+        const idx = this._items.findIndex((it) => it.uid === item.uid);
         if (idx === -1) {
             return this._items.push(item);
         }
@@ -75,8 +74,10 @@ class ListViewProvider implements IListViewProvider {
         return -1;
     }
 
-    findItem(predicate: (value: IListItem, sources: IListItem[]) => boolean,
-             recursive = false): IListItem | undefined {
+    findItem(
+        predicate: (value: IListItem, sources: IListItem[]) => boolean,
+        recursive = false
+    ): IListItem | undefined {
         let result: IListItem | undefined;
 
         for (const it of this.items) {
@@ -88,7 +89,7 @@ class ListViewProvider implements IListViewProvider {
             } else if (recursive) {
                 const tmpObj = this.iterateChildren(predicate, it, recursive, true);
 
-                if (tmpObj != undefined) {
+                if (tmpObj != null) {
                     result = tmpObj;
                     break;
                 }
@@ -100,7 +101,9 @@ class ListViewProvider implements IListViewProvider {
 
     private iterateChildren(
         callbackFn: (value: IListItem, sources: IListItem[]) => unknown,
-        source: IListItem, recursive: boolean, stopImmediately: boolean,
+        source: IListItem,
+        recursive: boolean,
+        stopImmediately: boolean
     ): IListItem | undefined {
         let result: IListItem | undefined;
 
@@ -116,7 +119,7 @@ class ListViewProvider implements IListViewProvider {
                 } else if (recursive) {
                     const tmpObj = this.iterateChildren(callbackFn, it, recursive, stopImmediately);
 
-                    if (tmpObj != undefined) {
+                    if (tmpObj != null) {
                         result = tmpObj;
                         if (stopImmediately) {
                             return result;
@@ -131,7 +134,8 @@ class ListViewProvider implements IListViewProvider {
 
     execAction(
         actionFn: (value: IListItem, sources: IListItem[]) => unknown,
-        recursive = false, stopImmediately = false
+        recursive = false,
+        stopImmediately = false
     ): Promise<void> {
         return new Promise((resolve) => {
             for (const it of this.items) {
@@ -142,7 +146,7 @@ class ListViewProvider implements IListViewProvider {
                 } else if (recursive) {
                     const retObj = this.iterateChildren(actionFn, it, recursive, stopImmediately);
 
-                    if (retObj != undefined && stopImmediately) {
+                    if (retObj != null && stopImmediately) {
                         break;
                     }
                 }
@@ -153,7 +157,7 @@ class ListViewProvider implements IListViewProvider {
     }
 
     removeItem(item: IListItem): void {
-        const idx = this._items.findIndex(it => it.uid === item.uid);
+        const idx = this._items.findIndex((it) => it.uid === item.uid);
         if (idx > -1) {
             this._items[idx].destroy();
             this._items.splice(idx, 1);
@@ -161,7 +165,7 @@ class ListViewProvider implements IListViewProvider {
     }
 
     async setActiveItem(value?: IListItem): Promise<void> {
-        if (value === undefined) {
+        if (value == null) {
             this._activeItem = undefined;
             this._emit('update:modelValue', undefined);
             return;
@@ -170,12 +174,16 @@ class ListViewProvider implements IListViewProvider {
             return;
         }
 
-        await this.execAction((it) => {
-            it.setActive(it.uid === value.uid);
-            if (it.uid === value.uid) {
-                this.triggerEvent(it);
-            }
-        }, true, false);
+        await this.execAction(
+            (it) => {
+                it.setActive(it.uid === value.uid);
+                if (it.uid === value.uid) {
+                    this.triggerEvent(it);
+                }
+            },
+            true,
+            false
+        );
     }
 
     private triggerEvent(newItem: IListItem) {
@@ -205,11 +213,15 @@ class ListViewProvider implements IListViewProvider {
         }
     }
 
-    private setExposedValue<T>(component: ComponentInternalInstance, property: string, value: T): void {
-        if (isRef((<TRecord>component.exposed)[property])) {
-            (<Ref<T>>(<TRecord>component.exposed)[property]).value = value;
+    private setExposedValue<T>(
+        component: ComponentInternalInstance,
+        property: string,
+        value: T
+    ): void {
+        if (isRef((component.exposed as TRecord)[property])) {
+            ((component.exposed as TRecord)[property] as Ref<T>).value = value;
         } else {
-            (<TRecord>component.exposed)[property] = value;
+            (component.exposed as TRecord)[property] = value;
         }
     }
 
@@ -225,7 +237,11 @@ class ListViewProvider implements IListViewProvider {
 
     expand(item: IListItem): void {
         const cmp = item.component;
-        if (item.hasChild() && ['BsListNav', 'BsListNavItem'].includes(item.tag) && !unref((<TRecord>cmp.exposed).expanded)) {
+        if (
+            item.hasChild() &&
+            ['BsListNav', 'BsListNavItem'].includes(item.tag) &&
+            !unref((cmp.exposed as TRecord).expanded)
+        ) {
             if (this.singleExpand) {
                 if (item.parent) {
                     item.parent.children.forEach((it) => {

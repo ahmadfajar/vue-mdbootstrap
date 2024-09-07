@@ -38,7 +38,7 @@ import {
 function filterListboxItems(
     emit: TEmitFn,
     schema: TDataListSchemaProps,
-    dataSource: IBsStore | IArrayStore | AbstractStore,
+    dataSource: IBsStore | IArrayStore,
     cacheItems: ShallowRef<IBsModel[]>,
     selectedItems: ShallowRef<IBsModel[]>,
     searchRef: Ref<string | undefined>,
@@ -71,7 +71,6 @@ function filterListboxItems(
                         console.warn(error);
                     });
             } else {
-                // @ts-ignore
                 cacheItems.value = cloneDataItems(dataSource, selectedItems, schema.valueField);
                 emit('data-filter', dataSource.dataItems);
                 emit('update:search-text', search);
@@ -95,7 +94,7 @@ function renderListboxSearchbox(
     const dataSource = props.dataSource?.proxy;
 
     if (dataSource && showSearchbox.value) {
-        const minChars = parseInt(<string>props.minSearchChars);
+        const minChars = parseInt(props.minSearchChars as string);
 
         return h(
             'label',
@@ -239,8 +238,8 @@ function renderListboxItems(
                             : createListboxItemContent(slots, props, schema, item, idx),
                 }
             ),
-            props.itemSeparator && idx + 1 < <number>dataItems.value?.length
-                ? h(BsDivider, { key: 'divider-' + idx })
+            props.itemSeparator && idx + 1 < dataItems.value.length
+                ? h(BsDivider, { key: `divider-${idx}` })
                 : undefined,
         ])
     );
@@ -281,8 +280,7 @@ function dispatchListboxEvent(
     dataItems.value = dataItems.value.map((it) => {
         it.set(
             '_selected',
-            selectedItems.value.find((row) => row.get(valueField) === it.get(valueField)) !=
-                undefined
+            selectedItems.value.find((row) => row.get(valueField) === it.get(valueField)) != null
         );
         return it;
     });
@@ -347,8 +345,8 @@ function createListboxItemContent(
     const nodes: VNode[] = [];
     if (
         props.showImage === true &&
-        (Object.hasOwn(item, <string>schema.imageField) ||
-            item.get(<string>schema.imageField) != undefined)
+        (Object.hasOwn(item, schema.imageField as string) ||
+            item.get(schema.imageField as string) != null)
     ) {
         nodes.push(createListTileLeading(props, schema, item));
     }
@@ -363,7 +361,7 @@ function createListTileLeading(
     item: IBsModel
 ): VNode {
     return h(BsListTileLeading, {
-        imgSrc: item.get(<string>schema.imageField) as Prop<string>,
+        imgSrc: item.get(schema.imageField as string) as Prop<string>,
         // @ts-ignore
         circle: props.circleImage as Prop<boolean>,
         // @ts-ignore
@@ -420,7 +418,7 @@ function cloneDataItems(
         }
         tmpObj.set(
             '_selected',
-            selectedItems.value.find((row) => row.get(fieldName) === it.get(fieldName)) != undefined
+            selectedItems.value.find((row) => row.get(fieldName) === it.get(fieldName)) != null
         );
 
         return tmpObj;
@@ -487,12 +485,12 @@ export function useRegisterListboxWatchers(
     searchboxRef: Ref<HTMLElement | null>,
     searchText: Ref<string | undefined>
 ) {
-    const maxHeight = parseInt(<string>props.maxHeight);
-    const minItems = parseInt(<string>props.minSearchLength);
+    const maxHeight = parseInt(props.maxHeight as string);
+    const minItems = parseInt(props.minSearchLength as string);
 
     if (dataSource) {
         const listener: LoadedCallbackFn = (data: IBsModel[]) => {
-            if (data.length == 0) {
+            if (data.length === 0) {
                 cacheItems.value = [];
             } else {
                 selectedItems.value = findSelectedItems(localValue, schema.valueField, dataSource);
@@ -520,13 +518,14 @@ export function useRegisterListboxWatchers(
         () => props.searchText,
         (value) => {
             if (
-                (value && value.length >= parseInt(<string>props.minSearchChars)) ||
-                Helper.isEmpty(value)
+                dataSource &&
+                ((value && value.length >= parseInt(props.minSearchChars as string)) ||
+                    Helper.isEmpty(value))
             ) {
                 filterListboxItems(
                     emit,
                     schema,
-                    <IBsStore | IArrayStore>dataSource,
+                    dataSource,
                     cacheItems,
                     selectedItems,
                     searchText,
@@ -554,7 +553,7 @@ export function useRegisterListboxWatchers(
                     '_selected',
                     selectedItems.value.find(
                         (row) => row.get(schema.valueField) === it.get(schema.valueField)
-                    ) != undefined
+                    ) != null
                 );
                 return it;
             });
@@ -568,7 +567,7 @@ export function useRegisterListboxWatchers(
 
         queueMicrotask(async () => {
             try {
-                if (dataSource.storeState.length == 0) {
+                if (dataSource.storeState.length === 0) {
                     await dataSource.load();
                 } else {
                     selectedItems.value = findSelectedItems(

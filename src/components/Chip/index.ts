@@ -9,7 +9,7 @@ const BsChipPlugin: Plugin = {
     install: (app: App): void => {
         app.component(<string>BsChip.name, BsChip);
         app.component(<string>BsChipGroup.name, BsChipGroup);
-    }
-}
+    },
+};
 
-export { BsChipPlugin, BsChip, BsChipGroup }
+export { BsChipPlugin, BsChip, BsChipGroup };

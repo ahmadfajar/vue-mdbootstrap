@@ -5,8 +5,8 @@ const validator = {
     validator: (v: object): boolean =>
         Object.hasOwn(v, 'validators') &&
         Object.hasOwn(v, 'messages') &&
-        Object.hasOwn(v, 'hasError')
-}
+        Object.hasOwn(v, 'hasError'),
+};
 
 export const validationProps = {
     /**
@@ -25,4 +25,4 @@ export const validationProps = {
      * Deprecated, use `validator` property instead.
      */
     externalValidator: validator,
-}
+};

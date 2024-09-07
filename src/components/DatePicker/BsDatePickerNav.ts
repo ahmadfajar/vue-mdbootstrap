@@ -1,23 +1,23 @@
 import { DateTime } from 'luxon';
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
-import type { TBsDatePickerNav, TDatePickerNavProps, TRecord } from '../../types';
-import { DatePickerConst, useRenderDatePickerNav, useWatchOfDatePickerNavProps } from './mixins/datePickerApi';
+import {
+    DatePickerConst,
+    useRenderDatePickerNav,
+    useWatchOfDatePickerNavProps,
+} from './mixins/datePickerApi';
 import { datePickerNavProps } from './mixins/datePickerProps';
+import type { TBsDatePickerNav, TDatePickerNavProps } from './types';
 
-export default defineComponent<TBsDatePickerNav, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsDatePickerNav>({
     name: 'BsDatePickerNav',
     props: datePickerNavProps,
-    emits: [
-        'toggle',
-        'update:model-value',
-    ],
-    setup(props, {emit}) {
+    emits: ['toggle', 'update:model-value'],
+    setup(props, { emit }) {
         const thisProps = props as Readonly<TDatePickerNavProps>;
         const reverse = ref(false);
         const formatOpts = ref<Intl.DateTimeFormatOptions>({
             month: 'long',
-            year: 'numeric'
+            year: 'numeric',
         });
         const localValue = ref<DateTime>(
             thisProps.modelValue ? DateTime.fromJSDate(thisProps.modelValue) : DateTime.now()
@@ -30,6 +30,6 @@ export default defineComponent<TBsDatePickerNav, TRecord, TRecord, ComputedOptio
         useWatchOfDatePickerNavProps(thisProps, formatOpts, localValue, reverse);
 
         return () =>
-            useRenderDatePickerNav(thisProps, emit, transitionName, formatOpts, localValue)
-    }
+            useRenderDatePickerNav(thisProps, emit, transitionName, formatOpts, localValue);
+    },
 });

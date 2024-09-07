@@ -4,15 +4,18 @@ import {
     stringOrArrayProp,
     stringProp,
     validStringOrNumberProp,
-    whiteColorProp
+    whiteColorProp,
 } from '../../../mixins/CommonProps';
-import { popoverDefaultTransitionProp, popoverPlacementProp } from '../../Popover/mixins/popoverProps';
+import {
+    popoverDefaultTransitionProp,
+    popoverPlacementProp,
+} from '../../Popover/mixins/popoverProps';
 import type { TColorPickerMode } from '../types';
 
 export const colorPickerProps = {
     activator: {
         type: [String, Object],
-        default: undefined
+        default: undefined,
     } as Prop<string | Element>,
     containerColor: whiteColorProp,
     cover: booleanProp,
@@ -38,10 +41,10 @@ export const colorPickerProps = {
     transition: popoverDefaultTransitionProp,
     swatches: {
         type: Array,
-        default: undefined
+        default: undefined,
     },
     swatchesMaxHeight: {
         type: [String, Number],
-        default: 80
+        default: 80,
     },
-}
+};

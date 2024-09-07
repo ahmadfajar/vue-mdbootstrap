@@ -23,23 +23,22 @@ import {
 } from './textFieldEventApi';
 import { useRenderFieldFeedback } from './validationApi';
 
-
 function dispatchModelValue(
     props: Readonly<TChipFieldOptionProps>,
     emit: TEmitFn,
     inputValue: Ref<string>,
-    localValue: Ref<string[]>,
+    localValue: Ref<string[]>
 ) {
     if (!props.disabled && !props.readonly) {
-        inputValue.value !== "" && localValue.value.push(inputValue.value);
+        inputValue.value !== '' && localValue.value.push(inputValue.value);
 
         if (Array.isArray(props.modelValue)) {
-            emit("update:model-value", localValue.value);
+            emit('update:model-value', localValue.value);
         } else {
-            emit("update:model-value", localValue.value.join(", "));
+            emit('update:model-value', localValue.value.join(', '));
         }
 
-        inputValue.value = "";
+        inputValue.value = '';
     }
 }
 
@@ -49,13 +48,13 @@ function createFieldInput(
     inputValue: Ref<string>,
     localValue: Ref<string[]>,
     isFocused: Ref<boolean>,
-    autocomplete: string | boolean,
+    autocomplete: string | boolean
 ): VNode {
-    return h("input", {
+    return h('input', {
         ...useMakeInputBaseAttrs(props),
         ...useInputTextFieldAttrs(props, autocomplete),
-        role: "textbox",
-        type: "text",
+        role: 'textbox',
+        type: 'text',
         value: inputValue.value,
         onChange: (e: Event) => {
             inputValue.value = (<HTMLInputElement>e.target).value;
@@ -63,21 +62,19 @@ function createFieldInput(
         },
         onBlur: (e: Event) => {
             dispatchModelValue(props, emit, inputValue, localValue);
-            nextTick().then(() =>
-                useOnFieldBlurred(emit, e, isFocused, (<boolean>props.disabled))
-            );
+            nextTick().then(() => useOnFieldBlurred(emit, e, isFocused, <boolean>props.disabled));
         },
-        onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, (<boolean>props.disabled)),
+        onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, <boolean>props.disabled),
         onKeydown: (e: KeyboardEvent) => {
-            if (e.key === "Backspace" && (<HTMLInputElement>e.target).value === "") {
+            if (e.key === 'Backspace' && (<HTMLInputElement>e.target).value === '') {
                 localValue.value.length > 0 && localValue.value.pop();
-                emit("keydown", e);
+                emit('keydown', e);
                 nextTick().then(() => dispatchModelValue(props, emit, inputValue, localValue));
-            } else if (e.key === "Enter") {
-                emit("keydown", e);
+            } else if (e.key === 'Enter') {
+                emit('keydown', e);
                 nextTick().then(() => dispatchModelValue(props, emit, inputValue, localValue));
             } else {
-                emit("keydown", e);
+                emit('keydown', e);
             }
         },
     });
@@ -86,39 +83,48 @@ function createFieldInput(
 function createFieldChips(
     props: Readonly<ExtractPropTypes<TBsChipField>>,
     emit: TEmitFn,
-    localValue: Ref<string[]>,
+    localValue: Ref<string[]>
 ): VNode {
     if (localValue.value.length === 0) {
-        return createCommentVNode(" v-if-chips ");
+        return createCommentVNode(' v-if-chips ');
     }
 
     const thisProps = props as Readonly<TChipFieldOptionProps>;
 
-    return h(Fragment, null, localValue.value.map(
-        (label) =>
-            h(BsChip, {
-                key: label,
-                color: props.chipColor,
-                disabled: props.disabled,
-                pill: props.chipPill,
-                outlined: props.chipOutlined,
-                // @ts-ignore
-                dismissible: <Prop<boolean>>(thisProps.chipDeletable && !thisProps.readonly && !thisProps.disabled),
-                onClose: () => {
-                    emit("delete-item", label);
-                    nextTick().then(() => {
-                        const result = localValue.value.filter(v => v !== label);
-                        if (Array.isArray(props.modelValue)) {
-                            emit("update:model-value", result);
-                        } else {
-                            emit("update:model-value", result.join(", "));
-                        }
-                    });
+    return h(
+        Fragment,
+        null,
+        localValue.value.map((label) =>
+            h(
+                BsChip,
+                {
+                    key: label,
+                    color: props.chipColor,
+                    disabled: props.disabled,
+                    pill: props.chipPill,
+                    outlined: props.chipOutlined,
+                    // @ts-ignore
+                    dismissible: (thisProps.chipDeletable &&
+                        !thisProps.readonly &&
+                        !thisProps.disabled) as Prop<boolean>,
+                    onClose: () => {
+                        emit('delete-item', label);
+                        nextTick().then(() => {
+                            const result = localValue.value.filter((v) => v !== label);
+                            if (Array.isArray(props.modelValue)) {
+                                emit('update:model-value', result);
+                            } else {
+                                emit('update:model-value', result.join(', '));
+                            }
+                        });
+                    },
                 },
-            }, {
-                default: () => toDisplayString(label)
-            })
-    ));
+                {
+                    default: () => toDisplayString(label),
+                }
+            )
+        )
+    );
 }
 
 export function useRenderChipField(
@@ -136,55 +142,69 @@ export function useRenderChipField(
     showValidationError: ComputedRef<boolean>,
     hasValidated: ComputedRef<boolean>,
     hasError: ComputedRef<boolean>,
-    errorItems: ComputedRef<string[]>,
+    errorItems: ComputedRef<string[]>
 ): VNode {
     const thisProps = props as Readonly<TChipFieldOptionProps>;
     const valueAsArray = Array.isArray(props.modelValue);
     const iconSize = 24;
 
     return useCreateFieldWrapper(
-        slots, iconSize, wrapperCss, thisProps,
-        h("div", {
-            class: controlCss.value,
-        }, [
-            useCreateFieldInnerWrapper(
-                slots,
-                thisProps,
-                [
-                    createFieldChips(props, emit, localValue),
-                    createFieldInput(thisProps, emit, inputValue, localValue, isFocused, autocomplete),
-                ],
-                iconSize,
-                thisProps.appendIcon,
-                thisProps.prependIcon,
-                useCreateValidationIcon(
-                    <TIconVariant>thisProps.actionIconVariant,
-                    hasValidated.value,
+        slots,
+        iconSize,
+        wrapperCss,
+        thisProps,
+        h(
+            'div',
+            {
+                class: controlCss.value,
+            },
+            [
+                useCreateFieldInnerWrapper(
+                    slots,
+                    thisProps,
+                    [
+                        createFieldChips(props, emit, localValue),
+                        createFieldInput(
+                            thisProps,
+                            emit,
+                            inputValue,
+                            localValue,
+                            isFocused,
+                            autocomplete
+                        ),
+                    ],
+                    iconSize,
+                    thisProps.appendIcon,
+                    thisProps.prependIcon,
+                    useCreateValidationIcon(
+                        thisProps.actionIconVariant as TIconVariant,
+                        hasValidated.value,
+                        hasError.value,
+                        thisProps.validationIcon as boolean,
+                        iconSize
+                    ),
+                    useCreateFieldActionIcon(
+                        showClearButton.value,
+                        thisProps.actionIconVariant as TIconVariant,
+                        iconSize,
+                        () => {
+                            inputValue.value = '';
+                            localValue.value = [];
+                            emit('update:model-value', valueAsArray ? [] : '');
+                            nextTick().then(() => emit('clear'));
+                        }
+                    )
+                ),
+                useRenderFieldFeedback(
+                    slots,
+                    thisProps,
+                    showHelpText.value,
+                    showValidationError.value,
                     hasError.value,
-                    <boolean>thisProps.validationIcon,
-                    iconSize,
+                    errorItems.value
                 ),
-                useCreateFieldActionIcon(
-                    showClearButton.value,
-                    <TIconVariant>thisProps.actionIconVariant,
-                    iconSize,
-                    () => {
-                        inputValue.value = "";
-                        localValue.value = [];
-                        emit("update:model-value", valueAsArray ? [] : "");
-                        nextTick().then(() => emit("clear"));
-                    },
-                ),
-            ),
-            useRenderFieldFeedback(
-                slots,
-                thisProps,
-                showHelpText.value,
-                showValidationError.value,
-                hasError.value,
-                errorItems.value,
-            ),
-        ]),
+            ]
+        ),
         (node: VNode) => useOnTextFieldNodeMounted(thisProps, node)
     );
 }

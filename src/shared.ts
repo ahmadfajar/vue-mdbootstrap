@@ -1,10 +1,21 @@
 import PopupManager from './components/Popover/mixins/PopupManager';
 
 export {
-    useMobileDevice, useBreakpointMax, useBreakpointMin, useAxiosPlugin,
-    useHttpService, useVueMdbService, useVueMdbNotification, useCurrentRoute,
-    useMergeClass, useRenderSlot, useRenderSlotDefault, useRenderSlotWithWrapper,
-    useRenderSlotWrapperWithCondition, useRenderTransition, useGenerateId
+    useAxiosPlugin,
+    useBreakpointMax,
+    useBreakpointMin,
+    useCurrentRoute,
+    useGenerateId,
+    useHttpService,
+    useMergeClass,
+    useMobileDevice,
+    useRenderSlot,
+    useRenderSlotDefault,
+    useRenderSlotWithWrapper,
+    useRenderSlotWrapperWithCondition,
+    useRenderTransition,
+    useVueMdbNotification,
+    useVueMdbService,
 } from './mixins/CommonApi';
 
 export { PopupManager };

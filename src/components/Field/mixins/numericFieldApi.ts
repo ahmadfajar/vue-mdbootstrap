@@ -29,15 +29,15 @@ import {
 } from './textFieldEventApi';
 import { useRenderFieldFeedback } from './validationApi';
 
-function createDecValueButton(
+function createMinusButton(
     props: Readonly<TNumericFieldOptionProps>,
-    decreaseValueHandler: () => void
+    clickHandler: () => void
 ): VNode {
     return h(
         'div',
         {
             class: [`${cssPrefix}btn-icon`, 'btn-sm'],
-            onClick: decreaseValueHandler,
+            onClick: clickHandler,
         },
         [
             h(
@@ -61,15 +61,15 @@ function createDecValueButton(
     );
 }
 
-function createIncValueButton(
+function createPlusButton(
     props: Readonly<TNumericFieldOptionProps>,
-    increaseValueHandler: () => void
+    clickHandler: () => void
 ): VNode {
     return h(
         'div',
         {
             class: [`${cssPrefix}btn-icon`, 'btn-sm'],
-            onClick: increaseValueHandler,
+            onClick: clickHandler,
         },
         [
             h(
@@ -96,19 +96,19 @@ function createIncValueButton(
 function createActionButtons(
     props: Readonly<TNumericFieldOptionProps>,
     position: TSpaceAround,
-    increaseValueHandler: () => void,
-    decreaseValueHandler: () => void
+    incrementValueHandler: () => void,
+    decrementValueHandler: () => void
 ): VNode {
     const children = [];
 
     if (position === 'left' && props.actionButtonPlacement === 'both') {
-        children.push(createDecValueButton(props, decreaseValueHandler));
+        children.push(createMinusButton(props, decrementValueHandler));
     } else if (position === 'right' && props.actionButtonPlacement === 'both') {
-        children.push(createIncValueButton(props, increaseValueHandler));
+        children.push(createPlusButton(props, incrementValueHandler));
     } else {
         children.push(
-            createDecValueButton(props, decreaseValueHandler),
-            createIncValueButton(props, increaseValueHandler)
+            createMinusButton(props, decrementValueHandler),
+            createPlusButton(props, incrementValueHandler)
         );
     }
 
@@ -123,8 +123,8 @@ function createActionButtons(
 
 function createSpinnerButton(
     props: Readonly<TNumericFieldOptionProps>,
-    increaseValueHandler: () => void,
-    decreaseValueHandler: () => void
+    incrementValueHandler: () => void,
+    decrementValueHandler: () => void
 ): VNode {
     return h(
         'div',
@@ -136,7 +136,7 @@ function createSpinnerButton(
                 'div',
                 {
                     class: ['btn', `${cssPrefix}spin-up`],
-                    onClick: increaseValueHandler,
+                    onClick: incrementValueHandler,
                 },
                 [
                     h(
@@ -159,7 +159,7 @@ function createSpinnerButton(
                 'div',
                 {
                     class: ['btn', `${cssPrefix}spin-down`],
-                    onClick: decreaseValueHandler,
+                    onClick: decrementValueHandler,
                 },
                 [
                     h(
@@ -189,8 +189,8 @@ function createAppendFieldActionNode(
     hasError: boolean,
     iconSize: number,
     clearHandler: () => void,
-    increaseValueHandler: () => void,
-    decreaseValueHandler: () => void
+    incrementValueHandler: () => void,
+    decrementValueHandler: () => void
 ): VNode {
     return useRenderTransition(
         { name: 'fade' },
@@ -198,7 +198,8 @@ function createAppendFieldActionNode(
             hasValidated ||
             hasError ||
             (props.spinButton && props.spinButtonPlacement === 'right') ||
-            (props.actionButton && ['right', 'both'].includes(props.actionButtonPlacement as string))
+            (props.actionButton &&
+                ['right', 'both'].includes(props.actionButtonPlacement as string))
             ? h(
                   'div',
                   {
@@ -217,7 +218,7 @@ function createAppendFieldActionNode(
                       !props.readonly &&
                       props.spinButton &&
                       props.spinButtonPlacement === 'right'
-                          ? createSpinnerButton(props, increaseValueHandler, decreaseValueHandler)
+                          ? createSpinnerButton(props, incrementValueHandler, decrementValueHandler)
                           : !props.disabled &&
                               !props.readonly &&
                               props.actionButton &&
@@ -225,8 +226,8 @@ function createAppendFieldActionNode(
                             ? createActionButtons(
                                   props,
                                   'right',
-                                  increaseValueHandler,
-                                  decreaseValueHandler
+                                  incrementValueHandler,
+                                  decrementValueHandler
                               )
                             : '',
                   ]
@@ -237,8 +238,8 @@ function createAppendFieldActionNode(
 
 function createPrependFieldActionNode(
     props: Readonly<TNumericFieldOptionProps>,
-    increaseValueHandler: () => void,
-    decreaseValueHandler: () => void
+    incrementValueHandler: () => void,
+    decrementValueHandler: () => void
 ): VNode {
     if (
         !props.disabled &&
@@ -251,7 +252,7 @@ function createPrependFieldActionNode(
             {
                 class: `${cssPrefix}action-icon`,
             },
-            [createSpinnerButton(props, increaseValueHandler, decreaseValueHandler)]
+            [createSpinnerButton(props, incrementValueHandler, decrementValueHandler)]
         );
     } else if (
         !props.disabled &&
@@ -268,7 +269,7 @@ function createPrependFieldActionNode(
                     `${cssPrefix}button-wrapper-${props.actionButtonPlacement}`,
                 ],
             },
-            [createActionButtons(props, 'left', increaseValueHandler, decreaseValueHandler)]
+            [createActionButtons(props, 'left', incrementValueHandler, decrementValueHandler)]
         );
     }
 
@@ -303,8 +304,8 @@ function createNumericInputField(
             value: displayValue,
             onBlur: (e: Event) => useOnFieldBlurred(emit, e, hasFocus, props.disabled as boolean),
             onChange: () => {
-                const field = <HTMLInputElement>inputRef.value;
-                if (field.value === null || field.value === '') {
+                const field = inputRef.value as HTMLInputElement;
+                if (field.value == null || field.value === '') {
                     useOnFieldValueUpdated(emit, localValue, null);
                     displayValue = '';
                 } else {
@@ -460,7 +461,7 @@ function decrementValue(
 ): void {
     if (!props.disabled && !props.readonly) {
         let result = (localValue.value || 0.0) - options.step;
-        if (parseInt(<string>props.maxFraction) == 0) {
+        if (parseInt(props.maxFraction as string) === 0) {
             result = Math.round(result);
         }
 
@@ -478,7 +479,7 @@ function incrementValue(
 ): void {
     if (!props.disabled && !props.readonly) {
         let result = (localValue.value ?? 0.0) + options.step;
-        if (parseInt(<string>props.maxFraction) == 0) {
+        if (parseInt(props.maxFraction as string) === 0) {
             result = Math.round(result);
         }
 

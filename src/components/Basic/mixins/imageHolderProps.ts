@@ -1,4 +1,4 @@
-import {booleanProp, stringOrNumberProp, stringProp} from "../../../mixins/CommonProps";
+import { booleanProp, stringOrNumberProp, stringProp } from '../../../mixins/CommonProps';
 
 export const imageHolderProps = {
     /**
@@ -26,14 +26,14 @@ export const imageHolderProps = {
      */
     bgColor: {
         type: String,
-        default: "#868e96"
+        default: '#868e96',
     },
     /**
      * This component's text color, must be in html hex coloring number.
      */
     textColor: {
         type: String,
-        default: "#dee2e6"
+        default: '#dee2e6',
     },
     /**
      * Short text as placeholder `[deprecated]`.
@@ -48,13 +48,13 @@ export const imageHolderProps = {
      */
     xPos: {
         type: [String, Number],
-        default: "50%"
+        default: '50%',
     },
     /**
      * Text placeholder Y position.
      */
     yPos: {
         type: [String, Number],
-        default: "50%"
+        default: '50%',
     },
-}
+};

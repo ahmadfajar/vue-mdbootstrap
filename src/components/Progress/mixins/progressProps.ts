@@ -45,7 +45,7 @@ export const progressProps = {
     modelValue: {
         type: Number,
         default: 0,
-        validator: (value: number): boolean => value >= 0 && value <= 100
+        validator: (value: number): boolean => value >= 0 && value <= 100,
     },
     /**
      * ProgressControl mode, valid values are: `determinate`, `indeterminate`, `buffer`.
@@ -53,7 +53,8 @@ export const progressProps = {
     mode: {
         type: String,
         default: 'indeterminate',
-        validator: (value: string): boolean => ['determinate', 'indeterminate', 'buffer'].includes(value)
+        validator: (value: string): boolean =>
+            ['determinate', 'indeterminate', 'buffer'].includes(value),
     } as Prop<TProgressControlMode>,
     /**
      * ProgressControl type, valid values are: `spinner`, `bar`.
@@ -61,6 +62,6 @@ export const progressProps = {
     type: {
         type: String,
         default: 'bar',
-        validator: (value: string): boolean => ['spinner', 'bar'].includes(value)
+        validator: (value: string): boolean => ['spinner', 'bar'].includes(value),
     } as Prop<TProgressControlVariant>,
-}
+};

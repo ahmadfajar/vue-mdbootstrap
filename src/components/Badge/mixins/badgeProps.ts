@@ -30,9 +30,16 @@ export const badgeProps = {
     variant: {
         type: String,
         default: undefined,
-        validator: (value: string): boolean => [
-            'primary', 'secondary', 'success', 'warning',
-            'danger', 'info', 'light', 'dark'
-        ].includes(value),
+        validator: (value: string): boolean =>
+            [
+                'primary',
+                'secondary',
+                'success',
+                'warning',
+                'danger',
+                'info',
+                'light',
+                'dark',
+            ].includes(value),
     },
-}
+};

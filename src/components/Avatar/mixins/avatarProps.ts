@@ -1,5 +1,10 @@
 import type { Prop } from 'vue';
-import { booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp } from '../../../mixins/CommonProps';
+import {
+    booleanProp,
+    stringOrNumberProp,
+    stringProp,
+    validStringOrNumberProp,
+} from '../../../mixins/CommonProps';
 import { flip, rotate } from '../../Icon/mixins/iconProps';
 import type { TSizeProps } from '../../Icon/types';
 
@@ -27,7 +32,7 @@ export const iconProps = {
      * Apply **pulse** animation to the icon.
      */
     iconPulse: booleanProp,
-}
+};
 
 export const imageProps = {
     /**
@@ -49,7 +54,7 @@ export const imageProps = {
         type: [Number, String, Object],
         default: 48,
     } as Prop<string | number | TSizeProps>,
-}
+};
 
 export const avatarProps = {
     border: stringOrNumberProp,
@@ -70,5 +75,4 @@ export const avatarProps = {
     text: stringProp,
     ...iconProps,
     ...imageProps,
-}
-
+};

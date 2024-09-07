@@ -8,7 +8,7 @@ import {
     normalizeStyle,
     renderList,
     renderSlot,
-    unref
+    unref,
 } from 'vue';
 import type { TRecord } from '../../../types';
 import Helper from '../../../utils/Helper';
@@ -20,7 +20,7 @@ function applyRippleStyles(position: object, size: number) {
     return {
         ...position,
         width: unitSize,
-        height: unitSize
+        height: unitSize,
     };
 }
 
@@ -29,13 +29,13 @@ function getRippleCenteredPosition(size: number) {
 
     return {
         marginTop: halfSize,
-        marginLeft: halfSize
-    }
+        marginLeft: halfSize,
+    };
 }
 
 function getSize(element: Ref<HTMLElement | null>) {
     if (element.value) {
-        const {offsetWidth, offsetHeight} = element.value;
+        const { offsetWidth, offsetHeight } = element.value;
         return Math.round(Math.max(offsetWidth, offsetHeight));
     }
 
@@ -57,9 +57,10 @@ function getHitPosition(
     }
 
     return {
-        top: (top - (rect?.top ?? 0) - elementSize / 2 - document.documentElement.scrollTop) + 'px',
-        left: (left - (rect?.left ?? 0) - elementSize / 2 - document.documentElement.scrollLeft) + 'px'
-    }
+        top: top - (rect?.top ?? 0) - elementSize / 2 - document.documentElement.scrollTop + 'px',
+        left:
+            left - (rect?.left ?? 0) - elementSize / 2 - document.documentElement.scrollLeft + 'px',
+    };
 }
 
 export declare type TRippleData = {
@@ -87,15 +88,17 @@ export function startRipple(
             }
 
             eventType.value = event.type;
-            ripples.value = [{
-                waveStyles: applyRippleStyles(position, size),
-                uuid: Helper.uuid(true)
-            }];
+            ripples.value = [
+                {
+                    waveStyles: applyRippleStyles(position, size),
+                    uuid: Helper.uuid(true),
+                },
+            ];
         }
     });
 }
 
-function endRipple(ripples: Ref<TRippleData[]>,) {
+function endRipple(ripples: Ref<TRippleData[]>) {
     Helper.defer(() => {
         if (Helper.isArray(ripples.value) && ripples.value.length > 0) {
             ripples.value.shift();
@@ -114,7 +117,7 @@ function touchStartCheck(
     disabled: Ref<boolean>,
     centered: Ref<boolean>,
     touchTimeout: Ref<number>,
-    event: MouseEvent & TouchEvent,
+    event: MouseEvent & TouchEvent
 ) {
     touchTimeout.value = Helper.defer(() => {
         startRipple(element, ripples, eventType, disabled, centered, event);
@@ -131,7 +134,7 @@ export function useRenderRipples(
     disabled: Ref<boolean>,
     centered: Ref<boolean>,
     touchTimeout: Ref<number>,
-    tagType?: string,
+    tagType?: string
 ) {
     return h(
         tagType || 'div',
@@ -146,29 +149,37 @@ export function useRenderRipples(
             onTouchendPassive: () => endRipple(ripples),
             onTouchmovePassive: () => touchMoveCheck(touchTimeout),
             onTouchstartPassive: (event: MouseEvent & TouchEvent) =>
-                touchStartCheck(element, ripples, eventType, disabled, centered, touchTimeout, event),
+                touchStartCheck(
+                    element,
+                    ripples,
+                    eventType,
+                    disabled,
+                    centered,
+                    touchTimeout,
+                    event
+                ),
         },
         [
             renderSlot(slots, 'default'),
             !unref(disabled)
                 ? h(
-                    Fragment,
-                    {key: 0},
-                    renderList(ripples.value, (ripple) => {
-                        return createVNode(
-                            BsWave,
-                            {
-                                key: ripple.uuid,
-                                class: normalizeClass(rippleClassNames.value),
-                                style: normalizeStyle(ripple.waveStyles),
-                            },
-                            null,
-                            8 /* PROPS */,
-                            ['class', 'style']
-                        );
-                    }),
-                )
+                      Fragment,
+                      { key: 0 },
+                      renderList(ripples.value, (ripple) => {
+                          return createVNode(
+                              BsWave,
+                              {
+                                  key: ripple.uuid,
+                                  class: normalizeClass(rippleClassNames.value),
+                                  style: normalizeStyle(ripple.waveStyles),
+                              },
+                              null,
+                              8 /* PROPS */,
+                              ['class', 'style']
+                          );
+                      })
+                  )
                 : createCommentVNode(' v-if '),
-        ],
+        ]
     );
 }

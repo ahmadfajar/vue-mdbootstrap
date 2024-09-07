@@ -1,5 +1,10 @@
 import type { Prop, PropType } from 'vue';
-import { booleanProp, booleanTrueProp, defaultColorProp, stringProp } from '../../../mixins/CommonProps';
+import {
+    booleanProp,
+    booleanTrueProp,
+    defaultColorProp,
+    stringProp,
+} from '../../../mixins/CommonProps';
 import type { TButtonMode, TButtonSize, TButtonType, TLabelPosition } from '../../../types';
 import { iconProps } from '../../Avatar/mixins/avatarProps';
 import { inputProps } from '../../Field/mixins/fieldProps';
@@ -8,26 +13,26 @@ import { iconSizeProp } from '../../Icon/mixins/iconProps';
 export const buttonMode = {
     type: String,
     default: 'default',
-    validator: (value: string): boolean => ['default', 'icon', 'fab', 'floating'].includes(value)
-} as Prop<TButtonMode>
+    validator: (value: string): boolean => ['default', 'icon', 'fab', 'floating'].includes(value),
+} as Prop<TButtonMode>;
 
 export const buttonSize = {
     type: String,
     default: undefined,
-    validator: (value: string): boolean => ['xs', 'sm', 'lg'].includes(value)
-} as Prop<TButtonSize>
+    validator: (value: string): boolean => ['xs', 'sm', 'lg'].includes(value),
+} as Prop<TButtonSize>;
 
 export const buttonType = {
     type: String,
     default: 'button',
-    validator: (value: string): boolean => ['button', 'submit', 'reset', 'div'].includes(value)
-} as Prop<TButtonType>
+    validator: (value: string): boolean => ['button', 'submit', 'reset', 'div'].includes(value),
+} as Prop<TButtonType>;
 
 export const iconPosition = {
     type: String as PropType<TLabelPosition>,
     default: 'left',
-    validator: (value: string): boolean => ['left', 'right'].includes(value)
-} as Prop<TLabelPosition>
+    validator: (value: string): boolean => ['left', 'right'].includes(value),
+} as Prop<TLabelPosition>;
 
 export const buttonInnerProps = {
     dropdownToggle: booleanProp,
@@ -37,8 +42,8 @@ export const buttonInnerProps = {
     tagName: {
         type: String,
         default: 'span',
-    }
-}
+    },
+};
 
 export const buttonProps = {
     active: booleanProp,
@@ -60,19 +65,19 @@ export const buttonProps = {
     type: buttonType,
     iconPosition,
     ...iconProps,
-}
+};
 
 export const toggleButtonProps = {
     ...inputProps,
     items: {
         type: Array,
         default: undefined,
-        required: true
+        required: true,
     },
     multiple: booleanProp,
     modelValue: {
         type: [String, Number, Boolean, Array],
-        default: undefined
+        default: undefined,
     },
     flat: booleanProp,
     outlined: booleanProp,
@@ -84,4 +89,4 @@ export const toggleButtonProps = {
     tonal: booleanProp,
     toggleColor: stringProp,
     iconPosition,
-}
+};

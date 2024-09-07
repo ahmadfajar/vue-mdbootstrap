@@ -152,7 +152,7 @@ export declare abstract class AbstractStore implements ObjectBase {
      *
      * @param config  The configuration properties
      */
-    constructor(config?: TDataStoreConfig);
+    protected constructor(config?: TDataStoreConfig);
 
     /**
      * Get the class name of this instance.

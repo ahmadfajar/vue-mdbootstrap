@@ -1,4 +1,3 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
@@ -6,7 +5,7 @@ import type { TBsRipple, TRecord, TRippleOptionProps } from '../../types';
 import { baseTagProps } from '../Card/mixins/cardProps';
 import { startRipple, type TRippleData, useRenderRipples } from './mixins/rippleApi';
 
-export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsRipple>({
     name: 'BsRipple',
     props: {
         ...baseTagProps,
@@ -23,7 +22,7 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Met
          */
         'update:active',
     ],
-    setup(props, {emit, slots}) {
+    setup(props, { emit, slots }) {
         const thisProps = props as Readonly<TRippleOptionProps>;
         const ripples = ref<TRippleData[]>([]);
         const element = ref<HTMLElement | null>(null);
@@ -43,17 +42,24 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Met
             () => thisProps.active,
             (value) => {
                 const isBoolean = typeof value === 'boolean';
+                const isEvent =
                 // @ts-ignore
-                const isEvent = value?.constructor.toString().match(/function (\w*)/)[1].toLowerCase() === 'mouseevent';
+                    value?.constructor
+                        .toString()
+                        .match(/function (\w*)/)[1]
+                        .toLowerCase() === 'mouseevent';
 
                 if (isBoolean && !disabled.value && value) {
-                    startRipple(
-                        element, ripples, eventType, disabled, centered,
-                        {type: 'mousedown'} as MouseEvent & TouchEvent
-                    );
+                    startRipple(element, ripples, eventType, disabled, centered, {
+                        type: 'mousedown',
+                    } as MouseEvent & TouchEvent);
                 } else if (isEvent) {
                     startRipple(
-                        element, ripples, eventType, disabled, centered,
+                        element,
+                        ripples,
+                        eventType,
+                        disabled,
+                        centered,
                         value as MouseEvent & TouchEvent
                     );
                 }
@@ -63,8 +69,16 @@ export default defineComponent<TBsRipple, TRecord, TRecord, ComputedOptions, Met
 
         return () =>
             useRenderRipples(
-                slots, element, ripples, classNames, rippleClassNames,
-                eventType, disabled, centered, touchTimeout, thisProps.tag,
+                slots,
+                element,
+                ripples,
+                classNames,
+                rippleClassNames,
+                eventType,
+                disabled,
+                centered,
+                touchTimeout,
+                thisProps.tag
             );
     },
 });

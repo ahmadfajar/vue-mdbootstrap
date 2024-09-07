@@ -6,9 +6,7 @@ import {
     VNode,
     VNodeProps,
 } from 'vue';
-import { EventUpdateOpenProps } from '../../../types';
-
-export declare type TSideDrawerPosition = 'left' | 'right';
+import { EventUpdateOpenProps, TSideDrawerPosition } from '../../../types';
 
 export declare type TSideDrawerOptionProps = {
     color?: string;

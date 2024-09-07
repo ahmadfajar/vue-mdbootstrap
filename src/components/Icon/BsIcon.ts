@@ -1,35 +1,38 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
+import type { Prop } from 'vue';
 import { defineComponent, h } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
-import type { TBsIcon, TBsIconSvg, TIconOptionProps, TRecord } from '../../types';
 import BsIconSvg from './BsIconSvg';
 import { useSizeHeight, useSizeStyles, useSizeWidth } from './mixins/iconApi';
 import { iconProps, iconSizeProp } from './mixins/iconProps';
+import type { TBsIcon, TBsIconSvg, TIconOptionProps } from './types';
 
-export default defineComponent<TBsIcon, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsIcon>({
     name: 'BsIcon',
     props: {
         size: iconSizeProp,
         ...iconProps,
     },
     setup(props) {
-        const cmpProps = props as Readonly<TIconOptionProps>;
-        const szHeight = useSizeHeight(cmpProps) as Prop<string>;
-        const szWidth = useSizeWidth(cmpProps) as Prop<string>;
+        const thisProps = props as Readonly<TIconOptionProps>;
+        const szHeight = useSizeHeight(thisProps) as Prop<string>;
+        const szWidth = useSizeWidth(thisProps) as Prop<string>;
 
-        return () => h(
-            'span', {
-                class: [`${cssPrefix}icon`],
-                style: useSizeStyles(cmpProps),
-            }, h<TBsIconSvg>(BsIconSvg, {
-                icon: props.icon,
-                height: szHeight,
-                width: szWidth,
-                spin: props.spin,
-                pulse: props.pulse,
-                flip: props.flip,
-                rotate: props.rotate,
-            }),
-        );
-    }
+        return () =>
+            h(
+                'span',
+                {
+                    class: [`${cssPrefix}icon`],
+                    style: useSizeStyles(thisProps),
+                },
+                h<TBsIconSvg>(BsIconSvg, {
+                    icon: props.icon,
+                    height: szHeight,
+                    width: szWidth,
+                    spin: props.spin,
+                    pulse: props.pulse,
+                    flip: props.flip,
+                    rotate: props.rotate,
+                })
+            );
+    },
 });

@@ -1,11 +1,9 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
-import type { TBsSearchField, TRecord, TSearchFieldOptionProps } from '../../types';
 import { searchFieldProps } from './mixins/fieldProps';
 import { useRenderSearchField, useSearchFieldClasses } from './mixins/searchFieldApi';
+import type { TBsSearchField, TSearchFieldOptionProps } from './types';
 
-
-export default defineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsSearchField>({
     name: 'BsSearchField',
     props: searchFieldProps,
     inheritAttrs: false,
@@ -39,23 +37,30 @@ export default defineComponent<TBsSearchField, TRecord, TRecord, ComputedOptions
          */
         'update:model-value',
     ],
-    setup(props, {attrs, emit, slots}) {
+    setup(props, { attrs, emit, slots }) {
         const thisProps = props as Readonly<TSearchFieldOptionProps>;
         const localValue = ref(thisProps.modelValue);
         const isFocused = ref<boolean>(false);
         const isPopoverOpen = ref(false);
         const activator = ref<HTMLElement | null>(null);
-        const classes = computed(() => useSearchFieldClasses(thisProps, isFocused))
+        const classes = computed(() => useSearchFieldClasses(thisProps, isFocused));
 
         watch(
             () => thisProps.modelValue,
-            (value) => localValue.value = value
+            (value) => (localValue.value = value)
         );
 
         return () =>
             useRenderSearchField(
-                slots, emit, props, attrs, classes, activator,
-                localValue, isFocused, isPopoverOpen
-            )
-    }
+                slots,
+                emit,
+                props,
+                attrs,
+                classes,
+                activator,
+                localValue,
+                isFocused,
+                isPopoverOpen
+            );
+    },
 });

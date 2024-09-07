@@ -87,7 +87,7 @@ export function useTabItemClassNames(
         'text-center': tagName.value !== 'li',
         'flex-fill': tabs?.alignment === 'justified',
         disabled: props.disabled === true,
-        [<string>props.activeClass]:
+        [`${props.activeClass}`]:
             props.activeClass &&
             props.active === true &&
             tagName.value !== 'li' &&
@@ -100,18 +100,14 @@ export function useItemLinkClassNames(
     props: Readonly<TTabItemOptionProps>,
     tabs?: TabsProvider
 ): TRecord {
-    const classes = {
+    return {
         'nav-link': true,
         'text-center': true,
-        disabled: props.disabled === true,
         'flex-fill': tabs?.alignment === 'justified',
-        [<string>props.activeClass]: props.activeClass && props.active === true, // && !useHasRouter(props),
+        disabled: props.disabled === true,
+        [`${props.activeClass}`]: props.activeClass && props.active === true, // && !useHasRouter(props),
+        [normalizeClass(tabs?.tabClass)]: !Helper.isEmpty(tabs?.tabClass) && !props.active,
     };
-    if (!Helper.isEmpty(tabs?.tabClass)) {
-        classes[normalizeClass(tabs?.tabClass)] = tabs?.tabClass && !props.active; // && !useHasRouter(props);
-    }
-
-    return classes;
 }
 
 function renderTabIconWithCondition(
@@ -126,7 +122,7 @@ function renderTabIconWithCondition(
             ...useCreateIconProps(props),
         });
     } else {
-        return unMatchCondition ?? createCommentVNode(' BsIcon ', true);
+        return unMatchCondition ?? createCommentVNode(' v-if-Icon ');
     }
 }
 
@@ -244,7 +240,7 @@ export function useRenderTabItem(
                 class: tabItemClasses.value,
                 role: 'presentation',
                 onVnodeBeforeMount: (vnode) => {
-                    const vm = (<IVNode>vnode).ctx;
+                    const vm = (vnode as IVNode).ctx;
                     if (vm && provider) {
                         tabIndex.value = provider.registerTabItem(vm) - 1;
                     }
@@ -266,7 +262,7 @@ export function useRenderTabItem(
 export function useRenderTabLabel(
     props: Readonly<TTabLabelOptionProps>,
     orientation: ComputedRef<TOrientation>
-): Array<VNode> {
+): VNode[] {
     return [
         renderTabIconWithCondition(
             !Helper.isEmpty(props.icon) && ['left', 'top'].includes(props.iconPosition as string),
@@ -293,9 +289,10 @@ export function useRenderTabLabel(
                   },
                   toDisplayString(props.label)
               )
-            : createCommentVNode(' BsTabLabel ', true),
+            : createCommentVNode(' v-if-TabLabel '),
         renderTabIconWithCondition(
-            !Helper.isEmpty(props.icon) && ['right', 'bottom'].includes(props.iconPosition as string),
+            !Helper.isEmpty(props.icon) &&
+                ['right', 'bottom'].includes(props.iconPosition as string),
             props,
             props.iconSize
         ),
@@ -344,7 +341,10 @@ function renderVerticalTabView(
             h(
                 'div',
                 {
-                    class: { 'col-auto px-0': true, 'order-last': props.tabPosition === 'right' },
+                    class: {
+                        'col-auto px-0': true,
+                        'order-last': props.tabPosition === 'right',
+                    },
                 },
                 [
                     h(
@@ -371,7 +371,10 @@ function renderVerticalTabView(
             h(
                 'div',
                 {
-                    class: useMergeClass('col tab-content', props.contentClass as string),
+                    class: useMergeClass(
+                        'col tab-content',
+                        props.contentClass as string | string[]
+                    ),
                 },
                 slots.default && slots.default()
             ),

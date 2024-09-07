@@ -1,16 +1,16 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
+import type { Prop } from 'vue';
 import { computed, createCommentVNode, defineComponent, h } from 'vue';
 import { cssPrefix, useRenderSlot } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
-import type { TBsListTileLeading, TListTileLeadingOptionProps, TRecord } from '../../types';
 import Helper from '../../utils/Helper';
 import { BsAvatar } from '../Avatar';
 import { useCreateIconProps } from '../Avatar/mixins/avatarApi';
 import { iconProps, imageProps } from '../Avatar/mixins/avatarProps';
 import { BsIcon } from '../Icon';
 import { useGetCalcSize, useSizeStyles } from '../Icon/mixins/iconApi';
+import type { TBsListTileLeading, TListTileLeadingOptionProps } from './types';
 
-export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsListTileLeading>({
     name: 'BsListTileLeading',
     props: {
         ...iconProps,
@@ -21,51 +21,50 @@ export default defineComponent<TBsListTileLeading, TRecord, TRecord, ComputedOpt
          */
         center: booleanProp,
     },
-    setup(props, {slots}) {
-        const cmpProps = props as Readonly<TListTileLeadingOptionProps>;
-        const styles = computed(
-            () => {
-                if (cmpProps.icon && (!cmpProps.size || useGetCalcSize(cmpProps) === 48)) {
-                    return {
-                        height: '24px',
-                        width: '24px'
-                    }
-                } else {
-                    return useSizeStyles(cmpProps);
-                }
+    setup(props, { slots }) {
+        const thisProps = props as Readonly<TListTileLeadingOptionProps>;
+        const styles = computed(() => {
+            if (thisProps.icon && (!thisProps.size || useGetCalcSize(thisProps) === 48)) {
+                return {
+                    height: '24px',
+                    width: '24px',
+                };
+            } else {
+                return useSizeStyles(thisProps);
             }
-        );
+        });
 
         return () =>
-            h('div', {
+            h(
+                'div',
+                {
                     class: [
                         `${cssPrefix}list-tile-leading`,
-                        cmpProps.center === true ? 'd-flex align-self-center' : '',
-                        !Helper.isEmpty(cmpProps.icon) ? `${cssPrefix}has-icon` : '',
+                        thisProps.center === true ? 'd-flex align-self-center' : '',
+                        !Helper.isEmpty(thisProps.icon) ? `${cssPrefix}has-icon` : '',
                     ],
                     style: styles.value,
                 },
                 useRenderSlot(
-                    slots, 'default', {key: Helper.uuid(true)},
-                    !Helper.isEmpty(cmpProps.imgSrc)
+                    slots,
+                    'default',
+                    { key: Helper.uuid(true) },
+                    !Helper.isEmpty(thisProps.imgSrc)
                         ? h(BsAvatar, {
-                            imgSrc: props.imgSrc,
-                            size: props.size,
-                            rounded: props.rounded,
-                            circle: props.circle,
-                        })
-                        : (
-                            !Helper.isEmpty(cmpProps.icon)
-                                ? h(BsIcon, {
-                                    size: (
-                                        (!cmpProps.size || useGetCalcSize(cmpProps) === 48)
-                                            ? 24 : useGetCalcSize(cmpProps)
-                                    ) as Prop<string | number>,
-                                    ...useCreateIconProps(cmpProps),
-                                })
-                                : createCommentVNode(' v-if-BsIcon ')
-                        )
+                              imgSrc: props.imgSrc,
+                              size: props.size,
+                              rounded: props.rounded,
+                              circle: props.circle,
+                          })
+                        : !Helper.isEmpty(thisProps.icon)
+                          ? h(BsIcon, {
+                                size: (!thisProps.size || useGetCalcSize(thisProps) === 48
+                                    ? 24
+                                    : useGetCalcSize(thisProps)) as Prop<string | number>,
+                                ...useCreateIconProps(thisProps),
+                            })
+                          : createCommentVNode(' v-if-BsIcon ')
                 )
-            )
-    }
+            );
+    },
 });

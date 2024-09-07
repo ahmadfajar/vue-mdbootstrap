@@ -124,7 +124,7 @@ export declare type TToggleButtonOptionProps = TInputBaseProps & TBaseButtonProp
     /**
      * The number of items stored in the collection.
      */
-    items: Array<TInputOptionItem>;
+    items: TInputOptionItem[];
     /**
      * Allow multiple choice or not.
      */
@@ -132,7 +132,7 @@ export declare type TToggleButtonOptionProps = TInputBaseProps & TBaseButtonProp
     /**
      * The input value to be monitored by `v-model`.
      */
-    modelValue?: string | number | boolean | Array<unknown>;
+    modelValue?: string | number | boolean | unknown[];
     /**
      * Color to apply when Button is active or selected.
      */

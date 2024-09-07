@@ -1,4 +1,3 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, ref, shallowRef, watch } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
 import type {
@@ -6,11 +5,11 @@ import type {
     TBsCombobox,
     TComboboxOptionProps,
     TDataListSchemaProps,
-    TRecord
+    TRecord,
 } from '../../types';
 import Helper from '../../utils/Helper';
 import {
-    useCreateTextFieldClasses,
+    useFieldControlClasses,
     useFieldWrapperClasses,
     useShowClearButton,
 } from '../Field/mixins/textFieldApi';
@@ -18,16 +17,7 @@ import { useGetValidationResult } from '../Field/mixins/validationApi';
 import { useFetchData, useRenderCombobox } from './mixins/comboboxApi';
 import { comboboxProps } from './mixins/comboboxProps';
 
-export default defineComponent<
-    TBsCombobox,
-    TRecord,
-    TRecord,
-    ComputedOptions,
-    MethodOptions,
-    ComponentOptionsMixin,
-    ComponentOptionsMixin,
-    EmitsOptions
->({
+export default defineComponent<TBsCombobox>({
     name: 'BsCombobox',
     props: comboboxProps,
     emits: [
@@ -74,21 +64,21 @@ export default defineComponent<
     ],
     setup(props, { emit, slots }) {
         const thisProps = props as Readonly<TComboboxOptionProps>;
-        const dataSchema = <TDataListSchemaProps>{
+        const dataSchema = {
             displayField: 'text',
             valueField: 'value',
             imageField: 'image',
             cascadeField: 'parent',
             disableField: 'disabled',
             ...thisProps.dataSource?.schema,
-        };
+        } as TDataListSchemaProps;
         const dataSource = thisProps.dataSource?.proxy;
-        const fieldValues = ref<string[] | number[]>(
+        const fieldValues = ref<(string | number)[]>(
             Array.isArray(thisProps.modelValue)
                 ? thisProps.modelValue
-                : Helper.isEmpty(thisProps.modelValue)
-                ? []
-                : [<string>thisProps.modelValue]
+                : !Helper.isEmpty(thisProps.modelValue)
+                  ? [thisProps.modelValue]
+                  : []
         );
         const selectedItems = shallowRef<IBsModel[]>([]);
         const isFocused = ref(false);
@@ -98,7 +88,7 @@ export default defineComponent<
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, fieldValues));
         const showAppendIcon = computed(
             () =>
-                slots['append-inner'] != undefined ||
+                slots['append-inner'] != null ||
                 !Helper.isEmpty(thisProps.appendIcon) ||
                 showClearButton.value
         );
@@ -110,7 +100,7 @@ export default defineComponent<
             )
         );
         const controlClasses = computed<TRecord>(() => ({
-            ...useCreateTextFieldClasses(
+            ...useFieldControlClasses(
                 slots,
                 thisProps,
                 fieldValues,
@@ -142,7 +132,7 @@ export default defineComponent<
                     selectedItems.value = [];
                 } else {
                     fieldValues.value =
-                        thisProps.multiple && Array.isArray(value) ? value : [<string>value];
+                        thisProps.multiple && Array.isArray(value) ? value : [value as string];
 
                     if (
                         !thisProps.multiple &&

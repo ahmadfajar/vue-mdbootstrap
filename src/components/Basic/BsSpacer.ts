@@ -1,11 +1,10 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent } from 'vue';
 import { useRenderSlotDefault } from '../../mixins/CommonApi';
 import { booleanTrueProp, validStringOrNumberProp } from '../../mixins/CommonProps';
-import type { TBsSpacer, TRecord } from '../../types';
 import Helper from '../../utils/Helper';
+import type { TBsSpacer } from './types';
 
-export default defineComponent<TBsSpacer, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsSpacer>({
     name: 'BsSpacer',
     props: {
         /**
@@ -20,9 +19,12 @@ export default defineComponent<TBsSpacer, TRecord, TRecord, ComputedOptions, Met
         width: validStringOrNumberProp,
     },
     setup(props) {
-        return () => useRenderSlotDefault('div', undefined,
-            {'flex-grow-1': props.fill && !props.width},
-            {width: props.width ? Helper.cssUnit(props.width as string) : undefined},
-        )
-    }
+        return () =>
+            useRenderSlotDefault(
+                'div',
+                undefined,
+                { 'flex-grow-1': props.fill && !props.width },
+                { width: props.width ? Helper.cssUnit(props.width as string) : undefined }
+            );
+    },
 });

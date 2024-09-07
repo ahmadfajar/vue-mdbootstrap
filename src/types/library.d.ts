@@ -90,23 +90,23 @@ export declare type TEventListenerBinding = {
     target?: Element | Window | null;
 };
 
-declare type TRect = {
-    width: number;
-    height?: number;
-    left?: number;
-    right?: number;
-    top?: number;
-    bottom?: number;
-};
-
 declare type TAppBar = {
     height: number;
     stickyTop: boolean;
     fixedTop: boolean;
 };
 
+export declare type TSideDrawerPosition = 'left' | 'right';
+
+declare type TSideDrawerProps = {
+    miniWidth: number;
+    width: number;
+    mini: boolean;
+    open: boolean;
+};
+
 declare type TSideDrawer = {
-    [K in TLabelPosition]: TRect;
+    [K in TSideDrawerPosition]: TSideDrawerProps;
 };
 
 export declare type TMdbAppObject = {

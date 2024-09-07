@@ -92,7 +92,7 @@ export declare type TModelState = {
  *     },
  *     proxy: {
  *         save: {url: './api/users', method: 'post'},
- *         update: {url: './api/users', method: 'put'},
+ *         update: {url: './api/users', method: 'patch'},
  *         delete: {url: './api/users', method: 'delete'},
  *         fetch: './api/users/{id}',
  *     },

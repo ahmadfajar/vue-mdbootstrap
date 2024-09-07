@@ -4,7 +4,7 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 import { EventUpdateModelValueProps, TLabelPosition, TRadioOptionProps } from '../../../types';
 
@@ -15,18 +15,20 @@ export declare type TSwitchOptionProps = TRadioOptionProps & {
     insetOutlined?: boolean;
     checkoffIcon?: boolean;
     checkedIcon?: boolean;
-}
+};
 
 export declare type TBsSwitch = ComponentObjectPropsOptions<TSwitchOptionProps>;
 
-declare type AllowedSwitchProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventUpdateModelValueProps<string | number | boolean> & {
-    onChecked?: (checked: boolean) => void;
-    '@checked'?: (checked: boolean) => void;
-}
+declare type AllowedSwitchProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventUpdateModelValueProps<string | number | boolean> & {
+        onChecked?: (checked: boolean) => void;
+        '@checked'?: (checked: boolean) => void;
+    };
 
 export declare const BsSwitch: {
-    new(): {
+    new (): {
         $props: AllowedSwitchProps & TSwitchOptionProps;
         $slots: {
             default?: () => VNode[];

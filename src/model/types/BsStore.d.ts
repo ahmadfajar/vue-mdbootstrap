@@ -27,7 +27,7 @@ export declare type TMessageResponse = {
  *         browse: '/api/users',
  *         delete: {url: './api/users', method: 'delete'},
  *         save: {url: './api/users', method: 'post'},
- *         update: {url: './api/users', method: 'put'}
+ *         update: {url: './api/users', method: 'patch'}
  *     },
  *     csrfConfig: {
  *         url: '/api/token/{name}',

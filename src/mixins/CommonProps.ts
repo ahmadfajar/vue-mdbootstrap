@@ -1,90 +1,90 @@
 export const booleanProp = {
     type: Boolean,
     default: false,
-}
+};
 
 export const booleanTrueProp = {
     type: Boolean,
     default: true,
-}
+};
 
 export const stringProp = {
     type: String,
     default: undefined,
-}
+};
 
 export const numberProp = {
     type: Number,
     default: undefined,
-}
+};
 
 export const dateProp = {
     type: Date,
     default: undefined,
-}
+};
 
 export const stringRequiredProp = {
     type: String,
     default: undefined,
     required: true,
-}
+};
 
 export const stringOrNumberProp = {
     type: [String, Number],
     default: undefined,
-}
+};
 
 export const stringOrArrayProp = {
     type: [String, Array],
-    default: undefined
-}
+    default: undefined,
+};
 
 export const validStringOrNumberProp = {
     type: [String, Number],
     default: undefined,
     validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
-}
+};
 
 export const validStringOrFloatProp = {
     type: [String, Number],
     default: undefined,
     validator: (value: string): boolean => !isNaN(parseFloat(value)),
-}
+};
 
 export const validNumberGtZeroProp = {
     type: [String, Number],
     default: undefined,
-    validator: (value: string) => parseInt(value, 10) > 0
-}
+    validator: (value: string) => parseInt(value, 10) > 0,
+};
 
 export const objectProp = {
     type: Object,
     default: undefined,
-}
+};
 
 export const tagProp = {
     type: String,
-    default: "div",
-}
+    default: 'div',
+};
 
 export const defaultColorProp = {
     type: String,
-    default: "default"
+    default: 'default',
 };
 
 export const primaryColorProp = {
     type: String,
-    default: "primary"
+    default: 'primary',
 };
 
 export const whiteColorProp = {
     type: String,
-    default: "white"
+    default: 'white',
 };
 
 export const defaultTransitionProp = {
     type: String,
-    default: "fade"
+    default: 'fade',
 };
 
 export const routerProps = {
@@ -108,5 +108,5 @@ export const routerProps = {
      * Navigation url.
      * @type {string}
      */
-    url: stringProp
-}
+    url: stringProp,
+};

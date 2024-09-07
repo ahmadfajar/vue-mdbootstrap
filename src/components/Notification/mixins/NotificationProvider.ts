@@ -5,14 +5,20 @@ import type {
     TNotificationItem,
     TNotificationOption,
     TNotificationPosition,
-    TNotificationVariant
+    TNotificationVariant,
 } from '../types';
 
 export default class NotificationProvider implements INotificationProvider {
     private readonly _item: TNotificationItem;
     private readonly _positions: TNotificationPosition[] = [
-        'top-right', 'top-left', 'top-center', 'top-full-width',
-        'bottom-right', 'bottom-left', 'bottom-center', 'bottom-full-width'
+        'top-right',
+        'top-left',
+        'top-center',
+        'top-full-width',
+        'bottom-right',
+        'bottom-left',
+        'bottom-center',
+        'bottom-full-width',
     ];
 
     constructor() {
@@ -29,9 +35,9 @@ export default class NotificationProvider implements INotificationProvider {
         return this._item;
     }
 
-    add(item: string | TNotificationOption): TNotificationOption | null {
-        const option = this._createOption(item);
-        const position = <TNotificationPosition>option.position;
+    add(data: string | TNotificationOption): TNotificationOption | null {
+        const option = this._createOption(data);
+        const position = option.position as TNotificationPosition;
 
         if (option.preventDuplicates) {
             const keys = this.notification[position].keys();
@@ -62,9 +68,9 @@ export default class NotificationProvider implements INotificationProvider {
     }
 
     remove(item: TNotificationOption) {
-        const oid = <string>item.oid;
-        const position = <TNotificationPosition>item.position;
-        this._item[position] = this.notification[position].filter(it => it.oid !== oid);
+        const oid = item.oid as string;
+        const position = item.position as TNotificationPosition;
+        this._item[position] = this.notification[position].filter((it) => it.oid !== oid);
     }
 
     removeByType(variant: TNotificationVariant) {
@@ -80,77 +86,56 @@ export default class NotificationProvider implements INotificationProvider {
     }
 
     error(option: string | TNotificationOption, title?: string): TNotificationOption | null {
-        const data = this._createOption(option);
-        data.variant = 'error';
-        data.title = title;
-
-        return this.add(data);
+        return this._doAdd(option, 'error', title);
     }
 
     info(option: string | TNotificationOption, title?: string): TNotificationOption | null {
-        const data = this._createOption(option);
-        data.variant = 'info';
-        data.title = title;
-
-        return this.add(data);
+        return this._doAdd(option, 'info', title);
     }
 
     success(option: string | TNotificationOption, title?: string): TNotificationOption | null {
-        const data = this._createOption(option);
-        data.variant = 'success';
-        data.title = title;
-
-        return this.add(data);
+        return this._doAdd(option, 'success', title);
     }
 
     warning(option: string | TNotificationOption, title?: string): TNotificationOption | null {
+        return this._doAdd(option, 'warning', title);
+    }
+
+    private _doAdd(
+        option: string | TNotificationOption,
+        variant: TNotificationVariant,
+        title?: string
+    ): TNotificationOption | null {
         const data = this._createOption(option);
-        data.variant = 'warning';
+        data.variant = variant;
         data.title = title;
 
         return this.add(data);
     }
 
     private _createOption(option: string | TNotificationOption): TNotificationOption {
-        const defOpt = {
-            position: 'bottom-right' as TNotificationPosition,
-            variant: 'default' as TNotificationVariant,
+        const defaultOption = {
             oid: Helper.uuid(true),
             clickClose: false,
             closeButton: true,
             // closeOnHover: false,
-            timeout: 6000,
             progressBar: false,
             preventDuplicates: false,
+            position: 'bottom-right' as TNotificationPosition,
+            variant: 'default' as TNotificationVariant,
+            timeout: 6000,
         };
 
-        if (Helper.isObject(option) && !Helper.isEmpty((<TNotificationOption>option).message)) {
+        if (Helper.isObject(option) && !Helper.isEmpty(option.message)) {
             return {
-                oid: defOpt.oid,
-                variant: defOpt.variant,
-                timeout: defOpt.timeout,
-                position: defOpt.position,
-                clickClose: defOpt.clickClose,
-                closeButton: defOpt.closeButton,
-                // closeOnHover: defOpt.closeOnHover,
-                progressBar: defOpt.progressBar,
-                preventDuplicates: defOpt.preventDuplicates,
-                // @ts-ignore
+                ...defaultOption,
                 ...option,
-            }
+            };
         }
 
         return {
+            ...defaultOption,
             message: option.toString(),
-            oid: defOpt.oid,
-            variant: defOpt.variant,
-            timeout: defOpt.timeout,
-            position: defOpt.position,
-            clickClose: defOpt.clickClose,
-            closeButton: defOpt.closeButton,
-            // closeOnHover: defOpt.closeOnHover,
-            progressBar: defOpt.progressBar,
-            preventDuplicates: defOpt.preventDuplicates,
-        }
+        };
     }
 }

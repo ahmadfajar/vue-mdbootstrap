@@ -142,7 +142,7 @@ export function useRenderAnimatedProgressSpinner(
                     [
                         useCreateSvgNode(
                             [`${cssPrefix}progress-spinner-draw`],
-                            useCircleSizeStyles(<number>props.diameter),
+                            useCircleSizeStyles(props.diameter as number),
                             false,
                             'xMidYMid meet',
                             `0 0 ${props.diameter} ${props.diameter}`,

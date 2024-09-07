@@ -1,4 +1,10 @@
-import { AllowedComponentProps, ComponentCustomProps, ComponentObjectPropsOptions, Plugin, VNodeProps } from 'vue';
+import {
+    AllowedComponentProps,
+    ComponentCustomProps,
+    ComponentObjectPropsOptions,
+    Plugin,
+    VNodeProps,
+} from 'vue';
 
 export declare type TProgressControlMode = 'determinate' | 'indeterminate' | 'buffer';
 
@@ -64,7 +70,7 @@ export declare type TMaskLoaderOptionProps = {
      * Sets the css style `z-index` value.
      */
     zIndex?: string | number;
-}
+};
 
 export declare type TProgressOptionProps = {
     /**
@@ -99,7 +105,7 @@ export declare type TProgressOptionProps = {
      * ProgressControl type, valid values are: `spinner`, `bar`.
      */
     type?: TProgressControlVariant;
-}
+};
 
 export declare type TProgressBarOptionProps = {
     /**
@@ -150,7 +156,7 @@ export declare type TProgressBarOptionProps = {
      * Progress bar's text value position.
      */
     valuePosition?: TProgressBarValuePosition;
-}
+};
 
 export declare type TBsMaskLoader = ComponentObjectPropsOptions<TMaskLoaderOptionProps>;
 
@@ -159,19 +165,19 @@ export declare type TBsProgress = ComponentObjectPropsOptions<TProgressOptionPro
 export declare type TBsProgressBar = ComponentObjectPropsOptions<TProgressBarOptionProps>;
 
 export declare const BsMaskLoader: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TMaskLoaderOptionProps;
     };
 };
 
 export declare const BsProgress: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TProgressOptionProps;
     };
 };
 
 export declare const BsProgressBar: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TProgressBarOptionProps;
     };
 };

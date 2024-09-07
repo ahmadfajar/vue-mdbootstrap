@@ -5,9 +5,14 @@ import {
     Plugin,
     Ref,
     UnwrapNestedRefs,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
-import { Color, EventUpdateModelValueProps, EventUpdateOpenProps, TPopoverPosition } from '../../../types';
+import {
+    Color,
+    EventUpdateModelValueProps,
+    EventUpdateOpenProps,
+    TPopoverPosition,
+} from '../../../types';
 
 export declare type TColorPickerMode = 'HEX' | 'RGB' | 'HSL';
 
@@ -17,7 +22,7 @@ declare type TColorPickerValue = {
     alphaSlider: number;
     mode: TColorPickerMode;
     value: string | undefined;
-}
+};
 
 /**
  * ColorPicker internal data structures.
@@ -36,7 +41,7 @@ export declare type TColorPickerData = {
     alphaSlider: Ref<HTMLElement | null>;
     alphaSliderThumb: Ref<HTMLElement | null>;
     canvasCtx?: CanvasRenderingContext2D | null;
-}
+};
 
 export declare type TColorPickerOptionProps = {
     /**
@@ -113,18 +118,21 @@ export declare type TColorPickerOptionProps = {
      * This animation is effected by `placement` property.
      */
     transition?: string;
-}
+};
 
 export declare type TBsColorPicker = ComponentObjectPropsOptions<TColorPickerOptionProps>;
 
-declare type AllowedColorPickerProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventUpdateOpenProps & EventUpdateModelValueProps<string> & {
-    'onUpdate:mode'?: (mode: TColorPickerMode) => void;
-    '@update:mode'?: (mode: TColorPickerMode) => void;
-}
+declare type AllowedColorPickerProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventUpdateOpenProps &
+    EventUpdateModelValueProps<string> & {
+        'onUpdate:mode'?: (mode: TColorPickerMode) => void;
+        '@update:mode'?: (mode: TColorPickerMode) => void;
+    };
 
 export declare const BsColorPicker: {
-    new(): {
+    new (): {
         $props: AllowedColorPickerProps & TColorPickerOptionProps;
         $emit: [
             /**

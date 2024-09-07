@@ -1,17 +1,17 @@
-import type {App, Plugin} from "vue";
-import BsDatePicker from "./BsDatePicker";
-import BsDateTimeField from "./BsDateTimeField";
-import "../../../scss/_globalvars.scss";
-import "../../../scss/_transitions.scss";
-import "../../../scss/_utilities.scss";
-import "../Field/field.scss";
-import "./datePicker.scss";
+import type { App, Plugin } from 'vue';
+import BsDatePicker from './BsDatePicker';
+import BsDateTimeField from './BsDateTimeField';
+import '../../../scss/_globalvars.scss';
+import '../../../scss/_transitions.scss';
+import '../../../scss/_utilities.scss';
+import '../Field/field.scss';
+import './datePicker.scss';
 
 const BsDatePickerPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(<string>BsDatePicker.name, BsDatePicker);
-        app.component(<string>BsDateTimeField.name, BsDateTimeField);
-    }
-}
+        app.component(BsDatePicker.name as string, BsDatePicker);
+        app.component(BsDateTimeField.name as string, BsDateTimeField);
+    },
+};
 
-export {BsDatePickerPlugin, BsDatePicker, BsDateTimeField}
+export { BsDatePickerPlugin, BsDatePicker, BsDateTimeField };

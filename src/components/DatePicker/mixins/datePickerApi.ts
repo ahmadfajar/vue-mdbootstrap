@@ -64,7 +64,7 @@ export function useDatePickerHeaderStyles(
         ...initial,
         cursor:
             [DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(
-                <TDateTimePickerMode>props.pickerMode
+                props.pickerMode as TDateTimePickerMode
             ) && !isYearActive.value
                 ? 'pointer'
                 : undefined,
@@ -73,7 +73,7 @@ export function useDatePickerHeaderStyles(
         ...initial,
         cursor:
             [DatePickerConst.DATE, DatePickerConst.DATETIME].includes(
-                <TDateTimePickerMode>props.pickerMode
+                props.pickerMode as TDateTimePickerMode
             ) && !isTimeActive.value
                 ? 'pointer'
                 : undefined,
@@ -82,7 +82,7 @@ export function useDatePickerHeaderStyles(
         ...initial,
         cursor:
             [DatePickerConst.DATE, DatePickerConst.DATETIME, DatePickerConst.MONTH].includes(
-                <TDateTimePickerMode>props.pickerMode
+                props.pickerMode as TDateTimePickerMode
             ) && !isTitleActive.value
                 ? 'pointer'
                 : undefined,
@@ -572,7 +572,7 @@ export function useRenderDatePickerDays(
                     e.preventDefault();
                     debounceShiftDatePickerCalendar(
                         debounceRef,
-                        <TDateTimePickerMode>DatePickerConst.DATE,
+                        DatePickerConst.DATE as TDateTimePickerMode,
                         calendarValue,
                         emit,
                         300,
@@ -625,12 +625,12 @@ export function useRenderDatePickerDays(
                                                             ? createCalendarDayButton(
                                                                   props,
                                                                   localValue,
-                                                                  <TValueText<DateTime>>it,
+                                                                  it as TValueText<DateTime>,
                                                                   today,
                                                                   () =>
                                                                       dispatchDateTimeValue(
                                                                           emit,
-                                                                          <DateTime>it.value,
+                                                                          it.value as DateTime,
                                                                           props.disabled
                                                                       )
                                                               )
@@ -654,7 +654,7 @@ export function useRenderDatePickerDays(
                     left: (e: WheelEvent) => {
                         (e.deltaX < -10 || e.deltaX > 10) &&
                             shiftDatePickerCalendar(
-                                <TDateTimePickerMode>DatePickerConst.DATE,
+                                DatePickerConst.DATE as TDateTimePickerMode,
                                 calendarValue.value,
                                 emit,
                                 e.deltaX * -1
@@ -663,7 +663,7 @@ export function useRenderDatePickerDays(
                     right: (e: WheelEvent) => {
                         (e.deltaX < -10 || e.deltaX > 10) &&
                             shiftDatePickerCalendar(
-                                <TDateTimePickerMode>DatePickerConst.DATE,
+                                DatePickerConst.DATE as TDateTimePickerMode,
                                 calendarValue.value,
                                 emit,
                                 e.deltaX * -1
@@ -682,8 +682,8 @@ function createCalendarDayButton(
     today: DateTime,
     clickHandler: VoidFunction
 ): VNode {
-    const selected = dateRef.value.hasSame(<DateTime>data.value, 'day');
-    const isOutlined = today.hasSame(<DateTime>data.value, 'day') && !selected;
+    const selected = dateRef.value.hasSame(data.value as DateTime, 'day');
+    const isOutlined = today.hasSame(data.value as DateTime, 'day') && !selected;
 
     return h(
         BsButton,
@@ -889,7 +889,7 @@ export function useRenderDatePickerMonths(
                     e.preventDefault();
                     debounceShiftDatePickerCalendar(
                         debounceRef,
-                        <TDateTimePickerMode>DatePickerConst.MONTH,
+                        DatePickerConst.MONTH as TDateTimePickerMode,
                         calendarValue,
                         emit,
                         300,
@@ -956,7 +956,7 @@ export function useRenderDatePickerMonths(
                     left: (e: WheelEvent) => {
                         (e.deltaX < -10 || e.deltaX > 10) &&
                             shiftDatePickerCalendar(
-                                <TDateTimePickerMode>DatePickerConst.MONTH,
+                                DatePickerConst.MONTH as TDateTimePickerMode,
                                 calendarValue.value,
                                 emit,
                                 e.deltaX * -1
@@ -965,7 +965,7 @@ export function useRenderDatePickerMonths(
                     right: (e: WheelEvent) => {
                         (e.deltaX < -10 || e.deltaX > 10) &&
                             shiftDatePickerCalendar(
-                                <TDateTimePickerMode>DatePickerConst.MONTH,
+                                DatePickerConst.MONTH as TDateTimePickerMode,
                                 calendarValue.value,
                                 emit,
                                 e.deltaX * -1
@@ -1036,7 +1036,7 @@ export function useRenderDatePickerYears(
                     e.preventDefault();
                     debounceShiftDatePickerCalendar(
                         debounceRef,
-                        <TDateTimePickerMode>DatePickerConst.YEAR,
+                        DatePickerConst.YEAR as TDateTimePickerMode,
                         calendarValue,
                         emit,
                         300,
@@ -1053,7 +1053,7 @@ export function useRenderDatePickerYears(
                         h(
                             'table',
                             {
-                                key: <string>calendarValue.value.toISODate(),
+                                key: calendarValue.value.toISODate() as string,
                             },
                             [
                                 h(
@@ -1103,7 +1103,7 @@ export function useRenderDatePickerYears(
                     left: (e: WheelEvent) => {
                         (e.deltaX < -10 || e.deltaX > 10) &&
                             shiftDatePickerCalendar(
-                                <TDateTimePickerMode>DatePickerConst.YEAR,
+                                DatePickerConst.YEAR as TDateTimePickerMode,
                                 calendarValue.value,
                                 emit,
                                 e.deltaX * -1
@@ -1112,7 +1112,7 @@ export function useRenderDatePickerYears(
                     right: (e: WheelEvent) => {
                         (e.deltaX < -10 || e.deltaX > 10) &&
                             shiftDatePickerCalendar(
-                                <TDateTimePickerMode>DatePickerConst.YEAR,
+                                DatePickerConst.YEAR as TDateTimePickerMode,
                                 calendarValue.value,
                                 emit,
                                 e.deltaX * -1
@@ -1443,16 +1443,16 @@ export function useParseDate(value?: string | number | Date): DateTime {
     if (value) {
         if (Helper.isString(value)) {
             try {
-                return DateTime.fromISO(<string>value);
+                return DateTime.fromISO(value);
             } catch (e) {
                 try {
-                    return DateTime.fromSQL(<string>value);
+                    return DateTime.fromSQL(value);
                 } catch (e) {
                     return DateTime.now().set({ millisecond: 0 });
                 }
             }
         } else if (Helper.isNumber(value)) {
-            return DateTime.fromSeconds(<number>value);
+            return DateTime.fromSeconds(value);
         } else if (value instanceof Date) {
             return DateTime.fromJSDate(value);
         }
@@ -1509,12 +1509,12 @@ export function useRenderDatePicker(
                         ? h(BsDatePickerHeader, {
                               color: props.headerColor,
                               // @ts-ignore
-                              enableTime: <Prop<boolean>>showTime.value,
-                              displayMode: <Prop<TDateTimePickerMode>>currentView.value,
-                              pickerMode: <Prop<TDateTimePickerMode>>pickerMode.value,
+                              enableTime: showTime.value as Prop<boolean>,
+                              displayMode: currentView.value as Prop<TDateTimePickerMode>,
+                              pickerMode: pickerMode.value as Prop<TDateTimePickerMode>,
                               landscape: props.landscape,
-                              locale: <Prop<string>>locale.value,
-                              modelValue: <Prop<Date>>thisValue,
+                              locale: locale.value as Prop<string>,
+                              modelValue: thisValue as Prop<Date>,
                               // readonly: props.readonly,
                               'onChange-view': (mode: TDateTimePickerMode) => {
                                   currentView.value = mode;
@@ -1547,12 +1547,11 @@ export function useRenderDatePicker(
                                 [
                                     currentView.value !== DatePickerConst.TIME
                                         ? h(BsDatePickerNav, {
-                                              displayMode: <Prop<TDateTimePickerMode>>(
-                                                  currentView.value
-                                              ),
+                                              displayMode:
+                                                  currentView.value as Prop<TDateTimePickerMode>,
                                               // disabled: props.readonly,
-                                              locale: <Prop<string>>locale.value,
-                                              modelValue: <Prop<Date>>calendarValue.value,
+                                              locale: locale.value as Prop<string>,
+                                              modelValue: calendarValue.value as Prop<Date>,
                                               onToggle: (oldMode: TDateTimePickerMode) => {
                                                   currentView.value = nextDisplayMode(
                                                       pickerMode.value,
@@ -1574,10 +1573,10 @@ export function useRenderDatePicker(
                                 [
                                     currentView.value === DatePickerConst.DATE
                                         ? h(BsDatePickerDays, {
-                                              locale: <Prop<string>>locale.value,
-                                              modelValue: <Prop<Date>>thisValue,
+                                              locale: locale.value as Prop<string>,
+                                              modelValue: thisValue as Prop<Date>,
                                               disabled: props.readonly,
-                                              calendarDate: <Prop<Date>>calendarValue.value,
+                                              calendarDate: calendarValue.value as Prop<Date>,
                                               selectedColor: props.headerColor,
                                               'onUpdate:model-value': (value: Date) => {
                                                   // calendarValue.value = value;
@@ -1594,10 +1593,10 @@ export function useRenderDatePicker(
                                         : undefined,
                                     currentView.value === DatePickerConst.MONTH
                                         ? h(BsDatePickerMonths, {
-                                              locale: <Prop<string>>locale.value,
-                                              modelValue: <Prop<Date>>thisValue,
+                                              locale: locale.value as Prop<string>,
+                                              modelValue: thisValue as Prop<Date>,
                                               disabled: props.readonly,
-                                              calendarDate: <Prop<Date>>calendarValue.value,
+                                              calendarDate: calendarValue.value as Prop<Date>,
                                               selectedColor: props.headerColor,
                                               'onUpdate:model-value': (value: Date) => {
                                                   calendarValue.value = value;
@@ -1623,10 +1622,10 @@ export function useRenderDatePicker(
                                         : undefined,
                                     currentView.value === DatePickerConst.YEAR
                                         ? h(BsDatePickerYears, {
-                                              locale: <Prop<string>>locale.value,
-                                              modelValue: <Prop<Date>>thisValue,
+                                              locale: locale.value as Prop<string>,
+                                              modelValue: thisValue as Prop<Date>,
                                               disabled: props.readonly,
-                                              calendarDate: <Prop<Date>>calendarValue.value,
+                                              calendarDate: calendarValue.value as Prop<Date>,
                                               selectedColor: props.headerColor,
                                               'onUpdate:model-value': (value: Date) => {
                                                   dispatchDatePickerValue(
@@ -1652,14 +1651,13 @@ export function useRenderDatePicker(
                                         : undefined,
                                     currentView.value === DatePickerConst.TIME
                                         ? h(BsDatePickerTimes, {
-                                              locale: <Prop<string>>locale.value,
-                                              modelValue: <Prop<Date>>thisValue,
+                                              locale: locale.value as Prop<string>,
+                                              modelValue: thisValue as Prop<Date>,
                                               disabled: props.readonly,
                                               selectedColor: props.headerColor,
                                               // @ts-ignore
-                                              backButton: <Prop<boolean>>(
-                                                  (pickerMode.value !== DatePickerConst.TIME)
-                                              ),
+                                              backButton: (pickerMode.value !==
+                                                  DatePickerConst.TIME) as Prop<boolean>,
                                               onClose: () => {
                                                   currentView.value = <TDateTimePickerMode>(
                                                       DatePickerConst.DATE
@@ -1673,7 +1671,7 @@ export function useRenderDatePicker(
                                                       value
                                                   );
                                                   if (
-                                                      pickerMode.value == DatePickerConst.DATETIME
+                                                      pickerMode.value === DatePickerConst.DATETIME
                                                   ) {
                                                       currentView.value =
                                                           DatePickerConst.TIME as TDateTimePickerMode;

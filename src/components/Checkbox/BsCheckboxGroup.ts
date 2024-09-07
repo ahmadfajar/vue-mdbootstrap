@@ -1,21 +1,25 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
-import type { TBsCheckboxGroup, TCheckboxGroupOptionProps, TCheckboxProps, TRecord } from '../../types';
+import type {
+    TBsCheckboxGroup,
+    TCheckboxGroupOptionProps,
+    TCheckboxProps,
+    TRecord,
+} from '../../types';
 import Helper from '../../utils/Helper';
 import { baseInputProps } from '../Field/mixins/fieldProps';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
-    useShowValidationError
+    useShowValidationError,
 } from '../Field/mixins/validationApi';
 import { validationProps } from '../Field/mixins/validationProps';
 import { useInputGroupClasses, useRenderRadioOrCheckboxGroup } from '../Radio/mixins/radioApi';
 import { useCreateCheckboxItems } from './mixins/checkboxApi';
 import { checkboxGroupProps } from './mixins/checkboxProps';
 
-export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsCheckboxGroup>({
     name: 'BsCheckboxGroup',
     props: {
         ...baseInputProps,
@@ -28,35 +32,36 @@ export default defineComponent<TBsCheckboxGroup, TRecord, TRecord, ComputedOptio
          */
         'update:model-value',
     ],
-    setup(props, {emit, slots}) {
-        const cmpProps = props as Readonly<TCheckboxGroupOptionProps>;
-        const hasError = computed<boolean>(() => useHasValidationError(cmpProps));
-        const hasValidated = computed<boolean>(() => useHasValidated(cmpProps));
-        const showValidationError = computed<boolean>(() => useShowValidationError(cmpProps));
-        const errorItems = computed(() => useGetErrorItems(cmpProps));
-        const checkboxClasses = computed(() => 
-            ({
-                ...useInputGroupClasses(cmpProps, hasValidated.value, hasError.value),
-                [`${cssPrefix}checkbox-group`]: true,
-            })
-        );
+    setup(props, { emit, slots }) {
+        const thisProps = props as Readonly<TCheckboxGroupOptionProps>;
+        const hasError = computed<boolean>(() => useHasValidationError(thisProps));
+        const hasValidated = computed<boolean>(() => useHasValidated(thisProps));
+        const showValidationError = computed<boolean>(() => useShowValidationError(thisProps));
+        const errorItems = computed(() => useGetErrorItems(thisProps));
+        const checkboxClasses = computed(() => ({
+            ...useInputGroupClasses(thisProps, hasValidated.value, hasError.value),
+            [`${cssPrefix}checkbox-group`]: true,
+        }));
 
         const toggleCheckHandler = (
             values: string | number | TRecord | Array<string | number | TRecord>,
-            item: TCheckboxProps,
+            item: TCheckboxProps
         ): void => {
-            if (!cmpProps.disabled && !cmpProps.readonly && !item.disabled && !item.readonly) {
+            if (!thisProps.disabled && !thisProps.readonly && !item.disabled && !item.readonly) {
                 emit('update:model-value', Array.isArray(values) ? values : [values]);
             }
-        }
+        };
 
         return () =>
             useRenderRadioOrCheckboxGroup(
-                slots, cmpProps, checkboxClasses,
-                useCreateCheckboxItems(cmpProps, toggleCheckHandler),
+                slots,
+                thisProps,
+                checkboxClasses,
+                useCreateCheckboxItems(thisProps, toggleCheckHandler),
                 showValidationError.value,
-                (!Helper.isEmpty(cmpProps.helpText) && cmpProps.persistentHelpText === true),
-                hasError.value, errorItems.value,
+                !Helper.isEmpty(thisProps.helpText) && thisProps.persistentHelpText === true,
+                hasError.value,
+                errorItems.value
             );
-    }
+    },
 });

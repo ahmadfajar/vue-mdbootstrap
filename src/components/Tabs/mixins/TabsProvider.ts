@@ -42,7 +42,7 @@ class TabsProvider {
     }
 
     get alignment(): TAlignment {
-        return this._props.alignment || ('start' as TAlignment);
+        return this._props.alignment || 'start';
     }
 
     get contentTransition(): string {
@@ -50,11 +50,11 @@ class TabsProvider {
     }
 
     get iconPosition(): TPlacementPosition {
-        return this._props.iconPosition || ('left' as TPlacementPosition);
+        return this._props.iconPosition || 'left';
     }
 
     get iconSize(): number {
-        return <number | undefined>this._props.iconSize || 24;
+        return (this._props.iconSize as number | undefined) || 24;
     }
 
     get tabClass(): string | string[] | undefined {
@@ -146,7 +146,8 @@ class TabsProvider {
         }
 
         this.tabItems.forEach((el, idx) => {
-            const pid = (<TTabItemOptionProps>el.props).id;
+            const pid = (el.props as TTabItemOptionProps).id;
+
             if (Helper.isNumber(key) && key === idx) {
                 (el.props as TTabItemOptionProps).active = true;
             } else {
@@ -156,8 +157,10 @@ class TabsProvider {
         });
         this.tabPanels.forEach((el, idx) => {
             const pid = (el.props as TTabItemOptionProps).id;
-            if ((Helper.isNumber(key) && key === idx) || (Helper.isString(key) && pid === key)) {
+
+            if ((Helper.isNumber(key) && key === idx) || (Helper.isString(key) && key === pid)) {
                 (el.props as TTabItemOptionProps).active = true;
+
                 if (isRef((el.exposed as TRecord).isActive)) {
                     ((el.exposed as TRecord).isActive as Ref<boolean>).value = true;
                 } else {
@@ -167,6 +170,7 @@ class TabsProvider {
                 this.triggerEvent(el, idx);
             } else {
                 (el.props as TTabItemOptionProps).active = false;
+
                 if (isRef((el.exposed as TRecord).isActive)) {
                     ((el.exposed as TRecord).isActive as Ref<boolean>).value = false;
                 } else {

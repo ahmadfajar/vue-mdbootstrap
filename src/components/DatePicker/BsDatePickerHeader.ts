@@ -1,5 +1,4 @@
 import { DateTime } from 'luxon';
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 import type { TBsDatePickerHeader, TDatePickerHeaderProps, TRecord } from '../../types';
 import {
@@ -7,34 +6,38 @@ import {
     useDatePickerHeaderStyles,
     useHeaderTitleFormatOpts,
     useRenderDatePickerHeader,
-    useWatchOfDatePickerHeaderProps
+    useWatchOfDatePickerHeaderProps,
 } from './mixins/datePickerApi';
 import { datePickerHeaderProps } from './mixins/datePickerProps';
 
-export default defineComponent<TBsDatePickerHeader, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsDatePickerHeader>({
     name: 'BsDatePickerHeader',
     props: datePickerHeaderProps,
-    emits: [
-        'change-view',
-    ],
-    setup(props, {emit}) {
+    emits: ['change-view'],
+    setup(props, { emit }) {
         const thisProps = props as Readonly<TDatePickerHeaderProps>;
         const reverse = ref(false);
-        const formatOpts = ref<Intl.DateTimeFormatOptions>(useHeaderTitleFormatOpts(thisProps.pickerMode));
+        const formatOpts = ref<Intl.DateTimeFormatOptions>(
+            useHeaderTitleFormatOpts(thisProps.pickerMode)
+        );
         const localValue = ref<DateTime>(
             thisProps.modelValue ? DateTime.fromJSDate(thisProps.modelValue) : DateTime.now()
         );
-        const isTimeActive = computed(() =>
-            thisProps.displayMode === DatePickerConst.TIME && !thisProps.readonly
+        const isTimeActive = computed(
+            () => thisProps.displayMode === DatePickerConst.TIME && !thisProps.readonly
         );
-        const isYearActive = computed(() =>
-            thisProps.displayMode === DatePickerConst.YEAR && !thisProps.readonly
+        const isYearActive = computed(
+            () => thisProps.displayMode === DatePickerConst.YEAR && !thisProps.readonly
         );
-        const isTitleActive = computed(() =>
-            ((thisProps.displayMode === DatePickerConst.DATE
-                    && [DatePickerConst.DATE, DatePickerConst.DATETIME].includes(<string>thisProps.pickerMode))
-                || (thisProps.displayMode === DatePickerConst.MONTH && thisProps.pickerMode === DatePickerConst.MONTH)
-            ) && !thisProps.readonly
+        const isTitleActive = computed(
+            () =>
+                ((thisProps.displayMode === DatePickerConst.DATE &&
+                    [DatePickerConst.DATE, DatePickerConst.DATETIME].includes(
+                        <string>thisProps.pickerMode
+                    )) ||
+                    (thisProps.displayMode === DatePickerConst.MONTH &&
+                        thisProps.pickerMode === DatePickerConst.MONTH)) &&
+                !thisProps.readonly
         );
         const transitionName = computed(() =>
             reverse.value === true ? 'slide-top-bottom' : 'slide-bottom-top'
@@ -48,8 +51,15 @@ export default defineComponent<TBsDatePickerHeader, TRecord, TRecord, ComputedOp
 
         return () =>
             useRenderDatePickerHeader(
-                thisProps, emit, styles, isYearActive, isTimeActive,
-                isTitleActive, transitionName, formatOpts, localValue,
-            )
-    }
-})
+                thisProps,
+                emit,
+                styles,
+                isYearActive,
+                isTimeActive,
+                isTitleActive,
+                transitionName,
+                formatOpts,
+                localValue
+            );
+    },
+});

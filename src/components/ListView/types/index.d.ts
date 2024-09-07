@@ -4,11 +4,19 @@ import {
     ComponentInternalInstance,
     ComponentObjectPropsOptions,
     Plugin,
+    Ref,
     RendererNode,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
-import { ObjectBase, TBadgeType, TIconProps, TImageProps, TRouterOptionProps, TTagProps } from '../../../types';
+import {
+    ObjectBase,
+    TBadgeType,
+    TIconProps,
+    TImageProps,
+    TRouterOptionProps,
+    TTagProps,
+} from '../../../types';
 
 export declare type TSpaceAround = 'left' | 'right' | 'both' | 'none';
 
@@ -47,7 +55,7 @@ export declare type TListViewOptionProps = {
      * ReadOnly storage which hold this ListView's active item object instance.
      */
     modelValue?: ComponentInternalInstance;
-}
+};
 
 export declare type TListNavOptionProps = {
     /**
@@ -58,72 +66,72 @@ export declare type TListNavOptionProps = {
      * Treat this component as child navigation container.
      */
     child?: boolean;
-}
+};
 
-export declare type TListNavItemOptionProps = TIconProps & TRouterOptionProps & {
-    /**
-     * Sets this component `ID` attribute. This property value is auto generates.
-     */
-    id?: string;
-    /**
-     * This component state.
-     */
-    active?: boolean;
-    /**
-     * Disable this component.
-     */
-    disabled?: boolean;
-    /**
-     * Item depth level in tree hierarchy.
-     */
-    depth?: string | number;
-    /**
-     * Text indentation from left side.
-     */
-    indent?: string | number;
-    /**
-     * Render the icon with fixed size.
-     */
-    iconSize?: string | number;
-    /**
-     * The text to render as component label.
-     */
-    label: string;
-    /**
-     * The text to render as Badge label.
-     */
-    badge?: string;
-    /**
-     * The Badge color appearance.
-     */
-    badgeColor?: string;
-    /**
-     * The Badge with `pill` or `label` style.
-     */
-    badgeType?: TBadgeType;
-    /**
-     * The Badge variant, valid values: `primary`, `secondary`, `success`, `danger`, `warning`,
-     * `info`, `light`, `dark`.
-     */
-    badgeVariant?: string;
-    /**
-     * Disable ListView `itemBorderVariant` feature on this component.
-     */
-    borderOff?: boolean;
-    /**
-     * Disable ListView `itemRoundedPill` feature on this component.
-     */
-    pillOff?: boolean;
-    /**
-     * Disable ListView `itemRounded` feature on this component.
-     */
-    roundedOff?: boolean;
-    /**
-     * Enabled or disabled ripple effect.
-     */
-    rippleOff?: boolean;
-
-}
+export declare type TListNavItemOptionProps = TIconProps &
+    TRouterOptionProps & {
+        /**
+         * Sets this component `ID` attribute. This property value is auto generates.
+         */
+        id?: string;
+        /**
+         * This component state.
+         */
+        active?: boolean;
+        /**
+         * Disable this component.
+         */
+        disabled?: boolean;
+        /**
+         * Item depth level in tree hierarchy.
+         */
+        depth?: string | number;
+        /**
+         * Text indentation from left side.
+         */
+        indent?: string | number;
+        /**
+         * Render the icon with fixed size.
+         */
+        iconSize?: string | number;
+        /**
+         * The text to render as component label.
+         */
+        label: string;
+        /**
+         * The text to render as Badge label.
+         */
+        badge?: string;
+        /**
+         * The Badge color appearance.
+         */
+        badgeColor?: string;
+        /**
+         * The Badge with `pill` or `label` style.
+         */
+        badgeType?: TBadgeType;
+        /**
+         * The Badge variant, valid values: `primary`, `secondary`, `success`, `danger`, `warning`,
+         * `info`, `light`, `dark`.
+         */
+        badgeVariant?: string;
+        /**
+         * Disable ListView `itemBorderVariant` feature on this component.
+         */
+        borderOff?: boolean;
+        /**
+         * Disable ListView `itemRoundedPill` feature on this component.
+         */
+        pillOff?: boolean;
+        /**
+         * Disable ListView `itemRounded` feature on this component.
+         */
+        roundedOff?: boolean;
+        /**
+         * Enabled or disabled ripple effect.
+         */
+        rippleOff?: boolean;
+    };
 
 export declare type TListTileOptionProps = TRouterOptionProps & {
     /**
@@ -158,7 +166,7 @@ export declare type TListTileOptionProps = TRouterOptionProps & {
      * Enabled or disabled ripple effect.
      */
     rippleOff?: boolean;
-}
+};
 
 export declare type TListTileActionOptionProps = TTagProps & {
     /**
@@ -169,7 +177,7 @@ export declare type TListTileActionOptionProps = TTagProps & {
      * Arrange item inside it vertically.
      */
     stack?: boolean;
-}
+};
 
 export declare type TListTileContentOptionProps = TTagProps & {
     /**
@@ -178,14 +186,15 @@ export declare type TListTileContentOptionProps = TTagProps & {
      * truncate with an ellipses at the end.
      */
     multiLine?: boolean;
-}
-
-export declare type TListTileLeadingOptionProps = TIconProps & TImageProps & {
-    /**
-     * Center item inside it vertically.
-     */
-    center?: boolean;
 };
+
+export declare type TListTileLeadingOptionProps = TIconProps &
+    TImageProps & {
+        /**
+         * Center item inside it vertically.
+         */
+        center?: boolean;
+    };
 
 export declare type TListTileTextOptionProps = {
     /**
@@ -196,7 +205,7 @@ export declare type TListTileTextOptionProps = {
      * user-provided content.
      */
     rawHtml?: string;
-}
+};
 
 export declare type TBsListView = ComponentObjectPropsOptions<TListViewOptionProps>;
 
@@ -216,15 +225,17 @@ export declare type TBsListTileTitle = ComponentObjectPropsOptions<TListTileText
 
 export declare type TBsListTileSubtitle = ComponentObjectPropsOptions<TListTileTextOptionProps>;
 
-declare type AllowedListViewProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
-    onChange?: (value: IListItem, oldValue: IListItem) => void;
-    'onUpdate:modelValue'?: (value: IListItem) => void;
-    '@change'?: (value: IListItem, oldValue: IListItem) => void;
-    '@update:modelValue'?: (value: IListItem) => void;
-}
+declare type AllowedListViewProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps & {
+        onChange?: (value: IListItem, oldValue: IListItem) => void;
+        'onUpdate:modelValue'?: (value: IListItem) => void;
+        '@change'?: (value: IListItem, oldValue: IListItem) => void;
+        '@update:modelValue'?: (value: IListItem) => void;
+    };
 
 export declare const BsListView: {
-    new(): {
+    new (): {
         $props: AllowedListViewProps & TListViewOptionProps;
         $slots: {
             default?: () => VNode[];
@@ -234,44 +245,67 @@ export declare const BsListView: {
 };
 
 export declare const BsListNav: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListNavOptionProps;
         $slots: {
             default?: () => VNode[];
         };
+        $exposed: {
+            collapsing: Ref<boolean>;
+            expanded: Ref<boolean>;
+            isActive: Ref<boolean>;
+        };
+        collapsing: Ref<boolean>;
+        expanded: Ref<boolean>;
+        isActive: Ref<boolean>;
     };
 };
 
-declare type AllowedListItemProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
-    'onClick'?: (event: Event, node?: RendererNode | null) => void;
-    'onUpdate:active'?: (active: boolean) => void;
-    '@click'?: (event: Event, node?: RendererNode | null) => void;
-    '@update:active'?: (active: boolean) => void;
-}
+declare type AllowedListItemProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps & {
+        onClick?: (event: Event, node?: RendererNode | null) => void;
+        'onUpdate:active'?: (active: boolean) => void;
+        '@click'?: (event: Event, node?: RendererNode | null) => void;
+        '@update:active'?: (active: boolean) => void;
+    };
 
 export declare const BsListNavItem: {
-    new(): {
+    new (): {
         $props: AllowedListItemProps & TListNavItemOptionProps;
         $slots: {
             default?: () => VNode[];
         };
         $emit: ['click', 'update:active'];
+        $exposed: {
+            expanded: Ref<boolean>;
+            isActive: Ref<boolean>;
+        };
+        expanded: Ref<boolean>;
+        isActive: Ref<boolean>;
     };
 };
 
 export declare const BsListTile: {
-    new(): {
+    new (): {
         $props: AllowedListItemProps & TListTileOptionProps;
         $slots: {
             default?: () => VNode[];
         };
         $emit: ['click', 'update:active'];
+        $exposed: {
+            isActive: Ref<boolean>;
+        };
+        isActive: Ref<boolean>;
     };
 };
 
 export declare const BsListTileAction: {
-    new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileActionOptionProps;
+    new (): {
+        $props: AllowedComponentProps &
+            ComponentCustomProps &
+            VNodeProps &
+            TListTileActionOptionProps;
         $slots: {
             default?: () => VNode[];
         };
@@ -279,8 +313,11 @@ export declare const BsListTileAction: {
 };
 
 export declare const BsListTileContent: {
-    new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileContentOptionProps;
+    new (): {
+        $props: AllowedComponentProps &
+            ComponentCustomProps &
+            VNodeProps &
+            TListTileContentOptionProps;
         $slots: {
             default?: () => VNode[];
         };
@@ -288,8 +325,11 @@ export declare const BsListTileContent: {
 };
 
 export declare const BsListTileLeading: {
-    new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileLeadingOptionProps;
+    new (): {
+        $props: AllowedComponentProps &
+            ComponentCustomProps &
+            VNodeProps &
+            TListTileLeadingOptionProps;
         $slots: {
             default?: () => VNode[];
         };
@@ -297,8 +337,11 @@ export declare const BsListTileLeading: {
 };
 
 export declare const BsListTileTitle: {
-    new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileTextOptionProps;
+    new (): {
+        $props: AllowedComponentProps &
+            ComponentCustomProps &
+            VNodeProps &
+            TListTileTextOptionProps;
         $slots: {
             default?: () => VNode[];
         };
@@ -306,8 +349,11 @@ export declare const BsListTileTitle: {
 };
 
 export declare const BsListTileSubtitle: {
-    new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TListTileTextOptionProps;
+    new (): {
+        $props: AllowedComponentProps &
+            ComponentCustomProps &
+            VNodeProps &
+            TListTileTextOptionProps;
         $slots: {
             default?: () => VNode[];
         };
@@ -342,7 +388,10 @@ export declare interface IListViewProvider extends ObjectBase {
      * that satisfies the provided testing function. If no values satisfy the testing function,
      * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined undefined} is returned.
      */
-    findItem(predicate: (value: IListItem, sources: IListItem[]) => boolean, recursive: boolean): IListItem | undefined;
+    findItem(
+        predicate: (value: IListItem, sources: IListItem[]) => boolean,
+        recursive: boolean
+    ): IListItem | undefined;
 
     /**
      * Execute an action for each item with the provided callback.
@@ -351,7 +400,11 @@ export declare interface IListViewProvider extends ObjectBase {
      * @param recursive        When `TRUE` the callback will be executed for every child.
      * @param stopImmediately  When `TRUE` if the callback returns a result, function will be stopped immediately.
      */
-    execAction(actionFn: (value: IListItem, sources: IListItem[]) => unknown, recursive: boolean, stopImmediately: boolean): Promise<void>;
+    execAction(
+        actionFn: (value: IListItem, sources: IListItem[]) => unknown,
+        recursive: boolean,
+        stopImmediately: boolean
+    ): Promise<void>;
 
     /**
      * Remove an item from the collection.

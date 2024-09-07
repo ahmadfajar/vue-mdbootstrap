@@ -1,11 +1,14 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, nextTick, ref } from 'vue';
-import type { TBsCheckbox, TCheckboxOptionProps, TRecord } from '../../types';
-import { useCheckSelected, useCreateInputRadioOrCheckbox, useRenderRadioOrCheckbox } from '../Radio/mixins/radioApi';
+import {
+    useCheckSelected,
+    useCreateInputRadioOrCheckbox,
+    useRenderRadioOrCheckbox,
+} from '../Radio/mixins/radioApi';
 import { useCheckboxClasses } from './mixins/checkboxApi';
 import { checkboxProps } from './mixins/checkboxProps';
+import type { TBsCheckbox, TCheckboxOptionProps } from './types';
 
-export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsCheckbox>({
     name: 'BsCheckbox',
     props: checkboxProps,
     emits: [
@@ -18,7 +21,7 @@ export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, M
          */
         'update:model-value',
     ],
-    setup(props, {emit, slots}) {
+    setup(props, { emit, slots }) {
         const cmpProps = props as Readonly<TCheckboxOptionProps>;
         const rippleActive = ref<boolean>(false);
         const checkboxClasses = computed(() => useCheckboxClasses(cmpProps));
@@ -36,25 +39,28 @@ export default defineComponent<TBsCheckbox, TRecord, TRecord, ComputedOptions, M
                     }
                     emit('update:model-value', cmpProps.modelValue);
                 } else {
-                    emit('update:model-value', (checked ? null : cmpProps.value))
+                    emit('update:model-value', checked ? null : cmpProps.value);
                 }
 
                 nextTick().then(() => {
                     emit('checked', !checked);
                 });
             }
-        }
+        };
 
         return () =>
             useRenderRadioOrCheckbox(
-                slots, cmpProps, checkboxClasses, rippleActive, 'checkbox',
-                useCreateInputRadioOrCheckbox(
-                    cmpProps, 'checkbox', {
-                        indeterminate: props.indeterminate,
-                        'true-value': true,
-                        'false-value': false,
-                    }),
-                toggleCheckHandler,
+                slots,
+                cmpProps,
+                checkboxClasses,
+                rippleActive,
+                'checkbox',
+                useCreateInputRadioOrCheckbox(cmpProps, 'checkbox', {
+                    indeterminate: props.indeterminate,
+                    'true-value': true,
+                    'false-value': false,
+                }),
+                toggleCheckHandler
             );
-    }
+    },
 });

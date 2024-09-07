@@ -1,22 +1,21 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
+import type { Prop } from 'vue';
 import { defineComponent, onMounted, ref, shallowRef } from 'vue';
 import { useVueMdbNotification } from '../../mixins/CommonApi';
+import Helper from '../../utils/Helper';
+import { useRenderNotificationItem } from './mixins/notificationApi';
 import type {
     INotificationProvider,
     TBsNotificationItem,
     TNotificationItemOptionProps,
     TNotificationOption,
-    TRecord
-} from '../../types';
-import Helper from '../../utils/Helper';
-import { useRenderNotificationItem } from './mixins/notificationApi';
+} from './types';
 
-export default defineComponent<TBsNotificationItem, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsNotificationItem>({
     name: 'BsNotificationItem',
     props: {
         options: {
             type: Object,
-            default: undefined
+            default: undefined,
         } as Prop<TNotificationOption>,
     },
     setup(props) {
@@ -24,15 +23,16 @@ export default defineComponent<TBsNotificationItem, TRecord, TRecord, ComputedOp
         const provider = shallowRef<INotificationProvider>();
         const timerId = ref<number>();
 
-        onMounted(
-            () => {
-                provider.value = useVueMdbNotification();
-                timerId.value = Helper.defer(() => {
+        onMounted(() => {
+            provider.value = useVueMdbNotification();
+            timerId.value = Helper.defer(
+                () => {
                     provider.value?.remove(<TNotificationOption>thisProps.options);
-                }, <number>thisProps.options?.timeout);
-            }
-        );
+                },
+                thisProps.options?.timeout as number
+            );
+        });
 
         return () => useRenderNotificationItem(thisProps, provider, timerId);
-    }
+    },
 });

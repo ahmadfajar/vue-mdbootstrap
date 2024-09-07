@@ -1,11 +1,10 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, nextTick, ref } from 'vue';
-import type { TBsSwitch, TRecord, TSwitchOptionProps } from '../../types';
 import { useCheckSelected } from '../Radio/mixins/radioApi';
 import { useRenderSwitch, useSwitchClasses } from './mixins/switchApi';
 import { switchProps } from './mixins/switchProps';
+import type { TBsSwitch, TSwitchOptionProps } from './types';
 
-export default defineComponent<TBsSwitch, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsSwitch>({
     name: 'BsSwitch',
     props: switchProps,
     emits: [
@@ -18,7 +17,7 @@ export default defineComponent<TBsSwitch, TRecord, TRecord, ComputedOptions, Met
          */
         'update:model-value',
     ],
-    setup(props, {emit, slots}) {
+    setup(props, { emit, slots }) {
         const thisProps = props as Readonly<TSwitchOptionProps>;
         const rippleActive = ref<boolean>(false);
         const switchClasses = computed(() => useSwitchClasses(thisProps));
@@ -36,16 +35,15 @@ export default defineComponent<TBsSwitch, TRecord, TRecord, ComputedOptions, Met
                     }
                     emit('update:model-value', thisProps.modelValue);
                 } else {
-                    emit('update:model-value', (checked ? null : thisProps.value))
+                    emit('update:model-value', checked ? null : thisProps.value);
                 }
 
                 nextTick().then(() => {
                     emit('checked', !checked);
                 });
             }
-        }
+        };
 
-        return () =>
-            useRenderSwitch(slots, props, switchClasses, rippleActive, toggleCheckHandler)
-    }
+        return () => useRenderSwitch(slots, props, switchClasses, rippleActive, toggleCheckHandler);
+    },
 });

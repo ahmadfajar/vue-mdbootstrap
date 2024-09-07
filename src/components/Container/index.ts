@@ -1,18 +1,20 @@
-import type {App, Plugin} from "vue";
-import registerConfig from "../../mixins/registerConfig";
-import BsAppContainer from "./BsAppContainer";
-import BsContainer from "./BsContainer";
-import BsContent from "./BsContent";
-import "./container.scss"
-import "../../../scss/_utilities.scss";
+import type { App, Plugin } from 'vue';
+import registerConfig from '../../mixins/registerConfig';
+import BsApp from './BsApp';
+import BsContainer from './BsContainer';
+import BsContent from './BsContent';
+import './container.scss';
+import '../../../scss/_utilities.scss';
 
 const BsContainerPlugin: Plugin = {
     install: (app: App): void => {
         registerConfig(app);
-        app.component(<string>BsAppContainer.name, BsAppContainer);
-        app.component(<string>BsContainer.name, BsContainer);
-        app.component(<string>BsContent.name, BsContent);
-    }
-}
+        app.component(BsApp.name as string, BsApp);
+        app.component(BsContainer.name as string, BsContainer);
+        app.component(BsContent.name as string, BsContent);
+        // Backward compatibility
+        app.component('BsAppContainer', BsApp);
+    },
+};
 
-export {BsContainerPlugin, BsAppContainer, BsContainer, BsContent}
+export { BsContainerPlugin, BsApp, BsContainer, BsContent };

@@ -8,7 +8,7 @@ import type {
     Slots,
     VNode,
 } from 'vue';
-import { Teleport, h, mergeProps, nextTick, vShow, withDirectives } from 'vue';
+import { h, mergeProps, nextTick, Teleport, vShow, withDirectives } from 'vue';
 import { ClickOutside, Resize, Scroll } from '../../../directives';
 import { useRenderTransition } from '../../../mixins/CommonApi';
 import { isChildOf, isSVGElement } from '../../../mixins/DomHelper';
@@ -21,10 +21,10 @@ const SPACE = 8;
 
 function shiftedSpace(value?: string | number): number {
     return Helper.isNumber(value)
-        ? <number>value
-        : !value || isNaN(parseInt(<string>value, 10))
-        ? 0
-        : parseInt(<string>value, 10);
+        ? value
+        : !value || isNaN(parseInt(value, 10))
+          ? 0
+          : parseInt(value, 10);
 }
 
 function getPopoverLeftPosition(
@@ -55,8 +55,8 @@ function getPopoverLeftPosition(
             offsetLeft = cover
                 ? activatorRect.left
                 : activatorRect.left + activatorRect.width > maxLeft
-                ? activatorRect.left - width - shift
-                : activatorRect.left + activatorRect.width + shift;
+                  ? activatorRect.left - width - shift
+                  : activatorRect.left + activatorRect.width + shift;
             break;
         case 'top':
         case 'bottom':
@@ -106,8 +106,8 @@ function getPopoverTopPosition(
             offsetTop = cover
                 ? activatorRect.top
                 : posY > spaceAvailable
-                ? posY - Math.abs(window.innerHeight - posY - height)
-                : posY;
+                  ? posY - Math.abs(window.innerHeight - posY - height)
+                  : posY;
             break;
         case 'left':
         case 'right':
@@ -159,8 +159,8 @@ export function useSetPopoverPosition(
 
     const popoverEl = <HTMLElement>popoverRef.value;
     const activatorEl = Helper.isString(props.trigger)
-        ? document.querySelector(<string>props.trigger)
-        : <Element>props.trigger;
+        ? document.querySelector(props.trigger)
+        : props.trigger;
 
     if (activatorEl) {
         const elRect = activatorEl.getBoundingClientRect();
@@ -187,7 +187,7 @@ export function useSetPopoverPosition(
                     elRect,
                     popoverEl.offsetHeight,
                     shift,
-                    <boolean>props.cover
+                    props.cover as boolean
                 ) + 'px';
             popoverEl.style.height = 'fit-content';
         } else {
@@ -196,20 +196,20 @@ export function useSetPopoverPosition(
             popoverEl.style.top =
                 getPopoverTopPosition(
                     elRect,
-                    <TPopoverPosition>props.placement,
+                    props.placement as TPopoverPosition,
                     popoverEl.offsetHeight,
                     shift,
-                    <boolean>props.cover
+                    props.cover as boolean
                 ) + 'px';
         }
 
         popoverEl.style.left =
             getPopoverLeftPosition(
                 elRect,
-                <TPopoverPosition>props.placement,
+                props.placement as TPopoverPosition,
                 popoverEl.offsetWidth,
                 shift,
-                <boolean>props.cover
+                props.cover as boolean
             ) + 'px';
 
         PopupManager.add(instance, props, isActive);
@@ -221,14 +221,15 @@ export function useClosePopover(
     isActive: Ref<boolean>,
     message: string
 ): void {
-    if (!instance || !isActive.value) {
-        return;
-    }
-
-    isActive.value = false;
-    instance.emit('update:open', false);
-    instance.emit('close', message);
-    PopupManager.remove(instance);
+    PopupManager.closePopover(instance, isActive, message);
+    // if (!instance || !isActive.value) {
+    //     return;
+    // }
+    //
+    // isActive.value = false;
+    // instance.emit('update:open', false);
+    // instance.emit('close', message);
+    // PopupManager.remove(instance);
 }
 
 export function useRenderPopover(
@@ -291,11 +292,11 @@ function onPopoverClickOutside(
         return;
     }
     const activatorEl = Helper.isString(props.trigger)
-        ? document.querySelector(<string>props.trigger)
-        : <Element>props.trigger;
-    let target: HTMLElement | null | undefined = <HTMLElement | null>evt.target;
+        ? document.querySelector(props.trigger)
+        : props.trigger;
+    let target: HTMLElement | null | undefined = evt.target as HTMLElement | null;
 
-    if (activatorEl && activatorEl.contains(<Node>target)) {
+    if (activatorEl && activatorEl.contains(target as Node)) {
         return;
     }
     if (activatorEl && isSVGElement(target)) {
@@ -305,7 +306,7 @@ function onPopoverClickOutside(
             target = target?.parentElement;
         }
     }
-    if (isChildOf(activatorEl, target)) {
+    if (isChildOf(activatorEl as Element | null, target)) {
         return;
     }
 

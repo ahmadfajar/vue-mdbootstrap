@@ -1,6 +1,12 @@
 import type { Prop, VNode } from 'vue';
 import { h } from 'vue';
-import type { TAvatarImageOptionProps, TFlipMode, TIconProps, TRecord, TSizeOptionProps } from '../../../types';
+import type {
+    TAvatarImageOptionProps,
+    TFlipMode,
+    TIconProps,
+    TRecord,
+    TSizeOptionProps,
+} from '../../../types';
 import Helper from '../../../utils/Helper';
 import { useGetCalcSize, useSizeStyles } from '../../Icon/mixins/iconApi';
 
@@ -22,14 +28,17 @@ export function useCreateIconProps(props: Readonly<TIconProps>): TRecord {
         pulse: props.iconPulse,
         flip: props.iconFlip as Prop<TFlipMode>,
         rotate: props.iconRotation as Prop<string | number>,
-    }
+    };
 }
 
-export function useShapeClasses(circle?: boolean, rounded?: boolean): Record<string, boolean | undefined> {
+export function useShapeClasses(
+    circle?: boolean,
+    rounded?: boolean
+): Record<string, boolean | undefined> {
     return {
         'rounded-circle': circle && !rounded,
-        'rounded': rounded,
-    }
+        rounded: rounded,
+    };
 }
 
 export function useRenderAvatarImage(props: Readonly<TAvatarImageOptionProps>): VNode {
@@ -40,7 +49,7 @@ export function useRenderAvatarImage(props: Readonly<TAvatarImageOptionProps>): 
         },
         style: {
             ...useSizeStyles(props),
-            border: props.border ? (Helper.cssUnit(props.border) + ' solid') : undefined
+            border: props.border ? Helper.cssUnit(props.border) + ' solid' : undefined,
         },
         src: props.imgSrc,
         alt: '',

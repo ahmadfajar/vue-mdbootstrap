@@ -1,6 +1,5 @@
-import {defaultColorProp} from "../../../mixins/CommonProps";
-import {inputProps} from "../../Field/mixins/fieldProps";
-
+import { defaultColorProp } from '../../../mixins/CommonProps';
+import { inputProps } from '../../Field/mixins/fieldProps';
 
 export const radioProps = {
     ...inputProps,
@@ -20,9 +19,9 @@ export const radioProps = {
      */
     modelValue: {
         type: [String, Number, Boolean, Object],
-        default: undefined
+        default: undefined,
     },
-}
+};
 
 export const radioGroupProps = {
     /**
@@ -40,7 +39,7 @@ export const radioGroupProps = {
         validator: (value: string): boolean => {
             const pVal = parseInt(value, 10);
             return pVal > 0 && pVal < 7;
-        }
+        },
     },
     /**
      * The collection of `<bs-radio>` property-value.
@@ -48,13 +47,13 @@ export const radioGroupProps = {
     items: {
         type: Array,
         default: undefined,
-        required: true
+        required: true,
     },
     /**
      * The value monitored by `v-model` to maintain the checked state.
      */
     modelValue: {
         type: [String, Number, Boolean, Object],
-        default: undefined
+        default: undefined,
     },
-}
+};

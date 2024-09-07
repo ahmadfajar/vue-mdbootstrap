@@ -22,7 +22,7 @@ export function useGetCalcSize(props: Readonly<TSizeOptionProps>): number {
 
 export function useSizeHeight(props: Readonly<TSizeOptionProps>): string | number | undefined {
     if (props.size && Helper.isObject(props.size)) {
-        return (<TSizeProps>props.size).height;
+        return (props.size as TSizeProps).height;
     } else {
         return props.height || props.size;
     }
@@ -30,7 +30,7 @@ export function useSizeHeight(props: Readonly<TSizeOptionProps>): string | numbe
 
 export function useSizeWidth(props: Readonly<TSizeOptionProps>): string | number | undefined {
     if (props.size && Helper.isObject(props.size)) {
-        return (<TSizeProps>props.size).width;
+        return (props.size as TSizeProps).width;
     } else {
         return props.width || props.size;
     }
@@ -43,5 +43,5 @@ export function useSizeStyles(props: Readonly<TSizeOptionProps>): TRecord {
     return {
         height: Helper.cssUnit(szHeight),
         width: Helper.cssUnit(szWidth),
-    }
+    };
 }

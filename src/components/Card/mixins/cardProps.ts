@@ -1,13 +1,13 @@
 import type { Prop } from 'vue';
-import { booleanProp, booleanTrueProp, stringProp, stringRequiredProp, tagProp } from '../../../mixins/CommonProps';
+import { booleanProp, stringProp, stringRequiredProp, tagProp } from '../../../mixins/CommonProps';
 import type { TCardContentVariant } from '../types';
 
 export const baseTagProps = {
     /**
      * Html tag used to render this component.
      */
-    tag: tagProp
-}
+    tag: tagProp,
+};
 
 export const cardProps = {
     ...baseTagProps,
@@ -39,22 +39,22 @@ export const cardProps = {
      * Text for the image `alt` attribute.
      */
     imgBottomAlt: stringProp,
-}
+};
 
 export const cardContentProps = {
     /**
      * Html tag used to render this component.
      */
-    tag: stringProp,
+    tag: stringProp as Prop<string>,
     /**
      * Card content variations, valid values are: `title`, `subtitle`, `text`.
      */
     type: {
         type: String,
         default: 'text',
-        validator: (value: string): boolean => ['title', 'subtitle', 'text'].includes(value)
+        validator: (value: string): boolean => ['title', 'subtitle', 'text'].includes(value),
     } as Prop<TCardContentVariant>,
-}
+};
 
 export const cardMediaProps = {
     /**
@@ -69,4 +69,4 @@ export const cardMediaProps = {
      * Placed text overlay at the top.
      */
     overlayTop: booleanProp,
-}
+};

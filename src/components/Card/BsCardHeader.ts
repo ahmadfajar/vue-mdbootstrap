@@ -1,13 +1,12 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent } from 'vue';
 import { useRenderSlotDefault } from '../../mixins/CommonApi';
-import type { TBsCardHeader, TRecord } from '../../types';
 import { baseTagProps } from './mixins/cardProps';
+import type { TBsCardHeader } from './types';
 
-export default defineComponent<TBsCardHeader, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsCardHeader>({
     name: 'BsCardHeader',
     props: baseTagProps,
-    setup(props, {slots}) {
-        return () => useRenderSlotDefault(<string>props.tag, slots, 'card-header');
-    }
+    setup(props, { slots }) {
+        return () => useRenderSlotDefault(props.tag as string, slots, 'card-header');
+    },
 });

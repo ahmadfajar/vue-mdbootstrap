@@ -1,4 +1,3 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import {
     computed,
     defineComponent,
@@ -22,16 +21,7 @@ import type {
 import { useListTileClassNames, useRenderListTile } from './mixins/listTileApi';
 import { listTileProps } from './mixins/listViewProps';
 
-export default defineComponent<
-    TBsListTile,
-    TRecord,
-    TRecord,
-    ComputedOptions,
-    MethodOptions,
-    ComponentOptionsMixin,
-    ComponentOptionsMixin,
-    EmitsOptions
->({
+export default defineComponent<TBsListTile>({
     name: 'BsListTile',
     props: listTileProps,
     emits: [
@@ -77,7 +67,7 @@ export default defineComponent<
                 }
             }
         });
-        
+
         onMounted(() => {
             instance.value = getCurrentInstance();
             hasRouter.value = useHasRouter(thisProps);

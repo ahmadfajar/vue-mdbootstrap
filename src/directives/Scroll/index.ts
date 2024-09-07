@@ -7,16 +7,16 @@ interface ScrollDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
     modifiers?: {
         passive?: boolean;
         self?: boolean;
-    }
+    };
 }
 
 function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
     const callback = Helper.isFunction(binding.value)
         ? binding.value
-        : (<TDirectiveBinding>binding.value).handler;
+        : (binding.value as TDirectiveBinding).handler;
     const options: AddEventListenerOptions = {
         passive: binding.modifiers?.passive ?? true,
-    }
+    };
     const self = binding.modifiers?.self ?? false;
     let target: Element | Window | null;
 
@@ -24,14 +24,14 @@ function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
         target = el;
     } else if (!Helper.isFunction(binding.value)) {
         const binder = binding.value as TDirectiveBinding;
-        target = Helper.isString(binder.target) ? document.querySelector(<string>binder.target) : window;
+        target = Helper.isString(binder.target) ? document.querySelector(binder.target) : window;
     } else {
         target = window;
     }
 
     if (target) {
         const scrollHandler = (evt: Event) => {
-            callback((<Element & Event>target), evt);
+            callback(target as Element & Event, evt);
         };
         target.addEventListener('scroll', scrollHandler, options);
         el.__scrollListener = {
@@ -44,7 +44,7 @@ function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
 
 function unmounted(el: IBindingElement): void {
     if (el.__scrollListener) {
-        const {handler, options, target} = el.__scrollListener;
+        const { handler, options, target } = el.__scrollListener;
 
         if (target) {
             target.removeEventListener('scroll', handler, options);
@@ -69,4 +69,4 @@ export const Scroll: Directive = {
     mounted,
     unmounted,
     updated,
-}
+};

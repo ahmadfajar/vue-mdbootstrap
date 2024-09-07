@@ -21,7 +21,7 @@ export function useListTileClassNames(
     provider?: IListViewProvider
 ): TRecord {
     return {
-        [`${cssPrefix}list-tile d-flex`]: true,
+        [`${cssPrefix}list-tile`]: true,
         [`${cssPrefix}link`]: (tagName === 'a' || props.navigable) && !props.disabled,
         [`${cssPrefix}tile-border-${provider?.itemBorderVariant}`]:
             provider?.itemBorderVariant &&
@@ -60,9 +60,9 @@ function createListTileElement(
             href: tagName === 'a' ? props.url : undefined,
             onVnodeMounted: (vNode: VNode) => {
                 instance.value = new ListItem(
-                    <string>props.id,
+                    props.id as string,
                     'BsListTile',
-                    (<IVNode>vNode).ctx,
+                    (vNode as IVNode).ctx,
                     emit
                 );
                 provider?.addItem(instance.value);

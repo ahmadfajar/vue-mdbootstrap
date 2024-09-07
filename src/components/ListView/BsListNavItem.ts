@@ -1,4 +1,3 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import {
     computed,
     defineComponent,
@@ -29,16 +28,7 @@ import {
 } from './mixins/listNavApi';
 import { listNavItemProps } from './mixins/listViewProps';
 
-export default defineComponent<
-    TBsListNavItem,
-    TRecord,
-    TRecord,
-    ComputedOptions,
-    MethodOptions,
-    ComponentOptionsMixin,
-    ComponentOptionsMixin,
-    EmitsOptions
->({
+export default defineComponent<TBsListNavItem>({
     name: 'BsListNavItem',
     props: listNavItemProps,
     emits: [
@@ -49,10 +39,10 @@ export default defineComponent<
         'update:active',
     ],
     setup(props, { emit, expose, slots }) {
-        const cmpProps = props as Readonly<TListNavItemOptionProps>;
+        const thisProps = props as Readonly<TListNavItemOptionProps>;
         const instance = shallowRef(getCurrentInstance());
         const refItem = shallowRef<IListItem>();
-        const isActive = ref<boolean | undefined>(cmpProps.active);
+        const isActive = ref<boolean | undefined>(thisProps.active);
         const expanded = ref<boolean>(false);
         const hasChild = ref<boolean>(false);
         const hasRouter = ref<boolean>(false);
@@ -61,17 +51,17 @@ export default defineComponent<
 
         const provider = inject<IListViewProvider>('ListView');
         const navItemClasses = computed<TRecord>(() =>
-            useListNavItemClasses(cmpProps, isActive, expanded, hasChild)
+            useListNavItemClasses(thisProps, isActive, expanded, hasChild)
         );
         const navItemInnerClasses = computed<TRecord>(() =>
-            useListNavItemInnerClasses(cmpProps, isActive, hasRouter, provider)
+            useListNavItemInnerClasses(thisProps, isActive, hasRouter, provider)
         );
-        const navItemInnerStyles = computed<string[]>(() => useNavItemContentStyles(cmpProps));
+        const navItemInnerStyles = computed<string[]>(() => useNavItemContentStyles(thisProps));
 
-        if (useHasRouter(cmpProps)) {
+        if (useHasRouter(thisProps)) {
             const route = useCurrentRoute();
             watchEffect(() => {
-                if (provider && route && useIsRouteMatch(instance, route, cmpProps)) {
+                if (provider && route && useIsRouteMatch(instance, route, thisProps)) {
                     provider.activeItem = refItem.value;
                     let parent = refItem.value?.parent;
                     while (parent) {
@@ -100,10 +90,10 @@ export default defineComponent<
             }
         });
         onMounted(() => {
-            hasRouter.value = useHasRouter(cmpProps);
+            hasRouter.value = useHasRouter(thisProps);
             if (hasRouter.value) {
                 const route = useCurrentRoute();
-                if (route && useIsRouteMatch(instance, route, cmpProps)) {
+                if (route && useIsRouteMatch(instance, route, thisProps)) {
                     refItem.value?.setActive(true);
                 }
             }

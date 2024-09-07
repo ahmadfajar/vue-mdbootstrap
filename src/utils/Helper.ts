@@ -12,7 +12,7 @@ export default class Helper {
      * @returns Array of numbers
      */
     static createRange(length: number): number[] {
-        return Array.from({ length }, (v, k) => k);
+        return Array.from({ length }, (_v, k) => k);
     }
 
     /**

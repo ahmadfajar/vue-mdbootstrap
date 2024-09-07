@@ -1,10 +1,10 @@
 // import ResizeObserver from 'resize-observer-polyfill';
-import {isServer} from "./CommonApi";
-import type {IBindingElement} from "../types";
+import type { IBindingElement } from '../types';
+import { isServer } from './CommonApi';
 
 declare type TResizeTarget = {
     target: IBindingElement;
-}
+};
 
 const resizeHandler = function (entries: Array<TResizeTarget>) {
     for (const entry of entries) {

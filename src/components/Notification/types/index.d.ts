@@ -4,7 +4,7 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     UnwrapNestedRefs,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 
 export declare type TNotificationPosition =

@@ -8,18 +8,18 @@ import type { HSLA, HSVA, RGBA } from './types/colorUtils';
  * @return The HSVA color values.
  */
 export function hslaToHsva(color: HSLA): HSVA {
-    const s = (color.s >= 0 && color.s <= 1) ? color.s : color.s / 100;
-    const l = (color.l >= 0 && color.l <= 1) ? color.l : color.l / 100;
+    const s = color.s >= 0 && color.s <= 1 ? color.s : color.s / 100;
+    const l = color.l >= 0 && color.l <= 1 ? color.l : color.l / 100;
 
     const value = l + s * Math.min(l, 1 - l);
-    const saturation = value === 0 ? 0 : 2 - (2 * l / value);
+    const saturation = value === 0 ? 0 : 2 - (2 * l) / value;
 
     return {
         h: color.h,
         s: saturation * 100,
         v: value * 100,
-        a: color.a
-    }
+        a: color.a,
+    };
 }
 
 /**
@@ -30,18 +30,18 @@ export function hslaToHsva(color: HSLA): HSVA {
  */
 export function hsvaToHsla(color: HSVA): HSLA {
     const value = color.v / 100;
-    const lightness = value * (1 - (color.s / 100) / 2);
+    const lightness = value * (1 - color.s / 100 / 2);
     let saturation: number | undefined;
 
     if (lightness > 0 && lightness < 1) {
-        saturation = Math.round((value - lightness) / Math.min(lightness, 1 - lightness) * 100);
+        saturation = Math.round(((value - lightness) / Math.min(lightness, 1 - lightness)) * 100);
     }
 
     return {
         h: color.h,
         s: saturation || 0,
         l: Math.round(lightness * 100),
-        a: color.a
+        a: color.a,
     };
 }
 
@@ -56,11 +56,11 @@ export function hsvaToRgba(color: HSVA): RGBA {
     const value = color.v / 100;
     const hueBy60 = color.h / 60;
     let chroma = saturation * value;
-    let x = chroma * (1 - Math.abs(hueBy60 % 2 - 1));
+    let x = chroma * (1 - Math.abs((hueBy60 % 2) - 1));
     const m = value - chroma;
 
-    chroma = (chroma + m);
-    x = (x + m);
+    chroma = chroma + m;
+    x = x + m;
 
     const index = Math.floor(hueBy60) % 6;
     const red = [chroma, x, m, m, x, chroma][index];
@@ -71,7 +71,7 @@ export function hsvaToRgba(color: HSVA): RGBA {
         r: Math.round(red * 255),
         g: Math.round(green * 255),
         b: Math.round(blue * 255),
-        a: color.a
+        a: color.a,
     };
 }
 
@@ -90,9 +90,9 @@ export function hexToRgba(color: string): RGBA {
     // const a = hexColor.length > 6 ? parseInt(hexColor.substring(6, 2), 16) : undefined;
 
     const [r, g, b, a] = chunk(hexColor, 2).map((c: string) => parseInt(c, 16));
-    const a1 = a === undefined ? 1 : Math.round((a / 255) * 100) / 100;
+    const a1 = a == null ? 1 : Math.round((a / 255) * 100) / 100;
 
-    return {r, g, b, a: a1}
+    return { r, g, b, a: a1 };
 }
 
 /**
@@ -114,7 +114,7 @@ export function rgbaToHsva(color: RGBA): HSVA {
 
     if (chroma) {
         if (xMax === red) {
-            hue = ((green - blue) / chroma);
+            hue = (green - blue) / chroma;
         }
         if (xMax === green) {
             hue = 2 + (blue - red) / chroma;
@@ -133,7 +133,7 @@ export function rgbaToHsva(color: RGBA): HSVA {
         h: hue < 0 ? hue + 360 : hue,
         s: Math.round(saturation * 100),
         v: Math.round(value * 100),
-        a: color.a
+        a: color.a,
     };
 }
 
@@ -146,7 +146,7 @@ export function rgbaToHsva(color: RGBA): HSVA {
  */
 export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: string): RGBA {
     const regex = /^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i;
-    let rgba: RGBA = {r: 0, g: 0, b: 0, a: 1};
+    let rgba: RGBA = { r: 0, g: 0, b: 0, a: 1 };
 
     // Default to black for invalid color strings
     canvasCtx.fillStyle = '#000';
@@ -160,7 +160,7 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
             r: parseInt(match[3]),
             g: parseInt(match[4]),
             b: parseInt(match[5]),
-            a: parseFloat(match[6])
+            a: parseFloat(match[6]),
         };
 
         // Workaround to mitigate a Chromium bug where the alpha value is rounded incorrectly
@@ -168,14 +168,15 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
     } else {
         const match1 = canvasCtx.fillStyle
             .replace('#', '')
-            .match(/.{2}/g)?.map(h => parseInt(h, 16));
+            .match(/.{2}/g)
+            ?.map((h) => parseInt(h, 16));
 
         if (match1) {
             rgba = {
                 r: match1[0],
                 g: match1[1],
                 b: match1[2],
-                a: 1
+                a: 1,
             };
         }
     }
@@ -208,7 +209,7 @@ export function rgbaToHex(rgba: RGBA): string {
     }
 
     if (rgba.a < 1) {
-        const alpha = rgba.a * 255 | 0;
+        const alpha = (rgba.a * 255) | 0;
         A = alpha.toString(16);
 
         if (alpha < 16) {
@@ -254,7 +255,7 @@ export function hslaToString(hsla: HSLA): string {
  * @return The brightness level.
  */
 export function brightnessLevel(rgba: RGBA): number {
-    return ((rgba.r * 299) + (rgba.g * 587) + (rgba.b * 114)) / 1000;
+    return (rgba.r * 299 + rgba.g * 587 + rgba.b * 114) / 1000;
 }
 
 /**
@@ -272,8 +273,11 @@ export function shadeColor(color: string | RGBA, lightness: number): string {
 
     if (typeof color === 'string' && color.length >= 6) {
         hex = color.replace('#', '');
-    } else if (typeof color === 'object' && Object.keys(color).length > 2 &&
-        Object.keys(color).every(it => ['r', 'g', 'b', 'a'].includes(it))) {
+    } else if (
+        typeof color === 'object' &&
+        Object.keys(color).length > 2 &&
+        Object.keys(color).every((it) => ['r', 'g', 'b', 'a'].includes(it))
+    ) {
         hex = rgbaToHex(color).replace('#', '');
     } else {
         return color.toString();

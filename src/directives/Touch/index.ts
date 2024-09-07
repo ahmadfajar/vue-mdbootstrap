@@ -1,5 +1,5 @@
-import type {Directive, DirectiveBinding} from "vue";
-import type {IBindingElement, TRecord} from "../../types";
+import type { Directive, DirectiveBinding } from 'vue';
+import type { IBindingElement, TRecord } from '../../types';
 
 export declare interface TouchDirectiveEvent {
     touchstartX: number;
@@ -20,25 +20,20 @@ export declare interface TouchDirectiveEvent {
 }
 
 function handleGesture(binding: TouchDirectiveEvent) {
-    const {
-        touchstartX,
-        touchendX,
-        touchstartY,
-        touchendY
-    } = binding;
+    const { touchstartX, touchendX, touchstartY, touchendY } = binding;
     const dirRatio = 0.5;
     const minDistance = 16;
     binding.deltaX = touchendX - touchstartX;
     binding.deltaY = touchendY - touchstartY;
 
     if (Math.abs(binding.deltaY) < dirRatio * Math.abs(binding.deltaX)) {
-        binding.left && (touchendX < touchstartX - minDistance) && binding.left(binding);
-        binding.right && (touchendX > touchstartX + minDistance) && binding.right(binding);
+        binding.left && touchendX < touchstartX - minDistance && binding.left(binding);
+        binding.right && touchendX > touchstartX + minDistance && binding.right(binding);
     }
 
     if (Math.abs(binding.deltaX) < dirRatio * Math.abs(binding.deltaY)) {
-        binding.up && (touchendY < touchstartY - minDistance) && binding.up(binding);
-        binding.down && (touchendY > touchstartY + minDistance) && binding.down(binding);
+        binding.up && touchendY < touchstartY - minDistance && binding.up(binding);
+        binding.down && touchendY > touchstartY + minDistance && binding.down(binding);
     }
 }
 
@@ -79,12 +74,12 @@ declare interface TouchValueBinding {
     end?: (evt: TouchDirectiveEvent) => void;
 }
 
-declare interface TouchDirectiveBinding extends Omit<DirectiveBinding, "modifiers"> {
+declare interface TouchDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
     value: TouchValueBinding;
     modifiers?: {
         parent?: boolean;
         passive?: boolean;
-    }
+    };
 }
 
 function createHandlers(value: TouchValueBinding) {
@@ -103,14 +98,14 @@ function createHandlers(value: TouchValueBinding) {
         down: value.down,
         start: value.start,
         move: value.move,
-        end: value.end
+        end: value.end,
     };
 
     return {
         touchstart: (e: TouchEvent) => touchStart(e, wrapper),
         touchend: (e: TouchEvent) => touchEnd(e, wrapper),
-        touchmove: (e: TouchEvent) => touchMove(e, wrapper)
-    }
+        touchmove: (e: TouchEvent) => touchMove(e, wrapper),
+    };
 }
 
 function mounted(el: IBindingElement, binding: TouchDirectiveBinding) {
@@ -124,11 +119,11 @@ function mounted(el: IBindingElement, binding: TouchDirectiveBinding) {
     }
 
     const handlers = createHandlers(binding.value);
-    (<IBindingElement>target).__touchEvents = handlers;
+    (target as IBindingElement).__touchEvents = handlers;
 
-    Object.keys(handlers).forEach(eventName => {
+    Object.keys(handlers).forEach((name) => {
         // @ts-ignore
-        target.addEventListener(eventName, handlers[eventName], options)
+        target.addEventListener(name, handlers[name], options);
     });
 }
 
@@ -138,20 +133,19 @@ function unmounted(el: IBindingElement, binding: TouchDirectiveBinding) {
         passive: binding.modifiers?.passive || true,
     };
 
-    if (!target || !(<IBindingElement>target).__touchEvents) {
+    if (!target || !(target as IBindingElement).__touchEvents) {
         return;
     }
 
-    const handlers = (<IBindingElement>target).__touchEvents as TRecord;
-    Object.keys(handlers).forEach(eventName => {
-        // @ts-ignore
-        target.removeEventListener(eventName, handlers[eventName], options);
+    const handlers = (target as IBindingElement).__touchEvents as TRecord;
+    Object.keys(handlers).forEach((name) => {
+        target.removeEventListener(name, handlers[name] as EventListenerObject, options);
     });
 
-    (<IBindingElement>target).__touchEvents = undefined;
+    (target as IBindingElement).__touchEvents = undefined;
 }
 
 export const Touch: Directive = {
     mounted,
     unmounted,
-}
+};

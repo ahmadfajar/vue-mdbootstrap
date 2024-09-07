@@ -27,6 +27,7 @@ export declare type TBsCheckboxGroup = ComponentObjectPropsOptions<TCheckboxGrou
 declare type AllowedCheckboxProps = AllowedComponentProps & ComponentCustomProps &
     VNodeProps & EventUpdateModelValueProps<string | number | boolean | null> & {
     onChecked?: (checked: boolean) => void;
+    '@checked'?: (checked: boolean) => void;
 }
 
 declare type AllowedCheckboxGroupProps = AllowedComponentProps & ComponentCustomProps &

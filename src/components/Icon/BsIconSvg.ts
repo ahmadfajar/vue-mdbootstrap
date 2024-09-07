@@ -1,20 +1,10 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue';
 import type { TBsIconSvg, TIconData, TIconOptionProps, TRecord } from '../../types';
 import { useSizeHeight, useSizeWidth } from './mixins/iconApi';
 import { iconProps } from './mixins/iconProps';
 import { findIcon, useGoogleIcon, useRenderSvgIcon, useSvgClasses } from './mixins/svgApi';
 
-export default defineComponent<
-    TBsIconSvg,
-    TRecord,
-    TRecord,
-    ComputedOptions,
-    MethodOptions,
-    ComponentOptionsMixin,
-    ComponentOptionsMixin,
-    EmitsOptions
->({
+export default defineComponent<TBsIconSvg>({
     name: 'BsIconSvg',
     props: iconProps,
     setup(props) {
@@ -42,8 +32,8 @@ export default defineComponent<
         return () =>
             useRenderSvgIcon(
                 svgIcon.value,
-                useSizeHeight(thisProps) ?? 24,
-                useSizeWidth(thisProps) ?? 24,
+                useSizeHeight(thisProps) || 24,
+                useSizeWidth(thisProps) || 24,
                 svgClasses.value
             );
     },

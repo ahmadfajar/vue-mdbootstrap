@@ -9,8 +9,8 @@ export const switchProps = {
     labelClass: stringOrArrayProp,
     labelPosition: {
         type: String,
-        default: "right",
-        validator: (value: string) => ["left", "right"].includes(value),
+        default: 'right',
+        validator: (value: string) => ['left', 'right'].includes(value),
     } as Prop<TLabelPosition>,
     insetMode: booleanProp,
     insetOutlined: booleanProp,
@@ -19,10 +19,10 @@ export const switchProps = {
     value: {
         type: [String, Number, Boolean, Object],
         default: undefined,
-        required: true
+        required: true,
     },
     modelValue: {
         type: [String, Number, Boolean, Object],
-        default: undefined
+        default: undefined,
     },
-}
+};

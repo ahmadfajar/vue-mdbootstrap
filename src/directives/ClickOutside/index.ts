@@ -1,67 +1,70 @@
-import type { IBindingElement, TDirectiveBinding } from '../../types'
-import type { Directive, DirectiveBinding } from 'vue'
-import { isChildOf, isSVGElement } from '../../mixins/DomHelper'
-import Helper from '../../utils/Helper'
+import type { Directive, DirectiveBinding } from 'vue';
+import { isChildOf, isSVGElement } from '../../mixins/DomHelper';
+import type { IBindingElement, TDirectiveBinding } from '../../types';
+import Helper from '../../utils/Helper';
 
 function mounted(el: IBindingElement, binding: DirectiveBinding<VoidFunction | TDirectiveBinding>) {
     const callback = Helper.isFunction(binding.value)
-        ? <VoidFunction | EventListener>binding.value
-        : <EventListener>(<TDirectiveBinding>binding.value).handler
+        ? (binding.value as VoidFunction | EventListener)
+        : ((binding.value as TDirectiveBinding).handler as EventListener);
 
-    let target: Element | null = null
+    let target: Element | null = null;
 
     if (!Helper.isFunction(binding.value)) {
-        const binder = <TDirectiveBinding>binding.value
+        const binder = binding.value as TDirectiveBinding;
         target = Helper.isString(binder.target)
             ? document.querySelector(binder.target)
-            : <Element | null>binder.target
+            : (binder.target as Element | null);
     }
+
     const clickHandler = function (evt: Event) {
-        if (el.contains(<Node>evt.target)) {
-            return
+        if (el.contains(evt.target as Node)) {
+            return;
         }
 
-        let eventTarget: HTMLElement | null | undefined = <HTMLElement>evt.target
+        let eventTarget = evt.target as HTMLElement | null | undefined;
+
         if (isSVGElement(eventTarget)) {
-            eventTarget = eventTarget?.parentElement
+            eventTarget = eventTarget?.parentElement;
 
             while (isSVGElement(eventTarget)) {
-                eventTarget = target?.parentElement
+                eventTarget = target?.parentElement;
             }
         }
         if (isChildOf(el, eventTarget)) {
-            return
+            return;
         }
         // console.info("evtTarget-isSVGElement:", isSVGElement(<HTMLElement>evt.target))
 
-        callback(evt)
-    }
+        callback(evt);
+    };
 
     el.__clickOutsideListener = {
         handler: clickHandler,
-        target: target
-    }
+        target: target,
+    };
     if (target) {
-        target.addEventListener('click', clickHandler)
+        target.addEventListener('click', clickHandler);
     } else {
-        document.addEventListener('click', clickHandler)
+        document.addEventListener('click', clickHandler);
     }
 }
 
 function unmounted(el: IBindingElement): void {
     if (el.__clickOutsideListener) {
-        const { handler, target } = el.__clickOutsideListener
+        const { handler, target } = el.__clickOutsideListener;
+
         if (target) {
-            target.removeEventListener('click', handler)
+            target.removeEventListener('click', handler);
         } else {
-            document.removeEventListener('click', handler)
+            document.removeEventListener('click', handler);
         }
 
-        delete el.__clickOutsideListener
+        delete el.__clickOutsideListener;
     }
 }
 
 export const ClickOutside: Directive = {
     mounted,
-    unmounted
-}
+    unmounted,
+};

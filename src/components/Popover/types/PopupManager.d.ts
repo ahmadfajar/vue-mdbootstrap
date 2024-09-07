@@ -11,9 +11,17 @@ export declare const PopupManager: {
     items: TPopupItem[];
     locked: boolean;
     allowScrolling(): void;
-    add(instance: ComponentInternalInstance, props: Readonly<TPopupOptions>, active: Ref<boolean>): void;
-    findItem(instance: ComponentInternalInstance): number;
     preventScrolling(): void;
+    findItem(instance: ComponentInternalInstance): number;
+    add(
+        instance: ComponentInternalInstance,
+        props: Readonly<TPopupOptions>,
+        active: Ref<boolean>
+    ): void;
     remove(instance: ComponentInternalInstance): void;
-    closePopover(instance: ComponentInternalInstance | null, isActive: Ref<boolean>, message: string): void;
+    closePopover(
+        instance: ComponentInternalInstance | null,
+        isActive: Ref<boolean>,
+        message: string
+    ): void;
 };

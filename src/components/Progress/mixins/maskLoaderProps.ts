@@ -1,11 +1,17 @@
 import type { Prop } from 'vue';
-import { booleanProp, defaultTransitionProp, primaryColorProp, stringProp } from '../../../mixins/CommonProps';
+import {
+    booleanProp,
+    defaultTransitionProp,
+    primaryColorProp,
+    stringProp,
+} from '../../../mixins/CommonProps';
 import type { TMaskLoaderVariant } from '../types';
 
 const maskLoaderVariant = {
     type: String,
     default: 'linear',
-    validator: (value: string): boolean => ['linear', 'linear-alt', 'progress', 'spinner', 'grow'].includes(value)
+    validator: (value: string): boolean =>
+        ['linear', 'linear-alt', 'progress', 'spinner', 'grow'].includes(value),
 } as Prop<TMaskLoaderVariant>;
 
 export const maskLoaderProps = {
@@ -23,7 +29,7 @@ export const maskLoaderProps = {
     overlayOpacity: {
         type: [String, Number],
         default: 0.5,
-        validator: (value: string): boolean => !isNaN(parseFloat(value))
+        validator: (value: string): boolean => !isNaN(parseFloat(value)),
     },
     /**
      * Backdrop overlay color.
@@ -57,6 +63,9 @@ export const maskLoaderProps = {
      * Mask loader variant type.
      */
     type: maskLoaderVariant,
+    /**
+     * Mask loader variant type [deprecated], use `type` instead.
+     */
     variant: stringProp as Prop<TMaskLoaderVariant>,
     /**
      * The animation transition to be used when displaying the mask loader.
@@ -70,4 +79,4 @@ export const maskLoaderProps = {
         default: 100,
         validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
     },
-}
+};

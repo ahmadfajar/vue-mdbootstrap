@@ -185,7 +185,7 @@ function renderColorPickerControls(
                                     ref: pickerData.alphaSliderThumb,
                                     class: [`${cssPrefix}slider-thumb`],
                                     onBlur: (event: Event) => {
-                                        (<HTMLElement>event.target).classList.remove(
+                                        (event.target as HTMLElement).classList.remove(
                                             `${cssPrefix}focused`
                                         );
                                     },
@@ -199,7 +199,7 @@ function renderColorPickerControls(
                                                 `${cssPrefix}focused`
                                             );
                                             moveSliderThumbOnKeydown(
-                                                <HTMLElement>pickerData.alphaSliderThumb.value,
+                                                pickerData.alphaSliderThumb.value as HTMLElement,
                                                 movements[event.key],
                                                 pickerData,
                                                 emit,
@@ -292,7 +292,7 @@ function createInputLabel(
         {
             class: useMergeClass(
                 `${cssNamePrefix}input-label`,
-                <string | string[]>props.inputLabelClass
+                props.inputLabelClass as string | string[]
             ),
             for: forID,
         },
@@ -347,7 +347,7 @@ function createInputNumber(
                 placeholder: label,
                 onChange: (event: Event) => {
                     onUpdateInputNumber(
-                        (<HTMLInputElement>event.target).value,
+                        (event.target as HTMLInputElement).value,
                         label,
                         pickerData,
                         emit
@@ -514,7 +514,7 @@ function renderInputColorHEX(
                         placeholder: 'HEX color',
                         onChange: (event: Event) => {
                             onUpdateInputColorHex(
-                                (<HTMLInputElement>event.target).value,
+                                (event.target as HTMLInputElement).value,
                                 pickerData,
                                 emit
                             );
@@ -534,7 +534,7 @@ function onUpdateInputColorHex(value: string, pickerData: TColorPickerData, emit
             srcStr = '#' + value.trim();
         }
 
-        const rgba = rgbaFromString(<CanvasRenderingContext2D>pickerData.canvasCtx, srcStr);
+        const rgba = rgbaFromString(pickerData.canvasCtx as CanvasRenderingContext2D, srcStr);
         const hsva = rgbaToHsva(rgba);
 
         updateColor(pickerData, rgba, hsva);
@@ -641,7 +641,7 @@ function renderColorPickerSwatches(
                         class: [`${cssPrefix}swatch-button`],
                         style: { color: it },
                         onClick: (event: Event) => {
-                            pickerData.config.value = (<HTMLElement>event.target).title;
+                            pickerData.config.value = (event.target as HTMLElement).title;
                             useUpdateColorCanvas(pickerData, emit);
                         },
                     })
@@ -818,7 +818,7 @@ function moveColorMarkerOnKeydown(
     deltaX: number,
     deltaY: number
 ): void {
-    const colorMarker = <HTMLElement>pickerData.colorMarker.value;
+    const colorMarker = pickerData.colorMarker.value as HTMLElement;
     const x = parseInt(colorMarker.style.left.replace('px', '')) + deltaX;
     const y = parseInt(colorMarker.style.top.replace('px', '')) + deltaY;
 
@@ -831,7 +831,7 @@ function setColorMarkerPosition(
     posX: number,
     posY: number
 ): void {
-    const colorMarker = <HTMLElement>pickerData.colorMarker.value;
+    const colorMarker = pickerData.colorMarker.value as HTMLElement;
     const colorAreaRect = pickerData.colorAreaRect;
 
     // Set ColorMarker position and make sure it doesn't go out of bounds
@@ -921,11 +921,11 @@ function updateHueSliderThumbUI(emit: TEmitFn, pickerData: TColorPickerData, pos
     const rgba = hsvaToRgba(hsva);
 
     // Update UI
-    (<HTMLElement>pickerData.colorArea.value).style.color = `hsl(${hsva.h}, 100%, 50%)`;
-    (<HTMLElement>pickerData.hueSliderThumb.value).style.left = `${posX}%`;
+    (pickerData.colorArea.value as HTMLElement).style.color = `hsl(${hsva.h}, 100%, 50%)`;
+    (pickerData.hueSliderThumb.value as HTMLElement).style.left = `${posX}%`;
     updateColor(pickerData, rgba, hsva);
     updateColorPreview(pickerData, emit);
-    (<HTMLElement>pickerData.hueSliderThumb.value).focus();
+    (pickerData.hueSliderThumb.value as HTMLElement).focus();
 }
 
 export function useMoveAlphaSliderThumb(
@@ -956,13 +956,13 @@ export function useMoveAlphaSliderThumb(
 }
 
 function updateAlphaSliderThumbUI(emit: TEmitFn, pickerData: TColorPickerData, posX: number): void {
-    (<HTMLElement>pickerData.alphaSliderThumb.value).style.left = `${posX}%`;
+    (pickerData.alphaSliderThumb.value as HTMLElement).style.left = `${posX}%`;
     pickerData.config.alphaSlider = posX;
     pickerData.config.currentColor.a = posX / 100;
     pickerData.colorHSL.a = posX / 100;
     pickerData.colorRGB.a = posX / 100;
     updateColorPreview(pickerData, emit);
-    (<HTMLElement>pickerData.alphaSliderThumb.value).focus();
+    (pickerData.alphaSliderThumb.value as HTMLElement).focus();
 }
 
 function updateColor(pickerData: TColorPickerData, rgba: Color.RGBA, hsva: Color.HSVA): void {
@@ -995,11 +995,11 @@ function updateColor(pickerData: TColorPickerData, rgba: Color.RGBA, hsva: Color
 
 function updateColorPreview(pickerData: TColorPickerData, emit?: TEmitFn): void {
     const hex = rgbaToHex(pickerData.config.currentColor);
-    (<HTMLElement>pickerData.colorMarker.value).style.color = hex.substring(0, 7);
-    (<HTMLElement>pickerData.colorPreview.value).style.color = hex;
+    (pickerData.colorMarker.value as HTMLElement).style.color = hex.substring(0, 7);
+    (pickerData.colorPreview.value as HTMLElement).style.color = hex;
 
     if (pickerData.alphaSlider.value) {
-        (<HTMLElement>pickerData.alphaSlider.value).style.color = hex.substring(0, 7);
+        (pickerData.alphaSlider.value as HTMLElement).style.color = hex.substring(0, 7);
     }
     if (emit) {
         dispatchModelValue(emit, pickerData, hex);
@@ -1051,14 +1051,14 @@ function updateColorCanvasUI(pickerData: TColorPickerData, color?: Color.HSVA): 
         a: pickerData.config.currentColor.a,
     };
 
-    (<HTMLElement>pickerData.colorArea.value).style.color = `hsl(${hsva.h}, 100%, 50%)`;
-    (<HTMLElement>pickerData.colorMarker.value).style.left =
+    (pickerData.colorArea.value as HTMLElement).style.color = `hsl(${hsva.h}, 100%, 50%)`;
+    (pickerData.colorMarker.value as HTMLElement).style.left =
         `${(pickerData.colorAreaRect.width * hsva.s) / 100}px`;
-    (<HTMLElement>pickerData.colorMarker.value).style.top =
+    (pickerData.colorMarker.value as HTMLElement).style.top =
         `${pickerData.colorAreaRect.height - (pickerData.colorAreaRect.height * hsva.v) / 100}px`;
-    (<HTMLElement>pickerData.hueSliderThumb.value).style.left = `${(hsva.h / 360) * 100}%`;
+    (pickerData.hueSliderThumb.value as HTMLElement).style.left = `${(hsva.h / 360) * 100}%`;
 
     if (pickerData.alphaSliderThumb.value) {
-        (<HTMLElement>pickerData.alphaSliderThumb.value).style.left = `${hsva.a * 100}%`;
+        (pickerData.alphaSliderThumb.value as HTMLElement).style.left = `${hsva.a * 100}%`;
     }
 }

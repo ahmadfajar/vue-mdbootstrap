@@ -41,7 +41,14 @@ body {
     }
 }
 
-.#{$prefix}container-wrap,
+.#{$prefix}container-wrap {
+    @include flex(1 0 auto);
+
+    &.smooth-animation {
+        @include transition($md-transition-default);
+    }
+}
+
 .#{$prefix}content-wrap {
     @include flex(1 0 auto);
     @include transition($md-transition-default);

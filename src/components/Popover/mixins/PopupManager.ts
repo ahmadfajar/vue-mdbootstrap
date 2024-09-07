@@ -7,10 +7,10 @@ declare type TPopupItem = {
     target: ComponentInternalInstance;
     props: Readonly<TPopupOptions>;
     active: Ref<boolean>;
-}
+};
 
 const PopupManager = {
-    items: [] as Array<TPopupItem>,
+    items: [] as TPopupItem[],
     locked: false,
     allowScrolling() {
         const body = document.getElementsByTagName('body')[0];
@@ -18,6 +18,20 @@ const PopupManager = {
         enableBodyScroll(body);
         clearAllBodyScrollLocks();
         this.locked = false;
+    },
+    preventScrolling() {
+        if (this.locked) {
+            return;
+        }
+        const body = document.getElementsByTagName('body')[0];
+
+        disableBodyScroll(body, {
+            reserveScrollBarGap: true,
+        });
+        this.locked = true;
+    },
+    findItem(instance: ComponentInternalInstance): number {
+        return this.items.findIndex((el) => el.target === instance);
     },
     add(instance: ComponentInternalInstance, props: Readonly<TPopupOptions>, active: Ref<boolean>) {
         // prevent duplicate item
@@ -28,21 +42,7 @@ const PopupManager = {
         if (props.overlay) {
             this.preventScrolling();
         }
-        this.items.push({target: instance, props: props, active: active});
-    },
-    findItem(instance: ComponentInternalInstance): number {
-        return this.items.findIndex((el) => el.target === instance);
-    },
-    preventScrolling() {
-        if (this.locked) {
-            return;
-        }
-        const body = document.getElementsByTagName('body')[0];
-
-        disableBodyScroll(body, {
-            reserveScrollBarGap: true
-        });
-        this.locked = true;
+        this.items.push({ target: instance, props: props, active: active });
     },
     remove(instance: ComponentInternalInstance) {
         const index = this.findItem(instance);
@@ -58,7 +58,7 @@ const PopupManager = {
     closePopover(
         instance: ComponentInternalInstance | null,
         isActive: Ref<boolean>,
-        message: string,
+        message: string
     ) {
         if (!instance || !isActive.value) {
             return;
@@ -68,11 +68,11 @@ const PopupManager = {
         instance.emit('update:open', false);
         instance.emit('close', message);
         this.remove(instance);
-    }
+    },
 };
 
 if (!isServer) {
-    (<Document>document).addEventListener('keydown', (evt: KeyboardEvent) => {
+    (document as Document).addEventListener('keydown', (evt: KeyboardEvent) => {
         if (PopupManager.items.length === 0 || (evt.key && evt.key.toLowerCase() !== 'escape')) {
             return;
         }

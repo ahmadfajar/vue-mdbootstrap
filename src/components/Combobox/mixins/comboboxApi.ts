@@ -1,5 +1,5 @@
 import type { ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
-import { Fragment, createCommentVNode, h, nextTick, toDisplayString, withDirectives } from 'vue';
+import { createCommentVNode, Fragment, h, nextTick, toDisplayString, withDirectives } from 'vue';
 import { ClickOutside } from '../../../directives';
 import { cssPrefix, useRenderSlot } from '../../../mixins/CommonApi';
 import { kebabCase } from '../../../mixins/StringHelper';
@@ -26,8 +26,8 @@ import {
 import { useOnTextFieldNodeMounted } from '../../Field/mixins/textFieldEventApi';
 import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
 import { BsIcon } from '../../Icon';
-import { BsListTileTitle } from '../../ListView';
 import { BsListbox } from '../../Listbox';
+import { BsListTileTitle } from '../../ListView';
 import { BsPopover } from '../../Popover';
 
 function createActionAppendIcons(
@@ -98,7 +98,7 @@ function renderComboboxFieldInput(
     props: Readonly<ExtractPropTypes<TBsCombobox>>,
     dataSchema: TDataListSchemaProps,
     selectedItems: ShallowRef<IBsModel[]>,
-    fieldValues: Ref<string[] | number[]>
+    fieldValues: Ref<(string | number)[]>
 ): VNode[] {
     const thisProps = props as Readonly<TComboboxOptionProps>;
     const showPlaceholder =
@@ -169,7 +169,7 @@ export function useRenderCombobox(
     controlCss: ComputedRef<TRecord>,
     schema: TDataListSchemaProps,
     activator: Ref<HTMLElement | null>,
-    fieldValues: Ref<string[] | number[]>,
+    fieldValues: Ref<(string | number)[]>,
     selectedItems: ShallowRef<IBsModel[]>,
     isPopoverOpen: Ref<boolean>,
     isFocused: Ref<boolean>,
@@ -183,7 +183,7 @@ export function useRenderCombobox(
     const thisProps = props as Readonly<TComboboxOptionProps>;
     const listboxWidth = () => {
         const minWidth = thisProps.popoverMinWidth || thisProps.listboxMinWidth;
-        return minWidth ? parseInt(<string>minWidth, 10) : 0;
+        return minWidth ? parseInt(minWidth as string, 10) : 0;
     };
     const iconSize = 24;
 
@@ -208,10 +208,10 @@ export function useRenderCombobox(
                             thisProps.appendIcon,
                             thisProps.prependIcon,
                             useCreateValidationIcon(
-                                <TIconVariant>thisProps.actionIconVariant,
+                                thisProps.actionIconVariant as TIconVariant,
                                 hasValidated.value,
                                 hasError.value,
-                                <boolean>thisProps.validationIcon,
+                                thisProps.validationIcon as boolean,
                                 iconSize
                             ),
                             createActionAppendIcons(
@@ -229,7 +229,7 @@ export function useRenderCombobox(
                                     useTogglePopoverState(
                                         emit,
                                         isPopoverOpen,
-                                        <boolean>(thisProps.readonly || thisProps.disabled),
+                                        (thisProps.readonly || thisProps.disabled) as boolean,
                                         isPopoverOpen.value
                                     );
                                 }
@@ -242,7 +242,7 @@ export function useRenderCombobox(
                                         useTogglePopoverState(
                                             emit,
                                             isPopoverOpen,
-                                            <boolean>thisProps.disabled,
+                                            thisProps.disabled as boolean,
                                             false
                                         );
                                     }
@@ -258,7 +258,7 @@ export function useRenderCombobox(
                                     useTogglePopoverState(
                                         emit,
                                         isPopoverOpen,
-                                        <boolean>(thisProps.readonly || thisProps.disabled),
+                                        (thisProps.readonly || thisProps.disabled) as boolean,
                                         isPopoverOpen.value
                                     );
                                 },
@@ -267,14 +267,14 @@ export function useRenderCombobox(
                                 useTogglePopoverState(
                                     emit,
                                     isPopoverOpen,
-                                    <boolean>thisProps.disabled,
+                                    thisProps.disabled as boolean,
                                     true
                                 ),
                             () =>
                                 useTogglePopoverState(
                                     emit,
                                     isPopoverOpen,
-                                    <boolean>thisProps.disabled,
+                                    thisProps.disabled as boolean,
                                     true
                                 )
                         ),
@@ -345,8 +345,8 @@ export function useRenderCombobox(
                                         (thisProps.multiple
                                             ? fieldValues.value
                                             : fieldValues.value.length > 0
-                                            ? fieldValues.value[0]
-                                            : undefined)
+                                              ? fieldValues.value[0]
+                                              : undefined)
                                     ),
                                     onDataBind: (items: IBsModel[]) => {
                                         selectedItems.value = items.filter((it) =>
@@ -364,11 +364,11 @@ export function useRenderCombobox(
                                         values: string | number | string[] | number[] | undefined
                                     ) => {
                                         fieldValues.value =
-                                            values === undefined
+                                            values == null
                                                 ? []
                                                 : Array.isArray(values)
-                                                ? values
-                                                : [<string>values];
+                                                  ? values
+                                                  : [<string>values];
                                         emit('update:model-value', values);
                                     },
                                     'onUpdate:selected-value': (values: IBsModel[]) => {

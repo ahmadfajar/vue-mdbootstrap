@@ -5,7 +5,7 @@ import {
     ComputedRef,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 import {
     EventUpdateModelValueProps,
@@ -17,7 +17,9 @@ import {
 } from '../../../types';
 
 export declare type TFieldType = 'text' | 'email' | 'password' | 'tel' | 'url';
+
 declare type TBoolRecord = Record<string, boolean>;
+
 declare type TStringRecord = Record<string, string>;
 
 export declare type TValidator = {
@@ -25,7 +27,7 @@ export declare type TValidator = {
     messages: TStringRecord;
     hasError: boolean;
     dirty: boolean;
-}
+};
 
 export declare interface TComputedValidationResult {
     hasError: ComputedRef<boolean>;
@@ -53,74 +55,75 @@ export declare type TValidationProps = {
      * Use `validator` property instead.
      */
     externalValidator?: TValidator;
-}
+};
 
-export declare type TInputFieldProps = TInputBaseProps & TValidationProps & {
-    /**
-     * Sets the action icon style variant.
-     */
-    actionIconVariant?: TIconVariant;
-    /**
-     * Sets auto show the clear button.
-     */
-    clearButton?: boolean;
-    /**
-     * Create this component with **flat** appearance, and removes the borders.
-     * The component appearance will be styled like plain text.
-     */
-    flat?: boolean;
-    /**
-     * Create this component with **filled** appearance.
-     * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
-     */
-    filled?: boolean;
-    /**
-     * Create this component with floating field label.
-     * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
-     */
-    floatingLabel?: boolean;
-    /**
-     * Create this component with **outlined** appearance.
-     * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
-     */
-    outlined?: boolean;
-    /**
-     * Display validation icon or not, when this field has been validated.
-     */
-    validationIcon?: boolean;
-    /**
-     * Sets icon to display on inner right side.
-     * This is a shortcut to insert component `BsIcon` inside this component.
-     * Use any valid Google Material icon name, see
-     * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-     * for details.
-     */
-    appendIcon?: string;
-    /**
-     * Sets icon to display on outer right side.
-     * This is a shortcut to insert component `BsIcon` inside this component.
-     * Use any valid Google Material icon name, see
-     * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-     * for details.
-     */
-    appendIconOuter?: string;
-    /**
-     * Sets icon to display on inner left side.
-     * This is a shortcut to insert component `BsIcon` inside this component.
-     * Use any valid Google Material icon name, see
-     * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-     * for details.
-     */
-    prependIcon?: string;
-    /**
-     * Sets icon to display on outer left side.
-     * This is a shortcut to insert component `BsIcon` inside this component.
-     * Use any valid Google Material icon name, see
-     * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-     * for details.
-     */
-    prependIconOuter?: string;
-}
+export declare type TInputFieldProps = TInputBaseProps &
+    TValidationProps & {
+        /**
+         * Sets the action icon style variant.
+         */
+        actionIconVariant?: TIconVariant;
+        /**
+         * Sets auto show the clear button.
+         */
+        clearButton?: boolean;
+        /**
+         * Create this component with **flat** appearance, and removes the borders.
+         * The component appearance will be styled like plain text.
+         */
+        flat?: boolean;
+        /**
+         * Create this component with **filled** appearance.
+         * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
+         */
+        filled?: boolean;
+        /**
+         * Create this component with floating field label.
+         * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
+         */
+        floatingLabel?: boolean;
+        /**
+         * Create this component with **outlined** appearance.
+         * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
+         */
+        outlined?: boolean;
+        /**
+         * Display validation icon or not, when this field has been validated.
+         */
+        validationIcon?: boolean;
+        /**
+         * Sets icon to display on inner right side.
+         * This is a shortcut to insert component `BsIcon` inside this component.
+         * Use any valid Google Material icon name, see
+         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
+         * for details.
+         */
+        appendIcon?: string;
+        /**
+         * Sets icon to display on outer right side.
+         * This is a shortcut to insert component `BsIcon` inside this component.
+         * Use any valid Google Material icon name, see
+         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
+         * for details.
+         */
+        appendIconOuter?: string;
+        /**
+         * Sets icon to display on inner left side.
+         * This is a shortcut to insert component `BsIcon` inside this component.
+         * Use any valid Google Material icon name, see
+         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
+         * for details.
+         */
+        prependIcon?: string;
+        /**
+         * Sets icon to display on outer left side.
+         * This is a shortcut to insert component `BsIcon` inside this component.
+         * Use any valid Google Material icon name, see
+         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
+         * for details.
+         */
+        prependIconOuter?: string;
+    };
 
 export declare type TInputTextProps = TInputFieldProps & {
     /**
@@ -135,7 +138,7 @@ export declare type TInputTextProps = TInputFieldProps & {
      * Sets the field placeholder.
      */
     placeholder?: string;
-}
+};
 
 export declare type TTextFieldOptionProps = TInputTextProps & {
     /**
@@ -174,7 +177,7 @@ export declare type TTextFieldOptionProps = TInputTextProps & {
      * Append inline non-modifiable text after the input field.
      */
     suffix?: string;
-}
+};
 
 export declare type TTextAreaOptionProps = TInputTextProps & {
     /**
@@ -197,7 +200,7 @@ export declare type TTextAreaOptionProps = TInputTextProps & {
      * Sets `<textarea>` height in pixel.
      */
     rowHeight?: string | number;
-}
+};
 
 export declare type TChipFieldOptionProps = TInputTextProps & {
     /**
@@ -220,14 +223,14 @@ export declare type TChipFieldOptionProps = TInputTextProps & {
      * The value monitored by `v-model` to maintain this field value.
      */
     modelValue?: string | string[];
-}
+};
 
 export declare type TNumericOpsOptions = {
     locale: string;
     step: number;
     maxValue?: number;
     minValue?: number;
-}
+};
 
 export declare type TNumericFieldOptionProps = TInputTextProps & {
     /**
@@ -289,7 +292,7 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
      * Append inline non-modifiable text after the input field.
      */
     suffix?: string;
-}
+};
 
 export declare type TSearchFieldOptionProps = {
     /**
@@ -348,7 +351,7 @@ export declare type TSearchFieldOptionProps = {
      * Sets animation transition when displaying the Popover container.
      */
     popoverTransition?: string;
-}
+};
 
 export declare type TBsTextField = ComponentObjectPropsOptions<TTextFieldOptionProps>;
 
@@ -360,20 +363,22 @@ export declare type TBsNumericField = ComponentObjectPropsOptions<TNumericFieldO
 
 export declare type TBsSearchField = ComponentObjectPropsOptions<TSearchFieldOptionProps>;
 
-declare type AllowedTextFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+declare type AllowedTextFieldProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
     EventUpdateModelValueProps<string | null> & {
-    onBlur?: EventListener;
-    onClear?: VoidFunction;
-    onFocus?: EventListener;
-    onKeydown?: EventListener;
-    '@blur'?: EventListener;
-    '@clear'?: VoidFunction;
-    '@focus'?: EventListener;
-    '@keydown'?: EventListener;
-}
+        onBlur?: EventListener;
+        onClear?: VoidFunction;
+        onFocus?: EventListener;
+        onKeydown?: EventListener;
+        '@blur'?: EventListener;
+        '@clear'?: VoidFunction;
+        '@focus'?: EventListener;
+        '@keydown'?: EventListener;
+    };
 
 export declare const BsTextField: {
-    new(): {
+    new (): {
         $props: AllowedTextFieldProps & TTextFieldOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
@@ -409,7 +414,7 @@ export declare const BsTextField: {
 };
 
 export declare const BsTextArea: {
-    new(): {
+    new (): {
         $props: AllowedTextFieldProps & TTextAreaOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
@@ -444,22 +449,24 @@ export declare const BsTextArea: {
     };
 };
 
-declare type AllowedChipFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+declare type AllowedChipFieldProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
     EventUpdateModelValueProps<string | string[]> & {
-    onBlur?: EventListener;
-    onClear?: VoidFunction;
-    onFocus?: EventListener;
-    onKeydown?: EventListener;
-    'onDelete-item'?: (deletedItem: string) => void;
-    '@blur'?: EventListener;
-    '@clear'?: VoidFunction;
-    '@focus'?: EventListener;
-    '@keydown'?: EventListener;
-    '@delete-item'?: (deletedItem: string) => void;
-}
+        onBlur?: EventListener;
+        onClear?: VoidFunction;
+        onFocus?: EventListener;
+        onKeydown?: EventListener;
+        'onDelete-item'?: (deletedItem: string) => void;
+        '@blur'?: EventListener;
+        '@clear'?: VoidFunction;
+        '@focus'?: EventListener;
+        '@keydown'?: EventListener;
+        '@delete-item'?: (deletedItem: string) => void;
+    };
 
 export declare const BsChipField: {
-    new(): {
+    new (): {
         $props: AllowedChipFieldProps & TChipFieldOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
@@ -498,20 +505,22 @@ export declare const BsChipField: {
     };
 };
 
-declare type AllowedNumericFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+declare type AllowedNumericFieldProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
     EventUpdateModelValueProps<number | null> & {
-    onBlur?: EventListener;
-    onClear?: VoidFunction;
-    onFocus?: EventListener;
-    onKeydown?: EventListener;
-    '@blur'?: EventListener;
-    '@clear'?: VoidFunction;
-    '@focus'?: EventListener;
-    '@keydown'?: EventListener;
-}
+        onBlur?: EventListener;
+        onClear?: VoidFunction;
+        onFocus?: EventListener;
+        onKeydown?: EventListener;
+        '@blur'?: EventListener;
+        '@clear'?: VoidFunction;
+        '@focus'?: EventListener;
+        '@keydown'?: EventListener;
+    };
 
 export declare const BsNumericField: {
-    new(): {
+    new (): {
         $props: AllowedNumericFieldProps & TNumericFieldOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
@@ -546,24 +555,26 @@ export declare const BsNumericField: {
     };
 };
 
-declare type AllowedSearchFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
+declare type AllowedSearchFieldProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
     EventUpdateModelValueProps<string | null> & {
-    onBlur?: EventListener;
-    onClear?: VoidFunction;
-    onClose?: VoidFunction;
-    onOpen?: VoidFunction;
-    onFocus?: EventListener;
-    onSearch?: (value: string) => void;
-    '@blur'?: EventListener;
-    '@clear'?: VoidFunction;
-    '@close'?: VoidFunction;
-    '@open'?: VoidFunction;
-    '@focus'?: EventListener;
-    '@search'?: (value: string) => void;
-}
+        onBlur?: EventListener;
+        onClear?: VoidFunction;
+        onClose?: VoidFunction;
+        onOpen?: VoidFunction;
+        onFocus?: EventListener;
+        onSearch?: (value: string) => void;
+        '@blur'?: EventListener;
+        '@clear'?: VoidFunction;
+        '@close'?: VoidFunction;
+        '@open'?: VoidFunction;
+        '@focus'?: EventListener;
+        '@search'?: (value: string) => void;
+    };
 
 export declare const BsSearchField: {
-    new(): {
+    new (): {
         $props: AllowedSearchFieldProps & TSearchFieldOptionProps;
         $slots: {
             popover?: () => VNode[];

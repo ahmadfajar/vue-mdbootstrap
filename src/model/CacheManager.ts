@@ -19,7 +19,8 @@ export const CacheManager = {
             value,
             hits: hits ?? 0,
             expiry:
-                (expireAt instanceof Date ? expireAt.valueOf() : expireAt) ?? Date.now() + cacheDuration,
+                (expireAt instanceof Date ? expireAt.valueOf() : expireAt) ??
+                Date.now() + cacheDuration,
             getKey(): string {
                 return item.key;
             },
@@ -53,6 +54,7 @@ export const CacheManager = {
     },
     deleteItems(keys: string[]): void {
         const len = keys.length - 1;
+        
         for (let i = len; i >= 0; i--) {
             this._cacheItems.delete(keys[i]);
         }
@@ -81,6 +83,7 @@ export const CacheManager = {
     },
     hasItem(key: string): boolean {
         const ret = this._cacheItems.get(key);
+
         if (ret && ret.expiry > Date.now()) {
             return true;
         } else {

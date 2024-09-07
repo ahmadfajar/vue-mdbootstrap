@@ -1,23 +1,34 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
+import type { Prop } from 'vue';
 import { defineComponent, h, ref, vModelCheckbox, vModelRadio, withDirectives } from 'vue';
 import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
-import type { TBsButtonInner, TBsToggleButton, TInputOptionItem, TRecord, TToggleButtonOptionProps } from '../../types';
 import BsButtonInner from './BsButtonInner';
-import { useMakeInputItemAttrs, useMakeInputItemClasses, useRenderToggleItemContent } from './mixins/buttonApi';
+import {
+    useMakeInputItemAttrs,
+    useMakeInputItemClasses,
+    useRenderToggleItemContent,
+} from './mixins/buttonApi';
 import { toggleButtonProps } from './mixins/buttonProps';
+import type {
+    TBsButtonInner,
+    TBsToggleButton,
+    TInputOptionItem,
+    TToggleButtonOptionProps,
+} from './types';
 
-export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsToggleButton>({
     name: 'BsToggleButton',
     props: toggleButtonProps,
     emits: [
         /**
          * Callback fired when this component's value is updated.
          */
-        'update:model-value'
+        'update:model-value',
     ],
-    setup(props, {emit, slots}) {
+    setup(props, { emit, slots }) {
         const thisProps = props as Readonly<TToggleButtonOptionProps>;
-        const localValue = ref<string | number | boolean | Array<unknown> | undefined>(<string | number | boolean | Array<unknown> | undefined>props.modelValue);
+        const localValue = ref<string | number | boolean | Array<unknown> | undefined>(
+            <string | number | boolean | Array<unknown> | undefined>props.modelValue
+        );
         const makeInputEl = (item: TInputOptionItem, props: Readonly<TToggleButtonOptionProps>) => {
             return withDirectives(
                 h('input', {
@@ -25,11 +36,16 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                     value: item.value,
                     ...useMakeInputItemAttrs(item, thisProps),
                     'onUpdate:modelValue': (value: string | number | boolean) => {
-                        if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
+                        if (
+                            !props.disabled &&
+                            !props.readonly &&
+                            !item.disabled &&
+                            !item.readonly
+                        ) {
                             localValue.value = value;
                             emit('update:model-value', localValue.value);
                         }
-                    }
+                    },
                 }),
                 [
                     props.multiple
@@ -37,13 +53,15 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                         : [vModelRadio, localValue.value],
                 ]
             );
-        }
+        };
         const rippleOff = (item: TInputOptionItem) => {
             return props.disabled || props.readonly || item.disabled || item.readonly;
-        }
+        };
 
         return () => {
-            return h('div', {
+            return h(
+                'div',
+                {
                     class: [
                         'btn-group',
                         // thisProps.pill ? 'rounded-pill' : (!thisProps.pill && !thisProps.rounded ? 'rounded-1' : ''),
@@ -57,39 +75,57 @@ export default defineComponent<TBsToggleButton, TRecord, TRecord, ComputedOption
                 thisProps.items?.map((item: TInputOptionItem, idx: number) => {
                     item.id ??= useGenerateId();
 
-                    return h('label', {
-                        key: `btn-${idx}`,
-                        tabIndex: 0,
-                        class: useMakeInputItemClasses(item, thisProps),
-                        // onClick: (e: Event) => (<HTMLElement>e.target).focus(),
-                        onKeydown: (e: KeyboardEvent) => {
-                            if (['Space', 'Enter'].includes(e.code)) {
-                                (e.target as HTMLElement).focus();
-                                if (!thisProps.disabled && !thisProps.readonly && !item.disabled && !item.readonly) {
-                                    if (thisProps.multiple) {
-                                        if ((localValue.value as unknown[]).includes(item.value)) {
-                                            localValue.value = (localValue.value as unknown[]).filter(it => it !== item.value);
+                    return h(
+                        'label',
+                        {
+                            key: `btn-${idx}`,
+                            tabIndex: 0,
+                            class: useMakeInputItemClasses(item, thisProps),
+                            // onClick: (e: Event) => (<HTMLElement>e.target).focus(),
+                            onKeydown: (e: KeyboardEvent) => {
+                                if (['Space', 'Enter'].includes(e.code)) {
+                                    (e.target as HTMLElement).focus();
+                                    if (
+                                        !thisProps.disabled &&
+                                        !thisProps.readonly &&
+                                        !item.disabled &&
+                                        !item.readonly
+                                    ) {
+                                        if (thisProps.multiple) {
+                                            if (
+                                                (localValue.value as unknown[]).includes(item.value)
+                                            ) {
+                                                localValue.value = (
+                                                    localValue.value as unknown[]
+                                                ).filter((it) => it !== item.value);
+                                            } else {
+                                                (localValue.value as unknown[]).push(item.value);
+                                            }
                                         } else {
-                                            (localValue.value as unknown[]).push(item.value);
+                                            localValue.value = item.value;
                                         }
-                                    } else {
-                                        localValue.value = item.value;
+                                        emit('update:model-value', localValue.value);
                                     }
-                                    emit('update:model-value', localValue.value);
+                                    e.preventDefault();
                                 }
-                                e.preventDefault();
-                            }
+                            },
                         },
-                    }, [
-                        makeInputEl(item, thisProps),
-                        h<TBsButtonInner>(BsButtonInner, {
-                            rippleOff: rippleOff(item) as Prop<boolean>,
-                        }, {
-                            default: () => useRenderToggleItemContent(slots, item, thisProps)
-                        }),
-                    ]);
+                        [
+                            makeInputEl(item, thisProps),
+                            h<TBsButtonInner>(
+                                BsButtonInner,
+                                {
+                                    rippleOff: rippleOff(item) as Prop<boolean>,
+                                },
+                                {
+                                    default: () =>
+                                        useRenderToggleItemContent(slots, item, thisProps),
+                                }
+                            ),
+                        ]
+                    );
                 })
             );
         };
-    }
+    },
 });

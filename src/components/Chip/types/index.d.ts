@@ -4,33 +4,38 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
-import { EventUpdateModelValueProps, EventVoidClosableProps, TIconProps, TLabelPosition } from '../../../types';
+import {
+    EventUpdateModelValueProps,
+    EventVoidClosableProps,
+    TIconProps,
+    TLabelPosition,
+} from '../../../types';
 
 export declare type TChipValue = {
     id: string;
     text: string;
     value?: string | number | boolean;
-}
+};
 
 export declare type TChipContainer = {
     contentId: string;
     contentWidth: number;
     wrapperId: string;
     wrapperWidth: number;
-}
+};
 
 export declare type TChipOptionItem = TIconProps & {
     id?: string;
     disabled?: boolean;
     dismissible?: boolean;
     imgSrc?: string;
-    iconVariant?: string,
+    iconVariant?: string;
     href?: string;
     text: string;
     value?: string | number | boolean;
-}
+};
 
 export declare type TChipOptionProps = TIconProps & {
     /**
@@ -68,7 +73,7 @@ export declare type TChipOptionProps = TIconProps & {
     /**
      * Use predefined icon style to be used inside this component.
      */
-    iconVariant?: string,
+    iconVariant?: string;
     /**
      * Enable avatar and set the image location url.
      */
@@ -107,7 +112,7 @@ export declare type TChipOptionProps = TIconProps & {
      * Create Chip with predefined size, valid values are: `sm` (small), `lg` (large).
      */
     size?: string;
-}
+};
 
 export declare type TChipGroupOptionProps = {
     /**
@@ -171,28 +176,23 @@ export declare type TChipGroupOptionProps = {
      * Slider button color appearance.
      */
     sliderButtonColor?: string;
-}
+};
 
 export declare type TBsChip = ComponentObjectPropsOptions<TChipOptionProps>;
 
 export declare type TBsChipGroup = ComponentObjectPropsOptions<TChipGroupOptionProps>;
 
-declare type AllowedChipProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventVoidClosableProps & EventUpdateModelValueProps<boolean> & {
-    'onUpdate:active'?: (active: boolean) => void;
-    '@update:active'?: (active: boolean) => void;
-}
-
-declare type AllowedChipGroupProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventUpdateModelValueProps<TChipValue | TChipValue[] | null> & {
-    onChange?: (newValue: TChipValue | TChipValue[] | null) => void;
-    'onItem:close'?: (dismissedItem: TChipValue) => void;
-    '@change'?: (newValue: TChipValue | TChipValue[] | null) => void;
-    '@item:close'?: (dismissedItem: TChipValue) => void;
-}
+declare type AllowedChipProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventVoidClosableProps &
+    EventUpdateModelValueProps<boolean> & {
+        'onUpdate:active'?: (active: boolean) => void;
+        '@update:active'?: (active: boolean) => void;
+    };
 
 export declare const BsChip: {
-    new(): {
+    new (): {
         $props: AllowedChipProps & TChipOptionProps;
         $slots: {
             default?: () => VNode[];
@@ -215,8 +215,18 @@ export declare const BsChip: {
     };
 };
 
+declare type AllowedChipGroupProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventUpdateModelValueProps<TChipValue | TChipValue[] | null> & {
+        onChange?: (newValue: TChipValue | TChipValue[] | null) => void;
+        'onItem:close'?: (dismissedItem: TChipValue) => void;
+        '@change'?: (newValue: TChipValue | TChipValue[] | null) => void;
+        '@item:close'?: (dismissedItem: TChipValue) => void;
+    };
+
 export declare const BsChipGroup: {
-    new(): {
+    new (): {
         $props: AllowedChipGroupProps & TChipGroupOptionProps;
         $slots: {
             text?: (props: TChipOptionItem) => VNode;

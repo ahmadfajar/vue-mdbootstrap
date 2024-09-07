@@ -1,13 +1,6 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, h, mergeProps, onMounted, watch } from 'vue';
 import { hslaToString, hsvaToHsla, rgbaToHex, rgbaToString } from '../../mixins/colorUtils';
 import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
-import type {
-    TBsColorPicker,
-    TColorPickerMode,
-    TColorPickerOptionProps,
-    TRecord,
-} from '../../types';
 import Helper from '../../utils/Helper';
 import { BsPopover } from '../Popover';
 import {
@@ -20,8 +13,9 @@ import {
     useUpdateColorCanvas,
 } from './mixins/colorPickerApi';
 import { colorPickerProps } from './mixins/colorPickerProps';
+import type { TBsColorPicker, TColorPickerMode, TColorPickerOptionProps } from './types';
 
-export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsColorPicker>({
     name: 'BsColorPicker',
     inheritAttrs: false,
     props: colorPickerProps,
@@ -39,7 +33,7 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
          */
         'update:open',
     ],
-    setup(props, {emit, attrs, expose}) {
+    setup(props, { emit, attrs, expose }) {
         const thisProps = props as Readonly<TColorPickerOptionProps>;
         const thisData = useInitColorPickerData(thisProps);
         const pickerClasses = computed(() => [
@@ -47,33 +41,33 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
             `bg-${thisProps.containerColor}`,
         ]);
         const inputIDs: Record<string, string> = {
-            'H': useGenerateId(),
-            'S': useGenerateId(),
-            'L': useGenerateId(),
-            'A1': useGenerateId(),
-            'R': useGenerateId(),
-            'G': useGenerateId(),
-            'B': useGenerateId(),
-            'A2': useGenerateId(),
-            'HEX': useGenerateId(),
-        }
+            H: useGenerateId(),
+            S: useGenerateId(),
+            L: useGenerateId(),
+            A1: useGenerateId(),
+            R: useGenerateId(),
+            G: useGenerateId(),
+            B: useGenerateId(),
+            A2: useGenerateId(),
+            HEX: useGenerateId(),
+        };
         const moveColorMarkerHandler = (event: Event) => {
-            useMoveColorMarker(<UIEvent>event, emit, thisData);
+            useMoveColorMarker(event as UIEvent, emit, thisData);
         };
         const moveHueSliderThumbHandler = (event: Event) => {
-            useMoveHueSliderThumb(<UIEvent>event, emit, thisData);
+            useMoveHueSliderThumb(event as UIEvent, emit, thisData);
         };
         const moveAlphaSliderThumbHandler = (event: Event) => {
-            useMoveAlphaSliderThumb(<UIEvent>event, emit, thisData);
+            useMoveAlphaSliderThumb(event as UIEvent, emit, thisData);
         };
         const hexColor = () => rgbaToHex(thisData.config.currentColor);
 
-        expose({hexColor, rgbColor: thisData.colorRGB, hslColor: thisData.colorHSL});
+        expose({ hexColor, rgbColor: thisData.colorRGB, hslColor: thisData.colorHSL });
 
         watch(
             () => thisProps.mode,
             (value) => {
-                thisData.config.mode = <TColorPickerMode>value;
+                thisData.config.mode = value as TColorPickerMode;
             }
         );
         watch(
@@ -85,7 +79,9 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
                     // Sync internal data with the ColorPicker's Mode
                     useUpdateColorCanvas(thisData);
                     if (thisData.config.mode === 'HSL') {
-                        thisData.config.value = hslaToString(hsvaToHsla(thisData.config.currentColor));
+                        thisData.config.value = hslaToString(
+                            hsvaToHsla(thisData.config.currentColor)
+                        );
                     } else if (thisData.config.mode === 'RGB') {
                         thisData.config.value = rgbaToString(thisData.config.currentColor);
                     } else {
@@ -102,7 +98,7 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
                 thisData,
                 moveColorMarkerHandler,
                 moveHueSliderThumbHandler,
-                moveAlphaSliderThumbHandler,
+                moveAlphaSliderThumbHandler
             );
             Helper.defer(() => {
                 emit('update:mode', thisData.config.mode);
@@ -112,30 +108,47 @@ export default defineComponent<TBsColorPicker, TRecord, TRecord, ComputedOptions
 
         return () =>
             !Helper.isEmpty(thisProps.activator)
-                ? h(BsPopover, mergeProps({
-                    class: [`${cssPrefix}popover-color-picker`],
-                    color: props.containerColor,
-                    cover: props.cover,
-                    open: props.open,
-                    placement: props.placement,
-                    space: props.space || 4,
-                    transition: props.transition,
-                    trigger: props.activator,
-                    'onUpdate:open': (value: boolean) => emit('update:open', value),
-                }, attrs), {
-                    default: () => useRenderColorPicker(
-                        thisProps, pickerClasses,
-                        thisData, inputIDs, attrs, emit,
-                        moveColorMarkerHandler,
-                        moveHueSliderThumbHandler,
-                        moveAlphaSliderThumbHandler,
-                    )
-                }) : useRenderColorPicker(
-                    thisProps, pickerClasses,
-                    thisData, inputIDs, attrs, emit,
-                    moveColorMarkerHandler,
-                    moveHueSliderThumbHandler,
-                    moveAlphaSliderThumbHandler,
-                )
-    }
+                ? h(
+                      BsPopover,
+                      mergeProps(
+                          {
+                              class: [`${cssPrefix}popover-color-picker`],
+                              color: props.containerColor,
+                              cover: props.cover,
+                              open: props.open,
+                              placement: props.placement,
+                              space: props.space || 4,
+                              transition: props.transition,
+                              trigger: props.activator,
+                              'onUpdate:open': (value: boolean) => emit('update:open', value),
+                          },
+                          attrs
+                      ),
+                      {
+                          default: () =>
+                              useRenderColorPicker(
+                                  thisProps,
+                                  pickerClasses,
+                                  thisData,
+                                  inputIDs,
+                                  attrs,
+                                  emit,
+                                  moveColorMarkerHandler,
+                                  moveHueSliderThumbHandler,
+                                  moveAlphaSliderThumbHandler
+                              ),
+                      }
+                  )
+                : useRenderColorPicker(
+                      thisProps,
+                      pickerClasses,
+                      thisData,
+                      inputIDs,
+                      attrs,
+                      emit,
+                      moveColorMarkerHandler,
+                      moveHueSliderThumbHandler,
+                      moveAlphaSliderThumbHandler
+                  );
+    },
 });

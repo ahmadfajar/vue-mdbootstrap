@@ -56,7 +56,7 @@ const _sealedObjErrMsg = 'This {1} is sealed to prevent adding new properties.';
  *     },
  *     proxy: {
  *         save: {url: './api/users', method: 'post'},
- *         update: {url: './api/users', method: 'put'},
+ *         update: {url: './api/users', method: 'patch'},
  *         delete: {url: './api/users', method: 'delete'},
  *         fetch: './api/users/{id}',
  *     },
@@ -429,7 +429,8 @@ export default class BsModel implements ObjectBase {
         const url = this.restUrl.save ?? '';
         const data = this.toObject();
         const methods = this.proxy.requestMethods();
-        const identifier = data[this.idProperty] as string;
+        const identifier = (data[this.idProperty] || this.get(this.idProperty)) as string;
+        // console.log('identifier:', identifier);
 
         if (url.includes('{id}') || Helper.isEmpty(identifier)) {
             Object.hasOwn(data, this.idProperty) && delete data[this.idProperty];
@@ -474,7 +475,8 @@ export default class BsModel implements ObjectBase {
         const url = this.restUrl.update ?? '';
         const data = this.toObject();
         const methods = this.proxy.requestMethods();
-        const identifier = data[this.idProperty] as string;
+        const identifier = (data[this.idProperty] || this.get(this.idProperty)) as string;
+        // console.log('identifier:', identifier);
 
         if (url.includes('{id}') || Helper.isEmpty(identifier)) {
             Object.hasOwn(data, this.idProperty) && delete data[this.idProperty];

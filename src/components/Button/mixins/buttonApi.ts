@@ -1,6 +1,19 @@
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode, VNodeArrayChildren } from 'vue';
+import type {
+    ComputedRef,
+    ExtractPropTypes,
+    Prop,
+    Ref,
+    Slots,
+    VNode,
+    VNodeArrayChildren,
+} from 'vue';
 import { h, toDisplayString } from 'vue';
-import { cssPrefix, useGenerateId, useRenderSlot, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
+import {
+    cssPrefix,
+    useGenerateId,
+    useRenderSlot,
+    useRenderSlotWithWrapper,
+} from '../../../mixins/CommonApi';
 import { kebabCase } from '../../../mixins/StringHelper';
 import type {
     TBsIcon,
@@ -12,7 +25,7 @@ import type {
     TInputOptionItem,
     TRecord,
     TToggleButtonOptionProps,
-    TToggleFieldOptionProps
+    TToggleFieldOptionProps,
 } from '../../../types';
 import Helper from '../../../utils/Helper';
 import { useCreateIconProps } from '../../Avatar/mixins/avatarApi';
@@ -23,45 +36,48 @@ import BsToggleButton from '../BsToggleButton';
 export function useMakeButtonProps(
     props: Readonly<TButtonOptionProps>,
     disabled: boolean,
-    buttonType?: string | undefined,
+    buttonType?: string | undefined
 ) {
     return {
         class: {
-            'btn': props.mode !== 'icon',
+            btn: props.mode !== 'icon',
             [`${cssPrefix}btn-${props.mode}`]: props.mode === 'icon',
             [`btn-outline-${props.color}`]: props.outlined && props.color && !props.tonal,
-            [`btn-flat-${props.color}`]: props.flat && props.color && !props.outlined && !props.tonal,
+            [`btn-flat-${props.color}`]:
+                props.flat && props.color && !props.outlined && !props.tonal,
             [`btn-${props.color}`]: !props.outlined && !props.flat && props.color,
             [`btn-${props.size}`]: !Helper.isEmpty(props.size),
             [`${cssPrefix}btn-raised`]: props.raised,
             [`${cssPrefix}btn-tonal`]: props.tonal,
             [`${cssPrefix}btn-fab`]: ['fab', 'floating'].includes(props.mode as string),
-            [`${cssPrefix}rounded-pill`]: (
-                props.pill && !['icon', 'fab', 'floating'].includes(props.mode as string)
-            ),
-            [`${cssPrefix}rounded-sm`]: (
-                !props.pill && !props.rounded &&
-                !['icon', 'fab', 'floating'].includes(props.mode as string)
-            ),
-            'disabled': disabled,
-            'readonly': props.readonly,
-            'active': props.active,
+            [`${cssPrefix}rounded-pill`]:
+                props.pill && !['icon', 'fab', 'floating'].includes(props.mode as string),
+            [`${cssPrefix}rounded-sm`]:
+                !props.pill &&
+                !props.rounded &&
+                !['icon', 'fab', 'floating'].includes(props.mode as string),
+            disabled: disabled,
+            readonly: props.readonly,
+            active: props.active,
         },
         role: 'button',
-        href: (!Helper.isEmpty(props.href) && !props.disabled && !props.readonly) ? props.href : undefined,
+        href:
+            !Helper.isEmpty(props.href) && !props.disabled && !props.readonly
+                ? props.href
+                : undefined,
         type: buttonType === 'div' ? undefined : buttonType,
         disabled: buttonType === 'div' ? undefined : disabled,
         'aria-disabled': buttonType === 'div' ? undefined : disabled,
-    }
+    };
 }
 
 function isInputItemSelected(
     item: TInputOptionItem,
-    props: Readonly<TToggleButtonOptionProps>,
+    props: Readonly<TToggleButtonOptionProps>
 ): boolean {
     if (props.multiple && Array.isArray(props.modelValue) && !Array.isArray(item.value)) {
         const sources = props.modelValue as Array<string | number | boolean>;
-        return sources.find((it: string | number | boolean) => it === item.value) != undefined;
+        return sources.find((it: string | number | boolean) => it === item.value) != null;
     } else {
         return props.modelValue === item.value;
     }
@@ -69,30 +85,34 @@ function isInputItemSelected(
 
 export function useMakeInputItemClasses(
     item: TInputOptionItem,
-    props: Readonly<TToggleButtonOptionProps>,
+    props: Readonly<TToggleButtonOptionProps>
 ): TRecord | object {
     const isSelected = isInputItemSelected(item, props);
 
     return {
-        'btn': true,
-        [`btn-${props.toggleColor}`]: isSelected && props.toggleColor && !props.disabled && !item.disabled,
-        [`btn-outline-${props.color}`]: props.outlined && !props.tonal && (!isSelected || !props.toggleColor),
-        [`btn-flat-${props.color}`]: props.flat && !props.outlined && !props.tonal && (!isSelected || !props.toggleColor),
-        [`btn-${props.color}`]: !props.outlined && !props.flat && (!isSelected || !props.toggleColor),
+        btn: true,
+        [`btn-${props.toggleColor}`]:
+            isSelected && props.toggleColor && !props.disabled && !item.disabled,
+        [`btn-outline-${props.color}`]:
+            props.outlined && !props.tonal && (!isSelected || !props.toggleColor),
+        [`btn-flat-${props.color}`]:
+            props.flat && !props.outlined && !props.tonal && (!isSelected || !props.toggleColor),
+        [`btn-${props.color}`]:
+            !props.outlined && !props.flat && (!isSelected || !props.toggleColor),
         [`btn-${props.size}`]: !Helper.isEmpty(props.size),
         [`${cssPrefix}btn-raised`]: props.raised,
         [`${cssPrefix}btn-tonal`]: props.tonal,
         [`${cssPrefix}rounded-pill`]: props.pill,
         [`${cssPrefix}rounded-sm`]: !props.pill && !props.rounded,
-        'active': isSelected && !props.toggleColor && !props.disabled && !item.disabled,
-        'disabled': props.disabled || item.disabled,
-        'readonly': props.readonly || item.readonly,
-    }
+        active: isSelected && !props.toggleColor && !props.disabled && !item.disabled,
+        disabled: props.disabled || item.disabled,
+        readonly: props.readonly || item.readonly,
+    };
 }
 
 export function useMakeInputItemAttrs(
     item: TInputOptionItem,
-    props: Readonly<TToggleButtonOptionProps>,
+    props: Readonly<TToggleButtonOptionProps>
 ): TRecord | object {
     const attr = {
         id: item.id || useGenerateId(),
@@ -110,8 +130,8 @@ export function useMakeInputItemAttrs(
         return {
             ...attr,
             'true-value': true,
-            'false-value': false
-        }
+            'false-value': false,
+        };
     }
 
     return attr;
@@ -125,45 +145,52 @@ function renderSlotIcon(
     iconId: string,
     iconPosition: string,
     iconSize?: number | string,
-    slotArgs?: TRecord,
+    slotArgs?: TRecord
 ): VNode {
     if (slots && slots[name]) {
         return useRenderSlotWithWrapper(
-            slots, name, iconId, {
+            slots,
+            name,
+            iconId,
+            {
                 class: {
                     'd-inline-block': true,
-                    [`${cssPrefix}icon-${iconPosition}`]: (
+                    [`${cssPrefix}icon-${iconPosition}`]:
                         btnMode === 'default' ||
-                        (['fab', 'floating'].includes(btnMode as string) && slots.default)
-                    ),
-                    [`${cssPrefix}empty-icon`]: (
-                        Helper.isEmpty(slots[name]) || !Helper.isFunction(slots[name])
-                    ),
+                        (['fab', 'floating'].includes(btnMode as string) && slots.default),
+                    [`${cssPrefix}empty-icon`]:
+                        Helper.isEmpty(slots[name]) || !Helper.isFunction(slots[name]),
                 },
-                style: iconSize && slots[name]?.call(undefined) != null ? {
-                    height: Helper.cssUnit(iconSize),
-                    width: Helper.cssUnit(iconSize),
-                } : undefined,
+                style:
+                    iconSize && slots[name]?.call(undefined) != null
+                        ? {
+                              height: Helper.cssUnit(iconSize),
+                              width: Helper.cssUnit(iconSize),
+                          }
+                        : undefined,
             },
-            undefined, 'span', slotArgs
+            undefined,
+            'span',
+            slotArgs
         );
     } else {
         return useRenderSlot(
-            slots, name,
-            {key: iconId},
+            slots,
+            name,
+            { key: iconId },
             !Helper.isEmpty(props.icon)
                 ? h<TBsIcon>(BsIcon, {
-                    id: iconId,
-                    class: {
-                        [`${cssPrefix}icon-${iconPosition}`]: (
-                            btnMode === 'default' ||
-                            (['fab', 'floating'].includes(btnMode as string) && slots.default)
-                        ),
-                    },
-                    size: iconSize as Prop<string | number | undefined>,
-                    ...useCreateIconProps(props),
-                }) : [],
-            slotArgs,
+                      id: iconId,
+                      class: {
+                          [`${cssPrefix}icon-${iconPosition}`]:
+                              btnMode === 'default' ||
+                              (['fab', 'floating'].includes(btnMode as string) && slots.default),
+                      },
+                      size: iconSize as Prop<string | number | undefined>,
+                      ...useCreateIconProps(props),
+                  })
+                : [],
+            slotArgs
         );
     }
 }
@@ -171,72 +198,81 @@ function renderSlotIcon(
 export function useRenderButtonContent(
     slots: Slots,
     props: Readonly<TButtonOptionProps>,
-    iconId: string,
+    iconId: string
 ): VNodeArrayChildren {
     return [
-        (props.iconPosition === 'left')
+        props.iconPosition === 'left'
             ? renderSlotIcon(
-                slots, 'icon',
-                props.mode,
-                props,
-                iconId,
-                props.iconPosition,
-                props.iconSize,
-            )
+                  slots,
+                  'icon',
+                  props.mode,
+                  props,
+                  iconId,
+                  props.iconPosition,
+                  props.iconSize
+              )
             : '',
         slots.default && slots.default(),
-        (props.iconPosition === 'right')
+        props.iconPosition === 'right'
             ? renderSlotIcon(
-                slots, 'icon',
-                props.mode,
-                props,
-                iconId,
-                props.iconPosition,
-                props.iconSize,
-            )
+                  slots,
+                  'icon',
+                  props.mode,
+                  props,
+                  iconId,
+                  props.iconPosition,
+                  props.iconSize
+              )
             : '',
-    ]
+    ];
 }
 
 export function useRenderToggleItemContent(
     slots: Slots,
     item: TInputOptionItem,
-    props: Readonly<TToggleButtonOptionProps>,
+    props: Readonly<TToggleButtonOptionProps>
 ): VNodeArrayChildren {
     return [
-        (props.iconPosition === 'left')
+        props.iconPosition === 'left'
             ? renderSlotIcon(
-                slots, 'icon',
-                'default',
-                item,
-                `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
-                props.iconPosition,
-                item.iconSize,
-                item,
-            )
+                  slots,
+                  'icon',
+                  'default',
+                  item,
+                  `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
+                  props.iconPosition,
+                  item.iconSize,
+                  item
+              )
             : '',
         useRenderSlot(
-            slots, 'label',
-            {key: kebabCase(item.label)},
+            slots,
+            'label',
+            { key: kebabCase(item.label) },
             [
-                h('span', {
-                    class: `${cssPrefix}btn-text`,
-                }, toDisplayString(item.label))
+                h(
+                    'span',
+                    {
+                        class: `${cssPrefix}btn-text`,
+                    },
+                    toDisplayString(item.label)
+                ),
             ],
-            item,
+            item
         ),
-        (props.iconPosition === 'right')
+        props.iconPosition === 'right'
             ? renderSlotIcon(
-                slots, 'icon',
-                'default',
-                item,
-                `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
-                props.iconPosition,
-                item.iconSize,
-                item,
-            )
+                  slots,
+                  'icon',
+                  'default',
+                  item,
+                  `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
+                  props.iconPosition,
+                  item.iconSize,
+                  item
+              )
             : '',
-    ]
+    ];
 }
 
 export function useRenderToggleFieldButton(
@@ -248,62 +284,85 @@ export function useRenderToggleFieldButton(
     showHelpText: ComputedRef<boolean>,
     showValidationError: ComputedRef<boolean>,
     hasError: ComputedRef<boolean>,
-    errorItems: ComputedRef<string[]>,
+    errorItems: ComputedRef<string[]>
 ): VNode {
     const thisProps = props as Readonly<TToggleFieldOptionProps>;
 
-    return h('div', {
-        class: wrapperCss.value
-    }, [
-        slots.default && slots.default(),
-        h('div', {
-            class: 'col-md',
-        }, [
-            h('div', {
-                class: [`${cssPrefix}field-inner`],
-            }, [
-                h(BsToggleButton, {
-                    id: props.id,
-                    name: props.name,
-                    disabled: props.disabled,
-                    readonly: props.readonly,
-                    required: props.required,
-                    items: props.items,
-                    multiple: props.multiple,
-                    modelValue: props.modelValue,
-                    flat: props.flat,
-                    outlined: props.outlined,
-                    tonal: props.tonal,
-                    raised: props.raised,
-                    rounded: props.rounded,
-                    pill: props.pill,
-                    size: props.size,
-                    color: props.color,
-                    toggleColor: props.toggleColor,
-                    iconPosition: props.iconPosition,
-                    onMouseenter: () => !Helper.isEmpty(thisProps.helpText) &&
-                        !thisProps.persistentHelpText && (hasFocused.value = true),
-                    onMouseleave: () => !Helper.isEmpty(thisProps.helpText) &&
-                        !thisProps.persistentHelpText && (hasFocused.value = false),
-                    'onUpdate:model-value': (value: string | number | boolean) => {
-                        emit('update:model-value', value);
-                    }
-                }, {
-                    label: slots.label
-                        ? (item: TInputOptionItem) => useRenderSlot(slots, 'label', item)
-                        : undefined,
-                    icon: slots.icon
-                        ? (item: TInputOptionItem) => useRenderSlot(slots, 'icon', item)
-                        : undefined,
-                }),
-            ]),
-            useRenderFieldFeedback(
-                slots, thisProps,
-                showHelpText.value,
-                showValidationError.value,
-                hasError.value,
-                errorItems.value,
+    return h(
+        'div',
+        {
+            class: wrapperCss.value,
+        },
+        [
+            slots.default && slots.default(),
+            h(
+                'div',
+                {
+                    class: 'col-md',
+                },
+                [
+                    h(
+                        'div',
+                        {
+                            class: [`${cssPrefix}field-inner`],
+                        },
+                        [
+                            h(
+                                BsToggleButton,
+                                {
+                                    id: props.id,
+                                    name: props.name,
+                                    disabled: props.disabled,
+                                    readonly: props.readonly,
+                                    required: props.required,
+                                    items: thisProps.items as Prop<TInputOptionItem[]>,
+                                    multiple: props.multiple,
+                                    modelValue: props.modelValue,
+                                    flat: props.flat,
+                                    outlined: props.outlined,
+                                    tonal: props.tonal,
+                                    raised: props.raised,
+                                    rounded: props.rounded,
+                                    pill: props.pill,
+                                    size: props.size,
+                                    color: props.color,
+                                    toggleColor: props.toggleColor,
+                                    iconPosition: props.iconPosition,
+                                    onMouseenter: () =>
+                                        !Helper.isEmpty(thisProps.helpText) &&
+                                        !thisProps.persistentHelpText &&
+                                        (hasFocused.value = true),
+                                    onMouseleave: () =>
+                                        !Helper.isEmpty(thisProps.helpText) &&
+                                        !thisProps.persistentHelpText &&
+                                        (hasFocused.value = false),
+                                    'onUpdate:model-value': (value: string | number | boolean) => {
+                                        emit('update:model-value', value);
+                                    },
+                                },
+                                {
+                                    label: slots.label
+                                        ? (item: TInputOptionItem) =>
+                                              useRenderSlot(slots, 'label', item)
+                                        : undefined,
+                                    icon: slots.icon
+                                        ? (item: TInputOptionItem) =>
+                                              useRenderSlot(slots, 'icon', item)
+                                        : undefined,
+                                }
+                            ),
+                        ]
+                    ),
+                    useRenderFieldFeedback(
+                        slots,
+                        thisProps,
+                        showHelpText.value,
+                        showValidationError.value,
+                        hasError.value,
+                        errorItems.value
+                    ),
+                ]
             ),
-        ]),
-    ]);
+        ]
+    );
 }

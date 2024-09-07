@@ -40,8 +40,9 @@
         }
     }
 
-    &.#{$prefix}appbar-transition {
-        @include transition($md-transition-default);
+    &.smooth-animation {
+        // @include transition($md-transition-default);
+        @include transition(.35s cubic-bezier(.5, .35, .75, 1));
     }
 
     &.#{$prefix}appbar-shadow {

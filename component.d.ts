@@ -1,10 +1,11 @@
 import type { AxiosInstance } from 'axios';
 import type {
     BsAlert,
-    BsAppContainer,
+    BsApp,
     BsAppbar,
     BsAppbarItems,
     BsAppbarTitle,
+    BsAppContainer,
     BsAvatar,
     BsBadge,
     BsButton,
@@ -33,6 +34,7 @@ import type {
     BsIconSvg,
     BsImageHolder,
     BsLightbox,
+    BsListbox,
     BsListNav,
     BsListNavItem,
     BsListTile,
@@ -42,7 +44,6 @@ import type {
     BsListTileSubtitle,
     BsListTileTitle,
     BsListView,
-    BsListbox,
     BsMaskLoader,
     BsModal,
     BsNotification,
@@ -67,18 +68,19 @@ import type {
     BsToggleField,
     BsToggleIcon,
     BsTooltip,
-    vClickOutside,
     IHttpService,
     INotificationProvider,
+    TVueMdb,
+    vClickOutside,
     vResize,
     vScroll,
-    TVueMdb,
     vTouch,
 } from './dist/vue-mdb';
 
 declare module '@vue/runtime-core' {
     export interface GlobalComponents {
         BsAlert: typeof BsAlert;
+        BsApp: typeof BsApp;
         BsAppContainer: typeof BsAppContainer;
         BsAppbar: typeof BsAppbar;
         BsAppbarItems: typeof BsAppbarItems;

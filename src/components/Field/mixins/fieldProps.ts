@@ -1,16 +1,19 @@
-import type {Prop, PropType} from "vue";
+import type { Prop, PropType } from 'vue';
+import { useGenerateId } from '../../../mixins/CommonApi';
 import {
     booleanProp,
     booleanTrueProp,
     numberProp,
     stringOrNumberProp,
     stringProp,
-    validStringOrFloatProp
-} from "../../../mixins/CommonProps";
-import {useGenerateId} from "../../../mixins/CommonApi";
-import {validationProps} from "./validationProps";
-import type {TIconVariant, TLabelPosition, TSpaceAround} from "../../../types";
-import {popoverDefaultTransitionProp, popoverPlacementProp} from "../../Popover/mixins/popoverProps";
+    validStringOrFloatProp,
+} from '../../../mixins/CommonProps';
+import type { TIconVariant, TLabelPosition, TSpaceAround } from '../../../types';
+import {
+    popoverDefaultTransitionProp,
+    popoverPlacementProp,
+} from '../../Popover/mixins/popoverProps';
+import { validationProps } from './validationProps';
 
 export const baseInputProps = {
     /**
@@ -28,8 +31,8 @@ export const baseInputProps = {
     /**
      * Whether this input field is required or not.
      */
-    required: booleanProp
-}
+    required: booleanProp,
+};
 
 export const inputProps = {
     /**
@@ -37,10 +40,10 @@ export const inputProps = {
      */
     id: {
         type: String,
-        default: () => useGenerateId()
+        default: () => useGenerateId(),
     },
     ...baseInputProps,
-}
+};
 
 export const textFieldProps = {
     /**
@@ -109,9 +112,10 @@ export const textFieldProps = {
     actionIconVariant: {
         type: String as PropType<TIconVariant>,
         default: 'outlined',
-        validator: (value: string): boolean => ["outlined", "filled", "round", "sharp"].includes(value),
+        validator: (value: string): boolean =>
+            ['outlined', 'filled', 'round', 'sharp'].includes(value),
     } as Prop<TIconVariant>,
-}
+};
 
 export const numericFieldProps = {
     ...inputProps,
@@ -119,7 +123,7 @@ export const numericFieldProps = {
     ...validationProps,
     autocomplete: {
         type: [String, Boolean],
-        default: false
+        default: false,
     },
     autofocus: booleanProp,
     modelValue: numberProp,
@@ -130,35 +134,35 @@ export const numericFieldProps = {
     spinButton: booleanTrueProp,
     spinButtonPlacement: {
         type: String as PropType<TLabelPosition>,
-        default: "right",
-        validator: (v: TLabelPosition) => ["left", "right"].includes(v)
+        default: 'right',
+        validator: (v: TLabelPosition) => ['left', 'right'].includes(v),
     } as Prop<TLabelPosition>,
     actionButton: booleanProp,
     actionButtonPlacement: {
         type: String as PropType<TSpaceAround>,
-        default: "right",
-        validator: (v: TSpaceAround) => ["left", "right", "both"].includes(v)
+        default: 'right',
+        validator: (v: TSpaceAround) => ['left', 'right', 'both'].includes(v),
     } as Prop<TSpaceAround>,
     maxFraction: {
         type: [Number, String],
         default: 3,
-        validator: (v: string) => !isNaN(parseInt(v))
+        validator: (v: string) => !isNaN(parseInt(v)),
     },
     maxValue: validStringOrFloatProp,
     minValue: validStringOrFloatProp,
     step: {
         type: [Number, String],
         default: 1.0,
-        validator: (v: string) => !isNaN(parseFloat(v))
+        validator: (v: string) => !isNaN(parseFloat(v)),
     },
     prefix: stringProp,
     suffix: stringProp,
-}
+};
 
 export const searchFieldProps = {
     id: {
         type: String,
-        default: () => useGenerateId()
+        default: () => useGenerateId(),
     },
     name: stringProp,
     disabled: booleanProp,
@@ -169,22 +173,22 @@ export const searchFieldProps = {
     darkMode: booleanProp,
     placeholder: {
         type: String,
-        default: 'Search...'
+        default: 'Search...',
     },
     minlength: {
         type: [String, Number],
         default: 4,
-        validator: (value: string) => parseInt(value, 10) > 0
+        validator: (value: string) => parseInt(value, 10) > 0,
     },
     popoverCls: {
         type: [String, Array],
-        default: "bg-white rounded shadow"
+        default: 'bg-white rounded shadow',
     },
     popoverMinWidth: {
         type: [Number, String],
         default: 480,
-        validator: (value: string) => parseInt(value, 10) > 0
+        validator: (value: string) => parseInt(value, 10) > 0,
     },
     popoverPlacement: popoverPlacementProp,
     popoverTransition: popoverDefaultTransitionProp,
-}
+};

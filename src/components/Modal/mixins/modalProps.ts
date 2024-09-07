@@ -3,9 +3,9 @@ import {
     booleanTrueProp,
     stringOrArrayProp,
     stringProp,
-    validStringOrNumberProp
-} from "../../../mixins/CommonProps";
-import {popoverBaseProps} from "../../Popover/mixins/popoverProps";
+    validStringOrNumberProp,
+} from '../../../mixins/CommonProps';
+import { popoverBaseProps } from '../../Popover/mixins/popoverProps';
 
 export const modalProps = {
     ...popoverBaseProps,
@@ -22,6 +22,7 @@ export const modalProps = {
     transition: {
         type: String,
         default: 'scale',
-        validator: (v: string) => ['slide-top', 'slide-bottom', 'slide-left', 'slide-right', 'fade', 'scale'].includes(v)
-    }
-}
+        validator: (v: string) =>
+            ['slide-top', 'slide-bottom', 'slide-left', 'slide-right', 'fade', 'scale'].includes(v),
+    },
+};

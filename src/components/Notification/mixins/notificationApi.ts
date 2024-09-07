@@ -8,7 +8,7 @@ import type {
     INotificationProvider,
     TNotificationItemOptionProps,
     TNotificationOption,
-    TNotificationPosition
+    TNotificationPosition,
 } from '../types';
 
 function createNotificationHolder(
@@ -23,16 +23,20 @@ function createNotificationHolder(
     for (const position in provider.value.notification) {
         if (Object.hasOwn(provider.value.notification, position)) {
             const placement = position as TNotificationPosition;
-            const item = h('div', {
+            const item = h(
+                'div',
+                {
                     key: placement,
-                    class: [`${cssPrefix}notification-container`, `${cssPrefix}notification-${placement}`]
+                    class: [
+                        `${cssPrefix}notification-container`,
+                        `${cssPrefix}notification-${placement}`,
+                    ],
                 },
-                provider.value.notification[placement].map(
-                    option =>
-                        h(BsNotificationItem, {
-                            key: option.oid,
-                            options: option as Prop<TNotificationOption>
-                        })
+                provider.value.notification[placement].map((option) =>
+                    h(BsNotificationItem, {
+                        key: option.oid,
+                        options: option as Prop<TNotificationOption>,
+                    })
                 )
             );
 
@@ -46,69 +50,88 @@ function createNotificationHolder(
 export function useRenderNotificationContainer(
     provider: ShallowRef<INotificationProvider | undefined>
 ): VNode {
-    return h(Teleport, {to: 'body'}, [
-        h('div', {
-            class: `${cssPrefix}notification`
-        }, createNotificationHolder(provider))
+    return h(Teleport, { to: 'body' }, [
+        h(
+            'div',
+            {
+                class: `${cssPrefix}notification`,
+            },
+            createNotificationHolder(provider)
+        ),
     ]);
 }
 
 function removeNotificationItem(
     timerId: Ref<number | undefined>,
     item?: TNotificationOption,
-    provider?: INotificationProvider,
+    provider?: INotificationProvider
 ) {
     clearTimeout(timerId.value);
-    provider?.remove(<TNotificationOption>item);
+    provider?.remove(item as TNotificationOption);
 }
 
 export function useRenderNotificationItem(
     props: Readonly<TNotificationItemOptionProps>,
     provider: ShallowRef<INotificationProvider | undefined>,
-    timerId: Ref<number | undefined>,
+    timerId: Ref<number | undefined>
 ): VNode {
-    return h('div', {
-        class: [`${cssPrefix}notification-dialog`, `${cssPrefix}notification-${props.options?.variant}`],
-        onClick: () => {
-            if (props.options?.clickClose === true) {
-                removeNotificationItem(timerId, props.options, provider.value);
-            }
+    return h(
+        'div',
+        {
+            class: [
+                `${cssPrefix}notification-dialog`,
+                `${cssPrefix}notification-${props.options?.variant}`,
+            ],
+            onClick: () => {
+                if (props.options?.clickClose === true) {
+                    removeNotificationItem(timerId, props.options, provider.value);
+                }
+            },
+            onMouseover: () => {
+                clearTimeout(timerId.value);
+                timerId.value = undefined;
+            },
+            onMouseout: () => {
+                timerId.value = Helper.defer(
+                    () => {
+                        provider.value?.remove(props.options as TNotificationOption);
+                    },
+                    props.options?.timeout as number
+                );
+            },
         },
-        onMouseover: () => {
-            clearTimeout(timerId.value);
-            timerId.value = undefined;
-        },
-        onMouseout: () => {
-            timerId.value = Helper.defer(() => {
-                provider.value?.remove(<TNotificationOption>props.options);
-            }, <number>props.options?.timeout);
-        },
-    }, [
-        (
+        [
             props.options?.progressBar
                 ? h(BsNotificationBar, {
-                    timeout: props.options.timeout as Prop<number>,
-                    // @ts-ignore
-                    pause: !timerId.value as Prop<boolean>
-                })
-                : ''
-        ),
-        (
+                      timeout: props.options.timeout as Prop<number>,
+                      // @ts-ignore
+                      pause: !timerId.value as Prop<boolean>,
+                  })
+                : '',
             props.options?.closeButton
-                ? h('button', {
-                    class: `${cssPrefix}btn-close`,
-                    role: 'button',
-                    type: 'button',
-                    onClick: () => removeNotificationItem(timerId, props.options, provider.value),
-                }, '×')
-                : ''
-        ),
-        h('div', {
-            class: `${cssPrefix}notification-title`
-        }, toDisplayString(props.options?.title)),
-        h('div', {
-            class: `${cssPrefix}notification-message`,
-            innerHTML: props.options?.message
-        }),
-    ]);
+                ? h(
+                      'button',
+                      {
+                          class: `${cssPrefix}btn-close`,
+                          role: 'button',
+                          type: 'button',
+                          onClick: () =>
+                              removeNotificationItem(timerId, props.options, provider.value),
+                      },
+                      '×'
+                  )
+                : '',
+            h(
+                'div',
+                {
+                    class: `${cssPrefix}notification-title`,
+                },
+                toDisplayString(props.options?.title)
+            ),
+            h('div', {
+                class: `${cssPrefix}notification-message`,
+                innerHTML: props.options?.message,
+            }),
+        ]
+    );
 }

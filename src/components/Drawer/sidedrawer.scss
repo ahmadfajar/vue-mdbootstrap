@@ -4,15 +4,23 @@
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 
+.#{$prefix}drawer-host {
+    @include transition(.55s $transition-easeInOut);
+    height: 100%;
+    position: absolute;
+    z-index: $zindex-sticky - 1;
+}
+
 .#{$prefix}side-drawer {
-    @include transition($md-transition-default);
     height: 100%;
     margin: 0;
     padding: 0;
-    position: absolute;
-    z-index: $zindex-sticky - 1;
 
-    &.#{$prefix}closed {
+    &.smooth-animation {
+        @include transition(.55s $transition-easeInOut);
+    }
+
+    &.drawer-closed {
         @include box-shadow(none !important);
     }
 

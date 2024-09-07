@@ -1,24 +1,24 @@
-import type { Directive, DirectiveBinding } from 'vue'
-import type { EventListenerTarget, IBindingElement, TDirectiveBinding } from '../../types'
-import Helper from '../../utils/Helper'
+import type { Directive, DirectiveBinding } from 'vue';
+import type { EventListenerTarget, IBindingElement, TDirectiveBinding } from '../../types';
+import Helper from '../../utils/Helper';
 
 interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
-    value: EventListenerTarget | TDirectiveBinding
+    value: EventListenerTarget | TDirectiveBinding;
     modifiers?: {
-        active?: boolean
-        quiet?: boolean
-    }
+        active?: boolean;
+        quiet?: boolean;
+    };
 }
 
 function mounted(el: IBindingElement, binding: ResizeDirectiveBinding): void {
     const callback = Helper.isFunction(binding.value)
         ? binding.value
-        : (<TDirectiveBinding>binding.value).handler;
+        : (binding.value as TDirectiveBinding).handler;
     const debounce = !Helper.isFunction(binding.value)
-        ? (<TDirectiveBinding>binding.value)?.debounce || 50
+        ? (binding.value as TDirectiveBinding)?.debounce || 50
         : 50;
     const options: AddEventListenerOptions = {
-        passive: !binding.modifiers?.active
+        passive: !binding.modifiers?.active,
     };
 
     let debounceTimeout: number;
@@ -27,8 +27,8 @@ function mounted(el: IBindingElement, binding: ResizeDirectiveBinding): void {
         if (debounceTimeout) {
             clearTimeout(debounceTimeout);
         }
-        debounceTimeout = window.setTimeout(() => callback((<Element & Event>el), evt), debounce);
-    }
+        debounceTimeout = window.setTimeout(() => callback(el as Element & Event, evt), debounce);
+    };
 
     window.addEventListener('resize', onResizeHandler, options);
     el.__resizeListener = onResizeHandler;
@@ -49,5 +49,5 @@ function unmounted(el: IBindingElement): void {
 
 export const Resize: Directive = {
     mounted,
-    unmounted
-}
+    unmounted,
+};

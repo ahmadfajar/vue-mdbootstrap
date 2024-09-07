@@ -1,17 +1,15 @@
-import type { AxiosInstance } from 'axios';
-import type { Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
-import type { RouteLocationNormalizedLoaded } from 'vue-router';
-import type {
+import { AxiosInstance } from 'axios';
+import { Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
+import { RouteLocationNormalizedLoaded } from 'vue-router';
+import {
     INotificationProvider,
     TBreakpoint,
     TRecord,
     TRouterLinkProps,
     TRouterOptionProps,
-    TVueMdb
+    TVueMdb,
 } from '../../types';
-import type { IHttpService } from '../../utils/types/AxiosPlugin';
-
-export declare const cssPrefix = 'md-';
+import { IHttpService } from '../../utils/types/AxiosPlugin';
 
 /**
  * Generate component's ID.
@@ -39,7 +37,13 @@ export declare function useMobileDevice(): boolean;
  * @param slotArgs The argument for the given slot
  * @returns The Rendered node.
  */
-export declare function useRenderSlot(slots: Slots, name: string, props?: Readonly<TRecord>, children?: VNode | VNodeArrayChildren, slotArgs?: unknown): VNode;
+export declare function useRenderSlot(
+    slots: Slots,
+    name: string,
+    props?: Readonly<TRecord>,
+    children?: VNode | VNodeArrayChildren,
+    slotArgs?: unknown
+): VNode;
 
 /**
  * Simple function to render an HTML tag as VNode and apply default slot to its child.
@@ -49,7 +53,12 @@ export declare function useRenderSlot(slots: Slots, name: string, props?: Readon
  * @param classes  Custom css classes to apply
  * @param styles   Custom inline stylesheet to apply
  */
-export declare function useRenderSlotDefault(tag: string, slots?: Slots, classes?: string | Array<string> | TRecord, styles?: string | Array<string> | TRecord): VNode;
+export declare function useRenderSlotDefault(
+    tag: string,
+    slots?: Slots,
+    classes?: string | string[] | TRecord,
+    styles?: TRecord
+): VNode;
 
 /**
  * Simple function to render a VNode with custom slot and wrap it
@@ -66,7 +75,15 @@ export declare function useRenderSlotDefault(tag: string, slots?: Slots, classes
  * @param slotArgs     The argument for the given slot
  * @returns The Rendered node.
  */
-export declare function useRenderSlotWithWrapper(slots: Slots, name: string, key: string, wrapperProps?: Readonly<TRecord>, children?: VNode | VNodeArrayChildren, wrapperTag?: string, slotArgs?: unknown): VNode;
+export declare function useRenderSlotWithWrapper(
+    slots: Slots,
+    name: string,
+    key: string,
+    wrapperProps?: Readonly<TRecord>,
+    children?: VNode | VNodeArrayChildren,
+    wrapperTag?: string,
+    slotArgs?: unknown
+): VNode;
 
 /**
  * Simple function to render a VNode with custom slot and wrap it
@@ -80,7 +97,14 @@ export declare function useRenderSlotWithWrapper(slots: Slots, name: string, key
  * @param slotArgs   The argument for the given slot
  * @returns The Rendered node.
  */
-export declare function useRenderSlotWrapperWithCondition(slots: Slots, name: string, condition: boolean, wrapProps?: Readonly<TRecord>, wrapTag?: string, slotArgs?: unknown): VNode | undefined;
+export declare function useRenderSlotWrapperWithCondition(
+    slots: Slots,
+    name: string,
+    condition: boolean,
+    wrapProps?: Readonly<TRecord>,
+    wrapTag?: string,
+    slotArgs?: unknown
+): VNode | undefined;
 
 /**
  * Simple function to render a Transition VNode.
@@ -90,7 +114,11 @@ export declare function useRenderSlotWrapperWithCondition(slots: Slots, name: st
  * @param asBlock  Render the Transition as block VNode.
  * @returns The Rendered node.
  */
-export declare function useRenderTransition(props: Readonly<TransitionProps> | undefined, children: VNode | VNodeArrayChildren, asBlock?: boolean): VNode;
+export declare function useRenderTransition(
+    props: Readonly<TransitionProps> | undefined,
+    children: VNode | VNodeArrayChildren,
+    asBlock?: boolean
+): VNode;
 
 /**
  * Simple function to render a RouterLink VNode.
@@ -99,7 +127,10 @@ export declare function useRenderTransition(props: Readonly<TransitionProps> | u
  * @param children The child nodes
  * @returns The Rendered node.
  */
-export declare function useRenderRouter(props: Readonly<TRouterLinkProps>, children: VNode | VNodeArrayChildren): VNode;
+export declare function useRenderRouter(
+    props: Readonly<TRouterLinkProps>,
+    children: VNode | VNodeArrayChildren
+): VNode;
 
 /**
  * Check if component instance has a `$router` and `path` property has been defined.

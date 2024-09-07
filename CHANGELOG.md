@@ -5,13 +5,19 @@
 
 ## v2.0.11
 
-Released: August XX, 2024
+Released: September 08, 2024
 
 ### Features & Improvements
 
 - **BsListNavItem**, **BsListTile**, **BsTab**, **BsTabItem**:
   - Add `path-name` and `location` properties to better accommodate the `<RouterLink>` property.
 - **BsListNavItem**, **BsListTile**: improve route matcher
+- **BsSideDrawer**: improvement when there are multiple `<BsApp>` and `<BsSideDrawer>` instances.
+
+### Bug Fixes
+
+- **BsModel**: fixed bug when the `toObject` method was overridden and its return 
+  value did not have a field that was mentioned by the `idProperty` property.
 
 
 ## v2.0.10
@@ -26,7 +32,7 @@ Released: August 12, 2024
 - **BsTextField**, **BsNumericField**: add properties `prefix` and `suffix`.
 - **BsChip**: improve UI border-radius to comply material design spec.
 - **BsDateTimeField**: prevents the DatePicker from being displayed when the field is in read-only state.
-- **BsStore**: add `expression` property on `TFilterOption` object.
+- **BsStore**: add `expression` property on `TFilterOption` configuration.
 
 ### Bug Fixes
 

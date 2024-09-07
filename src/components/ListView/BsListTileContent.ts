@@ -1,11 +1,10 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent } from 'vue';
 import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
 import { booleanProp } from '../../mixins/CommonProps';
-import type { TBsListTileContent, TListTileContentOptionProps, TRecord } from '../../types';
 import { baseTagProps } from '../Card/mixins/cardProps';
+import type { TBsListTileContent, TListTileContentOptionProps } from './types';
 
-export default defineComponent<TBsListTileContent, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsListTileContent>({
     name: 'BsListTileContent',
     props: {
         ...baseTagProps,
@@ -17,13 +16,13 @@ export default defineComponent<TBsListTileContent, TRecord, TRecord, ComputedOpt
          */
         multiLine: booleanProp,
     },
-    setup(props, {slots}) {
-        const cmpProps = props as Readonly<TListTileContentOptionProps>;
+    setup(props, { slots }) {
+        const thisProps = props as Readonly<TListTileContentOptionProps>;
 
         return () =>
-            useRenderSlotDefault(<string>cmpProps.tag, slots, {
+            useRenderSlotDefault(<string>thisProps.tag, slots, {
                 [`${cssPrefix}list-tile-content`]: true,
-                [`${cssPrefix}multiline`]: cmpProps.multiLine === true,
-            })
-    }
+                [`${cssPrefix}multiline`]: thisProps.multiLine === true,
+            });
+    },
 });

@@ -4,7 +4,7 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 import {
     EventUpdateModelValueProps,
@@ -12,7 +12,7 @@ import {
     IBsModel,
     TDataSource,
     TInputFieldProps,
-    TLabelPosition
+    TLabelPosition,
 } from '../../../types';
 
 export declare type TComboboxOptionProps = TInputFieldProps & {
@@ -149,37 +149,39 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
      * Sets transition animation when showing the Listbox container.
      */
     transition?: string;
-}
+};
 
 export declare type TBsCombobox = ComponentObjectPropsOptions<TComboboxOptionProps>;
 
 declare type AllowedComboboxProps = AllowedComponentProps &
-    ComponentCustomProps & VNodeProps & EventVoidClosableProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventVoidClosableProps &
     EventUpdateModelValueProps<string | number | string[] | number[] | undefined> & {
-    onClear?: VoidFunction;
-    onOpen?: VoidFunction;
-    onSelect?: (item: IBsModel) => void;
-    onDeselect?: (item: IBsModel) => void;
-    onDataBind?: (data: IBsModel[]) => void;
-    onDataError?: (error: unknown) => void;
-    onDataFilter?: (data: IBsModel[]) => void;
-    'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
-    '@clear'?: VoidFunction;
-    '@open'?: VoidFunction;
-    '@select'?: (item: IBsModel) => void;
-    '@deselect'?: (item: IBsModel) => void;
-    '@data-bind'?: (data: IBsModel[]) => void;
-    '@data-error'?: (error: unknown) => void;
-    '@data-filter'?: (data: IBsModel[]) => void;
-    '@update:selected-value'?: (selected: IBsModel[]) => void;
-}
+        onClear?: VoidFunction;
+        onOpen?: VoidFunction;
+        onSelect?: (item: IBsModel) => void;
+        onDeselect?: (item: IBsModel) => void;
+        onDataBind?: (data: IBsModel[]) => void;
+        onDataError?: (error: unknown) => void;
+        onDataFilter?: (data: IBsModel[]) => void;
+        'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
+        '@clear'?: VoidFunction;
+        '@open'?: VoidFunction;
+        '@select'?: (item: IBsModel) => void;
+        '@deselect'?: (item: IBsModel) => void;
+        '@data-bind'?: (data: IBsModel[]) => void;
+        '@data-error'?: (error: unknown) => void;
+        '@data-filter'?: (data: IBsModel[]) => void;
+        '@update:selected-value'?: (selected: IBsModel[]) => void;
+    };
 
 export declare const BsCombobox: {
-    new(): {
+    new (): {
         $props: AllowedComboboxProps & TComboboxOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];
-            'option-item'?: (arg: { item: IBsModel, index: number }) => VNode;
+            'option-item'?: (arg: { item: IBsModel; index: number }) => VNode;
             'append-inner'?: () => VNode;
             'append-outer'?: () => VNode;
             'prepend-inner'?: () => VNode;

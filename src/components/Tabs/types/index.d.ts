@@ -4,10 +4,16 @@ import {
     ComponentInternalInstance,
     ComponentObjectPropsOptions,
     Plugin,
+    Ref,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
-import { EventUpdateModelValueProps, TIconProps, TPlacementPosition, TRouterOptionProps } from '../../../types';
+import {
+    EventUpdateModelValueProps,
+    TIconProps,
+    TPlacementPosition,
+    TRouterOptionProps,
+} from '../../../types';
 
 export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 
@@ -44,7 +50,7 @@ export declare type TTabsBaseProps = {
      * Tabs position. Valid values: `left`, `right`, `top`, `bottom`.
      */
     tabPosition?: TPlacementPosition;
-}
+};
 
 export declare type TTabsOptionProps = TTabsBaseProps & {
     /**
@@ -71,18 +77,19 @@ export declare type TTabsOptionProps = TTabsBaseProps & {
      * The activeTab index or activeTab ID that monitored by `v-model`.
      */
     modelValue?: string | number;
-}
+};
 
-export declare type TTabPanelOptionProps = TRouterOptionProps & TIconProps & {
-    id?: string;
-    ariaLabel?: string;
-    disabled?: boolean;
-    label?: string;
-}
+export declare type TTabPanelOptionProps = TRouterOptionProps &
+    TIconProps & {
+        id?: string;
+        ariaLabel?: string;
+        disabled?: boolean;
+        label?: string;
+    };
 
 export declare type TTabItemOptionProps = TTabPanelOptionProps & {
     active?: boolean;
-}
+};
 
 export declare type TTabLabelOptionProps = TIconProps & {
     tabPosition?: TPlacementPosition;
@@ -90,7 +97,7 @@ export declare type TTabLabelOptionProps = TIconProps & {
     iconSize?: string | number;
     label?: string;
     rippleOff?: boolean;
-}
+};
 
 export declare type TBsTabs = ComponentObjectPropsOptions<TTabsOptionProps>;
 
@@ -100,33 +107,39 @@ export declare type TBsTabPanel = ComponentObjectPropsOptions<TTabPanelOptionPro
 
 export declare type TBsTabLabel = ComponentObjectPropsOptions<TTabLabelOptionProps>;
 
-declare type AllowedTabsProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventUpdateModelValueProps<number> & {
-    onChange?: (
-        newTab: ComponentInternalInstance,
-        oldTab: ComponentInternalInstance | undefined,
-        newIndex: number,
-        oldIndex?: number,
-    ) => void;
-    '@change'?: (
-        newTab: ComponentInternalInstance,
-        oldTab: ComponentInternalInstance | undefined,
-        newIndex: number,
-        oldIndex?: number,
-    ) => void;
-};
-
 export declare const BsTab: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TTabPanelOptionProps;
         $slots: {
             default?: () => VNode[];
         };
+        $exposed: {
+            isActive: Ref<boolean>;
+        };
+        isActive: Ref<boolean>;
     };
 };
 
+declare type AllowedTabsProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventUpdateModelValueProps<number> & {
+        onChange?: (
+            newTab: ComponentInternalInstance,
+            oldTab: ComponentInternalInstance | undefined,
+            newIndex: number,
+            oldIndex?: number
+        ) => void;
+        '@change'?: (
+            newTab: ComponentInternalInstance,
+            oldTab: ComponentInternalInstance | undefined,
+            newIndex: number,
+            oldIndex?: number
+        ) => void;
+    };
+
 export declare const BsTabs: {
-    new(): {
+    new (): {
         $props: AllowedTabsProps & TTabsOptionProps;
         $slots: {
             default?: () => VNode[];

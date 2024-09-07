@@ -1,7 +1,9 @@
 import type { Prop } from 'vue';
 import { booleanProp, stringProp, validNumberGtZeroProp } from '../../../mixins/CommonProps';
+import type { TDataSource, TLabelPosition } from '../../../types';
 import { iconPosition } from '../../Button/mixins/buttonProps';
 import { inputProps, textFieldProps } from '../../Field/mixins/fieldProps';
+import { validationProps } from '../../Field/mixins/validationProps';
 import {
     emptyDataMessage,
     listboxMaxHeight,
@@ -9,9 +11,7 @@ import {
     listboxMinSearchLength,
     notFoundMessage,
 } from '../../Listbox/mixins/listboxProps';
-import { validationProps } from '../../Field/mixins/validationProps';
 import { popoverDefaultTransitionProp } from '../../Popover/mixins/popoverProps';
-import type { TDataSource, TLabelPosition } from '../../../types';
 
 export const comboboxProps = {
     ...inputProps,

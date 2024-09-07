@@ -1,13 +1,13 @@
-import type {App, Plugin} from "vue";
-import BsColorPicker from "./BsColorPicker";
-import "../../../scss/_transitions.scss";
-import "../../../scss/_utilities.scss";
-import "./colorPicker.scss";
+import type { App, Plugin } from 'vue';
+import BsColorPicker from './BsColorPicker';
+import '../../../scss/_transitions.scss';
+import '../../../scss/_utilities.scss';
+import './colorPicker.scss';
 
 const BsColorPickerPlugin: Plugin = {
     install: (app: App): void => {
-        app.component(<string>BsColorPicker.name, BsColorPicker);
-    }
+        app.component(BsColorPicker.name as string, BsColorPicker);
+    },
 };
 
-export {BsColorPickerPlugin, BsColorPicker}
+export { BsColorPickerPlugin, BsColorPicker };

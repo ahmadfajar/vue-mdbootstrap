@@ -1,4 +1,4 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions, Prop } from 'vue';
+import type { Prop } from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
 import {
@@ -6,22 +6,21 @@ import {
     booleanTrueProp,
     stringOrNumberProp,
     stringProp,
-    validStringOrNumberProp
+    validStringOrNumberProp,
 } from '../../mixins/CommonProps';
 import type { TBsTextField, TFieldType, TRecord, TTextFieldOptionProps } from '../../types';
 import Helper from '../../utils/Helper';
 import { inputProps, textFieldProps } from './mixins/fieldProps';
 import {
-    useCreateTextFieldClasses,
+    useFieldControlClasses,
     useFieldWrapperClasses,
     useRenderTextField,
-    useShowClearButton
+    useShowClearButton,
 } from './mixins/textFieldApi';
 import { useGetValidationResult } from './mixins/validationApi';
 import { validationProps } from './mixins/validationProps';
 
-
-export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsTextField>({
     name: 'BsTextField',
     props: {
         ...inputProps,
@@ -29,13 +28,14 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         ...validationProps,
         autocomplete: {
             type: [String, Boolean],
-            default: false
+            default: false,
         },
         autofocus: booleanProp,
         type: {
             type: String,
             default: 'text',
-            validator: (v: string): boolean => ['text', 'email', 'password', 'tel', 'url'].includes(v)
+            validator: (v: string): boolean =>
+                ['text', 'email', 'password', 'tel', 'url'].includes(v),
         } as Prop<TFieldType>,
         datalist: stringProp,
         modelValue: stringOrNumberProp,
@@ -69,11 +69,14 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
          */
         'update:model-value',
     ],
-    setup(props, {emit, slots}) {
+    setup(props, { emit, slots }) {
         const thisProps = props as Readonly<TTextFieldOptionProps>;
-        const autocomplete = thisProps.autocomplete && Helper.isString(thisProps.autocomplete)
-            ? thisProps.autocomplete
-            : (thisProps.autocomplete ? 'on' : Helper.uuid());
+        const autocomplete =
+            thisProps.autocomplete && Helper.isString(thisProps.autocomplete)
+                ? thisProps.autocomplete
+                : thisProps.autocomplete
+                  ? 'on'
+                  : Helper.uuid();
         const localValue = ref<string | number | undefined | null>(thisProps.modelValue);
         const passwordToggled = ref(false);
         const isFocused = ref(false);
@@ -82,29 +85,39 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
         const showPasswordToggle = computed<boolean>(
             () => thisProps.type === 'password' && thisProps.passwordToggle === true
         );
-        const showAppendIcon = computed(() =>
-            (slots['append-inner'] != undefined) || !Helper.isEmpty(thisProps.appendIcon)
-            || showClearButton.value || showPasswordToggle.value
+        const showAppendIcon = computed(
+            () =>
+                slots['append-inner'] != null ||
+                !Helper.isEmpty(thisProps.appendIcon) ||
+                showClearButton.value ||
+                showPasswordToggle.value
         );
         const fieldWrapperClasses = computed<TRecord>(() =>
-            useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
+            useFieldWrapperClasses(
+                thisProps,
+                validator.hasValidated.value,
+                validator.hasError.value
+            )
         );
-        const fieldControlClasses = computed<TRecord>(() =>
-            ({
-                ...useCreateTextFieldClasses(slots, thisProps, localValue, isFocused, showAppendIcon.value),
-                [`${cssPrefix}field-rounded`]: (thisProps.outlined || thisProps.filled) && thisProps.rounded,
-                [`${cssPrefix}text-field`]: true,
-            })
-        );
-        const fieldType = computed<string | undefined>(
-            () => {
-                if (showPasswordToggle.value) {
-                    return passwordToggled.value ? 'text' : 'password';
-                }
-
-                return thisProps.type;
+        const fieldControlClasses = computed<TRecord>(() => ({
+            ...useFieldControlClasses(
+                slots,
+                thisProps,
+                localValue,
+                isFocused,
+                showAppendIcon.value
+            ),
+            [`${cssPrefix}field-rounded`]:
+                (thisProps.outlined || thisProps.filled) && thisProps.rounded,
+            [`${cssPrefix}text-field`]: true,
+        }));
+        const fieldType = computed<string | undefined>(() => {
+            if (showPasswordToggle.value) {
+                return passwordToggled.value ? 'text' : 'password';
             }
-        );
+
+            return thisProps.type;
+        });
         const onPasswordToggleHandler = (value: boolean): void => {
             passwordToggled.value = value;
         };
@@ -117,21 +130,24 @@ export default defineComponent<TBsTextField, TRecord, TRecord, ComputedOptions, 
 
         return () =>
             useRenderTextField(
-                slots, emit, thisProps,
+                slots,
+                emit,
+                thisProps,
                 fieldWrapperClasses,
                 fieldControlClasses,
                 fieldType.value,
-                localValue, isFocused,
+                localValue,
+                isFocused,
                 passwordToggled,
                 autocomplete,
-                showClearButton.value,
-                showPasswordToggle.value,
-                validator.showHelpText.value,
-                validator.showValidationError.value,
-                validator.hasValidated.value,
-                validator.hasError.value,
-                validator.errorItems.value,
-                onPasswordToggleHandler,
+                showClearButton,
+                showPasswordToggle,
+                validator.showHelpText,
+                validator.showValidationError,
+                validator.hasValidated,
+                validator.hasError,
+                validator.errorItems,
+                onPasswordToggleHandler
             );
-    }
+    },
 });

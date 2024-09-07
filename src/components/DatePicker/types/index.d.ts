@@ -4,13 +4,13 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 import {
     EventUpdateModelValueProps,
     EventVoidClosableProps,
     TInputFieldProps,
-    TPopoverPosition
+    TPopoverPosition,
 } from '../../../types';
 
 export declare type TDateTimePickerMode = 'date' | 'datetime' | 'year' | 'month' | 'time';
@@ -20,7 +20,7 @@ export declare type TTimePickerMode = 'time' | 'hour' | 'minute' | 'second';
 export declare type TDatePickerBaseProps = {
     locale?: string;
     modelValue?: Date;
-}
+};
 
 export declare type TDatePickerHeaderProps = TDatePickerBaseProps & {
     displayMode?: TDateTimePickerMode;
@@ -29,25 +29,25 @@ export declare type TDatePickerHeaderProps = TDatePickerBaseProps & {
     enableTime?: boolean;
     readonly?: boolean;
     landscape?: boolean;
-}
+};
 
 export declare type TDatePickerNavProps = TDatePickerBaseProps & {
     buttonColor?: string;
     displayMode?: TDateTimePickerMode;
     disabled?: boolean;
-}
+};
 
 export declare type TDatePickerCalendarProps = TDatePickerBaseProps & {
     calendarDate?: Date;
     disabled?: boolean;
     selectedColor?: string;
-}
+};
 
 export declare type TTimePickerProps = TDatePickerBaseProps & {
     backButton?: boolean;
     disabled?: boolean;
     selectedColor?: string;
-}
+};
 
 export declare type TDatePickerOptionProps = {
     /**
@@ -99,7 +99,7 @@ export declare type TDatePickerOptionProps = {
      * DatePicker's container width, default is 300px.
      */
     width?: number | string;
-}
+};
 
 export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
     /**
@@ -183,7 +183,7 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
      * Use `pickerTransition` property instead.
      */
     transition?: string;
-}
+};
 
 export declare type TBsDatePicker = ComponentObjectPropsOptions<TDatePickerOptionProps>;
 
@@ -197,30 +197,35 @@ export declare type TBsDatePickerTimes = ComponentObjectPropsOptions<TTimePicker
 
 export declare type TBsDateTimeField = ComponentObjectPropsOptions<TDateTimeFieldOptionProps>;
 
-declare type AllowedDatePickerProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventUpdateModelValueProps<string>;
-
-declare type AllowedDateTimeFieldProps = AllowedComponentProps & ComponentCustomProps & VNodeProps &
-    EventVoidClosableProps & EventUpdateModelValueProps<string> & {
-    onBlur?: (event: Event) => void;
-    onFocus?: (event: Event) => void;
-    onClear?: VoidFunction;
-    onOpen?: VoidFunction;
-    '@blur'?: (event: Event) => void;
-    '@focus'?: (event: Event) => void;
-    '@clear'?: VoidFunction;
-    '@open'?: VoidFunction;
-}
+declare type AllowedDatePickerProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventUpdateModelValueProps<string>;
 
 export declare const BsDatePicker: {
-    new(): {
+    new (): {
         $props: AllowedDatePickerProps & TDatePickerOptionProps;
         $emit: ['update:model-value'];
     };
 };
 
+declare type AllowedDateTimeFieldProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventVoidClosableProps &
+    EventUpdateModelValueProps<string> & {
+        onBlur?: (event: Event) => void;
+        onFocus?: (event: Event) => void;
+        onClear?: VoidFunction;
+        onOpen?: VoidFunction;
+        '@blur'?: (event: Event) => void;
+        '@focus'?: (event: Event) => void;
+        '@clear'?: VoidFunction;
+        '@open'?: VoidFunction;
+    };
+
 export declare const BsDateTimeField: {
-    new(): {
+    new (): {
         $props: AllowedDateTimeFieldProps & TDateTimeFieldOptionProps;
         $slots: {
             default?: (arg: { id: string }) => VNode[];

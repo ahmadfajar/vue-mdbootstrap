@@ -4,7 +4,7 @@ import {
     routerProps,
     stringOrArrayProp,
     stringOrNumberProp,
-    stringProp
+    stringProp,
 } from '../../../mixins/CommonProps';
 import type { TAlignment, TPlacementPosition, TTabsVariant } from '../../../types';
 import { iconProps } from '../../Avatar/mixins/avatarProps';
@@ -17,7 +17,7 @@ export const tabPanelProps = {
     label: stringProp,
     ariaLabel: stringProp,
     disabled: booleanProp,
-}
+};
 
 export const tabItemProps = {
     ...routerProps,
@@ -27,7 +27,7 @@ export const tabItemProps = {
     active: booleanProp,
     ariaLabel: stringProp,
     disabled: booleanProp,
-}
+};
 
 export const tabsProps = {
     /**
@@ -44,7 +44,8 @@ export const tabsProps = {
     alignment: {
         type: String,
         default: 'start',
-        validator: (value: string) => ['left', 'start', 'right', 'end', 'center', 'justified'].includes(value)
+        validator: (value: string) =>
+            ['left', 'start', 'right', 'end', 'center', 'justified'].includes(value),
     } as Prop<TAlignment>,
     /**
      * Tabs color style for tab variant: `modern` and `material`.
@@ -64,7 +65,7 @@ export const tabsProps = {
     iconPosition: {
         type: String,
         default: 'left',
-        validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value)
+        validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value),
     } as Prop<TPlacementPosition>,
     /**
      * Tabs position. Valid values: `left`, `right`, `top`, `bottom`.
@@ -72,7 +73,7 @@ export const tabsProps = {
     tabPosition: {
         type: String,
         default: 'top',
-        validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value)
+        validator: (value: string) => ['left', 'right', 'top', 'bottom'].includes(value),
     } as Prop<TPlacementPosition>,
     /**
      * TabItem css class name.
@@ -83,7 +84,7 @@ export const tabsProps = {
      */
     activeClass: {
         type: String,
-        default: 'active'
+        default: 'active',
     },
     /**
      * TabItem's container css class name.
@@ -105,4 +106,4 @@ export const tabsProps = {
      * This component activeTab index or activeTab ID.
      */
     modelValue: stringOrNumberProp,
-}
+};

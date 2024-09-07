@@ -4,7 +4,7 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 import { EventClosableProps, EventUpdateOpenProps, TPopupOptions, TRecord } from '../../../types';
 
@@ -51,21 +51,28 @@ export declare type TModalOptionProps = TPopupOptions & {
      * Valid values are: 'slide-top', 'slide-bottom', 'slide-left', 'slide-right', 'fade', 'scale'.
      */
     transition?: string;
-}
+};
 
 export declare type TImageDataset = {
     imageSrc: string;
     thumbnail: string;
     title: string;
-}
+};
 
 export declare type TTransitionMode = 'in-out' | 'out-in';
 
-export declare type TLightboxButtonType = 'close' | 'delete' | 'download' | 'info' | 'menubar' | 'rotate' | 'zoom';
+export declare type TLightboxButtonType =
+    | 'close'
+    | 'delete'
+    | 'download'
+    | 'info'
+    | 'menubar'
+    | 'rotate'
+    | 'zoom';
 
 export declare type TLightboxToolbarItems = {
     [K in TLightboxButtonType]?: boolean;
-}
+};
 
 export declare type TLightboxOptionProps = TPopupOptions & {
     /**
@@ -124,17 +131,20 @@ export declare type TLightboxOptionProps = TPopupOptions & {
      * Available modes are: `out-in` and `in-out`.
      */
     transitionMode?: TTransitionMode;
-}
+};
 
 export declare type TBsModal = ComponentObjectPropsOptions<TModalOptionProps>;
 
 export declare type TBsLightbox = ComponentObjectPropsOptions<TLightboxOptionProps>;
 
-declare type AllowedModalProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventClosableProps & EventUpdateOpenProps;
+declare type AllowedModalProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventClosableProps &
+    EventUpdateOpenProps;
 
 export declare const BsModal: {
-    new(): {
+    new (): {
         $props: AllowedModalProps & TModalOptionProps;
         $slots: {
             default?: () => VNode[];
@@ -145,28 +155,31 @@ export declare const BsModal: {
     };
 };
 
-declare type AllowedLightboxProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventClosableProps & EventUpdateOpenProps & {
-    onChange?: (value: TImageDataset, index: number) => void;
-    'onExec-delete'?: (target: TImageDataset) => void;
-    'onExec-download'?: (target: TImageDataset) => void;
-    'onExec-info'?: (target: TImageDataset) => void;
-    'onExec-rotate-left'?: (target: TImageDataset, rotate: number) => void;
-    'onExec-rotate-right'?: (target: TImageDataset, rotate: number) => void;
-    'onExec-zoomin'?: (target: TImageDataset, zoom: number) => void;
-    'onExec-zoomout'?: (target: TImageDataset, zoom: number) => void;
-    '@change'?: (value: TImageDataset, index: number) => void;
-    '@exec-delete'?: (target: TImageDataset) => void;
-    '@exec-download'?: (target: TImageDataset) => void;
-    '@exec-info'?: (target: TImageDataset) => void;
-    '@exec-rotate-left'?: (target: TImageDataset, rotate: number) => void;
-    '@exec-rotate-right'?: (target: TImageDataset, rotate: number) => void;
-    '@exec-zoomin'?: (target: TImageDataset, zoom: number) => void;
-    '@exec-zoomout'?: (target: TImageDataset, zoom: number) => void;
-};
+declare type AllowedLightboxProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventClosableProps &
+    EventUpdateOpenProps & {
+        onChange?: (value: TImageDataset, index: number) => void;
+        'onExec-delete'?: (target: TImageDataset) => void;
+        'onExec-download'?: (target: TImageDataset) => void;
+        'onExec-info'?: (target: TImageDataset) => void;
+        'onExec-rotate-left'?: (target: TImageDataset, rotate: number) => void;
+        'onExec-rotate-right'?: (target: TImageDataset, rotate: number) => void;
+        'onExec-zoomin'?: (target: TImageDataset, zoom: number) => void;
+        'onExec-zoomout'?: (target: TImageDataset, zoom: number) => void;
+        '@change'?: (value: TImageDataset, index: number) => void;
+        '@exec-delete'?: (target: TImageDataset) => void;
+        '@exec-download'?: (target: TImageDataset) => void;
+        '@exec-info'?: (target: TImageDataset) => void;
+        '@exec-rotate-left'?: (target: TImageDataset, rotate: number) => void;
+        '@exec-rotate-right'?: (target: TImageDataset, rotate: number) => void;
+        '@exec-zoomin'?: (target: TImageDataset, zoom: number) => void;
+        '@exec-zoomout'?: (target: TImageDataset, zoom: number) => void;
+    };
 
 export declare const BsLightbox: {
-    new(): {
+    new (): {
         $props: AllowedLightboxProps & TLightboxOptionProps;
         $slots: {
             menubar?: () => VNode[];
@@ -183,6 +196,16 @@ export declare const BsLightbox: {
             'exec-zoomout',
             'update:open',
         ];
+        $exposed: {
+            setActive: (index: number) => void;
+            openAt: (index: number) => void;
+            nextSlide: () => void;
+            prevSlide: () => void;
+        };
+        setActive: (index: number) => void;
+        openAt: (index: number) => void;
+        nextSlide: () => void;
+        prevSlide: () => void;
     };
 };
 

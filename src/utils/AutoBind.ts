@@ -5,7 +5,6 @@
  */
 export function autoBind(instance: unknown): void {
     for (let obj = instance; obj; obj = Object.getPrototypeOf(obj)) {
-
         // We're the end of the inheritance chain if we've reached 'Object'.
         if (obj.constructor.name === 'Object') {
             return;

@@ -20,7 +20,8 @@ export default class Helper {
      * @param args       Optional arguments which are passed through the `callback`
      * @returns {number} The returned **timeoutID** is a positive integer value
      * which identifies the timer created by the call to **setTimeout()**.
-     * This value can be passed to [clearTimeout]{@link https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout}
+     * This value can be passed to
+     * [clearTimeout]{@link https://developer.mozilla.org/en-US/docs/Web/API/clearTimeout}
      * to cancel the timeout.
      */
     static defer(callback: CallableFunction, delay: number, ...args: unknown[]): number;

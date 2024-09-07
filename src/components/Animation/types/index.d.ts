@@ -65,9 +65,14 @@ export declare const BsExpandTransition: {
     };
 };
 
+declare type AllowedOverlayProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
+    onClick: (e: Event) => void;
+    '@click': (e: Event) => void;
+}
+
 export declare const BsOverlay: {
     new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TOverlayOptionProps;
+        $props: AllowedOverlayProps & TOverlayOptionProps;
         $slots: {
             default?: () => VNode[];
         };
@@ -77,6 +82,7 @@ export declare const BsOverlay: {
 
 declare type AllowedRippleProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
     'onUpdate:active'?: (value: boolean) => void;
+    '@update:active'?: (value: boolean) => void;
 }
 
 export declare const BsRipple: {

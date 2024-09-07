@@ -13,27 +13,27 @@ import Helper from '../../../utils/Helper';
 import type { TComputedValidationResult, TValidationProps, TValidator } from '../types';
 
 function getValidator(props: Readonly<TValidationProps>): TValidator | undefined {
-    return unref(props.validator ?? props.externalValidator);
+    return unref(props.validator || props.externalValidator);
 }
 
 export function useHasValidationError(props: Readonly<TValidationProps>): boolean {
     const validator = getValidator(props);
-    return validator != undefined && validator.hasError;
+    return validator != null && validator.hasError;
 }
 
 export function useHasValidated(props: Readonly<TValidationProps>): boolean {
     const validator = getValidator(props);
-    return validator && validator.dirty != undefined ? validator.dirty : false;
+    return validator && validator.dirty != null ? validator.dirty : false;
 }
 
 export function useShowValidationError(props: Readonly<TValidationProps>): boolean {
     const validator = getValidator(props);
 
     return (
-        validator != undefined &&
+        validator != null &&
         validator.hasError &&
-        validator.messages != undefined &&
-        validator.validators != undefined
+        validator.messages != null &&
+        validator.validators != null
     );
 }
 
@@ -77,7 +77,7 @@ export function useGetValidationResult(
 
 function validationErrorMessage(props: Readonly<TValidationProps>, ruleName: string): string {
     const validator = getValidator(props);
-    return validator ? <string>unref(validator.messages[ruleName]) : '';
+    return validator ? unref(validator.messages[ruleName]) : '';
 }
 
 function renderErrorMessage(

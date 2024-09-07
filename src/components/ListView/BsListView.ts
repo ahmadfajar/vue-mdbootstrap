@@ -1,11 +1,10 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, h, provide } from 'vue';
 import { cssPrefix } from '../../mixins/CommonApi';
-import type { IListViewProvider, TBsListView, TListViewOptionProps, TRecord } from '../../types';
 import { listViewProps } from './mixins/listViewProps';
 import ListViewProvider from './mixins/ListViewProvider';
+import type { IListViewProvider, TBsListView, TListViewOptionProps } from './types';
 
-export default defineComponent<TBsListView, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsListView>({
     name: 'BsListView',
     props: listViewProps,
     emits: [
@@ -18,24 +17,28 @@ export default defineComponent<TBsListView, TRecord, TRecord, ComputedOptions, M
          */
         'update:modelValue',
     ],
-    setup(props, {slots, emit}) {
-        const cmpProps = props as Readonly<TListViewOptionProps>;
-        const classNames = computed(
-            () => ({
-                [`${cssPrefix}list`]: true,
-                [`${cssPrefix}list-${props.color}`]: props.color,
-                [`${cssPrefix}list-space-${props.spaceAround}`]: ['both', 'left', 'right'].includes(<string>props.spaceAround),
-                'overflow-hidden': props.overflowHidden,
-            })
-        );
+    setup(props, { slots, emit }) {
+        const thisProps = props as Readonly<TListViewOptionProps>;
+        const classNames = computed(() => ({
+            [`${cssPrefix}list`]: true,
+            [`${cssPrefix}list-${props.color}`]: props.color,
+            [`${cssPrefix}list-space-${props.spaceAround}`]: ['both', 'left', 'right'].includes(
+                props.spaceAround as string
+            ),
+            'overflow-hidden': props.overflowHidden,
+        }));
 
-        const provider = new ListViewProvider(cmpProps, emit);
+        const provider = new ListViewProvider(thisProps, emit);
         provide<IListViewProvider>('ListView', provider);
 
         return () =>
-            h('div', {
-                class: classNames.value,
-                onVnodeBeforeUnmount: () => provider.destroy()
-            }, slots.default && slots.default())
-    }
+            h(
+                'div',
+                {
+                    class: classNames.value,
+                    onVnodeBeforeUnmount: () => provider.destroy(),
+                },
+                slots.default && slots.default()
+            );
+    },
 });

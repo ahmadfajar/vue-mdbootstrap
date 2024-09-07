@@ -1,4 +1,3 @@
-
 export * from '../components/Alert/types';
 export * from '../components/Animation/types';
 export * from '../components/Appbar/types';

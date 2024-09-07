@@ -1,11 +1,10 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
-import type { TBsDatePicker, TDatePickerOptionProps, TDateTimePickerMode, TRecord } from '../../types';
+import { isServer } from '../../mixins/CommonApi';
 import { DatePickerConst, useParseDate, useRenderDatePicker } from './mixins/datePickerApi';
 import { datePickerProps } from './mixins/datePickerProps';
-import { isServer } from '../../mixins/CommonApi';
+import type { TBsDatePicker, TDatePickerOptionProps, TDateTimePickerMode } from './types';
 
-export default defineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsDatePicker>({
     name: 'BsDatePicker',
     props: datePickerProps,
     emits: [
@@ -14,29 +13,35 @@ export default defineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions,
          */
         'update:model-value',
     ],
-    setup(props, {emit}) {
+    setup(props, { emit }) {
         const thisProps = props as Readonly<TDatePickerOptionProps>;
-        const locale = ref<string>(thisProps.locale || (isServer ? DatePickerConst.defaultLocale : window.navigator.language));
+        const locale = ref<string>(
+            thisProps.locale ||
+                (isServer ? DatePickerConst.defaultLocale : window.navigator.language)
+        );
         const localValue = ref(useParseDate(thisProps.modelValue).setLocale(locale.value));
         const calendarDate = ref<Date>(localValue.value.toJSDate());
         const currentView = ref<TDateTimePickerMode>(
-            <TDateTimePickerMode>(thisProps.viewMode || thisProps.mode || DatePickerConst.DATE)
+            (thisProps.viewMode || thisProps.mode || DatePickerConst.DATE) as TDateTimePickerMode
         );
-        const pickerMode = computed(() =>
-            <TDateTimePickerMode>(thisProps.viewMode || thisProps.mode || DatePickerConst.DATE)
+        const pickerMode = computed(
+            () =>
+                (thisProps.viewMode ||
+                    thisProps.mode ||
+                    DatePickerConst.DATE) as TDateTimePickerMode
         );
         const showTime = computed(() =>
             [DatePickerConst.DATETIME, DatePickerConst.TIME].includes(pickerMode.value)
         );
         const ensureViewMode = () => {
             if (currentView.value === DatePickerConst.DATETIME) {
-                currentView.value = <TDateTimePickerMode>DatePickerConst.DATE;
+                currentView.value = DatePickerConst.DATE as TDateTimePickerMode;
             }
-        }
+        };
 
         ensureViewMode();
         watch(
-            () => <TDateTimePickerMode>(thisProps.viewMode || thisProps.mode),
+            () => (thisProps.viewMode || thisProps.mode) as TDateTimePickerMode | undefined,
             (value) => {
                 value && (currentView.value = value);
                 ensureViewMode();
@@ -63,8 +68,14 @@ export default defineComponent<TBsDatePicker, TRecord, TRecord, ComputedOptions,
 
         return () =>
             useRenderDatePicker(
-                props, emit, showTime, pickerMode, currentView,
-                locale, localValue, calendarDate,
-            )
-    }
+                props,
+                emit,
+                showTime,
+                pickerMode,
+                currentView,
+                locale,
+                localValue,
+                calendarDate
+            );
+    },
 });

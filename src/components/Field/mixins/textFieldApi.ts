@@ -293,7 +293,7 @@ export function useCreateValidationIcon(
 
 export function useShowClearButton(
     props: Readonly<TInputFieldProps>,
-    localValue: Ref<string | string[] | number | number[] | undefined | null>
+    localValue: Ref<string | number | (string | number)[] | undefined | null>
 ): boolean {
     return (
         props.clearButton === true &&
@@ -303,10 +303,10 @@ export function useShowClearButton(
     );
 }
 
-export function useCreateTextFieldClasses(
+export function useFieldControlClasses(
     slots: Slots,
     props: Readonly<TInputTextProps>,
-    localValue: Ref<string | string[] | number | number[] | undefined | null>,
+    localValue: Ref<string | number | (string | number)[] | undefined | null>,
     isFocused: Ref<boolean>,
     showAppendIcon: boolean,
     showPrependIcon?: boolean
@@ -384,13 +384,13 @@ export function useRenderTextField(
     isFocused: Ref<boolean>,
     passwordToggled: Ref<boolean>,
     autocomplete: string | boolean,
-    showClearButton: boolean,
-    showPasswordToggle: boolean,
-    showHelpText: boolean,
-    showValidationError: boolean,
-    hasValidated: boolean,
-    hasError: boolean,
-    errorItems: Array<string>,
+    showClearButton: ComputedRef<boolean>,
+    showPasswordToggle: ComputedRef<boolean>,
+    showHelpText: ComputedRef<boolean>,
+    showValidationError: ComputedRef<boolean>,
+    hasValidated: ComputedRef<boolean>,
+    hasError: ComputedRef<boolean>,
+    errorItems: ComputedRef<string[]>,
     passwordToggleHandler: (value: boolean) => void
 ): VNode {
     const iconSize = 24;
@@ -422,17 +422,17 @@ export function useRenderTextField(
                     props.prependIcon,
                     useCreateValidationIcon(
                         props.actionIconVariant as TIconVariant,
-                        hasValidated,
-                        hasError,
+                        hasValidated.value,
+                        hasError.value,
                         props.validationIcon as boolean,
                         iconSize
                     ),
                     useCreateFieldActionIcon(
-                        showClearButton,
+                        showClearButton.value,
                         props.actionIconVariant as TIconVariant,
                         iconSize,
                         () => useOnFieldValueCleared(emit, localValue),
-                        showPasswordToggle,
+                        showPasswordToggle.value,
                         passwordToggled,
                         passwordToggleHandler
                     )
@@ -440,10 +440,10 @@ export function useRenderTextField(
                 useRenderFieldFeedback(
                     slots,
                     props,
-                    showHelpText,
-                    showValidationError,
-                    hasError,
-                    errorItems
+                    showHelpText.value,
+                    showValidationError.value,
+                    hasError.value,
+                    errorItems.value
                 ),
             ]
         ),
@@ -500,12 +500,12 @@ export function useRenderTextArea(
     rowHeight: Ref<string | number | undefined | null>,
     isFocused: Ref<boolean>,
     autocomplete: string | boolean,
-    showClearButton: boolean,
-    showHelpText: boolean,
-    showValidationError: boolean,
-    hasValidated: boolean,
-    hasError: boolean,
-    errorItems: Array<string>
+    showClearButton: ComputedRef<boolean>,
+    showHelpText: ComputedRef<boolean>,
+    showValidationError: ComputedRef<boolean>,
+    hasValidated: ComputedRef<boolean>,
+    hasError: ComputedRef<boolean>,
+    errorItems: ComputedRef<string[]>
 ): VNode {
     const iconSize = 24;
 
@@ -536,13 +536,13 @@ export function useRenderTextArea(
                     props.prependIcon,
                     useCreateValidationIcon(
                         props.actionIconVariant as TIconVariant,
-                        hasValidated,
-                        hasError,
+                        hasValidated.value,
+                        hasError.value,
                         props.validationIcon as boolean,
                         iconSize
                     ),
                     useCreateFieldActionIcon(
-                        showClearButton,
+                        showClearButton.value,
                         props.actionIconVariant as TIconVariant,
                         iconSize,
                         () => useOnFieldValueCleared(emit, localValue)
@@ -551,10 +551,10 @@ export function useRenderTextArea(
                 useRenderFieldFeedback(
                     slots,
                     props,
-                    showHelpText,
-                    showValidationError,
-                    hasError,
-                    errorItems
+                    showHelpText.value,
+                    showValidationError.value,
+                    hasError.value,
+                    errorItems.value
                 ),
             ]
         ),

@@ -1,8 +1,13 @@
-import type { ComponentInternalInstance, Ref, VNode, VNodeArrayChildren } from "vue";
-import { cssPrefix } from "../../../mixins/CommonApi";
-import { EventListener } from "../../../mixins/DomHelper";
-import type { IBindingElement, IEventResult, IHTMLElement, TPlacementPosition } from "../../../types";
-import Helper from "../../../utils/Helper";
+import type { ComponentInternalInstance, Ref, VNode, VNodeArrayChildren } from 'vue';
+import { cssPrefix } from '../../../mixins/CommonApi';
+import { EventListener } from '../../../mixins/DomHelper';
+import type {
+    IBindingElement,
+    IEventResult,
+    IHTMLElement,
+    TPlacementPosition,
+} from '../../../types';
+import Helper from '../../../utils/Helper';
 
 const SPACE = 4;
 
@@ -22,14 +27,14 @@ function getTooltipLeftPosition(
     const offset = activatorEl.getBoundingClientRect();
 
     switch (placement) {
-        case "left":
+        case 'left':
             return offset.left - width - SPACE;
-        case "right":
+        case 'right':
             return offset.left + offset.width + SPACE;
-        case "top":
-        case "bottom":
+        case 'top':
+        case 'bottom':
         default:
-            return offset.left + (offset.width / 2) - (width / 2);
+            return offset.left + offset.width / 2 - width / 2;
     }
 }
 
@@ -49,14 +54,14 @@ function getTooltipTopPosition(
     const rect = activatorEl.getBoundingClientRect();
 
     switch (placement) {
-        case "top":
+        case 'top':
             return rect.top - height - SPACE;
-        case "bottom":
+        case 'bottom':
             return rect.top + rect.height + SPACE;
-        case "left":
-        case "right":
+        case 'left':
+        case 'right':
         default:
-            return rect.top + (rect.height / 2) - (height / 2);
+            return rect.top + rect.height / 2 - height / 2;
     }
 }
 
@@ -67,7 +72,7 @@ function getTooltipTopPosition(
  * @returns The DOM Element if found.
  */
 function findActivatorElement(instance: ComponentInternalInstance): Element | null {
-    const sibling = (<Element>instance.vnode.el).nextElementSibling
+    const sibling = (instance.vnode.el as Element).nextElementSibling;
     if (sibling && !sibling.classList.contains(`${cssPrefix}tooltip`)) {
         // The child-element on "slot.default"
         return sibling;
@@ -76,10 +81,11 @@ function findActivatorElement(instance: ComponentInternalInstance): Element | nu
     let children = instance.subTree.children;
 
     if (children && Array.isArray(children) && children.length > 0) {
-        children = (<VNode>(<VNodeArrayChildren>children)[1]).children;
+        children = ((children as VNodeArrayChildren)[1] as VNode).children;
+
         if (children && Array.isArray(children) && children.length > 0) {
             // The child-element on "slot.default"
-            return <Element>(<VNode>(<VNodeArrayChildren>children)[0]).el;
+            return ((children as VNodeArrayChildren)[0] as VNode).el as Element | null;
         }
     }
 
@@ -103,13 +109,18 @@ export function useSetTooltipPosition(
         const activatorEl = findActivatorElement(instance);
 
         if (activatorEl) {
-            tooltipEl.style.top = getTooltipTopPosition(activatorEl, elRect.height, placement) + "px";
-            tooltipEl.style.left = getTooltipLeftPosition(activatorEl, elRect.width, placement) + "px";
+            tooltipEl.style.top =
+                getTooltipTopPosition(activatorEl, elRect.height, placement) + 'px';
+            tooltipEl.style.left =
+                getTooltipLeftPosition(activatorEl, elRect.width, placement) + 'px';
         }
     }
 }
 
-export function useAddTooltipListener(instance: ComponentInternalInstance | null, active: Ref<boolean>) {
+export function useAddTooltipListener(
+    instance: ComponentInternalInstance | null,
+    active: Ref<boolean>
+) {
     if (!instance) {
         return;
     }
@@ -121,7 +132,7 @@ export function useAddTooltipListener(instance: ComponentInternalInstance | null
         }
 
         timer = Helper.defer(() => {
-            instance.emit("update:show", true);
+            instance.emit('update:show', true);
             active.value = true;
         }, 200);
         // e.preventDefault();
@@ -132,34 +143,33 @@ export function useAddTooltipListener(instance: ComponentInternalInstance | null
             clearTimeout(timer);
         }
 
-        instance.emit("update:show", false);
+        instance.emit('update:show', false);
         active.value = false;
     };
 
-    const activatorEl = <IHTMLElement | null>findActivatorElement(instance);
+    const activatorEl = findActivatorElement(instance) as IHTMLElement | null;
 
     if (activatorEl) {
-        (<IBindingElement>activatorEl).__mouseEvents = {
-            "mouseEnter": EventListener.listen(
-                activatorEl, "mouseenter",
-                showTooltip, { passive: true }
-            ),
-            "mouseLeave": EventListener.listen(
-                activatorEl, "mouseleave",
-                hideTooltip, { passive: true }
-            )
-        }
+        (activatorEl as IBindingElement).__mouseEvents = {
+            mouseEnter: EventListener.listen(activatorEl, 'mouseenter', showTooltip, {
+                passive: true,
+            }),
+            mouseLeave: EventListener.listen(activatorEl, 'mouseleave', hideTooltip, {
+                passive: true,
+            }),
+        };
     }
 }
 
 export function useRemoveTooltipListener(instance?: ComponentInternalInstance | null) {
     if (instance) {
-        const activatorEl = <IBindingElement>findActivatorElement(instance);
+        const activatorEl = findActivatorElement(instance) as IBindingElement | null;
+
         if (activatorEl) {
             // @ts-ignore
             const { mouseEnter, mouseLeave } = activatorEl.__mouseEvents;
-            (<IEventResult>mouseEnter).remove();
-            (<IEventResult>mouseLeave).remove();
+            (mouseEnter as IEventResult).remove();
+            (mouseLeave as IEventResult).remove();
             activatorEl.__mouseEvents = undefined;
         }
     }

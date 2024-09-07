@@ -1,10 +1,15 @@
-import type { ComponentOptionsMixin, ComputedOptions, EmitsOptions, MethodOptions } from 'vue';
 import { defineComponent, reactive, ref, shallowRef } from 'vue';
-import type { IBsModel, TBsListbox, TDataListSchemaProps, TListboxOptionProps, TRecord } from '../../types';
+import type {
+    IBsModel,
+    TBsListbox,
+    TDataListSchemaProps,
+    TListboxOptionProps,
+    TRecord,
+} from '../../types';
 import { useRegisterListboxWatchers, useRenderListbox } from './mixins/listboxApi';
 import { listboxProps } from './mixins/listboxProps';
 
-export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, MethodOptions, ComponentOptionsMixin, ComponentOptionsMixin, EmitsOptions>({
+export default defineComponent<TBsListbox>({
     name: 'BsListbox',
     props: listboxProps,
     emits: [
@@ -41,7 +46,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Me
          */
         'update:selected-value',
     ],
-    setup(props, {emit, slots}) {
+    setup(props, { emit, slots }) {
         const thisProps = props as Readonly<TListboxOptionProps>;
         const dataSchema: TDataListSchemaProps = {
             displayField: 'text',
@@ -59,7 +64,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Me
         const searchText = ref(thisProps.searchText);
         const fieldValues = ref(thisProps.modelValue);
         const selectedItems = shallowRef<IBsModel[]>([]);
-        const listviewStyles = reactive<TRecord>({maxHeight: maxHeight + 'px'});
+        const listviewStyles = reactive<TRecord>({ maxHeight: maxHeight + 'px' });
 
         useRegisterListboxWatchers(
             emit,
@@ -72,7 +77,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Me
             listviewStyles,
             showSearchbox,
             searchboxRef,
-            searchText,
+            searchText
         );
 
         return () =>
@@ -87,7 +92,7 @@ export default defineComponent<TBsListbox, TRecord, TRecord, ComputedOptions, Me
                 showSearchbox,
                 searchboxRef,
                 fieldValues,
-                searchText,
+                searchText
             );
-    }
+    },
 });

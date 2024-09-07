@@ -4,7 +4,7 @@ import {
     ComponentObjectPropsOptions,
     Plugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 import { EventUpdateModelValueProps } from '../../../types';
 
@@ -21,7 +21,7 @@ export declare type TIconData = {
     category?: string;
     variant?: string;
     data?: string;
-}
+};
 
 export declare type TSizeProps = {
     /**
@@ -32,7 +32,7 @@ export declare type TSizeProps = {
      * This component's width.
      */
     width?: string | number;
-}
+};
 
 export declare type TSizeOptionProps = {
     /**
@@ -47,7 +47,7 @@ export declare type TSizeOptionProps = {
      * Shortcut to create this component with equal height and width.
      */
     size?: string | number | TSizeProps;
-}
+};
 
 export declare type TIconOptionProps = TSizeOptionProps & {
     /**
@@ -70,7 +70,7 @@ export declare type TIconOptionProps = TSizeOptionProps & {
      * Rotate the icon, valid values are: `90`, `180`, `270`.
      */
     rotate?: string | number;
-}
+};
 
 export declare type TIconSpinnerOptionProps = {
     /**
@@ -89,7 +89,7 @@ export declare type TIconSpinnerOptionProps = {
      * Apply **spin** animation to the icon.
      */
     spin?: boolean;
-}
+};
 
 export declare type TToggleIconOptionProps = {
     /**
@@ -108,7 +108,7 @@ export declare type TToggleIconOptionProps = {
      * The icon size in pixels.
      */
     size?: string | number;
-}
+};
 
 export declare type TBsIcon = ComponentObjectPropsOptions<TIconOptionProps>;
 
@@ -118,32 +118,41 @@ export declare type TBsIconSpinner = ComponentObjectPropsOptions<TIconSpinnerOpt
 
 export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptionProps>;
 
-export declare const spinnerSvgData = 'M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z';
+export declare const spinnerSvgData =
+    'M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z';
 
-export declare function useCreateSvgComponent(data: string, height: number | string, width: number | string, clazz: unknown): VNode;
+export declare function useCreateSvgComponent(
+    data: string,
+    height: number | string,
+    width: number | string,
+    clazz: unknown
+): VNode;
 
 export declare const BsIcon: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconOptionProps;
     };
 };
 
 export declare const BsIconSvg: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconOptionProps;
     };
 };
 
 export declare const BsIconSpinner: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconSpinnerOptionProps;
     };
 };
 
 export declare const BsToggleIcon: {
-    new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps &
-            EventUpdateModelValueProps<boolean> & TToggleIconOptionProps;
+    new (): {
+        $props: AllowedComponentProps &
+            ComponentCustomProps &
+            VNodeProps &
+            EventUpdateModelValueProps<boolean> &
+            TToggleIconOptionProps;
         $emit: [
             /**
              * Fired when this component's toggle state is updated.

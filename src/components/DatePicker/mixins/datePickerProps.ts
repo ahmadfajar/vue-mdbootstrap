@@ -1,4 +1,4 @@
-import type { Prop, PropType } from "vue";
+import type { Prop, PropType } from 'vue';
 import {
     booleanProp,
     booleanTrueProp,
@@ -6,25 +6,28 @@ import {
     primaryColorProp,
     stringOrNumberProp,
     stringProp,
-    whiteColorProp
-} from "../../../mixins/CommonProps";
-import { inputProps, textFieldProps } from "../../Field/mixins/fieldProps";
-import { validationProps } from "../../Field/mixins/validationProps";
-import { popoverDefaultTransitionProp, popoverPlacementProp } from "../../Popover/mixins/popoverProps";
-import type { TDateTimePickerMode } from "../types";
-import { DatePickerConst } from "./datePickerApi";
+    whiteColorProp,
+} from '../../../mixins/CommonProps';
+import { inputProps, textFieldProps } from '../../Field/mixins/fieldProps';
+import { validationProps } from '../../Field/mixins/validationProps';
+import {
+    popoverDefaultTransitionProp,
+    popoverPlacementProp,
+} from '../../Popover/mixins/popoverProps';
+import type { TDateTimePickerMode } from '../types';
+import { DatePickerConst } from './datePickerApi';
 
 const pickerModeProp = {
     type: String as PropType<TDateTimePickerMode>,
-    default: "date",
-    validator: (value: TDateTimePickerMode) => DatePickerConst.viewModes.includes(value)
-} as Prop<TDateTimePickerMode>
+    default: 'date',
+    validator: (value: TDateTimePickerMode) => DatePickerConst.viewModes.includes(value),
+} as Prop<TDateTimePickerMode>;
 
 const pickerWidthProp = {
     type: [Number, String],
     default: 300,
-    validator: (value: string) => parseInt(value, 10) > 0
-}
+    validator: (value: string) => parseInt(value, 10) > 0,
+};
 
 export const datePickerHeaderProps = {
     color: primaryColorProp,
@@ -35,7 +38,7 @@ export const datePickerHeaderProps = {
     locale: stringProp,
     readonly: booleanProp,
     modelValue: dateProp,
-}
+};
 
 export const datePickerNavProps = {
     buttonColor: stringProp,
@@ -43,7 +46,7 @@ export const datePickerNavProps = {
     disabled: booleanProp,
     locale: stringProp,
     modelValue: dateProp,
-}
+};
 
 export const datePickerTimesProps = {
     backButton: booleanTrueProp,
@@ -51,7 +54,7 @@ export const datePickerTimesProps = {
     locale: stringProp,
     modelValue: dateProp,
     selectedColor: stringProp,
-}
+};
 
 export const datePickerCalendarProps = {
     disabled: booleanProp,
@@ -59,7 +62,7 @@ export const datePickerCalendarProps = {
     modelValue: dateProp,
     calendarDate: dateProp,
     selectedColor: stringProp,
-}
+};
 
 export const datePickerProps = {
     fullWidth: booleanProp,
@@ -73,10 +76,10 @@ export const datePickerProps = {
     viewMode: stringProp as Prop<TDateTimePickerMode>,
     modelValue: {
         type: [String, Number, Date],
-        default: undefined
+        default: undefined,
     },
     width: pickerWidthProp,
-}
+};
 
 export const dateTimeFieldProps = {
     ...inputProps,
@@ -89,7 +92,7 @@ export const dateTimeFieldProps = {
     displayFormat: stringProp,
     valueFormat: {
         type: String,
-        default: "yyyy-MM-dd",
+        default: 'yyyy-MM-dd',
     },
     headerColor: primaryColorProp,
     headerPanel: booleanTrueProp,
@@ -99,11 +102,11 @@ export const dateTimeFieldProps = {
     transition: stringProp,
     pickerCls: {
         type: [String, Array],
-        default: "rounded shadow"
+        default: 'rounded shadow',
     },
     pickerColor: whiteColorProp,
     pickerMode: pickerModeProp,
     pickerPlacement: popoverPlacementProp,
     pickerTransition: popoverDefaultTransitionProp,
     pickerWidth: pickerWidthProp,
-}
+};

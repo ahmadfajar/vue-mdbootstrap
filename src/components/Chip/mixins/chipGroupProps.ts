@@ -1,5 +1,5 @@
-import {booleanProp, booleanTrueProp, stringProp} from "../../../mixins/CommonProps";
-import {chipDefaultColor} from "./chipProps";
+import { booleanProp, booleanTrueProp, stringProp } from '../../../mixins/CommonProps';
+import { chipDefaultColor } from './chipProps';
 
 export const chipGroupProps = {
     /**
@@ -45,21 +45,21 @@ export const chipGroupProps = {
     size: {
         type: String,
         default: undefined,
-        validator: (value: string): boolean => ["sm", "lg"].includes(value)
+        validator: (value: string): boolean => ['sm', 'lg'].includes(value),
     },
     /**
      * Show slider's button or not.
      */
     sliderButton: {
         type: Boolean,
-        default: false
+        default: false,
     },
     /**
      * Slider button color appearance.
      */
     sliderButtonColor: {
         type: String,
-        default: "secondary"
+        default: 'secondary',
     },
     /**
      * The collection of `<BsChip>` property-value.
@@ -67,13 +67,13 @@ export const chipGroupProps = {
     items: {
         type: Array,
         default: undefined,
-        required: true
+        required: true,
     },
     /**
      * The value monitored by `v-model` for the selected items.
      */
     modelValue: {
         type: [Object, Array],
-        default: undefined
+        default: undefined,
     },
-}
+};
