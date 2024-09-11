@@ -103,6 +103,7 @@ export function useRenderDropdownMenu(
                     onMouseleave: thisOnMouseLeave,
                     'onUpdate:open': (value: boolean) => {
                         isActive.value = value;
+                        emit('update:open', value);
                     },
                 },
                 {

@@ -41,9 +41,9 @@ export default defineComponent<TBsDropdownMenu>({
         const timer = ref<number>();
 
         watch(
-            () => thisProps.open,
+            () => thisProps.open as boolean,
             (value) => {
-                isActive.value = <boolean>value;
+                isActive.value = value;
             }
         );
 
