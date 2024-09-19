@@ -1,6 +1,11 @@
 import type { ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
 import { h } from 'vue';
-import { cssPrefix, useHasRouter, useRenderRouter } from '../../../mixins/CommonApi';
+import {
+    cssPrefix,
+    useHasRouter,
+    useRenderRouter,
+    useRenderSlotDefault,
+} from '../../../mixins/CommonApi';
 import type {
     IListItem,
     IListViewProvider,
@@ -86,7 +91,6 @@ function createListTileElement(
                 BsRipple,
                 {
                     class: [
-                        'd-flex',
                         provider?.itemRounded === true && !props.roundedOff ? 'rounded' : '',
                         provider?.itemRoundedPill === true && !props.pillOff ? 'rounded-pill' : '',
                     ],
@@ -96,7 +100,7 @@ function createListTileElement(
                         !(tagName === 'a' || props.navigable)) as Prop<boolean>,
                 },
                 {
-                    default: () => slots.default && slots.default(),
+                    default: () => useRenderSlotDefault('div', slots, 'd-flex'),
                 }
             ),
         ]
