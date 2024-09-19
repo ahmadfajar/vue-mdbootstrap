@@ -1,3 +1,5 @@
+@use "sass:color";
+
 /* BsAlert variants mixins -- sass variables */
 
 @mixin alert-variant($name, $background, $border, $color) {
@@ -6,7 +8,7 @@
         --#{$bs-prefix}alert-border-color: #{$border};
         --#{$bs-prefix}alert-color: #{$color};
 
-        $hr-border-color: darken($border, 10%);
+        $hr-border-color: color.adjust($border, $lightness: -10%);
         --#{$bs-prefix}alert-hr-color: #{$hr-border-color};
 
         $link-color: mix(black, $color, 20%);
@@ -16,10 +18,10 @@
 
 @mixin make-outline-alert-variant($name, $color) {
     .#{$prefix}alert-outline-#{$name} {
-        $border-color: lighten($color, 15%);
-        $hr-border-color: darken($color, 5%);
-        $link-color: darken($color, 10%);
-        $text-color: darken($color, 5%);
+        $border-color: color.adjust($color, $lightness: 15%);
+        $hr-border-color: color.adjust($color, $lightness: -5%);
+        $link-color: color.adjust($color, $lightness: -10%);
+        $text-color: color.adjust($color, $lightness: -5%);
 
         --#{$bs-prefix}alert-color: #{$text-color};
         --#{$bs-prefix}alert-border-color: #{$border-color};
@@ -31,7 +33,7 @@
 @mixin make-solid-alert-variant($name, $color) {
     .#{$prefix}alert-solid-#{$name} {
         $text-color: set-color-contrast($color, $gray-900, $white);
-        $hr-border-color: set-color-contrast($color, darken($color, 25%), rgba(darken($white, 4%), .65));
+        $hr-border-color: set-color-contrast($color, color.adjust($color, $lightness: -25%), rgba(color.adjust($white, $lightness: -4%), .65));
 
         --#{$bs-prefix}alert-bg: #{$color};
         --#{$bs-prefix}alert-color: #{$text-color};

@@ -3,6 +3,7 @@ import {
     computed,
     defineComponent,
     getCurrentInstance,
+    onBeforeMount,
     onMounted,
     onUnmounted,
     ref,
@@ -93,6 +94,17 @@ export default defineComponent<TBsLightbox>({
                 }
             }
         );
+
+        onBeforeMount(() => {
+            // preload images and store them globally in memory
+            var images: HTMLImageElement[] = [];
+            if (thisProps.items?.length) {
+                thisProps.items.forEach((item, i) => {
+                    images[i] = new Image();
+                    images[i].src = item.imageSrc;
+                });
+            }
+        });
 
         onMounted(() => {
             instance.value = getCurrentInstance();

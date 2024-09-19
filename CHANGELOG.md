@@ -3,6 +3,16 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.0.12
+
+Released: September 20, 2024
+
+### Features & Improvements
+
+- **BsLightbox**: improve image loading using preloader
+- **BsSideDrawer**: improve collapse animation if used together with `<BsAppbar>`.
+
+
 ## v2.0.11
 
 Released: September 08, 2024

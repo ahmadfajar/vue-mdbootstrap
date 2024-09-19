@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Gray Colors
 $gray-100: #f8f9fa;
 $gray-200: #e9ecef;
@@ -705,7 +707,7 @@ $theme-colors: (
     "brown":       $brown-base,
     "cyan":        $cyan-base,
     "dark-blue":   $blue-darken-4,
-    "dark-green":  lighten($green-darken-4, 2%),
+    "dark-green":  color.adjust($green-darken-4, $lightness: 2%),
     "deep-orange": $deep-orange-base,
     "deep-purple": $deep-purple-base,
     "green":       $green-base,

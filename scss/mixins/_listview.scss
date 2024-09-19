@@ -5,7 +5,7 @@
 
 @mixin make-listview-variant($name, $color) {
     .#{$prefix}list-#{$name} {
-        $subheader-color: set-color-contrast($color, rgba(lighten($gray-900, 5%), .6), rgba($white, .6));
+        $subheader-color: set-color-contrast($color, rgba(color.adjust($gray-900, $lightness: 5%), .6), rgba($white, .6));
 
         --#{$prefix}listview-bg: #{$color};
         --#{$prefix}subheader-color: #{$subheader-color};
@@ -24,7 +24,7 @@
 
 @mixin make-list-tile-variant($name, $color) {
     .#{$prefix}list-#{$name} {
-        $tile-hover-bg: set-color-contrast($color, $default-hover-bgcolor, set-color-contrast($color, rgba(darken($color, 30%), .25), rgba(darken($color, 20%), .25), 160), 220);
+        $tile-hover-bg: set-color-contrast($color, $default-hover-bgcolor, set-color-contrast($color, rgba(color.adjust($color, $lightness: -30%), .25), rgba(color.adjust($color, $lightness: -20%), .25), 160), 220);
         $tile-active-bg: set-alt-bgcolor($color, .2);
 
         @if($name == "black") {
@@ -35,13 +35,13 @@
         $tile-title-color: set-color-contrast($color, $gray-900, $white);
         $tile-subtitle-color: set-color-contrast($color, $gray-700, rgba($white, .7));
         $tile-leading-color: set-color-contrast($color, rgba($black, .54), rgba($white, .6));
-        $tile-active-title-color: set-color-contrast($color, darken($default-active-bgcolor, 20%), $white, 220);
-        $tile-active-subtitle-color: set-color-contrast($color, darken($default-active-bgcolor, 10%), rgba($white, .77), 220);
+        $tile-active-title-color: set-color-contrast($color, color.adjust($default-active-bgcolor, $lightness: -20%), $white, 220);
+        $tile-active-subtitle-color: set-color-contrast($color, color.adjust($default-active-bgcolor, $lightness: -10%), rgba($white, .77), 220);
         $tile-active-leading-icon-color: set-color-contrast($color, rgba($default-active-bgcolor, .54), rgba($white, .75), 220);
         $tile-disable-title-color: set-color-contrast($color, rgba($black, .5), rgba($white, .4));
         $tile-disable-subtitle-color: $tile-disable-title-color;
         $tile-disable-leading-color: $tile-disable-title-color;
-        $tile-indicator-border-color: set-color-contrast($color, darken($mdb-default-color, 5%), lighten(set-alt-bgcolor($color, .65), 45%), 220);
+        $tile-indicator-border-color: set-color-contrast($color, color.adjust($mdb-default-color, $lightness: -5%), color.adjust(set-alt-bgcolor($color, .65), $lightness: 45%), 220);
 
         .#{$prefix}list-tile, .#{$prefix}list-nav {
             --#{$prefix}tile-action-color: #{$tile-leading-color};
@@ -61,7 +61,7 @@
             @if(not list.index($list-colors, $name)) {
                 --#{$prefix}tile-active-indicator-border-color: #{$tile-indicator-border-color};
             } @else {
-                --#{$prefix}tile-active-indicator-border-color: #{darken($mdb-default-color, 5%)};
+                --#{$prefix}tile-active-indicator-border-color: #{color.adjust($mdb-default-color, $lightness: -5%)};
             }
 
             --#{$prefix}tile-disable-action-color: #{$tile-disable-leading-color};

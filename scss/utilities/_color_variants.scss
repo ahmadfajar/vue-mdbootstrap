@@ -1,3 +1,5 @@
+@use "sass:color";
+
 // Create background colors classes
 @each $color_name, $color in $mdb-colors-1 {
     @each $color_type, $color_value in $color {
@@ -18,7 +20,7 @@
             }
             .bg-rgba-#{$color_name}-strong,
             .bg-rgba-#{$color_name}-strong:after {
-                background-color: rgba(darken($color_value, 5%), .7) !important;
+                background-color: rgba(color.adjust($color_value, $lightness: -5%), .7) !important;
             }
         } @else {
             @if $enable_full_palette {
@@ -46,7 +48,7 @@
 
     a.text-grey-#{$color_name} {
         &:hover, &:focus {
-            color: darken($color, 15%) !important;
+            color: color.adjust($color, $lightness: -15%) !important;
         }
     }
 }
@@ -81,7 +83,7 @@ $removed-bs-colors: map-remove($removed-duplicate-colors,
 
     a.text-#{$color_name} {
         &:hover, &:focus {
-            color: darken($color, 15%) !important;
+            color: color.adjust($color, $lightness: -15%) !important;
         }
     }
 }
@@ -113,12 +115,12 @@ $removed-bs-colors: map-remove($removed-duplicate-colors,
 
 a.text-dark, a.text-elegant-color-dark {
     &:hover, &:focus {
-        color: darken($elegant-color-dark, 15%) !important;
+        color: color.adjust($elegant-color-dark, $lightness: -15%) !important;
     }
 }
 
 a.text-dark-blue, a.text-primary-color-dark {
     &:hover, &:focus {
-        color: darken($primary-color-dark, 15%) !important;
+        color: color.adjust($primary-color-dark, $lightness: -15%) !important;
     }
 }

@@ -5,7 +5,8 @@
 @import "bootstrap/scss/variables";
 
 .#{$prefix}drawer-host {
-    @include transition(.55s $transition-easeInOut);
+    // @include transition(.55s $transition-easeInOut);
+    @include transition($md-transition-default);
     height: 100%;
     position: absolute;
     z-index: $zindex-sticky - 1;

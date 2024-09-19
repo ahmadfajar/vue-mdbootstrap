@@ -1,3 +1,4 @@
+@use "sass:color";
 @import 'compass-mixins/lib/compass/css3';
 @import '../../../scss/functions';
 @import '../../../scss/mixins/button';
@@ -5,8 +6,8 @@
 @import '../../../scss/variables';
 
 .btn {
-    $disabled-bg: lighten($gray-500, 20%);
-    $border-color: lighten($gray-500, 8%);
+    $disabled-bg: color.adjust($gray-500, $lightness: 20%);
+    $border-color: color.adjust($gray-500, $lightness: 8%);
     --#{$bs-prefix}btn-padding-y: 0;
     --#{$bs-prefix}btn-padding-x: 0;
     --#{$bs-prefix}btn-border-radius: #{$btn-border-radius};
@@ -288,8 +289,8 @@
 }
 
 .#{$prefix}btn-icon {
-    $disabled-bg: lighten($gray-500, 20%);
-    $border-color: lighten($gray-500, 8%);
+    $disabled-bg: color.adjust($gray-500, $lightness: 20%);
+    $border-color: color.adjust($gray-500, $lightness: 8%);
     --#{$bs-prefix}btn-border-width: 1px;
     --#{$bs-prefix}btn-border-radius: #{$border-radius-circle};
     --#{$bs-prefix}btn-disabled-bg: #{$disabled-bg};

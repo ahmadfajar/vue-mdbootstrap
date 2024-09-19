@@ -28,27 +28,27 @@
         }
     } @else if (brightness($color) > $brightnessLevel) {
         @if ($transparency > 0) {
-            @return rgba(darken($color, 35%), $transparency + 0.1);
+            @return rgba(color.adjust($color, $lightness: -35%), $transparency + 0.1);
         } @else {
-            @return rgba(darken($color, 25%), .2);
+            @return rgba(color.adjust($color, $lightness: -25%), .2);
         }
     } @else {
         @if ($transparency > 0) {
-            @return rgba(lighten($color, 30%), $transparency + 0.1);
+            @return rgba(color.adjust($color, $lightness: 30%), $transparency + 0.1);
         } @else {
-            @return rgba(lighten($color, 25%), .2);
+            @return rgba(color.adjust($color, $lightness: 25%), .2);
         }
     }
 }
 
 @function brightness($color) {
-    $red: color.red($color) * 299;
-    $green: color.green($color) * 587;
-    $blue: color.blue($color) * 114;
+    $red: color.channel($color, "red") * 299;
+    $green: color.channel($color, "green") * 587;
+    $blue: color.channel($color, "blue") * 114;
 
     @return math.div(($red + $green + $blue), 1000);
 }
 
 @function to-rgb($value) {
-    @return color.red($value), color.green($value), color.blue($value);
+    @return color.channel($value, "red"), color.channel($value, "green"), color.channel($value, "blue");
 }

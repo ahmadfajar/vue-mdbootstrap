@@ -26,7 +26,7 @@ export function useSideDrawerStyles(
     zIndex: Ref<number>
 ): TRecord {
     const zeroPx = '0px';
-    const drawerWidth1 = (parseInt(props.width as string) + 1) * -2;
+    const drawerWidth1 = (parseInt(props.width as string) + 1) * -1;
     const properties = {
         height: props.clipped ? `calc(100% - ${clipHeight.value}px)` : undefined,
         width: Helper.cssUnit(props.width),
@@ -179,21 +179,12 @@ function createSideDrawer(
                     },
                     style: {
                         ...styles.value,
-                        height: props.mini ? styles.value.height : '100%',
-                        marginTop: props.mini ? styles.value.marginTop : '0',
+                        marginTop: null,
+                        height: props.mini || !isMobile.value ? null : styles.value.height,
+                        width: props.mini || !isMobile.value ? null : styles.value.width,
                         position: props.mini || !isMobile.value ? null : styles.value.position,
-                        left:
-                            props.mini && props.position === 'left'
-                                ? '0'
-                                : isMobile.value
-                                  ? styles.value.left
-                                  : '0',
-                        right:
-                            props.mini && props.position === 'right'
-                                ? '0'
-                                : isMobile.value
-                                  ? styles.value.right
-                                  : '0',
+                        left: props.mini || !isMobile.value ? null : styles.value.left,
+                        right: props.mini || !isMobile.value ? null : styles.value.right,
                     },
                 },
                 attrs

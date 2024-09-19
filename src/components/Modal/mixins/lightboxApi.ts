@@ -302,7 +302,7 @@ function createLightboxDisplay(
             style: {
                 height:
                     props.showThumbnail === true
-                        ? 'calc(100% - ' + (<number>props.thumbnailHeight + 2) + 'px)'
+                        ? 'calc(100% - ' + ((props.thumbnailHeight as number) + 2) + 'px)'
                         : '100%',
             },
             onClick: () => {

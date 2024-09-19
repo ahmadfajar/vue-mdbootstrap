@@ -2,6 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
+    ComponentPublicInstance,
     Plugin,
     VNode,
     VNodeProps,
@@ -194,7 +195,7 @@ export declare const BsLightbox: {
             'exec-rotate-right',
             'exec-zoomin',
             'exec-zoomout',
-            'update:open',
+            'update:open'
         ];
         $exposed: {
             setActive: (index: number) => void;
@@ -208,5 +209,12 @@ export declare const BsLightbox: {
         prevSlide: () => void;
     };
 };
+
+export declare interface BsLightboxInstance extends ComponentPublicInstance {
+    openAt(index: number): void;
+    setActive(index: number): void;
+    nextSlide(): void;
+    prevSlide(): void;
+}
 
 export declare const BsModalPlugin: Plugin;

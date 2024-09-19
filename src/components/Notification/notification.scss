@@ -1,9 +1,10 @@
+@use "sass:color";
 @import "compass-mixins/lib/compass/css3";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
 .#{$prefix}notification {
-    --#{$prefix}notification-background-color: #{darken($gray-900, 5%)};
+    --#{$prefix}notification-background-color: #{color.adjust($gray-900, $lightness: -5%)};
     --#{$prefix}notification-bar-color: #{$warning-color};
     --#{$prefix}notification-border-radius: #{$border-radius-base};
     --#{$prefix}notification-box-shadow-color: rgba(0, 0, 0, 0.2);
