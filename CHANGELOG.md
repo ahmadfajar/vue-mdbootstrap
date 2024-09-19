@@ -9,8 +9,8 @@ Released: September XX, 2024
 
 ### Bug Fixes
 
-- **BsListTile**: fixed bug of `<BsListTileSubtitle>` text overlap with `<BsListTileAction>` 
-  when `multiline` is on and is in ripple animation state.
+- **BsListTile**: fixed bug when is being in ripple animation state the **BsListTileSubtitle** 
+  text overlap with **BsListTileAction** if **BsListTileContent** multiline is on.
 
 
 ## v2.0.12
