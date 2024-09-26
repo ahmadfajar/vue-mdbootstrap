@@ -81,8 +81,8 @@ export default defineComponent<TBsLightbox>({
         watch(
             () => thisProps.open as boolean,
             (value) => {
-                isOpen.value = value;
                 if (value) {
+                    isOpen.value = value;
                     zoom.value = 1;
                     rotate.value = 0;
                     itemIndex.value = itemIndex.value > -1 ? itemIndex.value : 0;
@@ -91,6 +91,8 @@ export default defineComponent<TBsLightbox>({
                             ? thisProps.items[itemIndex.value]
                             : undefined;
                     instance.value && PopupManager.add(instance.value, thisProps, isOpen);
+                } else {
+                    instance.value && PopupManager.closePopover(instance.value, isOpen, 'State changed.');
                 }
             }
         );

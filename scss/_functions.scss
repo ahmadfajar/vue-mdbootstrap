@@ -49,6 +49,6 @@
     @return math.div(($red + $green + $blue), 1000);
 }
 
-@function to-rgb($value) {
-    @return color.channel($value, "red"), color.channel($value, "green"), color.channel($value, "blue");
+@function to-rgb($color) {
+    @return color.channel($color, "red"), color.channel($color, "green"), color.channel($color, "blue");
 }

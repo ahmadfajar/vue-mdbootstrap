@@ -22,8 +22,5 @@
       "DOM",
       "DOM.Iterable"
     ],
-    "paths": {
-      "@/*": ["./src/*"]
-    }
   }
 }

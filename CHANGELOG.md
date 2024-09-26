@@ -7,10 +7,17 @@
 
 Released: September XX, 2024
 
+### Features & Improvements
+
+- **BsButton**: improve UI to better comply material design spec.
+- **Helper**: improve `uuid` generation performance.
+
 ### Bug Fixes
 
-- **BsListTile**: fixed bug when is being in ripple animation state the **BsListTileSubtitle** 
-  text overlap with **BsListTileAction** if **BsListTileContent** multiline is on.
+- **BsListTile**: fixed bug **BsListTileSubtitle** text overlapped with **BsListTileAction**
+  if multiline property of **BsListTileContent** was active and in ripple animation state.
+- **BsModal**, **BsLightbox**: fixed bug closing programmatically didn't revert 
+  document scrolling to original.
 
 
 ## v2.0.12

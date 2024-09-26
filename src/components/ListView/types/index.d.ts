@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentInternalInstance,
-    ComponentObjectPropsOptions,
+    ComponentObjectPropsOptions, ComponentPublicInstance,
     Plugin,
     Ref,
     RendererNode,
@@ -261,6 +261,12 @@ export declare const BsListNav: {
     };
 };
 
+export declare interface BsListNavInstance extends ComponentPublicInstance {
+    collapsing: Ref<boolean>;
+    expanded: Ref<boolean>;
+    isActive: Ref<boolean>;
+}
+
 declare type AllowedListItemProps = AllowedComponentProps &
     ComponentCustomProps &
     VNodeProps & {
@@ -286,6 +292,11 @@ export declare const BsListNavItem: {
     };
 };
 
+export declare interface BsListNavItemInstance extends ComponentPublicInstance {
+    expanded: Ref<boolean>;
+    isActive: Ref<boolean>;
+}
+
 export declare const BsListTile: {
     new (): {
         $props: AllowedListItemProps & TListTileOptionProps;
@@ -299,6 +310,10 @@ export declare const BsListTile: {
         isActive: Ref<boolean>;
     };
 };
+
+export declare interface BsListTileInstance extends ComponentPublicInstance {
+    isActive: Ref<boolean>;
+}
 
 export declare const BsListTileAction: {
     new (): {

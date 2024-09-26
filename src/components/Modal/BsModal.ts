@@ -44,14 +44,16 @@ export default defineComponent<TBsModal>({
         }));
 
         watch(
-            () => <boolean>thisProps.open,
+            () => thisProps.open as boolean,
             (value) => {
-                modalOpen.value = value;
                 if (value) {
+                    modalOpen.value = value;
                     instance.value && PopupManager.add(instance.value, thisProps, modalOpen);
                     nextTick().then(() =>
                         useSetDialogMaxHeight(thisProps, dialogEl, headerEl, bodyEl, footerEl)
                     );
+                } else {
+                    instance.value && PopupManager.closePopover(instance.value, modalOpen, 'State changed.');
                 }
             }
         );

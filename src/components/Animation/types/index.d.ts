@@ -66,8 +66,8 @@ export declare const BsExpandTransition: {
 };
 
 declare type AllowedOverlayProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
-    onClick: (e: Event) => void;
-    '@click': (e: Event) => void;
+    onClick?: (e: Event) => void;
+    '@click'?: (e: Event) => void;
 }
 
 export declare const BsOverlay: {

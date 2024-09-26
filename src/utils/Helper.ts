@@ -300,17 +300,8 @@ export default class Helper {
      */
     static uuid(standard = false): string {
         if (standard) {
-            if (typeof crypto !== 'undefined' && typeof crypto.getRandomValues === 'function') {
-                // @ts-ignore
-                return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(
-                    /[018]/g,
-                    // @ts-ignore
-                    (c) =>
-                        (
-                            c ^
-                            (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-                        ).toString(16)
-                );
+            if (typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function') {
+                return crypto.randomUUID();
             } else {
                 let value = Date.now();
                 if (typeof performance !== 'undefined' && typeof performance.now === 'function') {
