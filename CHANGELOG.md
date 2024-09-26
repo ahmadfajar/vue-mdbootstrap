@@ -5,7 +5,7 @@
 
 ## v2.0.13
 
-Released: September XX, 2024
+Released: September 27, 2024
 
 ### Features & Improvements
 

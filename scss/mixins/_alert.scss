@@ -1,4 +1,5 @@
 @use "sass:color";
+@use "../functions" as Func;
 
 /* BsAlert variants mixins -- sass variables */
 
@@ -8,7 +9,7 @@
         --#{$bs-prefix}alert-border-color: #{$border};
         --#{$bs-prefix}alert-color: #{$color};
 
-        $hr-border-color: color.adjust($border, $lightness: -10%);
+        $hr-border-color: Func.round-color-rgb(color.adjust($border, $lightness: -10%));
         --#{$bs-prefix}alert-hr-color: #{$hr-border-color};
 
         $link-color: mix(black, $color, 20%);
@@ -18,10 +19,10 @@
 
 @mixin make-outline-alert-variant($name, $color) {
     .#{$prefix}alert-outline-#{$name} {
-        $border-color: color.adjust($color, $lightness: 15%);
-        $hr-border-color: color.adjust($color, $lightness: -5%);
-        $link-color: color.adjust($color, $lightness: -10%);
-        $text-color: color.adjust($color, $lightness: -5%);
+        $border-color: Func.round-color-rgb(color.adjust($color, $lightness: 15%));
+        $hr-border-color: Func.round-color-rgb(color.adjust($color, $lightness: -5%));
+        $link-color: Func.round-color-rgb(color.adjust($color, $lightness: -10%));
+        $text-color: Func.round-color-rgb(color.adjust($color, $lightness: -5%));
 
         --#{$bs-prefix}alert-color: #{$text-color};
         --#{$bs-prefix}alert-border-color: #{$border-color};
@@ -38,6 +39,6 @@
         --#{$bs-prefix}alert-bg: #{$color};
         --#{$bs-prefix}alert-color: #{$text-color};
         --#{$bs-prefix}alert-link-color: #{$text-color};
-        --#{$bs-prefix}alert-hr-color: #{$hr-border-color};
+        --#{$bs-prefix}alert-hr-color: #{Func.round-color-rgb($hr-border-color)};
     }
 }

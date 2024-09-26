@@ -6,8 +6,8 @@
 @import '../../../scss/variables';
 
 .btn {
-    $disabled-bg: color.adjust($gray-500, $lightness: 20%);
-    $disabled-border-color: color.adjust($gray-500, $lightness: 20%);
+    $disabled-bg: round-color-rgb(color.adjust($gray-500, $lightness: 20%));
+    $disabled-border-color: round-color-rgb(color.adjust($gray-500, $lightness: 20%));
 
     --#{$bs-prefix}btn-padding-y: 0;
     --#{$bs-prefix}btn-padding-x: 0;
@@ -83,7 +83,7 @@
     &[class*='btn-outline'] {
         --#{$bs-prefix}btn-disabled-bg: transparent;
         --#{$bs-prefix}btn-disabled-color: #{$gray-500};
-        --#{$bs-prefix}btn-disabled-border-color: #{color.adjust($gray-500, $lightness: 8%)};
+        --#{$bs-prefix}btn-disabled-border-color: #{round-color-rgb(color.adjust($gray-500, $lightness: 8%))};
     }
 
     &.#{$prefix}btn-raised {
@@ -195,7 +195,7 @@
     }
 
     &[class*='btn-flat'] {
-        $disabled-color: color.adjust($gray-500, $lightness: 25%);
+        $disabled-color: round-color-rgb(color.adjust($gray-500, $lightness: 25%));
 
         --#{$bs-prefix}btn-disabled-bg: #{$disabled-color};
         --#{$bs-prefix}btn-disabled-border-color: #{$disabled-color};
@@ -294,8 +294,8 @@
 }
 
 .#{$prefix}btn-icon {
-    $disabled-bg: color.adjust($gray-500, $lightness: 20%);
-    $disabled-border-color: color.adjust($gray-500, $lightness: 20%);
+    $disabled-bg: round-color-rgb(color.adjust($gray-500, $lightness: 20%));
+    $disabled-border-color: round-color-rgb(color.adjust($gray-500, $lightness: 20%));
 
     --#{$bs-prefix}btn-border-width: 1px;
     --#{$bs-prefix}btn-border-radius: #{$border-radius-circle};
@@ -396,12 +396,12 @@
 
         &[class*='btn-outline'] {
             --#{$bs-prefix}btn-state-bg: transparent;
-            --#{$bs-prefix}btn-state-border-color: #{color.adjust($gray-500, $lightness: 8%)};
+            --#{$bs-prefix}btn-state-border-color: #{round-color-rgb(color.adjust($gray-500, $lightness: 8%))};
             --#{$bs-prefix}btn-state-color: #{$gray-500};
         }
 
         &[class*='btn-flat'] {
-            $disabled-color: color.adjust($gray-500, $lightness: 25%);
+            $disabled-color: round-color-rgb(color.adjust($gray-500, $lightness: 25%));
             --#{$bs-prefix}btn-state-bg: #{$disabled-color};
             --#{$bs-prefix}btn-state-border-color: #{$disabled-color};
             --#{$bs-prefix}btn-state-color: #{$gray-600};

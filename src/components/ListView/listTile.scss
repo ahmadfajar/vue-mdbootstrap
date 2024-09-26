@@ -16,9 +16,10 @@
 
     @include transition($transition-hoverable);
     @include user-select(none);
+    background-color: var(--#{$prefix}tile-state-bg);
+    display: flex;
     position: relative;
     text-decoration: none;
-    background-color: var(--#{$prefix}tile-state-bg);
 
     &:active,
     &:focus,

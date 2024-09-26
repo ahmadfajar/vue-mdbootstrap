@@ -7,8 +7,8 @@
 @import "../../../scss/variables";
 
 .#{$prefix}chip, a.#{$prefix}chip {
-    $disabled-bg: color.adjust($gray-500, $lightness: 15%);
-    $disabled-border-color: color.adjust($gray-500, $lightness: 8%);
+    $disabled-bg: round-color-rgb(color.adjust($gray-500, $lightness: 15%));
+    $disabled-border-color: round-color-rgb(color.adjust($gray-500, $lightness: 8%));
     --#{$prefix}chip-border-radius: #{$border-radius-lg};
     --#{$prefix}chip-border-width: 0;
     --#{$prefix}chip-font-weight: #{$font-weight-normal};

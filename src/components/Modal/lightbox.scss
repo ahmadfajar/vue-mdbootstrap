@@ -6,10 +6,10 @@
 @import "bootstrap/scss/mixins/breakpoints";
 
 .#{$prefix}lightbox-wrap {
-    --#{$prefix}lightbox-color: #{$gray-400};
+    --#{$prefix}lightbox-element-padding-x: #{$padding-sm};
     --#{$prefix}lightbox-display-bg: #{rgba($black, .3)};
     --#{$prefix}lightbox-toolbar-bg: #{rgba($black, .9)};
-    --#{$prefix}lightbox-element-padding-x: #{$padding-sm};
+    --#{$prefix}lightbox-toolbar-color: #{$gray-400};
     --#{$prefix}lightbox-overlay-bg: #151515;
     --#{$prefix}lightbox-title-bg: #{rgba($black, .7)};
     --#{$prefix}lightbox-title-color: #{$gray-400};
@@ -104,7 +104,7 @@
         }
 
         .#{$prefix}counter {
-            color: var(--#{$prefix}lightbox-color);
+            color: var(--#{$prefix}lightbox-toolbar-color);
             padding: var(--#{$prefix}lightbox-element-padding-x) $padding-base;
         }
     }

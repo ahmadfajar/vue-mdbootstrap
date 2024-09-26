@@ -8,9 +8,9 @@
         --#{$prefix}switch-active-thumb-bg: #{$color};
         --#{$prefix}switch-active-thumb-color: #{$color};
         --#{$prefix}switch-active-track-color: #{rgba($color, .38)};
-        --#{$prefix}switch-active-inset-track-color: #{color.scale($color, $lightness: 60%)};
+        --#{$prefix}switch-active-inset-track-color: #{round-color-rgb(color.scale($color, $lightness: 60%))};
 
-        $thumb-bg: set-color-contrast($color, color.scale($color, $lightness: -20%), $color, 220);
+        $thumb-bg: set-color-contrast($color, round-color-rgb(color.scale($color, $lightness: -20%)), $color, 220);
         $thumb-color: set-color-contrast($color, $black, $white, 220);
         --#{$prefix}switch-active-inset-thumb-bg: #{$thumb-bg};
         --#{$prefix}switch-active-inset-thumb-color: #{$thumb-color};

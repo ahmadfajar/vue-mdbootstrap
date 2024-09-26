@@ -1,5 +1,6 @@
 @use "sass:color";
 @import "compass-mixins/lib/compass/css3";
+@import "../../../scss/functions";
 @import "../../../scss/colors";
 @import "../../../scss/variables";
 
@@ -32,7 +33,7 @@ a {
         @each $color, $value in map-remove($context-colors, "default") {
             &.text-bg-#{$color} {
                 &:focus, &:hover {
-                    background-color: color.adjust($value, $lightness: -10%) !important;
+                    background-color: round-color-rgb(color.adjust($value, $lightness: -10%)) !important;
                     text-decoration: none;
                 }
                 &:focus {

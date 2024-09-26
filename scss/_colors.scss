@@ -1,4 +1,5 @@
 @use "sass:color";
+@use "functions" as Func;
 
 // Gray Colors
 $gray-100: #f8f9fa;
@@ -646,9 +647,9 @@ $special-color:             #37474f !default;
 $special-color-dark:        #263238 !default;
 $blue-green-color:          #064e40 !default;
 $blue-green-color-dark:     #022f27 !default;
-$mdb-default-color:         #5f4a97 !default; // #5f4a97 #6750a4 #6200ee
-$mdb-default-color-dark:    #44307a !default; // #44307a #4600ab
-$mdb-default-color-light:   #b99ce1 !default; // #d0bcff
+$mdb-default-color:         #5f4a97 !default;
+$mdb-default-color-dark:    #44307a !default;
+$mdb-default-color-light:   #b99ce1 !default;
 $mdb-unique-color:          #880e4f !default;
 $mdb-light-color:           #f8f9fa !default;
 $white:                     $white-base;
@@ -707,7 +708,7 @@ $theme-colors: (
     "brown":       $brown-base,
     "cyan":        $cyan-base,
     "dark-blue":   $blue-darken-4,
-    "dark-green":  color.adjust($green-darken-4, $lightness: 2%),
+    "dark-green":  Func.round-color-rgb(color.adjust($green-darken-4, $lightness: 2%)),
     "deep-orange": $deep-orange-base,
     "deep-purple": $deep-purple-base,
     "green":       $green-base,
