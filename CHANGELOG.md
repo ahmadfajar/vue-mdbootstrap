@@ -10,7 +10,7 @@ Released: September 27, 2024
 ### Features & Improvements
 
 - **BsButton**: improve UI to better comply material design spec.
-- **Helper**: improve `uuid` generation performance.
+- Class **Helper**: improve `uuid` generation performance.
 
 ### Bug Fixes
 
