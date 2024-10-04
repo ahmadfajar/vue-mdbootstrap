@@ -109,6 +109,8 @@ export default class BsArrayStore extends AbstractStore {
             } else if (this.sorters.length > 0) {
                 this._items = this.localSort();
                 this._onLoadingSuccess();
+            } else {
+                this._onLoadingSuccess();
             }
 
             resolve(this._items);
