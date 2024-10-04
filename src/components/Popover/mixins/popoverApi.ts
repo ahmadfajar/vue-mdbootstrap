@@ -60,7 +60,7 @@ function getPopoverLeftPosition(
             break;
         case 'top':
         case 'bottom':
-            offsetLeft = activatorRect.left + activatorRect.width / 2 - width / 2;
+            offsetLeft = activatorRect.left + (activatorRect.width / 2) - (width / 2);
             break;
         case 'bottom-left':
         case 'top-left':
@@ -70,6 +70,12 @@ function getPopoverLeftPosition(
         case 'top-right':
             offsetLeft = activatorRect.left + activatorRect.width - width;
             break;
+    }
+    
+    if (['top', 'top-left', 'bottom', 'bottom-left'].includes(placement as string)) {
+        if ((offsetLeft + width) >= (maxLeft + width)) {
+            offsetLeft = maxLeft;
+        }
     }
 
     return Math.max(minLeft, offsetLeft);
