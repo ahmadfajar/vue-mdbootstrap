@@ -62,4 +62,9 @@ export const lightboxProps = {
         default: undefined,
         validator: (v: string) => ['out-in', 'in-out'].includes(v),
     } as Prop<TTransitionMode>,
+    zIndex: {
+        type: [String, Number],
+        default: 1990,
+        validator: (v: string): boolean => !isNaN(parseInt(v, 10)),
+    },
 };

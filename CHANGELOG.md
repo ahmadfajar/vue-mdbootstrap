@@ -3,6 +3,22 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.0.14
+
+Released: November 14, 2024
+
+### Features & Improvements
+
+- **BsLightbox**: add `z-index` property to control component stacking within HTML layers.
+- **BsPopover**: improve UI display positioning.
+- **BsTooltip**: improve UI performance.
+
+### Bug Fixes
+
+- **BsArrayStore**: fixed bug loading state was not updated when method _load_ 
+  was called without argument.
+
+
 ## v2.0.13
 
 Released: September 27, 2024
@@ -26,7 +42,7 @@ Released: September 20, 2024
 
 ### Features & Improvements
 
-- **BsLightbox**: improve image loading using preloader
+- **BsLightbox**: improve image loading using preloader.
 - **BsSideDrawer**: improve collapse animation if used together with `<BsAppbar>`.
 
 

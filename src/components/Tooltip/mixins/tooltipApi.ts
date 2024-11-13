@@ -102,7 +102,7 @@ export function useSetTooltipPosition(
         return;
     }
 
-    const tooltipEl = <HTMLElement>tooltipRef.value;
+    const tooltipEl = tooltipRef.value as HTMLElement;
 
     if (tooltipEl && Helper.isFunction(tooltipEl.getBoundingClientRect)) {
         const elRect = tooltipEl.getBoundingClientRect();
@@ -125,24 +125,15 @@ export function useAddTooltipListener(
         return;
     }
 
-    let timer: number | undefined;
-    const showTooltip = (e: Event) => {
-        if (timer) {
-            clearTimeout(timer);
-        }
-
-        timer = Helper.defer(() => {
+    const showTooltip = (_e: Event) => {
+        window.requestAnimationFrame(() => {
             instance.emit('update:show', true);
             active.value = true;
-        }, 200);
-        // e.preventDefault();
-        e.stopPropagation();
+        })
+
+        // preventEventTarget(e);
     };
     const hideTooltip = () => {
-        if (timer) {
-            clearTimeout(timer);
-        }
-
         instance.emit('update:show', false);
         active.value = false;
     };
@@ -150,13 +141,12 @@ export function useAddTooltipListener(
     const activatorEl = findActivatorElement(instance) as IHTMLElement | null;
 
     if (activatorEl) {
+        const options = {capture: true, passive: false};
         (activatorEl as IBindingElement).__mouseEvents = {
-            mouseEnter: EventListener.listen(activatorEl, 'mouseenter', showTooltip, {
-                passive: true,
-            }),
-            mouseLeave: EventListener.listen(activatorEl, 'mouseleave', hideTooltip, {
-                passive: true,
-            }),
+            mouseEnter: EventListener.listen(activatorEl, 'mouseenter', showTooltip, options),
+            mouseLeave: EventListener.listen(activatorEl, 'mouseleave', hideTooltip, options),
+            focus: EventListener.listen(activatorEl, 'focus', showTooltip),
+            blur: EventListener.listen(activatorEl, 'blur', hideTooltip),
         };
     }
 }
@@ -167,9 +157,11 @@ export function useRemoveTooltipListener(instance?: ComponentInternalInstance | 
 
         if (activatorEl) {
             // @ts-ignore
-            const { mouseEnter, mouseLeave } = activatorEl.__mouseEvents;
+            const { mouseEnter, mouseLeave, focus, blur } = activatorEl.__mouseEvents;
             (mouseEnter as IEventResult).remove();
             (mouseLeave as IEventResult).remove();
+            (focus as IEventResult).remove();
+            (blur as IEventResult).remove();
             activatorEl.__mouseEvents = undefined;
         }
     }

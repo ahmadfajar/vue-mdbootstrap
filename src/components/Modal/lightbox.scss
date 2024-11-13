@@ -19,13 +19,14 @@
     --#{$prefix}lightbox-thumbnail-opacity: 0.5;
     --#{$prefix}lightbox-thumbnail-active-border-color: #{$red-base};
     --#{$prefix}lightbox-thumbnail-active-border-width: 2px;
+    // --#{$prefix}lightbox-zindex: 1990;
 
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     position: fixed;
-    z-index: 1032;
+    // z-index: var(--#{$prefix}lightbox-zindex);
 
     &.#{$prefix}lightbox-overlay {
         background-color: var(--#{$prefix}lightbox-overlay-bg);

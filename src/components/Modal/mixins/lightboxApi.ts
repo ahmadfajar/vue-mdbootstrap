@@ -82,6 +82,7 @@ export function useRenderLightbox(
                               `${cssPrefix}lightbox-wrap`,
                               props.overlay ? `${cssPrefix}lightbox-overlay` : '',
                           ],
+                          style: { 'z-index': props.zIndex },
                       },
                       [
                           createLightboxToolbar(

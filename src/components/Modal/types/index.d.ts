@@ -132,6 +132,10 @@ export declare type TLightboxOptionProps = TPopupOptions & {
      * Available modes are: `out-in` and `in-out`.
      */
     transitionMode?: TTransitionMode;
+    /**
+     * Insert inline css style `z-index` to control the component positioning on the html layers.
+     */
+    zIndex?: string | number;
 };
 
 export declare type TBsModal = ComponentObjectPropsOptions<TModalOptionProps>;
