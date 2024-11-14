@@ -1,7 +1,7 @@
 import {
     AllowedComponentProps,
     ComponentCustomProps,
-    ComponentObjectPropsOptions,
+    ComponentObjectPropsOptions, type ComponentPublicInstance,
     Plugin,
     VNode,
     VNodeProps,
@@ -10,11 +10,20 @@ import { TPlacementPosition } from '../../../types';
 
 export declare type TTooltipOptionProps = {
     /**
+     * Html element ID, {@link Element} instance or component instance that can trigger
+     * the appearance of this tooltip.
+     */
+    activator?: string | Element | ComponentPublicInstance;
+    /**
+     * Hide tooltip arrow or not.
+     */
+    arrowOff?: boolean;
+    /**
      * This tooltip content.
      */
     content: string;
     /**
-     * Put this tooltip into disable state.
+     * Disable this tooltip and prevent it from appearing.
      */
     disabled?: boolean;
     /**

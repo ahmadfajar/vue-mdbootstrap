@@ -42,6 +42,7 @@
         line-height: 18px;
         padding: 4px 10px;
         pointer-events: none;
+        width: max-content;
     }
 }
 
@@ -53,9 +54,10 @@
 
         &:before {
             top: 0;
-            //border-width: var(--#{$prefix}tooltip-arrow-height) calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0;
-            border-width: $tooltip-arrow-height (math.div($tooltip-arrow-width, 2)) 0;
-            border-top-color: rgba($tooltip-bg, $tooltip-opacity);
+            border-width: var(--#{$prefix}tooltip-arrow-height) calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0;
+            border-top-color: rgba(var(--#{$prefix}tooltip-bg), var(--#{$prefix}tooltip-opacity));
+            //border-width: $tooltip-arrow-height (math.div($tooltip-arrow-width, 2)) 0;
+            //border-top-color: rgba($tooltip-bg, $tooltip-opacity);
         }
     }
 }
@@ -68,9 +70,10 @@
 
         &::before {
             bottom: 0;
-            //border-width: 0 calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height);
-            border-width: 0 math.div($tooltip-arrow-width, 2) $tooltip-arrow-height;
-            border-bottom-color: rgba($tooltip-bg, $tooltip-opacity);
+            border-width: 0 calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height);
+            border-bottom-color: rgba(var(--#{$prefix}tooltip-bg), var(--#{$prefix}tooltip-opacity));
+            //border-width: 0 math.div($tooltip-arrow-width, 2) $tooltip-arrow-height;
+            //border-bottom-color: rgba($tooltip-bg, $tooltip-opacity);
         }
     }
 }
@@ -85,9 +88,10 @@
 
         &::before {
             left: 0;
-            //border-width: calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0 calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height);
-            border-width: math.div($tooltip-arrow-width, 2) 0 math.div($tooltip-arrow-width, 2) $tooltip-arrow-height;
-            border-left-color: rgba($tooltip-bg, $tooltip-opacity);
+            border-width: calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0 calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height);
+            border-left-color: rgba(var(--#{$prefix}tooltip-bg), var(--#{$prefix}tooltip-opacity));
+            //border-width: math.div($tooltip-arrow-width, 2) 0 math.div($tooltip-arrow-width, 2) $tooltip-arrow-height;
+            //border-left-color: rgba($tooltip-bg, $tooltip-opacity);
         }
     }
 }
@@ -102,9 +106,10 @@
 
         &:before {
             right: 0;
-            //border-width: calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height) calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0;
-            border-width: math.div($tooltip-arrow-width, 2) $tooltip-arrow-height math.div($tooltip-arrow-width, 2) 0;
-            border-right-color: rgba($tooltip-bg, $tooltip-opacity);
+            border-width: calc(var(--#{$prefix}tooltip-arrow-width) * .5) var(--#{$prefix}tooltip-arrow-height) calc(var(--#{$prefix}tooltip-arrow-width) * .5) 0;
+            border-right-color: rgba(var(--#{$prefix}tooltip-bg), var(--#{$prefix}tooltip-opacity));
+            //border-width: math.div($tooltip-arrow-width, 2) $tooltip-arrow-height math.div($tooltip-arrow-width, 2) 0;
+            //border-right-color: rgba($tooltip-bg, $tooltip-opacity);
         }
     }
 }

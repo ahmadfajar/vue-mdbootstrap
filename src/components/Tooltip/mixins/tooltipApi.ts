@@ -1,4 +1,11 @@
-import type { ComponentInternalInstance, Ref, VNode, VNodeArrayChildren } from 'vue';
+import type {
+    ComponentInternalInstance,
+    ComponentPublicInstance,
+    Ref,
+    VNode,
+    VNodeArrayChildren,
+} from 'vue';
+import { unref } from 'vue';
 import { cssPrefix } from '../../../mixins/CommonApi';
 import { EventListener } from '../../../mixins/DomHelper';
 import type {
@@ -14,64 +21,87 @@ const SPACE = 4;
 /**
  * Calculate Tooltip left offset.
  *
- * @param activatorEl Activator Element
- * @param width       Element width
- * @param placement   Tooltip placement.
+ * @param activatorEl  Activator Element
+ * @param tooltipWidth Tooltip element width
+ * @param placement    Tooltip placement.
  * @returns Tooltip left offset
  */
 function getTooltipLeftPosition(
     activatorEl: Element,
-    width: number,
+    tooltipWidth: number,
     placement?: TPlacementPosition
 ) {
-    const offset = activatorEl.getBoundingClientRect();
+    const domRect = activatorEl.getBoundingClientRect();
+    const parentRect = activatorEl.parentElement?.getBoundingClientRect();
 
     switch (placement) {
         case 'left':
-            return offset.left - width - SPACE;
+            return domRect.left - tooltipWidth - SPACE;
         case 'right':
-            return offset.left + offset.width + SPACE;
+            return domRect.left + domRect.width + SPACE;
         case 'top':
         case 'bottom':
         default:
-            return offset.left + offset.width / 2 - width / 2;
+            return (
+                domRect.left +
+                Math.min(domRect.width / 2, (parentRect?.width ?? domRect.width) / 2) -
+                tooltipWidth / 2
+            );
     }
 }
 
 /**
  * Calculate Tooltip top offset.
  *
- * @param activatorEl  Activator Element
- * @param height       Element height
- * @param placement    Tooltip placement.
+ * @param activatorEl   Activator Element
+ * @param tooltipHeight Tooltip element height
+ * @param placement     Tooltip placement.
  * @returns Tooltip top offset
  */
 function getTooltipTopPosition(
     activatorEl: Element,
-    height: number,
+    tooltipHeight: number,
     placement?: TPlacementPosition
 ) {
     const rect = activatorEl.getBoundingClientRect();
 
     switch (placement) {
         case 'top':
-            return rect.top - height - SPACE;
+            return rect.top - tooltipHeight - SPACE;
         case 'bottom':
             return rect.top + rect.height + SPACE;
         case 'left':
         case 'right':
         default:
-            return rect.top + rect.height / 2 - height / 2;
+            return rect.top + rect.height / 2 - tooltipHeight / 2;
     }
 }
 
 /**
  * Find first `VNode` within the `BsTooltip` virtual-node subtree.
  *
- * @param instance Component instance search starting point.
+ * @param instance   The tooltip component instance.
+ * @param triggerEl  An element ID or element instance that can trigger the appearance of the tooltip.
  * @returns The DOM Element if found.
  */
-function findActivatorElement(instance: ComponentInternalInstance): Element | null {
+function findActivatorElement(
+    instance: ComponentInternalInstance,
+    triggerEl?: string | Element | ComponentPublicInstance
+): Element | null {
+    if (triggerEl) {
+        if (triggerEl instanceof Element) {
+            return triggerEl;
+        } else if (Helper.isObject(triggerEl) && '$el' in triggerEl) {
+            return triggerEl.$el;
+        } else if (Helper.isString(triggerEl)) {
+            const element = document.getElementById(triggerEl);
+            if (element) {
+                return element;
+            }
+        }
+    }
+
+    // Fallback to component instance
     const sibling = (instance.vnode.el as Element).nextElementSibling;
     if (sibling && !sibling.classList.contains(`${cssPrefix}tooltip`)) {
         // The child-element on "slot.default"
@@ -93,44 +123,50 @@ function findActivatorElement(instance: ComponentInternalInstance): Element | nu
 }
 
 export function useSetTooltipPosition(
+    activatorRef: Ref<Element | null>,
     tooltipRef: Ref<Element | null>,
-    instance?: ComponentInternalInstance | null,
-    placement?: TPlacementPosition,
-    isActive?: boolean
-) {
-    if (!tooltipRef.value || !instance || !isActive) {
+    placement?: TPlacementPosition
+): void {
+    const activatorEl = unref(activatorRef) as Element | null;
+    const tooltipEl = unref(tooltipRef) as HTMLElement | null;
+
+    if (!activatorEl || !tooltipEl) {
         return;
     }
 
-    const tooltipEl = tooltipRef.value as HTMLElement;
-
     if (tooltipEl && Helper.isFunction(tooltipEl.getBoundingClientRect)) {
-        const elRect = tooltipEl.getBoundingClientRect();
-        const activatorEl = findActivatorElement(instance);
+        const tooltipRect = tooltipEl.getBoundingClientRect();
 
-        if (activatorEl) {
-            tooltipEl.style.top =
-                getTooltipTopPosition(activatorEl, elRect.height, placement) + 'px';
-            tooltipEl.style.left =
-                getTooltipLeftPosition(activatorEl, elRect.width, placement) + 'px';
-        }
+        tooltipEl.style.top =
+            getTooltipTopPosition(activatorEl, tooltipRect.height, placement) + 'px';
+        tooltipEl.style.left =
+            getTooltipLeftPosition(activatorEl, tooltipRect.width, placement) + 'px';
     }
 }
 
 export function useAddTooltipListener(
+    tooltipRef: Ref<Element | null>,
+    activatorRef: Ref<Element | null>,
+    active: Ref<boolean>,
+    disabled: Ref<boolean>,
     instance: ComponentInternalInstance | null,
-    active: Ref<boolean>
+    trigger?: string | Element | ComponentPublicInstance,
+    placement?: TPlacementPosition
 ) {
     if (!instance) {
         return;
     }
 
-    const showTooltip = (_e: Event) => {
+    const showTooltip = () => {
+        if (unref(disabled)) {
+            return;
+        }
+
         window.requestAnimationFrame(() => {
+            useSetTooltipPosition(activatorRef, tooltipRef, placement);
             instance.emit('update:show', true);
             active.value = true;
-        })
-
+        });
         // preventEventTarget(e);
     };
     const hideTooltip = () => {
@@ -138,10 +174,12 @@ export function useAddTooltipListener(
         active.value = false;
     };
 
-    const activatorEl = findActivatorElement(instance) as IHTMLElement | null;
+    const activatorEl = findActivatorElement(instance, trigger) as IHTMLElement | null;
+    activatorRef.value = activatorEl;
 
     if (activatorEl) {
-        const options = {capture: true, passive: false};
+        const options = { capture: true, passive: false };
+
         (activatorEl as IBindingElement).__mouseEvents = {
             mouseEnter: EventListener.listen(activatorEl, 'mouseenter', showTooltip, options),
             mouseLeave: EventListener.listen(activatorEl, 'mouseleave', hideTooltip, options),
@@ -151,18 +189,16 @@ export function useAddTooltipListener(
     }
 }
 
-export function useRemoveTooltipListener(instance?: ComponentInternalInstance | null) {
-    if (instance) {
-        const activatorEl = findActivatorElement(instance) as IBindingElement | null;
+export function useRemoveTooltipListener(activatorRef: Ref<Element | null>) {
+    const activatorEl = unref(activatorRef) as IBindingElement | null;
 
-        if (activatorEl) {
-            // @ts-ignore
-            const { mouseEnter, mouseLeave, focus, blur } = activatorEl.__mouseEvents;
-            (mouseEnter as IEventResult).remove();
-            (mouseLeave as IEventResult).remove();
-            (focus as IEventResult).remove();
-            (blur as IEventResult).remove();
-            activatorEl.__mouseEvents = undefined;
-        }
+    if (activatorEl) {
+        // @ts-ignore
+        const { mouseEnter, mouseLeave, focus, blur } = activatorEl.__mouseEvents;
+        (mouseEnter as IEventResult).remove();
+        (mouseLeave as IEventResult).remove();
+        (focus as IEventResult).remove();
+        (blur as IEventResult).remove();
+        activatorEl.__mouseEvents = undefined;
     }
 }
