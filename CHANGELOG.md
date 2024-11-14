@@ -3,7 +3,7 @@
 > All notable changes to this project will be documented in this file.
 
 
-## v2.0.14
+## v2.0.15
 
 Released: November 14, 2024
 
@@ -11,7 +11,9 @@ Released: November 14, 2024
 
 - **BsLightbox**: add `z-index` property to control component stacking within HTML layers.
 - **BsPopover**: improve UI display positioning.
-- **BsTooltip**: improve UI performance.
+- **BsTooltip**: 
+  - Add new properties: `activator` and `arrow-off`.
+  - Improve UI performance and css variables.
 
 ### Bug Fixes
 
