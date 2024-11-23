@@ -50,9 +50,9 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "dev": "rimraf dist && npm-run-all -s type-check build:dev",
-    "prod": "rimraf dist && npm-run-all -s type-check build:prod",
-    "dist": "rimraf dist && npm-run-all -s type-check build:* css:beauty css:minify",
+    "dev": "rimraf dist && run-s type-check build:dev",
+    "prod": "rimraf dist && run-s type-check build:prod",
+    "dist": "rimraf dist && run-p type-check build:* && run-s css:beauty css:minify",
     "build:dev": "vite build",
     "build:lib": "vite build --config vite.config.lib.ts",
     "build:prod": "vite build --config vite.config.prod.ts",
@@ -68,16 +68,16 @@
     "lodash": "^4.17.21",
     "luxon": "^3.5.0",
     "resize-observer-polyfill": "^1.5.1",
-    "vue": "^3.5.12"
+    "vue": "^3.5.13"
   },
   "devDependencies": {
     "@rollup/plugin-node-resolve": "^15.3.0",
     "@rollup/plugin-terser": "^0.4.4",
-    "@tsconfig/node20": "^20.1.4",
+    "@tsconfig/node22": "^22.0.0",
     "@types/body-scroll-lock": "^3.1.2",
     "@types/lodash": "^4.17.13",
     "@types/luxon": "^3.4.2",
-    "@types/node": "^22.9.0",
+    "@types/node": "^22.9.3",
     "@vue/tsconfig": "^0.6.0",
     "bootstrap": "5.2.3",
     "clean-css-cli": "^5.6.3",
@@ -85,9 +85,9 @@
     "npm-run-all": "^4.1.5",
     "rimraf": "^6.0.1",
     "rollup-plugin-dts": "^6.1.1",
-    "sass": "^1.80.7",
+    "sass": "^1.81.0",
     "terser": "^5.36.0",
-    "typescript": "^5.6.3",
+    "typescript": "^5.7.2",
     "vite": "^5.4.11",
     "vue-router": "^4.4.5"
   },

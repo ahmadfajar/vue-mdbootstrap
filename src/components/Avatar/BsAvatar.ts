@@ -25,17 +25,17 @@ export default defineComponent<TBsAvatar>({
                 {
                     class: {
                         [`${cssPrefix}avatar`]: true,
-                        ...useShapeClasses(thisProps.circle, thisProps.rounded),
+                        [`border-${thisProps.borderColor}`]: thisProps.borderColor,
+                        'overflow-hidden': thisProps.circle || thisProps.rounded,
                         'p-2': useGetCalcSize(thisProps) > 72,
-                        [`border-${thisProps.borderColor}`]:
-                            thisProps.borderColor && Helper.isEmpty(thisProps.imgSrc),
+                        ...useShapeClasses(thisProps.circle, thisProps.rounded),
                     },
                     style: {
                         ...useSizeStyles(thisProps),
-                        border:
-                            thisProps.border && Helper.isEmpty(thisProps.imgSrc)
-                                ? Helper.cssUnit(thisProps.border) + ' solid'
-                                : undefined,
+                        borderStyle: thisProps.border ? 'solid' : undefined,
+                        borderWidth: thisProps.border
+                            ? Helper.cssUnit(thisProps.border) + ' !important'
+                            : undefined,
                     },
                 },
                 useRenderSlot(slots, 'default', { key: Helper.uuid() }, [

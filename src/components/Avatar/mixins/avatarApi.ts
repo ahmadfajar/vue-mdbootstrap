@@ -43,14 +43,8 @@ export function useShapeClasses(
 
 export function useRenderAvatarImage(props: Readonly<TAvatarImageOptionProps>): VNode {
     return h('img', {
-        class: {
-            ...useShapeClasses(props.circle, props.rounded),
-            [`border-${props.borderColor}`]: props.borderColor,
-        },
-        style: {
-            ...useSizeStyles(props),
-            border: props.border ? Helper.cssUnit(props.border) + ' solid' : undefined,
-        },
+        class: useShapeClasses(props.circle, props.rounded),
+        style: useSizeStyles(props),
         src: props.imgSrc,
         alt: '',
     });
