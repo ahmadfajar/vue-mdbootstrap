@@ -1,8 +1,8 @@
+import { toggleIconProps } from '@/components/Icon/mixins/iconProps';
+import type { TBsIconSvg, TBsToggleIcon, TToggleIconOptionProps } from '@/components/Icon/types';
+import { cssPrefix } from '@/mixins/CommonApi';
 import { defineComponent, h } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
 import BsIconSvg from './BsIconSvg';
-import { toggleIconProps } from './mixins/iconProps';
-import type { TBsIconSvg, TBsToggleIcon, TToggleIconOptionProps } from './types';
 
 export default defineComponent<TBsToggleIcon>({
     name: 'BsToggleIcon',
@@ -24,6 +24,7 @@ export default defineComponent<TBsToggleIcon>({
                 },
                 h<TBsIconSvg>(BsIconSvg, {
                     icon: props.modelValue ? props.toggleIcon : props.icon,
+                    filled: props.filled,
                     height: props.size,
                     width: props.size,
                 })

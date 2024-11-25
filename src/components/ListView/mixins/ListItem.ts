@@ -1,7 +1,7 @@
+import type { IListItem, TEmitFn, TRecord } from '@/types';
+import Helper from '@/utils/Helper';
 import type { ComponentInternalInstance, Ref } from 'vue';
 import { isRef } from 'vue';
-import type { IListItem, TEmitFn, TRecord } from '../../../types';
-import Helper from '../../../utils/Helper';
 
 class ListItem implements IListItem {
     public readonly uid: string;

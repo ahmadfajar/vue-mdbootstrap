@@ -1,11 +1,6 @@
-import type { ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
-import { h } from 'vue';
-import {
-    cssPrefix,
-    useHasRouter,
-    useRenderRouter,
-    useRenderSlotDefault,
-} from '../../../mixins/CommonApi';
+import { BsRipple } from '@/components/Animation';
+import ListItem from '@/components/ListView/mixins/ListItem';
+import { cssPrefix, useHasRouter, useRenderRouter, useRenderSlotDefault } from '@/mixins/CommonApi';
 import type {
     IListItem,
     IListViewProvider,
@@ -14,9 +9,9 @@ import type {
     TEmitFn,
     TListTileOptionProps,
     TRecord,
-} from '../../../types';
-import { BsRipple } from '../../Animation';
-import ListItem from './ListItem';
+} from '@/types';
+import type { ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
+import { h } from 'vue';
 
 export function useListTileClassNames(
     tagName: string,

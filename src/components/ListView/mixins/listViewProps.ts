@@ -6,11 +6,11 @@ import {
     routerProps,
     stringOrNumberProp,
     stringProp,
-    stringRequiredProp,
+    stringMandatoryProp,
     validStringOrNumberProp,
     whiteColorProp,
 } from '../../../mixins/CommonProps';
-import { iconProps } from '../../Avatar/mixins/avatarProps';
+import { baseIconProps } from '../../Avatar/mixins/avatarProps';
 import type { TBadgeType } from '../../Badge/types';
 import { iconSizeProp } from '../../Icon/mixins/iconProps';
 import type { TSpaceAround } from '../types';
@@ -40,7 +40,7 @@ export const listViewProps = {
 };
 
 export const listNavItemProps = {
-    ...iconProps,
+    ...baseIconProps,
     ...routerProps,
     id: {
         type: String,
@@ -51,7 +51,7 @@ export const listNavItemProps = {
     depth: validStringOrNumberProp,
     indent: stringOrNumberProp,
     iconSize: iconSizeProp,
-    label: stringRequiredProp,
+    label: stringMandatoryProp,
     badge: stringProp,
     badgeColor: stringProp,
     badgeType: stringProp as Prop<TBadgeType>,

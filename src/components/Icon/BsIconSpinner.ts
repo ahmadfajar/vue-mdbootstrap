@@ -1,8 +1,12 @@
+import { iconSpinnerProps } from '@/components/Icon/mixins/iconProps';
+import {
+    spinnerSvgData,
+    useCircleSizeStyles,
+    useCreateSvgNode,
+} from '@/components/Icon/mixins/svgApi';
+import type { TBsIconSpinner } from '@/components/Icon/types';
+import { cssPrefix } from '@/mixins/CommonApi';
 import { defineComponent, h } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import { iconSpinnerProps } from './mixins/iconProps';
-import { spinnerSvgData, useCircleSizeStyles, useCreateSvgNode } from './mixins/svgApi';
-import type { TBsIconSpinner } from './types';
 
 export default defineComponent<TBsIconSpinner>({
     name: 'BsIconSpinner',

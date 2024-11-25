@@ -1,15 +1,15 @@
+import { useSizeHeight, useSizeStyles, useSizeWidth } from '@/components/Icon/mixins/iconApi';
+import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps';
+import type { TBsIcon, TBsIconSvg, TIconOptionProps } from '@/components/Icon/types';
+import { cssPrefix } from '@/mixins/CommonApi';
 import type { Prop } from 'vue';
 import { defineComponent, h } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
 import BsIconSvg from './BsIconSvg';
-import { useSizeHeight, useSizeStyles, useSizeWidth } from './mixins/iconApi';
-import { iconProps, iconSizeProp } from './mixins/iconProps';
-import type { TBsIcon, TBsIconSvg, TIconOptionProps } from './types';
 
 export default defineComponent<TBsIcon>({
     name: 'BsIcon',
     props: {
-        size: iconSizeProp,
+        size: iconSizeObjectProp,
         ...iconProps,
     },
     setup(props) {
@@ -26,6 +26,7 @@ export default defineComponent<TBsIcon>({
                 },
                 h<TBsIconSvg>(BsIconSvg, {
                     icon: props.icon,
+                    filled: props.filled,
                     height: szHeight,
                     width: szWidth,
                     spin: props.spin,

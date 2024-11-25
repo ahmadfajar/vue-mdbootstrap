@@ -1,3 +1,20 @@
+import ListItem from '@/components/ListView/mixins/ListItem';
+import {
+    useAddChild,
+    useListNavItemClasses,
+    useListNavItemInnerClasses,
+    useNavItemContentStyles,
+    useRenderListNavItem,
+} from '@/components/ListView/mixins/listNavApi';
+import { listNavItemProps } from '@/components/ListView/mixins/listViewProps';
+import { useCurrentRoute, useHasRouter, useIsRouteMatch } from '@/mixins/CommonApi';
+import type {
+    IListItem,
+    IListViewProvider,
+    TBsListNavItem,
+    TListNavItemOptionProps,
+    TRecord,
+} from '@/types';
 import {
     computed,
     defineComponent,
@@ -10,23 +27,6 @@ import {
     shallowRef,
     watchEffect,
 } from 'vue';
-import { useCurrentRoute, useHasRouter, useIsRouteMatch } from '../../mixins/CommonApi';
-import type {
-    IListItem,
-    IListViewProvider,
-    TBsListNavItem,
-    TListNavItemOptionProps,
-    TRecord,
-} from '../../types';
-import ListItem from './mixins/ListItem';
-import {
-    useAddChild,
-    useListNavItemClasses,
-    useListNavItemInnerClasses,
-    useNavItemContentStyles,
-    useRenderListNavItem,
-} from './mixins/listNavApi';
-import { listNavItemProps } from './mixins/listViewProps';
 
 export default defineComponent<TBsListNavItem>({
     name: 'BsListNavItem',

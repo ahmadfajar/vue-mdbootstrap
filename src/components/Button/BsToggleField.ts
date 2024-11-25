@@ -1,16 +1,16 @@
-import { computed, defineComponent, ref } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import type { TBsToggleField, TRecord, TToggleFieldOptionProps } from '../../types';
+import { useRenderToggleFieldButton } from '@/components/Button/mixins/buttonApi';
+import { toggleButtonProps } from '@/components/Button/mixins/buttonProps';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowHelpText,
     useShowValidationError,
-} from '../Field/mixins/validationApi';
-import { validationProps } from '../Field/mixins/validationProps';
-import { useRenderToggleFieldButton } from './mixins/buttonApi';
-import { toggleButtonProps } from './mixins/buttonProps';
+} from '@/components/Field/mixins/validationApi';
+import { validationProps } from '@/components/Field/mixins/validationProps';
+import { cssPrefix } from '@/mixins/CommonApi';
+import type { TBsToggleField, TRecord, TToggleFieldOptionProps } from '@/types';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent<TBsToggleField>({
     name: 'BsToggleField',

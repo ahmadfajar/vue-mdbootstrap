@@ -1,17 +1,12 @@
+import { BsRipple } from '@/components/Animation';
+import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi';
+import { BsButton } from '@/components/Button';
+import { BsIcon } from '@/components/Icon';
+import { cssPrefix, useRenderSlotDefault, useRenderSlotWithWrapper } from '@/mixins/CommonApi';
+import type { TBsButton, TBsIcon, TBsRipple, TChipOptionProps, TRecord } from '@/types';
+import Helper from '@/utils/Helper';
 import type { ComputedRef, Prop, Slots, VNode } from 'vue';
 import { createCommentVNode, h } from 'vue';
-import {
-    cssPrefix,
-    useRenderSlotDefault,
-    useRenderSlotWithWrapper,
-} from '../../../mixins/CommonApi';
-import { isEndWith } from '../../../mixins/StringHelper';
-import type { TBsButton, TBsIcon, TBsRipple, TChipOptionProps, TRecord } from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsRipple } from '../../Animation';
-import { useCreateIconProps } from '../../Avatar/mixins/avatarApi';
-import { BsButton } from '../../Button';
-import { BsIcon } from '../../Icon';
 
 export function useChipClassNames(props: Readonly<TChipOptionProps>, attrs: TRecord): TRecord {
     return {
@@ -138,14 +133,14 @@ export function useRenderChip(
                                 },
                             },
                             !Helper.isEmpty(props.icon)
-                                ? h<TBsIcon>(BsIcon, {
+                                ? // @ts-ignore
+                                  h<TBsIcon>(BsIcon, {
                                       ...useCreateIconProps(props),
-                                      icon: <Prop<string | undefined>>(
-                                          properIconName(props.icon, props.iconVariant)
-                                      ),
-                                      size: <Prop<string | number>>(
-                                          (props.size === 'sm' ? 18 : props.size === 'lg' ? 40 : 22)
-                                      ),
+                                      size: (props.size === 'sm'
+                                          ? 18
+                                          : props.size === 'lg'
+                                            ? 40
+                                            : 22) as Prop<number>,
                                   })
                                 : undefined
                         ),
@@ -164,16 +159,4 @@ export function useRenderChip(
             ),
         ]
     );
-}
-
-function properIconName(name?: string, variant?: string) {
-    if (name && variant) {
-        if (isEndWith(name, ['_outlined', '_filled', '_rounded', '_sharp'])) {
-            return name;
-        } else {
-            return `${name}_${variant}`;
-        }
-    }
-
-    return name;
 }

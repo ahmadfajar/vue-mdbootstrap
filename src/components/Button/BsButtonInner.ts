@@ -1,8 +1,8 @@
+import { BsRipple } from '@/components/Animation';
+import { buttonInnerProps } from '@/components/Button/mixins/buttonProps.ts';
+import { cssPrefix, useRenderSlotDefault } from '@/mixins/CommonApi.ts';
+import type { TBsButtonInner, TBsRipple, TButtonInnerOptionProps } from '@/types';
 import { defineComponent, h } from 'vue';
-import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
-import type { TBsButtonInner, TBsRipple, TButtonInnerOptionProps } from '../../types';
-import { BsRipple } from '../Animation';
-import { buttonInnerProps } from './mixins/buttonProps';
 
 export default defineComponent<TBsButtonInner>({
     name: 'BsButtonInner',

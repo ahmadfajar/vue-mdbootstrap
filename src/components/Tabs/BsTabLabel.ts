@@ -1,22 +1,22 @@
-import type { Prop } from 'vue';
-import { computed, defineComponent, h, toDisplayString } from 'vue';
-import { booleanProp, stringProp, validStringOrNumberProp } from '../../mixins/CommonProps';
+import { BsRipple } from '@/components/Animation';
+import { baseIconProps } from '@/components/Avatar/mixins/avatarProps';
+import { useRenderTabLabel } from '@/components/Tabs/mixins/tabsApi';
+import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps';
 import type {
     TBsRipple,
     TBsTabLabel,
     TOrientation,
     TPlacementPosition,
     TTabLabelOptionProps,
-} from '../../types';
-import Helper from '../../utils/Helper';
-import { BsRipple } from '../Animation';
-import { iconProps } from '../Avatar/mixins/avatarProps';
-import { useRenderTabLabel } from './mixins/tabsApi';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { Prop } from 'vue';
+import { computed, defineComponent, h, toDisplayString } from 'vue';
 
 export default defineComponent<TBsTabLabel>({
     name: 'BsTabLabel',
     props: {
-        ...iconProps,
+        ...baseIconProps,
         iconPosition: {
             type: String,
             default: 'left',

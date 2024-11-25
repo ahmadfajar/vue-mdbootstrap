@@ -1,3 +1,8 @@
+import { tabPanelProps } from '@/components/Tabs/mixins/tabsProps';
+import TabsProvider from '@/components/Tabs/mixins/TabsProvider';
+import type { TBsTabPanel, TTabItemOptionProps } from '@/components/Tabs/types';
+import { useRenderTransition } from '@/mixins/CommonApi';
+import Helper from '@/utils/Helper';
 import {
     computed,
     defineComponent,
@@ -9,11 +14,6 @@ import {
     vShow,
     withDirectives,
 } from 'vue';
-import { useRenderTransition } from '../../mixins/CommonApi';
-import Helper from '../../utils/Helper';
-import { tabPanelProps } from './mixins/tabsProps';
-import TabsProvider from './mixins/TabsProvider';
-import type { TBsTabPanel, TTabItemOptionProps } from './types';
 
 export default defineComponent<TBsTabPanel>({
     name: 'BsTab',

@@ -1,5 +1,3 @@
-import type { ComponentInternalInstance, Ref } from 'vue';
-import { isRef, unref } from 'vue';
 import type {
     IListItem,
     IListViewProvider,
@@ -7,8 +5,10 @@ import type {
     TListViewOptionProps,
     TRecord,
     TSpaceAround,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { ComponentInternalInstance, Ref } from 'vue';
+import { isRef, unref } from 'vue';
 
 class ListViewProvider implements IListViewProvider {
     private readonly _emit: TEmitFn;

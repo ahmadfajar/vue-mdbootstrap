@@ -1,11 +1,11 @@
+import BsButtonInner from '@/components/Button/BsButtonInner';
+import { useMakeButtonProps, useRenderButtonContent } from '@/components/Button/mixins/buttonApi';
+import { buttonProps } from '@/components/Button/mixins/buttonProps';
+import type { TBsButton, TBsButtonInner, TButtonOptionProps } from '@/components/Button/types';
+import { useGenerateId } from '@/mixins/CommonApi';
+import Helper from '@/utils/Helper';
 import type { Prop } from 'vue';
 import { computed, defineComponent, h } from 'vue';
-import { useGenerateId } from '../../mixins/CommonApi';
-import Helper from '../../utils/Helper';
-import BsButtonInner from './BsButtonInner';
-import { useMakeButtonProps, useRenderButtonContent } from './mixins/buttonApi';
-import { buttonProps } from './mixins/buttonProps';
-import type { TBsButton, TBsButtonInner, TButtonOptionProps } from './types';
 
 export default defineComponent<TBsButton>({
     name: 'BsButton',

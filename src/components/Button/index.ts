@@ -1,4 +1,4 @@
-import type { App, Plugin } from 'vue';
+import type { App, ObjectPlugin } from 'vue';
 import BsButton from './BsButton';
 import BsToggleButton from './BsToggleButton';
 import BsToggleField from './BsToggleField';
@@ -6,7 +6,7 @@ import '../../../scss/_globalvars.scss';
 import '../Field/field.scss';
 import './button.scss';
 
-const BsButtonPlugin: Plugin = {
+const BsButtonPlugin: ObjectPlugin = {
     install: (app: App): void => {
         app.component(BsButton.name as string, BsButton);
         app.component(BsToggleButton.name as string, BsToggleButton);

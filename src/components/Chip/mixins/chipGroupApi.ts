@@ -1,6 +1,6 @@
-import type { Prop, Ref, Slots, VNode } from 'vue';
-import { createCommentVNode, createTextVNode, h, renderSlot, toDisplayString } from 'vue';
-import { cssPrefix } from '../../../mixins/CommonApi';
+import { BsButton } from '@/components/Button';
+import { BsChip } from '@/components/Chip';
+import { cssPrefix } from '@/mixins/CommonApi';
 import type {
     TBsButton,
     TBsChip,
@@ -10,9 +10,9 @@ import type {
     TChipOptionItem,
     TChipValue,
     TRecord,
-} from '../../../types';
-import { BsButton } from '../../Button';
-import BsChip from '../BsChip';
+} from '@/types';
+import type { Prop, Ref, Slots, VNode } from 'vue';
+import { createCommentVNode, createTextVNode, h, renderSlot, toDisplayString } from 'vue';
 
 export function useSetSliderSize(slider: TChipContainer): void {
     const contentEl = document.getElementById(slider.contentId);
@@ -68,7 +68,7 @@ function createSliderArrow(
                 // @ts-ignore
                 flat: true as Prop<boolean>,
                 color: props.sliderButtonColor as Prop<string>,
-                icon: (direction === 'prev' ? 'navigate_before' : 'navigate_next') as Prop<string>,
+                icon: (direction === 'prev' ? 'chevron_backward' : 'chevron_forward') as Prop<string>,
                 iconSize: 24 as Prop<number>,
                 // @ts-ignore
                 disabled: !canScroll as Prop<boolean>,

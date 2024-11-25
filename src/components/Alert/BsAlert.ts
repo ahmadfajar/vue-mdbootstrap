@@ -1,12 +1,12 @@
-import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 import {
     useAlertClassNames,
-    useAlertColorName,
-    useAlertIconName,
+    useAlertColor,
+    useAlertIcon,
     useRenderAlert,
-} from './mixins/alertApi';
-import { alertProps } from './mixins/alertProps';
-import type { TAlertOptionProps, TBsAlert } from './types';
+} from '@/components/Alert/mixins/alertApi';
+import { alertProps } from '@/components/Alert/mixins/alertProps';
+import type { TAlertOptionProps, TBsAlert } from '@/components/Alert/types';
+import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 
 export default defineComponent<TBsAlert>({
     name: 'BsAlert',
@@ -23,15 +23,15 @@ export default defineComponent<TBsAlert>({
     ],
     setup(props, { emit, slots }) {
         const thisProps = props as Readonly<TAlertOptionProps>;
-        const dismiss = ref<boolean>(false);
-        const colorName = computed<string | undefined>(() => useAlertColorName(thisProps));
-        const alertIconName = computed<string | undefined>(() => useAlertIconName(thisProps));
+        const dismissed = ref<boolean>(false);
+        const alertColor = computed<string | undefined>(() => useAlertColor(thisProps));
+        const alertIcon = computed<string | undefined>(() => useAlertIcon(thisProps));
         const classNames = computed<Record<string, boolean | undefined>>(() =>
-            useAlertClassNames(thisProps, colorName)
+            useAlertClassNames(thisProps, alertColor)
         );
-        const show = computed(() => !dismiss.value && thisProps.modelValue);
+        const show = computed(() => !dismissed.value && thisProps.modelValue);
         const dismissedAlert = () => {
-            dismiss.value = true;
+            dismissed.value = true;
             emit('update:model-value', false);
             nextTick().then(() => emit('close'));
         };
@@ -40,7 +40,7 @@ export default defineComponent<TBsAlert>({
             () => thisProps.modelValue,
             (value) => {
                 if (thisProps.dismissible) {
-                    dismiss.value = !(value === true);
+                    dismissed.value = !(value === true);
                 }
             }
         );
@@ -51,8 +51,8 @@ export default defineComponent<TBsAlert>({
                 thisProps,
                 show,
                 classNames,
-                colorName,
-                alertIconName,
+                alertColor,
+                alertIcon,
                 dismissedAlert
             );
     },

@@ -1,9 +1,9 @@
+import { useChipClassNames, useRenderChip } from '@/components/Chip/mixins/chipApi';
+import { chipProps } from '@/components/Chip/mixins/chipProps';
+import { useRenderTransition } from '@/mixins/CommonApi';
+import type { TBsChip, TChipOptionProps, TRecord } from '@/types';
+import Helper from '@/utils/Helper';
 import { computed, createCommentVNode, defineComponent, nextTick, ref, watch } from 'vue';
-import { Helper } from '../../index';
-import { useRenderTransition } from '../../mixins/CommonApi';
-import type { TBsChip, TChipOptionProps, TRecord } from '../../types';
-import { useChipClassNames, useRenderChip } from './mixins/chipApi';
-import { chipProps } from './mixins/chipProps';
 
 export default defineComponent<TBsChip>({
     name: 'BsChip',
@@ -40,12 +40,14 @@ export default defineComponent<TBsChip>({
             );
         });
         const show = computed(() => !dismissed.value && props.modelValue);
+
         const dismissHandler = () => {
             dismissed.value = true;
             emit('update:active', false);
             emit('update:model-value', false);
             nextTick().then(() => emit('close'));
         };
+
         watch(
             () => thisProps.modelValue,
             (value) => {

@@ -1,14 +1,15 @@
-import type { Prop, PropType } from 'vue';
-import {
-    booleanProp,
-    booleanTrueProp,
-    defaultColorProp,
-    stringProp,
-} from '../../../mixins/CommonProps';
-import type { TButtonMode, TButtonSize, TButtonType, TLabelPosition } from '../../../types';
-import { iconProps } from '../../Avatar/mixins/avatarProps';
-import { inputProps } from '../../Field/mixins/fieldProps';
-import { iconSizeProp } from '../../Icon/mixins/iconProps';
+import { baseIconProps } from '@/components/Avatar/mixins/avatarProps';
+import { inputProps } from '@/components/Field/mixins/fieldProps';
+import { iconSizeProp } from '@/components/Icon/mixins/iconProps';
+import { booleanProp, booleanTrueProp, defaultColorProp, stringProp } from '@/mixins/CommonProps';
+import type {
+    TButtonMode,
+    TButtonSize,
+    TButtonType,
+    TInputOptionItem,
+    TLabelPosition,
+} from '@/types';
+import type { Prop } from 'vue';
 
 export const buttonMode = {
     type: String,
@@ -29,7 +30,7 @@ export const buttonType = {
 } as Prop<TButtonType>;
 
 export const iconPosition = {
-    type: String as PropType<TLabelPosition>,
+    type: String,
     default: 'left',
     validator: (value: string): boolean => ['left', 'right'].includes(value),
 } as Prop<TLabelPosition>;
@@ -64,7 +65,7 @@ export const buttonProps = {
     tonal: booleanProp,
     type: buttonType,
     iconPosition,
-    ...iconProps,
+    ...baseIconProps,
 };
 
 export const toggleButtonProps = {
@@ -73,7 +74,7 @@ export const toggleButtonProps = {
         type: Array,
         default: undefined,
         required: true,
-    },
+    } as Prop<TInputOptionItem[]>,
     multiple: booleanProp,
     modelValue: {
         type: [String, Number, Boolean, Array],

@@ -23,7 +23,7 @@ export const dateProp = {
     default: undefined,
 };
 
-export const stringRequiredProp = {
+export const stringMandatoryProp = {
     type: String,
     default: undefined,
     required: true,

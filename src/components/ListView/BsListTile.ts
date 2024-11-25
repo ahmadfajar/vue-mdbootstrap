@@ -1,3 +1,13 @@
+import { useListTileClassNames, useRenderListTile } from '@/components/ListView/mixins/listTileApi';
+import { listTileProps } from '@/components/ListView/mixins/listViewProps';
+import { useCurrentRoute, useHasLink, useHasRouter, useIsRouteMatch } from '@/mixins/CommonApi';
+import type {
+    IListItem,
+    IListViewProvider,
+    TBsListTile,
+    TListTileOptionProps,
+    TRecord,
+} from '@/types';
 import {
     computed,
     defineComponent,
@@ -10,16 +20,6 @@ import {
     shallowRef,
     watch,
 } from 'vue';
-import { useCurrentRoute, useHasLink, useHasRouter, useIsRouteMatch } from '../../mixins/CommonApi';
-import type {
-    IListItem,
-    IListViewProvider,
-    TBsListTile,
-    TListTileOptionProps,
-    TRecord,
-} from '../../types';
-import { useListTileClassNames, useRenderListTile } from './mixins/listTileApi';
-import { listTileProps } from './mixins/listViewProps';
 
 export default defineComponent<TBsListTile>({
     name: 'BsListTile',

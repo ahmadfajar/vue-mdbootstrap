@@ -1,8 +1,8 @@
+import { baseTagProps } from '@/components/Card/mixins/cardProps';
+import type { TBsListTileContent, TListTileContentOptionProps } from '@/components/ListView/types';
+import { cssPrefix, useRenderSlotDefault } from '@/mixins/CommonApi';
+import { booleanProp } from '@/mixins/CommonProps';
 import { defineComponent } from 'vue';
-import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
-import { baseTagProps } from '../Card/mixins/cardProps';
-import type { TBsListTileContent, TListTileContentOptionProps } from './types';
 
 export default defineComponent<TBsListTileContent>({
     name: 'BsListTileContent',

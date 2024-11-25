@@ -3,7 +3,7 @@ import {
     ComponentCustomProps,
     ComponentInternalInstance,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     Ref,
     VNode,
     VNodeProps,
@@ -68,11 +68,11 @@ export declare type TTabsOptionProps = TTabsBaseProps & {
     /**
      * Optional, Tab content css classes.
      */
-    contentClass?: string | Array<string>;
+    contentClass?: string | string[];
     /**
      * Optional, TabItem's container css classes.
      */
-    innerClass?: string | Array<string>;
+    innerClass?: string | string[];
     /**
      * The activeTab index or activeTab ID that monitored by `v-model`.
      */
@@ -157,4 +157,4 @@ export declare const BsTabs: {
     };
 };
 
-export declare const BsTabPlugin: Plugin;
+export declare const BsTabPlugin: ObjectPlugin;

@@ -2,17 +2,23 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
-import { TFlipMode, TSizeOptionProps, TSizeProps } from '../../../types';
+import {
+    TFlipMode,
+    type TIconRotation,
+    TIconVariant,
+    TSizeOptionProps,
+    TSizeProps,
+} from '../../../types';
 
 export declare type TImageProps = {
     /**
      * Create this component with circle shape.
      */
-    circle?: boolean,
+    circle?: boolean;
     /**
      * Create this component with rounded shape.
      */
@@ -25,16 +31,27 @@ export declare type TImageProps = {
      * Shortcut to create this component with equal height and width.
      */
     size?: string | number | TSizeProps;
-}
+};
 
 export declare type TIconProps = {
     /**
-     * Shortcut to insert component `BsIcon` inside this component.
-     * Use any valid Google Material icon name, see
-     * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-     * for details.
+     * Android icon name, either with or without suffix. Valid suffixes are:
+     * `_outlined`, `_rounded`, `_sharp`, `_filled`, `_outlined_filled`,
+     * `_rounded_filled`, or `_sharp_filled`. Suffix will take priority over
+     * `iconVariant` property.
+     *
+     * This is a shortcut to insert component `BsIcon` inside this component.
+     *
+     * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
      */
     icon?: string;
+    /**
+     * Use predefined icon style, valid values are: `outlined`, `rounded`, `sharp`,
+     * `filled`, `rounded_filled`, and `sharp_filled`. Default is `outlined`.
+     *
+     * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
+     */
+    iconVariant?: TIconVariant;
     /**
      * Apply **spin** animation to the icon.
      */
@@ -50,14 +67,14 @@ export declare type TIconProps = {
     /**
      * Rotate the icon, valid values are: `90`, `180`, `270`.
      */
-    iconRotation?: string | number;
-}
+    iconRotation?: TIconRotation;
+};
 
 export declare type TAvatarImageOptionProps = TSizeOptionProps & {
     /**
      * Create this component with circle shape.
      */
-    circle?: boolean,
+    circle?: boolean;
     /**
      * Create this component with rounded shape.
      */
@@ -74,19 +91,20 @@ export declare type TAvatarImageOptionProps = TSizeOptionProps & {
      * Apply border color to this component.
      */
     borderColor?: string;
-}
+};
 
-export declare type TAvatarOptionProps = TAvatarImageOptionProps & TIconProps & {
-    /**
-     * Create avatar from a text. The text must be less than 4 characters.
-     */
-    text?: string;
-}
+export declare type TAvatarOptionProps = TAvatarImageOptionProps &
+    TIconProps & {
+        /**
+         * Create avatar from a text. The text must be less than 4 characters.
+         */
+        text?: string;
+    };
 
 export declare type TBsAvatar = ComponentObjectPropsOptions<TAvatarOptionProps>;
 
 export declare const BsAvatar: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TAvatarOptionProps;
         $slots: {
             default?: () => VNode[];
@@ -94,4 +112,4 @@ export declare const BsAvatar: {
     };
 };
 
-export declare const BsAvatarPlugin: Plugin;
+export declare const BsAvatarPlugin: ObjectPlugin;

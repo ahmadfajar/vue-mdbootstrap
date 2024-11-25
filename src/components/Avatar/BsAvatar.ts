@@ -1,17 +1,16 @@
-import type { Prop } from 'vue';
-import { defineComponent, h } from 'vue';
-import { cssPrefix, useRenderSlot } from '../../mixins/CommonApi';
-import type { TAvatarOptionProps, TBsAvatar, TBsIcon } from '../../types';
-import Helper from '../../utils/Helper';
-import { BsIcon } from '../Icon';
-import { useGetCalcSize, useSizeStyles } from '../Icon/mixins/iconApi';
 import {
     useAvatarIconSize,
     useCreateIconProps,
     useRenderAvatarImage,
     useShapeClasses,
-} from './mixins/avatarApi';
-import { avatarProps } from './mixins/avatarProps';
+} from '@/components/Avatar/mixins/avatarApi';
+import { avatarProps } from '@/components/Avatar/mixins/avatarProps';
+import { BsIcon } from '@/components/Icon';
+import { useGetCalcSize, useSizeStyles } from '@/components/Icon/mixins/iconApi';
+import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi';
+import type { TAvatarOptionProps, TBsAvatar, TBsIcon } from '@/types';
+import Helper from '@/utils/Helper';
+import { defineComponent, h } from 'vue';
 
 export default defineComponent<TBsAvatar>({
     name: 'BsAvatar',
@@ -43,7 +42,8 @@ export default defineComponent<TBsAvatar>({
                         ? useRenderAvatarImage(thisProps)
                         : !Helper.isEmpty(thisProps.icon)
                           ? h<TBsIcon>(BsIcon, {
-                                size: useAvatarIconSize(thisProps) as Prop<number>,
+                                // @ts-ignore
+                                size: useAvatarIconSize(thisProps),
                                 ...useCreateIconProps(thisProps),
                             })
                           : h(

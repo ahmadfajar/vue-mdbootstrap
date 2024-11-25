@@ -1,4 +1,4 @@
-import type { App, Plugin } from 'vue';
+import type { App, ObjectPlugin } from 'vue';
 import BsIcon from './BsIcon';
 import BsIconSvg from './BsIconSvg';
 import BsIconSpinner from './BsIconSpinner';
@@ -6,7 +6,7 @@ import BsToggleIcon from './BsToggleIcon';
 import '../Progress/progress.scss';
 import './icon.scss';
 
-const BsIconPlugin: Plugin = {
+const BsIconPlugin: ObjectPlugin = {
     install: (app: App): void => {
         app.component(BsIcon.name as string, BsIcon);
         app.component(BsIconSvg.name as string, BsIconSvg);

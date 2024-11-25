@@ -1,8 +1,12 @@
+import {
+    useItemLinkClassNames,
+    useRenderTabItem,
+    useTabItemClassNames,
+} from '@/components/Tabs/mixins/tabsApi';
+import { tabItemProps } from '@/components/Tabs/mixins/tabsProps';
+import TabsProvider from '@/components/Tabs/mixins/TabsProvider';
+import type { TBsTabItem, TRecord, TTabItemOptionProps } from '@/types';
 import { computed, defineComponent, inject, ref } from 'vue';
-import type { TBsTabItem, TRecord, TTabItemOptionProps } from '../../types';
-import { useItemLinkClassNames, useRenderTabItem, useTabItemClassNames } from './mixins/tabsApi';
-import { tabItemProps } from './mixins/tabsProps';
-import TabsProvider from './mixins/TabsProvider';
 
 export default defineComponent<TBsTabItem>({
     name: 'BsTabItem',

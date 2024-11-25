@@ -1,14 +1,18 @@
-import { computed, defineComponent, nextTick, onMounted, reactive, ref, watch } from 'vue';
-import { useGenerateId } from '../../mixins/CommonApi';
-import { useChipIsSelected, useRenderChipGroup, useSetSliderSize } from './mixins/chipGroupApi';
-import { chipGroupProps } from './mixins/chipGroupProps';
+import {
+    useChipIsSelected,
+    useRenderChipGroup,
+    useSetSliderSize,
+} from '@/components/Chip/mixins/chipGroupApi';
+import { chipGroupProps } from '@/components/Chip/mixins/chipProps';
 import type {
     TBsChipGroup,
     TChipContainer,
     TChipGroupOptionProps,
     TChipOptionItem,
     TChipValue,
-} from './types';
+} from '@/components/Chip/types';
+import { useGenerateId } from '@/mixins/CommonApi';
+import { computed, defineComponent, nextTick, onMounted, reactive, ref, watch } from 'vue';
 
 export default defineComponent<TBsChipGroup>({
     name: 'BsChipGroup',
@@ -42,9 +46,11 @@ export default defineComponent<TBsChipGroup>({
             return slider.contentWidth > Math.abs(scrollOffset.value) + slider.wrapperWidth;
         });
         const hasPrev = computed(() => scrollOffset.value !== 0);
+
         const chipCloseHandler = (item: TChipOptionItem): void => {
             emit('item:close', item);
         };
+
         const chipClickHandler = (item: TChipOptionItem): void => {
             if (item.disabled) {
                 return;

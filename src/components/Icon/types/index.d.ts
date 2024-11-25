@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -10,15 +10,23 @@ import { EventUpdateModelValueProps } from '../../../types';
 
 export declare type TFlipMode = 'horizontal' | 'vertical' | 'both';
 
-export declare type TIconVariant = 'outlined' | 'filled' | 'rounded' | 'sharp';
+export declare type TIconRotation = '90' | '180' | '270';
+
+export declare type TIconVariant =
+    | 'outlined'
+    | 'rounded'
+    | 'sharp'
+    | 'filled'
+    | 'outlined_filled'
+    | 'rounded_filled'
+    | 'sharp_filled';
 
 export declare type TPlacementPosition = 'left' | 'right' | 'top' | 'bottom';
 
 export declare type TIconData = {
-    id: number;
     name: string;
-    icon?: string;
-    category?: string;
+    icon: string;
+    theme: string;
     variant?: string;
     data?: string;
 };
@@ -51,9 +59,20 @@ export declare type TSizeOptionProps = {
 
 export declare type TIconOptionProps = TSizeOptionProps & {
     /**
-     * The icon’s name or alias.
+     * Android icon name with suffix: `_outlined`, `_rounded`, `_sharp`, `_filled`,
+     * `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+     *
+     * Suffix `_filled` or `_outlined_filled` will result the same icon style.
+     * And you can either use `*_filled` or sets property `filled` to `true` to
+     * create an icon with fill style.
+     *
+     * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
      */
-    icon?: string;
+    icon: string;
+    /**
+     * Use [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) with fill style.
+     */
+    filled?: boolean;
     /**
      * Apply **pulse** animation to the icon.
      */
@@ -69,7 +88,7 @@ export declare type TIconOptionProps = TSizeOptionProps & {
     /**
      * Rotate the icon, valid values are: `90`, `180`, `270`.
      */
-    rotate?: string | number;
+    rotate?: TIconRotation;
 };
 
 export declare type TIconSpinnerOptionProps = {
@@ -93,13 +112,35 @@ export declare type TIconSpinnerOptionProps = {
 
 export declare type TToggleIconOptionProps = {
     /**
-     * The icon’s name or alias.
+     * The icon to display when `modelValue` property is `false` or `undefined`.
+     *
+     * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
+     * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+     *
+     * Suffix `_filled` or `_outlined_filled` will result the same icon style.
+     * And you can either use `*_filled` or sets property `filled` to `true` to
+     * create an icon with fill style.
+     *
+     * @see  [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
      */
-    icon?: string;
+    icon: string;
     /**
-     * The icon to display when `value` property is `true`.
+     * The icon to display when `modelValue` property is `true`.
+     *
+     * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
+     * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+     *
+     * Suffix `_filled` or `_outlined_filled` will result the same icon style.
+     * And you can either use `*_filled` or sets property `filled` to `true` to
+     * create an icon with fill style.
+     *
+     * @see  [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
      */
-    toggleIcon?: string;
+    toggleIcon: string;
+    /**
+     * Use [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) with fill style.
+     */
+    filled?: boolean;
     /**
      * Value monitored by `v-model` to maintain this component state.
      */
@@ -120,13 +161,6 @@ export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptio
 
 export declare const spinnerSvgData =
     'M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z';
-
-export declare function useCreateSvgComponent(
-    data: string,
-    height: number | string,
-    width: number | string,
-    clazz: unknown
-): VNode;
 
 export declare const BsIcon: {
     new (): {
@@ -162,4 +196,19 @@ export declare const BsToggleIcon: {
     };
 };
 
-export declare const BsIconPlugin: Plugin;
+/**
+ * Function to draw inline SVG xml directly.
+ *
+ * @param data   The SVG xml string
+ * @param height The desired {@link Element} height
+ * @param width  The desired {@link Element} width
+ * @param clazz  Optional css class name
+ */
+export declare function useRenderSVG(
+    data: string,
+    height: number | string,
+    width: number | string,
+    clazz: unknown
+): VNode;
+
+export declare const BsIconPlugin: ObjectPlugin;

@@ -1,20 +1,14 @@
-import type {
-    ComputedRef,
-    ExtractPropTypes,
-    Prop,
-    Ref,
-    Slots,
-    VNode,
-    VNodeArrayChildren,
-} from 'vue';
-import { h, toDisplayString } from 'vue';
+import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi';
+import { BsToggleButton } from '@/components/Button';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
+import { BsIcon } from '@/components/Icon';
 import {
     cssPrefix,
     useGenerateId,
     useRenderSlot,
     useRenderSlotWithWrapper,
-} from '../../../mixins/CommonApi';
-import { kebabCase } from '../../../mixins/StringHelper';
+} from '@/mixins/CommonApi';
+import { kebabCase } from '@/mixins/StringHelper';
 import type {
     TBsIcon,
     TBsToggleField,
@@ -26,12 +20,19 @@ import type {
     TRecord,
     TToggleButtonOptionProps,
     TToggleFieldOptionProps,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { useCreateIconProps } from '../../Avatar/mixins/avatarApi';
-import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
-import { BsIcon } from '../../Icon';
-import BsToggleButton from '../BsToggleButton';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type {
+    ComputedRef,
+    EmitFn,
+    ExtractPropTypes,
+    Prop,
+    Ref,
+    Slots,
+    VNode,
+    VNodeArrayChildren,
+} from 'vue';
+import { h, toDisplayString, vModelCheckbox, vModelRadio, withDirectives } from 'vue';
 
 export function useMakeButtonProps(
     props: Readonly<TButtonOptionProps>,
@@ -83,10 +84,10 @@ function isInputItemSelected(
     }
 }
 
-export function useMakeInputItemClasses(
+export function useCreateInputItemClasses(
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>
-): TRecord | object {
+): TRecord {
     const isSelected = isInputItemSelected(item, props);
 
     return {
@@ -110,10 +111,10 @@ export function useMakeInputItemClasses(
     };
 }
 
-export function useMakeInputItemAttrs(
+function createInputItemAttrs(
     item: TInputOptionItem,
     props: Readonly<TToggleButtonOptionProps>
-): TRecord | object {
+): TRecord {
     const attr = {
         id: item.id || useGenerateId(),
         role: props.multiple ? 'checkbox' : 'radio',
@@ -135,6 +136,28 @@ export function useMakeInputItemAttrs(
     }
 
     return attr;
+}
+
+export function useCreateInputElement(
+    localValue: Ref<string | number | boolean | unknown[] | undefined>,
+    item: TInputOptionItem,
+    props: Readonly<TToggleButtonOptionProps>,
+    emit: EmitFn
+): VNode {
+    return withDirectives(
+        h('input', {
+            class: 'd-none',
+            value: item.value,
+            ...createInputItemAttrs(item, props),
+            'onUpdate:modelValue': (value: string | number | boolean) => {
+                if (!props.disabled && !props.readonly && !item.disabled && !item.readonly) {
+                    localValue.value = value;
+                    emit('update:model-value', localValue.value);
+                }
+            },
+        }),
+        [props.multiple ? [vModelCheckbox, localValue.value] : [vModelRadio, localValue.value]]
+    );
 }
 
 function renderSlotIcon(
@@ -179,7 +202,8 @@ function renderSlotIcon(
             name,
             { key: iconId },
             !Helper.isEmpty(props.icon)
-                ? h<TBsIcon>(BsIcon, {
+                ? //@ts-ignore
+                  h<TBsIcon>(BsIcon, {
                       id: iconId,
                       class: {
                           [`${cssPrefix}icon-${iconPosition}`]:

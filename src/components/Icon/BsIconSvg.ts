@@ -1,14 +1,17 @@
+import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi';
+import { iconProps } from '@/components/Icon/mixins/iconProps';
+import {
+    useGetGoogleIcon,
+    useRenderIconFromSvg,
+    useSvgClasses,
+} from '@/components/Icon/mixins/svgApi';
+import type { TBsIconSvg, TIconData, TIconOptionProps, TRecord } from '@/types';
 import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue';
-import type { TBsIconSvg, TIconData, TIconOptionProps, TRecord } from '../../types';
-import { useSizeHeight, useSizeWidth } from './mixins/iconApi';
-import { iconProps } from './mixins/iconProps';
-import { findIcon, useGoogleIcon, useRenderSvgIcon, useSvgClasses } from './mixins/svgApi';
 
 export default defineComponent<TBsIconSvg>({
     name: 'BsIconSvg',
     props: iconProps,
     setup(props) {
-        let iconData: TIconData | undefined;
         const thisProps = props as Readonly<TIconOptionProps>;
         const svgIcon = ref<TIconData>();
         const svgClasses = computed<TRecord>(() => useSvgClasses(thisProps));
@@ -16,22 +19,16 @@ export default defineComponent<TBsIconSvg>({
         watch(
             () => thisProps.icon,
             async (value) => {
-                iconData = findIcon(value);
-                if (iconData) {
-                    svgIcon.value = await useGoogleIcon(iconData);
-                }
+                svgIcon.value = await useGetGoogleIcon(value, thisProps.filled);
             }
         );
         onBeforeMount(async () => {
-            iconData = findIcon(thisProps.icon);
-            if (iconData) {
-                svgIcon.value = await useGoogleIcon(iconData);
-            }
+            svgIcon.value = await useGetGoogleIcon(thisProps.icon, thisProps.filled);
         });
 
         return () =>
-            useRenderSvgIcon(
-                svgIcon.value,
+            useRenderIconFromSvg(
+                svgIcon.value?.data,
                 useSizeHeight(thisProps) || 24,
                 useSizeWidth(thisProps) || 24,
                 svgClasses.value

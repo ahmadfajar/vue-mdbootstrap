@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -12,6 +12,8 @@ import {
     TIconProps,
     TLabelPosition,
 } from '../../../types';
+
+export declare type TChipSize = 'sm' | 'lg';
 
 export declare type TChipValue = {
     id: string;
@@ -31,7 +33,6 @@ export declare type TChipOptionItem = TIconProps & {
     disabled?: boolean;
     dismissible?: boolean;
     imgSrc?: string;
-    iconVariant?: string;
     href?: string;
     text: string;
     value?: string | number | boolean;
@@ -71,10 +72,6 @@ export declare type TChipOptionProps = TIconProps & {
      */
     iconPosition?: TLabelPosition;
     /**
-     * Use predefined icon style to be used inside this component.
-     */
-    iconVariant?: string;
-    /**
      * Enable avatar and set the image location url.
      */
     imgSrc?: string;
@@ -111,7 +108,7 @@ export declare type TChipOptionProps = TIconProps & {
     /**
      * Create Chip with predefined size, valid values are: `sm` (small), `lg` (large).
      */
-    size?: string;
+    size?: TChipSize;
 };
 
 export declare type TChipGroupOptionProps = {
@@ -147,11 +144,11 @@ export declare type TChipGroupOptionProps = {
     /**
      * The collection of `<BsChip>` property-value.
      */
-    items: Array<TChipOptionItem>;
+    items: TChipOptionItem[];
     /**
      * The value monitored by `v-model` for the selected items.
      */
-    modelValue?: TChipValue | Array<TChipValue>;
+    modelValue?: TChipValue | TChipValue[];
     /**
      * Allow multiple selection or not.
      */
@@ -167,7 +164,7 @@ export declare type TChipGroupOptionProps = {
     /**
      * Create Chip with predefined size, valid values are: `sm` (small), `lg` (large).
      */
-    size?: string;
+    size?: TChipSize;
     /**
      * Show slider's button or not.
      */
@@ -249,4 +246,4 @@ export declare const BsChipGroup: {
     };
 };
 
-export declare const BsChipPlugin: Plugin;
+export declare const BsChipPlugin: ObjectPlugin;

@@ -2,11 +2,13 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
-import { EventVoidClosableProps, EventUpdateModelValueProps, TIconProps, TIconVariant } from '../../../types';
+import { EventUpdateModelValueProps, EventVoidClosableProps, TIconProps } from '../../../types';
+
+export declare type TAlertVariant = 'success' | 'info' | 'warning' | 'danger' | 'help';
 
 export declare type TAlertOptionProps = TIconProps & {
     /**
@@ -25,12 +27,7 @@ export declare type TAlertOptionProps = TIconProps & {
      * @deprecated
      * Use `variant` property instead.
      */
-    iconType?: string;
-    /**
-     * Use predefined icon style, valid values are: `outlined`, `filled`, `round`, `sharp`.
-     * See [Google Material Icons](https://fonts.google.com/icons?icon.set=Material+Icons).
-     */
-    iconVariant?: TIconVariant;
+    iconType?: TAlertVariant;
     /**
      * The value monitored by `v-model` to display or hide the alert component.
      */
@@ -51,17 +48,19 @@ export declare type TAlertOptionProps = TIconProps & {
     /**
      * Use predefined icon to create contextual alert.
      */
-    variant?: string;
-}
+    variant?: TAlertVariant;
+};
 
 export declare type TBsAlert = ComponentObjectPropsOptions<TAlertOptionProps>;
 
 declare type AllowedAlertProps = AllowedComponentProps &
-    ComponentCustomProps & VNodeProps & EventVoidClosableProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventVoidClosableProps &
     EventUpdateModelValueProps<boolean>;
 
 export declare const BsAlert: {
-    new(): {
+    new (): {
         $props: AllowedAlertProps & TAlertOptionProps;
         $slots: {
             default?: () => VNode[];
@@ -71,4 +70,4 @@ export declare const BsAlert: {
     };
 };
 
-export declare const BsAlertPlugin: Plugin;
+export declare const BsAlertPlugin: ObjectPlugin;

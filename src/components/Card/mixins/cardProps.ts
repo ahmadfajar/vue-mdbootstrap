@@ -1,5 +1,5 @@
 import type { Prop } from 'vue';
-import { booleanProp, stringProp, stringRequiredProp, tagProp } from '../../../mixins/CommonProps';
+import { booleanProp, stringProp, stringMandatoryProp, tagProp } from '../../../mixins/CommonProps';
 import type { TCardContentVariant } from '../types';
 
 export const baseTagProps = {
@@ -60,7 +60,7 @@ export const cardMediaProps = {
     /**
      * Text for media title.
      */
-    title: stringRequiredProp,
+    title: stringMandatoryProp,
     /**
      * Text for media subtitle.
      */

@@ -2,16 +2,16 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
-    VNodeProps
+    VNodeProps,
 } from 'vue';
 import {
     EventUpdateModelValueProps,
     TIconProps,
     TInputBaseProps,
     TLabelPosition,
-    TValidationProps
+    TValidationProps,
 } from '../../../types';
 
 export declare type TButtonInnerOptionProps = {
@@ -20,7 +20,7 @@ export declare type TButtonInnerOptionProps = {
     iconMode?: boolean;
     rippleOff?: boolean;
     tagName?: string;
-}
+};
 
 export declare type TButtonMode = 'default' | 'icon' | 'fab' | 'floating';
 export declare type TButtonType = 'button' | 'submit' | 'reset';
@@ -65,50 +65,51 @@ export declare type TBaseButtonProps = {
      * @see [Bootstrap Button Size](https://getbootstrap.com/docs/5.2/components/buttons/#sizes)
      */
     size?: TButtonSize;
-}
+};
 
-export declare type TButtonOptionProps = TIconProps & TBaseButtonProps & {
-    /**
-     * Sets this button state: `active` or `normal`.
-     */
-    active?: boolean;
-    /**
-     * Sets this button state: `enabled` or `disabled`.
-     */
-    disabled?: boolean;
-    readonly?: boolean;
-    /**
-     * This button component mode, valid values are: `default, icon, fab, floating`.
-     * `floating` is deprecated, use `fab` instead.
-     */
-    mode?: TButtonMode;
-    /**
-     * Render this button component as dropdowns button.
-     * @see [Bootstrap Dropdowns](https://getbootstrap.com/docs/5.2/components/dropdowns/)
-     */
-    dropdownToggle?: boolean;
-    /**
-     * Render component as `<a>` element and define its `href` property and
-     * apply button styles to the element.
-     */
-    href?: string;
-    /**
-     * Place icon on the `left` side (before text) or on the `right` side (after text).
-     */
-    iconPosition?: TLabelPosition;
-    /**
-     * Render the icon with predefined size.
-     */
-    iconSize?: string | number;
-    /**
-     * Disable the **ripple** effect.
-     */
-    rippleOff?: boolean;
-    /**
-     * The value to set to the button’s type attribute. Valid values are: `button`, `submit`, `reset`.
-     */
-    type?: TButtonType;
-}
+export declare type TButtonOptionProps = TIconProps &
+    TBaseButtonProps & {
+        /**
+         * Sets this button state: `active` or `normal`.
+         */
+        active?: boolean;
+        /**
+         * Sets this button state: `enabled` or `disabled`.
+         */
+        disabled?: boolean;
+        readonly?: boolean;
+        /**
+         * This button component mode, valid values are: `default, icon, fab, floating`.
+         * `floating` is deprecated, use `fab` instead.
+         */
+        mode?: TButtonMode;
+        /**
+         * Render this button component as dropdowns button.
+         * @see [Bootstrap Dropdowns](https://getbootstrap.com/docs/5.2/components/dropdowns/)
+         */
+        dropdownToggle?: boolean;
+        /**
+         * Render component as `<a>` element and define its `href` property and
+         * apply button styles to the element.
+         */
+        href?: string;
+        /**
+         * Place icon on the `left` side (before text) or on the `right` side (after text).
+         */
+        iconPosition?: TLabelPosition;
+        /**
+         * Render the icon with equal height and width.
+         */
+        iconSize?: string | number;
+        /**
+         * Disable the **ripple** effect.
+         */
+        rippleOff?: boolean;
+        /**
+         * The value to set to the button’s type attribute. Valid values are: `button`, `submit`, `reset`.
+         */
+        type?: TButtonType;
+    };
 
 export declare type TInputOptionItem = TIconProps & {
     id?: string;
@@ -118,30 +119,31 @@ export declare type TInputOptionItem = TIconProps & {
     value: string | number | boolean;
     label: string;
     iconSize?: number;
-}
+};
 
-export declare type TToggleButtonOptionProps = TInputBaseProps & TBaseButtonProps & {
-    /**
-     * The number of items stored in the collection.
-     */
-    items: TInputOptionItem[];
-    /**
-     * Allow multiple choice or not.
-     */
-    multiple?: boolean;
-    /**
-     * The input value to be monitored by `v-model`.
-     */
-    modelValue?: string | number | boolean | unknown[];
-    /**
-     * Color to apply when Button is active or selected.
-     */
-    toggleColor?: string;
-    /**
-     * Place icon on the `left` side (before text) or on the `right` side (after text).
-     */
-    iconPosition?: TLabelPosition;
-}
+export declare type TToggleButtonOptionProps = TInputBaseProps &
+    TBaseButtonProps & {
+        /**
+         * The number of items stored in the collection.
+         */
+        items: TInputOptionItem[];
+        /**
+         * Allow multiple choice or not.
+         */
+        multiple?: boolean;
+        /**
+         * The input value to be monitored by `v-model`.
+         */
+        modelValue?: string | number | boolean | unknown[];
+        /**
+         * Color to apply when Button is active or selected.
+         */
+        toggleColor?: string;
+        /**
+         * Place icon on the `left` side (before text) or on the `right` side (after text).
+         */
+        iconPosition?: TLabelPosition;
+    };
 
 export declare type TToggleFieldOptionProps = TToggleButtonOptionProps & TValidationProps;
 
@@ -154,7 +156,7 @@ export declare type TBsToggleButton = ComponentObjectPropsOptions<TToggleButtonO
 export declare type TBsToggleField = ComponentObjectPropsOptions<TToggleFieldOptionProps>;
 
 export declare const BsButton: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TButtonOptionProps;
         $slots: {
             default?: () => VNode[];
@@ -163,11 +165,13 @@ export declare const BsButton: {
     };
 };
 
-declare type AllowedToggleButtonProps = AllowedComponentProps & ComponentCustomProps &
-    VNodeProps & EventUpdateModelValueProps<string | number | boolean>;
+declare type AllowedToggleButtonProps = AllowedComponentProps &
+    ComponentCustomProps &
+    VNodeProps &
+    EventUpdateModelValueProps<string | number | boolean>;
 
 export declare const BsToggleButton: {
-    new(): {
+    new (): {
         $props: AllowedToggleButtonProps & TToggleButtonOptionProps;
         $slots: {
             label?: (item: TInputOptionItem) => VNode[];
@@ -178,7 +182,7 @@ export declare const BsToggleButton: {
 };
 
 export declare const BsToggleField: {
-    new(): {
+    new (): {
         $props: AllowedToggleButtonProps & TToggleFieldOptionProps;
         $slots: {
             default?: () => VNode[];
@@ -190,4 +194,4 @@ export declare const BsToggleField: {
     };
 };
 
-export declare const BsButtonPlugin: Plugin;
+export declare const BsButtonPlugin: ObjectPlugin;

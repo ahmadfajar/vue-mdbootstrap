@@ -1,21 +1,16 @@
-import type {
-    ComponentInternalInstance,
-    ComputedRef,
-    Prop,
-    Ref,
-    ShallowRef,
-    Slots,
-    VNode,
-} from 'vue';
-import { createCommentVNode, h, normalizeClass, toDisplayString, withDirectives } from 'vue';
-import { Touch } from '../../../directives';
+import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi';
+import { BsIcon } from '@/components/Icon';
+import BsTabItem from '@/components/Tabs/BsTabItem';
+import BsTabLabel from '@/components/Tabs/BsTabLabel';
+import TabsProvider from '@/components/Tabs/mixins/TabsProvider';
+import { Touch } from '@/directives';
 import {
     cssPrefix,
     useHasLink,
     useHasRouter,
     useMergeClass,
     useRenderRouter,
-} from '../../../mixins/CommonApi';
+} from '@/mixins/CommonApi';
 import type {
     IVNode,
     TBsIcon,
@@ -27,13 +22,18 @@ import type {
     TTabItemOptionProps,
     TTabLabelOptionProps,
     TTabsOptionProps,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { useCreateIconProps } from '../../Avatar/mixins/avatarApi';
-import { BsIcon } from '../../Icon';
-import BsTabItem from '../BsTabItem';
-import BsTabLabel from '../BsTabLabel';
-import TabsProvider from './TabsProvider';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type {
+    ComponentInternalInstance,
+    ComputedRef,
+    Prop,
+    Ref,
+    ShallowRef,
+    Slots,
+    VNode,
+} from 'vue';
+import { createCommentVNode, h, normalizeClass, toDisplayString, withDirectives } from 'vue';
 
 export function useTabViewClassNames(
     props: Readonly<TTabsOptionProps>,
@@ -117,6 +117,7 @@ function renderTabIconWithCondition(
     unMatchCondition?: VNode
 ): VNode {
     if (condition) {
+        // @ts-ignore
         return h<TBsIcon>(BsIcon, {
             size: iconSize as Prop<string | number>,
             ...useCreateIconProps(props),
@@ -143,6 +144,7 @@ function tabLabelAttrs(props: Readonly<TTabItemOptionProps>, provider?: TabsProv
         iconPulse: props.iconPulse,
         iconSpin: props.iconSpin,
         iconRotation: props.iconRotation,
+        iconVariant: props.iconVariant,
         iconSize: provider?.iconSize,
         iconPosition: provider?.iconPosition,
         tabPosition: provider?.tabPosition,
@@ -312,6 +314,7 @@ function createTabItemProps(
         iconRotation: tabPane.iconRotation,
         iconPulse: tabPane.iconPulse,
         iconSpin: tabPane.iconSpin,
+        iconVariant: tabPane.iconVariant,
         label: tabPane.label,
         path: tabPane.path,
         url: tabPane.url,

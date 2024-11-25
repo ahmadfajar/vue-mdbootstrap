@@ -1,3 +1,17 @@
+import { BsRipple } from '@/components/Animation';
+import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi';
+import { BsBadge } from '@/components/Badge';
+import { BsIcon } from '@/components/Icon';
+import { cssPrefix, useHasRouter, useRenderRouter } from '@/mixins/CommonApi';
+import type {
+    IListItem,
+    IListViewProvider,
+    TBsListNavItem,
+    TBsRipple,
+    TListNavItemOptionProps,
+    TRecord,
+} from '@/types';
+import Helper from '@/utils/Helper';
 import type {
     ComponentInternalInstance,
     ComputedRef,
@@ -9,20 +23,6 @@ import type {
     VNode,
 } from 'vue';
 import { createCommentVNode, createTextVNode, h, toDisplayString } from 'vue';
-import { cssPrefix, useHasRouter, useRenderRouter } from '../../../mixins/CommonApi';
-import type {
-    IListItem,
-    IListViewProvider,
-    TBsListNavItem,
-    TBsRipple,
-    TListNavItemOptionProps,
-    TRecord,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsRipple } from '../../Animation';
-import { useCreateIconProps } from '../../Avatar/mixins/avatarApi';
-import { BsBadge } from '../../Badge';
-import { BsIcon } from '../../Icon';
 
 export function useListNavItemClasses(
     props: Readonly<TListNavItemOptionProps>,
@@ -98,7 +98,8 @@ function renderNavItemContent(
         {
             default: () => [
                 !Helper.isEmpty(cmpProps.icon)
-                    ? h(BsIcon, {
+                    ? // @ts-ignore
+                      h(BsIcon, {
                           size: (cmpProps.iconSize ?? 24) as Prop<string | number>,
                           ...useCreateIconProps(cmpProps),
                       })

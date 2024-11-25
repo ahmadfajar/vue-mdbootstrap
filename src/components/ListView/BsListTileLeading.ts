@@ -1,20 +1,20 @@
+import { BsAvatar } from '@/components/Avatar';
+import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi';
+import { baseIconProps, baseImageProps } from '@/components/Avatar/mixins/avatarProps';
+import { BsIcon } from '@/components/Icon';
+import { useGetCalcSize, useSizeStyles } from '@/components/Icon/mixins/iconApi';
+import type { TBsListTileLeading, TListTileLeadingOptionProps } from '@/components/ListView/types';
+import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi';
+import { booleanProp } from '@/mixins/CommonProps';
+import Helper from '@/utils/Helper';
 import type { Prop } from 'vue';
 import { computed, createCommentVNode, defineComponent, h } from 'vue';
-import { cssPrefix, useRenderSlot } from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
-import Helper from '../../utils/Helper';
-import { BsAvatar } from '../Avatar';
-import { useCreateIconProps } from '../Avatar/mixins/avatarApi';
-import { iconProps, imageProps } from '../Avatar/mixins/avatarProps';
-import { BsIcon } from '../Icon';
-import { useGetCalcSize, useSizeStyles } from '../Icon/mixins/iconApi';
-import type { TBsListTileLeading, TListTileLeadingOptionProps } from './types';
 
 export default defineComponent<TBsListTileLeading>({
     name: 'BsListTileLeading',
     props: {
-        ...iconProps,
-        ...imageProps,
+        ...baseIconProps,
+        ...baseImageProps,
         /**
          * Center item inside it vertically.
          * @type {boolean}
@@ -57,7 +57,8 @@ export default defineComponent<TBsListTileLeading>({
                               circle: props.circle,
                           })
                         : !Helper.isEmpty(thisProps.icon)
-                          ? h(BsIcon, {
+                          ? // @ts-ignore
+                            h(BsIcon, {
                                 size: (!thisProps.size || useGetCalcSize(thisProps) === 48
                                     ? 24
                                     : useGetCalcSize(thisProps)) as Prop<string | number>,

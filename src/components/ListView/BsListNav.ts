@@ -1,3 +1,13 @@
+import ListItem from '@/components/ListView/mixins/ListItem';
+import { useAddChild } from '@/components/ListView/mixins/listNavApi';
+import type {
+    IListItem,
+    IListViewProvider,
+    TBsListNav,
+    TListNavOptionProps,
+} from '@/components/ListView/types';
+import { cssPrefix, useGenerateId } from '@/mixins/CommonApi';
+import { booleanProp } from '@/mixins/CommonProps';
 import {
     computed,
     defineComponent,
@@ -9,11 +19,6 @@ import {
     ref,
     shallowRef,
 } from 'vue';
-import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
-import ListItem from './mixins/ListItem';
-import { useAddChild } from './mixins/listNavApi';
-import type { IListItem, IListViewProvider, TBsListNav, TListNavOptionProps } from './types';
 
 export default defineComponent<TBsListNav>({
     name: 'BsListNav',

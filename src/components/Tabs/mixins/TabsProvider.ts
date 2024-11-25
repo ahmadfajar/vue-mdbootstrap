@@ -1,5 +1,3 @@
-import type { ComponentInternalInstance, Ref } from 'vue';
-import { isRef } from 'vue';
 import type {
     TAlignment,
     TEmitFn,
@@ -8,8 +6,10 @@ import type {
     TTabItemOptionProps,
     TTabsBaseProps,
     TTabsVariant,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { ComponentInternalInstance, Ref } from 'vue';
+import { isRef } from 'vue';
 
 /**
  * Class TabsProvider which is used for BsTab's component dependency injection.

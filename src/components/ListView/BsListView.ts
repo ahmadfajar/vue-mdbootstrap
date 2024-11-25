@@ -1,8 +1,12 @@
+import { listViewProps } from '@/components/ListView/mixins/listViewProps';
+import ListViewProvider from '@/components/ListView/mixins/ListViewProvider';
+import type {
+    IListViewProvider,
+    TBsListView,
+    TListViewOptionProps,
+} from '@/components/ListView/types';
+import { cssPrefix } from '@/mixins/CommonApi';
 import { computed, defineComponent, h, provide } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import { listViewProps } from './mixins/listViewProps';
-import ListViewProvider from './mixins/ListViewProvider';
-import type { IListViewProvider, TBsListView, TListViewOptionProps } from './types';
 
 export default defineComponent<TBsListView>({
     name: 'BsListView',

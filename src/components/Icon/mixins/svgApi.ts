@@ -1,82 +1,92 @@
+import {
+    useFilledIconStyle,
+    useNormalizeIconName,
+    useResolveRealIconName,
+    useResolveIconTheme,
+} from '@/components/Icon/mixins/iconApi';
+import { cssPrefix } from '@/mixins/CommonApi';
+import { CacheManager } from '@/model/CacheManager';
+import type { TIconData, TIconOptionProps, TRawCacheItem, TRecord } from '@/types';
+import Helper from '@/utils/Helper';
 import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import type { VNode, VNodeArrayChildren, VNodeProps } from 'vue';
 import { h } from 'vue';
-import { cssPrefix } from '../../../mixins/CommonApi';
-import { CacheManager } from '../../../model/CacheManager';
-import type { TIconData, TIconOptionProps, TRawCacheItem, TRecord } from '../../../types';
-import Helper from '../../../utils/Helper';
-import { IconLib } from './IconLib';
 
 /**
- * Find an icon on the Google's icon library.
+ * Make an icon data based on the [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) library.
  *
- * @param {string} name The icon name
- * @returns {TIconData} Icon data if icon exists on the library otherwise `undefined`.
+ * @param name   The android icon name with suffix: `_outlined`, `_rounded`,
+ *               `_sharp`, `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+ * @param filled Use fill style or not.
+ * @returns {TIconData} The icon data.
  */
-export function findIcon(name: string | undefined): TIconData | undefined {
+function makeIconData(name?: string, filled?: boolean): TIconData | undefined {
     if (!name) {
         return undefined;
     }
 
-    const strIcon = name.trim().toLowerCase().replace(' ', '_').replace('-', '_');
-    const variant =
-        strIcon.endsWith('_rounded') || strIcon.endsWith('_round')
-            ? 'round'
-            : strIcon.endsWith('_outlined')
-              ? 'outlined'
-              : strIcon.endsWith('_sharp')
-                ? 'sharp'
-                : '';
-    const realName = strIcon.replace(/(_outlined|_filled|_rounded|_round|_sharp)$/, '');
-    const found = Object.entries(IconLib).find((el) => {
-        const arr = el[0].split('::');
-        return arr[1] === realName;
-    });
+    const strIcon = useNormalizeIconName(name);
+    const theme = useResolveIconTheme(strIcon);
+    const realName = useResolveRealIconName(strIcon);
+    const isFilled = useFilledIconStyle(strIcon) || filled;
 
-    if (found != null) {
-        return {
-            id: found[1],
-            name: realName,
-            icon: strIcon,
-            category: found[0].split('::')[0],
-            variant: variant,
-        };
+    return {
+        name: realName,
+        icon: strIcon,
+        theme: theme,
+        variant: isFilled ? 'fill1' : 'default',
+    };
+}
+
+function googleIconUrl(theme: string, name: string, variant: string): string {
+    return `https://fonts.gstatic.com/s/i/short-term/release/materialsymbols${theme}/${name}/${variant}/24px.svg`;
+}
+
+/**
+ * Get an icon data based on the [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) icon library.
+ *
+ * @param name   The android icon name with suffix: `_outlined`, `_rounded` or `_sharp`.
+ * @param filled Use fill style or not.
+ * @returns {TIconData} Icon data if it is found on the Google Material Symbol.
+ */
+export async function useGetGoogleIcon(
+    name: string,
+    filled?: boolean
+): Promise<TIconData | undefined> {
+    const iconObj = makeIconData(name, filled);
+    if (!iconObj) {
+        return iconObj;
     }
 
-    return undefined;
-}
-
-export function googleIconUrl(theme: string | undefined, icon: string, version: number): string {
-    return `https://fonts.gstatic.com/s/i/materialicons${theme}/${icon}/v${version}/24px.svg`;
-}
-
-export async function useGoogleIcon(iconObj: TIconData): Promise<TIconData> {
-    const url = googleIconUrl(iconObj.variant, iconObj.name, iconObj.id);
+    const url = googleIconUrl(iconObj.theme, iconObj.name, iconObj.variant!);
     const cache = CacheManager.getItem(url);
 
     if (cache) {
         return {
-            id: iconObj.id,
             name: iconObj.name,
             icon: iconObj.icon,
-            category: iconObj.category,
+            theme: iconObj.theme,
             variant: iconObj.variant,
             data: cache.getValue() as string,
         };
     } else {
-        const resp = await axios.get(url);
-        const item = { key: url, value: resp.data } as TRawCacheItem;
-        CacheManager.save(item);
+        const response = await axios.get(url);
 
-        return {
-            id: iconObj.id,
-            name: iconObj.name,
-            icon: iconObj.icon,
-            category: iconObj.category,
-            variant: iconObj.variant,
-            data: resp.data,
-        };
+        if (response.status === 200) {
+            const item = { key: url, value: response.data } as TRawCacheItem;
+            CacheManager.save(item);
+
+            return {
+                name: iconObj.name,
+                icon: iconObj.icon,
+                theme: iconObj.theme,
+                variant: iconObj.variant,
+                data: response.data,
+            };
+        }
+
+        return undefined;
     }
 }
 
@@ -117,17 +127,18 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
     return results;
 }
 
-export function useRenderSvgIcon(
-    iconData: TIconData | undefined,
+export function useRenderIconFromSvg(
+    data: string | undefined,
     height: number | string | undefined,
     width: number | string | undefined,
     clazz: unknown
 ): VNode {
-    if (!iconData || !iconData.data) {
+    if (!data) {
         return h('span');
     }
+
     const parser = new XMLParser({ ignoreAttributes: false });
-    const jsonObj = parser.parse(iconData.data);
+    const jsonObj = parser.parse(data);
     const svgData = Object.entries(jsonObj.svg);
     const props = createNodeAttrs(svgData);
     const children = svgData.filter((el) => !el[0].startsWith('@_'));
@@ -153,16 +164,6 @@ export function useSvgClasses(props: Readonly<TIconOptionProps>): TRecord {
         [`${cssPrefix}rotate-180`]: props.rotate && parseInt(props.rotate as string, 10) === 180,
         [`${cssPrefix}rotate-270`]: props.rotate && parseInt(props.rotate as string, 10) === 270,
     };
-}
-
-export function useCreateSvgComponent(
-    data: string,
-    height: number | string,
-    width: number | string,
-    clazz: unknown
-): VNode {
-    const svgData = { id: 123, name: 'svg', data: data } as TIconData;
-    return useRenderSvgIcon(svgData, height, width, clazz);
 }
 
 export const spinnerSvgData =
@@ -213,4 +214,13 @@ export function useCircleSizeStyles(diameter: number): Record<string, string> {
         width: size,
         height: size,
     };
+}
+
+export function useRenderSVG(
+    data: string,
+    height: number | string,
+    width: number | string,
+    clazz: unknown
+): VNode {
+    return useRenderIconFromSvg(data, height, width, clazz);
 }

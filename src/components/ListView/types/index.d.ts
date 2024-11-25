@@ -2,8 +2,9 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentInternalInstance,
-    ComponentObjectPropsOptions, ComponentPublicInstance,
-    Plugin,
+    ComponentObjectPropsOptions,
+    ComponentPublicInstance,
+    ObjectPlugin,
     Ref,
     RendererNode,
     VNode,
@@ -375,7 +376,7 @@ export declare const BsListTileSubtitle: {
     };
 };
 
-export declare const BsListViewPlugin: Plugin;
+export declare const BsListViewPlugin: ObjectPlugin;
 
 export declare interface IListViewProvider extends ObjectBase {
     readonly config: Readonly<TListViewOptionProps>;
