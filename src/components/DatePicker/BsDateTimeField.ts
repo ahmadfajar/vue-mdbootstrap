@@ -1,22 +1,25 @@
-import { DateTime } from 'luxon';
-import { computed, defineComponent, ref, watch } from 'vue';
-import { cssPrefix, isServer } from '../../mixins/CommonApi';
+import { DatePickerConst } from '@/components/DatePicker/mixins/datePickerApi.ts';
+import { dateTimeFieldProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
+import {
+    useParseDateTimeFromFormat,
+    useRenderDateTimeField,
+} from '@/components/DatePicker/mixins/dateTimeFieldApi.ts';
+import {
+    useFieldControlClasses,
+    useFieldWrapperClasses,
+    useShowClearButton,
+} from '@/components/Field/mixins/textFieldApi.ts';
+import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
+import { cssPrefix, isServer } from '@/mixins/CommonApi.ts';
 import type {
     TBsDateTimeField,
     TDateTimeFieldOptionProps,
     TDateTimePickerMode,
     TRecord,
-} from '../../types';
-import Helper from '../../utils/Helper';
-import {
-    useFieldControlClasses,
-    useFieldWrapperClasses,
-    useShowClearButton,
-} from '../Field/mixins/textFieldApi';
-import { useGetValidationResult } from '../Field/mixins/validationApi';
-import { DatePickerConst } from './mixins/datePickerApi';
-import { dateTimeFieldProps } from './mixins/datePickerProps';
-import { useParseDateTimeFromFormat, useRenderDateTimeField } from './mixins/dateTimeFieldApi';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import { DateTime } from 'luxon';
+import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsDateTimeField>({
     name: 'BsDateTimeField',

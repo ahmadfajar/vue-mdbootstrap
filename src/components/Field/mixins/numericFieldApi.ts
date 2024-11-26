@@ -1,6 +1,21 @@
-import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
-import { createCommentVNode, h, toDisplayString } from 'vue';
-import { cssPrefix, useRenderTransition } from '../../../mixins/CommonApi';
+import { BsRipple } from '@/components/Animation';
+import {
+    useCreateFieldInnerWrapper,
+    useCreateFieldWrapper,
+    useCreateValidationIcon,
+    useInputTextFieldAttrs,
+    useMakeInputBaseAttrs,
+} from '@/components/Field/mixins/textFieldApi';
+import {
+    useOnFieldBlurred,
+    useOnFieldFocused,
+    useOnFieldValueCleared,
+    useOnFieldValueUpdated,
+    useOnTextFieldNodeMounted,
+} from '@/components/Field/mixins/textFieldEventApi';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
+import { BsIcon } from '@/components/Icon';
+import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi';
 import type {
     TBsIcon,
     TEmitFn,
@@ -9,25 +24,10 @@ import type {
     TNumericOpsOptions,
     TRecord,
     TSpaceAround,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsRipple } from '../../Animation';
-import { BsIcon } from '../../Icon';
-import {
-    useCreateFieldInnerWrapper,
-    useCreateFieldWrapper,
-    useCreateValidationIcon,
-    useInputTextFieldAttrs,
-    useMakeInputBaseAttrs,
-} from './textFieldApi';
-import {
-    useOnFieldBlurred,
-    useOnFieldFocused,
-    useOnFieldValueCleared,
-    useOnFieldValueUpdated,
-    useOnTextFieldNodeMounted,
-} from './textFieldEventApi';
-import { useRenderFieldFeedback } from './validationApi';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import { createCommentVNode, h, toDisplayString } from 'vue';
 
 function createMinusButton(
     props: Readonly<TNumericFieldOptionProps>,
@@ -50,9 +50,7 @@ function createMinusButton(
                 {
                     default: () =>
                         h(BsIcon, {
-                            icon: (props.actionIconVariant === 'outlined'
-                                ? `remove_circle_outline_${props.actionIconVariant}`
-                                : `remove_circle_${props.actionIconVariant}`) as Prop<string>,
+                            icon: `do_not_disturb_on_${props.actionIconVariant}` as Prop<string>,
                             size: 24 as Prop<number>,
                         }),
                 }
@@ -82,9 +80,7 @@ function createPlusButton(
                 {
                     default: () =>
                         h(BsIcon, {
-                            icon: (props.actionIconVariant === 'outlined'
-                                ? `add_circle_outline_${props.actionIconVariant}`
-                                : `add_circle_${props.actionIconVariant}`) as Prop<string>,
+                            icon: `add_circle_${props.actionIconVariant}` as Prop<string>,
                             size: 24 as Prop<number>,
                         }),
                 }

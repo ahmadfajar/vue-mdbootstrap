@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -235,4 +235,4 @@ export declare const BsCombobox: {
     };
 };
 
-export declare const BsComboboxPlugin: Plugin;
+export declare const BsComboboxPlugin: ObjectPlugin;

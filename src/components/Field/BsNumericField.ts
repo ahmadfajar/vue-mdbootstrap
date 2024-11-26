@@ -1,20 +1,20 @@
-import { computed, defineComponent, ref, watch } from 'vue';
-import { cssPrefix, isServer } from '../../mixins/CommonApi';
+import { numericFieldProps } from '@/components/Field/mixins/fieldProps';
+import { useRenderNumericField } from '@/components/Field/mixins/numericFieldApi';
+import {
+    useFieldControlClasses,
+    useFieldWrapperClasses,
+    useShowClearButton,
+} from '@/components/Field/mixins/textFieldApi';
+import { useGetValidationResult } from '@/components/Field/mixins/validationApi';
+import { cssPrefix, isServer } from '@/mixins/CommonApi';
 import type {
     TBsNumericField,
     TNumericFieldOptionProps,
     TNumericOpsOptions,
     TRecord,
-} from '../../types';
-import Helper from '../../utils/Helper';
-import { numericFieldProps } from './mixins/fieldProps';
-import { useRenderNumericField } from './mixins/numericFieldApi';
-import {
-    useFieldControlClasses,
-    useFieldWrapperClasses,
-    useShowClearButton,
-} from './mixins/textFieldApi';
-import { useGetValidationResult } from './mixins/validationApi';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsNumericField>({
     name: 'BsNumericField',

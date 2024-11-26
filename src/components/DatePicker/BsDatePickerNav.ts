@@ -1,12 +1,12 @@
-import { DateTime } from 'luxon';
-import { computed, defineComponent, ref } from 'vue';
 import {
     DatePickerConst,
     useRenderDatePickerNav,
     useWatchOfDatePickerNavProps,
-} from './mixins/datePickerApi';
-import { datePickerNavProps } from './mixins/datePickerProps';
-import type { TBsDatePickerNav, TDatePickerNavProps } from './types';
+} from '@/components/DatePicker/mixins/datePickerApi.ts';
+import { datePickerNavProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
+import type { TBsDatePickerNav, TDatePickerNavProps } from '@/components/DatePicker/types';
+import { DateTime } from 'luxon';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent<TBsDatePickerNav>({
     name: 'BsDatePickerNav',

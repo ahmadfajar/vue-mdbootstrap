@@ -1,4 +1,4 @@
-import type { IEventResult, IHTMLElement } from '../types';
+import type { IEventResult, IHTMLElement } from '@/types';
 
 export class EventListener {
     /**

@@ -22,9 +22,15 @@ export const iconVariant = {
     type: String,
     default: 'outlined',
     validator: (value: string): boolean =>
-        ['outlined', 'rounded', 'sharp', 'filled', 'rounded_filled', 'sharp_filled'].includes(
-            value
-        ),
+        [
+            'outlined',
+            'rounded',
+            'sharp',
+            'filled',
+            'outlined_filled',
+            'rounded_filled',
+            'sharp_filled',
+        ].includes(value),
 } as Prop<TIconVariant>;
 
 export const flip = {

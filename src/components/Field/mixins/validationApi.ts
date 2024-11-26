@@ -1,3 +1,10 @@
+import type {
+    TComputedValidationResult,
+    TValidationProps,
+    TValidator,
+} from '@/components/Field/types';
+import { cssPrefix, useRenderSlot, useRenderTransition } from '@/mixins/CommonApi.ts';
+import Helper from '@/utils/Helper';
 import {
     computed,
     createCommentVNode,
@@ -8,9 +15,6 @@ import {
     unref,
     type VNode,
 } from 'vue';
-import { cssPrefix, useRenderSlot, useRenderTransition } from '../../../mixins/CommonApi';
-import Helper from '../../../utils/Helper';
-import type { TComputedValidationResult, TValidationProps, TValidator } from '../types';
 
 function getValidator(props: Readonly<TValidationProps>): TValidator | undefined {
     return unref(props.validator || props.externalValidator);

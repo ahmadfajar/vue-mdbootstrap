@@ -1,24 +1,24 @@
-import type { Prop } from 'vue';
-import { computed, defineComponent, ref, watch } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
+import { inputProps, textFieldProps } from '@/components/Field/mixins/fieldProps';
+import {
+    useFieldControlClasses,
+    useFieldWrapperClasses,
+    useRenderTextField,
+    useShowClearButton,
+} from '@/components/Field/mixins/textFieldApi';
+import { useGetValidationResult } from '@/components/Field/mixins/validationApi';
+import { validationProps } from '@/components/Field/mixins/validationProps';
+import { cssPrefix } from '@/mixins/CommonApi';
 import {
     booleanProp,
     booleanTrueProp,
     stringOrNumberProp,
     stringProp,
     validStringOrNumberProp,
-} from '../../mixins/CommonProps';
-import type { TBsTextField, TFieldType, TRecord, TTextFieldOptionProps } from '../../types';
-import Helper from '../../utils/Helper';
-import { inputProps, textFieldProps } from './mixins/fieldProps';
-import {
-    useFieldControlClasses,
-    useFieldWrapperClasses,
-    useRenderTextField,
-    useShowClearButton,
-} from './mixins/textFieldApi';
-import { useGetValidationResult } from './mixins/validationApi';
-import { validationProps } from './mixins/validationProps';
+} from '@/mixins/CommonProps';
+import type { TBsTextField, TFieldType, TRecord, TTextFieldOptionProps } from '@/types';
+import Helper from '@/utils/Helper';
+import type { Prop } from 'vue';
+import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsTextField>({
     name: 'BsTextField',

@@ -1,5 +1,10 @@
-import type { Prop, PropType } from 'vue';
-import { useGenerateId } from '../../../mixins/CommonApi';
+import { validationProps } from '@/components/Field/mixins/validationProps';
+import { iconVariant } from '@/components/Icon/mixins/iconProps.ts';
+import {
+    popoverDefaultTransitionProp,
+    popoverPlacementProp,
+} from '@/components/Popover/mixins/popoverProps';
+import { useGenerateId } from '@/mixins/CommonApi';
 import {
     booleanProp,
     booleanTrueProp,
@@ -7,13 +12,9 @@ import {
     stringOrNumberProp,
     stringProp,
     validStringOrFloatProp,
-} from '../../../mixins/CommonProps';
-import type { TIconVariant, TLabelPosition, TSpaceAround } from '../../../types';
-import {
-    popoverDefaultTransitionProp,
-    popoverPlacementProp,
-} from '../../Popover/mixins/popoverProps';
-import { validationProps } from './validationProps';
+} from '@/mixins/CommonProps';
+import type { TLabelPosition, TSpaceAround } from '@/types';
+import type { Prop, PropType } from 'vue';
 
 export const baseInputProps = {
     /**
@@ -46,75 +47,17 @@ export const inputProps = {
 };
 
 export const textFieldProps = {
-    /**
-     * Create this component with **flat** appearance, and removes the borders.
-     * The component appearance will be styled like plain text.
-     */
     flat: booleanProp,
-    /**
-     * Create this component with **filled** appearance.
-     * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
-     */
     filled: booleanProp,
-    /**
-     * Create this component with floating field label.
-     * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
-     */
     floatingLabel: booleanProp,
-    /**
-     * Create this component with **outlined** appearance.
-     * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
-     */
     outlined: booleanProp,
-    /**
-     * Sets auto show the clear button.
-     */
     clearButton: booleanProp,
-    /**
-     * Display validation icon or not, when this field has been validated.
-     */
     validationIcon: booleanProp,
-    /**
-     * Sets icon to display on inner right side.
-     * This is a shortcut to insert component `BsIcon` inside this component.
-     * Use any valid Google Material icon name, see
-     * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-     * for details.
-     */
     appendIcon: stringProp,
-    /**
-     * Sets icon to display on outer right side.
-     * This is a shortcut to insert component `BsIcon` inside this component.
-     * Use any valid Google Material icon name, see
-     * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-     * for details.
-     */
     appendIconOuter: stringProp,
-    /**
-     * Sets icon to display on inner left side.
-     * This is a shortcut to insert component `BsIcon` inside this component.
-     * Use any valid Google Material icon name, see
-     * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-     * for details.
-     */
     prependIcon: stringProp,
-    /**
-     * Sets icon to display on outer left side.
-     * This is a shortcut to insert component `BsIcon` inside this component.
-     * Use any valid Google Material icon name, see
-     * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-     * for details.
-     */
     prependIconOuter: stringProp,
-    /**
-     * Sets the action icon style variant.
-     */
-    actionIconVariant: {
-        type: String as PropType<TIconVariant>,
-        default: 'outlined',
-        validator: (value: string): boolean =>
-            ['outlined', 'filled', 'round', 'sharp'].includes(value),
-    } as Prop<TIconVariant>,
+    actionIconVariant: iconVariant,
 };
 
 export const numericFieldProps = {

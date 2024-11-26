@@ -1,17 +1,17 @@
-import { computed, defineComponent, ref, watch } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import { booleanProp, stringOrArrayProp, stringProp } from '../../mixins/CommonProps';
-import type { TBsChipField, TChipFieldOptionProps, TRecord } from '../../types';
-import Helper from '../../utils/Helper';
-import { useRenderChipField } from './mixins/chipFieldApi';
-import { inputProps, textFieldProps } from './mixins/fieldProps';
+import { useRenderChipField } from '@/components/Field/mixins/chipFieldApi';
+import { inputProps, textFieldProps } from '@/components/Field/mixins/fieldProps';
 import {
     useFieldControlClasses,
     useFieldWrapperClasses,
     useShowClearButton,
-} from './mixins/textFieldApi';
-import { useGetValidationResult } from './mixins/validationApi';
-import { validationProps } from './mixins/validationProps';
+} from '@/components/Field/mixins/textFieldApi';
+import { useGetValidationResult } from '@/components/Field/mixins/validationApi';
+import { validationProps } from '@/components/Field/mixins/validationProps';
+import { cssPrefix } from '@/mixins/CommonApi';
+import { booleanProp, stringOrArrayProp, stringProp } from '@/mixins/CommonProps';
+import type { TBsChipField, TChipFieldOptionProps, TRecord } from '@/types';
+import Helper from '@/utils/Helper';
+import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsChipField>({
     name: 'BsChipField',

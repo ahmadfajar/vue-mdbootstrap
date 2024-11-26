@@ -1,10 +1,10 @@
-import type { App, Plugin } from 'vue';
+import type { App, ObjectPlugin } from 'vue';
 import BsPopover from './BsPopover';
 import '../../../scss/_transitions.scss';
 import '../../../scss/_utilities.scss';
 import './popover.scss';
 
-const BsPopoverPlugin: Plugin = {
+const BsPopoverPlugin: ObjectPlugin = {
     install: (app: App): void => {
         app.component(<string>BsPopover.name, BsPopover);
     },

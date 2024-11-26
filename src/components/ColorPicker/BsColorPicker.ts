@@ -1,8 +1,3 @@
-import { computed, defineComponent, h, mergeProps, onMounted, watch } from 'vue';
-import { hslaToString, hsvaToHsla, rgbaToHex, rgbaToString } from '../../mixins/colorUtils';
-import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
-import Helper from '../../utils/Helper';
-import { BsPopover } from '../Popover';
 import {
     useInitColorPickerData,
     useMoveAlphaSliderThumb,
@@ -11,9 +6,18 @@ import {
     useReleasePointerEvents,
     useRenderColorPicker,
     useUpdateColorCanvas,
-} from './mixins/colorPickerApi';
-import { colorPickerProps } from './mixins/colorPickerProps';
-import type { TBsColorPicker, TColorPickerMode, TColorPickerOptionProps } from './types';
+} from '@/components/ColorPicker/mixins/colorPickerApi';
+import { colorPickerProps } from '@/components/ColorPicker/mixins/colorPickerProps';
+import type {
+    TBsColorPicker,
+    TColorPickerMode,
+    TColorPickerOptionProps,
+} from '@/components/ColorPicker/types';
+import { BsPopover } from '@/components/Popover';
+import { hslaToString, hsvaToHsla, rgbaToHex, rgbaToString } from '@/mixins/colorUtils';
+import { cssPrefix, useGenerateId } from '@/mixins/CommonApi';
+import Helper from '@/utils/Helper';
+import { computed, defineComponent, h, mergeProps, onMounted, watch } from 'vue';
 
 export default defineComponent<TBsColorPicker>({
     name: 'BsColorPicker',
@@ -51,18 +55,24 @@ export default defineComponent<TBsColorPicker>({
             A2: useGenerateId(),
             HEX: useGenerateId(),
         };
+
         const moveColorMarkerHandler = (event: Event) => {
             useMoveColorMarker(event as UIEvent, emit, thisData);
         };
+
         const moveHueSliderThumbHandler = (event: Event) => {
             useMoveHueSliderThumb(event as UIEvent, emit, thisData);
         };
+
         const moveAlphaSliderThumbHandler = (event: Event) => {
             useMoveAlphaSliderThumb(event as UIEvent, emit, thisData);
         };
-        const hexColor = () => rgbaToHex(thisData.config.currentColor);
 
-        expose({ hexColor, rgbColor: thisData.colorRGB, hslColor: thisData.colorHSL });
+        const hexColor = () => rgbaToHex(thisData.config.currentColor);
+        const rgbColor = () => thisData.colorRGB;
+        const hslColor = () => thisData.colorHSL;
+
+        expose({ hexColor, rgbColor, hslColor });
 
         watch(
             () => thisProps.mode,
@@ -70,6 +80,7 @@ export default defineComponent<TBsColorPicker>({
                 thisData.config.mode = value as TColorPickerMode;
             }
         );
+
         watch(
             () => thisProps.modelValue,
             (value) => {
@@ -90,6 +101,7 @@ export default defineComponent<TBsColorPicker>({
                 }
             }
         );
+
         onMounted(() => {
             if (thisData.colorArea.value) {
                 thisData.colorAreaRect = thisData.colorArea.value.getBoundingClientRect();

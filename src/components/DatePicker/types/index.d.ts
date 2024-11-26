@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -264,4 +264,4 @@ export declare const BsDateTimeField: {
     };
 };
 
-export declare const BsDatePickerPlugin: Plugin;
+export declare const BsDatePickerPlugin: ObjectPlugin;

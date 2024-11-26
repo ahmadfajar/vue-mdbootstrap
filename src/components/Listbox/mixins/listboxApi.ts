@@ -1,3 +1,26 @@
+import { BsDivider } from '@/components/Basic';
+import { BsCheckbox } from '@/components/Checkbox';
+import {
+    BsListTile,
+    BsListTileAction,
+    BsListTileContent,
+    BsListTileLeading,
+    BsListTileTitle,
+    BsListView,
+} from '@/components/ListView';
+import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi';
+import { AbstractStore, BsStore } from '@/model';
+import type {
+    IArrayStore,
+    IBsModel,
+    IBsStore,
+    LoadedCallbackFn,
+    TDataListSchemaProps,
+    TEmitFn,
+    TListboxOptionProps,
+    TRecord,
+} from '@/types';
+import Helper from '@/utils/Helper';
 import type { Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
 import {
     createCommentVNode,
@@ -11,34 +34,11 @@ import {
     watchEffect,
     withDirectives,
 } from 'vue';
-import { cssPrefix, useRenderSlot } from '../../../mixins/CommonApi';
-import { AbstractStore, BsStore } from '../../../model';
-import type {
-    IArrayStore,
-    IBsModel,
-    IBsStore,
-    LoadedCallbackFn,
-    TDataListSchemaProps,
-    TEmitFn,
-    TListboxOptionProps,
-    TRecord,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsDivider } from '../../Basic';
-import { BsCheckbox } from '../../Checkbox';
-import {
-    BsListTile,
-    BsListTileAction,
-    BsListTileContent,
-    BsListTileLeading,
-    BsListTileTitle,
-    BsListView,
-} from '../../ListView';
 
 function filterListboxItems(
     emit: TEmitFn,
     schema: TDataListSchemaProps,
-    dataSource: IBsStore | IArrayStore,
+    dataSource: IBsStore | IArrayStore | AbstractStore,
     cacheItems: ShallowRef<IBsModel[]>,
     selectedItems: ShallowRef<IBsModel[]>,
     searchRef: Ref<string | undefined>,
@@ -407,7 +407,7 @@ function findSelectedItems(
 }
 
 function cloneDataItems(
-    dataSource: IBsStore | IArrayStore,
+    dataSource: IBsStore | IArrayStore | AbstractStore,
     selectedItems: ShallowRef<IBsModel[]>,
     fieldName: string
 ): IBsModel[] {
@@ -503,7 +503,7 @@ export function useRegisterListboxWatchers(
     }
 
     watchEffect(() => {
-        if (showSearchbox.value === false) {
+        if (!showSearchbox.value) {
             showSearchbox.value =
                 (dataSource && dataSource.storeState.length >= minItems) ||
                 !Helper.isEmpty(searchText.value) ||

@@ -1,8 +1,19 @@
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
-import { createCommentVNode, Fragment, h, nextTick, toDisplayString, withDirectives } from 'vue';
-import { ClickOutside } from '../../../directives';
-import { cssPrefix, useRenderSlot } from '../../../mixins/CommonApi';
-import { kebabCase } from '../../../mixins/StringHelper';
+import { BsChip } from '@/components/Chip';
+import {
+    useCreateFieldInnerWrapper,
+    useCreateFieldWrapper,
+    useCreateValidationIcon,
+    useMakeInputBaseAttrs,
+} from '@/components/Field/mixins/textFieldApi';
+import { useOnTextFieldNodeMounted } from '@/components/Field/mixins/textFieldEventApi';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
+import { BsIcon } from '@/components/Icon';
+import { BsListbox } from '@/components/Listbox';
+import { BsListTileTitle } from '@/components/ListView';
+import { BsPopover } from '@/components/Popover';
+import { ClickOutside } from '@/directives';
+import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi';
+import { kebabCase } from '@/mixins/StringHelper';
 import type {
     IArrayStore,
     IBsModel,
@@ -14,23 +25,12 @@ import type {
     TIconVariant,
     TPopoverPosition,
     TRecord,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsChip } from '../../Chip';
-import {
-    useCreateFieldInnerWrapper,
-    useCreateFieldWrapper,
-    useCreateValidationIcon,
-    useMakeInputBaseAttrs,
-} from '../../Field/mixins/textFieldApi';
-import { useOnTextFieldNodeMounted } from '../../Field/mixins/textFieldEventApi';
-import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
-import { BsIcon } from '../../Icon';
-import { BsListbox } from '../../Listbox';
-import { BsListTileTitle } from '../../ListView';
-import { BsPopover } from '../../Popover';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
+import { createCommentVNode, Fragment, h, nextTick, toDisplayString, withDirectives } from 'vue';
 
-function createActionAppendIcons(
+function createActionAppendIcon(
     showClearButton: boolean,
     iconVariant: TIconVariant,
     iconSize: number,
@@ -53,7 +53,7 @@ function createActionAppendIcons(
                 : '',
             h(BsIcon, {
                 class: 'icon-expand',
-                icon: `expand_more_${iconVariant}` as Prop<string>,
+                icon: `keyboard_arrow_down_${iconVariant}` as Prop<string>,
                 size: iconSize as Prop<number | undefined>,
                 onClick: popoverHandler,
             }),
@@ -94,7 +94,7 @@ function createChipsOrCsv(
     }
 }
 
-function renderComboboxFieldInput(
+function createComboboxFieldInput(
     props: Readonly<ExtractPropTypes<TBsCombobox>>,
     dataSchema: TDataListSchemaProps,
     selectedItems: ShallowRef<IBsModel[]>,
@@ -203,7 +203,7 @@ export function useRenderCombobox(
                         useCreateFieldInnerWrapper(
                             slots,
                             thisProps,
-                            renderComboboxFieldInput(props, schema, selectedItems, fieldValues),
+                            createComboboxFieldInput(props, schema, selectedItems, fieldValues),
                             iconSize,
                             thisProps.appendIcon,
                             thisProps.prependIcon,
@@ -214,9 +214,9 @@ export function useRenderCombobox(
                                 thisProps.validationIcon as boolean,
                                 iconSize
                             ),
-                            createActionAppendIcons(
+                            createActionAppendIcon(
                                 showClearButton.value,
-                                <TIconVariant>thisProps.actionIconVariant,
+                                thisProps.actionIconVariant as TIconVariant,
                                 iconSize,
                                 () => {
                                     fieldValues.value = [];

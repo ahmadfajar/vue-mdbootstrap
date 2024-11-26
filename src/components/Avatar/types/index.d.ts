@@ -37,19 +37,23 @@ export declare type TIconProps = {
     /**
      * Android icon name, either with or without suffix. Valid suffixes are:
      * `_outlined`, `_rounded`, `_sharp`, `_filled`, `_outlined_filled`,
-     * `_rounded_filled`, or `_sharp_filled`. Suffix will take priority over
+     * `_rounded_filled`, or `_sharp_filled`. Suffix `_filled` or `_outlined_filled`
+     * will result the same icon style. Suffix will take priority over
      * `iconVariant` property.
      *
      * This is a shortcut to insert component `BsIcon` inside this component.
      *
-     * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
+     * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     icon?: string;
     /**
      * Use predefined icon style, valid values are: `outlined`, `rounded`, `sharp`,
-     * `filled`, `rounded_filled`, and `sharp_filled`. Default is `outlined`.
+     * `filled`, `outlined_filled`, `rounded_filled`, and `sharp_filled`. Default
+     * is `outlined`.
      *
-     * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
+     * Variant `filled` or `outlined_filled` will result the same icon style.
+     *
+     * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     iconVariant?: TIconVariant;
     /**

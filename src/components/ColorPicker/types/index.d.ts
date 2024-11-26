@@ -1,12 +1,13 @@
 import {
     AllowedComponentProps,
     ComponentCustomProps,
-    ComponentObjectPropsOptions,
-    Plugin,
+    ComponentObjectPropsOptions, type ComponentPublicInstance,
+    ObjectPlugin,
     Ref,
     UnwrapNestedRefs,
     VNodeProps,
 } from 'vue';
+import { HSLA, RGBA } from '../../../mixins/types/colorUtils';
 import {
     Color,
     EventUpdateModelValueProps,
@@ -148,7 +149,21 @@ export declare const BsColorPicker: {
              */
             'update:open',
         ];
+        $exposed: {
+            hexColor: () => string;
+            rgbColor: () => RGBA;
+            hslColor: () => HSLA;
+        };
+        hexColor: () => string;
+        rgbColor: () => RGBA;
+        hslColor: () => HSLA;
     };
 };
 
-export declare const BsColorPickerPlugin: Plugin;
+export declare interface BsColorPickerInstance extends ComponentPublicInstance {
+    hexColor(): string;
+    rgbColor(): RGBA;
+    hslColor(): HSLA;
+}
+
+export declare const BsColorPickerPlugin: ObjectPlugin;

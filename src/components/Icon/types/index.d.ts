@@ -66,11 +66,11 @@ export declare type TIconOptionProps = TSizeOptionProps & {
      * And you can either use `*_filled` or sets property `filled` to `true` to
      * create an icon with fill style.
      *
-     * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
+     * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     icon: string;
     /**
-     * Use [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) with fill style.
+     * Use [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) with fill style.
      */
     filled?: boolean;
     /**
@@ -121,7 +121,7 @@ export declare type TToggleIconOptionProps = {
      * And you can either use `*_filled` or sets property `filled` to `true` to
      * create an icon with fill style.
      *
-     * @see  [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
+     * @see  [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     icon: string;
     /**
@@ -134,11 +134,11 @@ export declare type TToggleIconOptionProps = {
      * And you can either use `*_filled` or sets property `filled` to `true` to
      * create an icon with fill style.
      *
-     * @see  [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) for details.
+     * @see  [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     toggleIcon: string;
     /**
-     * Use [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols&icon.size=24&icon.color=%23e8eaed&icon.platform=web) with fill style.
+     * Use [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) with fill style.
      */
     filled?: boolean;
     /**

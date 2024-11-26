@@ -1,13 +1,4 @@
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
-import { createCommentVNode, Fragment, h, nextTick, toDisplayString } from 'vue';
-import type {
-    TBsChipField,
-    TChipFieldOptionProps,
-    TEmitFn,
-    TIconVariant,
-    TRecord,
-} from '../../../types';
-import { BsChip } from '../../Chip';
+import { BsChip } from '@/components/Chip';
 import {
     useCreateFieldActionIcon,
     useCreateFieldInnerWrapper,
@@ -15,13 +6,16 @@ import {
     useCreateValidationIcon,
     useInputTextFieldAttrs,
     useMakeInputBaseAttrs,
-} from './textFieldApi';
+} from '@/components/Field/mixins/textFieldApi';
 import {
     useOnFieldBlurred,
     useOnFieldFocused,
     useOnTextFieldNodeMounted,
-} from './textFieldEventApi';
-import { useRenderFieldFeedback } from './validationApi';
+} from '@/components/Field/mixins/textFieldEventApi';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
+import type { TBsChipField, TChipFieldOptionProps, TEmitFn, TIconVariant, TRecord } from '@/types';
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
+import { createCommentVNode, Fragment, h, nextTick, toDisplayString } from 'vue';
 
 function dispatchModelValue(
     props: Readonly<TChipFieldOptionProps>,

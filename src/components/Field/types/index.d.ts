@@ -3,7 +3,7 @@ import {
     ComponentCustomProps,
     ComponentObjectPropsOptions,
     ComputedRef,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -61,6 +61,15 @@ export declare type TInputFieldProps = TInputBaseProps &
     TValidationProps & {
         /**
          * Sets the action icon style variant.
+         *
+         * Valid predefined icon style are: `outlined`, `rounded`, `sharp`,
+         * `filled`, `outlined_filled`, `rounded_filled`, and `sharp_filled`.
+         * Default is `outlined`.
+         *
+         * Variant `filled` or `outlined_filled` will
+         * result the same icon style.
+         *
+         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         actionIconVariant?: TIconVariant;
         /**
@@ -74,17 +83,20 @@ export declare type TInputFieldProps = TInputBaseProps &
         flat?: boolean;
         /**
          * Create this component with **filled** appearance.
-         * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
+         *
+         * @see [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
          */
         filled?: boolean;
         /**
          * Create this component with floating field label.
-         * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
+         *
+         * @see [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
          */
         floatingLabel?: boolean;
         /**
          * Create this component with **outlined** appearance.
-         * See [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
+         *
+         * @see [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
          */
         outlined?: boolean;
         /**
@@ -92,35 +104,47 @@ export declare type TInputFieldProps = TInputBaseProps &
          */
         validationIcon?: boolean;
         /**
-         * Sets icon to display on inner right side.
-         * This is a shortcut to insert component `BsIcon` inside this component.
-         * Use any valid Google Material icon name, see
-         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-         * for details.
+         * Sets icon to display on inner right side. This is a shortcut to insert
+         * component `BsIcon` inside this component.
+         *
+         * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
+         * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+         * Suffix `_filled` or `_outlined_filled` will result the same icon style.
+         *
+         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         appendIcon?: string;
         /**
-         * Sets icon to display on outer right side.
-         * This is a shortcut to insert component `BsIcon` inside this component.
-         * Use any valid Google Material icon name, see
-         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-         * for details.
+         * Sets icon to display on outer right side. This is a shortcut to insert
+         * component `BsIcon` inside this component.
+         *
+         * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
+         * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+         * Suffix `_filled` or `_outlined_filled` will result the same icon style.
+         *
+         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         appendIconOuter?: string;
         /**
-         * Sets icon to display on inner left side.
-         * This is a shortcut to insert component `BsIcon` inside this component.
-         * Use any valid Google Material icon name, see
-         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-         * for details.
+         * Sets icon to display on inner left side. This is a shortcut to insert
+         * component `BsIcon` inside this component.
+         *
+         * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
+         * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+         * Suffix `_filled` or `_outlined_filled` will result the same icon style.
+         *
+         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         prependIcon?: string;
         /**
-         * Sets icon to display on outer left side.
-         * This is a shortcut to insert component `BsIcon` inside this component.
-         * Use any valid Google Material icon name, see
-         * [Google Material Icon](https://fonts.google.com/icons?icon.set=Material+Icons)
-         * for details.
+         * Sets icon to display on outer left side. This is a shortcut to insert
+         * component `BsIcon` inside this component.
+         *
+         * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
+         * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+         * Suffix `_filled` or `_outlined_filled` will result the same icon style.
+         *
+         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         prependIconOuter?: string;
     };
@@ -612,4 +636,4 @@ export declare const BsSearchField: {
     };
 };
 
-export declare const BsFieldPlugin: Plugin;
+export declare const BsFieldPlugin: ObjectPlugin;

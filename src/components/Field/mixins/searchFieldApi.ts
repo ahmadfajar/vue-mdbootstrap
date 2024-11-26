@@ -1,6 +1,12 @@
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
-import { createCommentVNode, h, mergeProps, vModelText, withDirectives } from 'vue';
-import { cssPrefix } from '../../../mixins/CommonApi';
+import { BsButton } from '@/components/Button';
+import {
+    useOnFieldBlurred,
+    useOnFieldFocused,
+    useOnFieldValueCleared,
+    useOnFieldValueUpdated,
+} from '@/components/Field/mixins/textFieldEventApi';
+import { BsPopover } from '@/components/Popover';
+import { cssPrefix } from '@/mixins/CommonApi';
 import type {
     TBsSearchField,
     TButtonMode,
@@ -8,16 +14,10 @@ import type {
     TEmitFn,
     TRecord,
     TSearchFieldOptionProps,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsButton } from '../../Button';
-import { BsPopover } from '../../Popover';
-import {
-    useOnFieldBlurred,
-    useOnFieldFocused,
-    useOnFieldValueCleared,
-    useOnFieldValueUpdated,
-} from './textFieldEventApi';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
+import { createCommentVNode, h, mergeProps, vModelText, withDirectives } from 'vue';
 
 export function useSearchFieldClasses(
     props: Readonly<TSearchFieldOptionProps>,

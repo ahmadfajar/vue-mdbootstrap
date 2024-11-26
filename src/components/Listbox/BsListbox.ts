@@ -1,13 +1,16 @@
-import { defineComponent, reactive, ref, shallowRef } from 'vue';
+import {
+    useRegisterListboxWatchers,
+    useRenderListbox,
+} from '@/components/Listbox/mixins/listboxApi';
+import { listboxProps } from '@/components/Listbox/mixins/listboxProps';
 import type {
     IBsModel,
     TBsListbox,
     TDataListSchemaProps,
     TListboxOptionProps,
     TRecord,
-} from '../../types';
-import { useRegisterListboxWatchers, useRenderListbox } from './mixins/listboxApi';
-import { listboxProps } from './mixins/listboxProps';
+} from '@/types';
+import { defineComponent, reactive, ref, shallowRef } from 'vue';
 
 export default defineComponent<TBsListbox>({
     name: 'BsListbox',

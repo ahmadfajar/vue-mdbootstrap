@@ -1,5 +1,3 @@
-import { DateTime } from 'luxon';
-import { computed, defineComponent, ref } from 'vue';
 import {
     DatePickerConst,
     useCalendarTableHours,
@@ -7,9 +5,15 @@ import {
     useCalendarTableSeconds,
     useRenderDatePickerTimes,
     useWatchOfDatePickerBaseProps,
-} from './mixins/datePickerApi';
-import { datePickerTimesProps } from './mixins/datePickerProps';
-import type { TBsDatePickerTimes, TTimePickerMode, TTimePickerProps } from './types';
+} from '@/components/DatePicker/mixins/datePickerApi.ts';
+import { datePickerTimesProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
+import type {
+    TBsDatePickerTimes,
+    TTimePickerMode,
+    TTimePickerProps,
+} from '@/components/DatePicker/types';
+import { DateTime } from 'luxon';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent<TBsDatePickerTimes>({
     name: 'BsDatePickerTimes',

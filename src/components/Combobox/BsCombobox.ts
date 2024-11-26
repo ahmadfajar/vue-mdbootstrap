@@ -1,21 +1,21 @@
-import { computed, defineComponent, ref, shallowRef, watch } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
+import { useFetchData, useRenderCombobox } from '@/components/Combobox/mixins/comboboxApi';
+import { comboboxProps } from '@/components/Combobox/mixins/comboboxProps';
+import {
+    useFieldControlClasses,
+    useFieldWrapperClasses,
+    useShowClearButton,
+} from '@/components/Field/mixins/textFieldApi';
+import { useGetValidationResult } from '@/components/Field/mixins/validationApi';
+import { cssPrefix } from '@/mixins/CommonApi';
 import type {
     IBsModel,
     TBsCombobox,
     TComboboxOptionProps,
     TDataListSchemaProps,
     TRecord,
-} from '../../types';
-import Helper from '../../utils/Helper';
-import {
-    useFieldControlClasses,
-    useFieldWrapperClasses,
-    useShowClearButton,
-} from '../Field/mixins/textFieldApi';
-import { useGetValidationResult } from '../Field/mixins/validationApi';
-import { useFetchData, useRenderCombobox } from './mixins/comboboxApi';
-import { comboboxProps } from './mixins/comboboxProps';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import { computed, defineComponent, ref, shallowRef, watch } from 'vue';
 
 export default defineComponent<TBsCombobox>({
     name: 'BsCombobox',

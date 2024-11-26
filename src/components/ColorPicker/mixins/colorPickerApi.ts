@@ -1,5 +1,4 @@
-import type { ComputedRef, Prop, VNode } from 'vue';
-import { createCommentVNode, h, mergeProps, nextTick, reactive, ref } from 'vue';
+import { BsToggleButton } from '@/components/Button';
 import {
     hslaToHsva,
     hslaToString,
@@ -9,9 +8,9 @@ import {
     rgbaToHex,
     rgbaToHsva,
     rgbaToString,
-} from '../../../mixins/colorUtils';
-import { cssPrefix, useMergeClass } from '../../../mixins/CommonApi';
-import { preventEventTarget } from '../../../mixins/DomHelper';
+} from '@/mixins/colorUtils';
+import { cssPrefix, useMergeClass } from '@/mixins/CommonApi';
+import { preventEventTarget } from '@/mixins/DomHelper';
 import type {
     Color,
     TButtonSize,
@@ -21,9 +20,10 @@ import type {
     TEmitFn,
     TInputOptionItem,
     TRecord,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsToggleButton } from '../../Button';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { ComputedRef, Prop, VNode } from 'vue';
+import { createCommentVNode, h, mergeProps, nextTick, reactive, ref } from 'vue';
 
 export function useInitColorPickerData(props: Readonly<TColorPickerOptionProps>): TColorPickerData {
     return {

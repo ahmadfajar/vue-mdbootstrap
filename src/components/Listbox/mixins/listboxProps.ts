@@ -1,13 +1,13 @@
-import type { Prop } from 'vue';
+import { iconPosition } from '@/components/Button/mixins/buttonProps';
+import type { TDataSource } from '@/components/Listbox/types';
 import {
     booleanProp,
     booleanTrueProp,
     stringProp,
     validNumberGtZeroProp,
     whiteColorProp,
-} from '../../../mixins/CommonProps';
-import { iconPosition } from '../../Button/mixins/buttonProps';
-import type { TDataSource } from '../types';
+} from '@/mixins/CommonProps';
+import type { Prop } from 'vue';
 
 export const listboxMinSearchChars = {
     type: [String, Number],

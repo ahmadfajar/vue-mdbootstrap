@@ -1,4 +1,4 @@
-import type { App, Plugin } from 'vue';
+import type { App, ObjectPlugin } from 'vue';
 import BsTextField from './BsTextField';
 import BsTextArea from './BsTextArea';
 import BsChipField from './BsChipField';
@@ -12,7 +12,7 @@ import './chipField.scss';
 import './numericField.scss';
 import './searchField.scss';
 
-const BsFieldPlugin: Plugin = {
+const BsFieldPlugin: ObjectPlugin = {
     install: (app: App): void => {
         app.component(BsTextField.name as string, BsTextField);
         app.component(BsTextArea.name as string, BsTextArea);

@@ -1,4 +1,4 @@
-import { booleanTrueProp, stringProp } from '../../../mixins/CommonProps';
+import { booleanTrueProp, stringProp } from '@/mixins/CommonProps';
 
 const validator = {
     type: Object,

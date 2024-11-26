@@ -1,16 +1,16 @@
-import type { Prop } from 'vue';
+import type { TColorPickerMode } from '@/components/ColorPicker/types';
+import {
+    popoverDefaultTransitionProp,
+    popoverPlacementProp,
+} from '@/components/Popover/mixins/popoverProps';
 import {
     booleanProp,
     stringOrArrayProp,
     stringProp,
     validStringOrNumberProp,
     whiteColorProp,
-} from '../../../mixins/CommonProps';
-import {
-    popoverDefaultTransitionProp,
-    popoverPlacementProp,
-} from '../../Popover/mixins/popoverProps';
-import type { TColorPickerMode } from '../types';
+} from '@/mixins/CommonProps';
+import type { Prop } from 'vue';
 
 export const colorPickerProps = {
     activator: {

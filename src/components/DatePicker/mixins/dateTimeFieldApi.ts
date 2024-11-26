@@ -1,16 +1,6 @@
-import { DateTime } from 'luxon';
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
-import { Fragment, h } from 'vue';
-import type {
-    TBsDateTimeField,
-    TDateTimeFieldOptionProps,
-    TDateTimePickerMode,
-    TEmitFn,
-    TIconVariant,
-    TRecord,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { useTogglePopoverState } from '../../Combobox/mixins/comboboxApi';
+import { useTogglePopoverState } from '@/components/Combobox/mixins/comboboxApi.ts';
+import { BsDatePicker } from '@/components/DatePicker';
+import { useParseDate } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import {
     useCreateFieldActionIcon,
     useCreateFieldInnerWrapper,
@@ -18,17 +8,27 @@ import {
     useCreateValidationIcon,
     useInputTextFieldAttrs,
     useMakeInputBaseAttrs,
-} from '../../Field/mixins/textFieldApi';
+} from '@/components/Field/mixins/textFieldApi.ts';
 import {
     useOnFieldBlurred,
     useOnFieldFocused,
     useOnFieldValueCleared,
     useOnTextFieldNodeMounted,
-} from '../../Field/mixins/textFieldEventApi';
-import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
-import { BsPopover } from '../../Popover';
-import BsDatePicker from '../BsDatePicker';
-import { useParseDate } from './datePickerApi';
+} from '@/components/Field/mixins/textFieldEventApi.ts';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
+import { BsPopover } from '@/components/Popover';
+import type {
+    TBsDateTimeField,
+    TDateTimeFieldOptionProps,
+    TDateTimePickerMode,
+    TEmitFn,
+    TIconVariant,
+    TRecord,
+} from '@/types';
+import Helper from '@/utils/Helper';
+import { DateTime } from 'luxon';
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
+import { Fragment, h } from 'vue';
 
 export function useParseDateTimeFromFormat(
     value?: string | number | Date,
@@ -55,6 +55,7 @@ export function useParseDateTimeFromFormat(
             if (!Helper.isEmpty(locale)) {
                 return result.setLocale(locale);
             }
+
             return result;
         }
     }
@@ -149,7 +150,7 @@ export function useRenderDateTimeField(
                         ),
                         useCreateFieldActionIcon(
                             showClearButton.value,
-                            <TIconVariant>thisProps.actionIconVariant,
+                            thisProps.actionIconVariant as TIconVariant,
                             iconSize,
                             () => useOnFieldValueCleared(emit, localFieldValue)
                         ),

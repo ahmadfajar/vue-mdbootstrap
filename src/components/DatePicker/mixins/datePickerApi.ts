@@ -1,10 +1,13 @@
-import type { DateTimeUnit, DurationObjectUnits } from 'luxon';
-import { DateTime } from 'luxon';
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, VNode } from 'vue';
-import { computed, createCommentVNode, h, ref, toDisplayString, watch, withDirectives } from 'vue';
-import { Touch } from '../../../directives';
-import { cssPrefix, useBreakpointMin, useRenderTransition } from '../../../mixins/CommonApi';
-import { preventEventTarget } from '../../../mixins/DomHelper';
+import { BsButton } from '@/components/Button';
+import BsDatePickerDays from '@/components/DatePicker/BsDatePickerDays';
+import BsDatePickerHeader from '@/components/DatePicker/BsDatePickerHeader';
+import BsDatePickerMonths from '@/components/DatePicker/BsDatePickerMonths';
+import BsDatePickerNav from '@/components/DatePicker/BsDatePickerNav';
+import BsDatePickerTimes from '@/components/DatePicker/BsDatePickerTimes';
+import BsDatePickerYears from '@/components/DatePicker/BsDatePickerYears';
+import { Touch } from '@/directives';
+import { cssPrefix, useBreakpointMin, useRenderTransition } from '@/mixins/CommonApi';
+import { preventEventTarget } from '@/mixins/DomHelper';
 import type {
     TBsDatePicker,
     TButtonMode,
@@ -21,15 +24,12 @@ import type {
     TTimePickerMode,
     TTimePickerProps,
     TValueText,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsButton } from '../../Button';
-import BsDatePickerDays from '../BsDatePickerDays';
-import BsDatePickerHeader from '../BsDatePickerHeader';
-import BsDatePickerMonths from '../BsDatePickerMonths';
-import BsDatePickerNav from '../BsDatePickerNav';
-import BsDatePickerTimes from '../BsDatePickerTimes';
-import BsDatePickerYears from '../BsDatePickerYears';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { DateTimeUnit, DurationObjectUnits } from 'luxon';
+import { DateTime } from 'luxon';
+import type { ComputedRef, ExtractPropTypes, Prop, Ref, VNode } from 'vue';
+import { computed, createCommentVNode, h, ref, toDisplayString, watch, withDirectives } from 'vue';
 
 export const DatePickerConst = {
     viewModes: ['datetime', 'date', 'month', 'year', 'time'] as TDateTimePickerMode[],
@@ -166,10 +166,7 @@ export function useWatchOfDatePickerNavProps(
             if (value === DatePickerConst.YEAR || value === DatePickerConst.MONTH) {
                 formatOpts.value = { year: 'numeric' };
             } else {
-                formatOpts.value = {
-                    month: 'long',
-                    year: 'numeric',
-                };
+                formatOpts.value = { month: 'long', year: 'numeric' };
             }
         }
     );
@@ -213,7 +210,9 @@ export function useRenderDatePickerHeader(
                             onClick: () => {
                                 if (
                                     !isYearActive.value &&
-                                    ['date', 'datetime', 'month'].includes(<string>props.pickerMode)
+                                    ['date', 'datetime', 'month'].includes(
+                                        props.pickerMode as string
+                                    )
                                 ) {
                                     emit('change-view', DatePickerConst.YEAR);
                                 }
@@ -224,7 +223,7 @@ export function useRenderDatePickerHeader(
                                 DatePickerConst.MONTH,
                                 DatePickerConst.YEAR,
                                 DatePickerConst.TIME,
-                            ].includes(<string>props.pickerMode)
+                            ].includes(props.pickerMode as string)
                                 ? ''
                                 : localValue.value.toLocaleString({ year: 'numeric' }),
                         ]
@@ -479,7 +478,7 @@ function weekdayNames(locale?: string): string[] {
     return Helper.createRange(7).map((i) => formatter.format(new Date(2017, 0, i + 15)));
 }
 
-export function useDatePickerCalenderSetup(props: Readonly<TDatePickerCalendarProps>) {
+export function useSetupDatePickerCalender(props: Readonly<TDatePickerCalendarProps>) {
     const reverse = ref(false);
     const localValue = ref<DateTime>(
         props.modelValue ? DateTime.fromJSDate(props.modelValue) : DateTime.now()
@@ -581,70 +580,49 @@ export function useRenderDatePickerDays(
                 },
             },
             [
-                useRenderTransition(
-                    {
-                        name: transitionName.value,
-                    },
-                    [
-                        h(
-                            'table',
-                            {
-                                key: calendarValue.value.toFormat(DatePickerConst.yearMonthISO),
-                            },
-                            [
-                                h('thead', [
-                                    h(
-                                        'tr',
-                                        dayNames.map((el) =>
-                                            h(
-                                                'th',
-                                                {
-                                                    key: `th-${el}`,
-                                                },
-                                                toDisplayString(el)
-                                            )
-                                        )
-                                    ),
-                                ]),
+                useRenderTransition({ name: transitionName.value }, [
+                    h(
+                        'table',
+                        { key: calendarValue.value.toFormat(DatePickerConst.yearMonthISO) },
+                        [
+                            h('thead', [
                                 h(
-                                    'tbody',
-                                    tableDays.value.map((row, idx) =>
-                                        h(
-                                            'tr',
-                                            {
-                                                key: `tr-${idx}`,
-                                            },
-                                            row.map((it, k) =>
-                                                h(
-                                                    'td',
-                                                    {
-                                                        key: `td-${idx}-${k}`,
-                                                    },
-                                                    [
-                                                        it.value
-                                                            ? createCalendarDayButton(
-                                                                  props,
-                                                                  localValue,
-                                                                  it as TValueText<DateTime>,
-                                                                  today,
-                                                                  () =>
-                                                                      dispatchDateTimeValue(
-                                                                          emit,
-                                                                          it.value as DateTime,
-                                                                          props.disabled
-                                                                      )
-                                                              )
-                                                            : '',
-                                                    ]
-                                                )
-                                            )
-                                        )
+                                    'tr',
+                                    dayNames.map((el) =>
+                                        h('th', { key: `th-${el}` }, toDisplayString(el))
                                     )
                                 ),
-                            ]
-                        ),
-                    ]
-                ),
+                            ]),
+                            h(
+                                'tbody',
+                                tableDays.value.map((row, idx) =>
+                                    h(
+                                        'tr',
+                                        { key: `tr-${idx}` },
+                                        row.map((it, k) =>
+                                            h('td', { key: `td-${idx}-${k}` }, [
+                                                it.value
+                                                    ? createCalendarDayButton(
+                                                          props,
+                                                          localValue,
+                                                          it as TValueText<DateTime>,
+                                                          today,
+                                                          () =>
+                                                              dispatchDateTimeValue(
+                                                                  emit,
+                                                                  it.value as DateTime,
+                                                                  props.disabled
+                                                              )
+                                                      )
+                                                    : '',
+                                            ])
+                                        )
+                                    )
+                                )
+                            ),
+                        ]
+                    ),
+                ]),
             ]
         ),
         [
@@ -898,55 +876,36 @@ export function useRenderDatePickerMonths(
                 },
             },
             [
-                useRenderTransition(
-                    {
-                        name: transitionName.value,
-                    },
-                    [
+                useRenderTransition({ name: transitionName.value }, [
+                    h('table', { key: calendarValue.value.toFormat(DatePickerConst.yearISO) }, [
                         h(
-                            'table',
-                            {
-                                key: calendarValue.value.toFormat(DatePickerConst.yearISO),
-                            },
-                            [
+                            'tbody',
+                            tableMonths.value.map((row, idx) =>
                                 h(
-                                    'tbody',
-                                    tableMonths.value.map((row, idx) =>
-                                        h(
-                                            'tr',
-                                            {
-                                                key: `tr-${idx}`,
-                                            },
-                                            row.map((it, k) =>
-                                                h(
-                                                    'td',
-                                                    {
-                                                        key: `td-${idx}-${k}`,
-                                                    },
-                                                    [
-                                                        createCalendarButton(
-                                                            props,
-                                                            localValue,
-                                                            it,
-                                                            today,
-                                                            'month',
-                                                            () =>
-                                                                dispatchDateTimeValue(
-                                                                    emit,
-                                                                    it.value,
-                                                                    props.disabled
-                                                                )
-                                                        ),
-                                                    ]
-                                                )
-                                            )
-                                        )
+                                    'tr',
+                                    { key: `tr-${idx}` },
+                                    row.map((it, k) =>
+                                        h('td', { key: `td-${idx}-${k}` }, [
+                                            createCalendarButton(
+                                                props,
+                                                localValue,
+                                                it,
+                                                today,
+                                                'month',
+                                                () =>
+                                                    dispatchDateTimeValue(
+                                                        emit,
+                                                        it.value,
+                                                        props.disabled
+                                                    )
+                                            ),
+                                        ])
                                     )
-                                ),
-                            ]
+                                )
+                            )
                         ),
-                    ]
-                ),
+                    ]),
+                ]),
             ]
         ),
         [
@@ -1045,55 +1004,36 @@ export function useRenderDatePickerYears(
                 },
             },
             [
-                useRenderTransition(
-                    {
-                        name: transitionName.value,
-                    },
-                    [
+                useRenderTransition({ name: transitionName.value }, [
+                    h('table', { key: calendarValue.value.toISODate() as string }, [
                         h(
-                            'table',
-                            {
-                                key: calendarValue.value.toISODate() as string,
-                            },
-                            [
+                            'tbody',
+                            tableYears.value.map((row, idx) =>
                                 h(
-                                    'tbody',
-                                    tableYears.value.map((row, idx) =>
-                                        h(
-                                            'tr',
-                                            {
-                                                key: `tr-${idx}`,
-                                            },
-                                            row.map((it, k) =>
-                                                h(
-                                                    'td',
-                                                    {
-                                                        key: `td-${idx}-${k}`,
-                                                    },
-                                                    [
-                                                        createCalendarButton(
-                                                            props,
-                                                            localValue,
-                                                            it,
-                                                            today,
-                                                            'year',
-                                                            () =>
-                                                                dispatchDateTimeValue(
-                                                                    emit,
-                                                                    it.value,
-                                                                    props.disabled
-                                                                )
-                                                        ),
-                                                    ]
-                                                )
-                                            )
-                                        )
+                                    'tr',
+                                    { key: `tr-${idx}` },
+                                    row.map((it, k) =>
+                                        h('td', { key: `td-${idx}-${k}` }, [
+                                            createCalendarButton(
+                                                props,
+                                                localValue,
+                                                it,
+                                                today,
+                                                'year',
+                                                () =>
+                                                    dispatchDateTimeValue(
+                                                        emit,
+                                                        it.value,
+                                                        props.disabled
+                                                    )
+                                            ),
+                                        ])
                                     )
-                                ),
-                            ]
+                                )
+                            )
                         ),
-                    ]
-                ),
+                    ]),
+                ]),
             ]
         ),
         [
@@ -1133,75 +1073,63 @@ export function useRenderDatePickerTimes(
     currentView: Ref<TTimePickerMode>,
     localValue: Ref<DateTime>
 ): VNode {
-    return h(
-        'div',
-        {
-            class: [`${cssPrefix}datepicker-times`],
-        },
-        [
-            props.backButton
-                ? h(
-                      'div',
-                      {
-                          class: [`${cssPrefix}datepicker-toolbar`],
-                      },
-                      [
-                          createCalendarNavButton('dark', 'arrow_back', 24, false, () => {
-                              if (currentView.value === DatePickerConst.TIME) {
-                                  emit('close');
-                              } else {
-                                  currentView.value = DatePickerConst.TIME;
-                              }
-                          }),
-                      ]
-                  )
-                : undefined,
-            useRenderTransition(
-                {
-                    name: 'fade',
-                    mode: 'out-in',
-                },
-                [
-                    currentView.value === DatePickerConst.TIME
-                        ? renderPickerTimes(props, emit, currentView, localValue)
-                        : undefined,
-                    currentView.value === DatePickerConst.HOUR
-                        ? renderPickerTimesUnit(
-                              props,
-                              emit,
-                              [`${cssPrefix}picker-hours`],
-                              tableHours,
-                              currentView,
-                              localValue,
-                              'hour'
-                          )
-                        : undefined,
-                    currentView.value === DatePickerConst.MINUTE
-                        ? renderPickerTimesUnit(
-                              props,
-                              emit,
-                              [`${cssPrefix}picker-minutes`],
-                              tableMinutes,
-                              currentView,
-                              localValue,
-                              'minute'
-                          )
-                        : undefined,
-                    currentView.value === DatePickerConst.SECOND
-                        ? renderPickerTimesUnit(
-                              props,
-                              emit,
-                              [`${cssPrefix}picker-seconds`],
-                              tableSeconds,
-                              currentView,
-                              localValue,
-                              'second'
-                          )
-                        : undefined,
-                ]
-            ),
-        ]
-    );
+    return h('div', { class: [`${cssPrefix}datepicker-times`] }, [
+        props.backButton
+            ? h('div', { class: [`${cssPrefix}datepicker-toolbar`] }, [
+                  createCalendarNavButton('dark', 'arrow_back', 24, false, () => {
+                      if (currentView.value === DatePickerConst.TIME) {
+                          emit('close');
+                      } else {
+                          currentView.value = DatePickerConst.TIME;
+                      }
+                  }),
+              ])
+            : undefined,
+        useRenderTransition(
+            {
+                name: 'fade',
+                mode: 'out-in',
+            },
+            [
+                currentView.value === DatePickerConst.TIME
+                    ? renderPickerTimes(props, emit, currentView, localValue)
+                    : undefined,
+                currentView.value === DatePickerConst.HOUR
+                    ? renderPickerTimesUnit(
+                          props,
+                          emit,
+                          [`${cssPrefix}picker-hours`],
+                          tableHours,
+                          currentView,
+                          localValue,
+                          'hour'
+                      )
+                    : undefined,
+                currentView.value === DatePickerConst.MINUTE
+                    ? renderPickerTimesUnit(
+                          props,
+                          emit,
+                          [`${cssPrefix}picker-minutes`],
+                          tableMinutes,
+                          currentView,
+                          localValue,
+                          'minute'
+                      )
+                    : undefined,
+                currentView.value === DatePickerConst.SECOND
+                    ? renderPickerTimesUnit(
+                          props,
+                          emit,
+                          [`${cssPrefix}picker-seconds`],
+                          tableSeconds,
+                          currentView,
+                          localValue,
+                          'second'
+                      )
+                    : undefined,
+            ]
+        ),
+    ]);
 }
 
 function renderPickerTimes(
@@ -1210,153 +1138,116 @@ function renderPickerTimes(
     currentView: Ref<TTimePickerMode>,
     localValue: Ref<DateTime>
 ): VNode {
-    return h(
-        'table',
-        {
-            class: [`${cssPrefix}picker-times`, !props.backButton ? 'mt-0' : ''],
-        },
-        [
-            h('colgroup', [
-                h('col'),
-                h('col', {
-                    class: [`${cssPrefix}picker-times-sep`],
-                }),
-                h('col'),
-                h('col', {
-                    class: [`${cssPrefix}picker-times-sep`],
-                }),
-                h('col'),
-            ]),
-            h('tbody', [
-                h('tr', [
-                    h('td', [
-                        createCalendarNavButton('dark', 'arrow_drop_up', 32, props.disabled, () =>
-                            shiftDateTimeThenDispatch(
-                                emit,
-                                localValue.value,
-                                'hours',
-                                1,
-                                props.disabled
-                            )
-                        ),
-                    ]),
-                    h('td', ' '),
-                    h('td', [
-                        createCalendarNavButton('dark', 'arrow_drop_up', 32, props.disabled, () =>
-                            shiftDateTimeThenDispatch(
-                                emit,
-                                localValue.value,
-                                'minutes',
-                                1,
-                                props.disabled
-                            )
-                        ),
-                    ]),
-                    h('td', ' '),
-                    h('td', [
-                        createCalendarNavButton('dark', 'arrow_drop_up', 32, props.disabled, () =>
-                            shiftDateTimeThenDispatch(
-                                emit,
-                                localValue.value,
-                                'seconds',
-                                1,
-                                props.disabled
-                            )
-                        ),
-                    ]),
-                ]),
-                h('tr', [
-                    h('td', [
-                        createPickerTimeButton(
+    return h('table', { class: [`${cssPrefix}picker-times`, !props.backButton ? 'mt-0' : ''] }, [
+        h('colgroup', [
+            h('col'),
+            h('col', { class: [`${cssPrefix}picker-times-sep`] }),
+            h('col'),
+            h('col', { class: [`${cssPrefix}picker-times-sep`] }),
+            h('col'),
+        ]),
+        h('tbody', [
+            h('tr', [
+                h('td', [
+                    createCalendarNavButton('dark', 'arrow_drop_up', 32, props.disabled, () =>
+                        shiftDateTimeThenDispatch(
+                            emit,
                             localValue.value,
-                            'HH',
-                            <boolean>props.disabled,
-                            () => {
-                                if (!props.disabled) {
-                                    currentView.value = DatePickerConst.HOUR;
-                                }
-                            }
-                        ),
-                    ]),
-                    h(
-                        'td',
-                        {
-                            class: [`${cssPrefix}picker-times-sep`],
-                        },
-                        ':'
+                            'hours',
+                            1,
+                            props.disabled
+                        )
                     ),
-                    h('td', [
-                        createPickerTimeButton(
-                            localValue.value,
-                            'mm',
-                            <boolean>props.disabled,
-                            () => {
-                                if (!props.disabled) {
-                                    currentView.value = DatePickerConst.MINUTE;
-                                }
-                            }
-                        ),
-                    ]),
-                    h(
-                        'td',
-                        {
-                            class: [`${cssPrefix}picker-times-sep`],
-                        },
-                        ':'
-                    ),
-                    h('td', [
-                        createPickerTimeButton(
-                            localValue.value,
-                            'ss',
-                            <boolean>props.disabled,
-                            () => {
-                                if (!props.disabled) {
-                                    currentView.value = DatePickerConst.SECOND;
-                                }
-                            }
-                        ),
-                    ]),
                 ]),
-                h('tr', [
-                    h('td', [
-                        createCalendarNavButton('dark', 'arrow_drop_down', 32, props.disabled, () =>
-                            shiftDateTimeThenDispatch(
-                                emit,
-                                localValue.value,
-                                'hours',
-                                -1,
-                                props.disabled
-                            )
-                        ),
-                    ]),
-                    h('td', ' '),
-                    h('td', [
-                        createCalendarNavButton('dark', 'arrow_drop_down', 32, props.disabled, () =>
-                            shiftDateTimeThenDispatch(
-                                emit,
-                                localValue.value,
-                                'minutes',
-                                -1,
-                                props.disabled
-                            )
-                        ),
-                    ]),
-                    h('td', ' '),
-                    h('td', [
-                        createCalendarNavButton('dark', 'arrow_drop_down', 32, props.disabled, () =>
-                            shiftDateTimeThenDispatch(
-                                emit,
-                                localValue.value,
-                                'seconds',
-                                -1,
-                                props.disabled
-                            )
-                        ),
-                    ]),
+                h('td', ' '),
+                h('td', [
+                    createCalendarNavButton('dark', 'arrow_drop_up', 32, props.disabled, () =>
+                        shiftDateTimeThenDispatch(
+                            emit,
+                            localValue.value,
+                            'minutes',
+                            1,
+                            props.disabled
+                        )
+                    ),
+                ]),
+                h('td', ' '),
+                h('td', [
+                    createCalendarNavButton('dark', 'arrow_drop_up', 32, props.disabled, () =>
+                        shiftDateTimeThenDispatch(
+                            emit,
+                            localValue.value,
+                            'seconds',
+                            1,
+                            props.disabled
+                        )
+                    ),
                 ]),
             ]),
-        ]
-    );
+            h('tr', [
+                h('td', [
+                    createPickerTimeButton(localValue.value, 'HH', <boolean>props.disabled, () => {
+                        if (!props.disabled) {
+                            currentView.value = DatePickerConst.HOUR;
+                        }
+                    }),
+                ]),
+                h('td', { class: [`${cssPrefix}picker-times-sep`] }, ':'),
+                h('td', [
+                    createPickerTimeButton(localValue.value, 'mm', <boolean>props.disabled, () => {
+                        if (!props.disabled) {
+                            currentView.value = DatePickerConst.MINUTE;
+                        }
+                    }),
+                ]),
+                h('td', { class: [`${cssPrefix}picker-times-sep`] }, ':'),
+                h('td', [
+                    createPickerTimeButton(localValue.value, 'ss', <boolean>props.disabled, () => {
+                        if (!props.disabled) {
+                            currentView.value = DatePickerConst.SECOND;
+                        }
+                    }),
+                ]),
+            ]),
+            h('tr', [
+                h('td', [
+                    createCalendarNavButton('dark', 'arrow_drop_down', 32, props.disabled, () =>
+                        shiftDateTimeThenDispatch(
+                            emit,
+                            localValue.value,
+                            'hours',
+                            -1,
+                            props.disabled
+                        )
+                    ),
+                ]),
+                h('td', ' '),
+                h('td', [
+                    createCalendarNavButton('dark', 'arrow_drop_down', 32, props.disabled, () =>
+                        shiftDateTimeThenDispatch(
+                            emit,
+                            localValue.value,
+                            'minutes',
+                            -1,
+                            props.disabled
+                        )
+                    ),
+                ]),
+                h('td', ' '),
+                h('td', [
+                    createCalendarNavButton('dark', 'arrow_drop_down', 32, props.disabled, () =>
+                        shiftDateTimeThenDispatch(
+                            emit,
+                            localValue.value,
+                            'seconds',
+                            -1,
+                            props.disabled
+                        )
+                    ),
+                ]),
+            ]),
+        ]),
+    ]);
 }
 
 function renderPickerTimesUnit(
@@ -1368,46 +1259,32 @@ function renderPickerTimesUnit(
     localValue: Ref<DateTime>,
     timeUnit: DateTimeUnit
 ): VNode {
-    return h(
-        'table',
-        {
-            class: classes,
-        },
-        [
-            h(
-                'tbody',
-                tableData.value.map((row, idx) =>
-                    h(
-                        'tr',
-                        {
-                            key: `tr-${idx}`,
-                        },
-                        row.map((it, k) =>
-                            h(
-                                'td',
-                                {
-                                    key: `td-${idx}-${k}`,
-                                },
-                                [
-                                    createCalendarButton(
-                                        props,
-                                        localValue,
-                                        it,
-                                        localValue.value,
-                                        timeUnit,
-                                        () => {
-                                            dispatchDateTimeValue(emit, it.value);
-                                            currentView.value = DatePickerConst.TIME;
-                                        }
-                                    ),
-                                ]
-                            )
-                        )
+    return h('table', { class: classes }, [
+        h(
+            'tbody',
+            tableData.value.map((row, idx) =>
+                h(
+                    'tr',
+                    { key: `tr-${idx}` },
+                    row.map((it, k) =>
+                        h('td', { key: `td-${idx}-${k}` }, [
+                            createCalendarButton(
+                                props,
+                                localValue,
+                                it,
+                                localValue.value,
+                                timeUnit,
+                                () => {
+                                    dispatchDateTimeValue(emit, it.value);
+                                    currentView.value = DatePickerConst.TIME;
+                                }
+                            ),
+                        ])
                     )
                 )
-            ),
-        ]
-    );
+            )
+        ),
+    ]);
 }
 
 function createPickerTimeButton(

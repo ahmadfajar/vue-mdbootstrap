@@ -1,11 +1,19 @@
-import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
-import { createCommentVNode, h, nextTick, toDisplayString, vModelText, withDirectives } from 'vue';
+import {
+    useOnFieldBlurred,
+    useOnFieldFocused,
+    useOnFieldNodeMounted,
+    useOnFieldValueCleared,
+    useOnFieldValueUpdated,
+    useOnTextFieldNodeMounted,
+} from '@/components/Field/mixins/textFieldEventApi';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
+import { BsIcon, BsToggleIcon } from '@/components/Icon';
 import {
     cssPrefix,
     useRenderSlotWithWrapper,
     useRenderSlotWrapperWithCondition,
     useRenderTransition,
-} from '../../../mixins/CommonApi';
+} from '@/mixins/CommonApi';
 import type {
     TBsIcon,
     TBsToggleIcon,
@@ -17,18 +25,10 @@ import type {
     TRecord,
     TTextAreaOptionProps,
     TTextFieldOptionProps,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsIcon, BsToggleIcon } from '../../Icon';
-import {
-    useOnFieldBlurred,
-    useOnFieldFocused,
-    useOnFieldNodeMounted,
-    useOnFieldValueCleared,
-    useOnFieldValueUpdated,
-    useOnTextFieldNodeMounted,
-} from './textFieldEventApi';
-import { useRenderFieldFeedback } from './validationApi';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import { createCommentVNode, h, nextTick, toDisplayString, vModelText, withDirectives } from 'vue';
 
 export function useFieldWrapperClasses(
     props: Readonly<TInputFieldProps>,
@@ -271,9 +271,7 @@ export function useCreateValidationIcon(
                       hasValidated && hasError
                           ? h<TBsIcon>(BsIcon, {
                                 class: 'icon-error text-danger',
-                                icon: (iconVariant === 'outlined'
-                                    ? `error_outline_${iconVariant}`
-                                    : `error_${iconVariant}`) as Prop<string>,
+                                icon: `error_${iconVariant}` as Prop<string>,
                                 size: iconSize as Prop<number | undefined>,
                             })
                           : hasValidated && !hasError

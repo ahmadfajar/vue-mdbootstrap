@@ -1,7 +1,10 @@
+import { searchFieldProps } from '@/components/Field/mixins/fieldProps';
+import {
+    useRenderSearchField,
+    useSearchFieldClasses,
+} from '@/components/Field/mixins/searchFieldApi';
+import type { TBsSearchField, TSearchFieldOptionProps } from '@/components/Field/types';
 import { computed, defineComponent, ref, watch } from 'vue';
-import { searchFieldProps } from './mixins/fieldProps';
-import { useRenderSearchField, useSearchFieldClasses } from './mixins/searchFieldApi';
-import type { TBsSearchField, TSearchFieldOptionProps } from './types';
 
 export default defineComponent<TBsSearchField>({
     name: 'BsSearchField',

@@ -1,14 +1,14 @@
-import { DateTime } from 'luxon';
-import { computed, defineComponent, ref } from 'vue';
-import type { TBsDatePickerHeader, TDatePickerHeaderProps, TRecord } from '../../types';
 import {
     DatePickerConst,
     useDatePickerHeaderStyles,
     useHeaderTitleFormatOpts,
     useRenderDatePickerHeader,
     useWatchOfDatePickerHeaderProps,
-} from './mixins/datePickerApi';
-import { datePickerHeaderProps } from './mixins/datePickerProps';
+} from '@/components/DatePicker/mixins/datePickerApi.ts';
+import { datePickerHeaderProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
+import type { TBsDatePickerHeader, TDatePickerHeaderProps, TRecord } from '@/types';
+import { DateTime } from 'luxon';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent<TBsDatePickerHeader>({
     name: 'BsDatePickerHeader',

@@ -1,8 +1,16 @@
+import {
+    DatePickerConst,
+    useParseDate,
+    useRenderDatePicker,
+} from '@/components/DatePicker/mixins/datePickerApi';
+import { datePickerProps } from '@/components/DatePicker/mixins/datePickerProps';
+import type {
+    TBsDatePicker,
+    TDatePickerOptionProps,
+    TDateTimePickerMode,
+} from '@/components/DatePicker/types';
+import { isServer } from '@/mixins/CommonApi';
 import { computed, defineComponent, ref, watch } from 'vue';
-import { isServer } from '../../mixins/CommonApi';
-import { DatePickerConst, useParseDate, useRenderDatePicker } from './mixins/datePickerApi';
-import { datePickerProps } from './mixins/datePickerProps';
-import type { TBsDatePicker, TDatePickerOptionProps, TDateTimePickerMode } from './types';
 
 export default defineComponent<TBsDatePicker>({
     name: 'BsDatePicker',
