@@ -3,8 +3,6 @@ import registerConfig from '../../mixins/registerConfig';
 import BsApp from './BsApp';
 import BsContainer from './BsContainer';
 import BsContent from './BsContent';
-import './container.scss';
-import '../../../scss/_utilities.scss';
 
 const BsContainerPlugin: ObjectPlugin = {
     install: (app: App): void => {

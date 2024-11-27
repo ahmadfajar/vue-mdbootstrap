@@ -162,7 +162,7 @@
     }
 
     .progress {
-        --#{$bs-prefix}progress-font-size: var(--#{$prefix}progress-font-size);
+        --#{$prefix-bs}progress-font-size: var(--#{$prefix}progress-font-size);
     }
 }
 

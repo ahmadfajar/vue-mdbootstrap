@@ -29,8 +29,8 @@
         display: none;
 
         > .#{$prefix}btn-icon {
-            --#{$bs-prefix}btn-disabled-bg: transparent;
-            --#{$bs-prefix}btn-disabled-border-color: transparent;
+            --#{$prefix-bs}btn-disabled-bg: transparent;
+            --#{$prefix-bs}btn-disabled-border-color: transparent;
         }
 
         @include media-breakpoint-up(lg) {

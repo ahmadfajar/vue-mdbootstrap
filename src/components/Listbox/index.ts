@@ -1,6 +1,5 @@
 import type { App, ObjectPlugin } from 'vue';
 import BsListbox from './BsListbox';
-import './listbox.scss';
 
 const BsListboxPlugin: ObjectPlugin = {
     install: (app: App): void => {

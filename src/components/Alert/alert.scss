@@ -5,17 +5,17 @@
 @import "../../../scss/variables";
 
 .alert {
-    --#{$bs-prefix}alert-link-color: inherit;
-    --#{$bs-prefix}alert-hr-color: inherit;
-    --#{$bs-prefix}alert-padding-y: 0.7rem;
+    --#{$prefix-bs}alert-link-color: inherit;
+    --#{$prefix-bs}alert-hr-color: inherit;
+    --#{$prefix-bs}alert-padding-y: 0.7rem;
 
     hr {
-        border-top: 1px solid var(--#{$bs-prefix}alert-hr-color);
+        border-top: 1px solid var(--#{$prefix-bs}alert-hr-color);
         opacity: 0.4;
     }
 
     .alert-link {
-        color: var(--#{$bs-prefix}alert-link-color);
+        color: var(--#{$prefix-bs}alert-link-color);
     }
 
     &.alert-dismissible {
@@ -31,11 +31,11 @@
     }
 
     .#{$prefix}btn-icon:last-child {
-        --#{$bs-prefix}btn-state-line-height: #{$padding-xl};
+        --#{$prefix-bs}btn-state-line-height: #{$padding-xl};
 
         .#{$prefix}ripple {
-            --#{$bs-prefix}btn-inner-state-width: #{$padding-xl};
-            --#{$bs-prefix}btn-inner-state-height: #{$padding-xl};
+            --#{$prefix-bs}btn-inner-state-width: #{$padding-xl};
+            --#{$prefix-bs}btn-inner-state-height: #{$padding-xl};
         }
     }
 }

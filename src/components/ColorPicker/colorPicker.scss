@@ -10,13 +10,13 @@ $markerSize: 14px;
 .#{$prefix}color-picker {
     --#{$prefix}slider-thumb-color: #{color.scale($grey-base, $lightness: -20%)};
 
-    @include border-radius(var(--#{$bs-prefix}border-radius));
+    @include border-radius(var(--#{$prefix-bs}border-radius));
     display: inline-block;
     width: 300px;
     position: relative;
 
     > .#{$cmpCssName}canvas {
-        @include border-top-radius(var(--#{$bs-prefix}border-radius));
+        @include border-top-radius(var(--#{$prefix-bs}border-radius));
         background-image: linear-gradient(rgba(0, 0, 0, 0), #000), linear-gradient(90deg, #fff, currentColor);
         height: 150px;
         width: 100%;
@@ -41,12 +41,12 @@ $markerSize: 14px;
         padding: $padding-base;
 
         &:last-child {
-            @include border-bottom-radius(var(--#{$bs-prefix}border-radius));
+            @include border-bottom-radius(var(--#{$prefix-bs}border-radius));
         }
     }
 
     > .#{$cmpCssName}swatches {
-        @include border-bottom-radius(var(--#{$bs-prefix}border-radius));
+        @include border-bottom-radius(var(--#{$prefix-bs}border-radius));
         overflow-y: auto;
         position: relative;
     }
@@ -262,7 +262,7 @@ $markerSize: 14px;
 
 .#{$prefix}popover {
     &.#{$prefix}popover-color-picker {
-        @include border-radius(var(--#{$bs-prefix}border-radius));
+        @include border-radius(var(--#{$prefix-bs}border-radius));
         overflow: hidden;
     }
 }

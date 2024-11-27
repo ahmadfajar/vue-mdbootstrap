@@ -2,8 +2,6 @@ import type { App, ObjectPlugin } from 'vue';
 import BsExpandTransition from './BsExpandTransition';
 import BsOverlay from './BsOverlay';
 import BsRipple from './BsRipple';
-import '../../../scss/_transitions.scss';
-import './animation.scss';
 
 const BsAnimationPlugin: ObjectPlugin = {
     install: (app: App): void => {

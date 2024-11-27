@@ -5,15 +5,15 @@
 
 @mixin alert-variant($name, $background, $border, $color) {
     .alert-#{$name} {
-        --#{$bs-prefix}alert-bg: #{$background};
-        --#{$bs-prefix}alert-border-color: #{$border};
-        --#{$bs-prefix}alert-color: #{$color};
+        --#{$prefix-bs}alert-bg: #{$background};
+        --#{$prefix-bs}alert-border-color: #{$border};
+        --#{$prefix-bs}alert-color: #{$color};
 
         $hr-border-color: Func.round-color-rgb(color.adjust($border, $lightness: -10%));
-        --#{$bs-prefix}alert-hr-color: #{$hr-border-color};
+        --#{$prefix-bs}alert-hr-color: #{$hr-border-color};
 
         $link-color: mix(black, $color, 20%);
-        --#{$bs-prefix}alert-link-color: #{$link-color};
+        --#{$prefix-bs}alert-link-color: #{$link-color};
     }
 }
 
@@ -24,10 +24,10 @@
         $link-color: Func.round-color-rgb(color.adjust($color, $lightness: -10%));
         $text-color: Func.round-color-rgb(color.adjust($color, $lightness: -5%));
 
-        --#{$bs-prefix}alert-color: #{$text-color};
-        --#{$bs-prefix}alert-border-color: #{$border-color};
-        --#{$bs-prefix}alert-hr-color: #{$hr-border-color};
-        --#{$bs-prefix}alert-link-color: #{$link-color};
+        --#{$prefix-bs}alert-color: #{$text-color};
+        --#{$prefix-bs}alert-border-color: #{$border-color};
+        --#{$prefix-bs}alert-hr-color: #{$hr-border-color};
+        --#{$prefix-bs}alert-link-color: #{$link-color};
     }
 }
 
@@ -36,9 +36,9 @@
         $text-color: set-color-contrast($color, $gray-900, $white);
         $hr-border-color: set-color-contrast($color, color.adjust($color, $lightness: -25%), rgba(color.adjust($white, $lightness: -4%), .65));
 
-        --#{$bs-prefix}alert-bg: #{$color};
-        --#{$bs-prefix}alert-color: #{$text-color};
-        --#{$bs-prefix}alert-link-color: #{$text-color};
-        --#{$bs-prefix}alert-hr-color: #{Func.round-color-rgb($hr-border-color)};
+        --#{$prefix-bs}alert-bg: #{$color};
+        --#{$prefix-bs}alert-color: #{$text-color};
+        --#{$prefix-bs}alert-link-color: #{$text-color};
+        --#{$prefix-bs}alert-hr-color: #{Func.round-color-rgb($hr-border-color)};
     }
 }

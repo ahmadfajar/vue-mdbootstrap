@@ -8,10 +8,6 @@ import BsListTileContent from './BsListTileContent';
 import BsListTileSubtitle from './BsListTileSubtitle';
 import BsListTileTitle from './BsListTileTitle';
 import BsListTileLeading from './BsListTileLeading';
-import '../Basic/basic.scss';
-import './listView.scss';
-import './listNav.scss';
-import './listTile.scss';
 
 const BsListViewPlugin: ObjectPlugin = {
     install: (app: App): void => {

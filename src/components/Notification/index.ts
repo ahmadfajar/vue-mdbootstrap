@@ -2,7 +2,6 @@ import type { App, ObjectPlugin } from 'vue';
 import registerConfig from '../../mixins/registerConfig';
 import BsNotification from './BsNotification';
 import NotificationProvider from './mixins/NotificationProvider';
-import './notification.scss';
 
 const BsNotificationPlugin: ObjectPlugin = {
     install: (app: App): void => {

@@ -37,8 +37,8 @@
     }
 
     .nav {
-        --#{$bs-prefix}nav-link-color: #{mix($default-active-bgcolor, rgba($gray-800, .8), 30%)};
-        --#{$bs-prefix}nav-link-hover-color: rgb(var(--#{$prefix}field-primary-indicator-rgb));
+        --#{$prefix-bs}nav-link-color: #{mix($default-active-bgcolor, rgba($gray-800, .8), 30%)};
+        --#{$prefix-bs}nav-link-hover-color: rgb(var(--#{$prefix}field-primary-indicator-rgb));
         //overflow-x: hidden;
 
         .nav-link {
@@ -70,33 +70,33 @@
 
         &.nav-tabs {
             &.#{$prefix}tab-left {
-                background-color: var(--#{$bs-prefix}card-cap-bg);
-                border-right: var(--#{$bs-prefix}card-border-width) solid var(--#{$bs-prefix}card-border-color);
+                background-color: var(--#{$prefix-bs}card-cap-bg);
+                border-right: var(--#{$prefix-bs}card-border-width) solid var(--#{$prefix-bs}card-border-color);
                 padding: var(--#{$prefix}tabs-nav-margin-x) 0 var(--#{$prefix}tabs-nav-margin-x) var(--#{$prefix}tabs-nav-margin-x);
 
                 > .nav-item {
                     @include border-right-radius(0);
-                    @include border-left-radius(var(--#{$bs-prefix}nav-tabs-border-radius));
+                    @include border-left-radius(var(--#{$prefix-bs}nav-tabs-border-radius));
                     margin-right: -1px;
 
                     &.active {
-                        border-color: var(--#{$prefix}tabs-nav-active-border-color) var(--#{$bs-prefix}white) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color);
+                        border-color: var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix-bs}white) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color);
                     }
                 }
             }
 
             &.#{$prefix}tab-right {
-                background-color: var(--#{$bs-prefix}card-cap-bg);
-                border-left: var(--#{$bs-prefix}card-border-width) solid var(--#{$bs-prefix}card-border-color);
+                background-color: var(--#{$prefix-bs}card-cap-bg);
+                border-left: var(--#{$prefix-bs}card-border-width) solid var(--#{$prefix-bs}card-border-color);
                 padding: var(--#{$prefix}tabs-nav-margin-x) var(--#{$prefix}tabs-nav-margin-x) var(--#{$prefix}tabs-nav-margin-x) 0;
 
                 > .nav-item {
                     @include border-left-radius(0);
-                    @include border-right-radius(var(--#{$bs-prefix}nav-tabs-border-radius));
+                    @include border-right-radius(var(--#{$prefix-bs}nav-tabs-border-radius));
                     margin-left: -1px;
 
                     &.active {
-                        border-color: var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$bs-prefix}white);
+                        border-color: var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix-bs}white);
                     }
                 }
             }
@@ -131,34 +131,34 @@
 
                 .nav-item {
                     @include border-top-radius(0);
-                    @include border-bottom-radius(var(--#{$bs-prefix}nav-tabs-border-radius));
+                    @include border-bottom-radius(var(--#{$prefix-bs}nav-tabs-border-radius));
                     margin-bottom: 0;
                     margin-top: -1px;
 
                     &.active {
-                        border-color: var(--#{$bs-prefix}white) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color);
+                        border-color: var(--#{$prefix-bs}white) var(--#{$prefix}tabs-nav-active-border-color) var(--#{$prefix}tabs-nav-active-border-color);
                     }
                 }
             }
         }
 
         &.nav-pills {
-            --#{$bs-prefix}nav-pills-link-active-bg: rgb(var(--#{$prefix}field-primary-indicator-rgb));
+            --#{$prefix-bs}nav-pills-link-active-bg: rgb(var(--#{$prefix}field-primary-indicator-rgb));
             padding: var(--#{$prefix}tabs-item-padding);
 
             &.#{$prefix}tab-left {
-                background-color: var(--#{$bs-prefix}card-cap-bg);
-                border-right: var(--#{$bs-prefix}card-border-width) solid var(--#{$bs-prefix}card-border-color);
+                background-color: var(--#{$prefix-bs}card-cap-bg);
+                border-right: var(--#{$prefix-bs}card-border-width) solid var(--#{$prefix-bs}card-border-color);
             }
 
             &.#{$prefix}tab-right {
-                background-color: var(--#{$bs-prefix}card-cap-bg);
-                border-left: var(--#{$bs-prefix}card-border-width) solid var(--#{$bs-prefix}card-border-color);
+                background-color: var(--#{$prefix-bs}card-cap-bg);
+                border-left: var(--#{$prefix-bs}card-border-width) solid var(--#{$prefix-bs}card-border-color);
             }
 
             .nav-link {
                 > .#{$prefix}ripple {
-                    @include border-radius(var(--#{$bs-prefix}nav-pills-border-radius));
+                    @include border-radius(var(--#{$prefix-bs}nav-pills-border-radius));
                 }
 
                 &.active {
@@ -326,15 +326,15 @@
         &:first-child {
             .nav-pills, .nav-material, .nav-modern {
                 &.#{$prefix}tab-top {
-                    @include border-top-radius(var(--#{$bs-prefix}card-border-radius));
+                    @include border-top-radius(var(--#{$prefix-bs}card-border-radius));
                 }
 
                 &.#{$prefix}tab-left {
-                    @include border-top-left-radius(var(--#{$bs-prefix}card-border-radius));
+                    @include border-top-left-radius(var(--#{$prefix-bs}card-border-radius));
                 }
 
                 &.#{$prefix}tab-right {
-                    @include border-top-right-radius(var(--#{$bs-prefix}card-border-radius));
+                    @include border-top-right-radius(var(--#{$prefix-bs}card-border-radius));
                 }
             }
         }
@@ -342,15 +342,15 @@
         &:last-child {
             .nav-pills, .nav-material, .nav-modern {
                 &.#{$prefix}tab-bottom {
-                    @include border-bottom-radius(var(--#{$bs-prefix}card-border-radius));
+                    @include border-bottom-radius(var(--#{$prefix-bs}card-border-radius));
                 }
 
                 &.#{$prefix}tab-left {
-                    @include border-bottom-left-radius(var(--#{$bs-prefix}card-border-radius));
+                    @include border-bottom-left-radius(var(--#{$prefix-bs}card-border-radius));
                 }
 
                 &.#{$prefix}tab-right {
-                    @include border-bottom-right-radius(var(--#{$bs-prefix}card-border-radius));
+                    @include border-bottom-right-radius(var(--#{$prefix-bs}card-border-radius));
                 }
             }
         }

@@ -108,8 +108,8 @@
         }
 
         > .#{$prefix}btn-icon {
-            --#{$bs-prefix}btn-inner-height: 2.5rem;
-            --#{$bs-prefix}btn-inner-width: 2.5rem;
+            --#{$prefix-bs}btn-inner-height: 2.5rem;
+            --#{$prefix-bs}btn-inner-width: 2.5rem;
         }
     }
 
@@ -121,7 +121,7 @@
     .#{$prefix}datepicker-years {
         .btn {
             &[class*='btn-flat'] {
-                --#{$bs-prefix}btn-inner-padding-x: 1.5rem;
+                --#{$prefix-bs}btn-inner-padding-x: 1.5rem;
             }
         }
     }
@@ -134,7 +134,7 @@
         overflow: hidden;
 
         .#{$prefix}btn-today {
-            --#{$bs-prefix}btn-border-color: var(--#{$bs-prefix}btn-color);
+            --#{$prefix-bs}btn-border-color: var(--#{$prefix-bs}btn-color);
         }
     }
 
@@ -153,11 +153,11 @@
         }
 
         .#{$prefix}btn-icon {
-            --#{$bs-prefix}btn-sm-inner-height: 2.125rem;
-            --#{$bs-prefix}btn-sm-inner-width: 2.125rem;
+            --#{$prefix-bs}btn-sm-inner-height: 2.125rem;
+            --#{$prefix-bs}btn-sm-inner-width: 2.125rem;
 
             &.disabled {
-                --#{$bs-prefix}btn-disabled-bg: transparent;
+                --#{$prefix-bs}btn-disabled-bg: transparent;
             }
         }
     }
@@ -228,16 +228,16 @@
             color: $grey-lighten-4;
 
             .btn-flat-dark {
-                --#{$bs-prefix}btn-color: #{$grey-lighten-2};
-                --#{$bs-prefix}btn-hover-color: #{$white};
-                --#{$bs-prefix}btn-hover-bg: rgba(70, 70, 70, 0.8);
+                --#{$prefix-bs}btn-color: #{$grey-lighten-2};
+                --#{$prefix-bs}btn-hover-color: #{$white};
+                --#{$prefix-bs}btn-hover-bg: rgba(70, 70, 70, 0.8);
             }
 
             &.bg-grey {
                 --#{$prefix}datepicker-table-header-color: #{$grey-lighten-3};
 
                 .btn-flat-dark {
-                    --#{$bs-prefix}btn-color: #{$grey-lighten-4};
+                    --#{$prefix-bs}btn-color: #{$grey-lighten-4};
                 }
             }
         }

@@ -1,9 +1,6 @@
 import type { App, ObjectPlugin } from 'vue';
 import BsRadio from './BsRadio';
 import BsRadioGroup from './BsRadioGroup';
-import '../../../scss/_globalvars.scss';
-import '../Field/field.scss';
-import './radio.scss';
 
 const BsRadioPlugin: ObjectPlugin = {
     install: (app: App): void => {

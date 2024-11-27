@@ -63,9 +63,9 @@
                 }
 
                 > .badge {
-                    --#{$bs-prefix}badge-font-size: 75%;
-                    --#{$bs-prefix}badge-padding-y: #{$padding-xs};
-                    --#{$bs-prefix}badge-font-weight: #{$font-weight-normal};
+                    --#{$prefix-bs}badge-font-size: 75%;
+                    --#{$prefix-bs}badge-padding-y: #{$padding-xs};
+                    --#{$prefix-bs}badge-font-weight: #{$font-weight-normal};
                     line-height: var(--#{$prefix}nav-item-line-height);
                 }
 

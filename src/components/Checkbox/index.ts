@@ -1,9 +1,6 @@
 import type { App, ObjectPlugin } from 'vue';
 import BsCheckbox from './BsCheckbox';
 import BsCheckboxGroup from './BsCheckboxGroup';
-import '../../../scss/_globalvars.scss';
-import '../Field/field.scss';
-import './checkbox.scss';
 
 const BsCheckboxPlugin: ObjectPlugin = {
     install: (app: App): void => {

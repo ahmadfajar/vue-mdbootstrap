@@ -4,13 +4,6 @@ import BsTextArea from './BsTextArea';
 import BsChipField from './BsChipField';
 import BsNumericField from './BsNumericField';
 import BsSearchField from './BsSearchField';
-import '../../../scss/_globalvars.scss';
-import '../../../scss/_transitions.scss';
-import '../../../scss/_utilities.scss';
-import './field.scss';
-import './chipField.scss';
-import './numericField.scss';
-import './searchField.scss';
 
 const BsFieldPlugin: ObjectPlugin = {
     install: (app: App): void => {

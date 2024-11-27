@@ -11,7 +11,7 @@
     z-index: 1060;
 
     .dropdown-menu {
-        --#{$bs-prefix}dropdown-border-width: 0;
+        --#{$prefix-bs}dropdown-border-width: 0;
         display: block;
         position: relative;
 

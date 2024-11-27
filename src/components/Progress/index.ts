@@ -2,8 +2,6 @@ import type { App, ObjectPlugin } from 'vue';
 import BsMaskLoader from './BsMaskLoader';
 import BsProgress from './BsProgress';
 import BsProgressBar from './BsProgressBar';
-import './progress.scss';
-import '../../../scss/_utilities.scss';
 
 const BsProgressPlugin: ObjectPlugin = {
     install: (app: App): void => {

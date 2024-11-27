@@ -40,9 +40,9 @@
     }
 
     .dropdown-menu {
-        --#{$bs-prefix}dropdown-padding-y: 0;
-        --#{$bs-prefix}dropdown-item-padding-y: var(--#{$prefix}tile-padding-y);
-        --#{$bs-prefix}dropdown-header-color: var(--#{$prefix}subheader-color);
+        --#{$prefix-bs}dropdown-padding-y: 0;
+        --#{$prefix-bs}dropdown-item-padding-y: var(--#{$prefix}tile-padding-y);
+        --#{$prefix-bs}dropdown-header-color: var(--#{$prefix}subheader-color);
     }
 
     &.#{$prefix}list-space-both,
@@ -71,11 +71,11 @@
 
 .card {
     > .#{$prefix}list:first-child {
-        @include border-top-radius(var(--#{$bs-prefix}card-border-radius));
+        @include border-top-radius(var(--#{$prefix-bs}card-border-radius));
     }
 
     > .#{$prefix}list:last-child {
-        @include border-bottom-radius(var(--#{$bs-prefix}card-border-radius));
+        @include border-bottom-radius(var(--#{$prefix-bs}card-border-radius));
     }
 }
 

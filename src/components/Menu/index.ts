@@ -1,6 +1,5 @@
 import type { App, ObjectPlugin } from 'vue';
 import BsDropdownMenu from './BsDropdownMenu';
-import './dropdownMenu.scss';
 
 const BsMenuPlugin: ObjectPlugin = {
     install: (app: App): void => {

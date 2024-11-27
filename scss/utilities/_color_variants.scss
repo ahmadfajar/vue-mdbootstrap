@@ -2,7 +2,7 @@
 @use "../functions" as Func;
 
 // Create background colors classes
-@each $color_name, $color in $mdb-colors-1 {
+@each $color_name, $color in $mdb-palette {
     @each $color_type, $color_value in $color {
         @if $color_type == "base" {
             @if(map-get($theme-colors, $color_name) == null) {
@@ -63,23 +63,23 @@ $removed-bs-colors: map-remove($removed-duplicate-colors,
         "primary", "secondary", "success", "info", "warning", "danger", "white"
 );
 
-:root {
-    --#{$bs-prefix}bg-opacity: 1;
-    --#{$bs-prefix}border-opacity: 1;
-    --#{$bs-prefix}text-opacity: 1;
-}
+//:root {
+//    --#{$bs-prefix}bg-opacity: 1;
+//    --#{$bs-prefix}border-opacity: 1;
+//    --#{$bs-prefix}text-opacity: 1;
+//}
 
 @each $color_name, $color in $removed-bs-colors {
     .bg-#{$color_name} {
-        background-color: rgba($color, var(--#{$bs-prefix}bg-opacity)) !important;
+        background-color: rgba($color, var(--#{$prefix-bs}bg-opacity)) !important;
     }
 
     .border-#{$color_name} {
-        border-color: rgba($color, var(--#{$bs-prefix}border-opacity)) !important;
+        border-color: rgba($color, var(--#{$prefix-bs}border-opacity)) !important;
     }
 
     .text-#{$color_name} {
-        color: rgba($color, var(--#{$bs-prefix}text-opacity)) !important;
+        color: rgba($color, var(--#{$prefix-bs}text-opacity)) !important;
     }
 
     a.text-#{$color_name} {
@@ -91,27 +91,27 @@ $removed-bs-colors: map-remove($removed-duplicate-colors,
 
 // Manually adds duplicate theme-color
 .bg-dark, .bg-elegant-color-dark {
-    background-color: rgba($elegant-color-dark, var(--#{$bs-prefix}bg-opacity)) !important;
+    background-color: rgba($elegant-color-dark, var(--#{$prefix-bs}bg-opacity)) !important;
 }
 
 .bg-dark-blue, .bg-primary-color-dark {
-    background-color: rgba($primary-color-dark, var(--#{$bs-prefix}bg-opacity)) !important;
+    background-color: rgba($primary-color-dark, var(--#{$prefix-bs}bg-opacity)) !important;
 }
 
 .border-dark, .border-elegant-color-dark {
-    border-color: rgba($elegant-color-dark, var(--#{$bs-prefix}border-opacity)) !important;
+    border-color: rgba($elegant-color-dark, var(--#{$prefix-bs}border-opacity)) !important;
 }
 
 .border-dark-blue, .border-primary-color-dark {
-    border-color: rgba($primary-color-dark, var(--#{$bs-prefix}border-opacity)) !important;
+    border-color: rgba($primary-color-dark, var(--#{$prefix-bs}border-opacity)) !important;
 }
 
 .text-dark, .text-elegant-color-dark {
-    color: rgba($elegant-color-dark, var(--#{$bs-prefix}text-opacity)) !important;
+    color: rgba($elegant-color-dark, var(--#{$prefix-bs}text-opacity)) !important;
 }
 
 .text-dark-blue, .text-primary-color-dark {
-    color: rgba($primary-color-dark, var(--#{$bs-prefix}text-opacity)) !important;
+    color: rgba($primary-color-dark, var(--#{$prefix-bs}text-opacity)) !important;
 }
 
 a.text-dark, a.text-elegant-color-dark {

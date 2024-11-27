@@ -6,8 +6,8 @@
 @import "bootstrap/scss/mixins/breakpoints";
 
 .card {
-    --#{$bs-prefix}card-border-radius: 0.75rem;
-    --#{$bs-prefix}card-inner-border-radius: calc(0.75rem - 1px);
+    --#{$prefix-bs}card-border-radius: 0.75rem;
+    --#{$prefix-bs}card-inner-border-radius: calc(0.75rem - 1px);
 
     .card-header {
         font-weight: $font-weight-semi-bold;
@@ -20,7 +20,7 @@
     &:not(.rounded-0) {
         > .#{$prefix}mask-loader {
             > .#{$prefix}overlay {
-                @include border-radius(var(--#{$bs-prefix}card-border-radius))
+                @include border-radius(var(--#{$prefix-bs}card-border-radius))
             }
         }
     }
@@ -42,12 +42,12 @@
 }
 
 .#{$prefix}card-media {
-    --#{$bs-prefix}card-media-bg: rgba(0, 0, 0, .54);
-    --#{$bs-prefix}card-media-color: rgba(255, 255, 255, .8);
-    --#{$bs-prefix}card-media-title-font-size: 1.5rem;
-    --#{$bs-prefix}card-media-title-font-weight: #{$font-weight-semi-bold};
-    --#{$bs-prefix}card-media-subtitle-font-size: 1.125rem;
-    --#{$bs-prefix}card-media-subtitle-font-weight: #{$font-weight-light};
+    --#{$prefix-bs}card-media-bg: rgba(0, 0, 0, .54);
+    --#{$prefix-bs}card-media-color: rgba(255, 255, 255, .8);
+    --#{$prefix-bs}card-media-title-font-size: 1.5rem;
+    --#{$prefix-bs}card-media-title-font-weight: #{$font-weight-semi-bold};
+    --#{$prefix-bs}card-media-subtitle-font-size: 1.125rem;
+    --#{$prefix-bs}card-media-subtitle-font-weight: #{$font-weight-light};
 
     position: relative;
 
@@ -60,7 +60,7 @@
     }
 
     > .#{$prefix}card-media-overlay {
-        background-color: var(--#{$bs-prefix}card-media-bg);
+        background-color: var(--#{$prefix-bs}card-media-bg);
         left: 0;
         right: 0;
         padding: $padding-base;
@@ -68,17 +68,17 @@
 
         > .#{$prefix}card-media-title,
         > .#{$prefix}card-media-subtitle {
-            color: var(--#{$bs-prefix}card-media-color);
+            color: var(--#{$prefix-bs}card-media-color);
         }
 
         > .#{$prefix}card-media-title {
-            font-size: var(--#{$bs-prefix}card-media-title-font-size);
-            font-weight: var(--#{$bs-prefix}card-media-title-font-weight);
+            font-size: var(--#{$prefix-bs}card-media-title-font-size);
+            font-weight: var(--#{$prefix-bs}card-media-title-font-weight);
         }
 
         > .#{$prefix}card-media-subtitle {
-            font-size: var(--#{$bs-prefix}card-media-subtitle-font-size);
-            font-weight: var(--#{$bs-prefix}card-media-subtitle-font-weight);
+            font-size: var(--#{$prefix-bs}card-media-subtitle-font-size);
+            font-weight: var(--#{$prefix-bs}card-media-subtitle-font-weight);
         }
     }
 }
@@ -87,24 +87,24 @@
     > .#{$prefix}card-media {
         &:first-child {
             > img {
-                @include border-top-radius(var(--#{$bs-prefix}card-inner-border-radius));
+                @include border-top-radius(var(--#{$prefix-bs}card-inner-border-radius));
             }
 
             > .#{$prefix}card-media-overlay {
                 &.#{$prefix}overlay-top {
-                    @include border-top-radius(var(--#{$bs-prefix}card-inner-border-radius));
+                    @include border-top-radius(var(--#{$prefix-bs}card-inner-border-radius));
                 }
             }
         }
 
         &:last-child {
             > img {
-                @include border-bottom-radius(var(--#{$bs-prefix}card-border-radius));
+                @include border-bottom-radius(var(--#{$prefix-bs}card-border-radius));
             }
 
             > .#{$prefix}card-media-overlay {
                 &.#{$prefix}overlay-bottom {
-                    @include border-bottom-radius(var(--#{$bs-prefix}card-border-radius));
+                    @include border-bottom-radius(var(--#{$prefix-bs}card-border-radius));
                 }
             }
         }
@@ -113,10 +113,10 @@
 
 .card-img-start,
 .card-img-left {
-    @include border-left-radius(var(--#{$bs-prefix}card-inner-border-radius));
+    @include border-left-radius(var(--#{$prefix-bs}card-inner-border-radius));
 }
 
 .card-img-end,
 .card-img-right {
-    @include border-right-radius(var(--#{$bs-prefix}card-inner-border-radius));
+    @include border-right-radius(var(--#{$prefix-bs}card-inner-border-radius));
 }

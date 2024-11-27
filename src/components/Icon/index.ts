@@ -3,8 +3,6 @@ import BsIcon from './BsIcon';
 import BsIconSvg from './BsIconSvg';
 import BsIconSpinner from './BsIconSpinner';
 import BsToggleIcon from './BsToggleIcon';
-import '../Progress/progress.scss';
-import './icon.scss';
 
 const BsIconPlugin: ObjectPlugin = {
     install: (app: App): void => {

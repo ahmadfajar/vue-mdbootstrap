@@ -57,11 +57,11 @@
 
             > .#{$prefix}spin-down,
             > .#{$prefix}spin-up {
-                --#{$bs-prefix}btn-border-radius: 0;
-                --#{$bs-prefix}btn-border-width: 0;
-                --#{$bs-prefix}btn-color: var(--#{$prefix}field-button-color);
-                --#{$bs-prefix}btn-active-bg: var(--#{$prefix}field-button-active-bg);
-                --#{$bs-prefix}btn-hover-bg: var(--#{$prefix}field-button-hover-bg);
+                --#{$prefix-bs}btn-border-radius: 0;
+                --#{$prefix-bs}btn-border-width: 0;
+                --#{$prefix-bs}btn-color: var(--#{$prefix}field-button-color);
+                --#{$prefix-bs}btn-active-bg: var(--#{$prefix}field-button-active-bg);
+                --#{$prefix-bs}btn-hover-bg: var(--#{$prefix}field-button-hover-bg);
 
                 width: 1.5rem;
                 height: 18px;
@@ -71,13 +71,13 @@
                 }
 
                 &:hover {
-                    --#{$bs-prefix}btn-state-box-shadow: none;
+                    --#{$prefix-bs}btn-state-box-shadow: none;
                 }
 
                 &:active,
                 &:focus {
-                    --#{$bs-prefix}btn-bg: var(--#{$bs-prefix}btn-hover-bg);
-                    --#{$bs-prefix}btn-state-box-shadow: #{$z-depth-half};
+                    --#{$prefix-bs}btn-bg: var(--#{$prefix-bs}btn-hover-bg);
+                    --#{$prefix-bs}btn-state-box-shadow: #{$z-depth-half};
                 }
             }
         }
@@ -87,12 +87,12 @@
             // margin-top: .75rem;
 
             .#{$prefix}btn-icon {
-                --#{$bs-prefix}btn-color: var(--#{$prefix}field-button-color);
-                --#{$bs-prefix}btn-active-bg: var(--#{$prefix}field-button-active-bg);
-                --#{$bs-prefix}btn-hover-bg: var(--#{$prefix}field-button-hover-bg);
+                --#{$prefix-bs}btn-color: var(--#{$prefix}field-button-color);
+                --#{$prefix-bs}btn-active-bg: var(--#{$prefix}field-button-active-bg);
+                --#{$prefix-bs}btn-hover-bg: var(--#{$prefix}field-button-hover-bg);
 
                 &:hover {
-                    --#{$bs-prefix}btn-state-box-shadow: none;
+                    --#{$prefix-bs}btn-state-box-shadow: none;
                 }
 
                 > .#{$prefix}ripple {

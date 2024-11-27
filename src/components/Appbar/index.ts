@@ -3,8 +3,6 @@ import registerConfig from '../../mixins/registerConfig';
 import BsAppbar from './BsAppbar';
 import BsAppbarItems from './BsAppbarItems';
 import BsAppbarTitle from './BsAppbarTitle';
-import './appbar.scss';
-import '../../../scss/_utilities.scss';
 
 const BsAppbarPlugin: ObjectPlugin = {
     install: (app: App): void => {

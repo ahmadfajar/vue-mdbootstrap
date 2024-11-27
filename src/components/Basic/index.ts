@@ -3,7 +3,6 @@ import BsDivider from './BsDivider';
 import BsImageHolder from './BsImageHolder';
 import BsSpacer from './BsSpacer';
 import BsSubheader from './BsSubheader';
-import './basic.scss';
 
 const BsBasicCmpPlugin: ObjectPlugin = {
     install: (app: App): void => {

@@ -17,7 +17,7 @@
             }
 
             .dropdown-menu {
-                --#{$bs-prefix}dropdown-divider-bg: #{rgba($white, 0.15)};
+                --#{$prefix-bs}dropdown-divider-bg: #{rgba($white, 0.15)};
             }
         }
     }
@@ -86,12 +86,12 @@
         }
 
         .dropdown-menu {
-            --#{$bs-prefix}dropdown-bg: var(--#{$prefix}listview-bg);
-            --#{$bs-prefix}dropdown-link-color: #{$tile-title-color};
-            --#{$bs-prefix}dropdown-link-active-bg: #{$tile-active-bg};
-            --#{$bs-prefix}dropdown-link-active-color: #{$tile-active-title-color};
-            --#{$bs-prefix}dropdown-link-hover-bg: #{$tile-hover-bg};
-            --#{$bs-prefix}dropdown-link-hover-color: #{$tile-active-title-color};
+            --#{$prefix-bs}dropdown-bg: var(--#{$prefix}listview-bg);
+            --#{$prefix-bs}dropdown-link-color: #{$tile-title-color};
+            --#{$prefix-bs}dropdown-link-active-bg: #{$tile-active-bg};
+            --#{$prefix-bs}dropdown-link-active-color: #{$tile-active-title-color};
+            --#{$prefix-bs}dropdown-link-hover-bg: #{$tile-hover-bg};
+            --#{$prefix-bs}dropdown-link-hover-color: #{$tile-active-title-color};
         }
     }
 }

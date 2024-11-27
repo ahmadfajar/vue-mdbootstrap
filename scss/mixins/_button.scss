@@ -9,16 +9,16 @@
         $hover-color: round-color-rgb(color.scale($color, $lightness: -15%));
         $active-color: round-color-rgb(color.scale($color, $lightness: -35%));
 
-        --#{$bs-prefix}btn-bg: #{$color};
-        --#{$bs-prefix}btn-color: #{$text-color};
-        --#{$bs-prefix}btn-border-color: #{$color};
-        --#{$bs-prefix}btn-active-bg: #{$active-color};
-        --#{$bs-prefix}btn-active-color: #{$text-color};
-        --#{$bs-prefix}btn-active-border-color: #{$active-color};
-        --#{$bs-prefix}btn-hover-bg: #{$hover-color};
-        --#{$bs-prefix}btn-hover-color: #{$text-color};
-        --#{$bs-prefix}btn-hover-border-color: #{$hover-color};
-        --#{$bs-prefix}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
+        --#{$prefix-bs}btn-bg: #{$color};
+        --#{$prefix-bs}btn-color: #{$text-color};
+        --#{$prefix-bs}btn-border-color: #{$color};
+        --#{$prefix-bs}btn-active-bg: #{$active-color};
+        --#{$prefix-bs}btn-active-color: #{$text-color};
+        --#{$prefix-bs}btn-active-border-color: #{$active-color};
+        --#{$prefix-bs}btn-hover-bg: #{$hover-color};
+        --#{$prefix-bs}btn-hover-color: #{$text-color};
+        --#{$prefix-bs}btn-hover-border-color: #{$hover-color};
+        --#{$prefix-bs}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
 
         &.#{$prefix}btn-fab,
         &.#{$prefix}btn-tonal {
@@ -30,15 +30,15 @@
                 $active-bg: $gray-200;
                 $active-color: $gray-800;
 
-                --#{$bs-prefix}btn-bg: #{$bg-color};
-                --#{$bs-prefix}btn-color: #{$text-color};
-                --#{$bs-prefix}btn-border-color: #{$bg-color};
-                --#{$bs-prefix}btn-active-bg: #{$active-bg};
-                --#{$bs-prefix}btn-active-color: #{$active-color};
-                --#{$bs-prefix}btn-active-border-color: #{$active-bg};
-                --#{$bs-prefix}btn-hover-bg: #{$hover-bg};
-                --#{$bs-prefix}btn-hover-color: #{$hover-color};
-                --#{$bs-prefix}btn-hover-border-color: #{$hover-bg};
+                --#{$prefix-bs}btn-bg: #{$bg-color};
+                --#{$prefix-bs}btn-color: #{$text-color};
+                --#{$prefix-bs}btn-border-color: #{$bg-color};
+                --#{$prefix-bs}btn-active-bg: #{$active-bg};
+                --#{$prefix-bs}btn-active-color: #{$active-color};
+                --#{$prefix-bs}btn-active-border-color: #{$active-bg};
+                --#{$prefix-bs}btn-hover-bg: #{$hover-bg};
+                --#{$prefix-bs}btn-hover-color: #{$hover-color};
+                --#{$prefix-bs}btn-hover-border-color: #{$hover-bg};
             } @else {
                 $text-color: round-color-rgb(color.scale($color, $lightness: -10%));
                 $bg-color: round-color-rgb(color.scale($color, $lightness: 80%));
@@ -47,15 +47,15 @@
                 $active-bg: round-color-rgb(color.scale($color, $lightness: 60%));
                 $active-color: round-color-rgb(color.scale($color, $lightness: -50%));
 
-                --#{$bs-prefix}btn-bg: #{$bg-color};
-                --#{$bs-prefix}btn-color: #{$text-color};
-                --#{$bs-prefix}btn-border-color: #{$bg-color};
-                --#{$bs-prefix}btn-active-bg: #{$active-bg};
-                --#{$bs-prefix}btn-active-color: #{$active-color};
-                --#{$bs-prefix}btn-active-border-color: #{$active-bg};
-                --#{$bs-prefix}btn-hover-bg: #{$hover-bg};
-                --#{$bs-prefix}btn-hover-color: #{$hover-color};
-                --#{$bs-prefix}btn-hover-border-color: #{$hover-bg};
+                --#{$prefix-bs}btn-bg: #{$bg-color};
+                --#{$prefix-bs}btn-color: #{$text-color};
+                --#{$prefix-bs}btn-border-color: #{$bg-color};
+                --#{$prefix-bs}btn-active-bg: #{$active-bg};
+                --#{$prefix-bs}btn-active-color: #{$active-color};
+                --#{$prefix-bs}btn-active-border-color: #{$active-bg};
+                --#{$prefix-bs}btn-hover-bg: #{$hover-bg};
+                --#{$prefix-bs}btn-hover-color: #{$hover-color};
+                --#{$prefix-bs}btn-hover-border-color: #{$hover-bg};
             }
         }
     }
@@ -65,34 +65,34 @@
     .btn-outline-#{$name} {
         $active-box-shadow-color-rgb: to-rgb(color.adjust($color, $lightness: 5%));
         $border-color: color.adjust($gray-600, $lightness: 25%);
-        --#{$bs-prefix}btn-bg: transparent;
-        --#{$bs-prefix}btn-border-color: #{round-color-rgb($border-color)};
-        --#{$bs-prefix}btn-border-width: thin;
-        --#{$bs-prefix}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
+        --#{$prefix-bs}btn-bg: transparent;
+        --#{$prefix-bs}btn-border-color: #{round-color-rgb($border-color)};
+        --#{$prefix-bs}btn-border-width: thin;
+        --#{$prefix-bs}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
 
         @if ($name == 'light' or $name == 'light-grey') {
             $active-bg-rgba: rgba(round-color-rgb($border-color), .2);
             $active-border-color-rgba: round-color-rgb(color.adjust($border-color, $lightness: -8%));
-            --#{$bs-prefix}btn-color: #{$gray-600};
-            --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-active-color: #{$gray-800};
-            --#{$bs-prefix}btn-active-border-color: #{$active-border-color-rgba};
-            --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-hover-color: #{$gray-800};
-            --#{$bs-prefix}btn-hover-border-color: #{$active-border-color-rgba};
+            --#{$prefix-bs}btn-color: #{$gray-600};
+            --#{$prefix-bs}btn-active-bg: #{$active-bg-rgba};
+            --#{$prefix-bs}btn-active-color: #{$gray-800};
+            --#{$prefix-bs}btn-active-border-color: #{$active-border-color-rgba};
+            --#{$prefix-bs}btn-hover-bg: #{$active-bg-rgba};
+            --#{$prefix-bs}btn-hover-color: #{$gray-800};
+            --#{$prefix-bs}btn-hover-border-color: #{$active-border-color-rgba};
         } @else {
             $active-bg-rgba: rgba(round-color-rgb(color.scale($color, $lightness: 5%)), .4);
             $active-color: set-color-contrast($active-bg-rgba, color.scale($color, $lightness: -70%), $white, 100);
             $hover-bg-rgba: rgba(color.scale($color, $lightness: 45%), .35);
             $hover-color-rgba: set-color-contrast($active-bg-rgba, $white, color.scale($color, $lightness: -30%), 220);
             $hover-border-color: color.adjust($color, $lightness: 10%);
-            --#{$bs-prefix}btn-color: #{$color};
-            --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-active-color: #{round-color-rgb($active-color)};
-            --#{$bs-prefix}btn-active-border-color: #{$color};
-            --#{$bs-prefix}btn-hover-bg: #{round-color-rgba($hover-bg-rgba)};
-            --#{$bs-prefix}btn-hover-color: #{round-color-rgba($hover-color-rgba)};
-            --#{$bs-prefix}btn-hover-border-color: #{round-color-rgb($hover-border-color)};
+            --#{$prefix-bs}btn-color: #{$color};
+            --#{$prefix-bs}btn-active-bg: #{$active-bg-rgba};
+            --#{$prefix-bs}btn-active-color: #{round-color-rgb($active-color)};
+            --#{$prefix-bs}btn-active-border-color: #{$color};
+            --#{$prefix-bs}btn-hover-bg: #{round-color-rgba($hover-bg-rgba)};
+            --#{$prefix-bs}btn-hover-color: #{round-color-rgba($hover-color-rgba)};
+            --#{$prefix-bs}btn-hover-border-color: #{round-color-rgb($hover-border-color)};
         }
     }
 }
@@ -100,26 +100,26 @@
 @mixin make-flat-button-variant($name, $color) {
     .btn-flat-#{$name} {
         $active-box-shadow-color-rgb: to-rgb(color.scale($color, $lightness: 10%));
-        --#{$bs-prefix}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
+        --#{$prefix-bs}btn-focus-shadow-rgb: #{$active-box-shadow-color-rgb};
 
         @if ($name == 'light' or $name == 'light-grey') {
             $active-bg-rgba: rgba($gray-500, .2);
-            --#{$bs-prefix}btn-active-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-color: #{round-color-rgb(color.scale($color, $lightness: 10%))};
-            --#{$bs-prefix}btn-active-color: #{$white};
-            --#{$bs-prefix}btn-hover-bg: #{$active-bg-rgba};
-            --#{$bs-prefix}btn-hover-color: #{$white};
+            --#{$prefix-bs}btn-active-bg: #{$active-bg-rgba};
+            --#{$prefix-bs}btn-color: #{round-color-rgb(color.scale($color, $lightness: 10%))};
+            --#{$prefix-bs}btn-active-color: #{$white};
+            --#{$prefix-bs}btn-hover-bg: #{$active-bg-rgba};
+            --#{$prefix-bs}btn-hover-color: #{$white};
         } @else {
             $active-bg-color-rgba: rgba(round-color-rgb(color.scale($color, $lightness: 10%)), .3);
             $active-color-rgba: set-color-contrast($active-bg-color-rgba, color.scale($color, $lightness: -70%), $white, 100);
             $hover-bg-rgba: set-color-contrast($color, rgba(color.scale($color, $lightness: 15%), .3), rgba(color.scale($color, $lightness: 20%), .2));
             $hover-color-rgba: set-color-contrast($active-bg-color-rgba, $white, color.scale($color, $lightness: -30%), 220);
 
-            --#{$bs-prefix}btn-color: #{$color};
-            --#{$bs-prefix}btn-active-bg: #{$active-bg-color-rgba};
-            --#{$bs-prefix}btn-active-color: #{round-color-rgba($active-color-rgba)};
-            --#{$bs-prefix}btn-hover-bg: #{round-color-rgba($hover-bg-rgba)};
-            --#{$bs-prefix}btn-hover-color: #{round-color-rgba($hover-color-rgba)};
+            --#{$prefix-bs}btn-color: #{$color};
+            --#{$prefix-bs}btn-active-bg: #{$active-bg-color-rgba};
+            --#{$prefix-bs}btn-active-color: #{round-color-rgba($active-color-rgba)};
+            --#{$prefix-bs}btn-hover-bg: #{round-color-rgba($hover-bg-rgba)};
+            --#{$prefix-bs}btn-hover-color: #{round-color-rgba($hover-color-rgba)};
         }
     }
 }
