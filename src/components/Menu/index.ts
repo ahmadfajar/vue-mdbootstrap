@@ -1,8 +1,8 @@
-import type { App, Plugin } from 'vue';
+import type { App, ObjectPlugin } from 'vue';
 import BsDropdownMenu from './BsDropdownMenu';
 import './dropdownMenu.scss';
 
-const BsMenuPlugin: Plugin = {
+const BsMenuPlugin: ObjectPlugin = {
     install: (app: App): void => {
         app.component(BsDropdownMenu.name as string, BsDropdownMenu);
         // Backward compatibility

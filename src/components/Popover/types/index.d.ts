@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -94,6 +94,6 @@ export declare const BsPopover: {
     };
 };
 
-export declare const BsPopoverPlugin: Plugin;
+export declare const BsPopoverPlugin: ObjectPlugin;
 
 export { PopupManager } from './PopupManager';

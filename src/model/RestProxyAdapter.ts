@@ -1,9 +1,9 @@
+import { useAxiosPlugin } from '@/mixins/CommonApi.ts';
+import type { IRestAdapter, TRecord, TRestKey, TRestMethodOptions } from '@/types';
+import Helper from '@/utils/Helper';
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 import type { AppConfig } from 'vue';
-import { useAxiosPlugin } from '../mixins/CommonApi';
-import type { IRestAdapter, TRecord, TRestKey, TRestMethodOptions } from '../types';
-import Helper from '../utils/Helper';
 
 /**
  * Class RestProxyAdapter which is used to load data from the remote server.

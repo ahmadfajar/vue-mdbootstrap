@@ -1,12 +1,11 @@
-import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
-import { h, mergeProps, nextTick, Teleport, withDirectives } from 'vue';
-import { Resize } from '../../../directives';
+import { BsOverlay } from '@/components/Animation';
+import { Resize } from '@/directives';
 import {
     cssPrefix,
     useFindParentCmp,
     useRenderSlotDefault,
     useVueMdbService,
-} from '../../../mixins/CommonApi';
+} from '@/mixins/CommonApi.ts';
 import type {
     TAppContainerOptionProps,
     TEmitFn,
@@ -14,9 +13,10 @@ import type {
     TSideDrawerOptionProps,
     TSideDrawerPosition,
     TVueMdb,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsOverlay } from '../../Animation';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import { h, mergeProps, nextTick, Teleport, withDirectives } from 'vue';
 
 export function useSideDrawerStyles(
     props: Readonly<TSideDrawerOptionProps>,
@@ -26,7 +26,7 @@ export function useSideDrawerStyles(
     zIndex: Ref<number>
 ): TRecord {
     const zeroPx = '0px';
-    const drawerWidth1 = (parseInt(props.width as string) + 1) * -1;
+    const drawerWidth1 = (parseInt(props.width as string, 10) + 1) * -1;
     const properties = {
         height: props.clipped ? `calc(100% - ${clipHeight.value}px)` : undefined,
         width: Helper.cssUnit(props.width),
@@ -48,7 +48,7 @@ export function useSideDrawerStyles(
     };
 
     if (isMobile.value && !props.mini) {
-        const drawerWidth2 = (parseInt(props.modalWidth as string) + 1) * -2;
+        const drawerWidth2 = (parseInt(props.modalWidth as string, 10) + 1) * -2;
 
         return {
             ...properties,

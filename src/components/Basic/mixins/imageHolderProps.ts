@@ -1,4 +1,4 @@
-import { booleanProp, stringOrNumberProp, stringProp } from '../../../mixins/CommonProps';
+import { booleanProp, stringOrNumberProp, stringProp } from '@/mixins/CommonProps.ts';
 
 export const imageHolderProps = {
     /**

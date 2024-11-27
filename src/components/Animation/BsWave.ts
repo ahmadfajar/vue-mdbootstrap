@@ -1,9 +1,16 @@
-import { createBlock, createElementVNode, defineComponent, openBlock, Transition, withCtx } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import {
+    createBlock,
+    createElementVNode,
+    defineComponent,
+    openBlock,
+    Transition,
+    withCtx,
+} from 'vue';
 
 const _hoisted_1 = createElementVNode(
     'span',
-    {class: `${cssPrefix}ripple-wave`},
+    { class: `${cssPrefix}ripple-wave` },
     null,
     -1 /* HOISTED */
 );
@@ -25,6 +32,5 @@ export default defineComponent({
                 }
             )
         );
-    }
+    },
 });
-

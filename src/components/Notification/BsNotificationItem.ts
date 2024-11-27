@@ -1,14 +1,14 @@
-import type { Prop } from 'vue';
-import { defineComponent, onMounted, ref, shallowRef } from 'vue';
-import { useVueMdbNotification } from '../../mixins/CommonApi';
-import Helper from '../../utils/Helper';
-import { useRenderNotificationItem } from './mixins/notificationApi';
+import { useRenderNotificationItem } from '@/components/Notification/mixins/notificationApi.ts';
 import type {
     INotificationProvider,
     TBsNotificationItem,
     TNotificationItemOptionProps,
     TNotificationOption,
-} from './types';
+} from '@/components/Notification/types';
+import { useVueMdbNotification } from '@/mixins/CommonApi.ts';
+import Helper from '@/utils/Helper';
+import type { Prop } from 'vue';
+import { defineComponent, onMounted, ref, shallowRef } from 'vue';
 
 export default defineComponent<TBsNotificationItem>({
     name: 'BsNotificationItem',
@@ -25,12 +25,9 @@ export default defineComponent<TBsNotificationItem>({
 
         onMounted(() => {
             provider.value = useVueMdbNotification();
-            timerId.value = Helper.defer(
-                () => {
-                    provider.value?.remove(<TNotificationOption>thisProps.options);
-                },
-                thisProps.options?.timeout as number
-            );
+            timerId.value = Helper.defer(() => {
+                provider.value?.remove(<TNotificationOption>thisProps.options);
+            }, thisProps.options?.timeout as number);
         });
 
         return () => useRenderNotificationItem(thisProps, provider, timerId);

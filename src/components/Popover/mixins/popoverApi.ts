@@ -1,3 +1,10 @@
+import { BsOverlay } from '@/components/Animation';
+import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
+import { ClickOutside, Resize, Scroll } from '@/directives';
+import { useRenderTransition } from '@/mixins/CommonApi.ts';
+import { isChildOf, isSVGElement } from '@/mixins/DomHelper.ts';
+import type { TBsPopover, TPopoverOptionProps, TPopoverPosition, TRecord } from '@/types';
+import Helper from '@/utils/Helper';
 import type {
     ComponentInternalInstance,
     ComputedRef,
@@ -9,13 +16,6 @@ import type {
     VNode,
 } from 'vue';
 import { h, mergeProps, nextTick, Teleport, vShow, withDirectives } from 'vue';
-import { ClickOutside, Resize, Scroll } from '../../../directives';
-import { useRenderTransition } from '../../../mixins/CommonApi';
-import { isChildOf, isSVGElement } from '../../../mixins/DomHelper';
-import type { TBsPopover, TPopoverOptionProps, TPopoverPosition, TRecord } from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsOverlay } from '../../Animation';
-import PopupManager from './PopupManager';
 
 const SPACE = 8;
 
@@ -60,7 +60,7 @@ function getPopoverLeftPosition(
             break;
         case 'top':
         case 'bottom':
-            offsetLeft = activatorRect.left + (activatorRect.width / 2) - (width / 2);
+            offsetLeft = activatorRect.left + activatorRect.width / 2 - width / 2;
             break;
         case 'bottom-left':
         case 'top-left':
@@ -71,9 +71,9 @@ function getPopoverLeftPosition(
             offsetLeft = activatorRect.left + activatorRect.width - width;
             break;
     }
-    
+
     if (['top', 'top-left', 'bottom', 'bottom-left'].includes(placement as string)) {
-        if ((offsetLeft + width) >= (maxLeft + width)) {
+        if (offsetLeft + width >= maxLeft + width) {
             offsetLeft = maxLeft;
         }
     }

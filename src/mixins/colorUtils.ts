@@ -1,5 +1,5 @@
-import { chunk } from './StringHelper';
-import type { HSLA, HSVA, RGBA } from './types/colorUtils';
+import { chunk } from '@/mixins/StringHelper.ts';
+import type { HSLA, HSVA, RGBA } from '@/mixins/types/colorUtils';
 
 /**
  * Convert HSLA to HSVA.

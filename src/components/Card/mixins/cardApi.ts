@@ -1,11 +1,11 @@
+import type { TCardContentType, TRecord } from '@/types';
 import type { VNode } from 'vue';
 import { h } from 'vue';
-import type { TRecord } from '../../../types';
 
 export function useRenderCardImg(
     imgSrc?: string,
     altText?: string,
-    classes?: string | Array<string> | TRecord
+    classes?: string | string[] | TRecord
 ): VNode {
     return h('img', {
         class: classes,
@@ -14,9 +14,10 @@ export function useRenderCardImg(
     });
 }
 
-export function useContentTag(type?: string, tag?: string): string {
+export function useContentTag(type?: TCardContentType, tag?: string): string {
     if (!tag) {
         return type === 'title' ? 'h4' : type === 'subtitle' ? 'h5' : 'p';
     }
+
     return tag;
 }

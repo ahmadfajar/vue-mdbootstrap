@@ -1,7 +1,7 @@
+import { inputProps } from '@/components/Field/mixins/fieldProps.ts';
+import { booleanProp, defaultColorProp, stringOrArrayProp } from '@/mixins/CommonProps.ts';
+import type { TLabelPosition } from '@/types';
 import type { Prop } from 'vue';
-import { booleanProp, defaultColorProp, stringOrArrayProp } from '../../../mixins/CommonProps';
-import type { TLabelPosition } from '../../../types';
-import { inputProps } from '../../Field/mixins/fieldProps';
 
 export const switchProps = {
     ...inputProps,

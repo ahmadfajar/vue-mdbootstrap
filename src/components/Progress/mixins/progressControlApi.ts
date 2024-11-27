@@ -1,18 +1,18 @@
-import type { ComputedRef, VNode } from 'vue';
-import { h, Transition } from 'vue';
-import { cssPrefix, useBrowserIE } from '../../../mixins/CommonApi';
-import Helper from '../../../utils/Helper';
 import {
     useCircleSizeStyles,
     useCreateSvgCircleNode,
     useCreateSvgNode,
-} from '../../Icon/mixins/svgApi';
+} from '@/components/Icon/mixins/svgApi.ts';
+import INDETERMINATE_ANIMATION_TEMPLATE from '@/components/Progress/mixins/ProgressSpinnerAnimation';
 import type {
     TProgressBarLabelPosition,
     TProgressBarOptionProps,
     TProgressOptionProps,
-} from '../types';
-import INDETERMINATE_ANIMATION_TEMPLATE from './ProgressSpinnerAnimation';
+} from '@/components/Progress/types';
+import { cssPrefix, useBrowserIE } from '@/mixins/CommonApi.ts';
+import Helper from '@/utils/Helper';
+import type { ComputedRef, VNode } from 'vue';
+import { h, Transition } from 'vue';
 
 declare interface ISpinnerElement extends Element {
     sheet?: CSSStyleSheet;
@@ -173,21 +173,15 @@ export function useRenderProgressBar(props: Readonly<TProgressBarOptionProps>): 
             props.labelPosition === 'top' || props.valuePosition === 'top'
                 ? createProgressBarLabel(props, 'top')
                 : undefined,
-            h(
-                'div',
-                {
-                    class: 'd-flex',
-                },
-                [
-                    props.labelPosition === 'start' || props.valuePosition === 'start'
-                        ? createProgressBarLabel(props, 'start')
-                        : undefined,
-                    createProgressBar(props),
-                    props.labelPosition === 'end' || props.valuePosition === 'end'
-                        ? createProgressBarLabel(props, 'end')
-                        : undefined,
-                ]
-            ),
+            h('div', { class: 'd-flex' }, [
+                props.labelPosition === 'start' || props.valuePosition === 'start'
+                    ? createProgressBarLabel(props, 'start')
+                    : undefined,
+                createProgressBar(props),
+                props.labelPosition === 'end' || props.valuePosition === 'end'
+                    ? createProgressBarLabel(props, 'end')
+                    : undefined,
+            ]),
             props.labelPosition === 'bottom' || props.valuePosition === 'bottom'
                 ? createProgressBarLabel(props, 'bottom')
                 : undefined,
@@ -248,12 +242,12 @@ function createProgressBarLabel(
                     : '',
                 props.labelAlignment === 'start' &&
                 props.labelPosition === position &&
-                ['top', 'bottom'].includes(props.labelPosition as string)
+                ['top', 'bottom'].includes(props.labelPosition)
                     ? 'text-start'
                     : '',
                 props.labelAlignment === 'end' &&
                 props.labelPosition === position &&
-                ['top', 'bottom'].includes(props.labelPosition as string)
+                ['top', 'bottom'].includes(props.labelPosition)
                     ? 'text-end'
                     : '',
             ],

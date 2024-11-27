@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNodeProps,
 } from 'vue';
 
@@ -57,11 +57,6 @@ export declare type TMaskLoaderOptionProps = {
      * Mask loader variant type.
      */
     type?: TMaskLoaderVariant;
-    /**
-     * @deprecated
-     * Use `type` instead.
-     */
-    variant?: TMaskLoaderVariant;
     /**
      * The animation transition to be used when displaying the mask loader.
      */
@@ -182,4 +177,4 @@ export declare const BsProgressBar: {
     };
 };
 
-export declare const BsProgressPlugin: Plugin;
+export declare const BsProgressPlugin: ObjectPlugin;

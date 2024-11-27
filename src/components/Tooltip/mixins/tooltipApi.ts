@@ -1,3 +1,7 @@
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import { EventListener } from '@/mixins/DomHelper.ts';
+import type { IBindingElement, IEventResult, IHTMLElement, TPlacementPosition } from '@/types';
+import Helper from '@/utils/Helper';
 import type {
     ComponentInternalInstance,
     ComponentPublicInstance,
@@ -6,15 +10,6 @@ import type {
     VNodeArrayChildren,
 } from 'vue';
 import { unref } from 'vue';
-import { cssPrefix } from '../../../mixins/CommonApi';
-import { EventListener } from '../../../mixins/DomHelper';
-import type {
-    IBindingElement,
-    IEventResult,
-    IHTMLElement,
-    TPlacementPosition,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
 
 const SPACE = 4;
 

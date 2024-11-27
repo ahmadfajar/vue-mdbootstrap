@@ -1,6 +1,6 @@
+import type { TBadgeType } from '@/components/Badge/types';
+import { booleanProp, defaultColorProp } from '@/mixins/CommonProps.ts';
 import type { Prop } from 'vue';
-import { booleanProp, defaultColorProp } from '../../../mixins/CommonProps';
-import type { TBadgeType } from '../types';
 
 export const badgeProps = {
     /**

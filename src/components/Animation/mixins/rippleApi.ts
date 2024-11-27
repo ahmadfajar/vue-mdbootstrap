@@ -1,3 +1,6 @@
+import BsWave from '@/components/Animation/BsWave';
+import type { TRecord } from '@/types';
+import Helper from '@/utils/Helper';
 import type { Ref, Slots } from 'vue';
 import {
     createCommentVNode,
@@ -10,9 +13,6 @@ import {
     renderSlot,
     unref,
 } from 'vue';
-import type { TRecord } from '../../../types';
-import Helper from '../../../utils/Helper';
-import BsWave from '../BsWave';
 
 function applyRippleStyles(position: object, size: number) {
     const unitSize = Helper.cssUnit(size);

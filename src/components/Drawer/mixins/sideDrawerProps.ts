@@ -1,6 +1,6 @@
+import { booleanProp, booleanTrueProp, whiteColorProp } from '@/mixins/CommonProps.ts';
+import type { TLabelPosition } from '@/types';
 import type { Prop } from 'vue';
-import { booleanProp, booleanTrueProp, whiteColorProp } from '../../../mixins/CommonProps';
-import type { TLabelPosition } from '../../../types';
 
 export const sideDrawerProps = {
     color: whiteColorProp,

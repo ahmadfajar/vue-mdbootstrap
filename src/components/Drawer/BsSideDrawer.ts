@@ -1,13 +1,13 @@
-import { computed, defineComponent, nextTick, onMounted, ref, watch } from 'vue';
-import { useBreakpointMax } from '../../mixins/CommonApi';
-import type { TBsSideDrawer, TSideDrawerOptionProps, TVueMdb } from '../../types';
 import {
     useOnMountedSideDrawer,
     useRenderSideDrawer,
     useSideDrawerProps,
     useSideDrawerStyles,
-} from './mixins/sideDrawerApi';
-import { sideDrawerProps } from './mixins/sideDrawerProps';
+} from '@/components/Drawer/mixins/sideDrawerApi.ts';
+import { sideDrawerProps } from '@/components/Drawer/mixins/sideDrawerProps.ts';
+import { useBreakpointMax } from '@/mixins/CommonApi.ts';
+import type { TBsSideDrawer, TSideDrawerOptionProps, TVueMdb } from '@/types';
+import { computed, defineComponent, nextTick, onMounted, ref, watch } from 'vue';
 
 export default defineComponent<TBsSideDrawer>({
     name: 'BsSideDrawer',

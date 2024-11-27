@@ -1,3 +1,20 @@
+import {
+    useComputeImgStyle,
+    useNavigateNextSlide,
+    useNavigatePrevSlide,
+    useRenderLightbox,
+    useSetActiveLightboxItem,
+} from '@/components/Modal/mixins/lightboxApi.ts';
+import { lightboxProps } from '@/components/Modal/mixins/lightboxProps.ts';
+import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
+import { EventListener } from '@/mixins/DomHelper.ts';
+import type {
+    IEventResult,
+    IHTMLElement,
+    TBsLightbox,
+    TImageDataset,
+    TLightboxOptionProps,
+} from '@/types';
 import type { ComponentInternalInstance } from 'vue';
 import {
     computed,
@@ -10,23 +27,6 @@ import {
     shallowRef,
     watch,
 } from 'vue';
-import { EventListener } from '../../mixins/DomHelper';
-import type {
-    IEventResult,
-    IHTMLElement,
-    TBsLightbox,
-    TImageDataset,
-    TLightboxOptionProps,
-} from '../../types';
-import PopupManager from '../Popover/mixins/PopupManager';
-import {
-    useComputeImgStyle,
-    useNavigateNextSlide,
-    useNavigatePrevSlide,
-    useRenderLightbox,
-    useSetActiveLightboxItem,
-} from './mixins/lightboxApi';
-import { lightboxProps } from './mixins/lightboxProps';
 
 export default defineComponent<TBsLightbox>({
     name: 'BsLightbox',
@@ -92,7 +92,8 @@ export default defineComponent<TBsLightbox>({
                             : undefined;
                     instance.value && PopupManager.add(instance.value, thisProps, isOpen);
                 } else {
-                    instance.value && PopupManager.closePopover(instance.value, isOpen, 'State changed.');
+                    instance.value &&
+                        PopupManager.closePopover(instance.value, isOpen, 'State changed.');
                 }
             }
         );

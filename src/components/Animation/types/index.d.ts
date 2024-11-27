@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     TransitionProps,
     VNode,
     VNodeProps
@@ -95,4 +95,4 @@ export declare const BsRipple: {
     };
 };
 
-export declare const BsAnimationPlugin: Plugin;
+export declare const BsAnimationPlugin: ObjectPlugin;

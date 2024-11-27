@@ -1,8 +1,8 @@
-import { computed, defineComponent, nextTick, ref } from 'vue';
-import { useCheckSelected } from '../Radio/mixins/radioApi';
-import { useRenderSwitch, useSwitchClasses } from './mixins/switchApi';
-import { switchProps } from './mixins/switchProps';
-import type { TBsSwitch, TSwitchOptionProps } from './types';
+import { useToggleChecked } from '@/components/Checkbox/mixins/checkboxApi.ts';
+import { useRenderSwitch, useSwitchClasses } from '@/components/Switch/mixins/switchApi.ts';
+import { switchProps } from '@/components/Switch/mixins/switchProps.ts';
+import type { TBsSwitch, TSwitchOptionProps } from '@/components/Switch/types';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent<TBsSwitch>({
     name: 'BsSwitch',
@@ -21,28 +21,8 @@ export default defineComponent<TBsSwitch>({
         const thisProps = props as Readonly<TSwitchOptionProps>;
         const rippleActive = ref<boolean>(false);
         const switchClasses = computed(() => useSwitchClasses(thisProps));
-        const toggleCheckHandler = () => {
-            if (!thisProps.disabled && !thisProps.readonly) {
-                const checked = useCheckSelected(thisProps);
-                rippleActive.value = true;
 
-                if (Array.isArray(thisProps.modelValue)) {
-                    const idx = thisProps.modelValue.indexOf(thisProps.value);
-                    if (checked) {
-                        thisProps.modelValue.splice(idx, 1);
-                    } else {
-                        thisProps.modelValue.push(thisProps.value);
-                    }
-                    emit('update:model-value', thisProps.modelValue);
-                } else {
-                    emit('update:model-value', checked ? null : thisProps.value);
-                }
-
-                nextTick().then(() => {
-                    emit('checked', !checked);
-                });
-            }
-        };
+        const toggleCheckHandler = () => useToggleChecked(thisProps, emit, rippleActive);
 
         return () => useRenderSwitch(slots, props, switchClasses, rippleActive, toggleCheckHandler);
     },

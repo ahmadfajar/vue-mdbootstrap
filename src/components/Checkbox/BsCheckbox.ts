@@ -1,12 +1,11 @@
-import { computed, defineComponent, nextTick, ref } from 'vue';
+import { useCheckboxClasses, useToggleChecked } from '@/components/Checkbox/mixins/checkboxApi.ts';
+import { checkboxProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
+import type { TBsCheckbox, TCheckboxOptionProps } from '@/components/Checkbox/types';
 import {
-    useCheckSelected,
     useCreateInputRadioOrCheckbox,
     useRenderRadioOrCheckbox,
-} from '../Radio/mixins/radioApi';
-import { useCheckboxClasses } from './mixins/checkboxApi';
-import { checkboxProps } from './mixins/checkboxProps';
-import type { TBsCheckbox, TCheckboxOptionProps } from './types';
+} from '@/components/Radio/mixins/radioApi.ts';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent<TBsCheckbox>({
     name: 'BsCheckbox',
@@ -22,40 +21,20 @@ export default defineComponent<TBsCheckbox>({
         'update:model-value',
     ],
     setup(props, { emit, slots }) {
-        const cmpProps = props as Readonly<TCheckboxOptionProps>;
+        const thisProps = props as Readonly<TCheckboxOptionProps>;
         const rippleActive = ref<boolean>(false);
-        const checkboxClasses = computed(() => useCheckboxClasses(cmpProps));
-        const toggleCheckHandler = (): void => {
-            if (!cmpProps.disabled && !cmpProps.readonly) {
-                const checked = useCheckSelected(cmpProps);
-                rippleActive.value = true;
+        const checkboxClasses = computed(() => useCheckboxClasses(thisProps));
 
-                if (Array.isArray(cmpProps.modelValue)) {
-                    const idx = cmpProps.modelValue.indexOf(cmpProps.value);
-                    if (checked) {
-                        cmpProps.modelValue.splice(idx, 1);
-                    } else {
-                        cmpProps.modelValue.push(cmpProps.value);
-                    }
-                    emit('update:model-value', cmpProps.modelValue);
-                } else {
-                    emit('update:model-value', checked ? null : cmpProps.value);
-                }
-
-                nextTick().then(() => {
-                    emit('checked', !checked);
-                });
-            }
-        };
+        const toggleCheckHandler = () => useToggleChecked(thisProps, emit, rippleActive);
 
         return () =>
             useRenderRadioOrCheckbox(
                 slots,
-                cmpProps,
+                thisProps,
                 checkboxClasses,
                 rippleActive,
                 'checkbox',
-                useCreateInputRadioOrCheckbox(cmpProps, 'checkbox', {
+                useCreateInputRadioOrCheckbox(thisProps, 'checkbox', {
                     indeterminate: props.indeterminate,
                     'true-value': true,
                     'false-value': false,

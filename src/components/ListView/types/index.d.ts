@@ -16,7 +16,7 @@ import {
     TIconProps,
     TImageProps,
     TRouterOptionProps,
-    TTagProps,
+    TTagProp,
 } from '../../../types';
 
 export declare type TSpaceAround = 'left' | 'right' | 'both' | 'none';
@@ -169,7 +169,7 @@ export declare type TListTileOptionProps = TRouterOptionProps & {
     rippleOff?: boolean;
 };
 
-export declare type TListTileActionOptionProps = TTagProps & {
+export declare type TListTileActionOptionProps = TTagProp & {
     /**
      * Center item inside it vertically.
      */
@@ -180,7 +180,7 @@ export declare type TListTileActionOptionProps = TTagProps & {
     stack?: boolean;
 };
 
-export declare type TListTileContentOptionProps = TTagProps & {
+export declare type TListTileContentOptionProps = TTagProp & {
     /**
      * Useful when you want to display multiline text. The subtitle default will be display
      * in a single line, if the text length is beyond the container's width then the text will be

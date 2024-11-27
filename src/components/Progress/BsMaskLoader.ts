@@ -1,6 +1,8 @@
-import type { Prop } from 'vue';
-import { computed, createCommentVNode, defineComponent, h } from 'vue';
-import { cssPrefix, useRenderTransition } from '../../mixins/CommonApi';
+import { BsOverlay } from '@/components/Animation';
+import { BsIconSpinner } from '@/components/Icon';
+import { BsProgress } from '@/components/Progress';
+import { maskLoaderProps } from '@/components/Progress/mixins/maskLoaderProps.ts';
+import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import type {
     TBsIconSpinner,
     TBsMaskLoader,
@@ -9,12 +11,10 @@ import type {
     TMaskLoaderOptionProps,
     TMaskLoaderVariant,
     TProgressControlVariant,
-} from '../../types';
-import Helper from '../../utils/Helper';
-import { BsOverlay } from '../Animation';
-import { BsIconSpinner } from '../Icon';
-import BsProgress from './BsProgress';
-import { maskLoaderProps } from './mixins/maskLoaderProps';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { Prop } from 'vue';
+import { computed, createCommentVNode, defineComponent, h } from 'vue';
 
 export default defineComponent<TBsMaskLoader>({
     name: 'BsMaskLoader',
@@ -22,7 +22,7 @@ export default defineComponent<TBsMaskLoader>({
     setup(props) {
         const thisProps = props as Readonly<TMaskLoaderOptionProps>;
         const loaderVariant = computed<TMaskLoaderVariant>(
-            () => <TMaskLoaderVariant>(thisProps.spinnerType || thisProps.variant || thisProps.type)
+            () => (thisProps.spinnerType || thisProps.type) as TMaskLoaderVariant
         );
 
         return () =>
@@ -74,7 +74,7 @@ export default defineComponent<TBsMaskLoader>({
                                   color: props.overlayColor,
                                   opacity: props.overlayOpacity,
                                   show: props.show,
-                                  zIndex: (<number>props.zIndex - 1) as Prop<string | number>,
+                                  zIndex: ((props.zIndex as number) - 1) as Prop<string>,
                               }),
                           ]
                       )

@@ -1,14 +1,17 @@
-import type { ComponentPublicInstance } from 'vue';
-import { defineComponent, ref, watch } from 'vue';
+import { useRenderDropdownMenu } from '@/components/Menu/mixins/dropdownMenuApi.ts';
+import type { TBsDropdownMenu, TDropdownMenuOptionProps } from '@/components/Menu/types';
+import {
+    popoverDefaultTransitionProp,
+    popoverPlacementProp,
+} from '@/components/Popover/mixins/popoverProps.ts';
 import {
     booleanProp,
     booleanTrueProp,
     validStringOrNumberProp,
     whiteColorProp,
-} from '../../mixins/CommonProps';
-import { popoverDefaultTransitionProp, popoverPlacementProp } from '../Popover/mixins/popoverProps';
-import { useRenderDropdownMenu } from './mixins/dropdownMenuApi';
-import type { TBsDropdownMenu, TDropdownMenuOptionProps } from './types';
+} from '@/mixins/CommonProps.ts';
+import type { ComponentPublicInstance } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsDropdownMenu>({
     name: 'BsDropdownMenu',

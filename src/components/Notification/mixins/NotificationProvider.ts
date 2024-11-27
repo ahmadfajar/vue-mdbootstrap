@@ -1,12 +1,12 @@
-import { reactive } from 'vue';
-import Helper from '../../../utils/Helper';
 import type {
     INotificationProvider,
     TNotificationItem,
     TNotificationOption,
     TNotificationPosition,
     TNotificationVariant,
-} from '../types';
+} from '@/components/Notification/types';
+import Helper from '@/utils/Helper';
+import { reactive } from 'vue';
 
 export default class NotificationProvider implements INotificationProvider {
     private readonly _item: TNotificationItem;

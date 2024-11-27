@@ -1,13 +1,8 @@
+import { BsPopover } from '@/components/Popover';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { TBsDropdownMenu, TBsPopover, TDropdownMenuOptionProps, TEmitFn } from '@/types';
 import type { ComponentPublicInstance, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
 import { h } from 'vue';
-import { cssPrefix } from '../../../mixins/CommonApi';
-import type {
-    TBsDropdownMenu,
-    TBsPopover,
-    TDropdownMenuOptionProps,
-    TEmitFn,
-} from '../../../types';
-import { BsPopover } from '../../Popover';
 
 function hideDropdownMenu(isActive: Ref<boolean>, timer: Ref<number | undefined>, emit: TEmitFn) {
     if (timer.value) {

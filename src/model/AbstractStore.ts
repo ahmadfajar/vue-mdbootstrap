@@ -1,8 +1,4 @@
-import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-import type { Many } from 'lodash';
-import orderBy from 'lodash/orderBy';
-import { reactive, readonly, type UnwrapNestedRefs } from 'vue';
-import { BsModel, RestProxyAdapter } from '../model';
+import { BsModel, RestProxyAdapter } from '@/model';
 import type {
     ErrorCallbackFn,
     IBsModel,
@@ -22,9 +18,13 @@ import type {
     TRestUrlOption,
     TSortDirection,
     TSortOption,
-} from '../types';
-import { autoBind } from '../utils/AutoBind';
-import Helper from '../utils/Helper';
+} from '@/types';
+import { autoBind } from '@/utils/AutoBind.ts';
+import Helper from '@/utils/Helper';
+import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
+import type { Many } from 'lodash';
+import orderBy from 'lodash/orderBy';
+import { reactive, readonly, type UnwrapNestedRefs } from 'vue';
 
 export const appendErrMsg = 'Can not assign primitive type to the dataset.';
 export const proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';

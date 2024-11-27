@@ -1,15 +1,11 @@
+import type { TBsSubheader } from '@/components/Basic/types';
+import { cssPrefix, useRenderSlotDefault } from '@/mixins/CommonApi.ts';
+import { booleanProp } from '@/mixins/CommonProps.ts';
 import { defineComponent } from 'vue';
-import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
-import type { TBsSubheader } from './types';
 
 export default defineComponent<TBsSubheader>({
     name: 'BsSubheader',
     props: {
-        /**
-         * Define explicitly when placed inside element that has dark background color.
-         * @type {boolean}
-         */
         dark: booleanProp,
     },
     setup(props, { slots }) {

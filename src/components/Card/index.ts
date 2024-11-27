@@ -1,4 +1,4 @@
-import type { App, Plugin } from 'vue';
+import type { App, ObjectPlugin } from 'vue';
 import BsCard from './BsCard';
 import BsCardBody from './BsCardBody';
 import BsCardContent from './BsCardContent';
@@ -8,7 +8,7 @@ import BsCardMedia from './BsCardMedia';
 import './card.scss';
 import '../../../scss/_utilities.scss';
 
-const BsCardPlugin: Plugin = {
+const BsCardPlugin: ObjectPlugin = {
     install: (app: App): void => {
         app.component(BsCard.name as string, BsCard);
         app.component(BsCardBody.name as string, BsCardBody);

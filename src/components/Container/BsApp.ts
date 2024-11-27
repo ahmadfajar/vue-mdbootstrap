@@ -1,13 +1,13 @@
-import { defineComponent, getCurrentInstance, h, onMounted, onUnmounted, ref } from 'vue';
-import { cssPrefix, useGenerateId } from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
+import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
+import { booleanProp } from '@/mixins/CommonProps.ts';
 import type {
     IComponentInstance,
     TAppContainerOptionProps,
     TBsAppContainer,
     TVueMdb,
-} from '../../types';
-import Helper from '../../utils/Helper';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import { defineComponent, getCurrentInstance, h, onMounted, onUnmounted, ref } from 'vue';
 
 export default defineComponent<TBsAppContainer>({
     name: 'BsApp',

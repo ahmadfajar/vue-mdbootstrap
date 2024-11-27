@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps
 } from 'vue';
@@ -44,4 +44,4 @@ export declare const BsBadge: {
     };
 };
 
-export declare const BsBadgePlugin: Plugin;
+export declare const BsBadgePlugin: ObjectPlugin;

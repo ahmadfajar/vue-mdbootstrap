@@ -1,11 +1,11 @@
-import { computed, defineComponent, nextTick, ref } from 'vue';
 import {
     useCreateInputRadioOrCheckbox,
     useRadioClasses,
     useRenderRadioOrCheckbox,
-} from './mixins/radioApi';
-import { radioProps } from './mixins/radioProps';
-import type { TBsRadio, TRadioOptionProps } from './types';
+} from '@/components/Radio/mixins/radioApi.ts';
+import { radioProps } from '@/components/Radio/mixins/radioProps.ts';
+import type { TBsRadio, TRadioOptionProps } from '@/components/Radio/types';
+import { computed, defineComponent, nextTick, ref } from 'vue';
 
 export default defineComponent<TBsRadio>({
     name: 'BsRadio',

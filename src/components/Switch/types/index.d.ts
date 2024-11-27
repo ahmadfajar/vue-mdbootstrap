@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -46,4 +46,4 @@ export declare const BsSwitch: {
     };
 };
 
-export declare const BsSwitchPlugin: Plugin;
+export declare const BsSwitchPlugin: ObjectPlugin;

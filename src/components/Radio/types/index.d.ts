@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -75,7 +75,7 @@ export declare type TInputGroupProps<D, M> = TInputBaseProps &
          */
         column?: string | number;
         /**
-         * The collection of `<bs-radio>` property-value.
+         * The collection of `<bs-radio>` or `<bs-checkbox>` property-value.
          */
         items: Array<D>;
         /**
@@ -156,4 +156,4 @@ export declare const BsRadioGroup: {
     };
 };
 
-export declare const BsRadioPlugin: Plugin;
+export declare const BsRadioPlugin: ObjectPlugin;

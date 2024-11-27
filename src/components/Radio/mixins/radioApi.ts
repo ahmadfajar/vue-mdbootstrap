@@ -1,6 +1,8 @@
-import type { ComputedRef, Prop, Ref, Slots, VNode, VNodeArrayChildren } from 'vue';
-import { h, renderSlot } from 'vue';
-import { cssPrefix, useRenderSlotWithWrapper } from '../../../mixins/CommonApi';
+import { BsRipple } from '@/components/Animation';
+import { useMakeInputBaseAttrs } from '@/components/Field/mixins/textFieldApi.ts';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
+import { BsRadio } from '@/components/Radio';
+import { cssPrefix, useRenderSlotWithWrapper } from '@/mixins/CommonApi.ts';
 import type {
     TBsRadio,
     TBsRipple,
@@ -9,12 +11,10 @@ import type {
     TRadioOptionProps,
     TRadioProps,
     TRecord,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsRipple } from '../../Animation';
-import { useMakeInputBaseAttrs } from '../../Field/mixins/textFieldApi';
-import { useRenderFieldFeedback } from '../../Field/mixins/validationApi';
-import BsRadio from '../BsRadio';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import type { ComputedRef, Prop, Ref, Slots, VNode, VNodeArrayChildren } from 'vue';
+import { h, renderSlot } from 'vue';
 
 export function useRadioClasses(props: Readonly<TRadioOptionProps>): TRecord {
     return {
@@ -161,11 +161,9 @@ export function useCreateRadioItems(
                     // @ts-ignore
                     readonly: (it.readonly || props.readonly) as Prop<boolean>,
                     value: it.value as Prop<string | number | unknown>,
-                    name: (it.name
-                        ? it.name
-                        : props.name
-                          ? props.name + '[' + idx + ']'
-                          : undefined) as Prop<string | undefined>,
+                    name: (it.name ? it.name : props.name ? props.name : undefined) as Prop<
+                        string | undefined
+                    >,
                     modelValue: props.modelValue as Prop<string | number | unknown>,
                     'onUpdate:model-value': (): void => toggleCheckHandler(it),
                 },
@@ -187,52 +185,39 @@ export function useRenderRadioOrCheckboxGroup<D, M>(
     hasError: boolean,
     errorItems: Array<string>
 ): VNode {
-    return h(
-        'div',
-        {
-            class: classnames.value,
-        },
-        [
-            renderSlot(slots, 'default'),
+    return h('div', { class: classnames.value }, [
+        renderSlot(slots, 'default'),
+        h('div', { class: 'col' }, [
             h(
                 'div',
                 {
-                    class: 'col',
+                    class: {
+                        'row g-2': true,
+                        'row-cols-1': !props.column || (props.column && props.items.length > 0),
+                        'row-cols-sm-auto': !props.column && props.items.length < 4,
+                        'row-cols-sm-2': !props.column && props.items.length > 3,
+                        'row-cols-lg-3 row-cols-xl-4': !props.column,
+                        'row-cols-md-2': props.column && props.items.length > 3,
+                        [`row-cols-lg-4`]:
+                            props.column &&
+                            parseInt(props.column as string, 10) > 4 &&
+                            props.items.length > 3,
+                        [`row-cols-lg-${props.column}`]:
+                            props.column && parseInt(props.column as string, 10) < 5,
+                        [`row-cols-xl-${props.column}`]:
+                            props.column && parseInt(props.column as string, 10) > 1,
+                    },
                 },
-                [
-                    h(
-                        'div',
-                        {
-                            class: {
-                                'row g-2': true,
-                                'row-cols-1':
-                                    !props.column || (props.column && props.items.length > 0),
-                                'row-cols-sm-auto': !props.column && props.items.length < 4,
-                                'row-cols-sm-2': !props.column && props.items.length > 3,
-                                'row-cols-lg-3 row-cols-xl-4': !props.column,
-                                'row-cols-md-2': props.column && props.items.length > 3,
-                                [`row-cols-lg-4`]:
-                                    props.column &&
-                                    parseInt(props.column as string) > 4 &&
-                                    props.items.length > 3,
-                                [`row-cols-lg-${props.column}`]:
-                                    props.column && parseInt(props.column as string) < 5,
-                                [`row-cols-xl-${props.column}`]:
-                                    props.column && parseInt(props.column as string) > 1,
-                            },
-                        },
-                        children
-                    ),
-                    useRenderFieldFeedback(
-                        slots,
-                        props,
-                        showHelpText,
-                        showValidationError,
-                        hasError,
-                        errorItems
-                    ),
-                ]
+                children
             ),
-        ]
-    );
+            useRenderFieldFeedback(
+                slots,
+                props,
+                showHelpText,
+                showValidationError,
+                hasError,
+                errorItems
+            ),
+        ]),
+    ]);
 }

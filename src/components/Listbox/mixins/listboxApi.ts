@@ -94,7 +94,7 @@ function renderListboxSearchbox(
     const dataSource = props.dataSource?.proxy;
 
     if (dataSource && showSearchbox.value) {
-        const minChars = parseInt(props.minSearchChars as string);
+        const minChars = parseInt(props.minSearchChars as string, 10);
 
         return h(
             'label',
@@ -485,8 +485,8 @@ export function useRegisterListboxWatchers(
     searchboxRef: Ref<HTMLElement | null>,
     searchText: Ref<string | undefined>
 ) {
-    const maxHeight = parseInt(props.maxHeight as string);
-    const minItems = parseInt(props.minSearchLength as string);
+    const maxHeight = parseInt(props.maxHeight as string, 10);
+    const minItems = parseInt(props.minSearchLength as string, 10);
 
     if (dataSource) {
         const listener: LoadedCallbackFn = (data: IBsModel[]) => {
@@ -519,7 +519,7 @@ export function useRegisterListboxWatchers(
         (value) => {
             if (
                 dataSource &&
-                ((value && value.length >= parseInt(props.minSearchChars as string)) ||
+                ((value && value.length >= parseInt(props.minSearchChars as string, 10)) ||
                     Helper.isEmpty(value))
             ) {
                 filterListboxItems(

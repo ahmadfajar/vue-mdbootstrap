@@ -1,6 +1,6 @@
 // import ResizeObserver from 'resize-observer-polyfill';
-import type { IBindingElement } from '../types';
-import { isServer } from './CommonApi';
+import { isServer } from '@/mixins/CommonApi.ts';
+import type { IBindingElement } from '@/types';
 
 declare type TResizeTarget = {
     target: IBindingElement;

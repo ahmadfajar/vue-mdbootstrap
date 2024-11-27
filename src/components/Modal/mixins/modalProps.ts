@@ -1,11 +1,11 @@
+import { popoverBaseProps } from '@/components/Popover/mixins/popoverProps.ts';
 import {
     booleanProp,
     booleanTrueProp,
     stringOrArrayProp,
     stringProp,
     validStringOrNumberProp,
-} from '../../../mixins/CommonProps';
-import { popoverBaseProps } from '../../Popover/mixins/popoverProps';
+} from '@/mixins/CommonProps.ts';
 
 export const modalProps = {
     ...popoverBaseProps,

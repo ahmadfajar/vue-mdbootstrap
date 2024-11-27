@@ -1,15 +1,9 @@
-import { booleanProp, defaultColorProp } from '../../../mixins/CommonProps';
-import { inputProps } from '../../Field/mixins/fieldProps';
+import { inputProps } from '@/components/Field/mixins/fieldProps.ts';
+import { booleanProp, defaultColorProp } from '@/mixins/CommonProps.ts';
 
 export const checkboxProps = {
     ...inputProps,
-    /**
-     * Sets this component color.
-     */
     color: defaultColorProp,
-    /**
-     * Sets this component state type.
-     */
     indeterminate: booleanProp,
     /**
      * The `<input>` element `value` attribute.
@@ -41,8 +35,7 @@ export const checkboxGroupProps = {
     column: {
         type: [String, Number],
         default: undefined,
-        validator: (value: string | number): boolean =>
-            (value as number) > 0 && (value as number) < 7,
+        validator: (value: string): boolean => parseInt(value, 10) > 0 && parseInt(value, 10) < 7,
     },
     /**
      * Sets this component state type.

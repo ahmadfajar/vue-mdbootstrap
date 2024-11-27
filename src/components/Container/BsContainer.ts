@@ -1,21 +1,21 @@
-import { computed, defineComponent, h, onMounted, ref, withDirectives } from 'vue';
-import { Resize } from '../../directives';
+import { baseTagProps } from '@/components/Card/mixins/cardProps.ts';
+import { Resize } from '@/directives';
 import {
     cssPrefix,
     useBreakpointMax,
     useFindParentCmp,
     useVueMdbService,
-} from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
+} from '@/mixins/CommonApi.ts';
+import { booleanProp } from '@/mixins/CommonProps.ts';
 import type {
     TAppContainerOptionProps,
     TBsContainer,
     TContainerOptionProps,
     TRecord,
     TVueMdb,
-} from '../../types';
-import Helper from '../../utils/Helper';
-import { baseTagProps } from '../Card/mixins/cardProps';
+} from '@/types';
+import Helper from '@/utils/Helper';
+import { computed, defineComponent, h, onMounted, ref, withDirectives } from 'vue';
 
 export default defineComponent<TBsContainer>({
     name: 'BsContainer',

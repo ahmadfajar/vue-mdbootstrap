@@ -1,15 +1,16 @@
-import type { Prop, VNodeArrayChildren } from 'vue';
-import { h } from 'vue';
-import { cssPrefix } from '../../../mixins/CommonApi';
+import { BsCheckbox } from '@/components/Checkbox';
+import { useCheckSelected } from '@/components/Radio/mixins/radioApi.ts';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type {
     TBsCheckbox,
     TCheckboxGroupOptionProps,
     TCheckboxOptionProps,
+    TRadioOptionProps,
     TRadioProps,
     TRecord,
-} from '../../../types';
-import { useCheckSelected } from '../../Radio/mixins/radioApi';
-import BsCheckbox from '../BsCheckbox';
+} from '@/types';
+import type { EmitFn, Prop, Ref, VNodeArrayChildren } from 'vue';
+import { h, nextTick } from 'vue';
 
 export function useCheckboxClasses(props: Readonly<TCheckboxOptionProps>): TRecord {
     const checked = useCheckSelected(props);
@@ -63,4 +64,31 @@ export function useCreateCheckboxItems(
             ),
         ]);
     });
+}
+
+export function useToggleChecked(
+    props: Readonly<TRadioOptionProps>,
+    emit: EmitFn,
+    rippleActive: Ref<boolean>
+): void {
+    if (!props.disabled && !props.readonly) {
+        const checked = useCheckSelected(props);
+        rippleActive.value = true;
+
+        if (Array.isArray(props.modelValue)) {
+            const idx = props.modelValue.indexOf(props.value);
+            if (checked) {
+                props.modelValue.splice(idx, 1);
+            } else {
+                props.modelValue.push(props.value);
+            }
+            emit('update:model-value', props.modelValue);
+        } else {
+            emit('update:model-value', checked ? null : props.value);
+        }
+
+        nextTick().then(() => {
+            emit('checked', !checked);
+        });
+    }
 }

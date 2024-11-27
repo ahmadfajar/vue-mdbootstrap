@@ -1,7 +1,7 @@
+import { isChildOf, isSVGElement } from '@/mixins/DomHelper.ts';
+import type { IBindingElement, TDirectiveBinding } from '@/types';
+import Helper from '@/utils/Helper';
 import type { Directive, DirectiveBinding } from 'vue';
-import { isChildOf, isSVGElement } from '../../mixins/DomHelper';
-import type { IBindingElement, TDirectiveBinding } from '../../types';
-import Helper from '../../utils/Helper';
 
 function mounted(el: IBindingElement, binding: DirectiveBinding<VoidFunction | TDirectiveBinding>) {
     const callback = Helper.isFunction(binding.value)

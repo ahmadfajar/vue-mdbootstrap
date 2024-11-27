@@ -1,15 +1,15 @@
-import type { Prop, Ref, ShallowRef, VNode } from 'vue';
-import { h, Teleport, toDisplayString } from 'vue';
-import { cssPrefix } from '../../../mixins/CommonApi';
-import Helper from '../../../utils/Helper';
-import BsNotificationBar from '../BsNotificationBar';
-import BsNotificationItem from '../BsNotificationItem';
+import BsNotificationBar from '@/components/Notification/BsNotificationBar';
+import BsNotificationItem from '@/components/Notification/BsNotificationItem';
 import type {
     INotificationProvider,
     TNotificationItemOptionProps,
     TNotificationOption,
     TNotificationPosition,
-} from '../types';
+} from '@/components/Notification/types';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import Helper from '@/utils/Helper';
+import type { Prop, Ref, ShallowRef, VNode } from 'vue';
+import { h, Teleport, toDisplayString } from 'vue';
 
 function createNotificationHolder(
     provider: ShallowRef<INotificationProvider | undefined>
@@ -92,12 +92,9 @@ export function useRenderNotificationItem(
                 timerId.value = undefined;
             },
             onMouseout: () => {
-                timerId.value = Helper.defer(
-                    () => {
-                        provider.value?.remove(props.options as TNotificationOption);
-                    },
-                    props.options?.timeout as number
-                );
+                timerId.value = Helper.defer(() => {
+                    provider.value?.remove(props.options as TNotificationOption);
+                }, props.options?.timeout as number);
             },
         },
         [

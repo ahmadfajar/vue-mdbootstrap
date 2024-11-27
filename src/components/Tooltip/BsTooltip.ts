@@ -1,3 +1,18 @@
+import {
+    useAddTooltipListener,
+    useRemoveTooltipListener,
+    useSetTooltipPosition,
+} from '@/components/Tooltip/mixins/tooltipApi.ts';
+import { Resize, Scroll } from '@/directives';
+import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
+import {
+    booleanProp,
+    stringOrNumberProp,
+    stringProp,
+    validStringOrNumberProp,
+} from '@/mixins/CommonProps.ts';
+import type { TBsTooltip, TPlacementPosition, TTooltipOptionProps } from '@/types';
+import Helper from '@/utils/Helper';
 import type { ComponentInternalInstance, ComponentPublicInstance, Prop } from 'vue';
 import {
     computed,
@@ -15,21 +30,6 @@ import {
     watch,
     withDirectives,
 } from 'vue';
-import { Resize, Scroll } from '../../directives';
-import { cssPrefix, useRenderTransition } from '../../mixins/CommonApi';
-import {
-    booleanProp,
-    stringOrNumberProp,
-    stringProp,
-    validStringOrNumberProp,
-} from '../../mixins/CommonProps';
-import type { TBsTooltip, TPlacementPosition, TTooltipOptionProps } from '../../types';
-import Helper from '../../utils/Helper';
-import {
-    useAddTooltipListener,
-    useRemoveTooltipListener,
-    useSetTooltipPosition,
-} from './mixins/tooltipApi';
 
 export default defineComponent<TBsTooltip>({
     name: 'BsTooltip',
@@ -118,7 +118,8 @@ export default defineComponent<TBsTooltip>({
                                           ref: tooltip,
                                       },
                                       [
-                                          !thisProps.arrowOff && h('div', { class: 'tooltip-arrow' }),
+                                          !thisProps.arrowOff &&
+                                              h('div', { class: 'tooltip-arrow' }),
                                           h(
                                               'div',
                                               {

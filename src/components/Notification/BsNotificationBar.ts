@@ -1,7 +1,10 @@
+import type {
+    TBsNotificationBar,
+    TNotificationBarOptionProps,
+} from '@/components/Notification/types';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import { booleanProp } from '@/mixins/CommonProps.ts';
 import { defineComponent, h, onMounted, ref, watch } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
-import type { TBsNotificationBar, TNotificationBarOptionProps } from './types';
 
 export default defineComponent<TBsNotificationBar>({
     name: 'BsNotificationBar',

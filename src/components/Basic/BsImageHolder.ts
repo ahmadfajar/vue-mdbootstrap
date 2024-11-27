@@ -1,11 +1,11 @@
+import { useShapeClasses } from '@/components/Avatar/mixins/avatarApi.ts';
+import { imageHolderProps } from '@/components/Basic/mixins/imageHolderProps.ts';
+import type { TBsImageHolder, TImageHolderOptionProps } from '@/components/Basic/types';
+import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
+import { useCreateSvgNode } from '@/components/Icon/mixins/svgApi.ts';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import Helper from '@/utils/Helper';
 import { computed, defineComponent, h, toDisplayString } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import Helper from '../../utils/Helper';
-import { useShapeClasses } from '../Avatar/mixins/avatarApi';
-import { useSizeHeight, useSizeWidth } from '../Icon/mixins/iconApi';
-import { useCreateSvgNode } from '../Icon/mixins/svgApi';
-import { imageHolderProps } from './mixins/imageHolderProps';
-import type { TBsImageHolder, TImageHolderOptionProps } from './types';
 
 export default defineComponent<TBsImageHolder>({
     name: 'BsImageHolder',
@@ -13,7 +13,9 @@ export default defineComponent<TBsImageHolder>({
     setup(props) {
         const thisProps = props as Readonly<TImageHolderOptionProps>;
         const showText = computed(() => {
-            return !Helper.isEmpty(props.placeholderText) || !Helper.isEmpty(props.placeHolder);
+            return (
+                !Helper.isEmpty(thisProps.placeHolder) || !Helper.isEmpty(thisProps.placeholderText)
+            );
         });
         const szHeight = useSizeHeight(thisProps);
         const szWidth = useSizeWidth(thisProps);
@@ -30,8 +32,9 @@ export default defineComponent<TBsImageHolder>({
                 'xMidYMid slice',
                 null,
                 {
-                    height: !szHeight || <number>szHeight < 2 ? '100%' : Helper.cssUnit(szHeight),
-                    width: !szWidth || <number>szWidth < 2 ? '100%' : Helper.cssUnit(szWidth),
+                    height:
+                        !szHeight || (szHeight as number) < 2 ? '100%' : Helper.cssUnit(szHeight),
+                    width: !szWidth || (szWidth as number) < 2 ? '100%' : Helper.cssUnit(szWidth),
                     role: 'img',
                 },
                 [

@@ -1,8 +1,12 @@
+import {
+    useAppbarOnMountedHook,
+    useAppbarStyles,
+    useRenderAppbar,
+} from '@/components/Appbar/mixins/appbarApi.ts';
+import { useBreakpointMax } from '@/mixins/CommonApi.ts';
+import { booleanProp } from '@/mixins/CommonProps.ts';
+import type { TAppbarOptionProps, TBsAppbar, TVueMdb } from '@/types';
 import { computed, defineComponent, onMounted, ref } from 'vue';
-import { useBreakpointMax } from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
-import type { TAppbarOptionProps, TBsAppbar, TVueMdb } from '../../types';
-import { useAppbarOnMountedHook, useAppbarStyles, useRenderAppbar } from './mixins/appbarApi';
 
 export default defineComponent<TBsAppbar>({
     name: 'BsAppbar',

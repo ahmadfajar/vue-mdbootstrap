@@ -1,3 +1,14 @@
+import { BsOverlay } from '@/components/Animation';
+import { useClosePopover } from '@/components/Popover/mixins/popoverApi.ts';
+import {
+    cssPrefix,
+    useBreakpointMax,
+    useMergeClass,
+    useRenderSlotWithWrapper,
+    useRenderTransition,
+} from '@/mixins/CommonApi.ts';
+import type { TBsModal, TModalOptionProps, TRecord } from '@/types';
+import Helper from '@/utils/Helper';
 import type {
     ComponentInternalInstance,
     ComputedRef,
@@ -9,17 +20,6 @@ import type {
     VNode,
 } from 'vue';
 import { createCommentVNode, createTextVNode, h, Teleport } from 'vue';
-import {
-    cssPrefix,
-    useBreakpointMax,
-    useMergeClass,
-    useRenderSlotWithWrapper,
-    useRenderTransition,
-} from '../../../mixins/CommonApi';
-import type { TBsModal, TModalOptionProps, TRecord } from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsOverlay } from '../../Animation';
-import { useClosePopover } from '../../Popover/mixins/popoverApi';
 
 export function useSetDialogMaxHeight(
     props: Readonly<TModalOptionProps>,

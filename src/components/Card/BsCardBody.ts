@@ -1,7 +1,7 @@
+import { baseTagProps } from '@/components/Card/mixins/cardProps.ts';
+import type { TBsCardBody } from '@/components/Card/types';
+import { useRenderSlotDefault } from '@/mixins/CommonApi.ts';
 import { defineComponent } from 'vue';
-import { useRenderSlotDefault } from '../../mixins/CommonApi';
-import { baseTagProps } from './mixins/cardProps';
-import type { TBsCardBody } from './types';
 
 export default defineComponent<TBsCardBody>({
     name: 'BsCardBody',

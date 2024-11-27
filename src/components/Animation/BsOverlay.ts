@@ -1,13 +1,13 @@
-import { computed, createCommentVNode, defineComponent, h } from 'vue';
-import { cssPrefix, useRenderTransition } from '../../mixins/CommonApi';
+import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import {
     booleanProp,
     stringProp,
     validStringOrFloatProp,
     validStringOrNumberProp,
-} from '../../mixins/CommonProps';
-import { preventEventTarget } from '../../mixins/DomHelper';
-import type { TBsOverlay, TRecord } from '../../types';
+} from '@/mixins/CommonProps.ts';
+import { preventEventTarget } from '@/mixins/DomHelper.ts';
+import type { TBsOverlay, TOverlayOptionProps, TRecord } from '@/types';
+import { computed, createCommentVNode, defineComponent, h } from 'vue';
 
 export default defineComponent<TBsOverlay>({
     name: 'BsOverlay',
@@ -20,17 +20,18 @@ export default defineComponent<TBsOverlay>({
     },
     emits: ['click'],
     setup(props, { emit, slots }) {
+        const thisProps = props as Readonly<TOverlayOptionProps>;
         const styles = computed<TRecord>(() => ({
-            opacity: props.opacity,
-            'background-color': props.color,
-            position: props.fixed ? 'fixed' : null,
-            'z-index': props.zIndex,
+            opacity: thisProps.opacity,
+            'background-color': thisProps.color,
+            position: thisProps.fixed ? 'fixed' : null,
+            'z-index': thisProps.zIndex,
         }));
 
         return () =>
             useRenderTransition(
                 { name: 'fade' },
-                props.show
+                thisProps.show
                     ? h(
                           'div',
                           {

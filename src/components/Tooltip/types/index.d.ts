@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions, type ComponentPublicInstance,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -66,4 +66,4 @@ export declare const BsTooltip: {
     };
 };
 
-export declare const BsTooltipPlugin: Plugin;
+export declare const BsTooltipPlugin: ObjectPlugin;

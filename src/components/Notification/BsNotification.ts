@@ -1,7 +1,7 @@
+import { useRenderNotificationContainer } from '@/components/Notification/mixins/notificationApi.ts';
+import type { INotificationProvider } from '@/components/Notification/types';
+import { useVueMdbNotification } from '@/mixins/CommonApi.ts';
 import { defineComponent, onMounted, shallowRef } from 'vue';
-import { useVueMdbNotification } from '../../mixins/CommonApi';
-import { useRenderNotificationContainer } from './mixins/notificationApi';
-import type { INotificationProvider } from './types';
 
 export default defineComponent({
     name: 'BsNotification',

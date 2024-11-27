@@ -1,8 +1,8 @@
+import type { TBsDivider, TDividerOptionProps } from '@/components/Basic/types';
+import { cssPrefix, useRenderSlotDefault } from '@/mixins/CommonApi.ts';
+import { booleanProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
+import Helper from '@/utils/Helper';
 import { defineComponent } from 'vue';
-import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
-import { booleanProp, validStringOrNumberProp } from '../../mixins/CommonProps';
-import Helper from '../../utils/Helper';
-import type { TBsDivider, TDividerOptionProps } from './types';
 
 export default defineComponent<TBsDivider>({
     name: 'BsDivider',

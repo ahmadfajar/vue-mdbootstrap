@@ -1,9 +1,13 @@
+import {
+    startRipple,
+    type TRippleData,
+    useRenderRipples,
+} from '@/components/Animation/mixins/rippleApi.ts';
+import { baseTagProps } from '@/components/Card/mixins/cardProps.ts';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import { booleanProp } from '@/mixins/CommonProps.ts';
+import type { TBsRipple, TRecord, TRippleOptionProps } from '@/types';
 import { computed, defineComponent, ref, watch } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
-import type { TBsRipple, TRecord, TRippleOptionProps } from '../../types';
-import { baseTagProps } from '../Card/mixins/cardProps';
-import { startRipple, type TRippleData, useRenderRipples } from './mixins/rippleApi';
 
 export default defineComponent<TBsRipple>({
     name: 'BsRipple',
@@ -43,7 +47,7 @@ export default defineComponent<TBsRipple>({
             (value) => {
                 const isBoolean = typeof value === 'boolean';
                 const isEvent =
-                // @ts-ignore
+                    // @ts-ignore
                     value?.constructor
                         .toString()
                         .match(/function (\w*)/)[1]

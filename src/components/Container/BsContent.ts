@@ -1,9 +1,9 @@
+import { BsContainer } from '@/components/Container';
+import type { TBsContainer, TBsContent, TContainerOptionProps } from '@/components/Container/types';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { VNode } from 'vue';
 import { defineComponent, h } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import { booleanProp } from '../../mixins/CommonProps';
-import BsContainer from './BsContainer';
-import type { TBsContainer, TBsContent, TContainerOptionProps } from './types';
 
 export default defineComponent<TBsContent>({
     name: 'BsContent',
@@ -15,10 +15,10 @@ export default defineComponent<TBsContent>({
         },
     },
     setup(props, { slots }) {
-        const cmpProps = props as Readonly<TContainerOptionProps>;
-        const contentRender = (): VNode =>
+        const thisProps = props as Readonly<TContainerOptionProps>;
+        const renderContent = (): VNode =>
             h(
-                cmpProps.tag || 'div',
+                thisProps.tag || 'div',
                 {
                     class: `${cssPrefix}content-wrap`,
                 },
@@ -26,7 +26,7 @@ export default defineComponent<TBsContent>({
             );
 
         return () =>
-            cmpProps.app
+            thisProps.app
                 ? h<TBsContainer>(
                       BsContainer,
                       {
@@ -34,9 +34,9 @@ export default defineComponent<TBsContent>({
                           tag: props.tag,
                       },
                       {
-                          default: () => contentRender(),
+                          default: () => renderContent(),
                       }
                   )
-                : contentRender();
+                : renderContent();
     },
 });

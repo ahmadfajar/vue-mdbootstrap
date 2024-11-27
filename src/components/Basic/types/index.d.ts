@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps
 } from 'vue';
@@ -116,4 +116,4 @@ export declare const BsSubheader: {
     };
 };
 
-export declare const BsBasicCmpPlugin: Plugin;
+export declare const BsBasicCmpPlugin: ObjectPlugin;

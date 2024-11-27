@@ -186,7 +186,7 @@ function popoverWidth(
     props: Readonly<TSearchFieldOptionProps>,
     activator: Ref<HTMLElement | null>
 ): number {
-    const width = Helper.parseIntLoose(<string>props.popoverMinWidth) ?? 0;
+    const width = Helper.parseIntLoose(props.popoverMinWidth as string) ?? 0;
 
     if (activator.value && width < activator.value?.offsetWidth) {
         return activator.value?.offsetWidth;

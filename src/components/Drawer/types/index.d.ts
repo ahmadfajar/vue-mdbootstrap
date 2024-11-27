@@ -2,24 +2,61 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
 import { EventUpdateOpenProps, TSideDrawerPosition } from '../../../types';
 
 export declare type TSideDrawerOptionProps = {
+    /**
+     * Sets the component colors.
+     */
     color?: string;
+    /**
+     * Cut off the top edge of the component.
+     */
     clipped?: boolean;
-    mini?: boolean;
+    /**
+     * Sets the component position fixed on the left or right side even when scrolling the page.
+     */
     fixedLayout?: boolean;
+    /**
+     * The component minimize state.
+     */
+    mini?: boolean;
+    /**
+     * The component width in pixel when on minimize state.
+     */
     miniWidth?: number | string;
+    /**
+     * The component width in pixel when display as modal on small screen.
+     */
     modalWidth?: number | string;
+    /**
+     * The component state, show or hide. Monitored by `v-model`.
+     */
     open?: boolean;
+    /**
+     * The backdrop overlay color when the component is displayed as modal.
+     * The value must be in hexadecimal color format.
+     */
     overlayColor?: string;
+    /**
+     * The component position location. Valid values are: `left`, `right`.
+     */
     position?: TSideDrawerPosition;
+    /**
+     * Add shadow effect to the component.
+     */
     shadow?: boolean;
+    /**
+     * Html tag used to render the component.
+     */
     tag?: string;
+    /**
+     * The component width in pixel.
+     */
     width?: number | string;
 };
 
@@ -52,4 +89,4 @@ export declare const BsSideDrawer: {
     };
 };
 
-export declare const BsDrawerPlugin: Plugin;
+export declare const BsDrawerPlugin: ObjectPlugin;

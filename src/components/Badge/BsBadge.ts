@@ -1,7 +1,7 @@
+import { badgeProps } from '@/components/Badge/mixins/badgeProps.ts';
+import type { TBadgeOptionProps, TBsBadge } from '@/components/Badge/types';
+import { cssPrefix, useRenderSlotDefault } from '@/mixins/CommonApi.ts';
 import { defineComponent } from 'vue';
-import { cssPrefix, useRenderSlotDefault } from '../../mixins/CommonApi';
-import { badgeProps } from './mixins/badgeProps';
-import type { TBadgeOptionProps, TBsBadge } from './types';
 
 export default defineComponent<TBsBadge>({
     name: 'BsBadge',

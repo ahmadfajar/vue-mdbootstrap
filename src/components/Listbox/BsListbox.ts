@@ -59,7 +59,7 @@ export default defineComponent<TBsListbox>({
             disableField: 'disabled',
             ...thisProps.dataSource?.schema,
         };
-        const maxHeight = parseInt(<string>thisProps.maxHeight);
+        const maxHeight = parseInt(thisProps.maxHeight as string, 10);
         const dataSource = thisProps.dataSource?.proxy;
         const cacheItems = shallowRef<IBsModel[]>([]);
         const showSearchbox = ref<boolean>(false);

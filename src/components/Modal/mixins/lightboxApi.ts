@@ -1,3 +1,24 @@
+import { BsSpacer } from '@/components/Basic';
+import { BsButton } from '@/components/Button';
+import { BsDropdownMenu } from '@/components/Menu';
+import { useClosePopover } from '@/components/Popover/mixins/popoverApi.ts';
+import { Touch } from '@/directives';
+import {
+    cssPrefix,
+    useBreakpointMax,
+    useMobileDevice,
+    useRenderTransition,
+} from '@/mixins/CommonApi.ts';
+import type {
+    TButtonMode,
+    TButtonSize,
+    TEmitFn,
+    TImageDataset,
+    TLightboxOptionProps,
+    TPopoverPosition,
+    TRecord,
+} from '@/types';
+import Helper from '@/utils/Helper';
 import type {
     ComponentInternalInstance,
     ComputedRef,
@@ -8,27 +29,6 @@ import type {
     VNode,
 } from 'vue';
 import { createCommentVNode, h, Teleport, toDisplayString, withDirectives } from 'vue';
-import { Touch } from '../../../directives';
-import {
-    cssPrefix,
-    useBreakpointMax,
-    useMobileDevice,
-    useRenderTransition,
-} from '../../../mixins/CommonApi';
-import type {
-    TButtonMode,
-    TButtonSize,
-    TEmitFn,
-    TImageDataset,
-    TLightboxOptionProps,
-    TPopoverPosition,
-    TRecord,
-} from '../../../types';
-import Helper from '../../../utils/Helper';
-import { BsSpacer } from '../../Basic';
-import { BsButton } from '../../Button';
-import { BsDropdownMenu } from '../../Menu';
-import { useClosePopover } from '../../Popover/mixins/popoverApi';
 
 export function useComputeImgStyle(
     props: Readonly<TLightboxOptionProps>,
@@ -416,7 +416,7 @@ function createLightboxNavCtrl(
                     h(BsButton, {
                         color: 'light-grey' as Prop<string>,
                         mode: 'icon' as Prop<TButtonMode>,
-                        icon: 'navigate_before' as Prop<string>,
+                        icon: 'chevron_backward' as Prop<string>,
                         size: 'lg' as Prop<TButtonSize>,
                         // @ts-ignore
                         flat: true as Prop<boolean>,
@@ -445,7 +445,7 @@ function createLightboxNavCtrl(
                     h(BsButton, {
                         color: 'light-grey' as Prop<string>,
                         mode: 'icon' as Prop<TButtonMode>,
-                        icon: 'navigate_next' as Prop<string>,
+                        icon: 'chevron_forward' as Prop<string>,
                         size: 'lg' as Prop<TButtonSize>,
                         // @ts-ignore
                         flat: true as Prop<boolean>,
@@ -483,7 +483,7 @@ export function useNavigatePrevSlide(
         transition.value =
             useMobileDevice() && useBreakpointMax('md')
                 ? 'slide-left-right'
-                : props.transition as string;
+                : (props.transition as string);
     } else {
         transition.value = props.transition as string;
     }
@@ -510,7 +510,7 @@ export function useNavigateNextSlide(
         transition.value =
             useMobileDevice() && useBreakpointMax('md')
                 ? 'slide-right-left'
-                : props.transition as string;
+                : (props.transition as string);
     } else {
         transition.value = props.transition as string;
     }

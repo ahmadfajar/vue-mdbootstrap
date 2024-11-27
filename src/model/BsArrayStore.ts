@@ -1,10 +1,10 @@
+import { AbstractStore } from '@/model';
+import type { IBsModel, TDataStoreConfig, TSortDirection, TSortOption } from '@/model/types';
+import type { TRecord } from '@/types';
+import Helper from '@/utils/Helper';
 import type { AxiosResponse } from 'axios';
 import meanBy from 'lodash/meanBy';
 import sumBy from 'lodash/sumBy';
-import { AbstractStore } from '../model';
-import type { TRecord } from '../types';
-import Helper from '../utils/Helper';
-import type { IBsModel, TDataStoreConfig, TSortDirection, TSortOption } from './types';
 
 /**
  * Data store class to work with collection of entity objects locally.

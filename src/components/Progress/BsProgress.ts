@@ -1,5 +1,3 @@
-import { computed, defineComponent, onMounted, watch } from 'vue';
-import { useBrowserIE } from '../../mixins/CommonApi';
 import {
     useAttachStyleTag,
     useBufferMode,
@@ -7,9 +5,11 @@ import {
     useIndeterminateMode,
     useRenderAnimatedProgressBar,
     useRenderAnimatedProgressSpinner,
-} from './mixins/progressControlApi';
-import { progressProps } from './mixins/progressProps';
-import type { TBsProgress, TProgressOptionProps } from './types';
+} from '@/components/Progress/mixins/progressControlApi.ts';
+import { progressProps } from '@/components/Progress/mixins/progressProps.ts';
+import type { TBsProgress, TProgressOptionProps } from '@/components/Progress/types';
+import { useBrowserIE } from '@/mixins/CommonApi.ts';
+import { computed, defineComponent, onMounted, watch } from 'vue';
 
 export default defineComponent<TBsProgress>({
     name: 'BsProgress',

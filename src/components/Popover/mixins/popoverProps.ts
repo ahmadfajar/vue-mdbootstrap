@@ -1,4 +1,4 @@
-import type { Prop } from 'vue';
+import type { TPopoverPosition } from '@/components/Popover/types';
 import {
     booleanProp,
     booleanTrueProp,
@@ -6,8 +6,8 @@ import {
     validStringOrFloatProp,
     validStringOrNumberProp,
     whiteColorProp,
-} from '../../../mixins/CommonProps';
-import type { TPopoverPosition } from '../types';
+} from '@/mixins/CommonProps.ts';
+import type { Prop } from 'vue';
 
 export const popoverPlacementProp = {
     type: String,

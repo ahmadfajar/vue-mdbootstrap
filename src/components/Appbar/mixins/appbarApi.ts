@@ -1,18 +1,13 @@
-import type { ComputedRef, Ref, Slots, VNode } from 'vue';
-import { getCurrentInstance, h, nextTick, withDirectives } from 'vue';
-import { Resize } from '../../../directives';
+import { Resize } from '@/directives';
 import {
     cssPrefix,
     useFindParentCmp,
     useRenderSlotDefault,
     useVueMdbService,
-} from '../../../mixins/CommonApi';
-import type {
-    TAppbarOptionProps,
-    TAppContainerOptionProps,
-    TRecord,
-    TVueMdb,
-} from '../../../types';
+} from '@/mixins/CommonApi.ts';
+import type { TAppbarOptionProps, TAppContainerOptionProps, TRecord, TVueMdb } from '@/types';
+import type { ComputedRef, Ref, Slots, VNode } from 'vue';
+import { getCurrentInstance, h, nextTick, withDirectives } from 'vue';
 
 export function useAppbarStyles(
     props: Readonly<TAppbarOptionProps>,
@@ -66,9 +61,10 @@ export function useAppbarOnMountedHook(
         console.warn('<BsAppbar> must be used inside <BsApp>');
     }
 
-    window && window.requestAnimationFrame(() => {
-        smoothAnimation.value = true;
-    });
+    window &&
+        window.requestAnimationFrame(() => {
+            smoothAnimation.value = true;
+        });
 }
 
 export function useRenderAppbar(

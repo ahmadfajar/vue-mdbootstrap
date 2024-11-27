@@ -1,23 +1,21 @@
-import { computed, defineComponent } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import type {
-    TBsCheckboxGroup,
-    TCheckboxGroupOptionProps,
-    TCheckboxProps,
-    TRecord,
-} from '../../types';
-import Helper from '../../utils/Helper';
-import { baseInputProps } from '../Field/mixins/fieldProps';
+import { useCreateCheckboxItems } from '@/components/Checkbox/mixins/checkboxApi.ts';
+import { checkboxGroupProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
+import { baseInputProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowValidationError,
-} from '../Field/mixins/validationApi';
-import { validationProps } from '../Field/mixins/validationProps';
-import { useInputGroupClasses, useRenderRadioOrCheckboxGroup } from '../Radio/mixins/radioApi';
-import { useCreateCheckboxItems } from './mixins/checkboxApi';
-import { checkboxGroupProps } from './mixins/checkboxProps';
+} from '@/components/Field/mixins/validationApi.ts';
+import { validationProps } from '@/components/Field/mixins/validationProps.ts';
+import {
+    useInputGroupClasses,
+    useRenderRadioOrCheckboxGroup,
+} from '@/components/Radio/mixins/radioApi.ts';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { TBsCheckboxGroup, TCheckboxGroupOptionProps, TCheckboxProps, TRecord } from '@/types';
+import Helper from '@/utils/Helper';
+import { computed, defineComponent } from 'vue';
 
 export default defineComponent<TBsCheckboxGroup>({
     name: 'BsCheckboxGroup',

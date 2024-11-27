@@ -1,4 +1,4 @@
-import type { App, Plugin } from 'vue';
+import type { App, ObjectPlugin } from 'vue';
 import registerConfig from '../../mixins/registerConfig';
 import BsApp from './BsApp';
 import BsContainer from './BsContainer';
@@ -6,7 +6,7 @@ import BsContent from './BsContent';
 import './container.scss';
 import '../../../scss/_utilities.scss';
 
-const BsContainerPlugin: Plugin = {
+const BsContainerPlugin: ObjectPlugin = {
     install: (app: App): void => {
         registerConfig(app);
         app.component(BsApp.name as string, BsApp);

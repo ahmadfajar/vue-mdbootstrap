@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps
 } from 'vue';
@@ -80,4 +80,4 @@ export declare const BsAppbarItems: {
     };
 };
 
-export declare const BsAppbarPlugin: Plugin;
+export declare const BsAppbarPlugin: ObjectPlugin;

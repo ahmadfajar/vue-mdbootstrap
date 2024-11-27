@@ -1,23 +1,5 @@
+import type { IBindingElement, TouchDirectiveEvent, TRecord } from '@/types';
 import type { Directive, DirectiveBinding } from 'vue';
-import type { IBindingElement, TRecord } from '../../types';
-
-export declare interface TouchDirectiveEvent {
-    touchstartX: number;
-    touchstartY: number;
-    touchendX: number;
-    touchendY: number;
-    touchmoveX: number;
-    touchmoveY: number;
-    deltaX: number;
-    deltaY: number;
-    left?: (evt: TouchDirectiveEvent) => void;
-    right?: (evt: TouchDirectiveEvent) => void;
-    up?: (evt: TouchDirectiveEvent) => void;
-    down?: (evt: TouchDirectiveEvent) => void;
-    start?: (evt: TouchDirectiveEvent) => void;
-    move?: (evt: TouchDirectiveEvent) => void;
-    end?: (evt: TouchDirectiveEvent) => void;
-}
 
 function handleGesture(binding: TouchDirectiveEvent) {
     const { touchstartX, touchendX, touchstartY, touchendY } = binding;

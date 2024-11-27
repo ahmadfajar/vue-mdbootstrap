@@ -1,3 +1,8 @@
+import { useRenderModalDialog, useSetDialogMaxHeight } from '@/components/Modal/mixins/modalApi.ts';
+import { modalProps } from '@/components/Modal/mixins/modalProps.ts';
+import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { TBsModal, TModalOptionProps, TRecord } from '@/types';
 import type { ComponentInternalInstance } from 'vue';
 import {
     computed,
@@ -9,11 +14,6 @@ import {
     shallowRef,
     watch,
 } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import type { TBsModal, TModalOptionProps, TRecord } from '../../types';
-import PopupManager from '../Popover/mixins/PopupManager';
-import { useRenderModalDialog, useSetDialogMaxHeight } from './mixins/modalApi';
-import { modalProps } from './mixins/modalProps';
 
 export default defineComponent<TBsModal>({
     name: 'BsModal',
@@ -53,7 +53,8 @@ export default defineComponent<TBsModal>({
                         useSetDialogMaxHeight(thisProps, dialogEl, headerEl, bodyEl, footerEl)
                     );
                 } else {
-                    instance.value && PopupManager.closePopover(instance.value, modalOpen, 'State changed.');
+                    instance.value &&
+                        PopupManager.closePopover(instance.value, modalOpen, 'State changed.');
                 }
             }
         );

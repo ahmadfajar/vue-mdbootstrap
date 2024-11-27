@@ -1,11 +1,6 @@
+import { booleanProp, booleanTrueProp, stringOrArrayProp } from '@/mixins/CommonProps.ts';
+import type { TImageDataset, TLightboxToolbarItems, TRecord, TTransitionMode } from '@/types';
 import type { Prop } from 'vue';
-import { booleanProp, booleanTrueProp, stringOrArrayProp } from '../../../mixins/CommonProps';
-import type {
-    TImageDataset,
-    TLightboxToolbarItems,
-    TRecord,
-    TTransitionMode,
-} from '../../../types';
 
 export const lightboxProps = {
     imageClass: stringOrArrayProp,

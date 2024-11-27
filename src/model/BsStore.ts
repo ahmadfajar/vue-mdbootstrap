@@ -1,17 +1,22 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import meanBy from 'lodash/meanBy';
-import sumBy from 'lodash/sumBy';
-import { AbstractStore, RestProxyAdapter } from '../model';
-import type { TRecord } from '../types';
-import Helper from '../utils/Helper';
-import { appendErrMsg, emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from './AbstractStore';
+import { AbstractStore, RestProxyAdapter } from '@/model';
+import {
+    appendErrMsg,
+    emptyDataErrMsg,
+    parsingDataErrMsg,
+    proxyErrMsg,
+} from '@/model/AbstractStore.ts';
 import type {
     IBsModel,
     TDataStoreConfig,
     TMessageResponse,
     TSortDirection,
     TSortOption,
-} from './types';
+} from '@/model/types';
+import type { TRecord } from '@/types';
+import Helper from '@/utils/Helper';
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import meanBy from 'lodash/meanBy';
+import sumBy from 'lodash/sumBy';
 
 /**
  * Data Store class to work with collection of entity objects and remote API.

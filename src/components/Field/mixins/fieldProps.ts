@@ -89,7 +89,7 @@ export const numericFieldProps = {
     maxFraction: {
         type: [Number, String],
         default: 3,
-        validator: (v: string) => !isNaN(parseInt(v)),
+        validator: (v: string) => !isNaN(parseInt(v, 10)),
     },
     maxValue: validStringOrFloatProp,
     minValue: validStringOrFloatProp,

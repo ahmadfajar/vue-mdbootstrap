@@ -3,7 +3,7 @@ import {
     ComponentCustomProps,
     ComponentObjectPropsOptions,
     ComponentPublicInstance,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -221,4 +221,4 @@ export declare interface BsLightboxInstance extends ComponentPublicInstance {
     prevSlide(): void;
 }
 
-export declare const BsModalPlugin: Plugin;
+export declare const BsModalPlugin: ObjectPlugin;

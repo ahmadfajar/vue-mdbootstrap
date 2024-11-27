@@ -1,3 +1,7 @@
+import { useRenderPopover, useSetPopoverPosition } from '@/components/Popover/mixins/popoverApi.ts';
+import { popoverProps } from '@/components/Popover/mixins/popoverProps.ts';
+import type { TBsPopover, TPopoverOptionProps, TPopoverPosition } from '@/components/Popover/types';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { ComponentInternalInstance } from 'vue';
 import {
     computed,
@@ -9,10 +13,6 @@ import {
     shallowRef,
     watch,
 } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import { useRenderPopover, useSetPopoverPosition } from './mixins/popoverApi';
-import { popoverProps } from './mixins/popoverProps';
-import type { TBsPopover, TPopoverOptionProps, TPopoverPosition } from './types';
 
 export default defineComponent<TBsPopover>({
     name: 'BsPopover',

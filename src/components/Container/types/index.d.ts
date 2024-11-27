@@ -2,7 +2,7 @@ import {
     AllowedComponentProps,
     ComponentCustomProps,
     ComponentObjectPropsOptions,
-    Plugin,
+    ObjectPlugin,
     VNode,
     VNodeProps,
 } from 'vue';
@@ -81,4 +81,4 @@ export declare const BsContent: {
     };
 };
 
-export declare const BsContainerPlugin: Plugin;
+export declare const BsContainerPlugin: ObjectPlugin;

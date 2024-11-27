@@ -1,5 +1,5 @@
-import Helper from '../utils/Helper';
-import type { ICacheItem, TRawCacheItem } from './types';
+import type { ICacheItem, TRawCacheItem } from '@/model/types';
+import Helper from '@/utils/Helper';
 
 declare type TCacheInternal = {
     value: unknown;
@@ -54,7 +54,7 @@ export const CacheManager = {
     },
     deleteItems(keys: string[]): void {
         const len = keys.length - 1;
-        
+
         for (let i = len; i >= 0; i--) {
             this._cacheItems.delete(keys[i]);
         }

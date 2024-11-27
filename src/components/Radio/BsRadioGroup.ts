@@ -1,21 +1,21 @@
-import { computed, defineComponent } from 'vue';
-import { cssPrefix } from '../../mixins/CommonApi';
-import Helper from '../../utils/Helper';
-import { baseInputProps } from '../Field/mixins/fieldProps';
+import { baseInputProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
     useGetErrorItems,
     useHasValidated,
     useHasValidationError,
     useShowValidationError,
-} from '../Field/mixins/validationApi';
-import { validationProps } from '../Field/mixins/validationProps';
+} from '@/components/Field/mixins/validationApi.ts';
+import { validationProps } from '@/components/Field/mixins/validationProps.ts';
 import {
     useCreateRadioItems,
     useInputGroupClasses,
     useRenderRadioOrCheckboxGroup,
-} from './mixins/radioApi';
-import { radioGroupProps } from './mixins/radioProps';
-import type { TBsRadioGroup, TRadioGroupOptionProps, TRadioProps } from './types';
+} from '@/components/Radio/mixins/radioApi.ts';
+import { radioGroupProps } from '@/components/Radio/mixins/radioProps.ts';
+import type { TBsRadioGroup, TRadioGroupOptionProps, TRadioProps } from '@/components/Radio/types';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import Helper from '@/utils/Helper';
+import { computed, defineComponent } from 'vue';
 
 export default defineComponent<TBsRadioGroup>({
     name: 'BsRadioGroup',

@@ -1,13 +1,5 @@
-import type {
-    AxiosError,
-    AxiosHeaders,
-    AxiosInstance,
-    AxiosRequestConfig,
-    AxiosResponse,
-} from 'axios';
-import type { UnwrapNestedRefs } from 'vue';
-import { reactive, readonly } from 'vue';
-import { RestProxyAdapter } from '../model';
+import { RestProxyAdapter } from '@/model';
+import { emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from '@/model/AbstractStore.ts';
 import type {
     IRestAdapter,
     ObjectBase,
@@ -20,10 +12,18 @@ import type {
     TRestKey,
     TRestMethodOptions,
     TUrlOption,
-} from '../types';
-import { autoBind } from '../utils/AutoBind';
-import Helper from '../utils/Helper';
-import { emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from './AbstractStore';
+} from '@/types';
+import { autoBind } from '@/utils/AutoBind.ts';
+import Helper from '@/utils/Helper.ts';
+import type {
+    AxiosError,
+    AxiosHeaders,
+    AxiosInstance,
+    AxiosRequestConfig,
+    AxiosResponse,
+} from 'axios';
+import type { UnwrapNestedRefs } from 'vue';
+import { reactive, readonly } from 'vue';
 
 const _assignErrMsg = 'The given field does not exists in this {1}.';
 const _assignValuesErrMsg = 'The given values can not be assigned to {1}.';

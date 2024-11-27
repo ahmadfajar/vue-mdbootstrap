@@ -1,7 +1,7 @@
+import type { TPopupOptions } from '@/components/Popover/types';
+import { isServer } from '@/mixins/CommonApi.ts';
 import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import type { ComponentInternalInstance, Ref } from 'vue';
-import { isServer } from '../../../mixins/CommonApi';
-import type { TPopupOptions } from '../types';
 
 declare type TPopupItem = {
     target: ComponentInternalInstance;

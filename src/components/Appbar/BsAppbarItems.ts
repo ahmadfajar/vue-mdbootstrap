@@ -1,10 +1,9 @@
-import {defineComponent} from "vue";
-import {cssPrefix, useRenderSlotDefault} from "../../mixins/CommonApi";
+import { cssPrefix, useRenderSlotDefault } from '@/mixins/CommonApi.ts';
+import { defineComponent } from 'vue';
 
 export default defineComponent({
-    name: "BsAppbarItems",
-    setup(props, {slots}) {
-        return () =>
-            useRenderSlotDefault("div", slots, `${cssPrefix}appbar-items`)
-    }
+    name: 'BsAppbarItems',
+    setup(_, { slots }) {
+        return () => useRenderSlotDefault('div', slots, `${cssPrefix}appbar-items`);
+    },
 });
