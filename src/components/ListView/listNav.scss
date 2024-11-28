@@ -1,7 +1,7 @@
 @import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
+@import "../../../scss/utils/color_functions";
 @import "../../../scss/mixins/listview";
-@import "../../../scss/colors";
+@import "../../../scss/color_vars";
 @import "../../../scss/variables";
 
 
@@ -19,7 +19,7 @@
     list-style: none;
 
     &.collapsing {
-        @include transition(height .65s $md-transition-drop-timing);
+        @include transition(height .65s $transition-drop-animation);
     }
 
     .#{$prefix}nav-item {

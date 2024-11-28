@@ -1,55 +1,54 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
-@import "../../../scss/mixins/placeholder";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@use "../../../scss/mixins/css3/placeholder";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}field-searchbox {
-    --#{$prefix}searchbox-bg: #{rgba($black, .015)};
-    --#{$prefix}searchbox-active-bg: #{$white};
-    --#{$prefix}searchbox-border-color: #{rgba($black, .07)};
-    --#{$prefix}searchbox-border-width: thin;
-    --#{$prefix}searchbox-active-border-color: rgb(var(--#{$prefix}field-primary-indicator-rgb));
-    --#{$prefix}searchbox-focused-shadow-rgba: rgba(var(--#{$prefix}field-primary-indicator-rgb), 0.25);
-    --#{$prefix}searchbox-padding-x: .375rem;
-    --#{$prefix}searchbox-padding-y: .375rem;
-    --#{$prefix}searchbox-text-color: currentColor;
+.#{vars.$prefix}field-searchbox {
+    --#{vars.$prefix}searchbox-bg: #{rgba(colors.$black, .015)};
+    --#{vars.$prefix}searchbox-active-bg: #{colors.$white};
+    --#{vars.$prefix}searchbox-border-color: #{rgba(colors.$black, .07)};
+    --#{vars.$prefix}searchbox-border-width: thin;
+    --#{vars.$prefix}searchbox-active-border-color: rgb(var(--#{vars.$prefix}field-primary-indicator-rgb));
+    --#{vars.$prefix}searchbox-focused-shadow-rgba: rgba(var(--#{vars.$prefix}field-primary-indicator-rgb), 0.25);
+    --#{vars.$prefix}searchbox-padding-x: .375rem;
+    --#{vars.$prefix}searchbox-padding-y: .375rem;
+    --#{vars.$prefix}searchbox-text-color: currentColor;
 
-    --#{$prefix}searchbox-state-opacity: 1;
+    --#{vars.$prefix}searchbox-state-opacity: 1;
 
     position: relative;
     width: 100%;
 
-    .#{$prefix}searchbox-inner {
-        --#{$prefix}searchbox-state-bg: var(--#{$prefix}searchbox-bg);
-        --#{$prefix}searchbox-state-border-color: var(--#{$prefix}searchbox-border-color);
+    .#{vars.$prefix}searchbox-inner {
+        --#{vars.$prefix}searchbox-state-bg: var(--#{vars.$prefix}searchbox-bg);
+        --#{vars.$prefix}searchbox-state-border-color: var(--#{vars.$prefix}searchbox-border-color);
 
-        @include transition(border-color $transition-basic, box-shadow $transition-basic);
-        @include flexbox((display: flex, align-items: center));
-        background-color: var(--#{$prefix}searchbox-state-bg);
-        border: var(--#{$prefix}searchbox-border-width) solid var(--#{$prefix}searchbox-state-border-color);
-        border-radius: var(--#{$prefix-bs}border-radius);
-        opacity: var(--#{$prefix}searchbox-state-opacity);
-        font-size: var(--#{$prefix-bs}body-font-size);
+        display: flex;
+        align-items: center;
+        transition: border-color vars.$transition-basic, box-shadow vars.$transition-basic;
+        padding: var(--#{vars.$prefix}searchbox-padding-y) var(--#{vars.$prefix}searchbox-padding-x);
+        background-color: var(--#{vars.$prefix}searchbox-state-bg);
+        border: var(--#{vars.$prefix}searchbox-border-width) solid var(--#{vars.$prefix}searchbox-state-border-color);
+        border-radius: var(--#{vars.$prefix-bs}border-radius);
+        opacity: var(--#{vars.$prefix}searchbox-state-opacity);
+        font-size: var(--#{vars.$prefix-bs}body-font-size);
         font-weight: 400;
         line-height: 1.5;
-        padding: var(--#{$prefix}searchbox-padding-y) var(--#{$prefix}searchbox-padding-x);
         position: relative;
         width: 100%;
 
         &.focused {
-            --#{$prefix}searchbox-state-bg: var(--#{$prefix}searchbox-active-bg);
-            --#{$prefix}searchbox-state-border-color: var(--#{$prefix}searchbox-active-border-color);
+            --#{vars.$prefix}searchbox-state-bg: var(--#{vars.$prefix}searchbox-active-bg);
+            --#{vars.$prefix}searchbox-state-border-color: var(--#{vars.$prefix}searchbox-active-border-color);
 
-            @include box-shadow(0 0 0.1rem 0.2rem var(--#{$prefix}searchbox-focused-shadow-rgba));
+            box-shadow: 0 0 0.1rem 0.2rem var(--#{vars.$prefix}searchbox-focused-shadow-rgba);
         }
 
         &.readonly {
-            --#{$prefix}searchbox-state-opacity: var(--#{$prefix}field-readonly-opacity);
+            --#{vars.$prefix}searchbox-state-opacity: var(--#{vars.$prefix}field-readonly-opacity);
         }
 
         &.disabled {
-            --#{$prefix-bs}searchbox-state-opacity: var(--#{$prefix}field-disabled-opacity);
+            --#{vars.$prefix-bs}searchbox-state-opacity: var(--#{vars.$prefix}field-disabled-opacity);
         }
 
         label {
@@ -60,10 +59,10 @@
         }
 
         input {
-            @include decorate-input-placeholder();
+            @include placeholder.decorate-input-placeholder();
 
             & {
-                color: var(--#{$prefix}searchbox-text-color);
+                color: var(--#{vars.$prefix}searchbox-text-color);
                 background: transparent;
                 border: 0 transparent;
                 width: 100%;
@@ -76,13 +75,13 @@
             }
         }
 
-        &.#{$prefix}searchbox-dark {
-            --#{$prefix}searchbox-bg: #{rgba($black, .15)};
-            --#{$prefix}searchbox-active-bg: #{rgba($black, 0.35)};
-            --#{$prefix}searchbox-border-color: #{rgba($black, .085)};
-            --#{$prefix}searchbox-active-border-color: rgb(var(--#{$prefix}field-accent-indicator-rgb));
-            --#{$prefix}searchbox-focused-shadow-rgba: rgba(185, 156, 225, .32);
-            --#{$prefix}searchbox-text-color: #{$gray-300};
+        &.#{vars.$prefix}searchbox-dark {
+            --#{vars.$prefix}searchbox-bg: #{rgba(colors.$black, .15)};
+            --#{vars.$prefix}searchbox-active-bg: #{rgba(colors.$black, 0.35)};
+            --#{vars.$prefix}searchbox-border-color: #{rgba(colors.$black, .085)};
+            --#{vars.$prefix}searchbox-active-border-color: rgb(var(--#{vars.$prefix}field-accent-indicator-rgb));
+            --#{vars.$prefix}searchbox-focused-shadow-rgba: rgba(185, 156, 225, .32);
+            --#{vars.$prefix}searchbox-text-color: #{colors.$gray-300};
         }
     }
 }

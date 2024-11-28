@@ -1,3 +1,6 @@
+@use "sass:math";
+@use "color_vars";
+
 // override compass-mixins global variables
 $legacy-support-for-ie:                 false;
 $legacy-support-for-mozilla:            false;
@@ -19,6 +22,21 @@ $font-weight-semi-bold:       500;
 $font-weight-bold:            700;
 $font-weight-boldest:         900;
 
+// Grid breakpoints
+//
+// Define the minimum dimensions at which your layout will change,
+// adapting to different screen sizes, for use in media queries.
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1200px,
+    xxl: 1400px
+);
+
+$zindex-sticky:               1020 !default;
+
 // Shadows
 $z-depth-1:                   0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 8px 0 rgba(0, 0, 0, 0.12) !default;
 $z-depth-half:                0 1px 2px 0 rgba(50, 50, 50, 0.35), 0 2px 4px 2px rgba(10, 10, 10, 0.05) !default;
@@ -28,56 +46,8 @@ $z-depth-3:                   0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 r
 $z-depth-4:                   0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21) !default;
 $z-depth-5:                   0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22) !default;
 
-$default-active-bgcolor:            $mdb-default-color !default;
+$default-active-bgcolor:            color_vars.$mdb-default-color !default;
 $default-hover-bgcolor:             rgba($default-active-bgcolor, .06) !default; // rgba($black, 0.045) !default;
-
-// Transitions
-$transition-basic:                  all .3s ease-in-out !default;
-$transition-hoverable:              all .55s ease-in-out !default;
-$transition-duration-base:          .45s !default;
-$transition-easeOut:                cubic-bezier(0.23, 1, 0.32, 1) !default;
-$transition-easeInOut:              cubic-bezier(0.445, 0.05, 0.55, 0.95) !default;
-
-/**
- * The default transition, used when the element is visible
- * since the beginning of the animation
- */
-$md-transition-default-timing:      cubic-bezier(.4, 0, .2, 1);
-$md-transition-default-duration:    $transition-duration-base;
-$md-transition-default:             $md-transition-default-duration $md-transition-default-timing;
-$md-transition-easeOut:             $transition-duration-base $transition-easeOut;
-
-/**
- * The enter transition, used when the element is not visible on the screen
- * since the beginning of the animation and become visible
- */
-$md-transition-enter-timing:        cubic-bezier(0, 0, .2, 1);
-$md-transition-enter-duration:      $transition-duration-base;
-$md-transition-enter:               $md-transition-enter-duration $md-transition-enter-timing;
-
-/**
- * The leave transition, used when the element is visible on the screen
- * since the beginning of the animation and is removed
- */
-$md-transition-leave-timing:        cubic-bezier(.4, .0, 1, 1);
-$md-transition-leave-duration:      $transition-duration-base;
-$md-transition-leave:               $md-transition-leave-duration $md-transition-leave-timing;
-
-/**
- * The stand transition, used when the element is going to accelerate,
- * like movements from bottom to top
- */
-$md-transition-stand-timing:        cubic-bezier(.25, .8, .50, 1);
-$md-transition-stand-duration:      $transition-duration-base;
-$md-transition-stand:               $md-transition-stand-duration $md-transition-stand-timing;
-
-/**
- * The out transition, used when the element is going to de-accelerate,
- * like movements from top to bottom
- */
-$md-transition-drop-timing:         cubic-bezier(.55, 0, .55, .2);
-$md-transition-drop-duration:       $transition-duration-base;
-$md-transition-drop:                $md-transition-drop-duration $md-transition-drop-timing;
 
 // padding or margin
 $padding-base:                      1rem !default;
@@ -160,9 +130,48 @@ $table-border-color:                rgba(#000, .1);
 $table-border-width:                1px !default;
 $table-cell-padding:                $padding-base - .4;
 $table-font-size:                   .9rem;
-$table-checkbox-selection-size:     floor(($table-font-size + $table-cell-padding) * 2);
-$table-header-color:                $gray-900;
-$table-header-bgcolor:              $grey-lighten-4;
+$table-checkbox-selection-size:     math.floor(($table-font-size + $table-cell-padding) * 2);
+$table-header-color:                color_vars.$gray-900;
+$table-header-bgcolor:              color_vars.$grey-lighten-4;
 $table-hover-bgcolor:               $default-hover-bgcolor;
-$table-text-color:                  $black;
+$table-text-color:                  color_vars.$black;
 
+
+// Transitions variables
+//-----------------------
+$transition-basic:                  all .3s ease-in-out !default;
+$transition-hoverable:              all .55s ease-in-out !default;
+$transition-duration-base:          .45s !default;
+$transition-easeOut:                cubic-bezier(0.23, 1, 0.32, 1) !default;
+$transition-easeInOut:              cubic-bezier(0.445, 0.05, 0.55, 0.95) !default;
+
+// The default transition, used when the element is visible
+// since the beginning of the animation
+$transition-default-animation:      cubic-bezier(.4, 0, .2, 1);
+$transition-default-duration:       $transition-duration-base;
+$transition-default:                $transition-default-duration $transition-default-animation;
+$transition-default-easing:         $transition-duration-base $transition-easeOut;
+
+// The enter transition, used when the element is not visible on the screen
+// since the beginning of the animation and become visible
+$transition-enter-animation:        cubic-bezier(0, 0, .2, 1);
+$transition-enter-duration:         $transition-duration-base;
+$transition-enter:                  $transition-enter-duration $transition-enter-animation;
+
+// The leave transition, used when the element is visible on the screen
+// since the beginning of the animation and is removed
+$transition-leave-animation:        cubic-bezier(.4, .0, 1, 1);
+$transition-leave-duration:         $transition-duration-base;
+$transition-leave:                  $transition-leave-duration $transition-leave-animation;
+
+// The stand transition, used when the element is going to accelerate,
+// like movements from bottom to top
+$transition-stand-animation:        cubic-bezier(.25, .8, .50, 1);
+$transition-stand-duration:         $transition-duration-base;
+$transition-stand:                  $transition-stand-duration $transition-stand-animation;
+
+// The out transition, used when the element is going to de-accelerate,
+// like movements from top to bottom
+$transition-drop-animation:         cubic-bezier(.55, 0, .55, .2);
+$transition-drop-duration:          $transition-duration-base;
+$transition-drop:                   $transition-drop-duration $transition-drop-animation;

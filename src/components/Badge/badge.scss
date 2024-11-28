@@ -1,24 +1,24 @@
 @use "sass:color";
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@use "sass:map";
+@use "../../../scss/utils/color_helper" as helper;
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
 .badge {
-    @include box-shadow(none);
-    --#{$prefix-bs}badge-font-weight: #{$font-weight-semi-bold};
+    --#{vars.$prefix-bs}badge-font-weight: #{vars.$font-weight-semi-bold};
+    box-shadow: none;
 
     &.badge-label {
-        --#{$prefix-bs}badge-font-size: .8em;
+        --#{vars.$prefix-bs}badge-font-size: .8em;
         line-height: 1;
-        padding: .3rem ($padding-sm + .1);
+        padding: .3rem (vars.$padding-sm + .1);
     }
 
     &.badge-pill {
-        $badge-padding: $padding-base - .25;
-        --#{$prefix-bs}badge-border-radius: #{$border-radius-pill};
-        --#{$prefix-bs}badge-font-size: .8em;
-        --#{$prefix-bs}badge-padding-x: #{$badge-padding};
+        $badge-padding: vars.$padding-base - .25;
+        --#{vars.$prefix-bs}badge-border-radius: #{vars.$border-radius-pill};
+        --#{vars.$prefix-bs}badge-font-size: .8em;
+        --#{vars.$prefix-bs}badge-padding-x: #{$badge-padding};
     }
 
     ~ .badge {
@@ -30,14 +30,14 @@ a {
     &.badge {
         text-decoration: none;
 
-        @each $color, $value in map-remove($context-colors, "default") {
-            &.text-bg-#{$color} {
+        @each $name, $color in map.remove(colors.$context-colors, "default") {
+            &.text-bg-#{$name} {
                 &:focus, &:hover {
-                    background-color: round-color-rgb(color.adjust($value, $lightness: -10%)) !important;
+                    background-color: helper.round-color-rgb(color.adjust($color, $lightness: -10%)) !important;
                     text-decoration: none;
                 }
                 &:focus {
-                    @include box-shadow(0 0 0 .2rem rgba($value, .5));
+                    box-shadow: 0 0 0 .2rem rgba($color, .5);
                     outline: 0;
                 }
             }

@@ -1,7 +1,7 @@
 @import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
+@import "../../../scss/utils/color_functions";
 @import "../../../scss/mixins/switch";
-@import "../../../scss/colors";
+@import "../../../scss/color_vars";
 @import "../../../scss/variables";
 
 .#{$prefix}switch {
@@ -49,7 +49,7 @@
         > .#{$prefix}switch-track {
             @include flexbox((display: flex, align-items: center));
             @include border-radius(var(--#{$prefix}switch-state-track-height));
-            @include transition($md-transition-stand);
+            @include transition($transition-stand);
             background-color: var(--#{$prefix}switch-state-track-color);
             height: var(--#{$prefix}switch-state-track-height);
             min-width: var(--#{$prefix}switch-state-track-width);
@@ -59,7 +59,7 @@
 
             > .#{$prefix}switch-thumb {
                 @include border-radius($border-radius-circle);
-                @include transition($md-transition-stand);
+                @include transition($transition-stand);
                 @include box-shadow(var(--#{$prefix}switch-state-box-shadow));
                 background-color: var(--#{$prefix}switch-state-thumb-bg);
                 height: var(--#{$prefix}switch-state-thumb-size);

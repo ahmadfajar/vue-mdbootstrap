@@ -1,7 +1,7 @@
 @import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
+@import "../../../scss/utils/color_functions";
 @import "../../../scss/mixins/radio";
-@import "../../../scss/colors";
+@import "../../../scss/color_vars";
 @import "../../../scss/variables";
 
 .#{$prefix}radio {
@@ -26,7 +26,7 @@
 
     > .#{$prefix}radio-inner {
         @include border-radius($border-radius-circle);
-        @include transition($md-transition-stand);
+        @include transition($transition-stand);
         background-color: var(--#{$prefix}radio-state-bg);
         border: var(--#{$prefix}radio-stroke) solid var(--#{$prefix}radio-state-color);
         height: var(--#{$prefix}radio-size);
@@ -41,7 +41,7 @@
 
         &:before,
         &:after {
-            @include transition($md-transition-drop);
+            @include transition($transition-drop);
             content: " ";
             position: absolute;
         }
@@ -119,7 +119,7 @@
         .#{$prefix}radio-inner {
             &:after {
                 @include transform(scale3D(1, 1, 1));
-                @include transition($md-transition-stand);
+                @include transition($transition-stand);
             }
         }
     }

@@ -1,35 +1,33 @@
-@use "sass:color";
-@use "sass:math";
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@use "../../../scss/mixins/css3/borders";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}datepicker {
-    --#{$prefix}datepicker-border-radius: #{$border-radius-base};
-    --#{$prefix}datepicker-padding-x: #{$padding-base};
-    --#{$prefix}datepicker-padding-y: #{$padding-base};
-    --#{$prefix}datepicker-header-color: #{$white};
-    --#{$prefix}datepicker-table-header-color: #{$gray-600};
-    --#{$prefix}datepicker-title-font-size: 1.8rem;
-    --#{$prefix}datepicker-subtitle-font-size: 1.25rem;
+.#{vars.$prefix}datepicker {
+    --#{vars.$prefix}datepicker-border-radius: #{vars.$border-radius-base};
+    --#{vars.$prefix}datepicker-padding-x: #{vars.$padding-base};
+    --#{vars.$prefix}datepicker-padding-y: #{vars.$padding-base};
+    --#{vars.$prefix}datepicker-header-color: #{colors.$white};
+    --#{vars.$prefix}datepicker-table-header-color: #{colors.$gray-600};
+    --#{vars.$prefix}datepicker-title-font-size: 1.8rem;
+    --#{vars.$prefix}datepicker-subtitle-font-size: 1.25rem;
 
-    @include border-radius(var(--#{$prefix}datepicker-border-radius));
+    @include borders.radius(var(--#{vars.$prefix}datepicker-border-radius));
     position: relative;
 
-    > .#{$prefix}datepicker-inner {
+    > .#{vars.$prefix}datepicker-inner {
         width: 100%;
     }
 
-    .#{$prefix}datepicker-body {
-        @include border-radius(var(--#{$prefix}datepicker-border-radius));
+    .#{vars.$prefix}datepicker-body {
+        @include borders.radius(var(--#{vars.$prefix}datepicker-border-radius));
         min-height: 280px;
         position: relative;
 
         table {
-            @include transition($md-transition-stand);
             display: table;
             table-layout: fixed;
             width: 100%;
+            transition: vars.$transition-stand;
 
             tr {
                 background-color: inherit;
@@ -46,37 +44,37 @@
         }
     }
 
-    .#{$prefix}datepicker-header,
-    .#{$prefix}datepicker-days {
-        padding: var(--#{$prefix}datepicker-padding-y) var(--#{$prefix}datepicker-padding-x);
+    .#{vars.$prefix}datepicker-header,
+    .#{vars.$prefix}datepicker-days {
+        padding: var(--#{vars.$prefix}datepicker-padding-y) var(--#{vars.$prefix}datepicker-padding-x);
     }
 
-    .#{$prefix}datepicker-header {
-        @include border-top-radius(var(--#{$prefix}datepicker-border-radius));
+    .#{vars.$prefix}datepicker-header {
+        @include borders.top-radius(var(--#{vars.$prefix}datepicker-border-radius));
 
-        color: var(--#{$prefix}datepicker-header-color);
-        font-weight: $font-weight-semi-bold;
+        color: var(--#{vars.$prefix}datepicker-header-color);
+        font-weight: vars.$font-weight-semi-bold;
         line-height: normal;
 
-        > .#{$prefix}datepicker-title {
-            font-size: var(--#{$prefix}datepicker-title-font-size);
+        > .#{vars.$prefix}datepicker-title {
+            font-size: var(--#{vars.$prefix}datepicker-title-font-size);
             overflow: hidden;
             position: relative;
         }
 
-        > .#{$prefix}datepicker-subtitle {
-            font-size: var(--#{$prefix}datepicker-subtitle-font-size);
-            margin-bottom: calc(var(--#{$prefix}datepicker-padding-y) / 4);
+        > .#{vars.$prefix}datepicker-subtitle {
+            font-size: var(--#{vars.$prefix}datepicker-subtitle-font-size);
+            margin-bottom: calc(var(--#{vars.$prefix}datepicker-padding-y) / 4);
         }
 
-        .#{$prefix}datepicker-year,
-        .#{$prefix}datepicker-time,
-        > .#{$prefix}datepicker-title {
-            @include user-select(none);
-            @include transition($md-transition-drop);
+        .#{vars.$prefix}datepicker-year,
+        .#{vars.$prefix}datepicker-time,
+        > .#{vars.$prefix}datepicker-title {
+            transition: vars.$transition-drop;
+            user-select: none;
 
             &:not(.active) {
-                opacity: var(--#{$prefix}field-readonly-opacity);
+                opacity: var(--#{vars.$prefix}field-readonly-opacity);
 
                 &:hover {
                     opacity: 1;
@@ -85,66 +83,68 @@
         }
     }
 
-    .#{$prefix}datepicker-nav {
-        @include flexbox((display: flex, justify-content: space-between, align-items: center));
-        padding: calc(var(--#{$prefix}datepicker-padding-y) / 2) var(--#{$prefix}datepicker-padding-x);
+    .#{vars.$prefix}datepicker-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) var(--#{vars.$prefix}datepicker-padding-x);
 
-        > .#{$prefix}datepicker-nav-title {
-            @include flex(1);
-            cursor: pointer;
+        > .#{vars.$prefix}datepicker-nav-title {
+            flex: 1;
             overflow: hidden;
             position: relative;
             text-align: center;
+            cursor: pointer;
 
-            > .#{$prefix}fw-bold {
-                @include transition($md-transition-stand);
+            > .#{vars.$prefix}fw-bold {
+                transition: vars.$transition-stand;
                 display: block;
                 width: 100%;
             }
 
             &.disabled {
-                opacity: var(--#{$prefix}field-readonly-opacity);
+                opacity: var(--#{vars.$prefix}field-readonly-opacity);
             }
         }
 
-        > .#{$prefix}btn-icon {
-            --#{$prefix-bs}btn-inner-height: 2.5rem;
-            --#{$prefix-bs}btn-inner-width: 2.5rem;
+        > .#{vars.$prefix}btn-icon {
+            --#{vars.$prefix-bs}btn-inner-height: 2.5rem;
+            --#{vars.$prefix-bs}btn-inner-width: 2.5rem;
         }
     }
 
-    .#{$prefix}picker-seconds,
-    .#{$prefix}picker-minutes,
-    .#{$prefix}picker-hours,
-    .#{$prefix}datepicker-days,
-    .#{$prefix}datepicker-months,
-    .#{$prefix}datepicker-years {
+    .#{vars.$prefix}picker-seconds,
+    .#{vars.$prefix}picker-minutes,
+    .#{vars.$prefix}picker-hours,
+    .#{vars.$prefix}datepicker-days,
+    .#{vars.$prefix}datepicker-months,
+    .#{vars.$prefix}datepicker-years {
         .btn {
             &[class*='btn-flat'] {
-                --#{$prefix-bs}btn-inner-padding-x: 1.5rem;
+                --#{vars.$prefix-bs}btn-inner-padding-x: 1.5rem;
             }
         }
     }
 
-    .#{$prefix}datepicker-days,
-    .#{$prefix}datepicker-months,
-    .#{$prefix}datepicker-years {
-        padding: 0 calc(var(--#{$prefix}datepicker-padding-x) - .25rem) calc(var(--#{$prefix}datepicker-padding-y) - .25rem);
+    .#{vars.$prefix}datepicker-days,
+    .#{vars.$prefix}datepicker-months,
+    .#{vars.$prefix}datepicker-years {
+        padding: 0 calc(var(--#{vars.$prefix}datepicker-padding-x) - .25rem) calc(var(--#{vars.$prefix}datepicker-padding-y) - .25rem);
         position: relative;
         overflow: hidden;
 
-        .#{$prefix}btn-today {
-            --#{$prefix-bs}btn-border-color: var(--#{$prefix-bs}btn-color);
+        .#{vars.$prefix}btn-today {
+            --#{vars.$prefix-bs}btn-border-color: var(--#{vars.$prefix-bs}btn-color);
         }
     }
 
-    .#{$prefix}datepicker-days {
+    .#{vars.$prefix}datepicker-days {
         th {
-            @include user-select(none);
-            color: var(--#{$prefix}datepicker-table-header-color);
+            color: var(--#{vars.$prefix}datepicker-table-header-color);
+            padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) 0;
             font-weight: 700;
-            padding: calc(var(--#{$prefix}datepicker-padding-y) / 2) 0;
             pointer-events: none;
+            user-select: none;
         }
 
         td {
@@ -152,102 +152,102 @@
             vertical-align: middle;
         }
 
-        .#{$prefix}btn-icon {
-            --#{$prefix-bs}btn-sm-inner-height: 2.125rem;
-            --#{$prefix-bs}btn-sm-inner-width: 2.125rem;
+        .#{vars.$prefix}btn-icon {
+            --#{vars.$prefix-bs}btn-sm-inner-height: 2.125rem;
+            --#{vars.$prefix-bs}btn-sm-inner-width: 2.125rem;
 
             &.disabled {
-                --#{$prefix-bs}btn-disabled-bg: transparent;
+                --#{vars.$prefix-bs}btn-disabled-bg: transparent;
             }
         }
     }
 
-    .#{$prefix}datepicker-months,
-    .#{$prefix}datepicker-years,
-    .#{$prefix}picker-times,
-    .#{$prefix}picker-minutes,
-    .#{$prefix}picker-seconds {
+    .#{vars.$prefix}datepicker-months,
+    .#{vars.$prefix}datepicker-years,
+    .#{vars.$prefix}picker-times,
+    .#{vars.$prefix}picker-minutes,
+    .#{vars.$prefix}picker-seconds {
         td {
             height: 54px;
             vertical-align: middle;
         }
     }
 
-    .#{$prefix}datepicker-times {
-        padding: calc(var(--#{$prefix}datepicker-padding-y) / 2) calc(var(--#{$prefix}datepicker-padding-x) - .25rem);
+    .#{vars.$prefix}datepicker-times {
+        padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) calc(var(--#{vars.$prefix}datepicker-padding-x) - .25rem);
 
-        .#{$prefix}picker-times {
-            margin-top: $padding-sm;
+        .#{vars.$prefix}picker-times {
+            margin-top: vars.$padding-sm;
         }
 
-        .#{$prefix}picker-hours {
+        .#{vars.$prefix}picker-hours {
             td {
                 height: 44px;
                 vertical-align: middle;
             }
         }
 
-        .#{$prefix}picker-times-sep {
+        .#{vars.$prefix}picker-times-sep {
             width: 1rem;
             font-size: 22px;
             font-weight: bold;
-            padding-bottom: $padding-xs;
+            padding-bottom: vars.$padding-xs;
         }
     }
 
-    &:not(.#{$prefix}landscape) {
-        .#{$prefix}datepicker-header {
-            + .#{$prefix}datepicker-body {
-                @include border-top-radius(0);
+    &:not(.#{vars.$prefix}landscape) {
+        .#{vars.$prefix}datepicker-header {
+            + .#{vars.$prefix}datepicker-body {
+                @include borders.top-radius(0);
             }
         }
     }
 
-    &.#{$prefix}landscape {
-        .#{$prefix}datepicker-header {
-            @include border-left-radius(var(--#{$prefix}datepicker-border-radius));
-            @include border-right-radius(0);
+    &.#{vars.$prefix}landscape {
+        .#{vars.$prefix}datepicker-header {
+            @include borders.start-radius(var(--#{vars.$prefix}datepicker-border-radius));
+            @include borders.end-radius(0);
             width: 200px;
 
-            + .#{$prefix}datepicker-body {
-                @include border-left-radius(0);
+            + .#{vars.$prefix}datepicker-body {
+                @include borders.start-radius(0);
             }
         }
     }
 
-    .#{$prefix}datepicker-header {
+    .#{vars.$prefix}datepicker-header {
         &.bg-white, &.bg-light, &.bg-light-grey, &.bg-yellow {
-            --#{$prefix}datepicker-header-color: #{$grey-darken-3};
+            --#{vars.$prefix}datepicker-header-color: #{colors.$grey-darken-3};
         }
     }
 
-    .#{$prefix}datepicker-body {
+    .#{vars.$prefix}datepicker-body {
         &:not(.bg-white):not(.bg-light):not(.bg-light-grey):not(.bg-amber):not(.bg-lime):not(.bg-yellow) {
-            --#{$prefix}datepicker-table-header-color: #{$grey-base};
+            --#{vars.$prefix}datepicker-table-header-color: #{colors.$grey-base};
 
-            color: $grey-lighten-4;
+            color: colors.$grey-lighten-4;
 
             .btn-flat-dark {
-                --#{$prefix-bs}btn-color: #{$grey-lighten-2};
-                --#{$prefix-bs}btn-hover-color: #{$white};
-                --#{$prefix-bs}btn-hover-bg: rgba(70, 70, 70, 0.8);
+                --#{vars.$prefix-bs}btn-color: #{colors.$grey-lighten-2};
+                --#{vars.$prefix-bs}btn-hover-color: #{colors.$white};
+                --#{vars.$prefix-bs}btn-hover-bg: rgba(70, 70, 70, 0.8);
             }
 
             &.bg-grey {
-                --#{$prefix}datepicker-table-header-color: #{$grey-lighten-3};
+                --#{vars.$prefix}datepicker-table-header-color: #{colors.$grey-lighten-3};
 
                 .btn-flat-dark {
-                    --#{$prefix-bs}btn-color: #{$grey-lighten-4};
+                    --#{vars.$prefix-bs}btn-color: #{colors.$grey-lighten-4};
                 }
             }
         }
     }
 }
 
-.#{$prefix}field-control {
-    &.#{$prefix}datetime-field {
-        .#{$prefix}prepend-inner,
-        .#{$prefix}append-inner {
+.#{vars.$prefix}field-control {
+    &.#{vars.$prefix}datetime-field {
+        .#{vars.$prefix}prepend-inner,
+        .#{vars.$prefix}append-inner {
             cursor: pointer;
         }
     }

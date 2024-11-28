@@ -1,53 +1,50 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins/breakpoints";
+@use "../../../scss/mixins/css3/borders";
+@use "../../../scss/mixins/css3/breakpoints" as media;
+@use "../../../scss/variables" as vars;
 
 .card {
-    --#{$prefix-bs}card-border-radius: 0.75rem;
-    --#{$prefix-bs}card-inner-border-radius: calc(0.75rem - 1px);
+    --#{vars.$prefix-bs}card-border-radius: 0.75rem;
+    --#{vars.$prefix-bs}card-inner-border-radius: calc(0.75rem - 1px);
 
     .card-header {
-        font-weight: $font-weight-semi-bold;
+        font-weight: vars.$font-weight-semi-bold;
     }
 
     .card-subtitle {
-        font-weight: $font-weight-normal;
+        font-weight: vars.$font-weight-normal;
     }
 
     &:not(.rounded-0) {
-        > .#{$prefix}mask-loader {
-            > .#{$prefix}overlay {
-                @include border-radius(var(--#{$prefix-bs}card-border-radius))
+        > .#{vars.$prefix}mask-loader {
+            > .#{vars.$prefix}overlay {
+                @include borders.radius(var(--#{vars.$prefix-bs}card-border-radius))
             }
         }
     }
 }
 
 .card-group {
-    @include media-breakpoint-up(sm) {
+    @include media.breakpoint-up(sm) {
         > .card {
-            &.#{$prefix}shadow,
-            &.#{$prefix}shadow-1,
-            &.#{$prefix}shadow-2,
-            &.#{$prefix}shadow-3,
-            &.#{$prefix}shadow-4,
-            &.#{$prefix}shadow-5 {
-                @include box-shadow(none !important);
+            &.#{vars.$prefix}shadow,
+            &.#{vars.$prefix}shadow-1,
+            &.#{vars.$prefix}shadow-2,
+            &.#{vars.$prefix}shadow-3,
+            &.#{vars.$prefix}shadow-4,
+            &.#{vars.$prefix}shadow-5 {
+                box-shadow: none !important;
             }
         }
     }
 }
 
-.#{$prefix}card-media {
-    --#{$prefix-bs}card-media-bg: rgba(0, 0, 0, .54);
-    --#{$prefix-bs}card-media-color: rgba(255, 255, 255, .8);
-    --#{$prefix-bs}card-media-title-font-size: 1.5rem;
-    --#{$prefix-bs}card-media-title-font-weight: #{$font-weight-semi-bold};
-    --#{$prefix-bs}card-media-subtitle-font-size: 1.125rem;
-    --#{$prefix-bs}card-media-subtitle-font-weight: #{$font-weight-light};
+.#{vars.$prefix}card-media {
+    --#{vars.$prefix-bs}card-media-bg: rgba(0, 0, 0, .54);
+    --#{vars.$prefix-bs}card-media-color: rgba(255, 255, 255, .8);
+    --#{vars.$prefix-bs}card-media-title-font-size: 1.5rem;
+    --#{vars.$prefix-bs}card-media-title-font-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix-bs}card-media-subtitle-font-size: 1.125rem;
+    --#{vars.$prefix-bs}card-media-subtitle-font-weight: #{vars.$font-weight-light};
 
     position: relative;
 
@@ -59,52 +56,52 @@
         vertical-align: top;
     }
 
-    > .#{$prefix}card-media-overlay {
-        background-color: var(--#{$prefix-bs}card-media-bg);
+    > .#{vars.$prefix}card-media-overlay {
+        background-color: var(--#{vars.$prefix-bs}card-media-bg);
         left: 0;
         right: 0;
-        padding: $padding-base;
+        padding: vars.$padding-base;
         position: absolute;
 
-        > .#{$prefix}card-media-title,
-        > .#{$prefix}card-media-subtitle {
-            color: var(--#{$prefix-bs}card-media-color);
+        > .#{vars.$prefix}card-media-title,
+        > .#{vars.$prefix}card-media-subtitle {
+            color: var(--#{vars.$prefix-bs}card-media-color);
         }
 
-        > .#{$prefix}card-media-title {
-            font-size: var(--#{$prefix-bs}card-media-title-font-size);
-            font-weight: var(--#{$prefix-bs}card-media-title-font-weight);
+        > .#{vars.$prefix}card-media-title {
+            font-size: var(--#{vars.$prefix-bs}card-media-title-font-size);
+            font-weight: var(--#{vars.$prefix-bs}card-media-title-font-weight);
         }
 
-        > .#{$prefix}card-media-subtitle {
-            font-size: var(--#{$prefix-bs}card-media-subtitle-font-size);
-            font-weight: var(--#{$prefix-bs}card-media-subtitle-font-weight);
+        > .#{vars.$prefix}card-media-subtitle {
+            font-size: var(--#{vars.$prefix-bs}card-media-subtitle-font-size);
+            font-weight: var(--#{vars.$prefix-bs}card-media-subtitle-font-weight);
         }
     }
 }
 
 .card {
-    > .#{$prefix}card-media {
+    > .#{vars.$prefix}card-media {
         &:first-child {
             > img {
-                @include border-top-radius(var(--#{$prefix-bs}card-inner-border-radius));
+                @include borders.top-radius(var(--#{vars.$prefix-bs}card-inner-border-radius));
             }
 
-            > .#{$prefix}card-media-overlay {
-                &.#{$prefix}overlay-top {
-                    @include border-top-radius(var(--#{$prefix-bs}card-inner-border-radius));
+            > .#{vars.$prefix}card-media-overlay {
+                &.#{vars.$prefix}overlay-top {
+                    @include borders.top-radius(var(--#{vars.$prefix-bs}card-inner-border-radius));
                 }
             }
         }
 
         &:last-child {
             > img {
-                @include border-bottom-radius(var(--#{$prefix-bs}card-border-radius));
+                @include borders.bottom-radius(var(--#{vars.$prefix-bs}card-border-radius));
             }
 
-            > .#{$prefix}card-media-overlay {
-                &.#{$prefix}overlay-bottom {
-                    @include border-bottom-radius(var(--#{$prefix-bs}card-border-radius));
+            > .#{vars.$prefix}card-media-overlay {
+                &.#{vars.$prefix}overlay-bottom {
+                    @include borders.bottom-radius(var(--#{vars.$prefix-bs}card-border-radius));
                 }
             }
         }
@@ -113,10 +110,10 @@
 
 .card-img-start,
 .card-img-left {
-    @include border-left-radius(var(--#{$prefix-bs}card-inner-border-radius));
+    @include borders.start-radius(var(--#{vars.$prefix-bs}card-inner-border-radius));
 }
 
 .card-img-end,
 .card-img-right {
-    @include border-right-radius(var(--#{$prefix-bs}card-inner-border-radius));
+    @include borders.end-radius(var(--#{vars.$prefix-bs}card-inner-border-radius));
 }

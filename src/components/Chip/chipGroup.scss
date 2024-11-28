@@ -1,54 +1,56 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins/breakpoints";
+@use "../../../scss/mixins/css3/breakpoints" as media;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}chip-group-slider {
-    @include flexbox((display: flex, flex: 1 1 auto));
+.#{vars.$prefix}chip-group-slider {
+    display: flex;
+    flex: 1 1 auto;
     contain: content;
     overflow: auto hidden;
 
-    > .#{$prefix}chip-group-content {
-        @include flexbox((display: flex, flex: 1 0 auto));
-        @include transition(all $md-transition-easeOut);
-        padding: $padding-xs;
+    > .#{vars.$prefix}chip-group-content {
+        display: flex;
+        flex: 1 0 auto;
+        padding: vars.$padding-xs;
         position: relative;
         white-space: nowrap;
+        transition: all vars.$transition-default-easing;
     }
 }
 
-.#{$prefix}chip-group {
-    @include flexbox((display: flex, flex: 0 1 auto));
+.#{vars.$prefix}chip-group {
+    display: flex;
+    flex: 0 1 auto;
     position: relative;
     max-width: 100%;
 
-    > .#{$prefix}chip-slide-prev,
-    > .#{$prefix}chip-slide-next {
+    > .#{vars.$prefix}chip-slide-prev,
+    > .#{vars.$prefix}chip-slide-next {
         display: none;
 
-        > .#{$prefix}btn-icon {
-            --#{$prefix-bs}btn-disabled-bg: transparent;
-            --#{$prefix-bs}btn-disabled-border-color: transparent;
+        > .#{vars.$prefix}btn-icon {
+            --#{vars.$prefix-bs}btn-disabled-bg: transparent;
+            --#{vars.$prefix-bs}btn-disabled-border-color: transparent;
         }
 
-        @include media-breakpoint-up(lg) {
-            @include flexbox((display: flex, flex: 0 1 52px, align-items: center, justify-content: center));
+        @include media.breakpoint-up(lg) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 1 52px;
             min-width: 52px;
         }
     }
 
-    &.#{$prefix}chip-group-column {
-        .#{$prefix}chip-group-content {
-            @include flex-wrap(wrap);
+    &.#{vars.$prefix}chip-group-column {
+        .#{vars.$prefix}chip-group-content {
+            flex-wrap: wrap;
             max-width: 100%;
             white-space: normal;
         }
     }
 
-    @include media-breakpoint-up(lg) {
-        > .#{$prefix}chip-group-slider {
+    @include media.breakpoint-up(lg) {
+        > .#{vars.$prefix}chip-group-slider {
             overflow: hidden;
         }
     }

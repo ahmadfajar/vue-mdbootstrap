@@ -1,55 +1,55 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}divider {
-    --#{$prefix}divider-height: 1px;
-    --#{$prefix}divider-margin-y: 0;
+.#{vars.$prefix}divider {
+    --#{vars.$prefix}divider-height: 1px;
+    --#{vars.$prefix}divider-margin-y: 0;
 
-    background-color: var(--#{$prefix}divider-color);
-    height: var(--#{$prefix}divider-height);
-    min-height: var(--#{$prefix}divider-height);
-    margin-bottom: var(--#{$prefix}divider-margin-y);
-    margin-top: var(--#{$prefix}divider-margin-y);
+    background-color: var(--#{vars.$prefix}divider-color);
+    height: var(--#{vars.$prefix}divider-height);
+    min-height: var(--#{vars.$prefix}divider-height);
+    margin-bottom: var(--#{vars.$prefix}divider-margin-y);
+    margin-top: var(--#{vars.$prefix}divider-margin-y);
+    max-width: 100%;
     border: none;
     display: block;
-    max-width: 100%;
 
     &.divider--dark {
-        --#{$prefix}divider-color: #{rgba($white, 0.4)};
+        --#{vars.$prefix}divider-color: #{rgba(colors.$white, 0.4)};
     }
 
     &.divider--light {
-        --#{$prefix}divider-color: #{rgba($black, 0.35)};
+        --#{vars.$prefix}divider-color: #{rgba(colors.$black, 0.35)};
     }
 }
 
-.#{$prefix}subheader {
-    --#{$prefix}subheader-font-size: #{$font-size-base};
-    --#{$prefix}subheader-font-weight: #{$font-weight-semi-bold};
-    --#{$prefix}subheader-padding-x: #{$padding-base};
-    --#{$prefix}subheader-padding-y: 0;
+.#{vars.$prefix}subheader {
+    --#{vars.$prefix}subheader-font-size: #{vars.$font-size-base};
+    --#{vars.$prefix}subheader-font-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix}subheader-padding-x: #{vars.$padding-base};
+    --#{vars.$prefix}subheader-padding-y: 0;
 
-    @include flexbox((display: flex, align-items: center));
-    color: var(--#{$prefix}subheader-color);
-    font-size: var(--#{$prefix}subheader-font-size);
-    font-weight: var(--#{$prefix}subheader-font-weight);
-    padding: var(--#{$prefix}subheader-padding-y) var(--#{$prefix}subheader-padding-x);
+    color: var(--#{vars.$prefix}subheader-color);
+    font-size: var(--#{vars.$prefix}subheader-font-size);
+    font-weight: var(--#{vars.$prefix}subheader-font-weight);
+    padding: var(--#{vars.$prefix}subheader-padding-y) var(--#{vars.$prefix}subheader-padding-x);
+    display: flex;
+    align-items: center;
     height: 48px;
 
     &.subheader--dark {
-        --#{$prefix}subheader-color: #{rgba($white, .8)};
+        --#{vars.$prefix}subheader-color: #{rgba(colors.$white, .8)};
     }
 
     &.subheader--light {
-        --#{$prefix}subheader-color: #{$gray-600};
+        --#{vars.$prefix}subheader-color: #{colors.$gray-600};
     }
 }
 
-.#{$prefix}img-holder {
-    @include user-select(none);
+.#{vars.$prefix}img-holder {
+    user-select: none;
 }
 
-.#{$prefix}anchor-center {
+.#{vars.$prefix}anchor-center {
     text-anchor: middle;
 }

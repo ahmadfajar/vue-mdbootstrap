@@ -1,18 +1,22 @@
 @use "sass:color";
+@use "../utils/color_helper" as helper;
+@use "../utils/color_functions" as color_utils;
+@use "../color_vars" as colors;
+@use "../variables" as vars;
 
-/* BsSwitch variants mixins -- sass variables */
-
+// BsSwitch variants mixins -- sass variables
+//--------------------------------------------
 @mixin make-switch-variant($name, $color) {
-    .#{$prefix}switch-#{$name} {
-        --#{$prefix}switch-active-box-shadow: #{0 0 6px -1px rgba(#000, .13), 0 1px 1px 1px rgba($color, .15), 0 1px 3px 0 rgba(#000, .2)};
-        --#{$prefix}switch-active-thumb-bg: #{$color};
-        --#{$prefix}switch-active-thumb-color: #{$color};
-        --#{$prefix}switch-active-track-color: #{rgba($color, .38)};
-        --#{$prefix}switch-active-inset-track-color: #{round-color-rgb(color.scale($color, $lightness: 60%))};
+    .#{vars.$prefix}switch-#{$name} {
+        --#{vars.$prefix}switch-active-box-shadow: #{0 0 6px -1px rgba(#000, .13), 0 1px 1px 1px rgba($color, .15), 0 1px 3px 0 rgba(#000, .2)};
+        --#{vars.$prefix}switch-active-thumb-bg: #{$color};
+        --#{vars.$prefix}switch-active-thumb-color: #{$color};
+        --#{vars.$prefix}switch-active-track-color: #{rgba($color, .38)};
+        --#{vars.$prefix}switch-active-inset-track-color: #{helper.round-color-rgb(color.scale($color, $lightness: 60%))};
 
-        $thumb-bg: set-color-contrast($color, round-color-rgb(color.scale($color, $lightness: -20%)), $color, 220);
-        $thumb-color: set-color-contrast($color, $black, $white, 220);
-        --#{$prefix}switch-active-inset-thumb-bg: #{$thumb-bg};
-        --#{$prefix}switch-active-inset-thumb-color: #{$thumb-color};
+        $thumb-bg: color_utils.set-color-contrast($color, helper.round-color-rgb(color.scale($color, $lightness: -20%)), $color, 220);
+        $thumb-color: color_utils.set-color-contrast($color, colors.$black, colors.$white, 220);
+        --#{vars.$prefix}switch-active-inset-thumb-bg: #{$thumb-bg};
+        --#{vars.$prefix}switch-active-inset-thumb-color: #{$thumb-color};
     }
 }

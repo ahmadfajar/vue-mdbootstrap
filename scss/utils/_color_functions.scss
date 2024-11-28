@@ -1,0 +1,58 @@
+@use "sass:color";
+@use "sass:map";
+@use "sass:math";
+@use "color_helper" as helper;
+@use "../color_vars" as colors;
+@use "../variables" as vars;
+
+// Colors function
+@function theme-color-level($theme, $color-name: "primary", $level: 0) {
+    $color: map.get($theme, $color-name);
+    $color-base: if($level > 0, colors.$black, colors.$white);
+    $level: math.abs($level);
+
+    @return color.mix($color-base, $color, $level * colors.$theme-color-interval);
+}
+
+@function brightness($color) {
+    $red: color.channel($color, "red") * 299;
+    $green: color.channel($color, "green") * 587;
+    $blue: color.channel($color, "blue") * 114;
+
+    @return math.div(($red + $green + $blue), 1000);
+}
+
+@function set-color-contrast($bgColor, $textOnLightBg, $textOnDarkBg, $brightnessLevel: 165) {
+    @if (brightness($bgColor) > $brightnessLevel) {
+        @return $textOnLightBg;
+    } @else {
+        @return $textOnDarkBg;
+    }
+}
+
+@function set-alt-bgcolor($color, $transparency: 0, $brightnessLevel: 170) {
+    @if (brightness($color) > 254) {
+        @if ($transparency > 0) {
+            @return rgba(vars.$default-active-bgcolor, $transparency);
+        } @else {
+            @return colors.$white;
+        }
+    } @else if (brightness($color) > $brightnessLevel) {
+        @if ($transparency > 0) {
+            @return rgba(helper.round-color-rgb(color.adjust($color, $lightness: -35%)), $transparency + 0.1);
+        } @else {
+            @return rgba(helper.round-color-rgb(color.adjust($color, $lightness: -25%)), .2);
+        }
+    } @else {
+        @if ($transparency > 0) {
+            @return rgba(helper.round-color-rgb(color.adjust($color, $lightness: 30%)), $transparency + 0.1);
+        } @else {
+            @return rgba(helper.round-color-rgb(color.adjust($color, $lightness: 25%)), .2);
+        }
+    }
+}
+
+@function to-rgb($color) {
+    $roundColor: helper.round-color-rgb($color);
+    @return color.channel($roundColor, "red"), color.channel($roundColor, "green"), color.channel($roundColor, "blue");
+}

@@ -1,17 +1,17 @@
-@import "./colors";
-@import "./variables";
+@use "variables" as vars;
 
-/* Global css variables */
+// Global css variables
+//----------------------
 :root {
-    --#{$prefix}field-primary-indicator-rgb: 98, 0, 238;
-    --#{$prefix}field-primary-indicator: rgb(var(--#{$prefix}field-primary-indicator-rgb));
-    --#{$prefix}field-accent-indicator-rgb: 185,156,225;
-    --#{$prefix}field-accent-indicator: rgb(var(--#{$prefix}field-accent-indicator-rgb));
-    --#{$prefix}field-active-indicator: var(--#{$prefix}field-primary-indicator-rgb);
-    --#{$prefix}field-button-active-bg: rgba(12,12,12,.25);
-    --#{$prefix}field-button-hover-bg: rgba(80,80,80,.2);
-    --#{$prefix}field-button-color: currentColor;
-    --#{$prefix}field-disabled-opacity: .4;
-    --#{$prefix}field-readonly-opacity: .55;
-    --#{$prefix}caret-size: 6px;
+    --#{vars.$prefix}field-primary-indicator-rgb: 98, 0, 238;
+    --#{vars.$prefix}field-primary-indicator: rgb(var(--#{vars.$prefix}field-primary-indicator-rgb));
+    --#{vars.$prefix}field-accent-indicator-rgb: 185,156,225;
+    --#{vars.$prefix}field-accent-indicator: rgb(var(--#{vars.$prefix}field-accent-indicator-rgb));
+    --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-primary-indicator-rgb);
+    --#{vars.$prefix}field-button-active-bg: rgba(12,12,12,.25);
+    --#{vars.$prefix}field-button-hover-bg: rgba(80,80,80,.2);
+    --#{vars.$prefix}field-button-color: currentColor;
+    --#{vars.$prefix}field-disabled-opacity: .4;
+    --#{vars.$prefix}field-readonly-opacity: .55;
+    --#{vars.$prefix}caret-size: 6px;
 }

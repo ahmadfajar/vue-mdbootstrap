@@ -1,7 +1,7 @@
 @use "sass:color";
 @import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
-@import "../../../scss/colors";
+@import "../../../scss/utils/color_functions";
+@import "../../../scss/color_vars";
 @import "../../../scss/variables";
 
 .#{$prefix}notification {

@@ -1,33 +1,33 @@
 @use "sass:color";
 @use "sass:math";
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@use "../../../scss/mixins/css3/borders";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-$cmpCssName: "#{$prefix}color-picker-";
+$cmpCssName: "#{vars.$prefix}color-picker-";
 $markerSize: 14px;
 
-.#{$prefix}color-picker {
-    --#{$prefix}slider-thumb-color: #{color.scale($grey-base, $lightness: -20%)};
+.#{vars.$prefix}color-picker {
+    --#{vars.$prefix}slider-thumb-color: #{color.scale(colors.$grey-base, $lightness: -20%)};
 
-    @include border-radius(var(--#{$prefix-bs}border-radius));
+    @include borders.radius(var(--#{vars.$prefix-bs}border-radius));
     display: inline-block;
     width: 300px;
     position: relative;
 
     > .#{$cmpCssName}canvas {
-        @include border-top-radius(var(--#{$prefix-bs}border-radius));
+        @include borders.top-radius(var(--#{vars.$prefix-bs}border-radius));
         background-image: linear-gradient(rgba(0, 0, 0, 0), #000), linear-gradient(90deg, #fff, currentColor);
         height: 150px;
         width: 100%;
 
         > .#{$cmpCssName}canvas-marker {
-            @include border-radius($border-radius-circle);
+            @include borders.radius(vars.$border-radius-circle);
             background-color: currentColor;
             height: $markerSize;
             width: $markerSize;
-            margin: math.div(-$markerSize, 2) 0 0 math.div(-$markerSize, 2);
-            border: 1px solid $white;
+            margin: math.div(($markerSize * -1), 2) 0 0 math.div(($markerSize * -1), 2);
+            border: 1px solid colors.$white;
             outline: none;
             position: absolute;
 
@@ -38,36 +38,37 @@ $markerSize: 14px;
     }
 
     > .#{$cmpCssName}body {
-        padding: $padding-base;
+        padding: vars.$padding-base;
 
         &:last-child {
-            @include border-bottom-radius(var(--#{$prefix-bs}border-radius));
+            @include borders.bottom-radius(var(--#{vars.$prefix-bs}border-radius));
         }
     }
 
     > .#{$cmpCssName}swatches {
-        @include border-bottom-radius(var(--#{$prefix-bs}border-radius));
+        @include borders.bottom-radius(var(--#{vars.$prefix-bs}border-radius));
         overflow-y: auto;
         position: relative;
     }
 
     .#{$cmpCssName}controls {
-        @include flexbox((display: flex, align-items: center));
+        display: flex;
+        align-items: center;
 
         > .#{$cmpCssName}preview {
             height: 2.5rem;
             width: 2.5rem;
-            margin-right: $padding-base;
+            margin-right: vars.$padding-base;
             position: relative;
 
             > .#{$cmpCssName}selected-color {
-                @include border-radius($border-radius-circle);
-                border: $gray-200 1px solid;
+                @include borders.radius(vars.$border-radius-circle);
+                border: colors.$gray-200 1px solid;
                 width: 100%;
                 height: 100%;
 
                 > .#{$cmpCssName}selected-color-alpha {
-                    @include border-radius($border-radius-circle);
+                    @include borders.radius(vars.$border-radius-circle);
                     background-color: currentColor;
                     height: 100%;
                     width: 100%;
@@ -76,68 +77,69 @@ $markerSize: 14px;
         }
 
         > .#{$cmpCssName}sliders {
-            @include flexbox((display: flex, flex: 1 0 auto, flex-direction: column));
-            padding-left: $padding-sm;
+            display: flex;
+            flex: 1 0 auto;
+            flex-direction: column;
+            padding-left: vars.$padding-sm;
         }
     }
 
-    .#{$prefix}hue-slider,
-    .#{$prefix}alpha-slider {
+    .#{vars.$prefix}hue-slider,
+    .#{vars.$prefix}alpha-slider {
         padding: ($markerSize * .75) math.div($markerSize, 2);
         position: relative;
     }
 
-    .#{$prefix}slider-track {
-        @include flexbox((display: flex, align-items: center));
-        @include border-radius($padding-sm);
-        height: .5rem;
+    .#{vars.$prefix}slider-track {
+        @include borders.radius(vars.$padding-sm);
+        display: flex;
+        align-items: center;
         width: 100%;
+        height: .5rem;
         position: relative;
 
-        > .#{$prefix}slider-thumb {
-            --#{$prefix}slider-thumb-surface-opacity: 0;
-            --#{$prefix}slider-thumb-ripple-opacity: 0;
+        > .#{vars.$prefix}slider-thumb {
+            --#{vars.$prefix}slider-thumb-surface-opacity: 0;
+            --#{vars.$prefix}slider-thumb-ripple-opacity: 0;
 
-            @include border-radius($border-radius-circle);
-            @include box-shadow(0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05));
-            //@include box-shadow($z-depth-half);
-            background-color: var(--#{$prefix}slider-thumb-color);
-            color: var(--#{$prefix}slider-thumb-color);
-            height: $markerSize;
+            @include borders.radius(vars.$border-radius-circle);
+            background-color: var(--#{vars.$prefix}slider-thumb-color);
+            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05);
+            color: var(--#{vars.$prefix}slider-thumb-color);
             width: $markerSize;
-            margin-left: math.div(-$markerSize, 2);
+            height: $markerSize;
+            margin-left: math.div(($markerSize * -1), 2);
             outline: none;
             position: absolute;
             cursor: pointer;
 
-            > .#{$prefix}slider-thumb-surface {
-                @include border-radius($border-radius-circle);
-                @include user-select(none);
-                background-color: var(--#{$prefix}slider-thumb-color);
+            > .#{vars.$prefix}slider-thumb-surface {
+                @include borders.radius(vars.$border-radius-circle);
+                background-color: var(--#{vars.$prefix}slider-thumb-color);
                 height: 100%;
                 width: 100%;
                 cursor: pointer;
+                user-select: none;
 
                 &:before {
-                    @include border-radius($border-radius-circle);
-                    @include transition($md-transition-default);
+                    @include borders.radius(vars.$border-radius-circle);
                     background-color: currentColor;
                     content: "";
                     height: 100%;
                     width: 100%;
                     left: 0;
                     top: 0;
-                    opacity: var(--#{$prefix}slider-thumb-surface-opacity);
                     position: absolute;
                     pointer-events: none;
+                    opacity: var(--#{vars.$prefix}slider-thumb-surface-opacity);
+                    transition: vars.$transition-default;
                 }
             }
 
-            > .#{$prefix}slider-thumb-ripple {
-                @include border-radius($border-radius-circle);
-                @include transform(translate(-50%, -50%));
-                background-color: var(--#{$prefix}slider-thumb-color);
-                opacity: var(--#{$prefix}slider-thumb-ripple-opacity);
+            > .#{vars.$prefix}slider-thumb-ripple {
+                @include borders.radius(vars.$border-radius-circle);
+                background-color: var(--#{vars.$prefix}slider-thumb-color);
+                opacity: var(--#{vars.$prefix}slider-thumb-ripple-opacity);
                 height: $markerSize * 2;
                 width: $markerSize * 2;
                 left: 50%;
@@ -145,47 +147,48 @@ $markerSize: 14px;
                 cursor: pointer;
                 position: absolute;
                 pointer-events: none;
+                transform: translate(-50%, -50%);
             }
 
             &:hover, &:focus {
-                --#{$prefix}slider-thumb-surface-opacity: 0.08;
+                --#{vars.$prefix}slider-thumb-surface-opacity: 0.08;
 
-                > .#{$prefix}slider-thumb-surface {
+                > .#{vars.$prefix}slider-thumb-surface {
                     &:before {
                         transform: scale(2);
                     }
                 }
             }
 
-            &.#{$prefix}focused {
-                --#{$prefix}slider-thumb-ripple-opacity: .18;
+            &.#{vars.$prefix}focused {
+                --#{vars.$prefix}slider-thumb-ripple-opacity: .18;
             }
 
-            &.#{$prefix}pressed {
-                --#{$prefix}slider-thumb-ripple-opacity: .25;
+            &.#{vars.$prefix}pressed {
+                --#{vars.$prefix}slider-thumb-ripple-opacity: .25;
             }
 
             &.move-transition {
-                @include transition(0.35s $md-transition-stand-timing);
+                transition: 0.35s vars.$transition-stand-animation;
             }
         }
 
-        > .#{$prefix}slider-track-alpha {
-            @include border-radius($padding-sm);
+        > .#{vars.$prefix}slider-track-alpha {
+            @include borders.radius(vars.$padding-sm);
             background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), currentColor);
             height: 100%;
             width: 100%;
         }
     }
 
-    .#{$prefix}hue-slider {
-        > .#{$prefix}slider-track {
+    .#{vars.$prefix}hue-slider {
+        > .#{vars.$prefix}slider-track {
             background-image: linear-gradient(to right, #f00 0%, #ff0 16.66%, #0f0 33.33%, #0ff 50%, #00f 66.66%, #f0f 83.33%, #f00 100%);
         }
     }
 
     .#{$cmpCssName}preview > .#{$cmpCssName}selected-color,
-    .#{$prefix}alpha-slider > .#{$prefix}slider-track {
+    .#{vars.$prefix}alpha-slider > .#{vars.$prefix}slider-track {
         background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
         background-position: 0 0, 4px 4px;
         background-size: 8px 8px;
@@ -193,11 +196,12 @@ $markerSize: 14px;
 
     .#{$cmpCssName}inputs {
         > .#{$cmpCssName}input-row {
-            @include flexbox((display: flex, align-items: center));
-            padding: ($padding-base - .25) 0;
+            display: flex;
+            align-items: center;
+            padding: (vars.$padding-base - .25) 0;
 
             > .#{$cmpCssName}input-col {
-                @include flex(1 1 auto);
+                flex: 1 1 auto;
                 width: 20%;
 
                 > input::-webkit-inner-spin-button {
@@ -207,10 +211,10 @@ $markerSize: 14px;
             }
 
             > .#{$cmpCssName}input-label {
-                @include user-select(none);
                 font-size: 12px;
-                opacity: var(--#{$prefix}field-readonly-opacity);
-                padding: 0 $padding-sm;
+                opacity: var(--#{vars.$prefix}field-readonly-opacity);
+                padding: 0 vars.$padding-sm;
+                user-select: none;
 
                 &:first-child {
                     padding-left: 0;
@@ -222,15 +226,15 @@ $markerSize: 14px;
     .#{$cmpCssName}swatches-content {
         padding: 12px;
 
-        > .#{$prefix}swatch-button {
-            @include border-radius($border-radius-circle);
+        > .#{vars.$prefix}swatch-button {
+            @include borders.radius(vars.$border-radius-circle);
             background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
             background-position: 0 0, 4px 4px;
             background-size: 8px 8px;
             border: 0;
             width: 20px;
             height: 20px;
-            margin: 0 $padding-xs $padding-sm $padding-xs;
+            margin: 0 vars.$padding-xs vars.$padding-sm vars.$padding-xs;
             padding: 0;
             cursor: pointer;
             overflow: hidden;
@@ -238,8 +242,8 @@ $markerSize: 14px;
             white-space: nowrap;
 
             &:after {
-                @include box-shadow(inset 0 0 0 1px rgba(0, 0, 0, .1));
-                @include border-radius($border-radius-circle);
+                @include borders.radius(vars.$border-radius-circle);
+                box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
                 background-color: currentColor;
                 content: '';
                 width: 100%;
@@ -260,9 +264,9 @@ $markerSize: 14px;
     }
 }
 
-.#{$prefix}popover {
-    &.#{$prefix}popover-color-picker {
-        @include border-radius(var(--#{$prefix-bs}border-radius));
+.#{vars.$prefix}popover {
+    &.#{vars.$prefix}popover-color-picker {
+        @include borders.radius(var(--#{vars.$prefix-bs}border-radius));
         overflow: hidden;
     }
 }

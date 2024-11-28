@@ -1,6 +1,4 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@use "../../../scss/variables" as vars;
 
 html, body {
     text-rendering: optimizeLegibility;
@@ -12,28 +10,29 @@ body {
     padding: 0;
 }
 
-.#{$prefix}application-wrap,
-.#{$prefix}container-wrap,
-.#{$prefix}content-wrap {
-    @include display-flex();
+.#{vars.$prefix}application-wrap,
+.#{vars.$prefix}container-wrap,
+.#{vars.$prefix}content-wrap {
+    display: flex;
     max-width: 100%;
     position: relative;
 }
 
-.#{$prefix}application-wrap {
-    @include backface-visibility();
-    @include flexbox((flex: 1 1 auto, flex-direction: column));
+.#{vars.$prefix}application-wrap {
+    backface-visibility: hidden;
+    flex: 1 1 auto;
+    flex-direction: column;
     overflow-x: hidden;
 
-    &.#{$prefix}viewport-height {
+    &.#{vars.$prefix}viewport-height {
         height: 100vh;
     }
 
-    &.#{$prefix}appbar-fixed-top {
-        > .#{$prefix}container-wrap {
+    &.#{vars.$prefix}appbar-fixed-top {
+        > .#{vars.$prefix}container-wrap {
             width: 100%;
 
-            > .#{$prefix}content-wrap {
+            > .#{vars.$prefix}content-wrap {
                 display: block;
                 overflow: auto;
             }
@@ -41,15 +40,15 @@ body {
     }
 }
 
-.#{$prefix}container-wrap {
-    @include flex(1 0 auto);
+.#{vars.$prefix}container-wrap {
+    flex: 1 0 auto;
 
     &.smooth-animation {
-        @include transition($md-transition-default);
+        transition: vars.$transition-default;
     }
 }
 
-.#{$prefix}content-wrap {
-    @include flex(1 0 auto);
-    @include transition($md-transition-default);
+.#{vars.$prefix}content-wrap {
+    flex: 1 0 auto;
+    transition: vars.$transition-default;
 }

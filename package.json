@@ -59,6 +59,9 @@
     "build:types": "rollup --config rollup.config.dts.mjs",
     "css:beauty": "cleancss --format beautify -o dist/bundle.css dist/bundle.css",
     "css:minify": "cleancss -o dist/bundle.min.css dist/bundle.css",
+    "scss:bundle": "sass --no-source-map scss/bundle.scss dist/bundle.css",
+    "scss:compile": "sass --no-source-map scss/custom/all.scss dist/custom-colors.css",
+    "scss:minify": "cleancss -o dist/custom-colors.min.css dist/custom-colors.css",
     "type-check": "tsc --noEmit -p tsconfig.build.json --composite false"
   },
   "dependencies": {

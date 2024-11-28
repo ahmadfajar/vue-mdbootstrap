@@ -1,4 +1,5 @@
-/* Transition mixins */
+// VueJs transition animation mixins
+//-----------------------------------
 @mixin enterFrom($parent) {
     .#{$parent}-enter-from {
         @content;

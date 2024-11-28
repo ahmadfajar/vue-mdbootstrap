@@ -1,22 +1,20 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}combobox-field {
-    &.#{$prefix}field-control {
+.#{vars.$prefix}combobox-field {
+    &.#{vars.$prefix}field-control {
         &.focused:not(.active) {
-            --#{$prefix}field-floating-label-transform: none;
+            --#{vars.$prefix}field-floating-label-transform: none;
         }
 
-        &.#{$prefix}field-outlined {
+        &.#{vars.$prefix}field-outlined {
             &.focused:not(.active) {
-                .#{$prefix}field-label {
+                .#{vars.$prefix}field-label {
                     opacity: 1;
                     visibility: initial;
                 }
 
-                .#{$prefix}field-outline-control {
-                    > .#{$prefix}field-outline-label {
+                .#{vars.$prefix}field-outline-control {
+                    > .#{vars.$prefix}field-outline-label {
                         display: none;
                     }
                 }
@@ -24,49 +22,51 @@
         }
     }
 
-    &.#{$prefix}floating-label {
-        .#{$prefix}field-label {
-            height: var(--#{$prefix}field-control-height);
+    &.#{vars.$prefix}floating-label {
+        .#{vars.$prefix}field-label {
+            height: var(--#{vars.$prefix}field-control-height);
         }
     }
 
-    .#{$prefix}action-icon {
+    .#{vars.$prefix}action-icon {
         > .icon-expand {
-            @include transition(all 0.3s ease 0s);
+            transition: all 0.3s ease 0s;
             cursor: pointer;
         }
     }
 
     &.disabled {
-        .#{$prefix}action-icon {
+        .#{vars.$prefix}action-icon {
             > .icon-expand {
-                opacity: var(--#{$prefix}field-disabled-opacity);
+                opacity: var(--#{vars.$prefix}field-disabled-opacity);
             }
         }
     }
 
-    &.#{$prefix}open {
-        .#{$prefix}action-icon {
+    &.#{vars.$prefix}open {
+        .#{vars.$prefix}action-icon {
             > .icon-expand {
-                @include transform(rotateZ(-180deg));
+                transform: rotateZ(-180deg);
             }
         }
     }
 
-    &.#{$prefix}chip-enabled {
-        > .#{$prefix}field-inner {
+    &.#{vars.$prefix}chip-enabled {
+        > .#{vars.$prefix}field-inner {
             //min-height: 58px;
 
-            > .#{$prefix}field-activator {
-                @include flexbox((flex: 1 1 auto, align-items: end, flex-wrap: wrap));
+            > .#{vars.$prefix}field-activator {
+                align-items: end;
+                flex: 1 1 auto;
+                flex-wrap: wrap;
                 max-width: 100%;
             }
         }
 
-        &.#{$prefix}field-filled, &.#{$prefix}field-outlined {
-            &:not(.#{$prefix}floating-label) {
-                .#{$prefix}field-activator {
-                    --#{$prefix}field-padding-start: 0;
+        &.#{vars.$prefix}field-filled, &.#{vars.$prefix}field-outlined {
+            &:not(.#{vars.$prefix}floating-label) {
+                .#{vars.$prefix}field-activator {
+                    --#{vars.$prefix}field-padding-start: 0;
 
                     align-items: center;
                     padding-left: 1rem;
@@ -74,9 +74,9 @@
                     padding-bottom: 0.25rem;
                 }
 
-                > .#{$prefix}field-inner {
-                    > .#{$prefix}action-icon, > .#{$prefix}validation-icon {
-                        > .#{$prefix}icon {
+                > .#{vars.$prefix}field-inner {
+                    > .#{vars.$prefix}action-icon, > .#{vars.$prefix}validation-icon {
+                        > .#{vars.$prefix}icon {
                             align-self: flex-start;
                             margin-top: 1rem;
                         }
@@ -85,93 +85,93 @@
             }
         }
 
-        .#{$prefix}chip {
-            margin-bottom: $text-field-padding-bottom;
-            margin-right: $padding-sm;
+        .#{vars.$prefix}chip {
+            margin-bottom: vars.$text-field-padding-bottom;
+            margin-right: vars.$padding-sm;
 
-            ~ .#{$prefix}chip {
+            ~ .#{vars.$prefix}chip {
                 margin-left: 0;
             }
         }
 
-        &.#{$prefix}floating-label {
-            .#{$prefix}field-label {
+        &.#{vars.$prefix}floating-label {
+            .#{vars.$prefix}field-label {
                 height: auto;
-                top: $padding-base;
+                top: vars.$padding-base;
             }
 
-            &:not(.#{$prefix}field-outlined):not(.#{$prefix}field-filled) {
-                .#{$prefix}field-activator {
-                    --#{$prefix}field-control-height: 0;
-                    --#{$prefix}field-padding-top: 0;
+            &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
+                .#{vars.$prefix}field-activator {
+                    --#{vars.$prefix}field-control-height: 0;
+                    --#{vars.$prefix}field-padding-top: 0;
 
-                    padding-top: $padding-base + .25;
+                    padding-top: vars.$padding-base + .25;
 
-                    > .#{$prefix}field-placeholder {
-                        --#{$prefix}field-padding-bottom: 0.75rem;
+                    > .#{vars.$prefix}field-placeholder {
+                        --#{vars.$prefix}field-padding-bottom: 0.75rem;
                     }
                 }
 
                 &.active {
-                    --#{$prefix}field-floating-label-transform: translateY(-24px) scale(.85);
-                    --#{$prefix}field-padding-top: 1.25rem;
+                    --#{vars.$prefix}field-floating-label-transform: translateY(-24px) scale(.85);
+                    --#{vars.$prefix}field-padding-top: 1.25rem;
                 }
 
-                .#{$prefix}field-label {
-                    top: $padding-base + .35;
+                .#{vars.$prefix}field-label {
+                    top: vars.$padding-base + .35;
                 }
             }
 
-            &.#{$prefix}field-filled,
-            &.#{$prefix}field-outlined {
-                .#{$prefix}field-activator {
-                    --#{$prefix}field-control-height: 0;
-                    --#{$prefix}field-padding-top: 0;
+            &.#{vars.$prefix}field-filled,
+            &.#{vars.$prefix}field-outlined {
+                .#{vars.$prefix}field-activator {
+                    --#{vars.$prefix}field-control-height: 0;
+                    --#{vars.$prefix}field-padding-top: 0;
 
-                    padding-left: $padding-base;
-                    padding-top: $padding-base;
+                    padding-left: vars.$padding-base;
+                    padding-top: vars.$padding-base;
 
-                    > .#{$prefix}field-placeholder {
-                        --#{$prefix}field-padding-start: 0;
+                    > .#{vars.$prefix}field-placeholder {
+                        --#{vars.$prefix}field-padding-start: 0;
                     }
                 }
             }
 
-            &.#{$prefix}field-filled {
-                .#{$prefix}action-icon,
-                .#{$prefix}append-inner,
-                .#{$prefix}prepend-inner {
-                    > .#{$prefix}icon {
+            &.#{vars.$prefix}field-filled {
+                .#{vars.$prefix}action-icon,
+                .#{vars.$prefix}append-inner,
+                .#{vars.$prefix}prepend-inner {
+                    > .#{vars.$prefix}icon {
                         margin-top: 22px;
                     }
                 }
 
-                .#{$prefix}field-activator {
+                .#{vars.$prefix}field-activator {
                     min-height: 4.125rem;
-                    padding-top: $padding-base + .75;
+                    padding-top: vars.$padding-base + .75;
 
-                    > .#{$prefix}field-label {
-                        top: $padding-base + .25;
+                    > .#{vars.$prefix}field-label {
+                        top: vars.$padding-base + .25;
                     }
 
-                    > .#{$prefix}field-placeholder {
-                        --#{$prefix}field-padding-bottom: 0.75rem;
+                    > .#{vars.$prefix}field-placeholder {
+                        --#{vars.$prefix}field-padding-bottom: 0.75rem;
                     }
                 }
 
                 &.active {
-                    --#{$prefix}field-floating-label-transform: translateY(-14px) scale(.85);
+                    --#{vars.$prefix}field-floating-label-transform: translateY(-14px) scale(.85);
                 }
             }
 
-            &.#{$prefix}field-outlined {
-                .#{$prefix}field-activator {
+            &.#{vars.$prefix}field-outlined {
+                .#{vars.$prefix}field-activator {
                     min-height: 3.75rem;
-                    padding-bottom: $text-field-padding-bottom;
+                    padding-bottom: vars.$text-field-padding-bottom;
 
-                    > .#{$prefix}field-placeholder {
-                        --#{$prefix}field-padding-bottom: 0.75rem;
-                        --#{$prefix}field-padding-top: 0;
+                    > .#{vars.$prefix}field-placeholder {
+                        --#{vars.$prefix}field-padding-bottom: 0.75rem;
+                        --#{vars.$prefix}field-padding-top: 0;
                     }
                 }
             }

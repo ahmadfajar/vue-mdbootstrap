@@ -1,88 +1,92 @@
 @use "sass:color";
+@use "../utils/color_functions" as color_utils;
+@use "../utils/color_helper" as helper;
+@use "../color_vars" as colors;
+@use "../variables" as vars;
 
-/* BsChip variants mixins -- sass variables */
-
-@mixin make-chip-variant($name, $color) {
-    .#{$prefix}chip-#{$name} {
-        $chip-color: round-color-rgba(set-color-contrast($color, rgba(color.scale($color, $lightness: 20%), .55), rgba(color.scale($color, $lightness: 30%), .55)));
-        $icon-color: round-color-rgb(color.adjust($color, $lightness: -5%));
-        $hover-bg: round-color-rgba(color.scale($chip-color, $lightness: -25%));
-        $active-bg: round-color-rgb(color.scale($color, $lightness: 10%));
-        $active-color: set-color-contrast($active-bg, $black, $white);
-        $active-box-shadow-color-rgb: to-rgb($chip-color);
-        $active-icon-color: round-color-rgba(set-color-contrast($active-bg, color.scale($chip-color, $lightness: -25%), $white));
+// BsChip variants mixins -- sass variables
+//------------------------------------------
+@mixin make-default-variant($name, $color) {
+    .#{vars.$prefix}chip-#{$name} {
+        $chip-color: helper.round-color-rgba(color_utils.set-color-contrast($color, rgba(color.scale($color, $lightness: 20%), .55), rgba(color.scale($color, $lightness: 30%), .55)));
+        $icon-color: helper.round-color-rgb(color.adjust($color, $lightness: -5%));
+        $hover-bg: helper.round-color-rgba(color.scale($chip-color, $lightness: -25%));
+        $active-bg: helper.round-color-rgb(color.scale($color, $lightness: 10%));
+        $active-color: color_utils.set-color-contrast($active-bg, colors.$black, colors.$white);
+        $active-box-shadow-color-rgb: color_utils.to-rgb($chip-color);
+        $active-icon-color: helper.round-color-rgba(color_utils.set-color-contrast($active-bg, color.scale($chip-color, $lightness: -25%), colors.$white));
 
         @if($name == 'light') {
-            $light-bg-color: round-color-rgb(color.adjust($color, $lightness: -2.5%));
-            $light-hover-bg: round-color-rgb(color.adjust($color, $lightness: -10%));
-            $light-active-bg: round-color-rgb(color.adjust($color, $lightness: -15%));
-            --#{$prefix}chip-bg: #{$light-bg-color};
-            --#{$prefix}chip-active-bg: #{$light-active-bg};
-            --#{$prefix}chip-hover-bg: #{$light-hover-bg};
-            --#{$prefix}chip-border-color: #{$light-bg-color};
+            $light-bg-color: helper.round-color-rgb(color.adjust($color, $lightness: -2.5%));
+            $light-hover-bg: helper.round-color-rgb(color.adjust($color, $lightness: -10%));
+            $light-active-bg: helper.round-color-rgb(color.adjust($color, $lightness: -15%));
+            --#{vars.$prefix}chip-bg: #{$light-bg-color};
+            --#{vars.$prefix}chip-active-bg: #{$light-active-bg};
+            --#{vars.$prefix}chip-hover-bg: #{$light-hover-bg};
+            --#{vars.$prefix}chip-border-color: #{$light-bg-color};
         } @else if($name == 'light-grey') {
-            $light-bg-color: round-color-rgb(color.adjust($color, $lightness: 2.5%));
-            $light-hover-bg: rgba(round-color-rgb(color.adjust($color, $lightness: -10%)), .55);
-            --#{$prefix}chip-bg: #{$light-bg-color};
-            --#{$prefix}chip-active-bg: #{$active-bg};
-            --#{$prefix}chip-hover-bg: #{$light-hover-bg};
-            --#{$prefix}chip-border-color: #{$light-bg-color};
+            $light-bg-color: helper.round-color-rgb(color.adjust($color, $lightness: 2.5%));
+            $light-hover-bg: rgba(helper.round-color-rgb(color.adjust($color, $lightness: -10%)), .55);
+            --#{vars.$prefix}chip-bg: #{$light-bg-color};
+            --#{vars.$prefix}chip-active-bg: #{$active-bg};
+            --#{vars.$prefix}chip-hover-bg: #{$light-hover-bg};
+            --#{vars.$prefix}chip-border-color: #{$light-bg-color};
         } @else {
-            --#{$prefix}chip-bg: #{$chip-color};
-            --#{$prefix}chip-border-color: #{$chip-color};
-            --#{$prefix}chip-hover-bg: #{$hover-bg};
-            --#{$prefix}chip-active-bg: #{$active-bg};
+            --#{vars.$prefix}chip-bg: #{$chip-color};
+            --#{vars.$prefix}chip-border-color: #{$chip-color};
+            --#{vars.$prefix}chip-hover-bg: #{$hover-bg};
+            --#{vars.$prefix}chip-active-bg: #{$active-bg};
         }
 
-        --#{$prefix}chip-color: #{$black};
-        --#{$prefix}chip-hover-border-color: #{$hover-bg};
-        --#{$prefix}chip-hover-color: #{$black};
-        --#{$prefix}chip-active-border-color: #{$active-bg};
-        --#{$prefix}chip-active-color: #{$active-color};
-        --#{$prefix}chip-icon-color: #{$icon-color};
-        --#{$prefix}chip-active-icon-color: #{$active-icon-color};
-        --#{$prefix}chip-focus-border-color: #{$active-bg};
-        --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
+        --#{vars.$prefix}chip-color: #{colors.$black};
+        --#{vars.$prefix}chip-hover-border-color: #{$hover-bg};
+        --#{vars.$prefix}chip-hover-color: #{colors.$black};
+        --#{vars.$prefix}chip-active-border-color: #{$active-bg};
+        --#{vars.$prefix}chip-active-color: #{$active-color};
+        --#{vars.$prefix}chip-icon-color: #{$icon-color};
+        --#{vars.$prefix}chip-active-icon-color: #{$active-icon-color};
+        --#{vars.$prefix}chip-focus-border-color: #{$active-bg};
+        --#{vars.$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
     }
 }
 
-@mixin make-chip-outline-variant($name, $color) {
-    .#{$prefix}chip-outline-#{$name} {
-        $border-color: round-color-rgb(color.adjust($gray-600, $lightness: 25%));
-        $hover-bg: round-color-rgba(set-color-contrast($color, rgba(color.adjust($color, $lightness: -10%), .4), rgba(color.adjust($color, $lightness: 20%), .2), 200));
-        $hover-border: round-color-rgb(set-color-contrast($color, $border-color, color.adjust($color, $lightness: 12%)));
-        $hover-color: set-color-contrast($color, $white, round-color-rgb(color.scale($color, $lightness: -40%)), 210);
-        $active-bg: round-color-rgba(set-color-contrast($color, rgba(color.scale($color, $lightness: -10%), .4), rgba(color.scale($color, $lightness: 15%), .3), 200));
-        $active-color: set-color-contrast($color, $white, round-color-rgb(color.scale($color, $lightness: -40%)), 210);
-        $focus-border: set-color-contrast($color, round-color-rgb(color.adjust($border-color, $lightness: -15%)), $color);
-        $active-box-shadow-color-rgb: to-rgb(color.adjust($hover-bg, $lightness: 10%));
+@mixin make-outline-variant($name, $color) {
+    .#{vars.$prefix}chip-outline-#{$name} {
+        $border-color: helper.round-color-rgb(color.adjust(colors.$gray-600, $lightness: 25%));
+        $hover-bg: helper.round-color-rgba(color_utils.set-color-contrast($color, rgba(color.adjust($color, $lightness: -10%), .4), rgba(color.adjust($color, $lightness: 20%), .2), 200));
+        $hover-border: helper.round-color-rgb(color_utils.set-color-contrast($color, $border-color, color.adjust($color, $lightness: 12%)));
+        $hover-color: color_utils.set-color-contrast($color, colors.$white, helper.round-color-rgb(color.scale($color, $lightness: -40%)), 210);
+        $active-bg: helper.round-color-rgba(color_utils.set-color-contrast($color, rgba(color.scale($color, $lightness: -10%), .4), rgba(color.scale($color, $lightness: 15%), .3), 200));
+        $active-color: color_utils.set-color-contrast($color, colors.$white, helper.round-color-rgb(color.scale($color, $lightness: -40%)), 210);
+        $focus-border: color_utils.set-color-contrast($color, helper.round-color-rgb(color.adjust($border-color, $lightness: -15%)), $color);
+        $active-box-shadow-color-rgb: color_utils.to-rgb(color.adjust($hover-bg, $lightness: 10%));
 
         @if($name == 'grey' or $name == 'secondary') {
-            $hover-bg-alt: rgba(round-color-rgb(color.adjust($color, $lightness: -2%)), .3);
-            $active-bg-alt: rgba(round-color-rgb(color.adjust($color, $lightness: -6%)), .3);
-            $active-border: round-color-rgba(set-color-contrast($color, $color, rgba(color.adjust($color, $lightness: 20%), .1)));
-            --#{$prefix}chip-color: #{$gray-800};
-            --#{$prefix}chip-hover-bg: #{$hover-bg-alt};
-            --#{$prefix}chip-hover-color: #{$gray-900};
-            --#{$prefix}chip-active-bg: #{$active-bg-alt};
-            --#{$prefix}chip-active-border-color: #{$active-border};
-            --#{$prefix}chip-active-color: #{$black};
-            --#{$prefix}chip-hover-border-color: #{$color};
+            $hover-bg-alt: rgba(helper.round-color-rgb(color.adjust($color, $lightness: -2%)), .3);
+            $active-bg-alt: rgba(helper.round-color-rgb(color.adjust($color, $lightness: -6%)), .3);
+            $active-border: helper.round-color-rgba(color_utils.set-color-contrast($color, $color, rgba(color.adjust($color, $lightness: 20%), .1)));
+            --#{vars.$prefix}chip-color: #{colors.$gray-800};
+            --#{vars.$prefix}chip-hover-bg: #{$hover-bg-alt};
+            --#{vars.$prefix}chip-hover-color: #{colors.$gray-900};
+            --#{vars.$prefix}chip-active-bg: #{$active-bg-alt};
+            --#{vars.$prefix}chip-active-border-color: #{$active-border};
+            --#{vars.$prefix}chip-active-color: #{colors.$black};
+            --#{vars.$prefix}chip-hover-border-color: #{$color};
         } @else {
-            --#{$prefix}chip-color: #{$color};
-            --#{$prefix}chip-hover-bg: #{$hover-bg};
-            --#{$prefix}chip-hover-color: #{$hover-color};
-            --#{$prefix}chip-active-bg: #{$active-bg};
-            --#{$prefix}chip-active-border-color: #{$active-bg};
-            --#{$prefix}chip-active-color: #{$active-color};
-            --#{$prefix}chip-hover-border-color: #{$hover-border};
+            --#{vars.$prefix}chip-color: #{$color};
+            --#{vars.$prefix}chip-hover-bg: #{$hover-bg};
+            --#{vars.$prefix}chip-hover-color: #{$hover-color};
+            --#{vars.$prefix}chip-active-bg: #{$active-bg};
+            --#{vars.$prefix}chip-active-border-color: #{$active-bg};
+            --#{vars.$prefix}chip-active-color: #{$active-color};
+            --#{vars.$prefix}chip-hover-border-color: #{$hover-border};
         }
 
-        --#{$prefix}chip-bg: transparent;
-        --#{$prefix}chip-border-color: #{$border-color};
-        --#{$prefix}chip-icon-color: #{$color};
-        --#{$prefix}chip-active-icon-color: #{$color};
-        --#{$prefix}chip-focus-border-color: #{$focus-border};
-        --#{$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
+        --#{vars.$prefix}chip-bg: transparent;
+        --#{vars.$prefix}chip-border-color: #{$border-color};
+        --#{vars.$prefix}chip-icon-color: #{$color};
+        --#{vars.$prefix}chip-active-icon-color: #{$color};
+        --#{vars.$prefix}chip-focus-border-color: #{$focus-border};
+        --#{vars.$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
     }
 }

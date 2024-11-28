@@ -1,7 +1,7 @@
 @import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
+@import "../../../scss/utils/color_functions";
 @import "../../../scss/mixins/listview";
-@import "../../../scss/colors";
+@import "../../../scss/color_vars";
 @import "../../../scss/variables";
 
 .#{$prefix}list {
@@ -27,7 +27,7 @@
     --#{$prefix}nav-item-font-weight: #{$font-weight-normal};
     --#{$prefix}nav-item-active-font-weight: #{$font-weight-semi-bold};
 
-    @include transition($md-transition-default, height);
+    @include transition($transition-default, height);
     list-style-type: none;
     overflow-x: hidden;
     overflow-y: auto;

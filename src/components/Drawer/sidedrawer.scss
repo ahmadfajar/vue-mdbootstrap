@@ -1,32 +1,28 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}drawer-host {
-    // @include transition(.55s $transition-easeInOut);
-    @include transition($md-transition-default);
+.#{vars.$prefix}drawer-host {
     height: 100%;
     position: absolute;
-    z-index: $zindex-sticky - 1;
+    z-index: vars.$zindex-sticky - 1;
+    transition: vars.$transition-default;
 }
 
-.#{$prefix}side-drawer {
+.#{vars.$prefix}side-drawer {
     height: 100%;
     margin: 0;
     padding: 0;
 
     &.smooth-animation {
-        @include transition(.55s $transition-easeInOut);
+        transition: .55s vars.$transition-easeInOut;
     }
 
     &.drawer-closed {
-        @include box-shadow(none !important);
+        box-shadow: none !important;
     }
 
-    > .#{$prefix}side-drawer-inner {
-        @include flexbox((display:flex, flex-direction: column));
+    > .#{vars.$prefix}side-drawer-inner {
+        display:flex;
+        flex-direction: column;
         height: 100%;
         width: 100%;
         overflow: hidden;

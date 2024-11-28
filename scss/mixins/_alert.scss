@@ -1,44 +1,47 @@
 @use "sass:color";
-@use "../functions" as Func;
+@use "../utils/color_functions" as color_utils;
+@use "../utils/color_helper" as helper;
+@use "../color_vars" as colors;
+@use "../variables" as vars;
 
-/* BsAlert variants mixins -- sass variables */
-
-@mixin alert-variant($name, $background, $border, $color) {
+// BsAlert variants mixins -- sass variables
+//-------------------------------------------
+@mixin make-default-variant($name, $background, $border, $color) {
     .alert-#{$name} {
-        --#{$prefix-bs}alert-bg: #{$background};
-        --#{$prefix-bs}alert-border-color: #{$border};
-        --#{$prefix-bs}alert-color: #{$color};
+        --#{vars.$prefix-bs}alert-bg: #{$background};
+        --#{vars.$prefix-bs}alert-border-color: #{$border};
+        --#{vars.$prefix-bs}alert-color: #{$color};
 
-        $hr-border-color: Func.round-color-rgb(color.adjust($border, $lightness: -10%));
-        --#{$prefix-bs}alert-hr-color: #{$hr-border-color};
+        $hr-border-color: helper.round-color-rgb(color.adjust($border, $lightness: -10%));
+        --#{vars.$prefix-bs}alert-hr-color: #{$hr-border-color};
 
-        $link-color: mix(black, $color, 20%);
-        --#{$prefix-bs}alert-link-color: #{$link-color};
+        $link-color: color.mix(black, $color, 20%);
+        --#{vars.$prefix-bs}alert-link-color: #{$link-color};
     }
 }
 
-@mixin make-outline-alert-variant($name, $color) {
-    .#{$prefix}alert-outline-#{$name} {
-        $border-color: Func.round-color-rgb(color.adjust($color, $lightness: 15%));
-        $hr-border-color: Func.round-color-rgb(color.adjust($color, $lightness: -5%));
-        $link-color: Func.round-color-rgb(color.adjust($color, $lightness: -10%));
-        $text-color: Func.round-color-rgb(color.adjust($color, $lightness: -5%));
+@mixin make-outline-variant($name, $color) {
+    .#{vars.$prefix}alert-outline-#{$name} {
+        $border-color: helper.round-color-rgb(color.adjust($color, $lightness: 15%));
+        $hr-border-color: helper.round-color-rgb(color.adjust($color, $lightness: -5%));
+        $link-color: helper.round-color-rgb(color.adjust($color, $lightness: -10%));
+        $text-color: helper.round-color-rgb(color.adjust($color, $lightness: -5%));
 
-        --#{$prefix-bs}alert-color: #{$text-color};
-        --#{$prefix-bs}alert-border-color: #{$border-color};
-        --#{$prefix-bs}alert-hr-color: #{$hr-border-color};
-        --#{$prefix-bs}alert-link-color: #{$link-color};
+        --#{vars.$prefix-bs}alert-color: #{$text-color};
+        --#{vars.$prefix-bs}alert-border-color: #{$border-color};
+        --#{vars.$prefix-bs}alert-hr-color: #{$hr-border-color};
+        --#{vars.$prefix-bs}alert-link-color: #{$link-color};
     }
 }
 
-@mixin make-solid-alert-variant($name, $color) {
-    .#{$prefix}alert-solid-#{$name} {
-        $text-color: set-color-contrast($color, $gray-900, $white);
-        $hr-border-color: set-color-contrast($color, color.adjust($color, $lightness: -25%), rgba(color.adjust($white, $lightness: -4%), .65));
+@mixin make-solid-variant($name, $color) {
+    .#{vars.$prefix}alert-solid-#{$name} {
+        $text-color: color_utils.set-color-contrast($color, colors.$gray-900, colors.$white);
+        $hr-border-color: color_utils.set-color-contrast($color, color.adjust($color, $lightness: -25%), rgba(color.adjust(colors.$white, $lightness: -4%), .65));
 
-        --#{$prefix-bs}alert-bg: #{$color};
-        --#{$prefix-bs}alert-color: #{$text-color};
-        --#{$prefix-bs}alert-link-color: #{$text-color};
-        --#{$prefix-bs}alert-hr-color: #{Func.round-color-rgb($hr-border-color)};
+        --#{vars.$prefix-bs}alert-bg: #{$color};
+        --#{vars.$prefix-bs}alert-color: #{$text-color};
+        --#{vars.$prefix-bs}alert-link-color: #{$text-color};
+        --#{vars.$prefix-bs}alert-hr-color: #{helper.round-color-rgb($hr-border-color)};
     }
 }

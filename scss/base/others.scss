@@ -1,0 +1,68 @@
+@use "../mixins/css3/borders";
+@use "../variables" as vars;
+
+.overflow-x-hidden {
+    overflow-x: hidden !important;
+}
+
+.overflow-y-hidden {
+    overflow-y: hidden !important;
+}
+
+.#{vars.$prefix}link {
+    cursor: pointer;
+}
+
+.#{vars.$prefix}fw-bold {
+    font-weight: vars.$font-weight-bold !important;
+}
+
+.#{vars.$prefix}fw-bolder {
+    font-weight: vars.$font-weight-boldest !important;
+}
+
+.#{vars.$prefix}fw-semibold {
+    font-weight: vars.$font-weight-semi-bold !important;
+}
+
+.#{vars.$prefix}fw-light {
+    font-weight: vars.$font-weight-light !important;
+}
+
+.#{vars.$prefix}border {
+    border: thin solid !important;
+}
+
+.rounded-top-0 {
+    @include borders.top-radius(0 !important);
+}
+
+.rounded-bottom-0 {
+    @include borders.bottom-radius(0 !important);
+}
+
+.rounded-start-0 {
+    @include borders.start-radius(0 !important);
+}
+
+.rounded-end-0 {
+    @include borders.end-radius(0 !important);
+}
+
+.triangle-up, .caret-up {
+    width: 0;
+    height: 0;
+    border-left: var(--#{vars.$prefix}caret-size) solid transparent;
+    border-right: var(--#{vars.$prefix}caret-size) solid transparent;
+    border-bottom: var(--#{vars.$prefix}caret-size) solid currentColor;
+    display: inline-block;
+}
+
+.triangle-down, .caret-down {
+    width: 0;
+    height: 0;
+    border-left: var(--#{vars.$prefix}caret-size) solid transparent;
+    border-right: var(--#{vars.$prefix}caret-size) solid transparent;
+    border-top: var(--#{vars.$prefix}caret-size) solid currentColor;
+    display: inline-block;
+}

@@ -1,21 +1,20 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
-@import "../../../scss/mixins/alert";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@use "../../../scss/utils/color_functions" as color_utils;
+@use "../../../scss/mixins/alert" as alerts;
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
 .alert {
-    --#{$prefix-bs}alert-link-color: inherit;
-    --#{$prefix-bs}alert-hr-color: inherit;
-    --#{$prefix-bs}alert-padding-y: 0.7rem;
+    --#{vars.$prefix-bs}alert-link-color: inherit;
+    --#{vars.$prefix-bs}alert-hr-color: inherit;
+    --#{vars.$prefix-bs}alert-padding-y: 0.7rem;
 
     hr {
-        border-top: 1px solid var(--#{$prefix-bs}alert-hr-color);
+        border-top: 1px solid var(--#{vars.$prefix-bs}alert-hr-color);
         opacity: 0.4;
     }
 
     .alert-link {
-        color: var(--#{$prefix-bs}alert-link-color);
+        color: var(--#{vars.$prefix-bs}alert-link-color);
     }
 
     &.alert-dismissible {
@@ -26,27 +25,27 @@
         }
     }
 
-    > .flex-fill ~ .#{$prefix}btn-icon:last-child {
-        margin-right: -$padding-sm;
+    > .flex-fill ~ .#{vars.$prefix}btn-icon:last-child {
+        margin-right: vars.$padding-sm * -1;
     }
 
-    .#{$prefix}btn-icon:last-child {
-        --#{$prefix-bs}btn-state-line-height: #{$padding-xl};
+    .#{vars.$prefix}btn-icon:last-child {
+        --#{vars.$prefix-bs}btn-state-line-height: #{vars.$padding-xl};
 
-        .#{$prefix}ripple {
-            --#{$prefix-bs}btn-inner-state-width: #{$padding-xl};
-            --#{$prefix-bs}btn-inner-state-height: #{$padding-xl};
+        .#{vars.$prefix}ripple {
+            --#{vars.$prefix-bs}btn-inner-state-width: #{vars.$padding-xl};
+            --#{vars.$prefix-bs}btn-inner-state-height: #{vars.$padding-xl};
         }
     }
 }
 
-@each $color-name, $value in $theme-colors {
-    $background-color: theme-color-level($theme-colors, $color-name, $alert-bg-level);
-    $border-color: theme-color-level($theme-colors, $color-name, $alert-border-level);
-    $text-color: theme-color-level($theme-colors, $color-name, $alert-color-level);
-    @include alert-variant($color-name, $background-color, $border-color, $text-color);
+@each $name, $color in colors.$context-colors {
+    $background-color: color_utils.theme-color-level(colors.$context-colors, $name, vars.$alert-bg-level);
+    $border-color: color_utils.theme-color-level(colors.$context-colors, $name, vars.$alert-border-level);
+    $text-color: color_utils.theme-color-level(colors.$context-colors, $name, vars.$alert-color-level);
+    @include alerts.make-default-variant($name, $background-color, $border-color, $text-color);
 
-    $outline-color: theme-color-level($theme-colors, $color-name, $alert-color-level);
-    @include make-outline-alert-variant($color-name, $value);
-    @include make-solid-alert-variant($color-name, $value);
+    $outline-color: color_utils.theme-color-level(colors.$context-colors, $name, vars.$alert-color-level);
+    @include alerts.make-outline-variant($name, $color);
+    @include alerts.make-solid-variant($name, $color);
 }

@@ -1,0 +1,24 @@
+@use "sass:color";
+@use "sass:math";
+
+@function round($value, $fractionDigits: 0) {
+    $power: math.pow(10, $fractionDigits);
+    @return math.div(math.round($power * $value), $power);
+}
+
+@function round-color-rgb($color, $precision: 2) {
+    $red: round(color.channel($color, "red"), $precision);
+    $green: round(color.channel($color, "green"), $precision);
+    $blue: round(color.channel($color, "blue"), $precision);
+
+    @return rgb($red, $green, $blue);
+}
+
+@function round-color-rgba($color, $precision: 2) {
+    $red: round(color.channel($color, "red"), $precision);
+    $green: round(color.channel($color, "green"), $precision);
+    $blue: round(color.channel($color, "blue"), $precision);
+    $alpha: round(color.channel($color, "alpha"), $precision);
+
+    @return rgba($red, $green, $blue, $alpha);
+}

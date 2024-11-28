@@ -1,0 +1,40 @@
+@use "../variables" as vars;
+
+.#{vars.$prefix}shadow {
+    border-width: 0 !important;
+    box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05) !important;
+}
+
+.#{vars.$prefix}shadow-1 {
+    border-width: 0 !important;
+    box-shadow: vars.$z-depth-1-half !important;
+}
+
+.#{vars.$prefix}shadow-2 {
+    border-width: 0 !important;
+    box-shadow: vars.$z-depth-2 !important;
+}
+
+.#{vars.$prefix}shadow-3 {
+    border-width: 0 !important;
+    box-shadow: vars.$z-depth-3 !important;
+}
+
+.#{vars.$prefix}shadow-4 {
+    border-width: 0 !important;
+    box-shadow: vars.$z-depth-4 !important;
+}
+
+.#{vars.$prefix}shadow-5 {
+    border-width: 0 !important;
+    box-shadow: vars.$z-depth-5 !important;
+}
+
+.#{vars.$prefix}hover-shadow {
+    box-shadow: none;
+    transition: vars.$transition-hoverable;
+
+    &:hover {
+        box-shadow: vars.$z-depth-2;
+    }
+}

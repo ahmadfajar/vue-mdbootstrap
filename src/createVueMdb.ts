@@ -6,8 +6,10 @@ import * as _cmpPlugins from './components';
 
 import '../scss/banner.scss';
 import '../scss/global_vars.scss';
-import '../scss/transitions.scss';
-import '../scss/_utilities.scss';
+import '../scss/css_animation.scss';
+import '../scss/base/colors.scss';
+import '../scss/base/others.scss';
+import '../scss/base/shadows.scss';
 import './components/Animation/animation.scss';
 import './components/Alert/alert.scss';
 import './components/Card/card.scss';

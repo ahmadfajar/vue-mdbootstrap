@@ -1,5 +1,5 @@
 @import "compass-mixins/lib/compass/css3";
-@import "../../../scss/colors";
+@import "../../../scss/color_vars";
 @import "../../../scss/variables";
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
@@ -30,7 +30,7 @@
     --#{$prefix}tabs-placement-left-shadow: #{$tabs-placement-left-shadow};
     --#{$prefix}tabs-placement-right-shadow: #{$tabs-placement-right-shadow};
 
-    @include transition($md-transition-leave);
+    @include transition($transition-leave);
 
     @include media-breakpoint-down(sm) {
         --#{$prefix}tabs-content-padding: #{$padding-base + .25} #{$padding-base - .25};
@@ -171,7 +171,7 @@
             position: relative;
 
             .nav-link {
-                @include transition($md-transition-default);
+                @include transition($transition-default);
                 @include border-radius(0);
                 background-color: transparent;
                 border-color: transparent;
@@ -314,7 +314,7 @@
     }
 
     .tab-content {
-        @include transition(all $md-transition-default);
+        @include transition(all $transition-default);
         overflow: hidden;
         position: relative;
         padding: var(--#{$prefix}tabs-content-padding);

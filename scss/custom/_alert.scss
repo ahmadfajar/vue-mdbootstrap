@@ -1,0 +1,17 @@
+@use "../mixins/alert" as alerts;
+@use "../utils/color_functions" as color_utils;
+@use "../color_vars" as colors;
+@use "../variables" as vars;
+
+// BsAlert with custom colors
+//----------------------------
+@each $name, $color in colors.$common-theme-colors {
+    $background-color: color_utils.theme-color-level(colors.$common-theme-colors, $name, vars.$alert-bg-level);
+    $border-color: color_utils.theme-color-level(colors.$common-theme-colors, $name, vars.$alert-border-level);
+    $text-color: color_utils.theme-color-level(colors.$common-theme-colors, $name, vars.$alert-color-level);
+    @include alerts.make-default-variant($name, $background-color, $border-color, $text-color);
+
+    $outline-color: color_utils.theme-color-level(colors.$common-theme-colors, $name, vars.$alert-color-level);
+    @include alerts.make-outline-variant($name, $color);
+    @include alerts.make-solid-variant($name, $color);
+}

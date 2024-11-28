@@ -1,7 +1,7 @@
 @import "compass-mixins/lib/compass/css3";
-@import "../../../scss/functions";
+@import "../../../scss/utils/color_functions";
 @import "../../../scss/mixins/listview";
-@import "../../../scss/colors";
+@import "../../../scss/color_vars";
 @import "../../../scss/variables";
 
 
@@ -35,7 +35,7 @@
 
     .#{$prefix}list-tile-title,
     .#{$prefix}list-tile-subtitle {
-        @include transition(.3s $md-transition-stand-timing);
+        @include transition(.3s $transition-stand-animation);
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -159,7 +159,7 @@
             > .#{$prefix}ripple {
                 &:before,
                 &:after {
-                    @include transition(.3s $md-transition-stand-timing);
+                    @include transition(.3s $transition-stand-animation);
                     background: var(--#{$prefix}tile-active-indicator-border-color);
                     content: " ";
                     display: block;

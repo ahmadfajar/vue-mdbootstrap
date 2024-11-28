@@ -1,0 +1,253 @@
+@use "mixins/transitions";
+@use "variables" as vars;
+
+// VueJs transition animation
+//----------------------------
+@include transitions.enterActive-leaveActive("fade") {
+    transition: opacity 0.5s ease-in-out;
+}
+
+@include transitions.enterFrom-leaveTo("fade") {
+    opacity: 0;
+}
+
+.slide-fade, .slide-fade-reverse {
+    &-enter-active {
+        transition: all .6s ease;
+    }
+
+    &-leave-active {
+        transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+
+    &-leave-from, &-leave-active, &-leave-to {
+        position: absolute !important;
+    }
+}
+
+@include transitions.enterFrom-leaveTo("slide-fade") {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+@include transitions.enterFrom-leaveTo("slide-fade-reverse") {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+@include transitions.enterActive-leaveActive("scale") {
+    transition-duration: 300ms;
+    transition-property: opacity, transform;
+    opacity: 1;
+    //backface-visibility: hidden;
+}
+
+@include transitions.enterFrom-leaveActive("scale") {
+    transform: scale(0.5);
+    opacity: 0;
+}
+
+.slide-left-right, .slide-right-left,
+.slide-bottom-top, .slide-top-bottom {
+    &-enter-active, &-leave-active {
+        transition: vars.$transition-enter;
+    }
+
+    &-enter-from, &-leave-to {
+        opacity: 0;
+    }
+
+    &-enter-to {
+        transform: translate(0);
+    }
+
+    &-leave-from, &-leave-active, &-leave-to {
+        position: absolute !important;
+    }
+}
+
+.slide-bottom-top {
+    &-enter-from {
+        transform: translate(0, 100%);
+    }
+
+    &-leave-to {
+        transform: translate(0, -100%);
+    }
+}
+
+.slide-top-bottom {
+    &-enter-from {
+        transform: translate(0, -100%);
+    }
+
+    &-leave-to {
+        transform: translate(0, 100%);
+    }
+}
+
+.slide-left-right {
+    &-enter-from {
+        transform: translateX(-100%);
+    }
+
+    &-leave-to {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+.slide-right-left {
+    &-enter-from {
+        transform: translateX(100%);
+    }
+
+    &-leave-to {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+.tab-transition {
+    &-enter-from {
+        transform: translate(100%, 0);
+    }
+
+    &-leave-from, &-leave-active {
+        position: absolute;
+        top: 0
+    }
+
+    &-leave-to {
+        transform: translate(-100%, 0);
+        position: absolute;
+    }
+}
+
+.tab-transition-reverse {
+    &-enter-from {
+        transform: translate(-100%, 0);
+    }
+
+    &-leave-from, &-leave-to {
+        transform: translate(100%, 0);
+        position: absolute;
+        top: 0;
+    }
+}
+
+@keyframes rotateIn {
+    0% {
+        transform-origin: center center;
+        transform: rotate(-180deg);
+        opacity: 0;
+    }
+    100% {
+        transform-origin: center center;
+        transform: rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rotateOut {
+    0% {
+        transform-origin: center center;
+        transform: rotate(0);
+        opacity: 1;
+    }
+    100% {
+        transform-origin: center center;
+        transform: rotate(180deg);
+        opacity: 0;
+    }
+}
+
+@keyframes rotateInUpLeft {
+    0% {
+        transform-origin: left bottom;
+        transform: rotate(90deg);
+        opacity: 0;
+    }
+    100% {
+        transform-origin: left bottom;
+        transform: rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rotateOutUpLeft {
+    0% {
+        transform-origin: left bottom;
+        transform: rotate(0);
+        opacity: 1;
+    }
+    100% {
+        transform-origin: left bottom;
+        transform: rotate(-90deg);
+        opacity: 0;
+    }
+}
+
+.rotate-clock-wise {
+    &-enter-active {
+        animation: rotateIn 1s;
+    }
+
+    &-leave-active {
+        animation: rotateOut 1s;
+    }
+
+    &-enter-from, &-leave-to {
+        opacity: 0;
+    }
+}
+
+.rotate-clock-reverse {
+    &-enter-active {
+        animation: rotateInUpLeft 750ms;
+    }
+
+    &-leave-active {
+        animation: rotateOutUpLeft 750ms;
+    }
+
+    &-enter-from, &-leave-to {
+        opacity: 0;
+    }
+}
+
+@keyframes rollIn {
+    0% {
+        transform: translateX(-100%) rotate(-120deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0) rotate(0);
+        opacity: 1;
+    }
+}
+
+@keyframes rollOut {
+    0% {
+        transform: translateX(0) rotate(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(100%) rotate(120deg);
+        opacity: 0;
+    }
+}
+
+.roll-in-out {
+    &-enter-active {
+        animation: rollIn 750ms;
+    }
+
+    &-leave-active {
+        animation: rollOut 750ms;
+    }
+
+    &-enter-from, &-leave-to {
+        opacity: 0;
+    }
+}

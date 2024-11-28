@@ -16,17 +16,17 @@ import { createCommentVNode, h } from 'vue';
 
 export function useAlertClassNames(
     props: Readonly<TAlertOptionProps>,
-    colorName: ComputedRef<string | undefined>
+    color: ComputedRef<string | undefined>
 ): Record<string, boolean | undefined> {
     const solid = props.solidFill || props.filled;
     return {
         'alert d-flex': true,
         'align-items-center': true,
         'alert-dismissible': props.dismissible,
-        [`alert-${colorName.value}`]: !Helper.isEmpty(colorName.value) && !props.outlined && !solid,
-        [`${cssPrefix}alert-solid-${colorName.value}`]:
-            !Helper.isEmpty(colorName.value) && solid && !props.outlined,
-        [`${cssPrefix}alert-outline-${colorName.value}`]: props.outlined,
+        [`alert-${color.value}`]: !Helper.isEmpty(color.value) && !props.outlined && !solid,
+        [`${cssPrefix}alert-solid-${color.value}`]:
+            !Helper.isEmpty(color.value) && solid && !props.outlined,
+        [`${cssPrefix}alert-outline-${color.value}`]: props.outlined,
     };
 }
 

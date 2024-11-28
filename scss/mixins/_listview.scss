@@ -1,97 +1,100 @@
 @use "sass:color";
 @use "sass:list";
-@use "../functions" as Func;
+@use "../utils/color_functions" as color_utils;
+@use "../utils/color_helper" as helper;
+@use "../color_vars" as colors;
+@use "../variables" as vars;
 
-/* BsListView variants mixins -- sass variables */
-
+// BsListView variants mixins -- sass variables
+//----------------------------------------------
 @mixin make-listview-variant($name, $color) {
-    .#{$prefix}list-#{$name} {
-        $subheader-color: Func.round-color-rgba(set-color-contrast($color, rgba(color.adjust($gray-900, $lightness: 5%), .6), rgba($white, .6)));
+    .#{vars.$prefix}list-#{$name} {
+        $subheader-color: helper.round-color-rgba(color_utils.set-color-contrast($color, rgba(color.adjust(colors.$gray-900, $lightness: 5%), .6), rgba(colors.$white, .6)));
 
-        --#{$prefix}listview-bg: #{$color};
-        --#{$prefix}subheader-color: #{$subheader-color};
+        --#{vars.$prefix}listview-bg: #{$color};
+        --#{vars.$prefix}subheader-color: #{$subheader-color};
 
-        @if (brightness($color) < 160) {
-            .#{$prefix}divider {
-                --#{$prefix}divider-color: #{rgba($white, 0.4)};
+        @if (color_utils.brightness($color) < 160) {
+            .#{vars.$prefix}divider {
+                --#{vars.$prefix}divider-color: #{rgba(colors.$white, 0.4)};
             }
 
             .dropdown-menu {
-                --#{$prefix-bs}dropdown-divider-bg: #{rgba($white, 0.15)};
+                --#{vars.$prefix-bs}dropdown-divider-bg: #{rgba(colors.$white, 0.15)};
             }
         }
     }
 }
 
 @mixin make-list-tile-variant($name, $color) {
-    .#{$prefix}list-#{$name} {
-        $tile-hover-bg: Func.round-color-rgba(set-color-contrast($color, $default-hover-bgcolor, set-color-contrast($color, rgba(color.adjust($color, $lightness: -30%), .25), rgba(color.adjust($color, $lightness: -20%), .25), 160), 220));
-        $tile-active-bg: set-alt-bgcolor($color, .2);
+    .#{vars.$prefix}list-#{$name} {
+        $tile-hover-bg: helper.round-color-rgba(color_utils.set-color-contrast($color, vars.$default-hover-bgcolor, color_utils.set-color-contrast($color, rgba(color.adjust($color, $lightness: -30%), .25), rgba(color.adjust($color, $lightness: -20%), .25), 160), 220));
+        $tile-active-bg: color_utils.set-alt-bgcolor($color, .2);
 
         @if($name == "black") {
-            $tile-hover-bg: set-alt-bgcolor($color, .2);
-            $tile-active-bg: rgba(Func.round-color-rgb(color.scale($color, $lightness: 55%)), .3);
+            $tile-hover-bg: color_utils.set-alt-bgcolor($color, .2);
+            $tile-active-bg: rgba(helper.round-color-rgb(color.scale($color, $lightness: 55%)), .3);
         }
 
-        $tile-title-color: set-color-contrast($color, $gray-900, $white);
-        $tile-subtitle-color: set-color-contrast($color, $gray-700, rgba($white, .7));
-        $tile-leading-color: set-color-contrast($color, rgba($black, .54), rgba($white, .6));
-        $tile-active-title-color: Func.round-color-rgb(set-color-contrast($color, color.adjust($default-active-bgcolor, $lightness: -20%), $white, 220));
-        $tile-active-subtitle-color: Func.round-color-rgba(set-color-contrast($color, color.adjust($default-active-bgcolor, $lightness: -10%), rgba($white, .77), 220));
-        $tile-active-leading-icon-color: Func.round-color-rgba(set-color-contrast($color, rgba($default-active-bgcolor, .54), rgba($white, .75), 220));
-        $tile-disable-title-color: set-color-contrast($color, rgba($black, .5), rgba($white, .4));
+        $tile-title-color: color_utils.set-color-contrast($color, colors.$gray-900, colors.$white);
+        $tile-subtitle-color: color_utils.set-color-contrast($color, colors.$gray-700, rgba(colors.$white, .7));
+        $tile-leading-color: color_utils.set-color-contrast($color, rgba(colors.$black, .54), rgba(colors.$white, .6));
+        $tile-active-title-color: helper.round-color-rgb(color_utils.set-color-contrast($color, color.adjust(vars.$default-active-bgcolor, $lightness: -20%), colors.$white, 220));
+        $tile-active-subtitle-color: helper.round-color-rgba(color_utils.set-color-contrast($color, color.adjust(vars.$default-active-bgcolor, $lightness: -10%), rgba(colors.$white, .77), 220));
+        $tile-active-leading-icon-color: helper.round-color-rgba(color_utils.set-color-contrast($color, rgba(vars.$default-active-bgcolor, .54), rgba(colors.$white, .75), 220));
+        $tile-disable-title-color: color_utils.set-color-contrast($color, rgba(colors.$black, .5), rgba(colors.$white, .4));
         $tile-disable-subtitle-color: $tile-disable-title-color;
         $tile-disable-leading-color: $tile-disable-title-color;
-        $tile-indicator-border-color: Func.round-color-rgba(set-color-contrast($color, color.adjust($mdb-default-color, $lightness: -5%), color.adjust(set-alt-bgcolor($color, .65), $lightness: 45%), 220));
+        $tile-indicator-border-color: helper.round-color-rgba(color_utils.set-color-contrast($color, color.adjust(colors.$mdb-default-color, $lightness: -5%), color.adjust(color_utils.set-alt-bgcolor($color, .65), $lightness: 45%), 220));
 
-        .#{$prefix}list-tile, .#{$prefix}list-nav {
-            --#{$prefix}tile-action-color: #{$tile-leading-color};
-            --#{$prefix}tile-leading-color: #{$tile-leading-color};
-            --#{$prefix}tile-title-color: #{$tile-title-color};
-            --#{$prefix}tile-subtitle-color: #{$tile-subtitle-color};
-            --#{$prefix}tile-hover-bg: #{$tile-hover-bg};
+        .#{vars.$prefix}list-tile, .#{vars.$prefix}list-nav {
+            --#{vars.$prefix}tile-action-color: #{$tile-leading-color};
+            --#{vars.$prefix}tile-leading-color: #{$tile-leading-color};
+            --#{vars.$prefix}tile-title-color: #{$tile-title-color};
+            --#{vars.$prefix}tile-subtitle-color: #{$tile-subtitle-color};
+            --#{vars.$prefix}tile-hover-bg: #{$tile-hover-bg};
 
-            --#{$prefix}tile-active-bg: #{$tile-active-bg};
-            --#{$prefix}tile-active-action-color: #{$tile-active-leading-icon-color};
-            --#{$prefix}tile-active-leading-color: #{$tile-active-title-color};
-            --#{$prefix}tile-active-leading-icon-color: #{$tile-active-leading-icon-color};
-            --#{$prefix}tile-active-title-color: #{$tile-active-title-color};
-            --#{$prefix}tile-active-subtitle-color: #{$tile-active-subtitle-color};
+            --#{vars.$prefix}tile-active-bg: #{$tile-active-bg};
+            --#{vars.$prefix}tile-active-action-color: #{$tile-active-leading-icon-color};
+            --#{vars.$prefix}tile-active-leading-color: #{$tile-active-title-color};
+            --#{vars.$prefix}tile-active-leading-icon-color: #{$tile-active-leading-icon-color};
+            --#{vars.$prefix}tile-active-title-color: #{$tile-active-title-color};
+            --#{vars.$prefix}tile-active-subtitle-color: #{$tile-active-subtitle-color};
 
             $list-colors: "amber", "yellow", "lime", "warning", "warning-color";
             @if(not list.index($list-colors, $name)) {
-                --#{$prefix}tile-active-indicator-border-color: #{$tile-indicator-border-color};
+                --#{vars.$prefix}tile-active-indicator-border-color: #{$tile-indicator-border-color};
             } @else {
-                --#{$prefix}tile-active-indicator-border-color: #{Func.round-color-rgb(color.adjust($mdb-default-color, $lightness: -5%))};
+                --#{vars.$prefix}tile-active-indicator-border-color: #{helper.round-color-rgb(color.adjust(colors.$mdb-default-color, $lightness: -5%))};
             }
 
-            --#{$prefix}tile-disable-action-color: #{$tile-disable-leading-color};
-            --#{$prefix}tile-disable-leading-color: #{$tile-disable-leading-color};
-            --#{$prefix}tile-disable-title-color: #{$tile-disable-title-color};
-            --#{$prefix}tile-disable-subtitle-color: #{$tile-disable-subtitle-color};
+            --#{vars.$prefix}tile-disable-action-color: #{$tile-disable-leading-color};
+            --#{vars.$prefix}tile-disable-leading-color: #{$tile-disable-leading-color};
+            --#{vars.$prefix}tile-disable-title-color: #{$tile-disable-title-color};
+            --#{vars.$prefix}tile-disable-subtitle-color: #{$tile-disable-subtitle-color};
 
-            $divider-color: set-color-contrast($color, $gray-300, rgba($white, .18), 220);
-            $nav-item-expanded-bg: set-alt-bgcolor($color);
+            $divider-color: color_utils.set-color-contrast($color, colors.$gray-300, rgba(colors.$white, .18), 220);
+            $nav-item-expanded-bg: color_utils.set-alt-bgcolor($color);
 
-            --#{$prefix}nav-item-color: #{$tile-title-color};
-            --#{$prefix}nav-item-divider-color: #{$divider-color};
-            --#{$prefix}nav-item-icon-color: #{$tile-leading-color};
-            --#{$prefix}nav-item-expanded-bg: #{$nav-item-expanded-bg};
-            --#{$prefix}nav-item-hover-bg: #{$tile-hover-bg};
-            --#{$prefix}nav-item-active-bg: #{$tile-active-bg};
-            --#{$prefix}nav-item-active-color: #{$tile-active-title-color};
-            --#{$prefix}nav-item-active-icon-color: #{$tile-active-leading-icon-color};
-            --#{$prefix}nav-item-disable-color: #{$tile-disable-title-color};
-            --#{$prefix}nav-item-disable-icon-color: #{$tile-disable-leading-color};
+            --#{vars.$prefix}nav-item-color: #{$tile-title-color};
+            --#{vars.$prefix}nav-item-divider-color: #{$divider-color};
+            --#{vars.$prefix}nav-item-icon-color: #{$tile-leading-color};
+            --#{vars.$prefix}nav-item-expanded-bg: #{$nav-item-expanded-bg};
+            --#{vars.$prefix}nav-item-hover-bg: #{$tile-hover-bg};
+            --#{vars.$prefix}nav-item-active-bg: #{$tile-active-bg};
+            --#{vars.$prefix}nav-item-active-color: #{$tile-active-title-color};
+            --#{vars.$prefix}nav-item-active-icon-color: #{$tile-active-leading-icon-color};
+            --#{vars.$prefix}nav-item-disable-color: #{$tile-disable-title-color};
+            --#{vars.$prefix}nav-item-disable-icon-color: #{$tile-disable-leading-color};
         }
 
         .dropdown-menu {
-            --#{$prefix-bs}dropdown-bg: var(--#{$prefix}listview-bg);
-            --#{$prefix-bs}dropdown-link-color: #{$tile-title-color};
-            --#{$prefix-bs}dropdown-link-active-bg: #{$tile-active-bg};
-            --#{$prefix-bs}dropdown-link-active-color: #{$tile-active-title-color};
-            --#{$prefix-bs}dropdown-link-hover-bg: #{$tile-hover-bg};
-            --#{$prefix-bs}dropdown-link-hover-color: #{$tile-active-title-color};
+            --#{vars.$prefix-bs}dropdown-bg: var(--#{vars.$prefix}listview-bg);
+            --#{vars.$prefix-bs}dropdown-link-color: #{$tile-title-color};
+            --#{vars.$prefix-bs}dropdown-link-active-bg: #{$tile-active-bg};
+            --#{vars.$prefix-bs}dropdown-link-active-color: #{$tile-active-title-color};
+            --#{vars.$prefix-bs}dropdown-link-hover-bg: #{$tile-hover-bg};
+            --#{vars.$prefix-bs}dropdown-link-hover-color: #{$tile-active-title-color};
         }
     }
 }

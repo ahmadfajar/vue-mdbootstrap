@@ -1,31 +1,32 @@
-@import "compass-mixins/lib/compass/css3";
-@import "compass-mixins/lib/compass/typography";
-@import "../../../scss/colors";
-@import "../../../scss/variables";
+@use "../../../scss/mixins/css3/text";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}appbar {
-    --#{$prefix}appbar-bg: #{$white};
-    --#{$prefix}appbar-color: #{$grey-darken-4};
-    --#{$prefix}appbar-height: 64px;
-    --#{$prefix}appbar-margin: #{$padding-sm ($padding-base - .25) $padding-sm $padding-base};
-    --#{$prefix}appbar-title-font-size: 1.5rem;
-    --#{$prefix}appbar-title-font-weight: #{$font-weight-normal};
+.#{vars.$prefix}appbar {
+    --#{vars.$prefix}appbar-bg: #{colors.$white};
+    --#{vars.$prefix}appbar-color: #{colors.$grey-darken-4};
+    --#{vars.$prefix}appbar-height: 64px;
+    --#{vars.$prefix}appbar-margin: #{vars.$padding-sm (vars.$padding-base - .25) vars.$padding-sm vars.$padding-base};
+    --#{vars.$prefix}appbar-title-font-size: 1.5rem;
+    --#{vars.$prefix}appbar-title-font-weight: #{vars.$font-weight-normal};
 
-    @include justify-content(flex-start);
-    background-color: var(--#{$prefix}appbar-bg);
+    justify-content: flex-start;
+    background-color: var(--#{vars.$prefix}appbar-bg);
     max-width: 100%;
 
-    > .#{$prefix}appbar-content {
-        @include flexbox((display:flex, align-items: center, flex-direction: row));
-        height: var(--#{$prefix}appbar-height);
-        padding: var(--#{$prefix}appbar-margin);
+    > .#{vars.$prefix}appbar-content {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        height: var(--#{vars.$prefix}appbar-height);
+        padding: var(--#{vars.$prefix}appbar-margin);
 
-        > .#{$prefix}appbar-title {
-            @include ellipsis();
-            font-size: var(--#{$prefix}appbar-title-font-size);
-            font-weight: var(--#{$prefix}appbar-title-font-weight);
+        > .#{vars.$prefix}appbar-title {
+            @include text.ellipsis();
+            font-size: var(--#{vars.$prefix}appbar-title-font-size);
+            font-weight: var(--#{vars.$prefix}appbar-title-font-weight);
             line-height: normal;
-            margin: 0 $padding-base;
+            margin: 0 vars.$padding-base;
 
             > a {
                 color: inherit;
@@ -33,19 +34,19 @@
             }
         }
 
-        > .#{$prefix}appbar-items {
-            @include display-flex();
+        > .#{vars.$prefix}appbar-items {
+            display: flex;
             max-width: 100%;
             padding: 0;
         }
     }
 
     &.smooth-animation {
-        @include transition($md-transition-default);
+        transition: $transition-default;
         // @include transition(.35s cubic-bezier(.5, .35, .75, 1));
     }
 
-    &.#{$prefix}appbar-shadow {
-        @include box-shadow($z-depth-1);
+    &.#{vars.$prefix}appbar-shadow {
+        box-shadow: vars.$z-depth-1;
     }
 }

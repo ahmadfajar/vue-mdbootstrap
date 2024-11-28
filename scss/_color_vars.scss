@@ -1,5 +1,6 @@
 @use "sass:color";
-@use "functions" as Func;
+@use "sass:map";
+@use "utils/color_helper" as helper;
 
 // Gray Colors
 $gray-100: #f8f9fa;
@@ -312,7 +313,7 @@ $grey-darken-4:   #212121 !default;
 $black-base: #000 !default;
 $white-base: #fff !default;
 
-$mdb-palette: (
+$full-palette: (
     "mdb-color": (
         "lighten-5":  $mdb-color-lighten-5,
         "lighten-4":  $mdb-color-lighten-4,
@@ -652,10 +653,14 @@ $mdb-default-color-dark:    #44307a !default;
 $mdb-default-color-light:   #b99ce1 !default;
 $mdb-unique-color:          #880e4f !default;
 $mdb-light-color:           #f8f9fa !default;
+$error-color:               $red-base !default;
 $white:                     $white-base;
 $black:                     $black-base;
-$error-color:               $red-base !default;
 
+// Set a specific jump point for requesting color jumps
+$theme-color-interval:      8% !default;
+
+// Material theme color
 // Applicable to:
 // BsButton, BsToggleButton, BsCheckbox, BsChip, BsCombobox, BsListView, BsListTile, BsListNav
 $material-colors: (
@@ -708,7 +713,7 @@ $theme-colors: (
     "brown":       $brown-base,
     "cyan":        $cyan-base,
     "dark-blue":   $blue-darken-4,
-    "dark-green":  Func.round-color-rgb(color.adjust($green-darken-4, $lightness: 2%)),
+    "dark-green":  helper.round-color-rgb(color.adjust($green-darken-4, $lightness: 2%)),
     "deep-orange": $deep-orange-base,
     "deep-purple": $deep-purple-base,
     "green":       $green-base,
@@ -727,9 +732,7 @@ $theme-colors: (
     "black":       $black-base
 );
 
-// used to reduced duplicate css when created theme colors
-$merge-theme-colors: map-merge($material-colors, $theme-colors);
-
+// This theme color is bundled by default
 $context-colors: (
     "default":      $default-color,
     "primary":      $primary-color,
@@ -738,9 +741,29 @@ $context-colors: (
     "success":      $success-color,
     "warning":      $warning-color,
     "danger":       $danger-color,
-    "light":        $grey-lighten-4,
+    "grey":         $grey-base,
+    "light-grey":   $grey-lighten-2,
+    "light":        $mdb-light-color,
     "dark":         $grey-darken-4,
 );
 
-// Set a specific jump point for requesting color jumps
-$theme-color-interval:      8% !default;
+// Merge theme colors to reduced duplication when creating css
+$merge-theme-colors: map.merge($material-colors, $theme-colors);
+
+// This theme color is distributed independently.
+// Colors that already exist on default bundle is removed to prevent duplication,
+//
+// This theme color can be used for most components.
+$common-theme-colors: map.remove($theme-colors,
+    "default", "primary", "secondary", "info", "success", "warning", "danger",
+    "grey", "light-grey", "light", "dark", "black", "white"
+);
+
+// This theme color is distributed independently.
+// Colors that already exist on default bundle is removed to prevent duplication,
+//
+// This theme color can only be used on some components.
+$custom-theme-colors: map.remove($merge-theme-colors,
+    "default", "primary", "secondary", "info", "success", "warning", "danger",
+    "grey", "light-grey", "light", "dark", "black", "white"
+);

@@ -1,8 +1,8 @@
 @import "/node_modules/compass-mixins/lib/compass/css3";
 @import "/node_modules/compass-mixins/lib/animation/core";
-@import "../../../scss/functions";
+@import "../../../scss/utils/color_functions";
 @import "../../../scss/mixins/progressbar";
-@import "../../../scss/colors";
+@import "../../../scss/color_vars";
 @import "../../../scss/variables";
 
 @keyframes #{$prefix}spin {
@@ -184,7 +184,7 @@
         }
 
         .#{$prefix}progress-spinner-circle {
-            animation: 4s infinite $md-transition-stand-timing;
+            animation: 4s infinite $transition-stand-animation;
         }
     }
 
@@ -194,7 +194,7 @@
             transition-duration: 2s;
 
             .#{$prefix}progress-spinner-draw {
-                animation: #{$prefix}progress-spinner-initial-rotate 1.98s $md-transition-stand-timing forwards;
+                animation: #{$prefix}progress-spinner-initial-rotate 1.98s $transition-stand-animation forwards;
             }
         }
 
@@ -207,14 +207,14 @@
         overflow: visible;
         transform: scale(1) rotate(-90deg);
         transform-origin: center;
-        transition: .4s $md-transition-stand-timing;
+        transition: .4s $transition-stand-animation;
         will-change: opacity, transform;
     }
 
     .#{$prefix}progress-spinner-circle {
         fill: none;
         transform-origin: center;
-        transition: stroke-dashoffset .25s $md-transition-stand-timing;
+        transition: stroke-dashoffset .25s $transition-stand-animation;
         will-change: stroke-dashoffset, stroke-dasharray, stroke-width, animation-name, r;
     }
 }
@@ -230,7 +230,7 @@
     position: relative;
     transform: translateZ(0) scaleY(1);
     transform-origin: center center;
-    transition: opacity .3s $md-transition-default-timing, transform .4s $md-transition-default-timing;
+    transition: opacity .3s $transition-default-animation, transform .4s $transition-default-animation;
     will-change: opacity, transform;
 
     &.#{$prefix}indeterminate,
@@ -259,7 +259,7 @@
         > .#{$prefix}progress-bar-fill,
         > .#{$prefix}progress-bar-track,
         > .#{$prefix}progress-bar-buffer {
-            transition: .25s $md-transition-stand-timing;
+            transition: .25s $transition-stand-animation;
         }
     }
 
