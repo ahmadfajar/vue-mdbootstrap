@@ -27,6 +27,7 @@
   "jsdelivr": "dist/vue-mdb.umd.min.js",
   "files": [
     "dist",
+    "scss",
     "component.d.ts",
     "package.json",
     "CHANGELOG.md",
@@ -52,16 +53,16 @@
   "scripts": {
     "dev": "rimraf dist && run-s type-check build:dev",
     "prod": "rimraf dist && run-s type-check build:prod",
-    "dist": "rimraf dist && run-p type-check build:* && run-s css:beauty css:minify",
+    "dist": "rimraf dist && run-p type-check build:* css:bundle css:custom && run-s css:minify css:custom-minify",
     "build:dev": "vite build",
     "build:lib": "vite build --config vite.config.lib.ts",
     "build:prod": "vite build --config vite.config.prod.ts",
     "build:types": "rollup --config rollup.config.dts.mjs",
+    "css:bundle": "sass --no-source-map src/bundle.scss dist/bundle.css",
     "css:beauty": "cleancss --format beautify -o dist/bundle.css dist/bundle.css",
     "css:minify": "cleancss -o dist/bundle.min.css dist/bundle.css",
-    "scss:bundle": "sass --no-source-map scss/bundle.scss dist/bundle.css",
-    "scss:compile": "sass --no-source-map scss/custom/all.scss dist/custom-colors.css",
-    "scss:minify": "cleancss -o dist/custom-colors.min.css dist/custom-colors.css",
+    "css:custom": "sass --no-source-map scss/custom/all.scss dist/custom-colors.css",
+    "css:custom-minify": "cleancss -o dist/custom-colors.min.css dist/custom-colors.css",
     "type-check": "tsc --noEmit -p tsconfig.build.json --composite false"
   },
   "dependencies": {

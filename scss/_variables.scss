@@ -1,15 +1,7 @@
 @use "sass:math";
-@use "color_vars";
+@use "color_vars" as colors;
 
-// override compass-mixins global variables
-$legacy-support-for-ie:                 false;
-$legacy-support-for-mozilla:            false;
-$experimental-support-for-opera:        false;
-$experimental-support-for-mozilla:      false;
-$experimental-support-for-webkit:       false;
-$experimental-support-for-microsoft:    false;
-
-// component prefix
+// Component prefix
 $prefix:                      'md-' !default;
 $prefix-bs:                   'bs-' !default;
 
@@ -46,22 +38,23 @@ $z-depth-3:                   0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 r
 $z-depth-4:                   0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21) !default;
 $z-depth-5:                   0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22) !default;
 
-$default-active-bgcolor:            color_vars.$mdb-default-color !default;
+$default-active-bgcolor:            colors.$mdb-default-color !default;
 $default-hover-bgcolor:             rgba($default-active-bgcolor, .06) !default; // rgba($black, 0.045) !default;
 
-// padding or margin
+// Padding or Margin
 $padding-base:                      1rem !default;
 $padding-xs:                        .25rem !default;
 $padding-sm:                        $padding-base - .5 !default;
 $padding-lg:                        $padding-base + .5 !default;
 $padding-xl:                        $padding-base * 2 !default;
 
-// Border radius
+// Borders
 $border-radius-base:                .375rem !default;
 $border-radius-sm:                  .25rem !default;
 $border-radius-lg:                  .5rem !default;
 $border-radius-pill:                50rem !default;
 $border-radius-circle:              50% !default;
+$border-width:                      1px !default;
 
 // Width of the `border` for generating carets that indicator dropdowns.
 $caret-width:                       .4rem;
@@ -77,6 +70,14 @@ $btn-border-radius:                 $border-radius-lg !default;
 $btn-border-radius-lg:              .7rem !default;
 $btn-margin-basic:                  .375rem !default;
 $btn-transition:                    color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+
+// Cards
+$card-spacer-y:                     $padding-base !default;
+$card-spacer-x:                     $padding-base !default;
+$card-title-spacer-y:               $padding-base * .5 !default;
+$card-border-width:                 $border-width !default;
+$card-cap-padding-y:                $card-spacer-y * .5 !default;
+$card-cap-padding-x:                $card-spacer-x !default;
 
 // Input Controls
 $checkbox-size:                     20px !default;
@@ -112,7 +113,6 @@ $text-field-opacity:                .6 !default;
 $text-field-hover-opacity:          .9 !default;
 $text-field-support-text-opacity:   .65 !default;
 
-
 // Tabs
 $tabs-item-spacing:                 .375rem !default;
 $tabs-item-padding:                 .75rem 1.25rem !default;
@@ -131,10 +131,21 @@ $table-border-width:                1px !default;
 $table-cell-padding:                $padding-base - .4;
 $table-font-size:                   .9rem;
 $table-checkbox-selection-size:     math.floor(($table-font-size + $table-cell-padding) * 2);
-$table-header-color:                color_vars.$gray-900;
-$table-header-bgcolor:              color_vars.$grey-lighten-4;
+$table-header-color:                colors.$gray-900;
+$table-header-bgcolor:              colors.$grey-lighten-4;
 $table-hover-bgcolor:               $default-hover-bgcolor;
-$table-text-color:                  color_vars.$black;
+$table-text-color:                  colors.$black;
+
+// Tooltips
+$tooltip-max-width:                 200px !default;
+$tooltip-color:                     colors.$white !default;
+$tooltip-bg:                        colors.$black !default;
+$tooltip-border-radius:             $border-radius-base !default;
+$tooltip-opacity:                   .9 !default;
+$tooltip-padding-y:                 $padding-base * .25 !default;
+$tooltip-padding-x:                 $padding-base * .5 !default;
+$tooltip-arrow-width:               .8rem !default;
+$tooltip-arrow-height:              .4rem !default;
 
 
 // Transitions variables

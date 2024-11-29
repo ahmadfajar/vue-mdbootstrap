@@ -1,84 +1,85 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/utils/color_functions";
-@import "../../../scss/mixins/listview";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
+@use "sass:map";
+@use "sass:math";
+@use "../../../scss/mixins/css3/borders";
+@use "../../../scss/mixins/listview";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}list {
-    --#{$prefix}listview-padding-x: 0;
-    --#{$prefix}listview-padding-y: #{$padding-sm};
+.#{vars.$prefix}list {
+    --#{vars.$prefix}listview-padding-x: 0;
+    --#{vars.$prefix}listview-padding-y: #{vars.$padding-sm};
 
-    --#{$prefix}tile-minheight: 2.5rem;
-    --#{$prefix}tile-action-minwidth: 1.5rem;
-    --#{$prefix}tile-spacing-x: #{$padding-base - .5};
-    --#{$prefix}tile-spacing-y: .375rem;
-    --#{$prefix}tile-padding-x: #{$padding-base};
-    --#{$prefix}tile-padding-y: #{$padding-sm};
-    --#{$prefix}tile-title-font-size: #{$font-size-base};
-    --#{$prefix}tile-title-font-weight: #{$font-weight-normal};
-    --#{$prefix}tile-subtitle-font-size: #{calc($font-size-base * 90/100)};
-    --#{$prefix}tile-active-title-font-weight: #{$font-weight-semi-bold};
-    --#{$prefix}tile-active-indicator-border: 4px;
+    --#{vars.$prefix}tile-minheight: 2.5rem;
+    --#{vars.$prefix}tile-action-minwidth: 1.5rem;
+    --#{vars.$prefix}tile-spacing-x: #{vars.$padding-base - .5};
+    --#{vars.$prefix}tile-spacing-y: .375rem;
+    --#{vars.$prefix}tile-padding-x: #{vars.$padding-base};
+    --#{vars.$prefix}tile-padding-y: #{vars.$padding-sm};
+    --#{vars.$prefix}tile-title-font-size: #{vars.$font-size-base};
+    --#{vars.$prefix}tile-title-font-weight: #{vars.$font-weight-normal};
+    --#{vars.$prefix}tile-subtitle-font-size: #{math.div((vars.$font-size-base * 90), 100)};
+    --#{vars.$prefix}tile-active-title-font-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix}tile-active-indicator-border: 4px;
 
-    --#{$prefix}nav-item-padding-x: #{$padding-base};
-    --#{$prefix}nav-item-padding-y: #{$padding-xs};
-    --#{$prefix}nav-item-line-height: normal;
-    --#{$prefix}nav-item-font-size: #{$font-size-base};
-    --#{$prefix}nav-item-font-weight: #{$font-weight-normal};
-    --#{$prefix}nav-item-active-font-weight: #{$font-weight-semi-bold};
+    --#{vars.$prefix}nav-item-padding-x: #{vars.$padding-base};
+    --#{vars.$prefix}nav-item-padding-y: #{vars.$padding-xs};
+    --#{vars.$prefix}nav-item-line-height: normal;
+    --#{vars.$prefix}nav-item-font-size: #{vars.$font-size-base};
+    --#{vars.$prefix}nav-item-font-weight: #{vars.$font-weight-normal};
+    --#{vars.$prefix}nav-item-active-font-weight: #{vars.$font-weight-semi-bold};
 
-    @include transition($transition-default, height);
+    background-color: var(--#{vars.$prefix}listview-bg);
     list-style-type: none;
     overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
-    background-color: var(--#{$prefix}listview-bg);
-    padding: var(--#{$prefix}listview-padding-y) var(--#{$prefix}listview-padding-x);
+    padding: var(--#{vars.$prefix}listview-padding-y) var(--#{vars.$prefix}listview-padding-x);
+    transition: vars.$transition-default, height;
 
-    .#{$prefix}subheader {
-        @include user-select(none);
+    .#{vars.$prefix}subheader {
+        user-select: none;
     }
 
     .dropdown-menu {
-        --#{$prefix-bs}dropdown-padding-y: 0;
-        --#{$prefix-bs}dropdown-item-padding-y: var(--#{$prefix}tile-padding-y);
-        --#{$prefix-bs}dropdown-header-color: var(--#{$prefix}subheader-color);
+        --#{vars.$prefix-bs}dropdown-padding-y: 0;
+        --#{vars.$prefix-bs}dropdown-item-padding-y: var(--#{vars.$prefix}tile-padding-y);
+        --#{vars.$prefix-bs}dropdown-header-color: var(--#{vars.$prefix}subheader-color);
     }
 
-    &.#{$prefix}list-space-both,
-    &.#{$prefix}list-space-left,
-    &.#{$prefix}list-space-right {
+    &.#{vars.$prefix}list-space-both,
+    &.#{vars.$prefix}list-space-left,
+    &.#{vars.$prefix}list-space-right {
         .dropdown-item {
-            margin-bottom: calc(var(--#{$prefix}tile-spacing-y) * .5);
-            margin-top: calc(var(--#{$prefix}tile-spacing-y) * .5);
+            margin-bottom: calc(var(--#{vars.$prefix}tile-spacing-y) * .5);
+            margin-top: calc(var(--#{vars.$prefix}tile-spacing-y) * .5);
         }
     }
 
-    &.#{$prefix}list-space-both,
-    &.#{$prefix}list-space-left {
+    &.#{vars.$prefix}list-space-both,
+    &.#{vars.$prefix}list-space-left {
         .dropdown-item {
-            margin-left: var(--#{$prefix}tile-spacing-x);
+            margin-left: var(--#{vars.$prefix}tile-spacing-x);
         }
     }
 
-    &.#{$prefix}list-space-both,
-    &.#{$prefix}list-space-right {
+    &.#{vars.$prefix}list-space-both,
+    &.#{vars.$prefix}list-space-right {
         .dropdown-item {
-            margin-right: var(--#{$prefix}tile-spacing-x);
+            margin-right: var(--#{vars.$prefix}tile-spacing-x);
         }
     }
 }
 
 .card {
-    > .#{$prefix}list:first-child {
-        @include border-top-radius(var(--#{$prefix-bs}card-border-radius));
+    > .#{vars.$prefix}list:first-child {
+        @include borders.top-radius(var(--#{vars.$prefix-bs}card-border-radius));
     }
 
-    > .#{$prefix}list:last-child {
-        @include border-bottom-radius(var(--#{$prefix-bs}card-border-radius));
+    > .#{vars.$prefix}list:last-child {
+        @include borders.bottom-radius(var(--#{vars.$prefix-bs}card-border-radius));
     }
 }
 
-@each $name, $color in map-merge($merge-theme-colors, ("white": $white)) {
-    @include make-listview-variant($name, $color);
+@each $name, $color in map.merge(colors.$context-colors, ("white": colors.$white, "black": colors.$black)) {
+    @include listview.make-listview-variant($name, $color);
 }

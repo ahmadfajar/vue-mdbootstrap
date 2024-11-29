@@ -1,43 +1,39 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/utils/color_functions";
-@import "../../../scss/mixins/listview";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
+@use "../../../scss/variables" as vars;
 
 
-.#{$prefix}list-nav {
-    --#{$prefix}nav-item-state-bg: transparent;
-    --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-color);
-    --#{$prefix}nav-item-state-icon-color: var(--#{$prefix}nav-item-icon-color);
-    --#{$prefix}nav-item-state-font-weight: var(--#{$prefix}nav-item-font-weight);
-    --#{$prefix}nav-item-inner-state-bg: inherit;
-    --#{$prefix}nav-item-padding-left: var(--#{$prefix}nav-item-padding-x);
-    --#{$prefix}nav-item-padding-right: var(--#{$prefix}nav-item-padding-x);
+.#{vars.$prefix}list-nav {
+    --#{vars.$prefix}nav-item-state-bg: transparent;
+    --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-color);
+    --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-icon-color);
+    --#{vars.$prefix}nav-item-state-font-weight: var(--#{vars.$prefix}nav-item-font-weight);
+    --#{vars.$prefix}nav-item-inner-state-bg: inherit;
+    --#{vars.$prefix}nav-item-padding-left: var(--#{vars.$prefix}nav-item-padding-x);
+    --#{vars.$prefix}nav-item-padding-right: var(--#{vars.$prefix}nav-item-padding-x);
 
     padding: 0;
     margin: 0;
     list-style: none;
 
     &.collapsing {
-        @include transition(height .65s $transition-drop-animation);
+        transition: height .65s vars.$transition-drop-animation;
     }
 
-    .#{$prefix}nav-item {
-        background-color: var(--#{$prefix}nav-item-state-bg);
+    .#{vars.$prefix}nav-item {
+        background-color: var(--#{vars.$prefix}nav-item-state-bg);
         position: relative;
         white-space: nowrap;
         width: 100%;
 
-        > .#{$prefix}nav-item-inner {
-            @include user-select(none);
-            cursor: pointer;
+        > .#{vars.$prefix}nav-item-inner {
+            background-color: var(--#{vars.$prefix}nav-item-inner-state-bg);
+            color: var(--#{vars.$prefix}nav-item-state-color);
+            font-size: var(--#{vars.$prefix}nav-item-font-size);
+            font-weight: var(--#{vars.$prefix}nav-item-state-font-weight);
             display: block;
             outline: 0 none;
             text-decoration: none;
-            background-color: var(--#{$prefix}nav-item-inner-state-bg);
-            color: var(--#{$prefix}nav-item-state-color);
-            font-size: var(--#{$prefix}nav-item-font-size);
-            font-weight: var(--#{$prefix}nav-item-state-font-weight);
+            cursor: pointer;
+            user-select: none;
 
             &:hover,
             &:focus,
@@ -45,116 +41,117 @@
                 text-decoration: none;
             }
 
-            > .#{$prefix}ripple {
-                @include align-items(center);
-                min-height: var(--#{$prefix}tile-minheight);
-                line-height: var(--#{$prefix}nav-item-line-height);
-                padding: var(--#{$prefix}nav-item-padding-y) var(--#{$prefix}nav-item-padding-right) var(--#{$prefix}nav-item-padding-y) var(--#{$prefix}nav-item-padding-left);
+            > .#{vars.$prefix}ripple {
+                align-items: center;
+                line-height: var(--#{vars.$prefix}nav-item-line-height);
+                padding: var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-right) var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-left);
+                min-height: var(--#{vars.$prefix}tile-minheight);
 
-                > .#{$prefix}nav-text {
-                    @include transition(opacity .8s);
-                    @include opacity(1);
-                    @include flex(1);
+                > .#{vars.$prefix}nav-text {
+                    flex: 1;
+                    opacity: 1;
+                    transition: opacity .8s;
                 }
 
-                > .#{$prefix}icon:first-child {
-                    margin-right: calc(var(--#{$prefix}nav-item-padding-x) + .25rem);
-                    color: var(--#{$prefix}nav-item-state-icon-color);
+                > .#{vars.$prefix}icon:first-child {
+                    margin-right: calc(var(--#{vars.$prefix}nav-item-padding-x) + .25rem);
+                    color: var(--#{vars.$prefix}nav-item-state-icon-color);
                 }
 
                 > .badge {
-                    --#{$prefix-bs}badge-font-size: 75%;
-                    --#{$prefix-bs}badge-padding-y: #{$padding-xs};
-                    --#{$prefix-bs}badge-font-weight: #{$font-weight-normal};
-                    line-height: var(--#{$prefix}nav-item-line-height);
+                    --#{vars.$prefix-bs}badge-font-size: 75%;
+                    --#{vars.$prefix-bs}badge-padding-y: #{vars.$padding-xs};
+                    --#{vars.$prefix-bs}badge-font-weight: #{vars.$font-weight-normal};
+
+                    line-height: var(--#{vars.$prefix}nav-item-line-height);
                 }
 
                 > .expand-more {
-                    @include transition(all 0.3s ease 0s);
-                    @include transform(rotateZ(0deg));
-                    color: var(--#{$prefix}nav-item-state-icon-color);
+                    color: var(--#{vars.$prefix}nav-item-state-icon-color);
+                    transform: rotateZ(0deg);
+                    transition: all 0.3s ease 0s;
                 }
             }
         }
 
-        &.#{$prefix}expanded {
-            --#{$prefix}nav-item-state-bg: var(--#{$prefix}nav-item-expanded-bg);
-            --#{$prefix}nav-item-inner-state-bg: transparent;
+        &.#{vars.$prefix}expanded {
+            --#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
+            --#{vars.$prefix}nav-item-inner-state-bg: transparent;
 
-            > .#{$prefix}nav-item-inner {
-                > .#{$prefix}ripple {
+            > .#{vars.$prefix}nav-item-inner {
+                > .#{vars.$prefix}ripple {
                     > .expand-more {
-                        @include transform(rotateZ(-180deg));
+                        transform: rotateZ(-180deg);
                     }
                 }
             }
         }
 
         &.active {
-            --#{$prefix}nav-item-inner-state-bg: var(--#{$prefix}nav-item-active-bg);
-            --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-active-color);
-            --#{$prefix}nav-item-state-icon-color: var(--#{$prefix}nav-item-active-icon-color);
-            --#{$prefix}nav-item-state-font-weight: var(--#{$prefix}nav-item-active-font-weight);
+            --#{vars.$prefix}nav-item-inner-state-bg: var(--#{vars.$prefix}nav-item-active-bg);
+            --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-active-color);
+            --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-active-icon-color);
+            --#{vars.$prefix}nav-item-state-font-weight: var(--#{vars.$prefix}nav-item-active-font-weight);
 
-            &.#{$prefix}nav-parent {
-                &.#{$prefix}expanded {
-                    --#{$prefix}nav-item-inner-state-bg: transparent;
-                    --#{$prefix}nav-item-state-bg: var(--#{$prefix}nav-item-expanded-bg);
-                    --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-color);
-                    --#{$prefix}nav-item-state-icon-color: var(--#{$prefix}nav-item-icon-color);
+            &.#{vars.$prefix}nav-parent {
+                &.#{vars.$prefix}expanded {
+                    --#{vars.$prefix}nav-item-inner-state-bg: transparent;
+                    --#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
+                    --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-color);
+                    --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-icon-color);
                 }
             }
         }
 
         &:hover {
-            &:not(.#{$prefix}expanded):not(.active):not(.disabled) {
-                --#{$prefix}nav-item-inner-state-bg: var(--#{$prefix}nav-item-hover-bg);
+            &:not(.#{vars.$prefix}expanded):not(.active):not(.disabled) {
+                --#{vars.$prefix}nav-item-inner-state-bg: var(--#{vars.$prefix}nav-item-hover-bg);
             }
         }
 
         &.disabled {
-            --#{$prefix}nav-item-state-color: var(--#{$prefix}nav-item-disable-color);
-            --#{$prefix}nav-item-state-icon-color: var(--#{$prefix}nav-item-disable-icon-color);
+            --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-disable-color);
+            --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-disable-icon-color);
 
-            > .#{$prefix}nav-item-inner {
+            > .#{vars.$prefix}nav-item-inner {
                 cursor: default;
             }
         }
     }
 
-    > .#{$prefix}nav-item {
-        &.#{$prefix}expanded {
+    > .#{vars.$prefix}nav-item {
+        &.#{vars.$prefix}expanded {
             &:not(:first-child) {
-                border-top: 1px solid var(--#{$prefix}nav-item-divider-color);
+                border-top: 1px solid var(--#{vars.$prefix}nav-item-divider-color);
             }
 
             &:not(:last-child) {
-                border-bottom: 1px solid var(--#{$prefix}nav-item-divider-color);
+                border-bottom: 1px solid var(--#{vars.$prefix}nav-item-divider-color);
             }
         }
 
-        &.#{$prefix}nav-parent {
-            &.#{$prefix}has-icon {
-                > .#{$prefix}nav-child {
-                    > .#{$prefix}nav-item {
-                        &:not(.#{$prefix}has-icon) {
-                            --#{$prefix}nav-item-padding-left: calc(var(--#{$prefix}nav-item-padding-x) + 2.75rem);
+        &.#{vars.$prefix}nav-parent {
+            &.#{vars.$prefix}has-icon {
+                > .#{vars.$prefix}nav-child {
+                    > .#{vars.$prefix}nav-item {
+                        &:not(.#{vars.$prefix}has-icon) {
+                            --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 2.75rem);
                         }
 
-                        .#{$prefix}nav-item {
-                            --#{$prefix}nav-item-padding-left: calc(var(--#{$prefix}nav-item-padding-x) + 3.75rem);
+                        .#{vars.$prefix}nav-item {
+                            --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 3.75rem);
                         }
                     }
                 }
             }
 
-            &:not(.#{$prefix}has-icon) {
-                > .#{$prefix}nav-child {
-                    > .#{$prefix}nav-item {
-                        --#{$prefix}nav-item-padding-left: calc(var(--#{$prefix}nav-item-padding-x) + 1rem);
+            &:not(.#{vars.$prefix}has-icon) {
+                > .#{vars.$prefix}nav-child {
+                    > .#{vars.$prefix}nav-item {
+                        --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 1rem);
 
-                        .#{$prefix}nav-item {
-                            --#{$prefix}nav-item-padding-left: calc(var(--#{$prefix}nav-item-padding-x) + 2rem);
+                        .#{vars.$prefix}nav-item {
+                            --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 2rem);
                         }
                     }
                 }

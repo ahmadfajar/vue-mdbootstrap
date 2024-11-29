@@ -1,45 +1,43 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}icon, .#{$prefix}toggle-icon {
+.#{vars.$prefix}icon, .#{vars.$prefix}toggle-icon {
     display: inline-block;
 
-    > .#{$prefix}svg-inline {
+    > .#{vars.$prefix}svg-inline {
         display: flex;
     }
 }
 
-.#{$prefix}toggle-icon {
+.#{vars.$prefix}toggle-icon {
     cursor: pointer;
 }
 
-.#{$prefix}rotate-90 {
+.#{vars.$prefix}rotate-90 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
-    @include transform(rotate(90deg));
+    transform: rotate(90deg);
 }
 
-.#{$prefix}rotate-180 {
+.#{vars.$prefix}rotate-180 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
-    @include transform(rotate(180deg));
+    transform: rotate(180deg);
 }
 
-.#{$prefix}rotate-270 {
+.#{vars.$prefix}rotate-270 {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
-    @include transform(rotate(270deg));
+    transform: rotate(270deg);
 }
 
-.#{$prefix}flip-horizontal {
+.#{vars.$prefix}flip-horizontal {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
-    @include transform(scale(-1, 1));
+    transform: scale(-1, 1);
 }
 
-.#{$prefix}flip-vertical {
+.#{vars.$prefix}flip-vertical {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
-    @include transform(scale(1, -1));
+    transform: scale(1, -1);
 }
 
-.#{$prefix}flip-both, .#{$prefix}flip-horizontal.#{$prefix}flip-vertical {
+.#{vars.$prefix}flip-both, .#{vars.$prefix}flip-horizontal.#{vars.$prefix}flip-vertical {
     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
-    @include transform(scale(-1, -1));
+    transform: scale(-1, -1);
 }

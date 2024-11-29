@@ -1,0 +1,9 @@
+@use "../mixins/progress";
+@use "../color_vars" as colors;
+
+// BsProgress with custom colors
+//-------------------------------
+@each $name, $color in colors.$common-theme-colors {
+    @include progress.make-bar-variant($name, $color);
+    @include progress.make-spinner-variant($name, $color);
+}

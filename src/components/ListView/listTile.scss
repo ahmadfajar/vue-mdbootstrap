@@ -1,25 +1,26 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/utils/color_functions";
-@import "../../../scss/mixins/listview";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
+@use "sass:map";
+@use "../../../scss/mixins/css3/borders";
+@use "../../../scss/mixins/css3/text";
+@use "../../../scss/mixins/listview";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
 
-.#{$prefix}list-tile {
-    --#{$prefix}tile-state-bg: inherit;
-    --#{$prefix}tile-state-action-color: var(--#{$prefix}tile-action-color);
-    --#{$prefix}tile-state-leading-color: var(--#{$prefix}tile-leading-color);
-    --#{$prefix}tile-state-leading-icon-color: var(--#{$prefix}tile-leading-color);
-    --#{$prefix}tile-state-subtitle-color: var(--#{$prefix}tile-subtitle-color);
-    --#{$prefix}tile-state-title-color: var(--#{$prefix}tile-title-color);
-    --#{$prefix}tile-state-title-font-weight: var(--#{$prefix}tile-title-font-weight);
+.#{vars.$prefix}list-tile {
+    --#{vars.$prefix}tile-state-bg: inherit;
+    --#{vars.$prefix}tile-state-action-color: var(--#{vars.$prefix}tile-action-color);
+    --#{vars.$prefix}tile-state-leading-color: var(--#{vars.$prefix}tile-leading-color);
+    --#{vars.$prefix}tile-state-leading-icon-color: var(--#{vars.$prefix}tile-leading-color);
+    --#{vars.$prefix}tile-state-subtitle-color: var(--#{vars.$prefix}tile-subtitle-color);
+    --#{vars.$prefix}tile-state-title-color: var(--#{vars.$prefix}tile-title-color);
+    --#{vars.$prefix}tile-state-title-font-weight: var(--#{vars.$prefix}tile-title-font-weight);
 
-    @include transition($transition-hoverable);
-    @include user-select(none);
-    background-color: var(--#{$prefix}tile-state-bg);
+    background-color: var(--#{vars.$prefix}tile-state-bg);
     display: flex;
     position: relative;
+    user-select: none;
     text-decoration: none;
+    transition: vars.$transition-hoverable;
 
     &:active,
     &:focus,
@@ -28,185 +29,192 @@
     }
 
     &:not(.disabled):not(.active) {
-        &.#{$prefix}link:hover {
-            --#{$prefix}tile-state-bg: var(--#{$prefix}tile-hover-bg);
+        &.#{vars.$prefix}link:hover {
+            --#{vars.$prefix}tile-state-bg: var(--#{vars.$prefix}tile-hover-bg);
         }
     }
 
-    .#{$prefix}list-tile-title,
-    .#{$prefix}list-tile-subtitle {
-        @include transition(.3s $transition-stand-animation);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    .#{vars.$prefix}list-tile-title,
+    .#{vars.$prefix}list-tile-subtitle {
+        @include text.ellipsis();
+        transition: .3s vars.$transition-stand-animation;
         width: 100%;
     }
 
-    .#{$prefix}list-tile-leading {
-        color: var(--#{$prefix}tile-state-leading-color);
+    .#{vars.$prefix}list-tile-leading {
+        color: var(--#{vars.$prefix}tile-state-leading-color);
         max-width: 100%;
 
-        &.#{$prefix}has-icon {
-            color: var(--#{$prefix}tile-state-leading-icon-color);
+        &.#{vars.$prefix}has-icon {
+            color: var(--#{vars.$prefix}tile-state-leading-icon-color);
         }
     }
 
-    .#{$prefix}list-tile-title {
-        color: var(--#{$prefix}tile-state-title-color);
+    .#{vars.$prefix}list-tile-title {
+        color: var(--#{vars.$prefix}tile-state-title-color);
     }
 
-    .#{$prefix}list-tile-subtitle {
-        color: var(--#{$prefix}tile-state-subtitle-color);
+    .#{vars.$prefix}list-tile-subtitle {
+        color: var(--#{vars.$prefix}tile-state-subtitle-color);
     }
 
-    .#{$prefix}list-tile-action {
-        color: var(--#{$prefix}tile-state-action-color);
-        min-width: var(--#{$prefix}tile-action-minwidth);
+    .#{vars.$prefix}list-tile-action {
+        color: var(--#{vars.$prefix}tile-state-action-color);
+        min-width: var(--#{vars.$prefix}tile-action-minwidth);
         max-width: 100%;
 
-        &.#{$prefix}action-stack {
-            @include flexbox((display: flex, align-self: flex-start, flex-direction: column));
+        &.#{vars.$prefix}action-stack {
+            display: flex;
+            align-self: flex-start;
+            flex-direction: column;
         }
 
-        .#{$prefix}checkbox {
-            --#{$prefix}checkbox-margin: #{$padding-sm $padding-sm $padding-sm 0};
+        .#{vars.$prefix}checkbox {
+            --#{vars.$prefix}checkbox-margin: #{vars.$padding-sm vars.$padding-sm vars.$padding-sm 0};
         }
     }
 
-    .#{$prefix}list-tile-content {
-        @include flexbox((display: flex, flex: 1, align-self: center, flex-direction: column));
+    .#{vars.$prefix}list-tile-content {
+        display: flex;
+        align-self: center;
+        flex: 1;
+        flex-direction: column;
+        overflow: hidden;
         max-width: 100%;
         width: auto;
-        overflow: hidden;
 
-        > .#{$prefix}list-tile-title {
-            font-size: var(--#{$prefix}tile-title-font-size);
-            font-weight: var(--#{$prefix}tile-state-title-font-weight);
+        > .#{vars.$prefix}list-tile-title {
+            font-size: var(--#{vars.$prefix}tile-title-font-size);
+            font-weight: var(--#{vars.$prefix}tile-state-title-font-weight);
         }
 
-        > .#{$prefix}list-tile-subtitle {
-            font-size: var(--#{$prefix}tile-subtitle-font-size);
+        > .#{vars.$prefix}list-tile-subtitle {
+            font-size: var(--#{vars.$prefix}tile-subtitle-font-size);
         }
 
-        &.#{$prefix}multiline {
-            > .#{$prefix}list-tile-subtitle {
+        &.#{vars.$prefix}multiline {
+            > .#{vars.$prefix}list-tile-subtitle {
                 white-space: normal;
             }
         }
     }
 
-    > .#{$prefix}ripple {
-        min-height: var(--#{$prefix}tile-minheight);
-        padding: var(--#{$prefix}tile-padding-y) var(--#{$prefix}tile-padding-x);
+    > .#{vars.$prefix}ripple {
+        min-height: var(--#{vars.$prefix}tile-minheight);
+        padding: var(--#{vars.$prefix}tile-padding-y) var(--#{vars.$prefix}tile-padding-x);
         position: relative;
 
-        > div > div[class^="#{$prefix}list-tile-"] {
+        > div > div[class^="#{vars.$prefix}list-tile-"] {
             &:nth-child(2),
             &:last-child:not(:first-child) {
-                margin-left: var(--#{$prefix}tile-padding-x);
+                margin-left: var(--#{vars.$prefix}tile-padding-x);
             }
 
-            &.#{$prefix}has-icon {
-                @include flexbox((display: flex, align-items: center, align-self: center, justify-content: center));
-                margin-right: calc(var(--#{$prefix}tile-padding-x) - .75rem);
+            &.#{vars.$prefix}has-icon {
+                display: flex;
+                align-items: center;
+                align-self: center;
+                justify-content: center;
+                margin-right: calc(var(--#{vars.$prefix}tile-padding-x) - .75rem);
             }
         }
     }
 
     &.active {
-        --#{$prefix}tile-state-bg: var(--#{$prefix}tile-active-bg);
-        --#{$prefix}tile-state-action-color: var(--#{$prefix}tile-active-action-color);
-        --#{$prefix}tile-state-leading-color: var(--#{$prefix}tile-active-leading-color);
-        --#{$prefix}tile-state-leading-icon-color: var(--#{$prefix}tile-active-leading-icon-color);
-        --#{$prefix}tile-state-subtitle-color: var(--#{$prefix}tile-active-subtitle-color);
-        --#{$prefix}tile-state-title-color: var(--#{$prefix}tile-active-title-color);
-        --#{$prefix}tile-state-title-font-weight: var(--#{$prefix}tile-active-title-font-weight);
+        --#{vars.$prefix}tile-state-bg: var(--#{vars.$prefix}tile-active-bg);
+        --#{vars.$prefix}tile-state-action-color: var(--#{vars.$prefix}tile-active-action-color);
+        --#{vars.$prefix}tile-state-leading-color: var(--#{vars.$prefix}tile-active-leading-color);
+        --#{vars.$prefix}tile-state-leading-icon-color: var(--#{vars.$prefix}tile-active-leading-icon-color);
+        --#{vars.$prefix}tile-state-subtitle-color: var(--#{vars.$prefix}tile-active-subtitle-color);
+        --#{vars.$prefix}tile-state-title-color: var(--#{vars.$prefix}tile-active-title-color);
+        --#{vars.$prefix}tile-state-title-font-weight: var(--#{vars.$prefix}tile-active-title-font-weight);
     }
 
     &.disabled {
-        --#{$prefix}tile-state-action-color: var(--#{$prefix}tile-disable-action-color);
-        --#{$prefix}tile-state-leading-color: var(--#{$prefix}tile-disable-leading-color);
-        --#{$prefix}tile-state-subtitle-color: var(--#{$prefix}tile-disable-subtitle-color);
-        --#{$prefix}tile-state-title-color: var(--#{$prefix}tile-disable-title-color);
+        --#{vars.$prefix}tile-state-action-color: var(--#{vars.$prefix}tile-disable-action-color);
+        --#{vars.$prefix}tile-state-leading-color: var(--#{vars.$prefix}tile-disable-leading-color);
+        --#{vars.$prefix}tile-state-subtitle-color: var(--#{vars.$prefix}tile-disable-subtitle-color);
+        --#{vars.$prefix}tile-state-title-color: var(--#{vars.$prefix}tile-disable-title-color);
     }
 }
 
-.#{$prefix}list-tile, .#{$prefix}nav-item-inner {
-    &.#{$prefix}tile-space-both,
-    &.#{$prefix}tile-space-left,
-    &.#{$prefix}tile-space-right {
-        margin-bottom: var(--#{$prefix}tile-spacing-y);
-        margin-top: var(--#{$prefix}tile-spacing-y);
+.#{vars.$prefix}list-tile, .#{vars.$prefix}nav-item-inner {
+    &.#{vars.$prefix}tile-space-both,
+    &.#{vars.$prefix}tile-space-left,
+    &.#{vars.$prefix}tile-space-right {
+        margin-bottom: var(--#{vars.$prefix}tile-spacing-y);
+        margin-top: var(--#{vars.$prefix}tile-spacing-y);
     }
 
-    &.#{$prefix}tile-space-both,
-    &.#{$prefix}tile-space-left {
-        margin-left: var(--#{$prefix}tile-spacing-x);
+    &.#{vars.$prefix}tile-space-both,
+    &.#{vars.$prefix}tile-space-left {
+        margin-left: var(--#{vars.$prefix}tile-spacing-x);
     }
 
-    &.#{$prefix}tile-space-both,
-    &.#{$prefix}tile-space-right {
-        margin-right: var(--#{$prefix}tile-spacing-x);
+    &.#{vars.$prefix}tile-space-both,
+    &.#{vars.$prefix}tile-space-right {
+        margin-right: var(--#{vars.$prefix}tile-spacing-x);
     }
 
-    &.#{$prefix}tile-border-left,
-    &.#{$prefix}tile-border-right,
-    &.#{$prefix}tile-border-left-right,
-    &.#{$prefix}tile-border-top,
-    &.#{$prefix}tile-border-bottom,
-    &.#{$prefix}tile-border-top-bottom {
+    &.#{vars.$prefix}tile-border-left,
+    &.#{vars.$prefix}tile-border-right,
+    &.#{vars.$prefix}tile-border-left-right,
+    &.#{vars.$prefix}tile-border-top,
+    &.#{vars.$prefix}tile-border-bottom,
+    &.#{vars.$prefix}tile-border-top-bottom {
         &.active {
-            > .#{$prefix}ripple {
+            > .#{vars.$prefix}ripple {
                 &:before,
                 &:after {
-                    @include transition(.3s $transition-stand-animation);
-                    background: var(--#{$prefix}tile-active-indicator-border-color);
+                    background: var(--#{vars.$prefix}tile-active-indicator-border-color);
                     content: " ";
                     display: block;
                     position: absolute;
+                    transition: .3s vars.$transition-stand-animation;
                 }
             }
         }
     }
 
-    &.#{$prefix}tile-border-left,
-    &.#{$prefix}tile-border-left-right {
+    &.#{vars.$prefix}tile-border-left,
+    &.#{vars.$prefix}tile-border-left-right {
         &.active {
-            > .#{$prefix}ripple {
+            > .#{vars.$prefix}ripple {
                 &:before {
+                    width: var(--#{vars.$prefix}tile-active-indicator-border);
+                    height: 100%;
                     left: 0;
                     top: 0;
-                    height: 100%;
-                    width: var(--#{$prefix}tile-active-indicator-border);
                 }
             }
         }
     }
 
-    &.#{$prefix}tile-border-right,
-    &.#{$prefix}tile-border-left-right {
+    &.#{vars.$prefix}tile-border-right,
+    &.#{vars.$prefix}tile-border-left-right {
         &.active {
-            > .#{$prefix}ripple {
+            > .#{vars.$prefix}ripple {
                 &:after {
+                    width: var(--#{vars.$prefix}tile-active-indicator-border);
+                    height: 100%;
                     right: 0;
                     top: 0;
-                    height: 100%;
-                    width: var(--#{$prefix}tile-active-indicator-border);
                 }
             }
         }
     }
 
-    &.#{$prefix}tile-border-left,
-    &.#{$prefix}tile-border-right,
-    &.#{$prefix}tile-border-left-right {
+    &.#{vars.$prefix}tile-border-left,
+    &.#{vars.$prefix}tile-border-right,
+    &.#{vars.$prefix}tile-border-left-right {
         &.active {
-            > .#{$prefix}ripple {
+            > .#{vars.$prefix}ripple {
                 &.rounded-pill {
                     &:before,
                     &:after {
-                        --#{$prefix}tile-active-indicator-border: 6px;
-                        @include border-radius(40%);
+                        --#{vars.$prefix}tile-active-indicator-border: 6px;
+
+                        @include borders.radius(40%);
                         top: 30%;
                         height: 40%;
                     }
@@ -215,43 +223,43 @@
         }
     }
 
-    &.#{$prefix}tile-border-top,
-    &.#{$prefix}tile-border-top-bottom {
+    &.#{vars.$prefix}tile-border-top,
+    &.#{vars.$prefix}tile-border-top-bottom {
         &.active {
-            > .#{$prefix}ripple {
+            > .#{vars.$prefix}ripple {
                 &:before {
+                    height: var(--#{vars.$prefix}tile-active-indicator-border);
+                    width: 100%;
                     left: 0;
                     top: 0;
-                    height: var(--#{$prefix}tile-active-indicator-border);
-                    width: 100%;
                 }
             }
         }
     }
 
-    &.#{$prefix}tile-border-bottom,
-    &.#{$prefix}tile-border-top-bottom {
+    &.#{vars.$prefix}tile-border-bottom,
+    &.#{vars.$prefix}tile-border-top-bottom {
         &.active {
-            > .#{$prefix}ripple {
+            > .#{vars.$prefix}ripple {
                 &:after {
+                    height: var(--#{vars.$prefix}tile-active-indicator-border);
+                    width: 100%;
                     left: 0;
                     bottom: 0;
-                    height: var(--#{$prefix}tile-active-indicator-border);
-                    width: 100%;
                 }
             }
         }
     }
 
-    &.#{$prefix}tile-border-top,
-    &.#{$prefix}tile-border-bottom,
-    &.#{$prefix}tile-border-top-bottom {
+    &.#{vars.$prefix}tile-border-top,
+    &.#{vars.$prefix}tile-border-bottom,
+    &.#{vars.$prefix}tile-border-top-bottom {
         &.active {
-            > .#{$prefix}ripple {
+            > .#{vars.$prefix}ripple {
                 &.rounded-pill {
                     &:before,
                     &:after {
-                        --#{$prefix}tile-active-indicator-border: 5px;
+                        --#{vars.$prefix}tile-active-indicator-border: 5px;
                         width: 85%;
                         left: 7.5%;
                     }
@@ -260,26 +268,26 @@
         }
     }
 
-    &.#{$prefix}tile-border-top,
-    &.#{$prefix}tile-border-top-bottom {
+    &.#{vars.$prefix}tile-border-top,
+    &.#{vars.$prefix}tile-border-top-bottom {
         &.active {
-            > .#{$prefix}ripple {
+            > .#{vars.$prefix}ripple {
                 &.rounded-pill {
                     &:before {
-                        @include border-bottom-radius(6px);
+                        @include borders.bottom-radius(6px);
                     }
                 }
             }
         }
     }
 
-    &.#{$prefix}tile-border-bottom,
-    &.#{$prefix}tile-border-top-bottom {
+    &.#{vars.$prefix}tile-border-bottom,
+    &.#{vars.$prefix}tile-border-top-bottom {
         &.active {
-            > .#{$prefix}ripple {
+            > .#{vars.$prefix}ripple {
                 &.rounded-pill {
                     &:after {
-                        @include border-top-radius(6px);
+                        @include borders.top-radius(6px);
                     }
                 }
             }
@@ -287,20 +295,20 @@
     }
 }
 
-.#{$prefix}nav-item {
-    &.#{$prefix}expanded {
-        > .#{$prefix}nav-item-inner {
-            &.#{$prefix}tile-border-top,
-            &.#{$prefix}tile-border-bottom,
-            &.#{$prefix}tile-border-top-bottom,
-            &.#{$prefix}tile-border-right,
-            &.#{$prefix}tile-border-left,
-            &.#{$prefix}tile-border-left-right {
+.#{vars.$prefix}nav-item {
+    &.#{vars.$prefix}expanded {
+        > .#{vars.$prefix}nav-item-inner {
+            &.#{vars.$prefix}tile-border-top,
+            &.#{vars.$prefix}tile-border-bottom,
+            &.#{vars.$prefix}tile-border-top-bottom,
+            &.#{vars.$prefix}tile-border-right,
+            &.#{vars.$prefix}tile-border-left,
+            &.#{vars.$prefix}tile-border-left-right {
                 &.active {
-                    > .#{$prefix}ripple {
+                    > .#{vars.$prefix}ripple {
                         &:before,
                         &:after {
-                            --#{$prefix}tile-active-indicator-border: 0;
+                            --#{vars.$prefix}tile-active-indicator-border: 0;
                         }
                     }
                 }
@@ -309,6 +317,6 @@
     }
 }
 
-@each $name, $color in map-merge($merge-theme-colors, ("white": $white)) {
-    @include make-list-tile-variant($name, $color);
+@each $name, $color in map.merge(colors.$context-colors, ("white": colors.$white, "black": colors.$black)) {
+    @include listview.make-list-tile-variant($name, $color);
 }

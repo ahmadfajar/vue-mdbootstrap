@@ -1,13 +1,14 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
+@use "../../../scss/mixins/css3/borders";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}dropdown-menu {
-    @include flexbox((display: flex, align-items: center));
+.#{vars.$prefix}dropdown-menu {
+    display: flex;
+    align-items: center;
     position: relative;
-    margin-right: $padding-sm;
+    margin-right: vars.$padding-sm;
 
-    .#{$prefix}dropdown-menu-activator {
+    .#{vars.$prefix}dropdown-menu-activator {
         position: relative;
 
         > * {
@@ -15,20 +16,20 @@
         }
     }
 
-    // ~ .#{$prefix}btn-icon {
+    // ~ .#{vars.$prefix}btn-icon {
     //     margin-left: $padding-xs;
     // }
 }
 
-.#{$prefix}popover-dropdown-menu {
-    --#{$prefix}menu-border-radius: var(--#{$prefix-bs}border-radius);
+.#{vars.$prefix}popover-dropdown-menu {
+    --#{vars.$prefix}menu-border-radius: var(--#{vars.$prefix-bs}border-radius);
 
-    @include border-radius(var(--#{$prefix}menu-border-radius));
+    @include borders.radius(var(--#{vars.$prefix}menu-border-radius));
 
-    > .#{$prefix}list {
-        @include border-radius(var(--#{$prefix}menu-border-radius));
+    > .#{vars.$prefix}list {
+        @include borders.radius(var(--#{vars.$prefix}menu-border-radius));
 
-        .#{$prefix}divider {
+        .#{vars.$prefix}divider {
             margin-bottom: 3px;
             margin-top: 3px;
         }

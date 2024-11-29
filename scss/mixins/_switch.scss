@@ -6,7 +6,7 @@
 
 // BsSwitch variants mixins -- sass variables
 //--------------------------------------------
-@mixin make-switch-variant($name, $color) {
+@mixin make-default-variant($name, $color) {
     .#{vars.$prefix}switch-#{$name} {
         --#{vars.$prefix}switch-active-box-shadow: #{0 0 6px -1px rgba(#000, .13), 0 1px 1px 1px rgba($color, .15), 0 1px 3px 0 rgba(#000, .2)};
         --#{vars.$prefix}switch-active-thumb-bg: #{$color};

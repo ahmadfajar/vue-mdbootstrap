@@ -1,162 +1,159 @@
 @use "sass:color";
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/utils/color_functions";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
+@use "../../../scss/utils/color_helper" as helper;
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}notification {
-    --#{$prefix}notification-background-color: #{round-color-rgb(color.adjust($gray-900, $lightness: -5%))};
-    --#{$prefix}notification-bar-color: #{$warning-color};
-    --#{$prefix}notification-border-radius: #{$border-radius-base};
-    --#{$prefix}notification-box-shadow-color: rgba(0, 0, 0, 0.2);
-    --#{$prefix}notification-box-shadow-hover-color: rgba(0, 0, 0, 0.45);
-    --#{$prefix}notification-color: #{$white};
-    --#{$prefix}notification-font-size: .9rem;
-    --#{$prefix}notification-hover-color: #{$gray-300};
-    --#{$prefix}notification-opacity: 0.9;
-    --#{$prefix}notification-title-weight: #{$font-weight-semi-bold};
-    --#{$prefix}notification-title-size: 110%;
-    --#{$prefix}notification-padding-x: #{$padding-base};
-    --#{$prefix}notification-padding-y: #{$padding-base - $padding-xs};
-    --#{$prefix}notification-width: 350px;
+.#{vars.$prefix}notification {
+    --#{vars.$prefix}notification-background-color: #{helper.round-color-rgb(color.adjust(colors.$gray-900, $lightness: -5%))};
+    --#{vars.$prefix}notification-bar-color: #{colors.$warning-color};
+    --#{vars.$prefix}notification-border-radius: #{vars.$border-radius-base};
+    --#{vars.$prefix}notification-box-shadow-color: rgba(0, 0, 0, 0.2);
+    --#{vars.$prefix}notification-box-shadow-hover-color: rgba(0, 0, 0, 0.45);
+    --#{vars.$prefix}notification-color: #{colors.$white};
+    --#{vars.$prefix}notification-font-size: .9rem;
+    --#{vars.$prefix}notification-hover-color: #{colors.$gray-300};
+    --#{vars.$prefix}notification-opacity: 0.9;
+    --#{vars.$prefix}notification-title-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix}notification-title-size: 110%;
+    --#{vars.$prefix}notification-padding-x: #{vars.$padding-base};
+    --#{vars.$prefix}notification-padding-y: #{vars.$padding-base - vars.$padding-xs};
+    --#{vars.$prefix}notification-width: 350px;
 
-    .#{$prefix}notification-title {
-        font-weight: var(--#{$prefix}notification-title-weight);
-        font-size: var(--#{$prefix}notification-title-size);
+    .#{vars.$prefix}notification-title {
+        font-weight: var(--#{vars.$prefix}notification-title-weight);
+        font-size: var(--#{vars.$prefix}notification-title-size);
     }
 
-    .#{$prefix}notification-message {
-        @include word-break(break-word);
+    .#{vars.$prefix}notification-message {
+        word-break: break-word;
 
         & {
-            --#{$prefix}notification-link-color: --#{$prefix}notification-color;
-            font-size: var(--#{$prefix}notification-font-size);
+            --#{vars.$prefix}notification-link-color: --#{vars.$prefix}notification-color;
+            font-size: var(--#{vars.$prefix}notification-font-size);
         }
 
         a, label {
-            color: var(--#{$prefix}notification-link-color);
+            color: var(--#{vars.$prefix}notification-link-color);
         }
 
         a:hover {
-            --#{$prefix}notification-link-color: var(--#{$prefix}notification-hover-color);
+            --#{vars.$prefix}notification-link-color: var(--#{vars.$prefix}notification-hover-color);
         }
     }
 
-    .#{$prefix}btn-close {
-        color: var(--#{$prefix}notification-color);
-        opacity: var(--#{$prefix}notification-opacity);
+    .#{vars.$prefix}btn-close {
+        color: var(--#{vars.$prefix}notification-color);
+        opacity: var(--#{vars.$prefix}notification-opacity);
         position: relative;
         right: -0.3em;
         top: -0.3em;
         float: right;
         font-size: 20px;
-        font-weight: $font-weight-normal;
-        text-shadow: 0 1px 0 rgba($white, 1);
+        font-weight: vars.$font-weight-normal;
+        text-shadow: 0 1px 0 rgba(colors.$white, 1);
 
         &:hover,
         &:focus {
-            --#{$prefix}notification-color: #{$black};
-            --#{$prefix}notification-opacity: 0.4;
+            --#{vars.$prefix}notification-color: #{colors.$black};
+            --#{vars.$prefix}notification-opacity: 0.4;
+
             cursor: pointer;
             text-decoration: none;
         }
     }
 
-    /**
-     * Additional properties for button version
-     * iOS requires the button element instead of an anchor tag.
-     * If you want the anchor version, it requires `href="#"`.
-     */
-    button.#{$prefix}btn-close {
+    // Additional properties for button version
+    // iOS requires the button element instead of an anchor tag.
+    // If you want the anchor version, it requires `href="#"`.
+    button.#{vars.$prefix}btn-close {
         border: 0;
         padding: 0;
         cursor: pointer;
         background: transparent;
     }
 
-    .#{$prefix}notification-container {
-        width: var(--#{$prefix}notification-container-width);
+    .#{vars.$prefix}notification-container {
+        width: var(--#{vars.$prefix}notification-container-width);
         position: fixed;
         z-index: 1055;
         pointer-events: none;
 
         * {
-            @include box-sizing(border-box);
+            box-sizing: border-box;
         }
 
-        &.#{$prefix}notification-top-right {
-            right: var(--#{$prefix}notification-padding-x);
-            top: var(--#{$prefix}notification-padding-y);
+        &.#{vars.$prefix}notification-top-right {
+            right: var(--#{vars.$prefix}notification-padding-x);
+            top: var(--#{vars.$prefix}notification-padding-y);
         }
 
-        &.#{$prefix}notification-top-left {
-            left: var(--#{$prefix}notification-padding-x);
-            top: var(--#{$prefix}notification-padding-y);
+        &.#{vars.$prefix}notification-top-left {
+            left: var(--#{vars.$prefix}notification-padding-x);
+            top: var(--#{vars.$prefix}notification-padding-y);
         }
 
-        &.#{$prefix}notification-top-center {
-            --#{$prefix}notification-container-width: 100%;
+        &.#{vars.$prefix}notification-top-center {
+            --#{vars.$prefix}notification-container-width: 100%;
 
             right: 0;
-            top: var(--#{$prefix}notification-padding-y);
+            top: var(--#{vars.$prefix}notification-padding-y);
         }
 
-        &.#{$prefix}notification-top-full-width {
-            --#{$prefix}notification-container-width: 100%;
+        &.#{vars.$prefix}notification-top-full-width {
+            --#{vars.$prefix}notification-container-width: 100%;
 
             z-index: 1054;
             right: 0;
-            top: var(--#{$prefix}notification-padding-y);
-            padding-left: var(--#{$prefix}notification-padding-x);
-            padding-right: var(--#{$prefix}notification-padding-x);
+            top: var(--#{vars.$prefix}notification-padding-y);
+            padding-left: var(--#{vars.$prefix}notification-padding-x);
+            padding-right: var(--#{vars.$prefix}notification-padding-x);
         }
 
-        &.#{$prefix}notification-bottom-right {
-            bottom: var(--#{$prefix}notification-padding-y);
-            right: var(--#{$prefix}notification-padding-x);
+        &.#{vars.$prefix}notification-bottom-right {
+            bottom: var(--#{vars.$prefix}notification-padding-y);
+            right: var(--#{vars.$prefix}notification-padding-x);
         }
 
-        &.#{$prefix}notification-bottom-left {
-            bottom: var(--#{$prefix}notification-padding-y);
-            left: var(--#{$prefix}notification-padding-x);
+        &.#{vars.$prefix}notification-bottom-left {
+            bottom: var(--#{vars.$prefix}notification-padding-y);
+            left: var(--#{vars.$prefix}notification-padding-x);
         }
 
-        &.#{$prefix}notification-bottom-center {
-            --#{$prefix}notification-container-width: 100%;
+        &.#{vars.$prefix}notification-bottom-center {
+            --#{vars.$prefix}notification-container-width: 100%;
 
-            bottom: var(--#{$prefix}notification-padding-y);
+            bottom: var(--#{vars.$prefix}notification-padding-y);
             right: 0;
         }
 
-        &.#{$prefix}notification-bottom-full-width {
-            --#{$prefix}notification-container-width: 100%;
+        &.#{vars.$prefix}notification-bottom-full-width {
+            --#{vars.$prefix}notification-container-width: 100%;
 
+            bottom: var(--#{vars.$prefix}notification-padding-y);
+            padding-left: var(--#{vars.$prefix}notification-padding-x);
+            padding-right: var(--#{vars.$prefix}notification-padding-x);
+            right: 0;
             z-index: 1054;
-            right: 0;
-            bottom: var(--#{$prefix}notification-padding-y);
-            padding-left: var(--#{$prefix}notification-padding-x);
-            padding-right: var(--#{$prefix}notification-padding-x);
         }
 
-        > .#{$prefix}notification-dialog {
-            @include border-radius(var(--#{$prefix}notification-border-radius));
-            @include box-shadow(0 0.25rem 1rem var(--#{$prefix}notification-box-shadow-color));
-
-            background-color: var(--#{$prefix}notification-background-color);
+        > .#{vars.$prefix}notification-dialog {
+            background-color: var(--#{vars.$prefix}notification-background-color);
             background-position: 15px center;
             background-repeat: no-repeat;
-            color: var(--#{$prefix}notification-color);
-            width: var(--#{$prefix}notification-width);
-            opacity: var(--#{$prefix}notification-opacity);
+            border-radius: var(--#{vars.$prefix}notification-border-radius);
+            box-shadow: 0 0.25rem 1rem var(--#{vars.$prefix}notification-box-shadow-color);
+            color: var(--#{vars.$prefix}notification-color);
+            width: var(--#{vars.$prefix}notification-width);
+            opacity: var(--#{vars.$prefix}notification-opacity);
             display: block;
-            position: relative;
-            overflow: hidden;
             margin: 0 0 6px;
             padding: 15px 15px 15px 50px;
+            overflow: hidden;
             pointer-events: auto;
+            position: relative;
 
-            > .#{$prefix}notification-bar {
-                background-color: var(--#{$prefix}notification-bar-color);
+            > .#{vars.$prefix}notification-bar {
+                background-color: var(--#{vars.$prefix}notification-bar-color);
                 position: absolute;
                 left: 0;
                 bottom: 0;
@@ -164,79 +161,79 @@
             }
 
             &:hover {
-                --#{$prefix}notification-opacity: 1;
-                --#{$prefix}notification-box-shadow-color: var(--#{$prefix}notification-box-shadow-hover-color);
+                --#{vars.$prefix}notification-opacity: 1;
+                --#{vars.$prefix}notification-box-shadow-color: var(--#{vars.$prefix}notification-box-shadow-hover-color);
 
                 cursor: pointer;
             }
 
-            &.#{$prefix}notification-default,
-            &.#{$prefix}notification-custom {
+            &.#{vars.$prefix}notification-default,
+            &.#{vars.$prefix}notification-custom {
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACnklEQVRIibWVT0gUcRTHP+/XICkkzPqPSCNPgUjWuUN/LBg9iJGE1CFw91A3D0GeLCjpVAQGEY6XsFNUELGtLSF0DOyQhmAHoYJScNYklYr9vQ7ubuu0s4rku8x35vfe+773fczviaoSZW482QT0iJh2VdsqYmKqVoFFYErEpFXtk8xo59eoHFKKwI0nG0XMTVXbC1SIGFG1mn8Wgtff14CHIuZa4HvzmxLEEqkzwAhQE3aurNiFBX7+ypYq9htwMfC9V5EEsUTqsqodBkxxtSJGwgThjnL4F9CXGe189A+BG092iZinqtYUBRSC+7taGexqBGDg8RwPUjOlCBT4LWK8wPcmCgSxRKoBmALqSvUOMHHLoy13+mYuS/dQOsoV4DNwKPC9JQdA1V4HakUMJSpCxMjkxwxtdS4Ab2cXoiTK4yZVOwAMiBt/Wa9q54DKMgEiQGuzi81aPnz6vhmBqNoM0OwA3SKmqjCU3EDDWIGpuQzhsyh/EeMCHQ5wskwVBTzYe0T7TzUIoDdefOHOs/dl/XP4hAO0lJtW3kwxFon0C1mLA9Ru1XsbVusAWkbHv6UKUkDrZ2X9c1gdYEHV7s1/jNIURXPJFUDVbmUGCw4wLWIO71AH0w6QVrUXdqiDtAM8B5aBav6vzQNpJ/C9pVgiNQJcKdfyNiQaDnxvNX8XDQHnRMz+qJazVgsSZbO6mUSzqvYubLyuj4mYcVVbUYpgX02V9p0+KFZV7ydnWFxeiyJYETHHA9+b3EAAEEukzgJjwO5t6v4D6Al8b7wgVXhluvHkUWBMxBwIVxexk4tlOZ8Z7XxXnC9q6VeLmKuq9hLgbkKwANwTMbcD31sN5ypJkLdYIrUH6ADaWb8U61n/D+aBaeA1MB743kpUjj/Zds3fTDZCJAAAAABJRU5ErkJggg==") !important;
             }
 
-            &.#{$prefix}notification-info {
-                --#{$prefix}notification-background-color: #{$info-color-dark};
+            &.#{vars.$prefix}notification-info {
+                --#{vars.$prefix}notification-background-color: #{colors.$info-color-dark};
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGwSURBVEhLtZa9SgNBEMc9sUxxRcoUKSzSWIhXpFMhhYWFhaBg4yPYiWCXZxBLERsLRS3EQkEfwCKdjWJAwSKCgoKCcudv4O5YLrt7EzgXhiU3/4+b2ckmwVjJSpKkQ6wAi4gwhT+z3wRBcEz0yjSseUTrcRyfsHsXmD0AmbHOC9Ii8VImnuXBPglHpQ5wwSVM7sNnTG7Za4JwDdCjxyAiH3nyA2mtaTJufiDZ5dCaqlItILh1NHatfN5skvjx9Z38m69CgzuXmZgVrPIGE763Jx9qKsRozWYw6xOHdER+nn2KkO+Bb+UV5CBN6WC6QtBgbRVozrahAbmm6HtUsgtPC19tFdxXZYBOfkbmFJ1VaHA1VAHjd0pp70oTZzvR+EVrx2Ygfdsq6eu55BHYR8hlcki+n+kERUFG8BrA0BwjeAv2M8WLQBtcy+SD6fNsmnB3AlBLrgTtVW1c2QN4bVWLATaIS60J2Du5y1TiJgjSBvFVZgTmwCU+dAZFoPxGEEs8nyHC9Bwe2GvEJv2WXZb0vjdyFT4Cxk3e/kIqlOGoVLwwPevpYHT+00T+hWwXDf4AJAOUqWcDhbwAAAAASUVORK5CYII=") !important;
             }
 
-            &.#{$prefix}notification-error {
-                --#{$prefix}notification-background-color: #{$danger-color-dark};
+            &.#{vars.$prefix}notification-error {
+                --#{vars.$prefix}notification-background-color: #{colors.$danger-color-dark};
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHOSURBVEhLrZa/SgNBEMZzh0WKCClSCKaIYOED+AAKeQQLG8HWztLCImBrYadgIdY+gIKNYkBFSwu7CAoqCgkkoGBI/E28PdbLZmeDLgzZzcx83/zZ2SSXC1j9fr+I1Hq93g2yxH4iwM1vkoBWAdxCmpzTxfkN2RcyZNaHFIkSo10+8kgxkXIURV5HGxTmFuc75B2RfQkpxHG8aAgaAFa0tAHqYFfQ7Iwe2yhODk8+J4C7yAoRTWI3w/4klGRgR4lO7Rpn9+gvMyWp+uxFh8+H+ARlgN1nJuJuQAYvNkEnwGFck18Er4q3egEc/oO+mhLdKgRyhdNFiacC0rlOCbhNVz4H9FnAYgDBvU3QIioZlJFLJtsoHYRDfiZoUyIxqCtRpVlANq0EU4dApjrtgezPFad5S19Wgjkc0hNVnuF4HjVA6C7QrSIbylB+oZe3aHgBsqlNqKYH48jXyJKMuAbiyVJ8KzaB3eRc0pg9VwQ4niFryI68qiOi3AbjwdsfnAtk0bCjTLJKr6mrD9g8iq/S/B81hguOMlQTnVyG40wAcjnmgsCNESDrjme7wfftP4P7SP4N3CJZdvzoNyGq2c/HWOXJGsvVg+RA/k2MC/wN6I2YA2Pt8GkAAAAASUVORK5CYII=") !important;
             }
 
-            &.#{$prefix}notification-success {
-                --#{$prefix}notification-background-color: #{$success-color-dark};
+            &.#{vars.$prefix}notification-success {
+                --#{vars.$prefix}notification-background-color: #{colors.$success-color-dark};
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg==") !important;
             }
 
-            &.#{$prefix}notification-warning {
-                --#{$prefix}notification-background-color: #{$warning-color};
-                --#{$prefix}notification-color: #{$gray-900};
+            &.#{vars.$prefix}notification-warning {
+                --#{vars.$prefix}notification-background-color: #{colors.$warning-color};
+                --#{vars.$prefix}notification-color: #{colors.$gray-900};
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFxEAABcRAcom8z8AAAKbSURBVEhL3Za/S1tRFMdvDFJBJepYB0OGghTX6KZu9X8QBxFE/AsMjg7BQVR0L64ibiLiHsVFiUgpgi4KrShIKGlCyen3e8+JLyZ5UZt08QPHe9/58f2+a/KeundPxNZXI861IYa4x3AWUfKF/wGUPyO+wVAY3DNn5dYCgw6IX3qzWExDTZnrsLbWAeEFb9bfL3J/r8G9mi5YW2uA4EdEzhtubckT3Kthjj3W3jwQ/erNRkZESiVzA9wzxxp6rL05cOdJREkiEZGjI5Hzc5HhYZFkUiSb1Rxq7GGvjf0buOsIRDL+BFNTeqrl5fKJRNJpzbGGa+t986P2BAQmvXBXl8jNjYpvbgaGGxuaY409ajpp43Vps7UGDHZiSfuLVApfCftOdHfrSsp71tijpG32bWBoyZ8ikRDJ5/UkZHc3OOHOjiUBe9irp1wymdeBoTiG8jWi5PAwMDw4sKTBXjXkbNzkXgYD215wfNyUKjg+DgwzGUtWwBk13Ta5xqB5zItFoyJnZ6ZSwcVFYMhHpBrOcFZ7xky2PmiI4s5OffPcnClUwVdae7vG3Z0lq+AsNEwravK1oGHWm/X2houRkxONMDhLDTWdNfnnoNiD4k9vuLpqk3UoFETW10XW1nQfBjXUkJo9ZhOAwoo3GxwUKRZtqg6Li+XPRySVsmQdqEEtNV0xGwXJBJJFL7K/bxMhzMwEhtPTlgyBWmpI7YTZ+dPNe4HRUetswPW1yMSExtWVJRtATTWdp1f51fbH/8zlcC9Fvw1lYMC5vT2N+AvPNrWoqXgP/2aHO1+U33HR6fr6nIvFmG6ex0fnHh74kf3C1Sec7lYLAKZfED/8r7aFQU1qm83zv10ofMAyhGRL/imC4W8sWZysoJn3j3N/AcI4vgVq2mAgAAAAAElFTkSuQmCC") !important;
 
-                > .#{$prefix}notification-bar {
-                    --#{$prefix}notification-bar-color: #{$danger-color-dark};
+                > .#{vars.$prefix}notification-bar {
+                    --#{vars.$prefix}notification-bar-color: #{colors.$danger-color-dark};
                 }
             }
         }
 
-        &.#{$prefix}notification-top-center > div,
-        &.#{$prefix}notification-bottom-center > div {
+        &.#{vars.$prefix}notification-top-center > div,
+        &.#{vars.$prefix}notification-bottom-center > div {
             margin-left: auto;
             margin-right: auto;
         }
 
-        &.#{$prefix}notification-top-full-width > div,
-        &.#{$prefix}notification-bottom-full-width > div {
-            --#{$prefix}notification-width: 100%;
+        &.#{vars.$prefix}notification-top-full-width > div,
+        &.#{vars.$prefix}notification-bottom-full-width > div {
+            --#{vars.$prefix}notification-width: 100%;
         }
     }
 
     @media all and (max-width: 480px) {
-        .#{$prefix}notification-container {
-            left: var(--#{$prefix}notification-padding-x);
-            right: var(--#{$prefix}notification-padding-x);
+        .#{vars.$prefix}notification-container {
+            left: var(--#{vars.$prefix}notification-padding-x);
+            right: var(--#{vars.$prefix}notification-padding-x);
 
-            &.#{$prefix}notification-top-full-width,
-            &.#{$prefix}notification-bottom-full-width {
-                --#{$prefix}notification-container-width: auto;
+            &.#{vars.$prefix}notification-top-full-width,
+            &.#{vars.$prefix}notification-bottom-full-width {
+                --#{vars.$prefix}notification-container-width: auto;
                 left: 0;
                 right: 0;
             }
 
-            &.#{$prefix}notification-top-center,
-            &.#{$prefix}notification-bottom-center {
-                --#{$prefix}notification-container-width: auto;
-                left: var(--#{$prefix}notification-padding-x);
-                right: var(--#{$prefix}notification-padding-x);
+            &.#{vars.$prefix}notification-top-center,
+            &.#{vars.$prefix}notification-bottom-center {
+                --#{vars.$prefix}notification-container-width: auto;
+                left: var(--#{vars.$prefix}notification-padding-x);
+                right: var(--#{vars.$prefix}notification-padding-x);
             }
 
-            > .#{$prefix}notification-dialog {
-                --#{$prefix}notification-width: 100%;
+            > .#{vars.$prefix}notification-dialog {
+                --#{vars.$prefix}notification-width: 100%;
             }
 
-            &.#{$prefix}btn-close {
+            &.#{vars.$prefix}btn-close {
                 right: -0.2em;
                 top: -0.2em;
             }

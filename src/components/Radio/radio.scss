@@ -1,39 +1,38 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/utils/color_functions";
-@import "../../../scss/mixins/radio";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
+@use "../../../scss/mixins/css3/borders";
+@use "../../../scss/mixins/radio";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}radio {
-    --#{$prefix}radio-size: #{$radio-size};
-    --#{$prefix}radio-touch-size: #{$radio-touch-size};
-    --#{$prefix}radio-stroke: #{$radio-stroke};
-    --#{$prefix}radio-margin: #{$radio-margin};
-    --#{$prefix}radio-disabled-bg: transparent;
-    --#{$prefix}radio-disabled-opacity: calc(var(--#{$prefix}field-disabled-opacity) - .2);
-    --#{$prefix}radio-state-bg: transparent;
-    --#{$prefix}radio-state-color: var(--#{$prefix}radio-color);
-    --#{$prefix}radio-state-opacity: 1;
-    --#{$prefix}radio-state-inner-bg: transparent;
-    --#{$prefix}radio-state-inner-opacity: 0;
-    --#{$prefix}radio-state-overlay-bg: transparent;
-    --#{$prefix}radio-state-overlay-opacity: 0;
+.#{vars.$prefix}radio {
+    --#{vars.$prefix}radio-size: #{vars.$radio-size};
+    --#{vars.$prefix}radio-touch-size: #{vars.$radio-touch-size};
+    --#{vars.$prefix}radio-stroke: #{vars.$radio-stroke};
+    --#{vars.$prefix}radio-margin: #{vars.$radio-margin};
+    --#{vars.$prefix}radio-disabled-bg: transparent;
+    --#{vars.$prefix}radio-disabled-opacity: calc(var(--#{vars.$prefix}field-disabled-opacity) - .2);
+    --#{vars.$prefix}radio-state-bg: transparent;
+    --#{vars.$prefix}radio-state-color: var(--#{vars.$prefix}radio-color);
+    --#{vars.$prefix}radio-state-opacity: 1;
+    --#{vars.$prefix}radio-state-inner-bg: transparent;
+    --#{vars.$prefix}radio-state-inner-opacity: 0;
+    --#{vars.$prefix}radio-state-overlay-bg: transparent;
+    --#{vars.$prefix}radio-state-overlay-opacity: 0;
 
-    @include display-flex(inline-flex);
-    margin: var(--#{$prefix}radio-margin);
+    display: inline-flex;
+    margin: var(--#{vars.$prefix}radio-margin);
     position: relative;
     cursor: pointer;
 
-    > .#{$prefix}radio-inner {
-        @include border-radius($border-radius-circle);
-        @include transition($transition-stand);
-        background-color: var(--#{$prefix}radio-state-bg);
-        border: var(--#{$prefix}radio-stroke) solid var(--#{$prefix}radio-state-color);
-        height: var(--#{$prefix}radio-size);
-        min-width: var(--#{$prefix}radio-size);
-        width: var(--#{$prefix}radio-size);
-        opacity: var(--#{$prefix}radio-state-opacity);
+    > .#{vars.$prefix}radio-inner {
+        @include borders.radius(vars.$border-radius-circle);
+        background-color: var(--#{vars.$prefix}radio-state-bg);
+        border: var(--#{vars.$prefix}radio-stroke) solid var(--#{vars.$prefix}radio-state-color);
+        height: var(--#{vars.$prefix}radio-size);
+        min-width: var(--#{vars.$prefix}radio-size);
+        width: var(--#{vars.$prefix}radio-size);
+        opacity: var(--#{vars.$prefix}radio-state-opacity);
         position: relative;
+        transition: vars.$transition-stand;
 
         &:focus {
             outline: none;
@@ -41,56 +40,56 @@
 
         &:before,
         &:after {
-            @include transition($transition-drop);
+            transition: vars.$transition-drop;
             content: " ";
             position: absolute;
         }
 
         &:before {
-            @include border-radius($border-radius-circle);
-            @include transform(translate(-50%, -50%));
-            height: var(--#{$prefix}radio-touch-size);
-            width: var(--#{$prefix}radio-touch-size);
+            @include borders.radius(vars.$border-radius-circle);
+            height: var(--#{vars.$prefix}radio-touch-size);
+            width: var(--#{vars.$prefix}radio-touch-size);
+            transform: translate(-50%, -50%);
             left: 50%;
             top: 50%;
             z-index: 11;
         }
 
         &:after {
-            @include border-radius($border-radius-circle);
-            @include transform(scale3D(.38, .38, 1));
-            background-color: var(--#{$prefix}radio-state-inner-bg);
-            opacity: var(--#{$prefix}radio-state-inner-opacity);
+            @include borders.radius(vars.$border-radius-circle);
+            background-color: var(--#{vars.$prefix}radio-state-inner-bg);
+            opacity: var(--#{vars.$prefix}radio-state-inner-opacity);
+            transform: scale3D(.38, .38, 1);
             bottom: 3px;
             left: 3px;
             right: 3px;
             top: 3px;
         }
 
-        .#{$prefix}radio-overlay {
-            @include transition($transition-hoverable);
-            @include border-radius($border-radius-circle);
-            @include transform(translate(-50%, -50%));
-            background-color: var(--#{$prefix}radio-state-overlay-bg);
-            opacity: var(--#{$prefix}radio-state-overlay-opacity);
-            height: var(--#{$prefix}radio-touch-size);
-            width: var(--#{$prefix}radio-touch-size);
+        .#{vars.$prefix}radio-overlay {
+            @include borders.radius(vars.$border-radius-circle);
+            background-color: var(--#{vars.$prefix}radio-state-overlay-bg);
+            opacity: var(--#{vars.$prefix}radio-state-overlay-opacity);
+            height: var(--#{vars.$prefix}radio-touch-size);
+            width: var(--#{vars.$prefix}radio-touch-size);
+            transition: vars.$transition-hoverable;
+            transform: translate(-50%, -50%);
             left: 50% !important;
             top: 50% !important;
             pointer-events: none;
             position: absolute;
         }
 
-        .#{$prefix}ripple {
-            @include border-radius($border-radius-circle);
-            @include transform(translate(-50%, -50%));
-            height: var(--#{$prefix}radio-touch-size);
-            width: var(--#{$prefix}radio-touch-size);
+        .#{vars.$prefix}ripple {
+            @include borders.radius(vars.$border-radius-circle);
+            height: var(--#{vars.$prefix}radio-touch-size);
+            width: var(--#{vars.$prefix}radio-touch-size);
             left: 50% !important;
             top: 50% !important;
+            transform: translate(-50%, -50%);
 
-            .#{$prefix}ripple-animation {
-                background-color: var(--#{$prefix}radio-active-color);
+            .#{vars.$prefix}ripple-animation {
+                background-color: var(--#{vars.$prefix}radio-active-color);
                 opacity: .65;
             }
 
@@ -100,43 +99,43 @@
         }
     }
 
-    > .#{$prefix}radio-label {
-        @include user-select(none);
-        opacity: var(--#{$prefix}radio-state-opacity);
-        height: var(--#{$prefix}radio-size);
-        line-height: var(--#{$prefix}radio-size);
+    > .#{vars.$prefix}radio-label {
+        opacity: var(--#{vars.$prefix}radio-state-opacity);
+        height: var(--#{vars.$prefix}radio-size);
+        line-height: var(--#{vars.$prefix}radio-size);
         margin-bottom: 0;
-        margin-left: $padding-base;
+        margin-left: vars.$padding-base;
         position: relative;
         cursor: pointer;
+        user-select: none;
     }
 
     &.checked {
-        --#{$prefix}radio-state-inner-bg: var(--#{$prefix}radio-active-color);
-        --#{$prefix}radio-state-color: var(--#{$prefix}radio-active-color);
-        --#{$prefix}radio-state-inner-opacity: 1;
+        --#{vars.$prefix}radio-state-inner-bg: var(--#{vars.$prefix}radio-active-color);
+        --#{vars.$prefix}radio-state-color: var(--#{vars.$prefix}radio-active-color);
+        --#{vars.$prefix}radio-state-inner-opacity: 1;
 
-        .#{$prefix}radio-inner {
+        .#{vars.$prefix}radio-inner {
             &:after {
-                @include transform(scale3D(1, 1, 1));
-                @include transition($transition-stand);
+                transform: scale3D(1, 1, 1);
+                transition: vars.$transition-stand;
             }
         }
     }
 
     &:not(.disabled):not(.readonly) {
-        > .#{$prefix}radio-inner {
+        > .#{vars.$prefix}radio-inner {
             &:hover {
-                --#{$prefix}radio-state-overlay-bg: currentColor;
-                --#{$prefix}radio-state-overlay-opacity: .09;
+                --#{vars.$prefix}radio-state-overlay-bg: currentColor;
+                --#{vars.$prefix}radio-state-overlay-opacity: .09;
             }
         }
 
         &.checked {
-            > .#{$prefix}radio-inner {
+            > .#{vars.$prefix}radio-inner {
                 &:hover {
-                    --#{$prefix}radio-state-overlay-bg: var(--#{$prefix}radio-active-color);
-                    --#{$prefix}radio-state-overlay-opacity: .2;
+                    --#{vars.$prefix}radio-state-overlay-bg: var(--#{vars.$prefix}radio-active-color);
+                    --#{vars.$prefix}radio-state-overlay-opacity: .2;
                 }
             }
         }
@@ -144,33 +143,33 @@
 
     &.required {
         label:after {
-            @include transform(translateX(calc(100% + 2px)));
+            transform: translateX(calc(100% + 2px));
             content: "*";
             line-height: 1em;
             position: absolute;
             vertical-align: top;
             right: 0;
-            top: var(--#{$prefix}radio-stroke);
+            top: var(--#{vars.$prefix}radio-stroke);
         }
     }
 
     &.disabled, &.readonly {
-        --#{$prefix}radio-state-opacity: var(--#{$prefix}field-readonly-opacity);
+        --#{vars.$prefix}radio-state-opacity: var(--#{vars.$prefix}field-readonly-opacity);
         cursor: default;
 
-        > .#{$prefix}radio-label {
+        > .#{vars.$prefix}radio-label {
             cursor: default;
         }
     }
 
     &.disabled {
-        --#{$prefix}radio-state-opacity: var(--#{$prefix}radio-disabled-opacity);
-        --#{$prefix}radio-state-bg: var(--#{$prefix}radio-disabled-bg);
-        --#{$prefix}radio-state-color: currentColor;
-        --#{$prefix}radio-state-inner-bg: currentColor;
+        --#{vars.$prefix}radio-state-opacity: var(--#{vars.$prefix}radio-disabled-opacity);
+        --#{vars.$prefix}radio-state-bg: var(--#{vars.$prefix}radio-disabled-bg);
+        --#{vars.$prefix}radio-state-color: currentColor;
+        --#{vars.$prefix}radio-state-inner-bg: currentColor;
     }
 }
 
-@each $name, $color in map-remove($merge-theme-colors, 'black') {
-    @include make-radio-variant($name, $color);
+@each $name, $color in colors.$context-colors {
+    @include radio.make-default-variant($name, $color);
 }

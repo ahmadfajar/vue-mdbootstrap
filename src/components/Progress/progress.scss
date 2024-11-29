@@ -1,20 +1,18 @@
-@import "/node_modules/compass-mixins/lib/compass/css3";
-@import "/node_modules/compass-mixins/lib/animation/core";
-@import "../../../scss/utils/color_functions";
-@import "../../../scss/mixins/progressbar";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
+@use "../../../scss/mixins/progress";
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-@keyframes #{$prefix}spin {
+
+@keyframes #{vars.$prefix}spin {
     0% {
-        @include transform(rotate(0deg));
+        transform: rotate(0deg);
     }
     100% {
-        @include transform(rotate(360deg));
+        transform: rotate(360deg);
     }
 }
 
-@keyframes #{$prefix}progress-spinner-initial-rotate {
+@keyframes #{vars.$prefix}progress-spinner-initial-rotate {
     0% {
         opacity: 0;
         transform: rotate(-90deg) translateZ(0);
@@ -27,7 +25,7 @@
     }
 }
 
-@keyframes #{$prefix}progress-spinner-stroke-rotate-fallback {
+@keyframes #{vars.$prefix}progress-spinner-stroke-rotate-fallback {
     0% {
         transform: rotate(0)
     }
@@ -45,7 +43,7 @@
     }
 }
 
-@keyframes #{$prefix}progress-bar-indeterminate-track {
+@keyframes #{vars.$prefix}progress-bar-indeterminate-track {
     0% {
         transform: translateX(0)
     }
@@ -62,7 +60,7 @@
     }
 }
 
-@keyframes #{$prefix}progress-bar-indeterminate-track-alternate {
+@keyframes #{vars.$prefix}progress-bar-indeterminate-track-alternate {
     0% {
         transform: scaleX(.08)
     }
@@ -79,7 +77,7 @@
     }
 }
 
-@keyframes #{$prefix}progress-bar-indeterminate-fill {
+@keyframes #{vars.$prefix}progress-bar-indeterminate-fill {
     0% {
         animation-timing-function: cubic-bezier(.15, 0, .52, .41);
         transform: translateX(0)
@@ -97,7 +95,7 @@
     }
 }
 
-@keyframes #{$prefix}progress-bar-indeterminate-fill-alternate {
+@keyframes #{vars.$prefix}progress-bar-indeterminate-fill-alternate {
     0% {
         animation-timing-function: cubic-bezier(.15, 0, .52, .41);
         transform: scaleX(.08)
@@ -115,174 +113,177 @@
     }
 }
 
-@keyframes #{$prefix}progress-bar-buffer {
+@keyframes #{vars.$prefix}progress-bar-buffer {
     to {
         transform: translate3D(-8px, 0, 0);
     }
 }
 
-.#{$prefix}spin {
-    @include animation(#{$prefix}spin 2s infinite linear);
+.#{vars.$prefix}spin {
+    animation: #{vars.$prefix}spin 2s infinite linear;
 }
 
-.#{$prefix}pulse {
-    @include animation(#{$prefix}spin 1.5s infinite steps(8));
+.#{vars.$prefix}pulse {
+    animation: #{vars.$prefix}spin 1.5s infinite steps(8);
 }
 
-.#{$prefix}mask-loader {
-    @include flexbox((display: flex, align-items: center, justify-content: center));
+.#{vars.$prefix}mask-loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     left: 0;
     top: 0;
     right: 0;
+    max-height: 100%;
     width: 100%;
     height: 100%;
-    max-height: 100%;
     position: absolute;
 }
 
-.#{$prefix}progress-wrapper {
-    --#{$prefix}progress-color: currentColor;
-    --#{$prefix}progress-font-size: .75rem;
-    --#{$prefix}progress-label-font-size: .825rem;
-    --#{$prefix}progress-label-font-weight: 600;
-    font-size: var(--#{$prefix}progress-font-size);
+.#{vars.$prefix}progress-wrapper {
+    --#{vars.$prefix}progress-color: currentColor;
+    --#{vars.$prefix}progress-font-size: .75rem;
+    --#{vars.$prefix}progress-label-font-size: .825rem;
+    --#{vars.$prefix}progress-label-font-weight: 600;
 
-    > .#{$prefix}progress-label:first-child {
+    font-size: var(--#{vars.$prefix}progress-font-size);
+
+    > .#{vars.$prefix}progress-label:first-child {
         margin-bottom: 3px;
     }
 
-    .#{$prefix}progress-label {
-        color: var(--#{$prefix}progress-color);
+    .#{vars.$prefix}progress-label {
+        color: var(--#{vars.$prefix}progress-color);
         text-align: center;
 
         > .text-label {
-            font-size: var(--#{$prefix}progress-label-font-size);
-            font-weight: var(--#{$prefix}progress-label-font-weight);
+            font-size: var(--#{vars.$prefix}progress-label-font-size);
+            font-weight: var(--#{vars.$prefix}progress-label-font-weight);
         }
     }
 
     .progress {
-        --#{$prefix-bs}progress-font-size: var(--#{$prefix}progress-font-size);
+        --#{vars.$prefix-bs}progress-font-size: var(--#{vars.$prefix}progress-font-size);
     }
 }
 
-.#{$prefix}progress-spinner {
+.#{vars.$prefix}progress-spinner {
     display: inline-flex;
     position: relative;
 
-    &.#{$prefix}indeterminate {
-        animation: #{$prefix}spin 2s linear infinite;
+    &.#{vars.$prefix}indeterminate {
+        animation: #{vars.$prefix}spin 2s linear infinite;
 
-        &.#{$prefix}progress-spinner-enter-from,
-        &.#{$prefix}progress-spinner-leave-active {
+        &.#{vars.$prefix}progress-spinner-enter-from,
+        &.#{vars.$prefix}progress-spinner-leave-active {
             transition-duration: .4s;
 
-            .#{$prefix}progress-spinner-draw {
+            .#{vars.$prefix}progress-spinner-draw {
                 opacity: 0;
                 transform: scale(.1);
             }
         }
 
-        .#{$prefix}progress-spinner-circle {
-            animation: 4s infinite $transition-stand-animation;
+        .#{vars.$prefix}progress-spinner-circle {
+            animation: 4s infinite vars.$transition-stand-animation;
         }
     }
 
-    &.#{$prefix}determinate {
-        &.#{$prefix}progress-spinner-enter-active,
-        &.#{$prefix}progress-spinner-leave-active {
+    &.#{vars.$prefix}determinate {
+        &.#{vars.$prefix}progress-spinner-enter-active,
+        &.#{vars.$prefix}progress-spinner-leave-active {
             transition-duration: 2s;
 
-            .#{$prefix}progress-spinner-draw {
-                animation: #{$prefix}progress-spinner-initial-rotate 1.98s $transition-stand-animation forwards;
+            .#{vars.$prefix}progress-spinner-draw {
+                animation: #{vars.$prefix}progress-spinner-initial-rotate 1.98s vars.$transition-stand-animation forwards;
             }
         }
 
-        .#{$prefix}progress-spinner-draw {
+        .#{vars.$prefix}progress-spinner-draw {
             transition: none;
         }
     }
 
-    > .#{$prefix}progress-spinner-draw {
+    > .#{vars.$prefix}progress-spinner-draw {
         overflow: visible;
         transform: scale(1) rotate(-90deg);
         transform-origin: center;
-        transition: .4s $transition-stand-animation;
+        transition: .4s vars.$transition-stand-animation;
         will-change: opacity, transform;
     }
 
-    .#{$prefix}progress-spinner-circle {
+    .#{vars.$prefix}progress-spinner-circle {
         fill: none;
         transform-origin: center;
-        transition: stroke-dashoffset .25s $transition-stand-animation;
+        transition: stroke-dashoffset .25s vars.$transition-stand-animation;
         will-change: stroke-dashoffset, stroke-dasharray, stroke-width, animation-name, r;
     }
 }
 
-.#{$prefix}progress-bar-enter-from,
-.#{$prefix}progress-bar-leave-active {
+.#{vars.$prefix}progress-bar-enter-from,
+.#{vars.$prefix}progress-bar-leave-active {
     opacity: .5;
     transform: translateZ(0) scaleY(0);
 }
 
-.#{$prefix}progress-bar {
+.#{vars.$prefix}progress-bar {
     overflow: hidden;
     position: relative;
     transform: translateZ(0) scaleY(1);
     transform-origin: center center;
-    transition: opacity .3s $transition-default-animation, transform .4s $transition-default-animation;
+    transition: opacity .3s vars.$transition-default-animation, transform .4s vars.$transition-default-animation;
     will-change: opacity, transform;
 
-    &.#{$prefix}indeterminate,
-    &.#{$prefix}query {
-        > .#{$prefix}progress-bar-track {
+    &.#{vars.$prefix}indeterminate,
+    &.#{vars.$prefix}query {
+        > .#{vars.$prefix}progress-bar-track {
             left: -150%;
-            animation: #{$prefix}progress-bar-indeterminate-track 2s infinite linear;
+            animation: #{vars.$prefix}progress-bar-indeterminate-track 2s infinite linear;
 
             &:after {
-                animation: #{$prefix}progress-bar-indeterminate-track-alternate 2s infinite linear;
+                animation: #{vars.$prefix}progress-bar-indeterminate-track-alternate 2s infinite linear;
             }
         }
 
-        > .#{$prefix}progress-bar-fill {
+        > .#{vars.$prefix}progress-bar-fill {
             left: -55%;
-            animation: #{$prefix}progress-bar-indeterminate-fill 2s infinite linear;
+            animation: #{vars.$prefix}progress-bar-indeterminate-fill 2s infinite linear;
 
             &:after {
-                animation: #{$prefix}progress-bar-indeterminate-fill-alternate 2s infinite linear;
+                animation: #{vars.$prefix}progress-bar-indeterminate-fill-alternate 2s infinite linear;
             }
         }
     }
 
-    &.#{$prefix}determinate,
-    &.#{$prefix}buffer {
-        > .#{$prefix}progress-bar-fill,
-        > .#{$prefix}progress-bar-track,
-        > .#{$prefix}progress-bar-buffer {
-            transition: .25s $transition-stand-animation;
+    &.#{vars.$prefix}determinate,
+    &.#{vars.$prefix}buffer {
+        > .#{vars.$prefix}progress-bar-fill,
+        > .#{vars.$prefix}progress-bar-track,
+        > .#{vars.$prefix}progress-bar-buffer {
+            transition: .25s vars.$transition-stand-animation;
         }
     }
 
-    &.#{$prefix}determinate {
-        > .#{$prefix}progress-bar-track {
+    &.#{vars.$prefix}determinate {
+        > .#{vars.$prefix}progress-bar-track {
             display: none;
         }
     }
 
-    &.#{$prefix}buffer {
-        > .#{$prefix}progress-bar-buffer {
+    &.#{vars.$prefix}buffer {
+        > .#{vars.$prefix}progress-bar-buffer {
             border-top: 4px dotted;
-            animation: #{$prefix}progress-bar-buffer .25s infinite linear;
+            animation: #{vars.$prefix}progress-bar-buffer .25s infinite linear;
         }
     }
 
-    &.#{$prefix}query {
+    &.#{vars.$prefix}query {
         transform: rotateZ(180deg);
     }
 
-    > .#{$prefix}progress-bar-buffer,
-    > .#{$prefix}progress-bar-track,
-    > .#{$prefix}progress-bar-fill {
+    > .#{vars.$prefix}progress-bar-buffer,
+    > .#{vars.$prefix}progress-bar-track,
+    > .#{vars.$prefix}progress-bar-fill {
         transform-origin: top left;
 
         &, &:after {
@@ -299,10 +300,10 @@
         }
     }
 
-    @include make-progress-bar-vars();
+    @include progress.make-css-vars();
 }
 
-@each $name, $color in $theme-colors {
-    @include make-progress-bar-variant($name, $color);
-    @include make-progress-spinner($name, $color);
+@each $name, $color in colors.$context-colors {
+    @include progress.make-bar-variant($name, $color);
+    @include progress.make-spinner-variant($name, $color);
 }

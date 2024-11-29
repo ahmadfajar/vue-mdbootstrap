@@ -42,7 +42,7 @@
     }
 
     &.smooth-animation {
-        transition: $transition-default;
+        transition: vars.$transition-default;
         // @include transition(.35s cubic-bezier(.5, .35, .75, 1));
     }
 

@@ -1,17 +1,9 @@
 @use "../utils/color_functions" as color_utils;
 @use "../variables" as vars;
 
-@mixin make-progress-spinner($name, $color) {
-    .spinner-#{$name} {
-        .#{vars.$prefix}progress-spinner-circle {
-            stroke: $color;
-        }
-    }
-}
-
 // BsProgress mixins - SASS variables
 //------------------------------------
-@mixin make-progress-bar-vars() {
+@mixin make-css-vars() {
     &.#{vars.$prefix}indeterminate {
         background-color: var(--#{vars.$prefix}progress-bar-bg);
 
@@ -46,7 +38,7 @@
     }
 }
 
-@mixin make-progress-bar-variant($name, $color) {
+@mixin make-bar-variant($name, $color) {
     $color-rgb: color_utils.to-rgb($color);
     .progress-bar-#{$name} {
         --#{vars.$prefix}progress-bar-bg: rgba(#{$color-rgb}, .24);
@@ -61,6 +53,14 @@
                     --#{vars.$prefix}progress-bar-bg-after: #{$color};
                 }
             }
+        }
+    }
+}
+
+@mixin make-spinner-variant($name, $color) {
+    .spinner-#{$name} {
+        .#{vars.$prefix}progress-spinner-circle {
+            stroke: $color;
         }
     }
 }

@@ -1,8 +1,6 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}popover {
+.#{vars.$prefix}popover {
     -webkit-overflow-scrolling: touch;
     position: fixed;
     max-height: 100%;
@@ -11,7 +9,8 @@
     z-index: 1060;
 
     .dropdown-menu {
-        --#{$prefix-bs}dropdown-border-width: 0;
+        --#{vars.$prefix-bs}dropdown-border-width: 0;
+
         display: block;
         position: relative;
 
@@ -22,9 +21,9 @@
         }
 
         .dropdown-header {
-            @include user-select(none);
             font-size: 13px;
             font-weight: 500;
+            user-select: none;
         }
     }
 

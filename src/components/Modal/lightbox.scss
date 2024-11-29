@@ -1,68 +1,66 @@
-@import "compass-mixins/lib/compass/css3";
-@import "../../../scss/color_vars";
-@import "../../../scss/variables";
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins/breakpoints";
+@use "../../../scss/mixins/css3/breakpoints" as media;
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
 
-.#{$prefix}lightbox-wrap {
-    --#{$prefix}lightbox-element-padding-x: #{$padding-sm};
-    --#{$prefix}lightbox-display-bg: #{rgba($black, .3)};
-    --#{$prefix}lightbox-toolbar-bg: #{rgba($black, .9)};
-    --#{$prefix}lightbox-toolbar-color: #{$gray-400};
-    --#{$prefix}lightbox-overlay-bg: #151515;
-    --#{$prefix}lightbox-title-bg: #{rgba($black, .7)};
-    --#{$prefix}lightbox-title-color: #{$gray-400};
-    --#{$prefix}lightbox-title-size: 1.25rem;
-    --#{$prefix}lightbox-thumbnail-bg: #{rgba($black, .95)};
-    --#{$prefix}lightbox-thumbnail-border: #{1px solid rgba($black, .6)};
-    --#{$prefix}lightbox-thumbnail-opacity: 0.5;
-    --#{$prefix}lightbox-thumbnail-active-border-color: #{$red-base};
-    --#{$prefix}lightbox-thumbnail-active-border-width: 2px;
-    // --#{$prefix}lightbox-zindex: 1990;
+.#{vars.$prefix}lightbox-wrap {
+    --#{vars.$prefix}lightbox-element-padding-x: #{vars.$padding-sm};
+    --#{vars.$prefix}lightbox-display-bg: #{rgba(colors.$black, .3)};
+    --#{vars.$prefix}lightbox-toolbar-bg: #{rgba(colors.$black, .9)};
+    --#{vars.$prefix}lightbox-toolbar-color: #{colors.$gray-400};
+    --#{vars.$prefix}lightbox-overlay-bg: #151515;
+    --#{vars.$prefix}lightbox-title-bg: #{rgba(colors.$black, .7)};
+    --#{vars.$prefix}lightbox-title-color: #{colors.$gray-400};
+    --#{vars.$prefix}lightbox-title-size: 1.25rem;
+    --#{vars.$prefix}lightbox-thumbnail-bg: #{rgba(colors.$black, .95)};
+    --#{vars.$prefix}lightbox-thumbnail-border: #{1px solid rgba(colors.$black, .6)};
+    --#{vars.$prefix}lightbox-thumbnail-opacity: 0.5;
+    --#{vars.$prefix}lightbox-thumbnail-active-border-color: #{colors.$red-base};
+    --#{vars.$prefix}lightbox-thumbnail-active-border-width: 2px;
 
     left: 0;
     right: 0;
     top: 0;
     bottom: 0;
     position: fixed;
-    // z-index: var(--#{$prefix}lightbox-zindex);
 
-    &.#{$prefix}lightbox-overlay {
-        background-color: var(--#{$prefix}lightbox-overlay-bg);
+    &.#{vars.$prefix}lightbox-overlay {
+        background-color: var(--#{vars.$prefix}lightbox-overlay-bg);
     }
 
-    > .#{$prefix}lightbox-display {
-        @include flexbox((display: flex, align-items: center, justify-content: center));
+    > .#{vars.$prefix}lightbox-display {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: relative;
 
-        .#{$prefix}lightbox-item {
-            @include flexbox((display: flex, flex-direction: column));
-            background: var(--#{$prefix}lightbox-display-bg);
+        .#{vars.$prefix}lightbox-item {
+            background: var(--#{vars.$prefix}lightbox-display-bg);
+            display: flex;
+            flex-direction: column;
             max-width: 95%;
             max-height: 96%;
             position: relative;
             overflow: hidden;
         }
 
-        .#{$prefix}lightbox-item-img {
-            @include flex(1 1 auto);
+        .#{vars.$prefix}lightbox-item-img {
             display: block;
+            flex: 1 1 auto;
             overflow: hidden;
             position: relative;
 
             > img {
-                @include transition($transition-basic);
+                transition: vars.$transition-basic;
                 max-width: 100%;
                 max-height: 100%;
                 z-index: 10;
             }
         }
 
-        .#{$prefix}lightbox-item-title {
-            background: var(--#{$prefix}lightbox-title-bg);
-            color: var(--#{$prefix}lightbox-title-color);
-            font-size: var(--#{$prefix}lightbox-title-size);
+        .#{vars.$prefix}lightbox-item-title {
+            background: var(--#{vars.$prefix}lightbox-title-bg);
+            color: var(--#{vars.$prefix}lightbox-title-color);
+            font-size: var(--#{vars.$prefix}lightbox-title-size);
             display: block;
             line-height: normal;
             padding: 12px;
@@ -71,81 +69,86 @@
             width: 100%;
         }
 
-        > .#{$prefix}lightbox-controls {
-            @include flexbox((display: flex, justify-content: space-between));
+        > .#{vars.$prefix}lightbox-controls {
+            display: flex;
+            justify-content: space-between;
             position: fixed;
             left: 0;
             right: 0;
             z-index: 10;
 
-            > .#{$prefix}control-prev {
-                @include display-flex(inline-flex);
-                padding-left: var(--#{$prefix}lightbox-element-padding-x);
+            > .#{vars.$prefix}control-prev {
+                display: inline-flex;
+                padding-left: var(--#{vars.$prefix}lightbox-element-padding-x);
             }
 
-            > .#{$prefix}control-next {
-                @include display-flex(inline-flex);
-                padding-right: var(--#{$prefix}lightbox-element-padding-x);
+            > .#{vars.$prefix}control-next {
+                display: inline-flex;
+                padding-right: var(--#{vars.$prefix}lightbox-element-padding-x);
             }
         }
     }
 
-    > .#{$prefix}lightbox-toolbar {
-        @include flexbox((display: flex, justify-content: space-between));
+    > .#{vars.$prefix}lightbox-toolbar {
+        display: flex;
+        justify-content: space-between;
         top: 0;
         left: 0;
         right: 0;
         position: fixed;
         z-index: 10;
 
-        .#{$prefix}toolbar-items {
-            background: var(--#{$prefix}lightbox-toolbar-bg);
+        .#{vars.$prefix}toolbar-items {
+            background: var(--#{vars.$prefix}lightbox-toolbar-bg);
+            padding: var(--#{vars.$prefix}lightbox-element-padding-x);
             min-width: 100px;
-            padding: var(--#{$prefix}lightbox-element-padding-x);
         }
 
-        .#{$prefix}counter {
-            color: var(--#{$prefix}lightbox-toolbar-color);
-            padding: var(--#{$prefix}lightbox-element-padding-x) $padding-base;
+        .#{vars.$prefix}counter {
+            color: var(--#{vars.$prefix}lightbox-toolbar-color);
+            padding: var(--#{vars.$prefix}lightbox-element-padding-x) vars.$padding-base;
         }
     }
 
-    > .#{$prefix}lightbox-thumbnail {
-        background: var(--#{$prefix}lightbox-thumbnail-bg);
+    > .#{vars.$prefix}lightbox-thumbnail {
+        background: var(--#{vars.$prefix}lightbox-thumbnail-bg);
         left: 0;
         right: 0;
         bottom: 0;
         overflow-x: auto;
         position: fixed;
-        padding: 0 $padding-sm;
+        padding: 0 vars.$padding-sm;
 
-        > .#{$prefix}lightbox-thumbnail-row {
-            @include flexbox((display:flex, flex-direction: row));
+        > .#{vars.$prefix}lightbox-thumbnail-row {
+            display:flex;
+            flex-direction: row;
 
-            > .#{$prefix}lightbox-thumbnails {
-                @include flexbox((display: flex, flex-flow: row nowrap));
+            > .#{vars.$prefix}lightbox-thumbnails {
+                display: flex;
+                flex-flow: row nowrap;
 
-                .#{$prefix}thumbnail-item {
-                    border: var(--#{$prefix}lightbox-thumbnail-border);
-                    opacity: var(--#{$prefix}lightbox-thumbnail-opacity);
-                    cursor: pointer;
+                .#{vars.$prefix}thumbnail-item {
+                    border: var(--#{vars.$prefix}lightbox-thumbnail-border);
+                    opacity: var(--#{vars.$prefix}lightbox-thumbnail-opacity);
                     display: inline-block;
+                    cursor: pointer;
 
                     &:hover {
-                        --#{$prefix}lightbox-thumbnail-opacity: 1;
+                        --#{vars.$prefix}lightbox-thumbnail-opacity: 1;
                     }
 
                     &.active {
-                        --#{$prefix}lightbox-thumbnail-opacity: 1;
-                        border-color: var(--#{$prefix}lightbox-thumbnail-active-border-color);
-                        border-left-width: var(--#{$prefix}lightbox-thumbnail-active-border-width);
-                        border-right-width: var(--#{$prefix}lightbox-thumbnail-active-border-width);
+                        --#{vars.$prefix}lightbox-thumbnail-opacity: 1;
+
+                        border-color: var(--#{vars.$prefix}lightbox-thumbnail-active-border-color);
+                        border-left-width: var(--#{vars.$prefix}lightbox-thumbnail-active-border-width);
+                        border-right-width: var(--#{vars.$prefix}lightbox-thumbnail-active-border-width);
                     }
                 }
             }
 
-            @include media-breakpoint-up(lg) {
-                @include flexbox((justify-content: center));
+            @include media.breakpoint-up(lg) {
+                justify-content: center;
             }
         }
     }
