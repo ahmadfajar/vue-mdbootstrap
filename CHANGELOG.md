@@ -3,6 +3,32 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.1.0
+
+Released: November XX, 2024
+
+### Features & Improvements
+
+- Migrate **Google Material Icons** to **[Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols)**.
+  This migration improve icon naming consistency, clarity and reduce the bundle size.
+- Migrate scss files from legacy SASS to modern SASS.
+- Reduce the number of color variants for each component on main css file
+  (comply to [Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/introduction/) colors with some addition),
+  and put other colors variants on different css file. This action greatly reduces the size of the main css file.
+- **BsIcon**, **BsIconSvg**, **BsToggleIcon**: 
+  - Improve `icon` property to better accommodate the **Google Material Symbols**.
+  - Add `filled` property to better accommodate the **Google Material Symbols**.
+- **BsAlert**, **BsChip**, **BsChipGroup**:
+  - Improve `icon` property to better accommodate the **Google Material Symbols**. 
+  - Improve `icon-variant` property to better accommodate the **Google Material Symbols**.
+- **BsAvatar**, **BsTab**, **BsListTileLeading**, **BsListNavItem**, **BsButton**, **BsToggleButton**, **BsToggleField**:
+  - Add `icon-variant` property to better accommodate the **Google Material Symbols**.
+  - Improve `icon` property to better accommodate the **Google Material Symbols**.
+- **BsChipField**, **BsTextArea**, **BsTextField**, **BsNumericField**, **BsDateTimeField**, **BsCombobox**:
+  - Improve properties: `append-icon`, `append-icon-outer`, `prepend-icon`, `prepend-icon-outer`,
+    and `action-icon-variant` to better accommodate the **Google Material Symbols**.
+
+
 ## v2.0.15
 
 Released: November 14, 2024
