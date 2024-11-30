@@ -1,6 +1,5 @@
-@use "sass:color";
 @use "sass:map";
-@use "../utils/color_helper" as helper;
+@use "../mixins/css3/text";
 @use "../color_vars" as colors;
 @use "../variables" as vars;
 
@@ -12,69 +11,20 @@
 
 // Create default colors for background, borders and text
 //--------------------------------------------------------
-
 $compact-colors: map.remove(colors.$context-colors,
-        "primary", "secondary", "success", "info", "warning", "danger", "white", "dark"
+    "primary", "secondary", "success", "info", "warning", "danger", "white", "dark"
 );
 
 @each $name, $color in $compact-colors {
-    .bg-#{$name} {
-        background-color: rgba($color, var(--#{vars.$prefix-bs}bg-opacity)) !important;
-    }
-
-    .border-#{$name} {
-        border-color: rgba($color, var(--#{vars.$prefix-bs}border-opacity)) !important;
-    }
-
-    .text-#{$name} {
-        color: rgba($color, var(--#{vars.$prefix-bs}text-opacity)) !important;
-    }
-
-    a.text-#{$name} {
-        &:hover, &:focus {
-            color: helper.round-color-rgb(color.adjust($color, $lightness: -15%)) !important;
-        }
-    }
+    @include text.decorate-color($color, $name);
 }
 
 // Manually adds duplicate colors
 //--------------------------------
-.bg-dark, .bg-elegant-color-dark {
-    background-color: rgba(colors.$elegant-color-dark, var(--#{vars.$prefix-bs}bg-opacity)) !important;
-}
-
-.border-dark, .border-elegant-color-dark {
-    border-color: rgba(colors.$elegant-color-dark, var(--#{vars.$prefix-bs}border-opacity)) !important;
-}
-
-.text-dark, .text-elegant-color-dark {
-    color: rgba(colors.$elegant-color-dark, var(--#{vars.$prefix-bs}text-opacity)) !important;
-}
-
-a.text-dark, a.text-elegant-color-dark {
-    &:hover, &:focus {
-        color: helper.round-color-rgb(color.adjust(colors.$elegant-color-dark, $lightness: -15%)) !important;
-    }
-}
+@include text.decorate-color(colors.$elegant-color-dark, "dark", "elegant-color-dark");
 
 // Create grey colors for background, borders and text
 //-------------------------------------------------------
 @each $name, $color in colors.$grays {
-    .bg-grey-#{$name} {
-        background-color: $color !important;
-    }
-
-    .border-grey-#{$name} {
-        border-color: $color !important;
-    }
-
-    .text-grey-#{$name} {
-        color: $color !important;
-    }
-
-    a.text-grey-#{$name} {
-        &:hover, &:focus {
-            color: helper.round-color-rgb(color.adjust($color, $lightness: -15%)) !important;
-        }
-    }
+    @include text.decorate-color($color, "grey-#{$name}");
 }

@@ -293,7 +293,7 @@ export function useRenderCombobox(
                     {
                         color: null,
                         space: (thisProps.outlined ? 2 : 1) as Prop<number>,
-                        class: ['y-overflow-hidden', `${cssPrefix}shadow-1`],
+                        class: ['overflow-y-hidden', `${cssPrefix}shadow-1`],
                         placement: 'bottom' as Prop<TPopoverPosition>,
                         transition: props.transition,
                         // @ts-ignore

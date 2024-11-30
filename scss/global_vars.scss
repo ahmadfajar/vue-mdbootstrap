@@ -3,7 +3,7 @@
 // Global css variables
 //----------------------
 :root {
-    --#{vars.$prefix}field-primary-indicator-rgb: 98, 0, 238;
+    --#{vars.$prefix}field-primary-indicator-rgb: 118, 14, 187;
     --#{vars.$prefix}field-primary-indicator: rgb(var(--#{vars.$prefix}field-primary-indicator-rgb));
     --#{vars.$prefix}field-accent-indicator-rgb: 185,156,225;
     --#{vars.$prefix}field-accent-indicator: rgb(var(--#{vars.$prefix}field-accent-indicator-rgb));

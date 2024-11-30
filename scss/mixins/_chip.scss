@@ -13,7 +13,7 @@
         $hover-bg: helper.round-color-rgba(color.scale($chip-color, $lightness: -25%));
         $active-bg: helper.round-color-rgb(color.scale($color, $lightness: 10%));
         $active-color: color_utils.set-color-contrast($active-bg, colors.$black, colors.$white);
-        $active-box-shadow-color-rgb: color_utils.to-rgb($chip-color);
+        $active-box-shadow-color-rgb: helper.to-rgb($chip-color);
         $active-icon-color: helper.round-color-rgba(color_utils.set-color-contrast($active-bg, color.scale($chip-color, $lightness: -25%), colors.$white));
 
         @if($name == 'light') {
@@ -59,7 +59,7 @@
         $active-bg: helper.round-color-rgba(color_utils.set-color-contrast($color, rgba(color.scale($color, $lightness: -10%), .4), rgba(color.scale($color, $lightness: 15%), .3), 200));
         $active-color: color_utils.set-color-contrast($color, colors.$white, helper.round-color-rgb(color.scale($color, $lightness: -40%)), 210);
         $focus-border: color_utils.set-color-contrast($color, helper.round-color-rgb(color.adjust($border-color, $lightness: -15%)), $color);
-        $active-box-shadow-color-rgb: color_utils.to-rgb(color.adjust($hover-bg, $lightness: 10%));
+        $active-box-shadow-color-rgb: helper.to-rgb(color.adjust($hover-bg, $lightness: 10%));
 
         @if($name == 'grey' or $name == 'secondary') {
             $hover-bg-alt: rgba(helper.round-color-rgb(color.adjust($color, $lightness: -2%)), .3);

@@ -62,7 +62,7 @@ export declare type TIconOptionProps = TSizeOptionProps & {
      * Android icon name with suffix: `_outlined`, `_rounded`, `_sharp`, `_filled`,
      * `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
      *
-     * Suffix `_filled` or `_outlined_filled` will result the same icon style.
+     * Suffix `_filled` and `_outlined_filled` will result the same icon style.
      * And you can either use `*_filled` or sets property `filled` to `true` to
      * create an icon with fill style.
      *

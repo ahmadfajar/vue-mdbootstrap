@@ -37,7 +37,7 @@ export declare type TIconProps = {
     /**
      * Android icon name, either with or without suffix. Valid suffixes are:
      * `_outlined`, `_rounded`, `_sharp`, `_filled`, `_outlined_filled`,
-     * `_rounded_filled`, or `_sharp_filled`. Suffix `_filled` or `_outlined_filled`
+     * `_rounded_filled`, or `_sharp_filled`. Suffix `_filled` and `_outlined_filled`
      * will result the same icon style. Suffix will take priority over
      * `iconVariant` property.
      *
@@ -51,7 +51,7 @@ export declare type TIconProps = {
      * `filled`, `outlined_filled`, `rounded_filled`, and `sharp_filled`. Default
      * is `outlined`.
      *
-     * Variant `filled` or `outlined_filled` will result the same icon style.
+     * Variant `filled` and `outlined_filled` will result the same icon style.
      *
      * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */

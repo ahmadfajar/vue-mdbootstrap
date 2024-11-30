@@ -4,6 +4,6 @@
 
 // BsCheckbox with custom colors
 //-------------------------------
-@each $name, $color in colors.$custom-theme-colors {
+@each $name, $color in map.remove(colors.$custom-theme-colors, "default-color") {
     @include checkbox.make-default-variant($name, $color);
 }

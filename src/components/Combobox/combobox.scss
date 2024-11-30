@@ -105,6 +105,7 @@
                     --#{vars.$prefix}field-control-height: 0;
                     --#{vars.$prefix}field-padding-top: 0;
 
+                    min-height: vars.$text-field-height;
                     padding-top: vars.$padding-base + .25;
 
                     > .#{vars.$prefix}field-placeholder {

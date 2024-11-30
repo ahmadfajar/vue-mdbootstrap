@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "../../../scss/mixins/css3/borders";
 @use "../../../scss/mixins/radio";
 @use "../../../scss/color_vars" as colors;
@@ -170,6 +171,6 @@
     }
 }
 
-@each $name, $color in colors.$context-colors {
+@each $name, $color in map.merge(colors.$context-colors, ("default-color": colors.$mdb-default-color)) {
     @include radio.make-default-variant($name, $color);
 }

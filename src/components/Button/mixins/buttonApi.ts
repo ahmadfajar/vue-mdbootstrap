@@ -177,7 +177,7 @@ function renderSlotIcon(
             iconId,
             {
                 class: {
-                    'd-inline-block': true,
+                    'd-inline-flex': true,
                     [`${cssPrefix}icon-${iconPosition}`]:
                         btnMode === 'default' ||
                         (['fab', 'floating'].includes(btnMode as string) && slots.default),
@@ -204,7 +204,7 @@ function renderSlotIcon(
             !Helper.isEmpty(props.icon)
                 ? //@ts-ignore
                   h<TBsIcon>(BsIcon, {
-                      id: iconId,
+                      // id: iconId,
                       class: {
                           [`${cssPrefix}icon-${iconPosition}`]:
                               btnMode === 'default' ||

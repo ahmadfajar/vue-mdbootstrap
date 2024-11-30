@@ -1,5 +1,6 @@
 @use "sass:color";
 @use "sass:map";
+@use "../mixins/css3/text";
 @use "../utils/color_helper" as helper;
 @use "../color_vars" as colors;
 @use "../variables" as vars;
@@ -16,44 +17,12 @@ $final-colors: map.remove(colors.$merge-theme-colors,
 );
 
 @each $name, $color in $final-colors {
-    .bg-#{$name} {
-        background-color: rgba($color, var(--#{vars.$prefix-bs}bg-opacity)) !important;
-    }
-
-    .border-#{$name} {
-        border-color: rgba($color, var(--#{vars.$prefix-bs}border-opacity)) !important;
-    }
-
-    .text-#{$name} {
-        color: rgba($color, var(--#{vars.$prefix-bs}text-opacity)) !important;
-    }
-
-    a.text-#{$name} {
-        &:hover, &:focus {
-            color: helper.round-color-rgb(color.adjust($color, $lightness: -15%)) !important;
-        }
-    }
+    @include text.decorate-color($color, $name);
 }
 
 // Manually adds duplicate custom colors
 //---------------------------------------
-.bg-dark-blue, .bg-primary-color-dark {
-    background-color: rgba(colors.$primary-color-dark, var(--#{vars.$prefix-bs}bg-opacity)) !important;
-}
-
-.border-dark-blue, .border-primary-color-dark {
-    border-color: rgba(colors.$primary-color-dark, var(--#{vars.$prefix-bs}border-opacity)) !important;
-}
-
-.text-dark-blue, .text-primary-color-dark {
-    color: rgba(colors.$primary-color-dark, var(--#{vars.$prefix-bs}text-opacity)) !important;
-}
-
-a.text-dark-blue, a.text-primary-color-dark {
-    &:hover, &:focus {
-        color: helper.round-color-rgb(color.adjust(colors.$primary-color-dark, $lightness: -15%)) !important;
-    }
-}
+@include text.decorate-color(colors.$primary-color-dark, "dark-blue", "primary-color-dark");
 
 // Create full color palette for background
 //-------------------------------------------
@@ -82,9 +51,7 @@ a.text-dark-blue, a.text-primary-color-dark {
             }
         } @else {
             @if colors.$enable_full_palette {
-                .bg-#{$name}.#{$sub_name} {
-                    background-color: $color_value !important;
-                }
+                @include text.decorate-color($color_value, "#{$name}.#{$sub_name}", false, true, false, false, false);
             }
         }
     }

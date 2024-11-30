@@ -1,4 +1,4 @@
-@use "../utils/color_functions" as color_utils;
+@use "../utils/color_helper" as helper;
 @use "../variables" as vars;
 
 // BsProgress mixins - SASS variables
@@ -39,7 +39,7 @@
 }
 
 @mixin make-bar-variant($name, $color) {
-    $color-rgb: color_utils.to-rgb($color);
+    $color-rgb: helper.to-rgb($color);
     .progress-bar-#{$name} {
         --#{vars.$prefix}progress-bar-bg: rgba(#{$color-rgb}, .24);
         --#{vars.$prefix}progress-bar-fill-bg: #{$color};

@@ -192,6 +192,8 @@
             font-size: 22px;
             font-weight: bold;
             padding-bottom: vars.$padding-xs;
+            pointer-events: none;
+            user-select: none;
         }
     }
 

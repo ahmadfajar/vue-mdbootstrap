@@ -20,7 +20,7 @@ export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
 }
 
 export function useCreateIconProps(props: Readonly<TIconProps>): TRecord {
-    const strIcon = useNormalizeIconName(props.icon!);
+    const strIcon = props.icon ? useNormalizeIconName(props.icon) : undefined;
     const hasSuffix = isEndWith(strIcon, [
         '_outlined_filled',
         '_rounded_filled',
@@ -30,7 +30,8 @@ export function useCreateIconProps(props: Readonly<TIconProps>): TRecord {
         '_rounded',
         '_sharp',
     ]);
-    const iconName = hasSuffix ? strIcon : `${strIcon}_${props.iconVariant}`;
+    const iconName =
+        hasSuffix && strIcon ? strIcon : (strIcon && props.iconVariant ? `${strIcon}_${props.iconVariant}` : strIcon);
 
     return {
         icon: iconName,

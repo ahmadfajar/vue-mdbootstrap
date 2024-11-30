@@ -50,6 +50,7 @@
     "./styles": "./dist/bundle.css",
     "./color-styles": "./dist/bundle-color.min.css",
     "./dist/*": "./dist/*",
+    "./scss/*": "./scss/*",
     "./package.json": "./package.json"
   },
   "scripts": {

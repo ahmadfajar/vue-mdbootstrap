@@ -51,8 +51,3 @@
         }
     }
 }
-
-@function to-rgb($color) {
-    $roundColor: helper.round-color-rgb($color);
-    @return color.channel($roundColor, "red"), color.channel($roundColor, "green"), color.channel($roundColor, "blue");
-}

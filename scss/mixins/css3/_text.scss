@@ -1,5 +1,65 @@
+@use "sass:color";
+@use "../../utils/color_helper" as helper;
+@use "../../variables" as vars;
+
 @mixin ellipsis($no-wrap: true) {
-    @if $no-wrap { white-space: nowrap; }
+    @if $no-wrap {
+        white-space: nowrap;
+    }
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+@mixin decorate-color($color, $name1, $name2: false, $background: true, $border: true, $text: true, $hyperlink: true) {
+    @if $background {
+        @if $name2 {
+            .bg-#{$name1}, .bg-#{$name2} {
+                background-color: rgba($color, var(--#{vars.$prefix-bs}bg-opacity)) !important;
+            }
+        } @else {
+            .bg-#{$name1} {
+                background-color: rgba($color, var(--#{vars.$prefix-bs}bg-opacity)) !important;
+            }
+        }
+    }
+
+    @if $border {
+        @if $name2 {
+            .border-#{$name1}, .border-#{$name2} {
+                border-color: rgba($color, var(--#{vars.$prefix-bs}border-opacity)) !important;
+            }
+        } @else {
+            .border-#{$name1} {
+                border-color: rgba($color, var(--#{vars.$prefix-bs}border-opacity)) !important;
+            }
+        }
+    }
+
+    @if $text {
+        @if $name2 {
+            .text-#{$name1}, .text-#{$name2} {
+                color: rgba($color, var(--#{vars.$prefix-bs}text-opacity)) !important;
+            }
+        } @else {
+            .text-#{$name1} {
+                color: rgba($color, var(--#{vars.$prefix-bs}text-opacity)) !important;
+            }
+        }
+    }
+
+    @if $hyperlink {
+        @if $name2 {
+            a.text-#{$name1}, a.text-#{$name2} {
+                &:hover, &:focus {
+                    color: helper.to-hex(helper.round-color-rgb(color.adjust($color, $lightness: -15%))) !important;
+                }
+            }
+        } @else {
+            a.text-#{$name1} {
+                &:hover, &:focus {
+                    color: helper.to-hex(helper.round-color-rgb(color.adjust($color, $lightness: -15%))) !important;
+                }
+            }
+        }
+    }
 }

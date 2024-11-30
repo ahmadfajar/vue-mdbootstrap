@@ -13,20 +13,21 @@ Released: November XX, 2024
   This migration improve icon naming consistency, clarity and reduce the bundle size.
 - Migrate scss files from legacy SASS to modern SASS.
 - Reduce the number of color variants for each component on main css file
-  (comply to [Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/introduction/) colors with some addition),
-  and put other colors variants on different css file. This action greatly reduces the size of the main css file.
+  (comply to [Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/introduction/) colors with some addition)
+  and put other color variants on different css file. This action greatly reduces the size of the main css file.
 - **BsIcon**, **BsIconSvg**, **BsToggleIcon**: 
-  - Improve `icon` property to better accommodate the **Google Material Symbols**.
-  - Add `filled` property to better accommodate the **Google Material Symbols**.
+  - Improve `icon` property to better accommodate **Google Material Symbols**.
+  - Add new property `filled` to better accommodate **Google Material Symbols**.
 - **BsAlert**, **BsChip**, **BsChipGroup**:
-  - Improve `icon` property to better accommodate the **Google Material Symbols**. 
-  - Improve `icon-variant` property to better accommodate the **Google Material Symbols**.
+  - Improve `icon` property to better accommodate **Google Material Symbols**. 
+  - Improve `icon-variant` property to better accommodate **Google Material Symbols**.
+  - Change property of `icon-variant` default value to `outlined`.
 - **BsAvatar**, **BsTab**, **BsListTileLeading**, **BsListNavItem**, **BsButton**, **BsToggleButton**, **BsToggleField**:
-  - Add `icon-variant` property to better accommodate the **Google Material Symbols**.
-  - Improve `icon` property to better accommodate the **Google Material Symbols**.
+  - Add new property `icon-variant` to better accommodate **Google Material Symbols**.
+  - Improve `icon` property to better accommodate **Google Material Symbols**.
 - **BsChipField**, **BsTextArea**, **BsTextField**, **BsNumericField**, **BsDateTimeField**, **BsCombobox**:
-  - Improve properties: `append-icon`, `append-icon-outer`, `prepend-icon`, `prepend-icon-outer`,
-    and `action-icon-variant` to better accommodate the **Google Material Symbols**.
+  - Improve properties: `append-icon`, `append-icon-outer`, `prepend-icon`, `prepend-icon-outer`
+    and `action-icon-variant` to better accommodate **Google Material Symbols**.
 
 
 ## v2.0.15
@@ -227,7 +228,7 @@ Released: November 25, 2023
 - **BsButton**: 
   - Add property `tonal` to enable **Filled Tonal** button style variant.
   - Improve `background-color`, `border-color`, `color`, `box-shadow` on various button state
-    (like: `hover`, `active`, `focus`, etc) and style variants.
+    (like: `hover`, `active`, `focus`, etc.) and style variants.
   - Improve `padding` on text button style variant to meet **Google Material 
     Design 3 - Text Button** style.
 - **BsMaskLoader**: refactor property `variant` to `type`, and change its valid 

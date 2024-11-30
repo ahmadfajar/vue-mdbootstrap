@@ -1,24 +1,42 @@
 @use "sass:color";
 @use "sass:math";
+@use "sass:string";
 
 @function round($value, $fractionDigits: 0) {
     $power: math.pow(10, $fractionDigits);
     @return math.div(math.round($power * $value), $power);
 }
 
-@function round-color-rgb($color, $precision: 2) {
-    $red: round(color.channel($color, "red"), $precision);
-    $green: round(color.channel($color, "green"), $precision);
-    $blue: round(color.channel($color, "blue"), $precision);
+@function round-color-rgb($color, $fractionDigits: 1) {
+    $red: round(color.channel($color, "red"), $fractionDigits);
+    $green: round(color.channel($color, "green"), $fractionDigits);
+    $blue: round(color.channel($color, "blue"), $fractionDigits);
 
     @return rgb($red, $green, $blue);
 }
 
-@function round-color-rgba($color, $precision: 2) {
-    $red: round(color.channel($color, "red"), $precision);
-    $green: round(color.channel($color, "green"), $precision);
-    $blue: round(color.channel($color, "blue"), $precision);
-    $alpha: round(color.channel($color, "alpha"), $precision);
+@function round-color-rgba($color, $fractionDigits: 1) {
+    $red: round(color.channel($color, "red"), $fractionDigits);
+    $green: round(color.channel($color, "green"), $fractionDigits);
+    $blue: round(color.channel($color, "blue"), $fractionDigits);
+    $alpha: round(color.channel($color, "alpha"), $fractionDigits);
 
     @return rgba($red, $green, $blue, $alpha);
+}
+
+@function to-rgb($color, $fractionDigits: 1) {
+    $rounded-color: round-color-rgb($color, $fractionDigits);
+    @return color.channel($rounded-color, "red"), color.channel($rounded-color, "green"), color.channel($rounded-color, "blue");
+}
+
+@function to-hex($color) {
+    $ie-hex: color.ie-hex-str($color);
+    $c1: string.slice($ie-hex, 2, 3);
+
+    @if string.length($ie-hex) == 9 and $c1 == "FF" {
+        @return string.unquote("##{string.slice($ie-hex, 4)}");
+    } @else {
+        $c2: string.slice($ie-hex, 4);
+        @return string.unquote("##{$c2}#{$c1}");
+    }
 }

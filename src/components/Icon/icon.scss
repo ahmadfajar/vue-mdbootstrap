@@ -1,7 +1,7 @@
 @use "../../../scss/variables" as vars;
 
 .#{vars.$prefix}icon, .#{vars.$prefix}toggle-icon {
-    display: inline-block;
+    display: inline-flex;
 
     > .#{vars.$prefix}svg-inline {
         display: flex;
