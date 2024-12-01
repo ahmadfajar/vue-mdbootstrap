@@ -8,7 +8,7 @@ import {
     ObjectPlugin,
     VNodeProps,
 } from 'vue';
-import { TRecord } from '../types';
+import { TRecord } from '../../../types';
 
 export declare type TFileBag = {
     file?: File | null;
