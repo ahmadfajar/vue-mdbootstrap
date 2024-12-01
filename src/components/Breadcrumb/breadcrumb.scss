@@ -19,8 +19,8 @@
     }
 
     > .breadcrumb {
-        --bs-breadcrumb-margin-bottom: 0;
-        --bs-breadcrumb-font-size: var(--#{vars.$prefix}breadcrumb-font-size);
+        --#{vars.$prefix-bs}breadcrumb-margin-bottom: 0;
+        --#{vars.$prefix-bs}breadcrumb-font-size: var(--#{vars.$prefix}breadcrumb-font-size);
 
         align-items: center;
         flex-wrap: nowrap;
