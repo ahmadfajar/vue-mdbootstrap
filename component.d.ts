@@ -29,6 +29,7 @@ import type {
     BsDivider,
     BsDropdownMenu,
     BsExpandTransition,
+    BsFontAwesome,
     BsIcon,
     BsIconSpinner,
     BsIconSvg,
@@ -110,6 +111,7 @@ declare module '@vue/runtime-core' {
         BsDivider: typeof BsDivider;
         BsDropdownMenu: typeof BsDropdownMenu;
         BsExpandTransition: typeof BsExpandTransition;
+        BsFontAwesome: typeof BsFontAwesome;
         BsIcon: typeof BsIcon;
         BsIconSpinner: typeof BsIconSpinner;
         BsIconSvg: typeof BsIconSvg;

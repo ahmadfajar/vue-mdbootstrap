@@ -4,7 +4,7 @@
     display: inline-flex;
 
     > .#{vars.$prefix}svg-inline {
-        display: flex;
+        display: inline;
     }
 }
 

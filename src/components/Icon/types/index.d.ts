@@ -10,6 +10,8 @@ import { EventUpdateModelValueProps } from '../../../types';
 
 export declare type TFlipMode = 'horizontal' | 'vertical' | 'both';
 
+export declare type TFontAwesomeVariant = 'regular' | 'solid' | 'light';
+
 export declare type TIconRotation = '90' | '180' | '270';
 
 export declare type TIconVariant =
@@ -151,6 +153,42 @@ export declare type TToggleIconOptionProps = {
     size?: string | number;
 };
 
+export declare type TFontAwesomeOptionProps = TSizeOptionProps & {
+    /**
+     * Any valid font awesome icon name.
+     *
+     * @see [Font Awesome](https://fontawesome.com/v6/search?o=r&m=free) for details.
+     */
+    icon: string;
+    /**
+     * Font Awesome style variant, valid values are: `regular`, `solid`, `light`.
+     * Default is `solid`.
+     */
+    variant?: TFontAwesomeVariant;
+    /**
+     * Vendor version of Font Awesome. Default is `6.7.1`.
+     */
+    version?: string;
+    /**
+     * Apply **pulse** animation to the icon.
+     */
+    pulse?: boolean;
+    /**
+     * Apply **spin** animation to the icon.
+     */
+    spin?: boolean;
+    /**
+     * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
+     */
+    flip?: TFlipMode;
+    /**
+     * Rotate the icon, valid values are: `90`, `180`, `270`.
+     */
+    rotate?: TIconRotation;
+}
+
+export declare type TBsFontAwesome = ComponentObjectPropsOptions<TFontAwesomeOptionProps>;
+
 export declare type TBsIcon = ComponentObjectPropsOptions<TIconOptionProps>;
 
 export declare type TBsIconSvg = ComponentObjectPropsOptions<TIconOptionProps>;
@@ -159,8 +197,13 @@ export declare type TBsIconSpinner = ComponentObjectPropsOptions<TIconSpinnerOpt
 
 export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptionProps>;
 
-export declare const spinnerSvgData =
-    'M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z';
+export declare const spinnerSvgData = 'SVG/XML+data';
+
+export declare const BsFontAwesome: {
+    new (): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TFontAwesomeOptionProps;
+    };
+};
 
 export declare const BsIcon: {
     new (): {
@@ -200,14 +243,14 @@ export declare const BsToggleIcon: {
  * Function to draw inline SVG xml directly.
  *
  * @param data   The SVG xml string
- * @param height The desired {@link Element} height
  * @param width  The desired {@link Element} width
+ * @param height The desired {@link Element} height
  * @param clazz  Optional css class name
  */
 export declare function useRenderSVG(
     data: string,
-    height: number | string,
     width: number | string,
+    height: number | string,
     clazz: unknown
 ): VNode;
 

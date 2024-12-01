@@ -5,7 +5,7 @@
 
 ## v2.1.0
 
-Released: November XX, 2024
+Released: December XX, 2024
 
 ### Features & Improvements
 
@@ -15,6 +15,7 @@ Released: November XX, 2024
 - Reduce the number of color variants for each component on main css file
   (comply to [Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/introduction/) colors with some addition)
   and put other color variants on different css file. This action greatly reduces the size of the main css file.
+- New components: **BsFontAwesome**. 
 - **BsIcon**, **BsIconSvg**, **BsToggleIcon**: 
   - Improve `icon` property to better accommodate **Google Material Symbols**.
   - Add new property `filled` to better accommodate **Google Material Symbols**.

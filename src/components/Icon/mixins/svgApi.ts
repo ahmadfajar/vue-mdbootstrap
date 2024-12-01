@@ -1,12 +1,18 @@
 import {
     useFilledIconStyle,
     useNormalizeIconName,
-    useResolveRealIconName,
     useResolveIconTheme,
+    useResolveRealIconName,
 } from '@/components/Icon/mixins/iconApi';
 import { cssPrefix } from '@/mixins/CommonApi';
 import { CacheManager } from '@/model/CacheManager';
-import type { TIconData, TIconOptionProps, TRawCacheItem, TRecord } from '@/types';
+import type {
+    TFontAwesomeVariant,
+    TIconData,
+    TIconOptionProps,
+    TRawCacheItem,
+    TRecord,
+} from '@/types';
 import Helper from '@/utils/Helper';
 import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
@@ -90,6 +96,50 @@ export async function useGetGoogleIcon(
     }
 }
 
+function fontAwesomeIconUrl(name: string, variant: string, version: string): string {
+    return `https://site-assets.fontawesome.com/releases/v${version}/svgs/${variant}/${name}.svg`;
+}
+
+export async function useGetFontAwesome(
+    name?: string,
+    variant: TFontAwesomeVariant = 'regular',
+    version: string = '6.7.1'
+): Promise<TIconData | undefined> {
+    if (!name) {
+        return undefined;
+    }
+
+    const url = fontAwesomeIconUrl(name, variant, version);
+    const cache = CacheManager.getItem(url);
+
+    if (cache) {
+        return {
+            name: name,
+            icon: name,
+            theme: variant,
+            variant: variant,
+            data: cache.getValue() as string,
+        };
+    } else {
+        const response = await axios.get(url);
+
+        if (response.status === 200) {
+            const item = { key: url, value: response.data } as TRawCacheItem;
+            CacheManager.save(item);
+
+            return {
+                name: name,
+                icon: name,
+                theme: variant,
+                variant: variant,
+                data: response.data,
+            };
+        }
+
+        return undefined;
+    }
+}
+
 function createNodeAttrs(attrs: Array<[string, unknown]>): TRecord {
     const props: Record<string, unknown> = {};
     const filtered = attrs
@@ -127,10 +177,10 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
     return results;
 }
 
-export function useRenderIconFromSvg(
+export function useRenderIconFromSVG(
     data: string | undefined,
-    height: number | string | undefined,
     width: number | string | undefined,
+    height: number | string | undefined,
     clazz: unknown
 ): VNode {
     if (!data) {
@@ -142,11 +192,57 @@ export function useRenderIconFromSvg(
     const svgData = Object.entries(jsonObj.svg);
     const props = createNodeAttrs(svgData);
     const children = svgData.filter((el) => !el[0].startsWith('@_'));
-    props['height'] = height;
+
     props['width'] = width;
+    props['height'] = height;
     props['class'] = clazz;
     props['fill'] = 'currentColor';
     props['xmlns'] = 'http://www.w3.org/2000/svg';
+
+    return h('svg', props, renderChildNodes(children));
+}
+
+export function useRenderNodeFromSVG(
+    data: string | undefined,
+    width: number | string | undefined,
+    height: number | string | undefined,
+    clazz: unknown
+): VNode {
+    if (!data) {
+        return h('span');
+    }
+
+    const parser = new XMLParser({ ignoreAttributes: false });
+    const jsonObj = parser.parse(data);
+    const svgData = Object.entries(jsonObj.svg);
+    const props = createNodeAttrs(svgData);
+    const viewBox = (props['viewBox'] as string).split(' ');
+    const pW = parseFloat(viewBox[2]);
+    const pH = parseFloat(viewBox[3]);
+    let ratio: number;
+    let uW: number | string | undefined;
+    let uH: number | string | undefined;
+
+    if (pW > pH) {
+        ratio = pH / pW;
+        uW = width ? parseInt(width as string, 10) : undefined;
+        uH = width && height && width === height ? ratio * uW! : height;
+    } else if (pW < pH) {
+        ratio = pW / pH;
+        uH = height ? parseInt(height as string, 10) : undefined;
+        uW = width && height && width === height ? ratio * uH! : width;
+    } else {
+        uW = width;
+        uH = height;
+    }
+
+    props['width'] = uW;
+    props['height'] = uH;
+    props['class'] = clazz;
+    props['fill'] = 'currentColor';
+    props['xmlns'] = 'http://www.w3.org/2000/svg';
+
+    const children = svgData.filter((el) => !el[0].startsWith('@_'));
 
     return h('svg', props, renderChildNodes(children));
 }
@@ -218,9 +314,9 @@ export function useCircleSizeStyles(diameter: number): Record<string, string> {
 
 export function useRenderSVG(
     data: string,
-    height: number | string,
     width: number | string,
-    clazz: unknown
+    height: number | string,
+    clazz: unknown,
 ): VNode {
-    return useRenderIconFromSvg(data, height, width, clazz);
+    return useRenderNodeFromSVG(data, width, height, clazz);
 }

@@ -2,7 +2,7 @@ import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi';
 import { iconProps } from '@/components/Icon/mixins/iconProps';
 import {
     useGetGoogleIcon,
-    useRenderIconFromSvg,
+    useRenderIconFromSVG,
     useSvgClasses,
 } from '@/components/Icon/mixins/svgApi';
 import type { TBsIconSvg, TIconData, TIconOptionProps, TRecord } from '@/types';
@@ -27,10 +27,10 @@ export default defineComponent<TBsIconSvg>({
         });
 
         return () =>
-            useRenderIconFromSvg(
+            useRenderIconFromSVG(
                 svgIcon.value?.data,
-                useSizeHeight(thisProps) || 24,
                 useSizeWidth(thisProps) || 24,
+                useSizeHeight(thisProps) || 24,
                 svgClasses.value
             );
     },
