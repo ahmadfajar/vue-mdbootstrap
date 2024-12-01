@@ -212,7 +212,7 @@ export function useRenderTransition(
  */
 export function useRenderRouter(
     props: Readonly<TRouterLinkProps>,
-    children: VNodeArrayChildren | VNode
+    children: VNodeArrayChildren | VNode | string
 ): VNode {
     const routerLinkCmp = resolveComponent('RouterLink');
     return createVNode(routerLinkCmp, props, {

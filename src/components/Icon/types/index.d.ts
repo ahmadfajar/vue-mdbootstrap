@@ -166,7 +166,7 @@ export declare type TFontAwesomeOptionProps = TSizeOptionProps & {
      */
     variant?: TFontAwesomeVariant;
     /**
-     * Vendor version of Font Awesome. Default is `6.7.1`.
+     * Font Awesome vendor version. Default is `6.7.1`.
      */
     version?: string;
     /**
@@ -197,7 +197,7 @@ export declare type TBsIconSpinner = ComponentObjectPropsOptions<TIconSpinnerOpt
 
 export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptionProps>;
 
-export declare const spinnerSvgData = 'SVG/XML+data';
+export declare const spinnerSvgData = 'SVG+ML/data';
 
 export declare const BsFontAwesome: {
     new (): {

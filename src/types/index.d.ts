@@ -26,5 +26,6 @@ export * from '../components/Radio/types';
 export * from '../components/Switch/types';
 export * from '../components/Tabs/types';
 export * from '../components/Tooltip/types';
+export * from '../components/Breadcrumb/types';
 export * from '../directives/types';
 export * from './library';

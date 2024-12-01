@@ -26,3 +26,4 @@ export { BsListboxPlugin } from './Listbox';
 export { BsComboboxPlugin } from './Combobox';
 export { BsModalPlugin } from './Modal';
 export { BsNotificationPlugin } from './Notification';
+export { BsBreadcrumbPlugin } from './Breadcrumb';

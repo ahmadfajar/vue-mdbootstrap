@@ -129,7 +129,7 @@ export declare function useRenderTransition(
  */
 export declare function useRenderRouter(
     props: Readonly<TRouterLinkProps>,
-    children: VNode | VNodeArrayChildren
+    children: VNode | VNodeArrayChildren | string
 ): VNode;
 
 /**

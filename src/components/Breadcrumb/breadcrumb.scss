@@ -1,0 +1,43 @@
+@use "../../../scss/variables" as vars;
+
+.#{vars.$prefix}breadcrumbs {
+    --#{vars.$prefix}breadcrumb-container-padding-x: #{vars.$padding-lg};
+    --#{vars.$prefix}breadcrumb-container-padding-y: 0.75rem;
+    --#{vars.$prefix}breadcrumb-icon-color: var(--#{vars.$prefix-bs}body-color);
+    --#{vars.$prefix}breadcrumb-font-size: 0.875rem;
+    --#{vars.$prefix}breadcrumb-label-color: var(--#{vars.$prefix-bs}body-color);
+    --#{vars.$prefix}breadcrumb-label-hover-color: var(--#{vars.$prefix-bs}link-color);
+
+    display: flex;
+    align-items: flex-end;
+    padding: var(--#{vars.$prefix}breadcrumb-container-padding-y) var(--#{vars.$prefix}breadcrumb-container-padding-x);
+
+    > .#{vars.$prefix}breadcrumb-icon {
+        color: var(--#{vars.$prefix}breadcrumb-icon-color);
+        display: inline-flex;
+        margin-right: vars.$padding-sm;
+    }
+
+    > .breadcrumb {
+        --bs-breadcrumb-margin-bottom: 0;
+        --bs-breadcrumb-font-size: var(--#{vars.$prefix}breadcrumb-font-size);
+
+        align-items: center;
+        flex-wrap: nowrap;
+        overflow: hidden;
+
+        a {
+            color: var(--#{vars.$prefix}breadcrumb-label-color);
+            text-decoration: none;
+
+            &:hover {
+                color: var(--#{vars.$prefix}breadcrumb-label-hover-color);
+            }
+        }
+    }
+
+    .breadcrumb-item {
+        display: flex;
+        white-space: nowrap;
+    }
+}
