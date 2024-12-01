@@ -1,0 +1,58 @@
+@use "../../../scss/color_vars" as colors;
+@use "../../../scss/variables" as vars;
+
+.#{vars.$prefix}image-uploader {
+    --#{vars.$prefix}image-uploader-bg: #{colors.$gray-100};
+    --#{vars.$prefix}image-uploader-border-color: var(--#{vars.$prefix-bs}border-color);
+    --#{vars.$prefix}image-uploader-border-radius: var(--#{vars.$prefix-bs}card-border-radius);
+    --#{vars.$prefix}image-uploader-height: 220px;
+    --#{vars.$prefix}image-uploader-padding-x: #{vars.$padding-sm};
+    --#{vars.$prefix}image-uploader-padding-y: #{vars.$padding-sm};
+    --#{vars.$prefix}image-uploader-text-color: #{colors.$gray-500};
+    --#{vars.$prefix}image-uploader-toolbar-padding: #{vars.$padding-sm} #{vars.$padding-sm};
+
+    background-color: var(--#{vars.$prefix}image-uploader-bg);
+    border: 1px solid var(--#{vars.$prefix}image-uploader-border-color);
+    border-radius: var(--#{vars.$prefix}image-uploader-border-radius);
+    padding: var(--#{vars.$prefix}image-uploader-padding-y) var(--#{vars.$prefix}image-uploader-padding-x);
+
+    .drop-image-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        height: var(--#{vars.$prefix}image-uploader-height);
+        width: 100%;
+
+        > .image-preview {
+            border-radius: var(--#{vars.$prefix}image-uploader-border-radius);
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+
+            &.dragging-over {
+                filter: brightness(0.5);
+            }
+        }
+
+        > .upload-toolbar {
+            display: flex;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            padding: var(--#{vars.$prefix}image-uploader-toolbar-padding);
+            width: 100%;
+        }
+
+        > h3, h4 {
+            color: var(--#{vars.$prefix}image-uploader-text-color);
+        }
+    }
+
+    > .unsupported-text {
+        margin-bottom: 0;
+        padding: vars.$padding-sm;
+    }
+}

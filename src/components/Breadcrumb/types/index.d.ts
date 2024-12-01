@@ -3,6 +3,7 @@ import {
     ComponentCustomProps,
     ComponentObjectPropsOptions,
     ObjectPlugin,
+    VNode,
     VNodeProps,
 } from 'vue';
 import { RouterLinkProps } from 'vue-router';
@@ -62,6 +63,10 @@ export declare type TBreadcrumbOptionProps = {
      */
     prependIcon?: string;
     /**
+     * The size of `prependIcon` to create.
+     */
+    iconSize?: string | number;
+    /**
      * Change the default breadcrumb item's separator.
      */
     separator?: string;
@@ -81,6 +86,9 @@ export declare type TBsBreadcrumb = ComponentObjectPropsOptions<TBreadcrumbOptio
 export declare const BsBreadcrumb: {
     new (): {
         $props: TBreadcrumbOptionProps & AllowedComponentProps & ComponentCustomProps & VNodeProps;
+        $slots: {
+            icon?: () => VNode;
+        };
     };
 };
 

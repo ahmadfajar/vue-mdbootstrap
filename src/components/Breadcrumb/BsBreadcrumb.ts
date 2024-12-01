@@ -4,10 +4,16 @@ import type {
     TBsBreadcrumb,
 } from '@/components/Breadcrumb/types';
 import { BsIcon } from '@/components/Icon';
-import { cssPrefix, useHasRouter, useRenderRouter } from '@/mixins/CommonApi.ts';
-import { booleanProp, stringProp } from '@/mixins/CommonProps.ts';
+import type { TBsIcon } from '@/components/Icon/types';
+import {
+    cssPrefix,
+    useHasRouter,
+    useRenderRouter,
+    useRenderSlotWithWrapper,
+} from '@/mixins/CommonApi.ts';
+import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
 import Helper from '@/utils/Helper.ts';
-import { defineComponent, h, type Prop, toDisplayString, type VNode } from 'vue';
+import { defineComponent, h, type Prop, type Slots, toDisplayString, type VNode } from 'vue';
 import type { RouterLinkProps } from 'vue-router';
 
 export default defineComponent<TBsBreadcrumb>({
@@ -19,6 +25,7 @@ export default defineComponent<TBsBreadcrumb>({
             required: true,
         } as Prop<TBreadcrumb[]>,
         prependIcon: stringProp,
+        iconSize: validStringOrNumberProp,
         separator: stringProp,
         sticky: booleanProp,
         tag: {
@@ -26,14 +33,14 @@ export default defineComponent<TBsBreadcrumb>({
             default: 'nav',
         },
     },
-    setup(props) {
+    setup(props, { slots }) {
         const thisProps = props as Readonly<TBreadcrumbOptionProps>;
 
-        return () => renderBreadcrumb(thisProps);
+        return () => renderBreadcrumb(thisProps, slots);
     },
 });
 
-function renderBreadcrumb(props: Readonly<TBreadcrumbOptionProps>): VNode {
+function renderBreadcrumb(props: Readonly<TBreadcrumbOptionProps>, slots: Slots): VNode {
     const itemCount = props.items.length > 0 ? props.items.length - 1 : 0;
 
     return h(
@@ -44,13 +51,18 @@ function renderBreadcrumb(props: Readonly<TBreadcrumbOptionProps>): VNode {
             ariaLabel: 'breadcrumb',
         },
         [
-            props.prependIcon
-                ? h('div', { class: `${cssPrefix}breadcrumb-icon` }, [
-                      h(BsIcon, {
+            useRenderSlotWithWrapper(
+                slots,
+                'icon',
+                'breadcrumb-icon',
+                { class: `${cssPrefix}breadcrumb-icon` },
+                !Helper.isEmpty(props.prependIcon)
+                    ? h<TBsIcon>(BsIcon, {
                           icon: props.prependIcon as Prop<string>,
-                      }),
-                  ])
-                : undefined,
+                          size: props.iconSize as Prop<string | number>,
+                      })
+                    : undefined
+            ),
             h(
                 'ol',
                 { class: 'breadcrumb' },

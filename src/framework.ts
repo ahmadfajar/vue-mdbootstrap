@@ -33,3 +33,4 @@ export * from './components/Combobox';
 export * from './components/Modal';
 export * from './components/Notification';
 export * from './components/Breadcrumb';
+export * from './components/Uploader';

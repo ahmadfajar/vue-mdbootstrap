@@ -27,3 +27,4 @@ export { BsComboboxPlugin } from './Combobox';
 export { BsModalPlugin } from './Modal';
 export { BsNotificationPlugin } from './Notification';
 export { BsBreadcrumbPlugin } from './Breadcrumb';
+export { BsUploaderPlugin } from './Uploader';
