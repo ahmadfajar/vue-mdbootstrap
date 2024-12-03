@@ -5,9 +5,9 @@ import type {
     BsAppbar,
     BsAppbarItems,
     BsAppbarTitle,
-    BsAppContainer,
     BsAvatar,
     BsBadge,
+    BsBreadcrumb,
     BsButton,
     BsCard,
     BsCardBody,
@@ -34,6 +34,7 @@ import type {
     BsIconSpinner,
     BsIconSvg,
     BsImageHolder,
+    BsImageUploader,
     BsLightbox,
     BsListbox,
     BsListNav,
@@ -82,11 +83,12 @@ declare module '@vue/runtime-core' {
     export interface GlobalComponents {
         BsAlert: typeof BsAlert;
         BsApp: typeof BsApp;
-        BsAppContainer: typeof BsAppContainer;
+        BsAppContainer: typeof BsApp;
         BsAppbar: typeof BsAppbar;
         BsAppbarItems: typeof BsAppbarItems;
         BsAppbarTitle: typeof BsAppbarTitle;
         BsAvatar: typeof BsAvatar;
+        BsBreadcrumb: typeof BsBreadcrumb;
         BsBadge: typeof BsBadge;
         BsButton: typeof BsButton;
         BsButtonToggle: typeof BsToggleButton;
@@ -117,6 +119,7 @@ declare module '@vue/runtime-core' {
         BsIconSvg: typeof BsIconSvg;
         BsIconToggle: typeof BsToggleIcon;
         BsImageHolder: typeof BsImageHolder;
+        BsImageUploader: typeof BsImageUploader;
         BsLightbox: typeof BsLightbox;
         BsListNav: typeof BsListNav;
         BsListNavItem: typeof BsListNavItem;

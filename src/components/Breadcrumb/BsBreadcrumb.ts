@@ -42,12 +42,19 @@ export default defineComponent<TBsBreadcrumb>({
 
 function renderBreadcrumb(props: Readonly<TBreadcrumbOptionProps>, slots: Slots): VNode {
     const itemCount = props.items.length > 0 ? props.items.length - 1 : 0;
+    let separator: string;
+
+    if (props.separator && props.separator.startsWith('url')) {
+        separator = decodeURI(props.separator).replaceAll('#', '%23');
+    } else {
+        separator = `'${props.separator}'`;
+    }
 
     return h(
         props.tag || 'nav',
         {
-            class: [`${cssPrefix}breadcrumbs`, props.sticky ? 'sticky-top' : ''],
-            style: props.separator ? { '--bs-breadcrumb-divider': props.separator } : undefined,
+            class: [`${cssPrefix}breadcrumb`, props.sticky ? 'sticky-top' : ''],
+            style: props.separator ? { '--bs-breadcrumb-divider': separator } : undefined,
             ariaLabel: 'breadcrumb',
         },
         [

@@ -341,7 +341,9 @@ function createUploaderButtons(
                             onChangeImage(evt, inputRef);
                         },
                     },
-                    toDisplayString(props.customText?.changeImage || 'Change')
+                    {
+                        default: () => toDisplayString(props.customText?.changeImage || 'Change'),
+                    }
                 ),
             h(BsButton, {
                 color: (props.buttonColor || 'primary') as Prop<string>,

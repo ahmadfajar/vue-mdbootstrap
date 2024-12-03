@@ -33,8 +33,8 @@ export default defineComponent<TBsFontAwesome>({
     },
     setup(props) {
         const thisProps = props as Readonly<TFontAwesomeOptionProps>;
-        const szWidth = useSizeWidth(thisProps);
-        const szHeight = useSizeHeight(thisProps);
+        const szWidth = useSizeWidth(thisProps) || 24;
+        const szHeight = useSizeHeight(thisProps) || 24;
         const svgIcon = ref<TIconData>();
         const svgClasses = computed<TRecord>(() => useSvgClasses(thisProps));
         const styles = computed<TRecord>(() => ({

@@ -83,6 +83,50 @@ export function chunk(source: string, size = 1): string[] {
     return chunked;
 }
 
+/**
+ * Replace special characters from the given `source` with encoded chars.
+ *
+ * Double quote will always be encoded to html entity unless `excludeDblQuote` is set to `true`.
+ *
+ * @param source            The input string to encode.
+ * @param excludeDblQuote   Optional, don't convert double quote to html entity.
+ * @param chars             Optional, special characters to encode.
+ * @param replaces          Optional, the encoded characters or replacement characters for the given `chars`.
+ */
+export function encodeSpecialChars(
+    source: string,
+    excludeDblQuote = false,
+    chars?: string[],
+    replaces?: string[]
+): string {
+    const validReps =
+        Array.isArray(chars) &&
+        Array.isArray(replaces) &&
+        chars.length > 0 &&
+        chars.length === replaces.length;
+    const s1 = validReps ? chars : ['#', '!', '$', '%', '&', '<', '>', '?', '@'];
+    const s2 = validReps ? replaces : ['23', '21', '24', '25', '26', '3C', '3E', '3F', '40'];
+    const nLength = source.length;
+    let retVal = '';
+
+    for (let i = 0; i < nLength; i++) {
+        if (source.at(i) === '"' && !excludeDblQuote) {
+            retVal += '&#' + source.codePointAt(i) + ';';
+        } else if (s1.includes(source.charAt(i))) {
+            const n = s1.indexOf(source.charAt(i));
+            if ((s2[n] as string).startsWith('%')) {
+                retVal += s2[n];
+            } else {
+                retVal += '%' + s2[n];
+            }
+        } else {
+            retVal += source.charAt(i);
+        }
+    }
+
+    return retVal;
+}
+
 export function camelCase(text: string): string {
     return loCamelCase(text);
 }

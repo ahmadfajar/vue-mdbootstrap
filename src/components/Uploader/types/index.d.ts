@@ -4,7 +4,6 @@ import {
     ComponentCustomProps,
     ComponentObjectPropsOptions,
     ComponentPublicInstance,
-    ComputedRef,
     ObjectPlugin,
     VNodeProps,
 } from 'vue';
@@ -117,7 +116,7 @@ export declare interface BsImageUploaderInstance extends ComponentPublicInstance
      */
     upload(url: string, property?: string, data?: TRecord): AxiosPromise;
 
-    fileBag: ComputedRef<{
+    fileBag: {
         /**
          * The picture's file that exists within the component instance and ready to upload.
          */
@@ -140,7 +139,7 @@ export declare interface BsImageUploaderInstance extends ComponentPublicInstance
          * @see [File](https://developer.mozilla.org/en-US/docs/Web/API/File) for more details.
          */
         filetype?: string | null;
-    }>;
+    };
 }
 
 export declare const BsUploaderPlugin: ObjectPlugin;

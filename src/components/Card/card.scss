@@ -4,7 +4,7 @@
 
 .card {
     --#{vars.$prefix-bs}card-border-radius: 0.75rem;
-    --#{vars.$prefix-bs}card-inner-border-radius: calc(0.75rem - 1px);
+    --#{vars.$prefix-bs}card-inner-border-radius: calc(var(--#{vars.$prefix-bs}card-border-radius) - 1px);
 
     .card-header {
         font-weight: vars.$font-weight-semi-bold;

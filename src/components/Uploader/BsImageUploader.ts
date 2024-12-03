@@ -39,6 +39,20 @@ export default defineComponent<TBsImageUploader>({
         },
         customText: objectProp as Prop<TCustomText>,
     },
+    emits: [
+        /**
+         * Fired when the image on this component is changed.
+         */
+        'change',
+        /**
+         * Fired when the image on this component is cleared or removed.
+         */
+        'clear',
+        /**
+         * Fired when error is occurred.
+         */
+        'error',
+    ],
     setup(props, { emit, expose }) {
         const thisProps = props as Readonly<TImageUploaderOptionProps>;
         const input = ref<HTMLInputElement>();

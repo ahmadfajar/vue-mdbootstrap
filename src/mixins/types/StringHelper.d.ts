@@ -63,6 +63,23 @@ export declare function camelCase(text: string): string;
 export declare function kebabCase(text: string): string;
 
 /**
+ * Replace special characters from the given `source` with encoded chars.
+ *
+ * Double quote will always be encoded to html entity unless `excludeDblQuote` is set to `true`.
+ *
+ * @param source            The input string to encode.
+ * @param excludeDblQuote   Optional, don't convert double quote to html entity.
+ * @param chars             Optional, special characters to encode.
+ * @param replaces          Optional, the encoded characters or replacement characters for the given `chars`.
+ */
+export function encodeSpecialChars(
+    source: string,
+    excludeDblQuote?: boolean,
+    chars?: string[],
+    replaces?: string[]
+): string;
+
+/**
  * Create an array of chunked strings.
  *
  * @param source The input string.
