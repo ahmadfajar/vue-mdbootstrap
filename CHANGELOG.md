@@ -5,7 +5,7 @@
 
 ## v2.1.0
 
-Released: December XX, 2024
+Released: December 03, 2024
 
 ### Features & Improvements
 
