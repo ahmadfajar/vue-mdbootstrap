@@ -1,6 +1,6 @@
 @use "sass:map";
 @use "../../../scss/mixins/css3/borders";
-@use "../../../scss/mixins/css3/text";
+@use "../../../scss/mixins/css3/decorators";
 @use "../../../scss/mixins/listview";
 @use "../../../scss/color_vars" as colors;
 @use "../../../scss/variables" as vars;
@@ -36,7 +36,7 @@
 
     .#{vars.$prefix}list-tile-title,
     .#{vars.$prefix}list-tile-subtitle {
-        @include text.ellipsis();
+        @include decorators.text-ellipsis();
         transition: .3s vars.$transition-stand-animation;
         width: 100%;
     }

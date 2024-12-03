@@ -1,6 +1,6 @@
 @use "sass:color";
 @use "sass:map";
-@use "../mixins/css3/text";
+@use "../mixins/css3/decorators";
 @use "../utils/color_helper" as helper;
 @use "../color_vars" as colors;
 @use "../variables" as vars;
@@ -17,12 +17,12 @@ $final-colors: map.remove(colors.$merge-theme-colors,
 );
 
 @each $name, $color in $final-colors {
-    @include text.decorate-color($color, $name);
+    @include decorators.decorate-color($color, $name);
 }
 
 // Manually adds duplicate custom colors
 //---------------------------------------
-@include text.decorate-color(colors.$primary-color-dark, "dark-blue", "primary-color-dark");
+@include decorators.decorate-color(colors.$primary-color-dark, "dark-blue", "primary-color-dark");
 
 // Create full color palette for background
 //-------------------------------------------
@@ -51,7 +51,7 @@ $final-colors: map.remove(colors.$merge-theme-colors,
             }
         } @else {
             @if colors.$enable_full_palette {
-                @include text.decorate-color($color_value, "#{$name}.#{$sub_name}", false, true, false, false, false);
+                @include decorators.decorate-color($color_value, "#{$name}.#{$sub_name}", false, true, false, false, false);
             }
         }
     }

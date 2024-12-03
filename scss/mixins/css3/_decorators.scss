@@ -2,7 +2,7 @@
 @use "../../utils/color_helper" as helper;
 @use "../../variables" as vars;
 
-@mixin ellipsis($no-wrap: true) {
+@mixin text-ellipsis($no-wrap: true) {
     @if $no-wrap {
         white-space: nowrap;
     }

@@ -1,5 +1,5 @@
 @use "sass:map";
-@use "../mixins/css3/text";
+@use "../mixins/css3/decorators";
 @use "../color_vars" as colors;
 @use "../variables" as vars;
 
@@ -16,15 +16,15 @@ $compact-colors: map.remove(colors.$context-colors,
 );
 
 @each $name, $color in $compact-colors {
-    @include text.decorate-color($color, $name);
+    @include decorators.decorate-color($color, $name);
 }
 
 // Manually adds duplicate colors
 //--------------------------------
-@include text.decorate-color(colors.$elegant-color-dark, "dark", "elegant-color-dark");
+@include decorators.decorate-color(colors.$elegant-color-dark, "dark", "elegant-color-dark");
 
 // Create grey colors for background, borders and text
 //-------------------------------------------------------
 @each $name, $color in colors.$grays {
-    @include text.decorate-color($color, "grey-#{$name}");
+    @include decorators.decorate-color($color, "grey-#{$name}");
 }

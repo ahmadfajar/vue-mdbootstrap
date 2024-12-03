@@ -1,7 +1,7 @@
 @use "sass:math";
 @use "../../../scss/mixins/css3/borders";
 @use "../../../scss/mixins/css3/placeholder";
-@use "../../../scss/mixins/css3/text";
+@use "../../../scss/mixins/css3/decorators";
 @use "../../../scss/mixins/transitions";
 @use "../../../scss/color_vars" as colors;
 @use "../../../scss/variables" as vars;
@@ -282,7 +282,7 @@
         --#{vars.$prefix}field-floating-label-transform: translateY(-8px) scale(.85);
 
         .#{vars.$prefix}field-label {
-            @include text.ellipsis();
+            @include decorators.text-ellipsis();
             opacity: var(--#{vars.$prefix}field-floating-label-opacity);
             color: var(--#{vars.$prefix}field-floating-label-color);
             transition: .25s vars.$transition-stand-animation;

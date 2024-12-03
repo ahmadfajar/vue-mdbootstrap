@@ -1,4 +1,4 @@
-@use "../../../scss/mixins/css3/text";
+@use "../../../scss/mixins/css3/decorators";
 @use "../../../scss/color_vars" as colors;
 @use "../../../scss/variables" as vars;
 
@@ -22,7 +22,7 @@
         padding: var(--#{vars.$prefix}appbar-margin);
 
         > .#{vars.$prefix}appbar-title {
-            @include text.ellipsis();
+            @include decorators.text-ellipsis();
             font-size: var(--#{vars.$prefix}appbar-title-font-size);
             font-weight: var(--#{vars.$prefix}appbar-title-font-weight);
             line-height: normal;
