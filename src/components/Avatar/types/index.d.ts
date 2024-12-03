@@ -35,23 +35,23 @@ export declare type TImageProps = {
 
 export declare type TIconProps = {
     /**
-     * Android icon name, either with or without suffix. Valid suffixes are:
+     * A shortcut to insert component `BsIcon` inside this component.
+     *
+     * Use android icon name with or without suffix. Valid suffixes are:
      * `_outlined`, `_rounded`, `_sharp`, `_filled`, `_outlined_filled`,
      * `_rounded_filled`, or `_sharp_filled`. Suffix `_filled` and `_outlined_filled`
-     * will result the same icon style. Suffix will take priority over
+     * will result the same icon style variant. Suffix will take priority over
      * `iconVariant` property.
-     *
-     * This is a shortcut to insert component `BsIcon` inside this component.
      *
      * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     icon?: string;
     /**
-     * Use predefined icon style, valid values are: `outlined`, `rounded`, `sharp`,
-     * `filled`, `outlined_filled`, `rounded_filled`, and `sharp_filled`. Default
-     * is `outlined`.
+     * Use predefined icon style variant, valid values are: `outlined`, `rounded`,
+     * `sharp`, `filled`, `outlined_filled`, `rounded_filled`, and `sharp_filled`.
+     * Default is `outlined`.
      *
-     * Variant `filled` and `outlined_filled` will result the same icon style.
+     * Variant `filled` and `outlined_filled` will result the same icon style variant.
      *
      * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */

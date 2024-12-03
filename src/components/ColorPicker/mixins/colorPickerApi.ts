@@ -421,7 +421,7 @@ function onUpdateInputNumber(
     updateColorPreview(pickerData, emit);
 }
 
-function renderInputColorHSL(
+function createInputColorHSL(
     props: Readonly<TColorPickerOptionProps>,
     pickerData: TColorPickerData,
     cssNamePrefix: string,
@@ -453,7 +453,7 @@ function renderInputColorHSL(
     );
 }
 
-function renderInputColorRGB(
+function createInputColorRGB(
     props: Readonly<TColorPickerOptionProps>,
     pickerData: TColorPickerData,
     cssNamePrefix: string,
@@ -485,7 +485,7 @@ function renderInputColorRGB(
     );
 }
 
-function renderInputColorHEX(
+function createInputColorHEX(
     props: Readonly<TColorPickerOptionProps>,
     pickerData: TColorPickerData,
     cssNamePrefix: string,
@@ -561,10 +561,10 @@ function renderColorPickerInputs(
         },
         [
             pickerData.config.mode === 'HSL'
-                ? renderInputColorHSL(props, pickerData, cssNamePrefix, inputIDs, emit)
+                ? createInputColorHSL(props, pickerData, cssNamePrefix, inputIDs, emit)
                 : pickerData.config.mode === 'RGB'
-                  ? renderInputColorRGB(props, pickerData, cssNamePrefix, inputIDs, emit)
-                  : renderInputColorHEX(props, pickerData, cssNamePrefix, inputIDs, emit),
+                  ? createInputColorRGB(props, pickerData, cssNamePrefix, inputIDs, emit)
+                  : createInputColorHEX(props, pickerData, cssNamePrefix, inputIDs, emit),
         ]
     );
 }
@@ -589,7 +589,7 @@ function renderColorPickerModeButtons(
                 color: props.modeButtonColor as Prop<string>,
                 toggleColor: props.modeButtonToggleColor as Prop<string>,
                 // @ts-ignore
-                outlined: props.outlineModeButton as Prop<boolean>,
+                outlined: props.modeButtonOutlined as Prop<boolean>,
                 items: [
                     { value: 'HEX', label: 'HEX' },
                     { value: 'RGB', label: 'RGB' },

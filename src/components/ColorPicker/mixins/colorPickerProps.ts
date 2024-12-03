@@ -23,7 +23,7 @@ export const colorPickerProps = {
     hideAlpha: booleanProp,
     hideInputs: booleanProp,
     hideModeButton: booleanProp,
-    outlineModeButton: booleanProp,
+    modeButtonOutlined: booleanProp,
     modeButtonColor: {
         type: String,
         default: 'grey',

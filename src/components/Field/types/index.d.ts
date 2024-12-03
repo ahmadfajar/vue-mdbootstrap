@@ -62,12 +62,11 @@ export declare type TInputFieldProps = TInputBaseProps &
         /**
          * Sets the action icon style variant.
          *
-         * Valid predefined icon style are: `outlined`, `rounded`, `sharp`,
+         * Valid predefined icon variants are: `outlined`, `rounded`, `sharp`,
          * `filled`, `outlined_filled`, `rounded_filled`, and `sharp_filled`.
          * Default is `outlined`.
          *
-         * Variant `filled` and `outlined_filled` will
-         * result the same icon style.
+         * Variant `filled` and `outlined_filled` will result the same icon style variant.
          *
          * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
@@ -107,9 +106,11 @@ export declare type TInputFieldProps = TInputBaseProps &
          * Sets icon to display on inner right side. This is a shortcut to insert
          * component `BsIcon` inside this component.
          *
-         * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
-         * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
-         * Suffix `_filled` and `_outlined_filled` will result the same icon style.
+         * Use android icon name with or without suffix. Valid suffixes are:
+         * `_outlined`, `_rounded`, `_sharp`, `_filled`, `_outlined_filled`,
+         * `_rounded_filled`, or `_sharp_filled`. If no suffix is given, then
+         * default (`outlined`) icon variant will be used. Suffix `_filled`
+         * and `_outlined_filled` will result the same icon style variant.
          *
          * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
@@ -118,9 +119,11 @@ export declare type TInputFieldProps = TInputBaseProps &
          * Sets icon to display on outer right side. This is a shortcut to insert
          * component `BsIcon` inside this component.
          *
-         * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
-         * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
-         * Suffix `_filled` and `_outlined_filled` will result the same icon style.
+         * Use android icon name with or without suffix. Valid suffixes are:
+         * `_outlined`, `_rounded`, `_sharp`, `_filled`, `_outlined_filled`,
+         * `_rounded_filled`, or `_sharp_filled`. If no suffix is given, then
+         * default (`outlined`) icon variant will be used. Suffix `_filled`
+         * and `_outlined_filled` will result the same icon style variant.
          *
          * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
@@ -129,9 +132,11 @@ export declare type TInputFieldProps = TInputBaseProps &
          * Sets icon to display on inner left side. This is a shortcut to insert
          * component `BsIcon` inside this component.
          *
-         * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
-         * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
-         * Suffix `_filled` and `_outlined_filled` will result the same icon style.
+         * Use android icon name with or without suffix. Valid suffixes are:
+         * `_outlined`, `_rounded`, `_sharp`, `_filled`, `_outlined_filled`,
+         * `_rounded_filled`, or `_sharp_filled`. If no suffix is given, then
+         * default (`outlined`) icon variant will be used. Suffix `_filled`
+         * and `_outlined_filled` will result the same icon style variant.
          *
          * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
@@ -140,9 +145,11 @@ export declare type TInputFieldProps = TInputBaseProps &
          * Sets icon to display on outer left side. This is a shortcut to insert
          * component `BsIcon` inside this component.
          *
-         * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
-         * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
-         * Suffix `_filled` and `_outlined_filled` will result the same icon style.
+         * Use android icon name with or without suffix. Valid suffixes are:
+         * `_outlined`, `_rounded`, `_sharp`, `_filled`, `_outlined_filled`,
+         * `_rounded_filled`, or `_sharp_filled`. If no suffix is given, then
+         * default (`outlined`) icon variant will be used. Suffix `_filled`
+         * and `_outlined_filled` will result the same icon style variant.
          *
          * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */

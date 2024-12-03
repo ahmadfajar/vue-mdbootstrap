@@ -22,7 +22,7 @@ Released: December 03, 2024
 - **BsAlert**, **BsChip**, **BsChipGroup**:
   - Improve `icon` property to better accommodate **Google Material Symbols**. 
   - Improve `icon-variant` property to better accommodate **Google Material Symbols**.
-  - Change property of `icon-variant` default value to `outlined`.
+  - Change the default value of the `icon-variant` property to `outlined`.
 - **BsAvatar**, **BsTab**, **BsListTileLeading**, **BsListNavItem**, **BsButton**, **BsToggleButton**, **BsToggleField**:
   - Add new property `icon-variant` to better accommodate **Google Material Symbols**.
   - Improve `icon` property to better accommodate **Google Material Symbols**.

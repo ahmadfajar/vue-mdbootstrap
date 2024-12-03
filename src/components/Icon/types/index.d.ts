@@ -61,10 +61,12 @@ export declare type TSizeOptionProps = {
 
 export declare type TIconOptionProps = TSizeOptionProps & {
     /**
-     * Android icon name with suffix: `_outlined`, `_rounded`, `_sharp`, `_filled`,
-     * `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+     * Android icon name with or without suffix. Valid suffixes are: `_outlined` ,
+     * `_rounded`, `_sharp`, `_filled`, `_outlined_filled`, `_rounded_filled`,
+     * or `_sharp_filled`. If no suffix is given, then default (`outlined`) icon
+     * variant will be used.
      *
-     * Suffix `_filled` and `_outlined_filled` will result the same icon style.
+     * Suffix `_filled` and `_outlined_filled` will result the same icon style variant.
      * And you can either use `*_filled` or sets property `filled` to `true` to
      * create an icon with fill style.
      *
@@ -116,11 +118,13 @@ export declare type TToggleIconOptionProps = {
     /**
      * The icon to display when `modelValue` property is `false` or `undefined`.
      *
-     * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
-     * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+     * Use android icon name with or without suffix. Valid suffixes are: `_outlined`,
+     * `_rounded`, `_sharp`, `_filled`, `_outlined_filled`, `_rounded_filled`, or
+     * `_sharp_filled`. If no suffix is given, then default (`outlined`) icon
+     * variant will be used.
      *
-     * Suffix `_filled` or `_outlined_filled` will result the same icon style.
-     * And you can either use `*_filled` or sets property `filled` to `true` to
+     * Suffix `_filled` or `_outlined_filled` will result the same icon style variant.
+     * And you can either use `*_filled` or sets the `filled` property to `true` to
      * create an icon with fill style.
      *
      * @see  [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
@@ -129,11 +133,13 @@ export declare type TToggleIconOptionProps = {
     /**
      * The icon to display when `modelValue` property is `true`.
      *
-     * Use android icon name with suffix: `_outlined`, `_rounded`, `_sharp`,
-     * `_filled`, `_outlined_filled`, `_rounded_filled`, or `_sharp_filled`.
+     * Use android icon name with or without suffix. Valid suffixes are: `_outlined`,
+     * `_rounded`, `_sharp`, `_filled`, `_outlined_filled`, `_rounded_filled`, or
+     * `_sharp_filled`. If no suffix is given, then default (`outlined`) icon
+     * variant will be used.
      *
-     * Suffix `_filled` or `_outlined_filled` will result the same icon style.
-     * And you can either use `*_filled` or sets property `filled` to `true` to
+     * Suffix `_filled` or `_outlined_filled` will result the same icon style variant.
+     * And you can either use `*_filled` or sets the `filled` property to `true` to
      * create an icon with fill style.
      *
      * @see  [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.

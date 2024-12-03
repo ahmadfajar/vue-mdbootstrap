@@ -75,13 +75,13 @@ export declare type TColorPickerOptionProps = {
     /**
      * Render the toggle mode buttons with outlined style.
      */
-    outlineModeButton?: boolean;
+    modeButtonOutlined?: boolean;
     /**
      * Default the toggle mode button color style.
      */
     modeButtonColor?: string;
     /**
-     * Color to apply to the active button.
+     * Color to apply to the active toggle mode button.
      */
     modeButtonToggleColor?: string;
     /**
