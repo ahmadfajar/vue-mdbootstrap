@@ -36,7 +36,6 @@ import type {
     BsImageHolder,
     BsImageUploader,
     BsLightbox,
-    BsListbox,
     BsListNav,
     BsListNavItem,
     BsListTile,
@@ -46,6 +45,7 @@ import type {
     BsListTileSubtitle,
     BsListTileTitle,
     BsListView,
+    BsListbox,
     BsMaskLoader,
     BsModal,
     BsNotification,
@@ -88,8 +88,8 @@ declare module '@vue/runtime-core' {
         BsAppbarItems: typeof BsAppbarItems;
         BsAppbarTitle: typeof BsAppbarTitle;
         BsAvatar: typeof BsAvatar;
-        BsBreadcrumb: typeof BsBreadcrumb;
         BsBadge: typeof BsBadge;
+        BsBreadcrumb: typeof BsBreadcrumb;
         BsButton: typeof BsButton;
         BsButtonToggle: typeof BsToggleButton;
         BsButtonToggleField: typeof BsToggleField;
