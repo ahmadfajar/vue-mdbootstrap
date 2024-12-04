@@ -26,6 +26,7 @@
         &:before {
             border-color: transparent;
             border-style: solid;
+            color: var(--#{vars.$prefix}tooltip-bg);
             content: "";
             position: absolute;
         }
