@@ -59,7 +59,7 @@ export declare type TSizeOptionProps = {
     size?: string | number | TSizeProps;
 };
 
-export declare type TIconOptionProps = TSizeOptionProps & {
+export declare type TBaseIconOptionProps = {
     /**
      * Android icon name with or without suffix. Valid suffixes are: `_outlined` ,
      * `_rounded`, `_sharp`, `_filled`, `_outlined_filled`, `_rounded_filled`,
@@ -94,6 +94,10 @@ export declare type TIconOptionProps = TSizeOptionProps & {
      */
     rotate?: TIconRotation;
 };
+
+export declare type TIconOptionProps = TSizeOptionProps & TBaseIconOptionProps;
+
+export declare type TIconSVGOptionProps = TSizeProps & TBaseIconOptionProps;
 
 export declare type TIconFontawesomeOptionProps = TSizeOptionProps & {
     /**
@@ -195,7 +199,7 @@ export declare type TToggleIconOptionProps = {
 
 export declare type TBsIcon = ComponentObjectPropsOptions<TIconOptionProps>;
 
-export declare type TBsIconSvg = ComponentObjectPropsOptions<TIconOptionProps>;
+export declare type TBsIconSvg = ComponentObjectPropsOptions<TIconSVGOptionProps>;
 
 export declare type TBsIconSpinner = ComponentObjectPropsOptions<TIconSpinnerOptionProps>;
 
@@ -219,7 +223,7 @@ export declare const BsIconFontawesome: {
 
 export declare const BsIconSvg: {
     new (): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconOptionProps;
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconSVGOptionProps;
     };
 };
 
