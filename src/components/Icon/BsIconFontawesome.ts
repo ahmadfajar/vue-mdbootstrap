@@ -6,8 +6,8 @@ import {
     useSvgClasses,
 } from '@/components/Icon/mixins/svgApi.ts';
 import type {
-    TBsFontAwesome,
-    TFontAwesomeOptionProps,
+    TBsIconFontawesome,
+    TIconFontawesomeOptionProps,
     TFontAwesomeVariant,
     TIconData,
 } from '@/components/Icon/types';
@@ -16,8 +16,8 @@ import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { computed, defineComponent, h, onBeforeMount, type Prop, ref, watch } from 'vue';
 
-export default defineComponent<TBsFontAwesome>({
-    name: 'BsFontAwesome',
+export default defineComponent<TBsIconFontawesome>({
+    name: 'BsIconFontawesome',
     props: {
         size: iconSizeObjectProp,
         variant: {
@@ -32,7 +32,7 @@ export default defineComponent<TBsFontAwesome>({
         ...iconProps,
     },
     setup(props) {
-        const thisProps = props as Readonly<TFontAwesomeOptionProps>;
+        const thisProps = props as Readonly<TIconFontawesomeOptionProps>;
         const szWidth = useSizeWidth(thisProps) || 24;
         const szHeight = useSizeHeight(thisProps) || 24;
         const svgIcon = ref<TIconData>();

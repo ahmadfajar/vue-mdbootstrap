@@ -3,6 +3,21 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.1.1
+
+Released: December 04, 2024
+
+### Improvements
+
+- **BsColorPicker**: rename property `outlineModeButton` to `modeButtonOutlined`. 
+- Rename component **BsFontAwesome** to **BsIconFontawesome** for consistency.
+- Improve typescript doc comments.
+
+### Bug Fixes
+
+- **BsTooltip**: fixed bug inconsistent arrow color.
+
+
 ## v2.1.0
 
 Released: December 03, 2024

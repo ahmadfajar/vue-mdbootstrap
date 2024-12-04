@@ -95,6 +95,40 @@ export declare type TIconOptionProps = TSizeOptionProps & {
     rotate?: TIconRotation;
 };
 
+export declare type TIconFontawesomeOptionProps = TSizeOptionProps & {
+    /**
+     * Any valid font awesome icon name.
+     *
+     * @see [Font Awesome](https://fontawesome.com/v6/search?o=r&m=free) for details.
+     */
+    icon: string;
+    /**
+     * Font Awesome style variant, valid values are: `regular`, `solid`, `light`.
+     * Default is `solid`.
+     */
+    variant?: TFontAwesomeVariant;
+    /**
+     * Font Awesome vendor version. Default is `6.7.1`.
+     */
+    version?: string;
+    /**
+     * Apply **pulse** animation to the icon.
+     */
+    pulse?: boolean;
+    /**
+     * Apply **spin** animation to the icon.
+     */
+    spin?: boolean;
+    /**
+     * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
+     */
+    flip?: TFlipMode;
+    /**
+     * Rotate the icon, valid values are: `90`, `180`, `270`.
+     */
+    rotate?: TIconRotation;
+}
+
 export declare type TIconSpinnerOptionProps = {
     /**
      * The Icon color.
@@ -159,61 +193,27 @@ export declare type TToggleIconOptionProps = {
     size?: string | number;
 };
 
-export declare type TFontAwesomeOptionProps = TSizeOptionProps & {
-    /**
-     * Any valid font awesome icon name.
-     *
-     * @see [Font Awesome](https://fontawesome.com/v6/search?o=r&m=free) for details.
-     */
-    icon: string;
-    /**
-     * Font Awesome style variant, valid values are: `regular`, `solid`, `light`.
-     * Default is `solid`.
-     */
-    variant?: TFontAwesomeVariant;
-    /**
-     * Font Awesome vendor version. Default is `6.7.1`.
-     */
-    version?: string;
-    /**
-     * Apply **pulse** animation to the icon.
-     */
-    pulse?: boolean;
-    /**
-     * Apply **spin** animation to the icon.
-     */
-    spin?: boolean;
-    /**
-     * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
-     */
-    flip?: TFlipMode;
-    /**
-     * Rotate the icon, valid values are: `90`, `180`, `270`.
-     */
-    rotate?: TIconRotation;
-}
-
-export declare type TBsFontAwesome = ComponentObjectPropsOptions<TFontAwesomeOptionProps>;
-
 export declare type TBsIcon = ComponentObjectPropsOptions<TIconOptionProps>;
 
 export declare type TBsIconSvg = ComponentObjectPropsOptions<TIconOptionProps>;
 
 export declare type TBsIconSpinner = ComponentObjectPropsOptions<TIconSpinnerOptionProps>;
 
+export declare type TBsIconFontawesome = ComponentObjectPropsOptions<TIconFontawesomeOptionProps>;
+
 export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptionProps>;
 
 export declare const spinnerSvgData = 'SVG+ML/data';
 
-export declare const BsFontAwesome: {
-    new (): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TFontAwesomeOptionProps;
-    };
-};
-
 export declare const BsIcon: {
     new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconOptionProps;
+    };
+};
+
+export declare const BsIconFontawesome: {
+    new (): {
+        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TIconFontawesomeOptionProps;
     };
 };
 
