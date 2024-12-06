@@ -1,14 +1,13 @@
-@use "../../../scss/color_vars" as colors;
 @use "../../../scss/variables" as vars;
 
 .#{vars.$prefix}breadcrumb {
     --#{vars.$prefix}breadcrumb-container-padding-x: #{vars.$padding-lg};
     --#{vars.$prefix}breadcrumb-container-padding-y: 0.75rem;
-    --#{vars.$prefix}breadcrumb-divider-color: #{colors.$gray-600};
+    --#{vars.$prefix}breadcrumb-separator-color: var(--#{vars.$prefix-bs}gray-600);
     --#{vars.$prefix}breadcrumb-icon-color: inherit;
     --#{vars.$prefix}breadcrumb-font-size: inherit;
     --#{vars.$prefix}breadcrumb-label-color: inherit;
-    --#{vars.$prefix}breadcrumb-label-active-color: #{colors.$gray-700};
+    --#{vars.$prefix}breadcrumb-label-active-color: var(--#{vars.$prefix-bs}gray-700);
     --#{vars.$prefix}breadcrumb-label-hover-color: var(--#{vars.$prefix-bs}link-color);
     --#{vars.$prefix}breadcrumb-line-height: 1.25;
 
@@ -23,7 +22,7 @@
     }
 
     > .breadcrumb {
-        --#{vars.$prefix-bs}breadcrumb-divider-color: var(--#{vars.$prefix}breadcrumb-divider-color);
+        --#{vars.$prefix-bs}breadcrumb-divider-color: var(--#{vars.$prefix}breadcrumb-separator-color);
         --#{vars.$prefix-bs}breadcrumb-item-active-color: var(--#{vars.$prefix}breadcrumb-label-active-color);
         --#{vars.$prefix-bs}breadcrumb-font-size: var(--#{vars.$prefix}breadcrumb-font-size);
         --#{vars.$prefix-bs}breadcrumb-margin-bottom: 0;

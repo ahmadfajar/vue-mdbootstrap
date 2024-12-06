@@ -35,7 +35,7 @@ export declare type TBreadcrumb = {
      * The breadcrumb item's handler that will handle the `onClick` event.
      *
      * `handler`, `location`, `pathName`, `path` and `href` properties can't be mixed together.
-     * If all or some of the fields is defined, then `handler` will take priority.
+     * If all or some of the properties is defined, then `handler` will take priority.
      *
      * The priorities are sorted as follows:
      * 1. `handler` (highest priority),
