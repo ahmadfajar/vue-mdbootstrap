@@ -2,6 +2,7 @@ import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi';
 import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps';
 import type { TBsIcon, TBsIconSvg, TIconOptionProps } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi';
+import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { computed, defineComponent, h, type Prop } from 'vue';
@@ -11,6 +12,7 @@ export default defineComponent<TBsIcon>({
     name: 'BsIcon',
     props: {
         size: iconSizeObjectProp,
+        filled: booleanProp,
         ...iconProps,
     },
     setup(props) {

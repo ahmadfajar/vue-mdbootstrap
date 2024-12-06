@@ -5,14 +5,18 @@ import {
     useRenderIconFromSVG,
     useSvgClasses,
 } from '@/components/Icon/mixins/svgApi';
-import type { TBsIconSvg, TIconData, TIconOptionProps, TRecord } from '@/types';
+import { booleanProp } from '@/mixins/CommonProps.ts';
+import type { TBsIconSvg, TIconData, TIconSVGOptionProps, TRecord } from '@/types';
 import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue';
 
 export default defineComponent<TBsIconSvg>({
     name: 'BsIconSvg',
-    props: iconProps,
+    props: {
+        filled: booleanProp,
+        ...iconProps,
+    },
     setup(props) {
-        const thisProps = props as Readonly<TIconOptionProps>;
+        const thisProps = props as Readonly<TIconSVGOptionProps>;
         const svgIcon = ref<TIconData>();
         const svgClasses = computed<TRecord>(() => useSvgClasses(thisProps));
 

@@ -68,7 +68,7 @@ export declare type TInputFieldProps = TInputBaseProps &
          *
          * Variant `filled` and `outlined_filled` will result the same icon style variant.
          *
-         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
+         * @see [Google Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         actionIconVariant?: TIconVariant;
         /**
@@ -112,7 +112,7 @@ export declare type TInputFieldProps = TInputBaseProps &
          * default (`outlined`) icon variant will be used. Suffix `_filled`
          * and `_outlined_filled` will result the same icon style variant.
          *
-         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
+         * @see [Google Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         appendIcon?: string;
         /**
@@ -125,7 +125,7 @@ export declare type TInputFieldProps = TInputBaseProps &
          * default (`outlined`) icon variant will be used. Suffix `_filled`
          * and `_outlined_filled` will result the same icon style variant.
          *
-         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
+         * @see [Google Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         appendIconOuter?: string;
         /**
@@ -138,7 +138,7 @@ export declare type TInputFieldProps = TInputBaseProps &
          * default (`outlined`) icon variant will be used. Suffix `_filled`
          * and `_outlined_filled` will result the same icon style variant.
          *
-         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
+         * @see [Google Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         prependIcon?: string;
         /**
@@ -151,7 +151,7 @@ export declare type TInputFieldProps = TInputBaseProps &
          * default (`outlined`) icon variant will be used. Suffix `_filled`
          * and `_outlined_filled` will result the same icon style variant.
          *
-         * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
+         * @see [Google Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
          */
         prependIconOuter?: string;
     };

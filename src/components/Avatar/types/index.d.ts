@@ -41,7 +41,7 @@ export declare type TIconProps = {
      * `_outlined`, `_rounded`, `_sharp`, `_filled`, `_outlined_filled`,
      * `_rounded_filled`, or `_sharp_filled`. Suffix `_filled` and `_outlined_filled`
      * will result the same icon style variant. Suffix will take priority over
-     * `iconVariant` property.
+     * `icon-variant` property.
      *
      * @see [Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */

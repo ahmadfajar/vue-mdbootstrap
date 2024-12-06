@@ -50,7 +50,6 @@ export const iconProps = {
     icon: iconName,
     height: validStringOrNumberProp,
     width: validStringOrNumberProp,
-    filled: booleanProp,
     pulse: booleanProp,
     spin: booleanProp,
     flip,

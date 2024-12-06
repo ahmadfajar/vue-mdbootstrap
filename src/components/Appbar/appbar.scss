@@ -32,6 +32,10 @@
                 color: inherit;
                 text-decoration: none;
             }
+
+            &:first-child {
+                margin-left: 0;
+            }
         }
 
         > .#{vars.$prefix}appbar-items {
