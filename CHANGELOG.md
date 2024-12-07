@@ -3,6 +3,19 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.1.2
+
+Released: December 08, 2024
+
+### Bug Fixes
+
+- **BsAppbarTitle**: fixed bug incorrect left margin when placed as the first child of `<BsAppbar>`.
+- **BsBreadcrumb**: fixed css variables.
+- **BsCheckboxGroup**, **BsRadioGroup**: fixed column layout bug that did not
+  respect the `column` property when its value was set to `1`.
+- **BsIconFontawesome**: removed unused property and fixed typescript declaration.
+
+
 ## v2.1.1
 
 Released: December 04, 2024
