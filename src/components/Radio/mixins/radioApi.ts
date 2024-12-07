@@ -185,6 +185,8 @@ export function useRenderRadioOrCheckboxGroup<D, M>(
     hasError: boolean,
     errorItems: Array<string>
 ): VNode {
+    const numCols = props.column ? parseInt(props.column as string, 10) : undefined;
+
     return h('div', { class: classnames.value }, [
         renderSlot(slots, 'default'),
         h('div', { class: 'col' }, [
@@ -197,15 +199,10 @@ export function useRenderRadioOrCheckboxGroup<D, M>(
                         'row-cols-sm-auto': !props.column && props.items.length < 4,
                         'row-cols-sm-2': !props.column && props.items.length > 3,
                         'row-cols-lg-3 row-cols-xl-4': !props.column,
-                        'row-cols-md-2': props.column && props.items.length > 3,
-                        [`row-cols-lg-4`]:
-                            props.column &&
-                            parseInt(props.column as string, 10) > 4 &&
-                            props.items.length > 3,
-                        [`row-cols-lg-${props.column}`]:
-                            props.column && parseInt(props.column as string, 10) < 5,
-                        [`row-cols-xl-${props.column}`]:
-                            props.column && parseInt(props.column as string, 10) > 1,
+                        'row-cols-md-2': numCols && numCols > 1 && props.items.length > 3,
+                        [`row-cols-lg-4`]: numCols && numCols > 4 && props.items.length > 3,
+                        [`row-cols-lg-${props.column}`]: numCols && numCols > 1 && numCols < 5,
+                        [`row-cols-xl-${props.column}`]: numCols && numCols > 1,
                     },
                 },
                 children
