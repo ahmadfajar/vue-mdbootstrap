@@ -57,7 +57,7 @@ export default defineComponent<TBsNotificationBar>({
 
         return () =>
             h('div', {
-                class: `${cssPrefix}notification-bar`,
+                class: `${cssPrefix}dialog-progressbar`,
                 style: { width: barWidth.value + '%' },
             });
     },

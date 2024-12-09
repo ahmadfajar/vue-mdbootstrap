@@ -3,15 +3,26 @@ import {
     ComponentCustomProps,
     ComponentObjectPropsOptions,
     ObjectPlugin,
-    UnwrapNestedRefs,
     VNodeProps,
 } from 'vue';
 
 export declare type TNotificationPosition =
-    'top-right' | 'top-left' | 'top-center' | 'top-full-width' |
-    'bottom-right' | 'bottom-left' | 'bottom-center' | 'bottom-full-width';
+    | 'top-right'
+    | 'top-left'
+    | 'top-center'
+    | 'top-full-width'
+    | 'bottom-right'
+    | 'bottom-left'
+    | 'bottom-center'
+    | 'bottom-full-width';
 
-export declare type TNotificationVariant = 'default' | 'info' | 'success' | 'error' | 'warning' | 'custom';
+export declare type TNotificationVariant =
+    | 'default'
+    | 'info'
+    | 'success'
+    | 'error'
+    | 'warning'
+    | 'custom';
 
 export declare type TNotificationOption = {
     message: string;
@@ -22,35 +33,39 @@ export declare type TNotificationOption = {
     position?: TNotificationPosition;
     clickClose?: boolean;
     closeButton?: boolean;
+    iconOff?: boolean;
     preventDuplicates?: boolean;
     progressBar?: boolean;
-}
-
-export declare type TNotificationItem = {
-    [N in TNotificationPosition]: TNotificationOption[];
-}
+};
 
 export declare type TNotificationItemOptionProps = {
-    options?: TNotificationOption;
-}
+    variant: string | TNotificationVariant;
+    message: string;
+    title?: string;
+    timeout?: number;
+    clickClose?: boolean;
+    closeButton?: boolean;
+    iconOff?: boolean;
+    progressBar?: boolean;
+};
 
 export declare type TNotificationBarOptionProps = {
     timeout?: number;
     pause?: boolean;
-}
+};
 
 export declare interface INotificationProvider {
     /**
-     * Get the notification holder.
+     * Get the notification data store.
      */
-    get notification(): UnwrapNestedRefs<TNotificationItem>;
+    get collection(): Map<TNotificationPosition, TNotificationOption[]>;
 
     /**
      * Create and display new Notification.
      *
-     * @param item The notification to be added.
+     * @param data The notification to be added.
      */
-    add(item: string | TNotificationOption): TNotificationOption | null;
+    add(data: string | TNotificationOption): TNotificationOption | null;
 
     /**
      * Close all notification and remove from the DOM.
@@ -81,34 +96,34 @@ export declare interface INotificationProvider {
     /**
      * Shortcut method to create and display Error Notification.
      *
-     * @param option The notification configuration or message.
-     * @param title  The notification title.
+     * @param data  The notification configuration or message.
+     * @param title The notification title.
      */
-    error(option: string | TNotificationOption, title?: string): TNotificationOption | null;
+    error(data: string | TNotificationOption, title?: string): TNotificationOption | null;
 
     /**
      * Shortcut method to create and display Info Notification.
      *
-     * @param option The notification configuration or message.
-     * @param title  The notification title.
+     * @param data  The notification configuration or message.
+     * @param title The notification title.
      */
-    info(option: string | TNotificationOption, title?: string): TNotificationOption | null;
+    info(data: string | TNotificationOption, title?: string): TNotificationOption | null;
 
     /**
      * Shortcut method to create and display Success Notification.
      *
-     * @param option The notification configuration or message.
-     * @param title  The notification title.
+     * @param data  The notification configuration or message.
+     * @param title The notification title.
      */
-    success(option: string | TNotificationOption, title?: string): TNotificationOption | null;
+    success(data: string | TNotificationOption, title?: string): TNotificationOption | null;
 
     /**
      * Shortcut method to create and display Warning Notification.
      *
-     * @param option The notification configuration or message.
-     * @param title  The notification title.
+     * @param data  The notification configuration or message.
+     * @param title The notification title.
      */
-    warning(option: string | TNotificationOption, title?: string): TNotificationOption | null;
+    warning(data: string | TNotificationOption, title?: string): TNotificationOption | null;
 }
 
 export declare type TBsNotificationItem = ComponentObjectPropsOptions<TNotificationItemOptionProps>;
@@ -116,7 +131,7 @@ export declare type TBsNotificationItem = ComponentObjectPropsOptions<TNotificat
 export declare type TBsNotificationBar = ComponentObjectPropsOptions<TNotificationBarOptionProps>;
 
 export declare const BsNotification: {
-    new(): {
+    new (): {
         $props: AllowedComponentProps & ComponentCustomProps & VNodeProps;
     };
 };

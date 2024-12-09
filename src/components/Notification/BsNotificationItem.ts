@@ -1,35 +1,43 @@
-import { useRenderNotificationItem } from '@/components/Notification/mixins/notificationApi.ts';
+import {
+    useDeferHideNotification,
+    useRenderNotificationItem,
+} from '@/components/Notification/mixins/notificationApi.ts';
 import type {
-    INotificationProvider,
     TBsNotificationItem,
     TNotificationItemOptionProps,
-    TNotificationOption,
+    TNotificationVariant,
 } from '@/components/Notification/types';
-import { useVueMdbNotification } from '@/mixins/CommonApi.ts';
-import Helper from '@/utils/Helper';
+import {
+    booleanProp,
+    booleanTrueProp,
+    numberProp,
+    stringMandatoryProp,
+    stringProp,
+} from '@/mixins/CommonProps.ts';
 import type { Prop } from 'vue';
-import { defineComponent, onMounted, ref, shallowRef } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 
 export default defineComponent<TBsNotificationItem>({
     name: 'BsNotificationItem',
     props: {
-        options: {
-            type: Object,
-            default: undefined,
-        } as Prop<TNotificationOption>,
+        message: stringMandatoryProp,
+        title: stringProp,
+        timeout: numberProp,
+        clickClose: booleanProp,
+        closeButton: booleanTrueProp,
+        iconOff: booleanProp,
+        progressBar: booleanProp,
+        variant: stringMandatoryProp as Prop<TNotificationVariant>,
     },
-    setup(props) {
+    emits: ['dismiss'],
+    setup(props, { emit }) {
         const thisProps = props as Readonly<TNotificationItemOptionProps>;
-        const provider = shallowRef<INotificationProvider>();
         const timerId = ref<number>();
 
         onMounted(() => {
-            provider.value = useVueMdbNotification();
-            timerId.value = Helper.defer(() => {
-                provider.value?.remove(<TNotificationOption>thisProps.options);
-            }, thisProps.options?.timeout as number);
+            useDeferHideNotification(emit, timerId, thisProps.timeout);
         });
 
-        return () => useRenderNotificationItem(thisProps, provider, timerId);
+        return () => useRenderNotificationItem(emit, thisProps, timerId);
     },
 });

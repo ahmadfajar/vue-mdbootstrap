@@ -5,7 +5,6 @@
 
 .#{vars.$prefix}notification {
     --#{vars.$prefix}notification-background-color: #{helper.round-color-rgb(color.adjust(colors.$gray-900, $lightness: -5%))};
-    --#{vars.$prefix}notification-bar-color: #{colors.$warning-color};
     --#{vars.$prefix}notification-border-radius: #{vars.$border-radius-base};
     --#{vars.$prefix}notification-box-shadow-color: rgba(0, 0, 0, 0.2);
     --#{vars.$prefix}notification-box-shadow-hover-color: rgba(0, 0, 0, 0.45);
@@ -17,14 +16,17 @@
     --#{vars.$prefix}notification-title-size: 110%;
     --#{vars.$prefix}notification-padding-x: #{vars.$padding-base};
     --#{vars.$prefix}notification-padding-y: #{vars.$padding-base - vars.$padding-xs};
+    --#{vars.$prefix}notification-progressbar-color: #{colors.$warning-color};
+    --#{vars.$prefix}notification-spacing: #{vars.$padding-base - vars.$padding-xs};
     --#{vars.$prefix}notification-width: 350px;
 
-    .#{vars.$prefix}notification-title {
+    .#{vars.$prefix}dialog-title {
         font-weight: var(--#{vars.$prefix}notification-title-weight);
         font-size: var(--#{vars.$prefix}notification-title-size);
+        margin-bottom: vars.$padding-sm;
     }
 
-    .#{vars.$prefix}notification-message {
+    .#{vars.$prefix}dialog-message {
         word-break: break-word;
 
         & {
@@ -82,24 +84,24 @@
             box-sizing: border-box;
         }
 
-        &.#{vars.$prefix}notification-top-right {
+        &.#{vars.$prefix}container-top-right {
             right: var(--#{vars.$prefix}notification-padding-x);
             top: var(--#{vars.$prefix}notification-padding-y);
         }
 
-        &.#{vars.$prefix}notification-top-left {
+        &.#{vars.$prefix}container-top-left {
             left: var(--#{vars.$prefix}notification-padding-x);
             top: var(--#{vars.$prefix}notification-padding-y);
         }
 
-        &.#{vars.$prefix}notification-top-center {
+        &.#{vars.$prefix}container-top-center {
             --#{vars.$prefix}notification-container-width: 100%;
 
             right: 0;
             top: var(--#{vars.$prefix}notification-padding-y);
         }
 
-        &.#{vars.$prefix}notification-top-full-width {
+        &.#{vars.$prefix}container-top-full-width {
             --#{vars.$prefix}notification-container-width: 100%;
 
             z-index: 1054;
@@ -109,24 +111,24 @@
             padding-right: var(--#{vars.$prefix}notification-padding-x);
         }
 
-        &.#{vars.$prefix}notification-bottom-right {
+        &.#{vars.$prefix}container-bottom-right {
             bottom: var(--#{vars.$prefix}notification-padding-y);
             right: var(--#{vars.$prefix}notification-padding-x);
         }
 
-        &.#{vars.$prefix}notification-bottom-left {
+        &.#{vars.$prefix}container-bottom-left {
             bottom: var(--#{vars.$prefix}notification-padding-y);
             left: var(--#{vars.$prefix}notification-padding-x);
         }
 
-        &.#{vars.$prefix}notification-bottom-center {
+        &.#{vars.$prefix}container-bottom-center {
             --#{vars.$prefix}notification-container-width: 100%;
 
             bottom: var(--#{vars.$prefix}notification-padding-y);
             right: 0;
         }
 
-        &.#{vars.$prefix}notification-bottom-full-width {
+        &.#{vars.$prefix}container-bottom-full-width {
             --#{vars.$prefix}notification-container-width: 100%;
 
             bottom: var(--#{vars.$prefix}notification-padding-y);
@@ -146,14 +148,17 @@
             width: var(--#{vars.$prefix}notification-width);
             opacity: var(--#{vars.$prefix}notification-opacity);
             display: block;
-            margin: 0 0 6px;
-            padding: 15px 15px 15px 50px;
+            padding: 15px 15px 15px 54px;
             overflow: hidden;
             pointer-events: auto;
             position: relative;
 
-            > .#{vars.$prefix}notification-bar {
-                background-color: var(--#{vars.$prefix}notification-bar-color);
+            &:not(:last-child) {
+                margin-bottom: var(--#{vars.$prefix}notification-spacing);
+            }
+
+            > .#{vars.$prefix}dialog-progressbar {
+                background-color: var(--#{vars.$prefix}notification-progressbar-color);
                 position: absolute;
                 left: 0;
                 bottom: 0;
@@ -167,45 +172,50 @@
                 cursor: pointer;
             }
 
-            &.#{vars.$prefix}notification-default,
-            &.#{vars.$prefix}notification-custom {
+            &.#{vars.$prefix}dialog-default,
+            &.#{vars.$prefix}dialog-custom {
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAA7EAAAOxAGVKw4bAAACnklEQVRIibWVT0gUcRTHP+/XICkkzPqPSCNPgUjWuUN/LBg9iJGE1CFw91A3D0GeLCjpVAQGEY6XsFNUELGtLSF0DOyQhmAHoYJScNYklYr9vQ7ubuu0s4rku8x35vfe+773fczviaoSZW482QT0iJh2VdsqYmKqVoFFYErEpFXtk8xo59eoHFKKwI0nG0XMTVXbC1SIGFG1mn8Wgtff14CHIuZa4HvzmxLEEqkzwAhQE3aurNiFBX7+ypYq9htwMfC9V5EEsUTqsqodBkxxtSJGwgThjnL4F9CXGe189A+BG092iZinqtYUBRSC+7taGexqBGDg8RwPUjOlCBT4LWK8wPcmCgSxRKoBmALqSvUOMHHLoy13+mYuS/dQOsoV4DNwKPC9JQdA1V4HakUMJSpCxMjkxwxtdS4Ab2cXoiTK4yZVOwAMiBt/Wa9q54DKMgEiQGuzi81aPnz6vhmBqNoM0OwA3SKmqjCU3EDDWIGpuQzhsyh/EeMCHQ5wskwVBTzYe0T7TzUIoDdefOHOs/dl/XP4hAO0lJtW3kwxFon0C1mLA9Ru1XsbVusAWkbHv6UKUkDrZ2X9c1gdYEHV7s1/jNIURXPJFUDVbmUGCw4wLWIO71AH0w6QVrUXdqiDtAM8B5aBav6vzQNpJ/C9pVgiNQJcKdfyNiQaDnxvNX8XDQHnRMz+qJazVgsSZbO6mUSzqvYubLyuj4mYcVVbUYpgX02V9p0+KFZV7ydnWFxeiyJYETHHA9+b3EAAEEukzgJjwO5t6v4D6Al8b7wgVXhluvHkUWBMxBwIVxexk4tlOZ8Z7XxXnC9q6VeLmKuq9hLgbkKwANwTMbcD31sN5ypJkLdYIrUH6ADaWb8U61n/D+aBaeA1MB743kpUjj/Zds3fTDZCJAAAAABJRU5ErkJggg==") !important;
             }
 
-            &.#{vars.$prefix}notification-info {
+            &.#{vars.$prefix}dialog-info {
                 --#{vars.$prefix}notification-background-color: #{colors.$info-color-dark};
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAGwSURBVEhLtZa9SgNBEMc9sUxxRcoUKSzSWIhXpFMhhYWFhaBg4yPYiWCXZxBLERsLRS3EQkEfwCKdjWJAwSKCgoKCcudv4O5YLrt7EzgXhiU3/4+b2ckmwVjJSpKkQ6wAi4gwhT+z3wRBcEz0yjSseUTrcRyfsHsXmD0AmbHOC9Ii8VImnuXBPglHpQ5wwSVM7sNnTG7Za4JwDdCjxyAiH3nyA2mtaTJufiDZ5dCaqlItILh1NHatfN5skvjx9Z38m69CgzuXmZgVrPIGE763Jx9qKsRozWYw6xOHdER+nn2KkO+Bb+UV5CBN6WC6QtBgbRVozrahAbmm6HtUsgtPC19tFdxXZYBOfkbmFJ1VaHA1VAHjd0pp70oTZzvR+EVrx2Ygfdsq6eu55BHYR8hlcki+n+kERUFG8BrA0BwjeAv2M8WLQBtcy+SD6fNsmnB3AlBLrgTtVW1c2QN4bVWLATaIS60J2Du5y1TiJgjSBvFVZgTmwCU+dAZFoPxGEEs8nyHC9Bwe2GvEJv2WXZb0vjdyFT4Cxk3e/kIqlOGoVLwwPevpYHT+00T+hWwXDf4AJAOUqWcDhbwAAAAASUVORK5CYII=") !important;
             }
 
-            &.#{vars.$prefix}notification-error {
+            &.#{vars.$prefix}dialog-error {
                 --#{vars.$prefix}notification-background-color: #{colors.$danger-color-dark};
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAHOSURBVEhLrZa/SgNBEMZzh0WKCClSCKaIYOED+AAKeQQLG8HWztLCImBrYadgIdY+gIKNYkBFSwu7CAoqCgkkoGBI/E28PdbLZmeDLgzZzcx83/zZ2SSXC1j9fr+I1Hq93g2yxH4iwM1vkoBWAdxCmpzTxfkN2RcyZNaHFIkSo10+8kgxkXIURV5HGxTmFuc75B2RfQkpxHG8aAgaAFa0tAHqYFfQ7Iwe2yhODk8+J4C7yAoRTWI3w/4klGRgR4lO7Rpn9+gvMyWp+uxFh8+H+ARlgN1nJuJuQAYvNkEnwGFck18Er4q3egEc/oO+mhLdKgRyhdNFiacC0rlOCbhNVz4H9FnAYgDBvU3QIioZlJFLJtsoHYRDfiZoUyIxqCtRpVlANq0EU4dApjrtgezPFad5S19Wgjkc0hNVnuF4HjVA6C7QrSIbylB+oZe3aHgBsqlNqKYH48jXyJKMuAbiyVJ8KzaB3eRc0pg9VwQ4niFryI68qiOi3AbjwdsfnAtk0bCjTLJKr6mrD9g8iq/S/B81hguOMlQTnVyG40wAcjnmgsCNESDrjme7wfftP4P7SP4N3CJZdvzoNyGq2c/HWOXJGsvVg+RA/k2MC/wN6I2YA2Pt8GkAAAAASUVORK5CYII=") !important;
             }
 
-            &.#{vars.$prefix}notification-success {
+            &.#{vars.$prefix}dialog-success {
                 --#{vars.$prefix}notification-background-color: #{colors.$success-color-dark};
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADsSURBVEhLY2AYBfQMgf///3P8+/evAIgvA/FsIF+BavYDDWMBGroaSMMBiE8VC7AZDrIFaMFnii3AZTjUgsUUWUDA8OdAH6iQbQEhw4HyGsPEcKBXBIC4ARhex4G4BsjmweU1soIFaGg/WtoFZRIZdEvIMhxkCCjXIVsATV6gFGACs4Rsw0EGgIIH3QJYJgHSARQZDrWAB+jawzgs+Q2UO49D7jnRSRGoEFRILcdmEMWGI0cm0JJ2QpYA1RDvcmzJEWhABhD/pqrL0S0CWuABKgnRki9lLseS7g2AlqwHWQSKH4oKLrILpRGhEQCw2LiRUIa4lwAAAABJRU5ErkJggg==") !important;
             }
 
-            &.#{vars.$prefix}notification-warning {
+            &.#{vars.$prefix}dialog-warning {
                 --#{vars.$prefix}notification-background-color: #{colors.$warning-color};
                 --#{vars.$prefix}notification-color: #{colors.$gray-900};
                 background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAFxEAABcRAcom8z8AAAKbSURBVEhL3Za/S1tRFMdvDFJBJepYB0OGghTX6KZu9X8QBxFE/AsMjg7BQVR0L64ibiLiHsVFiUgpgi4KrShIKGlCyen3e8+JLyZ5UZt08QPHe9/58f2+a/KeundPxNZXI861IYa4x3AWUfKF/wGUPyO+wVAY3DNn5dYCgw6IX3qzWExDTZnrsLbWAeEFb9bfL3J/r8G9mi5YW2uA4EdEzhtubckT3Kthjj3W3jwQ/erNRkZESiVzA9wzxxp6rL05cOdJREkiEZGjI5Hzc5HhYZFkUiSb1Rxq7GGvjf0buOsIRDL+BFNTeqrl5fKJRNJpzbGGa+t986P2BAQmvXBXl8jNjYpvbgaGGxuaY409ajpp43Vps7UGDHZiSfuLVApfCftOdHfrSsp71tijpG32bWBoyZ8ikRDJ5/UkZHc3OOHOjiUBe9irp1wymdeBoTiG8jWi5PAwMDw4sKTBXjXkbNzkXgYD215wfNyUKjg+DgwzGUtWwBk13Ta5xqB5zItFoyJnZ6ZSwcVFYMhHpBrOcFZ7xky2PmiI4s5OffPcnClUwVdae7vG3Z0lq+AsNEwravK1oGHWm/X2houRkxONMDhLDTWdNfnnoNiD4k9vuLpqk3UoFETW10XW1nQfBjXUkJo9ZhOAwoo3GxwUKRZtqg6Li+XPRySVsmQdqEEtNV0xGwXJBJJFL7K/bxMhzMwEhtPTlgyBWmpI7YTZ+dPNe4HRUetswPW1yMSExtWVJRtATTWdp1f51fbH/8zlcC9Fvw1lYMC5vT2N+AvPNrWoqXgP/2aHO1+U33HR6fr6nIvFmG6ex0fnHh74kf3C1Sec7lYLAKZfED/8r7aFQU1qm83zv10ofMAyhGRL/imC4W8sWZysoJn3j3N/AcI4vgVq2mAgAAAAAElFTkSuQmCC") !important;
 
-                > .#{vars.$prefix}notification-bar {
-                    --#{vars.$prefix}notification-bar-color: #{colors.$danger-color-dark};
+                > .#{vars.$prefix}dialog-progressbar {
+                    --#{vars.$prefix}notification-progressbar-color: #{colors.$danger-color-dark};
                 }
+            }
+
+            &.#{vars.$prefix}dialog-icon-off {
+                background-image: none !important;
+                padding-left: 15px;
             }
         }
 
-        &.#{vars.$prefix}notification-top-center > div,
-        &.#{vars.$prefix}notification-bottom-center > div {
+        &.#{vars.$prefix}container-top-center > div,
+        &.#{vars.$prefix}container-bottom-center > div {
             margin-left: auto;
             margin-right: auto;
         }
 
-        &.#{vars.$prefix}notification-top-full-width > div,
-        &.#{vars.$prefix}notification-bottom-full-width > div {
+        &.#{vars.$prefix}container-top-full-width > div,
+        &.#{vars.$prefix}container-bottom-full-width > div {
             --#{vars.$prefix}notification-width: 100%;
         }
     }
@@ -215,15 +225,15 @@
             left: var(--#{vars.$prefix}notification-padding-x);
             right: var(--#{vars.$prefix}notification-padding-x);
 
-            &.#{vars.$prefix}notification-top-full-width,
-            &.#{vars.$prefix}notification-bottom-full-width {
+            &.#{vars.$prefix}container-top-full-width,
+            &.#{vars.$prefix}container-bottom-full-width {
                 --#{vars.$prefix}notification-container-width: auto;
                 left: 0;
                 right: 0;
             }
 
-            &.#{vars.$prefix}notification-top-center,
-            &.#{vars.$prefix}notification-bottom-center {
+            &.#{vars.$prefix}container-top-center,
+            &.#{vars.$prefix}container-bottom-center {
                 --#{vars.$prefix}notification-container-width: auto;
                 left: var(--#{vars.$prefix}notification-padding-x);
                 right: var(--#{vars.$prefix}notification-padding-x);

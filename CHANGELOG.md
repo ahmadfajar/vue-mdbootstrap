@@ -3,6 +3,19 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.1.3
+
+Released: December 10, 2024
+
+### Features & Improvements
+
+- **BsNotification**: 
+  - Add feature to enable hiding the notification icon. 
+  - Improves initializing and removes unnecessary html element. 
+  - Improves the notification provider in handling and processing notification items. 
+  - Improves css variables and classes.
+
+
 ## v2.1.2
 
 Released: December 08, 2024

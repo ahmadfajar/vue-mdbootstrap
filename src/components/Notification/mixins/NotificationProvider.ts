@@ -1,116 +1,108 @@
 import type {
     INotificationProvider,
-    TNotificationItem,
     TNotificationOption,
     TNotificationPosition,
     TNotificationVariant,
 } from '@/components/Notification/types';
 import Helper from '@/utils/Helper';
-import { reactive } from 'vue';
+import { type Reactive, reactive } from 'vue';
 
 export default class NotificationProvider implements INotificationProvider {
-    private readonly _item: TNotificationItem;
-    private readonly _positions: TNotificationPosition[] = [
-        'top-right',
-        'top-left',
-        'top-center',
-        'top-full-width',
-        'bottom-right',
-        'bottom-left',
-        'bottom-center',
-        'bottom-full-width',
-    ];
+    private readonly _collection: Reactive<Map<TNotificationPosition, TNotificationOption[]>>;
 
     constructor() {
-        const item = {} as TNotificationItem;
-
-        for (let i = 0; i <= this._positions.length - 1; i++) {
-            item[this._positions[i]] = [];
-        }
-
-        this._item = reactive(item);
+        this._collection = reactive(new Map<TNotificationPosition, TNotificationOption[]>());
     }
 
-    get notification() {
-        return this._item;
+    get collection(): Map<TNotificationPosition, TNotificationOption[]> {
+        return this._collection;
     }
 
     add(data: string | TNotificationOption): TNotificationOption | null {
-        const option = this._createOption(data);
-        const position = option.position as TNotificationPosition;
+        const toastOption = this._createOption(data);
+        const placement = toastOption.position as TNotificationPosition;
+        const toastItems = this._collection.get(placement);
 
-        if (option.preventDuplicates) {
-            const keys = this.notification[position].keys();
-
-            for (const index of keys) {
-                if (
-                    this._item[position][index].title === option.title &&
-                    this._item[position][index].message === option.message
-                ) {
-                    console.warn('Duplicate notification', option);
-                    return null;
+        if (!toastItems) {
+            this._collection.set(placement, [toastOption]);
+        } else {
+            if (toastOption.preventDuplicates) {
+                for (const toast of toastItems) {
+                    if (
+                        toast.message === toastOption.message &&
+                        toast.title === toastOption.title
+                    ) {
+                        console.warn('Duplicate notification', toastOption);
+                        return null;
+                    }
                 }
             }
-        }
-        this._item[position].push(option);
 
-        return option;
+            toastItems.push(toastOption);
+            this._collection.set(placement, toastItems);
+        }
+
+        return toastOption;
     }
 
     clearAll() {
-        for (let i = 0; i < this._positions.length; i++) {
-            this._item[this._positions[i]] = [];
-        }
+        this._collection.clear();
     }
 
     close(item: TNotificationOption) {
         this.remove(item);
     }
 
-    remove(item: TNotificationOption) {
-        const oid = item.oid as string;
-        const position = item.position as TNotificationPosition;
-        this._item[position] = this.notification[position].filter((it) => it.oid !== oid);
-    }
-
-    removeByType(variant: TNotificationVariant) {
-        for (let i = 0; i < this._positions.length; i++) {
-            const keys = this.notification[this._positions[i]].keys();
-
-            for (const index of keys) {
-                if (this.notification[this._positions[i]][index].variant === variant) {
-                    this.remove(this.notification[this._positions[i]][index]);
-                }
-            }
+    private _deleteIfEmpty(placement: TNotificationPosition, data?: TNotificationOption[]): void {
+        if (Helper.isEmpty(data)) {
+            this._collection.delete(placement);
+        } else {
+            this._collection.set(placement, data ?? []);
         }
     }
 
-    error(option: string | TNotificationOption, title?: string): TNotificationOption | null {
-        return this._doAdd(option, 'error', title);
+    remove(item: TNotificationOption) {
+        const oid = item.oid as string;
+        const position = item.position as TNotificationPosition;
+        const toastItems = this._collection.get(position);
+        const results = toastItems?.filter((it) => it.oid !== oid);
+
+        this._deleteIfEmpty(position, results);
     }
 
-    info(option: string | TNotificationOption, title?: string): TNotificationOption | null {
-        return this._doAdd(option, 'info', title);
+    removeByType(variant: TNotificationVariant) {
+        this._collection.forEach((values, placement) => {
+            const results = values.filter((it) => it.variant !== variant);
+            this._deleteIfEmpty(placement, results);
+        });
     }
 
-    success(option: string | TNotificationOption, title?: string): TNotificationOption | null {
-        return this._doAdd(option, 'success', title);
+    error(data: string | TNotificationOption, title?: string): TNotificationOption | null {
+        return this._doAdd(data, 'error', title);
     }
 
-    warning(option: string | TNotificationOption, title?: string): TNotificationOption | null {
-        return this._doAdd(option, 'warning', title);
+    info(data: string | TNotificationOption, title?: string): TNotificationOption | null {
+        return this._doAdd(data, 'info', title);
+    }
+
+    success(data: string | TNotificationOption, title?: string): TNotificationOption | null {
+        return this._doAdd(data, 'success', title);
+    }
+
+    warning(data: string | TNotificationOption, title?: string): TNotificationOption | null {
+        return this._doAdd(data, 'warning', title);
     }
 
     private _doAdd(
-        option: string | TNotificationOption,
+        data: string | TNotificationOption,
         variant: TNotificationVariant,
         title?: string
     ): TNotificationOption | null {
-        const data = this._createOption(option);
-        data.variant = variant;
-        data.title = title;
+        const option = Helper.isObject(data) ? data : ({ message: data } as TNotificationOption);
+        option.variant = variant;
+        option.title = title || option.title;
 
-        return this.add(data);
+        return this.add(option);
     }
 
     private _createOption(option: string | TNotificationOption): TNotificationOption {
@@ -118,13 +110,13 @@ export default class NotificationProvider implements INotificationProvider {
             oid: Helper.uuid(true),
             clickClose: false,
             closeButton: true,
-            // closeOnHover: false,
+            iconOff: false,
             progressBar: false,
             preventDuplicates: false,
             position: 'bottom-right' as TNotificationPosition,
             variant: 'default' as TNotificationVariant,
             timeout: 6000,
-        };
+        } as TNotificationOption;
 
         if (Helper.isObject(option) && !Helper.isEmpty(option.message)) {
             return {
