@@ -64,12 +64,14 @@ export default defineComponent<TBsTooltip>({
     setup(props, { slots }) {
         const thisProps = props as Readonly<TTooltipOptionProps>;
         const tooltip = ref<Element | null>(null);
+        const tooltipArrow = ref<Element | null>(null);
         const activator = ref<Element | null>(null);
         const active = ref<boolean>(false);
         const isDisabled = ref<boolean>(thisProps.disabled ?? false);
         const isActive = computed(() => active.value || thisProps.show);
-        const transitionName = computed(() => `${cssPrefix}tooltip-${thisProps.placement}`);
-        const classNames = computed(() => [`${cssPrefix}tooltip`, transitionName.value]);
+        const placement = ref<TPlacementPosition>(thisProps.placement ?? 'bottom');
+        const transition = computed(() => `${cssPrefix}tooltip-${placement.value}`);
+        const classNames = computed(() => [`${cssPrefix}tooltip`, transition.value]);
         const styles = computed(() => ({
             width: thisProps.width === 'auto' ? undefined : Helper.cssUnit(thisProps.width),
             'max-width': Helper.cssUnit(thisProps.maxWidth),
@@ -78,7 +80,9 @@ export default defineComponent<TBsTooltip>({
             [`--${cssPrefix}tooltip-arrow-width`]: thisProps.arrowOff ? 0 : undefined,
         }));
         const setPosition = () => {
-            nextTick().then(() => useSetTooltipPosition(activator, tooltip, thisProps.placement));
+            nextTick().then(() =>
+                useSetTooltipPosition(activator, tooltip, tooltipArrow, placement)
+            );
         };
 
         let instance: ComponentInternalInstance | null;
@@ -92,12 +96,13 @@ export default defineComponent<TBsTooltip>({
             instance = getCurrentInstance();
             useAddTooltipListener(
                 tooltip,
+                tooltipArrow,
                 activator,
+                placement,
                 active,
                 isDisabled,
                 instance,
-                thisProps.activator,
-                thisProps.placement
+                thisProps.activator
             );
         });
         onBeforeUnmount(() => useRemoveTooltipListener(activator));
@@ -107,7 +112,7 @@ export default defineComponent<TBsTooltip>({
                 h(
                     Teleport,
                     { to: 'body' },
-                    useRenderTransition({ name: transitionName.value }, [
+                    useRenderTransition({ name: transition.value }, [
                         isActive.value
                             ? withDirectives(
                                   h(
@@ -119,7 +124,10 @@ export default defineComponent<TBsTooltip>({
                                       },
                                       [
                                           !thisProps.arrowOff &&
-                                              h('div', { class: 'tooltip-arrow' }),
+                                              h('div', {
+                                                  ref: tooltipArrow,
+                                                  class: 'tooltip-arrow',
+                                              }),
                                           h(
                                               'div',
                                               {

@@ -16,60 +16,103 @@ const SPACE = 4;
 /**
  * Calculate Tooltip left offset.
  *
+ * @param placementRef Tooltip placement.
  * @param activatorEl  Activator Element
  * @param tooltipWidth Tooltip element width
- * @param placement    Tooltip placement.
  * @returns Tooltip left offset
  */
 function getTooltipLeftPosition(
+    placementRef: Ref<TPlacementPosition>,
     activatorEl: Element,
-    tooltipWidth: number,
-    placement?: TPlacementPosition
-) {
+    tooltipWidth: number
+): number {
     const domRect = activatorEl.getBoundingClientRect();
     const parentRect = activatorEl.parentElement?.getBoundingClientRect();
+    const maxLeft = window.innerWidth - SPACE - tooltipWidth;
+    const plX = domRect.left - tooltipWidth - SPACE;
+    const prX = domRect.left + domRect.width + SPACE;
 
-    switch (placement) {
+    switch (placementRef.value) {
         case 'left':
-            return domRect.left - tooltipWidth - SPACE;
+            if (plX >= SPACE) {
+                return plX;
+            } else {
+                placementRef.value = 'right';
+                return prX;
+            }
         case 'right':
-            return domRect.left + domRect.width + SPACE;
+            if (prX <= maxLeft) {
+                return prX;
+            } else {
+                placementRef.value = 'left';
+                return plX;
+            }
         case 'top':
         case 'bottom':
         default:
-            return (
+            const tx =
                 domRect.left +
                 Math.min(domRect.width / 2, (parentRect?.width ?? domRect.width) / 2) -
-                tooltipWidth / 2
-            );
+                tooltipWidth / 2;
+            return Math.min(maxLeft, tx);
     }
 }
 
 /**
  * Calculate Tooltip top offset.
  *
+ * @param placementRef  Tooltip placement reference.
  * @param activatorEl   Activator Element
  * @param tooltipHeight Tooltip element height
- * @param placement     Tooltip placement.
  * @returns Tooltip top offset
  */
 function getTooltipTopPosition(
+    placementRef: Ref<TPlacementPosition>,
     activatorEl: Element,
-    tooltipHeight: number,
-    placement?: TPlacementPosition
-) {
-    const rect = activatorEl.getBoundingClientRect();
+    tooltipHeight: number
+): number {
+    const domRect = activatorEl.getBoundingClientRect();
+    const ptY = domRect.top - tooltipHeight - SPACE;
+    const pbY = domRect.top + domRect.height + SPACE;
 
-    switch (placement) {
+    switch (placementRef.value) {
         case 'top':
-            return rect.top - tooltipHeight - SPACE;
+            if (ptY >= SPACE) {
+                return ptY;
+            } else {
+                placementRef.value = 'bottom';
+                return pbY;
+            }
         case 'bottom':
-            return rect.top + rect.height + SPACE;
+            const maxY = domRect.bottom + tooltipHeight + SPACE;
+            if (pbY + tooltipHeight <= maxY) {
+                return pbY;
+            } else {
+                placementRef.value = 'top';
+                return ptY;
+            }
         case 'left':
         case 'right':
         default:
-            return rect.top + rect.height / 2 - tooltipHeight / 2;
+            return domRect.top + domRect.height / 2 - tooltipHeight / 2;
     }
+}
+
+function getArrowLeftPosition(
+    activatorEl: Element,
+    tooltipEl: Element,
+    placement?: TPlacementPosition
+): number {
+    const domRect = activatorEl.getBoundingClientRect();
+    const tooltipRect = tooltipEl.getBoundingClientRect();
+    const domWidth = domRect.width / 2;
+    const arrow = 13 / 2;
+
+    if (placement === 'top' || placement === 'bottom') {
+        return domRect.left - tooltipRect.left + domWidth - arrow;
+    }
+
+    return 0;
 }
 
 /**
@@ -120,10 +163,12 @@ function findActivatorElement(
 export function useSetTooltipPosition(
     activatorRef: Ref<Element | null>,
     tooltipRef: Ref<Element | null>,
-    placement?: TPlacementPosition
+    tooltipArrowRef: Ref<Element | null>,
+    placementRef: Ref<TPlacementPosition>
 ): void {
     const activatorEl = unref(activatorRef) as Element | null;
     const tooltipEl = unref(tooltipRef) as HTMLElement | null;
+    const arrowEl = unref(tooltipArrowRef) as HTMLElement | null;
 
     if (!activatorEl || !tooltipEl) {
         return;
@@ -133,20 +178,26 @@ export function useSetTooltipPosition(
         const tooltipRect = tooltipEl.getBoundingClientRect();
 
         tooltipEl.style.top =
-            getTooltipTopPosition(activatorEl, tooltipRect.height, placement) + 'px';
+            getTooltipTopPosition(placementRef, activatorEl, tooltipRect.height) + 'px';
         tooltipEl.style.left =
-            getTooltipLeftPosition(activatorEl, tooltipRect.width, placement) + 'px';
+            getTooltipLeftPosition(placementRef, activatorEl, tooltipRect.width) + 'px';
+
+        if (arrowEl) {
+            const px = getArrowLeftPosition(activatorEl, tooltipEl, placementRef.value);
+            arrowEl.style.left = px > 0 ? `${px}px` : '';
+        }
     }
 }
 
 export function useAddTooltipListener(
     tooltipRef: Ref<Element | null>,
+    tooltipArrowRef: Ref<Element | null>,
     activatorRef: Ref<Element | null>,
+    placementRef: Ref<TPlacementPosition>,
     active: Ref<boolean>,
     disabled: Ref<boolean>,
     instance: ComponentInternalInstance | null,
-    trigger?: string | Element | ComponentPublicInstance,
-    placement?: TPlacementPosition
+    trigger?: string | Element | ComponentPublicInstance
 ) {
     if (!instance) {
         return;
@@ -158,7 +209,7 @@ export function useAddTooltipListener(
         }
 
         window.requestAnimationFrame(() => {
-            useSetTooltipPosition(activatorRef, tooltipRef, placement);
+            useSetTooltipPosition(activatorRef, tooltipRef, tooltipArrowRef, placementRef);
             instance.emit('update:show', true);
             active.value = true;
         });
@@ -173,11 +224,10 @@ export function useAddTooltipListener(
     activatorRef.value = activatorEl;
 
     if (activatorEl) {
-        const options = { capture: true, passive: false };
-
+        // const options = { capture: true, passive: false };
         (activatorEl as IBindingElement).__mouseEvents = {
-            mouseEnter: EventListener.listen(activatorEl, 'mouseenter', showTooltip, options),
-            mouseLeave: EventListener.listen(activatorEl, 'mouseleave', hideTooltip, options),
+            mouseEnter: EventListener.listen(activatorEl, 'mouseenter', showTooltip),
+            mouseLeave: EventListener.listen(activatorEl, 'mouseleave', hideTooltip),
             focus: EventListener.listen(activatorEl, 'focus', showTooltip),
             blur: EventListener.listen(activatorEl, 'blur', hideTooltip),
         };

@@ -3,6 +3,18 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.1.4
+
+Released: December 28, 2024
+
+### Features & Improvements
+
+- **BsTooltip**: 
+  - Prevent displaying tooltip beyond the screen viewport by shifting its 
+    coordinates or reversing its placement. 
+  - Automatically adjust arrow positioning. 
+
+
 ## v2.1.3
 
 Released: December 10, 2024
