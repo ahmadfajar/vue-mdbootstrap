@@ -57,10 +57,25 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
 
             return service.get(url, config);
         },
+        patch: (url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig) => {
+            if (data instanceof FormData) {
+                return service.patchForm(url, data, options);
+            }
+
+            return service.patch(url, data, options);
+        },
         post: (url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig) => {
+            if (data instanceof FormData) {
+                return service.postForm(url, data, options);
+            }
+
             return service.post(url, data, options);
         },
         put: (url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig) => {
+            if (data instanceof FormData) {
+                return service.putForm(url, data, options);
+            }
+
             return service.put(url, data, options);
         },
         delete: (url: string, data?: TRecord, options?: RawAxiosRequestConfig) => {

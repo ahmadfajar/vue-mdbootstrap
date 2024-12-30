@@ -109,7 +109,9 @@ function getArrowLeftPosition(
     const arrow = 13 / 2;
 
     if (placement === 'top' || placement === 'bottom') {
-        return domRect.left - tooltipRect.left + domWidth - arrow;
+        if (domRect.width < tooltipRect.width) {
+            return domRect.left - tooltipRect.left + domWidth - arrow;
+        }
     }
 
     return 0;

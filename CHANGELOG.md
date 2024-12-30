@@ -3,6 +3,19 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.1.5
+
+Released: December 30, 2024
+
+### Features & Improvements
+
+- **BsTooltip**: improve arrow positioning when activator width greater than tooltip width.
+- **AxiosPlugin**: 
+  - Expose `$http.patch` method. 
+  - Detect form object for data provided to the `$http.post`, `$http.patch`, `$http.put` 
+    methods and execute appropriate axios method.
+
+
 ## v2.1.4
 
 Released: December 28, 2024

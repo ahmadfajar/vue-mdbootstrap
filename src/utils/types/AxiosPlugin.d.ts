@@ -14,6 +14,16 @@ export declare interface IHttpService {
     get(url: string, data?: TRecord, options?: RawAxiosRequestConfig): AxiosPromise;
 
     /**
+     * Send HTTP PATCH to the remote server.
+     *
+     * @param url     API url
+     * @param data    The data to be sent
+     * @param options Additional options
+     * @returns Promise instance
+     */
+    patch(url: string, data: TRecord | FormData, options?: RawAxiosRequestConfig): AxiosPromise;
+
+    /**
      * Send HTTP POST to the remote server.
      *
      * @param url     API url
