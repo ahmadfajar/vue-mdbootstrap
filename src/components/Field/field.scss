@@ -65,10 +65,12 @@
         }
     }
 
+    > .col-form-label, .#{vars.$prefix}field-label {
+        color: var(--#{vars.$prefix}field-label-color);
+    }
+
     &.required {
-        > .col-form-label,
-        .#{vars.$prefix}field-label {
-            color: var(--#{vars.$prefix}field-label-color);
+        > .col-form-label, .#{vars.$prefix}field-label {
             font-weight: vars.$font-weight-semi-bold;
         }
     }

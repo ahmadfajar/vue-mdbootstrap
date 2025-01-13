@@ -5,12 +5,17 @@ export declare class EventListener {
      * Listen to DOM events during the bubble phase.
      *
      * @param context   DOM element to register listener on.
-     * @param eventType Event type, e.g. 'click' or 'mouseover'.
+     * @param eventName Event type, e.g. 'click' or 'mouseover'.
      * @param callback  Callback function.
      * @param options   Listener options.
      * @returns Object with a `remove` method.
      */
-    static listen(context: IHTMLElement, eventType: string, callback: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): IEventResult | undefined;
+    static listen(
+        context: IHTMLElement,
+        eventName: string,
+        callback: EventListenerOrEventListenerObject,
+        options?: boolean | AddEventListenerOptions
+    ): IEventResult | undefined;
 }
 
 export declare function useAddResizeListener(el: IBindingElement, fn: CallableFunction): void;
@@ -28,4 +33,7 @@ export declare function isSVGElement(source?: HTMLElement | null): boolean;
  * @param target The child element to check.
  * @returns TRUE if `target` is indirect child otherwise `false`.
  */
-export declare function isChildOf(parent: HTMLElement | Node | null, target?: HTMLElement | null): boolean;
+export declare function isChildOf(
+    parent: HTMLElement | Node | null,
+    target?: HTMLElement | null
+): boolean;

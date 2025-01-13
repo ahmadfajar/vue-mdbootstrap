@@ -38,7 +38,7 @@
     height: 48px;
 
     &.subheader--dark {
-        --#{vars.$prefix}subheader-color: #{rgba(colors.$white, .8)};
+        --#{vars.$prefix}subheader-color: #{rgba(colors.$white, .68)};
     }
 
     &.subheader--light {

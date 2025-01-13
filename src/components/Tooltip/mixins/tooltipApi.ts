@@ -213,20 +213,22 @@ export function useAddTooltipListener(
         window.requestAnimationFrame(() => {
             useSetTooltipPosition(activatorRef, tooltipRef, tooltipArrowRef, placementRef);
             instance.emit('update:show', true);
-            active.value = true;
+            Helper.defer(() => {
+                active.value = true;
+            }, 60);
         });
-        // preventEventTarget(e);
     };
     const hideTooltip = () => {
+        Helper.defer(() => {
+            active.value = false;
+        }, 60);
         instance.emit('update:show', false);
-        active.value = false;
     };
 
     const activatorEl = findActivatorElement(instance, trigger) as IHTMLElement | null;
     activatorRef.value = activatorEl;
 
     if (activatorEl) {
-        // const options = { capture: true, passive: false };
         (activatorEl as IBindingElement).__mouseEvents = {
             mouseEnter: EventListener.listen(activatorEl, 'mouseenter', showTooltip),
             mouseLeave: EventListener.listen(activatorEl, 'mouseleave', hideTooltip),
