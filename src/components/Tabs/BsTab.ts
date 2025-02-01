@@ -32,13 +32,13 @@ export default defineComponent<TBsTabPanel>({
         expose({ isActive });
 
         const classNames = computed(() => {
-            // console.log(`computed-tab-${thisProps.id}:active`, isActive.value);
             return ['tab-pane', isActive.value === true ? 'active' : ''];
         });
 
         onBeforeMount(() => {
             const vm = getCurrentInstance();
             if (vm && tabProvider) {
+                // console.log('Registering tabPanel:', thisProps.id);
                 tabProvider.registerTabPanel(vm);
             }
         });

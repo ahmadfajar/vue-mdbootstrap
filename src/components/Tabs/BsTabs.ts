@@ -1,19 +1,9 @@
-import type { ComponentInternalInstance } from 'vue';
-import {
-    computed,
-    defineComponent,
-    nextTick,
-    onMounted,
-    provide,
-    ref,
-    shallowRef,
-    watch,
-} from 'vue';
-import Helper from '../../utils/Helper';
-import { useRenderTabView, useTabViewClassNames } from './mixins/tabsApi';
-import { tabsProps } from './mixins/tabsProps';
-import TabsProvider from './mixins/TabsProvider';
-import type { TBsTabs, TOrientation, TTabsOptionProps } from './types';
+import { useRenderTabView, useTabViewClassNames } from '@/components/Tabs/mixins/tabsApi.ts';
+import { tabsProps } from '@/components/Tabs/mixins/tabsProps.ts';
+import TabsProvider from '@/components/Tabs/mixins/TabsProvider';
+import type { TBsTabs, TOrientation, TTabsOptionProps } from '@/components/Tabs/types';
+import Helper from '@/utils/Helper';
+import { computed, defineComponent, nextTick, onMounted, provide, ref, watch } from 'vue';
 
 export default defineComponent<TBsTabs>({
     name: 'BsTabs',
@@ -30,7 +20,6 @@ export default defineComponent<TBsTabs>({
     ],
     setup(props, { emit, slots }) {
         const thisProps = props as Readonly<TTabsOptionProps>;
-        const tabPanels = shallowRef<ComponentInternalInstance[]>([]);
         const tabProvider = new TabsProvider(
             thisProps,
             emit,
@@ -48,15 +37,6 @@ export default defineComponent<TBsTabs>({
         const tabViewClasses = computed(() => useTabViewClassNames(thisProps, orientation));
 
         watch(
-            () => [tabProvider.tabPanels, thisProps.variant, thisProps.tabPosition],
-            ([panels]) => {
-                if (Array.isArray(panels)) {
-                    // console.log(`${uid}-panel-length:`, panels.length);
-                    nextTick().then(() => (tabPanels.value = Array.from(panels)));
-                }
-            }
-        );
-        watch(
             () => thisProps.modelValue,
             (value) => {
                 (Helper.isNumber(value) || Helper.isString(value)) &&
@@ -65,7 +45,6 @@ export default defineComponent<TBsTabs>({
         );
         onMounted(() => {
             nextTick().then(() => {
-                tabPanels.value = tabProvider.tabPanels;
                 tabProvider.setActiveTab(thisProps.modelValue as string | number);
             });
         });
@@ -77,7 +56,6 @@ export default defineComponent<TBsTabs>({
                 orientation,
                 tagName,
                 tabViewClasses,
-                tabPanels,
                 tabSlidingRef,
                 scrollOffset,
                 tabProvider

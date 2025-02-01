@@ -8,29 +8,31 @@ import type {
     TTabsVariant,
 } from '@/types';
 import Helper from '@/utils/Helper';
-import type { ComponentInternalInstance, Ref } from 'vue';
-import { isRef } from 'vue';
+import type { ComponentInternalInstance, Ref, ShallowReactive } from 'vue';
+import { isRef, shallowReactive } from 'vue';
 
 /**
  * Class TabsProvider which is used for BsTab's component dependency injection.
  *
  * @author Ahmad Fajar
- * @since  22/11/2022, modified: 18/08/2024 19:57
+ * @since  22/11/2022, modified: 01/02/2025 16:18
  */
 class TabsProvider {
-    private _tabItems: ComponentInternalInstance[];
-    private _tabPanels: ComponentInternalInstance[];
     private _activeTab: ComponentInternalInstance | undefined;
     private _activeTabIndex: number | undefined;
     private _props: TTabsBaseProps;
     private readonly _emit: TEmitFn;
+    public tabItems: ShallowReactive<ComponentInternalInstance[]>;
+    public tabPanels: ShallowReactive<ComponentInternalInstance[]>;
 
     constructor(tabConfig: Readonly<TTabsBaseProps>, emitter: TEmitFn, activeTab?: number) {
         this._props = tabConfig;
-        this._tabItems = [];
-        this._tabPanels = [];
+        this._activeTab = undefined;
         this._activeTabIndex = activeTab;
         this._emit = emitter;
+
+        this.tabItems = shallowReactive<ComponentInternalInstance[]>([]);
+        this.tabPanels = shallowReactive<ComponentInternalInstance[]>([]);
     }
 
     get activeTab(): ComponentInternalInstance | undefined {
@@ -69,14 +71,6 @@ class TabsProvider {
         return this._props.variant;
     }
 
-    get tabItems(): ComponentInternalInstance[] {
-        return this._tabItems;
-    }
-
-    get tabPanels(): ComponentInternalInstance[] {
-        return this._tabPanels;
-    }
-
     /**
      * Register a TabIem.
      *
@@ -84,7 +78,7 @@ class TabsProvider {
      * @returns {number} The TabIem index position
      */
     registerTabItem(item: ComponentInternalInstance): number {
-        return this._tabItems.push(item);
+        return this.tabItems.push(item);
     }
 
     /**
@@ -94,7 +88,7 @@ class TabsProvider {
      * @returns {number} The TabPanel index position
      */
     registerTabPanel(item: ComponentInternalInstance): number {
-        return this._tabPanels.push(item);
+        return this.tabPanels.push(item);
     }
 
     /**
@@ -103,8 +97,8 @@ class TabsProvider {
      * @returns {void}
      */
     unRegisterAll(): void {
-        this._tabItems = [];
-        this._tabPanels = [];
+        this.tabItems = [];
+        this.tabPanels = [];
     }
 
     /**
@@ -115,20 +109,18 @@ class TabsProvider {
      */
     unRegisterTab(key: string | number): void {
         if (Helper.isNumber(key)) {
-            this._tabItems.splice(key, 1);
-            this._tabPanels.splice(key, 1);
+            this.tabItems.splice(key, 1);
+            this.tabPanels.splice(key, 1);
         } else {
-            let idx = this._tabPanels.findIndex(
+            let idx = this.tabPanels.findIndex(
                 (el) => (el.props as TTabItemOptionProps).id === key
             );
             if (idx === -1) {
-                idx = this._tabItems.findIndex(
-                    (el) => (el.props as TTabItemOptionProps).id === key
-                );
+                idx = this.tabItems.findIndex((el) => (el.props as TTabItemOptionProps).id === key);
             }
 
-            this._tabItems.splice(idx, 1);
-            this._tabPanels.splice(idx, 1);
+            this.tabItems.splice(idx, 1);
+            this.tabPanels.splice(idx, 1);
         }
     }
 
@@ -155,7 +147,7 @@ class TabsProvider {
                     Helper.isString(key) && pid === `tabItem-${key}`;
             }
         });
-        this.tabPanels.forEach((el, idx) => {
+        this.tabPanels.forEach((el: ShallowReactive<ComponentInternalInstance>, idx) => {
             const pid = (el.props as TTabItemOptionProps).id;
 
             if ((Helper.isNumber(key) && key === idx) || (Helper.isString(key) && key === pid)) {
@@ -177,7 +169,6 @@ class TabsProvider {
                     (el.exposed as TRecord).isActive = false;
                 }
             }
-            // console.log(`tabPane-${pid}:active`, (<TTabItemOptionProps>el.props).active);
         });
     }
 

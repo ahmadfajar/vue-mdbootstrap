@@ -36,8 +36,6 @@ export declare type TMessageResponse = {
  *         suffix: false,
  *     },
  * });
- *
- * @author Ahmad Fajar
  */
 export declare class BsStore extends AbstractStore {
     /**

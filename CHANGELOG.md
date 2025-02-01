@@ -3,6 +3,23 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.1.6
+
+Released: February 01, 2025
+
+### Features & Improvements
+
+- **BsButton**: 
+  - Improve inner element spacing and padding when `dropdown-toggle` is enabled.
+  - Improve spacing between icon and caret when `default-slot` is **empty** or
+    **undefined** and `dropdown-toggle` is enabled.
+- **BsTooltip**: improve show or hide animation timing.
+
+### Bug Fixes
+
+- **BsTab**: fixed bug that caused `v-if` to not work as expected.
+
+
 ## v2.1.5
 
 Released: December 30, 2024

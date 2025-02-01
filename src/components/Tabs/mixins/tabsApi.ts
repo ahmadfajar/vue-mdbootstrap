@@ -4,13 +4,7 @@ import BsTabItem from '@/components/Tabs/BsTabItem';
 import BsTabLabel from '@/components/Tabs/BsTabLabel';
 import TabsProvider from '@/components/Tabs/mixins/TabsProvider';
 import { Touch } from '@/directives';
-import {
-    cssPrefix,
-    useHasLink,
-    useHasRouter,
-    useMergeClass,
-    useRenderRouter,
-} from '@/mixins/CommonApi';
+import { cssPrefix, useHasLink, useHasRouter, useMergeClass, useRenderRouter } from '@/mixins/CommonApi';
 import type {
     IVNode,
     TBsIcon,
@@ -24,15 +18,7 @@ import type {
     TTabsOptionProps,
 } from '@/types';
 import Helper from '@/utils/Helper';
-import type {
-    ComponentInternalInstance,
-    ComputedRef,
-    Prop,
-    Ref,
-    ShallowRef,
-    Slots,
-    VNode,
-} from 'vue';
+import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h, normalizeClass, toDisplayString, withDirectives } from 'vue';
 
 export function useTabViewClassNames(
@@ -331,7 +317,6 @@ function renderVerticalTabView(
     props: Readonly<TTabsOptionProps>,
     tagName: ComputedRef<string>,
     tabClasses: ComputedRef<string[]>,
-    tabItems: ShallowRef<ComponentInternalInstance[]>,
     provider: TabsProvider
 ): VNode {
     return h(
@@ -357,7 +342,7 @@ function renderVerticalTabView(
                             role: 'tablist',
                             'aria-orientation': 'vertical',
                         },
-                        tabItems.value.map((it, idx) => {
+                        provider.tabPanels.map((it, idx) => {
                             return h<TBsTabItem>(BsTabItem, {
                                 key: `tab-item-${idx}`,
                                 ...createTabItemProps(
@@ -434,7 +419,6 @@ function renderHorizontalTabView(
     props: Readonly<TTabsOptionProps>,
     tagName: ComputedRef<string>,
     tabClasses: ComputedRef<string[]>,
-    tabItems: ShallowRef<ComponentInternalInstance[]>,
     sliderRef: Ref<HTMLElement | undefined>,
     scrollOffset: Ref<number>,
     provider: TabsProvider
@@ -470,7 +454,7 @@ function renderHorizontalTabView(
                                           : '',
                                 ],
                             },
-                            tabItems.value.map((it, idx) =>
+                            provider.tabPanels.map((it, idx) =>
                                 h<TBsTabItem>(BsTabItem, {
                                     key: `tab-item-${idx}`,
                                     ...createTabItemProps(
@@ -513,20 +497,18 @@ export function useRenderTabView(
     orientation: ComputedRef<TOrientation>,
     tagName: ComputedRef<string>,
     tabClasses: ComputedRef<string[]>,
-    tabItems: ShallowRef<ComponentInternalInstance[]>,
     sliderRef: Ref<HTMLElement | undefined>,
     scrollOffset: Ref<number>,
     provider: TabsProvider
 ): VNode {
     if (orientation.value === 'vertical') {
-        return renderVerticalTabView(slots, props, tagName, tabClasses, tabItems, provider);
+        return renderVerticalTabView(slots, props, tagName, tabClasses, provider);
     } else {
         return renderHorizontalTabView(
             slots,
             props,
             tagName,
             tabClasses,
-            tabItems,
             sliderRef,
             scrollOffset,
             provider

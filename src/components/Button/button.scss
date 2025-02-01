@@ -106,16 +106,22 @@
         @include borders.radius(var(--#{vars.$prefix-bs}btn-border-radius));
         display: flex;
         padding: 0;
+    }
 
-        &.dropdown-toggle {
-            &::after {
-                align-self: center;
-                margin-right: 0.875rem;
-                margin-left: 0;
-            }
+    > .dropdown-toggle {
+        &::after {
+            align-self: center;
+            margin-right: 0.875rem;
+            margin-left: 0;
+        }
 
-            > .#{vars.$prefix}btn-inner {
-                padding-right: calc(var(--#{vars.$prefix-bs}btn-state-padding-x) - 0.2rem);
+        > .#{vars.$prefix}btn-inner {
+            padding-right: calc(var(--#{vars.$prefix-bs}btn-state-padding-x) / 2);
+        }
+
+        &.empty-text {
+            > .has-icon {
+                padding-right: vars.$padding-xs;
             }
         }
     }

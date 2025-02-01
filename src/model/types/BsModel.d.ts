@@ -103,8 +103,6 @@ export declare type TModelState = {
  *         suffix: false,
  *     },
  * }, adapter, 'uid');
- *
- * @author Ahmad Fajar
  */
 export declare class BsModel implements ObjectBase {
     /**

@@ -49,6 +49,7 @@ export default defineComponent<TBsButton>({
                     h<TBsButtonInner>(
                         BsButtonInner,
                         {
+                            class: { 'empty-text': !slots.default && thisProps.dropdownToggle },
                             dropdownToggle: props.dropdownToggle,
                             // @ts-ignore
                             iconMode: (thisProps.mode === 'icon') as Prop<boolean>,
