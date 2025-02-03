@@ -1316,7 +1316,7 @@ function createPickerTimeButton(
     );
 }
 
-export function useParseDate(value?: string | number | Date): DateTime {
+export function useParseDate(value?: string | number | Date | null): DateTime {
     if (value) {
         if (Helper.isString(value)) {
             try {

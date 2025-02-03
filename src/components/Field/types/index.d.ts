@@ -253,7 +253,7 @@ export declare type TChipFieldOptionProps = TInputTextProps & {
     /**
      * The value monitored by `v-model` to maintain this field value.
      */
-    modelValue?: string | string[];
+    modelValue?: string | string[] | null;
 };
 
 export declare type TNumericOpsOptions = {
@@ -365,7 +365,7 @@ export declare type TSearchFieldOptionProps = {
     /**
      * The value monitored by v-model to maintain field value.
      */
-    modelValue?: string;
+    modelValue?: string | null;
     /**
      * Custom CSS class for the Popover container.
      */

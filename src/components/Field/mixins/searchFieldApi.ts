@@ -39,7 +39,7 @@ export function useRenderSearchField(
     attrs: TRecord,
     cssClasses: ComputedRef<TRecord>,
     activator: Ref<HTMLElement | null>,
-    localValue: Ref<string | undefined>,
+    localValue: Ref<string | undefined | null>,
     isFocused: Ref<boolean>,
     isPopoverOpen: Ref<boolean>
 ): VNode {
@@ -195,7 +195,7 @@ function popoverWidth(
     return width;
 }
 
-function dispatchSearch(localValue: Ref<string | undefined>, emit: TEmitFn) {
+function dispatchSearch(localValue: Ref<string | undefined | null>, emit: TEmitFn) {
     if (!Helper.isEmpty(localValue.value)) {
         emit('search', localValue.value);
     } else {

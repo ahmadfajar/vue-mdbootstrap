@@ -143,7 +143,7 @@ function renderListboxView(
     dataItems: ShallowRef<IBsModel[]>,
     listviewStyles: TRecord,
     selectedItems: ShallowRef<IBsModel[]>,
-    localValue: Ref<string | number | string[] | number[] | undefined>
+    localValue: Ref<string | number | string[] | number[] | undefined | null>
 ): VNode {
     const dataSource = props.dataSource?.proxy;
 
@@ -197,7 +197,7 @@ function renderListboxItems(
     schema: TDataListSchemaProps,
     dataItems: ShallowRef<IBsModel[]>,
     selectedItems: ShallowRef<IBsModel[]>,
-    localValue: Ref<string | number | string[] | number[] | undefined>
+    localValue: Ref<string | number | string[] | number[] | undefined | null>
 ): VNode[] | undefined {
     return dataItems.value.map((item, idx) =>
         h(Fragment, [
@@ -250,7 +250,7 @@ function dispatchListboxEvent(
     props: Readonly<TListboxOptionProps>,
     dataItems: ShallowRef<IBsModel[]>,
     selectedItems: ShallowRef<IBsModel[]>,
-    localValue: Ref<string | number | string[] | number[] | undefined>,
+    localValue: Ref<string | number | string[] | number[] | undefined | null>,
     item: IBsModel,
     valueField: string,
     isSelected: boolean
@@ -295,7 +295,7 @@ function createListboxItemContentWithCheckbox(
     slots: Slots,
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
-    localValue: Ref<string | number | string[] | number[] | undefined>,
+    localValue: Ref<string | number | string[] | number[] | undefined | null>,
     item: IBsModel,
     index: number
 ): VNode[] {
@@ -314,7 +314,7 @@ function createListboxItemContentWithCheckbox(
 function createListTileCheckbox(
     props: Readonly<TListboxOptionProps>,
     schema: TDataListSchemaProps,
-    localValue: Ref<string | number | string[] | number[] | undefined>,
+    localValue: Ref<string | number | string[] | number[] | undefined | null>,
     item: IBsModel
 ): VNode {
     return h(
@@ -391,7 +391,7 @@ function createListTileContent(
 }
 
 function findSelectedItems(
-    localValue: Ref<string | number | string[] | number[] | undefined>,
+    localValue: Ref<string | number | string[] | number[] | undefined | null>,
     fieldName: string,
     dataStore?: IBsStore | IArrayStore
 ): IBsModel[] {
@@ -435,7 +435,7 @@ export function useRenderListbox(
     listviewStyles: TRecord,
     showSearchbox: Ref<boolean>,
     searchboxRef: Ref<HTMLElement | null>,
-    localValue: Ref<string | number | string[] | number[] | undefined>,
+    localValue: Ref<string | number | string[] | number[] | undefined | null>,
     searchRef: Ref<string | undefined>
 ): VNode {
     return h(
@@ -479,7 +479,7 @@ export function useRegisterListboxWatchers(
     schema: TDataListSchemaProps,
     cacheItems: ShallowRef<IBsModel[]>,
     selectedItems: ShallowRef<IBsModel[]>,
-    localValue: Ref<string | number | string[] | number[] | undefined>,
+    localValue: Ref<string | number | string[] | number[] | undefined | null>,
     listviewStyles: TRecord,
     showSearchbox: Ref<boolean>,
     searchboxRef: Ref<HTMLElement | null>,

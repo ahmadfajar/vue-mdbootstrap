@@ -85,7 +85,7 @@ export declare type TDatePickerOptionProps = {
      * - From an ISO 8601 valid string.
      * - From a number of seconds since the epoch (meaning since 1 January 1970 00:00:00 UTC).
      */
-    modelValue?: string | number | Date;
+    modelValue?: string | number | Date | null;
     /**
      * This component's view mode, valid values are: `datetime`, `date`, `month`, `year`, `time`
      */
@@ -133,7 +133,7 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
      * - From an ISO 8601 valid string.
      * - From a number of seconds since the epoch (meaning since 1 January 1970 00:00:00 UTC).
      */
-    modelValue?: string | number;
+    modelValue?: string | number | null;
     /**
      * The format string to display the datetime value.
      */

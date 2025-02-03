@@ -31,7 +31,7 @@ import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue
 import { Fragment, h } from 'vue';
 
 export function useParseDateTimeFromFormat(
-    value?: string | number | Date,
+    value?: string | number | Date | null,
     format?: string,
     locale?: string
 ): DateTime | undefined {

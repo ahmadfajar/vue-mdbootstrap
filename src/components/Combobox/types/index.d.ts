@@ -31,7 +31,7 @@ export declare type TComboboxOptionProps = TInputFieldProps & {
     /**
      * The value monitored by `v-model` to maintain this field value.
      */
-    modelValue?: string | number | string[] | number[];
+    modelValue?: string | number | string[] | number[] | null;
     /**
      * Sets the data source configuration.
      */

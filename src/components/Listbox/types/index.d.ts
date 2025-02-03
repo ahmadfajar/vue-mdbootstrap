@@ -59,7 +59,7 @@ export declare type TListboxOptionProps = {
     /**
      * The value monitored by `v-model` to maintain this field value.
      */
-    modelValue?: string | number | string[] | number[];
+    modelValue?: string | number | string[] | number[] | null;
     /**
      * Enable/disable multi selection.
      */
