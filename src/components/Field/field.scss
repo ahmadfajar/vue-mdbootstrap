@@ -637,8 +637,25 @@
     &.#{vars.$prefix}textarea-autogrow {
         > .#{vars.$prefix}field-inner {
             > .#{vars.$prefix}field-activator {
+                align-items: normal;
+                display: grid;
+
+                &::after {
+                    content: attr(data-clone) " ";
+                    font: inherit;
+                    white-space: pre-wrap;
+                    visibility: hidden;
+                }
+                
                 > textarea {
                     overflow-y: hidden;
+                }
+
+                > textarea,
+                &::after {
+                    margin: var(--#{vars.$prefix}field-padding-top) 0 0 0;
+                    padding: 0 var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
+                    grid-area: 1 / 1 / 2 / 2;
                 }
             }
         }

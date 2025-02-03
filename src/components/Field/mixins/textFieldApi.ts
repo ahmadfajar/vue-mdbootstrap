@@ -275,12 +275,12 @@ export function useCreateValidationIcon(
                                 size: iconSize as Prop<number | undefined>,
                             })
                           : hasValidated && !hasError
-                            ? h<TBsIcon>(BsIcon, {
-                                  class: 'icon-success text-success',
-                                  icon: `check_${iconVariant}` as Prop<string>,
-                                  size: iconSize as Prop<number | undefined>,
-                              })
-                            : undefined,
+                          ? h<TBsIcon>(BsIcon, {
+                                class: 'icon-success text-success',
+                                icon: `check_${iconVariant}` as Prop<string>,
+                                size: iconSize as Prop<number | undefined>,
+                            })
+                          : undefined,
                   ])
                 : createCommentVNode(' v-if-validation-icon ')
         );
@@ -452,6 +452,7 @@ export function useRenderTextField(
 function createTextAreaInputField(
     props: Readonly<TTextAreaOptionProps>,
     emit: TEmitFn,
+    inputRef: Ref<HTMLTextAreaElement | undefined>,
     localValue: Ref<string | number | undefined | null>,
     rowHeight: Ref<string | number | undefined | null>,
     isFocused: Ref<boolean>,
@@ -463,6 +464,7 @@ function createTextAreaInputField(
         h('textarea', {
             ...useMakeInputBaseAttrs(props),
             ...useInputTextFieldAttrs(props, autocomplete),
+            ref: inputRef,
             role: 'textbox',
             rows: canGrow ? 2 : props.rows && !props.rowHeight ? props.rows : undefined,
             style: rowHeight.value && {
@@ -475,12 +477,14 @@ function createTextAreaInputField(
             onKeydown: (e: KeyboardEvent) => emit('keydown', e),
             onInput: (e: InputEvent): void => {
                 if (canGrow) {
-                    const target = e.target as HTMLElement;
-                    target.style.height = 'auto';
-                    nextTick().then(() => {
-                        rowHeight.value = Helper.cssUnit(target.scrollHeight);
-                        target.style.height = Helper.cssUnit(target.scrollHeight) || 'auto';
-                    });
+                    const target = e.target as HTMLTextAreaElement;
+                    target.parentElement &&
+                        (target.parentElement.dataset.clone = target.value as string);
+                    // target.style.height = 'auto';
+                    // nextTick().then(() => {
+                    //     rowHeight.value = Helper.cssUnit(target.scrollHeight);
+                    //     target.style.height = Helper.cssUnit(target.scrollHeight) || 'auto';
+                    // });
                 }
             },
         }),
@@ -494,6 +498,7 @@ export function useRenderTextArea(
     props: Readonly<TTextAreaOptionProps>,
     wrapperCss: ComputedRef<TRecord>,
     controlCss: ComputedRef<TRecord>,
+    inputRef: Ref<HTMLTextAreaElement | undefined>,
     localValue: Ref<string | number | undefined | null>,
     rowHeight: Ref<string | number | undefined | null>,
     isFocused: Ref<boolean>,
@@ -524,6 +529,7 @@ export function useRenderTextArea(
                     createTextAreaInputField(
                         props,
                         emit,
+                        inputRef,
                         localValue,
                         rowHeight,
                         isFocused,

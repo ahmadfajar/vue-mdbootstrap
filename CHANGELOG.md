@@ -3,6 +3,16 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.1.7
+
+Released: February 03, 2025
+
+### Bug Fixes
+
+- **BsTextArea**: fixed bug could not determine its height when `auto-grow` and `readonly`
+  were enabled and the `model-value` wasn't empty.
+
+
 ## v2.1.6
 
 Released: February 01, 2025

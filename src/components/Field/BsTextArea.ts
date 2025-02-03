@@ -11,7 +11,7 @@ import { cssPrefix } from '@/mixins/CommonApi';
 import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps';
 import type { TBsTextArea, TRecord, TTextAreaOptionProps } from '@/types';
 import Helper from '@/utils/Helper';
-import { computed, defineComponent, ref, watch } from 'vue';
+import { computed, defineComponent, ref, watch, watchEffect } from 'vue';
 
 export default defineComponent<TBsTextArea>({
     name: 'BsTextArea',
@@ -63,10 +63,11 @@ export default defineComponent<TBsTextArea>({
             thisProps.autocomplete && Helper.isString(thisProps.autocomplete)
                 ? thisProps.autocomplete
                 : thisProps.autocomplete
-                  ? 'on'
-                  : Helper.uuid();
+                ? 'on'
+                : Helper.uuid();
         const localValue = ref<string | number | undefined | null>(thisProps.modelValue);
         const rowHeight = ref<string | number | undefined | null>(thisProps.rowHeight);
+        const inputRef = ref<HTMLTextAreaElement>();
         const isFocused = ref(false);
         const validator = useGetValidationResult(thisProps, isFocused);
         const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
@@ -97,12 +98,19 @@ export default defineComponent<TBsTextArea>({
                 thisProps.noResize || (thisProps.autoGrow && !thisProps.noResize),
         }));
 
-        watch(
-            () => thisProps.modelValue,
-            (value) => {
-                localValue.value = value;
+        watchEffect(() => {
+            localValue.value = thisProps.modelValue;
+            if (thisProps.autoGrow && !thisProps.noResize && inputRef.value) {
+                inputRef.value.parentElement &&
+                    (inputRef.value.parentElement.dataset.clone = localValue.value as string);
             }
-        );
+        });
+        // watch(
+        //     () => thisProps.modelValue,
+        //     (value) => {
+        //         localValue.value = value;
+        //     }
+        // );
 
         return () =>
             useRenderTextArea(
@@ -111,6 +119,7 @@ export default defineComponent<TBsTextArea>({
                 thisProps,
                 wrapperClasses,
                 controlClasses,
+                inputRef,
                 localValue,
                 rowHeight,
                 isFocused,
