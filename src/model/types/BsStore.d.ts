@@ -43,6 +43,25 @@ export declare class BsStore extends AbstractStore {
      *
      * @param config  The configuration properties
      * @param adapter Axios adapter instance
+     * @example
+     * const dsStore = new BsStore({
+     *     idProperty: 'id',
+     *     dataProperty: 'data',
+     *     totalProperty: 'total',
+     *     pageSize: 15,
+     *     restProxy: {
+     *         browse: '/api/users',
+     *         delete: {url: './api/users', method: 'delete'},
+     *         save: {url: './api/users', method: 'post'},
+     *         update: {url: './api/users', method: 'patch'}
+     *     },
+     *     csrfConfig: {
+     *         url: '/api/token/{name}',
+     *         tokenName: 'token_name',
+     *         dataField: 'value',
+     *         suffix: false,
+     *     },
+     * });
      */
     constructor(config: TDataStoreConfig, adapter?: AxiosInstance | null);
 
@@ -92,22 +111,22 @@ export declare class BsStore extends AbstractStore {
     /**
      * Calculate means or average value based on the given field.
      *
-     * @param field The field name of the dataset to calculate
+     * @param field The field name of the dataset to calculate.
      */
     aggregateAvg(field: string): number;
 
     /**
      * Count number of items in the internal dataset specified by the given criteria.
      *
-     * @param field  The grouping field name criteria
-     * @param value The grouping value criteria
+     * @param field The grouping field name criteria.
+     * @param value The grouping value criteria.
      */
     aggregateCountBy(field: string, value: unknown): number;
 
     /**
      * Calculate the SUM or total value based on the given field.
      *
-     * @param field The field name to be used when calculating value
+     * @param field The field name to be used when calculating value.
      */
     aggregateSum(field: string): number;
 
@@ -122,16 +141,16 @@ export declare class BsStore extends AbstractStore {
 
     /**
      * Replace internal dataset with new data. The proses only affected the internal dataset
-     * and nothing is sent to the remote server.
+     * and nothing is sent to the remote service.
      *
-     * @param data   The new data to be assigned
-     * @param silent Append the data silently and don't trigger data conversion
+     * @param data   The new data to be assigned.
+     * @param silent Append the data silently and don't trigger data transformer.
      */
     assignData(data: unknown, silent?: boolean): void;
 
     /**
-     * Delete specific item from internal dataset as well as from remote server whenever possible.
-     * The item can be deleted from the remote server, if 'restUrl' property contains a 'delete' key.
+     * Delete specific item from internal dataset as well as from remote service whenever possible.
+     * The item can be deleted from the remote service, if 'restUrl' property contains a 'delete' key.
      *
      * @param item Data Model instance to be removed
      */
@@ -139,15 +158,15 @@ export declare class BsStore extends AbstractStore {
 
     /**
      * Delete specific items from internal dataset as well as from remote
-     * server whenever possible. The items can be deleted from the remote
-     * server, if 'restUrl' property contains a 'delete' key.
+     * service whenever possible. The items can be deleted from the remote
+     * service, if 'restUrl' property contains a 'delete' key.
      *
      * @param items Collection of data Model instances to be removed
      */
     deletes<T extends BsModel>(items: T[]): Promise<TMessageResponse>;
 
     /**
-     * Fetch single item from the remote server via REST API and
+     * Fetch single item from the remote service via REST API and
      * replace internal dataset with the one comes from the remote service.
      *
      * @param id The item ID to fetch
@@ -171,21 +190,21 @@ export declare class BsStore extends AbstractStore {
     query(): Promise<IBsModel[] | AxiosResponse>;
 
     /**
-     * Sorts the internal dataset with the given criteria and returns
-     * the reference of the internal dataset.
+     * Sorts the internal dataset with the given criteria and returns the reference
+     * of the internal dataset. This method depends on `remoteSort` property.
      *
      * @example
      * // sort by a single field
-     * const results = myStore.sort('myField', 'asc');
+     * const results = await myStore.sort('myField', 'asc');
      *
      * // sorting by multiple fields
-     * const results = myStore.sort([
+     * const results = await myStore.sort([
      *  {property: 'age', direction: 'desc'},
      *  {property: 'name', direction: 'asc'}
      * ]);
      *
-     * @param options   The field for sorting or `TSortOption` objects
-     * @param direction The sort direction
+     * @param options   The field name to sort or sort method criterias.
+     * @param direction The sort direction.
      */
     sort(
         options: string | string[] | TSortOption | TSortOption[],

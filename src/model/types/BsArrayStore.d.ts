@@ -27,6 +27,21 @@ export declare class BsArrayStore extends AbstractStore {
      *
      * @param data   Collection of records to be assigned
      * @param config The configuration properties
+     * @example
+     * const myStore = new BsArrayStore(
+     *   [
+     *     {id: 1, name: 'Sandra Adams'},
+     *     {id: 2, name: 'Ali Connors'},
+     *     {id: 3, name: 'Trevor Hansen'},
+     *     {id: 4, name: 'Tucker Smith'},
+     *     {id: 5, name: 'Britta Holt'},
+     *     {id: 6, name: 'Jane Smith'},
+     *     {id: 7, name: 'John Smith'},
+     *     {id: 8, name: 'Sandra Williams'}
+     *   ], {
+     *     idProperty: 'id'
+     *   }
+     * );
      */
     constructor(data: unknown[], config?: TDataStoreConfig);
 
@@ -72,10 +87,15 @@ export declare class BsArrayStore extends AbstractStore {
      * Replace the dataset with new data.
      *
      * @param data   The new data to be assigned
-     * @param silent Append the data silently and don't trigger data conversion
+     * @param silent Append the data silently and don't trigger data transformer
      */
     assignData(data: unknown, silent?: boolean): void;
 
+    /**
+     * Load and replace internal dataset with the given data.
+     * 
+     * @param data The new data to replace the internal dataset.
+     */
     load(data?: unknown): Promise<IBsModel[] | AxiosResponse>;
 
     /**

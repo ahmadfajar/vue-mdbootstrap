@@ -161,14 +161,6 @@ export declare abstract class AbstractStore implements ObjectBase {
 
     destroy(): void;
 
-    clear(): void;
-
-    /**
-     * @deprecated
-     * Use `clear` instead.
-     */
-    clearData(): void;
-
     /**
      * Readonly data Model state, whether it is still loading data or not.
      */
@@ -282,7 +274,7 @@ export declare abstract class AbstractStore implements ObjectBase {
     /**
      * Replace old filters and apply new filters to the Store dataset.
      *
-     * @param newFilters        The filters to apply
+     * @param newFilters     The filters to apply
      * @param includeDefault Include default filters or not
      */
     setFilters(newFilters: TFilterOption[] | TFilterOption, includeDefault?: boolean): this;
@@ -302,7 +294,7 @@ export declare abstract class AbstractStore implements ObjectBase {
     set sorters(sortOptions: TSortOption[] | TSortOption);
 
     /**
-     * Clear all data items in the local dataset.
+     * Clear all data items in the local storage and reset data store state.
      */
     clear(): void;
 
@@ -313,7 +305,7 @@ export declare abstract class AbstractStore implements ObjectBase {
     clearData(): void;
 
     /**
-     * Reset this model state back to their initial states, like `loading`, etc.
+     * Reset this data store state back to its initial states, like `loading`, etc.
      */
     resetState(): void;
 
@@ -382,7 +374,7 @@ export declare abstract class AbstractStore implements ObjectBase {
     /**
      * Check if the given item is a DataModel or not.
      *
-     * @param item The item to check
+     * @param item The item to be checked
      */
     isCandidateForModel(item: TRecord): boolean;
 
@@ -411,26 +403,26 @@ export declare abstract class AbstractStore implements ObjectBase {
     /**
      * Set sorter's criteria collection.
      *
-     * @param sortOptions The sorts method criteria
+     * @param sortOptions One or more sorting method criteria(s).
      */
     setSorters(sortOptions: TSortOption[] | TSortOption): this;
 
     /**
      * Create an array of FilterOption criteria.
      *
-     * @param values  The `FilterOption` objects
+     * @param values  An array of filter options configuration.
      */
     createFilters(values: TFilterOption | TFilterOption[]): TFilterOption[];
 
     /**
      * Create an array of SortOption criteria.
      *
-     * @param values    The field for sorting or `TSortOption` objects
-     * @param direction The sort direction
-     * @param replace   Replace existing sort criteria or not
+     * @param property  The field name to sort or sort method criterias.
+     * @param direction The sort direction.
+     * @param replace   Replace existing sort criteria or not.
      */
     createSorters(
-        values: string | string[] | TSortOption | TSortOption[],
+        property: string | string[] | TSortOption | TSortOption[],
         direction?: TSortDirection,
         replace?: boolean
     ): TSortOption[];
@@ -467,7 +459,7 @@ export declare abstract class AbstractStore implements ObjectBase {
      * Register event listener.
      *
      * @param event The event name, valid values are: `error`, and `loaded`.
-     * @param fn    The event callback function
+     * @param fn    The event callback function.
      */
     addListener<T>(event: string, fn: ListenerFn<T>): void;
 
@@ -481,7 +473,7 @@ export declare abstract class AbstractStore implements ObjectBase {
     /**
      * Shortcut function to register `loaded` event listener.
      *
-     * @param fn Callback function when data is successfully loaded to this store dataset
+     * @param fn Callback function when data is successfully loaded to this store dataset.
      */
     onLoaded(fn: LoadedCallbackFn): void;
 

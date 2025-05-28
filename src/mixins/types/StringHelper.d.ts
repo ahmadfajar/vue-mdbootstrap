@@ -89,12 +89,12 @@ export function encodeSpecialChars(
 export declare function chunk(source: string, size?: number): string[];
 
 /**
- * Determines whether a string ends with the specified string,
+ * Determines whether a string ends with any of the specified string,
  * returning true or false as appropriate.
  *
  * @param source   The input string.
  * @param searches Collection of string to search at the end of string.
- * @returns true   if the given characters are found at the end of the string,
- *                 otherwise, `false`.
+ * @returns If any of the given strings in the collection is found at the end of 
+ *          the string then `true` is returned, otherwise `false`.
  */
 export declare function isEndWith(source?: string, searches?: string[]): boolean;
