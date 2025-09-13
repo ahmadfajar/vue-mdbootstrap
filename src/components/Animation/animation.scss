@@ -1,34 +1,29 @@
-@use "../../../scss/mixins/transitions";
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use '../../../scss/mixins/transitions';
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-@include transitions.enterActive-leaveActive("expand") {
-    backface-visibility: hidden;
-    transform: translate3d(0,0,0);
-    transition: all .85s vars.$transition-easeOut;
-}
-
-.#{vars.$prefix}overlay {
+@layer components {
+  .#{vars.$prefix}overlay {
     background-color: colors.$black;
     bottom: 0;
     left: 0;
     right: 0;
     top: 0;
-    opacity: .4;
+    opacity: 0.4;
     position: absolute;
     z-index: 1031;
-}
+  }
 
-.#{vars.$prefix}ripple {
+  .#{vars.$prefix}ripple {
     width: 100%;
     height: 100%;
     position: relative;
     overflow: hidden;
-    -webkit-mask-image: radial-gradient(circle, #fff 100%, #000 100%);
-    mask-image: radial-gradient(circle, #fff 100%, #000 100%);
-}
+    -webkit-mask-image: radial-gradient(circle, oklch(1 0 89.876) 100%, oklch(0 0 0) 100%);
+    mask-image: radial-gradient(circle, oklch(1 0 89.876) 100%, oklch(0 0 0) 100%);
+  }
 
-.#{vars.$prefix}ripple-wave {
+  .#{vars.$prefix}ripple-wave {
     transform: scale(2) translateZ(0);
     background: currentColor;
     border-radius: 50%;
@@ -38,28 +33,37 @@
     z-index: 1;
 
     &.#{vars.$prefix}center {
-        animation-duration: 1.2s;
-        top: 50%;
-        left: 50%;
+      animation-duration: 1.2s;
+      top: 50%;
+      left: 50%;
     }
 
     ~ *:not(.#{vars.$prefix}ripple-wave) {
-        position: relative;
-        z-index: 2;
+      position: relative;
+      z-index: 2;
     }
+  }
 }
 
-.#{vars.$prefix}ripple-enter-active {
-    transition: .8s vars.$transition-stand-animation;
+@layer animations {
+  @include transitions.enterActive-leaveActive('expand') {
+    backface-visibility: hidden;
+    transform: translate3d(0, 0, 0);
+    transition: all 0.85s vars.$transition-easeOut;
+  }
+
+  .#{vars.$prefix}ripple-enter-active {
+    transition: 0.8s vars.$transition-stand-animation;
     transition-property: opacity, transform;
     will-change: opacity, transform;
 
     &.#{vars.$prefix}center {
-        transition-duration: 1.2s;
+      transition-duration: 1.2s;
     }
-}
+  }
 
-.#{vars.$prefix}ripple-enter-from {
-    transform: scale(.26) translateZ(0);
-    opacity: .26;
+  .#{vars.$prefix}ripple-enter-from {
+    transform: scale(0.26) translateZ(0);
+    opacity: 0.26;
+  }
 }

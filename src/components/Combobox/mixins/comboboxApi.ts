@@ -13,7 +13,7 @@ import { BsListTileTitle } from '@/components/ListView';
 import { BsPopover } from '@/components/Popover';
 import { ClickOutside } from '@/directives';
 import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi';
-import { kebabCase } from '@/mixins/StringHelper';
+import { kebabCase } from '@/utils/StringHelper.ts';
 import type {
     IArrayStore,
     IBsModel,

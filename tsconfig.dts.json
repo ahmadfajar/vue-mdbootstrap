@@ -4,11 +4,11 @@
     "src/types/*.d.ts",
     "src/**/types/*.d.ts",
     "src/components/Popover/mixins/PopupManager.ts",
-    "src/mixins/colorUtils.ts",
+    "src/utils/colorUtils.ts",
     "src/mixins/CommonApi.ts",
-    "src/mixins/StringHelper.ts",
+    "src/utils/StringHelper.ts",
     "src/model/index.ts",
-    "src/directives/**/*.ts",
+    "src/directives/**/*.ts"
   ],
   "exclude": [
     "node_modules",

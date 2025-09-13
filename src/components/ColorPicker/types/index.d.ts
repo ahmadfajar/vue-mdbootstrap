@@ -7,7 +7,7 @@ import {
     UnwrapNestedRefs,
     VNodeProps,
 } from 'vue';
-import { HSLA, RGBA } from '../../../mixins/types/colorUtils';
+import { HSLA, RGBA } from '../../../utils/types/colorUtils';
 import {
     Color,
     EventUpdateModelValueProps,

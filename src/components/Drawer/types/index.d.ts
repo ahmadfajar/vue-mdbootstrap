@@ -6,7 +6,20 @@ import {
     VNode,
     VNodeProps,
 } from 'vue';
-import { EventUpdateOpenProps, TSideDrawerPosition } from '../../../types';
+import { EventUpdateOpenProps } from '@/types';
+
+export declare type TSideDrawerPosition = 'left' | 'right';
+
+declare type TSideDrawerProps = {
+  miniWidth: number;
+  width: number;
+  mini: boolean;
+  open: boolean;
+};
+
+declare type TSideDrawer = {
+  [K in TSideDrawerPosition]: TSideDrawerProps;
+};
 
 export declare type TSideDrawerOptionProps = {
     /**

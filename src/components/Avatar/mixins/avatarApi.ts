@@ -3,7 +3,7 @@ import {
     useNormalizeIconName,
     useSizeStyles,
 } from '@/components/Icon/mixins/iconApi';
-import { isEndWith } from '@/mixins/StringHelper';
+import { isEndWith } from '@/utils/StringHelper.ts';
 import type { TAvatarImageOptionProps, TIconProps, TRecord, TSizeOptionProps } from '@/types';
 import type { VNode } from 'vue';
 import { h } from 'vue';

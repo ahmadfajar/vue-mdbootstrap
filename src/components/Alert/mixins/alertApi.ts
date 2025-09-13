@@ -8,7 +8,7 @@ import {
     useRenderSlotWithWrapper,
     useRenderTransition,
 } from '@/mixins/CommonApi';
-import { isEndWith } from '@/mixins/StringHelper';
+import { isEndWith } from '@/utils/StringHelper.ts';
 import type { TAlertOptionProps, TBsButton, TBsIcon, TButtonMode } from '@/types';
 import Helper from '@/utils/Helper';
 import type { ComputedRef, Prop, Slots, VNode } from 'vue';

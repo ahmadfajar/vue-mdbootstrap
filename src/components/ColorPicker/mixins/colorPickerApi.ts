@@ -8,7 +8,7 @@ import {
     rgbaToHex,
     rgbaToHsva,
     rgbaToString,
-} from '@/mixins/colorUtils';
+} from '@/utils/colorUtils.ts';
 import { cssPrefix, useMergeClass } from '@/mixins/CommonApi';
 import { preventEventTarget } from '@/mixins/DomHelper';
 import type {

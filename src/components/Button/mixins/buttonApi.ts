@@ -8,7 +8,7 @@ import {
     useRenderSlot,
     useRenderSlotWithWrapper,
 } from '@/mixins/CommonApi';
-import { kebabCase } from '@/mixins/StringHelper';
+import { kebabCase } from '@/utils/StringHelper.ts';
 import type {
     TBsIcon,
     TBsToggleField,

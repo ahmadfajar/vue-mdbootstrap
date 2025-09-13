@@ -1,8 +1,10 @@
+import { TSideDrawer } from '@/components/Drawer/types';
 import { INotificationProvider } from '@/components/Notification/types';
 import {
   AllowedComponentProps,
   App,
   Component,
+  ComponentCustomProps,
   ComponentInternalInstance,
   ComponentPublicInstance,
   VNode,
@@ -14,9 +16,17 @@ export declare type TBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xs';
 
 export declare type TLabelPosition = 'left' | 'right';
 
-export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
+export declare type Numberish = number | string;
+
+export declare type MaybeNumberish = number | string | undefined | null;
 
 export declare type TRecord = Record<string, unknown>;
+
+export declare type TClassName = string | string[] | Record<string, any>;
+
+export declare type RawProps = VNodeProps & TRecord;
+
+export declare type BaseComponentProps = AllowedComponentProps & ComponentCustomProps & VNodeProps;
 
 export declare type TValueText<T> = {
   value: T;
@@ -28,6 +38,8 @@ export declare type TDebounce = {
   lastExec?: number;
 };
 
+export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
+
 export declare type TDirectiveBinding = {
   handler: VoidFunction | EventListener | EventListenerTarget;
   debounce?: number;
@@ -37,23 +49,29 @@ export declare type TDirectiveBinding = {
 export declare type TRouterLinkProps = AllowedComponentProps &
   VNodeProps & {
     id?: string;
+
     href?: string;
+
     /**
      * Route Location the link should navigate to when clicked on.
      */
     to?: RouteLocationRaw;
+
     /**
      * Calls `router.replace` instead of `router.push`.
      */
     replace?: boolean;
+
     /**
      * Class to apply when the link is active
      */
     activeClass?: string;
+
     /**
      * Class to apply when the link is exact active
      */
     exactActiveClass?: string;
+
     onClick?: (evt: Event) => void;
   };
 
@@ -62,50 +80,35 @@ export declare type TRouterOptionProps = {
    * Css class when element is active.
    */
   activeClass?: string;
+
   /**
    * Create `to` property for the `<RouterLink>` component,
    * if [vue-router](https://router.vuejs.org/) exist.
    */
   location?: RouteLocationAsRelativeGeneric;
+
   /**
    * Shortcut to create `to` property for the `<RouterLink>` component with only the given **path**,
    * if [vue-router](https://router.vuejs.org/) exist.
    */
   path?: string;
+
   /**
    * Shortcut to create `to` property for the `<RouterLink>` component with only the given
    * **path-name**, if [vue-router](https://router.vuejs.org/) exist.
    */
   pathName?: string;
+
   /**
    * Absolute or relative url when [vue-router](https://router.vuejs.org/) doesn't exist.
    */
   url?: string;
 };
 
-export declare type TEventListenerBinding = {
-  handler: EventListenerOrEventListenerObject;
-  options?: AddEventListenerOptions;
-  target?: Element | Window | null;
-};
-
 declare type TAppBar = {
   height: number;
   stickyTop: boolean;
   fixedTop: boolean;
-};
-
-export declare type TSideDrawerPosition = 'left' | 'right';
-
-declare type TSideDrawerProps = {
-  miniWidth: number;
-  width: number;
-  mini: boolean;
-  open: boolean;
-};
-
-declare type TSideDrawer = {
-  [K in TSideDrawerPosition]: TSideDrawerProps;
 };
 
 export declare type TMdbAppObject = {
@@ -131,13 +134,19 @@ export declare interface ObjectBase {
   destroy(): void;
 }
 
+export declare interface EventListenerBinding {
+  handler: EventListenerOrEventListenerObject;
+  options?: AddEventListenerOptions;
+  target?: Element | Window | null;
+}
+
 export declare interface EventListenerTarget {
   (target: Element | Window | undefined | null, event: Event | undefined | null): void;
 }
 
 export declare interface IBindingElement extends Element {
-  __clickOutsideListener?: TEventListenerBinding;
-  __scrollListener?: TEventListenerBinding;
+  __clickOutsideListener?: EventListenerBinding;
+  __scrollListener?: EventListenerBinding;
   __resizeListener?: EventListenerOrEventListenerObject | CallableFunction;
   __resizeListeners?: Array<CallableFunction>;
   __mouseEvents?: TRecord;
@@ -155,25 +164,25 @@ export declare interface IEventResult {
   remove(): void;
 }
 
-export declare type EventClosableProps = {
+export declare interface EventClosableProps {
   onClose?: (msg: string) => void;
   '@close'?: (msg: string) => void;
-};
+}
 
-export declare type EventVoidClosableProps = {
+export declare interface EventVoidClosableProps {
   onClose?: VoidFunction;
   '@close'?: VoidFunction;
-};
+}
 
-export declare type EventUpdateOpenProps = {
+export declare interface EventUpdateOpenProps {
   'onUpdate:open'?: (state: boolean) => void;
   '@update:open'?: (state: boolean) => void;
-};
+}
 
-export declare type EventUpdateModelValueProps<T> = {
+export declare interface EventUpdateModelValueProps<T> {
   'onUpdate:model-value'?: (value: T) => void;
   '@update:model-value'?: (value: T) => void;
-};
+}
 
 export declare interface IVNode extends VNode {
   ctx: ComponentInternalInstance;
@@ -190,16 +199,16 @@ export declare interface IComponentInstance extends ComponentInternalInstance {
  */
 export declare function createVueMdb(rootComponent: Component): App;
 
-export * as Color from '../mixins/types/colorUtils';
 export {
   EventListener,
   useAddResizeListener,
   useRemoveResizeListener,
 } from '../mixins/types/DomHelper';
-export * as StringHelper from '../mixins/types/StringHelper';
 export * from '../model/types';
 export { AxiosPlugin, IHttpService } from '../utils/types/AxiosPlugin';
+export * as Color from '../utils/types/colorUtils';
 export { default as Helper } from '../utils/types/Helper';
+export * as StringHelper from '../utils/types/StringHelper';
 
 export {
   useAxiosPlugin,

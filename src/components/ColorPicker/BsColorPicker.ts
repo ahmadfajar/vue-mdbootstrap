@@ -14,7 +14,7 @@ import type {
     TColorPickerOptionProps,
 } from '@/components/ColorPicker/types';
 import { BsPopover } from '@/components/Popover';
-import { hslaToString, hsvaToHsla, rgbaToHex, rgbaToString } from '@/mixins/colorUtils';
+import { hslaToString, hsvaToHsla, rgbaToHex, rgbaToString } from '@/utils/colorUtils.ts';
 import { cssPrefix, useGenerateId } from '@/mixins/CommonApi';
 import Helper from '@/utils/Helper';
 import { computed, defineComponent, h, mergeProps, onMounted, watch } from 'vue';
