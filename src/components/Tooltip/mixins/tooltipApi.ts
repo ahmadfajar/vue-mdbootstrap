@@ -1,6 +1,6 @@
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { EventListener } from '@/mixins/DomHelper.ts';
-import type { IBindingElement, IEventResult, IHTMLElement, TPlacementPosition } from '@/types';
+import type { IBindingElement, IEventResult, IHTMLElement } from '@/types';
 import Helper from '@/utils/Helper';
 import type {
     ComponentInternalInstance,

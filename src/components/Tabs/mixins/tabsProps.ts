@@ -1,4 +1,4 @@
-import { baseIconProps } from '@/components/Avatar/mixins/avatarProps';
+import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps';
 import { iconSizeProp } from '@/components/Icon/mixins/iconProps';
 import {
     booleanProp,
@@ -7,12 +7,12 @@ import {
     stringOrNumberProp,
     stringProp,
 } from '@/mixins/CommonProps';
-import type { TAlignment, TPlacementPosition, TTabsVariant } from '@/types';
+import type { TAlignment, TTabsVariant } from '@/types';
 import type { Prop } from 'vue';
 
 export const tabPanelProps = {
     ...routerProps,
-    ...baseIconProps,
+    ...iconBaseProps,
     id: stringProp,
     label: stringProp,
     ariaLabel: stringProp,
@@ -21,7 +21,7 @@ export const tabPanelProps = {
 
 export const tabItemProps = {
     ...routerProps,
-    ...baseIconProps,
+    ...iconBaseProps,
     id: stringProp,
     label: stringProp,
     active: booleanProp,

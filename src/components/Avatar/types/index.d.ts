@@ -1,36 +1,39 @@
 import {
-    AllowedComponentProps,
-    ComponentCustomProps,
-    ComponentObjectPropsOptions,
-    ObjectPlugin,
-    VNode,
-    VNodeProps,
+  AllowedComponentProps,
+  ComponentCustomProps,
+  ComponentObjectPropsOptions,
+  ObjectPlugin,
+  VNode,
+  VNodeProps,
 } from 'vue';
-import {
-    TFlipMode,
-    type TIconRotation,
-    TIconVariant,
-    TSizeOptionProps,
-    TSizeProps,
-} from '../../../types';
+import { TIconFlip, TIconRotation, TSizeOptionProps, TSizeProps, } from '../../../types';
+
+export declare type TIconVariant =
+  | 'outlined'
+  | 'rounded'
+  | 'sharp'
+  | 'filled'
+  | 'outlined_filled'
+  | 'rounded_filled'
+  | 'sharp_filled';
 
 export declare type TImageProps = {
-    /**
-     * Create this component with circle shape.
-     */
-    circle?: boolean;
-    /**
-     * Create this component with rounded shape.
-     */
-    rounded?: boolean;
-    /**
-     * The image location to place inside this component.
-     */
-    imgSrc?: string;
-    /**
-     * Shortcut to create this component with equal height and width.
-     */
-    size?: string | number | TSizeProps;
+  /**
+   * Create this component with circle shape.
+   */
+  circle?: boolean;
+  /**
+   * Create this component with rounded shape.
+   */
+  rounded?: boolean;
+  /**
+   * The image location to place inside this component.
+   */
+  imgSrc?: string;
+  /**
+   * Shortcut to create this component with equal height and width.
+   */
+  size?: string | number | TSizeProps;
 };
 
 export declare type TIconProps = {
@@ -67,7 +70,7 @@ export declare type TIconProps = {
     /**
      * Flip the icon, valid values are: `horizontal`, `vertical`, `both`.
      */
-    iconFlip?: TFlipMode;
+    iconFlip?: TIconFlip;
     /**
      * Rotate the icon, valid values are: `90`, `180`, `270`.
      */

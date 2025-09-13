@@ -1,4 +1,4 @@
-import { baseIconProps } from '@/components/Avatar/mixins/avatarProps';
+import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps';
 import { iconPosition } from '@/components/Button/mixins/buttonProps';
 import type { TChipOptionItem, TChipSize, TChipValue } from '@/components/Chip/types';
 import { booleanProp, booleanTrueProp, stringProp } from '@/mixins/CommonProps';
@@ -34,7 +34,7 @@ export const chipProps = {
      * Place icon on the `left` side (before text) or on the `right` side (after text).
      */
     iconPosition,
-    ...baseIconProps,
+    ...iconBaseProps,
 };
 
 export const chipGroupProps = {

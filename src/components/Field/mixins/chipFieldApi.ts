@@ -13,7 +13,7 @@ import {
     useOnTextFieldNodeMounted,
 } from '@/components/Field/mixins/textFieldEventApi';
 import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
-import type { TBsChipField, TChipFieldOptionProps, TEmitFn, TIconVariant, TRecord } from '@/types';
+import type { TBsChipField, TChipFieldOptionProps, TEmitFn, TRecord } from '@/types';
 import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, Fragment, h, nextTick, toDisplayString } from 'vue';
 

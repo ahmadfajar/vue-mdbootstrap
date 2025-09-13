@@ -22,7 +22,6 @@ import type {
     TDateTimeFieldOptionProps,
     TDateTimePickerMode,
     TEmitFn,
-    TIconVariant,
     TRecord,
 } from '@/types';
 import Helper from '@/utils/Helper';

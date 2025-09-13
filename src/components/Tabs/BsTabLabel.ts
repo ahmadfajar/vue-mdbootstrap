@@ -1,12 +1,11 @@
 import { BsRipple } from '@/components/Animation';
-import { baseIconProps } from '@/components/Avatar/mixins/avatarProps';
+import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps';
 import { useRenderTabLabel } from '@/components/Tabs/mixins/tabsApi';
 import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps';
 import type {
     TBsRipple,
     TBsTabLabel,
     TOrientation,
-    TPlacementPosition,
     TTabLabelOptionProps,
 } from '@/types';
 import Helper from '@/utils/Helper';
@@ -16,7 +15,7 @@ import { computed, defineComponent, h, toDisplayString } from 'vue';
 export default defineComponent<TBsTabLabel>({
     name: 'BsTabLabel',
     props: {
-        ...baseIconProps,
+        ...iconBaseProps,
         iconPosition: {
             type: String,
             default: 'left',

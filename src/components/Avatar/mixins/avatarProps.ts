@@ -1,14 +1,26 @@
-import { flip, iconVariant, rotate } from '@/components/Icon/mixins/iconProps';
+import type { TIconVariant } from '@/components/Avatar/types';
+import { flip, rotate } from '@/components/Icon/mixins/iconProps';
 import type { TSizeProps } from '@/components/Icon/types';
-import {
-    booleanProp,
-    stringOrNumberProp,
-    stringProp,
-    validStringOrNumberProp,
-} from '@/mixins/CommonProps';
+import { booleanProp, stringOrNumberProp, stringProp, validStringOrNumberProp, } from '@/mixins/CommonProps';
+import type { Numberish } from '@/types';
 import type { Prop } from 'vue';
 
-export const baseIconProps = {
+export const iconVariant = {
+  type: String,
+  default: 'outlined',
+  validator: (value: string): boolean =>
+    [
+      'outlined',
+      'rounded',
+      'sharp',
+      'filled',
+      'outlined_filled',
+      'rounded_filled',
+      'sharp_filled',
+    ].includes(value),
+} as Prop<TIconVariant>;
+
+export const iconBaseProps = {
     icon: stringProp,
     iconFlip: flip,
     iconRotation: rotate,
@@ -17,14 +29,14 @@ export const baseIconProps = {
     iconVariant,
 };
 
-export const baseImageProps = {
+export const imageBaseProps = {
     circle: booleanProp,
     rounded: booleanProp,
     imgSrc: stringProp,
     size: {
         type: [Number, String, Object],
         default: 48,
-    } as Prop<string | number | TSizeProps>,
+    } as Prop<Numberish | TSizeProps>,
 };
 
 export const avatarProps = {
@@ -33,6 +45,6 @@ export const avatarProps = {
     height: validStringOrNumberProp,
     width: validStringOrNumberProp,
     text: stringProp,
-    ...baseIconProps,
-    ...baseImageProps,
+    ...iconBaseProps,
+    ...imageBaseProps,
 };

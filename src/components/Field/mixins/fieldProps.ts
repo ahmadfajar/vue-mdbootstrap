@@ -1,5 +1,5 @@
+import { iconVariant } from '@/components/Avatar/mixins/avatarProps.ts';
 import { validationProps } from '@/components/Field/mixins/validationProps';
-import { iconVariant } from '@/components/Icon/mixins/iconProps.ts';
 import {
     popoverDefaultTransitionProp,
     popoverPlacementProp,

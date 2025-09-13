@@ -18,7 +18,6 @@ import type {
     TBsIcon,
     TBsToggleIcon,
     TEmitFn,
-    TIconVariant,
     TInputBaseProps,
     TInputFieldProps,
     TInputTextProps,

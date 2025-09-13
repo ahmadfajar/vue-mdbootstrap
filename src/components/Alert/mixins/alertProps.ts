@@ -1,5 +1,5 @@
 import type { TAlertVariant } from '@/components/Alert/types';
-import { baseIconProps } from '@/components/Avatar/mixins/avatarProps';
+import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps';
 import {
     booleanProp,
     booleanTrueProp,
@@ -28,5 +28,5 @@ export const alertProps = {
     solidFill: booleanProp,
     transition: defaultTransitionProp,
     modelValue: booleanTrueProp,
-    ...baseIconProps,
+    ...iconBaseProps,
 };

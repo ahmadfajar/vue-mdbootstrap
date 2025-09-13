@@ -1,4 +1,4 @@
-import { baseIconProps } from '@/components/Avatar/mixins/avatarProps';
+import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps';
 import { inputProps } from '@/components/Field/mixins/fieldProps';
 import { iconSizeProp } from '@/components/Icon/mixins/iconProps';
 import { booleanProp, booleanTrueProp, defaultColorProp, stringProp } from '@/mixins/CommonProps';
@@ -65,7 +65,7 @@ export const buttonProps = {
     tonal: booleanProp,
     type: buttonType,
     iconPosition,
-    ...baseIconProps,
+    ...iconBaseProps,
 };
 
 export const toggleButtonProps = {

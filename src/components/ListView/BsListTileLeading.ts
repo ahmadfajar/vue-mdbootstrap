@@ -1,6 +1,6 @@
 import { BsAvatar } from '@/components/Avatar';
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi';
-import { baseIconProps, baseImageProps } from '@/components/Avatar/mixins/avatarProps';
+import { iconBaseProps, imageBaseProps } from '@/components/Avatar/mixins/avatarProps';
 import { BsIcon } from '@/components/Icon';
 import { useGetCalcSize, useSizeStyles } from '@/components/Icon/mixins/iconApi';
 import type { TBsListTileLeading, TListTileLeadingOptionProps } from '@/components/ListView/types';
@@ -13,8 +13,8 @@ import { computed, createCommentVNode, defineComponent, h } from 'vue';
 export default defineComponent<TBsListTileLeading>({
     name: 'BsListTileLeading',
     props: {
-        ...baseIconProps,
-        ...baseImageProps,
+        ...iconBaseProps,
+        ...imageBaseProps,
         /**
          * Center item inside it vertically.
          * @type {boolean}

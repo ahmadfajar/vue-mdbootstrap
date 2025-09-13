@@ -1,23 +1,20 @@
 import {
-    AllowedComponentProps,
-    ComponentCustomProps,
-    ComponentInternalInstance,
-    ComponentObjectPropsOptions,
-    ObjectPlugin,
-    Ref,
-    VNode,
-    VNodeProps,
+  AllowedComponentProps,
+  ComponentCustomProps,
+  ComponentInternalInstance,
+  ComponentObjectPropsOptions,
+  ObjectPlugin,
+  Ref,
+  VNode,
+  VNodeProps,
 } from 'vue';
-import {
-    EventUpdateModelValueProps,
-    TIconProps,
-    TPlacementPosition,
-    TRouterOptionProps,
-} from '../../../types';
+import { EventUpdateModelValueProps, TIconProps, TRouterOptionProps, } from '../../../types';
 
 export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 
 export declare type TOrientation = 'horizontal' | 'vertical';
+
+export declare type TPlacementPosition = 'left' | 'right' | 'top' | 'bottom';
 
 export declare type TTabsVariant = 'tabs' | 'pills' | 'modern' | 'material';
 

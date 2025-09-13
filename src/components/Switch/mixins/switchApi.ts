@@ -1,5 +1,5 @@
 import { BsRipple } from '@/components/Animation';
-import { BsIconSvg } from '@/components/Icon';
+import { BsSvgIcon } from '@/components/Icon';
 import {
     useCheckSelected,
     useCreateInputRadioOrCheckbox,
@@ -28,13 +28,13 @@ function createThumbIcon(props: Readonly<TSwitchOptionProps>): VNode {
     if ((props.insetMode || props.insetOutlined) && (props.checkedIcon || props.checkoffIcon)) {
         const checked = useCheckSelected(props);
         if (checked && props.checkedIcon) {
-            return h(BsIconSvg, {
+            return h(BsSvgIcon, {
                 icon: 'check' as Prop<string>,
                 height: 16 as Prop<number>,
                 width: 16 as Prop<number>,
             });
         } else if (!checked && props.checkoffIcon && props.insetMode) {
-            return h(BsIconSvg, {
+            return h(BsSvgIcon, {
                 icon: 'close' as Prop<string>,
                 height: 16 as Prop<number>,
                 width: 16 as Prop<number>,

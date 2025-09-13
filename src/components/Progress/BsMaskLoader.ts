@@ -1,10 +1,10 @@
 import { BsOverlay } from '@/components/Animation';
-import { BsIconSpinner } from '@/components/Icon';
+import { BsSpinnerIcon } from '@/components/Icon';
 import { BsProgress } from '@/components/Progress';
 import { maskLoaderProps } from '@/components/Progress/mixins/maskLoaderProps.ts';
 import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import type {
-    TBsIconSpinner,
+    TBsSpinnerIcon,
     TBsMaskLoader,
     TBsOverlay,
     TBsProgress,
@@ -48,7 +48,7 @@ export default defineComponent<TBsMaskLoader>({
                                         type: 'spinner' as Prop<TProgressControlVariant>,
                                     })
                                   : loaderVariant.value === 'spinner'
-                                    ? h<TBsIconSpinner>(BsIconSpinner, {
+                                    ? h<TBsSpinnerIcon>(BsSpinnerIcon, {
                                           color: props.spinnerColor,
                                           size: props.spinnerDiameter,
                                           // @ts-ignore

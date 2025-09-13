@@ -1,10 +1,10 @@
 export { BsAnimationPlugin } from './Animation';
+export { BsIconPlugin } from './Icon';
+export { BsBasicCmpPlugin } from './Basic';
 export { BsContainerPlugin } from './Container';
 export { BsAppbarPlugin } from './Appbar';
 export { BsDrawerPlugin } from './Drawer';
-export { BsBasicCmpPlugin } from './Basic';
 export { BsCardPlugin } from './Card';
-export { BsIconPlugin } from './Icon';
 export { BsAvatarPlugin } from './Avatar';
 export { BsButtonPlugin } from './Button';
 export { BsAlertPlugin } from './Alert';

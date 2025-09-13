@@ -22,7 +22,6 @@ import type {
     TComboboxOptionProps,
     TDataListSchemaProps,
     TEmitFn,
-    TIconVariant,
     TPopoverPosition,
     TRecord,
 } from '@/types';

@@ -1,43 +1,44 @@
-@use "../../../scss/variables" as vars;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}icon, .#{vars.$prefix}toggle-icon {
+@layer utilities {
+  .#{vars.$prefix}icon,
+  .#{vars.$prefix}svg-inline,
+  .#{vars.$prefix}toggle-icon {
     display: inline-flex;
+  }
 
-    > .#{vars.$prefix}svg-inline {
-        display: inline;
-    }
-}
-
-.#{vars.$prefix}toggle-icon {
+  .#{vars.$prefix}toggle-icon {
     cursor: pointer;
-}
+  }
 
-.#{vars.$prefix}rotate-90 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=1)";
+  .#{vars.$prefix}rotate-90 {
+    -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=1)';
     transform: rotate(90deg);
-}
+  }
 
-.#{vars.$prefix}rotate-180 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2)";
+  .#{vars.$prefix}rotate-180 {
+    -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2)';
     transform: rotate(180deg);
-}
+  }
 
-.#{vars.$prefix}rotate-270 {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=3)";
+  .#{vars.$prefix}rotate-270 {
+    -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=3)';
     transform: rotate(270deg);
-}
+  }
 
-.#{vars.$prefix}flip-horizontal {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)";
+  .#{vars.$prefix}flip-horizontal {
+    -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=0, mirror=1)';
     transform: scale(-1, 1);
-}
+  }
 
-.#{vars.$prefix}flip-vertical {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  .#{vars.$prefix}flip-vertical {
+    -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)';
     transform: scale(1, -1);
-}
+  }
 
-.#{vars.$prefix}flip-both, .#{vars.$prefix}flip-horizontal.#{vars.$prefix}flip-vertical {
-    -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)";
+  .#{vars.$prefix}flip-both,
+  .#{vars.$prefix}flip-horizontal.#{vars.$prefix}flip-vertical {
+    -ms-filter: 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2, mirror=1)';
     transform: scale(-1, -1);
+  }
 }

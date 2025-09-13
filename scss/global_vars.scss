@@ -1,6 +1,6 @@
 @use 'variables' as vars;
 
-@layer components, animations, utilities;
+@layer base, components, animations, utilities;
 
 // Global css variables
 //----------------------

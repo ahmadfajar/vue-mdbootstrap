@@ -1,4 +1,4 @@
-import { BaseComponentProps } from '@/types';
+import { BaseComponentProps, Numberish } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, TransitionProps, VNode } from 'vue';
 
 export declare type TRippleOptionProps = {
@@ -44,12 +44,12 @@ export declare type TOverlayOptionProps = {
   /**
    * Overlay opacity.
    */
-  opacity?: string | number;
+  opacity?: Numberish;
 
   /**
    * Overlay inline-css `z-index`.
    */
-  zIndex?: string | number;
+  zIndex?: Numberish;
 };
 
 export declare type TBsOverlay = ComponentObjectPropsOptions<TOverlayOptionProps>;

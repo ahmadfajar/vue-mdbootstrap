@@ -10,7 +10,7 @@ import {
     validStringOrNumberProp,
     whiteColorProp,
 } from '../../../mixins/CommonProps';
-import { baseIconProps } from '../../Avatar/mixins/avatarProps';
+import { iconBaseProps } from '../../Avatar/mixins/avatarProps';
 import type { TBadgeType } from '../../Badge/types';
 import { iconSizeProp } from '../../Icon/mixins/iconProps';
 import type { TSpaceAround } from '../types';
@@ -40,7 +40,7 @@ export const listViewProps = {
 };
 
 export const listNavItemProps = {
-    ...baseIconProps,
+    ...iconBaseProps,
     ...routerProps,
     id: {
         type: String,

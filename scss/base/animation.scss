@@ -1,5 +1,5 @@
-@use 'mixins/transitions';
-@use 'variables' as vars;
+@use '../mixins/transitions';
+@use '../variables' as vars;
 
 @layer animations {
   // VueJs transition animation

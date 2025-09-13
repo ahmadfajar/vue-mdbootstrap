@@ -4,19 +4,14 @@ import {
   useResolveIconTheme,
   useResolveRealIconName,
 } from '@/components/Icon/mixins/iconApi';
+import type { TFontAwesomeVariant, TIconData, TIconOptionProps } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi';
 import { CacheManager } from '@/model/CacheManager';
-import type {
-  TFontAwesomeVariant,
-  TIconData,
-  TIconOptionProps,
-  TRawCacheItem,
-  TRecord,
-} from '@/types';
+import type { MaybeNumberish, Numberish, RawProps, TRawCacheItem, TRecord } from '@/types';
 import Helper from '@/utils/Helper';
 import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';
-import type { VNode, VNodeArrayChildren, VNodeProps } from 'vue';
+import type { VNode, VNodeArrayChildren } from 'vue';
 import { h } from 'vue';
 
 /**
@@ -109,7 +104,7 @@ function fontAwesomeIconUrl(name: string, variant: string, version: string): str
 export async function useGetFontAwesome(
   name?: string,
   variant: TFontAwesomeVariant = 'regular',
-  version: string = '6.7.1'
+  version: string = '7.0.1'
 ): Promise<TIconData | undefined> {
   if (!name) {
     return undefined;
@@ -191,8 +186,8 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
 
 export function useRenderIconFromSVG(
   data: string | undefined,
-  width: number | string | undefined,
-  height: number | string | undefined,
+  width: MaybeNumberish,
+  height: MaybeNumberish,
   clazz: unknown
 ): VNode {
   if (!data) {
@@ -216,8 +211,8 @@ export function useRenderIconFromSVG(
 
 export function useRenderNodeFromSVG(
   data: string | undefined,
-  width: number | string | undefined,
-  height: number | string | undefined,
+  width: MaybeNumberish,
+  height: MaybeNumberish,
   clazz: unknown
 ): VNode {
   if (!data) {
@@ -232,16 +227,16 @@ export function useRenderNodeFromSVG(
   const pW = parseFloat(viewBox[2]);
   const pH = parseFloat(viewBox[3]);
   let ratio: number;
-  let uW: number | string | undefined;
-  let uH: number | string | undefined;
+  let uW: MaybeNumberish;
+  let uH: MaybeNumberish;
 
   if (pW > pH) {
     ratio = pH / pW;
-    uW = width ? parseInt(width as string, 10) : undefined;
+    uW = width ? parseInt(width, 10) : height ? (pW / pH) * parseInt(height, 10) : undefined;
     uH = width && height && width === height ? ratio * uW! : height;
   } else if (pW < pH) {
     ratio = pW / pH;
-    uH = height ? parseInt(height as string, 10) : undefined;
+    uH = height ? parseInt(height, 10) : width ? (pH / pW) * parseInt(width, 10) : undefined;
     uW = width && height && width === height ? ratio * uH! : width;
   } else {
     uW = width;
@@ -259,7 +254,7 @@ export function useRenderNodeFromSVG(
   return h('svg', props, renderChildNodes(children));
 }
 
-export function useSvgClasses(props: Readonly<TIconOptionProps>): TRecord {
+export function useSvgIconClasses(props: Readonly<TIconOptionProps>): TRecord {
   return {
     'mx-auto': true,
     [`${cssPrefix}svg-inline`]: true,
@@ -277,11 +272,9 @@ export function useSvgClasses(props: Readonly<TIconOptionProps>): TRecord {
 export const spinnerSvgData =
   'M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z';
 
-type RawProps = VNodeProps & TRecord;
-
 export function useCreateSvgNode(
-  clazz: Array<string> | TRecord,
-  style: Array<string> | TRecord,
+  clazz: string[] | TRecord,
+  style: string[] | TRecord,
   focusable: boolean,
   aspectRatio?: string | null,
   viewBox?: string | null,
@@ -302,8 +295,8 @@ export function useCreateSvgNode(
 }
 
 export function useCreateSvgCircleNode(
-  clazz: Array<string> | TRecord,
-  style: Array<string> | TRecord,
+  clazz: string[] | TRecord,
+  style: string[] | TRecord,
   radius: number
 ): VNode {
   return h('circle', {
@@ -326,8 +319,8 @@ export function useCircleSizeStyles(diameter: number): Record<string, string> {
 
 export function useRenderSVG(
   data: string,
-  width: number | string,
-  height: number | string,
+  width: Numberish,
+  height: Numberish,
   clazz: unknown
 ): VNode {
   return useRenderNodeFromSVG(data, width, height, clazz);

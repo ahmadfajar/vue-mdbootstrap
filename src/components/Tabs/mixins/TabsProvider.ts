@@ -1,7 +1,6 @@
 import type {
     TAlignment,
     TEmitFn,
-    TPlacementPosition,
     TRecord,
     TTabItemOptionProps,
     TTabsBaseProps,

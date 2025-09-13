@@ -1,0 +1,94 @@
+import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
+import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps.ts';
+import {
+  useGetFontAwesome,
+  useRenderNodeFromSVG,
+  useSvgIconClasses,
+} from '@/components/Icon/mixins/svgApi.ts';
+import type {
+  TBsFontawesomeIcon,
+  TFontawesomeIconOptionProps,
+  TFontAwesomeVariant,
+  TIconData,
+} from '@/components/Icon/types';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import { stringOrArrayProp } from '@/mixins/CommonProps.ts';
+import type { TRecord } from '@/types';
+import Helper from '@/utils/Helper.ts';
+import {
+  computed,
+  defineComponent,
+  h,
+  normalizeClass,
+  onBeforeMount,
+  type Prop,
+  ref,
+  watchEffect,
+} from 'vue';
+
+export default defineComponent<TBsFontawesomeIcon>({
+  name: 'BsFontawesomeIcon',
+  props: {
+    size: iconSizeObjectProp,
+    svgClass: stringOrArrayProp,
+    variant: {
+      type: String,
+      default: 'solid',
+      validator: (value: string): boolean => ['regular', 'solid', 'light'].includes(value),
+    } as Prop<TFontAwesomeVariant>,
+    version: {
+      type: String,
+      default: '7.0.1',
+    },
+    ...iconProps,
+  },
+  setup(props) {
+    const thisProps = props as Readonly<TFontawesomeIconOptionProps>;
+    const szWidth = ref(useSizeWidth(thisProps) || 24);
+    const szHeight = ref(useSizeHeight(thisProps) || 24);
+    const svgIcon = ref<TIconData>();
+
+    const svgClasses = computed<TRecord>(() => {
+      if (!Helper.isEmpty(thisProps.svgClass)) {
+        const name = normalizeClass(thisProps.svgClass);
+
+        return {
+          ...useSvgIconClasses(thisProps),
+          [name]: true,
+        };
+      } else {
+        return useSvgIconClasses(thisProps);
+      }
+    });
+
+    const styles = computed<TRecord>(() => ({
+      width: Helper.cssUnit(szWidth),
+      height: Helper.cssUnit(szHeight),
+    }));
+
+    watchEffect(async () => {
+      svgIcon.value = await useGetFontAwesome(thisProps.icon, thisProps.variant, thisProps.version);
+
+      if (szHeight.value !== useSizeHeight(thisProps)) {
+        szHeight.value = useSizeHeight(thisProps);
+      }
+      if (szWidth.value !== useSizeWidth(thisProps)) {
+        szWidth.value = useSizeWidth(thisProps);
+      }
+    });
+
+    onBeforeMount(async () => {
+      svgIcon.value = await useGetFontAwesome(thisProps.icon, thisProps.variant, thisProps.version);
+    });
+
+    return () =>
+      h(
+        'span',
+        {
+          class: [`${cssPrefix}icon`, 'align-items-center', 'justify-content-center'],
+          style: styles.value,
+        },
+        useRenderNodeFromSVG(svgIcon.value?.data, szWidth, szHeight, svgClasses.value)
+      );
+  },
+});

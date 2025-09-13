@@ -11,7 +11,7 @@ import {
     stringProp,
     validStringOrNumberProp,
 } from '@/mixins/CommonProps.ts';
-import type { TBsTooltip, TPlacementPosition, TTooltipOptionProps } from '@/types';
+import type { TBsTooltip, TTooltipOptionProps } from '@/types';
 import Helper from '@/utils/Helper';
 import type { ComponentInternalInstance, ComponentPublicInstance, Prop } from 'vue';
 import {

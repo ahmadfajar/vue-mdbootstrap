@@ -9,7 +9,6 @@ import {
 } from 'vue';
 import {
     EventUpdateModelValueProps,
-    TIconVariant,
     TInputBaseProps,
     TLabelPosition,
     TPopoverPosition,

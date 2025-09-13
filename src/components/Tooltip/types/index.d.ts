@@ -6,7 +6,6 @@ import {
     VNode,
     VNodeProps,
 } from 'vue';
-import { TPlacementPosition } from '../../../types';
 
 export declare type TTooltipOptionProps = {
     /**

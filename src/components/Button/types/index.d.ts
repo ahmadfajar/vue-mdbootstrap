@@ -12,7 +12,7 @@ import {
     TInputBaseProps,
     TLabelPosition,
     TValidationProps,
-} from '../../../types';
+} from '@/types';
 
 export declare type TButtonInnerOptionProps = {
     dropdownToggle?: boolean;

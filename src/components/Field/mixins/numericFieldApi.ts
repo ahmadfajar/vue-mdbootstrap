@@ -19,7 +19,6 @@ import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi';
 import type {
     TBsIcon,
     TEmitFn,
-    TIconVariant,
     TNumericFieldOptionProps,
     TNumericOpsOptions,
     TRecord,
