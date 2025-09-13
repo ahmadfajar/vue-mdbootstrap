@@ -1,7 +1,7 @@
-@use "sass:list";
-@use "sass:math";
-@use "sass:meta";
-@use "../../variables" as vars;
+@use 'sass:list';
+@use 'sass:math';
+@use 'sass:meta';
+@use '../../variables' as vars;
 
 // Helper function to replace negative values with 0
 @function valid-radius($radius) {
@@ -16,42 +16,42 @@
   @return $return;
 }
 
-@mixin radius($radius: vars.$border-radius-base) {
+@mixin radius($radius: $radius-md) {
   border-radius: valid-radius($radius);
 }
 
-@mixin top-radius($radius: vars.$border-radius-base) {
+@mixin top-radius($radius: $radius-md) {
   border-top-left-radius: valid-radius($radius);
   border-top-right-radius: valid-radius($radius);
 }
 
-@mixin end-radius($radius: vars.$border-radius-base) {
+@mixin end-radius($radius: $radius-md) {
   border-top-right-radius: valid-radius($radius);
   border-bottom-right-radius: valid-radius($radius);
 }
 
-@mixin bottom-radius($radius: vars.$border-radius-base) {
+@mixin bottom-radius($radius: $radius-md) {
   border-bottom-right-radius: valid-radius($radius);
   border-bottom-left-radius: valid-radius($radius);
 }
 
-@mixin start-radius($radius: vars.$border-radius-base) {
+@mixin start-radius($radius: $radius-md) {
   border-top-left-radius: valid-radius($radius);
   border-bottom-left-radius: valid-radius($radius);
 }
 
-@mixin top-start-radius($radius: vars.$border-radius-base) {
+@mixin top-start-radius($radius: $radius-md) {
   border-top-left-radius: valid-radius($radius);
 }
 
-@mixin top-end-radius($radius: vars.$border-radius-base) {
+@mixin top-end-radius($radius: $radius-md) {
   border-top-right-radius: valid-radius($radius);
 }
 
-@mixin bottom-end-radius($radius: vars.$border-radius-base) {
+@mixin bottom-end-radius($radius: $radius-md) {
   border-bottom-right-radius: valid-radius($radius);
 }
 
-@mixin bottom-start-radius($radius: vars.$border-radius-base) {
+@mixin bottom-start-radius($radius: $radius-md) {
   border-bottom-left-radius: valid-radius($radius);
 }

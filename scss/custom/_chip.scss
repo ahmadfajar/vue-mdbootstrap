@@ -1,9 +1,9 @@
-@use "../mixins/chip";
-@use "../color_vars" as colors;
+@use '../mixins/chip';
+@use '../color_vars' as colors;
 
 // BsChip with custom colors
 //----------------------------
 @each $name, $color in colors.$custom-theme-colors {
-    @include chip.make-default-variant($name, $color);
-    @include chip.make-outline-variant($name, $color);
+  @include chip.make-default-variant($name, $color);
+  @include chip.make-outline-variant($name, $color);
 }

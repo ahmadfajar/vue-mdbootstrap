@@ -3,7 +3,7 @@
 @use "../../../scss/variables" as vars;
 
 .#{vars.$prefix}datepicker {
-    --#{vars.$prefix}datepicker-border-radius: #{vars.$border-radius-base};
+    --#{vars.$prefix}datepicker-border-radius: #{$radius-md};
     --#{vars.$prefix}datepicker-padding-x: #{vars.$padding-base};
     --#{vars.$prefix}datepicker-padding-y: #{vars.$padding-base};
     --#{vars.$prefix}datepicker-header-color: #{colors.$white};
@@ -219,27 +219,27 @@
 
     .#{vars.$prefix}datepicker-header {
         &.bg-white, &.bg-light, &.bg-light-grey, &.bg-yellow {
-            --#{vars.$prefix}datepicker-header-color: #{colors.$grey-darken-3};
+            --#{vars.$prefix}datepicker-header-color: #{$neutral-darken-3};
         }
     }
 
     .#{vars.$prefix}datepicker-body {
         &:not(.bg-white):not(.bg-light):not(.bg-light-grey):not(.bg-amber):not(.bg-lime):not(.bg-yellow) {
-            --#{vars.$prefix}datepicker-table-header-color: #{colors.$grey-base};
+            --#{vars.$prefix}datepicker-table-header-color: #{$neutral-base};
 
-            color: colors.$grey-lighten-4;
+            color: $neutral-lighten-4;
 
             .btn-flat-dark {
-                --#{vars.$prefix-bs}btn-color: #{colors.$grey-lighten-2};
+                --#{vars.$prefix-bs}btn-color: #{$neutral-lighten-2};
                 --#{vars.$prefix-bs}btn-hover-color: #{colors.$white};
                 --#{vars.$prefix-bs}btn-hover-bg: rgba(70, 70, 70, 0.8);
             }
 
             &.bg-grey {
-                --#{vars.$prefix}datepicker-table-header-color: #{colors.$grey-lighten-3};
+                --#{vars.$prefix}datepicker-table-header-color: #{$neutral-lighten-3};
 
                 .btn-flat-dark {
-                    --#{vars.$prefix-bs}btn-color: #{colors.$grey-lighten-4};
+                    --#{vars.$prefix-bs}btn-color: #{$neutral-lighten-4};
                 }
             }
         }

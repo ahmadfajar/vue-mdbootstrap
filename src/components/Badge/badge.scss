@@ -16,7 +16,7 @@
 
     &.badge-pill {
         $badge-padding: vars.$padding-base - .25;
-        --#{vars.$prefix-bs}badge-border-radius: #{vars.$border-radius-pill};
+        --#{vars.$prefix-bs}badge-border-radius: #{$radius-pill};
         --#{vars.$prefix-bs}badge-font-size: .8em;
         --#{vars.$prefix-bs}badge-padding-x: #{$badge-padding};
     }
@@ -33,7 +33,7 @@ a {
         @each $name, $color in map.remove(colors.$context-colors, "default") {
             &.text-bg-#{$name} {
                 &:focus, &:hover {
-                    background-color: helper.round-color-rgb(color.adjust($color, $lightness: -10%)) !important;
+                    background-color: helper.to-rgb(color.adjust($color, $lightness: -10%)) !important;
                     text-decoration: none;
                 }
                 &:focus {

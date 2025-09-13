@@ -8,10 +8,10 @@
     --#{vars.$prefix}searchbox-padding-x: #{vars.$padding-base - .25};
     --#{vars.$prefix}searchbox-padding-y: #{vars.$padding-sm};
     --#{vars.$prefix}searchbox-border-color: #{colors.$gray-500};
-    --#{vars.$prefix}searchbox-focused-border-color: #{helper.round-color-rgb(color.adjust(vars.$default-active-bgcolor, $lightness: -8%))};
+    --#{vars.$prefix}searchbox-focused-border-color: #{helper.to-rgb(color.adjust(vars.$default-active-bgcolor, $lightness: -8%))};
     --#{vars.$prefix}searchbox-font-size: 14px;
     --#{vars.$prefix}searchbox-text-color: #{colors.$gray-900};
-    --#{vars.$prefix}searchbox-focused-shadow-rgba: #{rgba(helper.round-color-rgb(color.adjust(vars.$default-active-bgcolor, $lightness: -10%)), 0.2)};
+    --#{vars.$prefix}searchbox-focused-shadow-rgba: #{rgba(helper.to-rgb(color.adjust(vars.$default-active-bgcolor, $lightness: -10%)), 0.2)};
 
     > .#{vars.$prefix}listbox-search {
         padding: vars.$padding-base - .25;

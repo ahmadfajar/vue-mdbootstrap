@@ -1,15 +1,15 @@
+import {
+  INotificationProvider,
+  TBreakpoint,
+  TRecord,
+  TRouterLinkProps,
+  TRouterOptionProps,
+  TVueMdb,
+} from '@/types';
+import { IHttpService } from '@/utils/types/AxiosPlugin';
 import { AxiosInstance } from 'axios';
 import { Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
 import { RouteLocationNormalizedLoaded } from 'vue-router';
-import {
-    INotificationProvider,
-    TBreakpoint,
-    TRecord,
-    TRouterLinkProps,
-    TRouterOptionProps,
-    TVueMdb,
-} from '../../types';
-import { IHttpService } from '../../utils/types/AxiosPlugin';
 
 /**
  * Generate component's ID.
@@ -38,11 +38,11 @@ export declare function useMobileDevice(): boolean;
  * @returns The Rendered node.
  */
 export declare function useRenderSlot(
-    slots: Slots,
-    name: string,
-    props?: Readonly<TRecord>,
-    children?: VNode | VNodeArrayChildren,
-    slotArgs?: unknown
+  slots: Slots,
+  name: string,
+  props?: Readonly<TRecord>,
+  children?: VNode | VNodeArrayChildren,
+  slotArgs?: unknown
 ): VNode;
 
 /**
@@ -54,10 +54,10 @@ export declare function useRenderSlot(
  * @param styles   Custom inline stylesheet to apply
  */
 export declare function useRenderSlotDefault(
-    tag: string,
-    slots?: Slots,
-    classes?: string | string[] | TRecord,
-    styles?: TRecord
+  tag: string,
+  slots?: Slots,
+  classes?: string | string[] | TRecord,
+  styles?: TRecord
 ): VNode;
 
 /**
@@ -76,13 +76,13 @@ export declare function useRenderSlotDefault(
  * @returns The Rendered node.
  */
 export declare function useRenderSlotWithWrapper(
-    slots: Slots,
-    name: string,
-    key: string,
-    wrapperProps?: Readonly<TRecord>,
-    children?: VNode | VNodeArrayChildren,
-    wrapperTag?: string,
-    slotArgs?: unknown
+  slots: Slots,
+  name: string,
+  key: string,
+  wrapperProps?: Readonly<TRecord>,
+  children?: VNode | VNodeArrayChildren,
+  wrapperTag?: string,
+  slotArgs?: unknown
 ): VNode;
 
 /**
@@ -98,12 +98,12 @@ export declare function useRenderSlotWithWrapper(
  * @returns The Rendered node.
  */
 export declare function useRenderSlotWrapperWithCondition(
-    slots: Slots,
-    name: string,
-    condition: boolean,
-    wrapProps?: Readonly<TRecord>,
-    wrapTag?: string,
-    slotArgs?: unknown
+  slots: Slots,
+  name: string,
+  condition: boolean,
+  wrapProps?: Readonly<TRecord>,
+  wrapTag?: string,
+  slotArgs?: unknown
 ): VNode | undefined;
 
 /**
@@ -115,9 +115,9 @@ export declare function useRenderSlotWrapperWithCondition(
  * @returns The Rendered node.
  */
 export declare function useRenderTransition(
-    props: Readonly<TransitionProps> | undefined,
-    children: VNode | VNodeArrayChildren,
-    asBlock?: boolean
+  props: Readonly<TransitionProps> | undefined,
+  children: VNode | VNodeArrayChildren,
+  asBlock?: boolean
 ): VNode;
 
 /**
@@ -128,8 +128,8 @@ export declare function useRenderTransition(
  * @returns The Rendered node.
  */
 export declare function useRenderRouter(
-    props: Readonly<TRouterLinkProps>,
-    children: VNode | VNodeArrayChildren | string
+  props: Readonly<TRouterLinkProps>,
+  children: VNode | VNodeArrayChildren | string
 ): VNode;
 
 /**

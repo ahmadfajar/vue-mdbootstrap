@@ -159,6 +159,7 @@
                 pointer-events: none;
             }
 
+            // used by BsCombobox component
             > .#{vars.$prefix}field-placeholder {
                 color: currentColor;
                 font-weight: vars.$font-weight-light;
@@ -362,7 +363,7 @@
                 }
 
                 .#{vars.$prefix}field-overlay {
-                    @include borders.radius(vars.$border-radius-pill);
+                    @include borders.radius($radius-pill);
                 }
 
                 > .#{vars.$prefix}field-inner {
@@ -379,7 +380,7 @@
                     }
 
                     &:before {
-                        @include borders.radius(vars.$border-radius-pill);
+                        @include borders.radius($radius-pill);
                         border: var(--#{vars.$prefix}field-state-border-width) solid var(--#{vars.$prefix}field-active-border-color);
                         background-color: transparent;
                         opacity: 1;
@@ -497,7 +498,7 @@
 
         &.#{vars.$prefix}field-rounded {
             &.#{vars.$prefix}text-field, &.#{vars.$prefix}numeric-field {
-                --#{vars.$prefix}field-outline-border-radius: #{vars.$border-radius-pill};
+                --#{vars.$prefix}field-outline-border-radius: #{$radius-pill};
 
                 &:not(.prepend-icon) {
                     --#{vars.$prefix}field-padding-start: #{math.div(vars.$text-field-height, 2)};
@@ -698,7 +699,6 @@
 
 .#{vars.$prefix}field {
     &.has-success {
-        //$textSuccess: lighten($success-color, 8%);
         --#{vars.$prefix}field-active-border-color: #{colors.$success-color};
         --#{vars.$prefix}field-border-color: #{colors.$success-color};
         --#{vars.$prefix}field-floating-label-color: #{colors.$success-color};

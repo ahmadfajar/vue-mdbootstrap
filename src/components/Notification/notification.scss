@@ -4,8 +4,8 @@
 @use "../../../scss/variables" as vars;
 
 .#{vars.$prefix}notification {
-    --#{vars.$prefix}notification-background-color: #{helper.round-color-rgb(color.adjust(colors.$gray-900, $lightness: -5%))};
-    --#{vars.$prefix}notification-border-radius: #{vars.$border-radius-base};
+    --#{vars.$prefix}notification-background-color: #{helper.to-rgb(color.adjust(colors.$gray-900, $lightness: -5%))};
+    --#{vars.$prefix}notification-border-radius: #{$radius-md};
     --#{vars.$prefix}notification-box-shadow-color: rgba(0, 0, 0, 0.2);
     --#{vars.$prefix}notification-box-shadow-hover-color: rgba(0, 0, 0, 0.45);
     --#{vars.$prefix}notification-color: #{colors.$white};

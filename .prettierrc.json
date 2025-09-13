@@ -2,8 +2,11 @@
   "$schema": "https://json.schemastore.org/prettierrc",
   "endOfLine": "auto",
   "semi": true,
-  "tabWidth": 4,
   "singleQuote": true,
+  "plugins": ["prettier-plugin-sort-imports", "prettier-plugin-organize-imports"],
   "printWidth": 100,
+  "sortingMethod": "alphabetical",
+  "sortingOrder": "ascending",
+  "tabWidth": 2,
   "trailingComma": "es5"
 }

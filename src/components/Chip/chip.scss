@@ -2,15 +2,14 @@
 @use "sass:math";
 @use "../../../scss/mixins/css3/borders";
 @use "../../../scss/mixins/chip";
-@use "../../../scss/utils/color_functions" as color_utils;
 @use "../../../scss/utils/color_helper" as helper;
 @use "../../../scss/color_vars" as colors;
 @use "../../../scss/variables" as vars;
 
 .#{vars.$prefix}chip, a.#{vars.$prefix}chip {
-    $disabled-bg: helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 15%));
-    $disabled-border-color: helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 8%));
-    --#{vars.$prefix}chip-border-radius: #{vars.$border-radius-lg};
+    $disabled-bg: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 15%));
+    $disabled-border-color: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 8%));
+    --#{vars.$prefix}chip-border-radius: #{vars.$radius-lg};
     --#{vars.$prefix}chip-border-width: 0;
     --#{vars.$prefix}chip-font-weight: #{vars.$font-weight-normal};
 
@@ -183,7 +182,7 @@
     }
 
     &.#{vars.$prefix}chip-sm {
-        --#{vars.$prefix}chip-border-radius: #{vars.$border-radius-base};
+        --#{vars.$prefix}chip-border-radius: #{vars.$radius-md};
         --#{vars.$prefix}chip-padding-x: .75rem;
 
         font-size: var(--#{vars.$prefix}chip-sm-font-size);
@@ -205,7 +204,7 @@
     }
 
     &.#{vars.$prefix}chip-lg {
-        --#{vars.$prefix}chip-border-radius: #{vars.$border-radius-lg + .25};
+        --#{vars.$prefix}chip-border-radius: #{vars.$radius-lg + .25};
         --#{vars.$prefix}chip-padding-x: #{vars.$padding-lg};
 
         font-size: var(--#{vars.$prefix}chip-lg-font-size);
@@ -236,7 +235,7 @@
     }
 
     &.#{vars.$prefix}chip-pill {
-        --#{vars.$prefix}chip-border-radius: #{vars.$border-radius-pill};
+        --#{vars.$prefix}chip-border-radius: #{vars.$radius-pill};
     }
 
     &[class*="chip-outline"] {

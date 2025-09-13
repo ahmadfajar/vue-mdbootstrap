@@ -18,9 +18,14 @@
     "sourceMap": false,
     "esModuleInterop": true,
     "lib": [
-      "ES2022",
+      "ES2024",
       "DOM",
-      "DOM.Iterable"
+      "DOM.Iterable",
+      "ESNext.Array",
+      "ESNext.Collection",
+      "ESNext.Promise",
+      "ESNext.String",
+      "ESNext.Symbol"
     ],
     "paths": {
       "@/*": ["./src/*"]

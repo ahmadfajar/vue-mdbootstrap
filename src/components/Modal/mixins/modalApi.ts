@@ -36,9 +36,11 @@ export function useSetDialogMaxHeight(
         return;
     }
 
-    const contentMaxHeight = useBreakpointMax('sm')
+    const contentMaxHeight = props.fullPage
+        ? window.innerHeight
+        : useBreakpointMax('sm')
         ? window.innerHeight - 64
-        : window.innerHeight - 128;
+        : window.innerHeight - 110;
 
     if (bodyEl.value) {
         let maxBodyHeight = contentMaxHeight;

@@ -1,60 +1,60 @@
 // VueJs transition animation mixins
 //-----------------------------------
 @mixin enterFrom($parent) {
-    .#{$parent}-enter-from {
-        @content;
-    }
+  .#{$parent}-enter-from {
+    @content;
+  }
 }
 
 @mixin enterTo($parent) {
-    .#{$parent}-enter-to {
-        @content;
-    }
+  .#{$parent}-enter-to {
+    @content;
+  }
 }
 
 @mixin enterActive($parent) {
-    .#{$parent}-enter-active {
-        @content;
-    }
+  .#{$parent}-enter-active {
+    @content;
+  }
 }
 
 @mixin enterActive-leaveActive($parent) {
-    .#{$parent}-enter-active,
-    .#{$parent}-leave-active {
-        @content;
-    }
+  .#{$parent}-enter-active,
+  .#{$parent}-leave-active {
+    @content;
+  }
 }
 
 @mixin enterFrom-leaveActive($parent) {
-    .#{$parent}-enter-from,
-    .#{$parent}-leave-active {
-        @content;
-    }
+  .#{$parent}-enter-from,
+  .#{$parent}-leave-active {
+    @content;
+  }
 }
 
 @mixin enterFrom-leaveTo($parent) {
-    .#{$parent}-enter-from,
-    .#{$parent}-leave-to {
-        @content;
-    }
+  .#{$parent}-enter-from,
+  .#{$parent}-leave-to {
+    @content;
+  }
 }
 
 @mixin leaveActive($parent) {
-    .#{$parent}-leave-active {
-        @content;
-    }
+  .#{$parent}-leave-active {
+    @content;
+  }
 }
 
 @mixin leaveTo($parent) {
-    .#{$parent}-leave-to {
-        @content;
-    }
+  .#{$parent}-leave-to {
+    @content;
+  }
 }
 
 @mixin leaveFrom-leaveActive-leaveTo($parent) {
-    .#{$parent}-leave-from,
-    .#{$parent}-leave-active,
-    .#{$parent}-leave-to {
-        @content;
-    }
+  .#{$parent}-leave-from,
+  .#{$parent}-leave-active,
+  .#{$parent}-leave-to {
+    @content;
+  }
 }

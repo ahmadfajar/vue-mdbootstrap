@@ -5,11 +5,11 @@
 
 .#{vars.$prefix}switch {
     --#{vars.$prefix}switch-margin: #{vars.$switch-margin};
-    --#{vars.$prefix}switch-thumb-bg: #{colors.$grey-lighten-5};
-    --#{vars.$prefix}switch-thumb-color: #{colors.$grey-lighten-5};
+    --#{vars.$prefix}switch-thumb-bg: #{$neutral-lighten-5};
+    --#{vars.$prefix}switch-thumb-color: #{$neutral-lighten-5};
     --#{vars.$prefix}switch-thumb-size: #{vars.$switch-thumb-size};
     --#{vars.$prefix}switch-touch-size: #{vars.$switch-touch-size};
-    --#{vars.$prefix}switch-track-color: #{colors.$grey-lighten-1};
+    --#{vars.$prefix}switch-track-color: #{$neutral-lighten-1};
     --#{vars.$prefix}switch-track-height: #{vars.$switch-track-height};
     --#{vars.$prefix}switch-track-width: #{vars.$switch-track-width};
     --#{vars.$prefix}switch-inset-thumb-size: #{vars.$switch-inset-thumb-size};
@@ -19,7 +19,7 @@
     --#{vars.$prefix}switch-outlined-thumb-size: #{vars.$switch-outlined-thumb-size};
     --#{vars.$prefix}switch-outlined-stroke: #{vars.$switch-outline-stroke};
     --#{vars.$prefix}switch-outlined-stroke-color: #{colors.$gray-600};
-    --#{vars.$prefix}switch-outlined-track-color: #{colors.$grey-lighten-2};
+    --#{vars.$prefix}switch-outlined-track-color: #{$neutral-lighten-2};
 
     --#{vars.$prefix}switch-state-box-shadow: #{vars.$switch-shadows};
     --#{vars.$prefix}switch-state-overlay-bg: transparent;
@@ -59,7 +59,7 @@
             transition: vars.$transition-stand;
 
             > .#{vars.$prefix}switch-thumb {
-                @include borders.radius(vars.$border-radius-circle);
+                @include borders.radius($radius-circle);
                 background-color: var(--#{vars.$prefix}switch-state-thumb-bg);
                 box-shadow: var(--#{vars.$prefix}switch-state-box-shadow);
                 height: var(--#{vars.$prefix}switch-state-thumb-size);
@@ -80,7 +80,7 @@
                 }
 
                 .#{vars.$prefix}switch-ripple, .#{vars.$prefix}ripple {
-                    @include borders.radius(vars.$border-radius-circle);
+                    @include borders.radius($radius-circle);
                     height: var(--#{vars.$prefix}switch-touch-size);
                     width: var(--#{vars.$prefix}switch-touch-size);
                     left: 50%;
@@ -223,8 +223,8 @@
 
     &.disabled {
         --#{vars.$prefix}switch-state-box-shadow: #{vars.$switch-disabled-shadows};
-        --#{vars.$prefix}switch-state-thumb-bg: #{colors.$grey-base};
-        --#{vars.$prefix}switch-state-thumb-color: #{colors.$grey-base};
+        --#{vars.$prefix}switch-state-thumb-bg: #{$neutral-base};
+        --#{vars.$prefix}switch-state-thumb-color: #{$neutral-base};
         --#{vars.$prefix}switch-state-track-color: #{colors.$gray-400};
 
         > .#{vars.$prefix}switch-label {

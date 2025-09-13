@@ -1,8 +1,8 @@
-@use "../mixins/switch";
-@use "../color_vars" as colors;
+@use '../mixins/switch';
+@use '../color_vars' as colors;
 
 // BsSwitch with custom colors
 //-------------------------------
 @each $name, $color in colors.$custom-theme-colors {
-    @include switch.make-default-variant($name, $color);
+  @include switch.make-default-variant($name, $color);
 }

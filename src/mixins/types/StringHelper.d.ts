@@ -12,9 +12,9 @@
  * @returns New String that has been padded on the left side.
  */
 export declare function padLeft(
-    str: string | number,
-    maxLength?: number,
-    fillString?: string
+  str: string | number,
+  maxLength?: number,
+  fillString?: string
 ): string;
 
 /**
@@ -31,9 +31,9 @@ export declare function padLeft(
  * @returns New String that has been padded on the right side.
  */
 export declare function padRight(
-    str: string | number,
-    maxLength?: number,
-    fillString?: string
+  str: string | number,
+  maxLength?: number,
+  fillString?: string
 ): string;
 
 /**
@@ -73,10 +73,10 @@ export declare function kebabCase(text: string): string;
  * @param replaces          Optional, the encoded characters or replacement characters for the given `chars`.
  */
 export function encodeSpecialChars(
-    source: string,
-    excludeDblQuote?: boolean,
-    chars?: string[],
-    replaces?: string[]
+  source: string,
+  excludeDblQuote?: boolean,
+  chars?: string[],
+  replaces?: string[]
 ): string;
 
 /**
@@ -90,11 +90,24 @@ export declare function chunk(source: string, size?: number): string[];
 
 /**
  * Determines whether a string ends with any of the specified string,
- * returning true or false as appropriate.
+ * returning true or false as appropriate. The test is performed in
+ * case-sensitive manner.
  *
  * @param source   The input string.
  * @param searches Collection of string to search at the end of string.
- * @returns If any of the given strings in the collection is found at the end of 
+ * @returns If any of the given strings in the collection is found at the end of
  *          the string then `true` is returned, otherwise `false`.
  */
 export declare function isEndWith(source?: string, searches?: string[]): boolean;
+
+/**
+ * Determines whether a string contains any of the specified string,
+ * returning true or false as appropriate. The test is performed in
+ * case-sensitive manner.
+ *
+ * @param source   The input string.
+ * @param searches Collection of string to search at the end of string.
+ * @returns If any of the given strings in the collection is found at any position
+ *          of the string then `true` is returned, otherwise `false`.
+ */
+export declare function isContains(source?: string, searches?: string[]): boolean;

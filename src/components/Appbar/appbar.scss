@@ -4,7 +4,7 @@
 
 .#{vars.$prefix}appbar {
     --#{vars.$prefix}appbar-bg: #{colors.$white};
-    --#{vars.$prefix}appbar-color: #{colors.$grey-darken-4};
+    --#{vars.$prefix}appbar-color: #{$neutral-darken-4};
     --#{vars.$prefix}appbar-height: 64px;
     --#{vars.$prefix}appbar-margin: #{vars.$padding-sm (vars.$padding-base - .25) vars.$padding-sm vars.$padding-base};
     --#{vars.$prefix}appbar-title-font-size: 1.5rem;

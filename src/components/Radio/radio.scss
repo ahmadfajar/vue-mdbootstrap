@@ -25,7 +25,7 @@
     cursor: pointer;
 
     > .#{vars.$prefix}radio-inner {
-        @include borders.radius(vars.$border-radius-circle);
+        @include borders.radius($radius-circle);
         background-color: var(--#{vars.$prefix}radio-state-bg);
         border: var(--#{vars.$prefix}radio-stroke) solid var(--#{vars.$prefix}radio-state-color);
         height: var(--#{vars.$prefix}radio-size);
@@ -47,7 +47,7 @@
         }
 
         &:before {
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             height: var(--#{vars.$prefix}radio-touch-size);
             width: var(--#{vars.$prefix}radio-touch-size);
             transform: translate(-50%, -50%);
@@ -57,7 +57,7 @@
         }
 
         &:after {
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             background-color: var(--#{vars.$prefix}radio-state-inner-bg);
             opacity: var(--#{vars.$prefix}radio-state-inner-opacity);
             transform: scale3D(.38, .38, 1);
@@ -68,7 +68,7 @@
         }
 
         .#{vars.$prefix}radio-overlay {
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             background-color: var(--#{vars.$prefix}radio-state-overlay-bg);
             opacity: var(--#{vars.$prefix}radio-state-overlay-opacity);
             height: var(--#{vars.$prefix}radio-touch-size);
@@ -82,7 +82,7 @@
         }
 
         .#{vars.$prefix}ripple {
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             height: var(--#{vars.$prefix}radio-touch-size);
             width: var(--#{vars.$prefix}radio-touch-size);
             left: 50% !important;

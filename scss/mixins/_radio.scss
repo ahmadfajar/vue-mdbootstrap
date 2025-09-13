@@ -1,10 +1,10 @@
-@use "../variables" as vars;
+@use '../variables' as vars;
 
 // BsRadio variants mixins -- sass variables
 //-------------------------------------------
 @mixin make-default-variant($name, $color) {
-    .#{vars.$prefix}radio-#{$name} {
-        --#{vars.$prefix}radio-color: currentColor;
-        --#{vars.$prefix}radio-active-color: #{$color};
-    }
+  .#{vars.$prefix}radio-#{$name} {
+    --#{vars.$prefix}radio-color: currentColor;
+    --#{vars.$prefix}radio-active-color: #{$color};
+  }
 }

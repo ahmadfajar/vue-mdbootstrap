@@ -1,42 +1,42 @@
 import type { AxiosInstance } from 'axios';
 import type {
-    ComponentInternalInstance,
-    Ref,
-    ShallowRef,
-    Slots,
-    TransitionProps,
-    VNode,
-    VNodeArrayChildren,
+  ComponentInternalInstance,
+  Ref,
+  ShallowRef,
+  Slots,
+  TransitionProps,
+  VNode,
+  VNodeArrayChildren,
 } from 'vue';
 import {
-    createBlock,
-    createCommentVNode,
-    createVNode,
-    getCurrentInstance,
-    h,
-    normalizeClass,
-    openBlock,
-    renderSlot,
-    resolveComponent,
-    Transition,
-    unref,
-    withCtx,
+  createBlock,
+  createCommentVNode,
+  createVNode,
+  getCurrentInstance,
+  h,
+  normalizeClass,
+  openBlock,
+  renderSlot,
+  resolveComponent,
+  Transition,
+  unref,
+  withCtx,
 } from 'vue';
 import type {
-    RouteLocationAsRelativeGeneric,
-    RouteLocationNormalizedLoaded,
-    RouteRecordRaw,
+  RouteLocationAsRelativeGeneric,
+  RouteLocationNormalizedLoaded,
+  RouteRecordRaw,
 } from 'vue-router';
 import type {
-    IHttpService,
-    INotificationProvider,
-    TBreakpoint,
-    TRecord,
-    TRouterLinkProps,
-    TRouterOptionProps,
-    TVueMdb,
-} from '../types';
-import Helper from '../utils/Helper';
+  IHttpService,
+  INotificationProvider,
+  TBreakpoint,
+  TRecord,
+  TRouterLinkProps,
+  TRouterOptionProps,
+  TVueMdb,
+} from '@/types';
+import Helper from '@/utils/Helper';
 
 export const cssPrefix = 'md-';
 
@@ -48,7 +48,7 @@ export const isServer = typeof window == 'undefined';
  * @returns The generated ID
  */
 export function useGenerateId(): string {
-    return 'bs-' + Helper.uuid(true);
+  return 'bs-' + Helper.uuid(true);
 }
 
 /**
@@ -57,7 +57,7 @@ export function useGenerateId(): string {
  * @returns `true` if IE browser is used otherwise `false`.
  */
 export function useBrowserIE(): boolean {
-    return !isServer && navigator.userAgent.toLowerCase().includes('trident');
+  return !isServer && navigator.userAgent.toLowerCase().includes('trident');
 }
 
 /**
@@ -66,7 +66,7 @@ export function useBrowserIE(): boolean {
  * @returns `true` if mobile browser is used otherwise `false`.
  */
 export function useMobileDevice(): boolean {
-    return !isServer && navigator.userAgent.toLowerCase().match(/mobile/i) != null;
+  return !isServer && navigator.userAgent.toLowerCase().match(/mobile/i) != null;
 }
 
 /**
@@ -77,24 +77,24 @@ export function useMobileDevice(): boolean {
  * @param slots    The slot instance
  * @param name     The slot name
  * @param props    VNode property, include slot identifier
- * @param children The VNode children
+ * @param children The default VNode children to replace the slot
  * @param slotArgs The argument for the given slot
- * @returns The Rendered node.
+ * @returns The rendered VNode.
  */
 export function useRenderSlot(
-    slots: Slots,
-    name: string,
-    props: Readonly<TRecord> = {},
-    children?: VNodeArrayChildren | VNode,
-    slotArgs?: TRecord
+  slots: Slots,
+  name: string,
+  props: Readonly<TRecord> = {},
+  children?: VNodeArrayChildren | VNode,
+  slotArgs?: TRecord
 ): VNode {
-    const slotProps = {
-        ...slotArgs,
-        ...props,
-    } as TRecord;
-    const fallback = children ? () => (Array.isArray(children) ? children : [children]) : undefined;
+  const slotProps = {
+    ...slotArgs,
+    ...props,
+  } as TRecord;
+  const fallback = children ? () => (Array.isArray(children) ? children : [children]) : undefined;
 
-    return renderSlot(slots, name, slotProps, fallback);
+  return renderSlot(slots, name, slotProps, fallback);
 }
 
 /**
@@ -106,14 +106,14 @@ export function useRenderSlot(
  * @param styles   Custom inline stylesheet to apply
  */
 export function useRenderSlotDefault(
-    tag: string,
-    slots?: Slots,
-    classes?: string | string[] | TRecord,
-    styles?: TRecord
+  tag: string,
+  slots?: Slots,
+  classes?: string | string[] | TRecord,
+  styles?: TRecord
 ): VNode {
-    return slots
-        ? h(tag, { class: classes, style: styles }, renderSlot(slots, 'default'))
-        : h(tag, { class: classes, style: styles });
+  return slots
+    ? h(tag, { class: classes, style: styles }, renderSlot(slots, 'default'))
+    : h(tag, { class: classes, style: styles });
 }
 
 /**
@@ -126,29 +126,29 @@ export function useRenderSlotDefault(
  * @param name         The slot name
  * @param key          Fragment key identifier
  * @param wrapperProps The VNode wrapper properties
- * @param children     The VNode children
+ * @param children     The default VNode children to replace the slot
  * @param wrapperTag   Valid html tag name
  * @param slotArgs     The argument for the given slot
- * @returns The Rendered node.
+ * @returns The rendered VNode.
  */
 export function useRenderSlotWithWrapper(
-    slots: Slots,
-    name: string,
-    key: string,
-    wrapperProps: Readonly<TRecord> = {},
-    children?: VNodeArrayChildren | VNode,
-    wrapperTag = 'div',
-    slotArgs?: TRecord
+  slots: Slots,
+  name: string,
+  key: string,
+  wrapperProps: Readonly<TRecord> = {},
+  children?: VNodeArrayChildren | VNode,
+  wrapperTag = 'div',
+  slotArgs?: TRecord
 ): VNode {
-    if (slots[name] != null || children) {
-        return h(
-            wrapperTag,
-            wrapperProps,
-            useRenderSlot(slots, name, { key: key }, children, slotArgs)
-        );
-    } else {
-        return createCommentVNode(` v-if-${name} `);
-    }
+  if (slots[name] != null || children) {
+    return h(
+      wrapperTag,
+      wrapperProps,
+      useRenderSlot(slots, name, { key: key }, children, slotArgs)
+    );
+  } else {
+    return createCommentVNode(` v-if-${name} `);
+  }
 }
 
 /**
@@ -161,19 +161,17 @@ export function useRenderSlotWithWrapper(
  * @param wrapProps  The VNode wrapper properties
  * @param wrapTag    Valid html tag name
  * @param slotArgs   The argument for the given slot
- * @returns The Rendered node.
+ * @returns The rendered VNode.
  */
 export function useRenderSlotWrapperWithCondition(
-    slots: Slots,
-    name: string,
-    condition: boolean,
-    wrapProps: Readonly<TRecord> = {},
-    wrapTag?: string,
-    slotArgs?: TRecord
+  slots: Slots,
+  name: string,
+  condition: boolean,
+  wrapProps: Readonly<TRecord> = {},
+  wrapTag?: string,
+  slotArgs?: TRecord
 ): VNode | undefined {
-    return condition
-        ? h(wrapTag || 'div', wrapProps, renderSlot(slots, name, slotArgs))
-        : undefined;
+  return condition ? h(wrapTag || 'div', wrapProps, renderSlot(slots, name, slotArgs)) : undefined;
 }
 
 /**
@@ -182,25 +180,25 @@ export function useRenderSlotWrapperWithCondition(
  * @param props    The transition properties
  * @param children The child nodes
  * @param asBlock  Render the Transition as block VNode.
- * @returns The Rendered node.
+ * @returns The rendered VNode.
  */
 export function useRenderTransition(
-    props: Readonly<TransitionProps> = {},
-    children: VNodeArrayChildren | VNode,
-    asBlock?: boolean
+  props: Readonly<TransitionProps> = {},
+  children: VNodeArrayChildren | VNode,
+  asBlock?: boolean
 ): VNode {
-    if (asBlock) {
-        return (
-            openBlock(),
-            createBlock(Transition, props, {
-                default: withCtx(() => (Array.isArray(children) ? children : [children])),
-            })
-        );
-    } else {
-        return h(Transition, props, {
-            default: () => children,
-        });
-    }
+  if (asBlock) {
+    return (
+      openBlock(),
+      createBlock(Transition, props, {
+        default: withCtx(() => (Array.isArray(children) ? children : [children])),
+      })
+    );
+  } else {
+    return h(Transition, props, {
+      default: () => children,
+    });
+  }
 }
 
 /**
@@ -208,16 +206,16 @@ export function useRenderTransition(
  *
  * @param props    The RouterLink's component properties
  * @param children The child nodes
- * @returns The Rendered node.
+ * @returns The rendered VNode.
  */
 export function useRenderRouter(
-    props: Readonly<TRouterLinkProps>,
-    children: VNodeArrayChildren | VNode | string
+  props: Readonly<TRouterLinkProps>,
+  children: VNodeArrayChildren | VNode | string
 ): VNode {
-    const routerLinkCmp = resolveComponent('RouterLink');
-    return createVNode(routerLinkCmp, props, {
-        default: () => children,
-    });
+  const routerLinkCmp = resolveComponent('RouterLink');
+  return createVNode(routerLinkCmp, props, {
+    default: () => children,
+  });
 }
 
 /**
@@ -228,15 +226,15 @@ export function useRenderRouter(
  * @returns TRUE when Router property
  */
 export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
-    const vm = getCurrentInstance();
-    return (
-        vm != null &&
-        (!Helper.isEmpty(props.path) ||
-            !Helper.isEmpty(props.pathName) ||
-            Helper.isObject(props.location)) &&
-        (vm.appContext.config.globalProperties.$router != null ||
-            vm.appContext.config.globalProperties.$route != null)
-    );
+  const vm = getCurrentInstance();
+  return (
+    vm != null &&
+    (!Helper.isEmpty(props.path) ||
+      !Helper.isEmpty(props.pathName) ||
+      Helper.isObject(props.location)) &&
+    (vm.appContext.config.globalProperties.$router != null ||
+      vm.appContext.config.globalProperties.$route != null)
+  );
 }
 
 /**
@@ -246,7 +244,7 @@ export function useHasRouter(props: Readonly<TRouterOptionProps>): boolean {
  * @returns TRUE when `url` property has been defined and doesn't have Router.
  */
 export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
-    return !useHasRouter(props) && !Helper.isEmpty(props.url);
+  return !useHasRouter(props) && !Helper.isEmpty(props.url);
 }
 
 /**
@@ -255,8 +253,8 @@ export function useHasLink(props: Readonly<TRouterOptionProps>): boolean {
  * @returns The current route location.
  */
 export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefined {
-    const vm = getCurrentInstance();
-    return vm?.appContext.config.globalProperties.$router?.currentRoute;
+  const vm = getCurrentInstance();
+  return vm?.appContext.config.globalProperties.$router?.currentRoute;
 }
 
 /**
@@ -266,29 +264,29 @@ export function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | undefine
  * @param search The route name to search
  */
 function findRouteByName(vm: ShallowRef<ComponentInternalInstance | null>, search: string) {
-    const router = vm.value?.appContext.config.globalProperties.$router;
-    const routes = router?.getRoutes();
-    // console.log('routes:', routes);
+  const router = vm.value?.appContext.config.globalProperties.$router;
+  const routes = router?.getRoutes();
+  // console.log('routes:', routes);
 
-    const findMatches = (children: RouteRecordRaw[]) =>
-        children.find((it): boolean => {
-            if (it.name === search) {
-                return true;
-            } else if (it.children && it.children.length > 0) {
-                return !!findMatches(it.children);
-            }
+  const findMatches = (children: RouteRecordRaw[]) =>
+    children.find((it): boolean => {
+      if (it.name === search) {
+        return true;
+      } else if (it.children && it.children.length > 0) {
+        return !!findMatches(it.children);
+      }
 
-            return false;
-        });
-
-    return routes?.find((it): boolean => {
-        if (it.name === search) {
-            return true;
-        } else if (it.children.length > 0) {
-            return !!findMatches(it.children);
-        }
-        return false;
+      return false;
     });
+
+  return routes?.find((it): boolean => {
+    if (it.name === search) {
+      return true;
+    } else if (it.children.length > 0) {
+      return !!findMatches(it.children);
+    }
+    return false;
+  });
 }
 
 /**
@@ -300,56 +298,55 @@ function findRouteByName(vm: ShallowRef<ComponentInternalInstance | null>, searc
  * @returns TRUE if all property of `location` match with the given `route`.
  */
 function isRouteMatchByLocation(
-    vm: ShallowRef<ComponentInternalInstance | null>,
-    route: RouteLocationNormalizedLoaded,
-    location?: RouteLocationAsRelativeGeneric
+  vm: ShallowRef<ComponentInternalInstance | null>,
+  route: RouteLocationNormalizedLoaded,
+  location?: RouteLocationAsRelativeGeneric
 ): boolean {
-    if (!location) {
-        return false;
-    }
-
-    if (
-        location.path === route.path ||
-        (location.path &&
-            (route.path.startsWith(`${location.path}/`) ||
-                route.path.startsWith(`${location.path}?`)))
-    ) {
-        return true;
-    }
-
-    if (location.name) {
-        if (location.params) {
-            const entries1 = Object.entries(route.params);
-            const entries2 = Object.entries(location.params as object);
-
-            const found = entries1.every((el1): boolean => {
-                return entries2.some((el2): boolean => {
-                    return el1[0] == el2[0] && el1[1] == el2[1];
-                });
-            });
-
-            if (found && route.name === location.name) {
-                return true;
-            }
-        }
-
-        if (route.name === location.name) {
-            return true;
-        }
-
-        // fallback using partial match
-        const result = findRouteByName(vm, location.name.toString());
-        // console.log('found-route:', result);
-        if (result) {
-            return (
-                result.path === route.path ||
-                route.path.startsWith(`${result.path}/`) ||
-                route.path.startsWith(`${result.path}?`)
-            );
-        }
-    }
-
+  if (!location) {
     return false;
+  }
+
+  if (
+    location.path === route.path ||
+    (location.path &&
+      (route.path.startsWith(`${location.path}/`) || route.path.startsWith(`${location.path}?`)))
+  ) {
+    return true;
+  }
+
+  if (location.name) {
+    if (location.params) {
+      const entries1 = Object.entries(route.params);
+      const entries2 = Object.entries(location.params as object);
+
+      const found = entries1.every((el1): boolean => {
+        return entries2.some((el2): boolean => {
+          return el1[0] == el2[0] && el1[1] == el2[1];
+        });
+      });
+
+      if (found && route.name === location.name) {
+        return true;
+      }
+    }
+
+    if (route.name === location.name) {
+      return true;
+    }
+
+    // fallback using partial match
+    const result = findRouteByName(vm, location.name.toString());
+    // console.log('found-route:', result);
+    if (result) {
+      return (
+        result.path === route.path ||
+        route.path.startsWith(`${result.path}/`) ||
+        route.path.startsWith(`${result.path}?`)
+      );
+    }
+  }
+
+  return false;
 }
 
 /**
@@ -360,38 +357,38 @@ function isRouteMatchByLocation(
  * @param navTarget The navigation properties
  */
 export function useIsRouteMatch(
-    vm: ShallowRef<ComponentInternalInstance | null>,
-    route: Ref<RouteLocationNormalizedLoaded>,
-    navTarget: TRouterOptionProps
+  vm: ShallowRef<ComponentInternalInstance | null>,
+  route: Ref<RouteLocationNormalizedLoaded>,
+  navTarget: TRouterOptionProps
 ): boolean {
-    const _route = unref(route);
+  const _route = unref(route);
 
-    if (
-        navTarget.path === _route.path ||
-        (navTarget.path &&
-            (_route.path.startsWith(`${navTarget.path}/`) ||
-                _route.path.startsWith(`${navTarget.path}?`)))
-    ) {
-        return true;
-    }
-    if (navTarget.pathName) {
-        if (_route.name === navTarget.pathName) {
-            return true;
-        }
-
-        // fallback using partial match
-        const result = findRouteByName(vm, navTarget.pathName);
-        // console.log('found-route:', result);
-        if (result) {
-            return (
-                result.path === _route.path ||
-                _route.path.startsWith(`${result.path}/`) ||
-                _route.path.startsWith(`${result.path}?`)
-            );
-        }
+  if (
+    navTarget.path === _route.path ||
+    (navTarget.path &&
+      (_route.path.startsWith(`${navTarget.path}/`) ||
+        _route.path.startsWith(`${navTarget.path}?`)))
+  ) {
+    return true;
+  }
+  if (navTarget.pathName) {
+    if (_route.name === navTarget.pathName) {
+      return true;
     }
 
-    return isRouteMatchByLocation(vm, _route, navTarget.location);
+    // fallback using partial match
+    const result = findRouteByName(vm, navTarget.pathName);
+    // console.log('found-route:', result);
+    if (result) {
+      return (
+        result.path === _route.path ||
+        _route.path.startsWith(`${result.path}/`) ||
+        _route.path.startsWith(`${result.path}?`)
+      );
+    }
+  }
+
+  return isRouteMatchByLocation(vm, _route, navTarget.location);
 }
 
 /**
@@ -402,23 +399,23 @@ export function useIsRouteMatch(
  * @returns TRUE when the screen resolution is within allowable resolution.
  */
 export function useBreakpointMax(breakpoint: TBreakpoint | number): boolean {
-    switch (breakpoint) {
-        case 'xs':
-            return window.matchMedia('(max-width: 575.98px)').matches;
-        case 'sm':
-            return window.matchMedia('(max-width: 767.98px)').matches;
-        case 'md':
-            return window.matchMedia('(max-width: 991.98px)').matches;
-        case 'lg':
-            return window.matchMedia('(max-width: 1199.98px)').matches;
-        case 'xl':
-            return window.matchMedia('(max-width: 1399.98px)').matches;
-        default:
-            if (Helper.isNumber(breakpoint)) {
-                return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
-            }
-            return true;
-    }
+  switch (breakpoint) {
+    case 'xs':
+      return window.matchMedia('(max-width: 575.98px)').matches;
+    case 'sm':
+      return window.matchMedia('(max-width: 767.98px)').matches;
+    case 'md':
+      return window.matchMedia('(max-width: 991.98px)').matches;
+    case 'lg':
+      return window.matchMedia('(max-width: 1199.98px)').matches;
+    case 'xl':
+      return window.matchMedia('(max-width: 1399.98px)').matches;
+    default:
+      if (Helper.isNumber(breakpoint)) {
+        return window.matchMedia(`(max-width: ${breakpoint}px)`).matches;
+      }
+      return true;
+  }
 }
 
 /**
@@ -429,53 +426,53 @@ export function useBreakpointMax(breakpoint: TBreakpoint | number): boolean {
  * @returns TRUE when the screen resolution is within allowable resolution.
  */
 export function useBreakpointMin(breakpoint: TBreakpoint | number): boolean {
-    switch (breakpoint) {
-        case 'sm':
-            return window.matchMedia('(min-width: 576px)').matches;
-        case 'md':
-            return window.matchMedia('(min-width: 768px)').matches;
-        case 'lg':
-            return window.matchMedia('(min-width: 992px)').matches;
-        case 'xl':
-        default:
-            if (Helper.isNumber(breakpoint)) {
-                return window.matchMedia(`(min-width: ${breakpoint}px)`).matches;
-            }
+  switch (breakpoint) {
+    case 'sm':
+      return window.matchMedia('(min-width: 576px)').matches;
+    case 'md':
+      return window.matchMedia('(min-width: 768px)').matches;
+    case 'lg':
+      return window.matchMedia('(min-width: 992px)').matches;
+    case 'xl':
+    default:
+      if (Helper.isNumber(breakpoint)) {
+        return window.matchMedia(`(min-width: ${breakpoint}px)`).matches;
+      }
 
-            return window.matchMedia('(min-width: 1200px)').matches;
-    }
+      return window.matchMedia('(min-width: 1200px)').matches;
+  }
 }
 
 export function useFindParentCmp(
-    cmpNames: Array<string>,
-    maxStep = 2,
-    instance?: ComponentInternalInstance | null
+  cmpNames: Array<string>,
+  maxStep = 2,
+  instance?: ComponentInternalInstance | null
 ): ComponentInternalInstance | undefined | null {
-    const vm = instance ?? getCurrentInstance();
+  const vm = instance ?? getCurrentInstance();
 
-    if (vm) {
-        let step = 0;
-        let iterator = vm.parent;
+  if (vm) {
+    let step = 0;
+    let iterator = vm.parent;
 
-        while (iterator) {
-            // if not found then stops.
-            if (maxStep > 0 && step === maxStep + 1) {
-                iterator = null;
-                break;
-            }
-            // Found match parent: stop iterate upward
-            if (cmpNames.includes(iterator.type.name as string)) {
-                break;
-            }
-            // Not found: iterate $parent and increase step counter
-            ++step;
-            iterator = iterator.parent;
-        }
-
-        return iterator;
+    while (iterator) {
+      // if not found then stops.
+      if (maxStep > 0 && step === maxStep + 1) {
+        iterator = null;
+        break;
+      }
+      // Found match parent: stop iterate upward
+      if (cmpNames.includes(iterator.type.name as string)) {
+        break;
+      }
+      // Not found: iterate $parent and increase step counter
+      ++step;
+      iterator = iterator.parent;
     }
 
-    return null;
+    return iterator;
+  }
+
+  return null;
 }
 
 /**
@@ -484,20 +481,20 @@ export function useFindParentCmp(
  * @param args The css classes to be merged.
  */
 export function useMergeClass(...args: (string | string[])[]): string[] {
-    let result: string[] = [];
+  let result: string[] = [];
 
-    for (let i = 0; i < args.length; i++) {
-        const src = args[i];
-        if (!Helper.isEmpty(src) && Array.isArray(src)) {
-            result = result.concat(src);
-        } else if (Helper.isString(src) && !Helper.isEmpty(src)) {
-            result.push(src);
-        } else {
-            result.push(normalizeClass(src));
-        }
+  for (let i = 0; i < args.length; i++) {
+    const src = args[i];
+    if (!Helper.isEmpty(src) && Array.isArray(src)) {
+      result = result.concat(src);
+    } else if (Helper.isString(src) && !Helper.isEmpty(src)) {
+      result.push(src);
+    } else {
+      result.push(normalizeClass(src));
     }
+  }
 
-    return result;
+  return result;
 }
 
 /**
@@ -507,8 +504,8 @@ export function useMergeClass(...args: (string | string[])[]): string[] {
  * @returns Axios instance when the component instance is resolved.
  */
 export function useAxiosPlugin(): AxiosInstance | undefined {
-    const vm = getCurrentInstance();
-    return vm?.appContext.config.globalProperties.$axios;
+  const vm = getCurrentInstance();
+  return vm?.appContext.config.globalProperties.$axios;
 }
 
 /**
@@ -518,8 +515,8 @@ export function useAxiosPlugin(): AxiosInstance | undefined {
  * @returns Axios instance when the component instance is resolved.
  */
 export function useHttpService(): IHttpService | undefined {
-    const vm = getCurrentInstance();
-    return vm?.appContext.config.globalProperties.$http;
+  const vm = getCurrentInstance();
+  return vm?.appContext.config.globalProperties.$http;
 }
 
 /**
@@ -528,8 +525,8 @@ export function useHttpService(): IHttpService | undefined {
  * @returns The VueMdb plugin instance.
  */
 export function useVueMdbService(): TVueMdb | undefined {
-    const vm = getCurrentInstance();
-    return vm?.appContext.config.globalProperties.$VueMdb;
+  const vm = getCurrentInstance();
+  return vm?.appContext.config.globalProperties.$VueMdb;
 }
 
 /**
@@ -538,6 +535,6 @@ export function useVueMdbService(): TVueMdb | undefined {
  * @returns The notification provider instance.
  */
 export function useVueMdbNotification(): INotificationProvider | undefined {
-    const vm = getCurrentInstance();
-    return vm?.appContext.config.globalProperties.$VueMdb.notification;
+  const vm = getCurrentInstance();
+  return vm?.appContext.config.globalProperties.$VueMdb.notification;
 }

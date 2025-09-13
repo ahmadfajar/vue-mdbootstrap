@@ -1,42 +1,101 @@
-@use "sass:color";
-@use "sass:math";
-@use "sass:string";
+@use 'sass:color';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:string';
+@use '../color_vars' as colors;
+@use '../variables' as vars;
 
 @function round($value, $fractionDigits: 0) {
-    $power: math.pow(10, $fractionDigits);
-    @return math.div(math.round($power * $value), $power);
-}
-
-@function round-color-rgb($color, $fractionDigits: 1) {
-    $red: round(color.channel($color, "red"), $fractionDigits);
-    $green: round(color.channel($color, "green"), $fractionDigits);
-    $blue: round(color.channel($color, "blue"), $fractionDigits);
-
-    @return rgb($red, $green, $blue);
-}
-
-@function round-color-rgba($color, $fractionDigits: 1) {
-    $red: round(color.channel($color, "red"), $fractionDigits);
-    $green: round(color.channel($color, "green"), $fractionDigits);
-    $blue: round(color.channel($color, "blue"), $fractionDigits);
-    $alpha: round(color.channel($color, "alpha"), $fractionDigits);
-
-    @return rgba($red, $green, $blue, $alpha);
+  $power: math.pow(10, $fractionDigits);
+  @return math.div(math.round($power * $value), $power);
 }
 
 @function to-rgb($color, $fractionDigits: 1) {
-    $rounded-color: round-color-rgb($color, $fractionDigits);
-    @return color.channel($rounded-color, "red"), color.channel($rounded-color, "green"), color.channel($rounded-color, "blue");
+  $red: round(color.channel($color, 'red'), $fractionDigits);
+  $green: round(color.channel($color, 'green'), $fractionDigits);
+  $blue: round(color.channel($color, 'blue'), $fractionDigits);
+
+  @return rgb($red, $green, $blue);
+}
+
+@function to-rgba($color, $fractionDigits: 1) {
+  $red: round(color.channel($color, 'red'), $fractionDigits);
+  $green: round(color.channel($color, 'green'), $fractionDigits);
+  $blue: round(color.channel($color, 'blue'), $fractionDigits);
+  $alpha: round(color.channel($color, 'alpha'), $fractionDigits);
+
+  @return rgba($red, $green, $blue, $alpha);
+}
+
+@function to-oklch($color, $fractionDigits: 2) {
+  $lightness: round(color.channel($color, 'lightness', $space: oklch), $fractionDigits);
+  $chroma: round(color.channel($color, 'chroma', $space: oklch), $fractionDigits);
+  $hue: round(color.channel($color, 'hue', $space: oklch), $fractionDigits);
+  $alpha: round(color.channel($color, 'alpha', $space: oklch), max($fractionDigits, 3));
+
+  @return oklch($lightness $chroma $hue / #{$alpha});
 }
 
 @function to-hex($color) {
-    $ie-hex: color.ie-hex-str($color);
-    $c1: string.slice($ie-hex, 2, 3);
+  $ie-hex: color.ie-hex-str($color);
+  $c1: string.slice($ie-hex, 2, 3);
 
-    @if string.length($ie-hex) == 9 and $c1 == "FF" {
-        @return string.unquote("##{string.slice($ie-hex, 4)}");
+  @if string.length($ie-hex) == 9 and $c1 == 'FF' {
+    @return string.unquote('##{string.slice($ie-hex, 4)}');
+  } @else {
+    $c2: string.slice($ie-hex, 4);
+    @return string.unquote('##{$c2}#{$c1}');
+  }
+}
+
+// Returns range from 0 to 255
+@function brightness($color) {
+  $red: color.channel($color, 'red') * 299;
+  $green: color.channel($color, 'green') * 587;
+  $blue: color.channel($color, 'blue') * 114;
+
+  @return math.div(($red + $green + $blue), 1000);
+}
+
+// Returns range from 0% to 100%
+@function lightnessLevel($color) {
+  @return color.channel($color, 'lightness', $space: oklch);
+}
+
+@function set-color-contrast($bgColor, $textOnLightBg, $textOnDarkBg, $lightness: 75%) {
+  @if (lightnessLevel($bgColor) > $lightness) {
+    @return $textOnLightBg;
+  } @else {
+    @return $textOnDarkBg;
+  }
+}
+
+@function set-alt-bgcolor($color, $transparency: 0, $brightness: 170) {
+  @if (brightness($color) > 254) {
+    @if ($transparency > 0) {
+      @return color.change(vars.$default-active-bgcolor, $alpha: $transparency);
     } @else {
-        $c2: string.slice($ie-hex, 4);
-        @return string.unquote("##{$c2}#{$c1}");
+      @return colors.$white;
     }
+  } @else if (brightness($color) > $brightness) {
+    @if ($transparency > 0) {
+      @return color.change(color.adjust($color, $lightness: -35%), $alpha: ($transparency + 0.1));
+    } @else {
+      @return color.change(color.adjust($color, $lightness: -25%), $alpha: 0.2);
+    }
+  } @else {
+    @if ($transparency > 0) {
+      @return color.change(color.adjust($color, $lightness: 30%), $alpha: ($transparency + 0.1));
+    } @else {
+      @return color.change(color.adjust($color, $lightness: 25%), $alpha: 0.2);
+    }
+  }
+}
+
+@function theme-color-level($theme, $color-name: 'primary', $level: 0) {
+  $color: map.get($theme, $color-name);
+  $color-base: if($level > 0, colors.$black, colors.$white);
+  $level: math.abs($level);
+
+  @return color.mix($color-base, $color, $level * colors.$theme-color-interval);
 }

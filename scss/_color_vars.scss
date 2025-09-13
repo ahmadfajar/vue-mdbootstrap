@@ -3,329 +3,306 @@
 @use "utils/color_helper" as helper;
 
 // Gray Colors
-$gray-100: #f8f9fa;
-$gray-200: #e9ecef;
-$gray-300: #dee2e6;
-$gray-400: #ced4da;
-$gray-500: #adb5bd;
-$gray-600: #6c757d;
-$gray-700: #495057;
-$gray-800: #343a40;
-$gray-900: #212529;
-
-$grays: (
-    "100": $gray-100,
-    "200": $gray-200,
-    "300": $gray-300,
-    "400": $gray-400,
-    "500": $gray-500,
-    "600": $gray-600,
-    "700": $gray-700,
-    "800": $gray-800,
-    "900": $gray-900
-);
+$gray-100: helper.to-oklch(#f8f9fa);
+$gray-200: helper.to-oklch(#e9ecef);
+$gray-300: helper.to-oklch(#dee2e6);
+$gray-400: helper.to-oklch(#ced4da);
+$gray-500: helper.to-oklch(#adb5bd);
+$gray-600: helper.to-oklch(#6c757d);
+$gray-700: helper.to-oklch(#495057);
+$gray-800: helper.to-oklch(#343a40);
+$gray-900: helper.to-oklch(#212529);
+$gray-950: helper.to-oklch(#151517);
 
 // Material Bootstrap Colors
-$mdb-color-lighten-5:  #d0d6e2 !default;
-$mdb-color-lighten-4:  #b1bace !default;
-$mdb-color-lighten-3:  #929fba !default;
-$mdb-color-lighten-2:  #7283a7 !default;
-$mdb-color-lighten-1:  #59698d !default;
-$mdb-color-base:       #45526e !default;
-$mdb-color-darken-1:   #3b465e !default;
-$mdb-color-darken-2:   #2e3951 !default;
-$mdb-color-darken-3:   #232c40 !default;
-$mdb-color-darken-4:   #1c2331 !default;
+$midnight-haze-lighten-5:   helper.to-oklch(#d0d6e2);
+$midnight-haze-lighten-4:   helper.to-oklch(#b1bace);
+$midnight-haze-lighten-3:   helper.to-oklch(#929fba);
+$midnight-haze-lighten-2:   helper.to-oklch(#7283a7);
+$midnight-haze-lighten-1:   helper.to-oklch(#59698d);
+$midnight-haze-base:        helper.to-oklch(#45526e);
+$midnight-haze-darken-1:    helper.to-oklch(#3b465e);
+$midnight-haze-darken-2:    helper.to-oklch(#2e3951);
+$midnight-haze-darken-3:    helper.to-oklch(#232c40);
+$midnight-haze-darken-4:    helper.to-oklch(#1c2331);
 
-$red-lighten-5:  #ffebee !default;
-$red-lighten-4:  #ffcdd2 !default;
-$red-lighten-3:  #ffada7 !default;
-$red-lighten-2:  #ff887f !default;
-$red-lighten-1:  #ff6155 !default;
-$red-base:       #f44336 !default;
-$red-darken-1:   #e53935 !default;
-$red-darken-2:   #d32f2f !default;
-$red-darken-3:   #b12121 !default;
-$red-darken-4:   #951313 !default;
-$red-accent-1:   #ff8a80 !default;
-$red-accent-2:   #ff5252 !default;
-$red-accent-3:   #e03333 !default;
-$red-accent-4:   #d21b1b !default;
+$red-lighten-5:         helper.to-oklch(#ffebee);
+$red-lighten-4:         helper.to-oklch(#ffcdd2);
+$red-lighten-3:         helper.to-oklch(#ffada7);
+$red-lighten-2:         helper.to-oklch(#ff887f);
+$red-lighten-1:         helper.to-oklch(#ff6155);
+$red-base:              helper.to-oklch(#f44336);
+$red-darken-1:          helper.to-oklch(#e53935);
+$red-darken-2:          helper.to-oklch(#d32f2f);
+$red-darken-3:          helper.to-oklch(#b12121);
+$red-darken-4:          helper.to-oklch(#951313);
+$red-accent-1:          helper.to-oklch(#ff8a80);
+$red-accent-2:          helper.to-oklch(#ff5252);
+$red-accent-3:          helper.to-oklch(#e03333);
+$red-accent-4:          helper.to-oklch(#d21b1b);
 
-$pink-lighten-5:  #ffdfe7 !default;
-$pink-lighten-4:  #ffc6d5 !default;
-$pink-lighten-3:  #ffa8bf !default;
-$pink-lighten-2:  #ff8baa !default;
-$pink-lighten-1:  #ff6f95 !default;
-$pink-base:       #F65A83 !default;
-$pink-darken-1:   #dd4c72 !default;
-$pink-darken-2:   #c1385b !default;
-$pink-darken-3:   #a12747 !default;
-$pink-darken-4:   #871d39 !default;
-$pink-accent-1:   #ff80ab !default;
-$pink-accent-2:   #ff4081 !default;
-$pink-accent-3:   #da1970 !default;
-$pink-accent-4:   #c51162 !default;
+$pink-lighten-5:        helper.to-oklch(#ffdfe7);
+$pink-lighten-4:        helper.to-oklch(#ffc6d5);
+$pink-lighten-3:        helper.to-oklch(#ffa8bf);
+$pink-lighten-2:        helper.to-oklch(#ff8baa);
+$pink-lighten-1:        helper.to-oklch(#ff6f95);
+$pink-base:             helper.to-oklch(#F65A83);
+$pink-darken-1:         helper.to-oklch(#dd4c72);
+$pink-darken-2:         helper.to-oklch(#c1385b);
+$pink-darken-3:         helper.to-oklch(#a12747);
+$pink-darken-4:         helper.to-oklch(#871d39);
+$pink-accent-1:         helper.to-oklch(#ff80ab);
+$pink-accent-2:         helper.to-oklch(#ff4081);
+$pink-accent-3:         helper.to-oklch(#da1970);
+$pink-accent-4:         helper.to-oklch(#c51162);
 
-$purple-lighten-5:  #f3e5f5 !default;
-$purple-lighten-4:  #e1bee7 !default;
-$purple-lighten-3:  #ce93d8 !default;
-$purple-lighten-2:  #ba68c8 !default;
-$purple-lighten-1:  #ab47bc !default;
-$purple-base:       #9c27b0 !default;
-$purple-darken-1:   #8e24aa !default;
-$purple-darken-2:   #7b1fa2 !default;
-$purple-darken-3:   #6a1b9a !default;
-$purple-darken-4:   #581581 !default;
-$purple-accent-1:   #ea80fc !default;
-$purple-accent-2:   #e040fb !default;
-$purple-accent-3:   #bf19db !default;
-$purple-accent-4:   #9d08b7 !default;
+$purple-lighten-5:      helper.to-oklch(#f3e5f5);
+$purple-lighten-4:      helper.to-oklch(#e1bee7);
+$purple-lighten-3:      helper.to-oklch(#ce93d8);
+$purple-lighten-2:      helper.to-oklch(#ba68c8);
+$purple-lighten-1:      helper.to-oklch(#ab47bc);
+$purple-base:           helper.to-oklch(#9c27b0);
+$purple-darken-1:       helper.to-oklch(#8e24aa);
+$purple-darken-2:       helper.to-oklch(#7b1fa2);
+$purple-darken-3:       helper.to-oklch(#6a1b9a);
+$purple-darken-4:       helper.to-oklch(#581581);
+$purple-accent-1:       helper.to-oklch(#ea80fc);
+$purple-accent-2:       helper.to-oklch(#e040fb);
+$purple-accent-3:       helper.to-oklch(#bf19db);
+$purple-accent-4:       helper.to-oklch(#9d08b7);
 
-$deep-purple-lighten-5:  #ede7f6 !default;
-$deep-purple-lighten-4:  #d1c4e9 !default;
-$deep-purple-lighten-3:  #b39ddb !default;
-$deep-purple-lighten-2:  #9575cd !default;
-$deep-purple-lighten-1:  #7e57c2 !default;
-$deep-purple-base:       #6f42c1 !default;
-$deep-purple-darken-1:   #5b32a7 !default;
-$deep-purple-darken-2:   #50269b !default;
-$deep-purple-darken-3:   #3e1985 !default;
-$deep-purple-darken-4:   #300c72 !default;
-$deep-purple-accent-1:   #b388ff !default;
-$deep-purple-accent-2:   #8f67ff !default;
-$deep-purple-accent-3:   #7846ff !default;
-$deep-purple-accent-4:   #5402c5 !default;
+$deep-purple-lighten-5:  helper.to-oklch(#ede7f6);
+$deep-purple-lighten-4:  helper.to-oklch(#d1c4e9);
+$deep-purple-lighten-3:  helper.to-oklch(#b39ddb);
+$deep-purple-lighten-2:  helper.to-oklch(#9575cd);
+$deep-purple-lighten-1:  helper.to-oklch(#7e57c2);
+$deep-purple-base:       helper.to-oklch(#6f42c1);
+$deep-purple-darken-1:   helper.to-oklch(#5b32a7);
+$deep-purple-darken-2:   helper.to-oklch(#50269b);
+$deep-purple-darken-3:   helper.to-oklch(#3e1985);
+$deep-purple-darken-4:   helper.to-oklch(#300c72);
+$deep-purple-accent-1:   helper.to-oklch(#b388ff);
+$deep-purple-accent-2:   helper.to-oklch(#8f67ff);
+$deep-purple-accent-3:   helper.to-oklch(#7846ff);
+$deep-purple-accent-4:   helper.to-oklch(#5402c5);
 
-$indigo-lighten-5:  #e8eaf6 !default;
-$indigo-lighten-4:  #c5cae9 !default;
-$indigo-lighten-3:  #9fa8da !default;
-$indigo-lighten-2:  #7986cb !default;
-$indigo-lighten-1:  #5c6bc0 !default;
-$indigo-base:       #3f51b5 !default;
-$indigo-darken-1:   #3949ab !default;
-$indigo-darken-2:   #303f9f !default;
-$indigo-darken-3:   #232f89 !default;
-$indigo-darken-4:   #1a237e !default;
-$indigo-accent-1:   #8c9eff !default;
-$indigo-accent-2:   #6770eb !default;
-$indigo-accent-3:   #4a56f1 !default;
-$indigo-accent-4:   #3945dd !default;
+$indigo-lighten-5:  helper.to-oklch(#e8eaf6);
+$indigo-lighten-4:  helper.to-oklch(#c5cae9);
+$indigo-lighten-3:  helper.to-oklch(#9fa8da);
+$indigo-lighten-2:  helper.to-oklch(#7986cb);
+$indigo-lighten-1:  helper.to-oklch(#5c6bc0);
+$indigo-base:       helper.to-oklch(#3f51b5);
+$indigo-darken-1:   helper.to-oklch(#3949ab);
+$indigo-darken-2:   helper.to-oklch(#303f9f);
+$indigo-darken-3:   helper.to-oklch(#232f89);
+$indigo-darken-4:   helper.to-oklch(#1a237e);
+$indigo-accent-1:   helper.to-oklch(#8c9eff);
+$indigo-accent-2:   helper.to-oklch(#6770eb);
+$indigo-accent-3:   helper.to-oklch(#4a56f1);
+$indigo-accent-4:   helper.to-oklch(#3945dd);
 
-$blue-lighten-5:  #e3f2fd !default;
-$blue-lighten-4:  #bbdefb !default;
-$blue-lighten-3:  #90caf9 !default;
-$blue-lighten-2:  #64b5f6 !default;
-$blue-lighten-1:  #42a5f5 !default;
-$blue-base:       #2196f3 !default;
-$blue-darken-1:   #1e88e5 !default;
-$blue-darken-2:   #1976d2 !default;
-$blue-darken-3:   #125db3 !default;
-$blue-darken-4:   #0d47a1 !default;
-$blue-accent-1:   #82b1ff !default;
-$blue-accent-2:   #448aff !default;
-$blue-accent-3:   #2979ff !default;
-$blue-accent-4:   #2962ff !default;
+$blue-lighten-5:  helper.to-oklch(#e3f2fd);
+$blue-lighten-4:  helper.to-oklch(#bbdefb);
+$blue-lighten-3:  helper.to-oklch(#90caf9);
+$blue-lighten-2:  helper.to-oklch(#64b5f6);
+$blue-lighten-1:  helper.to-oklch(#42a5f5);
+$blue-base:       helper.to-oklch(#2196f3);
+$blue-darken-1:   helper.to-oklch(#1e88e5);
+$blue-darken-2:   helper.to-oklch(#1976d2);
+$blue-darken-3:   helper.to-oklch(#125db3);
+$blue-darken-4:   helper.to-oklch(#0d47a1);
+$blue-accent-1:   helper.to-oklch(#82b1ff);
+$blue-accent-2:   helper.to-oklch(#448aff);
+$blue-accent-3:   helper.to-oklch(#2979ff);
+$blue-accent-4:   helper.to-oklch(#2962ff);
 
-$light-blue-lighten-5:  #e1f5fe !default;
-$light-blue-lighten-4:  #b3e5fc !default;
-$light-blue-lighten-3:  #81d4fa !default;
-$light-blue-lighten-2:  #4fc3f7 !default;
-$light-blue-lighten-1:  #29b6f6 !default;
-$light-blue-base:       #03a9f4 !default;
-$light-blue-darken-1:   #039be5 !default;
-$light-blue-darken-2:   #0288d1 !default;
-$light-blue-darken-3:   #006daf !default;
-$light-blue-darken-4:   #01579b !default;
-$light-blue-accent-1:   #80d8ff !default;
-$light-blue-accent-2:   #40c4ff !default;
-$light-blue-accent-3:   #00b0ff !default;
-$light-blue-accent-4:   #0091ea !default;
+$light-blue-lighten-5:  helper.to-oklch(#e1f5fe);
+$light-blue-lighten-4:  helper.to-oklch(#b3e5fc);
+$light-blue-lighten-3:  helper.to-oklch(#81d4fa);
+$light-blue-lighten-2:  helper.to-oklch(#4fc3f7);
+$light-blue-lighten-1:  helper.to-oklch(#29b6f6);
+$light-blue-base:       helper.to-oklch(#03a9f4);
+$light-blue-darken-1:   helper.to-oklch(#039be5);
+$light-blue-darken-2:   helper.to-oklch(#0288d1);
+$light-blue-darken-3:   helper.to-oklch(#006daf);
+$light-blue-darken-4:   helper.to-oklch(#01579b);
+$light-blue-accent-1:   helper.to-oklch(#80d8ff);
+$light-blue-accent-2:   helper.to-oklch(#40c4ff);
+$light-blue-accent-3:   helper.to-oklch(#00b0ff);
+$light-blue-accent-4:   helper.to-oklch(#0091ea);
 
-$cyan-lighten-5:  #e0f7fa !default;
-$cyan-lighten-4:  #b2ebf2 !default;
-$cyan-lighten-3:  #80deea !default;
-$cyan-lighten-2:  #4dd0e1 !default;
-$cyan-lighten-1:  #26c6da !default;
-$cyan-base:       #00bcd4 !default;
-$cyan-darken-1:   #00acc1 !default;
-$cyan-darken-2:   #0097a7 !default;
-$cyan-darken-3:   #007985 !default;
-$cyan-darken-4:   #006064 !default;
-$cyan-accent-1:   #84ffff !default;
-$cyan-accent-2:   #18ffff !default;
-$cyan-accent-3:   #0bd3d2 !default;
-$cyan-accent-4:   #0ba1a0 !default;
+$cyan-lighten-5:  helper.to-oklch(#e0f7fa);
+$cyan-lighten-4:  helper.to-oklch(#b2ebf2);
+$cyan-lighten-3:  helper.to-oklch(#80deea);
+$cyan-lighten-2:  helper.to-oklch(#4dd0e1);
+$cyan-lighten-1:  helper.to-oklch(#26c6da);
+$cyan-base:       helper.to-oklch(#00bcd4);
+$cyan-darken-1:   helper.to-oklch(#00acc1);
+$cyan-darken-2:   helper.to-oklch(#0097a7);
+$cyan-darken-3:   helper.to-oklch(#007985);
+$cyan-darken-4:   helper.to-oklch(#006064);
+$cyan-accent-1:   helper.to-oklch(#84ffff);
+$cyan-accent-2:   helper.to-oklch(#18ffff);
+$cyan-accent-3:   helper.to-oklch(#0bd3d2);
+$cyan-accent-4:   helper.to-oklch(#0ba1a0);
 
-$teal-lighten-5:  #e0f2f1 !default;
-$teal-lighten-4:  #b2dfdb !default;
-$teal-lighten-3:  #80cbc4 !default;
-$teal-lighten-2:  #4db6ac !default;
-$teal-lighten-1:  #26a69a !default;
-$teal-base:       #009688 !default;
-$teal-darken-1:   #00897b !default;
-$teal-darken-2:   #00796b !default;
-$teal-darken-3:   #016055 !default;
-$teal-darken-4:   #004d40 !default;
-$teal-accent-1:   #a7ffeb !default;
-$teal-accent-2:   #64f9dd !default;
-$teal-accent-3:   #27c9ab !default;
-$teal-accent-4:   #14a98d !default;
+$teal-lighten-5:  helper.to-oklch(#e0f2f1);
+$teal-lighten-4:  helper.to-oklch(#b2dfdb);
+$teal-lighten-3:  helper.to-oklch(#80cbc4);
+$teal-lighten-2:  helper.to-oklch(#4db6ac);
+$teal-lighten-1:  helper.to-oklch(#26a69a);
+$teal-base:       helper.to-oklch(#009688);
+$teal-darken-1:   helper.to-oklch(#00897b);
+$teal-darken-2:   helper.to-oklch(#00796b);
+$teal-darken-3:   helper.to-oklch(#016055);
+$teal-darken-4:   helper.to-oklch(#004d40);
+$teal-accent-1:   helper.to-oklch(#a7ffeb);
+$teal-accent-2:   helper.to-oklch(#64f9dd);
+$teal-accent-3:   helper.to-oklch(#27c9ab);
+$teal-accent-4:   helper.to-oklch(#14a98d);
 
-$green-lighten-5:  #deffdf !default;
-$green-lighten-4:  #c3f9c6 !default;
-$green-lighten-3:  #9add9d !default;
-$green-lighten-2:  #78d17d !default;
-$green-lighten-1:  #59bb5e !default;
-$green-base:       #40a545 !default;
-$green-darken-1:   #37973c !default;
-$green-darken-2:   #2a832e !default;
-$green-darken-3:   #26702a !default;
-$green-darken-4:   #1b5e20 !default;
-$green-accent-1:   #b9f6ca !default;
-$green-accent-2:   #8fefaa !default;
-$green-accent-3:   #5bcd7a !default;
-$green-accent-4:   #1da762 !default;
+$green-lighten-5:  helper.to-oklch(#deffdf);
+$green-lighten-4:  helper.to-oklch(#c3f9c6);
+$green-lighten-3:  helper.to-oklch(#9add9d);
+$green-lighten-2:  helper.to-oklch(#78d17d);
+$green-lighten-1:  helper.to-oklch(#59bb5e);
+$green-base:       helper.to-oklch(#40a545);
+$green-darken-1:   helper.to-oklch(#37973c);
+$green-darken-2:   helper.to-oklch(#2a832e);
+$green-darken-3:   helper.to-oklch(#26702a);
+$green-darken-4:   helper.to-oklch(#1b5e20);
+$green-accent-1:   helper.to-oklch(#b9f6ca);
+$green-accent-2:   helper.to-oklch(#8fefaa);
+$green-accent-3:   helper.to-oklch(#5bcd7a);
+$green-accent-4:   helper.to-oklch(#1da762);
 
-$light-green-lighten-5:  #f1f8e9 !default;
-$light-green-lighten-4:  #dcedc8 !default;
-$light-green-lighten-3:  #c5e1a5 !default;
-$light-green-lighten-2:  #aed581 !default;
-$light-green-lighten-1:  #9ccc65 !default;
-$light-green-base:       #8bc34a !default;
-$light-green-darken-1:   #7cb342 !default;
-$light-green-darken-2:   #689f38 !default;
-$light-green-darken-3:   #4f832b !default;
-$light-green-darken-4:   #406823 !default;
-$light-green-accent-1:   #ccff90 !default;
-$light-green-accent-2:   #a7e75c !default;
-$light-green-accent-3:   #76b130 !default;
-$light-green-accent-4:   #508511 !default;
+$light-green-lighten-5:  helper.to-oklch(#f1f8e9);
+$light-green-lighten-4:  helper.to-oklch(#dcedc8);
+$light-green-lighten-3:  helper.to-oklch(#c5e1a5);
+$light-green-lighten-2:  helper.to-oklch(#aed581);
+$light-green-lighten-1:  helper.to-oklch(#9ccc65);
+$light-green-base:       helper.to-oklch(#8bc34a);
+$light-green-darken-1:   helper.to-oklch(#7cb342);
+$light-green-darken-2:   helper.to-oklch(#689f38);
+$light-green-darken-3:   helper.to-oklch(#4f832b);
+$light-green-darken-4:   helper.to-oklch(#406823);
+$light-green-accent-1:   helper.to-oklch(#ccff90);
+$light-green-accent-2:   helper.to-oklch(#a7e75c);
+$light-green-accent-3:   helper.to-oklch(#76b130);
+$light-green-accent-4:   helper.to-oklch(#508511);
 
-$lime-lighten-5:  #f9fbe7 !default;
-$lime-lighten-4:  #f0f4c3 !default;
-$lime-lighten-3:  #e6ee9c !default;
-$lime-lighten-2:  #dce775 !default;
-$lime-lighten-1:  #d4e157 !default;
-$lime-base:       #cddc39 !default;
-$lime-darken-1:   #bbcb21 !default;
-$lime-darken-2:   #a4b501 !default;
-$lime-darken-3:   #879502 !default;
-$lime-darken-4:   #6f7a00 !default;
-$lime-accent-1:   #f4ff81 !default;
-$lime-accent-2:   #dae75b !default;
-$lime-accent-3:   #bbc741 !default;
-$lime-accent-4:   #9ca919 !default;
+$lime-lighten-5:  helper.to-oklch(#f9fbe7);
+$lime-lighten-4:  helper.to-oklch(#f0f4c3);
+$lime-lighten-3:  helper.to-oklch(#e6ee9c);
+$lime-lighten-2:  helper.to-oklch(#dce775);
+$lime-lighten-1:  helper.to-oklch(#d4e157);
+$lime-base:       helper.to-oklch(#cddc39);
+$lime-darken-1:   helper.to-oklch(#bbcb21);
+$lime-darken-2:   helper.to-oklch(#a4b501);
+$lime-darken-3:   helper.to-oklch(#879502);
+$lime-darken-4:   helper.to-oklch(#6f7a00);
+$lime-accent-1:   helper.to-oklch(#f4ff81);
+$lime-accent-2:   helper.to-oklch(#dae75b);
+$lime-accent-3:   helper.to-oklch(#bbc741);
+$lime-accent-4:   helper.to-oklch(#9ca919);
 
-$yellow-lighten-5:  #fffde7 !default;
-$yellow-lighten-4:  #fff9c4 !default;
-$yellow-lighten-3:  #fff59d !default;
-$yellow-lighten-2:  #fff176 !default;
-$yellow-lighten-1:  #ffee58 !default;
-$yellow-base:       #ffe822 !default;
-$yellow-darken-1:   #f1dc24 !default;
-$yellow-darken-2:   #e3ce12 !default;
-$yellow-darken-3:   #d1bc02 !default;
-$yellow-darken-4:   #b3a105 !default;
-$yellow-accent-1:   #fffe6d !default;
-$yellow-accent-2:   #f3f23a !default;
-$yellow-accent-3:   #dbda18 !default;
-$yellow-accent-4:   #c1c00a !default;
+$yellow-lighten-5:  helper.to-oklch(#fffde7);
+$yellow-lighten-4:  helper.to-oklch(#fff9c4);
+$yellow-lighten-3:  helper.to-oklch(#fff59d);
+$yellow-lighten-2:  helper.to-oklch(#fff176);
+$yellow-lighten-1:  helper.to-oklch(#ffee58);
+$yellow-base:       helper.to-oklch(#ffe822);
+$yellow-darken-1:   helper.to-oklch(#f1dc24);
+$yellow-darken-2:   helper.to-oklch(#e3ce12);
+$yellow-darken-3:   helper.to-oklch(#d1bc02);
+$yellow-darken-4:   helper.to-oklch(#b3a105);
+$yellow-accent-1:   helper.to-oklch(#fffe6d);
+$yellow-accent-2:   helper.to-oklch(#f3f23a);
+$yellow-accent-3:   helper.to-oklch(#dbda18);
+$yellow-accent-4:   helper.to-oklch(#c1c00a);
 
-$amber-lighten-5:  #fff8e1 !default;
-$amber-lighten-4:  #ffecb3 !default;
-$amber-lighten-3:  #ffe082 !default;
-$amber-lighten-2:  #ffd54f !default;
-$amber-lighten-1:  #ffca28 !default;
-$amber-base:       #ffc107 !default;
-$amber-darken-1:   #efb301 !default;
-$amber-darken-2:   #e1a900 !default;
-$amber-darken-3:   #cb9800 !default;
-$amber-darken-4:   #a77d00 !default;
-$amber-accent-1:   #ffe05d !default;
-$amber-accent-2:   #f3cd2f !default;
-$amber-accent-3:   #d5b016 !default;
-$amber-accent-4:   #bd9900 !default;
+$amber-lighten-5:  helper.to-oklch(#fff8e1);
+$amber-lighten-4:  helper.to-oklch(#ffecb3);
+$amber-lighten-3:  helper.to-oklch(#ffe082);
+$amber-lighten-2:  helper.to-oklch(#ffd54f);
+$amber-lighten-1:  helper.to-oklch(#ffca28);
+$amber-base:       helper.to-oklch(#ffc107);
+$amber-darken-1:   helper.to-oklch(#efb301);
+$amber-darken-2:   helper.to-oklch(#e1a900);
+$amber-darken-3:   helper.to-oklch(#cb9800);
+$amber-darken-4:   helper.to-oklch(#a77d00);
+$amber-accent-1:   helper.to-oklch(#ffe05d);
+$amber-accent-2:   helper.to-oklch(#f3cd2f);
+$amber-accent-3:   helper.to-oklch(#d5b016);
+$amber-accent-4:   helper.to-oklch(#bd9900);
 
-$orange-lighten-5:  #fff3e0 !default;
-$orange-lighten-4:  #ffe0b2 !default;
-$orange-lighten-3:  #ffcc80 !default;
-$orange-lighten-2:  #ffb74d !default;
-$orange-lighten-1:  #ffa726 !default;
-$orange-base:       #ff9800 !default;
-$orange-darken-1:   #f38801 !default;
-$orange-darken-2:   #e77602 !default;
-$orange-darken-3:   #d15e00 !default;
-$orange-darken-4:   #a74404 !default;
-$orange-accent-1:   #ffd180 !default;
-$orange-accent-2:   #ffab40 !default;
-$orange-accent-3:   #ff9100 !default;
-$orange-accent-4:   #d37801 !default;
+$orange-lighten-5:  helper.to-oklch(#fff3e0);
+$orange-lighten-4:  helper.to-oklch(#ffe0b2);
+$orange-lighten-3:  helper.to-oklch(#ffcc80);
+$orange-lighten-2:  helper.to-oklch(#ffb74d);
+$orange-lighten-1:  helper.to-oklch(#ffa726);
+$orange-base:       helper.to-oklch(#ff9800);
+$orange-darken-1:   helper.to-oklch(#f38801);
+$orange-darken-2:   helper.to-oklch(#e77602);
+$orange-darken-3:   helper.to-oklch(#d15e00);
+$orange-darken-4:   helper.to-oklch(#a74404);
+$orange-accent-1:   helper.to-oklch(#ffd180);
+$orange-accent-2:   helper.to-oklch(#ffab40);
+$orange-accent-3:   helper.to-oklch(#ff9100);
+$orange-accent-4:   helper.to-oklch(#d37801);
 
-$deep-orange-lighten-5:  #fbe9e7 !default;
-$deep-orange-lighten-4:  #ffccbc !default;
-$deep-orange-lighten-3:  #ffab91 !default;
-$deep-orange-lighten-2:  #ff8a65 !default;
-$deep-orange-lighten-1:  #ff7043 !default;
-$deep-orange-base:       #ff5722 !default;
-$deep-orange-darken-1:   #e74613 !default;
-$deep-orange-darken-2:   #d93400 !default;
-$deep-orange-darken-3:   #c12e00 !default;
-$deep-orange-darken-4:   #a52700 !default;
-$deep-orange-accent-1:   #ff9e80 !default;
-$deep-orange-accent-2:   #ff6e40 !default;
-$deep-orange-accent-3:   #ff3d00 !default;
-$deep-orange-accent-4:   #dd2c00 !default;
+$deep-orange-lighten-5:  helper.to-oklch(#fbe9e7);
+$deep-orange-lighten-4:  helper.to-oklch(#ffccbc);
+$deep-orange-lighten-3:  helper.to-oklch(#ffab91);
+$deep-orange-lighten-2:  helper.to-oklch(#ff8a65);
+$deep-orange-lighten-1:  helper.to-oklch(#ff7043);
+$deep-orange-base:       helper.to-oklch(#ff5722);
+$deep-orange-darken-1:   helper.to-oklch(#e74613);
+$deep-orange-darken-2:   helper.to-oklch(#d93400);
+$deep-orange-darken-3:   helper.to-oklch(#c12e00);
+$deep-orange-darken-4:   helper.to-oklch(#a52700);
+$deep-orange-accent-1:   helper.to-oklch(#ff9e80);
+$deep-orange-accent-2:   helper.to-oklch(#ff6e40);
+$deep-orange-accent-3:   helper.to-oklch(#ff3d00);
+$deep-orange-accent-4:   helper.to-oklch(#dd2c00);
 
-$brown-lighten-5:  #efebe9 !default;
-$brown-lighten-4:  #d7ccc8 !default;
-$brown-lighten-3:  #bcaaa4 !default;
-$brown-lighten-2:  #a1887f !default;
-$brown-lighten-1:  #8d6e63 !default;
-$brown-base:       #795548 !default;
-$brown-darken-1:   #6d4c41 !default;
-$brown-darken-2:   #5d4037 !default;
-$brown-darken-3:   #4e342e !default;
-$brown-darken-4:   #3e2723 !default;
+$brown-lighten-5:  helper.to-oklch(#efebe9);
+$brown-lighten-4:  helper.to-oklch(#d7ccc8);
+$brown-lighten-3:  helper.to-oklch(#bcaaa4);
+$brown-lighten-2:  helper.to-oklch(#a1887f);
+$brown-lighten-1:  helper.to-oklch(#8d6e63);
+$brown-base:       helper.to-oklch(#795548);
+$brown-darken-1:   helper.to-oklch(#6d4c41);
+$brown-darken-2:   helper.to-oklch(#5d4037);
+$brown-darken-3:   helper.to-oklch(#4e342e);
+$brown-darken-4:   helper.to-oklch(#3e2723);
 
-$blue-grey-lighten-5:  #eceff1 !default;
-$blue-grey-lighten-4:  #cfd8dc !default;
-$blue-grey-lighten-3:  #b0bec5 !default;
-$blue-grey-lighten-2:  #90a4ae !default;
-$blue-grey-lighten-1:  #78909c !default;
-$blue-grey-base:       #607d8b !default;
-$blue-grey-darken-1:   #546e7a !default;
-$blue-grey-darken-2:   #455a64 !default;
-$blue-grey-darken-3:   #37474f !default;
-$blue-grey-darken-4:   #263238 !default;
+$blue-grey-lighten-5:  helper.to-oklch(#eceff1);
+$blue-grey-lighten-4:  helper.to-oklch(#cfd8dc);
+$blue-grey-lighten-3:  helper.to-oklch(#b0bec5);
+$blue-grey-lighten-2:  helper.to-oklch(#90a4ae);
+$blue-grey-lighten-1:  helper.to-oklch(#78909c);
+$blue-grey-base:       helper.to-oklch(#607d8b);
+$blue-grey-darken-1:   helper.to-oklch(#546e7a);
+$blue-grey-darken-2:   helper.to-oklch(#455a64);
+$blue-grey-darken-3:   helper.to-oklch(#37474f);
+$blue-grey-darken-4:   helper.to-oklch(#263238);
 
-$grey-lighten-5:  #fafafa !default;
-$grey-lighten-4:  #f5f5f5 !default;
-$grey-lighten-3:  #eeeeee !default;
-$grey-lighten-2:  #e0e0e0 !default;
-$grey-lighten-1:  #bdbdbd !default;
-$grey-base:       #9e9e9e !default;
-$grey-darken-1:   #757575 !default;
-$grey-darken-2:   #616161 !default;
-$grey-darken-3:   #424242 !default;
-$grey-darken-4:   #212121 !default;
+$neutral-lighten-5:  helper.to-oklch(#fafafa);
+$neutral-lighten-4:  helper.to-oklch(#f5f5f5);
+$neutral-lighten-3:  helper.to-oklch(#e5e5e5);
+$neutral-lighten-2:  helper.to-oklch(#d4d4d4);
+$neutral-lighten-1:  helper.to-oklch(#a3a3a3);
+$neutral-base:       helper.to-oklch(#737373);
+$neutral-darken-1:   helper.to-oklch(#525252);
+$neutral-darken-2:   helper.to-oklch(#404040);
+$neutral-darken-3:   helper.to-oklch(#262626);
+$neutral-darken-4:   helper.to-oklch(#171717);
 
-$black-base: #000 !default;
-$white-base: #fff !default;
+$black: #000;
+$white: #fff;
 
 $full-palette: (
-    "mdb-color": (
-        "lighten-5":  $mdb-color-lighten-5,
-        "lighten-4":  $mdb-color-lighten-4,
-        "lighten-3":  $mdb-color-lighten-3,
-        "lighten-2":  $mdb-color-lighten-2,
-        "lighten-1":  $mdb-color-lighten-1,
-        "base":       $mdb-color-base,
-        "darken-1":   $mdb-color-darken-1,
-        "darken-2":   $mdb-color-darken-2,
-        "darken-3":   $mdb-color-darken-3,
-        "darken-4":   $mdb-color-darken-4
-    ),
     "red": (
         "lighten-5":  $red-lighten-5,
         "lighten-4":  $red-lighten-4,
@@ -582,17 +559,17 @@ $full-palette: (
         "accent-3":   $deep-orange-accent-3,
         "accent-4":   $deep-orange-accent-4
     ),
-    "brown": (
-        "lighten-5":  $brown-lighten-5,
-        "lighten-4":  $brown-lighten-4,
-        "lighten-3":  $brown-lighten-3,
-        "lighten-2":  $brown-lighten-2,
-        "lighten-1":  $brown-lighten-1,
-        "base":       $brown-base,
-        "darken-1":   $brown-darken-1,
-        "darken-2":   $brown-darken-2,
-        "darken-3":   $brown-darken-3,
-        "darken-4":   $brown-darken-4
+    "midnight-haze": (
+        "lighten-5": $midnight-haze-lighten-5,
+        "lighten-4": $midnight-haze-lighten-4,
+        "lighten-3": $midnight-haze-lighten-3,
+        "lighten-2": $midnight-haze-lighten-2,
+        "lighten-1": $midnight-haze-lighten-1,
+        "base":      $midnight-haze-base,
+        "darken-1":  $midnight-haze-darken-1,
+        "darken-2":  $midnight-haze-darken-2,
+        "darken-3":  $midnight-haze-darken-3,
+        "darken-4":  $midnight-haze-darken-4
     ),
     "blue-grey": (
         "lighten-5":  $blue-grey-lighten-5,
@@ -606,17 +583,29 @@ $full-palette: (
         "darken-3":   $blue-grey-darken-3,
         "darken-4":   $blue-grey-darken-4
     ),
-    "grey": (
-        "lighten-5":  $grey-lighten-5,
-        "lighten-4":  $grey-lighten-4,
-        "lighten-3":  $grey-lighten-3,
-        "lighten-2":  $grey-lighten-2,
-        "lighten-1":  $grey-lighten-1,
-        "base":       $grey-base,
-        "darken-1":   $grey-darken-1,
-        "darken-2":   $grey-darken-2,
-        "darken-3":   $grey-darken-3,
-        "darken-4":   $grey-darken-4
+    "gray": (
+        "lighten-5": $gray-100,
+        "lighten-4": $gray-200,
+        "lighten-3": $gray-300,
+        "lighten-2": $gray-400,
+        "lighten-1": $gray-500,
+        "base":      $gray-600,
+        "darken-1":  $gray-700,
+        "darken-2":  $gray-800,
+        "darken-3":  $gray-900,
+        "darken-4":  $gray-950
+    ),
+    "neutral": (
+        "lighten-5": $neutral-lighten-5,
+        "lighten-4": $neutral-lighten-4,
+        "lighten-3": $neutral-lighten-3,
+        "lighten-2": $neutral-lighten-2,
+        "lighten-1": $neutral-lighten-1,
+        "base":      $neutral-base,
+        "darken-1":  $neutral-darken-1,
+        "darken-2":  $neutral-darken-2,
+        "darken-3":  $neutral-darken-3,
+        "darken-4":  $neutral-darken-4
     )
 );
 
@@ -625,40 +614,52 @@ $enable_full_palette:  true !default;
 $enable-gradients:     false !default;
 
 // Material colors
-$primary-color:             #0d6efd !default;
-$primary-color-dark:        #0d47a1 !default;
-$secondary-color:           #aa66cc !default;
-$secondary-color-dark:      #681c8f !default;
-$default-color:             #2bbbad !default;
-$info-color:                #0dcaf0 !default;
-$info-color-dark:           #0b6c8d !default;
-$success-color:             #198754 !default;
-$success-color-dark:        #0f5334 !default;
-$warning-color:             #ffbb33 !default;
-$warning-color-dark:        #b57a04 !default;
-$danger-color:              #dc3545 !default;
-$danger-color-dark:         #ad0000 !default;
-$elegant-color:             #2e2e2e !default;
-$elegant-color-dark:        #212121 !default;
-$stylish-color:             #4b515d !default;
-$stylish-color-dark:        #2d333e !default;
-$unique-color:              #385870 !default;
-$unique-color-dark:         #1c2331 !default;
-$special-color:             #37474f !default;
-$special-color-dark:        #263238 !default;
-$blue-green-color:          #064e40 !default;
-$blue-green-color-dark:     #022f27 !default;
-$mdb-default-color:         #5f4a97 !default;
-$mdb-default-color-dark:    #44307a !default;
-$mdb-default-color-light:   #b99ce1 !default;
-$mdb-unique-color:          #880e4f !default;
-$mdb-light-color:           #f8f9fa !default;
-$error-color:               $red-base !default;
-$white:                     $white-base;
-$black:                     $black-base;
+$default-color:             helper.to-oklch(#715eac);
+$primary-color:             helper.to-oklch(#0d6efd);
+$primary-color-dark:        helper.to-oklch(#0d47a1);
+$secondary-color:           helper.to-oklch(#aa66cc);
+$secondary-color-dark:      helper.to-oklch(#681c8f);
+$info-color:                helper.to-oklch(#20dcfb);
+$info-color-dark:           helper.to-oklch(#0b6c8d);
+$success-color:             helper.to-oklch(#1a8754);
+$success-color-dark:        helper.to-oklch(#0f5334);
+$warning-color:             helper.to-oklch(#ffbb33);
+$warning-color-dark:        helper.to-oklch(#b57a04);
+$danger-color:              helper.to-oklch(#dc3545);
+$danger-color-dark:         helper.to-oklch(#ad0000);
+$elegant-color:             helper.to-oklch(#2e2e2e);
+$elegant-color-dark:        helper.to-oklch(#212121);
+$stylish-color:             helper.to-oklch(#4b515d);
+$stylish-color-dark:        helper.to-oklch(#2d333e);
+$unique-color:              helper.to-oklch(#385870);
+$unique-color-dark:         helper.to-oklch(#1c2331);
+$special-color:             helper.to-oklch(#37474f);
+$special-color-dark:        helper.to-oklch(#263238);
+$blue-green-color:          helper.to-oklch(#064e40);
+$blue-green-color-dark:     helper.to-oklch(#022f27);
+$mdb-default-color:         helper.to-oklch(#5f4a97);
+$mdb-default-color-dark:    helper.to-oklch(#44307a);
+$mdb-default-color-light:   helper.to-oklch(#b99ce1);
+$mdb-unique-color:          helper.to-oklch(#880e4f);
+$mdb-light-color:           helper.to-oklch(#f8f9fa);
+$error-color:               $red-base;
 
 // Set a specific jump point for requesting color jumps
 $theme-color-interval:      8% !default;
+
+// This theme color is bundled by default
+// Applicable to:
+// BsButton, BsToggleButton, BsToggleField, BsCheckbox, BsChip
+$context-colors: (
+    "default":      $default-color,
+    "primary":      $primary-color,
+    "secondary":    $gray-600,
+    "success":      $success-color,
+    "danger":       $danger-color,
+    "warning":      $warning-color,
+    "info":         $info-color,
+    "light":        $gray-200,
+);
 
 // Material theme color
 // Applicable to:
@@ -702,9 +703,9 @@ $theme-colors: (
     "warning":     $warning-color,
     "danger":      $danger-color,
     "info":        $info-color,
-    "dark":        $grey-darken-4,
+    "dark":        $neutral-darken-4,
     "light":       $mdb-light-color,
-    "light-grey":  $grey-lighten-2,
+    "light-grey":  $neutral-lighten-2,
     "yellow":      $yellow-base,
     "amber":       $amber-base,
     "blue":        $blue-base,
@@ -713,38 +714,23 @@ $theme-colors: (
     "brown":       $brown-base,
     "cyan":        $cyan-base,
     "dark-blue":   $blue-darken-4,
-    "dark-green":  helper.round-color-rgb(color.adjust($green-darken-4, $lightness: 2%)),
+    "dark-green":  color.adjust($green-darken-4, $lightness: 2%),
     "deep-orange": $deep-orange-base,
     "deep-purple": $deep-purple-base,
     "green":       $green-base,
-    "grey":        $grey-base,
+    "neutral":     $neutral-base,
     "indigo":      $indigo-base,
     "light-blue":  $light-blue-lighten-2,
     "light-green": $light-green-base,
     "lime":        $lime-base,
-    "mdb-color":   $mdb-color-base,
+    "mdb-color": $midnight-haze-base,
     "orange":      $orange-base,
     "pink":        $pink-base,
     "purple":      $purple-base,
     "red":         $red-base,
     "teal":        $teal-base,
     "unique":      $mdb-unique-color,
-    "black":       $black-base
-);
-
-// This theme color is bundled by default
-$context-colors: (
-    "default":      $default-color,
-    "primary":      $primary-color,
-    "secondary":    $gray-600,
-    "info":         $info-color,
-    "success":      $success-color,
-    "warning":      $warning-color,
-    "danger":       $danger-color,
-    "grey":         $grey-base,
-    "light-grey":   $grey-lighten-2,
-    "light":        $mdb-light-color,
-    "dark":         $grey-darken-4,
+    "black":       $black
 );
 
 // Merge theme colors to reduced duplication when creating css

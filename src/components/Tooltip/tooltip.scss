@@ -10,6 +10,8 @@
     --#{vars.$prefix}tooltip-color: #{vars.$tooltip-color};
     --#{vars.$prefix}tooltip-opacity: #{vars.$tooltip-opacity};
     --#{vars.$prefix}tooltip-font-size: 13px;
+    --#{vars.$prefix}tooltip-padding-x: #{vars.$tooltip-padding-x};
+    --#{vars.$prefix}tooltip-padding-y: #{vars.$tooltip-padding-y};
 
     display: flex;
     align-items: center;
@@ -39,7 +41,7 @@
         font-size: var(--#{vars.$prefix}tooltip-font-size);
         opacity: var(--#{vars.$prefix}tooltip-opacity);
         line-height: 18px;
-        padding: 4px 10px;
+        padding: var(--#{vars.$prefix}tooltip-padding-y) var(--#{vars.$prefix}tooltip-padding-x);
         pointer-events: none;
         width: max-content;
     }

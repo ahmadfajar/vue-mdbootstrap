@@ -6,8 +6,8 @@
 @use '../../../scss/variables' as vars;
 
 .btn {
-    $disabled-bg: helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 20%));
-    $disabled-border-color: helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 20%));
+    $disabled-bg: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 20%));
+    $disabled-border-color: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 20%));
 
     --#{vars.$prefix-bs}btn-padding-y: 0;
     --#{vars.$prefix-bs}btn-padding-x: 0;
@@ -82,7 +82,7 @@
     &[class*='btn-outline'] {
         --#{vars.$prefix-bs}btn-disabled-bg: transparent;
         --#{vars.$prefix-bs}btn-disabled-color: #{colors.$gray-500};
-        --#{vars.$prefix-bs}btn-disabled-border-color: #{helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 8%))};
+        --#{vars.$prefix-bs}btn-disabled-border-color: #{helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 8%))};
     }
 
     &.#{vars.$prefix}btn-raised {
@@ -155,7 +155,7 @@
     }
 
     &.btn-xs {
-        --#{vars.$prefix-bs}btn-border-radius: #{vars.$border-radius-sm};
+        --#{vars.$prefix-bs}btn-border-radius: #{$radius};
         --#{vars.$prefix-bs}btn-font-size: 0.75rem;
         --#{vars.$prefix-bs}btn-line-height: 1;
         --#{vars.$prefix-bs}btn-state-padding-x: var(--#{vars.$prefix-bs}btn-xs-inner-padding-x);
@@ -185,15 +185,15 @@
     }
 
     &.#{vars.$prefix}rounded-sm {
-        --#{vars.$prefix-bs}btn-border-radius: #{vars.$border-radius-sm};
+        --#{vars.$prefix-bs}btn-border-radius: #{$radius};
     }
 
     &.#{vars.$prefix}rounded-pill {
-        --#{vars.$prefix-bs}btn-border-radius: #{vars.$border-radius-pill};
+        --#{vars.$prefix-bs}btn-border-radius: #{$radius-pill};
     }
 
     &[class*='btn-flat'] {
-        $disabled-color: helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 25%));
+        $disabled-color: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 25%));
 
         --#{vars.$prefix-bs}btn-disabled-bg: #{$disabled-color};
         --#{vars.$prefix-bs}btn-disabled-border-color: #{$disabled-color};
@@ -292,11 +292,11 @@
 }
 
 .#{vars.$prefix}btn-icon {
-    $disabled-bg: helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 20%));
-    $disabled-border-color: helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 20%));
+    $disabled-bg: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 20%));
+    $disabled-border-color: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 20%));
 
     --#{vars.$prefix-bs}btn-border-width: 1px;
-    --#{vars.$prefix-bs}btn-border-radius: #{vars.$border-radius-circle};
+    --#{vars.$prefix-bs}btn-border-radius: #{$radius-circle};
     --#{vars.$prefix-bs}btn-disabled-bg: #{$disabled-bg};
     --#{vars.$prefix-bs}btn-disabled-border-color: #{$disabled-border-color};
     --#{vars.$prefix-bs}btn-disabled-color: #{colors.$gray-700};
@@ -393,12 +393,12 @@
 
         &[class*='btn-outline'] {
             --#{vars.$prefix-bs}btn-state-bg: transparent;
-            --#{vars.$prefix-bs}btn-state-border-color: #{helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 8%))};
+            --#{vars.$prefix-bs}btn-state-border-color: #{helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 8%))};
             --#{vars.$prefix-bs}btn-state-color: #{colors.$gray-500};
         }
 
         &[class*='btn-flat'] {
-            $disabled-color: helper.round-color-rgb(color.adjust(colors.$gray-500, $lightness: 25%));
+            $disabled-color: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 25%));
             --#{vars.$prefix-bs}btn-state-bg: #{$disabled-color};
             --#{vars.$prefix-bs}btn-state-border-color: #{$disabled-color};
             --#{vars.$prefix-bs}btn-state-color: #{colors.$gray-600};

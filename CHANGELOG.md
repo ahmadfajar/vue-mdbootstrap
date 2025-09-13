@@ -3,6 +3,16 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.1.8
+
+Released: July xx, 2025
+
+### Improvements
+
+- **BsModal**: improve inner body height when `scrollable` and `full-page` is defined.
+- **BsTooltip**: improve inner padding and scss variables.
+
+
 ## v2.1.7
 
 Released: February 03, 2025

@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "sass:math";
 @use "color_vars" as colors;
 
@@ -7,7 +8,6 @@ $prefix-bs:                   'bs-' !default;
 
 // Fonts
 $font-size-base:              1rem !default;
-$font-weight-thin:            200;
 $font-weight-light:           300;
 $font-weight-normal:          400;
 $font-weight-semi-bold:       500;
@@ -29,57 +29,59 @@ $grid-breakpoints: (
 
 $zindex-sticky:               1020 !default;
 
+$default-active-bgcolor:      colors.$mdb-default-color !default;
+$default-hover-bgcolor:       color.change($default-active-bgcolor, $alpha: 0.06) !default;
+
 // Shadows
-$z-depth-1:                   0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 4px 8px 0 rgba(0, 0, 0, 0.12) !default;
-$z-depth-half:                0 1px 2px 0 rgba(50, 50, 50, 0.35), 0 2px 4px 2px rgba(10, 10, 10, 0.05) !default;
-$z-depth-1-half:              0 5px 11px 0 rgba(0, 0, 0, 0.18), 0 4px 15px 0 rgba(0, 0, 0, 0.15) !default;
-$z-depth-2:                   0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !default;
-$z-depth-3:                   0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19) !default;
-$z-depth-4:                   0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21) !default;
-$z-depth-5:                   0 27px 24px 0 rgba(0, 0, 0, 0.2), 0 40px 77px 0 rgba(0, 0, 0, 0.22) !default;
+//-----------------------------
+$z-depth-1:                   0 2px 5px 0 oklch(0 0 0 / 0.16), 0 4px 8px 0 oklch(0 0 0 / 0.12) !default;
+$z-depth-half:                0 1px 2px 0 oklch(0.317 0 89.876 / 0.35), 0 2px 4px 2px oklch(0.145 0 89.876 / 0.05) !default;
+$z-depth-1-half:              0 5px 11px 0 oklch(0 0 0 / 0.18), 0 4px 15px 0 oklch(0 0 0 / 0.15) !default;
+$z-depth-2:                   0 8px 17px 0 oklch(0 0 0 / 0.2), 0 6px 20px 0 oklch(0 0 0 / 0.19) !default;
+$z-depth-3:                   0 12px 15px 0 oklch(0 0 0 / 0.24), 0 17px 50px 0 oklch(0 0 0 / 0.19) !default;
+$z-depth-4:                   0 16px 28px 0 oklch(0 0 0 / 0.22), 0 25px 55px 0 oklch(0 0 0 / 0.21) !default;
+$z-depth-5:                   0 27px 24px 0 oklch(0 0 0 / 0.2), 0 40px 77px 0 oklch(0 0 0 / 0.22) !default;
 
-$default-active-bgcolor:            colors.$mdb-default-color !default;
-$default-hover-bgcolor:             rgba($default-active-bgcolor, .06) !default; // rgba($black, 0.045) !default;
-
-// Padding or Margin
+// Padding and margin variables
+//-----------------------------
 $padding-base:                      1rem !default;
 $padding-xs:                        .25rem !default;
 $padding-sm:                        $padding-base - .5 !default;
 $padding-lg:                        $padding-base + .5 !default;
 $padding-xl:                        $padding-base * 2 !default;
 
-// Borders
-$border-radius-base:                .375rem !default;
-$border-radius-sm:                  .25rem !default;
-$border-radius-lg:                  .5rem !default;
-$border-radius-pill:                50rem !default;
-$border-radius-circle:              50% !default;
-$border-width:                      1px !default;
+// Borders radius variables
+//-----------------------------
+$radius:                            .25rem !default;
+$radius-md:                         .375rem !default;
+$radius-lg:                         .5rem !default;
+$radius-pill:                       50rem !default;
+$radius-circle:                     50% !default;
 
-// Width of the `border` for generating carets that indicator dropdowns.
-$caret-width:                       .4rem;
-$caret-margin:                      .7rem;
-
-// Alerts
+// Alerts components
+//-----------------------------
 $alert-bg-level:                    -10 !default;
 $alert-border-level:                -5 !default;
 $alert-color-level:                 6 !default;
 
-// Buttons
-$btn-border-radius:                 $border-radius-lg !default;
+// Button components
+//-----------------------------
+$btn-border-radius:                 $radius-lg !default;
 $btn-border-radius-lg:              .7rem !default;
 $btn-margin-basic:                  .375rem !default;
 $btn-transition:                    color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
 
-// Cards
+// Card components
+//-----------------------------
 $card-spacer-y:                     $padding-base !default;
 $card-spacer-x:                     $padding-base !default;
 $card-title-spacer-y:               $padding-base * .5 !default;
-$card-border-width:                 $border-width !default;
+$card-border-width:                 1px !default;
 $card-cap-padding-y:                $card-spacer-y * .5 !default;
 $card-cap-padding-x:                $card-spacer-x !default;
 
-// Input Controls
+// Input controls components
+//-----------------------------
 $checkbox-size:                     20px !default;
 $checkbox-touch-size:               40px !default;
 $checkbox-stroke:                   2px !default;
@@ -101,55 +103,46 @@ $switch-inset-track-width:          52px !default;
 $switch-inset-track-height:         32px !default;
 $switch-outline-stroke:             1.5px !default;
 $switch-margin:                     .5rem .25rem !default;
-$switch-shadows:                    0 0 6px -1px rgba(#000, .1), 0 1px 1px 1px rgba(#000, .15), 0 1px 3px 0 rgba(#000, .12) !default;
-$switch-disabled-shadows:           0 2px 1px -1px rgba(#000, .2), 0 1px 1px 0 rgba(#000, .14), 0 1px 3px 0 rgba(#000, .12) !default;
+$switch-shadows:                    0 0 6px -1px oklch(0 0 0 / 0.1), 0 1px 1px 1px oklch(0 0 0 / 0.15), 0 1px 3px 0 oklch(0 0 0 / 0.12) !default;
+$switch-disabled-shadows:           0 2px 1px -1px oklch(0 0 0 / 0.2), 0 1px 1px 0 oklch(0 0 0 / 0.14), 0 1px 3px 0 oklch(0 0 0 / 0.12) !default;
 
-$text-field-height:                 3.5rem !default;
+$text-field-height:                 3.5rem !default;,
 $text-field-padding-top:            1.625rem !default;
 $text-field-padding-bottom:         .375rem !default;
-$text-field-border-radius:          $border-radius-base !default;
+$text-field-border-radius: $radius-md !default;
 $text-field-line-height:            1.5rem !default;
 $text-field-opacity:                .6 !default;
 $text-field-hover-opacity:          .9 !default;
 $text-field-support-text-opacity:   .65 !default;
 
-// Tabs
+// Tabs components
+//-----------------------------
 $tabs-item-spacing:                 .375rem !default;
 $tabs-item-padding:                 .75rem 1.25rem !default;
 $tabs-material-indicator-border:    .2rem !default;
 $tabs-material-padding:             1.125rem 1.5rem 1rem 1.5rem !default;
 $tabs-modern-padding:               .625rem 1.25rem !default;
-$tabs-modern-border-radius:         $border-radius-pill !default;
-$tabs-placement-top-shadow:         0px 4px 5px rgba(#000, .15), 0px 2px 2px rgba(#000, .14), 0px 3px 1px -2px rgba(#000, .12) !default;
-$tabs-placement-bottom-shadow:      0px -1px 5px rgba(#000, .2), 0px -1px 2px rgba(#000, .14), 0px -3px 1px -2px rgba(#000, .12) !default;
-$tabs-placement-left-shadow:        1px 0px 5px rgba(#000, .2), 2px 0px 2px rgba(#000, .14), 3px 0px 1px -2px rgba(#000, .12) !default;
-$tabs-placement-right-shadow:       -1px 0px 5px rgba(#000, .2), -2px 0px 2px rgba(#000, .14), -3px 0px 1px -2px rgba(#000, .12) !default;
+$tabs-modern-border-radius: $radius-pill !default;
+$tabs-placement-top-shadow:         0px 4px 5px oklch(0 0 0 / 0.15), 0px 2px 2px oklch(0 0 0 / 0.14), 0px 3px 1px -2px oklch(0 0 0 / 0.12) !default;
+$tabs-placement-bottom-shadow:      0px -1px 5px oklch(0 0 0 / 0.2), 0px -1px 2px oklch(0 0 0 / 0.14), 0px -3px 1px -2px oklch(0 0 0 / 0.12) !default;
+$tabs-placement-left-shadow:        1px 0px 5px oklch(0 0 0 / 0.2), 2px 0px 2px oklch(0 0 0 / 0.14), 3px 0px 1px -2px oklch(0 0 0 / 0.12) !default;
+$tabs-placement-right-shadow:       -1px 0px 5px oklch(0 0 0 / 0.2), -2px 0px 2px oklch(0 0 0 / 0.14), -3px 0px 1px -2px oklch(0 0 0 / 0.12) !default;
 
-// Table
-$table-border-color:                rgba(#000, .1);
-$table-border-width:                1px !default;
-$table-cell-padding:                $padding-base - .4;
-$table-font-size:                   .9rem;
-$table-checkbox-selection-size:     math.floor(($table-font-size + $table-cell-padding) * 2);
-$table-header-color:                colors.$gray-900;
-$table-header-bgcolor:              colors.$grey-lighten-4;
-$table-hover-bgcolor:               $default-hover-bgcolor;
-$table-text-color:                  colors.$black;
-
-// Tooltips
+// Tooltips components
+//-----------------------------
 $tooltip-max-width:                 200px !default;
 $tooltip-color:                     colors.$white !default;
 $tooltip-bg:                        colors.$black !default;
-$tooltip-border-radius:             $border-radius-base !default;
+$tooltip-border-radius: $radius-md !default;
 $tooltip-opacity:                   .9 !default;
-$tooltip-padding-y:                 $padding-base * .25 !default;
-$tooltip-padding-x:                 $padding-base * .5 !default;
+$tooltip-padding-y:                 .25rem !default;
+$tooltip-padding-x:                 .625rem !default;
 $tooltip-arrow-width:               .8rem !default;
 $tooltip-arrow-height:              .4rem !default;
 
 
 // Transitions variables
-//-----------------------
+//-----------------------------
 $transition-basic:                  all .3s ease-in-out !default;
 $transition-hoverable:              all .55s ease-in-out !default;
 $transition-duration-base:          .45s !default;

@@ -1,5 +1,5 @@
-import loCamelCase from 'lodash/camelCase';
-import loKebabCase from 'lodash/kebabCase';
+import loCamelCase from 'lodash-es/camelCase';
+import loKebabCase from 'lodash-es/kebabCase';
 
 /**
  * Pads the input string with a given string (possibly repeated) so that the resulting string
@@ -15,13 +15,13 @@ import loKebabCase from 'lodash/kebabCase';
  * @returns New String that has been padded on the left side.
  */
 export function padLeft(str: string | number, maxLength = 2, fillString = '0'): string {
-    const outString = String(str);
+  const outString = String(str);
 
-    if (outString.length >= maxLength) {
-        return outString;
-    }
+  if (outString.length >= maxLength) {
+    return outString;
+  }
 
-    return outString.padStart(maxLength, fillString);
+  return outString.padStart(maxLength, fillString);
 }
 
 /**
@@ -38,13 +38,13 @@ export function padLeft(str: string | number, maxLength = 2, fillString = '0'): 
  * @returns New String that has been padded on the right side.
  */
 export function padRight(str: string | number, maxLength = 2, fillString = '0'): string {
-    const outString = String(str);
+  const outString = String(str);
 
-    if (outString.length >= maxLength) {
-        return outString;
-    }
+  if (outString.length >= maxLength) {
+    return outString;
+  }
 
-    return outString.padEnd(maxLength, fillString);
+  return outString.padEnd(maxLength, fillString);
 }
 
 /**
@@ -54,16 +54,20 @@ export function padRight(str: string | number, maxLength = 2, fillString = '0'):
  * @returns New string that has been transform to Title Case.
  */
 export function titleCase(text?: string): string {
-    return (
-        text
-            ?.toLowerCase()
-            .split(/[-_\s]+/)
-            .map(function (word: string) {
-                return word?.replace(word[0], word[0]?.toUpperCase());
-            })
-            .join(' ')
-            .trim() ?? ''
-    );
+  if (!text) {
+    return '';
+  }
+
+  return (
+    text
+      ?.toLowerCase()
+      .split(/[-_\s]+/)
+      .map(function (word: string) {
+        return word.replace(word[0]!, word[0]!.toUpperCase());
+      })
+      .join(' ')
+      .trim() ?? ''
+  );
 }
 
 /**
@@ -74,13 +78,13 @@ export function titleCase(text?: string): string {
  * @returns Array of chunked strings.
  */
 export function chunk(source: string, size = 1): string[] {
-    const chunked: string[] = [];
+  const chunked: string[] = [];
 
-    for (let i = 0; i < source.length; i += size) {
-        chunked.push(source.substring(i, size + i));
-    }
+  for (let i = 0; i < source.length; i += size) {
+    chunked.push(source.substring(i, size + i));
+  }
 
-    return chunked;
+  return chunked;
 }
 
 /**
@@ -94,51 +98,59 @@ export function chunk(source: string, size = 1): string[] {
  * @param replaces          Optional, the encoded characters or replacement characters for the given `chars`.
  */
 export function encodeSpecialChars(
-    source: string,
-    excludeDblQuote = false,
-    chars?: string[],
-    replaces?: string[]
+  source: string,
+  excludeDblQuote = false,
+  chars?: string[],
+  replaces?: string[]
 ): string {
-    const validReps =
-        Array.isArray(chars) &&
-        Array.isArray(replaces) &&
-        chars.length > 0 &&
-        chars.length === replaces.length;
-    const s1 = validReps ? chars : ['#', '!', '$', '%', '&', '<', '>', '?', '@'];
-    const s2 = validReps ? replaces : ['23', '21', '24', '25', '26', '3C', '3E', '3F', '40'];
-    const nLength = source.length;
-    let retVal = '';
+  const validReps =
+    Array.isArray(chars) &&
+    Array.isArray(replaces) &&
+    chars.length > 0 &&
+    chars.length === replaces.length;
+  const s1 = validReps ? chars : ['#', '!', '$', '%', '&', '<', '>', '?', '@'];
+  const s2 = validReps ? replaces : ['23', '21', '24', '25', '26', '3C', '3E', '3F', '40'];
+  const nLength = source.length;
+  let retVal = '';
 
-    for (let i = 0; i < nLength; i++) {
-        if (source.at(i) === '"' && !excludeDblQuote) {
-            retVal += '&#' + source.codePointAt(i) + ';';
-        } else if (s1.includes(source.charAt(i))) {
-            const n = s1.indexOf(source.charAt(i));
-            if ((s2[n] as string).startsWith('%')) {
-                retVal += s2[n];
-            } else {
-                retVal += '%' + s2[n];
-            }
-        } else {
-            retVal += source.charAt(i);
-        }
+  for (let i = 0; i < nLength; i++) {
+    if (source.at(i) === '"' && !excludeDblQuote) {
+      retVal += '&#' + source.codePointAt(i) + ';';
+    } else if (s1.includes(source.charAt(i))) {
+      const n = s1.indexOf(source.charAt(i));
+      if ((s2[n] as string).startsWith('%')) {
+        retVal += s2[n];
+      } else {
+        retVal += '%' + s2[n];
+      }
+    } else {
+      retVal += source.charAt(i);
     }
+  }
 
-    return retVal;
+  return retVal;
 }
 
 export function camelCase(text: string): string {
-    return loCamelCase(text);
+  return loCamelCase(text);
 }
 
 export function kebabCase(text: string): string {
-    return loKebabCase(text);
+  return loKebabCase(text);
 }
 
 export function isEndWith(str?: string, searches?: string[]): boolean {
-    if (str && searches) {
-        return searches.some((s) => str.endsWith(s));
-    }
+  if (str && searches) {
+    return searches.some((s) => str.endsWith(s));
+  }
 
-    return false;
+  return false;
+}
+
+export function isContains(str?: string, searches?: string[]): boolean {
+  if (str && searches) {
+    return searches.some((s) => str.includes(s));
+  }
+
+  return false;
 }

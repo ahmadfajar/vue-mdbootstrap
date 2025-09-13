@@ -1,12 +1,12 @@
-@use "../mixins/listview";
-@use "../color_vars" as colors;
+@use '../mixins/listview';
+@use '../color_vars' as colors;
 
 // BsListTile, BsListNav and BsListView with custom colors
 //---------------------------------------------------------
 @each $name, $color in colors.$custom-theme-colors {
-    @include listview.make-listview-variant($name, $color);
+  @include listview.make-listview-variant($name, $color);
 }
 
 @each $name, $color in colors.$custom-theme-colors {
-    @include listview.make-list-tile-variant($name, $color);
+  @include listview.make-list-tile-variant($name, $color);
 }

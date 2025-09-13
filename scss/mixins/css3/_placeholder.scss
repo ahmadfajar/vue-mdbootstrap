@@ -1,19 +1,29 @@
-@use "../../variables" as vars;
+@use '../../variables' as vars;
 
 // Input Placeholder mixins
 //--------------------------
 @mixin input-placeholder {
-    &::placeholder { @content; }
-    &:-ms-input-placeholder { @content; }
-    &:-moz-placeholder { @content; }
-    &::-moz-placeholder { @content; }
-    &::-webkit-input-placeholder { @content; }
+  &::placeholder {
+    @content;
+  }
+  &:-ms-input-placeholder {
+    @content;
+  }
+  &:-moz-placeholder {
+    @content;
+  }
+  &::-moz-placeholder {
+    @content;
+  }
+  &::-webkit-input-placeholder {
+    @content;
+  }
 }
 
 @mixin decorate-input-placeholder {
-    @include input-placeholder {
-        color: currentColor;
-        font-weight: vars.$font-weight-light;
-        opacity: .65;
-    };
+  @include input-placeholder {
+    color: currentColor;
+    font-weight: vars.$font-weight-light;
+    opacity: 0.65;
+  }
 }

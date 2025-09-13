@@ -2,20 +2,20 @@
  * Hue, Saturation, Value and Alpha color values.
  */
 export declare type HSVA = {
-    h: number;
-    s: number;
-    v: number;
-    a: number;
+  h: number;
+  s: number;
+  v: number;
+  a: number;
 };
 
 /**
  * Hue, Saturation, Lightness and Alpha color values.
  */
 export declare type HSLA = {
-    h: number;
-    s: number;
-    l: number;
-    a: number;
+  h: number;
+  s: number;
+  l: number;
+  a: number;
 };
 
 /**

@@ -1,9 +1,9 @@
-@use "sass:map";
-@use "../mixins/checkbox";
-@use "../color_vars" as colors;
+@use 'sass:map';
+@use '../mixins/checkbox';
+@use '../color_vars' as colors;
 
 // BsCheckbox with custom colors
 //-------------------------------
-@each $name, $color in map.remove(colors.$custom-theme-colors, "default-color") {
-    @include checkbox.make-default-variant($name, $color);
+@each $name, $color in map.remove(colors.$custom-theme-colors, 'default-color') {
+  @include checkbox.make-default-variant($name, $color);
 }

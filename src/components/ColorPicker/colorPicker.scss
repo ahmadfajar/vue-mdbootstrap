@@ -8,7 +8,7 @@ $cmpCssName: "#{vars.$prefix}color-picker-";
 $markerSize: 14px;
 
 .#{vars.$prefix}color-picker {
-    --#{vars.$prefix}slider-thumb-color: #{color.scale(colors.$grey-base, $lightness: -20%)};
+    --#{vars.$prefix}slider-thumb-color: #{color.scale($neutral-base, $lightness: -20%)};
 
     @include borders.radius(var(--#{vars.$prefix-bs}border-radius));
     display: inline-block;
@@ -22,7 +22,7 @@ $markerSize: 14px;
         width: 100%;
 
         > .#{$cmpCssName}canvas-marker {
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             background-color: currentColor;
             height: $markerSize;
             width: $markerSize;
@@ -62,13 +62,13 @@ $markerSize: 14px;
             position: relative;
 
             > .#{$cmpCssName}selected-color {
-                @include borders.radius(vars.$border-radius-circle);
+                @include borders.radius($radius-circle);
                 border: colors.$gray-200 1px solid;
                 width: 100%;
                 height: 100%;
 
                 > .#{$cmpCssName}selected-color-alpha {
-                    @include borders.radius(vars.$border-radius-circle);
+                    @include borders.radius($radius-circle);
                     background-color: currentColor;
                     height: 100%;
                     width: 100%;
@@ -102,7 +102,7 @@ $markerSize: 14px;
             --#{vars.$prefix}slider-thumb-surface-opacity: 0;
             --#{vars.$prefix}slider-thumb-ripple-opacity: 0;
 
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             background-color: var(--#{vars.$prefix}slider-thumb-color);
             box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05);
             color: var(--#{vars.$prefix}slider-thumb-color);
@@ -114,7 +114,7 @@ $markerSize: 14px;
             cursor: pointer;
 
             > .#{vars.$prefix}slider-thumb-surface {
-                @include borders.radius(vars.$border-radius-circle);
+                @include borders.radius($radius-circle);
                 background-color: var(--#{vars.$prefix}slider-thumb-color);
                 height: 100%;
                 width: 100%;
@@ -122,7 +122,7 @@ $markerSize: 14px;
                 user-select: none;
 
                 &:before {
-                    @include borders.radius(vars.$border-radius-circle);
+                    @include borders.radius($radius-circle);
                     background-color: currentColor;
                     content: "";
                     height: 100%;
@@ -137,7 +137,7 @@ $markerSize: 14px;
             }
 
             > .#{vars.$prefix}slider-thumb-ripple {
-                @include borders.radius(vars.$border-radius-circle);
+                @include borders.radius($radius-circle);
                 background-color: var(--#{vars.$prefix}slider-thumb-color);
                 opacity: var(--#{vars.$prefix}slider-thumb-ripple-opacity);
                 height: $markerSize * 2;
@@ -227,7 +227,7 @@ $markerSize: 14px;
         padding: 12px;
 
         > .#{vars.$prefix}swatch-button {
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
             background-position: 0 0, 4px 4px;
             background-size: 8px 8px;
@@ -242,7 +242,7 @@ $markerSize: 14px;
             white-space: nowrap;
 
             &:after {
-                @include borders.radius(vars.$border-radius-circle);
+                @include borders.radius($radius-circle);
                 box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
                 background-color: currentColor;
                 content: '';

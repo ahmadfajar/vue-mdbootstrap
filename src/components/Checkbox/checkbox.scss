@@ -1,14 +1,13 @@
 @use "sass:map";
 @use "../../../scss/mixins/css3/borders";
 @use "../../../scss/mixins/checkbox";
-@use "../../../scss/utils/color_functions" as color_utils;
 @use "../../../scss/color_vars" as colors;
 @use "../../../scss/variables" as vars;
 
 .#{vars.$prefix}checkbox {
     --#{vars.$prefix}checkbox-size: #{vars.$checkbox-size};
     --#{vars.$prefix}checkbox-touch-size: #{vars.$checkbox-touch-size};
-    --#{vars.$prefix}checkbox-border-radius: #{vars.$border-radius-sm};
+    --#{vars.$prefix}checkbox-border-radius: #{$radius};
     --#{vars.$prefix}checkbox-stroke: #{vars.$checkbox-stroke};
     --#{vars.$prefix}checkbox-margin: #{vars.$checkbox-margin};
     --#{vars.$prefix}checkbox-indeterminate-width: #{vars.$checkbox-indeterminate-width};
@@ -54,7 +53,7 @@
         }
 
         &:before {
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             height: var(--#{vars.$prefix}checkbox-touch-size);
             width: var(--#{vars.$prefix}checkbox-touch-size);
             transform: translate(-50%, -50%);
@@ -77,7 +76,7 @@
         }
 
         .#{vars.$prefix}checkbox-overlay {
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             background-color: var(--#{vars.$prefix}checkbox-state-overlay-bg);
             opacity: var(--#{vars.$prefix}checkbox-state-overlay-opacity);
             height: var(--#{vars.$prefix}checkbox-touch-size);
@@ -91,7 +90,7 @@
         }
 
         .#{vars.$prefix}ripple {
-            @include borders.radius(vars.$border-radius-circle);
+            @include borders.radius($radius-circle);
             height: var(--#{vars.$prefix}checkbox-touch-size);
             width: var(--#{vars.$prefix}checkbox-touch-size);
             left: 50% !important;
