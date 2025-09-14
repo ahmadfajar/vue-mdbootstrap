@@ -1,5 +1,5 @@
 import type { TIconFlip, TIconRotation, TSizeProps } from '@/components/Icon/types';
-import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps';
+import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
 import type { Numberish } from '@/types';
 import type { Prop } from 'vue';
 

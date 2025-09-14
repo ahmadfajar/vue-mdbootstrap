@@ -1,10 +1,10 @@
-import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi';
-import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps';
+import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
+import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps.ts';
 import {
   useGetGoogleIcon,
   useRenderIconFromSVG,
   useSvgIconClasses,
-} from '@/components/Icon/mixins/svgApi';
+} from '@/components/Icon/mixins/svgApi.ts';
 import type { TBsSvgIcon, TIconData, TSvgIconOptionProps } from '@/components/Icon/types';
 import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';

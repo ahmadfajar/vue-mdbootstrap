@@ -14,6 +14,16 @@ import { RouteLocationAsRelativeGeneric, RouteLocationRaw } from 'vue-router';
 
 export declare type TBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xs';
 
+export declare type TContextColor =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  | 'light'
+  | 'default';
+
 export declare type TLabelPosition = 'left' | 'right';
 
 export declare type Numberish = number | string;
@@ -22,7 +32,7 @@ export declare type MaybeNumberish = number | string | undefined | null;
 
 export declare type TRecord = Record<string, unknown>;
 
-export declare type TClassName = string | string[] | Record<string, any>;
+export declare type TClassNames = string | string[] | Record<string, any>;
 
 export declare type RawProps = VNodeProps & TRecord;
 

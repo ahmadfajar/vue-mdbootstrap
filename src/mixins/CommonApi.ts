@@ -1,3 +1,13 @@
+import type {
+  IHttpService,
+  INotificationProvider,
+  TBreakpoint,
+  TRecord,
+  TRouterLinkProps,
+  TRouterOptionProps,
+  TVueMdb,
+} from '@/types';
+import Helper from '@/utils/Helper';
 import type { AxiosInstance } from 'axios';
 import type {
   ComponentInternalInstance,
@@ -27,16 +37,6 @@ import type {
   RouteLocationNormalizedLoaded,
   RouteRecordRaw,
 } from 'vue-router';
-import type {
-  IHttpService,
-  INotificationProvider,
-  TBreakpoint,
-  TRecord,
-  TRouterLinkProps,
-  TRouterOptionProps,
-  TVueMdb,
-} from '@/types';
-import Helper from '@/utils/Helper';
 
 export const cssPrefix = 'md-';
 
@@ -321,7 +321,7 @@ function isRouteMatchByLocation(
 
       const found = entries1.every((el1): boolean => {
         return entries2.some((el2): boolean => {
-          return el1[0] == el2[0] && el1[1] == el2[1];
+          return el1[0] === el2[0] && el1[1] === el2[1];
         });
       });
 

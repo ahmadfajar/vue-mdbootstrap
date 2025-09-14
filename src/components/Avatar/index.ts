@@ -1,10 +1,10 @@
 import type { App, ObjectPlugin } from 'vue';
-import BsAvatar from './BsAvatar';
+import BsAvatar from './BsAvatar.ts';
 
 const BsAvatarPlugin: ObjectPlugin = {
-    install: (app: App): void => {
-        app.component(BsAvatar.name as string, BsAvatar);
-    },
+  install: (app: App): void => {
+    app.component(BsAvatar.name as string, BsAvatar);
+  },
 };
 
-export { BsAvatarPlugin, BsAvatar };
+export { BsAvatar, BsAvatarPlugin };

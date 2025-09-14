@@ -1,6 +1,6 @@
 import type { TSizeOptionProps, TSizeProps } from '@/components/Icon/types';
 import type { MaybeNumberish, TRecord } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 
 /**
  * Normalize icon name by trimming spaces and make it lowercase. The returns
@@ -50,6 +50,7 @@ export function useGetCalcSize(props: Readonly<TSizeOptionProps>): number {
     return 0;
   } else {
     const size = useSizeHeight(props) ?? useSizeWidth(props);
+
     if (Helper.isString(size)) {
       if (size.endsWith('em') || size.endsWith('rem')) {
         return parseFloat(size) * 16;

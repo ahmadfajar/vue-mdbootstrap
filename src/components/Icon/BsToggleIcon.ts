@@ -1,6 +1,6 @@
-import { toggleIconProps } from '@/components/Icon/mixins/iconProps';
+import { toggleIconProps } from '@/components/Icon/mixins/iconProps.ts';
 import type { TBsSvgIcon, TBsToggleIcon, TToggleIconOptionProps } from '@/components/Icon/types';
-import { cssPrefix } from '@/mixins/CommonApi';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { defineComponent, h } from 'vue';
 import BsIconSvg from './BsSvgIcon.ts';
 

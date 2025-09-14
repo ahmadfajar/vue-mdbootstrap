@@ -1,7 +1,7 @@
-import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi';
-import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps';
+import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
+import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps.ts';
 import type { TBsIcon, TBsSvgIcon, TIconOptionProps } from '@/components/Icon/types';
-import { cssPrefix } from '@/mixins/CommonApi';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp, stringOrArrayProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';

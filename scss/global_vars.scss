@@ -21,5 +21,8 @@
     --#{vars.$prefix}field-disabled-opacity: 0.4;
     --#{vars.$prefix}field-readonly-opacity: 0.55;
     --#{vars.$prefix}caret-size: 6px;
+
+    --#{vars.$prefix}radius: #{vars.$radius-md};
+    --#{vars.$prefix}radius-pill: #{vars.$radius-pill};
   }
 }

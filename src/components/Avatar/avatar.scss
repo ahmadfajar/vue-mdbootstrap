@@ -1,6 +1,7 @@
-@use "../../../scss/variables" as vars;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}avatar {
+@layer components {
+  .#{vars.$prefix}avatar {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -11,14 +12,15 @@
     position: relative;
 
     > .#{vars.$prefix}avatar-text {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: vars.$font-weight-semi-bold;
-        font-size: inherit;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: vars.$font-weight-semi-bold;
+      font-size: inherit;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      text-transform: uppercase;
     }
+  }
 }

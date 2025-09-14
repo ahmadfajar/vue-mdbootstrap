@@ -159,20 +159,36 @@
     overflow-y: hidden;
   }
 
+  .rounded {
+    border-radius: var(--#{vars.$prefix}radius);
+  }
+
+  .rounded-circle {
+    border-radius: #{vars.$radius-circle};
+  }
+
+  .rounded-pill {
+    border-radius: var(--#{vars.$prefix}radius-pill);
+  }
+
+  .rounded-0 {
+    border-radius: 0;
+  }
+
   .rounded-top-0 {
-    @include borders.top-radius(0 !important);
+    @include borders.top-radius(0);
   }
 
   .rounded-bottom-0 {
-    @include borders.bottom-radius(0 !important);
+    @include borders.bottom-radius(0);
   }
 
   .rounded-start-0 {
-    @include borders.start-radius(0 !important);
+    @include borders.start-radius(0);
   }
 
   .rounded-end-0 {
-    @include borders.end-radius(0 !important);
+    @include borders.end-radius(0);
   }
 
   .font-weight-bold {
