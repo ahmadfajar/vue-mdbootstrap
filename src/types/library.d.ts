@@ -24,6 +24,17 @@ export declare type TContextColor =
   | 'light'
   | 'default';
 
+export declare type HtmlTagName =
+  | 'div'
+  | 'nav'
+  | 'main'
+  | 'header'
+  | 'aside'
+  | 'article'
+  | 'section'
+  | 'span'
+  | string;
+
 export declare type TLabelPosition = 'left' | 'right';
 
 export declare type Numberish = number | string;
@@ -32,7 +43,7 @@ export declare type MaybeNumberish = number | string | undefined | null;
 
 export declare type TRecord = Record<string, unknown>;
 
-export declare type TClassNames = string | string[] | Record<string, any>;
+export declare type TClassList = string | string[] | Record<string, any>;
 
 export declare type RawProps = VNodeProps & TRecord;
 
@@ -50,11 +61,11 @@ export declare type TDebounce = {
 
 export declare type TEmitFn = (event: string, ...args: unknown[]) => void;
 
-export declare type TDirectiveBinding = {
+export declare interface TDirectiveBinding {
   handler: VoidFunction | EventListener | EventListenerTarget;
   debounce?: number;
   target?: string | Element | Document | Window;
-};
+}
 
 export declare type TRouterLinkProps = AllowedComponentProps &
   VNodeProps & {

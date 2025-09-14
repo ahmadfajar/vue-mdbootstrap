@@ -2,6 +2,7 @@ import type {
   IHttpService,
   INotificationProvider,
   TBreakpoint,
+  TClassList,
   TRecord,
   TRouterLinkProps,
   TRouterOptionProps,
@@ -108,7 +109,7 @@ export function useRenderSlot(
 export function useRenderSlotDefault(
   tag: string,
   slots?: Slots,
-  classes?: string | string[] | TRecord,
+  classes?: TClassList,
   styles?: TRecord
 ): VNode {
   return slots
@@ -444,35 +445,32 @@ export function useBreakpointMin(breakpoint: TBreakpoint | number): boolean {
 }
 
 export function useFindParentCmp(
-  cmpNames: Array<string>,
+  componentNames: Array<string>,
   maxStep = 2,
   instance?: ComponentInternalInstance | null
 ): ComponentInternalInstance | undefined | null {
   const vm = instance ?? getCurrentInstance();
+  if (!vm) return null;
 
-  if (vm) {
-    let step = 0;
-    let iterator = vm.parent;
+  let step = 0;
+  let iterator = vm.parent;
 
-    while (iterator) {
-      // if not found then stops.
-      if (maxStep > 0 && step === maxStep + 1) {
-        iterator = null;
-        break;
-      }
-      // Found match parent: stop iterate upward
-      if (cmpNames.includes(iterator.type.name as string)) {
-        break;
-      }
-      // Not found: iterate $parent and increase step counter
-      ++step;
-      iterator = iterator.parent;
+  while (iterator) {
+    // if not found then stops.
+    if (maxStep > 0 && step === maxStep + 1) {
+      iterator = null;
+      break;
     }
-
-    return iterator;
+    // Found match parent: stop iterate upward
+    if (componentNames.includes(iterator.type.name as string)) {
+      break;
+    }
+    // Not found: iterate $parent and increase step counter
+    ++step;
+    iterator = iterator.parent;
   }
 
-  return null;
+  return iterator;
 }
 
 /**
@@ -481,10 +479,12 @@ export function useFindParentCmp(
  * @param args The css classes to be merged.
  */
 export function useMergeClass(...args: (string | string[])[]): string[] {
+  const count = args.length;
   let result: string[] = [];
 
-  for (let i = 0; i < args.length; i++) {
+  for (let i = 0; i < count; i++) {
     const src = args[i];
+
     if (!Helper.isEmpty(src) && Array.isArray(src)) {
       result = result.concat(src);
     } else if (Helper.isString(src) && !Helper.isEmpty(src)) {

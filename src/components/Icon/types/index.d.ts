@@ -1,4 +1,10 @@
-import { BaseComponentProps, EventUpdateModelValueProps, Numberish, TRecord } from '@/types';
+import {
+  BaseComponentProps,
+  EventUpdateModelValueProps,
+  Numberish,
+  TClassList,
+  TContextColor,
+} from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 
 export declare type TFontAwesomeVariant =
@@ -86,7 +92,7 @@ export declare type TIconOptionProps = TSizeOptionProps &
     /**
      * Apply additional css class to the SVG.
      */
-    svgClass?: string | string[] | TRecord;
+    svgClass?: TClassList;
   };
 
 export declare type TSvgIconOptionProps = TSizeOptionProps & TIconBaseProps;
@@ -133,14 +139,14 @@ export declare type TFontawesomeIconOptionProps = TSizeOptionProps & {
   /**
    * Apply additional css class to the SVG.
    */
-  svgClass?: string | string[] | TRecord;
+  svgClass?: TClassList;
 };
 
 export declare type TSpinnerIconOptionProps = {
   /**
    * The Icon color.
    */
-  color?: string;
+  color?: TContextColor | string;
 
   /**
    * The icon’s size in pixel.

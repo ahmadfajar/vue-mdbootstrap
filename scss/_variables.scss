@@ -29,8 +29,8 @@ $grid-breakpoints: (
 
 $zindex-sticky:               1020 !default;
 
-$default-active-bgcolor:      colors.$mdb-default-color !default;
-$default-hover-bgcolor:       color.change($default-active-bgcolor, $alpha: 0.06) !default;
+$default-active-bgcolor:      color.change(colors.$mdb-default-color, $alpha: 0.2) !default;
+$default-hover-bgcolor:       color.change($default-active-bgcolor, $alpha: 0.1) !default;
 
 // Shadows
 //-----------------------------

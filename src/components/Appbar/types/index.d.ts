@@ -1,83 +1,91 @@
-import {
-    AllowedComponentProps,
-    ComponentCustomProps,
-    ComponentObjectPropsOptions,
-    ObjectPlugin,
-    VNode,
-    VNodeProps
-} from 'vue';
+import { BaseComponentProps, HtmlTagName } from '@/types';
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 
 export declare type TAppbarOptionProps = {
-    /**
-     * Cut off the left side of the component.
-     */
-    clippedLeft?: boolean;
-    /**
-     * Cut off the right side of the component.
-     */
-    clippedRight?: boolean;
-    /**
-     * Placed `Appbar` fixed at the top of the page.
-     * See [Bootstrap Position](https://getbootstrap.com/docs/5.3/helpers/position/) documentation.
-     */
-    fixedTop?: boolean;
-    /**
-     * Always stick `Appbar` at top of the page.
-     * See [Bootstrap Position](https://getbootstrap.com/docs/5.3/helpers/position/) documentation.
-     */
-    stickyTop?: boolean;
-    /**
-     * Add shadow effect to this component.
-     */
-    shadow?: boolean;
-    /**
-     * Html tag used to render this component.
-     */
-    tag?: string;
-}
+  /**
+   * Cut off the left side of the component.
+   */
+  clippedLeft?: boolean;
+
+  /**
+   * Cut off the right side of the component.
+   */
+  clippedRight?: boolean;
+
+  /**
+   * Placed `Appbar` fixed at the top of the page.
+   * See [Bootstrap Position](https://getbootstrap.com/docs/5.3/helpers/position/) documentation.
+   */
+  fixedTop?: boolean;
+
+  /**
+   * Always stick `Appbar` at top of the page.
+   * See [Bootstrap Position](https://getbootstrap.com/docs/5.3/helpers/position/) documentation.
+   */
+  stickyTop?: boolean;
+
+  /**
+   * Add shadow effect to this component.
+   */
+  shadow?: boolean;
+
+  /**
+   * Html tag used to render this component.
+   */
+  tag?: HtmlTagName;
+};
 
 export declare type TAppbarTitleOptionProps = {
-    /**
-     * The text to display.
-     */
-    title?: string;
-}
+  /**
+   * The text to display.
+   */
+  title?: string;
+};
 
 export declare type TBsAppbar = ComponentObjectPropsOptions<TAppbarOptionProps>;
 
 export declare type TBsAppbarTitle = ComponentObjectPropsOptions<TAppbarTitleOptionProps>;
 
-declare type AllowedAppbarProps = AllowedComponentProps & ComponentCustomProps & VNodeProps & {
-    onResize?: (target: HTMLElement) => void;
-    '@resize'?: (target: HTMLElement) => void;
+declare interface AllowedAppbarProps extends BaseComponentProps {
+  /**
+   * Fired when this component size is changed.
+   */
+  onResize?: (target: HTMLElement) => void;
+
+  /**
+   * Fired when this component size is changed.
+   */
+  '@resize'?: (target: HTMLElement) => void;
 }
 
 export declare const BsAppbar: {
-    new(): {
-        $props: AllowedAppbarProps & TAppbarOptionProps;
-        $slots: {
-            default?: () => VNode[];
-        };
-        $emit: ['resize'];
+  new (): {
+    $props: AllowedAppbarProps & TAppbarOptionProps;
+    $slots: {
+      default?: () => VNode[];
     };
-};
-
-export declare const BsAppbarTitle: {
-    new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps & TAppbarTitleOptionProps;
-        $slots: {
-            default?: () => VNode[];
-        };
+    $emits: {
+      (event: 'resize', target: HTMLElement): void;
     };
+  };
 };
 
 export declare const BsAppbarItems: {
-    new(): {
-        $props: AllowedComponentProps & ComponentCustomProps & VNodeProps;
-        $slots: {
-            default?: () => VNode[];
-        };
+  new (): {
+    $props: BaseComponentProps;
+    $slots: {
+      default?: () => VNode[];
     };
+  };
+};
+
+export declare const BsAppbarTitle: {
+  new (): {
+    $props: BaseComponentProps & TAppbarTitleOptionProps;
+    $slots: {
+      default?: () => VNode[];
+    };
+  };
 };
 
 export declare const BsAppbarPlugin: ObjectPlugin;

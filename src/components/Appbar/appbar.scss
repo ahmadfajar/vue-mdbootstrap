@@ -1,56 +1,59 @@
-@use "../../../scss/mixins/css3/decorators";
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use '../../../scss/mixins/css3/decorators';
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}appbar {
-    --#{vars.$prefix}appbar-bg: #{colors.$white};
-    --#{vars.$prefix}appbar-color: #{$neutral-darken-4};
+@layer components {
+  .#{vars.$prefix}appbar {
+    --#{vars.$prefix}appbar-bg: var(--appbar-background, #{colors.$white});
+    --#{vars.$prefix}appbar-color: var(--appbar-foreground, #{colors.$neutral-darken-4});
     --#{vars.$prefix}appbar-height: 64px;
-    --#{vars.$prefix}appbar-margin: #{vars.$padding-sm (vars.$padding-base - .25) vars.$padding-sm vars.$padding-base};
+    --#{vars.$prefix}appbar-padding: #{vars.$padding-sm (vars.$padding-base - 0.25) vars.$padding-sm vars.$padding-base};
     --#{vars.$prefix}appbar-title-font-size: 1.5rem;
     --#{vars.$prefix}appbar-title-font-weight: #{vars.$font-weight-normal};
 
-    justify-content: flex-start;
+    justify-self: flex-start;
     background-color: var(--#{vars.$prefix}appbar-bg);
+    color: var(--#{vars.$prefix}appbar-color);
     max-width: 100%;
 
-    > .#{vars.$prefix}appbar-content {
-        display: flex;
-        align-items: center;
-        flex-direction: row;
-        height: var(--#{vars.$prefix}appbar-height);
-        padding: var(--#{vars.$prefix}appbar-margin);
-
-        > .#{vars.$prefix}appbar-title {
-            @include decorators.text-ellipsis();
-            font-size: var(--#{vars.$prefix}appbar-title-font-size);
-            font-weight: var(--#{vars.$prefix}appbar-title-font-weight);
-            line-height: normal;
-            margin: 0 vars.$padding-base;
-
-            > a {
-                color: inherit;
-                text-decoration: none;
-            }
-
-            &:first-child {
-                margin-left: 0;
-            }
-        }
-
-        > .#{vars.$prefix}appbar-items {
-            display: flex;
-            max-width: 100%;
-            padding: 0;
-        }
-    }
-
     &.smooth-animation {
-        transition: vars.$transition-default;
-        // @include transition(.35s cubic-bezier(.5, .35, .75, 1));
+      transition: vars.$transition-default;
     }
 
     &.#{vars.$prefix}appbar-shadow {
-        box-shadow: vars.$z-depth-1;
+      box-shadow: vars.$z-depth-1;
     }
+
+    > .#{vars.$prefix}appbar-content {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      height: var(--#{vars.$prefix}appbar-height);
+      padding: var(--#{vars.$prefix}appbar-padding);
+    }
+
+    .#{vars.$prefix}appbar-title {
+      @include decorators.truncate();
+      color: var(--#{vars.$prefix}appbar-color);
+      font-size: var(--#{vars.$prefix}appbar-title-font-size);
+      font-weight: var(--#{vars.$prefix}appbar-title-font-weight);
+      line-height: normal;
+      margin: 0 vars.$padding-base;
+
+      > a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+    }
+
+    .#{vars.$prefix}appbar-items {
+      display: flex;
+      max-width: 100%;
+      padding: 0;
+    }
+  }
 }

@@ -1,4 +1,4 @@
-import { BaseComponentProps, Numberish } from '@/types';
+import { BaseComponentProps, type HtmlTagName, Numberish } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, TransitionProps, VNode } from 'vue';
 
 export declare type TRippleOptionProps = {
@@ -22,7 +22,7 @@ export declare type TRippleOptionProps = {
   /**
    * Html tag used to render this component.
    */
-  tag?: string;
+  tag?: HtmlTagName;
 };
 
 export declare type TOverlayOptionProps = {
