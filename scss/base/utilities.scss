@@ -1,70 +1,346 @@
 @use '../mixins/css3/borders';
 @use '../variables' as vars;
 
-.overflow-x-hidden {
-  overflow-x: hidden !important;
-}
+@layer utilities {
+  .mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.overflow-y-hidden {
-  overflow-y: hidden !important;
-}
+  .mx-0 {
+    margin-right: 0;
+    margin-left: 0;
+  }
 
-.#{vars.$prefix}link {
-  cursor: pointer;
-}
+  .my-0 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 
-.#{vars.$prefix}fw-bold {
-  font-weight: vars.$font-weight-bold !important;
-}
+  .ms-auto {
+    margin-left: auto;
+  }
 
-.#{vars.$prefix}fw-bolder {
-  font-weight: vars.$font-weight-boldest !important;
-}
+  .ms-0 {
+    margin-left: 0;
+  }
 
-.#{vars.$prefix}fw-semibold {
-  font-weight: vars.$font-weight-semi-bold !important;
-}
+  .mt-0 {
+    margin-top: 0;
+  }
 
-.#{vars.$prefix}fw-light {
-  font-weight: vars.$font-weight-light !important;
-}
+  .me-auto {
+    margin-right: auto;
+  }
 
-.#{vars.$prefix}border {
-  border: thin solid !important;
-}
+  .me-0 {
+    margin-right: 0;
+  }
 
-.rounded-top-0 {
-  @include borders.top-radius(0 !important);
-}
+  .mb-0 {
+    margin-bottom: 0;
+  }
 
-.rounded-bottom-0 {
-  @include borders.bottom-radius(0 !important);
-}
+  .px-0 {
+    padding-right: 0;
+    padding-left: 0;
+  }
 
-.rounded-start-0 {
-  @include borders.start-radius(0 !important);
-}
+  .py-0 {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 
-.rounded-end-0 {
-  @include borders.end-radius(0 !important);
-}
+  .ps-0 {
+    padding-left: 0;
+  }
 
-.triangle-up,
-.caret-up {
-  width: 0;
-  height: 0;
-  border-left: var(--#{vars.$prefix}caret-size) solid transparent;
-  border-right: var(--#{vars.$prefix}caret-size) solid transparent;
-  border-bottom: var(--#{vars.$prefix}caret-size) solid currentColor;
-  display: inline-block;
-}
+  .pe-0 {
+    padding-right: 0;
+  }
 
-.triangle-down,
-.caret-down {
-  width: 0;
-  height: 0;
-  border-left: var(--#{vars.$prefix}caret-size) solid transparent;
-  border-right: var(--#{vars.$prefix}caret-size) solid transparent;
-  border-top: var(--#{vars.$prefix}caret-size) solid currentColor;
-  display: inline-block;
+  .pt-0 {
+    padding-top: 0;
+  }
+
+  .pb-0 {
+    padding-bottom: 0;
+  }
+
+  .relative {
+    position: relative;
+  }
+
+  .absolute {
+    position: absolute;
+  }
+
+  .absolute-top {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .absolute-bottom {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .fixed {
+    position: fixed;
+  }
+
+  .fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
+
+  .fixed-bottom {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .sticky {
+    position: sticky;
+  }
+
+  .sticky-top {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+
+  .sticky-bottom {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+  }
+
+  .float-start {
+    float: left;
+  }
+
+  .float-end {
+    float: right;
+  }
+
+  .float-none {
+    float: none;
+  }
+
+  .overflow-auto {
+    overflow: auto;
+  }
+
+  .overflow-hidden {
+    overflow: hidden;
+  }
+
+  .overflow-visible {
+    overflow: visible;
+  }
+
+  .overflow-scroll {
+    overflow: scroll;
+  }
+
+  .overflow-x-hidden {
+    overflow-x: hidden;
+  }
+
+  .overflow-y-hidden {
+    overflow-y: hidden;
+  }
+
+  .rounded-top-0 {
+    @include borders.top-radius(0 !important);
+  }
+
+  .rounded-bottom-0 {
+    @include borders.bottom-radius(0 !important);
+  }
+
+  .rounded-start-0 {
+    @include borders.start-radius(0 !important);
+  }
+
+  .rounded-end-0 {
+    @include borders.end-radius(0 !important);
+  }
+
+  .font-weight-bold {
+    font-weight: vars.$font-weight-bold;
+  }
+
+  .font-weight-bolder {
+    font-weight: vars.$font-weight-boldest;
+  }
+
+  .font-weight-semibold {
+    font-weight: vars.$font-weight-semi-bold;
+  }
+
+  .font-weight-normal {
+    font-weight: vars.$font-weight-normal;
+  }
+
+  .font-weight-light {
+    font-weight: vars.$font-weight-light;
+  }
+
+  .border-thin {
+    border: thin solid;
+  }
+
+  .border-0 {
+    border: 0;
+  }
+
+  .border-top-0 {
+    border-top: 0;
+  }
+
+  .border-bottom-0 {
+    border-bottom: 0;
+  }
+
+  .border-start-0 {
+    border-left: 0;
+  }
+
+  .border-end-0 {
+    border-right: 0;
+  }
+
+  .border-none {
+    border: none;
+  }
+
+  .h-full {
+    height: 100%;
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  .h-vh {
+    height: 100vh;
+  }
+
+  .w-vw {
+    width: 100vw;
+  }
+
+  .h-svh {
+    height: 100svh;
+  }
+
+  .w-svh {
+    width: 100svw;
+  }
+
+  .max-h-full {
+    max-height: 100%;
+  }
+
+  .max-w-full {
+    max-width: 100%;
+  }
+
+  .align-baseline {
+    vertical-align: baseline;
+  }
+
+  .align-top {
+    vertical-align: top;
+  }
+
+  .align-middle {
+    vertical-align: middle;
+  }
+
+  .align-bottom {
+    vertical-align: bottom;
+  }
+
+  .align-text-bottom {
+    vertical-align: text-bottom;
+  }
+
+  .align-text-top {
+    vertical-align: text-top;
+  }
+
+  .triangle-up,
+  .caret-up {
+    width: 0;
+    height: 0;
+    border-left: var(--#{vars.$prefix}caret-size) solid transparent;
+    border-right: var(--#{vars.$prefix}caret-size) solid transparent;
+    border-bottom: var(--#{vars.$prefix}caret-size) solid currentColor;
+    display: inline-block;
+  }
+
+  .triangle-down,
+  .caret-down {
+    width: 0;
+    height: 0;
+    border-left: var(--#{vars.$prefix}caret-size) solid transparent;
+    border-right: var(--#{vars.$prefix}caret-size) solid transparent;
+    border-top: var(--#{vars.$prefix}caret-size) solid currentColor;
+    display: inline-block;
+  }
+
+  .#{vars.$prefix}shadow-0 {
+    box-shadow: none;
+  }
+
+  .#{vars.$prefix}shadow {
+    border-width: 0;
+    box-shadow:
+      0 1px 2px 0 rgba(60, 64, 67, 0.35),
+      0 1px 4px 3px rgba(60, 64, 67, 0.05);
+  }
+
+  .#{vars.$prefix}shadow-1 {
+    border-width: 0;
+    box-shadow: vars.$z-depth-1-half;
+  }
+
+  .#{vars.$prefix}shadow-2 {
+    border-width: 0;
+    box-shadow: vars.$z-depth-2;
+  }
+
+  .#{vars.$prefix}shadow-3 {
+    border-width: 0;
+    box-shadow: vars.$z-depth-3;
+  }
+
+  .#{vars.$prefix}shadow-4 {
+    border-width: 0;
+    box-shadow: vars.$z-depth-4;
+  }
+
+  .#{vars.$prefix}shadow-5 {
+    border-width: 0;
+    box-shadow: vars.$z-depth-5;
+  }
+
+  .#{vars.$prefix}hover-shadow {
+    box-shadow: none;
+    transition: vars.$transition-hoverable;
+
+    &:hover {
+      box-shadow: vars.$z-depth-2;
+    }
+  }
 }

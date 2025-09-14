@@ -16,42 +16,42 @@
   @return $return;
 }
 
-@mixin radius($radius: $radius-md) {
+@mixin radius($radius: vars.$radius-md) {
   border-radius: valid-radius($radius);
 }
 
-@mixin top-radius($radius: $radius-md) {
+@mixin top-radius($radius: vars.$radius-md) {
   border-top-left-radius: valid-radius($radius);
   border-top-right-radius: valid-radius($radius);
 }
 
-@mixin end-radius($radius: $radius-md) {
+@mixin end-radius($radius: vars.$radius-md) {
   border-top-right-radius: valid-radius($radius);
   border-bottom-right-radius: valid-radius($radius);
 }
 
-@mixin bottom-radius($radius: $radius-md) {
+@mixin bottom-radius($radius: vars.$radius-md) {
   border-bottom-right-radius: valid-radius($radius);
   border-bottom-left-radius: valid-radius($radius);
 }
 
-@mixin start-radius($radius: $radius-md) {
+@mixin start-radius($radius: vars.$radius-md) {
   border-top-left-radius: valid-radius($radius);
   border-bottom-left-radius: valid-radius($radius);
 }
 
-@mixin top-start-radius($radius: $radius-md) {
+@mixin top-start-radius($radius: vars.$radius-md) {
   border-top-left-radius: valid-radius($radius);
 }
 
-@mixin top-end-radius($radius: $radius-md) {
+@mixin top-end-radius($radius: vars.$radius-md) {
   border-top-right-radius: valid-radius($radius);
 }
 
-@mixin bottom-end-radius($radius: $radius-md) {
+@mixin bottom-end-radius($radius: vars.$radius-md) {
   border-bottom-right-radius: valid-radius($radius);
 }
 
-@mixin bottom-start-radius($radius: $radius-md) {
+@mixin bottom-start-radius($radius: vars.$radius-md) {
   border-bottom-left-radius: valid-radius($radius);
 }

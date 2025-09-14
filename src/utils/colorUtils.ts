@@ -2,17 +2,17 @@ import { chunk } from '@/utils/StringHelper.ts';
 import type { HSLA, HSVA, RGBA } from '@/utils/types/colorUtils';
 
 /**
- * Convert HSLA to HSVA.
+ * Convert HSL to HSV color space.
  *
  * @param color The HSLA color values.
  * @return The HSVA color values.
  */
 export function hslaToHsva(color: HSLA): HSVA {
-  const s = color.s >= 0 && color.s <= 1 ? color.s : color.s / 100;
-  const l = color.l >= 0 && color.l <= 1 ? color.l : color.l / 100;
+  const sat = color.s >= 0 && color.s <= 1 ? color.s : color.s / 100;
+  const light = color.l >= 0 && color.l <= 1 ? color.l : color.l / 100;
 
-  const value = l + s * Math.min(l, 1 - l);
-  const saturation = value === 0 ? 0 : 2 - (2 * l) / value;
+  const value = light + sat * Math.min(light, 1 - light);
+  const saturation = value === 0 ? 0 : 2 - (2 * light) / value;
 
   return {
     h: color.h,
@@ -23,7 +23,27 @@ export function hslaToHsva(color: HSLA): HSVA {
 }
 
 /**
- * Convert HSVA to HSLA.
+ * Convert HSL to sRGB color space.
+ *
+ * @param color The HSLA color value.
+ * @return The RGBA color value.
+ */
+export function hslaToRgba(color: HSLA): RGBA {
+  const sat = color.s >= 0 && color.s <= 1 ? color.s : color.s / 100;
+  const light = color.l >= 0 && color.l <= 1 ? color.l : color.l / 100;
+
+  function f(n) {
+    let k = (n + color.h / 30) % 12;
+    let a = sat * Math.min(light, 1 - light);
+
+    return light - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+  }
+
+  return { r: f(0), g: f(8), b: f(4), a: color.a };
+}
+
+/**
+ * Convert HSV to HSL color space.
  *
  * @param color The HSV color values.
  * @return The HSL color values.
@@ -46,7 +66,7 @@ export function hsvaToHsla(color: HSVA): HSLA {
 }
 
 /**
- * Convert HSVA to RGBA.
+ * Convert HSV to sRGB color space.
  *
  * @param color The HSVA color values.
  * @return The RGBA color values.
@@ -76,7 +96,7 @@ export function hsvaToRgba(color: HSVA): RGBA {
 }
 
 /**
- * Convert CSS HEX color format to RGBA color.
+ * Convert CSS HEX color format to sRGB color space.
  *
  * @param color The css HEX color value.
  * @return The RGBA color values.
@@ -91,7 +111,56 @@ export function hexToRgba(color: string): RGBA {
 }
 
 /**
- * Convert RGBA to HSVA.
+ * Convert sRGB to HSL color space.
+ *
+ * @param color The RGBA color
+ * @return The HSL color value: Hue as degrees 0..360, Saturation and Lightness in reference range [0,100]
+ */
+export function rgbaToHsla(color: RGBA): HSLA {
+  let max = Math.max(color.r, color.g, color.b);
+  let min = Math.min(color.r, color.g, color.b);
+  let [hue, sat, light] = [NaN, 0, (min + max) / 2];
+  let delta = max - min;
+  let epsilon = 1 / 100000; // max Sat is 1, in this code
+
+  if (delta !== 0) {
+    sat = light === 0 || light === 1 ? 0 : (max - light) / Math.min(light, 1 - light);
+
+    switch (max) {
+      case color.r:
+        hue = (color.g - color.b) / delta + (color.g < color.b ? 6 : 0);
+        break;
+      case color.g:
+        hue = (color.b - color.r) / delta + 2;
+        break;
+      case color.b:
+        hue = (color.r - color.g) / delta + 4;
+    }
+
+    hue = hue * 60;
+  }
+
+  // Very out of gamut colors can produce negative saturation
+  // If so, just rotate the hue by 180 and use a positive saturation
+  // see https://github.com/w3c/csswg-drafts/issues/9222
+  if (sat < 0) {
+    hue += 180;
+    sat = Math.abs(sat);
+  }
+
+  if (hue >= 360) {
+    hue -= 360;
+  }
+
+  if (sat <= epsilon) {
+    hue = NaN;
+  }
+
+  return { h: hue, s: sat * 100, l: light * 100, a: color.a };
+}
+
+/**
+ * Convert sRGB to HSV color space.
  *
  * @param color The RGBA color values.
  * @return The HSVA color values.
@@ -133,7 +202,7 @@ export function rgbaToHsva(color: RGBA): HSVA {
 }
 
 /**
- * Parse a string to RGBA.
+ * Parse a rgb/rgba color string to sRGB color space.
  *
  * @param canvasCtx  The canvas rendering context
  * @param source     String representing a color.

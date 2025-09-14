@@ -6,6 +6,12 @@
 //----------------------
 @layer components {
   :root {
+    --font-sans-serif: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --font-size: 1rem;
+    --font-weight: normal;
+    --line-height: 1.5;
+
     --#{vars.$prefix}field-primary-indicator: oklch(0.458 0.23 304.441);
     --#{vars.$prefix}field-accent-indicator: oklch(0.743 0.102 303.276);
     --#{vars.$prefix}field-active-indicator: oklch(0.458 0.23 304.441);

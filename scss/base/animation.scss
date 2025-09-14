@@ -266,4 +266,21 @@
       opacity: 0;
     }
   }
+
+  @keyframes #{vars.$prefix}spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .#{vars.$prefix}spin {
+    animation: #{vars.$prefix}spin 2s infinite linear;
+  }
+
+  .#{vars.$prefix}pulse {
+    animation: #{vars.$prefix}spin 1.5s infinite steps(8);
+  }
 }

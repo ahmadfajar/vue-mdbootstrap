@@ -2,7 +2,7 @@
 @use '../../utils/color_helper' as helper;
 @use '../../variables' as vars;
 
-@mixin text-ellipsis($no-wrap: true) {
+@mixin truncate($no-wrap: true) {
   @if $no-wrap {
     white-space: nowrap;
   }
@@ -23,11 +23,11 @@
     @if $name2 {
       .bg-#{$name1},
       .bg-#{$name2} {
-        background-color: rgba($color, var(--#{vars.$prefix-bs}bg-opacity)) !important;
+        background-color: $color;
       }
     } @else {
       .bg-#{$name1} {
-        background-color: rgba($color, var(--#{vars.$prefix-bs}bg-opacity)) !important;
+        background-color: $color;
       }
     }
   }
@@ -36,11 +36,11 @@
     @if $name2 {
       .border-#{$name1},
       .border-#{$name2} {
-        border-color: rgba($color, var(--#{vars.$prefix-bs}border-opacity)) !important;
+        border-color: $color;
       }
     } @else {
       .border-#{$name1} {
-        border-color: rgba($color, var(--#{vars.$prefix-bs}border-opacity)) !important;
+        border-color: $color;
       }
     }
   }
@@ -49,11 +49,11 @@
     @if $name2 {
       .text-#{$name1},
       .text-#{$name2} {
-        color: rgba($color, var(--#{vars.$prefix-bs}text-opacity)) !important;
+        color: $color;
       }
     } @else {
       .text-#{$name1} {
-        color: rgba($color, var(--#{vars.$prefix-bs}text-opacity)) !important;
+        color: $color;
       }
     }
   }
@@ -64,18 +64,14 @@
       a.text-#{$name2} {
         &:hover,
         &:focus {
-          color: helper.to-hex(
-            helper.to-rgb(color.adjust($color, $lightness: -15%))
-          ) !important;
+          color: helper.to-oklch(color.adjust($color, $lightness: -15%));
         }
       }
     } @else {
       a.text-#{$name1} {
         &:hover,
         &:focus {
-          color: helper.to-hex(
-            helper.to-rgb(color.adjust($color, $lightness: -15%))
-          ) !important;
+          color: helper.to-oklch(color.adjust($color, $lightness: -15%));
         }
       }
     }

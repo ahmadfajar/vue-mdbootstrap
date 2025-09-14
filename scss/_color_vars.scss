@@ -299,8 +299,8 @@ $neutral-darken-2:   helper.to-oklch(#404040);
 $neutral-darken-3:   helper.to-oklch(#262626);
 $neutral-darken-4:   helper.to-oklch(#171717);
 
-$black: oklch(0 0 0);
-$white: oklch(1 0 89.876);
+$black: #000;
+$white: #fff;
 
 $full-palette: (
     "red": (
