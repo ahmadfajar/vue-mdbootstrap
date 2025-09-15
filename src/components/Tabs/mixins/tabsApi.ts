@@ -9,7 +9,7 @@ import type {
     IVNode,
     TBsIcon,
     TBsTabItem,
-    TIconProps,
+    TAllowedIconProps,
     TOrientation,
     TRecord,
     TRouterLinkProps,
@@ -98,7 +98,7 @@ export function useItemLinkClassNames(
 
 function renderTabIconWithCondition(
     condition: boolean,
-    props: Readonly<TIconProps>,
+    props: Readonly<TAllowedIconProps>,
     iconSize?: string | number,
     unMatchCondition?: VNode
 ): VNode {

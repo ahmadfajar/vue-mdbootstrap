@@ -6,11 +6,11 @@ import {
     VNode,
     VNodeProps,
 } from 'vue';
-import { EventUpdateModelValueProps, EventVoidClosableProps, TIconProps } from '../../../types';
+import { EventUpdateModelValueProps, EventVoidClosableProps, TAllowedIconProps } from '../../../types';
 
 export declare type TAlertVariant = 'success' | 'info' | 'warning' | 'danger' | 'help';
 
-export declare type TAlertOptionProps = TIconProps & {
+export declare type TAlertOptionProps = TAllowedIconProps & {
     /**
      * Alert color
      */

@@ -8,6 +8,8 @@
   ],
   "exclude": [
     "node_modules",
+    "eslint.config.mjs",
+    "rollup.config.dts.mjs",
     "src/**/__tests__/*"
   ],
   "compilerOptions": {

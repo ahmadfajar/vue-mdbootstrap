@@ -1,7 +1,7 @@
-export { createVueMdb } from './createVueMdb';
-export { default as Helper } from './utils/Helper';
-export { AxiosPlugin } from './utils/AxiosPlugin';
-export * from './model';
-export * from './shared';
-export * from './directives';
-export * from './components';
+export { default as Helper } from '@/utils/Helper.ts';
+export { AxiosPlugin } from '@/utils/AxiosPlugin.ts';
+export * from '@/model';
+export * from '@/shared.ts';
+export * from '@/components';
+export * from '@/directives';
+export { createVueMdb } from '@/createVueMdb.ts';

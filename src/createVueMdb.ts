@@ -1,8 +1,8 @@
+import * as _cmpPlugins from '@/components';
+import * as _directives from '@/directives';
+import { AxiosPlugin } from '@/utils/AxiosPlugin.ts';
 import type { App, Component } from 'vue';
 import { createApp } from 'vue';
-import * as _cmpPlugins from './components';
-import * as _directives from './directives';
-import { AxiosPlugin } from './utils/AxiosPlugin';
 
 export function createVueMdb(rootComponent: Component): App {
   const vApp = createApp(rootComponent);

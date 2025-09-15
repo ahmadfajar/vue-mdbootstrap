@@ -1,5 +1,5 @@
 import type { EventListenerTarget, IBindingElement, TDirectiveBinding } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import type { Directive, DirectiveBinding } from 'vue';
 
 interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {

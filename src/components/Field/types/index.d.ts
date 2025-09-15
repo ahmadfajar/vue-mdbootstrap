@@ -7,13 +7,7 @@ import {
     VNode,
     VNodeProps,
 } from 'vue';
-import {
-    EventUpdateModelValueProps,
-    TInputBaseProps,
-    TLabelPosition,
-    TPopoverPosition,
-    TSpaceAround,
-} from '../../../types';
+import { EventUpdateModelValueProps, TLabelPosition, TPopoverPosition, TSpaceAround, } from '../../../types';
 
 export declare type TFieldType = 'text' | 'email' | 'password' | 'tel' | 'url';
 
@@ -37,23 +31,46 @@ export declare interface TComputedValidationResult {
 }
 
 export declare type TValidationProps = {
-    /**
-     * The help text to display below the field component.
-     */
-    helpText?: string;
-    /**
-     * Show persistent help text or not.
-     */
-    persistentHelpText?: boolean;
-    /**
-     * The external validator plugin to be used to validate this field value.
-     */
-    validator?: TValidator;
-    /**
-     * @deprecated
-     * Use `validator` property instead.
-     */
-    externalValidator?: TValidator;
+  /**
+   * The help text to display below the field component.
+   */
+  helpText?: string;
+  /**
+   * Show persistent help text or not.
+   */
+  persistentHelpText?: boolean;
+  /**
+   * The external validator plugin to be used to validate this field value.
+   */
+  validator?: TValidator;
+  /**
+   * @deprecated
+   * Use `validator` property instead.
+   */
+  externalValidator?: TValidator;
+};
+
+export declare type TInputBaseProps = {
+  /**
+   * Sets the `<input>` element `ID` attribute. This property value is auto generates.
+   */
+  id?: string;
+  /**
+   * Sets the `<input>` element `name` attribute.
+   */
+  name?: string | number;
+  /**
+   * This input field state.
+   */
+  disabled?: boolean;
+  /**
+   * This input field state.
+   */
+  readonly?: boolean;
+  /**
+   * Whether this input field is required or not.
+   */
+  required?: boolean;
 };
 
 export declare type TInputFieldProps = TInputBaseProps &

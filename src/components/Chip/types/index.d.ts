@@ -9,7 +9,7 @@ import {
 import {
     EventUpdateModelValueProps,
     EventVoidClosableProps,
-    TIconProps,
+    TAllowedIconProps,
     TLabelPosition,
 } from '../../../types';
 
@@ -28,7 +28,7 @@ export declare type TChipContainer = {
     wrapperWidth: number;
 };
 
-export declare type TChipOptionItem = TIconProps & {
+export declare type TChipOptionItem = TAllowedIconProps & {
     id?: string;
     disabled?: boolean;
     dismissible?: boolean;
@@ -38,7 +38,7 @@ export declare type TChipOptionItem = TIconProps & {
     value?: string | number | boolean;
 };
 
-export declare type TChipOptionProps = TIconProps & {
+export declare type TChipOptionProps = TAllowedIconProps & {
     /**
      * Sets this component state: `active` or `normal`.
      */

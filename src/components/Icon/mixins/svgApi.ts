@@ -60,7 +60,7 @@ export async function useGetGoogleIcon(
     return iconObj;
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const url = googleIconUrl(iconObj.theme, iconObj.name, iconObj.variant!);
     const cache = CacheManager.getItem(url);
 
@@ -110,7 +110,7 @@ export async function useGetFontAwesome(
     return undefined;
   }
 
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
     const url = fontAwesomeIconUrl(name, variant, version);
     const cache = CacheManager.getItem(url);
 
@@ -224,19 +224,27 @@ export function useRenderNodeFromSVG(
   const svgData = Object.entries(jsonObj.svg);
   const props = createNodeAttrs(svgData);
   const viewBox = (props['viewBox'] as string).split(' ');
-  const pW = parseFloat(viewBox[2]);
-  const pH = parseFloat(viewBox[3]);
+  const pW = parseFloat(viewBox[2]!);
+  const pH = parseFloat(viewBox[3]!);
   let ratio: number;
   let uW: MaybeNumberish;
   let uH: MaybeNumberish;
 
   if (pW > pH) {
     ratio = pH / pW;
-    uW = width ? parseInt(width, 10) : height ? (pW / pH) * parseInt(height, 10) : undefined;
+    uW = width
+      ? parseInt(width as string, 10)
+      : height
+        ? (pW / pH) * parseInt(height as string, 10)
+        : undefined;
     uH = width && height && width === height ? ratio * uW! : height;
   } else if (pW < pH) {
     ratio = pW / pH;
-    uH = height ? parseInt(height, 10) : width ? (pH / pW) * parseInt(width, 10) : undefined;
+    uH = height
+      ? parseInt(height as string, 10)
+      : width
+        ? (pH / pW) * parseInt(width as string, 10)
+        : undefined;
     uW = width && height && width === height ? ratio * uH! : width;
   } else {
     uW = width;
@@ -258,8 +266,8 @@ export function useSvgIconClasses(props: Readonly<TIconOptionProps>): TRecord {
   return {
     'mx-auto': true,
     [`${cssPrefix}svg-inline`]: true,
-    [`${cssPrefix}spin`]: props.spin,
     [`${cssPrefix}pulse`]: props.pulse,
+    [`${cssPrefix}spin`]: props.spin && !props.pulse,
     [`${cssPrefix}flip-both`]: props.flip === 'both',
     [`${cssPrefix}flip-vertical`]: props.flip === 'vertical',
     [`${cssPrefix}flip-horizontal`]: props.flip === 'horizontal',

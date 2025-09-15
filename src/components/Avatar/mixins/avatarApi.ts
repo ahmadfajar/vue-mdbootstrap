@@ -1,4 +1,4 @@
-import type { TAvatarImageOptionProps, TIconProps } from '@/components/Avatar/types';
+import type { TAvatarImageOptionProps, TAllowedIconProps } from '@/components/Avatar/types';
 import {
   useGetCalcSize,
   useNormalizeIconName,
@@ -21,7 +21,7 @@ export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
   }
 }
 
-export function useCreateIconProps(props: Readonly<TIconProps>): TRecord {
+export function useCreateIconProps(props: Readonly<TAllowedIconProps>): TRecord {
   const strIcon = props.icon ? useNormalizeIconName(props.icon) : undefined;
   const hasSuffix = isEndWith(strIcon, [
     '_outlined_filled',

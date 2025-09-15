@@ -39,6 +39,11 @@ export const stringOrArrayProp = {
   default: undefined,
 };
 
+export const stringArrayOrObjectProp = {
+  type: [String, Array, Object],
+  default: undefined,
+};
+
 export const validStringOrNumberProp = {
   type: [String, Number],
   default: undefined,

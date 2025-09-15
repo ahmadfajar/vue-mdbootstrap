@@ -32,7 +32,7 @@ export function hslaToRgba(color: HSLA): RGBA {
   const sat = color.s >= 0 && color.s <= 1 ? color.s : color.s / 100;
   const light = color.l >= 0 && color.l <= 1 ? color.l : color.l / 100;
 
-  function f(n) {
+  function f(n: number) {
     let k = (n + color.h / 30) % 12;
     let a = sat * Math.min(light, 1 - light);
 

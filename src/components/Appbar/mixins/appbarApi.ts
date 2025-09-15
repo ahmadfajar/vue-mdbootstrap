@@ -1,9 +1,9 @@
 import { Resize } from '@/directives';
 import {
   cssPrefix,
-  useFindParentCmp,
-  useRenderSlotDefault,
+  useFindParentComponent,
   useVueMdbService,
+  useWrapSlotDefault,
 } from '@/mixins/CommonApi.ts';
 import type { TAppbarOptionProps, TAppContainerOptionProps, TRecord, TVueMdb } from '@/types';
 import type { ComputedRef, Ref, Slots, VNode } from 'vue';
@@ -41,7 +41,7 @@ export function useAppbarOnMountedHook(
   const instance = getCurrentInstance();
   vueMdb.value = useVueMdbService();
 
-  const parent = useFindParentCmp(
+  const parent = useFindParentComponent(
     ['bs-app', 'bs-app-container', 'BsApp', 'BsAppContainer'],
     3,
     instance
@@ -92,7 +92,7 @@ export function useRenderAppbar(
         },
         style: styles.value,
       },
-      [useRenderSlotDefault('nav', slots, `${cssPrefix}appbar-content`)]
+      [useWrapSlotDefault('nav', slots, `${cssPrefix}appbar-content`)]
     ),
     [[Resize, resizeHandler]]
   );

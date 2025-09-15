@@ -8,7 +8,7 @@ import {
   VNode,
   VNodeProps,
 } from 'vue';
-import { EventUpdateModelValueProps, TIconProps, TRouterOptionProps, } from '../../../types';
+import { EventUpdateModelValueProps, TAllowedIconProps, TRouterOptionProps, } from '../../../types';
 
 export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 
@@ -77,7 +77,7 @@ export declare type TTabsOptionProps = TTabsBaseProps & {
 };
 
 export declare type TTabPanelOptionProps = TRouterOptionProps &
-    TIconProps & {
+    TAllowedIconProps & {
         id?: string;
         ariaLabel?: string;
         disabled?: boolean;
@@ -88,7 +88,7 @@ export declare type TTabItemOptionProps = TTabPanelOptionProps & {
     active?: boolean;
 };
 
-export declare type TTabLabelOptionProps = TIconProps & {
+export declare type TTabLabelOptionProps = TAllowedIconProps & {
     tabPosition?: TPlacementPosition;
     iconPosition?: TPlacementPosition;
     iconSize?: string | number;

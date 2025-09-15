@@ -22,16 +22,18 @@ function handleGesture(binding: TouchDirectiveEvent) {
 function touchStart(event: TouchEvent, binding: TouchDirectiveEvent) {
   // event.preventDefault();
   const touch = event.changedTouches[0];
-  binding.touchstartX = touch.clientX;
-  binding.touchstartY = touch.clientY;
+
+  binding.touchstartX = touch!.clientX;
+  binding.touchstartY = touch!.clientY;
 
   binding.start && binding.start(Object.assign(event, binding));
 }
 
 function touchEnd(event: TouchEvent, binding: TouchDirectiveEvent) {
   const touch = event.changedTouches[0];
-  binding.touchendX = touch.clientX;
-  binding.touchendY = touch.clientY;
+
+  binding.touchendX = touch!.clientX;
+  binding.touchendY = touch!.clientY;
 
   binding.end && binding.end(Object.assign(event, binding));
   handleGesture(binding);
@@ -40,8 +42,9 @@ function touchEnd(event: TouchEvent, binding: TouchDirectiveEvent) {
 function touchMove(event: TouchEvent, binding: TouchDirectiveEvent) {
   // event.preventDefault();
   const touch = event.changedTouches[0];
-  binding.touchmoveX = touch.clientX;
-  binding.touchmoveY = touch.clientY;
+
+  binding.touchmoveX = touch!.clientX;
+  binding.touchmoveY = touch!.clientY;
 
   binding.move && binding.move(Object.assign(event, binding));
 }

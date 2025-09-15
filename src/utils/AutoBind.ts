@@ -27,7 +27,7 @@ export function autoBind(instance: unknown): void {
       // class methods enumerable when we replace them.
       // @ts-ignore
       if (typeof obj[name] === 'function' && name !== 'constructor') {
-        Object.defineProperty(instance, name, {
+        Object.defineProperty(instance, name as string, {
           // @ts-ignore
           value: instance[name].bind(instance),
           enumerable: false,

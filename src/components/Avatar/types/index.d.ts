@@ -18,7 +18,7 @@ export declare type TIconVariant =
   | 'rounded_filled'
   | 'sharp_filled';
 
-export declare type TImageProps = {
+export declare type TAllowedImageProps = {
   /**
    * Create this component with circle shape.
    */
@@ -40,7 +40,7 @@ export declare type TImageProps = {
   size?: Numberish | TSizeProps;
 };
 
-export declare type TIconProps = {
+export declare type TAllowedIconProps = {
   /**
    * A shortcut to insert component `BsIcon` inside this component.
    *
@@ -114,7 +114,7 @@ export declare type TAvatarImageOptionProps = TSizeOptionProps & {
 };
 
 export declare type TAvatarOptionProps = TAvatarImageOptionProps &
-  TIconProps & {
+  TAllowedIconProps & {
     /**
      * Create avatar from a text. The text must be less than 4 characters.
      */

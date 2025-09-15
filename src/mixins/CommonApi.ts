@@ -106,7 +106,7 @@ export function useRenderSlot(
  * @param classes  Custom css classes to apply
  * @param styles   Custom inline stylesheet to apply
  */
-export function useRenderSlotDefault(
+export function useWrapSlotDefault(
   tag: string,
   slots?: Slots,
   classes?: TClassList,
@@ -132,7 +132,7 @@ export function useRenderSlotDefault(
  * @param slotArgs     The argument for the given slot
  * @returns The rendered VNode.
  */
-export function useRenderSlotWithWrapper(
+export function useWrapSlot(
   slots: Slots,
   name: string,
   key: string,
@@ -164,7 +164,7 @@ export function useRenderSlotWithWrapper(
  * @param slotArgs   The argument for the given slot
  * @returns The rendered VNode.
  */
-export function useRenderSlotWrapperWithCondition(
+export function useWrapSlotWithCondition(
   slots: Slots,
   name: string,
   condition: boolean,
@@ -357,7 +357,7 @@ function isRouteMatchByLocation(
  * @param route     Current route to check
  * @param navTarget The navigation properties
  */
-export function useIsRouteMatch(
+export function useRouteMatch(
   vm: ShallowRef<ComponentInternalInstance | null>,
   route: Ref<RouteLocationNormalizedLoaded>,
   navTarget: TRouterOptionProps
@@ -444,7 +444,7 @@ export function useBreakpointMin(breakpoint: TBreakpoint | number): boolean {
   }
 }
 
-export function useFindParentCmp(
+export function useFindParentComponent(
   componentNames: Array<string>,
   maxStep = 2,
   instance?: ComponentInternalInstance | null
@@ -488,7 +488,7 @@ export function useMergeClass(...args: (string | string[])[]): string[] {
     if (!Helper.isEmpty(src) && Array.isArray(src)) {
       result = result.concat(src);
     } else if (Helper.isString(src) && !Helper.isEmpty(src)) {
-      result.push(src);
+      !result.includes(src) && result.push(src);
     } else {
       result.push(normalizeClass(src));
     }

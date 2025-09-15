@@ -1,17 +1,42 @@
 import { useAxiosPlugin } from '@/mixins/CommonApi.ts';
-import type { IRestAdapter, TRecord, TRestKey, TRestMethodOptions } from '@/types';
+import type { TRestKey, TRestMethodOptions } from '@/model/BsModel.ts';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper';
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 import type { AppConfig } from 'vue';
 
+export declare interface IRestAdapter {
+  get adapterInstance(): AxiosInstance;
+
+  /**
+   * Perform REST request to the remote server.
+   *
+   * @param config    Request configuration
+   * @param onRequest Promise function called before the request is made.
+   * @param onSuccess Promise function called when the request is successful.
+   * @param onFailure Promise function called when the request is failed.
+   */
+  request(
+    config: AxiosRequestConfig,
+    onRequest: () => boolean,
+    onSuccess: (response: AxiosResponse) => void,
+    onFailure: (error: AxiosError) => void
+  ): Promise<AxiosResponse>;
+
+  /**
+   * Get REST request methods options.
+   */
+  requestMethods(): TRestMethodOptions;
+}
+
 /**
  * Class RestProxyAdapter which is used to load data from the remote server.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 01/03/2024 14:37
+ * @since  20/07/2018 modified: 16/09/2025 02:02
  */
-export default class RestProxyAdapter implements IRestAdapter {
+export class RestProxyAdapter implements IRestAdapter {
   private readonly _adapter: AxiosInstance;
   private readonly _httpMethods: TRecord;
 

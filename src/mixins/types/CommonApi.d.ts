@@ -1,6 +1,7 @@
 import {
   INotificationProvider,
   TBreakpoint,
+  TClassList,
   TRecord,
   TRouterLinkProps,
   TRouterOptionProps,
@@ -53,10 +54,10 @@ export declare function useRenderSlot(
  * @param classes  Custom css classes to apply
  * @param styles   Custom inline stylesheet to apply
  */
-export declare function useRenderSlotDefault(
+export declare function useWrapSlotDefault(
   tag: string,
   slots?: Slots,
-  classes?: string | string[] | TRecord,
+  classes?: TClassList,
   styles?: TRecord
 ): VNode;
 
@@ -75,7 +76,7 @@ export declare function useRenderSlotDefault(
  * @param slotArgs     The argument for the given slot
  * @returns The Rendered node.
  */
-export declare function useRenderSlotWithWrapper(
+export declare function useWrapSlot(
   slots: Slots,
   name: string,
   key: string,
@@ -97,7 +98,7 @@ export declare function useRenderSlotWithWrapper(
  * @param slotArgs   The argument for the given slot
  * @returns The Rendered node.
  */
-export declare function useRenderSlotWrapperWithCondition(
+export declare function useWrapSlotWithCondition(
   slots: Slots,
   name: string,
   condition: boolean,

@@ -12,7 +12,7 @@ import type {
   TIconData,
 } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import { stringOrArrayProp } from '@/mixins/CommonProps.ts';
+import { stringArrayOrObjectProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import {
@@ -30,7 +30,7 @@ export default defineComponent<TBsFontawesomeIcon>({
   name: 'BsFontawesomeIcon',
   props: {
     size: iconSizeObjectProp,
-    svgClass: stringOrArrayProp,
+    svgClass: stringArrayOrObjectProp,
     variant: {
       type: String,
       default: 'solid',

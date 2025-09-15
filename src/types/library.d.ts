@@ -186,22 +186,50 @@ export declare interface IEventResult {
 }
 
 export declare interface EventClosableProps {
+  /**
+   * Fired when this component is closed.
+   */
   onClose?: (msg: string) => void;
+
+  /**
+   * Fired when this component is closed.
+   */
   '@close'?: (msg: string) => void;
 }
 
 export declare interface EventVoidClosableProps {
+  /**
+   * Fired when this component is closed.
+   */
   onClose?: VoidFunction;
+
+  /**
+   * Fired when this component is closed.
+   */
   '@close'?: VoidFunction;
 }
 
 export declare interface EventUpdateOpenProps {
+  /**
+   * Fired when the state of `open` is updated.
+   */
   'onUpdate:open'?: (state: boolean) => void;
+
+  /**
+   * Fired when the state of `open` is updated.
+   */
   '@update:open'?: (state: boolean) => void;
 }
 
 export declare interface EventUpdateModelValueProps<T> {
+  /**
+   * Fired when this component's `modelValue` is updated.
+   */
   'onUpdate:model-value'?: (value: T) => void;
+
+  /**
+   * Fired when this component's `modelValue` is updated.
+   */
   '@update:model-value'?: (value: T) => void;
 }
 
@@ -224,12 +252,12 @@ export {
   EventListener,
   useAddResizeListener,
   useRemoveResizeListener,
-} from '../mixins/types/DomHelper';
-export * from '../model/types';
-export { AxiosPlugin, IHttpService } from '../utils/types/AxiosPlugin';
-export * as Color from '../utils/types/colorUtils';
-export { default as Helper } from '../utils/types/Helper';
-export * as StringHelper from '../utils/types/StringHelper';
+} from '@/mixins/types/DomHelper';
+export * from '@/model';
+export { AxiosPlugin, IHttpService } from '@/utils/types/AxiosPlugin';
+export * as Color from '@/utils/types/colorUtils';
+export { default as Helper } from '@/utils/types/Helper';
+export * as StringHelper from '@/utils/types/StringHelper';
 
 export {
   useAxiosPlugin,
@@ -241,10 +269,10 @@ export {
   useMergeClass,
   useMobileDevice,
   useRenderSlot,
-  useRenderSlotDefault,
-  useRenderSlotWithWrapper,
-  useRenderSlotWrapperWithCondition,
   useRenderTransition,
   useVueMdbNotification,
   useVueMdbService,
-} from '../mixins/types/CommonApi';
+  useWrapSlot,
+  useWrapSlotDefault,
+  useWrapSlotWithCondition,
+} from '@/mixins/types/CommonApi';

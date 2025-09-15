@@ -1,30 +1,126 @@
 import { BsModel, RestProxyAdapter } from '@/model';
 import type {
-  ErrorCallbackFn,
   IBsModel,
-  IRestAdapter,
-  ListenerFn,
-  LoadedCallbackFn,
-  ObjectBase,
-  TDataStoreConfig,
-  TDataStoreState,
-  TFilterLogic,
-  TFilterOperator,
-  TFilterOption,
+  TCSRFConfig,
   TModelOptions,
-  TQueryParameter,
-  TRecord,
+  TModelState,
   TRestConfig,
   TRestUrlOption,
-  TSortDirection,
-  TSortOption,
-} from '@/types';
+} from '@/model/BsModel.ts';
+import type { IRestAdapter } from '@/model/RestProxyAdapter.ts';
+import type { ObjectBase, TRecord } from '@/types';
 import { autoBind } from '@/utils/AutoBind.ts';
 import Helper from '@/utils/Helper';
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import type { Many } from 'lodash';
 import orderBy from 'lodash-es/orderBy';
 import { reactive, readonly, type UnwrapNestedRefs } from 'vue';
+
+export declare type TFilterLogic = 'AND' | 'OR';
+
+export declare type TFilterOperator =
+  | 'eq'
+  | 'neq'
+  | 'gt'
+  | 'gte'
+  | 'lt'
+  | 'lte'
+  | 'contains'
+  | 'fts'
+  | 'tsquery'
+  | 'startsWith'
+  | 'startswith'
+  | 'startWith'
+  | 'startwith'
+  | 'endsWith'
+  | 'endswith'
+  | 'endWith'
+  | 'endwith'
+  | 'notin'
+  | 'in';
+
+export declare type TFilterOption = {
+  /**
+   * Field name attribute for filter operation.
+   */
+  property: string;
+  /**
+   * Filter value.
+   */
+  value: string | number | boolean;
+  /**
+   * Filter operator, default: `eq`.
+   */
+  operator: TFilterOperator;
+  /**
+   * ORM custom data type, ex: 'ulid'.
+   */
+  type?: string;
+  /**
+   * Optional logic operator to be used when combined with another filters.
+   * If it is not defined, global filter logic will be used.
+   */
+  logic?: TFilterLogic;
+  /**
+   * Optional, indicate the `value` is an expression or field expression.
+   */
+  expression?: boolean;
+};
+
+export declare type TSortDirection = 'asc' | 'desc';
+
+export declare type TSortOption = {
+  /**
+   * Field name attribute for sorting operation.
+   */
+  property: string;
+
+  /**
+   * @deprecated
+   * Use `property` instead.
+   */
+  field?: string;
+
+  /**
+   * Sort direction, valid values: <tt>asc, desc</tt>
+   */
+  direction: TSortDirection;
+};
+
+export declare type TQueryParameter = {
+  page?: number;
+  limit?: number;
+  filters?: TFilterOption[];
+  sorts?: TSortOption[];
+  logic: TFilterLogic;
+};
+
+export declare type TDataStoreConfig = TRecord & {
+  idProperty?: string;
+  dataProperty?: string;
+  totalProperty?: string;
+  pageSize?: number;
+  remoteFilter?: boolean;
+  remotePaging?: boolean;
+  remoteSort?: boolean;
+  restProxy?: TRestUrlOption;
+  csrfConfig?: TCSRFConfig;
+  filterLogic?: TFilterLogic;
+  filters?: TFilterOption[];
+  sortOptions?: TSortOption[];
+};
+
+export declare type TDataStoreState = TModelState & {
+  length: number;
+  totalCount: number;
+  currentPage: number;
+};
+
+export declare type ListenerFn<T> = (arg: T) => void;
+
+export declare type ErrorCallbackFn = (error: AxiosError) => void;
+
+export declare type LoadedCallbackFn = (data: IBsModel[]) => void;
 
 export const appendErrMsg = 'Can not assign primitive type to the dataset.';
 export const proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
@@ -33,13 +129,12 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
 
 /**
  * Class AbstractStore is superclass of {@link BsArrayStore}, and {@link BsStore}.
- * It's never used directly, but offers a set of
- * methods used by those subclasses.
+ * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 13/09/2025 20:35
+ * @since  15/03/2019 modified: 16/09/2025 02:30
  */
-export default abstract class AbstractStore implements ObjectBase {
+export abstract class AbstractStore implements ObjectBase {
   private _eventMap: Map<string, ListenerFn<any>[]>;
   protected _config: TDataStoreConfig;
   protected _filters: TFilterOption[];
@@ -47,6 +142,10 @@ export default abstract class AbstractStore implements ObjectBase {
   protected _items: IBsModel[];
   protected _proxy: IRestAdapter | undefined;
   protected _state: UnwrapNestedRefs<TDataStoreState>;
+
+  /**
+   * Returns the reactive state of the DataStore.
+   */
   public storeState: Readonly<UnwrapNestedRefs<TDataStoreState>>;
 
   /**
@@ -70,7 +169,7 @@ export default abstract class AbstractStore implements ObjectBase {
   }
 
   /**
-   * Class constructor.
+   * Construct new {@link AbstractStore} object instance.
    *
    * @param config  The configuration properties
    */
@@ -117,6 +216,9 @@ export default abstract class AbstractStore implements ObjectBase {
     autoBind(this);
   }
 
+  /**
+   * Get the class name of this instance.
+   */
   get $_class(): string {
     return Object.getPrototypeOf(this).constructor.name;
   }
@@ -130,6 +232,9 @@ export default abstract class AbstractStore implements ObjectBase {
     delete this._config;
   }
 
+  /**
+   * Clear all data items in the local storage and reset data store state.
+   */
   clear() {
     if (Helper.isArray(this._items) && this._items.length > 0) {
       for (const item of this._items) {
@@ -153,26 +258,47 @@ export default abstract class AbstractStore implements ObjectBase {
     this.clear();
   }
 
+  /**
+   * Readonly data Model state, whether it is still loading data or not.
+   */
   get loading(): boolean {
     return this._state.loading;
   }
 
+  /**
+   * Readonly data Model state, whether it is still in the process of
+   * saving/updating data to the remote server or not.
+   */
   get updating(): boolean {
     return this._state.updating;
   }
 
+  /**
+   * Readonly data Model state, whether it is still in the process of deleting
+   * data from the remote server or not.
+   */
   get deleting(): boolean {
     return this._state.deleting;
   }
 
+  /**
+   * Readonly data Model state, whether there was an error when
+   * loading/saving/deleting data or not.
+   */
   get hasError(): boolean {
     return this._state.hasError;
   }
 
+  /**
+   * Returns the axios plugin adapter.
+   */
   get adapterInstance(): AxiosInstance | undefined {
     return this._proxy?.adapterInstance;
   }
 
+  /**
+   * Get REST proxy adapter which is used to work with remote service.
+   */
   get proxy(): IRestAdapter | undefined {
     return this._proxy;
   }
@@ -203,10 +329,16 @@ export default abstract class AbstractStore implements ObjectBase {
     this._config.restProxy = option;
   }
 
+  /**
+   * Returns active page number (base-1 index).
+   */
   get currentPage(): number {
     return this._state.currentPage;
   }
 
+  /**
+   * Get or Set the number of items within a page.
+   */
   get pageSize(): number {
     return this._config.pageSize as number;
   }
@@ -215,18 +347,30 @@ export default abstract class AbstractStore implements ObjectBase {
     this._config.pageSize = value;
   }
 
+  /**
+   * Returns the number of items on the active page.
+   */
   get length(): number {
     return this._state.length;
   }
 
+  /**
+   * Returns total number of items in the Store's dataset. (readonly)
+   */
   get totalCount(): number {
     return this._state.totalCount;
   }
 
+  /**
+   * Returns total number of pages.
+   */
   get totalPages(): number {
     return this.pageSize > 0 ? Math.ceil(this.totalCount / this.pageSize) : 1;
   }
 
+  /**
+   * Get or set the default filters.
+   */
   get defaultFilters(): TFilterOption[] {
     if (!Helper.isArray(this._config.filters)) {
       return [];
@@ -262,6 +406,9 @@ export default abstract class AbstractStore implements ObjectBase {
     this.setFilters(newFilters, true);
   }
 
+  /**
+   * Get or Set collection of filters to be used.
+   */
   get filters(): TFilterOption[] {
     return this._filters;
   }
@@ -271,8 +418,15 @@ export default abstract class AbstractStore implements ObjectBase {
     this._filteredItems = [];
   }
 
+  /**
+   * Register event listener.
+   *
+   * @param event The event name, valid values are: `error`, and `loaded`.
+   * @param fn    The event callback function.
+   */
   addListener<T>(event: string, fn: ListenerFn<T>): void {
     let listeners = this._eventMap.get(event);
+
     if (!listeners) {
       listeners = [fn];
     } else {
@@ -282,14 +436,34 @@ export default abstract class AbstractStore implements ObjectBase {
     this._eventMap.set(event, listeners);
   }
 
+  /**
+   * Shortcut function to register `error` event listener.
+   *
+   * @param fn Callback function when error occurred.
+   */
   onError(fn: ErrorCallbackFn): void {
     this.addListener('error', fn);
   }
 
+  /**
+   * Shortcut function to register `loaded` event listener.
+   *
+   * @param fn Callback function when data is successfully loaded to this store dataset.
+   */
   onLoaded(fn: LoadedCallbackFn): void {
     this.addListener('loaded', fn);
   }
 
+  /**
+   * Add a filter to the Store.
+   *
+   * @param field     The field name to which the filter will be applied.
+   * @param value     The filter value
+   * @param operator  Filter operator to be used, valid values: `eq`, `neq`, `gt`, `gte`,
+   *                  `lt`, `lte`, `in`, `notin`, `startwith`, `endwith`, `contains`, `fts`
+   * @param type      Optional, ORM custom data type
+   * @param logic     Optional, logic to be used when mixing two or more filters.
+   */
   addFilter(
     field: string,
     value: string | number | boolean,
@@ -314,6 +488,12 @@ export default abstract class AbstractStore implements ObjectBase {
     return this;
   }
 
+  /**
+   * Replace old filters and apply new filters to the Store dataset.
+   *
+   * @param newFilters     The filters to apply
+   * @param includeDefault Include default filters or not
+   */
   setFilters(newFilters: TFilterOption[] | TFilterOption, includeDefault = false): this {
     if (Array.isArray(newFilters)) {
       this.filters = includeDefault ? newFilters.concat(this.defaultFilters) : newFilters;
@@ -329,6 +509,11 @@ export default abstract class AbstractStore implements ObjectBase {
     return this;
   }
 
+  /**
+   * Define the filter logic to be used when filtering the Store’s dataset.
+   *
+   * @param logic The filter logic, valid values: 'AND', 'OR'
+   */
   setFilterLogic(logic: TFilterLogic): this {
     if (Helper.isString(logic) && logic.trim() !== '') {
       const trimmed = logic.trim().toUpperCase();
@@ -341,6 +526,10 @@ export default abstract class AbstractStore implements ObjectBase {
     return this;
   }
 
+  /**
+   * Get or Set the sorter's object collection to be used
+   * when sorting the Store's dataset.
+   */
   get sorters(): TSortOption[] {
     return this._config.sortOptions as TSortOption[];
   }
@@ -349,6 +538,9 @@ export default abstract class AbstractStore implements ObjectBase {
     this._config.sortOptions = this.createSorters(sortOptions);
   }
 
+  /**
+   * Reset this data store state back to its initial states, like `loading`, etc.
+   */
   resetState(): void {
     this._state.loading = false;
     this._state.updating = false;
@@ -356,18 +548,45 @@ export default abstract class AbstractStore implements ObjectBase {
     this._state.hasError = false;
   }
 
+  /**
+   * Finds the first matching item in the local dataset by a specific field value.
+   *
+   * @param property    The field name to test
+   * @param value       The value to match
+   * @param startIndex  The index to start searching at
+   */
   find(property: string, value: unknown, startIndex = 0): IBsModel | undefined {
     return this._items.find((item, idx) => item.get(property) === value && idx >= startIndex);
   }
 
+  /**
+   * Finds the first matching item in the local dataset by function's predicate.
+   * If the predicate returns `true`, it is considered a match.
+   *
+   * @param predicate  Function to execute on each value in the array
+   * @returns The item of the first element in the array that satisfies
+   * the provided testing function. Otherwise, `undefined` is returned.
+   */
   findBy(predicate: (value: IBsModel, index: number) => boolean): IBsModel | undefined {
     return this._items.find(predicate);
   }
 
+  /**
+   * Finds the index of the first matching Item in the local dataset by a specific field value.
+   *
+   * @param property   The field name to test
+   * @param value      The value to match
+   * @param startIndex The index to start searching at
+   * @returns The index of first match element, otherwise -1
+   */
   findIndex(property: string, value: unknown, startIndex = 0): number {
     return this._items.findIndex((item, idx) => item.get(property) === value && idx >= startIndex);
   }
 
+  /**
+   * Filter the dataset locally and returns new array with
+   * all elements that pass the test.
+   */
   localFilter(): IBsModel[] {
     if (this.filters.length > 0) {
       return this._items.filter((item) => {
@@ -418,6 +637,9 @@ export default abstract class AbstractStore implements ObjectBase {
     }
   }
 
+  /**
+   * Sorts the dataset locally and returns new sorted dataset.
+   */
   localSort(): IBsModel[] {
     const fields: string[] = [];
     const orders: Many<'asc' | 'desc'> = [];
@@ -434,15 +656,26 @@ export default abstract class AbstractStore implements ObjectBase {
     return this._items;
   }
 
+  /**
+   * Check if the data in the local dataset is empty or not.
+   */
   isEmpty(): boolean {
     return this.length === 0;
   }
 
+  /**
+   * Sets the current active page.
+   *
+   * @param value The new page number, based-1 index.
+   */
   page(value: number): this {
     this._state.currentPage = value;
     return this;
   }
 
+  /**
+   * Marks data Store to load the previous page.
+   */
   previousPage(): this {
     if (this.currentPage > 1) {
       return this.page(this.currentPage - 1);
@@ -451,6 +684,9 @@ export default abstract class AbstractStore implements ObjectBase {
     }
   }
 
+  /**
+   * Marks data Store to load the next page.
+   */
   nextPage(): this {
     if (this.currentPage < this.totalPages) {
       return this.page(this.currentPage + 1);
@@ -459,6 +695,11 @@ export default abstract class AbstractStore implements ObjectBase {
     }
   }
 
+  /**
+   * Check if the given item is a DataModel or not.
+   *
+   * @param item The item to be checked
+   */
   isCandidateForModel(item: TRecord): boolean {
     return (
       Helper.isObject(item) &&
@@ -467,20 +708,32 @@ export default abstract class AbstractStore implements ObjectBase {
     );
   }
 
-  remove(items: IBsModel[] | IBsModel): void {
+  /**
+   * Removes the specified item(s) from the internal dataset.
+   *
+   * @param items Model instance or array of model instances to be removed
+   */
+  remove<T extends IBsModel>(items: T | T[]): void {
     if (Array.isArray(items)) {
       for (const item of items) {
         this.remove(item);
       }
     } else if (this.isCandidateForModel(items as TRecord) || AbstractStore.isModel(items)) {
-      const idProperty = <string>this._config.idProperty;
+      const idProperty = this._config.idProperty as string;
       const index = this.findIndex(idProperty, items.get(idProperty));
+
       index > -1 && this.removeAt(index);
     } else {
       throw Error('Item must be instance of BsModel.');
     }
   }
 
+  /**
+   * Removes the model instance(s) at the given index from the internal dataset.
+   *
+   * @param index Starting index position
+   * @param count Number of items to delete
+   */
   removeAt(index: number, count = 1): void {
     if (index < 0) {
       throw Error("Parameter 'index' is out of bound.");
@@ -496,9 +749,11 @@ export default abstract class AbstractStore implements ObjectBase {
 
     for (let i = 0; i < length; i++) {
       const item = this._items[index + i];
+
       if (AbstractStore.isModel(item)) {
-        item.destroy();
+        item!.destroy();
       }
+
       // @ts-ignore
       this._items[index + i] = null;
     }
@@ -516,16 +771,31 @@ export default abstract class AbstractStore implements ObjectBase {
     this._state.deleting = false;
   }
 
+  /**
+   * Set the number of items within a page.
+   *
+   * @param value Number of items within a page
+   */
   setPageSize(value: number): this {
     this.pageSize = value;
     return this;
   }
 
+  /**
+   * Set sorter's criteria collection.
+   *
+   * @param sortOptions One or more sorting method criteria(s).
+   */
   setSorters(sortOptions: TSortOption[] | TSortOption): this {
     this.sorters = sortOptions;
     return this;
   }
 
+  /**
+   * Create an array of FilterOption criteria.
+   *
+   * @param values  An array of filter options configuration.
+   */
   createFilters(values: TFilterOption | TFilterOption[]): TFilterOption[] {
     const filters: TFilterOption[] = [];
 
@@ -550,8 +820,15 @@ export default abstract class AbstractStore implements ObjectBase {
     return filters;
   }
 
+  /**
+   * Create an array of SortOption criteria.
+   *
+   * @param property  The field name to sort or sort method criteria.
+   * @param direction The sort direction.
+   * @param replace   Replace existing sort criteria or not.
+   */
   createSorters(
-    values: string | string[] | TSortOption | TSortOption[],
+    property: string | string[] | TSortOption | TSortOption[],
     direction: TSortDirection = 'asc',
     replace = false
   ): TSortOption[] {
@@ -565,8 +842,8 @@ export default abstract class AbstractStore implements ObjectBase {
       };
     };
 
-    if (Array.isArray(values)) {
-      for (const fld of values) {
+    if (Array.isArray(property)) {
+      for (const fld of property) {
         if (Helper.isObject(fld) && AbstractStore.isCandidateForSortOption(fld)) {
           sorters.push(createOption(fld));
         } else if (Helper.isString(fld) && !Helper.isEmpty(fld)) {
@@ -576,11 +853,11 @@ export default abstract class AbstractStore implements ObjectBase {
           });
         }
       }
-    } else if (Helper.isObject(values) && AbstractStore.isCandidateForSortOption(values)) {
-      sorters.push(createOption(values));
-    } else if (Helper.isString(values) && !Helper.isEmpty(values)) {
+    } else if (Helper.isObject(property) && AbstractStore.isCandidateForSortOption(property)) {
+      sorters.push(createOption(property));
+    } else if (Helper.isString(property) && !Helper.isEmpty(property)) {
       sorters.push({
-        property: values,
+        property: property,
         direction: direction.toLowerCase() as TSortDirection,
       });
     }
@@ -592,6 +869,11 @@ export default abstract class AbstractStore implements ObjectBase {
     return sorters;
   }
 
+  /**
+   * Create new DataModel from the given object.
+   *
+   * @param item The data to convert
+   */
   createModel(item: TRecord): IBsModel {
     const proxyCfg: TRestUrlOption = {};
 
@@ -632,6 +914,9 @@ export default abstract class AbstractStore implements ObjectBase {
     }
   }
 
+  /**
+   * Get current query parameter's configuration.
+   */
   queryParams(): TQueryParameter {
     const params: TQueryParameter = {
       logic: this._config.filterLogic as TFilterLogic,
@@ -672,8 +957,20 @@ export default abstract class AbstractStore implements ObjectBase {
     return params;
   }
 
+  /**
+   * Load data from the remote server or from the given record(s) and
+   * replace internal dataset with the new dataset.
+   *
+   * @param data The record(s) to be assigned
+   */
   abstract load(data?: unknown): Promise<IBsModel[] | AxiosResponse>;
 
+  /**
+   * Returns dataset from the active page.
+   *
+   * If a filter or sorter has been applied before,
+   * then the returned dataset will also be affected by it.
+   */
   abstract get dataItems(): IBsModel[];
 
   /**
@@ -773,10 +1070,7 @@ export default abstract class AbstractStore implements ObjectBase {
     const listeners = this._eventMap.get(event);
 
     if (listeners) {
-      const len = listeners.length;
-      for (let idx = 0; idx < len; idx++) {
-        listeners[idx](arg);
-      }
+      listeners.forEach((listener) => listener(arg));
     }
   }
 }

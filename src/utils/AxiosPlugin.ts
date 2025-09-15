@@ -1,7 +1,7 @@
+import type { IHttpService, TRecord } from '@/types';
 import type { RawAxiosRequestConfig } from 'axios';
 import axios from 'axios';
 import type { App, ObjectPlugin } from 'vue';
-import type { IHttpService, TRecord } from '../types';
 
 declare interface IRequestConfig extends RawAxiosRequestConfig {
   requestHandler: CallableFunction;

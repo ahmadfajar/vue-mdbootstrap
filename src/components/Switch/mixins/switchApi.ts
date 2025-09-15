@@ -1,135 +1,135 @@
 import { BsRipple } from '@/components/Animation';
 import { BsSvgIcon } from '@/components/Icon';
 import {
-    useCheckSelected,
-    useCreateInputRadioOrCheckbox,
+  useCheckSelected,
+  useCreateInputRadioOrCheckbox,
 } from '@/components/Radio/mixins/radioApi.ts';
-import { cssPrefix, useMergeClass, useRenderSlotWrapperWithCondition } from '@/mixins/CommonApi.ts';
+import { cssPrefix, useMergeClass, useWrapSlotWithCondition } from '@/mixins/CommonApi.ts';
 import type { TBsRipple, TBsSwitch, TRecord, TSwitchOptionProps } from '@/types';
 import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h } from 'vue';
 
 export function useSwitchClasses(props: Readonly<TSwitchOptionProps>): TRecord {
-    const checked = useCheckSelected(props);
+  const checked = useCheckSelected(props);
 
-    return {
-        [`${cssPrefix}switch`]: true,
-        [`${cssPrefix}switch-${props.color}`]: props.color != null,
-        [`${cssPrefix}switch-inset`]: props.insetMode || props.insetOutlined,
-        [`${cssPrefix}switch-outlined`]: props.insetOutlined === true && !checked,
-        checked: checked,
-        required: props.required,
-        readonly: props.readonly,
-        disabled: props.disabled,
-    };
+  return {
+    [`${cssPrefix}switch`]: true,
+    [`${cssPrefix}switch-${props.color}`]: props.color != null,
+    [`${cssPrefix}switch-inset`]: props.insetMode || props.insetOutlined,
+    [`${cssPrefix}switch-outlined`]: props.insetOutlined === true && !checked,
+    checked: checked,
+    required: props.required,
+    readonly: props.readonly,
+    disabled: props.disabled,
+  };
 }
 
 function createThumbIcon(props: Readonly<TSwitchOptionProps>): VNode {
-    if ((props.insetMode || props.insetOutlined) && (props.checkedIcon || props.checkoffIcon)) {
-        const checked = useCheckSelected(props);
-        if (checked && props.checkedIcon) {
-            return h(BsSvgIcon, {
-                icon: 'check' as Prop<string>,
-                height: 16 as Prop<number>,
-                width: 16 as Prop<number>,
-            });
-        } else if (!checked && props.checkoffIcon && props.insetMode) {
-            return h(BsSvgIcon, {
-                icon: 'close' as Prop<string>,
-                height: 16 as Prop<number>,
-                width: 16 as Prop<number>,
-            });
-        }
+  if ((props.insetMode || props.insetOutlined) && (props.checkedIcon || props.checkoffIcon)) {
+    const checked = useCheckSelected(props);
+    if (checked && props.checkedIcon) {
+      return h(BsSvgIcon, {
+        icon: 'check' as Prop<string>,
+        height: 16 as Prop<number>,
+        width: 16 as Prop<number>,
+      });
+    } else if (!checked && props.checkoffIcon && props.insetMode) {
+      return h(BsSvgIcon, {
+        icon: 'close' as Prop<string>,
+        height: 16 as Prop<number>,
+        width: 16 as Prop<number>,
+      });
     }
+  }
 
-    return createCommentVNode(' v-if-thumb-icon ', true);
+  return createCommentVNode(' v-if-thumb-icon ', true);
 }
 
 function createSwitchUI(
-    props: Readonly<TSwitchOptionProps>,
-    rippleActive: Ref<boolean>,
-    toggleCheckHandler: VoidFunction
+  props: Readonly<TSwitchOptionProps>,
+  rippleActive: Ref<boolean>,
+  toggleCheckHandler: VoidFunction
 ): VNode {
-    return h('div', { class: [`${cssPrefix}switch-wrapper`] }, [
-        h(
-            'div',
+  return h('div', { class: [`${cssPrefix}switch-wrapper`] }, [
+    h(
+      'div',
+      {
+        class: [`${cssPrefix}switch-track`],
+        onClick: toggleCheckHandler,
+      },
+      [
+        h('div', { class: [`${cssPrefix}switch-thumb`] }, [
+          h('div', { class: `${cssPrefix}switch-ripple` }),
+          h<TBsRipple>(
+            BsRipple,
             {
-                class: [`${cssPrefix}switch-track`],
-                onClick: toggleCheckHandler,
+              // @ts-ignore
+              centered: true as Prop<boolean>,
+              // @ts-ignore
+              active: rippleActive.value as Prop<boolean>,
+              // @ts-ignore
+              disabled: (props.disabled || props.readonly) as Prop<boolean>,
+              'onUpdate:active': (value: boolean): void => {
+                rippleActive.value = value;
+              },
             },
-            [
-                h('div', { class: [`${cssPrefix}switch-thumb`] }, [
-                    h('div', { class: `${cssPrefix}switch-ripple` }),
-                    h<TBsRipple>(
-                        BsRipple,
-                        {
-                            // @ts-ignore
-                            centered: true as Prop<boolean>,
-                            // @ts-ignore
-                            active: rippleActive.value as Prop<boolean>,
-                            // @ts-ignore
-                            disabled: (props.disabled || props.readonly) as Prop<boolean>,
-                            'onUpdate:active': (value: boolean): void => {
-                                rippleActive.value = value;
-                            },
-                        },
-                        {
-                            default: () => [
-                                createThumbIcon(props),
-                                useCreateInputRadioOrCheckbox(props, 'checkbox'),
-                            ],
-                        }
-                    ),
-                ]),
-            ]
-        ),
-    ]);
+            {
+              default: () => [
+                createThumbIcon(props),
+                useCreateInputRadioOrCheckbox(props, 'checkbox'),
+              ],
+            }
+          ),
+        ]),
+      ]
+    ),
+  ]);
 }
 
 function switchLabelClass(props: Readonly<TSwitchOptionProps>, position: string): string[] {
-    const labelClass = [`${cssPrefix}switch-label`, `${cssPrefix}label-${position}`];
+  const labelClass = [`${cssPrefix}switch-label`, `${cssPrefix}label-${position}`];
 
-    return useMergeClass(labelClass, props.labelClass as string | string[]);
+  return useMergeClass(labelClass, props.labelClass as string | string[]);
 }
 
 export function useRenderSwitch(
-    slots: Slots,
-    props: Readonly<ExtractPropTypes<TBsSwitch>>,
-    classnames: ComputedRef<TRecord>,
-    rippleActive: Ref<boolean>,
-    toggleCheckHandler: VoidFunction
+  slots: Slots,
+  props: Readonly<ExtractPropTypes<TBsSwitch>>,
+  classnames: ComputedRef<TRecord>,
+  rippleActive: Ref<boolean>,
+  toggleCheckHandler: VoidFunction
 ): VNode {
-    const thisProps = props as Readonly<TSwitchOptionProps>;
+  const thisProps = props as Readonly<TSwitchOptionProps>;
 
-    return h(
-        'div',
+  return h(
+    'div',
+    {
+      class: classnames.value,
+    },
+    [
+      useWrapSlotWithCondition(
+        slots,
+        'default',
+        slots.default != null && thisProps.labelPosition === 'left',
         {
-            class: classnames.value,
+          for: thisProps.id,
+          class: switchLabelClass(thisProps, 'left'),
+          onClickPrevent: toggleCheckHandler,
         },
-        [
-            useRenderSlotWrapperWithCondition(
-                slots,
-                'default',
-                slots.default != null && thisProps.labelPosition === 'left',
-                {
-                    for: thisProps.id,
-                    class: switchLabelClass(thisProps, 'left'),
-                    onClickPrevent: toggleCheckHandler,
-                },
-                'label'
-            ),
-            createSwitchUI(thisProps, rippleActive, toggleCheckHandler),
-            useRenderSlotWrapperWithCondition(
-                slots,
-                'default',
-                slots.default != null && thisProps.labelPosition === 'right',
-                {
-                    for: thisProps.id,
-                    class: switchLabelClass(thisProps, 'right'),
-                    onClickPrevent: toggleCheckHandler,
-                },
-                'label'
-            ),
-        ]
-    );
+        'label'
+      ),
+      createSwitchUI(thisProps, rippleActive, toggleCheckHandler),
+      useWrapSlotWithCondition(
+        slots,
+        'default',
+        slots.default != null && thisProps.labelPosition === 'right',
+        {
+          for: thisProps.id,
+          class: switchLabelClass(thisProps, 'right'),
+          onClickPrevent: toggleCheckHandler,
+        },
+        'label'
+      ),
+    ]
+  );
 }

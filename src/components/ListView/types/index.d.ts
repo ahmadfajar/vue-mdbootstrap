@@ -13,8 +13,8 @@ import {
 import {
     ObjectBase,
     TBadgeType,
-    TIconProps,
-    TImageProps,
+    TAllowedIconProps,
+    TAllowedImageProps,
     TRouterOptionProps,
     TTagProp,
 } from '../../../types';
@@ -69,7 +69,7 @@ export declare type TListNavOptionProps = {
     child?: boolean;
 };
 
-export declare type TListNavItemOptionProps = TIconProps &
+export declare type TListNavItemOptionProps = TAllowedIconProps &
     TRouterOptionProps & {
         /**
          * Sets this component `ID` attribute. This property value is auto generates.
@@ -189,8 +189,8 @@ export declare type TListTileContentOptionProps = TTagProp & {
     multiLine?: boolean;
 };
 
-export declare type TListTileLeadingOptionProps = TIconProps &
-    TImageProps & {
+export declare type TListTileLeadingOptionProps = TAllowedIconProps &
+    TAllowedImageProps & {
         /**
          * Center item inside it vertically.
          */

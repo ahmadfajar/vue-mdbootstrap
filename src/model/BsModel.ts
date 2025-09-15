@@ -1,19 +1,12 @@
 import { RestProxyAdapter } from '@/model';
-import { emptyDataErrMsg, parsingDataErrMsg, proxyErrMsg } from '@/model/AbstractStore.ts';
-import type {
-  ErrorCallbackFn,
-  IBsModel,
-  IRestAdapter,
-  TCSRFConfig,
-  THttpMethod,
-  TModelOptions,
-  TModelState,
-  TRecord,
-  TRestConfig,
-  TRestKey,
-  TRestMethodOptions,
-  TUrlOption,
-} from '@/types';
+import {
+  emptyDataErrMsg,
+  type ErrorCallbackFn,
+  parsingDataErrMsg,
+  proxyErrMsg,
+} from '@/model/AbstractStore.ts';
+import type { IRestAdapter } from '@/model/RestProxyAdapter.ts';
+import { type ObjectBase, type TRecord } from '@/types';
 import { autoBind } from '@/utils/AutoBind.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
@@ -25,6 +18,278 @@ import type {
 } from 'axios';
 import type { UnwrapNestedRefs } from 'vue';
 import { reactive, readonly } from 'vue';
+
+export declare type THttpMethod =
+  | 'get'
+  | 'GET'
+  | 'delete'
+  | 'DELETE'
+  | 'head'
+  | 'HEAD'
+  | 'options'
+  | 'OPTIONS'
+  | 'post'
+  | 'POST'
+  | 'put'
+  | 'PUT'
+  | 'patch'
+  | 'PATCH'
+  | 'purge'
+  | 'PURGE';
+
+export declare type TRestMethodOptions = {
+  browse: THttpMethod;
+  fetch: THttpMethod;
+  save: THttpMethod;
+  update: THttpMethod;
+  delete: THttpMethod;
+};
+
+export declare type TUrlOption = {
+  url: string;
+  method: THttpMethod;
+};
+
+export declare type TRestUrlOption = {
+  [P in keyof TRestMethodOptions]?: TUrlOption | string;
+};
+
+export declare type TRestKey = Record<string, THttpMethod>;
+
+export declare type TRestConfig = Record<keyof TRestMethodOptions | string, string>;
+
+export declare type TCSRFConfig = {
+  url?: string;
+  tokenName?: string;
+  dataField?: string;
+  /**
+   * @deprecated
+   * Backward compatibility.
+   */
+  responseField?: string;
+  suffix?: boolean;
+};
+
+export declare type TModelOptions = {
+  schema: TRecord;
+  proxy: TRestUrlOption;
+  csrfConfig?: TCSRFConfig;
+};
+
+export declare type TModelState = {
+  loading: boolean;
+  updating: boolean;
+  deleting: boolean;
+  hasError: boolean;
+};
+
+export declare interface IBsModel extends ObjectBase {
+  [key: string]: unknown;
+
+  /**
+   * Returns the reactive state of the DataModel.
+   */
+  readonly state: Readonly<TModelState>;
+
+  /**
+   * Get/Override CSRF configuration in the form <code>{key: value}</code>, where the keys are:
+   * <tt>'url', 'tokenName', 'dataField', 'suffix'</tt>.
+   *
+   * @example
+   * return {
+   *    'url'       : '/api/token/{name}',
+   *    'tokenName' : 'token_name',
+   *    'dataField' : 'token',
+   *    'suffix'    : false
+   * }
+   *
+   * For backward compatibility you can override this function
+   * as needed on the inheritance class or put it on the constructor
+   * of the inheritance class or when instantiate the model.
+   */
+  get csrfConfig(): Readonly<TCSRFConfig> | undefined;
+
+  /**
+   * Get REST proxy adapter which is used to work with remote service.
+   */
+  get proxy(): IRestAdapter;
+
+  /**
+   * Get REST URL configuration in the form <code>{key: url}</code>,
+   * where the keys are: <tt>'save', 'fetch', 'delete', 'update'</tt>.
+   *
+   * @example
+   * return {
+   *    'save'  : '/api/user/create',
+   *    'fetch' : '/api/user/{id}',
+   *    'update': '/api/user/{id}/save',
+   *    'delete': '/api/user/{id}/delete'
+   * }
+   *
+   * For backward compatibility you can override this function
+   * as needed on the inheritance class or put it on the constructor
+   * of the inheritance class or when instantiate the model.
+   */
+  get restUrl(): TRestConfig;
+  set restUrl(option: TRestConfig);
+
+  /**
+   * Readonly data Model state, whether it is still loading data or not.
+   */
+  get loading(): boolean;
+
+  /**
+   * Readonly data Model state, whether it is still in the process of
+   * saving/updating data to the remote server or not.
+   */
+  get updating(): boolean;
+
+  /**
+   * Readonly data Model state, whether it is still in the process of deleting
+   * data from the remote server or not.
+   */
+  get deleting(): boolean;
+
+  /**
+   * Readonly data Model state, whether there was an error when
+   * loading/saving/deleting data or not.
+   */
+  get hasError(): boolean;
+
+  /**
+   * Assign new value to an existing field name.
+   *
+   * @param field     The field name
+   * @param newValue  The new value
+   */
+  assignValue(field: string, newValue: unknown): void;
+
+  /**
+   * Assign new values to some existing fields.
+   *
+   * This method checked the schema definition when constructing the object,
+   * and only fields that exists on the schema will get assign new value.
+   *
+   * @param sources Object with format key-value pairs
+   */
+  assignValues(sources: TRecord): void;
+
+  /**
+   * Perform delete record that already exists on the remote service via REST API.
+   */
+  delete(): Promise<AxiosResponse>;
+
+  /**
+   * Perform fetch or read record from remote service via REST API.
+   *
+   * @param id The item ID
+   */
+  fetch(id?: string | number): Promise<AxiosResponse>;
+
+  /**
+   * Freeze this data model instance, makes it Readonly and prevents any modification.
+   */
+  freeze(): Readonly<IBsModel>;
+
+  /**
+   * Get a field value.
+   *
+   * @param key The field name.
+   */
+  get(key: string): unknown;
+
+  /**
+   * Define or sets a field with new value.
+   * If the field doesn't exist, then it will be appended.
+   *
+   * @param key   The field name.
+   * @param value The field value.
+   * @throws Error If this data model is frozen.
+   */
+  set(key: string, value: unknown): void;
+
+  /**
+   * Get all the field names.
+   */
+  getFields(): IterableIterator<string>;
+
+  /**
+   * Returns the ID field name for this data model.
+   */
+  get idProperty(): string;
+
+  /**
+   * Get ID field name for this data model. (for backward compatibility)
+   *
+   * @deprecated
+   */
+  getIdProperty(): string;
+
+  /**
+   * Perform custom HTTP request to the remote service via REST API.
+   *
+   * @param restKey    The key from restUrl property
+   * @param method     Any valid HTTP method, likes: `get`, `post`, `delete`, `put`, `patch`.
+   *                   The default is `get`.
+   * @param params     Parameters to append when invoke rest request
+   * @param data       Data to append when invoke rest request
+   * @param successCb  Promise function to be called when the request is successful
+   * @param errorCb    Promise function to be called when the request is failed
+   */
+  request(
+    restKey: keyof TRestMethodOptions,
+    method?: THttpMethod | null,
+    params?: TRecord | null,
+    data?: TRecord | null,
+    successCb?: (response: AxiosResponse) => void,
+    errorCb?: (error: AxiosError) => void
+  ): Promise<AxiosResponse>;
+
+  /**
+   * Reset all fields value to their default.
+   */
+  reset(): void;
+
+  /**
+   * Reset this model state back to their initial states, such as `loading`, etc.
+   */
+  resetState(): void;
+
+  /**
+   * Persist new record to the remote service via REST API.
+   */
+  save(): Promise<AxiosResponse>;
+
+  /**
+   * Seal this data model instance, preventing new properties from being added to it
+   * and marking all existing properties as non-configurable.
+   *
+   * Values of present properties can still be changed as long as they are writable.
+   */
+  seal(): IBsModel;
+
+  /**
+   * Convert field attributes that exists in the schema definition into a Javascript plain object.
+   *
+   * The result of this method is used on REST method like: {@link save } and {@link update }.
+   *
+   * This method can be overridden on inherited classes to produce the desired DTO.
+   */
+  toObject(): TRecord;
+
+  /**
+   * Update and persist record that already exists on the remote service via REST API.
+   */
+  update(): Promise<AxiosResponse>;
+
+  /**
+   * Event triggered after data was fetched from the remote server.
+   * This method can be overridden on inherited classes.
+   *
+   * @param data The response data
+   */
+  onAfterFetch?(data: TRecord): void;
+}
 
 const _assignErrMsg = 'The given field does not exists in this {1}.';
 const _assignValuesErrMsg = 'The given values can not be assigned to {1}.';
@@ -70,9 +335,9 @@ const _sealedObjErrMsg = 'This {1} is sealed to prevent adding new properties.';
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 17/08/2024 02:45
+ * @since  09/07/2018 modified: 16/09/2025 02:30
  */
-export default class BsModel implements IBsModel {
+export class BsModel implements IBsModel {
   private readonly _idProperty: string;
   private readonly _dataProperty: string;
   private readonly _csrfConfig: Readonly<TCSRFConfig> | undefined;
@@ -83,6 +348,8 @@ export default class BsModel implements IBsModel {
   protected _state: TModelState;
   public state: Readonly<TModelState>;
 
+  [key: string]: unknown;
+
   /**
    * Construct {@link BsModel} object instance.
    *
@@ -90,6 +357,41 @@ export default class BsModel implements IBsModel {
    * @param adapter      Axios adapter instance
    * @param idProperty   Data model ID field name
    * @param dataProperty REST response data property
+   *
+   * @example
+   * const model1 = new BsModel({
+   *     uid: null,
+   *     username: null,
+   *     displayName: null,
+   *     email: null,
+   *     phoneNumber: null,
+   *     enabled: true,
+   *     password: null
+   * }, adapter, 'uid');
+   *
+   * const model2 = new BsModel({
+   *     schema: {
+   *         uid: null,
+   *         username: null,
+   *         displayName: null,
+   *         email: null,
+   *         phoneNumber: null,
+   *         enabled: true,
+   *         password: null
+   *     },
+   *     proxy: {
+   *         save: {url: './api/users', method: 'post'},
+   *         update: {url: './api/users', method: 'patch'},
+   *         delete: {url: './api/users', method: 'delete'},
+   *         fetch: './api/users/{id}',
+   *     },
+   *     csrfConfig: {
+   *         url: '/api/token/{name}',
+   *         tokenName: 'token_name',
+   *         dataField: 'value',
+   *         suffix: false,
+   *     },
+   * }, adapter, 'uid');
    */
   constructor(
     schema: TModelOptions | TRecord,
@@ -141,6 +443,9 @@ export default class BsModel implements IBsModel {
 
     autoBind(this);
   }
+  onAfterFetch?(_data: TRecord): void {
+    throw new Error('Method not implemented.');
+  }
 
   private _initSchema(schema: TRecord): void {
     Object.keys(schema).forEach((k) => {
@@ -160,6 +465,9 @@ export default class BsModel implements IBsModel {
     }
   }
 
+  /**
+   * Get the class name of this instance.
+   */
   get $_class(): string {
     return Object.getPrototypeOf(this).constructor.name;
   }
@@ -301,27 +609,27 @@ export default class BsModel implements IBsModel {
     );
   }
 
-  get(name: string): unknown {
-    return this._data.get(name);
+  get(key: string): unknown {
+    return this._data.get(key);
   }
 
-  set(name: string, value: unknown): void {
+  set(key: string, value: unknown): void {
     if (!Object.isFrozen(this)) {
-      if (!this._data.has(name) && !Object.isSealed(this)) {
+      if (!this._data.has(key) && !Object.isSealed(this)) {
         // if not exists and not sealed
-        this._data.set(name, value);
+        this._data.set(key, value);
 
-        Object.defineProperty(this, name, {
+        Object.defineProperty(this, key, {
           get(): unknown {
-            return this._data.get(name);
+            return this._data.get(key);
           },
           set(v: unknown): void {
-            this._data.set(name, v);
+            this._data.set(key, v);
           },
         });
-      } else if (this._data && this._data.has(name)) {
+      } else if (this._data && this._data.has(key)) {
         // if already exists
-        this._data.set(name, value);
+        this._data.set(key, value);
       } else {
         throw Error(_sealedObjErrMsg.replace('{1}', this.$_class));
       }
@@ -369,7 +677,7 @@ export default class BsModel implements IBsModel {
         : this.get(this.idProperty);
 
     if (url.includes('{id}') && !Helper.isEmpty(identifier)) {
-      url = url.replace('{id}', identifier);
+      url = url.replace('{id}', identifier as string);
       if (params && Object.hasOwn(params, this.idProperty)) {
         delete params[this.idProperty];
       }
@@ -391,17 +699,17 @@ export default class BsModel implements IBsModel {
 
     return this._requestWithToken(
       config,
-      ['post', 'put', 'patch'].includes(config['method'])
+      ['post', 'put', 'patch'].includes(config['method']!)
         ? this._checkBeforeSave
         : this._checkBeforeLoading,
       Helper.isFunction(successCb)
         ? successCb
-        : ['post', 'put', 'patch'].includes(config['method'])
+        : ['post', 'put', 'patch'].includes(config['method']!)
           ? this._onSaveSuccess
           : this._onLoadingSuccess,
       Helper.isFunction(errorCb)
         ? errorCb
-        : ['post', 'put', 'patch'].includes(config['method'])
+        : ['post', 'put', 'patch'].includes(config['method']!)
           ? this._onSaveFailure
           : this._onLoadingFailure
     );
@@ -420,12 +728,12 @@ export default class BsModel implements IBsModel {
     this._state.hasError = false;
   }
 
-  freeze(): Readonly<BsModel> {
+  freeze(): Readonly<IBsModel> {
     return Object.freeze(this);
   }
 
-  seal(): BsModel {
-    return Object.seal(this);
+  seal(): IBsModel {
+    return Object.seal(this) as unknown as IBsModel;
   }
 
   private _prepareSaveOrUpdate(method: 'update' | 'save'): AxiosRequestConfig {
@@ -500,7 +808,6 @@ export default class BsModel implements IBsModel {
         this._schema.has(k) && this._schema.set(k, values[k]);
       });
 
-      // @ts-ignore
       Helper.isFunction(this['onAfterFetch']) && this['onAfterFetch'](values);
     };
 
@@ -673,7 +980,7 @@ export default class BsModel implements IBsModel {
     url: string,
     method: keyof TRestMethodOptions
   ): void {
-    const methods = this.proxy.requestMethods();
+    const requestMethods = this.proxy.requestMethods();
 
     if (url.includes('{id}') && !Helper.isEmpty(identifier)) {
       url = url.replace('{id}', identifier as string);
@@ -684,6 +991,6 @@ export default class BsModel implements IBsModel {
     }
 
     config['url'] = url;
-    config['method'] = methods[method];
+    config['method'] = (requestMethods[method] as string).toLowerCase();
   }
 }

@@ -1,6 +1,6 @@
 import { isChildOf, isSVGElement } from '@/mixins/DomHelper.ts';
 import type { IBindingElement, TDirectiveBinding } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import type { Directive, DirectiveBinding } from 'vue';
 
 function mounted(el: IBindingElement, binding: DirectiveBinding<VoidFunction | TDirectiveBinding>) {

@@ -1,4 +1,4 @@
-import PopupManager from './components/Popover/mixins/PopupManager';
+import PopupManager from './components/Popover/mixins/PopupManager.ts';
 
 export {
   useAxiosPlugin,
@@ -10,17 +10,17 @@ export {
   useMergeClass,
   useMobileDevice,
   useRenderSlot,
-  useRenderSlotDefault,
-  useRenderSlotWithWrapper,
-  useRenderSlotWrapperWithCondition,
   useRenderTransition,
   useVueMdbNotification,
   useVueMdbService,
-} from './mixins/CommonApi';
+  useWrapSlot,
+  useWrapSlotDefault,
+  useWrapSlotWithCondition,
+} from './mixins/CommonApi.ts';
 
-export { useAddResizeListener, useRemoveResizeListener } from './mixins/ResizeListener';
-export { spinnerSvgData, useRenderSVG } from './components/Icon/mixins/svgApi';
-export { EventListener } from './mixins/DomHelper';
-export * as StringHelper from './utils/StringHelper.ts';
+export { spinnerSvgData, useRenderSVG } from './components/Icon/mixins/svgApi.ts';
+export { EventListener } from './mixins/DomHelper.ts';
+export { useAddResizeListener, useRemoveResizeListener } from './mixins/ResizeListener.ts';
 export * as Color from './utils/colorUtils.ts';
+export * as StringHelper from './utils/StringHelper.ts';
 export { PopupManager };
