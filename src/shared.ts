@@ -21,6 +21,7 @@ export {
 export { spinnerSvgData, useRenderSVG } from './components/Icon/mixins/svgApi.ts';
 export { EventListener } from './mixins/DomHelper.ts';
 export { useAddResizeListener, useRemoveResizeListener } from './mixins/ResizeListener.ts';
+export * from './utils/CacheManager.ts';
 export * as Color from './utils/colorUtils.ts';
 export * as StringHelper from './utils/StringHelper.ts';
 export { PopupManager };

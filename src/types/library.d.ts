@@ -254,6 +254,7 @@ export {
   useRemoveResizeListener,
 } from '@/mixins/types/DomHelper';
 export * from '@/model';
+export * from '@/utils/CacheManager.ts';
 export { AxiosPlugin, IHttpService } from '@/utils/types/AxiosPlugin';
 export * as Color from '@/utils/types/colorUtils';
 export { default as Helper } from '@/utils/types/Helper';

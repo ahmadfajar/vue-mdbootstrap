@@ -3,7 +3,7 @@ import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProp
 import type { TBsIcon, TBsSvgIcon, TIconOptionProps } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp, stringArrayOrObjectProp } from '@/mixins/CommonProps.ts';
-import type { TRecord } from '@/types';
+import type { Numberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { computed, defineComponent, h, type Prop } from 'vue';
 import BsSvgIcon from './BsSvgIcon.ts';
@@ -36,8 +36,8 @@ export default defineComponent<TBsIcon>({
           class: thisProps.svgClass,
           icon: props.icon,
           filled: props.filled,
-          height: szHeight as Prop<string>,
-          width: szWidth as Prop<string>,
+          height: szHeight as Prop<Numberish>,
+          width: szWidth as Prop<Numberish>,
           spin: props.spin,
           pulse: props.pulse,
           flip: props.flip,

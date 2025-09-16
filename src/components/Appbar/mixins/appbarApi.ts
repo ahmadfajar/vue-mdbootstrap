@@ -21,12 +21,12 @@ export function useAppbarStyles(
     marginLeft: isMobile.value
       ? zeroPx
       : props.clippedLeft && appId.value
-        ? (vueMdb.value?.app[appId.value].sideDrawer.left.width ?? 0) + 'px'
+        ? (vueMdb.value?.app[appId.value]?.sideDrawer.left.width ?? 0) + 'px'
         : zeroPx,
     marginRight: isMobile.value
       ? zeroPx
       : props.clippedRight && appId.value
-        ? (vueMdb.value?.app[appId.value].sideDrawer.right.width ?? 0) + 'px'
+        ? (vueMdb.value?.app[appId.value]?.sideDrawer.right.width ?? 0) + 'px'
         : zeroPx,
   };
 }
@@ -54,9 +54,9 @@ export function useAppbarOnMountedHook(
       if (appId.value && vueMdb.value) {
         const rect = appbar.value?.getBoundingClientRect();
 
-        vueMdb.value.app[appId.value].appbar.height = rect!.height;
-        vueMdb.value.app[appId.value].appbar.fixedTop = props.fixedTop ?? false;
-        vueMdb.value.app[appId.value].appbar.stickyTop = props.stickyTop ?? false;
+        vueMdb.value.app[appId.value]!.appbar.height = rect!.height;
+        vueMdb.value.app[appId.value]!.appbar.fixedTop = props.fixedTop ?? false;
+        vueMdb.value.app[appId.value]!.appbar.stickyTop = props.stickyTop ?? false;
         // console.info('appbar-vueMdb:', vueMdb.value);
       }
     });

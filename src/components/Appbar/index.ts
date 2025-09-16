@@ -1,8 +1,8 @@
 import type { App, ObjectPlugin } from 'vue';
-import registerConfig from '../../mixins/registerConfig';
-import BsAppbar from './BsAppbar';
-import BsAppbarItems from './BsAppbarItems';
-import BsAppbarTitle from './BsAppbarTitle';
+import registerConfig from '../../mixins/registerConfig.ts';
+import BsAppbar from './BsAppbar.ts';
+import BsAppbarItems from './BsAppbarItems.ts';
+import BsAppbarTitle from './BsAppbarTitle.ts';
 
 const BsAppbarPlugin: ObjectPlugin = {
   install: (app: App): void => {

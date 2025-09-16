@@ -42,6 +42,7 @@ export default defineComponent<TBsAvatar>({
             ? useRenderAvatarImage(thisProps)
             : !Helper.isEmpty(thisProps.icon)
               ? h<TBsIcon>(BsIcon, {
+                  // @ts-ignore
                   size: useAvatarIconSize(thisProps),
                   ...useCreateIconProps(thisProps),
                 })

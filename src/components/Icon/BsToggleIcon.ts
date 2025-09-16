@@ -7,12 +7,7 @@ import BsIconSvg from './BsSvgIcon.ts';
 export default defineComponent<TBsToggleIcon>({
   name: 'BsToggleIcon',
   props: toggleIconProps,
-  emits: [
-    /**
-     * Fired when this component's toggle state is updated.
-     */
-    'update:model-value',
-  ],
+  emits: ['update:model-value'],
   setup(props, { emit }) {
     const thisProps = props as Readonly<TToggleIconOptionProps>;
     return () =>

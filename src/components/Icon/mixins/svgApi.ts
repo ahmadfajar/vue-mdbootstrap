@@ -6,8 +6,8 @@ import {
 } from '@/components/Icon/mixins/iconApi.ts';
 import type { TFontAwesomeVariant, TIconData, TIconOptionProps } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import { CacheManager } from '@/model/CacheManager.ts';
 import type { MaybeNumberish, Numberish, RawProps, TRawCacheItem, TRecord } from '@/types';
+import { CacheManager } from '@/utils/CacheManager.ts';
 import Helper from '@/utils/Helper.ts';
 import axios from 'axios';
 import { XMLParser } from 'fast-xml-parser';

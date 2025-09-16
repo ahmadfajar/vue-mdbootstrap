@@ -13,7 +13,7 @@ import type {
 } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { stringArrayOrObjectProp } from '@/mixins/CommonProps.ts';
-import type { TRecord } from '@/types';
+import type { Numberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import {
   computed,
@@ -62,18 +62,18 @@ export default defineComponent<TBsFontawesomeIcon>({
     });
 
     const styles = computed<TRecord>(() => ({
-      width: Helper.cssUnit(szWidth),
-      height: Helper.cssUnit(szHeight),
+      width: Helper.cssUnit(szWidth.value),
+      height: Helper.cssUnit(szHeight.value),
     }));
 
     watchEffect(async () => {
       svgIcon.value = await useGetFontAwesome(thisProps.icon, thisProps.variant, thisProps.version);
 
       if (szHeight.value !== useSizeHeight(thisProps)) {
-        szHeight.value = useSizeHeight(thisProps);
+        szHeight.value = useSizeHeight(thisProps) as Numberish;
       }
       if (szWidth.value !== useSizeWidth(thisProps)) {
-        szWidth.value = useSizeWidth(thisProps);
+        szWidth.value = useSizeWidth(thisProps) as Numberish;
       }
     });
 
@@ -88,7 +88,7 @@ export default defineComponent<TBsFontawesomeIcon>({
           class: [`${cssPrefix}icon`, 'align-items-center', 'justify-content-center'],
           style: styles.value,
         },
-        useRenderNodeFromSVG(svgIcon.value?.data, szWidth, szHeight, svgClasses.value)
+        useRenderNodeFromSVG(svgIcon.value?.data, szWidth.value, szHeight.value, svgClasses.value)
       );
   },
 });

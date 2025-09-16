@@ -52,8 +52,8 @@ function getHitPosition(
   let left = event.pageX;
 
   if (event.type === 'touchstart') {
-    top = event.changedTouches[0].pageY;
-    left = event.changedTouches[0].pageX;
+    top = event.changedTouches[0]!.pageY;
+    left = event.changedTouches[0]!.pageX;
   }
 
   return {

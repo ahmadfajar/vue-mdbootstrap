@@ -49,11 +49,9 @@ export default defineComponent<TBsRipple>({
       () => thisProps.active,
       (value) => {
         const isBoolean = typeof value === 'boolean';
-        const isEvent =
-          value?.constructor
-            .toString()
-            .match(/function (\w*)/)[1]
-            .toLowerCase() === 'mouseevent';
+        // @ts-ignore
+        // prettier-ignore
+        const isEvent = value?.constructor.toString().match(/function (\w*)/)[1].toLowerCase() === 'mouseevent';
 
         if (isBoolean && !disabled.value && value) {
           startRipple(element, ripples, eventType, disabled, centered, {

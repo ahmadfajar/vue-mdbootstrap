@@ -19,7 +19,7 @@ import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } fro
 import meanBy from 'lodash-es/meanBy';
 import sumBy from 'lodash-es/sumBy';
 
-export declare type TMessageResponse = {
+declare type TMessageResponse = {
   success: boolean;
   message: string;
 };
