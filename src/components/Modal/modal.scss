@@ -7,7 +7,7 @@
     --#{vars.$prefix}modal-border-radius: 1rem;
     --#{vars.$prefix}modal-header-padding: #{vars.$padding-lg vars.$padding-lg 1.25rem};
     --#{vars.$prefix}modal-body-padding: #{vars.$padding-lg vars.$padding-lg 1.25rem};
-    --#{vars.$prefix}modal-footer-padding: #{vars.$padding-sm vars.$padding-base vars.$padding-base vars.$padding-base};
+    --#{vars.$prefix}modal-footer-padding: #{vars.$padding-sm $padding-md $padding-md $padding-md};
     --#{vars.$prefix}modal-max-width: 80%;
 
     display: flex;

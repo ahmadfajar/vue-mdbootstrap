@@ -122,11 +122,11 @@
 
         &.#{vars.$prefix}label-left {
             margin-right: vars.$padding-sm;
-            padding-right: vars.$padding-base + .25;
+            padding-right: $padding-md + .25;
         }
 
         &.#{vars.$prefix}label-right {
-            padding-left: vars.$padding-base;
+            padding-left: $padding-md;
         }
     }
 

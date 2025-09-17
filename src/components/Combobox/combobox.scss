@@ -97,7 +97,7 @@
         &.#{vars.$prefix}floating-label {
             .#{vars.$prefix}field-label {
                 height: auto;
-                top: vars.$padding-base;
+                top: $padding-md;
             }
 
             &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
@@ -106,7 +106,7 @@
                     --#{vars.$prefix}field-padding-top: 0;
 
                     min-height: vars.$text-field-height;
-                    padding-top: vars.$padding-base + .25;
+                    padding-top: $padding-md + .25;
 
                     > .#{vars.$prefix}field-placeholder {
                         --#{vars.$prefix}field-padding-bottom: 0.75rem;
@@ -119,7 +119,7 @@
                 }
 
                 .#{vars.$prefix}field-label {
-                    top: vars.$padding-base + .35;
+                    top: $padding-md + .35;
                 }
             }
 
@@ -129,8 +129,8 @@
                     --#{vars.$prefix}field-control-height: 0;
                     --#{vars.$prefix}field-padding-top: 0;
 
-                    padding-left: vars.$padding-base;
-                    padding-top: vars.$padding-base;
+                    padding-left: $padding-md;
+                    padding-top: $padding-md;
 
                     > .#{vars.$prefix}field-placeholder {
                         --#{vars.$prefix}field-padding-start: 0;
@@ -149,10 +149,10 @@
 
                 .#{vars.$prefix}field-activator {
                     min-height: 4.125rem;
-                    padding-top: vars.$padding-base + .75;
+                    padding-top: $padding-md + .75;
 
                     > .#{vars.$prefix}field-label {
-                        top: vars.$padding-base + .25;
+                        top: $padding-md + .25;
                     }
 
                     > .#{vars.$prefix}field-placeholder {

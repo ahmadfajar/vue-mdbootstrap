@@ -60,7 +60,7 @@
         background-color: var(--#{vars.$prefix-bs}card-media-bg);
         left: 0;
         right: 0;
-        padding: vars.$padding-base;
+        padding: $padding-md;
         position: absolute;
 
         > .#{vars.$prefix}card-media-title,

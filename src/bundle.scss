@@ -1,9 +1,10 @@
 @use "../scss/banner";
 @use "../scss/global_vars";
-@use "../scss/base/base";
-@use "../scss/base/animation";
-@use "../scss/base/flexbox";
-@use "../scss/base/utilities";
+@use "../scss/main/base";
+@use "../scss/main/animation";
+@use "../scss/main/flexbox";
+@use "../scss/main/grid";
+@use "../scss/main/utilities";
 @use "components/Animation/animation";
 @use "components/Alert/alert";
 @use "components/Card/card";

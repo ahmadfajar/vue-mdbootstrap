@@ -5,7 +5,7 @@
 @use "../../../scss/variables" as vars;
 
 .#{vars.$prefix}tabs {
-    --#{vars.$prefix}tabs-content-padding: #{vars.$padding-base + .25};
+    --#{vars.$prefix}tabs-content-padding: #{$padding-md + .25};
     --#{vars.$prefix}tabs-item-padding: #{vars.$tabs-item-padding};
     --#{vars.$prefix}tabs-item-spacing: #{vars.$tabs-item-spacing};
     --#{vars.$prefix}tabs-item-color: #{rgba(colors.$white, .6)};
@@ -17,8 +17,8 @@
     --#{vars.$prefix}tabs-nav-margin-x: #{vars.$card-cap-padding-x};
     --#{vars.$prefix}tabs-nav-margin-y: #{vars.$card-cap-padding-y};
     --#{vars.$prefix}tabs-material-padding: #{vars.$tabs-material-padding};
-    --#{vars.$prefix}tabs-material-margin-start: #{vars.$padding-base};
-    --#{vars.$prefix}tabs-material-margin-end: #{vars.$padding-base};
+    --#{vars.$prefix}tabs-material-margin-start: #{$padding-md};
+    --#{vars.$prefix}tabs-material-margin-end: #{$padding-md};
     --#{vars.$prefix}tabs-material-indicator-active-color: #{colors.$white};
     --#{vars.$prefix}tabs-material-indicator-border: #{vars.$tabs-material-indicator-border};
     --#{vars.$prefix}tabs-modern-border-radius: #{vars.$tabs-modern-border-radius};
@@ -32,7 +32,7 @@
     transition: vars.$transition-leave;
 
     @include media.breakpoint-down(sm) {
-        --#{vars.$prefix}tabs-content-padding: #{vars.$padding-base + .25} #{vars.$padding-base - .25};
+        --#{vars.$prefix}tabs-content-padding: #{$padding-md + .25} #{$padding-md - .25};
     }
 
     .nav {

@@ -14,10 +14,10 @@
     --#{vars.$prefix}notification-opacity: 0.9;
     --#{vars.$prefix}notification-title-weight: #{vars.$font-weight-semi-bold};
     --#{vars.$prefix}notification-title-size: 110%;
-    --#{vars.$prefix}notification-padding-x: #{vars.$padding-base};
-    --#{vars.$prefix}notification-padding-y: #{vars.$padding-base - vars.$padding-xs};
+    --#{vars.$prefix}notification-padding-x: #{$padding-md};
+    --#{vars.$prefix}notification-padding-y: #{$padding-md - vars.$padding-xs};
     --#{vars.$prefix}notification-progressbar-color: #{colors.$warning-color};
-    --#{vars.$prefix}notification-spacing: #{vars.$padding-base - vars.$padding-xs};
+    --#{vars.$prefix}notification-spacing: #{$padding-md - vars.$padding-xs};
     --#{vars.$prefix}notification-width: 350px;
 
     .#{vars.$prefix}dialog-title {

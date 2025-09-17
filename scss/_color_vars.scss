@@ -649,7 +649,7 @@ $theme-color-interval:      8% !default;
 
 // This theme color is bundled by default
 // Applicable to:
-// BsButton, BsToggleButton, BsToggleField, BsCheckbox, BsChip
+// BsButton, BsToggleButton, BsToggleField, BsCheckbox, BsChip, BsRadio, BsSwitch, BsTabs
 $context-colors: (
     "default":      $default-color,
     "primary":      $primary-color,

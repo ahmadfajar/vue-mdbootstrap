@@ -33,7 +33,7 @@
             --#{vars.$prefix}field-padding-end: 0;
 
             > .#{vars.$prefix}field-inner {
-                padding: 0.375rem vars.$padding-base 0 vars.$padding-base;
+                padding: 0.375rem $padding-md 0 $padding-md;
             }
         }
 
@@ -44,7 +44,7 @@
             --#{vars.$prefix}field-padding-end: 0;
 
             > .#{vars.$prefix}field-inner {
-                padding: 0 vars.$padding-base 0 vars.$padding-base;
+                padding: 0 $padding-md 0 $padding-md;
 
                 > .#{vars.$prefix}field-activator {
                     margin-top: .65rem;
@@ -62,7 +62,7 @@
                 --#{vars.$prefix}field-floating-label-transform: translateY(-14px) scale(.85);
 
                 > .#{vars.$prefix}field-inner {
-                    padding: 0 vars.$padding-base 0 vars.$padding-base;
+                    padding: 0 $padding-md 0 $padding-md;
 
                     > .#{vars.$prefix}field-activator {
                         margin-top: vars.$padding-lg;
@@ -82,7 +82,7 @@
                     min-height: 56px;
 
                     > .#{vars.$prefix}field-activator {
-                        margin-top: vars.$padding-base - vars.$padding-xs;
+                        margin-top: $padding-md - vars.$padding-xs;
                         margin-bottom: vars.$text-field-padding-bottom;
                     }
                 }
@@ -102,7 +102,7 @@
                         padding-left: 0;
 
                         > .#{vars.$prefix}field-activator {
-                            margin-left: vars.$padding-base;
+                            margin-left: $padding-md;
                         }
                     }
                 }
@@ -112,7 +112,7 @@
                         padding-right: 0;
 
                         > .#{vars.$prefix}field-activator {
-                            margin-right: vars.$padding-base;
+                            margin-right: $padding-md;
                         }
                     }
                 }
@@ -120,7 +120,7 @@
 
             &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
                 .#{vars.$prefix}field-activator {
-                    margin-top: vars.$padding-base;
+                    margin-top: $padding-md;
                 }
 
                 &.active, &.focused {

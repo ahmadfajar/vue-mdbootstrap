@@ -2,7 +2,7 @@ import { BsRipple } from '@/components/Animation';
 import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TBsButtonInner, TBsRipple, TButtonInnerOptionProps } from '@/types';
-import { defineComponent, h } from 'vue';
+import { defineComponent, h, type Prop } from 'vue';
 
 export default defineComponent<TBsButtonInner>({
   name: 'BsButtonInner',
@@ -21,7 +21,7 @@ export default defineComponent<TBsButtonInner>({
         {
           class: { 'dropdown-toggle': thisProps.dropdownToggle && !thisProps.iconMode },
           disabled: props.rippleOff,
-          tag: 'span',
+          tag: 'span' as Prop<string>,
         },
         {
           default: () =>

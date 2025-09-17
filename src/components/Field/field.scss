@@ -24,8 +24,8 @@
     --#{vars.$prefix}field-control-height: #{vars.$text-field-height};
     --#{vars.$prefix}field-label-color: currentColor;
     --#{vars.$prefix}field-outline-bg: transparent;
-    --#{vars.$prefix}field-padding-start: #{vars.$padding-base};
-    --#{vars.$prefix}field-padding-end: #{vars.$padding-base};
+    --#{vars.$prefix}field-padding-start: #{$padding-md};
+    --#{vars.$prefix}field-padding-end: #{$padding-md};
     --#{vars.$prefix}field-padding-top: #{vars.$text-field-padding-top};
     --#{vars.$prefix}field-padding-bottom: #{vars.$text-field-padding-bottom};
     --#{vars.$prefix}field-floating-label-color: var(--#{vars.$prefix}field-label-color);
@@ -47,7 +47,7 @@
 
             > .#{vars.$prefix}icon, > .#{vars.$prefix}toggle-icon {
                 align-self: flex-start;
-                margin-top: vars.$padding-base;
+                margin-top: $padding-md;
             }
 
             .#{vars.$prefix}text {
@@ -57,11 +57,11 @@
         }
 
         .#{vars.$prefix}prepend-outer {
-            margin-right: vars.$padding-base;
+            margin-right: $padding-md;
         }
 
         .#{vars.$prefix}append-outer {
-            margin-left: vars.$padding-base;
+            margin-left: $padding-md;
         }
     }
 
@@ -183,13 +183,13 @@
         }
 
         > .#{vars.$prefix}prepend-inner {
-            margin-left: vars.$padding-base - .25;
+            margin-left: $padding-md - .25;
         }
 
         > .#{vars.$prefix}field-activator + .#{vars.$prefix}action-icon,
         > .#{vars.$prefix}validation-icon,
         > .#{vars.$prefix}append-inner {
-            margin-right: vars.$padding-base - .25;
+            margin-right: $padding-md - .25;
         }
 
         > .#{vars.$prefix}action-icon {
@@ -370,12 +370,12 @@
                     --#{vars.$prefix}field-state-border-width: 0;
 
                     > .#{vars.$prefix}prepend-inner {
-                        margin-left: vars.$padding-base;
+                        margin-left: $padding-md;
                     }
 
                     > .#{vars.$prefix}action-icon, > .#{vars.$prefix}append-inner {
                         &:last-child {
-                            margin-right: vars.$padding-base;
+                            margin-right: $padding-md;
                         }
                     }
 
@@ -407,8 +407,8 @@
     }
 
     &.#{vars.$prefix}field-outlined {
-        --#{vars.$prefix}field-padding-top: #{vars.$padding-base};
-        --#{vars.$prefix}field-padding-bottom: #{vars.$padding-base};
+        --#{vars.$prefix}field-padding-top: #{$padding-md};
+        --#{vars.$prefix}field-padding-bottom: #{$padding-md};
         --#{vars.$prefix}field-outline-border-color: var(--#{vars.$prefix}field-border-color);
         --#{vars.$prefix}field-outline-border-width: var(--#{vars.$prefix}field-border-width);
         --#{vars.$prefix}field-outline-border-radius: #{vars.$text-field-border-radius};
@@ -516,15 +516,15 @@
 
                 > .#{vars.$prefix}field-inner {
                     > .#{vars.$prefix}prepend-inner {
-                        margin-left: vars.$padding-base;
+                        margin-left: $padding-md;
                     }
 
                     > .#{vars.$prefix}append-inner {
-                        margin-right: vars.$padding-base;
+                        margin-right: $padding-md;
                     }
 
                     > .#{vars.$prefix}field-activator + .#{vars.$prefix}action-icon {
-                        margin-right: vars.$padding-base;
+                        margin-right: $padding-md;
 
                         + .#{vars.$prefix}append-inner {
                             margin-left: vars.$padding-xs * -1;
@@ -552,7 +552,7 @@
 
         .#{vars.$prefix}prepend-inner {
             margin-left: 0;
-            margin-right: vars.$padding-base;
+            margin-right: $padding-md;
         }
 
         .#{vars.$prefix}append-inner {

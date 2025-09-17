@@ -18,6 +18,9 @@
 //    md
 //    >> breakpoint-next(sm, $breakpoint-names: (xs sm md lg xl xxl))
 //    md
+//
+// Original source: Bootstrap v5.2.
+
 @function breakpoint-next(
   $name,
   $breakpoints: vars.$grid-breakpoints,

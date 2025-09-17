@@ -1,7 +1,7 @@
 import type { App, ObjectPlugin } from 'vue';
-import BsButton from './BsButton';
-import BsToggleButton from './BsToggleButton';
-import BsToggleField from './BsToggleField';
+import BsButton from './BsButton.ts';
+import BsToggleButton from './BsToggleButton.ts';
+import BsToggleField from './BsToggleField.ts';
 
 const BsButtonPlugin: ObjectPlugin = {
   install: (app: App): void => {

@@ -11,8 +11,12 @@
   :root {
     --font-sans-serif: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    --font-size: 1rem;
-    --font-weight: normal;
+    --font-size-default: 1rem;
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
     --line-height: 1.5;
 
     // Global css variables to maintain UI component aspects
@@ -26,7 +30,7 @@
     --#{vars.$prefix}field-disabled-opacity: 0.4;
     --#{vars.$prefix}field-readonly-opacity: 0.55;
 
-    --#{vars.$prefix}caret-size: 6px;
+    --#{vars.$prefix}caret-size: 5px;
     --#{vars.$prefix}radius: #{vars.$radius-md};
     --#{vars.$prefix}radius-pill: #{vars.$radius-pill};
 

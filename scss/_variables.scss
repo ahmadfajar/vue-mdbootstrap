@@ -3,11 +3,11 @@
 @use "color_vars" as colors;
 
 // Component prefix
-$prefix:                      'md-' !default;
-$prefix-bs:                   'bs-' !default;
+$prefix:                      'md-';
+$prefix-bs:                   'bs-';
 
 // Fonts
-$font-size-base:              1rem !default;
+$font-size-base:              1rem;
 $font-weight-light:           300;
 $font-weight-normal:          400;
 $font-weight-semi-bold:       500;
@@ -27,127 +27,142 @@ $grid-breakpoints: (
     xxl: 1400px
 );
 
-$zindex-sticky:               1020 !default;
+$zindex-sticky:               1020;
+$spacing:                     1rem;
 
-$default-active-bgcolor:      color.change(colors.$mdb-default-color, $alpha: 0.2) !default;
-$default-hover-bgcolor:       color.change($default-active-bgcolor, $alpha: 0.1) !default;
+$default-active-bgcolor:      color.change(colors.$mdb-default-color, $alpha: 0.2);
+$default-hover-bgcolor:       color.change($default-active-bgcolor, $alpha: 0.1);
 
 // Shadows
 //-----------------------------
-$z-depth-1:                   0 2px 5px 0 oklch(0 0 0 / 0.16), 0 4px 8px 0 oklch(0 0 0 / 0.12) !default;
-$z-depth-half:                0 1px 2px 0 oklch(0.317 0 89.876 / 0.35), 0 2px 4px 2px oklch(0.145 0 89.876 / 0.05) !default;
-$z-depth-1-half:              0 5px 11px 0 oklch(0 0 0 / 0.18), 0 4px 15px 0 oklch(0 0 0 / 0.15) !default;
-$z-depth-2:                   0 8px 17px 0 oklch(0 0 0 / 0.2), 0 6px 20px 0 oklch(0 0 0 / 0.19) !default;
-$z-depth-3:                   0 12px 15px 0 oklch(0 0 0 / 0.24), 0 17px 50px 0 oklch(0 0 0 / 0.19) !default;
-$z-depth-4:                   0 16px 28px 0 oklch(0 0 0 / 0.22), 0 25px 55px 0 oklch(0 0 0 / 0.21) !default;
-$z-depth-5:                   0 27px 24px 0 oklch(0 0 0 / 0.2), 0 40px 77px 0 oklch(0 0 0 / 0.22) !default;
+$z-depth-1:                   0 2px 5px 0 oklch(0 0 0 / 0.16), 0 4px 8px 0 oklch(0 0 0 / 0.12);
+$z-depth-half:                0 1px 2px 0 oklch(0.317 0 89.876 / 0.35), 0 2px 4px 2px oklch(0.145 0 89.876 / 0.05);
+$z-depth-1-half:              0 5px 11px 0 oklch(0 0 0 / 0.18), 0 4px 15px 0 oklch(0 0 0 / 0.15);
+$z-depth-2:                   0 8px 17px 0 oklch(0 0 0 / 0.2), 0 6px 20px 0 oklch(0 0 0 / 0.19);
+$z-depth-3:                   0 12px 15px 0 oklch(0 0 0 / 0.24), 0 17px 50px 0 oklch(0 0 0 / 0.19);
+$z-depth-4:                   0 16px 28px 0 oklch(0 0 0 / 0.22), 0 25px 55px 0 oklch(0 0 0 / 0.21);
+$z-depth-5:                   0 27px 24px 0 oklch(0 0 0 / 0.2), 0 40px 77px 0 oklch(0 0 0 / 0.22);
+
+// Grid columns
+//-----------------------------
+$grid-columns:                12;
+$grid-gutter-width:           1.5rem;
+$grid-row-columns:            6;
 
 // Padding and margin variables
 //-----------------------------
-$padding-base:                      1rem !default;
-$padding-xs:                        .25rem !default;
-$padding-sm:                        $padding-base - .5 !default;
-$padding-lg:                        $padding-base + .5 !default;
-$padding-xl:                        $padding-base * 2 !default;
+$padding-xs:                  $spacing * .25;
+$padding-sm:                  $spacing * .5;
+$padding-md:                  $spacing;
+$padding-lg:                  $spacing * 1.5;
+$padding-xl:                  $spacing * 2;
 
 // Borders radius variables
 //-----------------------------
-$radius:                            .25rem !default;
-$radius-md:                         .375rem !default;
-$radius-lg:                         .5rem !default;
-$radius-pill:                       50rem !default;
-$radius-circle:                     50% !default;
+$radius:                      .25rem;
+$radius-md:                   .375rem;
+$radius-lg:                   .5rem;
+$radius-pill:                 50rem;
+$radius-circle:               50%;
 
 // Alerts components
 //-----------------------------
-$alert-bg-level:                    -10 !default;
-$alert-border-level:                -5 !default;
-$alert-color-level:                 6 !default;
+$alert-bg-level:              -10;
+$alert-border-level:          -5;
+$alert-color-level:           6;
 
 // Button components
 //-----------------------------
-$btn-border-radius:                 $radius-lg !default;
-$btn-border-radius-lg:              .7rem !default;
-$btn-margin-basic:                  .375rem !default;
-$btn-transition:                    color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+$btn-border-radius-sm:              .375rem; // 6px
+$btn-border-radius-md:              .625rem; // 10px
+$btn-border-radius-lg:              .875rem; // 14px
+$btn-font-size-xs:                  .75rem;
+$btn-font-size-sm:                  .875rem;
+$btn-font-size-md:                  1rem;
+$btn-font-size-lg:                  1.25rem;
+$btn-fab-border-radius-xs:          $radius * 2;
+$btn-fab-border-radius-sm:          $radius * 3;
+$btn-fab-border-radius-md:          $radius * 4;
+$btn-fab-border-radius-lg:          $radius * 6;
+$btn-transition:                    color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
 // Card components
 //-----------------------------
-$card-spacer-y:                     $padding-base !default;
-$card-spacer-x:                     $padding-base !default;
-$card-title-spacer-y:               $padding-base * .5 !default;
-$card-border-width:                 1px !default;
-$card-cap-padding-y:                $card-spacer-y * .5 !default;
-$card-cap-padding-x:                $card-spacer-x !default;
+$card-spacer-y:                     $padding-md;
+$card-spacer-x:                     $padding-md;
+$card-title-spacer-y:               $padding-md * .5;
+$card-border-width:                 1px;
+$card-cap-padding-y:                $card-spacer-y * .5;
+$card-cap-padding-x:                $card-spacer-x;
 
 // Input controls components
 //-----------------------------
-$checkbox-size:                     20px !default;
-$checkbox-touch-size:               40px !default;
-$checkbox-stroke:                   2px !default;
-$checkbox-indeterminate-width:      12px !default;
-$checkbox-margin:                   .5rem 1rem .5rem 0 !default;
+$checkbox-size:                     20px;
+$checkbox-touch-size:               40px;
+$checkbox-stroke:                   2px;
+$checkbox-indeterminate-width:      12px;
+$checkbox-margin:                   .5rem 1rem .5rem 0;
 
-$radio-size:                        $checkbox-size !default;
-$radio-touch-size:                  $checkbox-touch-size !default;
-$radio-stroke:                      $checkbox-stroke !default;
-$radio-margin:                      $checkbox-margin !default;
+$radio-size:                        $checkbox-size;
+$radio-touch-size:                  $checkbox-touch-size;
+$radio-stroke:                      $checkbox-stroke;
+$radio-margin:                      $checkbox-margin;
 
-$switch-touch-size:                 $checkbox-touch-size !default;
-$switch-thumb-size:                 $checkbox-size !default;
-$switch-track-width:                38px !default;
-$switch-track-height:               14px !default;
-$switch-inset-thumb-size:           24px !default;
-$switch-outlined-thumb-size:        18px !default;
-$switch-inset-track-width:          52px !default;
-$switch-inset-track-height:         32px !default;
-$switch-outline-stroke:             1.5px !default;
-$switch-margin:                     .5rem .25rem !default;
-$switch-shadows:                    0 0 6px -1px oklch(0 0 0 / 0.1), 0 1px 1px 1px oklch(0 0 0 / 0.15), 0 1px 3px 0 oklch(0 0 0 / 0.12) !default;
-$switch-disabled-shadows:           0 2px 1px -1px oklch(0 0 0 / 0.2), 0 1px 1px 0 oklch(0 0 0 / 0.14), 0 1px 3px 0 oklch(0 0 0 / 0.12) !default;
+$switch-touch-size:                 $checkbox-touch-size;
+$switch-thumb-size:                 $checkbox-size;
+$switch-track-width:                38px;
+$switch-track-height:               14px;
+$switch-inset-thumb-size:           24px;
+$switch-outlined-thumb-size:        18px;
+$switch-inset-track-width:          52px;
+$switch-inset-track-height:         32px;
+$switch-outline-stroke:             1.5px;
+$switch-margin:                     .5rem .25rem;
+$switch-shadows:                    0 0 6px -1px oklch(0 0 0 / 0.1), 0 1px 1px 1px oklch(0 0 0 / 0.15), 0 1px 3px 0 oklch(0 0 0 / 0.12);
+$switch-disabled-shadows:           0 2px 1px -1px oklch(0 0 0 / 0.2), 0 1px 1px 0 oklch(0 0 0 / 0.14), 0 1px 3px 0 oklch(0 0 0 / 0.12);
 
-$text-field-height:                 3.5rem !default;,
-$text-field-padding-top:            1.625rem !default;
-$text-field-padding-bottom:         .375rem !default;
-$text-field-border-radius: $radius-md !default;
-$text-field-line-height:            1.5rem !default;
-$text-field-opacity:                .6 !default;
-$text-field-hover-opacity:          .9 !default;
-$text-field-support-text-opacity:   .65 !default;
+$text-field-height:                 3.5rem;
+$text-field-padding-top:            1.625rem;
+$text-field-padding-bottom:         .375rem;
+$text-field-border-radius:          $radius-md;
+$text-field-line-height:            1.5rem;
+$text-field-opacity:                .6;
+$text-field-hover-opacity:          .9;
+$text-field-support-text-opacity:   .65;
 
 // Tabs components
 //-----------------------------
-$tabs-item-spacing:                 .375rem !default;
-$tabs-item-padding:                 .75rem 1.25rem !default;
-$tabs-material-indicator-border:    .2rem !default;
-$tabs-material-padding:             1.125rem 1.5rem 1rem 1.5rem !default;
-$tabs-modern-padding:               .625rem 1.25rem !default;
-$tabs-modern-border-radius: $radius-pill !default;
-$tabs-placement-top-shadow:         0px 4px 5px oklch(0 0 0 / 0.15), 0px 2px 2px oklch(0 0 0 / 0.14), 0px 3px 1px -2px oklch(0 0 0 / 0.12) !default;
-$tabs-placement-bottom-shadow:      0px -1px 5px oklch(0 0 0 / 0.2), 0px -1px 2px oklch(0 0 0 / 0.14), 0px -3px 1px -2px oklch(0 0 0 / 0.12) !default;
-$tabs-placement-left-shadow:        1px 0px 5px oklch(0 0 0 / 0.2), 2px 0px 2px oklch(0 0 0 / 0.14), 3px 0px 1px -2px oklch(0 0 0 / 0.12) !default;
-$tabs-placement-right-shadow:       -1px 0px 5px oklch(0 0 0 / 0.2), -2px 0px 2px oklch(0 0 0 / 0.14), -3px 0px 1px -2px oklch(0 0 0 / 0.12) !default;
+$tabs-item-spacing:                 .375rem;
+$tabs-item-padding:                 .75rem 1.25rem;
+$tabs-material-indicator-border:    .2rem;
+$tabs-material-padding:             1.125rem 1.5rem 1rem 1.5rem;
+$tabs-modern-padding:               .625rem 1.25rem;
+$tabs-modern-border-radius:         $radius-pill;
+$tabs-placement-top-shadow:         0px 4px 5px oklch(0 0 0 / 0.15), 0px 2px 2px oklch(0 0 0 / 0.14), 0px 3px 1px -2px oklch(0 0 0 / 0.12);
+$tabs-placement-bottom-shadow:      0px -1px 5px oklch(0 0 0 / 0.2), 0px -1px 2px oklch(0 0 0 / 0.14), 0px -3px 1px -2px oklch(0 0 0 / 0.12);
+$tabs-placement-left-shadow:        1px 0px 5px oklch(0 0 0 / 0.2), 2px 0px 2px oklch(0 0 0 / 0.14), 3px 0px 1px -2px oklch(0 0 0 / 0.12);
+$tabs-placement-right-shadow:       -1px 0px 5px oklch(0 0 0 / 0.2), -2px 0px 2px oklch(0 0 0 / 0.14), -3px 0px 1px -2px oklch(0 0 0 / 0.12);
 
 // Tooltips components
 //-----------------------------
-$tooltip-max-width:                 200px !default;
-$tooltip-color:                     colors.$white !default;
-$tooltip-bg:                        colors.$black !default;
-$tooltip-border-radius: $radius-md !default;
-$tooltip-opacity:                   .9 !default;
-$tooltip-padding-y:                 .25rem !default;
-$tooltip-padding-x:                 .625rem !default;
-$tooltip-arrow-width:               .8rem !default;
-$tooltip-arrow-height:              .4rem !default;
+$tooltip-max-width:                 200px;
+$tooltip-color:                     colors.$white;
+$tooltip-bg:                        colors.$black;
+$tooltip-border-radius:             $radius-md;
+$tooltip-opacity:                   .9;
+$tooltip-padding-y:                 .25rem;
+$tooltip-padding-x:                 .625rem;
+$tooltip-arrow-width:               .8rem;
+$tooltip-arrow-height:              .4rem;
 
 
 // Transitions variables
 //-----------------------------
-$transition-basic:                  all .3s ease-in-out !default;
-$transition-hoverable:              all .55s ease-in-out !default;
-$transition-duration-base:          .45s !default;
-$transition-easeOut:                cubic-bezier(0.23, 1, 0.32, 1) !default;
-$transition-easeInOut:              cubic-bezier(0.445, 0.05, 0.55, 0.95) !default;
+$transition-basic:                  all .3s ease-in-out;
+$transition-hoverable:              all .55s ease-in-out;
+$transition-duration-base:          .45s;
+$transition-easeOut:                cubic-bezier(0.23, 1, 0.32, 1);
+$transition-easeInOut:              cubic-bezier(0.445, 0.05, 0.55, 0.95);
 
 // The default transition, used when the element is visible
 // since the beginning of the animation

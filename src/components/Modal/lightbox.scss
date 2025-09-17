@@ -108,7 +108,7 @@
 
         .#{vars.$prefix}counter {
             color: var(--#{vars.$prefix}lightbox-toolbar-color);
-            padding: var(--#{vars.$prefix}lightbox-element-padding-x) vars.$padding-base;
+            padding: var(--#{vars.$prefix}lightbox-element-padding-x) $padding-md;
         }
     }
 

@@ -15,7 +15,7 @@
     }
 
     &.badge-pill {
-        $badge-padding: vars.$padding-base - .25;
+        $badge-padding: $padding-md - .25;
         --#{vars.$prefix-bs}badge-border-radius: #{$radius-pill};
         --#{vars.$prefix-bs}badge-font-size: .8em;
         --#{vars.$prefix-bs}badge-padding-x: #{$badge-padding};

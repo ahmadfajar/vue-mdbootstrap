@@ -4,8 +4,8 @@
 
 .#{vars.$prefix}datepicker {
     --#{vars.$prefix}datepicker-border-radius: #{$radius-md};
-    --#{vars.$prefix}datepicker-padding-x: #{vars.$padding-base};
-    --#{vars.$prefix}datepicker-padding-y: #{vars.$padding-base};
+    --#{vars.$prefix}datepicker-padding-x: #{$padding-md};
+    --#{vars.$prefix}datepicker-padding-y: #{$padding-md};
     --#{vars.$prefix}datepicker-header-color: #{colors.$white};
     --#{vars.$prefix}datepicker-table-header-color: #{colors.$gray-600};
     --#{vars.$prefix}datepicker-title-font-size: 1.8rem;

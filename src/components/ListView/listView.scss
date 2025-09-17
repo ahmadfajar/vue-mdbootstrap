@@ -11,9 +11,9 @@
 
     --#{vars.$prefix}tile-minheight: 2.5rem;
     --#{vars.$prefix}tile-action-minwidth: 1.5rem;
-    --#{vars.$prefix}tile-spacing-x: #{vars.$padding-base - .5};
+    --#{vars.$prefix}tile-spacing-x: #{$padding-md - .5};
     --#{vars.$prefix}tile-spacing-y: .375rem;
-    --#{vars.$prefix}tile-padding-x: #{vars.$padding-base};
+    --#{vars.$prefix}tile-padding-x: #{$padding-md};
     --#{vars.$prefix}tile-padding-y: #{vars.$padding-sm};
     --#{vars.$prefix}tile-title-font-size: #{vars.$font-size-base};
     --#{vars.$prefix}tile-title-font-weight: #{vars.$font-weight-normal};
@@ -21,7 +21,7 @@
     --#{vars.$prefix}tile-active-title-font-weight: #{vars.$font-weight-semi-bold};
     --#{vars.$prefix}tile-active-indicator-border: 4px;
 
-    --#{vars.$prefix}nav-item-padding-x: #{vars.$padding-base};
+    --#{vars.$prefix}nav-item-padding-x: #{$padding-md};
     --#{vars.$prefix}nav-item-padding-y: #{vars.$padding-xs};
     --#{vars.$prefix}nav-item-line-height: normal;
     --#{vars.$prefix}nav-item-font-size: #{vars.$font-size-base};

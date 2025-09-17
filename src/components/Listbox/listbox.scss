@@ -5,7 +5,7 @@
 @use "../../../scss/variables" as vars;
 
 .#{vars.$prefix}listbox {
-    --#{vars.$prefix}searchbox-padding-x: #{vars.$padding-base - .25};
+    --#{vars.$prefix}searchbox-padding-x: #{$padding-md - .25};
     --#{vars.$prefix}searchbox-padding-y: #{vars.$padding-sm};
     --#{vars.$prefix}searchbox-border-color: #{colors.$gray-500};
     --#{vars.$prefix}searchbox-focused-border-color: #{helper.to-rgb(color.adjust(vars.$default-active-bgcolor, $lightness: -8%))};
@@ -14,7 +14,7 @@
     --#{vars.$prefix}searchbox-focused-shadow-rgba: #{rgba(helper.to-rgb(color.adjust(vars.$default-active-bgcolor, $lightness: -10%)), 0.2)};
 
     > .#{vars.$prefix}listbox-search {
-        padding: vars.$padding-base - .25;
+        padding: $padding-md - .25;
         width: 100%;
 
         > input {

@@ -7,7 +7,7 @@
     --#{vars.$prefix}appbar-bg: var(--appbar-background, #{colors.$white});
     --#{vars.$prefix}appbar-color: var(--appbar-foreground, #{colors.$neutral-darken-4});
     --#{vars.$prefix}appbar-height: 64px;
-    --#{vars.$prefix}appbar-padding: #{vars.$padding-sm (vars.$padding-base - 0.25) vars.$padding-sm vars.$padding-base};
+    --#{vars.$prefix}appbar-padding: #{vars.$padding-sm (vars.$padding-md - 0.25) vars.$padding-sm vars.$padding-md};
     --#{vars.$prefix}appbar-title-font-size: 1.5rem;
     --#{vars.$prefix}appbar-title-font-weight: #{vars.$font-weight-normal};
 
@@ -38,7 +38,7 @@
       font-size: var(--#{vars.$prefix}appbar-title-font-size);
       font-weight: var(--#{vars.$prefix}appbar-title-font-weight);
       line-height: normal;
-      margin: 0 vars.$padding-base;
+      margin: 0 vars.$padding-md;
 
       > a {
         color: inherit;

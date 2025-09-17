@@ -1,6 +1,7 @@
 import {
   BaseComponentProps,
   EventUpdateModelValueProps,
+  MaybeNumberish,
   Numberish,
   TAllowedIconProps,
   TClassList,
@@ -78,7 +79,25 @@ export declare type TButtonBaseProps = {
   size?: TButtonSize;
 };
 
+export declare type TCustomIconProps = {
+  /**
+   * Apply custom css class to the icon.
+   */
+  iconClass?: TClassList;
+
+  /**
+   * Place icon on the `left` side (before text) or on the `right` side (after text).
+   */
+  iconPosition?: TIconPosition;
+
+  /**
+   * Render the icon with equal height and width.
+   */
+  iconSize?: Numberish;
+};
+
 export declare type TButtonOptionProps = TAllowedIconProps &
+  TCustomIconProps &
   TButtonBaseProps & {
     /**
      * Sets this button state: `active` or `normal`.
@@ -112,21 +131,6 @@ export declare type TButtonOptionProps = TAllowedIconProps &
      * apply button styles to the element.
      */
     href?: string;
-
-    /**
-     * Apply custom css class to the icon.
-     */
-    iconClass?: TClassList;
-
-    /**
-     * Place icon on the `left` side (before text) or on the `right` side (after text).
-     */
-    iconPosition?: TIconPosition;
-
-    /**
-     * Render the icon with equal height and width.
-     */
-    iconSize?: Numberish;
 
     /**
      * Disable the **ripple** effect.
@@ -193,7 +197,7 @@ export declare type TToggleButtonOptionProps = TInputBaseProps &
     /**
      * The input value to be monitored by `v-model`.
      */
-    modelValue?: string | number | boolean | unknown[];
+    modelValue?: MaybeNumberish | boolean | unknown[];
 
     /**
      * Color to apply when Button is active or selected.
@@ -227,7 +231,7 @@ export declare const BsButton: {
 };
 
 declare type AllowedToggleButtonProps = BaseComponentProps &
-  EventUpdateModelValueProps<string | number | boolean>;
+  EventUpdateModelValueProps<MaybeNumberish | boolean | unknown[]>;
 
 export declare const BsToggleButton: {
   new (): {
@@ -237,7 +241,7 @@ export declare const BsToggleButton: {
       icon?: (item: TInputOptionItem) => VNode;
     };
     $emits: {
-      (event: 'update:model-value', value: string | number | boolean): void;
+      (event: 'update:model-value', value: MaybeNumberish | boolean | unknown[]): void;
     };
   };
 };
@@ -252,7 +256,7 @@ export declare const BsToggleField: {
       'help-text'?: () => VNode;
     };
     $emits: {
-      (event: 'update:model-value', value: string | number | boolean): void;
+      (event: 'update:model-value', value: Numberish | boolean): void;
     };
   };
 };

@@ -38,7 +38,7 @@ $markerSize: 14px;
     }
 
     > .#{$cmpCssName}body {
-        padding: vars.$padding-base;
+        padding: $padding-md;
 
         &:last-child {
             @include borders.bottom-radius(var(--#{vars.$prefix-bs}border-radius));
@@ -58,7 +58,7 @@ $markerSize: 14px;
         > .#{$cmpCssName}preview {
             height: 2.5rem;
             width: 2.5rem;
-            margin-right: vars.$padding-base;
+            margin-right: $padding-md;
             position: relative;
 
             > .#{$cmpCssName}selected-color {
@@ -198,7 +198,7 @@ $markerSize: 14px;
         > .#{$cmpCssName}input-row {
             display: flex;
             align-items: center;
-            padding: (vars.$padding-base - .25) 0;
+            padding: ($padding-md - .25) 0;
 
             > .#{$cmpCssName}input-col {
                 flex: 1 1 auto;

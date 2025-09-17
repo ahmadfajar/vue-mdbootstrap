@@ -112,7 +112,7 @@
         opacity: var(--#{vars.$prefix}checkbox-state-opacity);
         height: var(--#{vars.$prefix}checkbox-size);
         line-height: var(--#{vars.$prefix}checkbox-size);
-        margin-left: vars.$padding-base;
+        margin-left: $padding-md;
         margin-bottom: 0;
         position: relative;
         user-select: none;
