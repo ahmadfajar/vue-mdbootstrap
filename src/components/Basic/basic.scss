@@ -25,7 +25,7 @@
 
 .#{vars.$prefix}subheader {
     --#{vars.$prefix}subheader-font-size: #{vars.$font-size-base};
-    --#{vars.$prefix}subheader-font-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix}subheader-font-weight: #{$font-weight-medium};
     --#{vars.$prefix}subheader-padding-x: #{$padding-md};
     --#{vars.$prefix}subheader-padding-y: 0;
 

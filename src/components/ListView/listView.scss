@@ -18,7 +18,7 @@
     --#{vars.$prefix}tile-title-font-size: #{vars.$font-size-base};
     --#{vars.$prefix}tile-title-font-weight: #{vars.$font-weight-normal};
     --#{vars.$prefix}tile-subtitle-font-size: #{math.div((vars.$font-size-base * 90), 100)};
-    --#{vars.$prefix}tile-active-title-font-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix}tile-active-title-font-weight: #{$font-weight-medium};
     --#{vars.$prefix}tile-active-indicator-border: 4px;
 
     --#{vars.$prefix}nav-item-padding-x: #{$padding-md};
@@ -26,7 +26,7 @@
     --#{vars.$prefix}nav-item-line-height: normal;
     --#{vars.$prefix}nav-item-font-size: #{vars.$font-size-base};
     --#{vars.$prefix}nav-item-font-weight: #{vars.$font-weight-normal};
-    --#{vars.$prefix}nav-item-active-font-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix}nav-item-active-font-weight: #{$font-weight-medium};
 
     background-color: var(--#{vars.$prefix}listview-bg);
     list-style-type: none;

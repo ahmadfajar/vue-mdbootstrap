@@ -9,7 +9,9 @@
 //----------------------
 @layer components {
   :root {
+    // prettier-ignore
     --font-sans-serif: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    // prettier-ignore
     --font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --font-size-default: 1rem;
     --font-weight-light: 300;
@@ -38,6 +40,7 @@
     //-------------------------------------------------
     --background: #{colors.$white};
     --foreground: #{colors.$neutral-darken-4};
+    --background-secondary: #{colors.$white};
     --foreground-secondary: #{colors.#{colors.$gray-800}};
     --appbar-background: var(--background);
     --appbar-foreground: var(--foreground);
@@ -56,6 +59,7 @@
     --navigation-menu-foreground: var(--foreground);
     --navigation-menu-foreground-secondary: var(--foreground-secondary);
     --navigation-menu-active-background: #{vars.$default-active-bgcolor};
+    // prettier-ignore
     --navigation-menu-active-foreground: #{helper.to-oklch(color.scale(vars.$default-active-bgcolor, $lightness: -10%))};
     --navigation-menu-active-foreground-secondary: var(--foreground-secondary);
     --navigation-menu-hover-background: #{vars.$default-hover-bgcolor};

@@ -10,7 +10,8 @@ $prefix-bs:                   'bs-';
 $font-size-base:              1rem;
 $font-weight-light:           300;
 $font-weight-normal:          400;
-$font-weight-semi-bold:       500;
+$font-weight-medium:          500;
+$font-weight-semibold:        600;
 $font-weight-bold:            700;
 $font-weight-boldest:         900;
 
@@ -72,9 +73,16 @@ $alert-padding-x:             $spacing;
 $alert-margin-bottom:         $spacing;
 $alert-border-radius:         $radius-md;
 $alert-icon-spacing:          $padding-md;
-$alert-bg-scale:              -80%;
-$alert-border-scale:          -70%;
-$alert-color-scale:           40%;
+$alert-bg-scale:              80%;
+$alert-border-scale:          70%;
+$alert-color-scale:           -40%;
+
+// Badge components
+//-----------------------------
+$badge-border-radius:               $radius-md;
+$badge-font-size:                   .75em;
+$badge-padding-y:                   .35rem;
+$badge-padding-x:                   .65rem;
 
 // Button components
 //-----------------------------

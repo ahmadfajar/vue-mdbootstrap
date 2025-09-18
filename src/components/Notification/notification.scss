@@ -12,7 +12,7 @@
     --#{vars.$prefix}notification-font-size: .9rem;
     --#{vars.$prefix}notification-hover-color: #{colors.$gray-300};
     --#{vars.$prefix}notification-opacity: 0.9;
-    --#{vars.$prefix}notification-title-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix}notification-title-weight: #{$font-weight-medium};
     --#{vars.$prefix}notification-title-size: 110%;
     --#{vars.$prefix}notification-padding-x: #{$padding-md};
     --#{vars.$prefix}notification-padding-y: #{$padding-md - vars.$padding-xs};

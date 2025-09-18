@@ -99,9 +99,12 @@
 }
 
 // Tint a color with black/white and returns color in oklch color space
-@function shift-color($color, $weight: 10%) {
-  $level: math.abs($weight);
-  $tint-color: if($level > 0, colors.$black, colors.$white);
+//
+// $lightness is negative it will tint with black and the color result becomes darker
+// $lightness is positive it will tint with white and the color result becomes lighter
+@function shift-color($color, $lightness: 10%) {
+  $weight: math.abs($lightness);
+  $tint-color: if($lightness > 0, colors.$white, colors.$black);
 
-  @return to-oklch(color.mix($tint-color, $color, $level, oklch));
+  @return to-oklch(color.mix($tint-color, $color, $weight, oklch));
 }

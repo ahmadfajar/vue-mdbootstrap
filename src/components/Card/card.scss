@@ -7,7 +7,7 @@
     --#{vars.$prefix-bs}card-inner-border-radius: calc(var(--#{vars.$prefix-bs}card-border-radius) - 1px);
 
     .card-header {
-        font-weight: vars.$font-weight-semi-bold;
+        font-weight: $font-weight-medium;
     }
 
     .card-subtitle {
@@ -42,7 +42,7 @@
     --#{vars.$prefix-bs}card-media-bg: rgba(0, 0, 0, .54);
     --#{vars.$prefix-bs}card-media-color: rgba(255, 255, 255, .8);
     --#{vars.$prefix-bs}card-media-title-font-size: 1.5rem;
-    --#{vars.$prefix-bs}card-media-title-font-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix-bs}card-media-title-font-weight: #{$font-weight-medium};
     --#{vars.$prefix-bs}card-media-subtitle-font-size: 1.125rem;
     --#{vars.$prefix-bs}card-media-subtitle-font-weight: #{vars.$font-weight-light};
 

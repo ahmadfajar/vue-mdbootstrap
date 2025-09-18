@@ -53,7 +53,7 @@
         @include borders.top-radius(var(--#{vars.$prefix}datepicker-border-radius));
 
         color: var(--#{vars.$prefix}datepicker-header-color);
-        font-weight: vars.$font-weight-semi-bold;
+        font-weight: $font-weight-medium;
         line-height: normal;
 
         > .#{vars.$prefix}datepicker-title {

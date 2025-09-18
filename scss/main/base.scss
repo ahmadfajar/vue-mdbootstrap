@@ -1,4 +1,4 @@
-@use '../mixins/css3/decorators';
+@use '../mixins/css3/text-decorators' as decorators;
 @use '../color_vars' as colors;
 
 @layer base {
@@ -8,11 +8,14 @@
     }
   }
 
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     box-sizing: border-box;
   }
 
-  body, html {
+  body,
+  html {
     text-rendering: optimizelegibility;
   }
 
@@ -23,9 +26,15 @@
     line-height: var(--line-height);
   }
 
-  // Create default colors for background, borders and text
-  //--------------------------------------------------------
+  // Create default colors for background and text
+  //-----------------------------------------------
   @each $name, $color in colors.$context-colors {
-    @include decorators.decorate-color($color, $name);
+    @include decorators.decorate-color(
+      $color,
+      $name,
+      $border: false,
+      $text-bg: true,
+      $hyperlink: true
+    );
   }
 }

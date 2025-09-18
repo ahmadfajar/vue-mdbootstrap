@@ -1,46 +1,76 @@
-@use "sass:color";
-@use "sass:map";
-@use "../../../scss/utils/color_helper" as helper;
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use 'sass:color';
+@use 'sass:map';
+@use '../../../scss/utils/color_helper' as helper;
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.badge {
-    --#{vars.$prefix-bs}badge-font-weight: #{vars.$font-weight-semi-bold};
+@layer components {
+  .#{vars.$prefix}badge {
+    // prettier-ignore
+    --#{vars.$prefix}badge-border-radius: var(--#{vars.$prefix}radius, #{vars.$badge-border-radius});
+    --#{vars.$prefix}badge-color: #{colors.$white};
+    --#{vars.$prefix}badge-font-size: #{vars.$badge-font-size};
+    --#{vars.$prefix}badge-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
+    --#{vars.$prefix}badge-padding-x: #{vars.$badge-padding-x};
+    --#{vars.$prefix}badge-padding-y: #{vars.$badge-padding-y};
+
+    border-radius: var(--#{vars.$prefix}badge-border-radius);
+    color: var(--#{vars.$prefix}badge-color);
+    font-size: var(--#{vars.$prefix}badge-font-size);
+    font-weight: var(--#{vars.$prefix}badge-font-weight);
+    padding: var(--#{vars.$prefix}badge-padding-y) var(--#{vars.$prefix}badge-padding-x);
+    display: inline-block;
+    text-align: center;
+    vertical-align: baseline;
+    white-space: nowrap;
+    line-height: 1;
     box-shadow: none;
 
-    &.badge-label {
-        --#{vars.$prefix-bs}badge-font-size: .8em;
-        line-height: 1;
-        padding: .3rem (vars.$padding-sm + .1);
+    &.#{vars.$prefix}badge-label {
+      --#{vars.$prefix}badge-font-size: 0.8em;
+      --#{vars.$prefix}badge-padding-x: #{vars.$padding-sm + 0.1};
     }
 
-    &.badge-pill {
-        $badge-padding: $padding-md - .25;
-        --#{vars.$prefix-bs}badge-border-radius: #{$radius-pill};
-        --#{vars.$prefix-bs}badge-font-size: .8em;
-        --#{vars.$prefix-bs}badge-padding-x: #{$badge-padding};
+    &.#{vars.$prefix}badge-pill {
+      --#{vars.$prefix}badge-border-radius: #{vars.$radius-pill};
+      --#{vars.$prefix}badge-font-size: 0.8em;
+      --#{vars.$prefix}badge-padding-x: #{vars.$spacing * 0.75};
     }
 
-    ~ .badge {
-        margin-left: .3rem;
+    // Empty badges collapse automatically
+    &:empty {
+      display: none;
     }
-}
+  }
 
-a {
-    &.badge {
-        text-decoration: none;
+  a.#{vars.$prefix}badge {
+    text-decoration: none;
 
-        @each $name, $color in map.remove(colors.$context-colors, "default") {
-            &.text-bg-#{$name} {
-                &:focus, &:hover {
-                    background-color: helper.to-rgb(color.adjust($color, $lightness: -10%)) !important;
-                    text-decoration: none;
-                }
-                &:focus {
-                    box-shadow: 0 0 0 .2rem rgba($color, .5);
-                    outline: 0;
-                }
-            }
+    @each $name, $color in colors.$context-colors {
+      &.text-bg-#{$name} {
+        &:focus,
+        &:hover {
+          background-color: helper.to-oklch(color.adjust($color, $lightness: -10%));
+          text-decoration: none;
         }
+
+        &:focus {
+          $shadow-color: helper.set-color-contrast(
+            $color,
+            color.adjust($color, $lightness: -18%),
+            color.adjust($color, $lightness: 8%)
+          );
+          box-shadow: #{0 0 0 0.25rem helper.to-oklch(color.change($shadow-color, $alpha: 0.65))};
+          outline: 0;
+        }
+      }
     }
+  }
+
+  @each $name, $color in colors.$context-colors {
+    .#{vars.$prefix}badge-outline-#{$name} {
+      --#{vars.$prefix}badge-color: $color;
+      border-color: helper.to-oklch(color.adjust($color, $lightness: 10%));
+    }
+  }
 }

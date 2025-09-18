@@ -1,6 +1,6 @@
 @use 'sass:color';
 @use 'sass:map';
-@use '../mixins/css3/decorators';
+@use '../mixins/css3/text-decorators' as decorators;
 @use '../utils/color_helper' as helper;
 @use '../color_vars' as colors;
 @use '../variables' as vars;

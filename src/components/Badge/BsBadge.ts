@@ -11,11 +11,11 @@ export default defineComponent<TBsBadge>({
 
     return () =>
       useWrapSlotDefault(thisProps.tag || 'span', slots, {
-        badge: true,
-        [`badge-${thisProps.type}`]: thisProps.type,
-        [`text-bg-${thisProps.variant}`]: !thisProps.outlined && thisProps.variant,
-        [`bg-${thisProps.color}`]: !thisProps.outlined && !thisProps.variant && thisProps.color,
-        [`${cssPrefix}border text-${thisProps.variant || thisProps.color}`]: thisProps.outlined,
+        [`${cssPrefix}badge`]: true,
+        [`${cssPrefix}badge-${thisProps.type}`]: thisProps.type,
+        [`text-bg-${thisProps.variant || thisProps.color}`]: !thisProps.outlined,
+        [`${cssPrefix}badge-outline-${thisProps.variant || thisProps.color}`]: thisProps.outlined,
+        'border-thin': thisProps.outlined,
       });
   },
 });

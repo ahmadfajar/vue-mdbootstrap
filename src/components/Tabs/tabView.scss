@@ -12,7 +12,7 @@
     --#{vars.$prefix}tabs-item-active-color: #{colors.$white};
     --#{vars.$prefix}tabs-item-hover-color: #{rgba(colors.$white, .8)};
     --#{vars.$prefix}tabs-item-disabled-color: #{rgba(colors.$white, .3)};
-    --#{vars.$prefix}tabs-item-font-weight: #{vars.$font-weight-semi-bold};
+    --#{vars.$prefix}tabs-item-font-weight: #{$font-weight-medium};
     --#{vars.$prefix}tabs-nav-active-border-color: #{colors.$gray-300};
     --#{vars.$prefix}tabs-nav-margin-x: #{vars.$card-cap-padding-x};
     --#{vars.$prefix}tabs-nav-margin-y: #{vars.$card-cap-padding-y};
