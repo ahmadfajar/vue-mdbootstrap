@@ -31,11 +31,11 @@ export default defineComponent<TBsBreadcrumb>({
   setup(props, { slots }) {
     const thisProps = props as Readonly<TBreadcrumbOptionProps>;
 
-    return () => renderBreadcrumb(thisProps, slots);
+    return () => renderBreadcrumb(slots, thisProps);
   },
 });
 
-function renderBreadcrumb(props: Readonly<TBreadcrumbOptionProps>, slots: Slots): VNode {
+function renderBreadcrumb(slots: Slots, props: Readonly<TBreadcrumbOptionProps>): VNode {
   const itemCount = props.items.length > 0 ? props.items.length - 1 : 0;
   let separator: string;
 
@@ -49,27 +49,31 @@ function renderBreadcrumb(props: Readonly<TBreadcrumbOptionProps>, slots: Slots)
     props.tag || 'nav',
     {
       class: [`${cssPrefix}breadcrumb`, props.sticky ? 'sticky-top' : ''],
-      style: props.separator ? { '--bs-breadcrumb-divider': separator } : undefined,
+      style: props.separator
+        ? { [`--${cssPrefix}breadcrumb-item-separator`]: separator }
+        : undefined,
       ariaLabel: 'breadcrumb',
     },
     [
-      useWrapSlot(
-        slots,
-        'icon',
-        'breadcrumb-icon',
-        { class: `${cssPrefix}breadcrumb-icon` },
-        !Helper.isEmpty(props.prependIcon)
-          ? h<TBsIcon>(BsIcon, {
-              icon: props.prependIcon as Prop<string>,
-              size: props.iconSize as Prop<string | number>,
-            })
-          : undefined
-      ),
-      h(
-        'ol',
-        { class: 'breadcrumb' },
-        props.items.map((it, idx) => createItemLabel(it, idx, itemCount))
-      ),
+      h('div', { class: `${cssPrefix}breadcrumb-container` }, [
+        useWrapSlot(
+          slots,
+          'icon',
+          'breadcrumb-icon',
+          { class: `${cssPrefix}breadcrumb-icon` },
+          !Helper.isEmpty(props.prependIcon)
+            ? h<TBsIcon>(BsIcon, {
+                icon: props.prependIcon as Prop<string>,
+                size: props.iconSize as Prop<string | number>,
+              })
+            : undefined
+        ),
+        h(
+          'ol',
+          { class: `${cssPrefix}breadcrumb-inner` },
+          props.items.map((it, idx) => createItemLabel(it, idx, itemCount))
+        ),
+      ]),
     ]
   );
 }
@@ -85,7 +89,7 @@ function createItemLabel(item: TBreadcrumb, index: number, length: number): VNod
     return h(
       'li',
       {
-        class: ['breadcrumb-item', 'active'],
+        class: [`${cssPrefix}breadcrumb-item`, 'active'],
         'aria-current': 'page',
       },
       toDisplayString(item.label)
@@ -94,7 +98,7 @@ function createItemLabel(item: TBreadcrumb, index: number, length: number): VNod
     return h(
       'li',
       {
-        class: ['breadcrumb-item', `${cssPrefix}link`],
+        class: [`${cssPrefix}breadcrumb-item`, `${cssPrefix}link`],
         onClick: item.handler(),
       },
       toDisplayString(item.label)
@@ -106,14 +110,14 @@ function createItemLabel(item: TBreadcrumb, index: number, length: number): VNod
         to: item.pathName ? { name: item.pathName } : item.path,
       } as RouterLinkProps);
 
-    return h('li', { class: 'breadcrumb-item' }, [
+    return h('li', { class: `${cssPrefix}breadcrumb-item` }, [
       useRenderRouter(_props, toDisplayString(item.label)),
     ]);
   } else if (item.href) {
-    return h('li', { class: 'breadcrumb-item' }, [
+    return h('li', { class: `${cssPrefix}breadcrumb-item` }, [
       h('a', { href: item.href }, toDisplayString(item.label)),
     ]);
   } else {
-    return h('li', { class: 'breadcrumb-item' }, toDisplayString(item.label));
+    return h('li', { class: `${cssPrefix}breadcrumb-item` }, toDisplayString(item.label));
   }
 }

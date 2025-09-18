@@ -79,10 +79,17 @@ $alert-color-scale:           -40%;
 
 // Badge components
 //-----------------------------
-$badge-border-radius:               $radius-md;
-$badge-font-size:                   .75em;
-$badge-padding-y:                   .35rem;
-$badge-padding-x:                   .65rem;
+$badge-border-radius:         $radius-md;
+$badge-font-size:             .75em;
+$badge-padding-y:             .35rem;
+$badge-padding-x:             .65rem;
+
+// Breadcrumb components
+//-----------------------------
+$breadcrumb-padding-y:        $spacing * 0.75;
+$breadcrumb-padding-x:        $padding-lg;
+$breadcrumb-item-spacing:     $padding-sm;
+$breadcrumb-line-height:      1.25;
 
 // Button components
 //-----------------------------

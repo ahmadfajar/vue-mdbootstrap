@@ -223,7 +223,7 @@
 
       &.empty-text {
         > .has-icon {
-          padding-right: vars.$padding-xs;
+          padding-right: #{vars.$padding-xs};
         }
       }
     }
@@ -255,8 +255,8 @@
     .#{vars.$prefix}icon-left,
     .#{vars.$prefix}icon-right {
       transition:
-        width 200ms vars.$transition-default-animation,
-        visibility 0ms vars.$transition-default-animation;
+        width 200ms #{vars.$transition-default-animation},
+        visibility 0ms #{vars.$transition-default-animation};
 
       &.#{vars.$prefix}empty-icon {
         width: 0;
@@ -264,13 +264,13 @@
     }
 
     .#{vars.$prefix}icon-left {
-      margin-right: vars.$padding-sm;
-      margin-left: vars.$padding-sm * -1;
+      margin-right: #{vars.$padding-sm};
+      margin-left: #{vars.$padding-sm * -1};
     }
 
     .#{vars.$prefix}icon-right {
-      margin-left: vars.$padding-sm;
-      margin-right: vars.$padding-sm * -1;
+      margin-left: #{vars.$padding-sm};
+      margin-right: #{vars.$padding-sm * -1};
     }
 
     &.#{vars.$prefix}btn-xs {
@@ -284,11 +284,11 @@
       }
 
       .#{vars.$prefix}icon-left {
-        margin-left: vars.$padding-xs * -1;
+        margin-left: #{vars.$padding-xs * -1};
       }
 
       .#{vars.$prefix}icon-right {
-        margin-right: vars.$padding-xs * -1;
+        margin-right: #{vars.$padding-xs * -1};
       }
     }
 
@@ -342,8 +342,8 @@
     .#{vars.$prefix}icon-left,
     .#{vars.$prefix}icon-right {
       transition:
-        width 200ms vars.$transition-default-animation,
-        visibility 0ms vars.$transition-default-animation;
+        width 200ms #{vars.$transition-default-animation},
+        visibility 0ms #{vars.$transition-default-animation};
 
       &.#{vars.$prefix}empty-icon {
         width: 0;
@@ -351,22 +351,22 @@
     }
 
     .#{vars.$prefix}icon-left {
-      margin-left: vars.$padding-xs * -1;
+      margin-left: #{vars.$padding-xs * -1};
     }
 
     .#{vars.$prefix}icon-right {
-      margin-right: vars.$padding-xs * -1;
+      margin-right: #{vars.$padding-xs * -1};
     }
 
     &.#{vars.$prefix}btn-xs,
     &.#{vars.$prefix}btn-sm {
       .#{vars.$prefix}icon-left {
-        margin-right: vars.$padding-xs;
+        margin-right: #{vars.$padding-xs};
         margin-left: 0;
       }
 
       .#{vars.$prefix}icon-right {
-        margin-left: vars.$padding-xs;
+        margin-left: #{vars.$padding-xs};
         margin-right: 0;
       }
     }

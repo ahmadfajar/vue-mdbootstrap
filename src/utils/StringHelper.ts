@@ -118,6 +118,7 @@ export function encodeSpecialChars(
       retVal += '&#' + source.codePointAt(i) + ';';
     } else if (s1.includes(source.charAt(i))) {
       const n = s1.indexOf(source.charAt(i));
+
       if ((s2[n] as string).startsWith('%')) {
         retVal += s2[n];
       } else {
