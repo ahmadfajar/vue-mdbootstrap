@@ -644,9 +644,6 @@ $mdb-unique-color:          helper.to-oklch(#880e4f);
 $mdb-light-color:           helper.to-oklch(#f8f9fa);
 $error-color:               $red-base;
 
-// Set a specific jump point for requesting color jumps
-$theme-color-interval:      8% !default;
-
 // This theme color is bundled by default
 // Applicable to:
 // BsButton, BsToggleButton, BsToggleField, BsCheckbox, BsChip, BsRadio, BsSwitch, BsTabs
@@ -723,7 +720,7 @@ $theme-colors: (
     "light-blue":  $light-blue-lighten-2,
     "light-green": $light-green-base,
     "lime":        $lime-base,
-    "mdb-color": $midnight-haze-base,
+    "mdb-color":   $midnight-haze-base,
     "orange":      $orange-base,
     "pink":        $pink-base,
     "purple":      $purple-base,
@@ -742,7 +739,7 @@ $merge-theme-colors: map.merge($material-colors, $theme-colors);
 // This theme color can be used for most components.
 $common-theme-colors: map.remove($theme-colors,
     "default", "primary", "secondary", "info", "success", "warning", "danger",
-    "grey", "light-grey", "light", "dark", "black", "white"
+    "grey", "light", "dark", "black", "white"
 );
 
 // This theme color is distributed independently.
@@ -751,5 +748,5 @@ $common-theme-colors: map.remove($theme-colors,
 // This theme color can only be used on some components.
 $custom-theme-colors: map.remove($merge-theme-colors,
     "default", "primary", "secondary", "info", "success", "warning", "danger",
-    "grey", "light-grey", "light", "dark", "black", "white"
+    "grey", "light", "dark", "black", "white"
 );

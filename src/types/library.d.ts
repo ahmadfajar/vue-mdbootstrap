@@ -43,6 +43,8 @@ export declare type MaybeNumberish = number | string | undefined | null;
 
 export declare type TRecord = Record<string, unknown>;
 
+export declare type TBooleanRecord = Record<string, boolean | undefined>;
+
 export declare type TClassList = string | string[] | Record<string, any>;
 
 export declare type RawProps = VNodeProps & TRecord;
@@ -187,24 +189,24 @@ export declare interface IEventResult {
 
 export declare interface EventClosableProps {
   /**
-   * Fired when this component is closed.
+   * Fired when this component is closed or dismissed (hide).
    */
   onClose?: (msg: string) => void;
 
   /**
-   * Fired when this component is closed.
+   * Fired when this component is closed or dismissed (hide).
    */
   '@close'?: (msg: string) => void;
 }
 
 export declare interface EventVoidClosableProps {
   /**
-   * Fired when this component is closed.
+   * Fired when this component is closed or dismissed (hide).
    */
   onClose?: VoidFunction;
 
   /**
-   * Fired when this component is closed.
+   * Fired when this component is closed or dismissed (hide).
    */
   '@close'?: VoidFunction;
 }

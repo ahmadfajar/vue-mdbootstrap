@@ -67,9 +67,14 @@ $radius-circle:               50%;
 
 // Alerts components
 //-----------------------------
-$alert-bg-level:              -10;
-$alert-border-level:          -5;
-$alert-color-level:           6;
+$alert-padding-y:             $spacing * .75;
+$alert-padding-x:             $spacing;
+$alert-margin-bottom:         $spacing;
+$alert-border-radius:         $radius-md;
+$alert-icon-spacing:          $padding-md;
+$alert-bg-scale:              -80%;
+$alert-border-scale:          -70%;
+$alert-color-scale:           40%;
 
 // Button components
 //-----------------------------

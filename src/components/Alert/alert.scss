@@ -1,51 +1,53 @@
-@use "../../../scss/utils/color_helper" as helper;
-@use "../../../scss/mixins/alert" as alerts;
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use '../../../scss/mixins/css3/borders';
+@use '../../../scss/mixins/alert' as alerts;
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.alert {
-    --#{vars.$prefix-bs}alert-link-color: inherit;
-    --#{vars.$prefix-bs}alert-hr-color: inherit;
-    --#{vars.$prefix-bs}alert-padding-y: 0.7rem;
+@layer components {
+  .#{vars.$prefix}alert {
+    --#{vars.$prefix}alert-bg: transparent;
+    --#{vars.$prefix}alert-padding-x: #{vars.$alert-padding-x};
+    --#{vars.$prefix}alert-padding-y: #{vars.$alert-padding-y};
+    --#{vars.$prefix}alert-margin-bottom: #{vars.$alert-margin-bottom};
+    --#{vars.$prefix}alert-border-color: transparent;
+    --#{vars.$prefix}alert-border: 1px solid var(--#{vars.$prefix}alert-border-color);
+    // prettier-ignore
+    --#{vars.$prefix}alert-border-radius: var(--#{vars.$prefix}radius, #{vars.$alert-border-radius});
+    --#{vars.$prefix}alert-icon-spacing: #{vars.$alert-icon-spacing};
 
-    hr {
-        border-top: 1px solid var(--#{vars.$prefix-bs}alert-hr-color);
-        opacity: 0.4;
+    position: relative;
+    padding: var(--#{vars.$prefix}alert-padding-y) var(--#{vars.$prefix}alert-padding-x);
+    margin-bottom: var(--#{vars.$prefix}alert-margin-bottom);
+    background-color: var(--#{vars.$prefix}alert-bg);
+    border: var(--#{vars.$prefix}alert-border);
+    color: var(--#{vars.$prefix}alert-color);
+    @include borders.radius(var(--#{vars.$prefix}alert-border-radius));
+
+    > .alert-icon {
+      display: flex;
+      margin-right: var(--#{vars.$prefix}alert-icon-spacing);
     }
 
     .alert-link {
-        color: var(--#{vars.$prefix-bs}alert-link-color);
-    }
-
-    &.alert-dismissible {
-        padding-right: 1rem;
-
-        > .close {
-            padding: .5rem;
-        }
+      color: var(--#{vars.$prefix}alert-link-color);
+      font-weight: var(--font-weight-semibold, 600);
     }
 
     > .flex-fill ~ .#{vars.$prefix}btn-icon:last-child {
-        margin-right: vars.$padding-sm * -1;
+      margin-right: vars.$padding-sm * -1;
     }
 
-    .#{vars.$prefix}btn-icon:last-child {
-        --#{vars.$prefix-bs}btn-state-line-height: #{vars.$padding-xl};
-
-        .#{vars.$prefix}ripple {
-            --#{vars.$prefix-bs}btn-inner-state-width: #{vars.$padding-xl};
-            --#{vars.$prefix-bs}btn-inner-state-height: #{vars.$padding-xl};
-        }
+    &[class*='alert-solid'] {
+      hr {
+        border-top: 1px solid var(--#{vars.$prefix}alert-hr-color);
+        opacity: 0.4;
+      }
     }
-}
+  }
 
-@each $name, $color in colors.$context-colors {
-    $background-color: helper.theme-color-level(colors.$context-colors, $name, vars.$alert-bg-level);
-    $border-color: helper.theme-color-level(colors.$context-colors, $name, vars.$alert-border-level);
-    $text-color: helper.theme-color-level(colors.$context-colors, $name, vars.$alert-color-level);
-    @include alerts.make-default-variant($name, $background-color, $border-color, $text-color);
-
-    $outline-color: helper.theme-color-level(colors.$context-colors, $name, vars.$alert-color-level);
+  @each $name, $color in colors.$context-colors {
+    @include alerts.make-default-variant($name, $color);
     @include alerts.make-outline-variant($name, $color);
     @include alerts.make-solid-variant($name, $color);
+  }
 }

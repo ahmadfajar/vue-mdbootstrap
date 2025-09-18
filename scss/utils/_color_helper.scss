@@ -1,5 +1,4 @@
 @use 'sass:color';
-@use 'sass:map';
 @use 'sass:math';
 @use 'sass:string';
 @use '../color_vars' as colors;
@@ -70,32 +69,39 @@
   }
 }
 
+// Returns color in oklch color space
 @function set-alt-bgcolor($color, $transparency: 0, $brightness: 170) {
   @if (brightness($color) > 254) {
     @if ($transparency > 0) {
-      @return color.change(vars.$default-active-bgcolor, $alpha: $transparency);
+      @return to-oklch(color.change(vars.$default-active-bgcolor, $alpha: $transparency));
     } @else {
-      @return colors.$white;
+      @return to-oklch(colors.$white);
     }
   } @else if (brightness($color) > $brightness) {
     @if ($transparency > 0) {
-      @return color.change(color.adjust($color, $lightness: -35%), $alpha: ($transparency + 0.1));
+      @return color.change(
+        to-oklch(color.adjust($color, $lightness: -35%)),
+        $alpha: ($transparency + 0.1)
+      );
     } @else {
-      @return color.change(color.adjust($color, $lightness: -25%), $alpha: 0.2);
+      @return color.change(to-oklch(color.adjust($color, $lightness: -25%)), $alpha: 0.2);
     }
   } @else {
     @if ($transparency > 0) {
-      @return color.change(color.adjust($color, $lightness: 30%), $alpha: ($transparency + 0.1));
+      @return color.change(
+        to-oklch(color.adjust($color, $lightness: 30%)),
+        $alpha: ($transparency + 0.1)
+      );
     } @else {
-      @return color.change(color.adjust($color, $lightness: 25%), $alpha: 0.2);
+      @return color.change(to-oklch(color.adjust($color, $lightness: 25%)), $alpha: 0.2);
     }
   }
 }
 
-@function theme-color-level($theme, $color-name: 'primary', $level: 0) {
-  $color: map.get($theme, $color-name);
-  $color-base: if($level > 0, colors.$black, colors.$white);
-  $level: math.abs($level);
+// Tint a color with black/white and returns color in oklch color space
+@function shift-color($color, $weight: 10%) {
+  $level: math.abs($weight);
+  $tint-color: if($level > 0, colors.$black, colors.$white);
 
-  @return color.mix($color-base, $color, $level * colors.$theme-color-interval);
+  @return to-oklch(color.mix($tint-color, $color, $level, oklch));
 }

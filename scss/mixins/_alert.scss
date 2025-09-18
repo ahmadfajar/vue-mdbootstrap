@@ -5,31 +5,35 @@
 
 // BsAlert variants mixins -- sass variables
 //-------------------------------------------
-@mixin make-default-variant($name, $background, $border, $color) {
-  .alert-#{$name} {
-    --#{vars.$prefix-bs}alert-bg: #{$background};
-    --#{vars.$prefix-bs}alert-border-color: #{$border};
-    --#{vars.$prefix-bs}alert-color: #{$color};
+@mixin make-default-variant($name, $color) {
+  .#{vars.$prefix}alert-#{$name} {
+    $background-color: helper.shift-color($color, vars.$alert-bg-scale);
+    $border-color: helper.shift-color($color, vars.$alert-border-scale);
+    $text-color: helper.shift-color($color, vars.$alert-color-scale);
 
-    $hr-border-color: helper.to-rgb(color.adjust($border, $lightness: -10%));
-    --#{vars.$prefix-bs}alert-hr-color: #{$hr-border-color};
+    --#{vars.$prefix}alert-bg: #{$background-color};
+    --#{vars.$prefix}alert-border-color: #{$border-color};
+    --#{vars.$prefix}alert-color: #{$text-color};
 
-    $link-color: color.mix(black, $color, 20%);
-    --#{vars.$prefix-bs}alert-link-color: #{$link-color};
+    $hr-border-color: helper.to-oklch(color.adjust($border-color, $lightness: -10%));
+    --#{vars.$prefix}alert-hr-color: #{$hr-border-color};
+
+    $link-color: color.mix(black, $text-color, 20%);
+    --#{vars.$prefix}alert-link-color: #{$link-color};
   }
 }
 
 @mixin make-outline-variant($name, $color) {
   .#{vars.$prefix}alert-outline-#{$name} {
-    $border-color: helper.to-rgb(color.adjust($color, $lightness: 15%));
-    $hr-border-color: helper.to-rgb(color.adjust($color, $lightness: -5%));
-    $link-color: helper.to-rgb(color.adjust($color, $lightness: -10%));
-    $text-color: helper.to-rgb(color.adjust($color, $lightness: -5%));
+    $border-color: helper.to-oklch(color.adjust($color, $lightness: 15%));
+    $hr-border-color: helper.to-oklch(color.adjust($color, $lightness: -5%));
+    $link-color: helper.to-oklch(color.adjust($color, $lightness: -10%));
+    $text-color: helper.to-oklch(color.adjust($color, $lightness: -5%));
 
-    --#{vars.$prefix-bs}alert-color: #{$text-color};
-    --#{vars.$prefix-bs}alert-border-color: #{$border-color};
-    --#{vars.$prefix-bs}alert-hr-color: #{$hr-border-color};
-    --#{vars.$prefix-bs}alert-link-color: #{$link-color};
+    --#{vars.$prefix}alert-color: #{$text-color};
+    --#{vars.$prefix}alert-border-color: #{$border-color};
+    --#{vars.$prefix}alert-hr-color: #{$hr-border-color};
+    --#{vars.$prefix}alert-link-color: #{$link-color};
   }
 }
 
@@ -39,12 +43,12 @@
     $hr-border-color: helper.set-color-contrast(
       $color,
       color.adjust($color, $lightness: -25%),
-      rgba(color.adjust(colors.$white, $lightness: -4%), 0.65)
+      color.change(color.adjust(colors.$white, $lightness: -4%), $alpha: 0.65)
     );
 
-    --#{vars.$prefix-bs}alert-bg: #{$color};
-    --#{vars.$prefix-bs}alert-color: #{$text-color};
-    --#{vars.$prefix-bs}alert-link-color: #{$text-color};
-    --#{vars.$prefix-bs}alert-hr-color: #{helper.to-rgb($hr-border-color)};
+    --#{vars.$prefix}alert-bg: #{$color};
+    --#{vars.$prefix}alert-color: #{$text-color};
+    --#{vars.$prefix}alert-link-color: #{$text-color};
+    --#{vars.$prefix}alert-hr-color: #{helper.to-oklch($hr-border-color)};
   }
 }
