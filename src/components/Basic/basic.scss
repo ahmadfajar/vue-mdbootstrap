@@ -1,7 +1,8 @@
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}divider {
+@layer components {
+  .#{vars.$prefix}divider {
     --#{vars.$prefix}divider-height: 1px;
     --#{vars.$prefix}divider-margin-y: 0;
 
@@ -15,18 +16,18 @@
     display: block;
 
     &.divider--dark {
-        --#{vars.$prefix}divider-color: #{rgba(colors.$white, 0.4)};
+      --#{vars.$prefix}divider-color: #{rgba(colors.$white, 0.4)};
     }
 
     &.divider--light {
-        --#{vars.$prefix}divider-color: #{rgba(colors.$black, 0.35)};
+      --#{vars.$prefix}divider-color: #{rgba(colors.$black, 0.35)};
     }
-}
+  }
 
-.#{vars.$prefix}subheader {
-    --#{vars.$prefix}subheader-font-size: #{vars.$font-size-base};
-    --#{vars.$prefix}subheader-font-weight: #{$font-weight-medium};
-    --#{vars.$prefix}subheader-padding-x: #{$padding-md};
+  .#{vars.$prefix}subheader {
+    --#{vars.$prefix}subheader-font-size: var(--font-size-default, #{vars.$font-size-base});
+    --#{vars.$prefix}subheader-font-weight: var(--font-weight-semibold, #{vars.$font-weight-semibold});
+    --#{vars.$prefix}subheader-padding-x: #{vars.$padding-md};
     --#{vars.$prefix}subheader-padding-y: 0;
 
     color: var(--#{vars.$prefix}subheader-color);
@@ -38,18 +39,19 @@
     height: 48px;
 
     &.subheader--dark {
-        --#{vars.$prefix}subheader-color: #{rgba(colors.$white, .68)};
+      --#{vars.$prefix}subheader-color: #{rgba(colors.$white, 0.68)};
     }
 
     &.subheader--light {
-        --#{vars.$prefix}subheader-color: #{colors.$gray-600};
+      --#{vars.$prefix}subheader-color: #{colors.$gray-600};
     }
-}
+  }
 
-.#{vars.$prefix}img-holder {
+  .#{vars.$prefix}img-holder {
     user-select: none;
-}
+  }
 
-.#{vars.$prefix}anchor-center {
+  .#{vars.$prefix}anchor-center {
     text-anchor: middle;
+  }
 }

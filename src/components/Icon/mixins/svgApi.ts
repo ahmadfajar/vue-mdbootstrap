@@ -298,7 +298,7 @@ export function useCreateSvgNode(
     viewBox: viewBox,
     ...otherProps,
   };
-  // @ts-ignore
+
   return h('svg', nodeProps, children);
 }
 

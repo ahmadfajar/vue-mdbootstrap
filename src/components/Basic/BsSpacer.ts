@@ -1,7 +1,7 @@
 import type { TBsSpacer, TSpacerOptionProps } from '@/components/Basic/types';
 import { useWrapSlotDefault } from '@/mixins/CommonApi.ts';
 import { booleanTrueProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import { defineComponent } from 'vue';
 
 export default defineComponent<TBsSpacer>({
