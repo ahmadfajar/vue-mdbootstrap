@@ -33,6 +33,9 @@ export declare type HtmlTagName =
   | 'article'
   | 'section'
   | 'span'
+  | 'h5'
+  | 'h4'
+  | 'p'
   | string;
 
 export declare type TLabelPosition = 'left' | 'right';

@@ -1,119 +1,261 @@
-@use "../../../scss/mixins/css3/borders";
-@use "../../../scss/mixins/css3/breakpoints" as media;
-@use "../../../scss/variables" as vars;
+@use '../../../scss/mixins/css3/borders';
+@use '../../../scss/mixins/css3/breakpoints' as media;
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.card {
-    --#{vars.$prefix-bs}card-border-radius: 0.75rem;
-    --#{vars.$prefix-bs}card-inner-border-radius: calc(var(--#{vars.$prefix-bs}card-border-radius) - 1px);
+@layer components {
+  .#{vars.$prefix}card {
+    --#{vars.$prefix}card-bg: var(--background-secondary, #{colors.$white});
+    --#{vars.$prefix}card-color: var(--foreground, #{colors.$gray-900});
+    --#{vars.$prefix}card-border-color: var(--border-translucent, #{vars.$card-border-color});
+    --#{vars.$prefix}card-border-radius: #{vars.$card-border-radius};
+    --#{vars.$prefix}card-border-width: #{vars.$card-border-width};
+    // prettier-ignore
+    --#{vars.$prefix}card-inner-border-radius: calc(var(--#{vars.$prefix}card-border-radius) - 1px);
+    --#{vars.$prefix}card-title-spacer-y: #{vars.$card-title-spacer-y};
+    --#{vars.$prefix}card-spacer-y: #{vars.$card-spacer-y};
+    --#{vars.$prefix}card-spacer-x: #{vars.$card-spacer-x};
 
-    .card-header {
-        font-weight: $font-weight-medium;
+    --#{vars.$prefix}card-cap-bg: #{vars.$card-cap-bg};
+    --#{vars.$prefix}card-cap-color: inherit;
+    --#{vars.$prefix}card-cap-padding-x: #{vars.$card-cap-padding-x};
+    --#{vars.$prefix}card-cap-padding-y: #{vars.$card-cap-padding-y};
+
+    --#{vars.$prefix}card-media-bg: oklch(0 0 0 / 0.54);
+    --#{vars.$prefix}card-media-color: oklch(1 0 89.876 / 0.8);
+    --#{vars.$prefix}card-media-padding-x: #{vars.$padding-md};
+    --#{vars.$prefix}card-media-padding-y: #{vars.$padding-md};
+    --#{vars.$prefix}card-media-title-font-size: 1.5em;
+    // prettier-ignore
+    --#{vars.$prefix}card-media-title-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
+    // prettier-ignore
+    --#{vars.$prefix}card-media-subtitle-font-weight: var(--font-weight-light, #{vars.$font-weight-light});
+    --#{vars.$prefix}card-media-subtitle-font-size: 1.125em;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: var(--#{vars.$prefix}card-height);
+    word-wrap: break-word;
+    background-color: var(--#{vars.$prefix}card-bg);
+    background-clip: border-box;
+    border: var(--#{vars.$prefix}card-border-width) solid var(--#{vars.$prefix}card-border-color);
+    @include borders.radius(var(--#{vars.$prefix}card-border-radius));
+
+    > hr {
+      margin-right: 0;
+      margin-left: 0;
     }
 
-    .card-subtitle {
-        font-weight: vars.$font-weight-normal;
+    > .list-group {
+      border-top: inherit;
+      border-bottom: inherit;
+
+      &:first-child {
+        border-top-width: 0;
+        @include borders.top-radius(var(--#{vars.$prefix}card-inner-border-radius));
+      }
+
+      &:last-child {
+        border-bottom-width: 0;
+        @include borders.bottom-radius(var(--#{vars.$prefix}card-inner-border-radius));
+      }
+    }
+
+    // Due to specificity of the above selector (`.card > .list-group`), we must
+    // use a child selector here to prevent double borders.
+    > .#{vars.$prefix}card-header + .list-group,
+    > .list-group + .#{vars.$prefix}card-footer {
+      border-top: 0;
     }
 
     &:not(.rounded-0) {
-        > .#{vars.$prefix}mask-loader {
-            > .#{vars.$prefix}overlay {
-                @include borders.radius(var(--#{vars.$prefix-bs}card-border-radius))
-            }
-        }
+      > .#{vars.$prefix}mask-loader {
+        @include borders.radius(var(--#{vars.$prefix}card-border-radius));
+      }
     }
-}
+  }
 
-.card-group {
-    @include media.breakpoint-up(sm) {
-        > .card {
-            &.#{vars.$prefix}shadow,
-            &.#{vars.$prefix}shadow-1,
-            &.#{vars.$prefix}shadow-2,
-            &.#{vars.$prefix}shadow-3,
-            &.#{vars.$prefix}shadow-4,
-            &.#{vars.$prefix}shadow-5 {
-                box-shadow: none !important;
-            }
-        }
+  .#{vars.$prefix}card-header {
+    margin-bottom: 0;
+    background-color: var(--#{vars.$prefix}card-cap-bg);
+    color: var(--#{vars.$prefix}card-cap-color);
+    font-weight: var(--font-weight-semibold, #{vars.$font-weight-semibold});
+    padding: var(--#{vars.$prefix}card-cap-padding-y) var(--#{vars.$prefix}card-cap-padding-x);
+    // prettier-ignore
+    border-bottom: var(--#{vars.$prefix}card-border-width) solid var(--#{vars.$prefix}card-border-color);
+
+    &:first-child {
+      @include borders.top-radius(var(--#{vars.$prefix}card-inner-border-radius));
     }
-}
+  }
 
-.#{vars.$prefix}card-media {
-    --#{vars.$prefix-bs}card-media-bg: rgba(0, 0, 0, .54);
-    --#{vars.$prefix-bs}card-media-color: rgba(255, 255, 255, .8);
-    --#{vars.$prefix-bs}card-media-title-font-size: 1.5rem;
-    --#{vars.$prefix-bs}card-media-title-font-weight: #{$font-weight-medium};
-    --#{vars.$prefix-bs}card-media-subtitle-font-size: 1.125rem;
-    --#{vars.$prefix-bs}card-media-subtitle-font-weight: #{vars.$font-weight-light};
+  .#{vars.$prefix}card-footer {
+    padding: var(--#{vars.$prefix}card-cap-padding-y) var(--#{vars.$prefix}card-cap-padding-x);
+    color: var(--#{vars.$prefix}card-cap-color);
+    background-color: var(--#{vars.$prefix}card-cap-bg);
+    // prettier-ignore
+    border-top: var(--#{vars.$prefix}card-border-width) solid var(--#{vars.$prefix}card-border-color);
 
+    &:last-child {
+      @include borders.bottom-radius(var(--#{vars.$prefix}card-inner-border-radius));
+    }
+  }
+
+  .#{vars.$prefix}card-body {
+    // Enable `flex-grow: 1` for decks and groups so that card blocks take up
+    // as much space as possible, ensuring footers are aligned to the bottom.
+    flex: 1 1 auto;
+    color: var(--#{vars.$prefix}card-color);
+    padding: var(--#{vars.$prefix}card-spacer-y) var(--#{vars.$prefix}card-spacer-x);
+  }
+
+  .#{vars.$prefix}card-title {
+    margin-bottom: var(--#{vars.$prefix}card-title-spacer-y);
+  }
+
+  .#{vars.$prefix}card-subtitle {
+    font-weight: var(--font-weight-normal, #{vars.$font-weight-normal});
+    margin-top: calc(-0.5 * var(--#{vars.$prefix}card-title-spacer-y));
+    margin-bottom: 0;
+  }
+
+  .#{vars.$prefix}card-text:last-child {
+    margin-bottom: 0;
+  }
+
+  .card-img,
+  .card-img-top,
+  .card-img-bottom {
+    width: 100%;
+  }
+
+  .card-img,
+  .card-img-top {
+    @include borders.top-radius(var(--#{vars.$prefix}card-inner-border-radius));
+  }
+
+  .card-img,
+  .card-img-bottom {
+    @include borders.bottom-radius(var(--#{vars.$prefix}card-inner-border-radius));
+  }
+
+  .card-img-start,
+  .card-img-left {
+    @include borders.start-radius(var(--#{vars.$prefix}card-inner-border-radius));
+  }
+
+  .card-img-end,
+  .card-img-right {
+    @include borders.end-radius(var(--#{vars.$prefix}card-inner-border-radius));
+  }
+
+  .#{vars.$prefix}card-media {
     position: relative;
 
     > img {
-        width: 100%;
-        max-width: 100%;
-        min-width: 100%;
-        display: block;
-        vertical-align: top;
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      display: block;
+      vertical-align: top;
     }
 
     > .#{vars.$prefix}card-media-overlay {
-        background-color: var(--#{vars.$prefix-bs}card-media-bg);
-        left: 0;
-        right: 0;
-        padding: $padding-md;
-        position: absolute;
+      left: 0;
+      right: 0;
+      position: absolute;
+      background-color: var(--#{vars.$prefix}card-media-bg);
+      // prettier-ignore
+      padding: var(--#{vars.$prefix}card-media-padding-y) var(--#{vars.$prefix}card-media-padding-x);
 
-        > .#{vars.$prefix}card-media-title,
-        > .#{vars.$prefix}card-media-subtitle {
-            color: var(--#{vars.$prefix-bs}card-media-color);
-        }
+      > .#{vars.$prefix}card-media-title,
+      > .#{vars.$prefix}card-media-subtitle {
+        color: var(--#{vars.$prefix}card-media-color);
+      }
 
-        > .#{vars.$prefix}card-media-title {
-            font-size: var(--#{vars.$prefix-bs}card-media-title-font-size);
-            font-weight: var(--#{vars.$prefix-bs}card-media-title-font-weight);
-        }
+      > .#{vars.$prefix}card-media-title {
+        font-size: var(--#{vars.$prefix}card-media-title-font-size);
+        font-weight: var(--#{vars.$prefix}card-media-title-font-weight);
+      }
 
-        > .#{vars.$prefix}card-media-subtitle {
-            font-size: var(--#{vars.$prefix-bs}card-media-subtitle-font-size);
-            font-weight: var(--#{vars.$prefix-bs}card-media-subtitle-font-weight);
-        }
+      > .#{vars.$prefix}card-media-subtitle {
+        font-size: var(--#{vars.$prefix}card-media-subtitle-font-size);
+        font-weight: var(--#{vars.$prefix}card-media-subtitle-font-weight);
+      }
     }
-}
+  }
 
-.card {
+  .#{vars.$prefix}card {
     > .#{vars.$prefix}card-media {
-        &:first-child {
-            > img {
-                @include borders.top-radius(var(--#{vars.$prefix-bs}card-inner-border-radius));
-            }
-
-            > .#{vars.$prefix}card-media-overlay {
-                &.#{vars.$prefix}overlay-top {
-                    @include borders.top-radius(var(--#{vars.$prefix-bs}card-inner-border-radius));
-                }
-            }
+      &:first-child {
+        > .#{vars.$prefix}overlay-top,
+        > img {
+          @include borders.top-radius(var(--#{vars.$prefix}card-inner-border-radius));
         }
+      }
 
-        &:last-child {
-            > img {
-                @include borders.bottom-radius(var(--#{vars.$prefix-bs}card-border-radius));
-            }
-
-            > .#{vars.$prefix}card-media-overlay {
-                &.#{vars.$prefix}overlay-bottom {
-                    @include borders.bottom-radius(var(--#{vars.$prefix-bs}card-border-radius));
-                }
-            }
+      &:last-child {
+        > .#{vars.$prefix}overlay-bottom,
+        > img {
+          @include borders.bottom-radius(var(--#{vars.$prefix}card-border-radius));
         }
+      }
     }
-}
+  }
 
-.card-img-start,
-.card-img-left {
-    @include borders.start-radius(var(--#{vars.$prefix-bs}card-inner-border-radius));
-}
+  .card-group {
+    // The child selector allows nested `.card` within `.card-group`
+    // to display properly.
+    > .#{vars.$prefix}card {
+      margin-bottom: var(--#{vars.$prefix}card-group-margin);
+    }
 
-.card-img-end,
-.card-img-right {
-    @include borders.end-radius(var(--#{vars.$prefix-bs}card-inner-border-radius));
+    @include media.breakpoint-up(sm) {
+      display: flex;
+      flex-flow: row wrap;
+
+      // The child selector allows nested `.card` within `.card-group`
+      // to display properly.
+      > .#{vars.$prefix}card {
+        flex: 1 0 0%;
+        margin-bottom: 0;
+
+        + .#{vars.$prefix}card {
+          margin-left: 0;
+          border-left: 0;
+        }
+
+        // Handle rounded corners
+        &:not(:last-child) {
+          @include borders.end-radius(0);
+
+          .#{vars.$prefix}card-header,
+          .card-img-top {
+            @include borders.top-end-radius(0);
+          }
+
+          .#{vars.$prefix}card-footer,
+          .card-img-bottom {
+            @include borders.bottom-end-radius(0);
+          }
+        }
+
+        &:not(:first-child) {
+          @include borders.start-radius(0);
+
+          .#{vars.$prefix}card-header,
+          .card-img-top {
+            @include borders.top-start-radius(0);
+          }
+
+          .#{vars.$prefix}card-footer,
+          .card-img-bottom {
+            @include borders.bottom-start-radius(0);
+          }
+        }
+      }
+    }
+  }
 }

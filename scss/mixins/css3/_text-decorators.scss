@@ -13,8 +13,8 @@
 
 // Mixins to create text-color, background-color, border-color and hyperlink
 @mixin decorate-color(
-  $color,
   $name,
+  $color,
   $background: true,
   $border: true,
   $text: true,

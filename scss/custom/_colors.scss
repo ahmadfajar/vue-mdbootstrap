@@ -29,12 +29,16 @@ $final-colors: map.remove(
 );
 
 @each $name, $color in $final-colors {
-  @include decorators.decorate-color($color, $name);
+  @include decorators.decorate-color($name, $color);
 }
 
 // Manually adds duplicate custom colors
 //---------------------------------------
-@include decorators.decorate-color(colors.$primary-color-dark, 'dark-blue', 'primary-color-dark');
+@include decorators.decorate-color(
+  'dark-blue',
+  colors.$primary-color-dark,
+  $alias-name1: 'primary-color-dark'
+);
 
 // Create full color palette for background
 //-------------------------------------------
@@ -43,37 +47,34 @@ $final-colors: map.remove(
     @if $sub_name == 'base' {
       @if (map.get(colors.$theme-colors, $name) == null) {
         .bg-#{$name} {
-          background-color: $color_value !important;
+          background-color: $color_value;
         }
       }
 
       .bg-rgba-#{$name}-slight,
       .bg-rgba-#{$name}-slight:after {
-        background-color: rgba($color_value, 0.1) !important;
+        background-color: color.change($color_value, $alpha: 0.1);
       }
 
       .bg-rgba-#{$name}-light,
       .bg-rgba-#{$name}-light:after {
-        background-color: rgba($color_value, 0.3) !important;
+        background-color: color.change($color_value, $alpha: 0.3);
       }
 
       .bg-rgba-#{$name}-strong,
       .bg-rgba-#{$name}-strong:after {
-        background-color: rgba(
-          helper.to-rgb(color.adjust($color_value, $lightness: -5%)),
-          0.7
-        ) !important;
+        background-color: color.change(
+          helper.to-oklch(color.adjust($color_value, $lightness: -5%)),
+          $alpha: 0.7
+        );
       }
     } @else {
       @if colors.$enable_full_palette {
         @include decorators.decorate-color(
-          $color_value,
           '#{$name}.#{$sub_name}',
-          false,
-          true,
-          false,
-          false,
-          false
+          $color_value,
+          $border: false,
+          $text: false
         );
       }
     }

@@ -1,13 +1,12 @@
-import { baseTagProps } from '@/components/Card/mixins/cardProps';
 import type { TBsListTileAction, TListTileActionOptionProps } from '@/components/ListView/types';
 import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi';
-import { booleanProp } from '@/mixins/CommonProps';
+import { booleanProp, tagProp } from '@/mixins/CommonProps';
 import { defineComponent } from 'vue';
 
 export default defineComponent<TBsListTileAction>({
   name: 'BsListTileAction',
   props: {
-    ...baseTagProps,
+    tag: tagProp,
     /**
      * Center item inside it vertically.
      * @type {boolean}

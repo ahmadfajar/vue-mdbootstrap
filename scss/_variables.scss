@@ -4,7 +4,7 @@
 
 // Component prefix
 $prefix:                      'md-';
-$prefix-bs:                   'bs-';
+//$prefix-bs:                   'bs-';
 
 // Fonts
 $font-size-base:              1rem;
@@ -108,12 +108,15 @@ $btn-transition:                    color .15s ease-in-out, background-color .15
 
 // Card components
 //-----------------------------
+$card-border-color:                 oklch(0.88 0.001 17.18);
+$card-border-radius:                $radius * 3;
+$card-border-width:                 1px;
+$card-cap-bg:                       rgba(colors.$black, .03);
+$card-cap-padding-y:                $spacing * .5;
+$card-cap-padding-x:                $padding-md;
 $card-spacer-y:                     $padding-md;
 $card-spacer-x:                     $padding-md;
-$card-title-spacer-y:               $padding-md * .5;
-$card-border-width:                 1px;
-$card-cap-padding-y:                $card-spacer-y * .5;
-$card-cap-padding-x:                $card-spacer-x;
+$card-title-spacer-y:               $spacing * .5;
 
 // Input controls components
 //-----------------------------

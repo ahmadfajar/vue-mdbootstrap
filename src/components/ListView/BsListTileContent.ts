@@ -1,13 +1,12 @@
-import { baseTagProps } from '@/components/Card/mixins/cardProps';
 import type { TBsListTileContent, TListTileContentOptionProps } from '@/components/ListView/types';
 import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi';
-import { booleanProp } from '@/mixins/CommonProps';
+import { booleanProp, tagProp } from '@/mixins/CommonProps';
 import { defineComponent } from 'vue';
 
 export default defineComponent<TBsListTileContent>({
   name: 'BsListTileContent',
   props: {
-    ...baseTagProps,
+    tag: tagProp,
     /**
      * Useful when you want to display multiline text. The subtitle default will be display
      * in a single line, if the text length is beyond the container's width then the text will be

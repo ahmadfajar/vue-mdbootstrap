@@ -1,4 +1,3 @@
-import { baseTagProps } from '@/components/Card/mixins/cardProps.ts';
 import { Resize } from '@/directives';
 import {
   cssPrefix,
@@ -6,7 +5,7 @@ import {
   useFindParentComponent,
   useVueMdbService,
 } from '@/mixins/CommonApi.ts';
-import { booleanProp } from '@/mixins/CommonProps.ts';
+import { booleanProp, tagProp } from '@/mixins/CommonProps.ts';
 import type {
   TAppContainerOptionProps,
   TBsContainer,
@@ -21,7 +20,7 @@ export default defineComponent<TBsContainer>({
   name: 'BsContainer',
   props: {
     app: booleanProp,
-    ...baseTagProps,
+    tag: tagProp,
   },
   emits: [
     /**
