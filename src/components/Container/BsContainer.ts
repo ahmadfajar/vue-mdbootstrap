@@ -13,7 +13,7 @@ import type {
   TRecord,
   TVueMdb,
 } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import { computed, defineComponent, h, onMounted, ref, withDirectives } from 'vue';
 
 export default defineComponent<TBsContainer>({
@@ -22,12 +22,7 @@ export default defineComponent<TBsContainer>({
     app: booleanProp,
     tag: tagProp,
   },
-  emits: [
-    /**
-     * Fired when this component size is changed.
-     */
-    'resize',
-  ],
+  emits: ['resize'],
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TContainerOptionProps>;
     const thisElement = ref<HTMLElement | null>(null);
@@ -39,7 +34,7 @@ export default defineComponent<TBsContainer>({
     const styles = computed((): TRecord | undefined => {
       if (thisProps.app && appId.value) {
         if (vueMdb.value) {
-          const { sideDrawer, appbar } = vueMdb.value.app[appId.value];
+          const { appbar, sideDrawer } = vueMdb.value.app[appId.value]!;
 
           return {
             paddingRight:
@@ -54,9 +49,9 @@ export default defineComponent<TBsContainer>({
                 : isMobile.value
                   ? 0
                   : `${sideDrawer.left.width}px`,
-            top: appbar.fixedTop === true ? Helper.cssUnit(appbar.height) : undefined,
-            bottom: appbar.fixedTop === true ? 0 : undefined,
-            position: appbar.fixedTop === true ? 'fixed' : undefined,
+            top: appbar.fixedTop ? Helper.cssUnit(appbar.height) : undefined,
+            bottom: appbar.fixedTop ? 0 : undefined,
+            position: appbar.fixedTop ? 'fixed' : undefined,
           };
         }
       }

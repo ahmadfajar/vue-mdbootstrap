@@ -1,54 +1,53 @@
-@use "../../../scss/variables" as vars;
+@use '../../../scss/variables' as vars;
 
-html, body {
-    text-rendering: optimizeLegibility;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-body {
+@layer base {
+  body {
     margin: 0;
     padding: 0;
+  }
 }
 
-.#{vars.$prefix}application-wrap,
-.#{vars.$prefix}container-wrap,
-.#{vars.$prefix}content-wrap {
+@layer components {
+  .#{vars.$prefix}application-wrap,
+  .#{vars.$prefix}container-wrap,
+  .#{vars.$prefix}content-wrap {
     display: flex;
     max-width: 100%;
     position: relative;
-}
+  }
 
-.#{vars.$prefix}application-wrap {
+  .#{vars.$prefix}application-wrap {
     backface-visibility: hidden;
     flex: 1 1 auto;
     flex-direction: column;
     overflow-x: hidden;
 
     &.#{vars.$prefix}viewport-height {
-        height: 100vh;
+      height: 100vh;
     }
 
     &.#{vars.$prefix}appbar-fixed-top {
-        > .#{vars.$prefix}container-wrap {
-            width: 100%;
+      > .#{vars.$prefix}container-wrap {
+        width: 100%;
 
-            > .#{vars.$prefix}content-wrap {
-                display: block;
-                overflow: auto;
-            }
+        > .#{vars.$prefix}content-wrap {
+          display: block;
+          overflow: auto;
         }
+      }
     }
-}
+  }
 
-.#{vars.$prefix}container-wrap {
+  .#{vars.$prefix}container-wrap {
     flex: 1 0 auto;
 
     &.smooth-animation {
-        transition: vars.$transition-default;
+      transition: vars.$transition-default;
     }
-}
+  }
 
-.#{vars.$prefix}content-wrap {
+  .#{vars.$prefix}content-wrap {
     flex: 1 0 auto;
     transition: vars.$transition-default;
+  }
 }

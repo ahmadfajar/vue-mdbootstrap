@@ -35,9 +35,10 @@
     box-sizing: border-box;
   }
 
-  body,
-  html {
+  html,
+  body {
     text-rendering: optimizelegibility;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
