@@ -48,9 +48,10 @@ export declare type TAlertOptionProps = TAllowedIconProps & {
 
 export declare type TBsAlert = ComponentObjectPropsOptions<TAlertOptionProps>;
 
-declare type AllowedAlertProps = BaseComponentProps &
-  EventVoidClosableProps &
-  EventUpdateModelValueProps<boolean>;
+declare interface AllowedAlertProps
+  extends BaseComponentProps,
+    EventVoidClosableProps,
+    EventUpdateModelValueProps<boolean> {}
 
 export declare const BsAlert: {
   new (): {

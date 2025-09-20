@@ -82,8 +82,9 @@ export declare const BsCheckbox: {
   };
 };
 
-declare type AllowedCheckboxGroupProps = BaseComponentProps &
-  EventUpdateModelValueProps<string[] | number[] | unknown[]>;
+declare interface AllowedCheckboxGroupProps
+  extends BaseComponentProps,
+    EventUpdateModelValueProps<string[] | number[] | unknown[]> {}
 
 export declare const BsCheckboxGroup: {
   new (): {

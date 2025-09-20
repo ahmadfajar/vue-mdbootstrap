@@ -1,14 +1,17 @@
-@use "sass:color";
-@use "sass:math";
-@use "../../../scss/mixins/css3/borders";
-@use "../../../scss/mixins/chip";
-@use "../../../scss/utils/color_helper" as helper;
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use 'sass:color';
+@use 'sass:math';
+@use '../../../scss/mixins/css3/borders';
+@use '../../../scss/mixins/chip';
+@use '../../../scss/utils/color_helper' as helper;
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}chip, a.#{vars.$prefix}chip {
-    $disabled-bg: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 15%));
-    $disabled-border-color: helper.to-rgb(color.adjust(colors.$gray-500, $lightness: 8%));
+@layer components {
+  .#{vars.$prefix}chip,
+  a.#{vars.$prefix}chip {
+    $disabled-bg: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 15%));
+    $disabled-border-color: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 8%));
+
     --#{vars.$prefix}chip-border-radius: #{vars.$radius-lg};
     --#{vars.$prefix}chip-border-width: 0;
     --#{vars.$prefix}chip-font-weight: #{vars.$font-weight-normal};
@@ -16,30 +19,31 @@
     --#{vars.$prefix}chip-disabled-bg: #{$disabled-bg};
     --#{vars.$prefix}chip-disabled-border-color: #{$disabled-border-color};
     --#{vars.$prefix}chip-disabled-color: #{colors.$gray-900};
-    --#{vars.$prefix}chip-disabled-opacity: .5;
-    --#{vars.$prefix}chip-readonly-opacity: .65;
+    --#{vars.$prefix}chip-disabled-opacity: 0.5;
+    --#{vars.$prefix}chip-readonly-opacity: 0.65;
 
     --#{vars.$prefix}chip-gutter-x: #{vars.$padding-sm};
     --#{vars.$prefix}chip-gutter-y: #{vars.$padding-xs};
-    --#{vars.$prefix}chip-padding-x: #{$padding-md};
+    --#{vars.$prefix}chip-padding-x: #{vars.$padding-md};
     --#{vars.$prefix}chip-padding-y: 0;
 
-    --#{vars.$prefix}chip-avatar-margin-left: #{-(vars.$padding-sm + .175)};
+    --#{vars.$prefix}chip-avatar-margin-left: #{(vars.$padding-sm + 0.175) * -1};
     --#{vars.$prefix}chip-avatar-margin-right: #{vars.$padding-sm};
     --#{vars.$prefix}chip-icon-margin-left: #{vars.$padding-sm * -1};
     --#{vars.$prefix}chip-icon-margin-right: #{vars.$padding-sm};
     --#{vars.$prefix}chip-dismiss-btn-margin-left: #{vars.$padding-sm};
-    --#{vars.$prefix}chip-dismiss-btn-margin-right: #{-(vars.$padding-sm + .25)};
+    --#{vars.$prefix}chip-dismiss-btn-margin-right: #{(vars.$padding-sm + 0.25) * -1};
 
-    --#{vars.$prefix}chip-height: 2rem;
-    --#{vars.$prefix}chip-sm-height: 1.56rem;
-    --#{vars.$prefix}chip-sm-font-size: 85%;
-    --#{vars.$prefix}chip-lg-height: 3rem;
-    --#{vars.$prefix}chip-lg-font-size: 120%;
+    --#{vars.$prefix}chip-height: #{vars.$chip-height};
+    --#{vars.$prefix}chip-sm-height: #{vars.$chip-sm-height};
+    --#{vars.$prefix}chip-sm-font-size: #{vars.$chip-sm-font-size};
+    --#{vars.$prefix}chip-lg-height: #{vars.$chip-lg-height};
+    --#{vars.$prefix}chip-lg-font-size: #{vars.$chip-lg-font-size};
 
     @include borders.radius(var(--#{vars.$prefix}chip-border-radius));
     background-color: var(--#{vars.$prefix}chip-bg);
     border: var(--#{vars.$prefix}chip-border-width) solid var(--#{vars.$prefix}chip-border-color);
+    // prettier-ignore
     margin: var(--#{vars.$prefix}chip-gutter-y) var(--#{vars.$prefix}chip-gutter-x) var(--#{vars.$prefix}chip-gutter-y) 0;
     font-weight: var(--#{vars.$prefix}chip-font-weight);
     height: var(--#{vars.$prefix}chip-height);
@@ -55,210 +59,218 @@
     white-space: nowrap;
     vertical-align: middle;
     text-decoration: none;
-    transition-duration: .3s;
+    transition-duration: 0.3s;
     transition-property: all, opacity;
     //transition-timing-function: $md-transition-drop-timing;
 
     &:not(.disabled):not(.readonly) {
-        &:hover {
-            background-color: var(--#{vars.$prefix}chip-hover-bg);
+      &:hover {
+        background-color: var(--#{vars.$prefix}chip-hover-bg);
+        border-color: var(--#{vars.$prefix}chip-hover-border-color);
+        color: var(--#{vars.$prefix}chip-hover-color);
+        font-weight: var(--#{vars.$prefix}chip-font-weight);
+        text-decoration: none;
+        box-shadow:
+          0 1px 2px 0 rgba(50, 50, 50, 0.25),
+          0 2px 4px 2px rgba(10, 10, 10, 0.05);
+      }
+
+      &:focus,
+      &.focused,
+      &:focus-visible,
+      &.active {
+        background-color: var(--#{vars.$prefix}chip-active-bg);
+        border-color: var(--#{vars.$prefix}chip-active-border-color);
+        color: var(--#{vars.$prefix}chip-active-color);
+
+        > .#{vars.$prefix}chip-content {
+          .#{vars.$prefix}chip-icon {
+            color: var(--#{vars.$prefix}chip-active-icon-color);
+          }
+        }
+
+        &[class*='chip-outline'] {
+          &:hover {
             border-color: var(--#{vars.$prefix}chip-hover-border-color);
-            color: var(--#{vars.$prefix}chip-hover-color);
-            font-weight: var(--#{vars.$prefix}chip-font-weight);
-            text-decoration: none;
-            box-shadow: 0 1px 2px 0 rgba(50, 50, 50, 0.25), 0 2px 4px 2px rgba(10, 10, 10, 0.05);
+          }
         }
+      }
 
-        &:focus,
-        &.focused,
-        &:focus-visible,
-        &.active {
-            background-color: var(--#{vars.$prefix}chip-active-bg);
-            border-color: var(--#{vars.$prefix}chip-active-border-color);
-            color: var(--#{vars.$prefix}chip-active-color);
-
-            > .#{vars.$prefix}chip-content {
-                .#{vars.$prefix}chip-icon {
-                    color: var(--#{vars.$prefix}chip-active-icon-color);
-                }
-            }
-
-            &[class*="chip-outline"] {
-                &:hover {
-                    border-color: var(--#{vars.$prefix}chip-hover-border-color);
-                }
-            }
-        }
-
-        &:focus, &:focus-visible {
-            border-color: var(--#{vars.$prefix}chip-focus-border-color);
-            box-shadow: 0 0 0.2rem rgba(var(--#{vars.$prefix}chip-focus-shadow-color), .4);
-        }
+      &:focus,
+      &:focus-visible {
+        border-color: var(--#{vars.$prefix}chip-focus-border-color);
+        box-shadow: 0 0 0.2rem rgba(var(--#{vars.$prefix}chip-focus-shadow-color), 0.4);
+      }
     }
 
     &.readonly {
-        opacity: var(--#{vars.$prefix}chip-readonly-opacity);
+      opacity: var(--#{vars.$prefix}chip-readonly-opacity);
     }
 
     &.disabled {
-        background-color: var(--#{vars.$prefix}chip-disabled-bg);
-        border-color: var(--#{vars.$prefix}chip-disabled-border-color);
-        color: var(--#{vars.$prefix}chip-disabled-color);
-        opacity: var(--#{vars.$prefix}chip-disabled-opacity);
+      background-color: var(--#{vars.$prefix}chip-disabled-bg);
+      border-color: var(--#{vars.$prefix}chip-disabled-border-color);
+      color: var(--#{vars.$prefix}chip-disabled-color);
+      opacity: var(--#{vars.$prefix}chip-disabled-opacity);
     }
 
     &.#{vars.$prefix}chip-clickable:not(.disabled):not(.readonly) {
-        user-select: none;
-        cursor: pointer;
+      user-select: none;
+      cursor: pointer;
     }
 
     > .#{vars.$prefix}chip-content {
-        --#{vars.$prefix}chip-inner-border-radius: calc(var(--#{vars.$prefix}chip-border-radius) - 1px);
+      --#{vars.$prefix}chip-inner-border-radius: calc(
+        var(--#{vars.$prefix}chip-border-radius) - 1px
+      );
 
-        @include borders.radius(var(--#{vars.$prefix}chip-inner-border-radius));
-        padding: var(--#{vars.$prefix}chip-padding-y) var(--#{vars.$prefix}chip-padding-x);
-        display: inline-flex;
+      @include borders.radius(var(--#{vars.$prefix}chip-inner-border-radius));
+      padding: var(--#{vars.$prefix}chip-padding-y) var(--#{vars.$prefix}chip-padding-x);
+      display: inline-flex;
+      align-items: center;
+      max-width: 100%;
+
+      > .#{vars.$prefix}chip-text {
+        > .caret-up,
+        > .caret-down,
+        > .triangle-up,
+        > .triangle-down {
+          &:last-child {
+            margin-right: vars.$padding-xs * -1;
+            margin-left: 0.65rem;
+          }
+        }
+      }
+
+      .#{vars.$prefix}chip-icon {
+        color: var(--#{vars.$prefix}chip-icon-color);
+      }
+
+      > .#{vars.$prefix}chip-avatar {
+        margin-left: var(--#{vars.$prefix}chip-avatar-margin-left);
+        margin-right: var(--#{vars.$prefix}chip-avatar-margin-right);
+        transition: visibility 0.3s vars.$transition-leave-animation;
+        display: flex;
         align-items: center;
-        max-width: 100%;
 
-        > .#{vars.$prefix}chip-text {
-            > .caret-up,
-            > .caret-down,
-            > .triangle-up,
-            > .triangle-down {
-                &:last-child {
-                    margin-right: vars.$padding-xs * -1;
-                    margin-left: .65rem;
-                }
-            }
+        > img {
+          @include borders.radius(var(--#{vars.$prefix}chip-inner-border-radius));
         }
 
-        .#{vars.$prefix}chip-icon {
-            color: var(--#{vars.$prefix}chip-icon-color);
+        &.#{vars.$prefix}chip-avatar-bounded {
+          margin-left: calc(var(--#{vars.$prefix}chip-padding-x) * -1);
+        }
+      }
+
+      > .#{vars.$prefix}chip-icon {
+        margin-left: var(--#{vars.$prefix}chip-icon-margin-left);
+        margin-right: var(--#{vars.$prefix}chip-icon-margin-right);
+        display: flex;
+        align-items: center;
+        width: 100%;
+        transition:
+          width 200ms vars.$transition-default-animation,
+          visibility 0ms vars.$transition-default-animation;
+
+        &.order-1 {
+          margin-left: vars.$padding-sm;
+          margin-right: math.div((vars.$padding-xs * -1), 2);
         }
 
-        > .#{vars.$prefix}chip-avatar {
-            margin-left: var(--#{vars.$prefix}chip-avatar-margin-left);
-            margin-right: var(--#{vars.$prefix}chip-avatar-margin-right);
-            transition: visibility .3s vars.$transition-leave-animation;
-            display: flex;
-            align-items: center;
-
-            > img {
-                @include borders.radius(var(--#{vars.$prefix}chip-inner-border-radius));
-            }
-
-            &.#{vars.$prefix}chip-avatar-bounded {
-                margin-left: calc(var(--#{vars.$prefix}chip-padding-x) * -1);
-            }
+        &.#{vars.$prefix}empty-icon {
+          width: 0;
         }
 
-        > .#{vars.$prefix}chip-icon {
-            margin-left: var(--#{vars.$prefix}chip-icon-margin-left);
-            margin-right: var(--#{vars.$prefix}chip-icon-margin-right);
-            display: flex;
-            align-items: center;
-            width: 100%;
-            transition: width 200ms vars.$transition-default-animation, visibility 0ms vars.$transition-default-animation;
-
-            &.order-1 {
-                margin-left: vars.$padding-sm;
-                margin-right: math.div((vars.$padding-xs * -1), 2);
-            }
-
-            &.#{vars.$prefix}empty-icon {
-                width: 0;
-            }
-
-            &:not(.#{vars.$prefix}empty-icon) ~ .#{vars.$prefix}chip-avatar {
-                margin-left: 0;
-            }
+        &:not(.#{vars.$prefix}empty-icon) ~ .#{vars.$prefix}chip-avatar {
+          margin-left: 0;
         }
+      }
 
-        > .#{vars.$prefix}btn-icon {
-            margin-left: var(--#{vars.$prefix}chip-dismiss-btn-margin-left);
-            margin-right: var(--#{vars.$prefix}chip-dismiss-btn-margin-right);
-        }
+      > .#{vars.$prefix}btn-icon {
+        margin-left: var(--#{vars.$prefix}chip-dismiss-btn-margin-left);
+        margin-right: var(--#{vars.$prefix}chip-dismiss-btn-margin-right);
+      }
     }
 
     &.#{vars.$prefix}chip-sm {
-        --#{vars.$prefix}chip-border-radius: #{vars.$radius-md};
-        --#{vars.$prefix}chip-padding-x: .75rem;
+      --#{vars.$prefix}chip-border-radius: #{vars.$radius-md};
+      --#{vars.$prefix}chip-padding-x: 0.75rem;
 
-        font-size: var(--#{vars.$prefix}chip-sm-font-size);
-        height: var(--#{vars.$prefix}chip-sm-height);
+      font-size: var(--#{vars.$prefix}chip-sm-font-size);
+      height: var(--#{vars.$prefix}chip-sm-height);
 
-        > .#{vars.$prefix}chip-content {
-            --#{vars.$prefix}chip-avatar-margin-left: #{vars.$padding-sm * -1};
-            --#{vars.$prefix}chip-dismiss-btn-margin-right: #{(vars.$padding-sm + .15) * -1};
+      > .#{vars.$prefix}chip-content {
+        --#{vars.$prefix}chip-avatar-margin-left: #{vars.$padding-sm * -1};
+        --#{vars.$prefix}chip-dismiss-btn-margin-right: #{(vars.$padding-sm + 0.15) * -1};
+      }
+
+      .#{vars.$prefix}btn-icon {
+        --#{vars.$prefix}btn-state-line-height: #{vars.$padding-md + 0.125};
+
+        .#{vars.$prefix}ripple {
+          --#{vars.$prefix}btn-inner-state-width: #{vars.$padding-md + 0.125};
+          --#{vars.$prefix}btn-inner-state-height: #{vars.$padding-md + 0.125};
         }
-
-        .#{vars.$prefix}btn-icon {
-            --#{vars.$prefix-bs}btn-state-line-height: #{$padding-md + .125};
-
-            .#{vars.$prefix}ripple {
-                --#{vars.$prefix-bs}btn-inner-state-width: #{$padding-md + .125};
-                --#{vars.$prefix-bs}btn-inner-state-height: #{$padding-md + .125};
-            }
-        }
+      }
     }
 
     &.#{vars.$prefix}chip-lg {
-        --#{vars.$prefix}chip-border-radius: #{vars.$radius-lg + .25};
-        --#{vars.$prefix}chip-padding-x: #{vars.$padding-lg};
+      --#{vars.$prefix}chip-border-radius: #{vars.$radius-lg + 0.25};
+      --#{vars.$prefix}chip-padding-x: #{vars.$padding-lg};
 
-        font-size: var(--#{vars.$prefix}chip-lg-font-size);
-        height: var(--#{vars.$prefix}chip-lg-height);
+      font-size: var(--#{vars.$prefix}chip-lg-font-size);
+      height: var(--#{vars.$prefix}chip-lg-height);
 
-        > .#{vars.$prefix}chip-content {
-            --#{vars.$prefix}chip-avatar-margin-left: #{-($padding-md + .125)};
-            --#{vars.$prefix}chip-icon-margin-left: #{-(vars.$padding-sm + .125)};
-            --#{vars.$prefix}chip-dismiss-btn-margin-right: #{-(vars.$padding-sm + .5)};
+      > .#{vars.$prefix}chip-content {
+        --#{vars.$prefix}chip-avatar-margin-left: #{(vars.$padding-md + 0.125) * -1};
+        --#{vars.$prefix}chip-icon-margin-left: #{(vars.$padding-sm + 0.125) * -1};
+        --#{vars.$prefix}chip-dismiss-btn-margin-right: #{-(vars.$padding-sm + 0.5)};
 
-            > .#{vars.$prefix}chip-icon {
-                &.order-1 {
-                    margin-right: calc((var(--#{vars.$prefix}chip-icon-margin-right) + .125rem) * -1);
-                }
-            }
+        > .#{vars.$prefix}chip-icon {
+          &.order-1 {
+            margin-right: calc((var(--#{vars.$prefix}chip-icon-margin-right) + 0.125rem) * -1);
+          }
         }
+      }
     }
 
     &:not(.#{vars.$prefix}chip-lg):not(.#{vars.$prefix}chip-sm) {
-        .#{vars.$prefix}btn-icon {
-            --#{vars.$prefix-bs}btn-state-line-height: #{vars.$padding-lg};
+      .#{vars.$prefix}btn-icon {
+        --#{vars.$prefix}btn-state-line-height: #{vars.$padding-lg};
 
-            .#{vars.$prefix}ripple {
-                --#{vars.$prefix-bs}btn-inner-state-width: #{vars.$padding-lg};
-                --#{vars.$prefix-bs}btn-inner-state-height: #{vars.$padding-lg};
-            }
+        .#{vars.$prefix}ripple {
+          --#{vars.$prefix}btn-inner-state-width: #{vars.$padding-lg};
+          --#{vars.$prefix}btn-inner-state-height: #{vars.$padding-lg};
         }
+      }
     }
 
     &.#{vars.$prefix}chip-pill {
-        --#{vars.$prefix}chip-border-radius: #{vars.$radius-pill};
+      --#{vars.$prefix}chip-border-radius: #{vars.$radius-pill};
     }
 
-    &[class*="chip-outline"] {
-        --#{vars.$prefix}chip-border-width: thin;
+    &[class*='chip-outline'] {
+      --#{vars.$prefix}chip-border-width: thin;
 
-        &.#{vars.$prefix}chip-sm {
-            .#{vars.$prefix}chip-avatar:not(.#{vars.$prefix}chip-avatar-bounded) {
-                margin-left: calc(var(--#{vars.$prefix}chip-avatar-margin-left) - 1px);
-            }
+      &.#{vars.$prefix}chip-sm {
+        .#{vars.$prefix}chip-avatar:not(.#{vars.$prefix}chip-avatar-bounded) {
+          margin-left: calc(var(--#{vars.$prefix}chip-avatar-margin-left) - 1px);
         }
+      }
     }
-}
+  }
 
-.#{vars.$prefix}dropdown-menu {
+  .#{vars.$prefix}dropdown-menu {
     > .#{vars.$prefix}dropdown-menu-activator {
-        > .#{vars.$prefix}chip {
-            margin-right: 0;
-            margin-left: 0;
-        }
+      > .#{vars.$prefix}chip {
+        margin-right: 0;
+        margin-left: 0;
+      }
     }
-}
+  }
 
-@each $name, $color in colors.$context-colors {
+  @each $name, $color in colors.$context-colors {
     @include chip.make-default-variant($name, $color);
     @include chip.make-outline-variant($name, $color);
+  }
 }

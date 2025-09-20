@@ -1,12 +1,12 @@
-import type { TAvatarImageOptionProps, TAllowedIconProps } from '@/components/Avatar/types';
+import type { TAllowedIconProps, TAvatarImageOptionProps } from '@/components/Avatar/types';
 import {
   useGetCalcSize,
   useNormalizeIconName,
   useSizeStyles,
 } from '@/components/Icon/mixins/iconApi.ts';
-import type { TRecord, TSizeOptionProps } from '@/types';
+import type { TBsIcon, TIconFlip, TIconRotation, TSizeOptionProps } from '@/types';
 import { isEndWith } from '@/utils/StringHelper.ts';
-import type { VNode } from 'vue';
+import type { Prop, VNode } from 'vue';
 import { h } from 'vue';
 
 export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
@@ -21,7 +21,7 @@ export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
   }
 }
 
-export function useCreateIconProps(props: Readonly<TAllowedIconProps>): TRecord {
+export function useCreateIconProps(props: Readonly<TAllowedIconProps>): TBsIcon {
   const strIcon = props.icon ? useNormalizeIconName(props.icon) : undefined;
   const hasSuffix = isEndWith(strIcon, [
     '_outlined_filled',
@@ -40,11 +40,11 @@ export function useCreateIconProps(props: Readonly<TAllowedIconProps>): TRecord 
         : strIcon;
 
   return {
-    icon: iconName,
-    spin: props.iconSpin,
-    pulse: props.iconPulse,
-    flip: props.iconFlip,
-    rotate: props.iconRotation,
+    icon: iconName as Prop<string>,
+    spin: props.iconSpin as unknown as Prop<boolean>,
+    pulse: props.iconPulse as unknown as Prop<boolean>,
+    flip: props.iconFlip as Prop<TIconFlip | undefined>,
+    rotate: props.iconRotation as Prop<TIconRotation | undefined>,
   };
 }
 

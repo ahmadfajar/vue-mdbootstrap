@@ -122,8 +122,7 @@ function renderSlotIcon(
       name,
       { key: iconId },
       !Helper.isEmpty(props.icon)
-        ? //@ts-ignore
-          h<TBsIcon>(BsIcon, {
+        ? h<TBsIcon>(BsIcon, {
             // id: iconId,
             class: {
               [`${cssPrefix}icon-${props.iconPosition}`]:

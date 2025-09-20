@@ -10,7 +10,7 @@ import { useGetCalcSize, useSizeStyles } from '@/components/Icon/mixins/iconApi.
 import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi.ts';
 import type { TAvatarOptionProps, TBsAvatar, TBsIcon } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import { defineComponent, h, toDisplayString } from 'vue';
+import { defineComponent, h, type Prop, toDisplayString } from 'vue';
 
 export default defineComponent<TBsAvatar>({
   name: 'BsAvatar',
@@ -42,8 +42,7 @@ export default defineComponent<TBsAvatar>({
             ? useRenderAvatarImage(thisProps)
             : !Helper.isEmpty(thisProps.icon)
               ? h<TBsIcon>(BsIcon, {
-                  // @ts-ignore
-                  size: useAvatarIconSize(thisProps),
+                  size: useAvatarIconSize(thisProps) as Prop<number>,
                   ...useCreateIconProps(thisProps),
                 })
               : h(
