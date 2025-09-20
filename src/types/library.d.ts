@@ -216,12 +216,12 @@ export declare interface EventVoidClosableProps {
 
 export declare interface EventUpdateOpenProps {
   /**
-   * Fired when the state of `open` is updated.
+   * Fired when the component's popup's state is updated.
    */
   'onUpdate:open'?: (state: boolean) => void;
 
   /**
-   * Fired when the state of `open` is updated.
+   * Fired when the component's popup's state is updated.
    */
   '@update:open'?: (state: boolean) => void;
 }

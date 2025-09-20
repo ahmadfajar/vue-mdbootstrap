@@ -114,7 +114,7 @@ export function hexToRgba(color: string): RGBA {
  * Convert sRGB to HSL color space.
  *
  * @param color The RGBA color
- * @return The HSL color value: Hue as degrees 0..360, Saturation and Lightness in reference range [0,100]
+ * @return The HSL color value. Hue as degrees [0..360], Saturation and Lightness as range [0..100]
  */
 export function rgbaToHsla(color: RGBA): HSLA {
   let max = Math.max(color.r, color.g, color.b);

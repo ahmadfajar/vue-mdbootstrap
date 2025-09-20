@@ -1,272 +1,336 @@
-@use "sass:color";
-@use "sass:math";
-@use "../../../scss/mixins/css3/borders";
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use 'sass:color';
+@use 'sass:math';
+@use '../../../scss/mixins/css3/borders';
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-$cmpCssName: "#{vars.$prefix}color-picker-";
+$cmpCssName: '#{vars.$prefix}color-picker-';
 $markerSize: 14px;
 
 .#{vars.$prefix}color-picker {
-    --#{vars.$prefix}slider-thumb-color: #{color.scale($neutral-base, $lightness: -20%)};
+  --color-picker-input-bg: colors.$gray-200;
+  --color-picker-input-border: 1px solid oklch(0.867 0.011 247.949);
+  --color-picker-input-color: var(--foreground, colors.$gray-900);
+  --color-picker-input-focus-bg: var(--background-secondary, colors.$white);
+  --color-picker-input-focus-color: inherit;
+  --color-picker-input-focus-outline: 2px solid darkslateblue;
+  --color-picker-input-focus-shadow: oklch(0.578 0.228 260.025 / 0.25);
+  --color-picker-slider-thumb-color: #{color.scale(colors.$neutral-base, $lightness: -40%)};
 
-    @include borders.radius(var(--#{vars.$prefix-bs}border-radius));
-    display: inline-block;
-    width: 300px;
+  @include borders.radius(var(--#{vars.$prefix}border-radius));
+  display: inline-block;
+  width: 300px;
+  position: relative;
+
+  > .#{$cmpCssName}canvas {
+    @include borders.top-radius(var(--#{vars.$prefix}radius));
+    // prettier-ignore
+    background-image: linear-gradient(rgba(0, 0, 0, 0), #000), linear-gradient(90deg, #fff, currentColor);
+    height: 150px;
+    width: 100%;
+
+    > .#{$cmpCssName}canvas-marker {
+      @include borders.radius(vars.$radius-circle);
+      background-color: currentColor;
+      height: $markerSize;
+      width: $markerSize;
+      margin: math.div(($markerSize * -1), 2) 0 0 math.div(($markerSize * -1), 2);
+      border: 1px solid #{colors.$white};
+      outline: none;
+      position: absolute;
+
+      &:focus {
+        border-width: 2px;
+      }
+    }
+  }
+
+  > .#{$cmpCssName}body {
+    padding: vars.$padding-md;
+
+    &:last-child {
+      @include borders.bottom-radius(var(--#{vars.$prefix}radius));
+    }
+  }
+
+  > .#{$cmpCssName}swatches {
+    @include borders.bottom-radius(var(--#{vars.$prefix}radius));
+    overflow-y: auto;
+    position: relative;
+  }
+
+  .#{$cmpCssName}controls {
+    display: flex;
+    align-items: center;
+
+    > .#{$cmpCssName}preview {
+      height: 2.5rem;
+      width: 2.5rem;
+      margin-right: vars.$padding-md;
+      position: relative;
+
+      > .#{$cmpCssName}selected-color {
+        @include borders.radius(vars.$radius-circle);
+        border: colors.$gray-200 1px solid;
+        width: 100%;
+        height: 100%;
+
+        > .#{$cmpCssName}selected-color-alpha {
+          @include borders.radius(vars.$radius-circle);
+          background-color: currentColor;
+          height: 100%;
+          width: 100%;
+        }
+      }
+    }
+
+    > .#{$cmpCssName}sliders {
+      display: flex;
+      flex: 1 0 auto;
+      flex-direction: column;
+      padding-left: vars.$padding-sm;
+    }
+  }
+
+  .#{vars.$prefix}hue-slider,
+  .#{vars.$prefix}alpha-slider {
+    padding: ($markerSize * 0.75) math.div($markerSize, 2);
+    position: relative;
+  }
+
+  .#{vars.$prefix}slider-track {
+    @include borders.radius(vars.$padding-sm);
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 0.5rem;
     position: relative;
 
-    > .#{$cmpCssName}canvas {
-        @include borders.top-radius(var(--#{vars.$prefix-bs}border-radius));
-        background-image: linear-gradient(rgba(0, 0, 0, 0), #000), linear-gradient(90deg, #fff, currentColor);
-        height: 150px;
+    > .#{vars.$prefix}slider-thumb {
+      --#{vars.$prefix}slider-thumb-surface-opacity: 0;
+      --#{vars.$prefix}slider-thumb-ripple-opacity: 0;
+
+      @include borders.radius(vars.$radius-circle);
+      background-color: var(--color-picker-slider-thumb-color);
+      box-shadow:
+        0 1px 2px 0 rgba(60, 64, 67, 0.35),
+        0 1px 4px 3px rgba(60, 64, 67, 0.05);
+      color: var(--color-picker-slider-thumb-color);
+      width: $markerSize;
+      height: $markerSize;
+      margin-left: math.div(($markerSize * -1), 2);
+      outline: none;
+      position: absolute;
+      cursor: pointer;
+
+      > .#{vars.$prefix}slider-thumb-surface {
+        @include borders.radius(vars.$radius-circle);
+        background-color: var(--color-picker-slider-thumb-color);
+        height: 100%;
         width: 100%;
+        cursor: pointer;
+        user-select: none;
 
-        > .#{$cmpCssName}canvas-marker {
-            @include borders.radius($radius-circle);
-            background-color: currentColor;
-            height: $markerSize;
-            width: $markerSize;
-            margin: math.div(($markerSize * -1), 2) 0 0 math.div(($markerSize * -1), 2);
-            border: 1px solid colors.$white;
-            outline: none;
-            position: absolute;
-
-            &:focus {
-                border-width: 2px;
-            }
+        &:before {
+          @include borders.radius(vars.$radius-circle);
+          background-color: currentColor;
+          content: '';
+          height: 100%;
+          width: 100%;
+          left: 0;
+          top: 0;
+          position: absolute;
+          pointer-events: none;
+          opacity: var(--#{vars.$prefix}slider-thumb-surface-opacity);
+          transition: vars.$transition-default;
         }
-    }
+      }
 
-    > .#{$cmpCssName}body {
-        padding: $padding-md;
+      > .#{vars.$prefix}slider-thumb-ripple {
+        @include borders.radius(vars.$radius-circle);
+        background-color: var(--color-picker-slider-thumb-color);
+        opacity: var(--#{vars.$prefix}slider-thumb-ripple-opacity);
+        height: $markerSize * 2;
+        width: $markerSize * 2;
+        left: 50%;
+        top: 50%;
+        cursor: pointer;
+        position: absolute;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+      }
 
-        &:last-child {
-            @include borders.bottom-radius(var(--#{vars.$prefix-bs}border-radius));
+      &:hover,
+      &:focus {
+        --#{vars.$prefix}slider-thumb-surface-opacity: 0.08;
+
+        > .#{vars.$prefix}slider-thumb-surface {
+          &:before {
+            transform: scale(2);
+          }
         }
+      }
+
+      &.#{vars.$prefix}focused {
+        --#{vars.$prefix}slider-thumb-ripple-opacity: 0.18;
+      }
+
+      &.#{vars.$prefix}pressed {
+        --#{vars.$prefix}slider-thumb-ripple-opacity: 0.25;
+      }
+
+      &.move-transition {
+        transition: 0.35s #{vars.$transition-stand-animation};
+      }
     }
 
-    > .#{$cmpCssName}swatches {
-        @include borders.bottom-radius(var(--#{vars.$prefix-bs}border-radius));
-        overflow-y: auto;
-        position: relative;
+    > .#{vars.$prefix}slider-track-alpha {
+      @include borders.radius(vars.$padding-sm);
+      background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), currentColor);
+      height: 100%;
+      width: 100%;
     }
+  }
 
-    .#{$cmpCssName}controls {
-        display: flex;
-        align-items: center;
+  .#{vars.$prefix}hue-slider {
+    > .#{vars.$prefix}slider-track {
+      background-image: linear-gradient(
+        to right,
+        #f00 0%,
+        #ff0 16.66%,
+        #0f0 33.33%,
+        #0ff 50%,
+        #00f 66.66%,
+        #f0f 83.33%,
+        #f00 100%
+      );
+    }
+  }
 
-        > .#{$cmpCssName}preview {
-            height: 2.5rem;
-            width: 2.5rem;
-            margin-right: $padding-md;
-            position: relative;
+  .#{$cmpCssName}preview > .#{$cmpCssName}selected-color,
+  .#{vars.$prefix}alpha-slider > .#{vars.$prefix}slider-track {
+    background-image:
+      repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa),
+      repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
+    background-position:
+      0 0,
+      4px 4px;
+    background-size: 8px 8px;
+  }
 
-            > .#{$cmpCssName}selected-color {
-                @include borders.radius($radius-circle);
-                border: colors.$gray-200 1px solid;
-                width: 100%;
-                height: 100%;
+  .#{$cmpCssName}inputs {
+    padding-top: vars.$padding-sm;
 
-                > .#{$cmpCssName}selected-color-alpha {
-                    @include borders.radius($radius-circle);
-                    background-color: currentColor;
-                    height: 100%;
-                    width: 100%;
-                }
-            }
+    > .#{$cmpCssName}input-row {
+      display: flex;
+      align-items: center;
+      padding: (vars.$padding-md - 0.25) 0;
+
+      > .#{$cmpCssName}input-col {
+        flex: 1 1 auto;
+        width: 20%;
+
+        > input::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
         }
+      }
 
-        > .#{$cmpCssName}sliders {
-            display: flex;
-            flex: 1 0 auto;
-            flex-direction: column;
-            padding-left: vars.$padding-sm;
+      > .#{$cmpCssName}input-label {
+        font-size: 12px;
+        opacity: var(--#{vars.$prefix}field-readonly-opacity);
+        padding: 0 vars.$padding-sm;
+        user-select: none;
+
+        &:first-child {
+          padding-left: 0;
         }
+      }
     }
 
-    .#{vars.$prefix}hue-slider,
-    .#{vars.$prefix}alpha-slider {
-        padding: ($markerSize * .75) math.div($markerSize, 2);
-        position: relative;
-    }
+    .form-input-number,
+    .form-input-text {
+      display: block;
+      width: 100%;
+      font-weight: 400;
+      font-size: 0.85em;
+      line-height: 1.5;
+      background-color: var(--color-picker-input-bg);
+      background-clip: padding-box;
+      border: var(--color-picker-input-border);
+      border-radius: 0.25rem;
+      color: var(--color-picker-input-color);
+      min-height: calc(1.5em + 0.5rem + 2px);
+      padding: 0.25rem 0.375rem;
+      -webkit-appearance: none;
+      appearance: none;
+      // prettier-ignore
+      transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 
-    .#{vars.$prefix}slider-track {
-        @include borders.radius(vars.$padding-sm);
-        display: flex;
-        align-items: center;
+      &:focus {
+        color: var(--color-picker-input-focus-color);
+        background-color: var(--color-picker-input-focus-bg);
+        outline: var(--color-picker-input-focus-outline);
+        box-shadow: 0 0 0 0.25rem var(--color-picker-input-focus-shadow);
+      }
+    }
+  }
+
+  .#{$cmpCssName}swatches-content {
+    padding: 12px;
+
+    > .#{vars.$prefix}swatch-button {
+      @include borders.radius(vars.$radius-circle);
+      background-image:
+        repeating-linear-gradient(
+          45deg,
+          #aaa 25%,
+          transparent 25%,
+          transparent 75%,
+          #aaa 75%,
+          #aaa
+        ),
+        repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
+      background-position:
+        0 0,
+        4px 4px;
+      background-size: 8px 8px;
+      border: 0;
+      width: 20px;
+      height: 20px;
+      margin: 0 vars.$padding-xs vars.$padding-sm vars.$padding-xs;
+      padding: 0;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      white-space: nowrap;
+
+      &:after {
+        @include borders.radius(vars.$radius-circle);
+        box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+        background-color: currentColor;
+        content: '';
         width: 100%;
-        height: .5rem;
-        position: relative;
-
-        > .#{vars.$prefix}slider-thumb {
-            --#{vars.$prefix}slider-thumb-surface-opacity: 0;
-            --#{vars.$prefix}slider-thumb-ripple-opacity: 0;
-
-            @include borders.radius($radius-circle);
-            background-color: var(--#{vars.$prefix}slider-thumb-color);
-            box-shadow: 0 1px 2px 0 rgba(60, 64, 67, 0.35), 0 1px 4px 3px rgba(60, 64, 67, 0.05);
-            color: var(--#{vars.$prefix}slider-thumb-color);
-            width: $markerSize;
-            height: $markerSize;
-            margin-left: math.div(($markerSize * -1), 2);
-            outline: none;
-            position: absolute;
-            cursor: pointer;
-
-            > .#{vars.$prefix}slider-thumb-surface {
-                @include borders.radius($radius-circle);
-                background-color: var(--#{vars.$prefix}slider-thumb-color);
-                height: 100%;
-                width: 100%;
-                cursor: pointer;
-                user-select: none;
-
-                &:before {
-                    @include borders.radius($radius-circle);
-                    background-color: currentColor;
-                    content: "";
-                    height: 100%;
-                    width: 100%;
-                    left: 0;
-                    top: 0;
-                    position: absolute;
-                    pointer-events: none;
-                    opacity: var(--#{vars.$prefix}slider-thumb-surface-opacity);
-                    transition: vars.$transition-default;
-                }
-            }
-
-            > .#{vars.$prefix}slider-thumb-ripple {
-                @include borders.radius($radius-circle);
-                background-color: var(--#{vars.$prefix}slider-thumb-color);
-                opacity: var(--#{vars.$prefix}slider-thumb-ripple-opacity);
-                height: $markerSize * 2;
-                width: $markerSize * 2;
-                left: 50%;
-                top: 50%;
-                cursor: pointer;
-                position: absolute;
-                pointer-events: none;
-                transform: translate(-50%, -50%);
-            }
-
-            &:hover, &:focus {
-                --#{vars.$prefix}slider-thumb-surface-opacity: 0.08;
-
-                > .#{vars.$prefix}slider-thumb-surface {
-                    &:before {
-                        transform: scale(2);
-                    }
-                }
-            }
-
-            &.#{vars.$prefix}focused {
-                --#{vars.$prefix}slider-thumb-ripple-opacity: .18;
-            }
-
-            &.#{vars.$prefix}pressed {
-                --#{vars.$prefix}slider-thumb-ripple-opacity: .25;
-            }
-
-            &.move-transition {
-                transition: 0.35s vars.$transition-stand-animation;
-            }
-        }
-
-        > .#{vars.$prefix}slider-track-alpha {
-            @include borders.radius(vars.$padding-sm);
-            background-image: linear-gradient(90deg, rgba(0, 0, 0, 0), currentColor);
-            height: 100%;
-            width: 100%;
-        }
+        height: 100%;
+        left: 0;
+        top: 0;
+        display: block;
+        position: absolute;
+        pointer-events: none;
+      }
     }
+  }
 
-    .#{vars.$prefix}hue-slider {
-        > .#{vars.$prefix}slider-track {
-            background-image: linear-gradient(to right, #f00 0%, #ff0 16.66%, #0f0 33.33%, #0ff 50%, #00f 66.66%, #f0f 83.33%, #f00 100%);
-        }
+  > .#{$cmpCssName}body + .#{$cmpCssName}swatches {
+    > .#{$cmpCssName}swatches-content {
+      padding-top: 0;
     }
-
-    .#{$cmpCssName}preview > .#{$cmpCssName}selected-color,
-    .#{vars.$prefix}alpha-slider > .#{vars.$prefix}slider-track {
-        background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
-        background-position: 0 0, 4px 4px;
-        background-size: 8px 8px;
-    }
-
-    .#{$cmpCssName}inputs {
-        > .#{$cmpCssName}input-row {
-            display: flex;
-            align-items: center;
-            padding: ($padding-md - .25) 0;
-
-            > .#{$cmpCssName}input-col {
-                flex: 1 1 auto;
-                width: 20%;
-
-                > input::-webkit-inner-spin-button {
-                    -webkit-appearance: none;
-                    margin: 0;
-                }
-            }
-
-            > .#{$cmpCssName}input-label {
-                font-size: 12px;
-                opacity: var(--#{vars.$prefix}field-readonly-opacity);
-                padding: 0 vars.$padding-sm;
-                user-select: none;
-
-                &:first-child {
-                    padding-left: 0;
-                }
-            }
-        }
-    }
-
-    .#{$cmpCssName}swatches-content {
-        padding: 12px;
-
-        > .#{vars.$prefix}swatch-button {
-            @include borders.radius($radius-circle);
-            background-image: repeating-linear-gradient(45deg, #aaa 25%, transparent 25%, transparent 75%, #aaa 75%, #aaa), repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
-            background-position: 0 0, 4px 4px;
-            background-size: 8px 8px;
-            border: 0;
-            width: 20px;
-            height: 20px;
-            margin: 0 vars.$padding-xs vars.$padding-sm vars.$padding-xs;
-            padding: 0;
-            cursor: pointer;
-            overflow: hidden;
-            position: relative;
-            white-space: nowrap;
-
-            &:after {
-                @include borders.radius($radius-circle);
-                box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .1);
-                background-color: currentColor;
-                content: '';
-                width: 100%;
-                height: 100%;
-                left: 0;
-                top: 0;
-                display: block;
-                position: absolute;
-                pointer-events: none;
-            }
-        }
-    }
-
-    > .#{$cmpCssName}body + .#{$cmpCssName}swatches {
-        > .#{$cmpCssName}swatches-content {
-            padding-top: 0;
-        }
-    }
+  }
 }
 
 .#{vars.$prefix}popover {
-    &.#{vars.$prefix}popover-color-picker {
-        @include borders.radius(var(--#{vars.$prefix-bs}border-radius));
-        overflow: hidden;
-    }
+  &.#{vars.$prefix}popover-color-picker {
+    @include borders.radius(var(--#{vars.$prefix}border-radius));
+    overflow: hidden;
+  }
 }

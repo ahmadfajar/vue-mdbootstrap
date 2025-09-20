@@ -75,6 +75,7 @@ export declare function hexToRgba(color: string): RGBA;
  *
  * @param color The RGBA color
  * @return The HSL color value.
+ * Hue as degrees [0..360], Saturation and Lightness as range [0..100]
  */
 export function rgbaToHsla(color: RGBA): HSLA;
 
