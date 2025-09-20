@@ -1,5 +1,5 @@
 import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps.ts';
-import { inputProps } from '@/components/Field/mixins/fieldProps.ts';
+import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import { iconSizeProp } from '@/components/Icon/mixins/iconProps.ts';
 import {
   booleanProp,

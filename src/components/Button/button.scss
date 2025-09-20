@@ -218,7 +218,7 @@
       }
 
       > .#{vars.$prefix}btn-inner {
-        padding-right: calc(var(--#{vars.$prefix-bs}btn-state-padding-x) / 2);
+        padding-right: calc(var(--#{vars.$prefix}btn-state-padding-x) / 2);
       }
 
       &.empty-text {

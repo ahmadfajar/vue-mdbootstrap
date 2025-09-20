@@ -30,6 +30,14 @@ $grid-breakpoints: (
 
 $zindex-sticky:               1020;
 $spacing:                     1rem;
+$gutters: (
+  0: 0,
+  1: $spacing * .25,
+  2: $spacing * .5,
+  3: $spacing,
+  4: $spacing * 1.5,
+  5: $spacing * 3,
+);
 
 $default-active-bgcolor:      color.change(colors.$mdb-default-color, $alpha: 0.2);
 $default-hover-bgcolor:       color.change($default-active-bgcolor, $alpha: 0.1);
@@ -123,7 +131,9 @@ $card-title-spacer-y:               $spacing * .5;
 $checkbox-size:                     20px;
 $checkbox-touch-size:               40px;
 $checkbox-stroke:                   2px;
-$checkbox-indeterminate-width:      12px;
+$checkbox-indeterminate-width:      14px;
+$checkbox-checkmark-height:         13px;
+$checkbox-checkmark-width:          7px;
 $checkbox-margin:                   .5rem 1rem .5rem 0;
 
 $radio-size:                        $checkbox-size;

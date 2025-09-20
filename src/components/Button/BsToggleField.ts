@@ -22,7 +22,7 @@ export default defineComponent<TBsToggleField>({
 
     const wrapperClasses = computed<TRecord>(() => ({
       [`${cssPrefix}field`]: true,
-      [`${cssPrefix}toggle-field ${cssPrefix}row`]: true,
+      [`${cssPrefix}toggle-field row`]: true,
       required: thisProps.required,
       readonly: thisProps.readonly,
       disabled: thisProps.disabled,

@@ -2,7 +2,7 @@
 @use "../variables" as vars;
 
 @layer utilities {
-  .#{vars.$prefix}row {
+  .row {
     @include grid.make-row();
 
     > * {

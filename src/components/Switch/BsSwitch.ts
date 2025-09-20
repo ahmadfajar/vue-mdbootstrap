@@ -22,7 +22,7 @@ export default defineComponent<TBsSwitch>({
         const rippleActive = ref<boolean>(false);
         const switchClasses = computed(() => useSwitchClasses(thisProps));
 
-        const toggleCheckHandler = () => useToggleChecked(thisProps, emit, rippleActive);
+        const toggleCheckHandler = () => useToggleChecked(emit, thisProps, rippleActive);
 
         return () => useRenderSwitch(slots, props, switchClasses, rippleActive, toggleCheckHandler);
     },

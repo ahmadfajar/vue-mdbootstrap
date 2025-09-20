@@ -1,102 +1,92 @@
 import {
-  AllowedComponentProps,
-  ComponentCustomProps,
-  ComponentObjectPropsOptions,
-  ObjectPlugin,
-  VNode,
-  VNodeProps,
-} from 'vue';
-import { EventUpdateModelValueProps, type TInputBaseProps, TValidationProps } from '../../../types';
+  BaseComponentProps,
+  EventUpdateModelValueProps,
+  Numberish,
+  TContextColor,
+  TInputBaseProps,
+  TInputGroupProps,
+} from '@/types';
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 
-export declare type TRadioProps = {
+export declare interface TRadioInputProps {
   /**
    * Sets the `<input>` element `ID` attribute. This property value is auto generates.
    */
   id?: string;
+
   /**
    * Sets the `<input>` element `name` attribute.
    */
-  name?: string | number;
+  name?: Numberish;
+
   /**
-   * This input field state.
+   * This input field state: enabled or disabled.
    */
   disabled?: boolean;
+
   /**
-   * This input field state.
+   * Sets this input field into readonly state.
    */
   readonly?: boolean;
+
   /**
    * Sets this component color.
    */
-  color?: string;
+  color?: TContextColor | string;
+
   /**
    * The `<input>` element `value` attribute.
    */
-  value: string | number | boolean | unknown;
+  value: Numberish | boolean | unknown;
+
   /**
    * The text label to display.
    */
   label: string;
-};
-
-export declare type TInputGroupProps<D, M> = TInputBaseProps &
-  TValidationProps & {
-    /**
-     * Sets this component color.
-     */
-    color?: string;
-    /**
-     * Sets the maximum number of columns to display the checkbox. When the number of items
-     * exceed the number of columns, then the remaining items will be displayed on the
-     * next row. The maximum number of columns must be less than 7.
-     */
-    column?: string | number;
-    /**
-     * The collection of `<bs-radio>` or `<bs-checkbox>` property-value.
-     */
-    items: Array<D>;
-    /**
-     * The value monitored by `v-model` to maintain the checked state.
-     */
-    modelValue?: M;
-  };
+}
 
 export declare type TRadioOptionProps = TInputBaseProps & {
   /**
    * Sets this component color.
    */
   color?: string;
+
   /**
    * The `<input>` element `value` attribute.
    */
-  value?: string | number | boolean | unknown;
+  value?: Numberish | boolean | unknown;
+
   /**
    * The input value to be monitored by `v-model`.
    */
-  modelValue?: string | number | boolean | unknown;
+  modelValue?: Numberish | boolean | unknown;
 };
 
 export declare type TRadioGroupOptionProps = TInputGroupProps<
-  TRadioProps,
-  string | number | boolean | unknown
+  TRadioInputProps,
+  Numberish | boolean | unknown
 >;
 
 export declare type TBsRadio = ComponentObjectPropsOptions<TRadioOptionProps>;
 
 export declare type TBsRadioGroup = ComponentObjectPropsOptions<TRadioGroupOptionProps>;
 
-declare type AllowedRadioProps = AllowedComponentProps &
-  ComponentCustomProps &
-  VNodeProps &
-  EventUpdateModelValueProps<string | number | boolean> & {
-    onChecked?: (checked: boolean) => void;
-    '@checked'?: (checked: boolean) => void;
-  };
+declare interface AllowedRadioProps
+  extends BaseComponentProps,
+    EventUpdateModelValueProps<Numberish | boolean> {
+  /**
+   * Fired when this component's checked state is updated.
+   */
+  onChecked?: (checked: boolean) => void;
 
-declare type AllowedRadioGroupProps = AllowedComponentProps &
-  ComponentCustomProps &
-  VNodeProps &
-  EventUpdateModelValueProps<string | number>;
+  /**
+   * Fired when this component's checked state is updated.
+   */
+  '@checked'?: (checked: boolean) => void;
+}
+
+declare type AllowedRadioGroupProps = BaseComponentProps &
+  EventUpdateModelValueProps<Numberish | boolean>;
 
 export declare const BsRadio: {
   new (): {
@@ -104,16 +94,10 @@ export declare const BsRadio: {
     $slots: {
       default?: () => VNode[];
     };
-    $emit: [
-      /**
-       * Fired when this component's state is changed.
-       */
-      'checked',
-      /**
-       * Fired when this component's checked value is updated.
-       */
-      'update:model-value',
-    ];
+    $emits: {
+      (event: 'checked', checked: boolean): void;
+      (event: 'update:model-value', value: Numberish | boolean): void;
+    };
   };
 };
 
@@ -124,12 +108,9 @@ export declare const BsRadioGroup: {
       default?: () => VNode[];
       'help-text'?: () => VNode;
     };
-    $emit: [
-      /**
-       * Fired when this component's checked value is updated.
-       */
-      'update:model-value',
-    ];
+    $emits: {
+      (event: 'update:model-value', value: Numberish | boolean): void;
+    };
   };
 };
 

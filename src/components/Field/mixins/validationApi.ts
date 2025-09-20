@@ -17,7 +17,7 @@ import {
 } from 'vue';
 
 function getValidator(props: Readonly<TValidationProps>): TValidator | undefined {
-  return unref(props.validator || props.externalValidator);
+  return unref(props.validator);
 }
 
 export function useHasValidationError(props: Readonly<TValidationProps>): boolean {
@@ -43,8 +43,17 @@ export function useShowValidationError(props: Readonly<TValidationProps>): boole
 
 export function useShowHelpText(props: Readonly<TValidationProps>, isFocused?: boolean): boolean {
   return (
-    !Helper.isEmpty(props.helpText) && (props.persistentHelpText === true || isFocused === true)
+    (!Helper.isEmpty(props.helpText) &&
+      isFocused &&
+      (props.persistentHelpOff || props.persistentHelpText === false)) ||
+    (!Helper.isEmpty(props.helpText) &&
+      props.persistentHelpText === true &&
+      !props.persistentHelpOff)
   );
+
+  // return (
+  //   !Helper.isEmpty(props.helpText) && (props.persistentHelpText === true || isFocused === true)
+  // );
 }
 
 export function useGetErrorItems(props: Readonly<TValidationProps>): string[] {
@@ -52,6 +61,7 @@ export function useGetErrorItems(props: Readonly<TValidationProps>): string[] {
 
   if (validator) {
     const validators = unref(validator.validators);
+
     return Object.keys(validators).filter((name) => {
       return unref(validators[name]);
     });
@@ -98,7 +108,7 @@ function renderErrorMessage(
             'small',
             {
               key: `bs-${ruleName}`,
-              class: 'text-danger d-block',
+              class: 'text-danger block',
             },
             validationErrorMessage(props, ruleName)
           );
@@ -136,7 +146,7 @@ export function useRenderFieldFeedback(
                     ? h(
                         'small',
                         {
-                          class: `${cssPrefix}help-text d-block`,
+                          class: `${cssPrefix}help-text block`,
                         },
                         props.helpText
                       )

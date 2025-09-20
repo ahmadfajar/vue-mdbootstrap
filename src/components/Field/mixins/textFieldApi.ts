@@ -5,26 +5,28 @@ import {
   useOnFieldValueCleared,
   useOnFieldValueUpdated,
   useOnTextFieldNodeMounted,
-} from '@/components/Field/mixins/textFieldEventApi';
-import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
+} from '@/components/Field/mixins/textFieldEventApi.ts';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
 import { BsIcon, BsToggleIcon } from '@/components/Icon';
 import {
   cssPrefix,
   useRenderTransition,
   useWrapSlot,
   useWrapSlotWithCondition,
-} from '@/mixins/CommonApi';
+} from '@/mixins/CommonApi.ts';
 import type {
   TBsIcon,
   TBsToggleIcon,
   TEmitFn,
+  TIconVariant,
+  TInputBaseProps,
   TInputFieldProps,
   TInputTextProps,
   TRecord,
   TTextAreaOptionProps,
   TTextFieldOptionProps,
 } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h, nextTick, toDisplayString, vModelText, withDirectives } from 'vue';
 

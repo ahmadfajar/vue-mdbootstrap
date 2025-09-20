@@ -8,14 +8,14 @@
 // Original source: Bootstrap v5.2.
 
 @mixin make-row($gutter: vars.$grid-gutter-width) {
-  --#{vars.$prefix}gutter-x: #{$gutter};
-  --#{vars.$prefix}gutter-y: 0;
+  --#{vars.$prefix}gap-x: #{$gutter};
+  --#{vars.$prefix}gap-y: 0;
+
   display: flex;
   flex-wrap: wrap;
-  // TODO: Revisit calc order after https://github.com/react-bootstrap/react-bootstrap/issues/6039 is fixed
-  margin-top: calc(-1 * var(--#{vars.$prefix}gutter-y));
-  margin-right: calc(-.5 * var(--#{vars.$prefix}gutter-x));
-  margin-left: calc(-.5 * var(--#{vars.$prefix}gutter-x));
+  margin-top: calc(-1 * var(--#{vars.$prefix}gap-y));
+  margin-right: calc(-0.5 * var(--#{vars.$prefix}gap-x));
+  margin-left: calc(-0.5 * var(--#{vars.$prefix}gap-x));
 }
 
 @mixin make-col-ready() {
@@ -26,16 +26,15 @@
   flex-shrink: 0;
   width: 100%;
   max-width: 100%; // Prevent `.col-auto`, `.col` (& responsive variants) from breaking out the grid
-  padding-right: calc(var(--#{vars.$prefix}gutter-x) * .5);
-  padding-left: calc(var(--#{vars.$prefix}gutter-x) * .5);
-  margin-top: var(--#{vars.$prefix}gutter-y);
+  padding-right: calc(var(--#{vars.$prefix}gap-x) * 0.5);
+  padding-left: calc(var(--#{vars.$prefix}gap-x) * 0.5);
+  margin-top: var(--#{vars.$prefix}gap-y);
 }
 
 @mixin make-col($size: false, $columns: vars.$grid-columns) {
   @if $size {
     flex: 0 0 auto;
     width: math.percentage(math.div($size, $columns));
-
   } @else {
     flex: 1 1 0;
     max-width: 100%;
@@ -68,43 +67,48 @@
 //
 // Used only by Bootstrap to generate the correct number of grid classes given
 // any value of `$grid-columns`.
-@mixin make-grid-columns($columns: vars.$grid-columns, $gutter: vars.$grid-gutter-width, $breakpoints: vars.$grid-breakpoints) {
+@mixin make-grid-columns(
+  $columns: vars.$grid-columns,
+  $gutter: vars.$grid-gutter-width,
+  $breakpoints: vars.$grid-breakpoints
+) {
   @each $breakpoint in map.keys($breakpoints) {
     $infix: media.breakpoint-infix($breakpoint, $breakpoints);
 
     @include media.breakpoint-up($breakpoint, $breakpoints) {
       // Provide basic `.col-{bp}` classes for equal-width flexbox columns
-      .#{vars.$prefix}col#{$infix} {
+      .col#{$infix} {
         flex: 1 0 0%; // Flexbugs #4: https://github.com/philipwalton/flexbugs#flexbug-4
       }
 
-      .#{vars.$prefix}row-cols#{$infix}-auto > * {
+      .row-cols#{$infix}-auto > * {
         @include make-col-auto();
       }
 
       @if vars.$grid-row-columns > 0 {
         @for $i from 1 through vars.$grid-row-columns {
-          .#{vars.$prefix}row-cols#{$infix}-#{$i} {
+          .row-cols#{$infix}-#{$i} {
             @include row-cols($i);
           }
         }
       }
 
-      .#{vars.$prefix}col#{$infix}-auto {
+      .col#{$infix}-auto {
         @include make-col-auto();
       }
 
       @if $columns > 0 {
         @for $i from 1 through $columns {
-          .#{vars.$prefix}col#{$infix}-#{$i} {
+          .col#{$infix}-#{$i} {
             @include make-col($i, $columns);
           }
         }
 
         // `$columns - 1` because offsetting by the width of an entire row isn't possible
         @for $i from 0 through ($columns - 1) {
-          @if not ($infix == "" and $i == 0) { // Avoid emitting useless .offset-0
-            .#{vars.$prefix}offset#{$infix}-#{$i} {
+          @if not($infix == '' and $i == 0) {
+            // Avoid emitting useless .offset-0
+            .offset#{$infix}-#{$i} {
               @include make-col-offset($i, $columns);
             }
           }
@@ -114,15 +118,15 @@
       // Gutters
       //
       // Make use of `.g-*`, `.gx-*` or `.gy-*` utilities to change spacing between the columns.
-      @each $key, $value in $gutters {
+      @each $key, $value in vars.$gutters {
         .g#{$infix}-#{$key},
         .gx#{$infix}-#{$key} {
-          --#{vars.$prefix}gutter-x: #{$value};
+          --#{vars.$prefix}gap-x: #{$value};
         }
 
         .g#{$infix}-#{$key},
         .gy#{$infix}-#{$key} {
-          --#{vars.$prefix}gutter-y: #{$value};
+          --#{vars.$prefix}gap-y: #{$value};
         }
       }
     }
@@ -136,7 +140,7 @@
     @include media.breakpoint-up($breakpoint, $breakpoints) {
       @if $columns > 0 {
         @for $i from 1 through $columns {
-          .#{vars.$prefix}g-col#{$infix}-#{$i} {
+          .g-col#{$infix}-#{$i} {
             grid-column: auto / span $i;
           }
         }
@@ -144,7 +148,7 @@
         // Start with `1` because `0` is and invalid value.
         // Ends with `$columns - 1` because offsetting by the width of an entire row isn't possible.
         @for $i from 1 through ($columns - 1) {
-          .#{vars.$prefix}g-start#{$infix}-#{$i} {
+          .g-start#{$infix}-#{$i} {
             grid-column-start: $i;
           }
         }

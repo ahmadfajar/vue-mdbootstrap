@@ -6,18 +6,18 @@
 //----------------------------------------------
 @mixin make-default-variant($name, $color) {
   .#{vars.$prefix}checkbox-#{$name} {
-    $checked-color: helper.set-color-contrast($color, colors.$black, colors.$white, 170);
+    $checked-color: helper.set-color-contrast($color, colors.$black, colors.$white);
 
-    --#{vars.$prefix}checkbox-bg: #{$color};
-    --#{vars.$prefix}checkbox-color: #{$checked-color};
+    --#{vars.$prefix}checkbox-checked-bg: #{$color};
+    --#{vars.$prefix}checkbox-checked-color: #{$checked-color};
 
-    > .#{vars.$prefix}checkbox-inner {
-      &:before {
-        --#{vars.$prefix}checkbox-touch-size: #{vars.$checkbox-touch-size};
-      }
-      &:after {
-        --#{vars.$prefix}checkbox-border-width: #{vars.$checkbox-stroke};
-      }
-    }
+    //> .#{vars.$prefix}checkbox-inner {
+    //  &:before {
+    //    --#{vars.$prefix}checkbox-touch-size: #{vars.$checkbox-touch-size};
+    //  }
+    //  &:after {
+    //    --#{vars.$prefix}checkbox-border-width: #{vars.$checkbox-stroke};
+    //  }
+    //}
   }
 }
