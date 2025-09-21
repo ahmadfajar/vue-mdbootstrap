@@ -1,35 +1,36 @@
-@use "../../../scss/variables" as vars;
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}drawer-host {
+@layer components {
+  .#{vars.$prefix}drawer-host {
     height: 100%;
     position: absolute;
     z-index: vars.$zindex-sticky - 1;
     transition: vars.$transition-default;
-}
+  }
 
-.#{vars.$prefix}side-drawer {
+  .#{vars.$prefix}side-drawer {
+    background-color: var(--sidedrawer-background, #{colors.$white});
+    color: var(--sidedrawer-foreground, #{colors.$gray-900});
     height: 100%;
     margin: 0;
     padding: 0;
 
     &.smooth-animation {
-        transition: .55s vars.$transition-easeInOut;
+      transition: 0.55s vars.$transition-easeInOut;
     }
 
     &.drawer-closed {
-        box-shadow: none !important;
+      box-shadow: none !important;
     }
 
     > .#{vars.$prefix}side-drawer-inner {
-        display:flex;
-        flex-direction: column;
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        position: relative;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      position: relative;
     }
-
-    .divider {
-        border-bottom: 1px solid rgba(200, 200, 200, 0.16);
-    }
+  }
 }

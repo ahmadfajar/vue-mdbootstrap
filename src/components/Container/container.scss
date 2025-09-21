@@ -17,6 +17,7 @@
   }
 
   .#{vars.$prefix}application-wrap {
+    background-color: var(--background);
     backface-visibility: hidden;
     flex: 1 1 auto;
     flex-direction: column;
@@ -47,6 +48,7 @@
   }
 
   .#{vars.$prefix}content-wrap {
+    color: var(--foreground);
     flex: 1 0 auto;
     transition: vars.$transition-default;
   }

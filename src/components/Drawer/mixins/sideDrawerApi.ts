@@ -14,7 +14,7 @@ import type {
   TSideDrawerPosition,
   TVueMdb,
 } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
 import { h, mergeProps, nextTick, Teleport, withDirectives } from 'vue';
 
@@ -22,7 +22,7 @@ export function useSideDrawerStyles(
   props: Readonly<TSideDrawerOptionProps>,
   isMobile: Ref<boolean>,
   isOpen: Ref<boolean>,
-  clipHeight: ComputedRef<number>,
+  clipHeight: ComputedRef<number | undefined>,
   zIndex: Ref<number>
 ): TRecord {
   const zeroPx = '0px';
@@ -44,7 +44,7 @@ export function useSideDrawerStyles(
           : Helper.cssUnit(drawerWidth1)
         : undefined,
     position: props.fixedLayout ? 'fixed' : 'absolute',
-    'z-index': clipHeight.value > 0 ? zIndex.value - 1 : undefined,
+    'z-index': clipHeight.value && clipHeight.value > 0 ? zIndex.value - 1 : undefined,
   };
 
   if (isMobile.value && !props.mini) {
@@ -83,7 +83,7 @@ export function useSideDrawerStyles(
   return properties;
 }
 
-export function useSideDrawerProps(
+export function useUpdateSideDrawerConfig(
   props: Readonly<TSideDrawerOptionProps>,
   vueMdb: TVueMdb,
   appId: string,
@@ -91,23 +91,26 @@ export function useSideDrawerProps(
   stateOpen: boolean
 ): void {
   const position: TSideDrawerPosition = props.position === 'right' ? 'right' : 'left';
-  vueMdb.app[appId].sideDrawer[position].open = stateOpen;
-  vueMdb.app[appId].sideDrawer[position].mini = props.mini as boolean;
-  vueMdb.app[appId].sideDrawer[position].miniWidth = parseInt(props.miniWidth as string, 10);
 
-  if (stateOpen) {
-    vueMdb.app[appId].sideDrawer[position].width =
-      !isMobile || props.mini ? parseInt(props.width as string, 10) : 0;
-  } else {
-    vueMdb.app[appId].sideDrawer[position].width = props.mini
-      ? parseInt(props.miniWidth as string, 10)
-      : 0;
+  if (vueMdb.app[appId]) {
+    vueMdb.app[appId].sideDrawer[position].open = stateOpen;
+    vueMdb.app[appId].sideDrawer[position].mini = props.mini as boolean;
+    vueMdb.app[appId].sideDrawer[position].miniWidth = parseInt(props.miniWidth as string, 10);
+
+    if (stateOpen) {
+      vueMdb.app[appId].sideDrawer[position].width =
+        !isMobile || props.mini ? parseInt(props.width as string, 10) : 0;
+    } else {
+      vueMdb.app[appId].sideDrawer[position].width = props.mini
+        ? parseInt(props.miniWidth as string, 10)
+        : 0;
+    }
   }
 }
 
 export function useOnMountedSideDrawer(
-  appId: Ref<string | undefined>,
   vueMdb: Ref<TVueMdb | undefined>,
+  appId: Ref<string | undefined>,
   zIndex: Ref<number>
 ): void {
   vueMdb.value = useVueMdbService();
@@ -125,7 +128,7 @@ export function useOnMountedSideDrawer(
         // If found then set starting z-index to 1030, so it can be placed above appbar layer
         // displayed on small-screen.
         Object.keys(vueMdb.value.app).forEach((it: string) => {
-          if (vueMdb.value?.app[it].appbar.fixedTop) {
+          if (vueMdb.value?.app[it]?.appbar.fixedTop) {
             zIndex.value = 1030;
             return;
           }
@@ -137,7 +140,7 @@ export function useOnMountedSideDrawer(
   }
 }
 
-function createOverlay(
+function renderOverlay(
   props: Readonly<TSideDrawerOptionProps>,
   zIndex: Ref<number>,
   isOpen: Ref<boolean>,
@@ -145,10 +148,8 @@ function createOverlay(
 ): VNode {
   return h(BsOverlay, {
     color: props.overlayColor as Prop<string | undefined>,
-    // @ts-ignore
-    fixed: true as Prop<boolean>,
-    // @ts-ignore
-    show: isOpen.value as Prop<boolean>,
+    fixed: true as unknown as Prop<boolean>,
+    show: isOpen.value as unknown as Prop<boolean>,
     zIndex: zIndex.value as Prop<number>,
     onClick: () => {
       isOpen.value = false;
@@ -157,9 +158,9 @@ function createOverlay(
   });
 }
 
-function createSideDrawer(
-  slots: Slots,
+function renderSideDrawer(
   props: Readonly<TSideDrawerOptionProps>,
+  slots: Slots,
   attrs: TRecord,
   styles: ComputedRef<TRecord>,
   isMobile: Ref<boolean>,
@@ -177,8 +178,8 @@ function createSideDrawer(
             ['smooth-animation']: isMobile.value || props.mini,
             ['drawer-closed']: !props.mini && !isOpen.value,
             ['drawer-opened']: isOpen.value,
+            [`${cssPrefix}shadow`]: props.shadow,
             [`bg-${props.color}`]: props.color,
-            shadow: props.shadow,
           },
           style: {
             ...styles.value,
@@ -223,11 +224,11 @@ export function useRenderSideDrawer(
       isMobile.value &&
         !props.mini &&
         h(Teleport, { to: 'body' }, [
-          createSideDrawer(slots, props, attrs, styles, isMobile, isOpen, resizeHandler),
-          createOverlay(props, zIndex, isOpen, emit),
+          renderOverlay(props, zIndex, isOpen, emit),
+          renderSideDrawer(props, slots, attrs, styles, isMobile, isOpen, resizeHandler),
         ]),
       (!isMobile.value || props.mini) &&
-        createSideDrawer(slots, props, attrs, styles, isMobile, isOpen, resizeHandler),
+        renderSideDrawer(props, slots, attrs, styles, isMobile, isOpen, resizeHandler),
     ]
   );
 }
