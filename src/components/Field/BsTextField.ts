@@ -1,24 +1,30 @@
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
-import { textFieldProps } from '@/components/Field/mixins/fieldProps';
+import { textFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
   useFieldControlClasses,
   useFieldWrapperClasses,
   useRenderTextField,
   useShowClearButton,
-} from '@/components/Field/mixins/textFieldApi';
-import { useGetValidationResult } from '@/components/Field/mixins/validationApi';
-import { validationProps } from '@/components/Field/mixins/validationProps';
-import { cssPrefix } from '@/mixins/CommonApi';
+} from '@/components/Field/mixins/textFieldApi.ts';
+import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
+import { validationProps } from '@/components/Field/mixins/validationProps.ts';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
 import {
   booleanProp,
   booleanTrueProp,
   stringOrNumberProp,
   stringProp,
   validStringOrNumberProp,
-} from '@/mixins/CommonProps';
-import type { TBsTextField, TFieldType, TRecord, TTextFieldOptionProps } from '@/types';
-import Helper from '@/utils/Helper';
-import type { Prop } from 'vue';
+} from '@/mixins/CommonProps.ts';
+import type {
+  MaybeNumberish,
+  TBsTextField,
+  TFieldType,
+  TRecord,
+  TTextFieldOptionProps,
+} from '@/types';
+import Helper from '@/utils/Helper.ts';
+import type { Prop, PropType } from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsTextField>({
@@ -33,9 +39,10 @@ export default defineComponent<TBsTextField>({
     },
     autofocus: booleanProp,
     type: {
-      type: String,
+      type: String as PropType<TFieldType>,
       default: 'text',
-      validator: (v: string): boolean => ['text', 'email', 'password', 'tel', 'url'].includes(v),
+      validator: (v: TFieldType): boolean =>
+        ['text', 'email', 'password', 'tel', 'url'].includes(v),
     } as Prop<TFieldType>,
     datalist: stringProp,
     modelValue: stringOrNumberProp,
@@ -47,28 +54,7 @@ export default defineComponent<TBsTextField>({
     prefix: stringProp,
     suffix: stringProp,
   },
-  emits: [
-    /**
-     * Fired when this component lost focus.
-     */
-    'blur',
-    /**
-     * Fired when this component got focused.
-     */
-    'focus',
-    /**
-     * Fired when this component's value is being cleared.
-     */
-    'clear',
-    /**
-     * Triggers when cursor is still in the `<input>` element and keyboard key is pressed.
-     */
-    'keydown',
-    /**
-     * Fired when this component's value is updated.
-     */
-    'update:model-value',
-  ],
+  emits: ['blur', 'focus', 'clear', 'keydown', 'update:model-value'],
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TTextFieldOptionProps>;
     const autocomplete =
@@ -77,10 +63,11 @@ export default defineComponent<TBsTextField>({
         : thisProps.autocomplete
           ? 'on'
           : Helper.uuid();
-    const localValue = ref<string | number | undefined | null>(thisProps.modelValue);
+    const localValue = ref<MaybeNumberish>(thisProps.modelValue);
     const passwordToggled = ref(false);
     const isFocused = ref(false);
     const validator = useGetValidationResult(thisProps, isFocused);
+
     const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
     const showPasswordToggle = computed<boolean>(
       () => thisProps.type === 'password' && thisProps.passwordToggle === true
@@ -107,9 +94,11 @@ export default defineComponent<TBsTextField>({
 
       return thisProps.type;
     });
+
     const onPasswordToggleHandler = (value: boolean): void => {
       passwordToggled.value = value;
     };
+
     watch(
       () => thisProps.modelValue,
       (value) => {

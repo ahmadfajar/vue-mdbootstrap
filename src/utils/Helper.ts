@@ -2,7 +2,7 @@
  * Class Helper with static functions.
  *
  * @author Ahmad Fajar
- * @since  05/07/2018, modified: 18/08/2024 09:42
+ * @since  05/07/2018, modified: 21/09/2025 18:30
  */
 export default class Helper {
   /**
@@ -58,15 +58,15 @@ export default class Helper {
       if (_temp == null) {
         return fallbackFn;
       }
-      // @ts-ignore
-      _temp = _temp[path[i]];
+      // @ts-expect-error: Overwrite variable
+      _temp = _temp[path[i]!];
     }
 
     if (_temp == null) {
       return fallbackFn;
     }
 
-    // @ts-ignore
+    // @ts-expect-error: Returning object property value
     return _temp[path[last]] ?? fallbackFn;
   }
 
@@ -126,7 +126,7 @@ export default class Helper {
    * @param value The value to check
    * @returns TRUE if the given value is an Array otherwise FALSE
    */
-  static isArray(value: unknown): value is any[] {
+  static isArray(value: unknown): value is unknown[] {
     return value != null && Array.isArray(value);
   }
 
@@ -271,11 +271,8 @@ export default class Helper {
         return 0;
       }
 
-      // @ts-ignore
-      [sortA, sortB] = [sortA, sortB].map((s) =>
-        // @ts-ignore
-        (s || '').toString().toLocaleLowerCase()
-      );
+      // @ts-expect-error Unsafe destructuring object and assignment
+      [sortA, sortB] = [sortA, sortB].map((s) => String(s || '').toLocaleLowerCase());
 
       if (sortA > sortB) {
         return 1;

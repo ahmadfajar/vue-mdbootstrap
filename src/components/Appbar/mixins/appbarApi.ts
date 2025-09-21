@@ -31,13 +31,13 @@ export function useAppbarStyles(
   };
 }
 
-export function useAppbarOnMountedHook(
+export async function useAppbarOnMountedHook(
   appId: Ref<string | undefined>,
   appbar: Ref<HTMLElement | null>,
   vueMdb: Ref<TVueMdb | undefined>,
   smoothAnimation: Ref<boolean>,
   props: Readonly<TAppbarOptionProps>
-): void {
+): Promise<void> {
   const instance = getCurrentInstance();
   vueMdb.value = useVueMdbService();
 
@@ -48,7 +48,7 @@ export function useAppbarOnMountedHook(
   );
 
   if (parent) {
-    nextTick().then(() => {
+    await nextTick().then(() => {
       appId.value = (parent.props as Readonly<TAppContainerOptionProps>).id;
 
       if (appId.value && vueMdb.value) {

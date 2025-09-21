@@ -1,4 +1,4 @@
-import type { IBindingElement, TouchDirectiveEvent, TRecord } from '@/types';
+import type { IBindingElement, TouchDirectiveEvent, TouchEventListener, TRecord } from '@/types';
 import type { Directive, DirectiveBinding } from 'vue';
 
 function handleGesture(binding: TouchDirectiveEvent) {
@@ -67,7 +67,7 @@ declare interface TouchDirectiveBinding extends Omit<DirectiveBinding, 'modifier
   };
 }
 
-function createHandlers(value: TouchValueBinding) {
+function createHandlers(value: TouchValueBinding): TouchEventListener {
   const wrapper: TouchDirectiveEvent = {
     touchstartX: 0,
     touchstartY: 0,
@@ -107,8 +107,11 @@ function mounted(el: IBindingElement, binding: TouchDirectiveBinding) {
   (target as IBindingElement).__touchEvents = handlers;
 
   Object.keys(handlers).forEach((name) => {
-    // @ts-ignore
-    target.addEventListener(name, handlers[name], options);
+    target.addEventListener(
+      name,
+      handlers[name as keyof TouchEventListener] as unknown as EventListener,
+      options
+    );
   });
 }
 

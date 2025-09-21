@@ -5,12 +5,13 @@ declare type TResizeTarget = {
   target: IBindingElement;
 };
 
-const resizeHandler = function (entries: Array<TResizeTarget>) {
+const resizeHandler = function (entries: TResizeTarget[]) {
   for (const entry of entries) {
     const listeners = entry.target.__resizeListeners || [];
+
     if (Array.isArray(listeners) && listeners.length) {
       listeners.forEach((fn: CallableFunction): void => {
-        fn();
+        fn.bind(entry);
       });
     }
   }

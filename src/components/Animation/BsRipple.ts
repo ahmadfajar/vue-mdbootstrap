@@ -49,8 +49,8 @@ export default defineComponent<TBsRipple>({
       () => thisProps.active,
       (value) => {
         const isBoolean = typeof value === 'boolean';
-        // @ts-ignore
         // prettier-ignore
+        // @ts-expect-error constructor may be null
         const isEvent = value?.constructor.toString().match(/function (\w*)/)[1].toLowerCase() === 'mouseevent';
 
         if (isBoolean && !disabled.value && value) {

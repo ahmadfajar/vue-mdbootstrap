@@ -6,12 +6,12 @@ import type { Directive, DirectiveBinding } from 'vue';
 function mounted(el: IBindingElement, binding: DirectiveBinding<VoidFunction | TDirectiveBinding>) {
   const callback = Helper.isFunction(binding.value)
     ? (binding.value as VoidFunction | EventListener)
-    : ((binding.value as TDirectiveBinding).handler as EventListener);
+    : (binding.value.handler as EventListener);
 
   let target: Element | null = null;
 
   if (!Helper.isFunction(binding.value)) {
-    const binder = binding.value as TDirectiveBinding;
+    const binder = binding.value;
     target = Helper.isString(binder.target)
       ? document.querySelector(binder.target)
       : (binder.target as Element | null);

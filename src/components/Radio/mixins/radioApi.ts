@@ -1,5 +1,5 @@
 import { BsRipple } from '@/components/Animation';
-import { useMakeInputBaseAttrs } from '@/components/Field/mixins/textFieldApi.ts';
+import { useInputFieldBaseAttrs } from '@/components/Field/mixins/textFieldApi.ts';
 import {
   useGetErrorItems,
   useHasValidated,
@@ -65,7 +65,7 @@ export function useCreateInputRadioOrCheckbox(
     : '';
 
   let inputProps = {
-    ...useMakeInputBaseAttrs(props),
+    ...useInputFieldBaseAttrs(props),
     type: inputType,
     role: inputType,
     value: thisValue,

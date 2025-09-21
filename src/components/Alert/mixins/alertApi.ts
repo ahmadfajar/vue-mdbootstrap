@@ -8,7 +8,14 @@ import {
   useWrapSlot,
   useWrapSlotDefault,
 } from '@/mixins/CommonApi.ts';
-import type { TAlertOptionProps, TBooleanRecord, TBsButton, TBsIcon, TButtonMode } from '@/types';
+import type {
+  PromiseVoidFunction,
+  TAlertOptionProps,
+  TBooleanRecord,
+  TBsButton,
+  TBsIcon,
+  TButtonMode,
+} from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { isEndWith } from '@/utils/StringHelper.ts';
 import type { ComputedRef, Prop, Slots, VNode } from 'vue';
@@ -88,7 +95,7 @@ function doRenderAlert(
   classNames: ComputedRef<TBooleanRecord>,
   alertColor: ComputedRef<string | undefined>,
   alertIcon: ComputedRef<string | undefined>,
-  dismissHandler: VoidFunction
+  dismissHandler: PromiseVoidFunction
 ): VNode {
   return h(
     'div',
@@ -137,7 +144,7 @@ export function useRenderAlert(
   classNames: ComputedRef<TBooleanRecord>,
   alertColorName: ComputedRef<string | undefined>,
   alertIconName: ComputedRef<string | undefined>,
-  dismissHandler: VoidFunction
+  dismissHandler: PromiseVoidFunction
 ): VNode {
   return useRenderTransition(
     { name: props.transition },

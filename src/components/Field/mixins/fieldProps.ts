@@ -4,20 +4,19 @@ import { validationProps } from '@/components/Field/mixins/validationProps';
 import {
   popoverDefaultTransitionProp,
   popoverPlacementProp,
-} from '@/components/Popover/mixins/popoverProps';
-import { useGenerateId } from '@/mixins/CommonApi';
+} from '@/components/Popover/mixins/popoverProps.ts';
+import { useGenerateId } from '@/mixins/CommonApi.ts';
 import {
   booleanProp,
   booleanTrueProp,
   numberProp,
   stringProp,
   validStringOrFloatProp,
-} from '@/mixins/CommonProps';
-import type { TLabelPosition, TSpaceAround } from '@/types';
+} from '@/mixins/CommonProps.ts';
+import type { TPlusMinusButtonPlacement, TSpinButtonPlacement } from '@/types';
 import type { Prop, PropType } from 'vue';
 
 export const textFieldProps = {
-  flat: booleanProp,
   filled: booleanProp,
   floatingLabel: booleanProp,
   outlined: booleanProp,
@@ -46,16 +45,16 @@ export const numericFieldProps = {
   useGrouping: booleanTrueProp,
   spinButton: booleanTrueProp,
   spinButtonPlacement: {
-    type: String as PropType<TLabelPosition>,
+    type: String as PropType<TSpinButtonPlacement>,
     default: 'right',
-    validator: (v: TLabelPosition) => ['left', 'right'].includes(v),
-  } as Prop<TLabelPosition>,
+    validator: (v: TSpinButtonPlacement) => ['left', 'right'].includes(v),
+  } as Prop<TSpinButtonPlacement>,
   actionButton: booleanProp,
   actionButtonPlacement: {
-    type: String as PropType<TSpaceAround>,
+    type: String as PropType<TPlusMinusButtonPlacement>,
     default: 'right',
-    validator: (v: TSpaceAround) => ['left', 'right', 'both'].includes(v),
-  } as Prop<TSpaceAround>,
+    validator: (v: TPlusMinusButtonPlacement) => ['left', 'right', 'both'].includes(v),
+  } as Prop<TPlusMinusButtonPlacement>,
   maxFraction: {
     type: [Number, String],
     default: 3,

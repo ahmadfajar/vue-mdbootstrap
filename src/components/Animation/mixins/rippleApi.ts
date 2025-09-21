@@ -1,5 +1,5 @@
 import BsWave from '@/components/Animation/BsWave.ts';
-import type { TRecord } from '@/types';
+import type { HtmlTagName, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type { Ref, Slots } from 'vue';
 import {
@@ -133,7 +133,7 @@ export function useRenderRipples(
   disabled: Ref<boolean>,
   centered: Ref<boolean>,
   touchTimeout: Ref<number>,
-  tagType?: string
+  tagType?: HtmlTagName
 ) {
   return h(
     tagType || 'span',

@@ -1,22 +1,18 @@
 import {
+  BaseComponentProps,
   EventUpdateModelValueProps,
-  type Numberish,
-  type TIconVariant,
-  TLabelPosition,
+  type MaybeNumberish,
+  Numberish,
+  TIconVariant,
   TPopoverPosition,
-  TSpaceAround,
 } from '@/types';
-import {
-  AllowedComponentProps,
-  ComponentCustomProps,
-  ComponentObjectPropsOptions,
-  ComputedRef,
-  ObjectPlugin,
-  VNode,
-  VNodeProps,
-} from 'vue';
+import { ComponentObjectPropsOptions, ComputedRef, ObjectPlugin, VNode } from 'vue';
 
 export declare type TFieldType = 'text' | 'email' | 'password' | 'tel' | 'url';
+
+export declare type TPlusMinusButtonPlacement = 'left' | 'right' | 'both';
+
+export declare type TSpinButtonPlacement = 'left' | 'right';
 
 declare type TBoolRecord = Record<string, boolean>;
 
@@ -100,37 +96,38 @@ export declare type TInputFieldProps = TInputBaseProps &
      * @see [Google Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     actionIconVariant?: TIconVariant;
+
     /**
      * Sets auto show the clear button.
      */
     clearButton?: boolean;
-    /**
-     * Create this component with **flat** appearance, and removes the borders.
-     * The component appearance will be styled like plain text.
-     */
-    flat?: boolean;
+
     /**
      * Create this component with **filled** appearance.
      *
      * @see [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
      */
     filled?: boolean;
+
     /**
      * Create this component with floating field label.
      *
      * @see [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
      */
     floatingLabel?: boolean;
+
     /**
      * Create this component with **outlined** appearance.
      *
      * @see [Google Material Design](https://m3.material.io/components/text-fields/overview) for details.
      */
     outlined?: boolean;
+
     /**
      * Display validation icon or not, when this field has been validated.
      */
     validationIcon?: boolean;
+
     /**
      * Sets icon to display on inner right side. This is a shortcut to insert
      * component `BsIcon` inside this component.
@@ -144,6 +141,7 @@ export declare type TInputFieldProps = TInputBaseProps &
      * @see [Google Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     appendIcon?: string;
+
     /**
      * Sets icon to display on outer right side. This is a shortcut to insert
      * component `BsIcon` inside this component.
@@ -157,6 +155,7 @@ export declare type TInputFieldProps = TInputBaseProps &
      * @see [Google Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     appendIconOuter?: string;
+
     /**
      * Sets icon to display on inner left side. This is a shortcut to insert
      * component `BsIcon` inside this component.
@@ -170,6 +169,7 @@ export declare type TInputFieldProps = TInputBaseProps &
      * @see [Google Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols) for details.
      */
     prependIcon?: string;
+
     /**
      * Sets icon to display on outer left side. This is a shortcut to insert
      * component `BsIcon` inside this component.
@@ -190,10 +190,12 @@ export declare type TInputTextProps = TInputFieldProps & {
    * Sets browsers autocomplete predictions on/off.
    */
   autocomplete?: string | boolean;
+
   /**
    * Autofocus field when this component is mounted.
    */
   autofocus?: boolean;
+
   /**
    * Sets the field placeholder.
    */
@@ -204,35 +206,43 @@ export declare type TTextFieldOptionProps = TInputTextProps & {
   /**
    * The value monitored by `v-model` to maintain this field value.
    */
-  modelValue?: string | number | null;
+  modelValue?: MaybeNumberish;
+
   /**
    * Sets <input> element type attribute. Valid values are: `text`, `password`, `email`, `url`, `tel`.
    */
   type?: TFieldType;
+
   /**
    * Sets target `<datalist>` element ID.
    */
   datalist?: string;
+
   /**
    * Enable toggle password field.
    */
   passwordToggle?: boolean;
+
   /**
    * Sets `<input>` element maximum characters allowed.
    */
-  maxlength?: string | number;
+  maxlength?: Numberish;
+
   /**
    * Sets `<input>` element minimum characters allowed.
    */
-  minlength?: string | number;
+  minlength?: Numberish;
+
   /**
    * Create this component with **rounded-pill** appearance.
    */
   rounded?: boolean;
+
   /**
    * Prepend inline non-modifiable text before the input field.
    */
   prefix?: string;
+
   /**
    * Append inline non-modifiable text after the input field.
    */
@@ -244,22 +254,26 @@ export declare type TTextAreaOptionProps = TInputTextProps & {
    * Enable/disable `<textarea>` element to auto grow.
    */
   autoGrow?: boolean;
+
   /**
    * Disable resizing the `<textarea>` element.
    */
   noResize?: boolean;
+
   /**
    * The value monitored by `v-model` to maintain this field value.
    */
   modelValue?: string | null;
+
   /**
    * Sets `<textarea>` height in rows.
    */
-  rows?: string | number;
+  rows?: Numberish;
+
   /**
    * Sets `<textarea>` height in pixel.
    */
-  rowHeight?: string | number;
+  rowHeight?: Numberish;
 };
 
 export declare type TChipFieldOptionProps = TInputTextProps & {
@@ -267,25 +281,29 @@ export declare type TChipFieldOptionProps = TInputTextProps & {
    * The default Chips color to apply.
    */
   chipColor?: string;
+
   /**
    * When defined, display the close button on every Chip to delete a Chip.
    */
   chipDeletable?: boolean;
+
   /**
    * Render the Chips with rounded-pill style.
    */
   chipPill?: boolean;
+
   /**
    * Render the Chips with outlined style.
    */
   chipOutlined?: boolean;
+
   /**
    * The value monitored by `v-model` to maintain this field value.
    */
   modelValue?: string | string[] | null;
 };
 
-export declare type TNumericOpsOptions = {
+export declare type TNumericOptions = {
   locale: string;
   step: number;
   maxValue?: number;
@@ -297,57 +315,70 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
    * The value monitored by `v-model` to maintain this field value.
    */
   modelValue?: number | null;
+
   /**
    * The locale to be used when displaying the numeric value.
    * Defaults is using browser's locale.
    */
   locale?: string;
+
   /**
    * Format the displayed numeric value with digit grouping.
    */
   useGrouping?: boolean;
+
   /**
    * Enable and shows the Spinner action buttons which is used to
    * increment/decrement the numeric value.
    */
   spinButton?: boolean;
+
   /**
    * Sets the Spinner action buttons placement, valid values: `left` and `right`.
    */
-  spinButtonPlacement?: TLabelPosition;
+  spinButtonPlacement?: TSpinButtonPlacement;
+
   /**
    * Enable and shows the Plus-Minus action buttons which is used to
    * increment/decrement the numeric value.
    */
   actionButton?: boolean;
+
   /**
    * Sets the Plus-Minus action buttons placement, valid values: `left`, `right` and `both`.
    */
-  actionButtonPlacement?: TSpaceAround;
+  actionButtonPlacement?: TPlusMinusButtonPlacement;
+
   /**
    * Sets the maximum allowed fraction or decimal digits for the displayed value.
    */
-  maxFraction?: string | number;
+  maxFraction?: Numberish;
+
   /**
    * Sets the maximum allowed value.
    */
-  maxValue?: string | number;
+  maxValue?: Numberish;
+
   /**
    * Sets the minimum allowed value.
    */
-  minValue?: string | number;
+  minValue?: Numberish;
+
   /**
    * Sets the increment/decrement steps value.
    */
-  step?: string | number;
+  step?: Numberish;
+
   /**
    * Create this component with **rounded-pill** appearance.
    */
   rounded?: boolean;
+
   /**
    * Prepend inline non-modifiable text before the input field.
    */
   prefix?: string;
+
   /**
    * Append inline non-modifiable text after the input field.
    */
@@ -359,54 +390,67 @@ export declare type TSearchFieldOptionProps = {
    * Sets `<input>` element ID attribute. This property value is auto generates.
    */
   id?: string;
+
   /**
    * Sets `<input>` element name attribute.
    */
   name?: string;
+
   /**
    * Enable/disable the component and the `<input>` element.
    */
   disabled?: boolean;
+
   /**
    * Put the component in readonly state and sets the `<input>` element readonly attribute.
    */
   readonly?: boolean;
+
   /**
    * Autofocus field when document is loaded.
    */
   autofocus?: boolean;
+
   /**
    * Enable advance search panel. If true then Popover container will be enabled.
    */
   advanceSearch?: boolean;
+
   /**
    * Sets the field placeholder.
    */
   placeholder?: string;
+
   /**
    * Adapts search field to the container background color.
    */
   darkMode?: boolean;
+
   /**
    * Minimum characters to check before triggers the search event.
    */
-  minlength?: number | string;
+  minlength?: Numberish;
+
   /**
    * The value monitored by v-model to maintain field value.
    */
   modelValue?: string | null;
+
   /**
    * Custom CSS class for the Popover container.
    */
   popoverCls?: string | string[];
+
   /**
    * Sets minimum width for the Popover container.
    */
   popoverMinWidth?: number | string;
+
   /**
    * Sets the Popover display placement.
    */
   popoverPlacement?: TPopoverPosition;
+
   /**
    * Sets animation transition when displaying the Popover container.
    */
@@ -423,23 +467,53 @@ export declare type TBsNumericField = ComponentObjectPropsOptions<TNumericFieldO
 
 export declare type TBsSearchField = ComponentObjectPropsOptions<TSearchFieldOptionProps>;
 
-declare type AllowedTextFieldProps = AllowedComponentProps &
-  ComponentCustomProps &
-  VNodeProps &
-  EventUpdateModelValueProps<string | null> & {
-    onBlur?: EventListener;
-    onClear?: VoidFunction;
-    onFocus?: EventListener;
-    onKeydown?: EventListener;
-    '@blur'?: EventListener;
-    '@clear'?: VoidFunction;
-    '@focus'?: EventListener;
-    '@keydown'?: EventListener;
-  };
+declare interface AllowedInputFieldEvents extends BaseComponentProps {
+  /**
+   * Fired when this component lost focus.
+   */
+  onBlur?: EventListener;
+
+  /**
+   * Fired when this component's value is being cleared.
+   */
+  onClear?: VoidFunction;
+
+  /**
+   * Fired when this component got focused.
+   */
+  onFocus?: EventListener;
+
+  /**
+   * Fired when `KeyboardEvent` is triggered by the `<input>` element.
+   */
+  onKeydown?: EventListener;
+
+  /**
+   * Fired when this component lost focus.
+   */
+  '@blur'?: EventListener;
+
+  /**
+   * Fired when this component's value is being cleared.
+   */
+  '@clear'?: VoidFunction;
+
+  /**
+   * Fired when this component got focused.
+   */
+  '@focus'?: EventListener;
+
+  /**
+   * Fired when `KeyboardEvent` is triggered by the `<input>` element.
+   */
+  '@keydown'?: EventListener;
+}
 
 export declare const BsTextField: {
   new (): {
-    $props: AllowedTextFieldProps & TTextFieldOptionProps;
+    $props: AllowedInputFieldEvents &
+      EventUpdateModelValueProps<string | null> &
+      TTextFieldOptionProps;
     $slots: {
       default?: (arg: { id: string }) => VNode[];
       'append-inner'?: () => VNode;
@@ -448,34 +522,21 @@ export declare const BsTextField: {
       'prepend-outer'?: () => VNode;
       'help-text'?: () => VNode;
     };
-    $emit: [
-      /**
-       * Fired when this component lost focus.
-       */
-      'blur',
-      /**
-       * Fired when this component got focused.
-       */
-      'focus',
-      /**
-       * Fired when this component's value is being cleared.
-       */
-      'clear',
-      /**
-       * Triggers when cursor is still in the `<input>` element and keyboard key is pressed.
-       */
-      'keydown',
-      /**
-       * Fired when this component's value is updated.
-       */
-      'update:model-value',
-    ];
+    $emits: {
+      (event: 'clear'): void;
+      (event: 'blur', target: Event): void;
+      (event: 'focus', target: Event): void;
+      (event: 'keydown', target: Event): void;
+      (event: 'update:model-value', value: string | null): void;
+    };
   };
 };
 
 export declare const BsTextArea: {
   new (): {
-    $props: AllowedTextFieldProps & TTextAreaOptionProps;
+    $props: AllowedInputFieldEvents &
+      EventUpdateModelValueProps<string | null> &
+      TTextAreaOptionProps;
     $slots: {
       default?: (arg: { id: string }) => VNode[];
       'append-inner'?: () => VNode;
@@ -484,50 +545,31 @@ export declare const BsTextArea: {
       'prepend-outer'?: () => VNode;
       'help-text'?: () => VNode;
     };
-    $emit: [
-      /**
-       * Fired when this component lost focus.
-       */
-      'blur',
-      /**
-       * Fired when this component got focused.
-       */
-      'focus',
-      /**
-       * Fired when this component's value is being cleared.
-       */
-      'clear',
-      /**
-       * Triggers when cursor is still in the `<textarea>` element and keyboard key is pressed.
-       */
-      'keydown',
-      /**
-       * Fired when this component's value is updated.
-       */
-      'update:model-value',
-    ];
+    $emits: {
+      (event: 'clear'): void;
+      (event: 'blur', target: Event): void;
+      (event: 'focus', target: Event): void;
+      (event: 'keydown', target: Event): void;
+      (event: 'update:model-value', value: string | null): void;
+    };
   };
 };
 
-declare type AllowedChipFieldProps = AllowedComponentProps &
-  ComponentCustomProps &
-  VNodeProps &
-  EventUpdateModelValueProps<string | string[]> & {
-    onBlur?: EventListener;
-    onClear?: VoidFunction;
-    onFocus?: EventListener;
-    onKeydown?: EventListener;
-    'onDelete-item'?: (deletedItem: string) => void;
-    '@blur'?: EventListener;
-    '@clear'?: VoidFunction;
-    '@focus'?: EventListener;
-    '@keydown'?: EventListener;
-    '@delete-item'?: (deletedItem: string) => void;
-  };
+declare interface ChipFieldEvents extends AllowedInputFieldEvents {
+  /**
+   * Fired when an item is deleted from the collection.
+   */
+  'onDelete-item'?: (deletedItem: string) => void;
+
+  /**
+   * Fired when an item is deleted from the collection.
+   */
+  '@delete-item'?: (deletedItem: string) => void;
+}
 
 export declare const BsChipField: {
   new (): {
-    $props: AllowedChipFieldProps & TChipFieldOptionProps;
+    $props: ChipFieldEvents & EventUpdateModelValueProps<string | string[]> & TChipFieldOptionProps;
     $slots: {
       default?: (arg: { id: string }) => VNode[];
       'append-inner'?: () => VNode;
@@ -536,52 +578,22 @@ export declare const BsChipField: {
       'prepend-outer'?: () => VNode;
       'help-text'?: () => VNode;
     };
-    $emit: [
-      /**
-       * Fired when this ChipField lost focus.
-       */
-      'blur',
-      /**
-       * Fired when this ChipField got focused.
-       */
-      'focus',
-      /**
-       * Fired when this ChipField's value is being cleared.
-       */
-      'clear',
-      /**
-       * Fired when `KeyboardEvent` is triggered from the `<input>` element.
-       */
-      'keydown',
-      /**
-       * Fired when a chip is deleted from this ChipField.
-       */
-      'delete-item',
-      /**
-       * Fired when this ChipField's value is updated.
-       */
-      'update:model-value',
-    ];
+    $emits: {
+      (event: 'clear'): void;
+      (event: 'blur', target: Event): void;
+      (event: 'focus', target: Event): void;
+      (event: 'keydown', target: Event): void;
+      (event: 'update:model-value', value: string | string[]): void;
+      (event: 'delete-item', deletedItem: string): void;
+    };
   };
 };
-
-declare type AllowedNumericFieldProps = AllowedComponentProps &
-  ComponentCustomProps &
-  VNodeProps &
-  EventUpdateModelValueProps<number | null> & {
-    onBlur?: EventListener;
-    onClear?: VoidFunction;
-    onFocus?: EventListener;
-    onKeydown?: EventListener;
-    '@blur'?: EventListener;
-    '@clear'?: VoidFunction;
-    '@focus'?: EventListener;
-    '@keydown'?: EventListener;
-  };
 
 export declare const BsNumericField: {
   new (): {
-    $props: AllowedNumericFieldProps & TNumericFieldOptionProps;
+    $props: AllowedInputFieldEvents &
+      EventUpdateModelValueProps<number | null> &
+      TNumericFieldOptionProps;
     $slots: {
       default?: (arg: { id: string }) => VNode[];
       'append-inner'?: () => VNode;
@@ -590,85 +602,64 @@ export declare const BsNumericField: {
       'prepend-outer'?: () => VNode;
       'help-text'?: () => VNode;
     };
-    $emit: [
-      /**
-       * Fired when this component lost focus.
-       */
-      'blur',
-      /**
-       * Fired when this component got focused.
-       */
-      'focus',
-      /**
-       * Fired when this component's value is being cleared.
-       */
-      'clear',
-      /**
-       * Triggers when cursor is still in the `<input>` element and keyboard key is pressed.
-       */
-      'keydown',
-      /**
-       * Fired when this component's value is updated.
-       */
-      'update:model-value',
-    ];
+    $emits: {
+      (event: 'clear'): void;
+      (event: 'blur', target: Event): void;
+      (event: 'focus', target: Event): void;
+      (event: 'keydown', target: Event): void;
+      (event: 'update:model-value', value: number | null): void;
+    };
   };
 };
 
-declare type AllowedSearchFieldProps = AllowedComponentProps &
-  ComponentCustomProps &
-  VNodeProps &
-  EventUpdateModelValueProps<string | null> & {
-    onBlur?: EventListener;
-    onClear?: VoidFunction;
-    onClose?: VoidFunction;
-    onOpen?: VoidFunction;
-    onFocus?: EventListener;
-    onSearch?: (value: string) => void;
-    '@blur'?: EventListener;
-    '@clear'?: VoidFunction;
-    '@close'?: VoidFunction;
-    '@open'?: VoidFunction;
-    '@focus'?: EventListener;
-    '@search'?: (value: string) => void;
-  };
+declare interface SearchFieldEvents extends AllowedInputFieldEvents {
+  /**
+   * Fired when the Popover is hiding.
+   */
+  onClose?: VoidFunction;
+
+  /**
+   * Fired when the Popover is show.
+   */
+  onOpen?: VoidFunction;
+
+  /**
+   * Asks handler to start searching for the given keyword.
+   */
+  onSearch?: (value: string) => void;
+
+  /**
+   * Fired when the Popover is hiding.
+   */
+  '@close'?: VoidFunction;
+
+  /**
+   * Fired when the Popover is show.
+   */
+  '@open'?: VoidFunction;
+
+  /**
+   * Asks handler to start searching for the given keyword.
+   */
+  '@search'?: (value: string) => void;
+}
 
 export declare const BsSearchField: {
   new (): {
-    $props: AllowedSearchFieldProps & TSearchFieldOptionProps;
+    $props: SearchFieldEvents & EventUpdateModelValueProps<string | null> & TSearchFieldOptionProps;
     $slots: {
       popover?: () => VNode[];
     };
-    $emit: [
-      /**
-       * Fired when this component lost focus.
-       */
-      'blur',
-      /**
-       * Fired when this component got focused.
-       */
-      'focus',
-      /**
-       * Fired when this component's value is being cleared.
-       */
-      'clear',
-      /**
-       * Asks handler to start searching for the given keyword.
-       */
-      'search',
-      /**
-       * Fired when the Popover is show.
-       */
-      'open',
-      /**
-       * Fired when the Popover is hiding.
-       */
-      'close',
-      /**
-       * Fired when this component's value is updated.
-       */
-      'update:model-value',
-    ];
+    $emits: {
+      (event: 'clear'): void;
+      (event: 'close'): void;
+      (event: 'open'): void;
+      (event: 'blur', target: Event): void;
+      (event: 'focus', target: Event): void;
+      (event: 'keydown', target: Event): void;
+      (event: 'search', value: string): void;
+      (event: 'update:model-value', value: string | null): void;
+    };
   };
 };
 

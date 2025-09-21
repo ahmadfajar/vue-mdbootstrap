@@ -63,9 +63,9 @@ export class RestProxyAdapter implements IRestAdapter {
     }
     if (
       'get' in appConfig &&
-      !Helper.isFunction(appConfig.get) &&
+      !Helper.isFunction(appConfig['get']) &&
       'post' in appConfig &&
-      !Helper.isFunction(appConfig.post)
+      !Helper.isFunction(appConfig['post'])
     ) {
       throw Error(
         'Axios is not defined. ' +
@@ -172,7 +172,7 @@ export class RestProxyAdapter implements IRestAdapter {
             }
             resolve(response);
           })
-          .catch((error) => {
+          .catch((error: AxiosError) => {
             if (Helper.isFunction(onFailure)) {
               onFailure(error);
             }

@@ -10,7 +10,7 @@ import { useGetValidationResult } from '@/components/Field/mixins/validationApi'
 import { validationProps } from '@/components/Field/mixins/validationProps';
 import { cssPrefix } from '@/mixins/CommonApi';
 import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps';
-import type { TBsTextArea, TRecord, TTextAreaOptionProps } from '@/types';
+import type { MaybeNumberish, TBsTextArea, TRecord, TTextAreaOptionProps } from '@/types';
 import Helper from '@/utils/Helper';
 import { computed, defineComponent, ref, watchEffect } from 'vue';
 
@@ -36,28 +36,7 @@ export default defineComponent<TBsTextArea>({
     },
     rowHeight: validStringOrNumberProp,
   },
-  emits: [
-    /**
-     * Fired when this component lost focus.
-     */
-    'blur',
-    /**
-     * Fired when this component got focused.
-     */
-    'focus',
-    /**
-     * Fired when this component's value is being cleared.
-     */
-    'clear',
-    /**
-     * Triggers when cursor is still in the `<textarea>` element and keyboard key is pressed.
-     */
-    'keydown',
-    /**
-     * Fired when this component's value is updated.
-     */
-    'update:model-value',
-  ],
+  emits: ['blur', 'focus', 'clear', 'keydown', 'update:model-value'],
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TTextAreaOptionProps>;
     const autocomplete =
@@ -66,11 +45,12 @@ export default defineComponent<TBsTextArea>({
         : thisProps.autocomplete
           ? 'on'
           : Helper.uuid();
-    const localValue = ref<string | number | undefined | null>(thisProps.modelValue);
-    const rowHeight = ref<string | number | undefined | null>(thisProps.rowHeight);
+    const localValue = ref<string | undefined | null>(thisProps.modelValue);
+    const rowHeight = ref<MaybeNumberish>(thisProps.rowHeight);
     const inputRef = ref<HTMLTextAreaElement>();
     const isFocused = ref(false);
     const validator = useGetValidationResult(thisProps, isFocused);
+
     const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
     const showAppendIcon = computed(
       () =>

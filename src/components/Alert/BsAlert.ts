@@ -21,10 +21,10 @@ export default defineComponent<TBsAlert>({
     const classNames = computed<TBooleanRecord>(() => useAlertClassNames(thisProps, alertColor));
     const show = computed(() => !dismissed.value && thisProps.modelValue);
 
-    const dismissedAlert = () => {
+    const dismissedAlert = async () => {
       dismissed.value = true;
       emit('update:model-value', false);
-      nextTick().then(() => emit('close'));
+      await nextTick().then(() => emit('close'));
     };
 
     watch(

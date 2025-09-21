@@ -335,7 +335,7 @@ const _sealedObjErrMsg = 'This {1} is sealed to prevent adding new properties.';
  * }, adapter, 'uid');
  *
  * @author Ahmad Fajar
- * @since  09/07/2018 modified: 16/09/2025 02:30
+ * @since  09/07/2018 modified: 21/09/2025 18:30
  */
 export class BsModel implements IBsModel {
   private readonly _idProperty: string;
@@ -425,7 +425,7 @@ export class BsModel implements IBsModel {
 
       for (const [key, value] of Object.entries((schema as TModelOptions).proxy)) {
         if (Helper.isObject(value)) {
-          _methods[key] = (value as TUrlOption).method;
+          _methods[key] = value.method;
         }
         this._restUrl[key] = Helper.isObject(value) ? value.url : value;
       }
@@ -443,6 +443,7 @@ export class BsModel implements IBsModel {
 
     autoBind(this);
   }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onAfterFetch?(_data: TRecord): void {
     throw new Error('Method not implemented.');
   }
@@ -453,13 +454,15 @@ export class BsModel implements IBsModel {
       this._data.set(k, schema[k]);
     });
 
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const me = this;
     for (const key of this._schema.keys()) {
       Object.defineProperty(this, key, {
         get(): unknown {
-          return this._data.get(key);
+          return me._data.get(key);
         },
         set(value: unknown): void {
-          this._data.set(key, value);
+          me._data.set(key, value);
         },
       });
     }
@@ -469,7 +472,8 @@ export class BsModel implements IBsModel {
    * Get the class name of this instance.
    */
   get $_class(): string {
-    return Object.getPrototypeOf(this).constructor.name;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    return Object.getPrototypeOf(this).constructor.name as string;
   }
 
   /**
@@ -581,9 +585,9 @@ export class BsModel implements IBsModel {
 
     return this._requestWithToken(
       config,
-      this._checkBeforeDelete,
-      this._onDeleteSuccess,
-      this._onDeleteFailure,
+      this['_checkBeforeDelete'],
+      this['_onDeleteSuccess'],
+      this['_onDeleteFailure'],
       '-delete'
     );
   }
@@ -603,9 +607,9 @@ export class BsModel implements IBsModel {
 
     return this.proxy.request(
       config,
-      this._checkBeforeLoading,
-      this._onLoadingSuccess,
-      this._onLoadingFailure
+      this['_checkBeforeLoading'],
+      this['_onLoadingSuccess'],
+      this['_onLoadingFailure']
     );
   }
 
@@ -619,12 +623,14 @@ export class BsModel implements IBsModel {
         // if not exists and not sealed
         this._data.set(key, value);
 
+        // eslint-disable-next-line @typescript-eslint/no-this-alias
+        const me = this;
         Object.defineProperty(this, key, {
           get(): unknown {
-            return this._data.get(key);
+            return me._data.get(key);
           },
           set(v: unknown): void {
-            this._data.set(key, v);
+            me._data.set(key, v);
           },
         });
       } else if (this._data && this._data.has(key)) {
@@ -699,19 +705,19 @@ export class BsModel implements IBsModel {
 
     return this._requestWithToken(
       config,
-      ['post', 'put', 'patch'].includes(config['method']!)
-        ? this._checkBeforeSave
-        : this._checkBeforeLoading,
+      ['post', 'put', 'patch'].includes(config['method'])
+        ? this['_checkBeforeSave']
+        : this['_checkBeforeLoading'],
       Helper.isFunction(successCb)
         ? successCb
-        : ['post', 'put', 'patch'].includes(config['method']!)
-          ? this._onSaveSuccess
-          : this._onLoadingSuccess,
+        : ['post', 'put', 'patch'].includes(config['method'])
+          ? this['_onSaveSuccess']
+          : this['_onLoadingSuccess'],
       Helper.isFunction(errorCb)
         ? errorCb
-        : ['post', 'put', 'patch'].includes(config['method']!)
-          ? this._onSaveFailure
-          : this._onLoadingFailure
+        : ['post', 'put', 'patch'].includes(config['method'])
+          ? this['_onSaveFailure']
+          : this['_onLoadingFailure']
     );
   }
 
@@ -765,9 +771,9 @@ export class BsModel implements IBsModel {
 
     return this._requestWithToken(
       config,
-      this._checkBeforeSave,
-      this._onSaveSuccess,
-      this._onSaveFailure,
+      this['_checkBeforeSave'],
+      this['_onSaveSuccess'],
+      this['_onSaveFailure'],
       '-create'
     );
   }
@@ -777,9 +783,9 @@ export class BsModel implements IBsModel {
 
     return this._requestWithToken(
       config,
-      this._checkBeforeSave,
-      this._onSaveSuccess,
-      this._onSaveFailure,
+      this['_checkBeforeSave'],
+      this['_onSaveSuccess'],
+      this['_onSaveFailure'],
       '-update'
     );
   }
@@ -800,7 +806,8 @@ export class BsModel implements IBsModel {
    * @param response A response object
    */
   protected _assignFromResponse(response: AxiosResponse): void {
-    const _data = response.data;
+    const _data = response.data as TRecord;
+
     const _assignFn = (values: TRecord) => {
       this.assignValues(values);
       // assign values that was fetched from REST response as defaults
@@ -817,7 +824,7 @@ export class BsModel implements IBsModel {
       if (Object.hasOwn(_data, this.idProperty)) {
         _assignFn(_data);
       } else if (Object.hasOwn(_data, this._dataProperty)) {
-        const _cdata = _data[this._dataProperty];
+        const _cdata = _data[this._dataProperty] as TRecord;
 
         if (Helper.isEmpty(_cdata)) {
           console.warn(emptyDataErrMsg);
@@ -941,8 +948,7 @@ export class BsModel implements IBsModel {
     onFailure: (error: AxiosError) => void,
     suffix = ''
   ): Promise<AxiosResponse> {
-    // @ts-ignore
-    const headers = { 'X-Requested-With': 'XMLHttpRequest' } as AxiosHeaders;
+    const headers = { 'X-Requested-With': 'XMLHttpRequest' } as unknown as AxiosHeaders;
     let csrfUrl = this.csrfConfig?.url ?? '';
 
     if (csrfUrl.includes('{name}') && !Helper.isEmpty(this.csrfConfig?.tokenName)) {
@@ -955,8 +961,11 @@ export class BsModel implements IBsModel {
 
     if (csrfUrl !== '') {
       const response = await this.proxy.adapterInstance.get(csrfUrl);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       headers['X-CSRF-TOKEN'] =
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         response.data[this.csrfConfig?.dataField as string] ??
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         response.data[this.csrfConfig?.responseField as string];
       config['headers'] = headers;
 

@@ -74,7 +74,7 @@ export default class Helper {
    * @param value The value to check
    * @returns TRUE if the given value is an Array otherwise FALSE
    */
-  static isArray(value: unknown): value is any[];
+  static isArray(value: unknown): value is unknown[];
 
   /**
    * Check the type of value is Function or not. NULL or UNDEFINED is considered as not a Function.
@@ -138,7 +138,7 @@ export default class Helper {
    */
   static cssUnit(
     value: string | number | undefined | null,
-    unit?: string | undefined | null
+    unit?: string | null
   ): string | undefined;
 
   /**

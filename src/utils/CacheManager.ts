@@ -136,7 +136,7 @@ class StorageProxy {
     if (this.hasSessionStorage()) {
       const text = window.sessionStorage.getItem(key);
       if (text) {
-        return JSON.parse(text);
+        return JSON.parse(text) as TCacheInternal;
       }
     } else {
       return this._storage.get(key);
@@ -256,8 +256,8 @@ export const CacheManager = {
       return;
     }
 
-    if ('getKey' in item && Helper.isFunction(item.getKey)) {
-      const it = item as ICacheItem;
+    if ('getKey' in item && Helper.isFunction(item['getKey'])) {
+      const it = item;
 
       this._cacheStorage.setItem(it.getKey(), {
         value: it.getValue(),

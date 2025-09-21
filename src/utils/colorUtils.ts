@@ -33,8 +33,8 @@ export function hslaToRgba(color: HSLA): RGBA {
   const light = color.l >= 0 && color.l <= 1 ? color.l : color.l / 100;
 
   function f(n: number) {
-    let k = (n + color.h / 30) % 12;
-    let a = sat * Math.min(light, 1 - light);
+    const k = (n + color.h / 30) % 12;
+    const a = sat * Math.min(light, 1 - light);
 
     return light - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
   }
@@ -117,11 +117,12 @@ export function hexToRgba(color: string): RGBA {
  * @return The HSL color value. Hue as degrees [0..360], Saturation and Lightness as range [0..100]
  */
 export function rgbaToHsla(color: RGBA): HSLA {
-  let max = Math.max(color.r, color.g, color.b);
-  let min = Math.min(color.r, color.g, color.b);
+  const max = Math.max(color.r, color.g, color.b);
+  const min = Math.min(color.r, color.g, color.b);
+  // eslint-disable-next-line prefer-const
   let [hue, sat, light] = [NaN, 0, (min + max) / 2];
-  let delta = max - min;
-  let epsilon = 1 / 100000; // max Sat is 1, in this code
+  const delta = max - min;
+  const epsilon = 1 / 100000; // max Sat is 1, in this code
 
   if (delta !== 0) {
     sat = light === 0 || light === 1 ? 0 : (max - light) / Math.min(light, 1 - light);
@@ -344,7 +345,7 @@ export function shadeColor(color: string | RGBA, lightness: number): string {
   ) {
     hex = rgbaToHex(color).replace('#', '');
   } else {
-    return color.toString();
+    return JSON.stringify(color);
   }
 
   const decimalColor = parseInt(hex, 16);

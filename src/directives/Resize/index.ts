@@ -11,12 +11,8 @@ interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
 }
 
 function mounted(el: IBindingElement, binding: ResizeDirectiveBinding): void {
-  const callback = Helper.isFunction(binding.value)
-    ? binding.value
-    : (binding.value as TDirectiveBinding).handler;
-  const debounce = !Helper.isFunction(binding.value)
-    ? (binding.value as TDirectiveBinding)?.debounce || 50
-    : 50;
+  const callback = Helper.isFunction(binding.value) ? binding.value : binding.value.handler;
+  const debounce = !Helper.isFunction(binding.value) ? binding.value?.debounce || 50 : 50;
   const options: AddEventListenerOptions = {
     passive: !binding.modifiers?.active,
   };

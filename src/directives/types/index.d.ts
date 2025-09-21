@@ -33,3 +33,9 @@ export declare interface TouchDirectiveEvent {
   move?: (evt: TouchDirectiveEvent) => void;
   end?: (evt: TouchDirectiveEvent) => void;
 }
+
+export declare interface TouchEventListener {
+  touchstart(e: TouchEvent): void;
+  touchend(e: TouchEvent): void;
+  touchmove(e: TouchEvent): void;
+}

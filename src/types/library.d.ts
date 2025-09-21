@@ -1,5 +1,6 @@
 import { TSideDrawer } from '@/components/Drawer/types';
 import { INotificationProvider } from '@/components/Notification/types';
+import type { TouchEventListener } from '@/directives/types';
 import {
   AllowedComponentProps,
   App,
@@ -48,7 +49,7 @@ export declare type TRecord = Record<string, unknown>;
 
 export declare type TBooleanRecord = Record<string, boolean | undefined>;
 
-export declare type TClassList = string | string[] | Record<string, any>;
+export declare type TClassList = string | string[] | TRecord;
 
 export declare type RawProps = VNodeProps & TRecord;
 
@@ -153,6 +154,10 @@ export declare type TVueMdb = {
   notification: INotificationProvider;
 };
 
+export declare interface PromiseVoidFunction {
+  (): Promise<void>;
+}
+
 export declare interface ObjectBase {
   /**
    * Cleaning up resources and dispose each property before destroying this object.
@@ -176,7 +181,7 @@ export declare interface IBindingElement extends Element {
   __resizeListener?: EventListenerOrEventListenerObject | CallableFunction;
   __resizeListeners?: Array<CallableFunction>;
   __mouseEvents?: TRecord;
-  __touchEvents?: TRecord;
+  __touchEvents?: TouchEventListener | TRecord;
   __observer?: ResizeObserver;
 }
 
