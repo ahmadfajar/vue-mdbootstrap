@@ -29,7 +29,7 @@ export default defineComponent<TBsIcon>({
       h(
         'span',
         {
-          class: [`${cssPrefix}icon`],
+          class: [`${cssPrefix}icon`, 'items-center', 'justify-center'],
           style: styles.value,
         },
         h<TBsSvgIcon>(BsSvgIcon, {

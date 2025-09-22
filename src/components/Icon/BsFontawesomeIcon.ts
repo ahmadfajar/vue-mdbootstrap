@@ -66,15 +66,29 @@ export default defineComponent<TBsFontawesomeIcon>({
       height: Helper.cssUnit(szHeight.value),
     }));
 
-    watchEffect(async () => {
-      svgIcon.value = await useGetFontAwesome(thisProps.icon, thisProps.variant, thisProps.version);
-
+    watchEffect(() => {
       if (szHeight.value !== useSizeHeight(thisProps)) {
         szHeight.value = useSizeHeight(thisProps) as Numberish;
       }
       if (szWidth.value !== useSizeWidth(thisProps)) {
         szWidth.value = useSizeWidth(thisProps) as Numberish;
       }
+
+      useGetFontAwesome(thisProps.icon, thisProps.variant, thisProps.version)
+        .then((v) => {
+          svgIcon.value = v;
+        })
+        .catch((err) => {
+          console.warn(err);
+        });
+      // svgIcon.value = await useGetFontAwesome(thisProps.icon, thisProps.variant, thisProps.version);
+      //
+      // if (szHeight.value !== useSizeHeight(thisProps)) {
+      //   szHeight.value = useSizeHeight(thisProps) as Numberish;
+      // }
+      // if (szWidth.value !== useSizeWidth(thisProps)) {
+      //   szWidth.value = useSizeWidth(thisProps) as Numberish;
+      // }
     });
 
     onBeforeMount(async () => {
@@ -85,7 +99,7 @@ export default defineComponent<TBsFontawesomeIcon>({
       h(
         'span',
         {
-          class: [`${cssPrefix}icon`, 'align-items-center', 'justify-content-center'],
+          class: [`${cssPrefix}icon`, 'items-center', 'justify-center'],
           style: styles.value,
         },
         useRenderNodeFromSVG(svgIcon.value?.data, szWidth.value, szHeight.value, svgClasses.value)

@@ -44,23 +44,28 @@ export declare type TFilterOption = {
    * Field name attribute for filter operation.
    */
   property: string;
+
   /**
    * Filter value.
    */
   value: string | number | boolean;
+
   /**
    * Filter operator, default: `eq`.
    */
   operator: TFilterOperator;
+
   /**
    * ORM custom data type, ex: 'ulid'.
    */
   type?: string;
+
   /**
    * Optional logic operator to be used when combined with another filters.
    * If it is not defined, global filter logic will be used.
    */
   logic?: TFilterLogic;
+
   /**
    * Optional, indicate the `value` is an expression or field expression.
    */
@@ -132,10 +137,10 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
  * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 16/09/2025 02:30
+ * @since  15/03/2019 modified: 21/09/2025 18:45
  */
 export abstract class AbstractStore implements ObjectBase {
-  private _eventMap: Map<string, ListenerFn<any>[]>;
+  private _eventMap: Map<string, ListenerFn<never>[]>;
   protected _config: TDataStoreConfig;
   protected _filters: TFilterOption[];
   protected _filteredItems: IBsModel[];
@@ -220,7 +225,8 @@ export abstract class AbstractStore implements ObjectBase {
    * Get the class name of this instance.
    */
   get $_class(): string {
-    return Object.getPrototypeOf(this).constructor.name;
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    return Object.getPrototypeOf(this).constructor.name as string;
   }
 
   destroy() {
@@ -228,7 +234,7 @@ export abstract class AbstractStore implements ObjectBase {
     this._eventMap.clear();
     this._filters = [];
     this._filteredItems = [];
-    // @ts-ignore
+    // @ts-expect-error: Destroying Store config
     delete this._config;
   }
 
@@ -393,7 +399,7 @@ export abstract class AbstractStore implements ObjectBase {
       this._config.filters.length > 0 ? oldFilters.concat(...this._config.filters) : oldFilters;
     const newFilters = this.filters.filter((flt) => {
       let found = false;
-      for (const filter of oldFilters as TFilterOption[]) {
+      for (const filter of oldFilters) {
         if (flt.property === filter.property) {
           found = true;
           break;
@@ -751,10 +757,10 @@ export abstract class AbstractStore implements ObjectBase {
       const item = this._items[index + i];
 
       if (AbstractStore.isModel(item)) {
-        item!.destroy();
+        item.destroy();
       }
 
-      // @ts-ignore
+      // @ts-expect-error: Assign null to Store's item
       this._items[index + i] = null;
     }
 
@@ -1018,7 +1024,7 @@ export abstract class AbstractStore implements ObjectBase {
     }
 
     this._state.loading = true;
-    const items = Array.isArray(source) ? source : [source];
+    const items = (Array.isArray(source) ? source : [source]) as IBsModel[];
 
     if (silent) {
       this._items = items;
@@ -1070,7 +1076,7 @@ export abstract class AbstractStore implements ObjectBase {
     const listeners = this._eventMap.get(event);
 
     if (listeners) {
-      listeners.forEach((listener) => listener(arg));
+      listeners.forEach((listener) => listener(arg as never));
     }
   }
 }

@@ -24,12 +24,12 @@ export function useSetSliderSize(slider: TChipContainer): void {
 
 export function useChipIsSelected(
   item: TChipOptionItem,
-  modelValue?: TChipValue | Array<TChipValue>
+  modelValue?: TChipValue | TChipValue[]
 ): boolean {
   if (modelValue && Array.isArray(modelValue)) {
     return modelValue.find((it) => it.text === item.text) != null;
   } else if (modelValue) {
-    return (<TChipValue>modelValue).text === item.text;
+    return modelValue.text === item.text;
   }
 
   return false;
@@ -106,7 +106,7 @@ function createChipElement(
   props: Readonly<TChipGroupOptionProps>,
   item: TChipOptionItem,
   index: number,
-  clickHandler: (item: TChipOptionItem) => void,
+  clickHandler: (item: TChipOptionItem) => Promise<void>,
   closeHandler: (item: TChipOptionItem) => void
 ): VNode {
   const chipProps = createChipAttrs(props, item);
@@ -135,7 +135,7 @@ export function useRenderChipGroup(
   showSliderButton: boolean | undefined,
   hasPrev: boolean,
   hasNext: boolean,
-  clickHandler: (item: TChipOptionItem) => void,
+  clickHandler: (item: TChipOptionItem) => Promise<void>,
   closeHandler: (item: TChipOptionItem) => void
 ): VNode {
   return h(

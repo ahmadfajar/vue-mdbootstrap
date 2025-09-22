@@ -108,11 +108,11 @@ export function useUpdateSideDrawerConfig(
   }
 }
 
-export function useOnMountedSideDrawer(
+export async function useOnMountedSideDrawer(
   vueMdb: Ref<TVueMdb | undefined>,
   appId: Ref<string | undefined>,
   zIndex: Ref<number>
-): void {
+): Promise<void> {
   vueMdb.value = useVueMdbService();
   const parent = useFindParentComponent(
     ['bs-app', 'bs-app-container', 'BsApp', 'BsAppContainer'],
@@ -120,7 +120,7 @@ export function useOnMountedSideDrawer(
   );
 
   if (parent) {
-    nextTick().then(() => {
+    await nextTick().then(() => {
       appId.value = (parent.props as Readonly<TAppContainerOptionProps>).id;
 
       if (appId.value && vueMdb.value) {

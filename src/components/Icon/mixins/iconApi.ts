@@ -1,4 +1,4 @@
-import type { TSizeOptionProps, TSizeProps } from '@/components/Icon/types';
+import type { TSizeOptionProps } from '@/components/Icon/types';
 import type { MaybeNumberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 
@@ -67,7 +67,7 @@ export function useGetCalcSize(props: Readonly<TSizeOptionProps>): number {
 
 export function useSizeHeight(props: Readonly<TSizeOptionProps>): MaybeNumberish {
   if (props.size && Helper.isObject(props.size)) {
-    return (props.size as TSizeProps).height;
+    return props.size.height;
   } else {
     return props.height || props.size;
   }
@@ -75,7 +75,7 @@ export function useSizeHeight(props: Readonly<TSizeOptionProps>): MaybeNumberish
 
 export function useSizeWidth(props: Readonly<TSizeOptionProps>): MaybeNumberish {
   if (props.size && Helper.isObject(props.size)) {
-    return (props.size as TSizeProps).width;
+    return props.size.width;
   } else {
     return props.width || props.size;
   }

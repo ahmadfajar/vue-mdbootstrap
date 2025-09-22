@@ -14,7 +14,7 @@ export default defineComponent<TBsToggleIcon>({
       h(
         'span',
         {
-          class: [`${cssPrefix}toggle-icon`],
+          class: [`${cssPrefix}toggle-icon`, 'items-center', 'justify-center'],
           onClick: () => emit('update:model-value', !thisProps.modelValue),
         },
         h<TBsSvgIcon>(BsIconSvg, {

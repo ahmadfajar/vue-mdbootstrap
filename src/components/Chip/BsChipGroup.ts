@@ -38,7 +38,7 @@ export default defineComponent<TBsChipGroup>({
       emit('item:close', item);
     };
 
-    const chipClickHandler = (item: TChipOptionItem): void => {
+    const chipClickHandler = async (item: TChipOptionItem): Promise<void> => {
       if (item.disabled) {
         return;
       }
@@ -59,11 +59,11 @@ export default defineComponent<TBsChipGroup>({
         }
 
         emit('change', selectedValues);
-        nextTick().then(() => emit('update:model-value', selectedValues));
+        await nextTick().then(() => emit('update:model-value', selectedValues));
       } else {
         const isSelected = useChipIsSelected(item, thisProps.modelValue);
         emit('change', !isSelected ? value : null);
-        nextTick().then(() => emit('update:model-value', !isSelected ? value : null));
+        await nextTick().then(() => emit('update:model-value', !isSelected ? value : null));
       }
     };
 

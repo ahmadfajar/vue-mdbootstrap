@@ -4,6 +4,7 @@ import { BsButton } from '@/components/Button';
 import { BsIcon } from '@/components/Icon';
 import { cssPrefix, useWrapSlot, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
 import type {
+  PromiseVoidFunction,
   TBsButton,
   TBsIcon,
   TBsRipple,
@@ -95,7 +96,7 @@ function isLightColor(color: string): boolean {
 
 function createCloseBtnAttr(
   props: Readonly<TChipOptionProps>,
-  clickHandler: VoidFunction
+  clickHandler: PromiseVoidFunction
 ): TBsButton {
   return <TBsButton>{
     flat: true as unknown as Prop<boolean>,
@@ -118,7 +119,7 @@ export function useRenderChip(
   classNames: ComputedRef<TRecord>,
   tagName: string,
   rippleDisabled: boolean,
-  dismissHandler: VoidFunction
+  dismissHandler: PromiseVoidFunction
 ): VNode {
   return h(
     tagName,

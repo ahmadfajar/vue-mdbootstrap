@@ -11,6 +11,7 @@ import { BsRadio } from '@/components/Radio';
 import { cssPrefix, useWrapSlot } from '@/mixins/CommonApi.ts';
 import type {
   Numberish,
+  PromiseVoidFunction,
   TBsRadio,
   TBsRipple,
   TInputBaseProps,
@@ -90,7 +91,7 @@ export function useRenderRadioOrCheckbox(
   rippleActive: Ref<boolean>,
   inputType: 'checkbox' | 'radio',
   inputElement: VNode,
-  toggleCheckHandler: VoidFunction
+  toggleCheckHandler: PromiseVoidFunction
 ): VNode {
   return h(
     'div',
@@ -134,9 +135,9 @@ export function useRenderRadioOrCheckbox(
           tabIndex: 0,
           class: `${cssPrefix}${inputType}-label`,
           onClickPrevent: toggleCheckHandler,
-          onKeydown: (e: KeyboardEvent) => {
+          onKeydown: async (e: KeyboardEvent) => {
             if (['Space', 'Enter'].includes(e.code)) {
-              toggleCheckHandler();
+              await toggleCheckHandler();
               e.preventDefault();
             }
           },

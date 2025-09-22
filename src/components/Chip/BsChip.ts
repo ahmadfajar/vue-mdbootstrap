@@ -27,11 +27,11 @@ export default defineComponent<TBsChip>({
       );
     });
 
-    const dismissHandler = () => {
+    const dismissHandler = async () => {
       dismissed.value = true;
       emit('update:active', false);
       emit('update:model-value', false);
-      nextTick().then(() => emit('close'));
+      await nextTick().then(() => emit('close'));
     };
 
     watch(

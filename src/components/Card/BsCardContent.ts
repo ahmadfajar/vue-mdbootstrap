@@ -12,6 +12,8 @@ export default defineComponent<TBsCardContent>({
     const tagName = computed(() => useContentTag(thisProps.type, thisProps.tag));
 
     return () =>
-      useWrapSlotDefault(tagName.value, slots, { [`${cssPrefix}card-${props.type}`]: tagName.value });
+      useWrapSlotDefault(tagName.value, slots, {
+        [`${cssPrefix}card-${props.type as string}`]: tagName.value,
+      });
   },
 });

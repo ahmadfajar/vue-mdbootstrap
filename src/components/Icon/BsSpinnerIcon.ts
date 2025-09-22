@@ -16,9 +16,8 @@ export default defineComponent<TBsSpinnerIcon>({
       useCreateSvgNode(
         [
           `${cssPrefix}svg-inline`,
-          'align-self-center',
           props.spin ? `${cssPrefix}spin` : props.pulse ? `${cssPrefix}pulse` : '',
-          props.color ? `text-${props.color}` : '',
+          props.color ? `text-${props.color as string}` : '',
         ],
         useCircleSizeStyles(props.size as number),
         false,

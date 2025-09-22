@@ -25,7 +25,7 @@ export default defineComponent<TBsAppContainer>({
 
     onMounted(() => {
       const instance = getCurrentInstance();
-      vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb;
+      vueMdb.value = instance?.appContext.config.globalProperties.$VueMdb as TVueMdb;
 
       if (instance && vueMdb.value) {
         const rect =

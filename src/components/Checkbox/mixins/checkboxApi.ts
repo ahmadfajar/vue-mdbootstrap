@@ -58,11 +58,11 @@ export function useCreateCheckboxItems(
   });
 }
 
-export function useToggleChecked(
+export async function useToggleChecked(
   emit: EmitFn,
   props: Readonly<TRadioOptionProps>,
   rippleActive: Ref<boolean>
-): void {
+): Promise<void> {
   if (!props.disabled && !props.readonly) {
     const checked = useCheckSelected(props);
     rippleActive.value = true;
@@ -80,7 +80,7 @@ export function useToggleChecked(
       emit('update:model-value', checked ? null : props.value);
     }
 
-    nextTick().then(() => {
+    await nextTick().then(() => {
       emit('checked', !checked);
     });
   }

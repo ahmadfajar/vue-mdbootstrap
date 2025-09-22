@@ -61,6 +61,7 @@ export declare interface IBsStore extends AbstractStore {
    * Check if the Store is using server sorting or local sorting.
    */
   get remoteSort(): boolean;
+
   /**
    * Enable or disable data Store server sorting.
    *
@@ -196,7 +197,7 @@ export declare interface IBsStore extends AbstractStore {
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 16/09/2025 02:58
+ * @since  20/07/2018 modified: 21/09/2025 19:07
  */
 export class BsStore extends AbstractStore implements IBsStore {
   /**
@@ -361,7 +362,7 @@ export class BsStore extends AbstractStore implements IBsStore {
 
       model
         .save()
-        .catch((error) => {
+        .catch((error: AxiosError) => {
           this._state.hasError = true;
           RestProxyAdapter.warnResponseError(error);
         })
@@ -402,7 +403,7 @@ export class BsStore extends AbstractStore implements IBsStore {
             resolve(response);
             this._fireEvent('loaded', this.dataItems);
           })
-          .catch((error) => {
+          .catch((error: AxiosError) => {
             this._state.deleting = false;
             this._state.hasError = true;
             reject(error);
@@ -423,7 +424,7 @@ export class BsStore extends AbstractStore implements IBsStore {
         } catch (e) {
           this._state.deleting = false;
           this._state.hasError = true;
-          reject(e);
+          reject(e as Error);
         }
       });
     }
@@ -459,7 +460,7 @@ export class BsStore extends AbstractStore implements IBsStore {
           this._fireEvent('error', error as AxiosError);
           this._state.hasError = true;
 
-          reject(error);
+          reject(error as AxiosError);
         }
 
         this._state.deleting = false;
@@ -495,9 +496,9 @@ export class BsStore extends AbstractStore implements IBsStore {
 
     return this.proxy.request(
       config,
-      this._checkBeforeLoading,
-      this._assignFromResponse,
-      this._onLoadingFailure
+      this['_checkBeforeLoading'],
+      this['_assignFromResponse'],
+      this['_onLoadingFailure']
     );
   }
 
@@ -530,9 +531,9 @@ export class BsStore extends AbstractStore implements IBsStore {
 
       return this.proxy.request(
         config,
-        this._checkBeforeLoading,
-        this._assignFromResponse,
-        this._onLoadingFailure
+        this['_checkBeforeLoading'],
+        this['_assignFromResponse'],
+        this['_onLoadingFailure']
       );
     }
   }
@@ -545,19 +546,22 @@ export class BsStore extends AbstractStore implements IBsStore {
     options: string | string[] | TSortOption | TSortOption[],
     direction: TSortDirection = 'asc'
   ): Promise<IBsModel[]> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
       this.createSorters(options, direction, true);
 
       if (!this.remoteSort) {
         this._items = this.localSort();
         resolve(this._items);
       } else {
-        try {
-          await this.load();
-          resolve(this._items);
-        } catch (e) {
-          reject(e);
-        }
+        this.load()
+          .then(() => resolve(this._items))
+          .catch((error: AxiosError) => reject(error));
+        // try {
+        //   await this.load();
+        //   resolve(this._items);
+        // } catch (e) {
+        //   reject(e as AxiosError);
+        // }
       }
     });
   }
@@ -568,16 +572,18 @@ export class BsStore extends AbstractStore implements IBsStore {
    * @param response Response object
    */
   private _assignFromResponse(response: AxiosResponse) {
-    const responseData = response.data;
+    const responseData = response.data as TRecord[];
 
     if (Helper.isEmpty(responseData)) {
       console.warn(emptyDataErrMsg);
     } else {
-      if (Object.hasOwn(responseData, this._config.dataProperty as string)) {
-        this.assignData(responseData[this._config.dataProperty as string]);
+      if (Object.hasOwn(responseData, this._config.dataProperty as PropertyKey)) {
+        this.assignData(responseData[this._config.dataProperty as never]);
 
-        if (this._config.totalProperty && responseData[this._config.totalProperty]) {
-          this._state.totalCount = responseData[this._config.totalProperty];
+        if (this._config.totalProperty && responseData[this._config.totalProperty as never]) {
+          this._state.totalCount = responseData[
+            this._config.totalProperty as never
+          ] as unknown as number;
         }
       } else {
         console.warn(parsingDataErrMsg);

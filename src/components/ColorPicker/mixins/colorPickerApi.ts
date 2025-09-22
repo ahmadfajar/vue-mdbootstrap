@@ -572,10 +572,10 @@ function renderColorPickerModeButtons(
           { value: 'HSL', label: 'HSL' },
         ] as Prop<TInputOptionItem[]>,
         modelValue: pickerData.config.mode as Prop<string>,
-        'onUpdate:model-value': (value: TColorPickerMode) => {
+        'onUpdate:model-value': async (value: TColorPickerMode) => {
           pickerData.config.mode = value;
           dispatchModelValue(emit, pickerData);
-          nextTick().then(() => emit('update:mode', value));
+          await nextTick().then(() => emit('update:mode', value));
         },
       }),
     ]
@@ -972,7 +972,7 @@ function updateColorPreview(pickerData: TColorPickerData, emit?: TEmitFn): void 
   (pickerData.colorPreview.value as HTMLElement).style.color = hex;
 
   if (pickerData.alphaSlider.value) {
-    (pickerData.alphaSlider.value as HTMLElement).style.color = hex.substring(0, 7);
+    pickerData.alphaSlider.value.style.color = hex.substring(0, 7);
   }
   if (emit) {
     dispatchModelValue(emit, pickerData, hex);
@@ -1032,6 +1032,6 @@ function updateColorCanvasUI(pickerData: TColorPickerData, color?: Color.HSVA): 
   (pickerData.hueSliderThumb.value as HTMLElement).style.left = `${(hsva.h / 360) * 100}%`;
 
   if (pickerData.alphaSliderThumb.value) {
-    (pickerData.alphaSliderThumb.value as HTMLElement).style.left = `${hsva.a * 100}%`;
+    pickerData.alphaSliderThumb.value.style.left = `${hsva.a * 100}%`;
   }
 }

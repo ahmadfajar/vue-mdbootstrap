@@ -57,9 +57,9 @@ export default defineComponent<TBsSideDrawer>({
       }
     );
 
-    onMounted(() => {
-      useOnMountedSideDrawer(vueMdb, appId, zIndex);
-      nextTick().then(() => {
+    onMounted(async () => {
+      await useOnMountedSideDrawer(vueMdb, appId, zIndex);
+      await nextTick().then(() => {
         if (appId.value && vueMdb.value) {
           useUpdateSideDrawerConfig(
             thisProps,

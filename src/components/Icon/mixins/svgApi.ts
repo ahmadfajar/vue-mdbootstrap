@@ -9,7 +9,7 @@ import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { MaybeNumberish, Numberish, RawProps, TRawCacheItem, TRecord } from '@/types';
 import { CacheManager } from '@/utils/CacheManager.ts';
 import Helper from '@/utils/Helper.ts';
-import axios from 'axios';
+import axios, { type AxiosError } from 'axios';
 import { XMLParser } from 'fast-xml-parser';
 import type { VNode, VNodeArrayChildren } from 'vue';
 import { h } from 'vue';
@@ -49,18 +49,15 @@ function googleIconUrl(theme: string, name: string, variant: string): string {
  *
  * @param name   The android icon name with suffix: `_outlined`, `_rounded` or `_sharp`.
  * @param filled Use fill style or not.
- * @returns {TIconData} Icon data if it is found on the Google Material Symbol.
+ * @returns Icon data if it is found on the Google Material Symbol.
  */
-export async function useGetGoogleIcon(
-  name: string,
-  filled?: boolean
-): Promise<TIconData | undefined> {
+export function useGetGoogleIcon(name: string, filled?: boolean): Promise<TIconData | undefined> {
   const iconObj = makeIconData(name, filled);
   if (!iconObj) {
-    return iconObj;
+    return Promise.resolve(iconObj);
   }
 
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const url = googleIconUrl(iconObj.theme, iconObj.name, iconObj.variant!);
     const cache = CacheManager.getItem(url);
 
@@ -73,26 +70,27 @@ export async function useGetGoogleIcon(
         data: cache.getValue() as string,
       });
     } else {
-      try {
-        const response = await axios.get(url);
+      axios
+        .get(url)
+        .then((response) => {
+          if (response.status === 200) {
+            const item = { key: url, value: response.data } as TRawCacheItem;
+            CacheManager.save(item);
 
-        if (response.status === 200) {
-          const item = { key: url, value: response.data } as TRawCacheItem;
-          CacheManager.save(item);
-
-          resolve({
-            name: iconObj.name,
-            icon: iconObj.icon,
-            theme: iconObj.theme,
-            variant: iconObj.variant,
-            data: response.data,
-          });
-        } else {
-          resolve(undefined);
-        }
-      } catch (e) {
-        reject(e);
-      }
+            resolve({
+              name: iconObj.name,
+              icon: iconObj.icon,
+              theme: iconObj.theme,
+              variant: iconObj.variant,
+              data: response.data as string,
+            });
+          } else {
+            resolve(undefined);
+          }
+        })
+        .catch((err: AxiosError) => {
+          reject(err);
+        });
     }
   });
 }
@@ -101,16 +99,16 @@ function fontAwesomeIconUrl(name: string, variant: string, version: string): str
   return `https://site-assets.fontawesome.com/releases/v${version}/svgs/${variant}/${name}.svg`;
 }
 
-export async function useGetFontAwesome(
+export function useGetFontAwesome(
   name?: string,
   variant: TFontAwesomeVariant = 'regular',
   version: string = '7.0.1'
 ): Promise<TIconData | undefined> {
   if (!name) {
-    return undefined;
+    return Promise.resolve(undefined);
   }
 
-  return new Promise(async (resolve, reject) => {
+  return new Promise((resolve, reject) => {
     const url = fontAwesomeIconUrl(name, variant, version);
     const cache = CacheManager.getItem(url);
 
@@ -123,26 +121,27 @@ export async function useGetFontAwesome(
         data: cache.getValue() as string,
       });
     } else {
-      try {
-        const response = await axios.get(url);
+      axios
+        .get(url)
+        .then((response) => {
+          if (response.status === 200) {
+            const item = { key: url, value: response.data } as TRawCacheItem;
+            CacheManager.save(item);
 
-        if (response.status === 200) {
-          const item = { key: url, value: response.data } as TRawCacheItem;
-          CacheManager.save(item);
-
-          resolve({
-            name: name,
-            icon: name,
-            theme: variant,
-            variant: variant,
-            data: response.data,
-          });
-        } else {
-          resolve(undefined);
-        }
-      } catch (e) {
-        reject(e);
-      }
+            resolve({
+              name: name,
+              icon: name,
+              theme: variant,
+              variant: variant,
+              data: response.data as string,
+            });
+          } else {
+            resolve(undefined);
+          }
+        })
+        .catch((err) => {
+          reject(err as AxiosError);
+        });
     }
   });
 }
@@ -173,7 +172,7 @@ function renderChildNodes(children: Array<[string, unknown]>): Array<VNode> {
         results.push(rh);
       });
     } else if (Helper.isObject(el[1])) {
-      const entries = Object.entries(el[1] as object);
+      const entries = Object.entries(el[1]);
       const childNodes = entries.filter((it) => !it[0].startsWith('@_'));
       const rh = h(el[0], createNodeAttrs(entries), renderChildNodes(childNodes));
 
@@ -195,8 +194,8 @@ export function useRenderIconFromSVG(
   }
 
   const parser = new XMLParser({ ignoreAttributes: false });
-  const jsonObj = parser.parse(data);
-  const svgData = Object.entries(jsonObj.svg);
+  const jsonObj = parser.parse(data) as Record<string, [string, unknown]>;
+  const svgData = Object.entries(jsonObj.svg as [string, unknown]);
   const props = createNodeAttrs(svgData);
   const children = svgData.filter((el) => !el[0].startsWith('@_'));
 
@@ -220,8 +219,8 @@ export function useRenderNodeFromSVG(
   }
 
   const parser = new XMLParser({ ignoreAttributes: false });
-  const jsonObj = parser.parse(data);
-  const svgData = Object.entries(jsonObj.svg);
+  const jsonObj = parser.parse(data) as Record<string, [string, unknown]>;
+  const svgData = Object.entries(jsonObj.svg as [string, unknown]);
   const props = createNodeAttrs(svgData);
   const viewBox = (props['viewBox'] as string).split(' ');
   const pW = parseFloat(viewBox[2]!);
@@ -264,7 +263,6 @@ export function useRenderNodeFromSVG(
 
 export function useSvgIconClasses(props: Readonly<TIconOptionProps>): TRecord {
   return {
-    'mx-auto': true,
     [`${cssPrefix}svg-inline`]: true,
     [`${cssPrefix}pulse`]: props.pulse,
     [`${cssPrefix}spin`]: props.spin && !props.pulse,

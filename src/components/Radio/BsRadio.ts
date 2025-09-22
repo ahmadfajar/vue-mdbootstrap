@@ -16,12 +16,13 @@ export default defineComponent<TBsRadio>({
     const rippleActive = ref<boolean>(false);
     const radioClasses = computed(() => useRadioClasses(thisProps));
 
-    const toggleCheckHandler = (): void => {
+    const toggleCheckHandler = async (): Promise<void> => {
       if (!thisProps.disabled && !thisProps.readonly) {
         const checked = thisProps.value === thisProps.modelValue;
         rippleActive.value = true;
         emit('update:model-value', checked ? null : thisProps.value);
-        nextTick().then(() => {
+
+        await nextTick().then(() => {
           emit('checked', !checked);
         });
       }
