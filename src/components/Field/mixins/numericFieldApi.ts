@@ -5,27 +5,28 @@ import {
   useCreateValidationIcon,
   useInputFieldBaseAttrs,
   useInputTextFieldAttrs,
-} from '@/components/Field/mixins/textFieldApi';
+} from '@/components/Field/mixins/textFieldApi.ts';
 import {
   useOnFieldBlurred,
   useOnFieldFocused,
   useOnFieldValueCleared,
   useOnFieldValueUpdated,
   useOnTextFieldNodeMounted,
-} from '@/components/Field/mixins/textFieldEventApi';
-import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
+} from '@/components/Field/mixins/textFieldEventApi.ts';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
 import { BsIcon } from '@/components/Icon';
-import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi';
+import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import type {
+  PromiseVoidFunction,
   TBsIcon,
-  TEmitFn,
+  TIconVariant,
   TNumericFieldOptionProps,
   TNumericOptions,
+  TPlusMinusButtonPlacement,
   TRecord,
-  TSpaceAround,
 } from '@/types';
-import Helper from '@/utils/Helper';
-import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import Helper from '@/utils/Helper.ts';
+import type { ComputedRef, EmitFn, Prop, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h, toDisplayString } from 'vue';
 
 function createMinusButton(
@@ -35,15 +36,14 @@ function createMinusButton(
   return h(
     'div',
     {
-      class: [`${cssPrefix}btn-icon`, 'btn-sm'],
+      class: [`${cssPrefix}btn-icon`, `${cssPrefix}btn-sm`],
       onClick: clickHandler,
     },
     [
       h(
         BsRipple,
         {
-          // @ts-ignore
-          disabled: props.disabled as Prop<boolean>,
+          disabled: props.disabled as unknown as Prop<boolean>,
           tag: 'span' as Prop<string>,
         },
         {
@@ -65,15 +65,14 @@ function createPlusButton(
   return h(
     'div',
     {
-      class: [`${cssPrefix}btn-icon`, 'btn-sm'],
+      class: [`${cssPrefix}btn-icon`, `${cssPrefix}btn-sm`],
       onClick: clickHandler,
     },
     [
       h(
         BsRipple,
         {
-          // @ts-ignore
-          disabled: props.disabled as Prop<boolean>,
+          disabled: props.disabled as unknown as Prop<boolean>,
           tag: 'span' as Prop<string>,
         },
         {
@@ -90,7 +89,7 @@ function createPlusButton(
 
 function createActionButtons(
   props: Readonly<TNumericFieldOptionProps>,
-  position: TSpaceAround,
+  position: TPlusMinusButtonPlacement,
   incrementValueHandler: () => void,
   decrementValueHandler: () => void
 ): VNode {
@@ -130,20 +129,19 @@ function createSpinnerButton(
       h(
         'div',
         {
-          class: ['btn', `${cssPrefix}spin-up`],
+          class: [`${cssPrefix}btn`, `${cssPrefix}spin-up`],
           onClick: incrementValueHandler,
         },
         [
           h(
             BsRipple,
             {
-              // @ts-ignore
-              disabled: props.disabled as Prop<boolean>,
+              disabled: props.disabled as unknown as Prop<boolean>,
               tag: 'span' as Prop<string>,
             },
             {
               default: () =>
-                h('div', {
+                h('span', {
                   class: 'triangle-up',
                 }),
             }
@@ -153,20 +151,19 @@ function createSpinnerButton(
       h(
         'div',
         {
-          class: ['btn', `${cssPrefix}spin-down`],
+          class: [`${cssPrefix}btn`, `${cssPrefix}spin-down`],
           onClick: decrementValueHandler,
         },
         [
           h(
             BsRipple,
             {
-              // @ts-ignore
-              disabled: props.disabled as Prop<boolean>,
+              disabled: props.disabled as unknown as Prop<boolean>,
               tag: 'span' as Prop<string>,
             },
             {
               default: () =>
-                h('div', {
+                h('span', {
                   class: 'triangle-down',
                 }),
             }
@@ -183,7 +180,7 @@ function createAppendFieldActionNode(
   hasValidated: boolean,
   hasError: boolean,
   iconSize: number,
-  clearHandler: () => void,
+  clearHandler: PromiseVoidFunction,
   incrementValueHandler: () => void,
   decrementValueHandler: () => void
 ): VNode {
@@ -265,15 +262,67 @@ function createPrependFieldActionNode(
   return createCommentVNode(' v-if-action-button ');
 }
 
+function isLessOrEqualMaxValue(value: number, options: TNumericOptions): boolean {
+  return !Helper.isNumber(options.maxValue) ? true : value <= options.maxValue;
+}
+
+function isGreaterOrEqualMinValue(value: number, options: TNumericOptions): boolean {
+  return !Helper.isNumber(options.minValue) ? true : value >= options.minValue;
+}
+
+function decrementValue(
+  emit: EmitFn<InputNumericEventEmitter>,
+  props: Readonly<TNumericFieldOptionProps>,
+  options: TNumericOptions,
+  localValue: Ref<number | null | undefined>
+): void {
+  if (!props.disabled && !props.readonly) {
+    let result = (localValue.value || 0.0) - options.step;
+    if (parseInt(props.maxFraction as string) === 0) {
+      result = Math.round(result);
+    }
+
+    if (isGreaterOrEqualMinValue(result, options) && isLessOrEqualMaxValue(result, options)) {
+      useOnFieldValueUpdated(emit, localValue, result);
+    }
+  }
+}
+
+function incrementValue(
+  emit: EmitFn<InputNumericEventEmitter>,
+  props: Readonly<TNumericFieldOptionProps>,
+  options: TNumericOptions,
+  localValue: Ref<number | null | undefined>
+): void {
+  if (!props.disabled && !props.readonly) {
+    let result = (localValue.value ?? 0.0) + options.step;
+    if (parseInt(props.maxFraction as string) === 0) {
+      result = Math.round(result);
+    }
+
+    if (isGreaterOrEqualMinValue(result, options) && isLessOrEqualMaxValue(result, options)) {
+      useOnFieldValueUpdated(emit, localValue, result);
+    }
+  }
+}
+
+declare interface InputNumericEventEmitter {
+  clear: VoidFunction;
+  blur: (target: Event) => void;
+  focus: (target: Event) => void;
+  keydown: (target: Event) => void;
+  'update:model-value': (value: number | null | undefined) => void;
+}
+
 function createNumericInputField(
+  emit: EmitFn<InputNumericEventEmitter>,
   props: Readonly<TNumericFieldOptionProps>,
   numericOptions: TNumericOptions,
   formatOptions: Intl.NumberFormatOptions,
   inputRef: Ref<HTMLElement | null>,
   localValue: Ref<number | null | undefined>,
   hasFocus: Ref<boolean>,
-  autocomplete: string | boolean,
-  emit: TEmitFn
+  autocomplete: string | boolean
 ): VNode[] {
   let displayValue =
     hasFocus.value && !props.disabled && !props.readonly
@@ -343,9 +392,9 @@ function createNumericInputField(
         } else if (/^-?\d*[.]?\d*$/.test(e.key)) {
           emit('keydown', e);
         } else if (incrementKey.includes(e.key) && !props.disabled && !props.readonly) {
-          incrementValue(props, numericOptions, localValue, emit);
+          incrementValue(emit, props, numericOptions, localValue);
         } else if (decrementKey.includes(e.key) && !props.disabled && !props.readonly) {
-          decrementValue(props, numericOptions, localValue, emit);
+          decrementValue(emit, props, numericOptions, localValue);
         } else {
           e.preventDefault();
         }
@@ -359,7 +408,7 @@ function createNumericInputField(
 
 export function useRenderNumericField(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn<InputNumericEventEmitter>,
   props: Readonly<TNumericFieldOptionProps>,
   operationOptions: TNumericOptions,
   formatOptions: Intl.NumberFormatOptions,
@@ -393,14 +442,14 @@ export function useRenderNumericField(
           slots,
           props,
           createNumericInputField(
+            emit,
             props,
             operationOptions,
             formatOptions,
             inputRef,
             localValue,
             hasFocus,
-            autocomplete,
-            emit
+            autocomplete
           ),
           iconSize,
           props.appendIcon,
@@ -418,14 +467,14 @@ export function useRenderNumericField(
             hasValidated.value,
             hasError.value,
             iconSize,
-            () => useOnFieldValueCleared(emit, localValue),
-            () => incrementValue(props, operationOptions, localValue, emit),
-            () => decrementValue(props, operationOptions, localValue, emit)
+            async () => await useOnFieldValueCleared(emit, localValue),
+            () => incrementValue(emit, props, operationOptions, localValue),
+            () => decrementValue(emit, props, operationOptions, localValue)
           ),
           createPrependFieldActionNode(
             props,
-            () => incrementValue(props, operationOptions, localValue, emit),
-            () => decrementValue(props, operationOptions, localValue, emit)
+            () => incrementValue(emit, props, operationOptions, localValue),
+            () => decrementValue(emit, props, operationOptions, localValue)
           )
         ),
         useRenderFieldFeedback(
@@ -440,48 +489,4 @@ export function useRenderNumericField(
     ),
     (node: VNode) => useOnTextFieldNodeMounted(props, node)
   );
-}
-
-function decrementValue(
-  props: Readonly<TNumericFieldOptionProps>,
-  options: TNumericOptions,
-  localValue: Ref<number | null | undefined>,
-  emit: TEmitFn
-): void {
-  if (!props.disabled && !props.readonly) {
-    let result = (localValue.value || 0.0) - options.step;
-    if (parseInt(props.maxFraction as string) === 0) {
-      result = Math.round(result);
-    }
-
-    if (isGreaterOrEqualMinValue(result, options) && isLessOrEqualMaxValue(result, options)) {
-      useOnFieldValueUpdated(emit, localValue, result);
-    }
-  }
-}
-
-function incrementValue(
-  props: Readonly<TNumericFieldOptionProps>,
-  options: TNumericOptions,
-  localValue: Ref<number | null | undefined>,
-  emit: TEmitFn
-): void {
-  if (!props.disabled && !props.readonly) {
-    let result = (localValue.value ?? 0.0) + options.step;
-    if (parseInt(props.maxFraction as string) === 0) {
-      result = Math.round(result);
-    }
-
-    if (isGreaterOrEqualMinValue(result, options) && isLessOrEqualMaxValue(result, options)) {
-      useOnFieldValueUpdated(emit, localValue, result);
-    }
-  }
-}
-
-function isLessOrEqualMaxValue(value: number, options: TNumericOptions): boolean {
-  return !Helper.isNumber(options.maxValue) ? true : value <= options.maxValue;
-}
-
-function isGreaterOrEqualMinValue(value: number, options: TNumericOptions): boolean {
-  return !Helper.isNumber(options.minValue) ? true : value >= options.minValue;
 }

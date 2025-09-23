@@ -1,41 +1,20 @@
-import { numericFieldProps } from '@/components/Field/mixins/fieldProps';
-import { useRenderNumericField } from '@/components/Field/mixins/numericFieldApi';
+import { numericFieldProps } from '@/components/Field/mixins/fieldProps.ts';
+import { useRenderNumericField } from '@/components/Field/mixins/numericFieldApi.ts';
 import {
   useFieldControlClasses,
   useFieldWrapperClasses,
   useShowClearButton,
-} from '@/components/Field/mixins/textFieldApi';
-import { useGetValidationResult } from '@/components/Field/mixins/validationApi';
-import { cssPrefix, isServer } from '@/mixins/CommonApi';
+} from '@/components/Field/mixins/textFieldApi.ts';
+import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
+import { cssPrefix, isServer } from '@/mixins/CommonApi.ts';
 import type { TBsNumericField, TNumericFieldOptionProps, TNumericOptions, TRecord } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsNumericField>({
   name: 'BsNumericField',
   props: numericFieldProps,
-  emits: [
-    /**
-     * Fired when this component lost focus.
-     */
-    'blur',
-    /**
-     * Fired when this component got focused.
-     */
-    'focus',
-    /**
-     * Fired when this component's value is being cleared.
-     */
-    'clear',
-    /**
-     * Triggers when cursor is still in the `<input>` element and keyboard key is pressed.
-     */
-    'keydown',
-    /**
-     * Fired when this component's value is updated.
-     */
-    'update:model-value',
-  ],
+  emits: ['blur', 'focus', 'clear', 'keydown', 'update:model-value'],
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TNumericFieldOptionProps>;
     const autocomplete =
@@ -55,7 +34,8 @@ export default defineComponent<TBsNumericField>({
         !Helper.isEmpty(thisProps.appendIcon) ||
         showClearButton.value ||
         (thisProps.actionButton === true &&
-          thisProps.actionButtonPlacement === 'right' &&
+          (thisProps.actionButtonPlacement === 'right' ||
+            thisProps.actionButtonPlacement === 'both') &&
           !thisProps.disabled &&
           !thisProps.readonly) ||
         (thisProps.spinButton === true &&
@@ -70,11 +50,8 @@ export default defineComponent<TBsNumericField>({
         (!thisProps.disabled &&
           !thisProps.readonly &&
           thisProps.actionButton === true &&
-          thisProps.actionButtonPlacement === 'left') ||
-        (!thisProps.disabled &&
-          !thisProps.readonly &&
-          thisProps.actionButton === true &&
-          thisProps.actionButtonPlacement === 'both') ||
+          (thisProps.actionButtonPlacement === 'left' ||
+            thisProps.actionButtonPlacement === 'both')) ||
         (thisProps.spinButton === true &&
           thisProps.spinButtonPlacement === 'left' &&
           !thisProps.disabled &&
@@ -95,6 +72,7 @@ export default defineComponent<TBsNumericField>({
       [`${cssPrefix}field-rounded`]: (thisProps.outlined || thisProps.filled) && thisProps.rounded,
       [`${cssPrefix}numeric-field`]: true,
     }));
+
     const operationOptions: TNumericOptions = {
       locale: thisProps.locale || (isServer ? 'en-US' : window.navigator.language),
       maxValue: Helper.parseFloatLoose(thisProps.maxValue as string),

@@ -32,13 +32,13 @@ export function useOnFieldFocused(
   }
 }
 
-export function useOnFieldValueCleared<T>(
-  emit: EmitFn,
+export async function useOnFieldValueCleared<T>(
+  emit: EmitFn<{ clear: VoidFunction; 'update:model-value': (value: T | null) => void }>,
   localValue: Ref<T | undefined | null>
-): void {
+): Promise<void> {
   localValue.value = null;
   emit('update:model-value', null);
-  nextTick().then(() => emit('clear'));
+  await nextTick().then(() => emit('clear'));
 }
 
 export function useOnFieldValueUpdated<T>(
@@ -62,7 +62,7 @@ export function useOnFieldNodeMounted(props: Readonly<TInputFieldProps>, node: V
       label = fieldLabel.children[0];
 
       if (!Helper.isEmpty(label?.classList) && !Helper.isEmpty(label?.className)) {
-        label!.className = `${cssPrefix}empty-class`;
+        (label as HTMLLabelElement).className = `${cssPrefix}empty-class`;
       }
     }
   }

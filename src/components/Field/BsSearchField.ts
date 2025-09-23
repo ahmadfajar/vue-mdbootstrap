@@ -1,8 +1,8 @@
-import { searchFieldProps } from '@/components/Field/mixins/fieldProps';
+import { searchFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
   useRenderSearchField,
   useSearchFieldClasses,
-} from '@/components/Field/mixins/searchFieldApi';
+} from '@/components/Field/mixins/searchFieldApi.ts';
 import type { TBsSearchField, TSearchFieldOptionProps } from '@/components/Field/types';
 import { computed, defineComponent, ref, watch } from 'vue';
 
@@ -10,36 +10,7 @@ export default defineComponent<TBsSearchField>({
   name: 'BsSearchField',
   props: searchFieldProps,
   inheritAttrs: false,
-  emits: [
-    /**
-     * Fired when this component lost focus.
-     */
-    'blur',
-    /**
-     * Fired when this component got focused.
-     */
-    'focus',
-    /**
-     * Fired when this component's value is being cleared.
-     */
-    'clear',
-    /**
-     * Asks handler to start searching for the given keyword.
-     */
-    'search',
-    /**
-     * Fired when the Popover is show.
-     */
-    'open',
-    /**
-     * Fired when the Popover is hiding.
-     */
-    'close',
-    /**
-     * Fired when this component's value is updated.
-     */
-    'update:model-value',
-  ],
+  emits: ['blur', 'focus', 'clear', 'search', 'open', 'close', 'update:model-value'],
   setup(props, { attrs, emit, slots }) {
     const thisProps = props as Readonly<TSearchFieldOptionProps>;
     const localValue = ref(thisProps.modelValue);
@@ -57,7 +28,7 @@ export default defineComponent<TBsSearchField>({
       useRenderSearchField(
         slots,
         emit,
-        props,
+        thisProps,
         attrs,
         classes,
         activator,

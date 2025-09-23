@@ -24,6 +24,6 @@
   @include input-placeholder {
     color: currentColor;
     font-weight: vars.$font-weight-light;
-    opacity: 0.65;
+    opacity: vars.$text-field-support-text-opacity;
   }
 }

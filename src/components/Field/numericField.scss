@@ -1,189 +1,183 @@
 @use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}numeric-field {
-  .#{vars.$prefix}field-overlay + .#{vars.$prefix}action-icon {
-    margin-left: 0.75rem;
-    margin-right: 0;
-  }
-
-  &.#{vars.$prefix}field-outlined,
-  &.#{vars.$prefix}field-filled {
-    &.readonly,
-    &.disabled {
-      .#{vars.$prefix}field-suffix {
-        padding-right: 0.25rem;
-      }
-    }
-  }
-
-  &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
+@layer components {
+  .#{vars.$prefix}numeric-field {
     .#{vars.$prefix}field-overlay + .#{vars.$prefix}action-icon {
-      margin-left: 0;
-      margin-right: 0.75rem;
-    }
-  }
-
-  .#{vars.$prefix}prepend-inner + .#{vars.$prefix}action-icon {
-    margin-left: 0.5rem;
-  }
-
-  .#{vars.$prefix}action-icon {
-    > .#{vars.$prefix}action-button-left,
-    > .#{vars.$prefix}action-button-right {
-      display: flex;
-      align-items: center;
+      margin-left: 0.75rem;
+      margin-right: 0;
     }
 
-    > .#{vars.$prefix}spin-button-left,
-    > .#{vars.$prefix}spin-button-right {
-      display: flex;
-      flex-direction: column;
-      width: 1.5rem;
-      margin-top: 0.3rem;
-      margin-bottom: 0.15rem;
-
-      > .#{vars.$prefix}spin-down {
-        margin-left: 0;
-
-        .triangle-down {
-          margin-top: 4px;
-        }
-      }
-
-      > .#{vars.$prefix}spin-up {
-        .triangle-up {
-          margin-top: 6px;
-        }
-      }
-
-      > .#{vars.$prefix}spin-down,
-      > .#{vars.$prefix}spin-up {
-        --#{vars.$prefix-bs}btn-border-radius: 0;
-        --#{vars.$prefix-bs}btn-border-width: 0;
-        --#{vars.$prefix-bs}btn-color: var(--#{vars.$prefix}field-button-color);
-        --#{vars.$prefix-bs}btn-active-bg: var(--#{vars.$prefix}field-button-active-bg);
-        --#{vars.$prefix-bs}btn-hover-bg: var(--#{vars.$prefix}field-button-hover-bg);
-
-        width: 1.5rem;
-        height: 18px;
-
-        > .#{vars.$prefix}ripple {
-          justify-content: center;
-        }
-
-        &:hover {
-          --#{vars.$prefix-bs}btn-state-box-shadow: none;
-        }
-
-        &:active,
-        &:focus {
-          --#{vars.$prefix-bs}btn-bg: var(--#{vars.$prefix-bs}btn-hover-bg);
-          --#{vars.$prefix-bs}btn-state-box-shadow: #{vars.$z-depth-half};
+    &.#{vars.$prefix}field-outlined,
+    &.#{vars.$prefix}field-filled {
+      &.readonly,
+      &.disabled {
+        .#{vars.$prefix}field-suffix {
+          padding-right: vars.$padding-xs;
         }
       }
     }
 
-    > .#{vars.$prefix}action-button-left,
-    > .#{vars.$prefix}action-button-right {
-      // margin-top: .75rem;
-
-      .#{vars.$prefix}btn-icon {
-        --#{vars.$prefix-bs}btn-color: var(--#{vars.$prefix}field-button-color);
-        --#{vars.$prefix-bs}btn-active-bg: var(--#{vars.$prefix}field-button-active-bg);
-        --#{vars.$prefix-bs}btn-hover-bg: var(--#{vars.$prefix}field-button-hover-bg);
-
-        &:hover {
-          --#{vars.$prefix-bs}btn-state-box-shadow: none;
-        }
-
-        > .#{vars.$prefix}ripple {
-          align-items: center;
-          justify-content: center;
-        }
-
-        + .#{vars.$prefix}btn-icon {
-          margin-left: -0.25rem;
-        }
-      }
-    }
-
-    > .#{vars.$prefix}icon {
-      + .#{vars.$prefix}spin-button-right,
-      + .#{vars.$prefix}action-button-right {
-        margin-left: vars.$padding-sm;
-      }
-    }
-
-    + .#{vars.$prefix}append-inner {
-      margin-left: vars.$padding-xs * -1;
-    }
-  }
-
-  &:not(.#{vars.$prefix}floating-label) {
     &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
-      .#{vars.$prefix}action-icon {
-        > .#{vars.$prefix}spin-button-left,
-        > .#{vars.$prefix}spin-button-right {
-          margin-top: 0;
-        }
+      .#{vars.$prefix}field-overlay + .#{vars.$prefix}action-icon {
+        margin-left: 0;
+        margin-right: 0.75rem;
       }
     }
-  }
 
-  &.#{vars.$prefix}floating-label {
+    .#{vars.$prefix}prepend-inner + .#{vars.$prefix}action-icon {
+      margin-left: 0.5rem;
+    }
+
     .#{vars.$prefix}action-icon {
+      > .#{vars.$prefix}action-button-left,
+      > .#{vars.$prefix}action-button-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .#{vars.$prefix}spin-down,
+      .#{vars.$prefix}spin-up,
+      .#{vars.$prefix}btn-icon {
+        --#{vars.$prefix}btn-bg: transparent;
+        --#{vars.$prefix}btn-border-color: transparent;
+        --#{vars.$prefix}btn-active-border-color: transparent;
+        --#{vars.$prefix}btn-hover-border-color: transparent;
+        --#{vars.$prefix}btn-hover-box-shadow: none;
+
+        --#{vars.$prefix}btn-color: var(--#{vars.$prefix}field-button-color);
+        --#{vars.$prefix}btn-active-bg: var(--#{vars.$prefix}field-button-active-bg);
+        --#{vars.$prefix}btn-active-color: var(--#{vars.$prefix}field-button-color);
+        --#{vars.$prefix}btn-hover-bg: var(--#{vars.$prefix}field-button-hover-bg);
+        --#{vars.$prefix}btn-hover-color: var(--#{vars.$prefix}field-button-color);
+      }
+
       > .#{vars.$prefix}spin-button-left,
       > .#{vars.$prefix}spin-button-right {
-        margin-top: 0.625rem;
+        display: flex;
+        flex-direction: column;
+        width: 1.5rem;
+        margin-top: 0.3rem;
+        margin-bottom: 0.15rem;
+
+        > .#{vars.$prefix}spin-down,
+        > .#{vars.$prefix}spin-up {
+          height: 1.125rem; // 18px;
+          width: 1.5rem;
+
+          > .#{vars.$prefix}ripple {
+            justify-content: center;
+          }
+        }
+
+        > .#{vars.$prefix}spin-down {
+          margin-left: 0;
+
+          .triangle-down {
+            margin-top: 0.25rem;
+          }
+        }
+
+        > .#{vars.$prefix}spin-up {
+          .triangle-up {
+            margin-top: 0.375rem;
+          }
+        }
+      }
+
+      > .#{vars.$prefix}action-button-left,
+      > .#{vars.$prefix}action-button-right {
+        // margin-top: .75rem;
+
+        .#{vars.$prefix}btn-icon {
+          > .#{vars.$prefix}ripple {
+            align-items: center;
+            justify-content: center;
+          }
+
+          + .#{vars.$prefix}btn-icon {
+            margin-left: -0.25rem;
+          }
+        }
+      }
+
+      > .#{vars.$prefix}icon {
+        + .#{vars.$prefix}spin-button-right,
+        + .#{vars.$prefix}action-button-right {
+          margin-left: vars.$padding-sm;
+        }
+      }
+
+      + .#{vars.$prefix}append-inner {
+        margin-left: vars.$padding-xs * -1;
       }
     }
 
-    &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
+    &:not(.#{vars.$prefix}floating-label) {
+      &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
+        .#{vars.$prefix}action-icon {
+          > .#{vars.$prefix}spin-button-left,
+          > .#{vars.$prefix}spin-button-right {
+            margin-top: 0;
+          }
+        }
+      }
+    }
+
+    &.#{vars.$prefix}floating-label {
       .#{vars.$prefix}action-icon {
         > .#{vars.$prefix}spin-button-left,
         > .#{vars.$prefix}spin-button-right {
-          margin-top: 1rem;
-        }
-
-        > .#{vars.$prefix}action-button-left,
-        > .#{vars.$prefix}action-button-right {
-          margin-top: 12px;
-        }
-      }
-    }
-
-    &.#{vars.$prefix}field-outlined {
-      &:not(.prepend-icon) {
-        .#{vars.$prefix}action-icon + .#{vars.$prefix}field-activator {
-          --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-36px)
-            scale(0.85);
-        }
-
-        .#{vars.$prefix}button-wrapper-left + .#{vars.$prefix}field-activator {
-          --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-72px)
-            scale(0.85);
-        }
-
-        .#{vars.$prefix}button-wrapper-both + .#{vars.$prefix}field-activator {
-          --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-44px)
-            scale(0.85);
+          margin-top: 0.625rem;
         }
       }
 
-      &.prepend-icon {
-        .#{vars.$prefix}action-icon + .#{vars.$prefix}field-activator {
-          --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-68px)
-            scale(0.85);
+      &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
+        .#{vars.$prefix}action-icon {
+          > .#{vars.$prefix}spin-button-left,
+          > .#{vars.$prefix}spin-button-right {
+            margin-top: 1rem;
+          }
+
+          > .#{vars.$prefix}action-button-left,
+          > .#{vars.$prefix}action-button-right {
+            margin-top: 0.75rem;
+          }
+        }
+      }
+
+      &.#{vars.$prefix}field-outlined {
+        &:not(.prepend-icon) {
+          .#{vars.$prefix}action-icon + .#{vars.$prefix}field-activator {
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-36px)
+              scale(0.85);
+          }
+
+          .#{vars.$prefix}button-wrapper-left + .#{vars.$prefix}field-activator {
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-72px)
+              scale(0.85);
+          }
+
+          .#{vars.$prefix}button-wrapper-both + .#{vars.$prefix}field-activator {
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-44px)
+              scale(0.85);
+          }
         }
 
-        .#{vars.$prefix}button-wrapper-left + .#{vars.$prefix}field-activator {
-          --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-104px)
-            scale(0.85);
-        }
+        &.prepend-icon {
+          .#{vars.$prefix}action-icon + .#{vars.$prefix}field-activator {
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-68px)
+              scale(0.85);
+          }
 
-        .#{vars.$prefix}button-wrapper-both + .#{vars.$prefix}field-activator {
-          --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-76px)
-            scale(0.85);
+          .#{vars.$prefix}button-wrapper-left + .#{vars.$prefix}field-activator {
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-104px)
+              scale(0.85);
+          }
+
+          .#{vars.$prefix}button-wrapper-both + .#{vars.$prefix}field-activator {
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-76px)
+              scale(0.85);
+          }
         }
       }
     }

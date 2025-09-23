@@ -69,7 +69,7 @@
     //-------------------------------------------------------
     --#{vars.$prefix}field-primary-indicator: oklch(0.458 0.23 304.441);
     --#{vars.$prefix}field-accent-indicator: oklch(0.743 0.102 303.276);
-    --#{vars.$prefix}field-active-indicator: oklch(0.458 0.23 304.441);
+    --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-primary-indicator);
     --#{vars.$prefix}field-button-active-bg: oklch(0.154 0 89.876 / 0.25);
     --#{vars.$prefix}field-button-hover-bg: oklch(0.431 0 89.876 / 0.2);
     --#{vars.$prefix}field-button-color: currentColor;

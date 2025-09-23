@@ -460,8 +460,7 @@
     @include button.make-flat-variant($name, $color);
   }
 
-  .dark,
-  @media (prefers-color-scheme: dark) {
+  .dark {
     .#{vars.$prefix}btn,
     .#{vars.$prefix}btn-fab,
     .#{vars.$prefix}btn-icon {

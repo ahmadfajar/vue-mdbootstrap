@@ -260,12 +260,10 @@
     }
   }
 
-  .#{vars.$prefix}dropdown-menu {
-    > .#{vars.$prefix}dropdown-menu-activator {
-      > .#{vars.$prefix}chip {
-        margin-right: 0;
-        margin-left: 0;
-      }
+  .#{vars.$prefix}dropdown-menu-activator {
+    > .#{vars.$prefix}chip {
+      margin-right: 0;
+      margin-left: 0;
     }
   }
 

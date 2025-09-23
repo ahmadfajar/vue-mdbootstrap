@@ -6,20 +6,29 @@ import {
   useCreateValidationIcon,
   useInputFieldBaseAttrs,
   useInputTextFieldAttrs,
-} from '@/components/Field/mixins/textFieldApi';
+} from '@/components/Field/mixins/textFieldApi.ts';
 import {
   useOnFieldBlurred,
   useOnFieldFocused,
   useOnTextFieldNodeMounted,
-} from '@/components/Field/mixins/textFieldEventApi';
-import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
-import type { TBsChipField, TChipFieldOptionProps, TEmitFn, TRecord } from '@/types';
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
+} from '@/components/Field/mixins/textFieldEventApi.ts';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
+import type { TBsChipField, TChipFieldOptionProps, TIconVariant, TRecord } from '@/types';
+import type { ComputedRef, EmitFn, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, Fragment, h, nextTick, toDisplayString } from 'vue';
+
+declare interface ChipEventEmitter {
+  clear: VoidFunction;
+  blur: EventListener;
+  focus: EventListener;
+  keydown: EventListener;
+  'delete-item': (deletedItem: string) => void;
+  'update:model-value': (value: string | string[]) => void;
+}
 
 function dispatchModelValue(
   props: Readonly<TChipFieldOptionProps>,
-  emit: TEmitFn,
+  emit: EmitFn<ChipEventEmitter>,
   inputValue: Ref<string>,
   localValue: Ref<string[]>
 ) {
@@ -38,7 +47,7 @@ function dispatchModelValue(
 
 function createFieldInput(
   props: Readonly<TChipFieldOptionProps>,
-  emit: TEmitFn,
+  emit: EmitFn<ChipEventEmitter>,
   inputValue: Ref<string>,
   localValue: Ref<string[]>,
   isFocused: Ref<boolean>,
@@ -51,22 +60,22 @@ function createFieldInput(
     type: 'text',
     value: inputValue.value,
     onChange: (e: Event) => {
-      inputValue.value = (<HTMLInputElement>e.target).value;
+      inputValue.value = (e.target as HTMLInputElement).value;
       dispatchModelValue(props, emit, inputValue, localValue);
     },
-    onBlur: (e: Event) => {
+    onBlur: async (e: Event) => {
       dispatchModelValue(props, emit, inputValue, localValue);
-      nextTick().then(() => useOnFieldBlurred(emit, e, isFocused, <boolean>props.disabled));
+      await nextTick().then(() => useOnFieldBlurred(emit, e, isFocused, props.disabled as boolean));
     },
     onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, <boolean>props.disabled),
-    onKeydown: (e: KeyboardEvent) => {
-      if (e.key === 'Backspace' && (<HTMLInputElement>e.target).value === '') {
+    onKeydown: async (e: KeyboardEvent) => {
+      if (e.key === 'Backspace' && (e.target as HTMLInputElement).value === '') {
         localValue.value.length > 0 && localValue.value.pop();
         emit('keydown', e);
-        nextTick().then(() => dispatchModelValue(props, emit, inputValue, localValue));
+        await nextTick().then(() => dispatchModelValue(props, emit, inputValue, localValue));
       } else if (e.key === 'Enter') {
         emit('keydown', e);
-        nextTick().then(() => dispatchModelValue(props, emit, inputValue, localValue));
+        await nextTick().then(() => dispatchModelValue(props, emit, inputValue, localValue));
       } else {
         emit('keydown', e);
       }
@@ -76,7 +85,7 @@ function createFieldInput(
 
 function createFieldChips(
   props: Readonly<ExtractPropTypes<TBsChipField>>,
-  emit: TEmitFn,
+  emit: EmitFn<ChipEventEmitter>,
   localValue: Ref<string[]>
 ): VNode {
   if (localValue.value.length === 0) {
@@ -97,14 +106,14 @@ function createFieldChips(
           disabled: props.disabled,
           pill: props.chipPill,
           outlined: props.chipOutlined,
-          // @ts-ignore
           dismissible: (thisProps.chipDeletable &&
             !thisProps.readonly &&
-            !thisProps.disabled) as Prop<boolean>,
-          onClose: () => {
+            !thisProps.disabled) as unknown as Prop<boolean>,
+          onClose: async () => {
             emit('delete-item', label);
-            nextTick().then(() => {
+            await nextTick().then(() => {
               const result = localValue.value.filter((v) => v !== label);
+
               if (Array.isArray(props.modelValue)) {
                 emit('update:model-value', result);
               } else {
@@ -123,7 +132,7 @@ function createFieldChips(
 
 export function useRenderChipField(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn<ChipEventEmitter>,
   props: Readonly<ExtractPropTypes<TBsChipField>>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
@@ -174,11 +183,11 @@ export function useRenderChipField(
             showClearButton.value,
             thisProps.actionIconVariant as TIconVariant,
             iconSize,
-            () => {
+            async () => {
               inputValue.value = '';
               localValue.value = [];
               emit('update:model-value', valueAsArray ? [] : '');
-              nextTick().then(() => emit('clear'));
+              await nextTick().then(() => emit('clear'));
             }
           )
         ),

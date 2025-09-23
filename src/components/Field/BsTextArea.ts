@@ -1,17 +1,17 @@
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
-import { textFieldProps } from '@/components/Field/mixins/fieldProps';
+import { textFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
   useFieldControlClasses,
   useFieldWrapperClasses,
   useRenderTextArea,
   useShowClearButton,
-} from '@/components/Field/mixins/textFieldApi';
-import { useGetValidationResult } from '@/components/Field/mixins/validationApi';
-import { validationProps } from '@/components/Field/mixins/validationProps';
-import { cssPrefix } from '@/mixins/CommonApi';
-import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps';
+} from '@/components/Field/mixins/textFieldApi.ts';
+import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
+import { validationProps } from '@/components/Field/mixins/validationProps.ts';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
 import type { MaybeNumberish, TBsTextArea, TRecord, TTextAreaOptionProps } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import { computed, defineComponent, ref, watchEffect } from 'vue';
 
 export default defineComponent<TBsTextArea>({

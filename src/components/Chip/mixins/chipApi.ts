@@ -164,7 +164,7 @@ export function useRenderChip(
                 : undefined
             ),
             props.imgSrc ? createChipAvatar(props) : createCommentVNode(' v-if-chip-avatar '),
-            useWrapSlotDefault('div', slots, [`${cssPrefix}chip-text`, 'flex items-center']),
+            useWrapSlotDefault('div', slots, [`${cssPrefix}chip-text`, 'flex', 'items-center']),
             props.dismissible
               ? h<TBsButton>(BsButton, createCloseBtnAttr(props, dismissHandler))
               : createCommentVNode(' v-if-chip-dismissible '),

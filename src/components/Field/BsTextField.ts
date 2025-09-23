@@ -87,7 +87,7 @@ export default defineComponent<TBsTextField>({
       [`${cssPrefix}field-rounded`]: (thisProps.outlined || thisProps.filled) && thisProps.rounded,
       [`${cssPrefix}text-field`]: true,
     }));
-    const fieldType = computed<string | undefined>(() => {
+    const fieldType = computed<TFieldType | undefined>(() => {
       if (showPasswordToggle.value) {
         return passwordToggled.value ? 'text' : 'password';
       }

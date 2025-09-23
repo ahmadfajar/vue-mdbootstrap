@@ -1,17 +1,17 @@
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
-import { useRenderChipField } from '@/components/Field/mixins/chipFieldApi';
-import { textFieldProps } from '@/components/Field/mixins/fieldProps';
+import { useRenderChipField } from '@/components/Field/mixins/chipFieldApi.ts';
+import { textFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
   useFieldControlClasses,
   useFieldWrapperClasses,
   useShowClearButton,
-} from '@/components/Field/mixins/textFieldApi';
-import { useGetValidationResult } from '@/components/Field/mixins/validationApi';
-import { validationProps } from '@/components/Field/mixins/validationProps';
-import { cssPrefix } from '@/mixins/CommonApi';
-import { booleanProp, stringOrArrayProp, stringProp } from '@/mixins/CommonProps';
+} from '@/components/Field/mixins/textFieldApi.ts';
+import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
+import { validationProps } from '@/components/Field/mixins/validationProps.ts';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import { booleanProp, stringOrArrayProp, stringProp } from '@/mixins/CommonProps.ts';
 import type { TBsChipField, TChipFieldOptionProps, TRecord } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsChipField>({
@@ -32,32 +32,7 @@ export default defineComponent<TBsChipField>({
     modelValue: stringOrArrayProp,
     placeholder: stringProp,
   },
-  emits: [
-    /**
-     * Fired when this ChipField lost focus.
-     */
-    'blur',
-    /**
-     * Fired when this ChipField got focused.
-     */
-    'focus',
-    /**
-     * Fired when this ChipField's value is being cleared.
-     */
-    'clear',
-    /**
-     * Fired when `KeyboardEvent` is triggered from the `<input>` element.
-     */
-    'keydown',
-    /**
-     * Fired when a chip is deleted from this ChipField.
-     */
-    'delete-item',
-    /**
-     * Fired when this ChipField's value is updated.
-     */
-    'update:model-value',
-  ],
+  emits: ['blur', 'focus', 'clear', 'keydown', 'delete-item', 'update:model-value'],
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TChipFieldOptionProps>;
     const autocomplete =
@@ -67,15 +42,10 @@ export default defineComponent<TBsChipField>({
           ? 'on'
           : Helper.uuid();
     const inputValue = ref<string>('');
-    const localValue = ref<string[]>(
-      Array.isArray(thisProps.modelValue)
-        ? thisProps.modelValue
-        : !Helper.isEmpty(thisProps.modelValue)
-          ? [thisProps.modelValue]
-          : []
-    );
+    const localValue = ref<string[]>(convertValues(thisProps.modelValue));
     const isFocused = ref(false);
     const validator = useGetValidationResult(thisProps, isFocused);
+
     const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
     const showAppendIcon = computed(
       () =>
@@ -94,11 +64,7 @@ export default defineComponent<TBsChipField>({
     watch(
       () => thisProps.modelValue,
       (value) => {
-        localValue.value = Array.isArray(value)
-          ? value
-          : !Helper.isEmpty(value)
-            ? value.split(',').map((v) => v.trim())
-            : [];
+        localValue.value = convertValues(value);
       }
     );
 
@@ -122,3 +88,11 @@ export default defineComponent<TBsChipField>({
       );
   },
 });
+
+function convertValues(sources: string | string[] | undefined | null) {
+  return Array.isArray(sources)
+    ? sources
+    : !Helper.isEmpty(sources)
+      ? sources.split(',').map((v) => v.trim())
+      : [];
+}

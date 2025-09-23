@@ -1,7 +1,7 @@
 import {
   BaseComponentProps,
   EventUpdateModelValueProps,
-  type MaybeNumberish,
+  MaybeNumberish,
   Numberish,
   TIconVariant,
   TPopoverPosition,
@@ -583,8 +583,8 @@ export declare const BsChipField: {
       (event: 'blur', target: Event): void;
       (event: 'focus', target: Event): void;
       (event: 'keydown', target: Event): void;
-      (event: 'update:model-value', value: string | string[]): void;
       (event: 'delete-item', deletedItem: string): void;
+      (event: 'update:model-value', value: string | string[]): void;
     };
   };
 };
@@ -612,7 +612,9 @@ export declare const BsNumericField: {
   };
 };
 
-declare interface SearchFieldEvents extends AllowedInputFieldEvents {
+declare type SearchFieldBaseEvents = Omit<AllowedInputFieldEvents, 'onKeydown' | '@keydown'>;
+
+declare interface SearchFieldEvents extends SearchFieldBaseEvents {
   /**
    * Fired when the Popover is hiding.
    */

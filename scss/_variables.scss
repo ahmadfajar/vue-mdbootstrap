@@ -162,14 +162,18 @@ $switch-margin:                     .5rem .25rem;
 $switch-shadows:                    0 0 6px -1px oklch(0 0 0 / 0.1), 0 1px 1px 1px oklch(0 0 0 / 0.15), 0 1px 3px 0 oklch(0 0 0 / 0.12);
 $switch-disabled-shadows:           0 2px 1px -1px oklch(0 0 0 / 0.2), 0 1px 1px 0 oklch(0 0 0 / 0.14), 0 1px 3px 0 oklch(0 0 0 / 0.12);
 
-$text-field-height:                 3.5rem;
-$text-field-padding-top:            1.625rem;
-$text-field-padding-bottom:         .375rem;
-$text-field-border-radius:          $radius-md;
-$text-field-line-height:            1.5rem;
-$text-field-opacity:                .6;
-$text-field-hover-opacity:          .9;
-$text-field-support-text-opacity:   .65;
+$text-field-border-radius:            $radius-md;
+$text-field-height:                   3.5rem;
+$text-field-line-height:              1.5rem;
+$text-field-padding-start:            $padding-md;
+$text-field-padding-end:              $padding-md;
+$text-field-padding-top:              1.625rem;
+$text-field-padding-bottom:           .375rem;
+$text-field-classic-padding-top:      $padding-sm;
+$text-field-classic-padding-bottom:   $padding-sm;
+$text-field-opacity:                  .6;
+$text-field-hover-opacity:            .9;
+$text-field-support-text-opacity:     .65;
 
 // Tabs components
 //-----------------------------

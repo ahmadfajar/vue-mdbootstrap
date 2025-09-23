@@ -17,9 +17,10 @@ import {
 import type {
   MaybeNumberish,
   Numberish,
+  PromiseVoidFunction,
   TBsIcon,
   TBsToggleIcon,
-  TEmitFn,
+  TFieldType,
   TIconVariant,
   TInputBaseProps,
   TInputFieldProps,
@@ -29,7 +30,7 @@ import type {
   TTextFieldOptionProps,
 } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import type { ComputedRef, EmitFn, Prop, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h, toDisplayString, vModelText, withDirectives } from 'vue';
 
 export function useFieldWrapperClasses(
@@ -49,10 +50,10 @@ export function useFieldWrapperClasses(
   };
 }
 
-export function useFieldControlClasses(
+export function useFieldControlClasses<T>(
   slots: Slots,
   props: Readonly<TInputTextProps>,
-  localValue: Ref<MaybeNumberish | Numberish[]>,
+  localValue: Ref<T>,
   isFocused: Ref<boolean>,
   showAppendIcon: boolean,
   showPrependIcon?: boolean
@@ -286,12 +287,20 @@ export function useInputTextFieldAttrs(
   };
 }
 
+declare interface InputTextEventEmitter {
+  clear: VoidFunction;
+  blur: (target: Event) => void;
+  focus: (target: Event) => void;
+  keydown: (target: Event) => void;
+  'update:model-value': (value: MaybeNumberish) => void;
+}
+
 function createTextInputField(
-  emit: TEmitFn,
+  emit: EmitFn<InputTextEventEmitter>,
   props: Readonly<TTextFieldOptionProps>,
-  type: string | undefined,
+  type: TFieldType | undefined,
   autocomplete: string | boolean,
-  localValue: Ref<string | number | undefined | null>,
+  localValue: Ref<MaybeNumberish>,
   isFocused: Ref<boolean>
 ): VNode[] {
   return [
@@ -325,7 +334,7 @@ export function useCreateFieldActionIcon(
   showClearButton: boolean,
   iconVariant: TIconVariant,
   iconSize?: number,
-  clearHandler?: EventListener,
+  clearHandler?: PromiseVoidFunction,
   showPasswordToggle?: boolean,
   passwordToggled?: Ref<boolean>,
   passwordToggleHandler?: (value: boolean) => void
@@ -391,11 +400,11 @@ export function useCreateValidationIcon(
 
 export function useRenderTextField(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn<InputTextEventEmitter>,
   props: Readonly<TTextFieldOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
-  fieldType: string | undefined,
+  fieldType: TFieldType | undefined,
   localValue: Ref<string | number | undefined | null>,
   isFocused: Ref<boolean>,
   passwordToggled: Ref<boolean>,
@@ -440,7 +449,7 @@ export function useRenderTextField(
             showClearButton.value,
             props.actionIconVariant as TIconVariant,
             iconSize,
-            () => useOnFieldValueCleared(emit, localValue),
+            async () => await useOnFieldValueCleared(emit, localValue),
             showPasswordToggle.value,
             passwordToggled,
             passwordToggleHandler
@@ -460,8 +469,16 @@ export function useRenderTextField(
   );
 }
 
+declare interface InputTextAreaEventEmitter {
+  clear: VoidFunction;
+  blur: (target: Event) => void;
+  focus: (target: Event) => void;
+  keydown: (target: Event) => void;
+  'update:model-value': (value: string | null | undefined) => void;
+}
+
 function createTextAreaInputField(
-  emit: TEmitFn,
+  emit: EmitFn<InputTextAreaEventEmitter>,
   props: Readonly<TTextAreaOptionProps>,
   inputRef: Ref<HTMLTextAreaElement | undefined>,
   localValue: Ref<string | undefined | null>,
@@ -504,7 +521,7 @@ function createTextAreaInputField(
 
 export function useRenderTextArea(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn<InputTextAreaEventEmitter>,
   props: Readonly<TTextAreaOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
@@ -559,7 +576,7 @@ export function useRenderTextArea(
             showClearButton.value,
             props.actionIconVariant as TIconVariant,
             iconSize,
-            () => useOnFieldValueCleared(emit, localValue)
+            async () => await useOnFieldValueCleared(emit, localValue)
           )
         ),
         useRenderFieldFeedback(
