@@ -1,32 +1,24 @@
 import type { TBsListTileAction, TListTileActionOptionProps } from '@/components/ListView/types';
-import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi';
-import { booleanProp, tagProp } from '@/mixins/CommonProps';
+import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
+import { booleanProp, tagProp } from '@/mixins/CommonProps.ts';
 import { defineComponent } from 'vue';
 
 export default defineComponent<TBsListTileAction>({
   name: 'BsListTileAction',
   props: {
     tag: tagProp,
-    /**
-     * Center item inside it vertically.
-     * @type {boolean}
-     */
     center: booleanProp,
-    /**
-     * Arrange item inside it vertically.
-     * @type {boolean}
-     */
     stack: booleanProp,
   },
   setup(props, { slots }) {
     const thisProps = props as Readonly<TListTileActionOptionProps>;
 
     return () =>
-      useWrapSlotDefault(thisProps.tag as string, slots, {
+      useWrapSlotDefault(thisProps.tag || 'div', slots, {
         [`${cssPrefix}list-tile-action`]: true,
         [`${cssPrefix}action-stack`]: thisProps.stack === true,
-        'd-flex': !thisProps.stack && thisProps.center === true,
-        'align-self-center': thisProps.center === true,
+        flex: !thisProps.stack && thisProps.center === true,
+        'self-center': thisProps.center === true,
       });
   },
 });

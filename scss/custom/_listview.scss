@@ -8,5 +8,5 @@
 }
 
 @each $name, $color in colors.$custom-theme-colors {
-  @include listview.make-list-tile-variant($name, $color);
+  @include listview.make-list-item-variant($name, $color);
 }

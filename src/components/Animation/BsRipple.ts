@@ -23,12 +23,7 @@ export default defineComponent<TBsRipple>({
     centered: booleanProp,
     disabled: booleanProp,
   },
-  emits: [
-    /**
-     * Fired when this component's animation state is updated.
-     */
-    'update:active',
-  ],
+  emits: ['update:active'],
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TRippleOptionProps>;
     const ripples = ref<TRippleData[]>([]);
@@ -73,6 +68,7 @@ export default defineComponent<TBsRipple>({
 
     return () =>
       useRenderRipples(
+        thisProps.tag || 'span',
         slots,
         element,
         ripples,
@@ -81,8 +77,7 @@ export default defineComponent<TBsRipple>({
         eventType,
         disabled,
         centered,
-        touchTimeout,
-        thisProps.tag
+        touchTimeout
       );
   },
 });

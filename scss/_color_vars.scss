@@ -642,11 +642,11 @@ $mdb-default-color-dark:    helper.to-oklch(#44307a);
 $mdb-default-color-light:   helper.to-oklch(#b99ce1);
 $mdb-unique-color:          helper.to-oklch(#880e4f);
 $mdb-light-color:           helper.to-oklch(#f8f9fa);
-$error-color:               $red-base;
 
 // This theme color is bundled by default
 // Applicable to:
-// BsButton, BsToggleButton, BsToggleField, BsCheckbox, BsChip, BsRadio, BsSwitch, BsTabs
+// BsAlert, BsBadge, BsButton, BsToggleButton, BsToggleField, BsChip, BsCard,
+// BsCheckbox, BsRadio, BsSwitch, BsTabs, BsProgress
 $context-colors: (
     "default":      $default-color,
     "primary":      $primary-color,
@@ -659,8 +659,6 @@ $context-colors: (
 );
 
 // Material theme color
-// Applicable to:
-// BsButton, BsToggleButton, BsCheckbox, BsChip, BsCombobox, BsListView, BsListTile, BsListNav
 $material-colors: (
     "primary-color":          $primary-color,
     "primary-color-dark":     $primary-color-dark,
@@ -689,45 +687,42 @@ $material-colors: (
 );
 
 // Bootstrap custom theme colors
-// Applicable to:
-// BsButton, BsAlert, BsCheckbox, BsChip, BsCombobox, BsListView, BsListTile, BsListNav,
-// BsProgress, BsRadio, BsSwitch, BsToggleButton
 $theme-colors: (
-    "default":     $default-color,
-    "primary":     $primary-color,
-    "secondary":   $gray-600,
-    "success":     $success-color,
-    "warning":     $warning-color,
-    "danger":      $danger-color,
-    "info":        $info-color,
-    "dark":        $neutral-darken-4,
-    "light":       $mdb-light-color,
-    "light-grey":  $neutral-lighten-2,
-    "yellow":      $yellow-base,
-    "amber":       $amber-base,
-    "blue":        $blue-base,
-    "blue-green":  $blue-green-color,
-    "blue-grey":   $blue-grey-base,
-    "brown":       $brown-base,
-    "cyan":        $cyan-base,
-    "dark-blue":   $blue-darken-4,
-    "dark-green":  color.adjust($green-darken-4, $lightness: 2%),
-    "deep-orange": $deep-orange-base,
-    "deep-purple": $deep-purple-base,
-    "green":       $green-base,
-    "neutral":     $neutral-base,
-    "indigo":      $indigo-base,
-    "light-blue":  $light-blue-lighten-2,
-    "light-green": $light-green-base,
-    "lime":        $lime-base,
-    "mdb-color":   $midnight-haze-base,
-    "orange":      $orange-base,
-    "pink":        $pink-base,
-    "purple":      $purple-base,
-    "red":         $red-base,
-    "teal":        $teal-base,
-    "unique":      $mdb-unique-color,
-    "black":       $black
+    "default":          $default-color,
+    "primary":          $primary-color,
+    "secondary":        $gray-600,
+    "success":          $success-color,
+    "warning":          $warning-color,
+    "danger":           $danger-color,
+    "info":             $info-color,
+    "dark":             $neutral-darken-4,
+    "light":            $mdb-light-color,
+    "light-grey":       $neutral-lighten-2,
+    "yellow":           $yellow-base,
+    "amber":            $amber-base,
+    "blue":             $blue-base,
+    "blue-green":       $blue-green-color,
+    "blue-grey":        $blue-grey-base,
+    "brown":            $brown-base,
+    "cyan":             $cyan-base,
+    "dark-blue":        $blue-darken-4,
+    "dark-green":       helper.to-oklch(color.adjust($green-darken-4, $lightness: 2%)),
+    "deep-orange":      $deep-orange-base,
+    "deep-purple":      $deep-purple-base,
+    "green":            $green-base,
+    "neutral":          $neutral-base,
+    "indigo":           $indigo-base,
+    "light-blue":       $light-blue-lighten-2,
+    "light-green":      $light-green-base,
+    "lime":             $lime-base,
+    "mdb-color":        $midnight-haze-base,
+    "orange":           $orange-base,
+    "pink":             $pink-base,
+    "purple":           $purple-base,
+    "red":              $red-base,
+    "teal":             $teal-base,
+    "unique":           $mdb-unique-color,
+    "black":            $black
 );
 
 // Merge theme colors to reduced duplication when creating css

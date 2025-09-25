@@ -1,85 +1,106 @@
-@use "sass:map";
-@use "sass:math";
-@use "../../../scss/mixins/css3/borders";
-@use "../../../scss/mixins/listview";
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use 'sass:map';
+@use 'sass:math';
+@use '../../../scss/mixins/css3/borders';
+@use '../../../scss/mixins/listview';
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}list {
+@layer components {
+  .#{vars.$prefix}list {
+    --#{vars.$prefix}listview-bg: inherit;
+    --#{vars.$prefix}listview-color: var(--navigation-item-foreground, colors.$gray-900);
     --#{vars.$prefix}listview-padding-x: 0;
     --#{vars.$prefix}listview-padding-y: #{vars.$padding-sm};
 
     --#{vars.$prefix}tile-minheight: 2.5rem;
     --#{vars.$prefix}tile-action-minwidth: 1.5rem;
-    --#{vars.$prefix}tile-spacing-x: #{$padding-md - .5};
-    --#{vars.$prefix}tile-spacing-y: .375rem;
-    --#{vars.$prefix}tile-padding-x: #{$padding-md};
+    --#{vars.$prefix}tile-spacing-x: #{vars.$padding-sm};
+    --#{vars.$prefix}tile-spacing-y: 0.375rem;
+    --#{vars.$prefix}tile-padding-x: #{vars.$padding-md};
     --#{vars.$prefix}tile-padding-y: #{vars.$padding-sm};
-    --#{vars.$prefix}tile-title-font-size: #{vars.$font-size-base};
-    --#{vars.$prefix}tile-title-font-weight: #{vars.$font-weight-normal};
     --#{vars.$prefix}tile-subtitle-font-size: #{math.div((vars.$font-size-base * 90), 100)};
-    --#{vars.$prefix}tile-active-title-font-weight: #{$font-weight-medium};
-    --#{vars.$prefix}tile-active-indicator-border: 4px;
+    --#{vars.$prefix}tile-title-font-size: var(--font-size-default, #{vars.$font-size-base});
+    // prettier-ignore
+    --#{vars.$prefix}tile-title-font-weight: var(--font-weight-normal, #{vars.$font-weight-normal});
+    // prettier-ignore
+    --#{vars.$prefix}tile-active-title-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
+    // prettier-ignore
+    --#{vars.$prefix}tile-disabled-opacity: var(--#{vars.$prefix}field-readonly-opacity);
+    // prettier-ignore
+    --#{vars.$prefix}tile-indicator-border-color: var(--navigation-item-border-indicator);
+    --#{vars.$prefix}tile-indicator-border-width: 4px;
 
-    --#{vars.$prefix}nav-item-padding-x: #{$padding-md};
+    --#{vars.$prefix}nav-item-padding-x: #{vars.$padding-md};
     --#{vars.$prefix}nav-item-padding-y: #{vars.$padding-xs};
     --#{vars.$prefix}nav-item-line-height: normal;
-    --#{vars.$prefix}nav-item-font-size: #{vars.$font-size-base};
-    --#{vars.$prefix}nav-item-font-weight: #{vars.$font-weight-normal};
-    --#{vars.$prefix}nav-item-active-font-weight: #{$font-weight-medium};
+    // prettier-ignore
+    --#{vars.$prefix}nav-item-font-size: var(--font-size-default, #{vars.$font-size-base});
+    // prettier-ignore
+    --#{vars.$prefix}nav-item-font-weight: var(--font-weight-normal, #{vars.$font-weight-normal});
+    // prettier-ignore
+    --#{vars.$prefix}nav-item-active-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
+    // prettier-ignore
+    --#{vars.$prefix}nav-item-disabled-opacity: var(--#{vars.$prefix}field-readonly-opacity);
 
     background-color: var(--#{vars.$prefix}listview-bg);
+    color: var(--#{vars.$prefix}listview-color);
     list-style-type: none;
     overflow-x: hidden;
     overflow-y: auto;
     height: 100%;
+    // prettier-ignore
     padding: var(--#{vars.$prefix}listview-padding-y) var(--#{vars.$prefix}listview-padding-x);
     transition: vars.$transition-default, height;
 
     .#{vars.$prefix}subheader {
-        user-select: none;
+      user-select: none;
     }
 
+    // bootstrap patch
     .dropdown-menu {
-        --#{vars.$prefix-bs}dropdown-padding-y: 0;
-        --#{vars.$prefix-bs}dropdown-item-padding-y: var(--#{vars.$prefix}tile-padding-y);
-        --#{vars.$prefix-bs}dropdown-header-color: var(--#{vars.$prefix}subheader-color);
+      --#{vars.$prefix-bs}dropdown-padding-y: 0;
+      --#{vars.$prefix-bs}dropdown-item-padding-y: var(--#{vars.$prefix}tile-padding-y);
+      --#{vars.$prefix-bs}dropdown-header-color: var(--#{vars.$prefix}subheader-color);
+
+      --#{vars.$prefix-bs}dropdown-bg: var(--#{vars.$prefix}listview-bg);
+      --#{vars.$prefix-bs}dropdown-link-color: var(--#{vars.$prefix}listview-color);
+      --#{vars.$prefix-bs}dropdown-link-active-bg: var(--navigation-menu-active-background);
+      --#{vars.$prefix-bs}dropdown-link-active-color: var(--navigation-menu-active-foreground);
+      --#{vars.$prefix-bs}dropdown-link-hover-bg: var(--navigation-menu-hover-background);
+      --#{vars.$prefix-bs}dropdown-link-hover-color: var(--navigation-menu-hover-foreground);
     }
 
     &.#{vars.$prefix}list-space-both,
     &.#{vars.$prefix}list-space-left,
     &.#{vars.$prefix}list-space-right {
-        .dropdown-item {
-            margin-bottom: calc(var(--#{vars.$prefix}tile-spacing-y) * .5);
-            margin-top: calc(var(--#{vars.$prefix}tile-spacing-y) * .5);
-        }
+      .dropdown-item {
+        margin-bottom: calc(var(--#{vars.$prefix}tile-spacing-y) * 0.5);
+        margin-top: calc(var(--#{vars.$prefix}tile-spacing-y) * 0.5);
+      }
     }
 
     &.#{vars.$prefix}list-space-both,
     &.#{vars.$prefix}list-space-left {
-        .dropdown-item {
-            margin-left: var(--#{vars.$prefix}tile-spacing-x);
-        }
+      .dropdown-item {
+        margin-left: var(--#{vars.$prefix}tile-spacing-x);
+      }
     }
 
     &.#{vars.$prefix}list-space-both,
     &.#{vars.$prefix}list-space-right {
-        .dropdown-item {
-            margin-right: var(--#{vars.$prefix}tile-spacing-x);
-        }
+      .dropdown-item {
+        margin-right: var(--#{vars.$prefix}tile-spacing-x);
+      }
     }
-}
+  }
 
-.card {
+  .#{vars.$prefix}card {
     > .#{vars.$prefix}list:first-child {
-        @include borders.top-radius(var(--#{vars.$prefix-bs}card-border-radius));
+      @include borders.top-radius(var(--#{vars.$prefix}card-border-radius));
     }
 
     > .#{vars.$prefix}list:last-child {
-        @include borders.bottom-radius(var(--#{vars.$prefix-bs}card-border-radius));
+      @include borders.bottom-radius(var(--#{vars.$prefix}card-border-radius));
     }
-}
-
-@each $name, $color in map.merge(colors.$context-colors, ("white": colors.$white, "black": colors.$black)) {
-    @include listview.make-listview-variant($name, $color);
+  }
 }

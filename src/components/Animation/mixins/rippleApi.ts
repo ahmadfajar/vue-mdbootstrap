@@ -124,6 +124,7 @@ function touchStartCheck(
 }
 
 export function useRenderRipples(
+  tagName: HtmlTagName,
   slots: Slots,
   element: Ref<HTMLElement | null>,
   ripples: Ref<TRippleData[]>,
@@ -132,11 +133,10 @@ export function useRenderRipples(
   eventType: Ref<string>,
   disabled: Ref<boolean>,
   centered: Ref<boolean>,
-  touchTimeout: Ref<number>,
-  tagType?: HtmlTagName
+  touchTimeout: Ref<number>
 ) {
   return h(
-    tagType || 'span',
+    tagName,
     {
       ref: element,
       class: normalizeClass(classNames.value),

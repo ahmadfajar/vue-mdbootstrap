@@ -1,18 +1,37 @@
-@use "sass:map";
-@use "../../../scss/mixins/css3/borders";
-@use "../../../scss/mixins/css3/text-decorators";
-@use "../../../scss/mixins/listview";
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use 'sass:map';
+@use '../../../scss/mixins/css3/borders';
+@use '../../../scss/mixins/css3/text-decorators';
+@use '../../../scss/mixins/listview';
+@use '../../../scss/variables' as vars;
 
+@layer components {
+  .#{vars.$prefix}list-tile {
+    --#{vars.$prefix}tile-action-color: var(--navigation-item-foreground-secondary);
+    --#{vars.$prefix}tile-leading-color: var(--navigation-item-foreground);
+    --#{vars.$prefix}tile-leading-icon-color: var(--navigation-item-foreground-secondary);
+    --#{vars.$prefix}tile-subtitle-color: var(--navigation-item-foreground-secondary);
+    --#{vars.$prefix}tile-title-color: var(--navigation-item-foreground);
 
-.#{vars.$prefix}list-tile {
+    --#{vars.$prefix}tile-active-bg: var(--navigation-item-active-background);
+    // prettier-ignore
+    --#{vars.$prefix}tile-active-action-color: var(--navigation-item-active-foreground-secondary);
+    --#{vars.$prefix}tile-active-leading-color: var(--navigation-item-active-foreground);
+    // prettier-ignore
+    --#{vars.$prefix}tile-active-leading-icon-color: var(--navigation-item-active-foreground-secondary);
+    // prettier-ignore
+    --#{vars.$prefix}tile-active-subtitle-color: var(--navigation-item-active-foreground-secondary);
+    --#{vars.$prefix}tile-active-title-color: var(--navigation-item-active-foreground);
+    --#{vars.$prefix}tile-hover-bg: var(--navigation-item-hover-background);
+
+    // used internally
     --#{vars.$prefix}tile-state-bg: inherit;
     --#{vars.$prefix}tile-state-action-color: var(--#{vars.$prefix}tile-action-color);
     --#{vars.$prefix}tile-state-leading-color: var(--#{vars.$prefix}tile-leading-color);
-    --#{vars.$prefix}tile-state-leading-icon-color: var(--#{vars.$prefix}tile-leading-color);
+    // prettier-ignore
+    --#{vars.$prefix}tile-state-leading-icon-color: var(--#{vars.$prefix}tile-leading-icon-color);
     --#{vars.$prefix}tile-state-subtitle-color: var(--#{vars.$prefix}tile-subtitle-color);
     --#{vars.$prefix}tile-state-title-color: var(--#{vars.$prefix}tile-title-color);
+    // prettier-ignore
     --#{vars.$prefix}tile-state-title-font-weight: var(--#{vars.$prefix}tile-title-font-weight);
 
     background-color: var(--#{vars.$prefix}tile-state-bg);
@@ -25,135 +44,135 @@
     &:active,
     &:focus,
     &:hover {
-        text-decoration: none;
+      text-decoration: none;
     }
 
     &:not(.disabled):not(.active) {
-        &.#{vars.$prefix}link:hover {
-            --#{vars.$prefix}tile-state-bg: var(--#{vars.$prefix}tile-hover-bg);
-        }
+      &.#{vars.$prefix}link:hover {
+        --#{vars.$prefix}tile-state-bg: var(--#{vars.$prefix}tile-hover-bg);
+      }
     }
 
     .#{vars.$prefix}list-tile-title,
     .#{vars.$prefix}list-tile-subtitle {
-        @include decorators.text-ellipsis();
-        transition: .3s vars.$transition-stand-animation;
-        width: 100%;
+      @include text-decorators.truncate();
+      transition: 0.3s vars.$transition-stand-animation;
+      width: 100%;
     }
 
     .#{vars.$prefix}list-tile-leading {
-        color: var(--#{vars.$prefix}tile-state-leading-color);
-        max-width: 100%;
+      color: var(--#{vars.$prefix}tile-state-leading-color);
+      max-width: 100%;
 
-        &.#{vars.$prefix}has-icon {
-            color: var(--#{vars.$prefix}tile-state-leading-icon-color);
-        }
+      &.has-icon {
+        color: var(--#{vars.$prefix}tile-state-leading-icon-color);
+      }
     }
 
     .#{vars.$prefix}list-tile-title {
-        color: var(--#{vars.$prefix}tile-state-title-color);
+      color: var(--#{vars.$prefix}tile-state-title-color);
     }
 
     .#{vars.$prefix}list-tile-subtitle {
-        color: var(--#{vars.$prefix}tile-state-subtitle-color);
+      color: var(--#{vars.$prefix}tile-state-subtitle-color);
     }
 
     .#{vars.$prefix}list-tile-action {
-        color: var(--#{vars.$prefix}tile-state-action-color);
-        min-width: var(--#{vars.$prefix}tile-action-minwidth);
-        max-width: 100%;
+      color: var(--#{vars.$prefix}tile-state-action-color);
+      min-width: var(--#{vars.$prefix}tile-action-minwidth);
+      max-width: 100%;
 
-        &.#{vars.$prefix}action-stack {
-            display: flex;
-            align-self: flex-start;
-            flex-direction: column;
-        }
+      &.#{vars.$prefix}action-stack {
+        display: flex;
+        align-self: flex-start;
+        flex-direction: column;
+      }
 
-        .#{vars.$prefix}checkbox {
-            --#{vars.$prefix}checkbox-margin: #{vars.$padding-sm vars.$padding-sm vars.$padding-sm 0};
-        }
+      .#{vars.$prefix}checkbox {
+        --#{vars.$prefix}checkbox-margin: #{vars.$padding-sm vars.$padding-sm vars.$padding-sm 0};
+      }
     }
 
     .#{vars.$prefix}list-tile-content {
-        display: flex;
-        align-self: center;
-        flex: 1;
-        flex-direction: column;
-        overflow: hidden;
-        max-width: 100%;
-        width: auto;
+      display: flex;
+      align-self: center;
+      flex: 1;
+      flex-direction: column;
+      overflow: hidden;
+      max-width: 100%;
+      width: auto;
 
-        > .#{vars.$prefix}list-tile-title {
-            font-size: var(--#{vars.$prefix}tile-title-font-size);
-            font-weight: var(--#{vars.$prefix}tile-state-title-font-weight);
-        }
+      > .#{vars.$prefix}list-tile-title {
+        font-size: var(--#{vars.$prefix}tile-title-font-size);
+        font-weight: var(--#{vars.$prefix}tile-state-title-font-weight);
+      }
 
+      > .#{vars.$prefix}list-tile-subtitle {
+        font-size: var(--#{vars.$prefix}tile-subtitle-font-size);
+      }
+
+      &.#{vars.$prefix}multiline {
         > .#{vars.$prefix}list-tile-subtitle {
-            font-size: var(--#{vars.$prefix}tile-subtitle-font-size);
+          white-space: normal;
         }
-
-        &.#{vars.$prefix}multiline {
-            > .#{vars.$prefix}list-tile-subtitle {
-                white-space: normal;
-            }
-        }
+      }
     }
 
     > .#{vars.$prefix}ripple {
-        min-height: var(--#{vars.$prefix}tile-minheight);
-        padding: var(--#{vars.$prefix}tile-padding-y) var(--#{vars.$prefix}tile-padding-x);
-        position: relative;
+      min-height: var(--#{vars.$prefix}tile-minheight);
+      padding: var(--#{vars.$prefix}tile-padding-y) var(--#{vars.$prefix}tile-padding-x);
+      position: relative;
 
-        > div > div[class^="#{vars.$prefix}list-tile-"] {
-            &:nth-child(2),
-            &:last-child:not(:first-child) {
-                margin-left: var(--#{vars.$prefix}tile-padding-x);
-            }
-
-            &.#{vars.$prefix}has-icon {
-                display: flex;
-                align-items: center;
-                align-self: center;
-                justify-content: center;
-                margin-right: calc(var(--#{vars.$prefix}tile-padding-x) - .75rem);
-            }
+      > div > div[class^='#{vars.$prefix}list-tile-'] {
+        &:nth-child(2),
+        &:last-child:not(:first-child) {
+          margin-left: var(--#{vars.$prefix}tile-padding-x);
         }
+
+        &.has-icon {
+          display: flex;
+          align-items: center;
+          align-self: center;
+          justify-content: center;
+          margin-right: calc(var(--#{vars.$prefix}tile-padding-x) - 0.75rem);
+        }
+      }
     }
 
     &.active {
-        --#{vars.$prefix}tile-state-bg: var(--#{vars.$prefix}tile-active-bg);
-        --#{vars.$prefix}tile-state-action-color: var(--#{vars.$prefix}tile-active-action-color);
-        --#{vars.$prefix}tile-state-leading-color: var(--#{vars.$prefix}tile-active-leading-color);
-        --#{vars.$prefix}tile-state-leading-icon-color: var(--#{vars.$prefix}tile-active-leading-icon-color);
-        --#{vars.$prefix}tile-state-subtitle-color: var(--#{vars.$prefix}tile-active-subtitle-color);
-        --#{vars.$prefix}tile-state-title-color: var(--#{vars.$prefix}tile-active-title-color);
-        --#{vars.$prefix}tile-state-title-font-weight: var(--#{vars.$prefix}tile-active-title-font-weight);
+      --#{vars.$prefix}tile-state-bg: var(--#{vars.$prefix}tile-active-bg);
+      --#{vars.$prefix}tile-state-action-color: var(--#{vars.$prefix}tile-active-action-color);
+      --#{vars.$prefix}tile-state-leading-color: var(--#{vars.$prefix}tile-active-leading-color);
+      // prettier-ignore
+      --#{vars.$prefix}tile-state-leading-icon-color: var(--#{vars.$prefix}tile-active-leading-icon-color);
+      --#{vars.$prefix}tile-state-subtitle-color: var(--#{vars.$prefix}tile-active-subtitle-color);
+      --#{vars.$prefix}tile-state-title-color: var(--#{vars.$prefix}tile-active-title-color);
+      // prettier-ignore
+      --#{vars.$prefix}tile-state-title-font-weight: var(--#{vars.$prefix}tile-active-title-font-weight);
     }
 
     &.disabled {
-        --#{vars.$prefix}tile-state-action-color: var(--#{vars.$prefix}tile-disable-action-color);
-        --#{vars.$prefix}tile-state-leading-color: var(--#{vars.$prefix}tile-disable-leading-color);
-        --#{vars.$prefix}tile-state-subtitle-color: var(--#{vars.$prefix}tile-disable-subtitle-color);
-        --#{vars.$prefix}tile-state-title-color: var(--#{vars.$prefix}tile-disable-title-color);
+      opacity: var(--#{vars.$prefix}tile-disabled-opacity);
     }
-}
+  }
 
-.#{vars.$prefix}list-tile, .#{vars.$prefix}nav-item-inner {
+  .#{vars.$prefix}list-tile,
+  .#{vars.$prefix}nav-item-inner {
     &.#{vars.$prefix}tile-space-both,
     &.#{vars.$prefix}tile-space-left,
     &.#{vars.$prefix}tile-space-right {
-        margin-bottom: var(--#{vars.$prefix}tile-spacing-y);
-        margin-top: var(--#{vars.$prefix}tile-spacing-y);
+      margin-bottom: var(--#{vars.$prefix}tile-spacing-y);
+      margin-top: var(--#{vars.$prefix}tile-spacing-y);
     }
 
     &.#{vars.$prefix}tile-space-both,
     &.#{vars.$prefix}tile-space-left {
-        margin-left: var(--#{vars.$prefix}tile-spacing-x);
+      margin-left: var(--#{vars.$prefix}tile-spacing-x);
     }
 
     &.#{vars.$prefix}tile-space-both,
     &.#{vars.$prefix}tile-space-right {
-        margin-right: var(--#{vars.$prefix}tile-spacing-x);
+      margin-right: var(--#{vars.$prefix}tile-spacing-x);
     }
 
     &.#{vars.$prefix}tile-border-left,
@@ -162,161 +181,158 @@
     &.#{vars.$prefix}tile-border-top,
     &.#{vars.$prefix}tile-border-bottom,
     &.#{vars.$prefix}tile-border-top-bottom {
-        &.active {
-            > .#{vars.$prefix}ripple {
-                &:before,
-                &:after {
-                    background: var(--#{vars.$prefix}tile-active-indicator-border-color);
-                    content: " ";
-                    display: block;
-                    position: absolute;
-                    transition: .3s vars.$transition-stand-animation;
-                }
-            }
+      &.active {
+        > .#{vars.$prefix}ripple {
+          &:before,
+          &:after {
+            background: var(--#{vars.$prefix}tile-indicator-border-color);
+            content: ' ';
+            display: block;
+            position: absolute;
+            transition: 0.3s vars.$transition-stand-animation;
+          }
         }
+      }
     }
 
     &.#{vars.$prefix}tile-border-left,
     &.#{vars.$prefix}tile-border-left-right {
-        &.active {
-            > .#{vars.$prefix}ripple {
-                &:before {
-                    width: var(--#{vars.$prefix}tile-active-indicator-border);
-                    height: 100%;
-                    left: 0;
-                    top: 0;
-                }
-            }
+      &.active {
+        > .#{vars.$prefix}ripple {
+          &:before {
+            width: var(--#{vars.$prefix}tile-indicator-border-width);
+            height: 100%;
+            left: 0;
+            top: 0;
+          }
         }
+      }
     }
 
     &.#{vars.$prefix}tile-border-right,
     &.#{vars.$prefix}tile-border-left-right {
-        &.active {
-            > .#{vars.$prefix}ripple {
-                &:after {
-                    width: var(--#{vars.$prefix}tile-active-indicator-border);
-                    height: 100%;
-                    right: 0;
-                    top: 0;
-                }
-            }
+      &.active {
+        > .#{vars.$prefix}ripple {
+          &:after {
+            width: var(--#{vars.$prefix}tile-indicator-border-width);
+            height: 100%;
+            right: 0;
+            top: 0;
+          }
         }
+      }
     }
 
     &.#{vars.$prefix}tile-border-left,
     &.#{vars.$prefix}tile-border-right,
     &.#{vars.$prefix}tile-border-left-right {
-        &.active {
-            > .#{vars.$prefix}ripple {
-                &.rounded-pill {
-                    &:before,
-                    &:after {
-                        --#{vars.$prefix}tile-active-indicator-border: 6px;
+      &.active {
+        > .#{vars.$prefix}ripple {
+          &.rounded-pill {
+            &:before,
+            &:after {
+              --#{vars.$prefix}tile-indicator-border-width: 6px;
 
-                        @include borders.radius(40%);
-                        top: 30%;
-                        height: 40%;
-                    }
-                }
+              @include borders.radius(40%);
+              top: 30%;
+              height: 40%;
             }
+          }
         }
+      }
     }
 
     &.#{vars.$prefix}tile-border-top,
     &.#{vars.$prefix}tile-border-top-bottom {
-        &.active {
-            > .#{vars.$prefix}ripple {
-                &:before {
-                    height: var(--#{vars.$prefix}tile-active-indicator-border);
-                    width: 100%;
-                    left: 0;
-                    top: 0;
-                }
-            }
+      &.active {
+        > .#{vars.$prefix}ripple {
+          &:before {
+            height: var(--#{vars.$prefix}tile-indicator-border-width);
+            width: 100%;
+            left: 0;
+            top: 0;
+          }
         }
+      }
     }
 
     &.#{vars.$prefix}tile-border-bottom,
     &.#{vars.$prefix}tile-border-top-bottom {
-        &.active {
-            > .#{vars.$prefix}ripple {
-                &:after {
-                    height: var(--#{vars.$prefix}tile-active-indicator-border);
-                    width: 100%;
-                    left: 0;
-                    bottom: 0;
-                }
-            }
+      &.active {
+        > .#{vars.$prefix}ripple {
+          &:after {
+            height: var(--#{vars.$prefix}tile-indicator-border-width);
+            width: 100%;
+            left: 0;
+            bottom: 0;
+          }
         }
+      }
     }
 
     &.#{vars.$prefix}tile-border-top,
     &.#{vars.$prefix}tile-border-bottom,
     &.#{vars.$prefix}tile-border-top-bottom {
-        &.active {
-            > .#{vars.$prefix}ripple {
-                &.rounded-pill {
-                    &:before,
-                    &:after {
-                        --#{vars.$prefix}tile-active-indicator-border: 5px;
-                        width: 85%;
-                        left: 7.5%;
-                    }
-                }
+      &.active {
+        > .#{vars.$prefix}ripple {
+          &.rounded-pill {
+            &:before,
+            &:after {
+              --#{vars.$prefix}tile-indicator-border-width: 5px;
+              width: 85%;
+              left: 7.5%;
             }
+          }
         }
+      }
     }
 
     &.#{vars.$prefix}tile-border-top,
     &.#{vars.$prefix}tile-border-top-bottom {
-        &.active {
-            > .#{vars.$prefix}ripple {
-                &.rounded-pill {
-                    &:before {
-                        @include borders.bottom-radius(6px);
-                    }
-                }
+      &.active {
+        > .#{vars.$prefix}ripple {
+          &.rounded-pill {
+            &:before {
+              @include borders.bottom-radius(6px);
             }
+          }
         }
+      }
     }
 
     &.#{vars.$prefix}tile-border-bottom,
     &.#{vars.$prefix}tile-border-top-bottom {
-        &.active {
-            > .#{vars.$prefix}ripple {
-                &.rounded-pill {
-                    &:after {
-                        @include borders.top-radius(6px);
-                    }
-                }
+      &.active {
+        > .#{vars.$prefix}ripple {
+          &.rounded-pill {
+            &:after {
+              @include borders.top-radius(6px);
             }
+          }
         }
+      }
     }
-}
+  }
 
-.#{vars.$prefix}nav-item {
+  .#{vars.$prefix}nav-item {
     &.#{vars.$prefix}expanded {
-        > .#{vars.$prefix}nav-item-inner {
-            &.#{vars.$prefix}tile-border-top,
-            &.#{vars.$prefix}tile-border-bottom,
-            &.#{vars.$prefix}tile-border-top-bottom,
-            &.#{vars.$prefix}tile-border-right,
-            &.#{vars.$prefix}tile-border-left,
-            &.#{vars.$prefix}tile-border-left-right {
-                &.active {
-                    > .#{vars.$prefix}ripple {
-                        &:before,
-                        &:after {
-                            --#{vars.$prefix}tile-active-indicator-border: 0;
-                        }
-                    }
-                }
+      > .#{vars.$prefix}nav-item-inner {
+        &.#{vars.$prefix}tile-border-top,
+        &.#{vars.$prefix}tile-border-bottom,
+        &.#{vars.$prefix}tile-border-top-bottom,
+        &.#{vars.$prefix}tile-border-right,
+        &.#{vars.$prefix}tile-border-left,
+        &.#{vars.$prefix}tile-border-left-right {
+          &.active {
+            > .#{vars.$prefix}ripple {
+              &:before,
+              &:after {
+                --#{vars.$prefix}tile-indicator-border-width: 0;
+              }
             }
+          }
         }
+      }
     }
-}
-
-@each $name, $color in map.merge(colors.$context-colors, ("white": colors.$white, "black": colors.$black)) {
-    @include listview.make-list-tile-variant($name, $color);
+  }
 }

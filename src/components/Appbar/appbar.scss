@@ -7,9 +7,11 @@
     --#{vars.$prefix}appbar-bg: var(--appbar-background, #{colors.$white});
     --#{vars.$prefix}appbar-color: var(--appbar-foreground, #{colors.$neutral-darken-4});
     --#{vars.$prefix}appbar-height: 64px;
+    // prettier-ignore
     --#{vars.$prefix}appbar-padding: #{vars.$padding-sm (vars.$padding-md - 0.25) vars.$padding-sm vars.$padding-md};
     --#{vars.$prefix}appbar-title-font-size: 1.5rem;
-    --#{vars.$prefix}appbar-title-font-weight: #{vars.$font-weight-normal};
+    // prettier-ignore
+    --#{vars.$prefix}appbar-title-font-weight: var(--font-weight-normal, #{vars.$font-weight-normal}) ;
 
     justify-self: flex-start;
     background-color: var(--#{vars.$prefix}appbar-bg);

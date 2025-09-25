@@ -1,8 +1,8 @@
 import { BsRipple } from '@/components/Animation';
-import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi';
+import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
 import { BsBadge } from '@/components/Badge';
 import { BsIcon } from '@/components/Icon';
-import { cssPrefix, useHasRouter, useRenderRouter } from '@/mixins/CommonApi';
+import { cssPrefix, useHasRouter, useRenderRouter } from '@/mixins/CommonApi.ts';
 import type {
   IListItem,
   IListViewProvider,
@@ -12,7 +12,7 @@ import type {
   TListNavItemOptionProps,
   TRecord,
 } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import type {
   ComponentInternalInstance,
   ComputedRef,
@@ -35,7 +35,7 @@ export function useListNavItemClasses(
     [`${cssPrefix}nav-item`]: true,
     [`${cssPrefix}nav-parent`]: hasChild.value,
     [`${cssPrefix}expanded`]: hasChild.value && expanded.value,
-    [`${cssPrefix}has-icon`]: !Helper.isEmpty(props.icon),
+    'has-icon': !Helper.isEmpty(props.icon),
     active: !props.disabled && isActive.value,
     disabled: props.disabled === true,
   };
@@ -61,7 +61,7 @@ export function useListNavItemInnerClasses(
       hasRouter.value && props.activeClass && !props.disabled && isActive.value,
     active: !hasRouter.value && !props.disabled && isActive.value,
     rounded: provider?.itemRounded === true && !props.roundedOff,
-    'rounded-pill': provider?.itemRoundedPill === true && !props.pillOff,
+    'rounded-pill': provider?.itemRoundedPill === true && !provider.itemRounded && !props.pillOff,
     disabled: props.disabled === true,
   };
 }
@@ -88,13 +88,13 @@ function renderNavItemContent(
   return h<TBsRipple>(
     BsRipple,
     {
-      class: [
-        'd-flex',
-        provider?.itemRounded === true && !cmpProps.roundedOff ? 'rounded' : '',
-        provider?.itemRoundedPill === true && !cmpProps.pillOff ? 'rounded-pill' : '',
-      ],
+      class: {
+        rounded: provider?.itemRounded === true && !cmpProps.roundedOff,
+        'rounded-pill':
+          provider?.itemRoundedPill === true && !provider.itemRounded && !cmpProps.pillOff,
+      },
       style: innerStyles.value,
-      disabled: props.rippleOff || props.disabled,
+      disabled: (cmpProps.rippleOff || cmpProps.disabled) as unknown as Prop<boolean>,
     },
     {
       default: () => [
@@ -213,11 +213,11 @@ function onVNodeClickHandler(
 }
 
 export async function useAddChild(
-  listViewProvider: IListViewProvider,
+  provider: IListViewProvider,
   parent?: ComponentInternalInstance | null,
   child?: IListItem
 ): Promise<void> {
-  await listViewProvider.execAction(
+  await provider.execAction(
     (it) => {
       if (parent && child && it.uid === parent.props.id) {
         child.parent = it;
@@ -248,11 +248,11 @@ export function useRenderListNavItem(
   return h(
     'li',
     {
-      id: props.id,
+      id: cmpProps.id,
       class: classes.value,
     },
     [
-      useHasRouter(cmpProps) && !props.disabled
+      useHasRouter(cmpProps) && !cmpProps.disabled
         ? renderRouterLink(
             props,
             innerClasses,

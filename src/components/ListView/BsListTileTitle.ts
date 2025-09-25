@@ -1,27 +1,18 @@
-import type { TBsListTileTitle } from '@/components/ListView/types';
-import { cssPrefix } from '@/mixins/CommonApi';
-import { stringProp } from '@/mixins/CommonProps';
-import Helper from '@/utils/Helper';
-import { defineComponent, h } from 'vue';
+import { useRenderListTileText } from '@/components/ListView/mixins/listTileApi.ts';
+import type { TBsListTileTitle, TListTileTextOptionProps } from '@/components/ListView/types';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import { stringProp } from '@/mixins/CommonProps.ts';
+import { defineComponent } from 'vue';
 
 export default defineComponent<TBsListTileTitle>({
-    name: 'BsListTileTitle',
-    props: {
-        rawHtml: stringProp,
-    },
-    setup(props, { slots }) {
-        return () =>
-            !Helper.isEmpty(props.rawHtml)
-                ? h('div', {
-                      class: [`${cssPrefix}list-tile-title`],
-                      innerHTML: props.rawHtml,
-                  })
-                : h(
-                      'div',
-                      {
-                          class: [`${cssPrefix}list-tile-title`],
-                      },
-                      slots.default && slots.default()
-                  );
-    },
+  name: 'BsListTileTitle',
+  props: {
+    rawHtml: stringProp,
+  },
+  setup(props, { slots }) {
+    return () =>
+      useRenderListTileText(slots, props as Readonly<TListTileTextOptionProps>, [
+        `${cssPrefix}list-tile-title`,
+      ]);
+  },
 });

@@ -1,10 +1,24 @@
-@use "../../../scss/variables" as vars;
+@use '../../../scss/variables' as vars;
 
+@layer components {
+  .#{vars.$prefix}list-nav {
+    --#{vars.$prefix}nav-item-color: var(--navigation-item-foreground);
+    --#{vars.$prefix}nav-item-icon-color: var(--navigation-item-foreground-secondary);
+    --#{vars.$prefix}nav-item-divider-color: var(--border-translucent);
 
-.#{vars.$prefix}list-nav {
+    --#{vars.$prefix}nav-item-active-bg: var(--navigation-item-active-background);
+    --#{vars.$prefix}nav-item-active-color: var(--navigation-item-active-foreground);
+    // prettier-ignore
+    --#{vars.$prefix}nav-item-active-icon-color: var(--navigation-item-active-foreground-secondary);
+    --#{vars.$prefix}nav-item-expanded-bg: var(--navigation-item-expanded-background);
+    --#{vars.$prefix}nav-item-hover-bg: var(--navigation-item-hover-background);
+
+    // used internally
     --#{vars.$prefix}nav-item-state-bg: transparent;
     --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-color);
+    // prettier-ignore
     --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-icon-color);
+    // prettier-ignore
     --#{vars.$prefix}nav-item-state-font-weight: var(--#{vars.$prefix}nav-item-font-weight);
     --#{vars.$prefix}nav-item-inner-state-bg: inherit;
     --#{vars.$prefix}nav-item-padding-left: var(--#{vars.$prefix}nav-item-padding-x);
@@ -15,147 +29,161 @@
     list-style: none;
 
     &.collapsing {
-        transition: height .65s vars.$transition-drop-animation;
+      transition: height 0.65s vars.$transition-drop-animation;
     }
 
     .#{vars.$prefix}nav-item {
-        background-color: var(--#{vars.$prefix}nav-item-state-bg);
-        position: relative;
-        white-space: nowrap;
-        width: 100%;
+      background-color: var(--#{vars.$prefix}nav-item-state-bg);
+      position: relative;
+      white-space: nowrap;
+      width: 100%;
+
+      > .#{vars.$prefix}nav-item-inner {
+        background-color: var(--#{vars.$prefix}nav-item-inner-state-bg);
+        color: var(--#{vars.$prefix}nav-item-state-color);
+        font-size: var(--#{vars.$prefix}nav-item-font-size);
+        font-weight: var(--#{vars.$prefix}nav-item-state-font-weight);
+        display: block;
+        outline: 0 none;
+        text-decoration: none;
+        cursor: pointer;
+        user-select: none;
+
+        &:hover,
+        &:focus,
+        &:active {
+          text-decoration: none;
+        }
+
+        > .#{vars.$prefix}ripple {
+          display: flex;
+          align-items: center;
+          line-height: var(--#{vars.$prefix}nav-item-line-height);
+          // prettier-ignore
+          padding: var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-right) var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-left);
+          min-height: var(--#{vars.$prefix}tile-minheight);
+
+          > .#{vars.$prefix}nav-text {
+            flex: 1;
+            opacity: 1;
+            transition: opacity 0.8s;
+          }
+
+          > .#{vars.$prefix}icon:first-child {
+            margin-right: calc(var(--#{vars.$prefix}nav-item-padding-x) + 0.25rem);
+            color: var(--#{vars.$prefix}nav-item-state-icon-color);
+          }
+
+          > .#{vars.$prefix}badge {
+            --#{vars.$prefix}badge-font-size: 0.75em;
+            --#{vars.$prefix}badge-padding-y: #{vars.$padding-xs};
+            --#{vars.$prefix}badge-font-weight: #{vars.$font-weight-normal};
+
+            line-height: var(--#{vars.$prefix}nav-item-line-height);
+          }
+
+          > .expand-more {
+            color: var(--#{vars.$prefix}nav-item-state-icon-color);
+            transform: rotateZ(0deg);
+            transition: all 0.3s ease 0s;
+          }
+        }
+      }
+
+      &.#{vars.$prefix}expanded {
+        --#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
+        --#{vars.$prefix}nav-item-inner-state-bg: transparent;
 
         > .#{vars.$prefix}nav-item-inner {
-            background-color: var(--#{vars.$prefix}nav-item-inner-state-bg);
-            color: var(--#{vars.$prefix}nav-item-state-color);
-            font-size: var(--#{vars.$prefix}nav-item-font-size);
-            font-weight: var(--#{vars.$prefix}nav-item-state-font-weight);
-            display: block;
-            outline: 0 none;
-            text-decoration: none;
-            cursor: pointer;
-            user-select: none;
-
-            &:hover,
-            &:focus,
-            &:active {
-                text-decoration: none;
+          > .#{vars.$prefix}ripple {
+            > .expand-more {
+              transform: rotateZ(-180deg);
             }
-
-            > .#{vars.$prefix}ripple {
-                align-items: center;
-                line-height: var(--#{vars.$prefix}nav-item-line-height);
-                padding: var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-right) var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-left);
-                min-height: var(--#{vars.$prefix}tile-minheight);
-
-                > .#{vars.$prefix}nav-text {
-                    flex: 1;
-                    opacity: 1;
-                    transition: opacity .8s;
-                }
-
-                > .#{vars.$prefix}icon:first-child {
-                    margin-right: calc(var(--#{vars.$prefix}nav-item-padding-x) + .25rem);
-                    color: var(--#{vars.$prefix}nav-item-state-icon-color);
-                }
-
-                > .badge {
-                    --#{vars.$prefix-bs}badge-font-size: 75%;
-                    --#{vars.$prefix-bs}badge-padding-y: #{vars.$padding-xs};
-                    --#{vars.$prefix-bs}badge-font-weight: #{vars.$font-weight-normal};
-
-                    line-height: var(--#{vars.$prefix}nav-item-line-height);
-                }
-
-                > .expand-more {
-                    color: var(--#{vars.$prefix}nav-item-state-icon-color);
-                    transform: rotateZ(0deg);
-                    transition: all 0.3s ease 0s;
-                }
-            }
+          }
         }
+      }
 
-        &.#{vars.$prefix}expanded {
-            --#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
+      &.active {
+        // prettier-ignore
+        --#{vars.$prefix}nav-item-inner-state-bg: var(--#{vars.$prefix}nav-item-active-bg);
+        // prettier-ignore
+        --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-active-color);
+        // prettier-ignore
+        --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-active-icon-color);
+        // prettier-ignore
+        --#{vars.$prefix}nav-item-state-font-weight: var(--#{vars.$prefix}nav-item-active-font-weight);
+
+        &.#{vars.$prefix}nav-parent {
+          &.#{vars.$prefix}expanded {
             --#{vars.$prefix}nav-item-inner-state-bg: transparent;
-
-            > .#{vars.$prefix}nav-item-inner {
-                > .#{vars.$prefix}ripple {
-                    > .expand-more {
-                        transform: rotateZ(-180deg);
-                    }
-                }
-            }
+            // prettier-ignore
+            --#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
+            --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-color);
+            // prettier-ignore
+            --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-icon-color);
+          }
         }
+      }
 
-        &.active {
-            --#{vars.$prefix}nav-item-inner-state-bg: var(--#{vars.$prefix}nav-item-active-bg);
-            --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-active-color);
-            --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-active-icon-color);
-            --#{vars.$prefix}nav-item-state-font-weight: var(--#{vars.$prefix}nav-item-active-font-weight);
-
-            &.#{vars.$prefix}nav-parent {
-                &.#{vars.$prefix}expanded {
-                    --#{vars.$prefix}nav-item-inner-state-bg: transparent;
-                    --#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
-                    --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-color);
-                    --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-icon-color);
-                }
-            }
+      &:hover {
+        &:not(.#{vars.$prefix}expanded):not(.active):not(.disabled) {
+          --#{vars.$prefix}nav-item-inner-state-bg: var(--#{vars.$prefix}nav-item-hover-bg);
         }
+      }
 
-        &:hover {
-            &:not(.#{vars.$prefix}expanded):not(.active):not(.disabled) {
-                --#{vars.$prefix}nav-item-inner-state-bg: var(--#{vars.$prefix}nav-item-hover-bg);
-            }
+      &.disabled {
+        opacity: var(--#{vars.$prefix}nav-item-disabled-opacity);
+        //--#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-disable-color);
+        //--#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-disable-icon-color);
+
+        > .#{vars.$prefix}nav-item-inner {
+          cursor: default;
         }
-
-        &.disabled {
-            --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-disable-color);
-            --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-disable-icon-color);
-
-            > .#{vars.$prefix}nav-item-inner {
-                cursor: default;
-            }
-        }
+      }
     }
 
     > .#{vars.$prefix}nav-item {
-        &.#{vars.$prefix}expanded {
-            &:not(:first-child) {
-                border-top: 1px solid var(--#{vars.$prefix}nav-item-divider-color);
-            }
-
-            &:not(:last-child) {
-                border-bottom: 1px solid var(--#{vars.$prefix}nav-item-divider-color);
-            }
+      &.#{vars.$prefix}expanded {
+        &:not(:first-child) {
+          border-top: 1px solid var(--#{vars.$prefix}nav-item-divider-color);
         }
 
-        &.#{vars.$prefix}nav-parent {
-            &.#{vars.$prefix}has-icon {
-                > .#{vars.$prefix}nav-child {
-                    > .#{vars.$prefix}nav-item {
-                        &:not(.#{vars.$prefix}has-icon) {
-                            --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 2.75rem);
-                        }
-
-                        .#{vars.$prefix}nav-item {
-                            --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 3.75rem);
-                        }
-                    }
-                }
-            }
-
-            &:not(.#{vars.$prefix}has-icon) {
-                > .#{vars.$prefix}nav-child {
-                    > .#{vars.$prefix}nav-item {
-                        --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 1rem);
-
-                        .#{vars.$prefix}nav-item {
-                            --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 2rem);
-                        }
-                    }
-                }
-            }
+        &:not(:last-child) {
+          border-bottom: 1px solid var(--#{vars.$prefix}nav-item-divider-color);
         }
+      }
+
+      &.#{vars.$prefix}nav-parent {
+        &.has-icon {
+          > .#{vars.$prefix}nav-child {
+            > .#{vars.$prefix}nav-item {
+              &:not(.#{vars.$prefix}has-icon) {
+                // prettier-ignore
+                --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 2.75rem);
+              }
+
+              .#{vars.$prefix}nav-item {
+                // prettier-ignore
+                --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 3.75rem);
+              }
+            }
+          }
+        }
+
+        &:not(.has-icon) {
+          > .#{vars.$prefix}nav-child {
+            > .#{vars.$prefix}nav-item {
+              // prettier-ignore
+              --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 1rem);
+
+              .#{vars.$prefix}nav-item {
+                // prettier-ignore
+                --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 2rem);
+              }
+            }
+          }
+        }
+      }
     }
+  }
 }

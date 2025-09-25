@@ -1,13 +1,13 @@
-import ListItem from '@/components/ListView/mixins/ListItem';
+import ListItem from '@/components/ListView/mixins/ListItem.ts';
 import {
   useAddChild,
   useListNavItemClasses,
   useListNavItemInnerClasses,
   useNavItemContentStyles,
   useRenderListNavItem,
-} from '@/components/ListView/mixins/listNavApi';
-import { listNavItemProps } from '@/components/ListView/mixins/listViewProps';
-import { useCurrentRoute, useHasRouter, useRouteMatch } from '@/mixins/CommonApi';
+} from '@/components/ListView/mixins/listNavApi.ts';
+import { listNavItemProps } from '@/components/ListView/mixins/listViewProps.ts';
+import { useCurrentRoute, useHasRouter, useRouteMatch } from '@/mixins/CommonApi.ts';
 import type {
   IListItem,
   IListViewProvider,
@@ -31,13 +31,7 @@ import {
 export default defineComponent<TBsListNavItem>({
   name: 'BsListNavItem',
   props: listNavItemProps,
-  emits: [
-    'click',
-    /**
-     * Fired when this component's state is updated.
-     */
-    'update:active',
-  ],
+  emits: ['click', 'update:active'],
   setup(props, { emit, expose, slots }) {
     const thisProps = props as Readonly<TListNavItemOptionProps>;
     const instance = shallowRef(getCurrentInstance());
@@ -60,6 +54,7 @@ export default defineComponent<TBsListNavItem>({
 
     if (useHasRouter(thisProps)) {
       const route = useCurrentRoute();
+
       watchEffect(() => {
         if (provider && route && useRouteMatch(instance, route, thisProps)) {
           provider.activeItem = refItem.value;
@@ -72,26 +67,31 @@ export default defineComponent<TBsListNavItem>({
       });
     }
 
-    onBeforeMount(() => {
+    onBeforeMount(async () => {
       instance.value = getCurrentInstance();
-      if (instance) {
-        refItem.value = new ListItem(props.id as string, 'BsListNavItem', instance.value!, emit);
+
+      if (instance.value) {
+        refItem.value = new ListItem(thisProps.id as string, 'BsListNavItem', instance.value, emit);
 
         if (provider) {
-          nextTick().then(() => useAddChild(provider, instance.value?.parent, refItem.value));
+          await nextTick().then(() => useAddChild(provider, instance.value?.parent, refItem.value));
         }
       }
     });
-    onMounted(() => {
+
+    onMounted(async () => {
       hasRouter.value = useHasRouter(thisProps);
+
       if (hasRouter.value) {
         const route = useCurrentRoute();
         if (route && useRouteMatch(instance, route, thisProps)) {
           refItem.value?.setActive(true);
         }
       }
-      nextTick().then(() => {
+
+      await nextTick().then(() => {
         hasChild.value = refItem.value?.hasChild() ?? false;
+
         if (hasRouter.value && !hasChild.value && isActive.value) {
           let parent = refItem.value?.parent;
           while (parent) {

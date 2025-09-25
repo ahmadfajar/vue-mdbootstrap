@@ -8,99 +8,109 @@
 //----------------------------------------------
 @mixin make-listview-variant($name, $color) {
   .#{vars.$prefix}list-#{$name} {
-    $subheader-color: helper.to-rgba(
-      helper.set-color-contrast(
-        $color,
-        rgba(color.adjust(colors.$gray-900, $lightness: 5%), 0.6),
-        rgba(colors.$white, 0.6)
-      )
+    $subheader-color: helper.set-color-contrast(
+      $color,
+      color.change(helper.to-oklch(color.adjust(colors.$gray-900, $lightness: 5%)), $alpha: 0.6),
+      color.change(colors.$white, $alpha: 0.6)
     );
 
     --#{vars.$prefix}listview-bg: #{$color};
     --#{vars.$prefix}subheader-color: #{$subheader-color};
 
-    @if (helper.brightness($color) < 160) {
+    @if (helper.lightnessLevel($color) < 62.75%) {
       .#{vars.$prefix}divider {
-        --#{vars.$prefix}divider-color: #{rgba(colors.$white, 0.4)};
+        --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
       }
 
+      // bootstrap patch
       .dropdown-menu {
-        --#{vars.$prefix-bs}dropdown-divider-bg: #{rgba(colors.$white, 0.15)};
+        --#{vars.$prefix-bs}dropdown-divider-bg: #{color.change(colors.$white, $alpha: 0.15)};
       }
     }
   }
 }
 
-@mixin make-list-tile-variant($name, $color) {
+@mixin make-list-item-variant($name, $color) {
   .#{vars.$prefix}list-#{$name} {
-    $tile-hover-bg: helper.to-rgba(
+    $tile-hover-bg: helper.to-oklch(
       helper.set-color-contrast(
         $color,
         vars.$default-hover-bgcolor,
         helper.set-color-contrast(
           $color,
-          rgba(color.adjust($color, $lightness: -30%), 0.25),
-          rgba(color.adjust($color, $lightness: -20%), 0.25),
-          160
+          color.change(color.adjust($color, $lightness: -30%), $alpha: 0.25),
+          color.change(color.adjust($color, $lightness: -20%), $alpha: 0.25),
+          62.75%
         ),
-        220
+        86%
       )
     );
+
     $tile-active-bg: helper.set-alt-bgcolor($color, 0.2);
 
     @if ($name == 'black') {
       $tile-hover-bg: helper.set-alt-bgcolor($color, 0.2);
-      $tile-active-bg: rgba(helper.to-rgb(color.scale($color, $lightness: 55%)), 0.3);
+      $tile-active-bg: color.change(
+        helper.to-oklch(color.scale($color, $lightness: 55%)),
+        $alpha: 0.3
+      );
     }
 
     $tile-title-color: helper.set-color-contrast($color, colors.$gray-900, colors.$white);
     $tile-subtitle-color: helper.set-color-contrast(
       $color,
       colors.$gray-700,
-      rgba(colors.$white, 0.7)
+      rgba(colors.$white, $alpha: 0.7)
     );
+
     $tile-leading-color: helper.set-color-contrast(
       $color,
       rgba(colors.$black, 0.54),
       rgba(colors.$white, 0.6)
     );
-    $tile-active-title-color: helper.to-rgb(
-      helper.set-color-contrast(
-        $color,
-        color.adjust(vars.$default-active-bgcolor, $lightness: -20%),
-        colors.$white,
-        220
-      )
-    );
-    $tile-active-subtitle-color: helper.to-rgba(
-      helper.set-color-contrast(
-        $color,
-        color.adjust(vars.$default-active-bgcolor, $lightness: -10%),
-        rgba(colors.$white, 0.77),
-        220
-      )
-    );
-    $tile-active-leading-icon-color: helper.to-rgba(
-      helper.set-color-contrast(
-        $color,
-        rgba(vars.$default-active-bgcolor, 0.54),
-        rgba(colors.$white, 0.75),
-        220
-      )
-    );
-    $tile-disable-title-color: helper.set-color-contrast(
+
+    $tile-active-title-color: helper.set-color-contrast(
       $color,
-      rgba(colors.$black, 0.5),
-      rgba(colors.$white, 0.4)
+      color.change(
+        helper.to-oklch(color.adjust(vars.$default-active-bgcolor, $lightness: -20%)),
+        $alpha: 1
+      ),
+      colors.$white,
+      86.2%
     );
-    $tile-disable-subtitle-color: $tile-disable-title-color;
-    $tile-disable-leading-color: $tile-disable-title-color;
-    $tile-indicator-border-color: helper.to-rgba(
+
+    $tile-active-subtitle-color: helper.set-color-contrast(
+      $color,
+      color.change(
+        helper.to-oklch(color.adjust(vars.$default-active-bgcolor, $lightness: -10%)),
+        $alpha: 1
+      ),
+      rgba(colors.$white, 0.77),
+      86.2%
+    );
+
+    $tile-active-leading-icon-color: helper.to-oklch(
+      helper.set-color-contrast(
+        $color,
+        color.change(vars.$default-active-bgcolor, $alpha: 0.54),
+        rgba(colors.$white, 0.75),
+        86.2%
+      )
+    );
+
+    //$tile-disable-title-color: helper.set-color-contrast(
+    //  $color,
+    //  rgba(colors.$black, 0.5),
+    //  rgba(colors.$white, 0.4)
+    //);
+    //$tile-disable-subtitle-color: $tile-disable-title-color;
+    //$tile-disable-leading-color: $tile-disable-title-color;
+    $tile-indicator-border-color: helper.to-oklch(
       helper.set-color-contrast(
         $color,
         color.adjust(colors.$mdb-default-color, $lightness: -5%),
         color.adjust(helper.set-alt-bgcolor($color, 0.65), $lightness: 45%),
-        220
+        86.2%
       )
     );
 
@@ -121,23 +131,23 @@
 
       $list-colors: 'amber', 'yellow', 'lime', 'warning', 'warning-color';
       @if (not list.index($list-colors, $name)) {
-        --#{vars.$prefix}tile-active-indicator-border-color: #{$tile-indicator-border-color};
+        --#{vars.$prefix}tile-indicator-border-color: #{$tile-indicator-border-color};
       } @else {
-        --#{vars.$prefix}tile-active-indicator-border-color: #{helper.to-rgb(
-            color.adjust(colors.$mdb-default-color, $lightness: -5%)
+        --#{vars.$prefix}tile-indicator-border-color: #{helper.to-oklch(
+            color.change(color.adjust(colors.$mdb-default-color, $lightness: -5%), $alpha: 1)
           )};
       }
 
-      --#{vars.$prefix}tile-disable-action-color: #{$tile-disable-leading-color};
-      --#{vars.$prefix}tile-disable-leading-color: #{$tile-disable-leading-color};
-      --#{vars.$prefix}tile-disable-title-color: #{$tile-disable-title-color};
-      --#{vars.$prefix}tile-disable-subtitle-color: #{$tile-disable-subtitle-color};
+      //--#{vars.$prefix}tile-disable-action-color: #{$tile-disable-leading-color};
+      //--#{vars.$prefix}tile-disable-leading-color: #{$tile-disable-leading-color};
+      //--#{vars.$prefix}tile-disable-title-color: #{$tile-disable-title-color};
+      //--#{vars.$prefix}tile-disable-subtitle-color: #{$tile-disable-subtitle-color};
 
       $divider-color: helper.set-color-contrast(
         $color,
         colors.$gray-300,
         rgba(colors.$white, 0.18),
-        220
+        86.2%
       );
       $nav-item-expanded-bg: helper.set-alt-bgcolor($color);
 
@@ -149,10 +159,11 @@
       --#{vars.$prefix}nav-item-active-bg: #{$tile-active-bg};
       --#{vars.$prefix}nav-item-active-color: #{$tile-active-title-color};
       --#{vars.$prefix}nav-item-active-icon-color: #{$tile-active-leading-icon-color};
-      --#{vars.$prefix}nav-item-disable-color: #{$tile-disable-title-color};
-      --#{vars.$prefix}nav-item-disable-icon-color: #{$tile-disable-leading-color};
+      //--#{vars.$prefix}nav-item-disable-color: #{$tile-disable-title-color};
+      //--#{vars.$prefix}nav-item-disable-icon-color: #{$tile-disable-leading-color};
     }
 
+    // bootstrap patch
     .dropdown-menu {
       --#{vars.$prefix-bs}dropdown-bg: var(--#{vars.$prefix}listview-bg);
       --#{vars.$prefix-bs}dropdown-link-color: #{$tile-title-color};

@@ -1,37 +1,37 @@
 import type { App, ObjectPlugin } from 'vue';
-import BsListView from './BsListView';
-import BsListNav from './BsListNav';
-import BsListNavItem from './BsListNavItem';
-import BsListTile from './BsListTile';
-import BsListTileAction from './BsListTileAction';
-import BsListTileContent from './BsListTileContent';
-import BsListTileSubtitle from './BsListTileSubtitle';
-import BsListTileTitle from './BsListTileTitle';
-import BsListTileLeading from './BsListTileLeading';
+import BsListNav from './BsListNav.ts';
+import BsListNavItem from './BsListNavItem.ts';
+import BsListTile from './BsListTile.ts';
+import BsListTileAction from './BsListTileAction.ts';
+import BsListTileContent from './BsListTileContent.ts';
+import BsListTileLeading from './BsListTileLeading.ts';
+import BsListTileSubtitle from './BsListTileSubtitle.ts';
+import BsListTileTitle from './BsListTileTitle.ts';
+import BsListView from './BsListView.ts';
 
 const BsListViewPlugin: ObjectPlugin = {
-    install: (app: App): void => {
-        app.component(BsListView.name as string, BsListView);
-        app.component(BsListNav.name as string, BsListNav);
-        app.component(BsListNavItem.name as string, BsListNavItem);
-        app.component(BsListTile.name as string, BsListTile);
-        app.component(BsListTileAction.name as string, BsListTileAction);
-        app.component(BsListTileContent.name as string, BsListTileContent);
-        app.component(BsListTileLeading.name as string, BsListTileLeading);
-        app.component(BsListTileSubtitle.name as string, BsListTileSubtitle);
-        app.component(BsListTileTitle.name as string, BsListTileTitle);
-    },
+  install: (app: App): void => {
+    app.component(BsListView.name as string, BsListView);
+    app.component(BsListNav.name as string, BsListNav);
+    app.component(BsListNavItem.name as string, BsListNavItem);
+    app.component(BsListTile.name as string, BsListTile);
+    app.component(BsListTileAction.name as string, BsListTileAction);
+    app.component(BsListTileContent.name as string, BsListTileContent);
+    app.component(BsListTileLeading.name as string, BsListTileLeading);
+    app.component(BsListTileSubtitle.name as string, BsListTileSubtitle);
+    app.component(BsListTileTitle.name as string, BsListTileTitle);
+  },
 };
 
 export {
-    BsListViewPlugin,
-    BsListView,
-    BsListNav,
-    BsListNavItem,
-    BsListTile,
-    BsListTileAction,
-    BsListTileContent,
-    BsListTileLeading,
-    BsListTileSubtitle,
-    BsListTileTitle,
+  BsListNav,
+  BsListNavItem,
+  BsListTile,
+  BsListTileAction,
+  BsListTileContent,
+  BsListTileLeading,
+  BsListTileSubtitle,
+  BsListTileTitle,
+  BsListView,
+  BsListViewPlugin,
 };

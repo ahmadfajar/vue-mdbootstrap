@@ -14,7 +14,7 @@
     --font-sans-serif: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     // prettier-ignore
     --font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    --font-size-default: 1rem;
+    --font-size-default: #{vars.$font-size-base};
     --font-weight-light: 300;
     --font-weight-normal: 400;
     --font-weight-medium: 500;
@@ -52,12 +52,7 @@
   // Create default colors for background and text
   //-----------------------------------------------
   @each $name, $color in colors.$context-colors {
-    @include decorators.decorate-color(
-      $name,
-      $color,
-      $text-bg: true,
-      $hyperlink: true
-    );
+    @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
   }
 }
 
@@ -85,31 +80,43 @@
     --background: #{colors.$white};
     --foreground: #{colors.$neutral-darken-4};
     --background-secondary: #{colors.$white};
-    --foreground-secondary: #{colors.#{colors.$gray-800}};
+    --foreground-secondary: #{colors.$gray-800};
     --border-translucent: oklch(0.88 0.001 17.18);
 
     --appbar-background: var(--background);
     --appbar-foreground: var(--foreground);
 
     --sidedrawer-background: var(--background);
-    --sidedrawer-foreground: var(--foreground);
-    --sidedrawer-foreground-secondary: var(--foreground-secondary);
-    --sidedrawer-menu-active-background: var(--background);
-    --sidedrawer-menu-active-foreground: var(--foreground);
-    --sidedrawer-menu-active-foreground-secondary: var(--foreground-secondary);
-    --sidedrawer-menu-hover-background: var(--background);
-    --sidedrawer-menu-hover-foreground: var(--foreground);
+    --sidedrawer-item-foreground: var(--foreground);
+    --sidedrawer-item-foreground-secondary: #{colors.$gray-700};
+    --sidedrawer-item-active-background: #{vars.$default-active-bgcolor};
+    --sidedrawer-item-active-foreground: #{helper.to-oklch(
+        color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 1)
+      )};
+    --sidedrawer-item-active-foreground-secondary: #{helper.to-oklch(
+        color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 0.75)
+      )};
+    --sidedrawer-item-hover-background: #{vars.$default-hover-bgcolor};
+    --sidedrawer-item-hover-foreground: var(--foreground);
+    --sidedrawer-item-border-indicator: var(--#{vars.$prefix}field-active-indicator);
+    --sidedrawer-item-divider-color: var(--border-translucent);
+    --sidedrawer-item-expanded-background: oklch(0 0 0 / 0.07);
 
-    // Used in dropdown menus, listview and other similar UI
-    --navigation-menu-background: var(--background);
-    --navigation-menu-foreground: var(--foreground);
-    --navigation-menu-foreground-secondary: var(--foreground-secondary);
-    --navigation-menu-active-background: #{vars.$default-active-bgcolor};
-    // prettier-ignore
-    --navigation-menu-active-foreground: #{helper.to-oklch(color.scale(vars.$default-active-bgcolor, $lightness: -10%))};
-    --navigation-menu-active-foreground-secondary: var(--foreground-secondary);
-    --navigation-menu-hover-background: #{vars.$default-hover-bgcolor};
-    --navigation-menu-hover-foreground: var(--foreground);
-    --navigation-menu-hover-foreground-secondary: var(--foreground-secondary);
+    // Used in dropdown menus, list-tile, list-nav and other similar UI
+    --navigation-item-background: var(--background);
+    --navigation-item-expanded-background: oklch(0 0 0 / 0.07);
+    --navigation-item-foreground: var(--foreground);
+    --navigation-item-foreground-secondary: #{colors.$gray-700};
+    --navigation-item-active-background: #{vars.$default-active-bgcolor};
+    --navigation-item-border-indicator: var(--#{vars.$prefix}field-active-indicator);
+    --navigation-item-active-foreground: #{helper.to-oklch(
+        color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 1)
+      )};
+    --navigation-item-active-foreground-secondary: #{helper.to-oklch(
+        color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 0.75)
+      )};
+    --navigation-item-hover-background: #{vars.$default-hover-bgcolor};
+    --navigation-item-hover-foreground: var(--foreground);
+    --navigation-item-hover-foreground-secondary: #{colors.$gray-700};
   }
 }

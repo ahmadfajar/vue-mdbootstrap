@@ -1,6 +1,9 @@
-import { useListTileClassNames, useRenderListTile } from '@/components/ListView/mixins/listTileApi';
-import { listTileProps } from '@/components/ListView/mixins/listViewProps';
-import { useCurrentRoute, useHasLink, useHasRouter, useRouteMatch } from '@/mixins/CommonApi';
+import {
+  useListTileClassNames,
+  useRenderListTile,
+} from '@/components/ListView/mixins/listTileApi.ts';
+import { listTileProps } from '@/components/ListView/mixins/listViewProps.ts';
+import { useCurrentRoute, useHasLink, useHasRouter, useRouteMatch } from '@/mixins/CommonApi.ts';
 import type {
   IListItem,
   IListViewProvider,
@@ -24,13 +27,7 @@ import {
 export default defineComponent<TBsListTile>({
   name: 'BsListTile',
   props: listTileProps,
-  emits: [
-    'click',
-    /**
-     * Fired when this component's state is updated.
-     */
-    'update:active',
-  ],
+  emits: ['click', 'update:active'],
   setup(props, { emit, expose, slots }) {
     const thisProps = props as Readonly<TListTileOptionProps>;
     const instance = shallowRef(getCurrentInstance());
@@ -44,7 +41,7 @@ export default defineComponent<TBsListTile>({
     const provider = inject<IListViewProvider>('ListView');
     const tagName = computed<string>(() => (hasRouter.value || hasLink.value ? 'a' : 'div'));
     const tileClasses = computed<TRecord>(() =>
-      useListTileClassNames(tagName.value, thisProps, isActive, hasLink, provider)
+      useListTileClassNames(thisProps, isActive, hasLink, tagName.value, provider)
     );
 
     watch(
@@ -56,12 +53,13 @@ export default defineComponent<TBsListTile>({
       }
     );
 
-    onBeforeUpdate(() => {
+    onBeforeUpdate(async () => {
       if (hasRouter.value) {
         const route = useCurrentRoute();
+
         if (route && useRouteMatch(instance, route, thisProps)) {
           isActive.value = true;
-          nextTick().then(() => {
+          await nextTick().then(() => {
             emit('update:active', true);
           });
         }

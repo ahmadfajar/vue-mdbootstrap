@@ -165,7 +165,11 @@
   }
 
   .font-weight-semibold {
-    font-weight: $font-weight-medium;
+    font-weight: vars.$font-weight-semibold;
+  }
+
+  .font-weight-medium {
+    font-weight: vars.$font-weight-medium;
   }
 
   .font-weight-normal {
@@ -315,6 +319,10 @@
     border-right: var(--#{vars.$prefix}caret-size) solid transparent;
     border-top: var(--#{vars.$prefix}caret-size) solid currentColor;
     display: inline-block;
+  }
+
+  .#{vars.$prefix}link {
+    cursor: pointer;
   }
 
   .#{vars.$prefix}shadow-0 {

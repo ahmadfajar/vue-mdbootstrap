@@ -1,90 +1,96 @@
-import type { IListItem, TEmitFn, TRecord } from '@/types';
-import Helper from '@/utils/Helper';
-import type { ComponentInternalInstance, Ref } from 'vue';
+import type { IListItem, IListTileEventEmitter, TRecord } from '@/types';
+import Helper from '@/utils/Helper.ts';
+import type { ComponentInternalInstance, EmitFn, Ref } from 'vue';
 import { isRef } from 'vue';
 
 class ListItem implements IListItem {
-    public readonly uid: string;
-    public readonly tag: string;
-    private readonly _component: ComponentInternalInstance;
-    private readonly _emit: TEmitFn;
-    private _children: Array<IListItem>;
-    private _parent: IListItem | undefined;
+  public readonly uid: string;
+  public readonly tag: string;
+  private readonly _component: ComponentInternalInstance;
+  private readonly _emit: EmitFn<IListTileEventEmitter>;
+  private _children: Array<IListItem>;
+  private _parent: IListItem | undefined;
 
-    constructor(uid: string, tag: string, component: ComponentInternalInstance, emitter: TEmitFn) {
-        this.uid = uid;
-        this.tag = tag;
-        this._component = component;
-        this._emit = emitter;
-        this._children = [];
+  constructor(
+    uid: string,
+    tag: string,
+    component: ComponentInternalInstance,
+    emitter: EmitFn<IListTileEventEmitter>
+  ) {
+    this.uid = uid;
+    this.tag = tag;
+    this._component = component;
+    this._emit = emitter;
+    this._children = [];
+  }
+
+  destroy(): void {
+    for (const child of this.children) {
+      child.destroy();
     }
 
-    destroy(): void {
-        for (const child of this.children) {
-            child.destroy();
-        }
+    this._children = [];
+  }
 
-        this._children = [];
+  get component(): ComponentInternalInstance {
+    return this._component;
+  }
+
+  get parent(): IListItem | undefined {
+    return this._parent;
+  }
+
+  set parent(value: IListItem | undefined) {
+    this._parent = value;
+  }
+
+  get children(): Array<IListItem> {
+    return this._children;
+  }
+
+  addChild(child: IListItem): number {
+    const idx = this._children.findIndex((it) => it.uid === child.uid);
+    if (idx === -1) {
+      return this._children.push(child);
     }
 
-    get component(): ComponentInternalInstance {
-        return this._component;
+    return -1;
+  }
+
+  removeChild(id: string): void {
+    const idx = this._children.findIndex((it) => it.uid === id);
+    if (idx > -1) {
+      this._children[idx]?.destroy();
+      this._children.splice(idx, 1);
+    }
+  }
+
+  hasChild(): boolean {
+    return this.children.length > 0;
+  }
+
+  fireEvent(name: string, ...args: unknown[]): void {
+    // @ts-expect-error Fire custom event
+    this._emit(name, ...args);
+  }
+
+  setActive(value: boolean): void {
+    this.component.props.active = value;
+
+    if (!Helper.isEmpty(this.component.exposed)) {
+      if (isRef((this.component.exposed as TRecord).isActive)) {
+        ((this.component.exposed as TRecord).isActive as Ref<boolean>).value = value;
+      } else {
+        (this.component.exposed as TRecord).isActive = value;
+      }
     }
 
-    get parent(): IListItem | undefined {
-        return this._parent;
-    }
+    this._emit('update:active', value);
+  }
 
-    set parent(value: IListItem | undefined) {
-        this._parent = value;
-    }
-
-    get children(): Array<IListItem> {
-        return this._children;
-    }
-
-    addChild(child: IListItem): number {
-        const idx = this._children.findIndex((it) => it.uid === child.uid);
-        if (idx === -1) {
-            return this._children.push(child);
-        }
-
-        return -1;
-    }
-
-    removeChild(id: string): void {
-        const idx = this._children.findIndex((it) => it.uid === id);
-        if (idx > -1) {
-            this._children[idx].destroy();
-            this._children.splice(idx, 1);
-        }
-    }
-
-    hasChild(): boolean {
-        return this.children.length > 0;
-    }
-
-    fireEvent(name: string, ...args: unknown[]): void {
-        this._emit(name, ...args);
-    }
-
-    setActive(value: boolean): void {
-        this.component.props.active = value;
-
-        if (!Helper.isEmpty(this.component.exposed)) {
-            if (isRef((this.component.exposed as TRecord).isActive)) {
-                ((this.component.exposed as TRecord).isActive as Ref<boolean>).value = value;
-            } else {
-                (this.component.exposed as TRecord).isActive = value;
-            }
-        }
-
-        this.fireEvent('update:active', value);
-    }
-
-    setRippleOff(value: boolean): void {
-        this.component.props.rippleOff = value;
-    }
+  setRippleOff(value: boolean): void {
+    this.component.props.rippleOff = value;
+  }
 }
 
 export default ListItem;

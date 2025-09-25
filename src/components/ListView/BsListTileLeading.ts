@@ -1,13 +1,13 @@
 import { BsAvatar } from '@/components/Avatar';
-import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi';
-import { iconBaseProps, imageBaseProps } from '@/components/Avatar/mixins/avatarProps';
+import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
+import { iconBaseProps, imageBaseProps } from '@/components/Avatar/mixins/avatarProps.ts';
 import { BsIcon } from '@/components/Icon';
-import { useGetCalcSize, useSizeStyles } from '@/components/Icon/mixins/iconApi';
+import { useGetCalcSize, useSizeStyles } from '@/components/Icon/mixins/iconApi.ts';
 import type { TBsListTileLeading, TListTileLeadingOptionProps } from '@/components/ListView/types';
-import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi';
-import { booleanProp } from '@/mixins/CommonProps';
+import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi.ts';
+import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { Numberish } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import type { Prop } from 'vue';
 import { computed, createCommentVNode, defineComponent, h } from 'vue';
 
@@ -16,10 +16,6 @@ export default defineComponent<TBsListTileLeading>({
   props: {
     ...iconBaseProps,
     ...imageBaseProps,
-    /**
-     * Center item inside it vertically.
-     * @type {boolean}
-     */
     center: booleanProp,
   },
   setup(props, { slots }) {
@@ -39,11 +35,11 @@ export default defineComponent<TBsListTileLeading>({
       h(
         'div',
         {
-          class: [
-            `${cssPrefix}list-tile-leading`,
-            thisProps.center === true ? 'd-flex align-self-center' : '',
-            !Helper.isEmpty(thisProps.icon) ? `${cssPrefix}has-icon` : '',
-          ],
+          class: {
+            [`${cssPrefix}list-tile-leading`]: true,
+            'flex self-center': thisProps.center === true,
+            'has-icon': !Helper.isEmpty(thisProps.icon),
+          },
           style: styles.value,
         },
         useRenderSlot(

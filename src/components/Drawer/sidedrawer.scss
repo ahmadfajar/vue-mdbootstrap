@@ -32,5 +32,43 @@
       overflow: hidden;
       position: relative;
     }
+
+    // Apply SideDrawer color scheme to ListView, List-Tile, and List-Nav
+    .#{vars.$prefix}list {
+      --#{vars.$prefix}listview-bg: var(--sidedrawer-background);
+      --#{vars.$prefix}listview-color: var(--sidedrawer-item-foreground);
+    }
+
+    .#{vars.$prefix}list-tile {
+      --#{vars.$prefix}tile-action-color: var(--sidedrawer-item-foreground-secondary);
+      --#{vars.$prefix}tile-leading-color: var(--sidedrawer-item-foreground);
+      --#{vars.$prefix}tile-leading-icon-color: var(--sidedrawer-item-foreground-secondary);
+      --#{vars.$prefix}tile-subtitle-color: var(--sidedrawer-item-foreground-secondary);
+      --#{vars.$prefix}tile-title-color: var(--sidedrawer-item-foreground);
+
+      --#{vars.$prefix}tile-active-bg: var(--sidedrawer-item-active-background);
+      // prettier-ignore
+      --#{vars.$prefix}tile-active-action-color: var(--sidedrawer-item-active-foreground-secondary);
+      --#{vars.$prefix}tile-active-leading-color: var(--sidedrawer-item-active-foreground);
+      // prettier-ignore
+      --#{vars.$prefix}tile-active-leading-icon-color: var(--sidedrawer-item-active-foreground-secondary);
+      // prettier-ignore
+      --#{vars.$prefix}tile-active-subtitle-color: var(--sidedrawer-item-active-foreground-secondary);
+      --#{vars.$prefix}tile-active-title-color: var(--sidedrawer-item-active-foreground);
+      --#{vars.$prefix}tile-hover-bg: var(--sidedrawer-item-hover-background);
+    }
+
+    .#{vars.$prefix}list-nav {
+      --#{vars.$prefix}nav-item-color: var(--sidedrawer-item-foreground);
+      --#{vars.$prefix}nav-item-icon-color: var(--sidedrawer-item-foreground-secondary);
+      --#{vars.$prefix}nav-item-divider-color: var(--sidedrawer-item-divider-color);
+
+      --#{vars.$prefix}nav-item-active-bg: var(--sidedrawer-item-active-background);
+      --#{vars.$prefix}nav-item-active-color: var(--sidedrawer-item-active-foreground);
+      // prettier-ignore
+      --#{vars.$prefix}nav-item-active-icon-color: var(--sidedrawer-item-active-foreground-secondary);
+      --#{vars.$prefix}nav-item-expanded-bg: var(--sidedrawer-item-expanded-background);
+      --#{vars.$prefix}nav-item-hover-bg: var(--sidedrawer-item-hover-background);
+    }
   }
 }
