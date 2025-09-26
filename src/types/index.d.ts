@@ -18,7 +18,6 @@ export * from '../components/Drawer/types';
 export * from '../components/Field/types';
 export * from '../components/Icon/types';
 export * from '../components/ListView/types';
-export * from '../components/Listbox/types';
 export * from '../components/Menu/types';
 export * from '../components/Modal/types';
 export * from '../components/Notification/types';

@@ -103,7 +103,7 @@
     --sidedrawer-item-expanded-background: oklch(0 0 0 / 0.07);
 
     // Used in dropdown menus, list-tile, list-nav and other similar UI
-    --navigation-item-background: var(--background);
+    --navigation-background: var(--background);
     --navigation-item-expanded-background: oklch(0 0 0 / 0.07);
     --navigation-item-foreground: var(--foreground);
     --navigation-item-foreground-secondary: #{colors.$gray-700};

@@ -1,17 +1,17 @@
-import { iconPosition } from '@/components/Button/mixins/buttonProps';
+import { iconPosition } from '@/components/Button/mixins/buttonProps.ts';
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
-import { textFieldProps } from '@/components/Field/mixins/fieldProps';
-import { validationProps } from '@/components/Field/mixins/validationProps';
 import {
   emptyDataMessage,
   listboxMaxHeight,
   listboxMinSearchChars,
   listboxMinSearchLength,
   notFoundMessage,
-} from '@/components/Listbox/mixins/listboxProps';
-import { popoverDefaultTransitionProp } from '@/components/Popover/mixins/popoverProps';
-import { booleanProp, stringProp, validNumberGtZeroProp } from '@/mixins/CommonProps';
-import type { TDataSource, TLabelPosition } from '@/types';
+} from '@/components/Combobox/mixins/listboxProps.ts';
+import { textFieldProps } from '@/components/Field/mixins/fieldProps.ts';
+import { validationProps } from '@/components/Field/mixins/validationProps.ts';
+import { popoverDefaultTransitionProp } from '@/components/Popover/mixins/popoverProps.ts';
+import { booleanProp, stringProp, validNumberGtZeroProp } from '@/mixins/CommonProps.ts';
+import type { TDataSource } from '@/types';
 import type { Prop } from 'vue';
 
 export const comboboxProps = {
@@ -36,18 +36,13 @@ export const comboboxProps = {
   notFoundMessage: notFoundMessage,
   minSearchChars: listboxMinSearchChars,
   minSearchLength: listboxMinSearchLength,
-  minimumItemsForSearch: validNumberGtZeroProp,
   multiple: booleanProp,
   listboxColor: stringProp,
   listboxMaxHeight: listboxMaxHeight,
   listboxMinWidth: validNumberGtZeroProp,
   listboxSearchLabel: stringProp,
-  popoverMaxHeight: validNumberGtZeroProp,
-  popoverMinWidth: validNumberGtZeroProp,
   checkboxColor: stringProp,
   checkboxPosition: iconPosition,
-  checkOptionColor: stringProp,
-  checkOptionPosition: stringProp as Prop<TLabelPosition>,
   chipEnabled: booleanProp,
   chipColor: stringProp,
   chipPill: booleanProp,

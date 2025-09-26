@@ -1,40 +1,47 @@
 import { BsChip } from '@/components/Chip';
+import { BsListbox } from '@/components/Combobox';
 import {
   useCreateFieldInnerWrapper,
   useCreateFieldWrapper,
   useCreateValidationIcon,
   useInputFieldBaseAttrs,
-} from '@/components/Field/mixins/textFieldApi';
-import { useOnTextFieldNodeMounted } from '@/components/Field/mixins/textFieldEventApi';
-import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi';
+} from '@/components/Field/mixins/textFieldApi.ts';
+import { useOnTextFieldNodeMounted } from '@/components/Field/mixins/textFieldEventApi.ts';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
 import { BsIcon } from '@/components/Icon';
-import { BsListbox } from '@/components/Listbox';
 import { BsListTileTitle } from '@/components/ListView';
 import { BsPopover } from '@/components/Popover';
+import { useTogglePopoverState } from '@/components/Popover/mixins/popoverApi.ts';
 import { ClickOutside } from '@/directives';
-import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi';
+import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi.ts';
 import type {
   IArrayStore,
   IBsModel,
   IBsStore,
-  TBsCombobox,
+  Numberish,
+  PromiseVoidFunction,
+  TBsListbox,
+  TBsPopover,
+  TCheckboxPosition,
   TComboboxOptionProps,
-  TDataListSchemaProps,
+  TDataListSchema,
+  TDataSource,
   TEmitFn,
+  TIconVariant,
   TPopoverPosition,
   TRecord,
 } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import { kebabCase } from '@/utils/StringHelper.ts';
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
+import type { ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
 import { createCommentVNode, Fragment, h, nextTick, toDisplayString, withDirectives } from 'vue';
 
 function createActionAppendIcon(
   showClearButton: boolean,
   iconVariant: TIconVariant,
   iconSize: number,
-  clearHandler: EventListener,
-  popoverHandler: EventListener
+  clearHandler: PromiseVoidFunction,
+  popoverHandler: VoidFunction
 ): VNode {
   return h(
     'div',
@@ -60,14 +67,12 @@ function createActionAppendIcon(
   );
 }
 
-function createChipsOrCsv(
-  props: Readonly<ExtractPropTypes<TBsCombobox>>,
-  schema: TDataListSchemaProps,
+function renderChipOrCsvItems(
+  props: Readonly<TComboboxOptionProps>,
+  schema: TDataListSchema,
   selectedItems: ShallowRef<IBsModel[]>
 ): VNode {
-  const thisProps = props as Readonly<TComboboxOptionProps>;
-
-  if (thisProps.chipEnabled && thisProps.multiple && selectedItems.value.length > 0) {
+  if (props.multiple && props.chipEnabled && selectedItems.value.length > 0) {
     return h(
       Fragment,
       null,
@@ -76,10 +81,10 @@ function createChipsOrCsv(
           BsChip,
           {
             key: kebabCase(it.get(schema.displayField) as string),
-            color: props.chipColor,
-            disabled: props.disabled,
-            pill: props.chipPill,
-            outlined: props.chipOutlined,
+            color: props.chipColor as Prop<string>,
+            disabled: props.disabled as unknown as Prop<boolean>,
+            pill: props.chipPill as unknown as Prop<boolean>,
+            outlined: props.chipOutlined as unknown as Prop<boolean>,
           },
           {
             default: () => toDisplayString(it.get(schema.displayField)),
@@ -93,15 +98,13 @@ function createChipsOrCsv(
   }
 }
 
-function createComboboxFieldInput(
-  props: Readonly<ExtractPropTypes<TBsCombobox>>,
-  dataSchema: TDataListSchemaProps,
+function renderComboboxInputField(
+  props: Readonly<TComboboxOptionProps>,
+  dataSchema: TDataListSchema,
   selectedItems: ShallowRef<IBsModel[]>,
-  fieldValues: Ref<(string | number)[]>
+  localValue: Ref<Numberish[]>
 ): VNode[] {
-  const thisProps = props as Readonly<TComboboxOptionProps>;
-  const showPlaceholder =
-    Helper.isEmpty(fieldValues.value) && !Helper.isEmpty(thisProps.placeholder);
+  const showPlaceholder = Helper.isEmpty(localValue.value) && !Helper.isEmpty(props.placeholder);
 
   return [
     showPlaceholder
@@ -110,26 +113,26 @@ function createComboboxFieldInput(
           {
             class: `${cssPrefix}field-placeholder`,
           },
-          toDisplayString(thisProps.placeholder)
+          toDisplayString(props.placeholder)
         )
       : createCommentVNode(' v-if-placeholder '),
-    createChipsOrCsv(props, dataSchema, selectedItems),
+    renderChipOrCsvItems(props, dataSchema, selectedItems),
     h(
       'select',
       {
-        ...useInputFieldBaseAttrs(thisProps),
-        class: 'd-none',
+        ...useInputFieldBaseAttrs(props),
+        class: 'hidden',
         tabindex: -1,
         'aria-hidden': true,
-        multiple: thisProps.multiple,
-        'aria-required': thisProps.required,
-        'aria-disabled': thisProps.disabled,
+        multiple: props.multiple,
+        'aria-required': props.required && !props.disabled,
+        'aria-disabled': props.disabled,
       },
       selectedItems.value.map((it) =>
         h(
           'option',
           {
-            key: `item-${it.get(dataSchema.valueField)}`,
+            key: `item-${it.get(dataSchema.valueField) as string}`,
             value: it.get(dataSchema.valueField),
             selected: 'selected',
           },
@@ -140,35 +143,15 @@ function createComboboxFieldInput(
   ];
 }
 
-/**
- * Toggle Popover state: show or hide.
- *
- * @param emit           Emitter function
- * @param isPopoverOpen  The Popover state reference
- * @param isDisabled     Is the component in disable state or not
- * @param state          Current Popover state. Toggle will inverse this state.
- */
-export function useTogglePopoverState(
-  emit: TEmitFn,
-  isPopoverOpen: Ref<boolean>,
-  isDisabled: boolean,
-  state: boolean
-) {
-  if (!isDisabled) {
-    isPopoverOpen.value = !state;
-    emit(isPopoverOpen.value ? 'open' : 'close');
-  }
-}
-
 export function useRenderCombobox(
   slots: Slots,
   emit: TEmitFn,
-  props: Readonly<ExtractPropTypes<TBsCombobox>>,
+  props: Readonly<TComboboxOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
-  schema: TDataListSchemaProps,
+  schema: TDataListSchema,
   activator: Ref<HTMLElement | null>,
-  fieldValues: Ref<(string | number)[]>,
+  localValue: Ref<Numberish[]>,
   selectedItems: ShallowRef<IBsModel[]>,
   isPopoverOpen: Ref<boolean>,
   isFocused: Ref<boolean>,
@@ -179,11 +162,11 @@ export function useRenderCombobox(
   hasError: ComputedRef<boolean>,
   errorItems: ComputedRef<string[]>
 ): VNode {
-  const thisProps = props as Readonly<TComboboxOptionProps>;
   const listboxWidth = () => {
-    const minWidth = thisProps.popoverMinWidth || thisProps.listboxMinWidth;
+    const minWidth = props.listboxMinWidth;
     return minWidth ? parseInt(minWidth as string, 10) : 0;
   };
+
   const iconSize = 24;
 
   return withDirectives(
@@ -191,7 +174,7 @@ export function useRenderCombobox(
       slots,
       iconSize,
       wrapperCss,
-      thisProps,
+      props,
       h(Fragment, [
         h(
           'div',
@@ -201,34 +184,34 @@ export function useRenderCombobox(
           [
             useCreateFieldInnerWrapper(
               slots,
-              thisProps,
-              createComboboxFieldInput(props, schema, selectedItems, fieldValues),
+              props,
+              renderComboboxInputField(props, schema, selectedItems, localValue),
               iconSize,
-              thisProps.appendIcon,
-              thisProps.prependIcon,
+              props.appendIcon,
+              props.prependIcon,
               useCreateValidationIcon(
-                thisProps.actionIconVariant as TIconVariant,
+                props.actionIconVariant as TIconVariant,
                 hasValidated.value,
                 hasError.value,
-                thisProps.validationIcon as boolean,
+                props.validationIcon as boolean,
                 iconSize
               ),
               createActionAppendIcon(
                 showClearButton.value,
-                thisProps.actionIconVariant as TIconVariant,
+                props.actionIconVariant as TIconVariant,
                 iconSize,
-                () => {
-                  fieldValues.value = [];
+                async () => {
+                  localValue.value = [];
                   selectedItems.value = [];
-                  emit('update:model-value', thisProps.multiple ? [] : undefined);
-                  nextTick().then(() => emit('clear'));
+                  emit('update:model-value', props.multiple ? [] : undefined);
+                  await nextTick().then(() => emit('clear'));
                 },
                 () => {
-                  isFocused.value = !thisProps.disabled;
+                  isFocused.value = !props.disabled;
                   useTogglePopoverState(
                     emit,
                     isPopoverOpen,
-                    (thisProps.readonly || thisProps.disabled) as boolean,
+                    (props.readonly || props.disabled) as boolean,
                     isPopoverOpen.value
                   );
                 }
@@ -237,11 +220,11 @@ export function useRenderCombobox(
               {
                 ref: activator,
                 onMouseenter: () => {
-                  if (thisProps.openOnHover && !isPopoverOpen.value) {
+                  if (props.openOnHover && !isPopoverOpen.value) {
                     useTogglePopoverState(
                       emit,
                       isPopoverOpen,
-                      thisProps.disabled as boolean,
+                      (props.readonly || props.disabled) as boolean,
                       false
                     );
                   }
@@ -250,24 +233,24 @@ export function useRenderCombobox(
               {
                 tabIndex: -1,
                 onFocus: () => {
-                  isFocused.value = !thisProps.disabled;
+                  isFocused.value = !props.disabled;
                 },
                 onClick: () => {
-                  isFocused.value = !thisProps.disabled;
+                  isFocused.value = !props.disabled;
                   useTogglePopoverState(
                     emit,
                     isPopoverOpen,
-                    (thisProps.readonly || thisProps.disabled) as boolean,
+                    (props.readonly || props.disabled) as boolean,
                     isPopoverOpen.value
                   );
                 },
               },
-              () => useTogglePopoverState(emit, isPopoverOpen, thisProps.disabled as boolean, true),
-              () => useTogglePopoverState(emit, isPopoverOpen, thisProps.disabled as boolean, true)
+              () => useTogglePopoverState(emit, isPopoverOpen, props.disabled as boolean, true),
+              () => useTogglePopoverState(emit, isPopoverOpen, props.disabled as boolean, true)
             ),
             useRenderFieldFeedback(
               slots,
-              thisProps,
+              props,
               showHelpText.value,
               showValidationError.value,
               hasError.value,
@@ -275,16 +258,15 @@ export function useRenderCombobox(
             ),
           ]
         ),
-        h(
+        h<TBsPopover>(
           BsPopover,
           {
             color: null,
-            space: (thisProps.outlined ? 2 : 1) as Prop<number>,
+            space: (props.outlined ? 2 : 1) as Prop<number>,
             class: ['overflow-y-hidden', `${cssPrefix}shadow-1`],
             placement: 'bottom' as Prop<TPopoverPosition>,
-            transition: props.transition,
-            // @ts-ignore
-            open: isPopoverOpen.value as Prop<boolean>,
+            transition: props.transition as Prop<string>,
+            open: isPopoverOpen.value as unknown as Prop<boolean>,
             trigger: activator.value as Prop<HTMLElement>,
             style: {
               minWidth: Helper.cssUnit(
@@ -296,43 +278,40 @@ export function useRenderCombobox(
           },
           {
             default: () =>
-              h(
+              h<TBsListbox>(
                 BsListbox,
                 {
-                  // @ts-ignore
-                  autoload: Helper.isEmpty(props.parentValue) as Prop<boolean>,
-                  // @ts-ignore
-                  borderless: true as Prop<boolean>,
-                  // @ts-ignore
-                  useCheckbox: true as Prop<boolean>,
-                  color: props.listboxColor,
-                  dataSource: props.dataSource,
-                  readonly: props.readonly,
-                  multiple: props.multiple,
-                  emptyDataMessage: props.emptyDataMessage,
-                  notFoundMessage: props.notFoundMessage,
-                  searchLabel: props.listboxSearchLabel,
+                  autoload: Helper.isEmpty(props.parentValue) as unknown as Prop<boolean>,
+                  borderless: true as unknown as Prop<boolean>,
+                  useCheckbox: true as unknown as Prop<boolean>,
+                  color: props.listboxColor as Prop<string>,
+                  dataSource: props.dataSource as Prop<TDataSource>,
+                  readonly: props.readonly as unknown as Prop<boolean>,
+                  multiple: props.multiple as unknown as Prop<boolean>,
+                  emptyDataMessage: props.emptyDataMessage as Prop<string>,
+                  notFoundMessage: props.notFoundMessage as Prop<string>,
+                  searchLabel: props.listboxSearchLabel as Prop<string>,
                   // searchText: (!isPopoverOpen.value ? "" : undefined),
-                  itemSeparator: props.itemSeparator,
-                  minSearchChars: props.minSearchChars,
-                  minSearchLength: props.minimumItemsForSearch || props.minSearchLength,
-                  maxHeight: props.popoverMaxHeight || props.listboxMaxHeight,
-                  checkboxColor: props.checkOptionColor || props.checkboxColor,
-                  checkboxPosition: props.checkOptionPosition || props.checkboxPosition,
-                  showImage: props.showImage,
-                  imageSize: props.imageSize,
-                  circleImage: props.circleImage,
-                  roundedImage: props.roundedImage,
+                  itemSeparator: props.itemSeparator as unknown as Prop<boolean>,
+                  minSearchChars: props.minSearchChars as Prop<Numberish>,
+                  minSearchLength: props.minSearchLength as Prop<Numberish>,
+                  maxHeight: props.listboxMaxHeight as Prop<Numberish>,
+                  checkboxColor: props.checkboxColor as Prop<string>,
+                  checkboxPosition: props.checkboxPosition as Prop<TCheckboxPosition>,
+                  showImage: props.showImage as unknown as Prop<boolean>,
+                  imageSize: props.imageSize as Prop<Numberish>,
+                  circleImage: props.circleImage as unknown as Prop<boolean>,
+                  roundedImage: props.roundedImage as unknown as Prop<boolean>,
                   modelValue: <Prop<string | number | string[] | number[]>>(
-                    (thisProps.multiple
-                      ? fieldValues.value
-                      : fieldValues.value.length > 0
-                        ? fieldValues.value[0]
+                    (props.multiple
+                      ? localValue.value
+                      : localValue.value.length > 0
+                        ? localValue.value[0]
                         : undefined)
                   ),
                   onDataBind: (items: IBsModel[]) => {
                     selectedItems.value = items.filter((it) =>
-                      fieldValues.value.some((v) => v === it.get(schema.valueField))
+                      localValue.value.some((v) => v === it.get(schema.valueField))
                     );
                     emit('data-bind', items);
                   },
@@ -343,14 +322,14 @@ export function useRenderCombobox(
                   'onUpdate:model-value': (
                     values: string | number | string[] | number[] | undefined
                   ) => {
-                    fieldValues.value =
-                      values == null ? [] : Array.isArray(values) ? values : [<string>values];
+                    localValue.value =
+                      values == null ? [] : Array.isArray(values) ? values : [values];
                     emit('update:model-value', values);
                   },
                   'onUpdate:selected-value': (values: IBsModel[]) => {
                     selectedItems.value = values;
                     emit('update:selected-value', values);
-                    if (!thisProps.multiple) {
+                    if (!props.multiple) {
                       useTogglePopoverState(emit, isPopoverOpen, false, true);
                     }
                   },
@@ -371,13 +350,13 @@ export function useRenderCombobox(
                   'empty-data-msg': () =>
                     useRenderSlot(slots, 'empty-data-msg', { key: 'emptyDataMessage' }, [
                       h(BsListTileTitle, null, {
-                        default: () => toDisplayString(thisProps.emptyDataMessage),
+                        default: () => toDisplayString(props.emptyDataMessage),
                       }),
                     ]),
                   'not-found-msg': () =>
                     useRenderSlot(slots, 'not-found-msg', { key: 'notFoundMessage' }, [
                       h(BsListTileTitle, null, {
-                        default: () => toDisplayString(thisProps.notFoundMessage),
+                        default: () => toDisplayString(props.notFoundMessage),
                       }),
                     ]),
                 }
@@ -385,13 +364,13 @@ export function useRenderCombobox(
           }
         ),
       ]),
-      (node: VNode) => useOnTextFieldNodeMounted(thisProps, node)
+      (node: VNode) => useOnTextFieldNodeMounted(props, node)
     ),
     [
       [
         ClickOutside,
         () => {
-          if (!thisProps.disabled) {
+          if (!props.disabled) {
             isFocused.value = false;
           }
         },
@@ -404,8 +383,7 @@ export function useRenderCombobox(
  * Fetch data from remote service and additionally create filters based on parentValue.
  */
 export async function useFetchData(
-  emit: TEmitFn,
-  dataSchema: TDataListSchemaProps,
+  dataSchema: TDataListSchema,
   parentValue: string | number | undefined,
   dataSource?: IBsStore | IArrayStore
 ): Promise<void> {
@@ -430,12 +408,7 @@ export async function useFetchData(
     }
 
     dataSource.setFilters([], true);
-
-    try {
-      await dataSource.load();
-    } catch (error) {
-      emit('data-error', error);
-    }
+    await dataSource.load();
   }
 }
 

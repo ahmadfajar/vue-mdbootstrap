@@ -14,7 +14,6 @@ export { BsFieldPlugin } from './Field';
 export { BsCheckboxPlugin } from './Checkbox';
 export { BsRadioPlugin } from './Radio';
 export { BsSwitchPlugin } from './Switch';
-export { BsListboxPlugin } from './Listbox';
 export { BsListViewPlugin } from './ListView';
 export { BsPopoverPlugin } from './Popover';
 export { BsMenuPlugin } from './Menu';

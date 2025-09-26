@@ -227,7 +227,7 @@ export declare const BsChipGroup: {
       text?: (props: TChipOptionItem) => VNode;
       icon?: (props: TChipOptionItem) => VNode;
     };
-    $emit: {
+    $emits: {
       (event: 'change', newValue: TChipValue | TChipValue[] | null): void;
       (event: 'item:close', dismissedItem: TChipValue): void;
       (event: 'update:model-value', value: TChipValue | TChipValue[] | null): void;

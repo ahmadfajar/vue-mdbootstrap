@@ -33,6 +33,9 @@ export declare type TListItemBorder =
 export declare type TListViewOptionProps = {
   /**
    * Apply custom color scheme to this ListView component.
+   *
+   * @deprecated
+   * Use unified global css variable instead.
    */
   color?: string;
 

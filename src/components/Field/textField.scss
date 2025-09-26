@@ -682,7 +682,9 @@
       --#{vars.$prefix}field-padding-top: 0.425rem;
 
       &.#{vars.$prefix}field-outlined {
+        // prettier-ignore
         --#{vars.$prefix}field-padding-top: var(--#{vars.$prefix}field-classic-padding-top);
+        // prettier-ignore
         --#{vars.$prefix}field-padding-bottom: var(--#{vars.$prefix}field-classic-padding-bottom);
 
         .#{vars.$prefix}field-outline-indicator {

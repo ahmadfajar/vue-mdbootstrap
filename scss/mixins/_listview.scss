@@ -14,7 +14,7 @@
       color.change(colors.$white, $alpha: 0.6)
     );
 
-    --#{vars.$prefix}listview-bg: #{$color};
+    --#{vars.$prefix}listview-bg: #{helper.to-oklch($color)};
     --#{vars.$prefix}subheader-color: #{$subheader-color};
 
     @if (helper.lightnessLevel($color) < 62.75%) {

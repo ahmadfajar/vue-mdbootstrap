@@ -18,7 +18,6 @@ export * from '@/components/Field';
 export * from '@/components/Checkbox';
 export * from '@/components/Radio';
 export * from '@/components/Switch';
-export * from '@/components/Listbox';
 export * from '@/components/ListView';
 export * from '@/components/Popover';
 export * from '@/components/Menu';

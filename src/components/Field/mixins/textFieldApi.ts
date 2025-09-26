@@ -288,7 +288,7 @@ export function useInputTextFieldAttrs(
 }
 
 declare interface InputTextEventEmitter {
-  clear: VoidFunction;
+  clear: () => void;
   blur: (target: Event) => void;
   focus: (target: Event) => void;
   keydown: (target: Event) => void;

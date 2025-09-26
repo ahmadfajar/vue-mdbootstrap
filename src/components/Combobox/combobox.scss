@@ -1,181 +1,185 @@
-@use "../../../scss/variables" as vars;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}combobox-field {
+@layer components {
+  .#{vars.$prefix}combobox-field {
     &.#{vars.$prefix}field-control {
+      &.focused:not(.active) {
+        --#{vars.$prefix}field-floating-label-transform: none;
+      }
+
+      &.#{vars.$prefix}field-outlined {
         &.focused:not(.active) {
-            --#{vars.$prefix}field-floating-label-transform: none;
-        }
+          .#{vars.$prefix}field-label {
+            opacity: 1;
+            visibility: initial;
+          }
 
-        &.#{vars.$prefix}field-outlined {
-            &.focused:not(.active) {
-                .#{vars.$prefix}field-label {
-                    opacity: 1;
-                    visibility: initial;
-                }
-
-                .#{vars.$prefix}field-outline-control {
-                    > .#{vars.$prefix}field-outline-label {
-                        display: none;
-                    }
-                }
+          .#{vars.$prefix}field-outline-control {
+            > .#{vars.$prefix}field-outline-label {
+              display: none;
             }
+          }
         }
+      }
     }
 
     &.#{vars.$prefix}floating-label {
-        .#{vars.$prefix}field-label {
-            height: var(--#{vars.$prefix}field-control-height);
-        }
+      .#{vars.$prefix}field-label {
+        height: var(--#{vars.$prefix}field-control-height);
+      }
     }
 
     .#{vars.$prefix}action-icon {
-        > .icon-expand {
-            transition: all 0.3s ease 0s;
-            cursor: pointer;
-        }
+      > .icon-expand {
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+      }
     }
 
     &.disabled {
-        .#{vars.$prefix}action-icon {
-            > .icon-expand {
-                opacity: var(--#{vars.$prefix}field-disabled-opacity);
-            }
+      .#{vars.$prefix}action-icon {
+        > .icon-expand {
+          opacity: var(--#{vars.$prefix}field-disabled-opacity);
         }
+      }
     }
 
     &.#{vars.$prefix}open {
-        .#{vars.$prefix}action-icon {
-            > .icon-expand {
-                transform: rotateZ(-180deg);
-            }
+      .#{vars.$prefix}action-icon {
+        > .icon-expand {
+          transform: rotateZ(-180deg);
         }
+      }
     }
 
     &.#{vars.$prefix}chip-enabled {
-        > .#{vars.$prefix}field-inner {
-            //min-height: 58px;
+      > .#{vars.$prefix}field-inner {
+        //min-height: 58px;
 
-            > .#{vars.$prefix}field-activator {
-                align-items: end;
-                flex: 1 1 auto;
-                flex-wrap: wrap;
-                max-width: 100%;
+        > .#{vars.$prefix}field-activator {
+          align-items: end;
+          flex: 1 1 auto;
+          flex-wrap: wrap;
+          max-width: 100%;
+        }
+      }
+
+      &.#{vars.$prefix}field-filled,
+      &.#{vars.$prefix}field-outlined {
+        &:not(.#{vars.$prefix}floating-label) {
+          .#{vars.$prefix}field-activator {
+            --#{vars.$prefix}field-padding-start: 0;
+
+            align-items: center;
+            padding-left: 1rem;
+            padding-top: 0.5rem;
+            padding-bottom: 0.25rem;
+          }
+
+          > .#{vars.$prefix}field-inner {
+            > .#{vars.$prefix}action-icon,
+            > .#{vars.$prefix}validation-icon {
+              > .#{vars.$prefix}icon {
+                align-self: flex-start;
+                margin-top: 1rem;
+              }
             }
+          }
+        }
+      }
+
+      .#{vars.$prefix}chip {
+        margin-bottom: vars.$text-field-padding-bottom;
+        margin-right: vars.$padding-sm;
+
+        //~ .#{vars.$prefix}chip {
+        //  margin-left: 0;
+        //}
+      }
+
+      &.#{vars.$prefix}floating-label {
+        .#{vars.$prefix}field-label {
+          height: auto;
+          top: vars.$padding-md;
         }
 
-        &.#{vars.$prefix}field-filled, &.#{vars.$prefix}field-outlined {
-            &:not(.#{vars.$prefix}floating-label) {
-                .#{vars.$prefix}field-activator {
-                    --#{vars.$prefix}field-padding-start: 0;
+        &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
+          .#{vars.$prefix}field-activator {
+            --#{vars.$prefix}field-control-height: 0;
+            --#{vars.$prefix}field-padding-top: 0;
 
-                    align-items: center;
-                    padding-left: 1rem;
-                    padding-top: 0.5rem;
-                    padding-bottom: 0.25rem;
-                }
+            min-height: vars.$text-field-height;
+            padding-top: vars.$padding-md + 0.25;
 
-                > .#{vars.$prefix}field-inner {
-                    > .#{vars.$prefix}action-icon, > .#{vars.$prefix}validation-icon {
-                        > .#{vars.$prefix}icon {
-                            align-self: flex-start;
-                            margin-top: 1rem;
-                        }
-                    }
-                }
+            > .#{vars.$prefix}field-placeholder {
+              --#{vars.$prefix}field-padding-bottom: 0.75rem;
             }
+          }
+
+          &.active {
+            --#{vars.$prefix}field-floating-label-transform: translateY(-24px) scale(0.85);
+            --#{vars.$prefix}field-padding-top: 1.25rem;
+          }
+
+          .#{vars.$prefix}field-label {
+            top: vars.$padding-md + 0.35;
+          }
         }
 
-        .#{vars.$prefix}chip {
-            margin-bottom: vars.$text-field-padding-bottom;
-            margin-right: vars.$padding-sm;
+        &.#{vars.$prefix}field-filled,
+        &.#{vars.$prefix}field-outlined {
+          .#{vars.$prefix}field-activator {
+            --#{vars.$prefix}field-control-height: 0;
+            --#{vars.$prefix}field-padding-top: 0;
 
-            ~ .#{vars.$prefix}chip {
-                margin-left: 0;
+            padding-left: vars.$padding-md;
+            padding-top: vars.$padding-md;
+
+            > .#{vars.$prefix}field-placeholder {
+              --#{vars.$prefix}field-padding-start: 0;
             }
+          }
         }
 
-        &.#{vars.$prefix}floating-label {
-            .#{vars.$prefix}field-label {
-                height: auto;
-                top: $padding-md;
+        &.#{vars.$prefix}field-filled {
+          .#{vars.$prefix}action-icon,
+          .#{vars.$prefix}append-inner,
+          .#{vars.$prefix}prepend-inner {
+            > .#{vars.$prefix}icon {
+              margin-top: 1.375rem; // 22px;
+            }
+          }
+
+          .#{vars.$prefix}field-activator {
+            min-height: 4.125rem;
+            padding-top: vars.$padding-md + 0.75;
+
+            > .#{vars.$prefix}field-label {
+              top: vars.$padding-md + 0.25;
             }
 
-            &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
-                .#{vars.$prefix}field-activator {
-                    --#{vars.$prefix}field-control-height: 0;
-                    --#{vars.$prefix}field-padding-top: 0;
-
-                    min-height: vars.$text-field-height;
-                    padding-top: $padding-md + .25;
-
-                    > .#{vars.$prefix}field-placeholder {
-                        --#{vars.$prefix}field-padding-bottom: 0.75rem;
-                    }
-                }
-
-                &.active {
-                    --#{vars.$prefix}field-floating-label-transform: translateY(-24px) scale(.85);
-                    --#{vars.$prefix}field-padding-top: 1.25rem;
-                }
-
-                .#{vars.$prefix}field-label {
-                    top: $padding-md + .35;
-                }
+            > .#{vars.$prefix}field-placeholder {
+              --#{vars.$prefix}field-padding-bottom: 0.75rem;
             }
+          }
 
-            &.#{vars.$prefix}field-filled,
-            &.#{vars.$prefix}field-outlined {
-                .#{vars.$prefix}field-activator {
-                    --#{vars.$prefix}field-control-height: 0;
-                    --#{vars.$prefix}field-padding-top: 0;
-
-                    padding-left: $padding-md;
-                    padding-top: $padding-md;
-
-                    > .#{vars.$prefix}field-placeholder {
-                        --#{vars.$prefix}field-padding-start: 0;
-                    }
-                }
-            }
-
-            &.#{vars.$prefix}field-filled {
-                .#{vars.$prefix}action-icon,
-                .#{vars.$prefix}append-inner,
-                .#{vars.$prefix}prepend-inner {
-                    > .#{vars.$prefix}icon {
-                        margin-top: 22px;
-                    }
-                }
-
-                .#{vars.$prefix}field-activator {
-                    min-height: 4.125rem;
-                    padding-top: $padding-md + .75;
-
-                    > .#{vars.$prefix}field-label {
-                        top: $padding-md + .25;
-                    }
-
-                    > .#{vars.$prefix}field-placeholder {
-                        --#{vars.$prefix}field-padding-bottom: 0.75rem;
-                    }
-                }
-
-                &.active {
-                    --#{vars.$prefix}field-floating-label-transform: translateY(-14px) scale(.85);
-                }
-            }
-
-            &.#{vars.$prefix}field-outlined {
-                .#{vars.$prefix}field-activator {
-                    min-height: 3.75rem;
-                    padding-bottom: vars.$text-field-padding-bottom;
-
-                    > .#{vars.$prefix}field-placeholder {
-                        --#{vars.$prefix}field-padding-bottom: 0.75rem;
-                        --#{vars.$prefix}field-padding-top: 0;
-                    }
-                }
-            }
+          &.active {
+            --#{vars.$prefix}field-floating-label-transform: translateY(-14px) scale(0.85);
+          }
         }
+
+        &.#{vars.$prefix}field-outlined {
+          .#{vars.$prefix}field-activator {
+            min-height: 3.75rem;
+            padding-bottom: vars.$text-field-padding-bottom;
+
+            > .#{vars.$prefix}field-placeholder {
+              --#{vars.$prefix}field-padding-bottom: 0.75rem;
+              --#{vars.$prefix}field-padding-top: 0;
+            }
+          }
+        }
+      }
     }
+  }
 }

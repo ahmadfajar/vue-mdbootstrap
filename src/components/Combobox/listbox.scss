@@ -1,0 +1,56 @@
+@use 'sass:color';
+@use '../../../scss/mixins/css3/placeholder';
+@use '../../../scss/utils/color_helper' as helper;
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
+
+@layer components {
+  .#{vars.$prefix}listbox {
+    --#{vars.$prefix}listbox-bg: var(--navigation-background, #{colors.$white});
+    --#{vars.$prefix}searchbox-bg: #{rgba(colors.$black, 0.025)};
+    --#{vars.$prefix}searchbox-active-bg: #{colors.$white};
+    --#{vars.$prefix}searchbox-font-size: 14px;
+    --#{vars.$prefix}searchbox-text-color: currentColor;
+    --#{vars.$prefix}searchbox-border-color: #{colors.$gray-500};
+    // prettier-ignore
+    --#{vars.$prefix}searchbox-focused-border-color: var(--#{vars.$prefix}field-active-indicator);
+    // prettier-ignore
+    --#{vars.$prefix}searchbox-focused-box-shadow: color-mix(in oklch, var(--#{vars.$prefix}field-active-indicator), transparent 70%);
+    --#{vars.$prefix}searchbox-padding-x: #{vars.$padding-md - 0.25};
+    --#{vars.$prefix}searchbox-padding-y: #{vars.$padding-sm};
+
+    background-color: var(--#{vars.$prefix}listbox-bg);
+
+    > .#{vars.$prefix}listbox-search {
+      padding: vars.$padding-md - 0.25;
+      width: 100%;
+
+      > input {
+        @include placeholder.decorate-input-placeholder();
+
+        & {
+          background: var(--#{vars.$prefix}searchbox-bg);
+          border: 1px solid var(--#{vars.$prefix}searchbox-border-color);
+          color: var(--#{vars.$prefix}searchbox-text-color);
+          font-size: var(--#{vars.$prefix}searchbox-font-size);
+          // prettier-ignore
+          padding: var(--#{vars.$prefix}searchbox-padding-y) var(--#{vars.$prefix}searchbox-padding-x);
+          outline: none;
+          width: 100%;
+        }
+
+        &:focus {
+          background: var(--#{vars.$prefix}searchbox-active-bg);
+          border-color: var(--#{vars.$prefix}searchbox-focused-border-color);
+          box-shadow: 0 0 0.15rem 0.25rem var(--#{vars.$prefix}searchbox-focused-box-shadow);
+        }
+      }
+    }
+
+    //&:not(.bg-amber):not(.bg-lime):not(.bg-yellow):not(.bg-light):not(.bg-light-grey):not(.bg-white) {
+    //  --#{vars.$prefix}searchbox-text-color: #{colors.$white};
+    //  --#{vars.$prefix}searchbox-focused-border-color: #{colors.$white};
+    //  --#{vars.$prefix}searchbox-focused-box-shadow: #{rgba(colors.$gray-400, 0.2)};
+    //}
+  }
+}
