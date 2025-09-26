@@ -423,11 +423,11 @@ export function useRenderListbox(
   return h(
     'div',
     {
-      class: [
-        `${cssPrefix}listbox`,
-        props.color ? `bg-${props.color}` : '',
-        !props.borderless ? 'border' : '',
-      ],
+      class: {
+        [`${cssPrefix}listbox`]: true,
+        [`bg-${props.color}`]: props.color,
+        border: !props.borderless,
+      },
     },
     [
       renderSearchbox(

@@ -1,12 +1,5 @@
-import { EventClosableProps, EventUpdateOpenProps } from '@/types';
-import {
-  AllowedComponentProps,
-  ComponentCustomProps,
-  ComponentObjectPropsOptions,
-  ObjectPlugin,
-  VNode,
-  VNodeProps,
-} from 'vue';
+import { BaseComponentProps, EventClosableProps, EventUpdateOpenProps, Numberish } from '@/types';
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 
 export declare type TPopoverPosition =
   | 'top'
@@ -27,26 +20,31 @@ export declare type TPopupOptions = {
    * This Popover state: show or hide.
    */
   open?: boolean;
+
   /**
    * Close the Popover when ESC key is pressed.
    */
   escClose?: boolean;
+
   /**
    * Show backdrop overlay or not.
    */
   overlay?: boolean;
+
   /**
    * Close the Popover when the backdrop overlay is clicked.
    */
   overlayClickClose?: boolean;
+
   /**
    * The backdrop overlay color.
    */
   overlayColor?: string;
+
   /**
    * The backdrop overlay opacity.
    */
-  overlayOpacity?: string | number;
+  overlayOpacity?: Numberish;
 };
 
 export declare type TPopoverOptionProps = TPopupOptions & {
@@ -54,22 +52,30 @@ export declare type TPopoverOptionProps = TPopupOptions & {
    * Display Popover at a position that covers the activator element.
    */
   cover?: boolean;
+
   /**
    * This Popover background color.
+   *
+   * @deprecated
+   * Use unified global css variable instead.
    */
   color?: string;
+
   /**
    * Popover display placement.
    */
   placement?: TPopoverPosition;
+
   /**
    * Number of pixel to shift the Popover display position from the activator element.
    */
-  space?: string | number;
+  space?: Numberish;
+
   /**
    * Transition animation when displaying the Popover. This animation is effected by `placement` property.
    */
   transition?: string;
+
   /**
    * HTML element or element ID which is used to activate and calculate this Popover display position.
    */
@@ -78,11 +84,10 @@ export declare type TPopoverOptionProps = TPopupOptions & {
 
 export declare type TBsPopover = ComponentObjectPropsOptions<TPopoverOptionProps>;
 
-declare type AllowedPopoverProps = AllowedComponentProps &
-  ComponentCustomProps &
-  VNodeProps &
-  EventClosableProps &
-  EventUpdateOpenProps;
+declare interface AllowedPopoverProps
+  extends BaseComponentProps,
+    EventClosableProps,
+    EventUpdateOpenProps {}
 
 export declare const BsPopover: {
   new (): {
@@ -90,7 +95,10 @@ export declare const BsPopover: {
     $slots: {
       default?: () => VNode[];
     };
-    $emit: ['close', 'update:open'];
+    $emits: {
+      (event: 'close', message: string): void;
+      (event: 'update:open', state: boolean): void;
+    };
   };
 };
 

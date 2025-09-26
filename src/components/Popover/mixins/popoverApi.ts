@@ -3,19 +3,11 @@ import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
 import { ClickOutside, Resize, Scroll } from '@/directives';
 import { useRenderTransition } from '@/mixins/CommonApi.ts';
 import { isChildOf, isSVGElement } from '@/mixins/DomHelper.ts';
-import type {
-  Numberish,
-  TBsPopover,
-  TEmitFn,
-  TPopoverOptionProps,
-  TPopoverPosition,
-  TRecord,
-} from '@/types';
+import type { Numberish, TEmitFn, TPopoverOptionProps, TPopoverPosition, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
   ComponentInternalInstance,
   ComputedRef,
-  ExtractPropTypes,
   Prop,
   Ref,
   ShallowRef,
@@ -26,7 +18,7 @@ import { h, mergeProps, nextTick, Teleport, vShow, withDirectives } from 'vue';
 
 const SPACE = 8;
 
-function shiftedSpace(value?: Numberish): number {
+function shiftedValue(value?: Numberish): number {
   return Helper.isNumber(value)
     ? value
     : !value || isNaN(parseInt(value, 10))
@@ -162,15 +154,15 @@ function getPopoverBottomPosition(
 export function useSetPopoverPosition(
   instance: ComponentInternalInstance | null,
   props: Readonly<TPopoverOptionProps>,
-  popoverRef: Ref<Element | null>,
-  actualPlacement: Ref<TPopoverPosition | undefined>,
+  popoverRef: Ref<HTMLElement | null>,
+  placementRef: Ref<TPopoverPosition | undefined>,
   isActive: Ref<boolean>
 ): void {
   if (!popoverRef.value || !instance || !isActive.value || !props.trigger) {
     return;
   }
 
-  const popoverEl = <HTMLElement>popoverRef.value;
+  const popoverEl = popoverRef.value;
   const activatorEl = Helper.isString(props.trigger)
     ? document.querySelector(props.trigger)
     : props.trigger;
@@ -181,24 +173,24 @@ export function useSetPopoverPosition(
       useClosePopover(instance, isActive, 'Activator overflow.');
     }
 
-    const shift = shiftedSpace(props.space);
-    const deltaYTop = elRect.top - popoverEl.offsetHeight - shift;
-    const deltaYBottom = window.innerHeight - (elRect.top + popoverEl.offsetHeight + shift);
+    const shifted = shiftedValue(props.space);
+    const deltaYTop = elRect.top - popoverEl.offsetHeight - shifted;
+    const deltaYBottom = window.innerHeight - (elRect.top + popoverEl.offsetHeight + shifted);
 
     if (props.placement?.startsWith('bottom') && deltaYBottom < deltaYTop) {
-      actualPlacement.value = props.placement.replace('bottom', 'top') as TPopoverPosition;
+      placementRef.value = props.placement.replace('bottom', 'top') as TPopoverPosition;
     } else if (props.placement?.startsWith('top') && deltaYTop < deltaYBottom) {
-      actualPlacement.value = props.placement.replace('top', 'bottom') as TPopoverPosition;
+      placementRef.value = props.placement.replace('top', 'bottom') as TPopoverPosition;
     } else {
-      actualPlacement.value = props.placement;
+      placementRef.value = props.placement;
     }
 
-    if (actualPlacement.value?.startsWith('top')) {
+    if (placementRef.value?.startsWith('top')) {
+      popoverEl.style.height = 'fit-content';
       popoverEl.style.top = '';
       popoverEl.style.bottom =
-        getPopoverBottomPosition(elRect, popoverEl.offsetHeight, shift, props.cover as boolean) +
+        getPopoverBottomPosition(elRect, popoverEl.offsetHeight, shifted, props.cover as boolean) +
         'px';
-      popoverEl.style.height = 'fit-content';
     } else {
       popoverEl.style.bottom = '';
       popoverEl.style.height = '';
@@ -207,7 +199,7 @@ export function useSetPopoverPosition(
           elRect,
           props.placement as TPopoverPosition,
           popoverEl.offsetHeight,
-          shift,
+          shifted,
           props.cover as boolean
         ) + 'px';
     }
@@ -217,7 +209,7 @@ export function useSetPopoverPosition(
         elRect,
         props.placement as TPopoverPosition,
         popoverEl.offsetWidth,
-        shift,
+        shifted,
         props.cover as boolean
       ) + 'px';
 
@@ -241,55 +233,6 @@ export function useClosePopover(
   // PopupManager.remove(instance);
 }
 
-export function useRenderPopover(
-  slots: Slots,
-  attrs: TRecord,
-  props: Readonly<ExtractPropTypes<TBsPopover>>,
-  instance: ShallowRef<ComponentInternalInstance | null>,
-  classNames: ComputedRef<string[]>,
-  popover: Ref<Element | null>,
-  actualPlacement: Ref<TPopoverPosition | undefined>,
-  isActive: Ref<boolean>
-): VNode {
-  const thisProps = props as Readonly<TPopoverOptionProps>;
-  const thisSetPosition = async () => {
-    await nextTick().then(() =>
-      useSetPopoverPosition(instance.value, thisProps, popover, actualPlacement, isActive)
-    );
-  };
-  const thisOnClickOutside = (evt: Event) => {
-    onPopoverClickOutside(thisProps, instance.value, isActive, evt);
-  };
-
-  return h(Teleport, { to: 'body' }, [
-    h(BsOverlay, {
-      show: (props.overlay && isActive.value) as unknown as Prop<boolean>,
-      opacity: props.overlayOpacity,
-      color: props.overlayColor,
-      onClick: () => {
-        if (thisProps.overlayClickClose) {
-          useClosePopover(instance.value, isActive, 'Overlay clicked.');
-        }
-      },
-    }),
-    useRenderTransition({ name: thisProps.transition }, [
-      withDirectives(
-        h(
-          'div',
-          mergeProps({ class: classNames.value, ref: popover }, attrs),
-          slots.default && slots.default()
-        ),
-        [
-          [vShow, isActive.value],
-          [ClickOutside, thisOnClickOutside],
-          [Resize, thisSetPosition],
-          [Scroll, thisSetPosition],
-        ]
-      ),
-    ]),
-  ]);
-}
-
 function onPopoverClickOutside(
   props: Readonly<TPopoverOptionProps>,
   instance: ComponentInternalInstance | null,
@@ -299,10 +242,11 @@ function onPopoverClickOutside(
   if ((props.overlay && !props.overlayClickClose) || !isActive.value) {
     return;
   }
+
   const activatorEl = Helper.isString(props.trigger)
     ? document.querySelector(props.trigger)
     : props.trigger;
-  let target: HTMLElement | null | undefined = evt.target as HTMLElement | null;
+  let target = evt.target as HTMLElement | null | undefined;
 
   if (activatorEl && activatorEl.contains(target as Node)) {
     return;
@@ -319,6 +263,61 @@ function onPopoverClickOutside(
   }
 
   useClosePopover(instance, isActive, 'Clicked outside.');
+}
+
+export function useRenderPopover(
+  slots: Slots,
+  attrs: TRecord,
+  props: Readonly<TPopoverOptionProps>,
+  instance: ShallowRef<ComponentInternalInstance | null>,
+  classNames: ComputedRef<string[]>,
+  popoverRef: Ref<HTMLElement | null>,
+  placementRef: Ref<TPopoverPosition | undefined>,
+  isActive: Ref<boolean>
+): VNode {
+  const thisSetPosition = async () => {
+    await nextTick().then(() =>
+      useSetPopoverPosition(instance.value, props, popoverRef, placementRef, isActive)
+    );
+  };
+
+  const thisOnClickOutside = (evt: Event) => {
+    onPopoverClickOutside(props, instance.value, isActive, evt);
+  };
+
+  return h(
+    Teleport,
+    { to: 'body' },
+    {
+      default: () => [
+        h(BsOverlay, {
+          show: (props.overlay && isActive.value) as unknown as Prop<boolean>,
+          opacity: props.overlayOpacity as Prop<Numberish>,
+          color: props.overlayColor as Prop<string>,
+          onClick: () => {
+            if (props.overlayClickClose) {
+              useClosePopover(instance.value, isActive, 'Overlay clicked.');
+            }
+          },
+        }),
+        useRenderTransition({ name: props.transition }, [
+          withDirectives(
+            h(
+              'div',
+              mergeProps({ class: classNames.value, ref: popoverRef }, attrs),
+              slots.default && slots.default()
+            ),
+            [
+              [vShow, isActive.value],
+              [ClickOutside, thisOnClickOutside],
+              [Resize, thisSetPosition],
+              [Scroll, thisSetPosition],
+            ]
+          ),
+        ]),
+      ],
+    }
+  );
 }
 
 /**

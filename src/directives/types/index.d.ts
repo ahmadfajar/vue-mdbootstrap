@@ -1,18 +1,18 @@
-import { ObjectDirective } from 'vue';
+import { Directive } from 'vue';
 
-export declare const vClickOutside: ObjectDirective<HTMLElement> & {
+export declare const vClickOutside: Directive<HTMLElement> & {
   name?: 'click-outside';
 };
 
-export declare const vResize: ObjectDirective<HTMLElement> & {
+export declare const vResize: Directive<HTMLElement> & {
   name?: 'resize';
 };
 
-export declare const vScroll: ObjectDirective<HTMLElement> & {
+export declare const vScroll: Directive<HTMLElement> & {
   name?: 'scroll';
 };
 
-export declare const vTouch: ObjectDirective<HTMLElement> & {
+export declare const vTouch: Directive<HTMLElement> & {
   name?: 'touch';
 };
 
