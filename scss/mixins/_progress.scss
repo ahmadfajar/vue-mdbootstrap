@@ -1,3 +1,4 @@
+@use "sass:color";
 @use '../utils/color_helper' as helper;
 @use '../variables' as vars;
 
@@ -39,12 +40,13 @@
 }
 
 @mixin make-bar-variant($name, $color) {
-  $color-rgb: helper.to-rgb($color);
+  $color-oklch: helper.to-oklch($color);
+
   .progress-bar-#{$name} {
-    --#{vars.$prefix}progress-bar-bg: rgba(#{$color-rgb}, 0.24);
+    --#{vars.$prefix}progress-bar-bg: color.change(#{$color-oklch}, $alpha:0.24);
     --#{vars.$prefix}progress-bar-fill-bg: #{$color};
-    --#{vars.$prefix}progress-bar-track-bg: rgba(#{$color-rgb}, 0.38);
-    --#{vars.$prefix}progress-bar-buffer-border-color: rgba(#{$color-rgb}, 0.38);
+    --#{vars.$prefix}progress-bar-track-bg: color.change(#{$color-oklch}, $alpha:0.38);
+    --#{vars.$prefix}progress-bar-buffer-border-color: color.change(#{$color-oklch}, $alpha:0.38);
 
     &.#{vars.$prefix}indeterminate {
       > .#{vars.$prefix}progress-bar-track,

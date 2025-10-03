@@ -64,10 +64,10 @@
 
       --#{vars.$prefix-bs}dropdown-bg: var(--#{vars.$prefix}listview-bg);
       --#{vars.$prefix-bs}dropdown-link-color: var(--#{vars.$prefix}listview-color);
-      --#{vars.$prefix-bs}dropdown-link-active-bg: var(--navigation-menu-active-background);
-      --#{vars.$prefix-bs}dropdown-link-active-color: var(--navigation-menu-active-foreground);
-      --#{vars.$prefix-bs}dropdown-link-hover-bg: var(--navigation-menu-hover-background);
-      --#{vars.$prefix-bs}dropdown-link-hover-color: var(--navigation-menu-hover-foreground);
+      --#{vars.$prefix-bs}dropdown-link-active-bg: var(--navigation-item-active-background);
+      --#{vars.$prefix-bs}dropdown-link-active-color: var(--navigation-item-active-foreground);
+      --#{vars.$prefix-bs}dropdown-link-hover-bg: var(--navigation-item-hover-background);
+      --#{vars.$prefix-bs}dropdown-link-hover-color: var(--navigation-item-hover-foreground);
     }
 
     &.#{vars.$prefix}list-space-both,

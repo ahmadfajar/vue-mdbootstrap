@@ -80,4 +80,4 @@ export default `
       transform: rotateX(180deg) rotate(341.5deg);
     }
   }
-`
+`;

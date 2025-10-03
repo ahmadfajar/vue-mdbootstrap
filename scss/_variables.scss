@@ -175,6 +175,26 @@ $text-field-opacity:                  .6;
 $text-field-hover-opacity:            .9;
 $text-field-support-text-opacity:     .65;
 
+// MaskLoader components
+//-----------------------------
+$spinner-width:                     2rem;
+$spinner-height:                    $spinner-width;
+$spinner-vertical-align:            -.125em;
+$spinner-border-width:              .25em;
+$spinner-animation-speed:           .75s;
+
+// ProgressBar components
+//-----------------------------
+$progress-height:                   1rem;
+$progress-font-size:                $font-size-base * .75;
+$progress-bg:                       colors.$gray-200;
+$progress-border-radius:            $radius-md;
+$progress-box-shadow:               inset 0 1px 2px rgba(colors.$black, .075);
+$progress-bar-color:                colors.$white;
+$progress-bar-bg:                   colors.$primary-color;
+$progress-bar-animation-timing:     1s linear infinite;
+$progress-bar-transition:           width .6s ease;
+
 // Tabs components
 //-----------------------------
 $tabs-item-spacing:                 .375rem;

@@ -1,14 +1,14 @@
 import type { App, ObjectPlugin } from 'vue';
-import BsMaskLoader from './BsMaskLoader';
-import BsProgress from './BsProgress';
-import BsProgressBar from './BsProgressBar';
+import BsMaskLoader from './BsMaskLoader.ts';
+import BsProgress from './BsProgress.ts';
+import BsProgressBar from './BsProgressBar.ts';
 
 const BsProgressPlugin: ObjectPlugin = {
-    install: (app: App): void => {
-        app.component(BsMaskLoader.name as string, BsMaskLoader);
-        app.component(BsProgress.name as string, BsProgress);
-        app.component(BsProgressBar.name as string, BsProgressBar);
-    },
+  install: (app: App): void => {
+    app.component(BsMaskLoader.name as string, BsMaskLoader);
+    app.component(BsProgress.name as string, BsProgress);
+    app.component(BsProgressBar.name as string, BsProgressBar);
+  },
 };
 
-export { BsProgressPlugin, BsMaskLoader, BsProgress, BsProgressBar };
+export { BsMaskLoader, BsProgress, BsProgressBar, BsProgressPlugin };
