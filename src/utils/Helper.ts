@@ -1,3 +1,5 @@
+import { isEndWith } from '@/utils/StringHelper.ts';
+
 /**
  * Class Helper with static functions.
  *
@@ -223,12 +225,7 @@ export default class Helper {
     if (Helper.isString(value)) {
       if (value.toLowerCase() === 'auto') {
         return value;
-      } else if (
-        value.endsWith('px') ||
-        value.endsWith('em') ||
-        value.endsWith('rem') ||
-        value.endsWith('%')
-      ) {
+      } else if (isEndWith(value, ['px', 'em', 'rem', '%'])) {
         return value;
       } else {
         return value + _px;

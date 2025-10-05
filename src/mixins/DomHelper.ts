@@ -1,4 +1,4 @@
-import type { IEventResult, IHTMLElement } from '@/types';
+import type { IEventListenerResult, IHTMLElement } from '@/types';
 
 export class EventListener {
   /**
@@ -15,7 +15,7 @@ export class EventListener {
     eventName: string,
     callback: EventListenerOrEventListenerObject,
     options?: boolean | AddEventListenerOptions
-  ): IEventResult | undefined {
+  ): IEventListenerResult | undefined {
     if (target.addEventListener) {
       target.addEventListener(eventName, callback, options);
 

@@ -1,162 +1,141 @@
 import {
-    useComputeImgStyle,
-    useNavigateNextSlide,
-    useNavigatePrevSlide,
-    useRenderLightbox,
-    useSetActiveLightboxItem,
+  useComputeImgStyle,
+  useNavigateNextSlide,
+  useNavigatePrevSlide,
+  useRenderLightbox,
+  useSetActiveLightboxItem,
 } from '@/components/Modal/mixins/lightboxApi.ts';
 import { lightboxProps } from '@/components/Modal/mixins/lightboxProps.ts';
 import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
 import { EventListener } from '@/mixins/DomHelper.ts';
 import type {
-    IEventResult,
-    IHTMLElement,
-    TBsLightbox,
-    TImageDataset,
-    TLightboxOptionProps,
+  IEventListenerResult,
+  IHTMLElement,
+  TBsLightbox,
+  TImageDataset,
+  TLightboxOptionProps,
 } from '@/types';
 import type { ComponentInternalInstance } from 'vue';
 import {
-    computed,
-    defineComponent,
-    getCurrentInstance,
-    onBeforeMount,
-    onMounted,
-    onUnmounted,
-    ref,
-    shallowRef,
-    watch,
+  computed,
+  defineComponent,
+  getCurrentInstance,
+  onBeforeMount,
+  onMounted,
+  onUnmounted,
+  ref,
+  shallowRef,
+  watch,
 } from 'vue';
 
 export default defineComponent<TBsLightbox>({
-    name: 'BsLightbox',
-    props: lightboxProps,
-    emits: [
-        'change',
-        'close',
-        'exec-delete',
-        'exec-download',
-        'exec-info',
-        'exec-rotate-left',
-        'exec-rotate-right',
-        'exec-zoomin',
-        'exec-zoomout',
-        'update:open',
-    ],
-    setup(props, { emit, expose, slots }) {
-        const thisProps = props as Readonly<TLightboxOptionProps>;
-        const instance = shallowRef<ComponentInternalInstance | null>(null);
-        const activeItem = ref<TImageDataset | undefined>(
-            thisProps.items && thisProps.items.length > 0 ? thisProps.items[0] : undefined
-        );
-        const itemIndex = ref(thisProps.items && thisProps.items.length > 0 ? 0 : -1);
-        const rotate = ref(0);
-        const zoom = ref(1);
-        const isOpen = ref(false);
-        const transition = ref(<string>thisProps.transition);
-        const imgStyles = computed(() => useComputeImgStyle(thisProps, rotate, zoom));
-        let keyEvent: IEventResult | undefined;
+  name: 'BsLightbox',
+  props: lightboxProps,
+  emits: [
+    'change',
+    'close',
+    'exec-delete',
+    'exec-download',
+    'exec-info',
+    'exec-rotate-left',
+    'exec-rotate-right',
+    'exec-zoomin',
+    'exec-zoomout',
+    'update:open',
+  ],
+  setup(props, { emit, expose, slots }) {
+    const thisProps = props as Readonly<TLightboxOptionProps>;
+    const instance = shallowRef<ComponentInternalInstance | null>(null);
+    const activeItem = ref<TImageDataset | undefined>(
+      thisProps.items && thisProps.items.length > 0 ? thisProps.items[0] : undefined
+    );
+    const itemIndex = ref(thisProps.items && thisProps.items.length > 0 ? 0 : -1);
+    const rotate = ref(0);
+    const zoom = ref(1);
+    const isOpen = ref(false);
+    const transition = ref(<string>thisProps.transition);
+    const imgStyles = computed(() => useComputeImgStyle(thisProps, rotate, zoom));
+    let keyEvent: IEventListenerResult | undefined;
 
-        const setActive = (index: number) =>
-            useSetActiveLightboxItem(emit, thisProps, activeItem, itemIndex, zoom, rotate, index);
-        const openAt = (index: number) => {
-            if (thisProps.items && index > -1 && index < thisProps.items?.length) {
-                itemIndex.value = index;
-                activeItem.value = thisProps.items.length > 0 ? thisProps.items[index] : undefined;
-                isOpen.value = true;
-                emit('update:open', true);
-            } else {
-                throw Error('The given image index is out of bound.');
-            }
-        };
-        const nextSlide = () => {
-            useNavigateNextSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate, transition);
-        };
-        const prevSlide = () => {
+    const setActive = (index: number) =>
+      useSetActiveLightboxItem(emit, thisProps, activeItem, itemIndex, zoom, rotate, index);
+    const openAt = (index: number) => {
+      if (thisProps.items && index > -1 && index < thisProps.items?.length) {
+        itemIndex.value = index;
+        activeItem.value = thisProps.items.length > 0 ? thisProps.items[index] : undefined;
+        isOpen.value = true;
+        emit('update:open', true);
+      } else {
+        throw Error('The given image index is out of bound.');
+      }
+    };
+    const nextSlide = () => {
+      useNavigateNextSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate, transition);
+    };
+    const prevSlide = () => {
+      useNavigatePrevSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate, transition);
+    };
+
+    expose({ setActive, openAt, nextSlide, prevSlide });
+
+    watch(
+      () => thisProps.open as boolean,
+      (value) => {
+        if (value) {
+          isOpen.value = value;
+          zoom.value = 1;
+          rotate.value = 0;
+          itemIndex.value = itemIndex.value > -1 ? itemIndex.value : 0;
+          activeItem.value =
+            thisProps.items && thisProps.items.length > 0
+              ? thisProps.items[itemIndex.value]
+              : undefined;
+          instance.value && PopupManager.add(instance.value, thisProps, isOpen);
+        } else {
+          instance.value && PopupManager.closePopover(instance.value, isOpen, 'State changed.');
+        }
+      }
+    );
+
+    onBeforeMount(() => {
+      // preload images and store them globally in memory
+      var images: HTMLImageElement[] = [];
+      if (thisProps.items?.length) {
+        thisProps.items.forEach((item, i) => {
+          images[i] = new Image();
+          images[i].src = item.imageSrc;
+        });
+      }
+    });
+
+    onMounted(() => {
+      instance.value = getCurrentInstance();
+      keyEvent = EventListener.listen(document.body as IHTMLElement, 'keydown', (evt: Event) => {
+        const evtKey = evt as KeyboardEvent;
+        if (evtKey.key && evtKey.key === 'ArrowLeft') {
+          isOpen.value &&
             useNavigatePrevSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate, transition);
-        };
+        } else if (evtKey.key && evtKey.key === 'ArrowRight') {
+          isOpen.value &&
+            useNavigateNextSlide(emit, thisProps, activeItem, itemIndex, zoom, rotate, transition);
+        }
+      });
+    });
+    onUnmounted(() => keyEvent?.remove());
 
-        expose({ setActive, openAt, nextSlide, prevSlide });
-
-        watch(
-            () => thisProps.open as boolean,
-            (value) => {
-                if (value) {
-                    isOpen.value = value;
-                    zoom.value = 1;
-                    rotate.value = 0;
-                    itemIndex.value = itemIndex.value > -1 ? itemIndex.value : 0;
-                    activeItem.value =
-                        thisProps.items && thisProps.items.length > 0
-                            ? thisProps.items[itemIndex.value]
-                            : undefined;
-                    instance.value && PopupManager.add(instance.value, thisProps, isOpen);
-                } else {
-                    instance.value &&
-                        PopupManager.closePopover(instance.value, isOpen, 'State changed.');
-                }
-            }
-        );
-
-        onBeforeMount(() => {
-            // preload images and store them globally in memory
-            var images: HTMLImageElement[] = [];
-            if (thisProps.items?.length) {
-                thisProps.items.forEach((item, i) => {
-                    images[i] = new Image();
-                    images[i].src = item.imageSrc;
-                });
-            }
-        });
-
-        onMounted(() => {
-            instance.value = getCurrentInstance();
-            keyEvent = EventListener.listen(
-                document.body as IHTMLElement,
-                'keydown',
-                (evt: Event) => {
-                    const evtKey = evt as KeyboardEvent;
-                    if (evtKey.key && evtKey.key === 'ArrowLeft') {
-                        isOpen.value &&
-                            useNavigatePrevSlide(
-                                emit,
-                                thisProps,
-                                activeItem,
-                                itemIndex,
-                                zoom,
-                                rotate,
-                                transition
-                            );
-                    } else if (evtKey.key && evtKey.key === 'ArrowRight') {
-                        isOpen.value &&
-                            useNavigateNextSlide(
-                                emit,
-                                thisProps,
-                                activeItem,
-                                itemIndex,
-                                zoom,
-                                rotate,
-                                transition
-                            );
-                    }
-                }
-            );
-        });
-        onUnmounted(() => keyEvent?.remove());
-
-        return () =>
-            useRenderLightbox(
-                slots,
-                emit,
-                instance,
-                thisProps,
-                imgStyles,
-                isOpen,
-                activeItem,
-                itemIndex,
-                rotate,
-                zoom,
-                transition
-            );
-    },
+    return () =>
+      useRenderLightbox(
+        slots,
+        emit,
+        instance,
+        thisProps,
+        imgStyles,
+        isOpen,
+        activeItem,
+        itemIndex,
+        rotate,
+        zoom,
+        transition
+      );
+  },
 });

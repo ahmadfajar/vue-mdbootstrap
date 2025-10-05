@@ -169,8 +169,19 @@ export declare interface EventListenerBinding {
   target?: Element | Window | null;
 }
 
+export declare interface IEventListenerResult {
+  remove(): void;
+}
+
 export declare interface EventListenerTarget {
   (target: Element | Window | undefined | null, event: Event | undefined | null): void;
+}
+
+export declare interface IMouseEvents {
+  mouseEnter: IEventListenerResult;
+  mouseLeave: IEventListenerResult;
+  focus: IEventListenerResult;
+  blur: IEventListenerResult;
 }
 
 export declare interface IBindingElement extends Element {
@@ -178,7 +189,7 @@ export declare interface IBindingElement extends Element {
   __scrollListener?: EventListenerBinding;
   __resizeListener?: EventListenerOrEventListenerObject | CallableFunction;
   __resizeListeners?: Array<CallableFunction>;
-  __mouseEvents?: TRecord;
+  __mouseEvents?: IMouseEvents;
   __touchEvents?: TouchEventListener | TRecord;
   __observer?: ResizeObserver;
 }
@@ -187,10 +198,6 @@ export declare interface IHTMLElement extends HTMLElement {
   attachEvent(type: string, callback: EventListenerOrEventListenerObject): void;
 
   detachEvent(type: string, callback: EventListenerOrEventListenerObject): void;
-}
-
-export declare interface IEventResult {
-  remove(): void;
 }
 
 export declare interface EventClosableProps {

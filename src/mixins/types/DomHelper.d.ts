@@ -1,4 +1,4 @@
-import { IBindingElement, IEventResult, IHTMLElement } from '@/types';
+import { IBindingElement, IEventListenerResult, IHTMLElement } from '@/types';
 
 export declare class EventListener {
   /**
@@ -15,7 +15,7 @@ export declare class EventListener {
     eventName: string,
     callback: EventListenerOrEventListenerObject,
     options?: boolean | AddEventListenerOptions
-  ): IEventResult | undefined;
+  ): IEventListenerResult | undefined;
 }
 
 export declare function useAddResizeListener(el: IBindingElement, fn: CallableFunction): void;
