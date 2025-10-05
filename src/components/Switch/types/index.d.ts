@@ -1,49 +1,72 @@
 import {
-    AllowedComponentProps,
-    ComponentCustomProps,
-    ComponentObjectPropsOptions,
-    ObjectPlugin,
-    VNode,
-    VNodeProps,
-} from 'vue';
-import { EventUpdateModelValueProps, TLabelPosition, TRadioOptionProps } from '../../../types';
+  BaseComponentProps,
+  EventUpdateModelValueProps,
+  Numberish,
+  TRadioOptionProps,
+} from '@/types';
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+
+export declare type TLabelPosition = 'left' | 'right';
 
 export declare type TSwitchOptionProps = TRadioOptionProps & {
-    labelPosition?: TLabelPosition;
-    labelClass?: string | string[];
-    insetMode?: boolean;
-    insetOutlined?: boolean;
-    checkoffIcon?: boolean;
-    checkedIcon?: boolean;
+  /**
+   * Additional css class for the text label.
+   */
+  labelClass?: string | string[];
+
+  /**
+   * The switch text label position, valid values are: `left`, `right`.
+   */
+  labelPosition?: TLabelPosition;
+
+  /**
+   * Sets the switch style appearance to **Inset style**.
+   */
+  insetMode?: boolean;
+
+  /**
+   * Sets the switch style appearance to **Inset Outlined style**.
+   */
+  insetOutlined?: boolean;
+
+  /**
+   * Enable the component's thumb icon when the component is on _**unchecked**_ state.
+   */
+  checkoffIcon?: boolean;
+
+  /**
+   * Enable the component's thumb icon when the component is on _**checked**_ state.
+   */
+  checkedIcon?: boolean;
 };
 
 export declare type TBsSwitch = ComponentObjectPropsOptions<TSwitchOptionProps>;
 
-declare type AllowedSwitchProps = AllowedComponentProps &
-    ComponentCustomProps &
-    VNodeProps &
-    EventUpdateModelValueProps<string | number | boolean> & {
-        onChecked?: (checked: boolean) => void;
-        '@checked'?: (checked: boolean) => void;
-    };
+declare interface AllowedSwitchProps
+  extends BaseComponentProps,
+    EventUpdateModelValueProps<Numberish | boolean> {
+  /**
+   * Fired when this component's state is changed.
+   */
+  onChecked?: (checked: boolean) => void;
+
+  /**
+   * Fired when this component's state is changed.
+   */
+  '@checked'?: (checked: boolean) => void;
+}
 
 export declare const BsSwitch: {
-    new (): {
-        $props: AllowedSwitchProps & TSwitchOptionProps;
-        $slots: {
-            default?: () => VNode[];
-        };
-        $emit: [
-            /**
-             * Fired when this component's state is changed.
-             */
-            'checked',
-            /**
-             * Fired when this component's checked value is updated.
-             */
-            'update:model-value',
-        ];
+  new (): {
+    $props: AllowedSwitchProps & TSwitchOptionProps;
+    $slots: {
+      default?: () => VNode[];
     };
+    $emits: {
+      (event: 'checked', checked: boolean): void;
+      (event: 'update:model-value', value: Numberish | boolean): void;
+    };
+  };
 };
 
 export declare const BsSwitchPlugin: ObjectPlugin;

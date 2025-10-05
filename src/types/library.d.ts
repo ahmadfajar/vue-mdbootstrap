@@ -39,8 +39,6 @@ export declare type HtmlTagName =
   | 'p'
   | string;
 
-export declare type TLabelPosition = 'left' | 'right';
-
 export declare type Numberish = number | string;
 
 export declare type MaybeNumberish = number | string | undefined | null;

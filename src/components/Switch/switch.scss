@@ -1,27 +1,37 @@
-@use "../../../scss/mixins/css3/borders";
-@use "../../../scss/mixins/switch";
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use '../../../scss/mixins/css3/borders';
+@use '../../../scss/mixins/switch';
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}switch {
+@layer components {
+  .#{vars.$prefix}switch {
+    --#{vars.$prefix}switch-box-shadow: #{vars.$switch-shadows};
     --#{vars.$prefix}switch-margin: #{vars.$switch-margin};
-    --#{vars.$prefix}switch-thumb-bg: #{$neutral-lighten-5};
-    --#{vars.$prefix}switch-thumb-color: #{$neutral-lighten-5};
+    --#{vars.$prefix}switch-thumb-bg: #{colors.$neutral-lighten-5};
+    --#{vars.$prefix}switch-thumb-color: #{colors.$neutral-lighten-5};
     --#{vars.$prefix}switch-thumb-size: #{vars.$switch-thumb-size};
     --#{vars.$prefix}switch-touch-size: #{vars.$switch-touch-size};
-    --#{vars.$prefix}switch-track-color: #{$neutral-lighten-1};
+    --#{vars.$prefix}switch-track-color: #{colors.$neutral-lighten-1};
     --#{vars.$prefix}switch-track-height: #{vars.$switch-track-height};
     --#{vars.$prefix}switch-track-width: #{vars.$switch-track-width};
+
     --#{vars.$prefix}switch-inset-thumb-size: #{vars.$switch-inset-thumb-size};
     --#{vars.$prefix}switch-inset-track-height: #{vars.$switch-inset-track-height};
     --#{vars.$prefix}switch-inset-track-width: #{vars.$switch-inset-track-width};
+
     --#{vars.$prefix}switch-outlined-thumb-color: #{colors.$gray-600};
     --#{vars.$prefix}switch-outlined-thumb-size: #{vars.$switch-outlined-thumb-size};
     --#{vars.$prefix}switch-outlined-stroke: #{vars.$switch-outline-stroke};
     --#{vars.$prefix}switch-outlined-stroke-color: #{colors.$gray-600};
-    --#{vars.$prefix}switch-outlined-track-color: #{$neutral-lighten-2};
+    --#{vars.$prefix}switch-outlined-track-color: #{colors.$neutral-lighten-2};
 
-    --#{vars.$prefix}switch-state-box-shadow: #{vars.$switch-shadows};
+    --#{vars.$prefix}switch-disabled-box-shadow: #{vars.$switch-disabled-shadows};
+    --#{vars.$prefix}switch-disabled-thumb-bg: #{colors.$neutral-base};
+    --#{vars.$prefix}switch-disabled-thumb-color: #{colors.$neutral-base};
+    --#{vars.$prefix}switch-disabled-track-color: #{colors.$gray-400};
+
+    // used internally
+    --#{vars.$prefix}switch-state-box-shadow: var(--#{vars.$prefix}switch-box-shadow);
     --#{vars.$prefix}switch-state-overlay-bg: transparent;
     --#{vars.$prefix}switch-state-overlay-opacity: 0;
     --#{vars.$prefix}switch-state-thumb-bg: var(--#{vars.$prefix}switch-thumb-bg);
@@ -37,208 +47,236 @@
     position: relative;
 
     &:not(.disabled):not(.readonly) {
-        > .#{vars.$prefix}switch-wrapper {
-            cursor: pointer;
-        }
+      > .#{vars.$prefix}switch-wrapper {
+        cursor: pointer;
+      }
     }
 
     > .#{vars.$prefix}switch-wrapper {
-        display: inline-flex;
-        margin: var(--#{vars.$prefix}switch-margin);
+      display: inline-flex;
+      margin: var(--#{vars.$prefix}switch-margin);
+    }
 
-        > .#{vars.$prefix}switch-track {
-            @include borders.radius(var(--#{vars.$prefix}switch-state-track-height));
-            display: flex;
-            align-items: center;
-            background-color: var(--#{vars.$prefix}switch-state-track-color);
-            height: var(--#{vars.$prefix}switch-state-track-height);
-            min-width: var(--#{vars.$prefix}switch-state-track-width);
-            width: var(--#{vars.$prefix}switch-state-track-width);
-            margin: 3px 0;
-            position: relative;
-            transition: vars.$transition-stand;
+    .#{vars.$prefix}switch-track {
+      @include borders.radius(var(--#{vars.$prefix}switch-state-track-height));
+      display: flex;
+      align-items: center;
+      background-color: var(--#{vars.$prefix}switch-state-track-color);
+      height: var(--#{vars.$prefix}switch-state-track-height);
+      min-width: var(--#{vars.$prefix}switch-state-track-width);
+      width: var(--#{vars.$prefix}switch-state-track-width);
+      margin: 3px 0;
+      position: relative;
+      transition: vars.$transition-stand;
+    }
 
-            > .#{vars.$prefix}switch-thumb {
-                @include borders.radius($radius-circle);
-                background-color: var(--#{vars.$prefix}switch-state-thumb-bg);
-                box-shadow: var(--#{vars.$prefix}switch-state-box-shadow);
-                height: var(--#{vars.$prefix}switch-state-thumb-size);
-                width: var(--#{vars.$prefix}switch-state-thumb-size);
-                margin-left: var(--#{vars.$prefix}switch-state-thumb-margin-left);
-                position: relative;
-                transition: vars.$transition-stand;
+    .#{vars.$prefix}switch-overlay,
+    .#{vars.$prefix}ripple {
+      @include borders.radius(vars.$radius-circle);
+      height: var(--#{vars.$prefix}switch-touch-size);
+      width: var(--#{vars.$prefix}switch-touch-size);
+      left: 50%;
+      top: 50%;
+      position: absolute;
+      transform: translate(-50%, -50%);
+    }
 
-                &:before {
-                    content: " ";
-                    height: var(--#{vars.$prefix}switch-touch-size);
-                    width: var(--#{vars.$prefix}switch-touch-size);
-                    transform: translate(-50%, -50%);
-                    position: absolute;
-                    left: 50%;
-                    top: 50%;
-                    z-index: 11;
-                }
+    .#{vars.$prefix}switch-thumb {
+      @include borders.radius(vars.$radius-circle);
+      background-color: var(--#{vars.$prefix}switch-state-thumb-bg);
+      box-shadow: var(--#{vars.$prefix}switch-state-box-shadow);
+      height: var(--#{vars.$prefix}switch-state-thumb-size);
+      width: var(--#{vars.$prefix}switch-state-thumb-size);
+      margin-left: var(--#{vars.$prefix}switch-state-thumb-margin-left);
+      position: relative;
+      transition: vars.$transition-stand;
 
-                .#{vars.$prefix}switch-ripple, .#{vars.$prefix}ripple {
-                    @include borders.radius($radius-circle);
-                    height: var(--#{vars.$prefix}switch-touch-size);
-                    width: var(--#{vars.$prefix}switch-touch-size);
-                    left: 50%;
-                    top: 50%;
-                    position: absolute;
-                    transform: translate(-50%, -50%);
-                }
+      &:before {
+        content: ' ';
+        height: var(--#{vars.$prefix}switch-touch-size);
+        width: var(--#{vars.$prefix}switch-touch-size);
+        transform: translate(-50%, -50%);
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 11;
+      }
 
-                .#{vars.$prefix}switch-ripple {
-                    background-color: var(--#{vars.$prefix}switch-state-overlay-bg);
-                    opacity: var(--#{vars.$prefix}switch-state-overlay-opacity);
-                    transition: vars.$transition-hoverable;
-                    pointer-events: none;
-                }
+      > .#{vars.$prefix}ripple {
+        color: var(--#{vars.$prefix}switch-state-thumb-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-                .#{vars.$prefix}ripple {
-                    color: var(--#{vars.$prefix}switch-state-thumb-color);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
+        //.#{vars.$prefix}ripple-animation {
+        //  background-color: var(--#{vars.$prefix}switch-state-thumb-color);
+        //  opacity: 0.65;
+        //}
+      }
 
-                    .#{vars.$prefix}ripple-animation {
-                        background-color: var(--#{vars.$prefix}switch-state-thumb-color);
-                        opacity: .65;
-                    }
+      input {
+        display: none;
+      }
+    }
 
-                    > input {
-                        display: none;
-                    }
-                }
-            }
-        }
+    .#{vars.$prefix}switch-overlay {
+      background-color: var(--#{vars.$prefix}switch-state-overlay-bg);
+      opacity: var(--#{vars.$prefix}switch-state-overlay-opacity);
+      transition: vars.$transition-hoverable;
+      pointer-events: none;
     }
 
     .#{vars.$prefix}switch-label {
-        margin-bottom: 0;
-        padding-left: 0;
-        position: relative;
+      margin-bottom: 0;
+      padding-left: 0;
+      position: relative;
 
-        &.#{vars.$prefix}label-left {
-            margin-right: vars.$padding-sm;
-            padding-right: $padding-md + .25;
-        }
+      &.#{vars.$prefix}label-left {
+        margin-right: vars.$padding-sm;
+        padding-right: vars.$padding-md + 0.25;
+      }
 
-        &.#{vars.$prefix}label-right {
-            padding-left: $padding-md;
-        }
+      &.#{vars.$prefix}label-right {
+        padding-left: vars.$padding-md;
+      }
     }
 
     &.required {
-        label:after {
-            content: "*";
-            font-weight: vars.$font-weight-bold;
-            transform: translateX(calc(100% + 2px));
-            line-height: 1em;
-            position: absolute;
-            right: 0;
-            top: 10px;
-        }
+      label:after {
+        content: '*';
+        font-weight: var(--font-weight-semibold);
+        transform: translateX(calc(100% + 2px));
+        line-height: 1em;
+        position: absolute;
+        right: 0;
+        top: 10px;
+      }
     }
 
     &.#{vars.$prefix}switch-inset {
-        --#{vars.$prefix}switch-state-thumb-color: #{colors.$gray-800};
-        --#{vars.$prefix}switch-state-thumb-size: var(--#{vars.$prefix}switch-inset-thumb-size);
-        --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-track-color);
-        --#{vars.$prefix}switch-state-track-height: var(--#{vars.$prefix}switch-inset-track-height);
-        --#{vars.$prefix}switch-state-track-width: var(--#{vars.$prefix}switch-inset-track-width);
-        --#{vars.$prefix}switch-state-thumb-margin-left: calc((var(--#{vars.$prefix}switch-inset-track-height) - var(--#{vars.$prefix}switch-inset-thumb-size)) / 2);
+      --#{vars.$prefix}switch-state-thumb-color: #{colors.$gray-800};
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-size: var(--#{vars.$prefix}switch-inset-thumb-size);
+      --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-track-color);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-track-height: var(--#{vars.$prefix}switch-inset-track-height);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-track-width: var(--#{vars.$prefix}switch-inset-track-width);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-margin-left: calc((var(--#{vars.$prefix}switch-inset-track-height) - var(--#{vars.$prefix}switch-inset-thumb-size)) / 2);
     }
 
     &.#{vars.$prefix}switch-outlined {
-        --#{vars.$prefix}switch-state-box-shadow: none;
-        --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-outlined-track-color);
-        --#{vars.$prefix}switch-state-thumb-bg: var(--#{vars.$prefix}switch-outlined-thumb-color);
-        --#{vars.$prefix}switch-state-thumb-size: var(--#{vars.$prefix}switch-outlined-thumb-size);
-        --#{vars.$prefix}switch-state-thumb-margin-left: calc((var(--#{vars.$prefix}switch-inset-track-height) - var(--#{vars.$prefix}switch-outlined-thumb-size)) / 2);
+      --#{vars.$prefix}switch-state-box-shadow: none;
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-outlined-track-color);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-bg: var(--#{vars.$prefix}switch-outlined-thumb-color);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-size: var(--#{vars.$prefix}switch-outlined-thumb-size);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-margin-left: calc((var(--#{vars.$prefix}switch-inset-track-height) - var(--#{vars.$prefix}switch-outlined-thumb-size)) / 2);
 
-        .#{vars.$prefix}switch-track {
-            border: var(--#{vars.$prefix}switch-outlined-stroke) solid var(--#{vars.$prefix}switch-outlined-stroke-color);
-        }
+      .#{vars.$prefix}switch-track {
+        // prettier-ignore
+        border: var(--#{vars.$prefix}switch-outlined-stroke) solid var(--#{vars.$prefix}switch-outlined-stroke-color);
+      }
     }
 
     &.checked {
-        --#{vars.$prefix}switch-state-box-shadow: var(--#{vars.$prefix}switch-active-box-shadow);
-        --#{vars.$prefix}switch-state-thumb-bg: var(--#{vars.$prefix}switch-active-thumb-bg);
-        --#{vars.$prefix}switch-state-thumb-color: var(--#{vars.$prefix}switch-active-thumb-color);
-        --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-active-track-color);
-        --#{vars.$prefix}switch-state-translate-x: calc(var(--#{vars.$prefix}switch-state-track-width) - var(--#{vars.$prefix}switch-state-thumb-size));
-        --#{vars.$prefix}switch-state-transform-x: translatex(var(--#{vars.$prefix}switch-state-translate-x));
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-box-shadow: var(--#{vars.$prefix}switch-active-box-shadow);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-bg: var(--#{vars.$prefix}switch-active-thumb-bg);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-color: var(--#{vars.$prefix}switch-active-thumb-color);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-active-track-color);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-translate-x: calc(var(--#{vars.$prefix}switch-state-track-width) - var(--#{vars.$prefix}switch-state-thumb-size));
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-transform-x: translatex(var(--#{vars.$prefix}switch-state-translate-x));
 
-        .#{vars.$prefix}switch-thumb {
-            transform: var(--#{vars.$prefix}switch-state-transform-x);
+      .#{vars.$prefix}switch-thumb {
+        transform: var(--#{vars.$prefix}switch-state-transform-x);
+      }
+
+      &.#{vars.$prefix}switch-inset {
+        --#{vars.$prefix}switch-state-box-shadow: none;
+        // prettier-ignore
+        --#{vars.$prefix}switch-state-translate-x: calc(var(--#{vars.$prefix}switch-state-track-width) - var(--#{vars.$prefix}switch-state-thumb-size) - (var(--#{vars.$prefix}switch-state-thumb-margin-left) * 2.25));
+
+        &:not(.disabled) {
+          // prettier-ignore
+          --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-active-inset-track-color);
+          // prettier-ignore
+          --#{vars.$prefix}switch-state-thumb-bg: var(--#{vars.$prefix}switch-active-inset-thumb-bg);
+          // prettier-ignore
+          --#{vars.$prefix}switch-state-thumb-color: var(--#{vars.$prefix}switch-active-inset-thumb-color);
         }
-
-        &.#{vars.$prefix}switch-inset {
-            --#{vars.$prefix}switch-state-box-shadow: none;
-            --#{vars.$prefix}switch-state-translate-x: calc(var(--#{vars.$prefix}switch-state-track-width) - var(--#{vars.$prefix}switch-state-thumb-size) - (var(--#{vars.$prefix}switch-state-thumb-margin-left) * 2.25));
-
-            &:not(.disabled) {
-                --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-active-inset-track-color);
-                --#{vars.$prefix}switch-state-thumb-bg: var(--#{vars.$prefix}switch-active-inset-thumb-bg);
-                --#{vars.$prefix}switch-state-thumb-color: var(--#{vars.$prefix}switch-active-inset-thumb-color);
-            }
-        }
+      }
     }
 
     &:not(.disabled):not(.readonly) {
+      .#{vars.$prefix}switch-thumb {
+        &:hover {
+          --#{vars.$prefix}switch-state-overlay-bg: var(--#{vars.$prefix}switch-thumb-color);
+          --#{vars.$prefix}switch-state-overlay-opacity: 0.15;
+        }
+      }
+
+      &.#{vars.$prefix}switch-outlined {
         .#{vars.$prefix}switch-thumb {
-            &:hover {
-                --#{vars.$prefix}switch-state-overlay-bg: var(--#{vars.$prefix}switch-thumb-color);
-                --#{vars.$prefix}switch-state-overlay-opacity: .15;
-            }
+          &:hover {
+            // prettier-ignore
+            --#{vars.$prefix}switch-state-overlay-bg: var(--#{vars.$prefix}switch-outlined-thumb-color);
+            --#{vars.$prefix}switch-state-overlay-opacity: 0.11;
+          }
         }
+      }
 
-        &.#{vars.$prefix}switch-outlined {
-            .#{vars.$prefix}switch-thumb {
-                &:hover {
-                    --#{vars.$prefix}switch-state-overlay-bg: var(--#{vars.$prefix}switch-outlined-thumb-color);
-                    --#{vars.$prefix}switch-state-overlay-opacity: .11;
-                }
-            }
+      &.checked {
+        .#{vars.$prefix}switch-thumb {
+          &:hover {
+            // prettier-ignore
+            --#{vars.$prefix}switch-state-overlay-bg: var(--#{vars.$prefix}switch-active-thumb-color);
+            --#{vars.$prefix}switch-state-overlay-opacity: 0.22;
+          }
         }
-
-        &.checked {
-            .#{vars.$prefix}switch-thumb {
-                &:hover {
-                    --#{vars.$prefix}switch-state-overlay-bg: var(--#{vars.$prefix}switch-active-thumb-color);
-                    --#{vars.$prefix}switch-state-overlay-opacity: .22;
-                }
-            }
-        }
+      }
     }
 
     &.readonly {
-        > .#{vars.$prefix}switch-label,
-        > .#{vars.$prefix}switch-wrapper {
-            opacity: var(--#{vars.$prefix}field-readonly-opacity);
-        }
+      > .#{vars.$prefix}switch-label,
+      > .#{vars.$prefix}switch-wrapper {
+        opacity: var(--#{vars.$prefix}field-readonly-opacity);
+      }
     }
 
     &.disabled {
-        --#{vars.$prefix}switch-state-box-shadow: #{vars.$switch-disabled-shadows};
-        --#{vars.$prefix}switch-state-thumb-bg: #{$neutral-base};
-        --#{vars.$prefix}switch-state-thumb-color: #{$neutral-base};
-        --#{vars.$prefix}switch-state-track-color: #{colors.$gray-400};
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-box-shadow: var(--#{vars.$prefix}switch-disabled-box-shadow);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-bg: var(--#{vars.$prefix}switch-disabled-thumb-bg);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-color: var(--#{vars.$prefix}switch-disabled-thumb-color);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-disabled-track-color);
 
-        > .#{vars.$prefix}switch-label {
-            opacity: var(--#{vars.$prefix}field-disabled-opacity);
-        }
+      > .#{vars.$prefix}switch-label {
+        opacity: var(--#{vars.$prefix}field-disabled-opacity);
+      }
     }
 
-    &.disabled, &.readonly {
-        > .#{vars.$prefix}switch-wrapper {
-            cursor: default;
-        }
+    &.disabled,
+    &.readonly {
+      > .#{vars.$prefix}switch-wrapper {
+        cursor: default;
+      }
     }
-}
+  }
 
-@each $name, $color in colors.$context-colors {
+  @each $name, $color in colors.$context-colors {
     @include switch.make-default-variant($name, $color);
+  }
 }

@@ -7,23 +7,23 @@
 //--------------------------------------------
 @mixin make-default-variant($name, $color) {
   .#{vars.$prefix}switch-#{$name} {
-    --#{vars.$prefix}switch-active-box-shadow:
-      #{0 0 6px -1px rgba(#000, 0.13), 0 1px 1px 1px rgba($color, 0.15),
-      0 1px 3px 0 rgba(#000, 0.2)};
+    // prettier-ignore
+    --#{vars.$prefix}switch-active-box-shadow: #{0 0 6px -1px rgba(#000, 0.13), 0 1px 1px 1px color.change($color, $alpha: 0.15), 0 1px 3px 0 rgba(#000, 0.2)};
     --#{vars.$prefix}switch-active-thumb-bg: #{$color};
     --#{vars.$prefix}switch-active-thumb-color: #{$color};
-    --#{vars.$prefix}switch-active-track-color: #{rgba($color, 0.38)};
-    --#{vars.$prefix}switch-active-inset-track-color: #{helper.to-rgb(
-        color.scale($color, $lightness: 60%)
-      )};
+    --#{vars.$prefix}switch-active-track-color: #{color.change($color, $alpha: 0.38)};
 
     $thumb-bg: helper.set-color-contrast(
       $color,
-      helper.to-rgb(color.scale($color, $lightness: -20%)),
+      helper.to-oklch(color.scale($color, $lightness: -20%)),
       $color,
       220
     );
-    $thumb-color: helper.set-color-contrast($color, colors.$black, colors.$white, 220);
+    $thumb-color: helper.set-color-contrast($color, colors.$black, colors.$white, 86.3%);
+
+    --#{vars.$prefix}switch-active-inset-track-color: #{helper.to-oklch(
+        color.scale($color, $lightness: 60%)
+      )};
     --#{vars.$prefix}switch-active-inset-thumb-bg: #{$thumb-bg};
     --#{vars.$prefix}switch-active-inset-thumb-color: #{$thumb-color};
   }

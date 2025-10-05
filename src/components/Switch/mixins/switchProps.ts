@@ -1,7 +1,5 @@
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import { booleanProp, defaultColorProp, stringOrArrayProp } from '@/mixins/CommonProps.ts';
-import type { TLabelPosition } from '@/types';
-import type { Prop } from 'vue';
 
 export const switchProps = {
   ...inputProps,
@@ -11,7 +9,7 @@ export const switchProps = {
     type: String,
     default: 'right',
     validator: (value: string) => ['left', 'right'].includes(value),
-  } as Prop<TLabelPosition>,
+  },
   insetMode: booleanProp,
   insetOutlined: booleanProp,
   checkoffIcon: booleanProp,

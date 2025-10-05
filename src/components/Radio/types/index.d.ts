@@ -85,9 +85,6 @@ declare interface AllowedRadioProps
   '@checked'?: (checked: boolean) => void;
 }
 
-declare type AllowedRadioGroupProps = BaseComponentProps &
-  EventUpdateModelValueProps<Numberish | boolean>;
-
 export declare const BsRadio: {
   new (): {
     $props: AllowedRadioProps & TRadioOptionProps;
@@ -100,6 +97,10 @@ export declare const BsRadio: {
     };
   };
 };
+
+declare interface AllowedRadioGroupProps
+  extends BaseComponentProps,
+    EventUpdateModelValueProps<Numberish | boolean> {}
 
 export declare const BsRadioGroup: {
   new (): {
