@@ -1,366 +1,494 @@
-@use "sass:color";
-@use "../../../scss/mixins/css3/breakpoints" as media;
-@use "../../../scss/mixins/css3/borders";
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use 'sass:color';
+@use '../../../scss/mixins/css3/breakpoints' as media;
+@use '../../../scss/mixins/css3/borders';
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}tabs {
-    --#{vars.$prefix}tabs-content-padding: #{$padding-md + .25};
-    --#{vars.$prefix}tabs-item-padding: #{vars.$tabs-item-padding};
-    --#{vars.$prefix}tabs-item-spacing: #{vars.$tabs-item-spacing};
-    --#{vars.$prefix}tabs-item-color: #{rgba(colors.$white, .6)};
-    --#{vars.$prefix}tabs-item-active-color: #{colors.$white};
-    --#{vars.$prefix}tabs-item-hover-color: #{rgba(colors.$white, .8)};
-    --#{vars.$prefix}tabs-item-disabled-color: #{rgba(colors.$white, .3)};
-    --#{vars.$prefix}tabs-item-font-weight: #{$font-weight-medium};
-    --#{vars.$prefix}tabs-nav-active-border-color: #{colors.$gray-300};
-    --#{vars.$prefix}tabs-nav-margin-x: #{vars.$card-cap-padding-x};
-    --#{vars.$prefix}tabs-nav-margin-y: #{vars.$card-cap-padding-y};
-    --#{vars.$prefix}tabs-material-padding: #{vars.$tabs-material-padding};
-    --#{vars.$prefix}tabs-material-margin-start: #{$padding-md};
-    --#{vars.$prefix}tabs-material-margin-end: #{$padding-md};
-    --#{vars.$prefix}tabs-material-indicator-active-color: #{colors.$white};
-    --#{vars.$prefix}tabs-material-indicator-border: #{vars.$tabs-material-indicator-border};
-    --#{vars.$prefix}tabs-modern-border-radius: #{vars.$tabs-modern-border-radius};
-    --#{vars.$prefix}tabs-modern-padding: #{vars.$tabs-modern-padding};
-    --#{vars.$prefix}tabs-modern-active-bgcolor: #{rgba(colors.$black, .2)};
-    --#{vars.$prefix}tabs-placement-top-shadow: #{vars.$tabs-placement-top-shadow};
-    --#{vars.$prefix}tabs-placement-bottom-shadow: #{vars.$tabs-placement-bottom-shadow};
-    --#{vars.$prefix}tabs-placement-left-shadow: #{vars.$tabs-placement-left-shadow};
-    --#{vars.$prefix}tabs-placement-right-shadow: #{vars.$tabs-placement-right-shadow};
+@layer components {
+  .#{vars.$prefix}tabs {
+    --#{vars.$prefix}tab-content-padding: #{vars.$padding-md + 0.25};
+    --#{vars.$prefix}tab-placement-top-shadow: #{vars.$tabs-placement-top-shadow};
+    --#{vars.$prefix}tab-placement-bottom-shadow: #{vars.$tabs-placement-bottom-shadow};
+    --#{vars.$prefix}tab-placement-left-shadow: #{vars.$tabs-placement-left-shadow};
+    --#{vars.$prefix}tab-placement-right-shadow: #{vars.$tabs-placement-right-shadow};
+    --#{vars.$prefix}tab-spacing: #{vars.$tabs-spacing};
+
+    --#{vars.$prefix}tab-item-padding: #{vars.$tabs-item-padding};
+    --#{vars.$prefix}tab-item-color: #{rgba(colors.$white, 0.6)};
+    --#{vars.$prefix}tab-item-active-color: #{colors.$white};
+    --#{vars.$prefix}tab-item-hover-color: #{rgba(colors.$white, 0.8)};
+    --#{vars.$prefix}tab-item-disabled-color: #{rgba(colors.$white, 0.3)};
+    // prettier-ignore
+    --#{vars.$prefix}tab-item-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
+    --#{vars.$prefix}tab-item-font-size: 0.95rem;
+
+    // prettier-ignore
+    --#{vars.$prefix}tab-tabs-background: var(--#{vars.$prefix}card-cap-bg, #{vars.$card-cap-bg});
+    // prettier-ignore
+    --#{vars.$prefix}tab-tabs-border-radius: var(--#{vars.$prefix}radius, #{vars.$radius-md});
+    // prettier-ignore
+    --#{vars.$prefix}tab-tabs-border-color: var(--#{vars.$prefix}card-border-color, #{vars.$card-border-color});
+    // prettier-ignore
+    --#{vars.$prefix}tab-tabs-border-width: var(--#{vars.$prefix}card-border-width, thin);
+    --#{vars.$prefix}tab-tabs-active-bg: #{colors.$white};
+    --#{vars.$prefix}tab-tabs-active-border-color: #{colors.$gray-300};
+    --#{vars.$prefix}tab-tabs-hover-border-color: #{colors.$gray-200};
+    // prettier-ignore
+    --#{vars.$prefix}tab-tabs-color: #{color.mix(colors.$mdb-default-color, color.change(colors.$gray-800, $alpha: 0.8), 30%)};
+    --#{vars.$prefix}tab-tabs-disabled-color: #{colors.$gray-600};
+    // prettier-ignore
+    --#{vars.$prefix}tab-tabs-hover-color: var(--#{vars.$prefix}field-active-indicator);
+    // prettier-ignore
+    --#{vars.$prefix}tab-tabs-margin-x: var(--#{vars.$prefix}card-cap-padding-x, #{vars.$card-cap-padding-x});
+    // prettier-ignore
+    --#{vars.$prefix}tab-tabs-margin-y: var(--#{vars.$prefix}card-cap-padding-y, #{vars.$card-cap-padding-y});
+
+    // prettier-ignore
+    --#{vars.$prefix}tab-pills-background: var(--#{vars.$prefix}card-cap-bg, #{vars.$card-cap-bg});
+    // prettier-ignore
+    --#{vars.$prefix}tab-pills-border-radius: var(--#{vars.$prefix}radius, #{vars.$radius-md});
+    // prettier-ignore
+    --#{vars.$prefix}tab-pills-border-color: var(--#{vars.$prefix}card-border-color, #{vars.$card-border-color});
+    // prettier-ignore
+    --#{vars.$prefix}tab-pills-border-width: var(--#{vars.$prefix}card-border-width, thin);
+    // prettier-ignore
+    --#{vars.$prefix}tab-pills-color: #{color.mix(colors.$mdb-default-color, color.change(colors.$gray-800, $alpha: 0.8), 30%)};
+    --#{vars.$prefix}tab-pills-active-bg: var(--#{vars.$prefix}field-primary-indicator);
+    --#{vars.$prefix}tab-pills-active-color: #{colors.$white};
+    --#{vars.$prefix}tab-pills-hover-color: var(--#{vars.$prefix}field-active-indicator);
+    --#{vars.$prefix}tab-pills-disabled-color: #{colors.$gray-600};
+    --#{vars.$prefix}tab-pills-margin: #{vars.$tabs-pills-margin};
+
+    --#{vars.$prefix}tab-material-padding: #{vars.$tabs-material-padding};
+    --#{vars.$prefix}tab-material-margin-start: #{vars.$padding-md};
+    --#{vars.$prefix}tab-material-margin-end: #{vars.$padding-md};
+    --#{vars.$prefix}tab-material-indicator-active-color: #{colors.$white};
+    // prettier-ignore
+    --#{vars.$prefix}tab-material-indicator-border: #{vars.$tabs-material-indicator-border};
+
+    // prettier-ignore
+    --#{vars.$prefix}tab-modern-border-radius: var(--#{vars.$prefix}radius-pill, #{vars.$tabs-modern-border-radius});
+    --#{vars.$prefix}tab-modern-active-bg: #{rgba(colors.$black, 0.2)};
+    --#{vars.$prefix}tab-modern-margin: #{vars.$tabs-modern-margin};
 
     transition: vars.$transition-leave;
 
     @include media.breakpoint-down(sm) {
-        --#{vars.$prefix}tabs-content-padding: #{$padding-md + .25} #{$padding-md - .25};
+      // prettier-ignore
+      --#{vars.$prefix}tab-content-padding: #{vars.$padding-md + 0.25} #{vars.$padding-md - 0.25};
     }
 
-    .nav {
-        --#{vars.$prefix-bs}nav-link-color: #{color.mix(vars.$default-active-bgcolor, rgba(colors.$gray-800, .8), 30%)};
-        --#{vars.$prefix-bs}nav-link-hover-color: rgb(var(--#{vars.$prefix}field-primary-indicator-rgb));
-        //overflow-x: hidden;
+    > .#{vars.$prefix}tab-content {
+      padding: var(--#{vars.$prefix}tab-content-padding);
+      transition: all vars.$transition-default;
+      overflow: hidden;
+      position: relative;
+    }
+  }
 
-        .nav-link {
-            cursor: pointer;
-            font-size: .95rem;
-            outline: 0 none;
-            padding: 0;
+  .tab-item-link {
+    cursor: pointer;
+    outline: 0 none;
+    padding: 0;
+    display: block;
+    text-decoration: none;
+    transition: vars.$tabs-item-link-transition;
 
-            > .#{vars.$prefix}ripple {
-                font-weight: var(--#{vars.$prefix}tabs-item-font-weight);
-                padding: var(--#{vars.$prefix}tabs-item-padding);
-                user-select: none;
-            }
-        }
-
-        &.#{vars.$prefix}tab-top,
-        &.#{vars.$prefix}tab-bottom {
-            flex-wrap: nowrap;
-            overflow-x: hidden;
-            position: relative;
-
-            > .tab-sliding {
-                display: flex;
-                flex: 1 0 auto;
-                position: relative;
-                transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.5, 1);
-            }
-        }
-
-        &.nav-tabs {
-            &.#{vars.$prefix}tab-left {
-                background-color: var(--#{vars.$prefix-bs}card-cap-bg);
-                border-right: var(--#{vars.$prefix-bs}card-border-width) solid var(--#{vars.$prefix-bs}card-border-color);
-                padding: var(--#{vars.$prefix}tabs-nav-margin-x) 0 var(--#{vars.$prefix}tabs-nav-margin-x) var(--#{vars.$prefix}tabs-nav-margin-x);
-
-                > .nav-item {
-                    @include borders.end-radius(0);
-                    @include borders.start-radius(var(--#{vars.$prefix-bs}nav-tabs-border-radius));
-                    margin-right: -1px;
-
-                    &.active {
-                        border-color: var(--#{vars.$prefix}tabs-nav-active-border-color) var(--#{vars.$prefix-bs}white) var(--#{vars.$prefix}tabs-nav-active-border-color) var(--#{vars.$prefix}tabs-nav-active-border-color);
-                    }
-                }
-            }
-
-            &.#{vars.$prefix}tab-right {
-                background-color: var(--#{vars.$prefix-bs}card-cap-bg);
-                border-left: var(--#{vars.$prefix-bs}card-border-width) solid var(--#{vars.$prefix-bs}card-border-color);
-                padding: var(--#{vars.$prefix}tabs-nav-margin-x) var(--#{vars.$prefix}tabs-nav-margin-x) var(--#{vars.$prefix}tabs-nav-margin-x) 0;
-
-                > .nav-item {
-                    @include borders.start-radius(0);
-                    @include borders.end-radius(var(--#{vars.$prefix-bs}nav-tabs-border-radius));
-                    margin-left: -1px;
-
-                    &.active {
-                        border-color: var(--#{vars.$prefix}tabs-nav-active-border-color) var(--#{vars.$prefix}tabs-nav-active-border-color) var(--#{vars.$prefix}tabs-nav-active-border-color) var(--#{vars.$prefix-bs}white);
-                    }
-                }
-            }
-
-            &.#{vars.$prefix}tab-top,
-            &.#{vars.$prefix}tab-bottom {
-                > .tab-sliding {
-                    padding-left: var(--#{vars.$prefix}tabs-nav-margin-x);
-                    padding-right: var(--#{vars.$prefix}tabs-nav-margin-x);
-                }
-            }
-
-            &.#{vars.$prefix}tab-top {
-                //padding: var(--#{vars.$prefix}tabs-nav-margin-y) var(--#{vars.$prefix}tabs-nav-margin-x) 0 var(--#{vars.$prefix}tabs-nav-margin-x);
-                padding: var(--#{vars.$prefix}tabs-nav-margin-y) 0 0 0;
-                border-bottom-width: 0;
-
-                > .tab-sliding {
-                    border-bottom: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
-                }
-            }
-
-            &.#{vars.$prefix}tab-bottom {
-                //padding: 0 var(--#{vars.$prefix}tabs-nav-margin-x) var(--#{vars.$prefix}tabs-nav-margin-y) var(--#{vars.$prefix}tabs-nav-margin-x);
-                padding: 0 0 var(--#{vars.$prefix}tabs-nav-margin-y) 0;
-                border-bottom-width: 0;
-                border-top-width: 0;
-
-                > .tab-sliding {
-                    border-top: var(--bs-nav-tabs-border-width) solid var(--bs-nav-tabs-border-color);
-                }
-
-                .nav-item {
-                    @include borders.top-radius(0);
-                    @include borders.bottom-radius(var(--#{vars.$prefix-bs}nav-tabs-border-radius));
-                    margin-bottom: 0;
-                    margin-top: -1px;
-
-                    &.active {
-                        border-color: var(--#{vars.$prefix-bs}white) var(--#{vars.$prefix}tabs-nav-active-border-color) var(--#{vars.$prefix}tabs-nav-active-border-color);
-                    }
-                }
-            }
-        }
-
-        &.nav-pills {
-            --#{vars.$prefix-bs}nav-pills-link-active-bg: rgb(var(--#{vars.$prefix}field-primary-indicator-rgb));
-            padding: var(--#{vars.$prefix}tabs-item-padding);
-
-            &.#{vars.$prefix}tab-left {
-                background-color: var(--#{vars.$prefix-bs}card-cap-bg);
-                border-right: var(--#{vars.$prefix-bs}card-border-width) solid var(--#{vars.$prefix-bs}card-border-color);
-            }
-
-            &.#{vars.$prefix}tab-right {
-                background-color: var(--#{vars.$prefix-bs}card-cap-bg);
-                border-left: var(--#{vars.$prefix-bs}card-border-width) solid var(--#{vars.$prefix-bs}card-border-color);
-            }
-
-            .nav-link {
-                > .#{vars.$prefix}ripple {
-                    @include borders.radius(var(--#{vars.$prefix-bs}nav-pills-border-radius));
-                }
-
-                &.active {
-                    box-shadow: vars.$z-depth-1;
-                }
-            }
-        }
-
-        &.nav-material {
-            position: relative;
-
-            .nav-link {
-                @include borders.radius(0);
-                background-color: transparent;
-                border-color: transparent;
-                border-style: solid;
-                border-width: 0;
-                list-style: none;
-                color: var(--#{vars.$prefix}tabs-item-color);
-                transition: vars.$transition-default;
-
-                > .#{vars.$prefix}ripple {
-                    padding: var(--#{vars.$prefix}tabs-material-padding);
-                }
-
-                &:hover {
-                    color: var(--#{vars.$prefix}tabs-item-hover-color);
-                }
-
-                &.active {
-                    color: var(--#{vars.$prefix}tabs-item-active-color);
-                }
-
-                &.disabled {
-                    color: var(--#{vars.$prefix}tabs-item-disabled-color);
-                }
-            }
-
-            &.#{vars.$prefix}tab-top {
-                box-shadow: var(--#{vars.$prefix}tabs-placement-top-shadow);
-
-                .nav-link {
-                    border-bottom-width: var(--#{vars.$prefix}tabs-material-indicator-border);
-
-                    &.active {
-                        border-bottom-color: var(--#{vars.$prefix}tabs-material-indicator-active-color);
-                    }
-                }
-            }
-
-            &.#{vars.$prefix}tab-bottom {
-                box-shadow: var(--#{vars.$prefix}tabs-placement-bottom-shadow);
-
-                .nav-link {
-                    border-top-width: var(--#{vars.$prefix}tabs-material-indicator-border);
-
-                    &.active {
-                        border-top-color: var(--#{vars.$prefix}tabs-material-indicator-active-color);
-                    }
-                }
-            }
-
-            &.#{vars.$prefix}tab-left {
-                box-shadow: var(--#{vars.$prefix}tabs-placement-left-shadow);
-
-                > .nav-link {
-                    border-right-width: var(--#{vars.$prefix}tabs-material-indicator-border);
-
-                    &.active {
-                        border-right-color: var(--#{vars.$prefix}tabs-material-indicator-active-color);
-                    }
-                }
-            }
-
-            &.#{vars.$prefix}tab-right {
-                box-shadow: var(--#{vars.$prefix}tabs-placement-right-shadow);
-
-                > .nav-link {
-                    border-left-width: var(--#{vars.$prefix}tabs-material-indicator-border);
-
-                    &.active {
-                        border-left-color: var(--#{vars.$prefix}tabs-material-indicator-active-color);
-                    }
-                }
-            }
-
-            &.#{vars.$prefix}tab-top,
-            &.#{vars.$prefix}tab-bottom {
-                .nav-link {
-                    @include media.breakpoint-up(lg) {
-                        &:first-child {
-                            margin-left: var(--#{vars.$prefix}tabs-material-margin-start);
-                        }
-
-                        &:last-child {
-                            margin-right: var(--#{vars.$prefix}tabs-material-margin-end);
-                        }
-                    }
-                }
-            }
-        }
-
-        &.nav-modern {
-            border-width: 0;
-            padding: var(--#{vars.$prefix}tabs-modern-padding);
-
-            &.#{vars.$prefix}tab-top {
-                box-shadow: var(--#{vars.$prefix}tabs-placement-top-shadow);
-            }
-
-            &.#{vars.$prefix}tab-bottom {
-                box-shadow: var(--#{vars.$prefix}tabs-placement-bottom-shadow);
-            }
-
-            .nav-link {
-                @include borders.radius(var(--#{vars.$prefix}tabs-modern-border-radius));
-                border-width: 0 !important;
-                color: var(--#{vars.$prefix}tabs-item-color);
-
-                > .#{vars.$prefix}ripple {
-                    @include borders.radius(var(--#{vars.$prefix}tabs-modern-border-radius));
-                }
-
-                &:hover {
-                    color: var(--#{vars.$prefix}tabs-item-hover-color);
-                }
-
-                &.active {
-                    background-color: var(--#{vars.$prefix}tabs-modern-active-bgcolor);
-                    color: var(--#{vars.$prefix}tabs-item-active-color);
-                }
-
-                &.disabled {
-                    color: var(--#{vars.$prefix}tabs-item-disabled-color);
-                }
-            }
-        }
-
-        &.nav-pills, &.nav-modern {
-            &.#{vars.$prefix}tab-top,
-            &.#{vars.$prefix}tab-bottom {
-                .nav-item + .nav-item {
-                    margin-left: var(--#{vars.$prefix}tabs-item-spacing);
-                }
-            }
-
-            &.#{vars.$prefix}tab-left,
-            &.#{vars.$prefix}tab-right {
-                .nav-item + .nav-item {
-                    margin-top: var(--#{vars.$prefix}tabs-item-spacing);
-                }
-            }
-        }
+    &.disabled,
+    &:disabled {
+      pointer-events: none;
+      cursor: default;
     }
 
-    .tab-content {
-        transition: all vars.$transition-default;
-        overflow: hidden;
+    > .#{vars.$prefix}ripple {
+      font-size: var(--#{vars.$prefix}tab-item-font-size);
+      font-weight: var(--#{vars.$prefix}tab-item-font-weight);
+      padding: var(--#{vars.$prefix}tab-item-padding);
+      user-select: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+  }
+
+  .#{vars.$prefix}tab-items {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+
+    &.#{vars.$prefix}tab-top,
+    &.#{vars.$prefix}tab-bottom {
+      flex-wrap: nowrap;
+      overflow-x: hidden;
+      position: relative;
+
+      > .tab-sliding {
+        display: flex;
+        flex: 1 0 auto;
         position: relative;
-        padding: var(--#{vars.$prefix}tabs-content-padding);
+        transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.5, 1);
+      }
     }
-}
 
-.card {
+    &.#{vars.$prefix}tabs-tabs {
+      .tab-item-link {
+        color: var(--#{vars.$prefix}tab-tabs-color);
+
+        &:hover,
+        &:focus {
+          color: var(--#{vars.$prefix}tab-tabs-hover-color);
+        }
+
+        &.active {
+          background-color: var(--#{vars.$prefix}tab-tabs-active-bg);
+        }
+
+        &.disabled,
+        &:disabled {
+          color: var(--#{vars.$prefix}tab-tabs-disabled-color);
+        }
+      }
+
+      &.#{vars.$prefix}tab-left {
+        background-color: var(--#{vars.$prefix}tab-tabs-background);
+        // prettier-ignore
+        border-right: var(--#{vars.$prefix}tab-tabs-border-width) solid var(--#{vars.$prefix}tab-tabs-border-color);
+        // prettier-ignore
+        padding: var(--#{vars.$prefix}tab-tabs-margin-x) 0 var(--#{vars.$prefix}tab-tabs-margin-x) var(--#{vars.$prefix}tab-tabs-margin-x);
+
+        > .tab-item-link {
+          @include borders.end-radius(0);
+          @include borders.start-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
+          margin-right: -1px;
+
+          &.active {
+            // prettier-ignore
+            border-color: var(--#{vars.$prefix}tab-tabs-active-border-color) #{colors.$white} var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color);
+          }
+        }
+      }
+
+      &.#{vars.$prefix}tab-right {
+        background-color: var(--#{vars.$prefix}tab-tabs-background);
+        // prettier-ignore
+        border-left: var(--#{vars.$prefix}tab-tabs-border-width) solid var(--#{vars.$prefix}tab-tabs-border-color);
+        // prettier-ignore
+        padding: var(--#{vars.$prefix}tab-tabs-margin-x) var(--#{vars.$prefix}tab-tabs-margin-x) var(--#{vars.$prefix}tab-tabs-margin-x) 0;
+
+        > .tab-item-link {
+          @include borders.start-radius(0);
+          @include borders.end-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
+          margin-left: -1px;
+
+          &.active {
+            // prettier-ignore
+            border-color: var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color) #{colors.$white};
+          }
+        }
+      }
+
+      &.#{vars.$prefix}tab-top,
+      &.#{vars.$prefix}tab-bottom {
+        > .tab-sliding {
+          padding-left: var(--#{vars.$prefix}tab-tabs-margin-x);
+          padding-right: var(--#{vars.$prefix}tab-tabs-margin-x);
+        }
+      }
+
+      &.#{vars.$prefix}tab-top {
+        padding: var(--#{vars.$prefix}tab-tabs-margin-y) 0 0 0;
+        border-bottom-width: 0;
+
+        > .tab-sliding {
+          // prettier-ignore
+          border-bottom: var(--#{vars.$prefix}tab-tabs-border-width) solid var(--#{vars.$prefix}tab-tabs-border-color);
+        }
+
+        .tab-item-link {
+          @include borders.bottom-radius(0);
+          @include borders.top-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
+          margin-bottom: -1px;
+
+          &:hover,
+          &:focus {
+            // prettier-ignore
+            border-color:  var(--#{vars.$prefix}tab-tabs-hover-border-color) var(--#{vars.$prefix}tab-tabs-hover-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color);
+          }
+
+          &.active {
+            // prettier-ignore
+            border-color:  var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color) #{colors.$white};
+          }
+        }
+      }
+
+      &.#{vars.$prefix}tab-bottom {
+        padding: 0 0 var(--#{vars.$prefix}tab-tabs-margin-y) 0;
+        border-bottom-width: 0;
+        border-top-width: 0;
+
+        > .tab-sliding {
+          // prettier-ignore
+          border-top: var(--#{vars.$prefix}tab-tabs-border-width) solid var(--#{vars.$prefix}tab-tabs-border-color);
+        }
+
+        .tab-item-link {
+          @include borders.top-radius(0);
+          @include borders.bottom-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
+          margin-top: -1px;
+
+          &:hover,
+          &:focus {
+            // prettier-ignore
+            border-color:  var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-hover-border-color) var(--#{vars.$prefix}tab-tabs-hover-border-color);
+          }
+
+          &.active {
+            // prettier-ignore
+            border-color: #{colors.$white} var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color);
+          }
+        }
+      }
+    }
+
+    &.#{vars.$prefix}tabs-pills {
+      padding: var(--#{vars.$prefix}tab-pills-margin);
+
+      .tab-item-link {
+        color: var(--#{vars.$prefix}tab-pills-color);
+
+        > .#{vars.$prefix}ripple {
+          @include borders.radius(var(--#{vars.$prefix}tab-pills-border-radius));
+        }
+
+        &:hover,
+        &:focus {
+          color: var(--#{vars.$prefix}tab-pills-hover-color);
+        }
+
+        &.active {
+          background-color: var(--#{vars.$prefix}tab-pills-active-bg);
+          color: var(--#{vars.$prefix}tab-pills-active-color);
+          box-shadow: vars.$z-depth-1;
+        }
+
+        &.disabled,
+        &:disabled {
+          color: var(--#{vars.$prefix}tab-pills-disabled-color);
+        }
+      }
+
+      &.#{vars.$prefix}tab-left {
+        background-color: var(--#{vars.$prefix}tab-pills-background);
+        // prettier-ignore
+        border-right: var(--#{vars.$prefix}tab-pills-border-width) solid var(--#{vars.$prefix}tab-pills-border-color);
+      }
+
+      &.#{vars.$prefix}tab-right {
+        background-color: var(--#{vars.$prefix}tab-pills-background);
+        // prettier-ignore
+        border-left: var(--#{vars.$prefix}tab-pills-border-width) solid var(--#{vars.$prefix}tab-pills-border-color);
+      }
+    }
+
+    &.#{vars.$prefix}tabs-material {
+      position: relative;
+
+      .tab-item-link {
+        //@include borders.radius(0);
+        background-color: transparent;
+        border-color: transparent;
+        border-style: solid;
+        border-width: 0;
+        list-style: none;
+        color: var(--#{vars.$prefix}tab-item-color);
+        transition: vars.$transition-default;
+
+        > .#{vars.$prefix}ripple {
+          padding: var(--#{vars.$prefix}tab-material-padding);
+        }
+
+        &:hover {
+          color: var(--#{vars.$prefix}tab-item-hover-color);
+        }
+
+        &.active {
+          color: var(--#{vars.$prefix}tab-item-active-color);
+        }
+
+        &.disabled {
+          color: var(--#{vars.$prefix}tab-item-disabled-color);
+        }
+      }
+
+      &.#{vars.$prefix}tab-top {
+        box-shadow: var(--#{vars.$prefix}tab-placement-top-shadow);
+
+        .tab-item-link {
+          border-bottom-width: var(--#{vars.$prefix}tab-material-indicator-border);
+
+          &.active {
+            border-bottom-color: var(--#{vars.$prefix}tab-material-indicator-active-color);
+          }
+        }
+      }
+
+      &.#{vars.$prefix}tab-bottom {
+        box-shadow: var(--#{vars.$prefix}tab-placement-bottom-shadow);
+
+        .tab-item-link {
+          border-top-width: var(--#{vars.$prefix}tab-material-indicator-border);
+
+          &.active {
+            border-top-color: var(--#{vars.$prefix}tab-material-indicator-active-color);
+          }
+        }
+      }
+
+      &.#{vars.$prefix}tab-left {
+        box-shadow: var(--#{vars.$prefix}tab-placement-left-shadow);
+
+        > .tab-item-link {
+          border-right-width: var(--#{vars.$prefix}tab-material-indicator-border);
+
+          &.active {
+            border-right-color: var(--#{vars.$prefix}tab-material-indicator-active-color);
+          }
+        }
+      }
+
+      &.#{vars.$prefix}tab-right {
+        box-shadow: var(--#{vars.$prefix}tab-placement-right-shadow);
+
+        > .tab-item-link {
+          border-left-width: var(--#{vars.$prefix}tab-material-indicator-border);
+
+          &.active {
+            border-left-color: var(--#{vars.$prefix}tab-material-indicator-active-color);
+          }
+        }
+      }
+
+      &.#{vars.$prefix}tab-top,
+      &.#{vars.$prefix}tab-bottom {
+        .tab-item-link {
+          @include media.breakpoint-up(lg) {
+            &:first-child {
+              margin-left: var(--#{vars.$prefix}tab-material-margin-start);
+            }
+
+            &:last-child {
+              margin-right: var(--#{vars.$prefix}tab-material-margin-end);
+            }
+          }
+        }
+      }
+    }
+
+    &.#{vars.$prefix}tabs-modern {
+      //border-width: 0;
+      padding: var(--#{vars.$prefix}tab-modern-margin);
+
+      &.#{vars.$prefix}tab-top {
+        box-shadow: var(--#{vars.$prefix}tab-placement-top-shadow);
+      }
+
+      &.#{vars.$prefix}tab-bottom {
+        box-shadow: var(--#{vars.$prefix}tab-placement-bottom-shadow);
+      }
+
+      .tab-item-link {
+        @include borders.radius(var(--#{vars.$prefix}tab-modern-border-radius));
+        //border-width: 0 !important;
+        color: var(--#{vars.$prefix}tab-item-color);
+
+        > .#{vars.$prefix}ripple {
+          @include borders.radius(var(--#{vars.$prefix}tab-modern-border-radius));
+        }
+
+        &:hover {
+          color: var(--#{vars.$prefix}tab-item-hover-color);
+        }
+
+        &.active {
+          background-color: var(--#{vars.$prefix}tab-modern-active-bg);
+          color: var(--#{vars.$prefix}tab-item-active-color);
+        }
+
+        &.disabled {
+          color: var(--#{vars.$prefix}tab-item-disabled-color);
+        }
+      }
+    }
+
+    &.#{vars.$prefix}tabs-pills,
+    &.#{vars.$prefix}tabs-modern {
+      &.#{vars.$prefix}tab-top,
+      &.#{vars.$prefix}tab-bottom {
+        .tab-item + .tab-item {
+          margin-left: var(--#{vars.$prefix}tab-spacing);
+        }
+      }
+
+      &.#{vars.$prefix}tab-left,
+      &.#{vars.$prefix}tab-right {
+        .tab-item + .tab-item {
+          margin-top: var(--#{vars.$prefix}tab-spacing);
+        }
+      }
+    }
+  }
+
+  .#{vars.$prefix}card {
     > .#{vars.$prefix}tabs {
-        &:first-child {
-            .nav-pills, .nav-material, .nav-modern {
-                &.#{vars.$prefix}tab-top {
-                    @include borders.top-radius(var(--#{vars.$prefix-bs}card-border-radius));
-                }
+      &:first-child {
+        .#{vars.$prefix}tabs-pills,
+        .#{vars.$prefix}tabs-material,
+        .#{vars.$prefix}tabs-modern {
+          &.#{vars.$prefix}tab-top {
+            @include borders.top-radius(var(--#{vars.$prefix}card-border-radius));
+          }
 
-                &.#{vars.$prefix}tab-left {
-                    @include borders.top-start-radius(var(--#{vars.$prefix-bs}card-border-radius));
-                }
+          &.#{vars.$prefix}tab-left {
+            @include borders.top-start-radius(var(--#{vars.$prefix}card-border-radius));
+          }
 
-                &.#{vars.$prefix}tab-right {
-                    @include borders.top-end-radius(var(--#{vars.$prefix-bs}card-border-radius));
-                }
-            }
+          &.#{vars.$prefix}tab-right {
+            @include borders.top-end-radius(var(--#{vars.$prefix}card-border-radius));
+          }
         }
+      }
 
-        &:last-child {
-            .nav-pills, .nav-material, .nav-modern {
-                &.#{vars.$prefix}tab-bottom {
-                    @include borders.bottom-radius(var(--#{vars.$prefix-bs}card-border-radius));
-                }
+      &:last-child {
+        .#{vars.$prefix}tabs-pills,
+        .#{vars.$prefix}tabs-material,
+        .#{vars.$prefix}tabs-modern {
+          &.#{vars.$prefix}tab-bottom {
+            @include borders.bottom-radius(var(--#{vars.$prefix}card-border-radius));
+          }
 
-                &.#{vars.$prefix}tab-left {
-                    @include borders.bottom-start-radius(var(--#{vars.$prefix-bs}card-border-radius));
-                }
+          &.#{vars.$prefix}tab-left {
+            @include borders.bottom-start-radius(var(--#{vars.$prefix}card-border-radius));
+          }
 
-                &.#{vars.$prefix}tab-right {
-                    @include borders.bottom-end-radius(var(--#{vars.$prefix-bs}card-border-radius));
-                }
-            }
+          &.#{vars.$prefix}tab-right {
+            @include borders.bottom-end-radius(var(--#{vars.$prefix}card-border-radius));
+          }
         }
+      }
     }
 
     &.rounded-0 {
-        .#{vars.$prefix}tabs {
-            .nav-pills, .nav-material, .nav-modern {
-                @include borders.radius(0);
-            }
+      .#{vars.$prefix}tabs {
+        .#{vars.$prefix}tabs-pills,
+        .#{vars.$prefix}tabs-material,
+        .#{vars.$prefix}tabs-modern {
+          @include borders.radius(0);
         }
+      }
     }
+  }
 }

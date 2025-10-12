@@ -1,12 +1,12 @@
 import type { App, ObjectPlugin } from 'vue';
-import BsTabs from './BsTabs';
-import BsTab from './BsTab';
+import BsTab from './BsTab.ts';
+import BsTabs from './BsTabs.ts';
 
 const BsTabsPlugin: ObjectPlugin = {
-    install: (app: App): void => {
-        app.component(BsTab.name as string, BsTab);
-        app.component(BsTabs.name as string, BsTabs);
-    },
+  install: (app: App): void => {
+    app.component(BsTab.name as string, BsTab);
+    app.component(BsTabs.name as string, BsTabs);
+  },
 };
 
-export { BsTabsPlugin, BsTab, BsTabs };
+export { BsTab, BsTabs, BsTabsPlugin };

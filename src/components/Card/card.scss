@@ -78,12 +78,16 @@
     }
   }
 
+  .#{vars.$prefix}card-footer,
   .#{vars.$prefix}card-header {
-    margin-bottom: 0;
     background-color: var(--#{vars.$prefix}card-cap-bg);
     color: var(--#{vars.$prefix}card-cap-color);
-    font-weight: var(--font-weight-semibold, #{vars.$font-weight-semibold});
     padding: var(--#{vars.$prefix}card-cap-padding-y) var(--#{vars.$prefix}card-cap-padding-x);
+  }
+
+  .#{vars.$prefix}card-header {
+    margin-bottom: 0;
+    font-weight: var(--font-weight-semibold, #{vars.$font-weight-semibold});
     // prettier-ignore
     border-bottom: var(--#{vars.$prefix}card-border-width) solid var(--#{vars.$prefix}card-border-color);
 
@@ -93,9 +97,6 @@
   }
 
   .#{vars.$prefix}card-footer {
-    padding: var(--#{vars.$prefix}card-cap-padding-y) var(--#{vars.$prefix}card-cap-padding-x);
-    color: var(--#{vars.$prefix}card-cap-color);
-    background-color: var(--#{vars.$prefix}card-cap-bg);
     // prettier-ignore
     border-top: var(--#{vars.$prefix}card-border-width) solid var(--#{vars.$prefix}card-border-color);
 
