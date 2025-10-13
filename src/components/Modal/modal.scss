@@ -1,14 +1,21 @@
-@use "../../../scss/mixins/css3/borders";
-@use "../../../scss/color_vars" as colors;
-@use "../../../scss/variables" as vars;
+@use '../../../scss/mixins/css3/borders';
+@use '../../../scss/color_vars' as colors;
+@use '../../../scss/variables' as vars;
 
-.#{vars.$prefix}modal {
+@layer components {
+  .#{vars.$prefix}modal {
     --#{vars.$prefix}modal-background: #{colors.$white};
     --#{vars.$prefix}modal-border-radius: 1rem;
     --#{vars.$prefix}modal-header-padding: #{vars.$padding-lg vars.$padding-lg 1.25rem};
     --#{vars.$prefix}modal-body-padding: #{vars.$padding-lg vars.$padding-lg 1.25rem};
-    --#{vars.$prefix}modal-footer-padding: #{vars.$padding-sm $padding-md $padding-md $padding-md};
+    // prettier-ignore
+    --#{vars.$prefix}modal-footer-padding: #{vars.$padding-sm vars.$padding-md vars.$padding-md vars.$padding-md};
     --#{vars.$prefix}modal-max-width: 80%;
+    --#{vars.$prefix}modal-title-font-size: 1.375rem;
+    // prettier-ignore
+    --#{vars.$prefix}modal-title-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
+    // prettier-ignore
+    --#{vars.$prefix}modal-box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
 
     display: flex;
     align-items: center;
@@ -21,107 +28,108 @@
     z-index: 1038;
 
     > .#{vars.$prefix}modal-inner {
-        @include borders.radius(var(--#{vars.$prefix}modal-border-radius));
-        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, .2), 0 8px 10px 1px rgba(0, 0, 0, .14), 0 3px 14px 2px rgba(0, 0, 0, .12);
-        background-color: var(--#{vars.$prefix}modal-background);
-        max-width: var(--#{vars.$prefix}modal-max-width);
-        font-size: inherit;
-        padding: 0;
+      @include borders.radius(var(--#{vars.$prefix}modal-border-radius));
+      box-shadow: var(--#{vars.$prefix}modal-box-shadow);
+      background-color: var(--#{vars.$prefix}modal-background);
+      max-width: var(--#{vars.$prefix}modal-max-width);
+      font-size: inherit;
+      padding: 0;
 
+      .#{vars.$prefix}modal-body {
+        padding: var(--#{vars.$prefix}modal-body-padding);
+      }
+
+      &.#{vars.$prefix}modal-scrollable {
         .#{vars.$prefix}modal-body {
-            padding: var(--#{vars.$prefix}modal-body-padding);
+          overflow-x: hidden;
+          overflow-y: auto;
+          -webkit-overflow-scrolling: touch;
         }
+      }
 
-        &.#{vars.$prefix}modal-scrollable {
-            .#{vars.$prefix}modal-body {
-                overflow-x: hidden;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-            }
-        }
+      &.#{vars.$prefix}modal-fullscreen {
+        --#{vars.$prefix}modal-border-radius: 0;
+        --#{vars.$prefix}modal-max-width: 100%;
 
-        &.#{vars.$prefix}modal-fullscreen {
-            --#{vars.$prefix}modal-border-radius: 0;
-            --#{vars.$prefix}modal-max-width: 100%;
-
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 0;
-            bottom: 0;
-            width: 100% !important;
-            height: 100% !important;
-            max-height: 100% !important;
-        }
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100% !important;
+        height: 100% !important;
+        max-height: 100% !important;
+      }
     }
 
     .#{vars.$prefix}modal-title {
-        padding: var(--#{vars.$prefix}modal-header-padding);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-weight: $font-weight-medium;
-        font-size: 1.375rem;
-        line-height: normal;
-        margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      line-height: normal;
+      margin: 0;
+      padding: var(--#{vars.$prefix}modal-header-padding);
+      font-size: var(--#{vars.$prefix}modal-title-font-size);
+      font-weight: var(--#{vars.$prefix}modal-title-font-weight);
 
-        ~ .#{vars.$prefix}modal-body {
-            --#{vars.$prefix}modal-body-padding: #{0 vars.$padding-lg 1.25rem};
-        }
+      ~ .#{vars.$prefix}modal-body {
+        --#{vars.$prefix}modal-body-padding: #{0 vars.$padding-lg 1.25rem};
+      }
     }
 
     .#{vars.$prefix}modal-footer {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding: var(--#{vars.$prefix}modal-footer-padding);
-        min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: 48px;
+      padding: var(--#{vars.$prefix}modal-footer-padding);
     }
-}
+  }
 
-.modal-dialog-enter-active,
-.modal-dialog-leave-active {
+  .modal-dialog-enter-active,
+  .modal-dialog-leave-active {
     transition: opacity vars.$transition-default-easing;
 
     .#{vars.$prefix}modal-inner {
-        &.#{vars.$prefix}slide-top,
-        &.#{vars.$prefix}slide-bottom,
-        &.#{vars.$prefix}slide-left,
-        &.#{vars.$prefix}slide-right,
-        &.#{vars.$prefix}scale {
-            transition: transform vars.$transition-default-easing;
-        }
+      &.#{vars.$prefix}slide-top,
+      &.#{vars.$prefix}slide-bottom,
+      &.#{vars.$prefix}slide-left,
+      &.#{vars.$prefix}slide-right,
+      &.#{vars.$prefix}scale {
+        transition: transform vars.$transition-default-easing;
+      }
     }
-}
+  }
 
-.modal-dialog-enter-from,
-.modal-dialog-leave-active {
+  .modal-dialog-enter-from,
+  .modal-dialog-leave-active {
     opacity: 0;
-}
+  }
 
-.modal-dialog-enter-from,
-.modal-dialog-leave-active {
+  .modal-dialog-enter-from,
+  .modal-dialog-leave-active {
     .#{vars.$prefix}modal-inner {
-        backface-visibility: hidden;
+      backface-visibility: hidden;
 
-        &.#{vars.$prefix}slide-top {
-            transform: translate3d(0, -100%, 0);
-        }
+      &.#{vars.$prefix}slide-top {
+        transform: translate3d(0, -100%, 0);
+      }
 
-        &.#{vars.$prefix}slide-bottom {
-            transform: translate3d(0, 100%, 0);
-        }
+      &.#{vars.$prefix}slide-bottom {
+        transform: translate3d(0, 100%, 0);
+      }
 
-        &.#{vars.$prefix}slide-right {
-            transform: translate3d(100%, 0, 0);
-        }
+      &.#{vars.$prefix}slide-right {
+        transform: translate3d(100%, 0, 0);
+      }
 
-        &.#{vars.$prefix}slide-left {
-            transform: translate3d(-100%, 0, 0);
-        }
+      &.#{vars.$prefix}slide-left {
+        transform: translate3d(-100%, 0, 0);
+      }
 
-        &.#{vars.$prefix}scale {
-            transform: scale(0.6);
-        }
+      &.#{vars.$prefix}scale {
+        transform: scale(0.6);
+      }
     }
+  }
 }

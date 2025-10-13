@@ -7,12 +7,11 @@ import {
   useRenderTransition,
   useWrapSlot,
 } from '@/mixins/CommonApi.ts';
-import type { TBsModal, TModalOptionProps, TRecord } from '@/types';
-import Helper from '@/utils/Helper';
+import type { TModalOptionProps, TRecord } from '@/types';
+import Helper from '@/utils/Helper.ts';
 import type {
   ComponentInternalInstance,
   ComputedRef,
-  ExtractPropTypes,
   Prop,
   Ref,
   ShallowRef,
@@ -27,7 +26,7 @@ export function useSetDialogMaxHeight(
   headerEl: Ref<HTMLElement | null>,
   bodyEl: Ref<HTMLElement | null>,
   footerEl: Ref<HTMLElement | null>
-) {
+): void {
   if (!dialogEl.value) {
     return;
   }
@@ -60,7 +59,7 @@ export function useSetDialogMaxHeight(
 export function useRenderModalDialog(
   slots: Slots,
   instance: ShallowRef<ComponentInternalInstance | null>,
-  props: Readonly<ExtractPropTypes<TBsModal>>,
+  props: Readonly<TModalOptionProps>,
   modalOpen: Ref<boolean>,
   classNames: ComputedRef<TRecord>,
   dialogEl: Ref<HTMLElement | null>,
@@ -68,22 +67,18 @@ export function useRenderModalDialog(
   bodyEl: Ref<HTMLElement | null>,
   footerEl: Ref<HTMLElement | null>
 ): VNode {
-  const thisProps = props as Readonly<TModalOptionProps>;
-
   return h(Teleport, { to: 'body' }, [
     h(BsOverlay, {
-      color: props.overlayColor,
-      opacity: props.overlayOpacity,
-      // @ts-ignore
-      show: (modalOpen.value && thisProps.overlay) as Prop<boolean>,
-      // @ts-ignore
-      fixed: true as Prop<boolean>,
+      color: props.overlayColor as Prop<string>,
+      opacity: props.overlayOpacity as Prop<number>,
+      show: (modalOpen.value && props.overlay) as unknown as Prop<boolean>,
+      fixed: true as unknown as Prop<boolean>,
       zIndex: 1037 as Prop<number>,
     }),
     createModalDialog(
       slots,
       instance,
-      thisProps,
+      props,
       modalOpen,
       classNames,
       dialogEl,
@@ -113,7 +108,7 @@ function createModalDialog(
           {
             class: [`${cssPrefix}modal`],
             onClick: () => {
-              (props.overlayClose || props.overlayClickClose) &&
+              props.overlayClickClose &&
                 useClosePopover(instance.value, modalOpen, 'Overlay clicked.');
             },
           },
