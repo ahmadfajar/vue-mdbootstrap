@@ -4,14 +4,14 @@ import { useVueMdbNotification } from '@/mixins/CommonApi.ts';
 import { defineComponent, onMounted, shallowRef } from 'vue';
 
 export default defineComponent({
-    name: 'BsNotification',
-    setup() {
-        const provider = shallowRef<INotificationProvider>();
+  name: 'BsNotification',
+  setup() {
+    const provider = shallowRef<INotificationProvider>();
 
-        onMounted(() => {
-            provider.value = useVueMdbNotification();
-        });
+    onMounted(() => {
+      provider.value = useVueMdbNotification();
+    });
 
-        return () => useRenderNotificationContainer(provider);
-    },
+    return () => useRenderNotificationContainer(provider);
+  },
 });
