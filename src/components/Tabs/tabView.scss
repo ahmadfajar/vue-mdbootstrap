@@ -1,6 +1,7 @@
 @use 'sass:color';
 @use '../../../scss/mixins/css3/breakpoints' as media;
 @use '../../../scss/mixins/css3/borders';
+@use '../../../scss/utils/color_helper' as helper;
 @use '../../../scss/color_vars' as colors;
 @use '../../../scss/variables' as vars;
 
@@ -33,8 +34,14 @@
     --#{vars.$prefix}tab-tabs-active-bg: #{colors.$white};
     --#{vars.$prefix}tab-tabs-active-border-color: #{colors.$gray-300};
     --#{vars.$prefix}tab-tabs-hover-border-color: #{colors.$gray-200};
-    // prettier-ignore
-    --#{vars.$prefix}tab-tabs-color: #{color.mix(colors.$mdb-default-color, color.change(colors.$gray-800, $alpha: 0.8), 30%)};
+    --#{vars.$prefix}tab-tabs-color: #{helper.to-oklch(
+        color.mix(
+          colors.$mdb-default-color,
+          color.change(colors.$gray-800, $alpha: 0.8),
+          30%,
+          oklch
+        )
+      )};
     --#{vars.$prefix}tab-tabs-disabled-color: #{colors.$gray-600};
     // prettier-ignore
     --#{vars.$prefix}tab-tabs-hover-color: var(--#{vars.$prefix}field-active-indicator);
