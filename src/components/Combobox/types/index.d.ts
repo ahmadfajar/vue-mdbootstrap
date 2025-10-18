@@ -1,3 +1,4 @@
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 import {
   BaseComponentProps,
   EventUpdateModelValueProps,
@@ -7,10 +8,8 @@ import {
   IBsStore,
   Numberish,
   TContextColor,
-  TDataSource,
   TInputFieldProps,
-} from '@/types';
-import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+} from '../../../types';
 
 export declare type TCheckboxPosition = 'left' | 'right';
 

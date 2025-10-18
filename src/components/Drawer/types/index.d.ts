@@ -1,5 +1,5 @@
-import { BaseComponentProps, EventUpdateOpenProps, HtmlTagName, Numberish } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+import { BaseComponentProps, EventUpdateOpenProps, HtmlTagName, Numberish } from '../../../types';
 
 export declare type TSideDrawerPosition = 'left' | 'right';
 

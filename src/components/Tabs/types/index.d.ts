@@ -1,17 +1,17 @@
 import {
-  BaseComponentProps,
-  EventUpdateModelValueProps,
-  Numberish,
-  TAllowedIconProps,
-  TRouterOptionProps,
-} from '@/types';
-import {
   ComponentInternalInstance,
   ComponentObjectPropsOptions,
   ObjectPlugin,
   Ref,
   VNode,
 } from 'vue';
+import {
+  BaseComponentProps,
+  EventUpdateModelValueProps,
+  Numberish,
+  TAllowedIconProps,
+  TRouterOptionProps,
+} from '../../../types';
 
 export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 

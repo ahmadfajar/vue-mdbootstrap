@@ -1,4 +1,13 @@
 import {
+  ComponentInternalInstance,
+  ComponentObjectPropsOptions,
+  ComponentPublicInstance,
+  ObjectPlugin,
+  Ref,
+  RendererNode,
+  VNode,
+} from 'vue';
+import {
   BaseComponentProps,
   EventUpdateModelValueProps,
   Numberish,
@@ -9,16 +18,7 @@ import {
   TBadgeVariant,
   TRouterOptionProps,
   TTagProp,
-} from '@/types';
-import {
-  ComponentInternalInstance,
-  ComponentObjectPropsOptions,
-  ComponentPublicInstance,
-  ObjectPlugin,
-  Ref,
-  RendererNode,
-  VNode,
-} from 'vue';
+} from '../../../types';
 
 export declare type TSpaceAround = 'left' | 'right' | 'both' | 'none';
 

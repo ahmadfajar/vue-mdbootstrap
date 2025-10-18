@@ -4,8 +4,8 @@ import BsCheckboxGroup from './BsCheckboxGroup.ts';
 
 const BsCheckboxPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(<string>BsCheckbox.name, BsCheckbox);
-    app.component(<string>BsCheckboxGroup.name, BsCheckboxGroup);
+    app.component(BsCheckbox.name as string, BsCheckbox);
+    app.component(BsCheckboxGroup.name as string, BsCheckboxGroup);
   },
 };
 

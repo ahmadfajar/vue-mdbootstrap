@@ -1,6 +1,6 @@
-import { TRecord } from '@/types';
 import { AxiosPromise, RawAxiosRequestConfig } from 'axios';
-import { Plugin } from 'vue';
+import { ObjectPlugin } from 'vue';
+import { TRecord } from '../../types';
 
 export declare interface IHttpService {
   /**
@@ -54,4 +54,4 @@ export declare interface IHttpService {
   delete(url: string, data?: TRecord, options?: RawAxiosRequestConfig): AxiosPromise;
 }
 
-export declare const AxiosPlugin: Plugin;
+export declare const AxiosPlugin: ObjectPlugin;

@@ -1,6 +1,3 @@
-import { TSideDrawer } from '@/components/Drawer/types';
-import { INotificationProvider } from '@/components/Notification/types';
-import type { TouchEventListener } from '@/directives/types';
 import {
   AllowedComponentProps,
   App,
@@ -12,6 +9,9 @@ import {
   VNodeProps,
 } from 'vue';
 import { RouteLocationAsRelativeGeneric, RouteLocationRaw } from 'vue-router';
+import { TSideDrawer } from '../components/Drawer/types';
+import { INotificationProvider } from '../components/Notification/types';
+import { TouchEventListener } from '../directives/types';
 
 export declare type TBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xs';
 
@@ -267,13 +267,13 @@ export {
   EventListener,
   useAddResizeListener,
   useRemoveResizeListener,
-} from '@/mixins/types/DomHelper';
-export * from '@/model';
-export * from '@/utils/CacheManager.ts';
-export { AxiosPlugin, IHttpService } from '@/utils/types/AxiosPlugin';
-export * as Color from '@/utils/types/colorUtils';
-export { default as Helper } from '@/utils/types/Helper';
-export * as StringHelper from '@/utils/types/StringHelper';
+} from '../mixins/types/DomHelper';
+export * from '../model/types';
+export * from '../utils/types/AxiosPlugin';
+export * from '../utils/types/CacheManager';
+export * as Color from '../utils/types/colorUtils';
+export { default as Helper } from '../utils/types/Helper';
+export * as StringHelper from '../utils/types/StringHelper';
 
 export {
   useAxiosPlugin,
@@ -291,4 +291,4 @@ export {
   useWrapSlot,
   useWrapSlotDefault,
   useWrapSlotWithCondition,
-} from '@/mixins/types/CommonApi';
+} from '../mixins/types/CommonApi';

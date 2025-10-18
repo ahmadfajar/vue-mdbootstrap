@@ -1,11 +1,11 @@
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 import {
   BaseComponentProps,
   EventUpdateOpenProps,
   EventVoidClosableProps,
   Numberish,
   TPopoverPosition,
-} from '@/types';
-import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+} from '../../../types';
 
 export declare type TDropdownMenuOptionProps = {
   /**

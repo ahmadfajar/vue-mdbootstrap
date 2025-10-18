@@ -1,5 +1,4 @@
-import loCamelCase from 'lodash-es/camelCase';
-import loKebabCase from 'lodash-es/kebabCase';
+import { camelCase as loCamelCase, kebabCase as loKebabCase } from 'lodash-es';
 
 /**
  * Pads the input string with a given string (possibly repeated) so that the resulting string

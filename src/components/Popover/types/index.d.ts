@@ -1,5 +1,10 @@
-import { BaseComponentProps, EventClosableProps, EventUpdateOpenProps, Numberish } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+import {
+  BaseComponentProps,
+  EventClosableProps,
+  EventUpdateOpenProps,
+  Numberish,
+} from '../../../types';
 
 export declare type TPopoverPosition =
   | 'top'

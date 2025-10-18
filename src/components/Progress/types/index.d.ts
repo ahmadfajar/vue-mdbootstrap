@@ -1,5 +1,5 @@
-import { BaseComponentProps, Numberish, TContextColor } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin } from 'vue';
+import { BaseComponentProps, Numberish, TContextColor } from '../../../types';
 
 export declare type TProgressControlMode = 'determinate' | 'indeterminate' | 'buffer';
 

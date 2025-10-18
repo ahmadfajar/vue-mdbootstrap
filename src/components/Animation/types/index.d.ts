@@ -1,5 +1,5 @@
-import { BaseComponentProps, type HtmlTagName, Numberish } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, TransitionProps, VNode } from 'vue';
+import { BaseComponentProps, type HtmlTagName, Numberish } from '../../../types';
 
 export declare type TRippleOptionProps = {
   /**

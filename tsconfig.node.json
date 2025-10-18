@@ -9,5 +9,5 @@
     "esModuleInterop": true,
     "strict": true
   },
-  "include": ["vite.config.ts", "vite.config.lib.ts", "vite.config.prod.ts", "vite.config.types.ts", "eslint.config.mjs", "banner.ts"]
+  "include": ["vite.config.ts", "vite.config.lib.ts", "vite.config.prod.ts", "eslint.config.mjs", "banner.ts"]
 }

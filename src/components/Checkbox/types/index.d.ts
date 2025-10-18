@@ -1,3 +1,4 @@
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 import {
   BaseComponentProps,
   EventUpdateModelValueProps,
@@ -7,8 +8,7 @@ import {
   TRadioInputProps,
   TRadioOptionProps,
   TValidationProps,
-} from '@/types';
-import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+} from '../../../types';
 
 export declare type TInputGroupProps<D, M> = TInputBaseProps &
   TValidationProps & {

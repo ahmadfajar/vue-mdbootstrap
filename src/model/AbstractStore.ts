@@ -1,131 +1,29 @@
 import { BsModel, RestProxyAdapter } from '@/model';
 import type {
+  ErrorCallbackFn,
   IBsModel,
-  TCSRFConfig,
+  IRestAdapter,
+  ListenerFn,
+  LoadedCallbackFn,
+  TDataStoreConfig,
+  TDataStoreState,
+  TFilterLogic,
+  TFilterOperator,
+  TFilterOption,
   TModelOptions,
-  TModelState,
+  TQueryParameter,
   TRestConfig,
   TRestUrlOption,
-} from '@/model/BsModel.ts';
-import type { IRestAdapter } from '@/model/RestProxyAdapter.ts';
+  TSortDirection,
+  TSortOption,
+} from '@/model/types';
 import type { ObjectBase, TRecord } from '@/types';
 import { autoBind } from '@/utils/AutoBind.ts';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import type { Many } from 'lodash';
-import orderBy from 'lodash-es/orderBy';
+import { orderBy } from 'lodash-es';
 import { reactive, readonly, type UnwrapNestedRefs } from 'vue';
-
-export declare type TFilterLogic = 'AND' | 'OR';
-
-export declare type TFilterOperator =
-  | 'eq'
-  | 'neq'
-  | 'gt'
-  | 'gte'
-  | 'lt'
-  | 'lte'
-  | 'contains'
-  | 'fts'
-  | 'tsquery'
-  | 'startsWith'
-  | 'startswith'
-  | 'startWith'
-  | 'startwith'
-  | 'endsWith'
-  | 'endswith'
-  | 'endWith'
-  | 'endwith'
-  | 'notin'
-  | 'in';
-
-export declare type TFilterOption = {
-  /**
-   * Field name attribute for filter operation.
-   */
-  property: string;
-
-  /**
-   * Filter value.
-   */
-  value: string | number | boolean;
-
-  /**
-   * Filter operator, default: `eq`.
-   */
-  operator: TFilterOperator;
-
-  /**
-   * ORM custom data type, ex: 'ulid'.
-   */
-  type?: string;
-
-  /**
-   * Optional logic operator to be used when combined with another filters.
-   * If it is not defined, global filter logic will be used.
-   */
-  logic?: TFilterLogic;
-
-  /**
-   * Optional, indicate the `value` is an expression or field expression.
-   */
-  expression?: boolean;
-};
-
-export declare type TSortDirection = 'asc' | 'desc';
-
-export declare type TSortOption = {
-  /**
-   * Field name attribute for sorting operation.
-   */
-  property: string;
-
-  /**
-   * @deprecated
-   * Use `property` instead.
-   */
-  field?: string;
-
-  /**
-   * Sort direction, valid values: <tt>asc, desc</tt>
-   */
-  direction: TSortDirection;
-};
-
-export declare type TQueryParameter = {
-  page?: number;
-  limit?: number;
-  filters?: TFilterOption[];
-  sorts?: TSortOption[];
-  logic: TFilterLogic;
-};
-
-export declare type TDataStoreConfig = TRecord & {
-  idProperty?: string;
-  dataProperty?: string;
-  totalProperty?: string;
-  pageSize?: number;
-  remoteFilter?: boolean;
-  remotePaging?: boolean;
-  remoteSort?: boolean;
-  restProxy?: TRestUrlOption;
-  csrfConfig?: TCSRFConfig;
-  filterLogic?: TFilterLogic;
-  filters?: TFilterOption[];
-  sortOptions?: TSortOption[];
-};
-
-export declare type TDataStoreState = TModelState & {
-  length: number;
-  totalCount: number;
-  currentPage: number;
-};
-
-export declare type ListenerFn<T> = (arg: T) => void;
-
-export declare type ErrorCallbackFn = (error: AxiosError) => void;
-
-export declare type LoadedCallbackFn = (data: IBsModel[]) => void;
 
 export const appendErrMsg = 'Can not assign primitive type to the dataset.';
 export const proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
@@ -137,7 +35,7 @@ export const parsingDataErrMsg = 'Unable to parse data coming from server.';
  * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 21/09/2025 18:45
+ * @since  15/03/2019 modified: 19/10/2025 05:00
  */
 export abstract class AbstractStore implements ObjectBase {
   private _eventMap: Map<string, ListenerFn<never>[]>;

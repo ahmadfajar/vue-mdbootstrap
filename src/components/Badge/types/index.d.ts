@@ -1,5 +1,5 @@
-import { BaseComponentProps, HtmlTagName, TContextColor } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+import { BaseComponentProps, HtmlTagName, TContextColor } from '../../../types';
 
 export declare type TBadgeType = 'label' | 'pill';
 

@@ -1,3 +1,4 @@
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 import {
   BaseComponentProps,
   Numberish,
@@ -6,8 +7,7 @@ import {
   TIconRotation,
   TSizeOptionProps,
   TSizeProps,
-} from '@/types';
-import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+} from '../../../types';
 
 export declare type TIconVariant =
   | 'outlined'

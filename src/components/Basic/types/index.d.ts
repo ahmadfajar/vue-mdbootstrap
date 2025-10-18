@@ -1,5 +1,5 @@
-import { BaseComponentProps, Numberish, TSizeOptionProps } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+import { BaseComponentProps, Numberish, TSizeOptionProps } from '../../../types';
 
 export declare type TDividerOptionProps = {
   /**

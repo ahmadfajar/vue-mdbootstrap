@@ -1,3 +1,4 @@
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 import {
   BaseComponentProps,
   EventUpdateModelValueProps,
@@ -6,8 +7,7 @@ import {
   TContextColor,
   TInputFieldProps,
   TPopoverPosition,
-} from '@/types';
-import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+} from '../../../types';
 
 export declare type TDateTimePickerMode = 'date' | 'datetime' | 'year' | 'month' | 'time';
 

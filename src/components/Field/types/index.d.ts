@@ -1,3 +1,4 @@
+import { ComponentObjectPropsOptions, ComputedRef, ObjectPlugin, VNode } from 'vue';
 import {
   BaseComponentProps,
   EventUpdateModelValueProps,
@@ -5,8 +6,7 @@ import {
   Numberish,
   TIconVariant,
   TPopoverPosition,
-} from '@/types';
-import { ComponentObjectPropsOptions, ComputedRef, ObjectPlugin, VNode } from 'vue';
+} from '../../../types';
 
 export declare type TFieldType = 'text' | 'email' | 'password' | 'tel' | 'url';
 

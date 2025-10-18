@@ -1,3 +1,4 @@
+import { ComponentObjectPropsOptions, ComponentPublicInstance, ObjectPlugin, VNode } from 'vue';
 import {
   BaseComponentProps,
   EventClosableProps,
@@ -5,8 +6,7 @@ import {
   Numberish,
   TPopupOptions,
   TRecord,
-} from '@/types';
-import { ComponentObjectPropsOptions, ComponentPublicInstance, ObjectPlugin, VNode } from 'vue';
+} from '../../../types';
 
 export declare type TModalOptionProps = TPopupOptions & {
   /**

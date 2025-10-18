@@ -1,6 +1,6 @@
-import { TPlacementPosition } from '@/components/Tabs/types';
-import { BaseComponentProps, Numberish } from '@/types';
 import { ComponentObjectPropsOptions, ComponentPublicInstance, ObjectPlugin, VNode } from 'vue';
+import { BaseComponentProps, Numberish } from '../../../types';
+import { TPlacementPosition } from '../../Tabs/types';
 
 export declare type TTooltipOptionProps = {
   /**

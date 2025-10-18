@@ -1,6 +1,6 @@
 {
   "name": "vue-mdbootstrap",
-  "version": "2.1.8",
+  "version": "2.2.0",
   "description": "Bootstrap5 Material Design Components for Vue.js",
   "author": {
     "name": "Ahmad Fajar",
@@ -61,7 +61,7 @@
     "build:dev": "vite build",
     "build:lib": "vite build --config vite.config.lib.ts",
     "build:prod": "vite build --config vite.config.prod.ts",
-    "build:types": "vite build --config vite.config.types.ts",
+    "build:types": "./node_modules/.bin/rollup --config rollup.config.dts.mjs",
     "css:compile": "sass --no-source-map src/bundle.scss dist/bundle.css",
     "css:beauty": "cleancss --format beautify -o dist/bundle.css dist/bundle.css",
     "css:minify": "cleancss -o dist/bundle.min.css dist/bundle.css",
@@ -107,7 +107,6 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.1",
     "vite": "^7.1.10",
-    "vite-plugin-dts": "^4.5.4",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },

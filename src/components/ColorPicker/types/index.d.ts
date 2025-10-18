@@ -1,18 +1,18 @@
 import {
-  BaseComponentProps,
-  Color,
-  EventUpdateModelValueProps,
-  EventUpdateOpenProps,
-  Numberish,
-  TPopoverPosition,
-} from '@/types';
-import {
   ComponentObjectPropsOptions,
   ComponentPublicInstance,
   ObjectPlugin,
   Reactive,
   Ref,
 } from 'vue';
+import {
+  BaseComponentProps,
+  Color,
+  EventUpdateModelValueProps,
+  EventUpdateOpenProps,
+  Numberish,
+  TPopoverPosition,
+} from '../../../types';
 
 export declare type TColorPickerMode = 'HEX' | 'RGB' | 'HSL';
 

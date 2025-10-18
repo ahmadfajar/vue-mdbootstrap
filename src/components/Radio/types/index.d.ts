@@ -1,3 +1,4 @@
+import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 import {
   BaseComponentProps,
   EventUpdateModelValueProps,
@@ -5,8 +6,7 @@ import {
   TContextColor,
   TInputBaseProps,
   TInputGroupProps,
-} from '@/types';
-import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+} from '../../../types';
 
 export declare interface TRadioInputProps {
   /**

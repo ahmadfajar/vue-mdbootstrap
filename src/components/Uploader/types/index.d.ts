@@ -1,6 +1,6 @@
-import { BaseComponentProps, Numberish, TRecord } from '@/types';
 import { AxiosPromise } from 'axios';
 import { ComponentObjectPropsOptions, ComponentPublicInstance, ObjectPlugin } from 'vue';
+import { BaseComponentProps, Numberish, TRecord } from '../../../types';
 
 export declare type TFileBag = {
   file?: File | null;

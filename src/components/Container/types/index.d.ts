@@ -1,5 +1,5 @@
-import { BaseComponentProps, HtmlTagName } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
+import { BaseComponentProps, HtmlTagName } from '../../../types';
 
 export declare type TAppContainerOptionProps = {
   /**

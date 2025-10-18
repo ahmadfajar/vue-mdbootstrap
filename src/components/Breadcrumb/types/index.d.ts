@@ -1,6 +1,6 @@
-import type { BaseComponentProps } from '@/types';
 import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
 import { RouterLinkProps } from 'vue-router';
+import type { BaseComponentProps } from '../../../types';
 
 export declare type TBreadcrumb = {
   /**

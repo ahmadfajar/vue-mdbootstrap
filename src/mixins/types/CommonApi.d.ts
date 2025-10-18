@@ -1,3 +1,6 @@
+import { AxiosInstance } from 'axios';
+import { Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
+import { RouteLocationNormalizedLoaded } from 'vue-router';
 import {
   INotificationProvider,
   TBreakpoint,
@@ -6,11 +9,8 @@ import {
   TRouterLinkProps,
   TRouterOptionProps,
   TVueMdb,
-} from '@/types';
-import { IHttpService } from '@/utils/types/AxiosPlugin';
-import { AxiosInstance } from 'axios';
-import { Ref, Slots, TransitionProps, VNode, VNodeArrayChildren } from 'vue';
-import { RouteLocationNormalizedLoaded } from 'vue-router';
+} from '../../types';
+import { IHttpService } from '../../utils/types/AxiosPlugin';
 
 /**
  * Generate component's ID.

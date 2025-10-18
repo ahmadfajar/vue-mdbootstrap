@@ -1,6 +1,6 @@
-import { IBindingElement, IEventListenerResult, IHTMLElement } from '@/types';
+import { IBindingElement, IEventListenerResult, IHTMLElement } from '../../types/library';
 
-export declare class EventListener {
+export class EventListener {
   /**
    * Listen to DOM events during the bubble phase.
    *
@@ -18,13 +18,13 @@ export declare class EventListener {
   ): IEventListenerResult | undefined;
 }
 
-export declare function useAddResizeListener(el: IBindingElement, fn: CallableFunction): void;
+export function useAddResizeListener(el: IBindingElement, fn: CallableFunction): void;
 
-export declare function useRemoveResizeListener(el: IBindingElement, fn?: CallableFunction): void;
+export function useRemoveResizeListener(el: IBindingElement, fn?: CallableFunction): void;
 
-export declare function preventEventTarget(event: Event): void;
+export function preventEventTarget(event: Event): void;
 
-export declare function isSVGElement(source?: HTMLElement | null): boolean;
+export function isSVGElement(source?: HTMLElement | null): boolean;
 
 /**
  * Check if `target` is indirect child of `parent`.
@@ -33,7 +33,4 @@ export declare function isSVGElement(source?: HTMLElement | null): boolean;
  * @param target The child element to check.
  * @returns TRUE if `target` is indirect child otherwise `false`.
  */
-export declare function isChildOf(
-  parent: HTMLElement | Node | null,
-  target?: HTMLElement | null
-): boolean;
+export function isChildOf(parent: HTMLElement | Node | null, target?: HTMLElement | null): boolean;

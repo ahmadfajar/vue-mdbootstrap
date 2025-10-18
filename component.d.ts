@@ -1,5 +1,4 @@
 import type { AxiosInstance } from 'axios';
-import type { Directive } from 'vue';
 import type {
   BsAlert,
   BsApp,
@@ -30,10 +29,8 @@ import type {
   BsDivider,
   BsDropdownMenu,
   BsExpandTransition,
+  BsFontawesomeIcon,
   BsIcon,
-  BsIconFontawesome,
-  BsIconSpinner,
-  BsIconSvg,
   BsImageHolder,
   BsImageUploader,
   BsLightbox,
@@ -61,7 +58,9 @@ import type {
   BsSearchField,
   BsSideDrawer,
   BsSpacer,
+  BsSpinnerIcon,
   BsSubheader,
+  BsSvgIcon,
   BsSwitch,
   BsTab,
   BsTabs,
@@ -71,16 +70,16 @@ import type {
   BsToggleField,
   BsToggleIcon,
   BsTooltip,
+  ClickOutside,
   IHttpService,
   INotificationProvider,
+  Resize,
+  Scroll,
   TVueMdb,
-  vClickOutside,
-  vResize,
-  vScroll,
-  vTouch,
+  Touch,
 } from './dist/vue-mdb';
 
-declare module '@vue/runtime-core' {
+declare module 'vue' {
   export interface GlobalComponents {
     BsAlert: typeof BsAlert;
     BsApp: typeof BsApp;
@@ -114,10 +113,11 @@ declare module '@vue/runtime-core' {
     BsDivider: typeof BsDivider;
     BsDropdownMenu: typeof BsDropdownMenu;
     BsExpandTransition: typeof BsExpandTransition;
+    BsFontawesomeIcon: typeof BsFontawesomeIcon;
     BsIcon: typeof BsIcon;
-    BsIconFontawesome: typeof BsIconFontawesome;
-    BsIconSpinner: typeof BsIconSpinner;
-    BsIconSvg: typeof BsIconSvg;
+    BsIconFontawesome: typeof BsFontawesomeIcon;
+    BsIconSpinner: typeof BsSpinnerIcon;
+    BsIconSvg: typeof BsSvgIcon;
     BsIconToggle: typeof BsToggleIcon;
     BsImageHolder: typeof BsImageHolder;
     BsImageUploader: typeof BsImageUploader;
@@ -147,7 +147,9 @@ declare module '@vue/runtime-core' {
     BsSearchField: typeof BsSearchField;
     BsSideDrawer: typeof BsSideDrawer;
     BsSpacer: typeof BsSpacer;
+    BsSpinnerIcon: typeof BsSpinnerIcon;
     BsSubheader: typeof BsSubheader;
+    BsSvgIcon: typeof BsSvgIcon;
     BsSwitch: typeof BsSwitch;
     BsTab: typeof BsTab;
     BsTabs: typeof BsTabs;
@@ -159,24 +161,14 @@ declare module '@vue/runtime-core' {
     BsTooltip: typeof BsTooltip;
   }
 
-  export interface GlobalDirectives {
-    vClickOutside: typeof vClickOutside;
-    vResize: typeof vResize;
-    vScroll: typeof vScroll;
-    vTouch: typeof vTouch;
-  }
-
-  export interface Directives {
-    'click-outside': Directive;
-    'resize': Directive;
-    'scroll': Directive;
-    'touch': Directive;
-  }
-
   export interface ComponentCustomProperties {
     $axios: AxiosInstance;
     $http: IHttpService;
     $VueMdb: TVueMdb;
     $notification: INotificationProvider;
+    vClickOutside: ClickOutside;
+    vResize: Resize;
+    vScroll: Scroll;
+    vTouch: Touch;
   }
 }
