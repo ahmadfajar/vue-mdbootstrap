@@ -55,6 +55,7 @@ export const datePickerTimesProps = {
   locale: stringProp,
   modelValue: dateProp,
   selectedColor: stringProp,
+  calendarButton: stringProp,
 };
 
 export const datePickerCalendarProps = {
@@ -62,11 +63,13 @@ export const datePickerCalendarProps = {
   locale: stringProp,
   modelValue: dateProp,
   calendarDate: dateProp,
+  calendarButton: stringProp,
   selectedColor: stringProp,
 };
 
 export const datePickerProps = {
   fullWidth: booleanProp,
+  buttonColor: stringProp,
   surfaceColor: whiteColorProp,
   headerColor: primaryColorProp,
   headerPanel: booleanTrueProp,
@@ -108,11 +111,11 @@ export const dateTimeFieldProps = {
     default: undefined,
     validator: (value: TDateTimePickerMode) => DatePickerConst.viewModes.includes(value),
   } as Prop<TDateTimePickerMode>,
-  transition: stringProp,
   pickerCls: {
     type: [String, Array],
     default: 'rounded shadow',
   },
+  pickerButton: stringProp,
   pickerColor: whiteColorProp,
   pickerMode: pickerModeProp,
   pickerPlacement: popoverPlacementProp,

@@ -39,7 +39,11 @@
       width: max-content;
     }
   }
+}
 
+@layer animations {
+  // VueJs Tooltip transition animation
+  //------------------------------------
   .#{vars.$prefix}tooltip-top,
   .#{vars.$prefix}tooltip-bottom,
   .#{vars.$prefix}tooltip-left,

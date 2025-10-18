@@ -460,6 +460,13 @@
     @include button.make-flat-variant($name, $color);
   }
 
+  // BsButton with dark color variant
+  //----------------------------------
+  $btn-dark: helper.to-oklch(#202020);
+  @include button.make-default-variant('dark', $btn-dark);
+  @include button.make-outline-variant('dark', $btn-dark);
+  @include button.make-flat-variant('dark', $btn-dark);
+
   .dark {
     .#{vars.$prefix}btn,
     .#{vars.$prefix}btn-fab,

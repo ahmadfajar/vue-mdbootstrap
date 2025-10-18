@@ -85,7 +85,11 @@
       padding: var(--#{vars.$prefix}modal-footer-padding);
     }
   }
+}
 
+@layer animations {
+  // VueJs Modal-Dialog transition animation
+  //------------------------------------------
   .modal-dialog-enter-active,
   .modal-dialog-leave-active {
     transition: opacity vars.$transition-default-easing;

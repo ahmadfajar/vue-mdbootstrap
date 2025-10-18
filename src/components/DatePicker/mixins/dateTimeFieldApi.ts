@@ -18,15 +18,19 @@ import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.
 import { BsPopover } from '@/components/Popover';
 import { useTogglePopoverState } from '@/components/Popover/mixins/popoverApi.ts';
 import type {
-  TBsDateTimeField,
+  Numberish,
+  TBsDatePicker,
+  TBsPopover,
   TDateTimeFieldOptionProps,
   TDateTimePickerMode,
   TEmitFn,
+  TIconVariant,
+  TPopoverPosition,
   TRecord,
 } from '@/types';
-import Helper from '@/utils/Helper';
+import Helper from '@/utils/Helper.ts';
 import { DateTime } from 'luxon';
-import type { ComputedRef, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
+import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
 import { Fragment, h } from 'vue';
 
 export function useParseDateTimeFromFormat(
@@ -40,9 +44,11 @@ export function useParseDateTimeFromFormat(
         return !Helper.isEmpty(format)
           ? DateTime.fromFormat(value, format, { locale: locale })
           : DateTime.fromISO(value, { locale: locale });
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         try {
           return DateTime.fromSQL(value, { locale: locale });
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           return undefined;
         }
@@ -94,7 +100,7 @@ function createDateTimeInputField(
 export function useRenderDateTimeField(
   slots: Slots,
   emit: TEmitFn,
-  props: Readonly<ExtractPropTypes<TBsDateTimeField>>,
+  props: Readonly<TDateTimeFieldOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
   activator: Ref<HTMLElement | null>,
@@ -112,14 +118,13 @@ export function useRenderDateTimeField(
   hasError: ComputedRef<boolean>,
   errorItems: ComputedRef<string[]>
 ): VNode {
-  const thisProps = props as Readonly<TDateTimeFieldOptionProps>;
   const iconSize = 24;
 
   return useCreateFieldWrapper(
     slots,
     iconSize,
     wrapperCss,
-    thisProps,
+    props,
     h(Fragment, [
       h(
         'div',
@@ -129,21 +134,21 @@ export function useRenderDateTimeField(
         [
           useCreateFieldInnerWrapper(
             slots,
-            thisProps,
-            createDateTimeInputField(emit, thisProps, displayValue, isFocused, isPopoverOpen),
+            props,
+            createDateTimeInputField(emit, props, displayValue, isFocused, isPopoverOpen),
             iconSize,
             calendarIcon.value,
-            thisProps.prependIcon,
+            props.prependIcon,
             useCreateValidationIcon(
-              thisProps.actionIconVariant as TIconVariant,
+              props.actionIconVariant as TIconVariant,
               hasValidated.value,
               hasError.value,
-              thisProps.validationIcon as boolean,
+              props.validationIcon as boolean,
               iconSize
             ),
             useCreateFieldActionIcon(
               showClearButton.value,
-              thisProps.actionIconVariant as TIconVariant,
+              props.actionIconVariant as TIconVariant,
               iconSize,
               () => useOnFieldValueCleared(emit, localFieldValue)
             ),
@@ -151,11 +156,11 @@ export function useRenderDateTimeField(
             {
               ref: activator,
               onMouseenter: () => {
-                if (thisProps.openOnHover && !isPopoverOpen.value) {
+                if (props.openOnHover && !isPopoverOpen.value) {
                   useTogglePopoverState(
                     emit,
                     isPopoverOpen,
-                    (thisProps.disabled || thisProps.readonly) as boolean,
+                    (props.disabled || props.readonly) as boolean,
                     false
                   );
                 }
@@ -166,20 +171,20 @@ export function useRenderDateTimeField(
               useTogglePopoverState(
                 emit,
                 isPopoverOpen,
-                (thisProps.disabled || thisProps.readonly) as boolean,
+                (props.disabled || props.readonly) as boolean,
                 isPopoverOpen.value
               ),
             () =>
               useTogglePopoverState(
                 emit,
                 isPopoverOpen,
-                (thisProps.disabled || thisProps.readonly) as boolean,
+                (props.disabled || props.readonly) as boolean,
                 isPopoverOpen.value
               )
           ),
           useRenderFieldFeedback(
             slots,
-            thisProps,
+            props,
             showHelpText.value,
             showValidationError.value,
             hasError.value,
@@ -187,42 +192,42 @@ export function useRenderDateTimeField(
           ),
         ]
       ),
-      h(
+      h<TBsPopover>(
         BsPopover,
         {
           color: null,
-          space: (thisProps.outlined ? 2 : 1) as Prop<number>,
+          space: (props.outlined ? 2 : 1) as Prop<number>,
           class: props.pickerCls,
-          placement: props.pickerPlacement,
-          transition: props.transition || props.pickerTransition,
-          // @ts-ignore
-          open: isPopoverOpen.value as Prop<boolean>,
+          placement: props.pickerPlacement as Prop<TPopoverPosition>,
+          transition: props.pickerTransition as Prop<string>,
+          open: isPopoverOpen.value as unknown as Prop<boolean>,
           trigger: activator.value as Prop<HTMLElement>,
           onClose: () => useTogglePopoverState(emit, isPopoverOpen, false, true),
         },
         {
           default: () =>
-            h(BsDatePicker, {
-              surfaceColor: props.pickerColor,
-              headerColor: props.headerColor,
-              headerPanel: props.headerPanel,
-              landscape: props.landscapeMode,
+            h<TBsDatePicker>(BsDatePicker, {
+              buttonColor: (props.pickerButton || 'dark') as Prop<string>,
+              surfaceColor: props.pickerColor as Prop<string>,
+              headerColor: props.headerColor as Prop<string>,
+              headerPanel: props.headerPanel as unknown as Prop<boolean>,
+              landscape: props.landscapeMode as unknown as Prop<boolean>,
               locale: locale.value as Prop<string>,
-              readonly: props.readonly || props.disabled,
+              readonly: (props.readonly || props.disabled) as unknown as Prop<boolean>,
               mode: pickerMode.value as Prop<TDateTimePickerMode>,
               modelValue: localFieldValue.value?.toJSDate() as Prop<Date | undefined>,
-              width: props.pickerWidth,
+              width: props.pickerWidth as Prop<Numberish>,
               'onUpdate:model-value': (value: string) => {
                 localFieldValue.value = useParseDate(value).setLocale(locale.value);
                 emit(
                   'update:model-value',
-                  localFieldValue.value?.toFormat(thisProps.valueFormat as string)
+                  localFieldValue.value?.toFormat(props.valueFormat as string)
                 );
               },
             }),
         }
       ),
     ]),
-    (node: VNode) => useOnTextFieldNodeMounted(thisProps, node)
+    (node: VNode) => useOnTextFieldNodeMounted(props, node)
   );
 }
