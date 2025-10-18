@@ -18,7 +18,7 @@
     $hr-border-color: helper.to-oklch(color.adjust($border-color, $lightness: -10%));
     --#{vars.$prefix}alert-hr-color: #{$hr-border-color};
 
-    $link-color: color.mix(black, $text-color, 20%);
+    $link-color: helper.to-oklch(color.mix(colors.$black, $text-color, 20%, oklch));
     --#{vars.$prefix}alert-link-color: #{$link-color};
   }
 }

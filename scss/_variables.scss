@@ -4,7 +4,7 @@
 
 // Component prefix
 $prefix:                      'md-';
-//$prefix-bs:                   'bs-';
+$prefix-bs:                   'bs-';
 
 // Fonts
 $font-size-base:              1rem;
@@ -119,7 +119,7 @@ $btn-transition:                    color .15s ease-in-out, background-color .15
 $card-border-color:                 oklch(0.88 0.001 17.18);
 $card-border-radius:                $radius * 3;
 $card-border-width:                 1px;
-$card-cap-bg:                       rgba(colors.$black, .03);
+$card-cap-bg:                       color.change(colors.$black, $alpha: .03);
 $card-cap-padding-y:                $spacing * .5;
 $card-cap-padding-x:                $padding-md;
 $card-spacer-y:                     $padding-md;
@@ -189,7 +189,7 @@ $progress-height:                   1rem;
 $progress-font-size:                $font-size-base * .75;
 $progress-bg:                       colors.$gray-200;
 $progress-border-radius:            $radius-md;
-$progress-box-shadow:               inset 0 1px 2px rgba(colors.$black, .075);
+$progress-box-shadow:               inset 0 1px 2px color.change(colors.$black, $alpha: .075);
 $progress-bar-color:                colors.$white;
 $progress-bar-bg:                   colors.$primary-color;
 $progress-bar-animation-timing:     1s linear infinite;

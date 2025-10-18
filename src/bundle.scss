@@ -1,6 +1,6 @@
 @use "../scss/banner";
 @use "../scss/main/base";
-@use "../scss/main/animation";
+@use "../scss/main/animations";
 @use "../scss/main/flexbox";
 @use "../scss/main/grid";
 @use "../scss/main/utilities";
@@ -14,6 +14,8 @@
 @use "components/Avatar/avatar";
 @use "components/Badge/badge";
 @use "components/Button/button";
+@use "components/Chip/chip";
+@use "components/Chip/chipGroup";
 @use "components/Field/textField";
 @use "components/Field/chipField";
 @use "components/Field/numericField";
@@ -21,8 +23,6 @@
 @use "components/Checkbox/checkbox";
 @use "components/Radio/radio";
 @use "components/Switch/switch";
-@use "components/Chip/chip";
-@use "components/Chip/chipGroup";
 @use "components/ListView/listView";
 @use "components/ListView/listNav";
 @use "components/ListView/listTile";

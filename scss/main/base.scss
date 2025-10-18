@@ -1,6 +1,6 @@
 @use 'sass:color';
-@use '../mixins/css3/text-decorators' as decorators;
 @use '../utils/color_helper' as helper;
+@use '../mixins/css3/text-decorators' as decorators;
 @use '../color_vars' as colors;
 @use '../variables' as vars;
 
@@ -47,12 +47,6 @@
     font-size: var(--font-size-default);
     font-weight: var(--font-weight-normal);
     line-height: var(--line-height);
-  }
-
-  // Create default colors for background and text
-  //-----------------------------------------------
-  @each $name, $color in colors.$context-colors {
-    @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
   }
 }
 
@@ -119,5 +113,11 @@
     --navigation-item-hover-background: #{vars.$default-hover-bgcolor};
     --navigation-item-hover-foreground: var(--foreground);
     --navigation-item-hover-foreground-secondary: #{colors.$gray-700};
+  }
+
+  // Create default colors for background and text
+  //-----------------------------------------------
+  @each $name, $color in colors.$context-colors {
+    @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
   }
 }

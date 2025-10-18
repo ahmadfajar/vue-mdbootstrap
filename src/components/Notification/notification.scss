@@ -10,8 +10,8 @@
       )};
     // prettier-ignore
     --#{vars.$prefix}notification-border-radius: var(--#{vars.$prefix}radius, #{vars.$radius-md});
-    --#{vars.$prefix}notification-box-shadow-color: rgba(0, 0, 0, 0.2);
-    --#{vars.$prefix}notification-box-shadow-hover-color: rgba(0, 0, 0, 0.45);
+    --#{vars.$prefix}notification-box-shadow-color: oklch(0 0 0 / 0.2);
+    --#{vars.$prefix}notification-box-shadow-hover-color: oklch(0 0 0 / 0.45);
     --#{vars.$prefix}notification-color: #{colors.$white};
     --#{vars.$prefix}notification-hover-color: #{colors.$gray-300};
     --#{vars.$prefix}notification-font-size: 0.9rem;
@@ -57,8 +57,8 @@
       top: -0.3em;
       float: right;
       font-size: 20px;
-      font-weight: vars.$font-weight-normal;
-      text-shadow: 0 1px 0 rgba(colors.$white, 1);
+      font-weight: var(--font-weight-normal, #{vars.$font-weight-normal});
+      text-shadow: 0 1px 0 colors.$white;
 
       &:hover,
       &:focus {

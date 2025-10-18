@@ -31,8 +31,8 @@
         transition-duration: 2s;
 
         .#{vars.$prefix}progress-spinner-draw {
-          animation: #{vars.$prefix}progress-spinner-initial-rotate 1.98s
-            vars.$transition-stand-animation forwards;
+          // prettier-ignore
+          animation: #{vars.$prefix}progress-spinner-initial-rotate 1.98s vars.$transition-stand-animation forwards;
         }
       }
 
@@ -68,9 +68,8 @@
     position: relative;
     transform: translateZ(0) scaleY(1);
     transform-origin: center center;
-    transition:
-      opacity 0.3s vars.$transition-default-animation,
-      transform 0.4s vars.$transition-default-animation;
+    // prettier-ignore
+    transition: opacity 0.3s vars.$transition-default-animation, transform 0.4s vars.$transition-default-animation;
     will-change: opacity, transform;
 
     &.#{vars.$prefix}indeterminate,

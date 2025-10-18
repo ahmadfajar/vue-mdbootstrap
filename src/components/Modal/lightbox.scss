@@ -1,3 +1,4 @@
+@use "sass:color";
 @use '../../../scss/mixins/css3/breakpoints' as media;
 @use '../../../scss/color_vars' as colors;
 @use '../../../scss/variables' as vars;
@@ -5,15 +6,15 @@
 @layer components {
   .#{vars.$prefix}lightbox-wrap {
     --#{vars.$prefix}lightbox-element-padding-x: #{vars.$padding-sm};
-    --#{vars.$prefix}lightbox-display-bg: #{rgba(colors.$black, 0.3)};
-    --#{vars.$prefix}lightbox-toolbar-bg: #{rgba(colors.$black, 0.9)};
+    --#{vars.$prefix}lightbox-display-bg: #{color.change(colors.$black, $alpha: 0.3)};
+    --#{vars.$prefix}lightbox-toolbar-bg: #{color.change(colors.$black, $alpha: 0.9)};
     --#{vars.$prefix}lightbox-toolbar-color: #{colors.$gray-400};
     --#{vars.$prefix}lightbox-overlay-bg: #151515;
-    --#{vars.$prefix}lightbox-title-bg: #{rgba(colors.$black, 0.7)};
+    --#{vars.$prefix}lightbox-title-bg: #{color.change(colors.$black, $alpha: 0.7)};
     --#{vars.$prefix}lightbox-title-color: #{colors.$gray-400};
     --#{vars.$prefix}lightbox-title-size: 1.25rem;
-    --#{vars.$prefix}lightbox-thumbnail-bg: #{rgba(colors.$black, 0.95)};
-    --#{vars.$prefix}lightbox-thumbnail-border: #{1px solid rgba(colors.$black, 0.6)};
+    --#{vars.$prefix}lightbox-thumbnail-bg: #{color.change(colors.$black, $alpha: 0.95)};
+    --#{vars.$prefix}lightbox-thumbnail-border: #{1px solid color.change(colors.$black, $alpha: 0.6)};
     --#{vars.$prefix}lightbox-thumbnail-opacity: 0.5;
     --#{vars.$prefix}lightbox-thumbnail-active-border-color: #{colors.$red-base};
     --#{vars.$prefix}lightbox-thumbnail-active-border-width: 2px;

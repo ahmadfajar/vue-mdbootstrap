@@ -103,7 +103,7 @@
         text-align: center;
         cursor: pointer;
 
-        > .#{vars.$prefix}fw-bold {
+        > .font-weight-bold {
           transition: vars.$transition-stand;
           display: block;
           width: 100%;
@@ -113,11 +113,6 @@
           opacity: var(--#{vars.$prefix}field-readonly-opacity);
         }
       }
-
-      //> .#{vars.$prefix}btn-icon {
-      //  --#{vars.$prefix}btn-inner-height: 2.5rem;
-      //  --#{vars.$prefix}btn-inner-width: 2.5rem;
-      //}
     }
 
     .#{vars.$prefix}picker-seconds,
@@ -126,7 +121,7 @@
     .#{vars.$prefix}datepicker-days,
     .#{vars.$prefix}datepicker-months,
     .#{vars.$prefix}datepicker-years {
-      .btn {
+      .#{vars.$prefix}btn {
         &[class*='btn-flat'] {
           --#{vars.$prefix}btn-md-padding-x: 3rem;
         }
@@ -234,31 +229,6 @@
         --#{vars.$prefix}datepicker-header-color: #{colors.$neutral-darken-3};
       }
     }
-
-    /*
-    .#{vars.$prefix}datepicker-body {
-      // prettier-ignore
-      &:not(.bg-white):not(.bg-light):not(.bg-light-grey):not(.bg-amber):not(.bg-lime):not(.bg-yellow) {
-        --#{vars.$prefix}datepicker-table-header-color: #{colors.$neutral-base};
-
-        color: colors.$neutral-lighten-4;
-
-        .#{vars.$prefix}btn-flat-dark {
-          --#{vars.$prefix}btn-color: #{colors.$neutral-lighten-2};
-          --#{vars.$prefix}btn-hover-color: #{colors.$white};
-          --#{vars.$prefix}btn-hover-bg: rgba(70, 70, 70, 0.8);
-        }
-
-        &.bg-grey {
-          --#{vars.$prefix}datepicker-table-header-color: #{colors.$neutral-lighten-3};
-
-          .btn-flat-dark {
-            --#{vars.$prefix}btn-color: #{colors.$neutral-lighten-4};
-          }
-        }
-      }
-    }
-    */
   }
 
   .#{vars.$prefix}field-control {

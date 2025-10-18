@@ -9,10 +9,10 @@ $markerSize: 14px;
 
 @layer components {
   .#{vars.$prefix}color-picker {
-    --color-picker-input-bg: colors.$gray-200;
+    --color-picker-input-bg: #{colors.$gray-200};
     --color-picker-input-border: 1px solid oklch(0.867 0.011 247.949);
-    --color-picker-input-color: var(--foreground, colors.$gray-900);
-    --color-picker-input-focus-bg: var(--background-secondary, colors.$white);
+    --color-picker-input-color: var(--foreground, #{colors.$gray-900});
+    --color-picker-input-focus-bg: var(--background-secondary, #{colors.$white});
     --color-picker-input-focus-color: inherit;
     --color-picker-input-focus-outline: 2px solid darkslateblue;
     --color-picker-input-focus-shadow: oklch(0.578 0.228 260.025 / 0.25);
@@ -113,9 +113,8 @@ $markerSize: 14px;
 
         @include borders.radius(vars.$radius-circle);
         background-color: var(--color-picker-slider-thumb-color);
-        box-shadow:
-          0 1px 2px 0 rgba(60, 64, 67, 0.35),
-          0 1px 4px 3px rgba(60, 64, 67, 0.05);
+        // prettier-ignore
+        box-shadow: 0 1px 2px 0 oklch(0.369 0.007 240.019 / 0.35), 0 1px 4px 3px oklch(0.369 0.007 240.019 / 0.05);
         color: var(--color-picker-slider-thumb-color);
         width: $markerSize;
         height: $markerSize;
@@ -315,7 +314,7 @@ $markerSize: 14px;
 
         &:after {
           @include borders.radius(vars.$radius-circle);
-          box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+          box-shadow: inset 0 0 0 1px oklch(0 0 0 / 0.1);
           background-color: currentColor;
           content: '';
           width: 100%;

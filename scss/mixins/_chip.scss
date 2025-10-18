@@ -16,7 +16,7 @@
     $hover-bg: helper.to-oklch(color.scale($chip-color, $lightness: -25%));
     $active-bg: helper.to-oklch(color.scale($color, $lightness: 10%));
     $active-color: helper.set-color-contrast($active-bg, colors.$black, colors.$white);
-    $active-box-shadow-color-rgb: helper.to-oklch($chip-color);
+    $active-box-shadow-color: helper.to-oklch($chip-color);
     $active-icon-color: helper.to-oklch(
       helper.set-color-contrast(
         $active-bg,
@@ -59,7 +59,7 @@
     --#{vars.$prefix}chip-icon-color: #{$icon-color};
     --#{vars.$prefix}chip-active-icon-color: #{$active-icon-color};
     --#{vars.$prefix}chip-focus-border-color: #{$active-bg};
-    --#{vars.$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
+    --#{vars.$prefix}chip-focus-shadow-color: #{$active-box-shadow-color};
   }
 }
 
@@ -94,7 +94,7 @@
     $focus-border: helper.to-oklch(
       helper.set-color-contrast($color, color.adjust($border-color, $lightness: -15%), $color)
     );
-    $active-box-shadow-color-rgb: helper.to-oklch(color.adjust($hover-bg, $lightness: 10%));
+    $active-box-shadow-color: helper.to-oklch(color.adjust($hover-bg, $lightness: 10%));
 
     @if ($name == 'grey' or $name == 'secondary') {
       $hover-bg-alt: helper.to-oklch(
@@ -133,6 +133,6 @@
     --#{vars.$prefix}chip-icon-color: #{$color};
     --#{vars.$prefix}chip-active-icon-color: #{$color};
     --#{vars.$prefix}chip-focus-border-color: #{$focus-border};
-    --#{vars.$prefix}chip-focus-shadow-color: #{$active-box-shadow-color-rgb};
+    --#{vars.$prefix}chip-focus-shadow-color: #{$active-box-shadow-color};
   }
 }

@@ -10,14 +10,5 @@
 
     --#{vars.$prefix}checkbox-checked-bg: #{$color};
     --#{vars.$prefix}checkbox-checked-color: #{$checked-color};
-
-    //> .#{vars.$prefix}checkbox-inner {
-    //  &:before {
-    //    --#{vars.$prefix}checkbox-touch-size: #{vars.$checkbox-touch-size};
-    //  }
-    //  &:after {
-    //    --#{vars.$prefix}checkbox-border-width: #{vars.$checkbox-stroke};
-    //  }
-    //}
   }
 }

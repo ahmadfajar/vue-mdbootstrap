@@ -60,13 +60,13 @@
     $tile-subtitle-color: helper.set-color-contrast(
       $color,
       colors.$gray-700,
-      rgba(colors.$white, $alpha: 0.7)
+      color.change(colors.$white, $alpha: 0.7)
     );
 
     $tile-leading-color: helper.set-color-contrast(
       $color,
-      rgba(colors.$black, 0.54),
-      rgba(colors.$white, 0.6)
+      color.change(colors.$black, $alpha: 0.54),
+      color.change(colors.$white, $alpha: 0.6)
     );
 
     $tile-active-title-color: helper.set-color-contrast(
@@ -85,7 +85,7 @@
         helper.to-oklch(color.adjust(vars.$default-active-bgcolor, $lightness: -10%)),
         $alpha: 1
       ),
-      rgba(colors.$white, 0.77),
+      color.change(colors.$white, $alpha: 0.77),
       86.2%
     );
 
@@ -93,7 +93,7 @@
       helper.set-color-contrast(
         $color,
         color.change(vars.$default-active-bgcolor, $alpha: 0.54),
-        rgba(colors.$white, 0.75),
+        color.change(colors.$white, $alpha: 0.75),
         86.2%
       )
     );
@@ -146,7 +146,7 @@
       $divider-color: helper.set-color-contrast(
         $color,
         colors.$gray-300,
-        rgba(colors.$white, 0.18),
+        color.change(colors.$white, $alpha: 0.18),
         86.2%
       );
       $nav-item-expanded-bg: helper.set-alt-bgcolor($color);

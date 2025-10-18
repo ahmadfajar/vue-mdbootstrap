@@ -43,10 +43,11 @@
   $color-oklch: helper.to-oklch($color);
 
   .progress-bar-#{$name} {
-    --#{vars.$prefix}progress-bar-bg: color.change(#{$color-oklch}, $alpha:0.24);
+    --#{vars.$prefix}progress-bar-bg: #{color.change($color-oklch, $alpha:0.24)};
     --#{vars.$prefix}progress-bar-fill-bg: #{$color};
-    --#{vars.$prefix}progress-bar-track-bg: color.change(#{$color-oklch}, $alpha:0.38);
-    --#{vars.$prefix}progress-bar-buffer-border-color: color.change(#{$color-oklch}, $alpha:0.38);
+    --#{vars.$prefix}progress-bar-track-bg: #{color.change($color-oklch, $alpha:0.38)};
+    // prettier-ignore
+    --#{vars.$prefix}progress-bar-buffer-border-color: #{color.change($color-oklch, $alpha:0.38)};
 
     &.#{vars.$prefix}indeterminate {
       > .#{vars.$prefix}progress-bar-track,

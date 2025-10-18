@@ -8,7 +8,7 @@
 @mixin make-default-variant($name, $color) {
   .#{vars.$prefix}switch-#{$name} {
     // prettier-ignore
-    --#{vars.$prefix}switch-active-box-shadow: #{0 0 6px -1px rgba(#000, 0.13), 0 1px 1px 1px color.change($color, $alpha: 0.15), 0 1px 3px 0 rgba(#000, 0.2)};
+    --#{vars.$prefix}switch-active-box-shadow: #{0 0 6px -1px color.change(colors.$black, $alpha: 0.13), 0 1px 1px 1px color.change($color, $alpha: 0.15), 0 1px 3px 0 color.change(colors.$black, $alpha: 0.2)};
     --#{vars.$prefix}switch-active-thumb-bg: #{$color};
     --#{vars.$prefix}switch-active-thumb-color: #{$color};
     --#{vars.$prefix}switch-active-track-color: #{color.change($color, $alpha: 0.38)};

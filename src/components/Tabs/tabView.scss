@@ -15,10 +15,10 @@
     --#{vars.$prefix}tab-spacing: #{vars.$tabs-spacing};
 
     --#{vars.$prefix}tab-item-padding: #{vars.$tabs-item-padding};
-    --#{vars.$prefix}tab-item-color: #{rgba(colors.$white, 0.6)};
+    --#{vars.$prefix}tab-item-color: #{color.change(colors.$white, $alpha: 0.6)};
     --#{vars.$prefix}tab-item-active-color: #{colors.$white};
-    --#{vars.$prefix}tab-item-hover-color: #{rgba(colors.$white, 0.8)};
-    --#{vars.$prefix}tab-item-disabled-color: #{rgba(colors.$white, 0.3)};
+    --#{vars.$prefix}tab-item-hover-color: #{color.change(colors.$white, $alpha: 0.8)};
+    --#{vars.$prefix}tab-item-disabled-color: #{color.change(colors.$white, $alpha: 0.3)};
     // prettier-ignore
     --#{vars.$prefix}tab-item-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
     --#{vars.$prefix}tab-item-font-size: 0.95rem;
@@ -59,7 +59,7 @@
     // prettier-ignore
     --#{vars.$prefix}tab-pills-border-width: var(--#{vars.$prefix}card-border-width, thin);
     // prettier-ignore
-    --#{vars.$prefix}tab-pills-color: #{color.mix(colors.$mdb-default-color, color.change(colors.$gray-800, $alpha: 0.8), 30%)};
+    --#{vars.$prefix}tab-pills-color: #{color.mix(colors.$mdb-default-color, color.change(colors.$gray-800, $alpha: 0.8), 30%, oklch)};
     --#{vars.$prefix}tab-pills-active-bg: var(--#{vars.$prefix}field-primary-indicator);
     --#{vars.$prefix}tab-pills-active-color: #{colors.$white};
     --#{vars.$prefix}tab-pills-hover-color: var(--#{vars.$prefix}field-active-indicator);
@@ -75,7 +75,7 @@
 
     // prettier-ignore
     --#{vars.$prefix}tab-modern-border-radius: var(--#{vars.$prefix}radius-pill, #{vars.$tabs-modern-border-radius});
-    --#{vars.$prefix}tab-modern-active-bg: #{rgba(colors.$black, 0.2)};
+    --#{vars.$prefix}tab-modern-active-bg: #{color.change(colors.$black, $alpha: 0.2)};
     --#{vars.$prefix}tab-modern-margin: #{vars.$tabs-modern-margin};
 
     transition: vars.$transition-leave;
@@ -167,8 +167,10 @@
         padding: var(--#{vars.$prefix}tab-tabs-margin-x) 0 var(--#{vars.$prefix}tab-tabs-margin-x) var(--#{vars.$prefix}tab-tabs-margin-x);
 
         > .tab-item-link {
-          @include borders.end-radius(0);
-          @include borders.start-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
+          // prettier-ignore
+          @include borders.radius(var(--#{vars.$prefix}tab-tabs-border-radius) 0 0 var(--#{vars.$prefix}tab-tabs-border-radius));
+          //@include borders.end-radius(0);
+          //@include borders.start-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
           margin-right: -1px;
 
           &.active {
@@ -186,8 +188,10 @@
         padding: var(--#{vars.$prefix}tab-tabs-margin-x) var(--#{vars.$prefix}tab-tabs-margin-x) var(--#{vars.$prefix}tab-tabs-margin-x) 0;
 
         > .tab-item-link {
-          @include borders.start-radius(0);
-          @include borders.end-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
+          // prettier-ignore
+          @include borders.radius(0 var(--#{vars.$prefix}tab-tabs-border-radius) var(--#{vars.$prefix}tab-tabs-border-radius) 0);
+          //@include borders.start-radius(0);
+          //@include borders.end-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
           margin-left: -1px;
 
           &.active {
@@ -215,8 +219,10 @@
         }
 
         .tab-item-link {
-          @include borders.bottom-radius(0);
-          @include borders.top-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
+          // prettier-ignore
+          @include borders.radius(var(--#{vars.$prefix}tab-tabs-border-radius) var(--#{vars.$prefix}tab-tabs-border-radius) 0 0);
+          //@include borders.bottom-radius(0);
+          //@include borders.top-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
           margin-bottom: -1px;
 
           &:hover,
@@ -243,8 +249,10 @@
         }
 
         .tab-item-link {
-          @include borders.top-radius(0);
-          @include borders.bottom-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
+          // prettier-ignore
+          @include borders.radius(0 0 var(--#{vars.$prefix}tab-tabs-border-radius) var(--#{vars.$prefix}tab-tabs-border-radius));
+          //@include borders.top-radius(0);
+          //@include borders.bottom-radius(var(--#{vars.$prefix}tab-tabs-border-radius));
           margin-top: -1px;
 
           &:hover,

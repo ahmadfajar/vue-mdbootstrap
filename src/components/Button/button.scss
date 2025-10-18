@@ -30,7 +30,7 @@
     --#{vars.$prefix}btn-bg: transparent;
     --#{vars.$prefix}btn-color: #{colors.$gray-900};
     --#{vars.$prefix}btn-border-color: transparent;
-    --#{vars.$prefix}btn-border-width: 1.5px;
+    --#{vars.$prefix}btn-border-width: 0.094rem; // 1.5px;
 
     --#{vars.$prefix}btn-disabled-bg: #{color.change($disabled-bg, $alpha: 0.8)};
     --#{vars.$prefix}btn-disabled-color: #{colors.$gray-700};

@@ -1,25 +1,23 @@
+@use 'sass:color';
 @use '../../../scss/mixins/css3/placeholder';
 @use '../../../scss/color_vars' as colors;
 @use '../../../scss/variables' as vars;
 
 @layer components {
   .#{vars.$prefix}field-searchbox {
-    --#{vars.$prefix}searchbox-bg: #{rgba(colors.$black, 0.025)};
+    --#{vars.$prefix}searchbox-bg: #{color.change(colors.$black, $alpha: 0.025)};
     --#{vars.$prefix}searchbox-color: currentColor;
     --#{vars.$prefix}searchbox-active-bg: #{colors.$white};
     --#{vars.$prefix}searchbox-active-border-color: var(--#{vars.$prefix}field-active-indicator);
-    --#{vars.$prefix}searchbox-border-color: #{rgba(colors.$black, 0.07)};
+    --#{vars.$prefix}searchbox-border-color: #{color.change(colors.$black, $alpha: 0.07)};
     --#{vars.$prefix}searchbox-border-width: thin;
     --#{vars.$prefix}searchbox-border-radius: var(--#{vars.$prefix}radius);
     --#{vars.$prefix}searchbox-font-size: var(--font-size-default, 1rem);
     --#{vars.$prefix}searchbox-font-weight: var(--font-weight-normal, 400);
     --#{vars.$prefix}searchbox-padding-x: 0.375rem;
     --#{vars.$prefix}searchbox-padding-y: 0.375rem;
-    --#{vars.$prefix}searchbox-focused-shadow: color-mix(
-      in oklch,
-      var(--#{vars.$prefix}field-active-indicator),
-      transparent 75%
-    );
+    // prettier-ignore
+    --#{vars.$prefix}searchbox-focused-shadow: color-mix(in oklch, var(--#{vars.$prefix}field-active-indicator), transparent 75%);
 
     // used internally
     --#{vars.$prefix}searchbox-state-bg: var(--#{vars.$prefix}searchbox-bg);
@@ -91,10 +89,10 @@
   .dark .#{vars.$prefix}field-searchbox,
   .#{vars.$prefix}field-searchbox.#{vars.$prefix}searchbox-dark {
     --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-accent-indicator);
-    --#{vars.$prefix}searchbox-bg: #{rgba(colors.$black, 0.15)};
+    --#{vars.$prefix}searchbox-bg: #{color.change(colors.$black, $alpha: 0.15)};
     --#{vars.$prefix}searchbox-color: #{colors.$gray-300};
-    --#{vars.$prefix}searchbox-active-bg: #{rgba(colors.$black, 0.35)};
-    --#{vars.$prefix}searchbox-border-color: #{rgba(colors.$white, 0.12)};
+    --#{vars.$prefix}searchbox-active-bg: #{color.change(colors.$black, $alpha: 0.35)};
+    --#{vars.$prefix}searchbox-border-color: #{color.change(colors.$white, $alpha: 0.12)};
     --#{vars.$prefix}searchbox-focused-shadow: oklch(0.743 0.102 303.276 / 0.32);
   }
 }

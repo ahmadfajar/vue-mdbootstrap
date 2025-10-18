@@ -1,3 +1,4 @@
+@use "sass:color";
 @use '../../../scss/color_vars' as colors;
 @use '../../../scss/variables' as vars;
 
@@ -16,16 +17,17 @@
     display: block;
 
     &.divider--dark {
-      --#{vars.$prefix}divider-color: #{rgba(colors.$white, 0.4)};
+      --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
     }
 
     &.divider--light {
-      --#{vars.$prefix}divider-color: #{rgba(colors.$black, 0.35)};
+      --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.35)};
     }
   }
 
   .#{vars.$prefix}subheader {
     --#{vars.$prefix}subheader-font-size: var(--font-size-default, #{vars.$font-size-base});
+    // prettier-ignore
     --#{vars.$prefix}subheader-font-weight: var(--font-weight-semibold, #{vars.$font-weight-semibold});
     --#{vars.$prefix}subheader-padding-x: #{vars.$padding-md};
     --#{vars.$prefix}subheader-padding-y: 0;
@@ -33,13 +35,14 @@
     color: var(--#{vars.$prefix}subheader-color);
     font-size: var(--#{vars.$prefix}subheader-font-size);
     font-weight: var(--#{vars.$prefix}subheader-font-weight);
+    // prettier-ignore
     padding: var(--#{vars.$prefix}subheader-padding-y) var(--#{vars.$prefix}subheader-padding-x);
     display: flex;
     align-items: center;
     height: 48px;
 
     &.subheader--dark {
-      --#{vars.$prefix}subheader-color: #{rgba(colors.$white, 0.68)};
+      --#{vars.$prefix}subheader-color: #{color.change(colors.$white, $alpha: 0.68)};
     }
 
     &.subheader--light {

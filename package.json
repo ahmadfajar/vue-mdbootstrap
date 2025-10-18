@@ -57,11 +57,11 @@
   "scripts": {
     "dev": "rimraf dist && run-p type-check build:dev css:compile css:custom",
     "prod": "rimraf dist && run-p type-check build:prod css:compile css:custom && run-s css:minify css:custom-minify",
-    "dist": "rimraf dist && run-p type-check build:dev build:prod build:lib build:types css:compile css:custom && run-s css:minify css:custom-minify",
+    "dist": "rimraf dist && run-p type-check build:dev build:prod build:lib build:types css:compile && run-s css:minify",
     "build:dev": "vite build",
     "build:lib": "vite build --config vite.config.lib.ts",
     "build:prod": "vite build --config vite.config.prod.ts",
-    "build:types": "./node_modules/.bin/rollup --config rollup.config.dts.mjs",
+    "build:types": "vite build --config vite.config.types.ts",
     "css:compile": "sass --no-source-map src/bundle.scss dist/bundle.css",
     "css:beauty": "cleancss --format beautify -o dist/bundle.css dist/bundle.css",
     "css:minify": "cleancss -o dist/bundle.min.css dist/bundle.css",
@@ -107,6 +107,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.46.1",
     "vite": "^7.1.10",
+    "vite-plugin-dts": "^4.5.4",
     "vue": "^3.5.22",
     "vue-router": "^4.6.3"
   },

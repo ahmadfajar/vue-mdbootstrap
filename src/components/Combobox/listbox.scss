@@ -7,7 +7,7 @@
 @layer components {
   .#{vars.$prefix}listbox {
     --#{vars.$prefix}listbox-bg: var(--navigation-background, #{colors.$white});
-    --#{vars.$prefix}searchbox-bg: #{rgba(colors.$black, 0.025)};
+    --#{vars.$prefix}searchbox-bg: #{color.change(colors.$black, $alpha: 0.025)};
     --#{vars.$prefix}searchbox-active-bg: #{colors.$white};
     --#{vars.$prefix}searchbox-font-size: 14px;
     --#{vars.$prefix}searchbox-text-color: currentColor;

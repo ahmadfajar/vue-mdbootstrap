@@ -389,9 +389,8 @@
       }
 
       &.focused {
-        --#{vars.$prefix}field-floating-label-color: var(
-          --#{vars.$prefix}field-active-border-color
-        );
+        // prettier-ignore
+        --#{vars.$prefix}field-floating-label-color: var(--#{vars.$prefix}field-active-border-color);
         --#{vars.$prefix}field-floating-label-opacity: 1;
 
         .#{vars.$prefix}field-label {

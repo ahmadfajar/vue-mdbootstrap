@@ -10,6 +10,7 @@
     --#{vars.$prefix}badge-border-radius: var(--#{vars.$prefix}radius, #{vars.$badge-border-radius});
     --#{vars.$prefix}badge-color: #{colors.$white};
     --#{vars.$prefix}badge-font-size: #{vars.$badge-font-size};
+    // prettier-ignore
     --#{vars.$prefix}badge-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
     --#{vars.$prefix}badge-padding-x: #{vars.$badge-padding-x};
     --#{vars.$prefix}badge-padding-y: #{vars.$badge-padding-y};
@@ -69,7 +70,7 @@
 
   @each $name, $color in colors.$context-colors {
     .#{vars.$prefix}badge-outline-#{$name} {
-      --#{vars.$prefix}badge-color: $color;
+      --#{vars.$prefix}badge-color: #{$color};
       border-color: helper.to-oklch(color.adjust($color, $lightness: 10%));
     }
   }

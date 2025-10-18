@@ -1,8 +1,6 @@
 @use 'sass:color';
 @use 'sass:math';
 @use 'sass:string';
-@use '../color_vars' as colors;
-@use '../variables' as vars;
 
 @function round($value, $fractionDigits: 0) {
   $power: math.pow(10, $fractionDigits);
@@ -69,13 +67,17 @@
   }
 }
 
+$white: #fff;
+$black: #000;
+$default-active-bgcolor: to-oklch(#5f4a97);
+
 // Returns color in oklch color space
 @function set-alt-bgcolor($color, $transparency: 0, $brightness: 170) {
   @if (brightness($color) > 254) {
     @if ($transparency > 0) {
-      @return to-oklch(color.change(vars.$default-active-bgcolor, $alpha: $transparency));
+      @return to-oklch(color.change($default-active-bgcolor, $alpha: $transparency));
     } @else {
-      @return to-oklch(colors.$white);
+      @return to-oklch($white);
     }
   } @else if (brightness($color) > $brightness) {
     @if ($transparency > 0) {
@@ -104,7 +106,7 @@
 // $lightness is positive it will tint with white and the color result becomes lighter
 @function shift-color($color, $lightness: 10%) {
   $weight: math.abs($lightness);
-  $tint-color: if($lightness > 0, colors.$white, colors.$black);
+  $tint-color: if($lightness > 0, $white, $black);
 
   @return to-oklch(color.mix($tint-color, $color, $weight, oklch));
 }
