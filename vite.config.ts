@@ -2,7 +2,6 @@ import terser from '@rollup/plugin-terser';
 import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
-// @ts-ignore
 import { bannerText } from './banner';
 
 export default defineConfig({

@@ -4,6 +4,7 @@ import { BaseComponentProps, HtmlTagName, TContextColor } from '../../../types';
 export declare type TBadgeType = 'label' | 'pill';
 
 export declare type TBadgeVariant =
+  | 'default'
   | 'primary'
   | 'secondary'
   | 'success'

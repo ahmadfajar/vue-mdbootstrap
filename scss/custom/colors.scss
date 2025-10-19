@@ -1,0 +1,163 @@
+@use 'sass:color';
+@use 'sass:map';
+@use '../mixins/css3/text-decorators' as decorators;
+@use '../utils/color_helper' as helper;
+@use '../color_vars' as colors;
+@use '../banner';
+
+// Create custom colors for background, borders and text
+//--------------------------------------------------------
+$final-colors: map.remove(
+  colors.$merge-theme-colors,
+  'elegant-color-dark',
+  'dark-blue',
+  'primary-color-dark',
+  'default',
+  'primary',
+  'secondary',
+  'info',
+  'success',
+  'warning',
+  'danger',
+  'light',
+  'light-grey',
+  'grey',
+  'black',
+  'white'
+);
+
+@each $name, $color in $final-colors {
+  @include decorators.decorate-color($name, $color);
+}
+
+// Manually adds duplicate custom colors
+//---------------------------------------
+@include decorators.decorate-color(
+  'dark-blue',
+  colors.$primary-color-dark,
+  $alias-name1: 'primary-color-dark'
+);
+
+// Create full color palette for background
+//-------------------------------------------
+@each $name, $colors in colors.$full-palette {
+  @each $sub_name, $color_value in $colors {
+    @if $sub_name == 'base' {
+      .bg-#{$name}-600 {
+        background-color: $color_value;
+      }
+
+      .bg-rgba-#{$name}-slight,
+      .bg-rgba-#{$name}-slight:after {
+        background-color: color.change($color_value, $alpha: 0.1);
+      }
+
+      .bg-rgba-#{$name}-light,
+      .bg-rgba-#{$name}-light:after {
+        background-color: color.change($color_value, $alpha: 0.3);
+      }
+
+      .bg-rgba-#{$name}-strong,
+      .bg-rgba-#{$name}-strong:after {
+        background-color: color.change(
+          helper.to-oklch(color.adjust($color_value, $lightness: -5%)),
+          $alpha: 0.7
+        );
+      }
+    } @else {
+      @if colors.$enable_full_palette {
+        @if ($sub_name == 'lighten-5') {
+          $color-name: '#{$name}-100';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        } @else if ($sub_name == 'lighten-4') {
+          $color-name: '#{$name}-200';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        } @else if ($sub_name == 'lighten-3') {
+          $color-name: '#{$name}-300';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        } @else if ($sub_name == 'lighten-2') {
+          $color-name: '#{$name}-400';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        } @else if ($sub_name == 'lighten-1') {
+          $color-name: '#{$name}-500';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        } @else if ($sub_name == 'darken-1') {
+          $color-name: '#{$name}-700';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        } @else if ($sub_name == 'darken-2') {
+          $color-name: '#{$name}-800';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        } @else if ($sub_name == 'darken-3') {
+          $color-name: '#{$name}-900';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        } @else if ($sub_name == 'darken-4') {
+          $color-name: '#{$name}-950';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        } @else {
+          $color-name: '#{$name}-#{$sub_name}00';
+          @include decorators.decorate-color(
+            $color-name,
+            $color_value,
+            $border: false,
+            $text: false,
+            $alias-name1: '#{$name}.#{$sub_name}'
+          );
+        }
+      }
+    }
+  }
+}

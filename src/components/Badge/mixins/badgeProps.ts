@@ -18,7 +18,7 @@ export const badgeProps = {
     type: String,
     default: undefined,
     validator: (value: string): boolean =>
-      ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'dark'].includes(
+      ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'default'].includes(
         value
       ),
   },
