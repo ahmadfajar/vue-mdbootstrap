@@ -558,7 +558,7 @@ function renderColorPickerModeButtons(
   return h(
     'div',
     {
-      class: ['py-2', 'text-center'],
+      class: ['flex', 'justify-center', 'py-2'],
     },
     [
       h(BsToggleButton, {

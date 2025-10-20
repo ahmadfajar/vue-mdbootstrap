@@ -37,15 +37,7 @@
     background-color: var(--#{vars.$prefix}tile-state-bg);
     display: flex;
     position: relative;
-    user-select: none;
-    text-decoration: none;
     transition: vars.$transition-hoverable;
-
-    &:active,
-    &:focus,
-    &:hover {
-      text-decoration: none;
-    }
 
     &:not(.disabled):not(.active) {
       &.#{vars.$prefix}link:hover {
@@ -334,5 +326,17 @@
         }
       }
     }
+  }
+}
+
+// separate these styles from layer to override Bootstrap 'reboot.css'
+.#{vars.$prefix}list-tile {
+  user-select: none;
+  text-decoration: none;
+
+  &:active,
+  &:focus,
+  &:hover {
+    text-decoration: none;
   }
 }

@@ -169,7 +169,7 @@ class ListViewProvider implements IListViewProvider {
   async setActiveItem(value?: IListItem): Promise<void> {
     if (value == null) {
       this._activeItem = undefined;
-      this._emit('update:modelValue', undefined);
+      this._emit('update:model-value', undefined);
       return;
     }
     if (this.config.individualState === true && value.tag === 'BsListTile') {

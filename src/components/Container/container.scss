@@ -1,12 +1,5 @@
 @use '../../../scss/variables' as vars;
 
-@layer base {
-  body {
-    margin: 0;
-    padding: 0;
-  }
-}
-
 @layer components {
   .#{vars.$prefix}application-wrap,
   .#{vars.$prefix}container-wrap,
@@ -18,6 +11,7 @@
 
   .#{vars.$prefix}application-wrap {
     background-color: var(--background);
+    color: var(--foreground);
     backface-visibility: hidden;
     flex: 1 1 auto;
     flex-direction: column;

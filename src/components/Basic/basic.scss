@@ -10,8 +10,8 @@
     background-color: var(--#{vars.$prefix}divider-color);
     height: var(--#{vars.$prefix}divider-height);
     min-height: var(--#{vars.$prefix}divider-height);
-    margin-bottom: var(--#{vars.$prefix}divider-margin-y);
-    margin-top: var(--#{vars.$prefix}divider-margin-y);
+    margin-bottom: var(--#{vars.$prefix}divider-margin-y) !important;
+    margin-top: var(--#{vars.$prefix}divider-margin-y) !important;
     max-width: 100%;
     border: none;
     display: block;

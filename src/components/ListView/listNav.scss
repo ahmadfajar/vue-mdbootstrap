@@ -24,10 +24,6 @@
     --#{vars.$prefix}nav-item-padding-left: var(--#{vars.$prefix}nav-item-padding-x);
     --#{vars.$prefix}nav-item-padding-right: var(--#{vars.$prefix}nav-item-padding-x);
 
-    padding: 0;
-    margin: 0;
-    list-style: none;
-
     &.collapsing {
       transition: height 0.65s vars.$transition-drop-animation;
     }
@@ -40,20 +36,8 @@
 
       > .#{vars.$prefix}nav-item-inner {
         background-color: var(--#{vars.$prefix}nav-item-inner-state-bg);
-        color: var(--#{vars.$prefix}nav-item-state-color);
         font-size: var(--#{vars.$prefix}nav-item-font-size);
         font-weight: var(--#{vars.$prefix}nav-item-state-font-weight);
-        display: block;
-        outline: 0 none;
-        text-decoration: none;
-        cursor: pointer;
-        user-select: none;
-
-        &:hover,
-        &:focus,
-        &:active {
-          text-decoration: none;
-        }
 
         > .#{vars.$prefix}ripple {
           display: flex;
@@ -183,6 +167,30 @@
             }
           }
         }
+      }
+    }
+  }
+}
+
+// separate these styles from layer to override Bootstrap 'reboot.css'
+.#{vars.$prefix}list-nav {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  .#{vars.$prefix}nav-item {
+    > .#{vars.$prefix}nav-item-inner {
+      color: var(--#{vars.$prefix}nav-item-state-color);
+      text-decoration: none;
+      display: block;
+      outline: 0 none;
+      cursor: pointer;
+      user-select: none;
+
+      &:hover,
+      &:focus,
+      &:active {
+        text-decoration: none;
       }
     }
   }

@@ -14,7 +14,7 @@ $markerSize: 14px;
     --color-picker-input-color: var(--foreground, #{colors.$gray-900});
     --color-picker-input-focus-bg: var(--background-secondary, #{colors.$white});
     --color-picker-input-focus-color: inherit;
-    --color-picker-input-focus-outline: 2px solid darkslateblue;
+    --color-picker-input-focus-outline: 2px solid var(--#{vars.$prefix}field-active-indicator);
     --color-picker-input-focus-shadow: oklch(0.578 0.228 260.025 / 0.25);
     --color-picker-slider-thumb-color: #{color.scale(colors.$neutral-base, $lightness: -40%)};
 
@@ -278,7 +278,7 @@ $markerSize: 14px;
           color: var(--color-picker-input-focus-color);
           background-color: var(--color-picker-input-focus-bg);
           outline: var(--color-picker-input-focus-outline);
-          box-shadow: 0 0 0 0.25rem var(--color-picker-input-focus-shadow);
+          box-shadow: 0 0 0 0.325rem var(--color-picker-input-focus-shadow);
         }
       }
     }
@@ -287,7 +287,7 @@ $markerSize: 14px;
       padding: 12px;
 
       > .#{vars.$prefix}swatch-button {
-        @include borders.radius(vars.$radius-circle);
+        @include borders.radius(vars.$radius-circle !important);
         background-image:
           repeating-linear-gradient(
             45deg,
@@ -298,9 +298,9 @@ $markerSize: 14px;
             #aaa
           ),
           repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
-        background-position:
-          0 0,
-          4px 4px;
+
+        // prettier-ignore
+        background-position: 0 0, 4px 4px;
         background-size: 8px 8px;
         border: 0;
         width: 20px;

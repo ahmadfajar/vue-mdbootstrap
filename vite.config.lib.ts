@@ -30,7 +30,7 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled into your library
-      external: ['axios', 'body-scroll-lock', 'fast-xml-parser', 'lodash-es', 'luxon', 'vue'],
+      external: ['axios', 'fast-xml-parser', 'lodash-es', 'luxon', 'vue'],
       // treeshake: false,
       treeshake: {
         preset: 'smallest',

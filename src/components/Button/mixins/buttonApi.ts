@@ -60,8 +60,8 @@ export function useMakeButtonProps(
       [`${cssPrefix}btn-tonal`]: props.tonal,
       [`${cssPrefix}btn-raised`]:
         props.raised && props.mode !== 'fab' && (props.mode as string) !== 'floating',
-      [`${cssPrefix}rounded-sm`]: defaultMode && isPillOff && !props.rounded,
-      [`${cssPrefix}rounded-pill`]: defaultMode && !isPillOff && !props.rounded,
+      [`${cssPrefix}btn-rounded-sm`]: defaultMode && isPillOff && !props.rounded,
+      [`${cssPrefix}btn-rounded-pill`]: defaultMode && !isPillOff && !props.rounded,
       [`${cssPrefix}btn-${props.color}`]: props.color && !props.outlined && !props.flat,
       [`${cssPrefix}btn-outline-${props.color}`]: props.color && props.outlined && !props.tonal,
       [`${cssPrefix}btn-flat-${props.color}`]:
@@ -226,8 +226,8 @@ function makeToggleButtonItemClasses(
       !Helper.isEmpty(props.size) && ['xs', 'sm', 'lg'].includes(props.size),
     [`${cssPrefix}btn-tonal`]: props.tonal,
     [`${cssPrefix}btn-raised`]: props.raised,
-    [`${cssPrefix}rounded-sm`]: isPillOff && !props.rounded,
-    [`${cssPrefix}rounded-pill`]: !isPillOff && !props.rounded,
+    [`${cssPrefix}btn-rounded-sm`]: isPillOff && !props.rounded,
+    [`${cssPrefix}btn-rounded-pill`]: !isPillOff && !props.rounded,
     [`${cssPrefix}btn-${props.color}`]: enableColor && !props.outlined,
     [`${cssPrefix}btn-${props.toggleColor}`]: enableToggleColor,
     [`${cssPrefix}btn-outline-${props.color}`]: enableColor && props.outlined && !props.tonal,

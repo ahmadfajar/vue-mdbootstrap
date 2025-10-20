@@ -6,21 +6,6 @@
 @use '../../../scss/variables' as vars;
 
 @layer components {
-  .dropdown-toggle {
-    white-space: nowrap;
-
-    &:after {
-      border-top: var(--#{vars.$prefix}caret-size, 5px) solid;
-      border-right: var(--#{vars.$prefix}caret-size, 5px) solid transparent;
-      border-bottom: 0;
-      border-left: var(--#{vars.$prefix}caret-size, 5px) solid transparent;
-      content: '';
-      display: inline-block;
-      margin-left: 0.255em;
-      vertical-align: 0.255em;
-    }
-  }
-
   .#{vars.$prefix}btn,
   .#{vars.$prefix}btn-fab,
   .#{vars.$prefix}btn-icon {
@@ -63,87 +48,15 @@
     --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-border-color);
     // end
 
-    padding: 0;
-    outline: 0;
-    line-height: 1;
-    cursor: pointer;
     display: inline-block;
     position: relative;
     white-space: nowrap;
-    text-decoration: none;
-    font-size: var(--#{vars.$prefix}btn-font-size);
-    font-weight: var(--#{vars.$prefix}btn-font-weight);
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
     color: var(--#{vars.$prefix}btn-color);
     background-color: var(--#{vars.$prefix}btn-bg);
-    // prettier-ignore
-    border: var(--#{vars.$prefix}btn-border-width) solid var(--#{vars.$prefix}btn-state-border-color);
-    border-radius: var(--#{vars.$prefix}btn-border-radius);
     box-shadow: var(--#{vars.$prefix}btn-box-shadow);
     transition: #{vars.$btn-transition};
 
-    &:hover {
-      --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-hover-border-color);
-
-      color: var(--#{vars.$prefix}btn-hover-color);
-      background-color: var(--#{vars.$prefix}btn-hover-bg);
-      box-shadow: var(--#{vars.$prefix}btn-hover-box-shadow);
-    }
-
-    &:focus-visible:not(.disabled):not(:disabled) {
-      --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-focus-border-color);
-
-      color: var(--#{vars.$prefix}btn-hover-color);
-      background-color: var(--#{vars.$prefix}btn-hover-bg);
-      outline: 3px solid var(--#{vars.$prefix}btn-focus-shadow-color);
-      //outline-offset: 1px;
-      z-index: 1;
-
-      &.active {
-        color: var(--#{vars.$prefix}btn-active-color);
-        background-color: var(--#{vars.$prefix}btn-active-bg);
-      }
-    }
-
-    &.active {
-      --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-active-border-color);
-
-      color: var(--#{vars.$prefix}btn-active-color);
-      background-color: var(--#{vars.$prefix}btn-active-bg);
-      box-shadow: var(--#{vars.$prefix}btn-active-box-shadow);
-    }
-
-    &.readonly {
-      opacity: var(--#{vars.$prefix}btn-readonly-opacity);
-
-      &:not(.active) {
-        --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-border-color);
-
-        color: var(--#{vars.$prefix}btn-color);
-        background-color: var(--#{vars.$prefix}btn-bg);
-      }
-    }
-
-    &.readonly,
-    &.disabled,
-    &:disabled {
-      cursor: default;
-      box-shadow: none;
-      pointer-events: none;
-    }
-
-    &.disabled,
-    &:disabled {
-      --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-disabled-border-color);
-
-      color: var(--#{vars.$prefix}btn-disabled-color);
-      background-color: var(--#{vars.$prefix}btn-disabled-bg);
-      opacity: var(--#{vars.$prefix}btn-disabled-opacity);
-    }
-
-    > .ripple {
+    > .#{vars.$prefix}ripple {
       display: flex;
       padding: 0;
       border-radius: inherit;
@@ -158,6 +71,7 @@
       line-height: var(--#{vars.$prefix}btn-state-line-height);
       //border-radius: var(--#{vars.$prefix}btn-border-radius);
       border-radius: inherit;
+      // prettier-ignore
       padding: var(--#{vars.$prefix}btn-state-padding-y) var(--#{vars.$prefix}btn-state-padding-x);
     }
 
@@ -213,7 +127,7 @@
     > .dropdown-toggle {
       &::after {
         align-self: center;
-        margin-right: calc(--#{vars.$prefix}btn-state-padding-x / 2);
+        margin-right: calc(var(--#{vars.$prefix}btn-state-padding-x) / 2);
         margin-left: 0;
       }
 
@@ -462,10 +376,9 @@
 
   // BsButton with dark color variant
   //----------------------------------
-  $btn-dark: helper.to-oklch(#202020);
-  @include button.make-default-variant('dark', $btn-dark);
-  @include button.make-outline-variant('dark', $btn-dark);
-  @include button.make-flat-variant('dark', $btn-dark);
+  @include button.make-default-variant('dark', colors.$dark-color);
+  @include button.make-outline-variant('dark', colors.$dark-color);
+  @include button.make-flat-variant('dark', colors.$dark-color);
 
   .dark {
     .#{vars.$prefix}btn,
@@ -482,6 +395,129 @@
       &[class*='btn-outline'] {
         --#{vars.$prefix}btn-disabled-border-color: #{color.change(colors.$gray-600, $alpha: 0.7)};
       }
+    }
+  }
+}
+
+// override Bootstrap styles
+.dropdown-toggle {
+  white-space: nowrap;
+
+  &:after {
+    border-top: var(--#{vars.$prefix}caret-size, 5px) solid;
+    border-right: var(--#{vars.$prefix}caret-size, 5px) solid transparent;
+    border-bottom: 0;
+    border-left: var(--#{vars.$prefix}caret-size, 5px) solid transparent;
+    content: '';
+    display: inline-block;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+  }
+}
+
+// separate these styles from layer to override Bootstrap 'reboot.css'
+.#{vars.$prefix}btn,
+.#{vars.$prefix}btn-fab,
+.#{vars.$prefix}btn-icon {
+  padding: 0;
+  outline: 0;
+  line-height: 1;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: var(--#{vars.$prefix}btn-font-size);
+  font-weight: var(--#{vars.$prefix}btn-font-weight);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  // prettier-ignore
+  border: var(--#{vars.$prefix}btn-border-width) solid var(--#{vars.$prefix}btn-state-border-color);
+  border-radius: var(--#{vars.$prefix}btn-border-radius);
+
+  &:hover {
+    --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-hover-border-color);
+
+    color: var(--#{vars.$prefix}btn-hover-color);
+    background-color: var(--#{vars.$prefix}btn-hover-bg);
+    box-shadow: var(--#{vars.$prefix}btn-hover-box-shadow);
+  }
+
+  &:focus-visible:not(.disabled):not(:disabled) {
+    --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-focus-border-color);
+
+    color: var(--#{vars.$prefix}btn-hover-color);
+    background-color: var(--#{vars.$prefix}btn-hover-bg);
+    outline: 3px solid var(--#{vars.$prefix}btn-focus-shadow-color);
+    //outline-offset: 1px;
+    z-index: 1;
+
+    &.active {
+      color: var(--#{vars.$prefix}btn-active-color);
+      background-color: var(--#{vars.$prefix}btn-active-bg);
+    }
+  }
+
+  &.active {
+    --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-active-border-color);
+
+    color: var(--#{vars.$prefix}btn-active-color);
+    background-color: var(--#{vars.$prefix}btn-active-bg);
+    box-shadow: var(--#{vars.$prefix}btn-active-box-shadow);
+  }
+
+  &.readonly {
+    opacity: var(--#{vars.$prefix}btn-readonly-opacity);
+
+    &:not(.active) {
+      --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-border-color);
+
+      color: var(--#{vars.$prefix}btn-color);
+      background-color: var(--#{vars.$prefix}btn-bg);
+    }
+  }
+
+  &.readonly,
+  &.disabled,
+  &:disabled {
+    cursor: default;
+    box-shadow: none;
+    pointer-events: none;
+  }
+
+  &.disabled,
+  &:disabled {
+    --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-disabled-border-color);
+
+    color: var(--#{vars.$prefix}btn-disabled-color);
+    background-color: var(--#{vars.$prefix}btn-disabled-bg);
+    opacity: var(--#{vars.$prefix}btn-disabled-opacity);
+  }
+}
+
+.#{vars.$prefix}button-group {
+  display: inline-flex;
+  position: relative;
+}
+
+.#{vars.$prefix}button-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  justify-content: flex-start;
+
+  .#{vars.$prefix}btn,
+  .#{vars.$prefix}btn-icon {
+    &:not(:last-child) {
+      @include borders.end-radius(0);
+    }
+
+    &:not(:first-child) {
+      @include borders.start-radius(0);
+      margin-left: -1px;
+    }
+
+    &.active,
+    &:focus {
+      z-index: 1;
     }
   }
 }

@@ -1,3 +1,5 @@
+@use '../variables' as vars;
+
 @layer utilities {
   .hidden {
     display: none;
@@ -173,5 +175,21 @@
 
   .self-stretch {
     align-self: stretch;
+  }
+
+  $spacing: 0.25rem;
+
+  @for $i from 1 through 12 {
+    .#{vars.$prefix}gap-#{$i} {
+      gap: $spacing * $i;
+    }
+
+    .#{vars.$prefix}gap-x-#{$i} {
+      column-gap: $spacing * $i;
+    }
+
+    .#{vars.$prefix}gap-y-#{$i} {
+      row-gap: $spacing * $i;
+    }
   }
 }
