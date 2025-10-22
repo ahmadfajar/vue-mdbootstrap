@@ -392,7 +392,7 @@ export function useRenderToggleFieldButton(
       h(
         'div',
         {
-          class: `${cssPrefix}col-md`,
+          class: 'col-md',
         },
         [
           h(

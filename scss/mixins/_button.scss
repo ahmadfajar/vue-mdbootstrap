@@ -3,8 +3,8 @@
 @use '../color_vars' as colors;
 @use '../variables' as vars;
 
-// BsButton variants mixins -- sass variables
-//--------------------------------------------
+// BsButton variants -- scss mixins
+//----------------------------------
 @mixin make-default-variant($name, $color, $dark-mode: false) {
   @if ($dark-mode == true) {
     .#{vars.$prefix}btn-#{$name} {
@@ -181,7 +181,19 @@
             $color,
             helper.set-color-contrast(
               $color,
-              color.adjust($color, $lightness: 70%),
+              color.change(color.adjust($color, $lightness: 70%), $alpha: 0.7),
+              color.change($color, $chroma: 20%, $lightness: 95%),
+              90%
+            ),
+            color.scale($color, $chroma: -10%, $lightness: 80%)
+          )
+        );
+        $border-color: helper.to-oklch(
+          helper.set-color-contrast(
+            $color,
+            helper.set-color-contrast(
+              $color,
+              color.change(color.adjust($color, $lightness: 50%), $alpha: 0.5),
               color.change($color, $chroma: 20%, $lightness: 95%),
               90%
             ),
@@ -193,7 +205,7 @@
             $color,
             helper.set-color-contrast(
               $color,
-              color.adjust($color, $lightness: -2%),
+              color.change(color.adjust($color, $lightness: -2%), $alpha: 0.5),
               color.change($color, $chroma: 30%, $lightness: 95%),
               90%
             ),
@@ -201,14 +213,23 @@
           )
         );
         $hover-text: helper.to-oklch(
-          helper.set-color-contrast($color, colors.$black, color.scale($color, $lightness: -30%))
+          helper.set-color-contrast(
+            $color,
+            helper.set-color-contrast(
+              $color,
+              color.scale($color, $lightness: 60%),
+              colors.$black,
+              90%
+            ),
+            color.scale($color, $lightness: -30%)
+          )
         );
         $active-bg: helper.to-oklch(
           helper.set-color-contrast(
             $color,
             helper.set-color-contrast(
               $color,
-              color.adjust($color, $lightness: -5%),
+              color.change(color.adjust($color, $lightness: -5%), $alpha: 0.5),
               color.change($color, $chroma: 40%, $lightness: 95%),
               90%
             ),
@@ -216,12 +237,16 @@
           )
         );
         $active-text: helper.to-oklch(
-          helper.set-color-contrast($color, colors.$black, color.scale($color, $lightness: -50%))
+          helper.set-color-contrast(
+            $color,
+            helper.set-color-contrast($color, colors.$white, colors.$black, 90%),
+            color.scale($color, $lightness: -50%)
+          )
         );
 
         --#{vars.$prefix}btn-bg: #{$bg-color};
         --#{vars.$prefix}btn-color: #{$text-color};
-        --#{vars.$prefix}btn-border-color: #{$bg-color};
+        --#{vars.$prefix}btn-border-color: #{$border-color};
         --#{vars.$prefix}btn-active-bg: #{$active-bg};
         --#{vars.$prefix}btn-active-color: #{$active-text};
         --#{vars.$prefix}btn-active-border-color: #{color.change($active-bg, $alpha: 0.25)};
@@ -235,16 +260,16 @@
       > .#{vars.$prefix}btn-#{$name}:not(:first-child):not(:focus-visible) {
         &:not(:disabled):not(.disabled):not(.active) {
           $border-color: helper.to-oklch(color.adjust($color, $lightness: -10%));
-          border-left-color: $border-color;
+          border-left-color: $border-color !important;
 
           &.readonly {
             $border-color: helper.to-oklch(color.adjust($color, $lightness: -5%));
-            border-left-color: $border-color;
+            border-left-color: $border-color !important;
           }
 
           &.#{vars.$prefix}btn-tonal {
             $border-color: helper.to-oklch(color.adjust($color, $lightness: 27%));
-            border-left-color: $border-color;
+            border-left-color: color.change($border-color, $alpha: 0.8) !important;
           }
         }
       }
@@ -303,42 +328,33 @@
         color.scale($color, $lightness: -15%),
         color.adjust($color, $lightness: 5%)
       );
-      $text-color: helper.set-color-contrast($color, colors.$gray-700, $color);
-      $border-color: color.adjust(colors.$gray-600, $lightness: 25%);
-      $active-bg: helper.to-oklch(
-        helper.set-color-contrast(
-          $color,
-          color.change(color.scale($color, $lightness: 5%), $alpha: 0.65),
-          color.change(color.scale($color, $lightness: 5%), $alpha: 0.4)
-        )
+      $text-color: helper.set-color-contrast(
+        $color,
+        helper.set-color-contrast($color, colors.$gray-300, colors.$gray-700, 90%),
+        $color
       );
+      $border-color: color.adjust(colors.$gray-600, $lightness: 20%);
+      $active-bg: color.change(color.scale($color, $lightness: 5%), $alpha: 0.4);
       $active-text: helper.set-color-contrast(
-        $active-bg,
-        color.scale($color, $lightness: -60%),
+        $color,
         colors.$white,
-        30%
+        color.scale($color, $lightness: -40%),
+        90%
       );
       $hover-bg: color.change(color.scale($color, $lightness: 45%), $alpha: 0.35);
       $hover-text: helper.set-color-contrast(
         $color,
-        colors.$black,
-        color.scale($color, $lightness: -30%)
+        colors.$white,
+        color.scale($color, $lightness: -30%),
+        90%
       );
-      $hover-border: helper.set-color-contrast(
-        $color,
-        $border-color,
-        color.adjust($color, $lightness: 10%)
-      );
+      $hover-border: helper.set-color-contrast($color, $border-color, $color, 90%);
 
-      --#{vars.$prefix}btn-color: #{$text-color};
+      --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
       --#{vars.$prefix}btn-border-color: #{helper.to-oklch($border-color)};
-      --#{vars.$prefix}btn-active-bg: #{$active-bg};
+      --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($active-bg)};
       --#{vars.$prefix}btn-active-color: #{helper.to-oklch($active-text)};
-      --#{vars.$prefix}btn-active-border-color: #{helper.set-color-contrast(
-          $color,
-          $border-color,
-          $color
-        )};
+      --#{vars.$prefix}btn-active-border-color: #{helper.to-oklch($hover-border)};
       --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
       --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($hover-text)};
       --#{vars.$prefix}btn-hover-border-color: #{helper.to-oklch($hover-border)};
@@ -384,15 +400,14 @@
       --#{vars.$prefix}btn-active-bg: #{helper.to-oklch(color.change($active-bg, $alpha: 0.3))};
       --#{vars.$prefix}btn-focus-shadow-color: #{helper.to-oklch($focus-box-shadow-color)};
 
-      @if (helper.lightnessLevel($color) > 82%) {
-        $darkenText: helper.to-oklch(color.scale($color, $lightness: -40%));
-        --#{vars.$prefix}btn-color: #{helper.to-oklch(color.scale($color, $lightness: -20%))};
+      @if (helper.lightnessLevel($color) > 87%) {
+        --#{vars.$prefix}btn-color: #{helper.to-oklch(color.change($text-color, $alpha: 0.8))};
         --#{vars.$prefix}btn-hover-bg: #{color.change(
             color.scale($color, $lightness: 15%),
-            $alpha: 0.25
+            $alpha: 0.23
           )};
-        --#{vars.$prefix}btn-hover-color: #{$darkenText};
-        --#{vars.$prefix}btn-active-color: #{$darkenText};
+        --#{vars.$prefix}btn-hover-color: #{colors.$white};
+        --#{vars.$prefix}btn-active-color: #{colors.$white};
       } @else {
         $active-text: helper.set-color-contrast(
           $active-bg,
@@ -400,12 +415,7 @@
           colors.$white,
           30%
         );
-        $hover-text: helper.set-color-contrast(
-          $active-bg,
-          $text-color,
-          color.scale($color, $lightness: -30%),
-          84%
-        );
+        $hover-text: color.scale($color, $lightness: -30%);
         $hover-bg: helper.set-color-contrast(
           $color,
           color.change(color.scale($color, $lightness: 15%), $alpha: 0.3),

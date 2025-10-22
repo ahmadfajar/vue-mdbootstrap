@@ -347,6 +347,8 @@
     position: relative;
 
     .#{vars.$prefix}btn {
+      &:hover,
+      &:focus-visible,
       &.selected {
         z-index: 1;
       }
@@ -362,7 +364,7 @@
         &.disabled,
         &:disabled {
           $disabled-border-color: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: -7%));
-          border-left-color: color.change($disabled-border-color, $alpha: 0.5);
+          border-left-color: color.change($disabled-border-color, $alpha: 0.5) !important;
         }
       }
     }
