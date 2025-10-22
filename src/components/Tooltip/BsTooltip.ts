@@ -51,7 +51,7 @@ export default defineComponent<TBsTooltip>({
     maxWidth: validStringOrNumberProp,
     zIndex: {
       type: [String, Number],
-      default: 2000,
+      default: 1030,
       validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
     },
   },

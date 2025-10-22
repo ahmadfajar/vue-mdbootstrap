@@ -59,11 +59,11 @@
   @return color.channel($color, 'lightness', $space: oklch);
 }
 
-@function set-color-contrast($bgColor, $textOnLightBg, $textOnDarkBg, $lightness: 75%) {
-  @if (lightnessLevel($bgColor) > $lightness) {
-    @return $textOnLightBg;
+@function set-color-contrast($color, $lightColor, $darkColor, $lightness: 75%) {
+  @if (lightnessLevel($color) > $lightness) {
+    @return $lightColor;
   } @else {
-    @return $textOnDarkBg;
+    @return $darkColor;
   }
 }
 

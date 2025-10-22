@@ -5,16 +5,21 @@ import { useRenderTransition } from '@/mixins/CommonApi.ts';
 import { isChildOf, isSVGElement } from '@/mixins/DomHelper.ts';
 import type { Numberish, TEmitFn, TPopoverOptionProps, TPopoverPosition, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type {
-  ComponentInternalInstance,
-  ComputedRef,
-  Prop,
-  Ref,
-  ShallowRef,
-  Slots,
-  VNode,
+import {
+  type ComponentInternalInstance,
+  type ComputedRef,
+  h,
+  mergeProps,
+  nextTick,
+  type Prop,
+  type Ref,
+  type ShallowRef,
+  type Slots,
+  Teleport,
+  type VNode,
+  vShow,
+  withDirectives,
 } from 'vue';
-import { h, mergeProps, nextTick, Teleport, vShow, withDirectives } from 'vue';
 
 const SPACE = 8;
 
@@ -88,9 +93,9 @@ function getPopoverTopPosition(
   cover: boolean
 ): number {
   const posY = activatorRect.top + activatorRect.height + shift;
-  let offsetTop = 0;
   const spaceAvailable = window.innerHeight - SPACE - height;
   const minTop = SPACE;
+  let offsetTop = 0;
 
   switch (placement) {
     case 'top':
@@ -169,6 +174,7 @@ export function useSetPopoverPosition(
 
   if (activatorEl) {
     const elRect = activatorEl.getBoundingClientRect();
+    // console.log('Top: ', elRect.top, ', bottom: ', elRect.bottom);
     if (elRect.top < -elRect.height || elRect.top > window.innerHeight) {
       useClosePopover(instance, isActive, 'Activator overflow.');
     }
@@ -223,14 +229,6 @@ export function useClosePopover(
   message: string
 ): void {
   PopupManager.closePopover(instance, isActive, message);
-  // if (!instance || !isActive.value) {
-  //     return;
-  // }
-  //
-  // isActive.value = false;
-  // instance.emit('update:open', false);
-  // instance.emit('close', message);
-  // PopupManager.remove(instance);
 }
 
 function onPopoverClickOutside(
@@ -276,9 +274,10 @@ export function useRenderPopover(
   isActive: Ref<boolean>
 ): VNode {
   const thisSetPosition = async () => {
-    await nextTick().then(() =>
-      useSetPopoverPosition(instance.value, props, popoverRef, placementRef, isActive)
-    );
+    await nextTick().then(() => {
+      // console.log('Activator:', props.trigger);
+      useSetPopoverPosition(instance.value, props, popoverRef, placementRef, isActive);
+    });
   };
 
   const thisOnClickOutside = (evt: Event) => {

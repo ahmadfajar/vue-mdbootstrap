@@ -243,8 +243,8 @@
     --#{vars.$prefix}btn-md-padding-y: #{vars.$padding-md};
     --#{vars.$prefix}btn-sm-padding-x: #{vars.$padding-sm};
     --#{vars.$prefix}btn-sm-padding-y: #{vars.$padding-sm};
-    --#{vars.$prefix}btn-xs-padding-x: #{vars.$spacing + 0.125};
-    --#{vars.$prefix}btn-xs-padding-y: #{vars.$spacing + 0.125};
+    --#{vars.$prefix}btn-xs-padding-x: #{vars.$spacing * 0.375};
+    --#{vars.$prefix}btn-xs-padding-y: #{vars.$spacing * 0.375};
 
     --#{vars.$prefix}btn-border-radius: #{vars.$btn-fab-border-radius-md};
     --#{vars.$prefix}btn-box-shadow: #{vars.$z-depth-half};
@@ -265,10 +265,12 @@
     }
 
     .#{vars.$prefix}icon-left {
+      margin-right: #{vars.$padding-sm};
       margin-left: #{vars.$padding-xs * -1};
     }
 
     .#{vars.$prefix}icon-right {
+      margin-left: #{vars.$padding-sm};
       margin-right: #{vars.$padding-xs * -1};
     }
 
@@ -415,7 +417,8 @@
   }
 }
 
-// separate these styles from layer to override Bootstrap 'reboot.css'
+// Patch Bootstrap 'reboot.css'
+// This patch must be placed outside the css layer.
 .#{vars.$prefix}btn,
 .#{vars.$prefix}btn-fab,
 .#{vars.$prefix}btn-icon {
@@ -513,9 +516,14 @@
     &:not(:first-child) {
       @include borders.start-radius(0);
       margin-left: -1px;
+
+      &:not([class*='btn-outline']):not([class*='btn-flat']) {
+        border-left-color: oklch(0 0 0 / 0.1);
+      }
     }
 
     &.active,
+    &:hover,
     &:focus {
       z-index: 1;
     }

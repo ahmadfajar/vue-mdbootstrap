@@ -22,10 +22,19 @@ function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
     target = el;
   } else if (!Helper.isFunction(binding.value)) {
     const binder = binding.value;
-    target = Helper.isString(binder.target) ? document.querySelector(binder.target) : window;
+    target = Helper.isString(binder.target)
+      ? document.querySelector(binder.target)
+      : binder.target instanceof Element
+        ? binder.target
+        : window;
   } else {
     target = window;
   }
+
+  // console.log('target:', target);
+  // console.log('element:', el);
+  // console.log('value:', binding.value);
+  // console.log('options:', options);
 
   if (target) {
     const scrollHandler = (evt: Event) => {

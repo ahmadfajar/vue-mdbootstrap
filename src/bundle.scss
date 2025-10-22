@@ -1,5 +1,6 @@
 @use "../scss/banner";
 @use "../scss/main/base";
+@use "../scss/main/animations";
 @use "components/Animation/animation";
 @use "components/Container/container";
 @use "components/Appbar/appbar";
@@ -38,7 +39,6 @@
 @use "components/Notification/notification";
 @use "components/Breadcrumb/breadcrumb";
 @use "components/Uploader/uploader";
-@use "../scss/main/animations";
 @use "../scss/main/flexbox";
 @use "../scss/main/grid";
 @use "../scss/main/utilities";
@@ -50,4 +50,6 @@ body {
   line-height: var(--line-height);
   margin: 0;
   padding: 0;
+  width: 100%;
+  min-height: 100vh;
 }

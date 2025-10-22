@@ -15,7 +15,6 @@ async function hideDropdownMenu(
 ): Promise<void> {
   if (timer.value) {
     window.clearTimeout(timer.value);
-    return Promise.resolve();
   }
 
   await new Promise<void>((resolve) => {

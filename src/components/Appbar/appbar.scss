@@ -17,7 +17,6 @@
     background-color: var(--#{vars.$prefix}appbar-bg);
     color: var(--#{vars.$prefix}appbar-color);
     max-width: 100%;
-    width: 100%;
 
     &.smooth-animation {
       transition: vars.$transition-default;

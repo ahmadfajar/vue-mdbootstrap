@@ -1,12 +1,12 @@
 @use '../../../scss/mixins/css3/borders';
+@use '../../../scss/color_vars' as colors;
 @use '../../../scss/variables' as vars;
 
 @layer components {
   .#{vars.$prefix}dropdown-menu {
-    //display: flex;
-    //align-items: center;
-    //position: relative;
-    margin-right: vars.$padding-sm;
+    display: inline-flex;
+    align-items: center;
+    position: relative;
 
     .#{vars.$prefix}dropdown-menu-activator {
       position: relative;
@@ -18,15 +18,102 @@
   }
 
   .#{vars.$prefix}popover-dropdown-menu {
-    @include borders.radius(var(--#{vars.$prefix}radius));
+    --#{vars.$prefix}popover-border-radius: var(--#{vars.$prefix}radius);
 
     > .#{vars.$prefix}list {
       @include borders.radius(var(--#{vars.$prefix}radius));
 
       .#{vars.$prefix}divider {
-        margin-bottom: 3px;
-        margin-top: 3px;
+        --#{vars.$prefix}divider-margin-y: 3px;
       }
     }
+  }
+}
+
+// Patch Bootstrap 'dropdown-menu' css styles and make it available even without Bootstrap.
+// This patch must be placed outside the css layer.
+.#{vars.$prefix}popover {
+  .dropdown-menu {
+    --#{vars.$prefix}dropdown-bg: var(--#{vars.$prefix}listview-bg, inherit);
+    --#{vars.$prefix}dropdown-border-color: var(--border-translucent);
+    --#{vars.$prefix}dropdown-border-width: 0;
+    --#{vars.$prefix}dropdown-padding-x: 0;
+    --#{vars.$prefix}dropdown-padding-y: 0;
+    --#{vars.$prefix}dropdown-header-color: var(--#{vars.$prefix}subheader-color);
+    --#{vars.$prefix}dropdown-header-padding-x: #{vars.$padding-md};
+    --#{vars.$prefix}dropdown-header-padding-y: #{vars.$padding-sm};
+
+    // prettier-ignore
+    --#{vars.$prefix}dropdown-item-padding-x: var(--#{vars.$prefix}tile-padding-x, #{vars.$padding-md});
+    // prettier-ignore
+    --#{vars.$prefix}dropdown-item-padding-y: var(--#{vars.$prefix}tile-padding-y, #{vars.$padding-xs});
+
+    --#{vars.$prefix}dropdown-link-color: var(--navigation-item-foreground);
+    --#{vars.$prefix}dropdown-link-active-bg: var(--navigation-item-active-background);
+    --#{vars.$prefix}dropdown-link-active-color: var(--navigation-item-active-foreground);
+    --#{vars.$prefix}dropdown-link-hover-bg: var(--navigation-item-hover-background);
+    --#{vars.$prefix}dropdown-link-hover-color: var(--navigation-item-hover-foreground);
+
+    background-color: var(--#{vars.$prefix}dropdown-bg);
+    // prettier-ignore
+    border: var(--#{vars.$prefix}dropdown-border-width) solid var(--#{vars.$prefix}dropdown-border-color);
+    // prettier-ignore
+    padding: var(--#{vars.$prefix}dropdown-padding-y) var(--#{vars.$prefix}dropdown-padding-x);
+    background-clip: padding-box;
+    margin: 0;
+    position: relative;
+    display: block;
+    text-align: left;
+    list-style: none;
+  }
+
+  .dropdown-item {
+    // prettier-ignore
+    padding: var(--#{vars.$prefix}dropdown-item-padding-y) var(--#{vars.$prefix}dropdown-item-padding-x);
+    color: var(--#{vars.$prefix}dropdown-link-color);
+    font-weight: var(--font-weight-normal);
+    display: flex;
+    align-items: center;
+    text-align: inherit;
+    text-decoration: none;
+    user-select: none;
+    white-space: nowrap;
+    width: auto;
+    clear: both;
+    cursor: pointer;
+    border: 0;
+
+    &:hover,
+    &:focus {
+      background-color: var(--#{vars.$prefix}dropdown-link-hover-bg);
+      color: var(--#{vars.$prefix}dropdown-link-hover-color);
+      text-decoration: none;
+    }
+
+    &.active,
+    &:active {
+      background-color: var(--#{vars.$prefix}dropdown-link-active-bg);
+      color: var(--#{vars.$prefix}dropdown-link-active-color);
+      text-decoration: none;
+    }
+
+    &.disabled,
+    &:disabled {
+      opacity: var(--#{vars.$prefix}field-readonly-opacity);
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+
+  .dropdown-header {
+    // prettier-ignore
+    padding: var(--#{vars.$prefix}dropdown-header-padding-y) var(--#{vars.$prefix}dropdown-header-padding-x);
+    color: var(--#{vars.$prefix}dropdown-header-color);
+    font-weight: var(--font-weight-medium);
+    font-size: 14px;
+    margin-bottom: 0;
+    display: block;
+    user-select: none;
+    white-space: nowrap;
   }
 }

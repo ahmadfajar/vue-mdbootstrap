@@ -86,6 +86,7 @@
 
       --#{vars.$prefix}btn-focus-shadow-color: #{$dark-box-shadow-focus};
 
+      &.#{vars.$prefix}btn-fab,
       &.#{vars.$prefix}btn-tonal {
         $tonal-text-color: helper.to-oklch(color.scale($color, $lightness: 90%));
         $tonal-bg: helper.to-oklch(color.scale($color, $lightness: 50%));
@@ -170,29 +171,57 @@
       --#{vars.$prefix}btn-hover-border-color: #{$hover-bg};
       --#{vars.$prefix}btn-focus-shadow-color: #{$focus-box-shadow-color};
 
+      &.#{vars.$prefix}btn-fab,
       &.#{vars.$prefix}btn-tonal {
         $text-color: helper.to-oklch(
-          helper.set-color-contrast($color, colors.$black, color.scale($color, $lightness: -25%))
+          helper.set-color-contrast($color, colors.$black, color.scale($color, $lightness: -35%))
         );
         $bg-color: helper.to-oklch(
           helper.set-color-contrast(
             $color,
-            color.scale($color, $chroma: -50%, $lightness: 80%),
-            color.scale($color, $chroma: -30%, $lightness: 80%)
+            helper.set-color-contrast(
+              $color,
+              color.adjust($color, $lightness: 70%),
+              color.change($color, $chroma: 20%, $lightness: 95%),
+              90%
+            ),
+            color.scale($color, $chroma: -10%, $lightness: 80%)
           )
         );
-        $hover-bg: helper.to-oklch(color.scale($color, $chroma: -30%, $lightness: 70%));
+        $hover-bg: helper.to-oklch(
+          helper.set-color-contrast(
+            $color,
+            helper.set-color-contrast(
+              $color,
+              color.adjust($color, $lightness: -2%),
+              color.change($color, $chroma: 30%, $lightness: 95%),
+              90%
+            ),
+            color.scale($color, $lightness: 70%)
+          )
+        );
         $hover-text: helper.to-oklch(
           helper.set-color-contrast($color, colors.$black, color.scale($color, $lightness: -30%))
         );
-        $active-bg: helper.to-oklch(color.scale($color, $lightness: 60%));
+        $active-bg: helper.to-oklch(
+          helper.set-color-contrast(
+            $color,
+            helper.set-color-contrast(
+              $color,
+              color.adjust($color, $lightness: -5%),
+              color.change($color, $chroma: 40%, $lightness: 95%),
+              90%
+            ),
+            color.scale($color, $lightness: 60%)
+          )
+        );
         $active-text: helper.to-oklch(
           helper.set-color-contrast($color, colors.$black, color.scale($color, $lightness: -50%))
         );
 
-        --#{vars.$prefix}btn-bg: #{color.change($bg-color, $alpha: 0.85)};
+        --#{vars.$prefix}btn-bg: #{$bg-color};
         --#{vars.$prefix}btn-color: #{$text-color};
-        --#{vars.$prefix}btn-border-color: #{color.change($bg-color, $alpha: 0.25)};
+        --#{vars.$prefix}btn-border-color: #{$bg-color};
         --#{vars.$prefix}btn-active-bg: #{$active-bg};
         --#{vars.$prefix}btn-active-color: #{$active-text};
         --#{vars.$prefix}btn-active-border-color: #{color.change($active-bg, $alpha: 0.25)};
@@ -355,14 +384,15 @@
       --#{vars.$prefix}btn-active-bg: #{helper.to-oklch(color.change($active-bg, $alpha: 0.3))};
       --#{vars.$prefix}btn-focus-shadow-color: #{helper.to-oklch($focus-box-shadow-color)};
 
-      @if (helper.lightnessLevel($color) > 87%) {
-        --#{vars.$prefix}btn-color: #{helper.to-oklch(color.change($text-color, $alpha: 0.8))};
+      @if (helper.lightnessLevel($color) > 82%) {
+        $darkenText: helper.to-oklch(color.scale($color, $lightness: -40%));
+        --#{vars.$prefix}btn-color: #{helper.to-oklch(color.scale($color, $lightness: -20%))};
         --#{vars.$prefix}btn-hover-bg: #{color.change(
             color.scale($color, $lightness: 15%),
-            $alpha: 0.23
+            $alpha: 0.25
           )};
-        --#{vars.$prefix}btn-hover-color: #{colors.$white};
-        --#{vars.$prefix}btn-active-color: #{colors.$white};
+        --#{vars.$prefix}btn-hover-color: #{$darkenText};
+        --#{vars.$prefix}btn-active-color: #{$darkenText};
       } @else {
         $active-text: helper.set-color-contrast(
           $active-bg,

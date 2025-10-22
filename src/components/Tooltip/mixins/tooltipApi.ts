@@ -11,44 +11,45 @@ const SPACE = 4;
  * Calculate Tooltip left offset.
  *
  * @param placementRef Tooltip placement.
- * @param activatorEl  Activator Element
- * @param tooltipWidth Tooltip element width
+ * @param activatorEl  Activator Element.
+ * @param arrowEl      Arrow Element.
+ * @param tooltipWidth Tooltip element width.
  * @returns Tooltip left offset
  */
 function tooltipLeftPosition(
   placementRef: Ref<TPlacementPosition>,
   activatorEl: Element,
+  arrowEl: Element | null,
   tooltipWidth: number
 ): number {
   const domRect = activatorEl.getBoundingClientRect();
   const parentRect = activatorEl.parentElement?.getBoundingClientRect();
-  const maxLeft = window.innerWidth - tooltipWidth - SPACE;
-  const plX = domRect.left - tooltipWidth - SPACE;
-  const prX = domRect.left + domRect.width + SPACE;
+  const arrowRect = arrowEl?.getBoundingClientRect();
+  const limitX = window.innerWidth - tooltipWidth - SPACE;
+  const leftX = domRect.left - tooltipWidth - SPACE;
+  const rightX = domRect.right + SPACE;
 
   switch (placementRef.value) {
     case 'left':
-      if (plX >= SPACE) {
-        return plX;
+      if (leftX - (arrowRect ? arrowRect.width / 2 : 0) >= SPACE) {
+        return leftX - (arrowRect ? arrowRect.width / 2 : 0);
       } else {
         placementRef.value = 'right';
-        return prX;
+        return rightX + (arrowRect ? arrowRect.width / 2 : 0);
       }
     case 'right':
-      if (prX <= maxLeft) {
-        return prX;
+      if (rightX + (arrowRect ? arrowRect.width / 2 : 0) <= limitX) {
+        return rightX + (arrowRect ? arrowRect.width / 2 : 0);
       } else {
         placementRef.value = 'left';
-        return plX;
+        return leftX - (arrowRect ? arrowRect.width / 2 : 0);
       }
     case 'top':
     case 'bottom':
     default:
-      const tx =
-        domRect.left +
-        Math.min(domRect.width / 2, (parentRect?.width ?? domRect.width) / 2) -
-        tooltipWidth / 2;
-      return Math.min(maxLeft, tx);
+      const tw = Math.min(domRect.width / 2, (parentRect?.width ?? domRect.width) / 2);
+      const tx = domRect.left + tw - tooltipWidth / 2;
+      return Math.min(limitX, tx);
   }
 }
 
@@ -56,34 +57,37 @@ function tooltipLeftPosition(
  * Calculate Tooltip top offset.
  *
  * @param placementRef  Tooltip placement reference.
- * @param activatorEl   Activator Element
- * @param tooltipHeight Tooltip element height
+ * @param activatorEl   Activator Element.
+ * @param arrowEl       Arrow Element.
+ * @param tooltipHeight Tooltip element height.
  * @returns Tooltip top offset
  */
 function tooltipTopPosition(
   placementRef: Ref<TPlacementPosition>,
   activatorEl: Element,
+  arrowEl: Element | null,
   tooltipHeight: number
 ): number {
   const domRect = activatorEl.getBoundingClientRect();
+  const arrowRect = arrowEl?.getBoundingClientRect();
   const ptY = domRect.top - tooltipHeight - SPACE;
-  const pbY = domRect.top + domRect.height + SPACE;
+  const pbY = domRect.bottom + SPACE;
 
   switch (placementRef.value) {
     case 'top':
       if (ptY >= SPACE) {
-        return ptY;
+        return ptY - (arrowRect ? arrowRect.height / 2 - 2 : 0);
       } else {
         placementRef.value = 'bottom';
-        return pbY;
+        return pbY + (arrowRect ? arrowRect.height / 2 : 0);
       }
     case 'bottom':
       const maxY = domRect.bottom + tooltipHeight + SPACE;
       if (pbY + tooltipHeight <= maxY) {
-        return pbY;
+        return pbY + (arrowRect ? arrowRect.height / 2 : 0);
       } else {
         placementRef.value = 'top';
-        return ptY;
+        return ptY - (arrowRect ? arrowRect.height / 2 - 2 : 0);
       }
     case 'left':
     case 'right':
@@ -103,9 +107,9 @@ function arrowLeftPosition(
 
   switch (placement) {
     case 'left':
-      return activatorRect.left - SPACE;
+      return activatorRect.left - arrowWidth / 2 - SPACE * 2;
     case 'right':
-      return activatorRect.right + SPACE;
+      return activatorRect.right + arrowWidth / 2;
     case 'top':
     case 'bottom':
     default:
@@ -123,13 +127,13 @@ function arrowTopPosition(
 
   switch (placement) {
     case 'top':
-      return activatorRect.top - arrowHeight - SPACE;
+      return activatorRect.top - arrowHeight / 2 - SPACE - 2;
     case 'bottom':
-      return activatorRect.bottom + SPACE;
+      return activatorRect.bottom + SPACE + 2;
     case 'left':
     case 'right':
     default:
-      return activatorRect.top + (activatorRect.height / 2 - arrowHeight / 2);
+      return activatorRect.top + (activatorRect.height / 2 - arrowHeight / 2) + 1;
   }
 }
 
@@ -194,17 +198,21 @@ export function useSetTooltipPosition(
 
   if (tooltipEl && Helper.isFunction(tooltipEl['getBoundingClientRect'])) {
     const tooltipRect = tooltipEl.getBoundingClientRect();
-
-    tooltipEl.style.top = tooltipTopPosition(placementRef, activatorEl, tooltipRect.height) + 'px';
-    tooltipEl.style.left = tooltipLeftPosition(placementRef, activatorEl, tooltipRect.width) + 'px';
+    const posY = tooltipTopPosition(placementRef, activatorEl, arrowEl, tooltipRect.height);
+    const posX = tooltipLeftPosition(placementRef, activatorEl, arrowEl, tooltipRect.width);
 
     if (arrowEl) {
+      const placement = unref(placementRef);
       const arrowRect = arrowEl.getBoundingClientRect();
-      const px = arrowLeftPosition(unref(placementRef), activatorEl, arrowRect.width);
-      const pY = arrowTopPosition(unref(placementRef), activatorEl, arrowRect.height);
-      arrowEl.style.left = px > 0 ? `${px}px` : '';
-      arrowEl.style.top = pY > 0 ? `${pY}px` : '';
+      const pY = arrowTopPosition(placement, activatorEl, arrowRect.height);
+      const px = arrowLeftPosition(placement, activatorEl, arrowRect.width);
+
+      arrowEl.style.top = pY > 0 ? `${pY - posY}px` : '';
+      arrowEl.style.left = px > 0 ? `${px - posX}px` : '';
     }
+
+    tooltipEl.style.top = `${posY}px`;
+    tooltipEl.style.left = `${posX}px`;
   }
 }
 
@@ -218,7 +226,7 @@ export function useAddTooltipListener(
   disabled: Ref<boolean>,
   instance: ComponentInternalInstance | null,
   trigger?: string | Element | ComponentPublicInstance
-) {
+): void {
   if (!instance) {
     return;
   }
@@ -228,12 +236,10 @@ export function useAddTooltipListener(
       return;
     }
 
+    active.value = true;
+    instance.emit('update:show', true);
     window.requestAnimationFrame(() => {
       useSetTooltipPosition(activatorRef, tooltipRef, tooltipArrowRef, placementRef);
-      instance.emit('update:show', true);
-      Helper.defer(() => {
-        active.value = true;
-      }, 60);
     });
   };
 

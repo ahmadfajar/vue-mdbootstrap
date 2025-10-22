@@ -8,7 +8,7 @@ export function createVueMdb(rootComponent: Component): App {
   const vApp = createApp(rootComponent);
 
   for (const [key, drv] of Object.entries(_directives)) {
-    // console.info(`${key}: ${drv}`);
+    // console.info(`${key}: Directive<${key}>`);
     vApp.directive(key, drv);
   }
 

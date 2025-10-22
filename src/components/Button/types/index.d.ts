@@ -116,6 +116,7 @@ export declare type TButtonOptionProps = TAllowedIconProps &
 
     /**
      * This button component mode, valid values are: `default, icon, fab, floating`.
+     *
      * `floating` is deprecated, use `fab` instead.
      */
     mode?: TButtonMode;

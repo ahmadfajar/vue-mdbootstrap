@@ -56,10 +56,10 @@ export function useMakeButtonProps(
       [`${cssPrefix}btn`]: defaultMode,
       [`${cssPrefix}btn-icon`]: props.mode === 'icon',
       [`${cssPrefix}btn-fab`]: props.mode === 'fab' || (props.mode as string) === 'floating',
-      [`${cssPrefix}btn-${props.size}`]: ['xs', 'sm', 'lg'].includes(props.size!),
       [`${cssPrefix}btn-tonal`]: props.tonal,
       [`${cssPrefix}btn-raised`]:
         props.raised && props.mode !== 'fab' && (props.mode as string) !== 'floating',
+      [`${cssPrefix}btn-${props.size}`]: ['xs', 'sm', 'lg'].includes(props.size!),
       [`${cssPrefix}btn-rounded-sm`]: defaultMode && isPillOff && !props.rounded,
       [`${cssPrefix}btn-rounded-pill`]: defaultMode && !isPillOff && !props.rounded,
       [`${cssPrefix}btn-${props.color}`]: props.color && !props.outlined && !props.flat,

@@ -4,22 +4,22 @@
   .#{vars.$prefix}application-wrap,
   .#{vars.$prefix}container-wrap,
   .#{vars.$prefix}content-wrap {
-    display: flex;
-    max-width: 100%;
+    width: 100%;
     position: relative;
   }
 
   .#{vars.$prefix}application-wrap {
     background-color: var(--background);
     color: var(--foreground);
-    backface-visibility: hidden;
-    flex: 1 1 auto;
+    //backface-visibility: hidden;
+    display: flex;
+    //flex: 1 1 auto;
     flex-direction: column;
-    overflow-x: hidden;
+    min-height: 100vh;
 
-    &.#{vars.$prefix}viewport-height {
-      height: 100vh;
-    }
+    //&.#{vars.$prefix}viewport-height {
+    //  height: 100vh;
+    //}
 
     &.#{vars.$prefix}appbar-fixed-top {
       > .#{vars.$prefix}container-wrap {
@@ -34,7 +34,9 @@
   }
 
   .#{vars.$prefix}container-wrap {
-    flex: 1 0 auto;
+    flex-grow: 1;
+    flex-shrink: 0;
+    width: 100%;
 
     &.smooth-animation {
       transition: vars.$transition-default;
@@ -44,6 +46,6 @@
   .#{vars.$prefix}content-wrap {
     color: var(--foreground);
     flex: 1 0 auto;
-    transition: vars.$transition-default;
+    //transition: vars.$transition-default;
   }
 }

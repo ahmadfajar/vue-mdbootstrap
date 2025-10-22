@@ -1,4 +1,5 @@
 import { BsOverlay } from '@/components/Animation';
+import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
 import { Resize } from '@/directives';
 import {
   cssPrefix,
@@ -146,12 +147,17 @@ function renderOverlay(
   isOpen: Ref<boolean>,
   emit: TEmitFn
 ): VNode {
+  if (isOpen.value) {
+    PopupManager.preventScrolling();
+  }
+
   return h(BsOverlay, {
     color: props.overlayColor as Prop<string | undefined>,
     fixed: true as unknown as Prop<boolean>,
     show: isOpen.value as unknown as Prop<boolean>,
     zIndex: zIndex.value as Prop<number>,
     onClick: () => {
+      PopupManager.allowScrolling();
       isOpen.value = false;
       emit('update:open', false);
     },

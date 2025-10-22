@@ -56,20 +56,6 @@
       user-select: none;
     }
 
-    // bootstrap patch
-    .dropdown-menu {
-      --#{vars.$prefix-bs}dropdown-padding-y: 0;
-      --#{vars.$prefix-bs}dropdown-item-padding-y: var(--#{vars.$prefix}tile-padding-y);
-      --#{vars.$prefix-bs}dropdown-header-color: var(--#{vars.$prefix}subheader-color);
-
-      --#{vars.$prefix-bs}dropdown-bg: var(--#{vars.$prefix}listview-bg);
-      --#{vars.$prefix-bs}dropdown-link-color: var(--#{vars.$prefix}listview-color);
-      --#{vars.$prefix-bs}dropdown-link-active-bg: var(--navigation-item-active-background);
-      --#{vars.$prefix-bs}dropdown-link-active-color: var(--navigation-item-active-foreground);
-      --#{vars.$prefix-bs}dropdown-link-hover-bg: var(--navigation-item-hover-background);
-      --#{vars.$prefix-bs}dropdown-link-hover-color: var(--navigation-item-hover-foreground);
-    }
-
     &.#{vars.$prefix}list-space-both,
     &.#{vars.$prefix}list-space-left,
     &.#{vars.$prefix}list-space-right {

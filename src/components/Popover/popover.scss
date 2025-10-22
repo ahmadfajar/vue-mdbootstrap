@@ -1,10 +1,13 @@
+@use '../../../scss/mixins/css3/borders';
 @use '../../../scss/color_vars' as colors;
 @use '../../../scss/variables' as vars;
 
 @layer components {
   .#{vars.$prefix}popover {
     --#{vars.$prefix}popover-bg: var(--background-tertiary, #{colors.$white});
+    --#{vars.$prefix}popover-border-radius: var(--#{vars.$prefix}radius);
 
+    @include borders.radius(var(--#{vars.$prefix}popover-border-radius));
     background-color: var(--#{vars.$prefix}popover-bg);
     -webkit-overflow-scrolling: touch;
     position: fixed;
@@ -20,27 +23,13 @@
     > .#{vars.$prefix}listbox {
       --#{vars.$prefix}listbox-bg: inherit;
     }
+  }
+}
 
-    // bootstrap patch
-    .dropdown-menu {
-      --#{vars.$prefix-bs}dropdown-border-width: 0;
-
-      display: block;
-      position: relative;
-
-      .dropdown-item {
-        display: flex;
-        align-items: center;
-        width: auto;
-      }
-
-      .dropdown-header {
-        font-size: 13px;
-        font-weight: 500;
-        user-select: none;
-      }
-    }
-
+@layer animations {
+  // VueJs Popover transition animation
+  //------------------------------------
+  .#{vars.$prefix}popover {
     &.transition-bottom,
     &.transition-bottom-left,
     &.transition-bottom-right,

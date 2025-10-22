@@ -5,7 +5,6 @@ import {
   stringProp,
   validStringOrFloatProp,
   validStringOrNumberProp,
-  whiteColorProp,
 } from '@/mixins/CommonProps.ts';
 import type { Prop, PropType } from 'vue';
 
@@ -46,7 +45,7 @@ export const popoverBaseProps = {
 export const popoverProps = {
   ...popoverBaseProps,
   cover: booleanProp,
-  color: whiteColorProp,
+  color: stringProp,
   space: validStringOrNumberProp,
   placement: popoverPlacementProp,
   transition: popoverDefaultTransitionProp,
