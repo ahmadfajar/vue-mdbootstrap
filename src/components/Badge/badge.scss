@@ -44,34 +44,37 @@
     }
   }
 
-  a.#{vars.$prefix}badge {
-    text-decoration: none;
-
-    @each $name, $color in colors.$context-colors {
-      &.text-bg-#{$name} {
-        &:focus,
-        &:hover {
-          background-color: helper.to-oklch(color.adjust($color, $lightness: -10%));
-          text-decoration: none;
-        }
-
-        &:focus {
-          $shadow-color: helper.set-color-contrast(
-            $color,
-            color.adjust($color, $lightness: -18%),
-            color.adjust($color, $lightness: 8%)
-          );
-          box-shadow: #{0 0 0 0.25rem helper.to-oklch(color.change($shadow-color, $alpha: 0.65))};
-          outline: 0;
-        }
-      }
-    }
-  }
-
   @each $name, $color in colors.$context-colors {
     .#{vars.$prefix}badge-outline-#{$name} {
       --#{vars.$prefix}badge-color: #{$color};
       border-color: helper.to-oklch(color.adjust($color, $lightness: 10%));
+    }
+  }
+}
+
+// Patch Bootstrap 'reboot.css'
+// This patch must be placed outside the css layer.
+a.#{vars.$prefix}badge {
+  color: var(--#{vars.$prefix}badge-color);
+  text-decoration: none;
+
+  @each $name, $color in colors.$context-colors {
+    &.text-bg-#{$name} {
+      &:focus,
+      &:hover {
+        background-color: helper.to-oklch(color.adjust($color, $lightness: -10%)) !important;
+        text-decoration: none;
+      }
+
+      &:focus {
+        $shadow-color: helper.set-color-contrast(
+          $color,
+          color.adjust($color, $lightness: -18%),
+          color.adjust($color, $lightness: 8%)
+        );
+        box-shadow: #{0 0 0 0.25rem helper.to-oklch(color.change($shadow-color, $alpha: 0.65))};
+        outline: 0;
+      }
     }
   }
 }

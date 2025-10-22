@@ -13,7 +13,8 @@ export default defineComponent<TBsBadge>({
       useWrapSlotDefault(thisProps.tag || 'span', slots, {
         [`${cssPrefix}badge`]: true,
         [`${cssPrefix}badge-${thisProps.type}`]: thisProps.type,
-        [`text-bg-${thisProps.variant || thisProps.color}`]: !thisProps.outlined,
+        [`bg-${thisProps.color}`]: thisProps.color && !thisProps.outlined,
+        [`text-bg-${thisProps.variant}`]: thisProps.variant && !thisProps.outlined,
         [`${cssPrefix}badge-outline-${thisProps.variant || thisProps.color}`]: thisProps.outlined,
         'border-thin': thisProps.outlined,
       });

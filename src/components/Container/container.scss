@@ -15,11 +15,10 @@
     display: flex;
     //flex: 1 1 auto;
     flex-direction: column;
-    min-height: 100vh;
 
-    //&.#{vars.$prefix}viewport-height {
-    //  height: 100vh;
-    //}
+    &.#{vars.$prefix}viewport-height {
+      min-height: 100vh;
+    }
 
     &.#{vars.$prefix}appbar-fixed-top {
       > .#{vars.$prefix}container-wrap {
