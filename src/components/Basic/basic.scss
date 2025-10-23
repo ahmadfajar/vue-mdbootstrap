@@ -3,28 +3,6 @@
 @use '../../../scss/variables' as vars;
 
 @layer components {
-  .#{vars.$prefix}divider {
-    --#{vars.$prefix}divider-height: 1px;
-    --#{vars.$prefix}divider-margin-y: 0;
-
-    background-color: var(--#{vars.$prefix}divider-color);
-    height: var(--#{vars.$prefix}divider-height);
-    min-height: var(--#{vars.$prefix}divider-height);
-    margin-bottom: var(--#{vars.$prefix}divider-margin-y) !important;
-    margin-top: var(--#{vars.$prefix}divider-margin-y) !important;
-    max-width: 100%;
-    border: none;
-    display: block;
-
-    &.divider--dark {
-      --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
-    }
-
-    &.divider--light {
-      --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.35)};
-    }
-  }
-
   .#{vars.$prefix}subheader {
     --#{vars.$prefix}subheader-font-size: var(--font-size-default, #{vars.$font-size-base});
     // prettier-ignore
@@ -56,5 +34,29 @@
 
   .#{vars.$prefix}anchor-center {
     text-anchor: middle;
+  }
+}
+
+// Patch Bootstrap 'reboot.css' styles
+// This patch must be placed outside the css layer.
+.#{vars.$prefix}divider {
+  --#{vars.$prefix}divider-height: 1px;
+  --#{vars.$prefix}divider-margin-y: #{vars.$padding-xs};
+
+  background-color: var(--#{vars.$prefix}divider-color);
+  height: var(--#{vars.$prefix}divider-height);
+  min-height: var(--#{vars.$prefix}divider-height);
+  margin-bottom: var(--#{vars.$prefix}divider-margin-y);
+  margin-top: var(--#{vars.$prefix}divider-margin-y);
+  max-width: 100%;
+  border: none;
+  display: block;
+
+  &.divider--dark {
+    --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
+  }
+
+  &.divider--light {
+    --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.35)};
   }
 }

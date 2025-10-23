@@ -116,7 +116,7 @@ $btn-transition:                    color .15s ease-in-out, background-color .15
 
 // Card components
 //-----------------------------
-$card-border-color:                 oklch(0.88 0.001 17.18);
+$card-border-color:                 oklch(0 0 0 / 0.15);
 $card-border-radius:                $radius * 3;
 $card-border-width:                 1px;
 $card-cap-bg:                       color.change(colors.$black, $alpha: .03);

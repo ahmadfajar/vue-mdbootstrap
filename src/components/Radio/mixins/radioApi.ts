@@ -113,6 +113,7 @@ export function useRenderRadioOrCheckbox(
           h<TBsRipple>(
             BsRipple,
             {
+              tag: 'div' as Prop<string>,
               centered: true as unknown as Prop<boolean>,
               active: rippleActive.value as unknown as Prop<boolean>,
               disabled: (props.disabled || props.readonly) as unknown as Prop<boolean>,
