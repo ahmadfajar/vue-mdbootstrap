@@ -13,7 +13,7 @@ import type {
 } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { stringArrayOrObjectProp } from '@/mixins/CommonProps.ts';
-import type { Numberish, TRecord } from '@/types';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import {
   computed,
@@ -38,7 +38,7 @@ export default defineComponent<TBsFontawesomeIcon>({
     } as Prop<TFontAwesomeVariant>,
     version: {
       type: String,
-      default: '7.0.1',
+      default: '7.1.0',
     },
     ...iconProps,
   },
@@ -68,10 +68,10 @@ export default defineComponent<TBsFontawesomeIcon>({
 
     watchEffect(() => {
       if (szHeight.value !== useSizeHeight(thisProps)) {
-        szHeight.value = useSizeHeight(thisProps) as Numberish;
+        szHeight.value = useSizeHeight(thisProps) || 24;
       }
       if (szWidth.value !== useSizeWidth(thisProps)) {
-        szWidth.value = useSizeWidth(thisProps) as Numberish;
+        szWidth.value = useSizeWidth(thisProps) || 24;
       }
 
       useGetFontAwesome(thisProps.icon, thisProps.variant, thisProps.version)
@@ -81,14 +81,6 @@ export default defineComponent<TBsFontawesomeIcon>({
         .catch((err) => {
           console.warn(err);
         });
-      // svgIcon.value = await useGetFontAwesome(thisProps.icon, thisProps.variant, thisProps.version);
-      //
-      // if (szHeight.value !== useSizeHeight(thisProps)) {
-      //   szHeight.value = useSizeHeight(thisProps) as Numberish;
-      // }
-      // if (szWidth.value !== useSizeWidth(thisProps)) {
-      //   szWidth.value = useSizeWidth(thisProps) as Numberish;
-      // }
     });
 
     onBeforeMount(async () => {

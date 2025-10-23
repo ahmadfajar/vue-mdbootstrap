@@ -5,8 +5,7 @@
 @layer components {
   .#{vars.$prefix}tooltip {
     --#{vars.$prefix}tooltip-arrow-size: #{vars.$tooltip-arrow-size};
-    // prettier-ignore
-    --#{vars.$prefix}tooltip-border-radius: var(--#{vars.$prefix}radius, #{vars.$tooltip-border-radius});
+    --#{vars.$prefix}tooltip-border-radius: #{vars.$tooltip-border-radius};
     --#{vars.$prefix}tooltip-bg: #{vars.$tooltip-bg};
     --#{vars.$prefix}tooltip-color: #{vars.$tooltip-color};
     --#{vars.$prefix}tooltip-opacity: #{vars.$tooltip-opacity};
@@ -51,27 +50,27 @@
     &-enter-active,
     &-leave-active {
       // prettier-ignore
-      transition: transform 0.3s vars.$transition-easeOut, opacity 0.3s vars.$transition-easeOut;
+      transition: transform 0.15s vars.$transition-leave-animation, opacity 0.35s vars.$transition-leave-animation;
     }
   }
 
   @include transitions.enterFrom-leaveActive(#{vars.$prefix}tooltip-top) {
     opacity: 0;
-    transform: translate3d(0, 15px, 0);
+    transform: translate(0, 10px);
   }
 
   @include transitions.enterFrom-leaveActive(#{vars.$prefix}tooltip-bottom) {
     opacity: 0;
-    transform: translate3d(0, -15px, 0);
+    transform: translate(0, -10px);
   }
 
   @include transitions.enterFrom-leaveActive(#{vars.$prefix}tooltip-left) {
     opacity: 0;
-    transform: translate3d(24px, 0, 0);
+    transform: translate(10px, 0);
   }
 
   @include transitions.enterFrom-leaveActive(#{vars.$prefix}tooltip-right) {
     opacity: 0;
-    transform: translate3d(-24px, 0, 0);
+    transform: translate(-10px, 0);
   }
 }

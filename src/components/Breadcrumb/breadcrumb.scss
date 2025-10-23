@@ -7,6 +7,8 @@
     --#{vars.$prefix}breadcrumb-padding-y: #{vars.$breadcrumb-padding-y};
     --#{vars.$prefix}breadcrumb-icon-color: inherit;
     --#{vars.$prefix}breadcrumb-font-size: inherit;
+    --#{vars.$prefix}breadcrumb-font-weight: var(--font-weight-medium);
+
     --#{vars.$prefix}breadcrumb-item-color: inherit;
     --#{vars.$prefix}breadcrumb-item-active-color: #{colors.$gray-800};
     --#{vars.$prefix}breadcrumb-item-hover-color: var(--link-color, #{colors.$primary-color});
@@ -23,15 +25,14 @@
       position: relative;
       display: flex;
       flex-wrap: nowrap;
-      align-items: center;
+      align-items: flex-end;
       overflow-y: hidden;
       overflow-x: auto;
 
       > .#{vars.$prefix}breadcrumb-inner {
         font-size: var(--#{vars.$prefix}breadcrumb-font-size);
+        font-weight: var(--#{vars.$prefix}breadcrumb-font-weight);
         position: relative;
-        list-style: none;
-        margin: 0;
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
@@ -47,13 +48,8 @@
 
     .#{vars.$prefix}breadcrumb-item {
       color: var(--#{vars.$prefix}breadcrumb-item-color);
-      line-height: var(--#{vars.$prefix}breadcrumb-line-height);
-      display: flex;
-      flex-wrap: nowrap;
-      white-space: nowrap;
-      margin: 0;
 
-      + .breadcrumb-item {
+      + .#{vars.$prefix}breadcrumb-item {
         padding-left: var(--#{vars.$prefix}breadcrumb-item-spacing);
 
         &::before {
@@ -63,19 +59,36 @@
           content: var(--#{vars.$prefix}breadcrumb-item-separator, '/');
         }
       }
-
-      a {
-        color: inherit;
-        text-decoration: none;
-
-        &:hover {
-          color: var(--#{vars.$prefix}breadcrumb-item-hover-color);
-        }
-      }
-
-      &.active {
-        color: var(--#{vars.$prefix}breadcrumb-item-active-color);
-      }
     }
+  }
+}
+
+// Patch Bootstrap 'reboot.css' and user-agent styles
+// This patch must be placed outside the css layer.
+ol.#{vars.$prefix}breadcrumb-inner {
+  line-height: var(--#{vars.$prefix}breadcrumb-line-height);
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+  padding-inline-start: 0;
+}
+
+li.#{vars.$prefix}breadcrumb-item {
+  display: flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  margin: 0;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--#{vars.$prefix}breadcrumb-item-hover-color);
+    }
+  }
+
+  &.active {
+    color: var(--#{vars.$prefix}breadcrumb-item-active-color);
   }
 }

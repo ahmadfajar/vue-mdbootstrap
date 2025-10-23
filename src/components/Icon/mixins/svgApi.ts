@@ -102,7 +102,7 @@ function fontAwesomeIconUrl(name: string, variant: string, version: string): str
 export function useGetFontAwesome(
   name?: string,
   variant: TFontAwesomeVariant = 'regular',
-  version: string = '7.0.1'
+  version: string = '7.1.0'
 ): Promise<TIconData | undefined> {
   if (!name) {
     return Promise.resolve(undefined);
