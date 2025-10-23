@@ -7,12 +7,10 @@
 @use '../../../scss/variables' as vars;
 
 @layer components {
-  .#{vars.$prefix}chip,
-  a.#{vars.$prefix}chip {
+  .#{vars.$prefix}chip {
     $disabled-bg: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 15%));
     $disabled-border-color: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 8%));
 
-    --#{vars.$prefix}chip-border-radius: #{vars.$radius-lg};
     --#{vars.$prefix}chip-border-width: 0;
     --#{vars.$prefix}chip-font-weight: #{vars.$font-weight-normal};
 
@@ -24,8 +22,6 @@
 
     --#{vars.$prefix}chip-gutter-x: #{vars.$padding-sm};
     --#{vars.$prefix}chip-gutter-y: #{vars.$padding-xs};
-    --#{vars.$prefix}chip-padding-x: #{vars.$padding-md};
-    --#{vars.$prefix}chip-padding-y: 0;
 
     --#{vars.$prefix}chip-avatar-margin-left: #{(vars.$padding-sm + 0.175) * -1};
     --#{vars.$prefix}chip-avatar-margin-right: #{vars.$padding-sm};
@@ -34,73 +30,93 @@
     --#{vars.$prefix}chip-dismiss-btn-margin-left: #{vars.$padding-sm};
     --#{vars.$prefix}chip-dismiss-btn-margin-right: #{(vars.$padding-sm + 0.25) * -1};
 
-    --#{vars.$prefix}chip-height: #{vars.$chip-height};
-    --#{vars.$prefix}chip-sm-height: #{vars.$chip-sm-height};
-    --#{vars.$prefix}chip-sm-font-size: #{vars.$chip-sm-font-size};
-    --#{vars.$prefix}chip-lg-height: #{vars.$chip-lg-height};
-    --#{vars.$prefix}chip-lg-font-size: #{vars.$chip-lg-font-size};
+    --#{vars.$prefix}chip-md-border-radius: #{vars.$radius-lg};
+    --#{vars.$prefix}chip-md-height: #{vars.$chip-md-height};
+    --#{vars.$prefix}chip-md-padding-x: #{vars.$padding-md};
+    --#{vars.$prefix}chip-md-padding-y: 0;
 
-    @include borders.radius(var(--#{vars.$prefix}chip-border-radius));
-    background-color: var(--#{vars.$prefix}chip-bg);
+    --#{vars.$prefix}chip-sm-border-radius: #{vars.$radius-md};
+    --#{vars.$prefix}chip-sm-font-size: #{vars.$chip-sm-font-size};
+    --#{vars.$prefix}chip-sm-height: #{vars.$chip-sm-height};
+    --#{vars.$prefix}chip-sm-padding-x: 0.75rem;
+    --#{vars.$prefix}chip-sm-padding-y: 0;
+
+    --#{vars.$prefix}chip-lg-border-radius: #{vars.$radius-lg + 0.25};
+    --#{vars.$prefix}chip-lg-font-size: #{vars.$chip-lg-font-size};
+    --#{vars.$prefix}chip-lg-height: #{vars.$chip-lg-height};
+    --#{vars.$prefix}chip-lg-padding-x: #{vars.$padding-lg};
+    --#{vars.$prefix}chip-lg-padding-y: 0;
+
+    // used internally
+    --#{vars.$prefix}chip-state-bg: var(--#{vars.$prefix}chip-bg);
+    --#{vars.$prefix}chip-state-color: var(--#{vars.$prefix}chip-color);
+    --#{vars.$prefix}chip-state-border-color: var(--#{vars.$prefix}chip-border-color);
+    --#{vars.$prefix}chip-state-icon-color: var(--#{vars.$prefix}chip-icon-color);
+    --#{vars.$prefix}chip-state-border-radius: var(--#{vars.$prefix}chip-md-border-radius);
+    --#{vars.$prefix}chip-state-height: var(--#{vars.$prefix}chip-md-height);
+    --#{vars.$prefix}chip-state-padding-x: var(--#{vars.$prefix}chip-md-padding-x);
+    --#{vars.$prefix}chip-state-padding-y: var(--#{vars.$prefix}chip-md-padding-y);
+    // end
+
+    @include borders.radius(var(--#{vars.$prefix}chip-state-border-radius));
+    background-color: var(--#{vars.$prefix}chip-state-bg);
     // prettier-ignore
-    border: var(--#{vars.$prefix}chip-border-width) solid var(--#{vars.$prefix}chip-border-color);
+    border: var(--#{vars.$prefix}chip-border-width) solid var(--#{vars.$prefix}chip-state-border-color);
     // prettier-ignore
     margin: var(--#{vars.$prefix}chip-gutter-y) var(--#{vars.$prefix}chip-gutter-x) var(--#{vars.$prefix}chip-gutter-y) 0;
     font-weight: var(--#{vars.$prefix}chip-font-weight);
-    height: var(--#{vars.$prefix}chip-height);
-    color: var(--#{vars.$prefix}chip-color);
+    height: var(--#{vars.$prefix}chip-state-height);
     display: inline-flex;
     align-items: center;
-    cursor: default;
     max-width: 100%;
     line-height: 1;
-    outline: none;
     overflow: hidden;
     position: relative;
     white-space: nowrap;
     vertical-align: middle;
-    text-decoration: none;
     transition-duration: 0.3s;
     transition-property: all, opacity;
     //transition-timing-function: $md-transition-drop-timing;
 
     &:not(.disabled):not(.readonly) {
       &:hover {
-        background-color: var(--#{vars.$prefix}chip-hover-bg);
-        border-color: var(--#{vars.$prefix}chip-hover-border-color);
-        color: var(--#{vars.$prefix}chip-hover-color);
+        --#{vars.$prefix}chip-state-bg: var(--#{vars.$prefix}chip-hover-bg);
+        --#{vars.$prefix}chip-state-color: var(--#{vars.$prefix}chip-hover-color);
+        --#{vars.$prefix}chip-state-border-color: var(--#{vars.$prefix}chip-hover-border-color);
+
         font-weight: var(--#{vars.$prefix}chip-font-weight);
-        text-decoration: none;
         // prettier-ignore
         box-shadow: 0 1px 2px 0 oklch(0.317 0 89.876 / 0.25), 0 2px 4px 2px oklch(0.145 0 89.876 / 0.05);
       }
 
-      &:focus,
+      &.active,
       &.focused,
-      &:focus-visible,
-      &.active {
-        background-color: var(--#{vars.$prefix}chip-active-bg);
-        border-color: var(--#{vars.$prefix}chip-active-border-color);
-        color: var(--#{vars.$prefix}chip-active-color);
+      &:focus,
+      &:focus-visible {
+        --#{vars.$prefix}chip-state-bg: var(--#{vars.$prefix}chip-active-bg);
+        --#{vars.$prefix}chip-state-color: var(--#{vars.$prefix}chip-active-color);
+        // prettier-ignore
+        --#{vars.$prefix}chip-state-border-color: var(--#{vars.$prefix}chip-active-border-color);
 
         > .#{vars.$prefix}chip-content {
           .#{vars.$prefix}chip-icon {
-            color: var(--#{vars.$prefix}chip-active-icon-color);
+            --#{vars.$prefix}chip-state-icon-color: var(--#{vars.$prefix}chip-active-icon-color);
           }
         }
 
         &[class*='chip-outline'] {
           &:hover {
-            border-color: var(--#{vars.$prefix}chip-hover-border-color);
+            // prettier-ignore
+            --#{vars.$prefix}chip-state-border-color: var(--#{vars.$prefix}chip-hover-border-color);
           }
         }
       }
 
-      &:focus,
       &:focus-visible {
-        border-color: var(--#{vars.$prefix}chip-focus-border-color);
         // prettier-ignore
-        box-shadow: 0 0 0.2rem color-mix(in oklch, var(--#{vars.$prefix}chip-focus-shadow-color), transparent 40%);
+        --#{vars.$prefix}chip-state-border-color: var(--#{vars.$prefix}chip-focus-border-color);
+        // prettier-ignore
+        box-shadow: 0 0 0 3px var(--#{vars.$prefix}chip-focus-shadow-color);
       }
     }
 
@@ -109,23 +125,20 @@
     }
 
     &.disabled {
-      background-color: var(--#{vars.$prefix}chip-disabled-bg);
-      border-color: var(--#{vars.$prefix}chip-disabled-border-color);
-      color: var(--#{vars.$prefix}chip-disabled-color);
-      opacity: var(--#{vars.$prefix}chip-disabled-opacity);
-    }
+      --#{vars.$prefix}chip-state-bg: var(--#{vars.$prefix}chip-disabled-bg);
+      --#{vars.$prefix}chip-state-color: var(--#{vars.$prefix}chip-disabled-color);
+      // prettier-ignore
+      --#{vars.$prefix}chip-state-border-color: var(--#{vars.$prefix}chip-disabled-border-color);
 
-    &.#{vars.$prefix}chip-clickable:not(.disabled):not(.readonly) {
-      user-select: none;
-      cursor: pointer;
+      opacity: var(--#{vars.$prefix}chip-disabled-opacity);
     }
 
     > .#{vars.$prefix}chip-content {
       // prettier-ignore
-      --#{vars.$prefix}chip-inner-border-radius: calc(var(--#{vars.$prefix}chip-border-radius) - 1px);
+      --#{vars.$prefix}chip-inner-border-radius: calc(var(--#{vars.$prefix}chip-state-border-radius) - 1px);
 
       @include borders.radius(var(--#{vars.$prefix}chip-inner-border-radius));
-      padding: var(--#{vars.$prefix}chip-padding-y) var(--#{vars.$prefix}chip-padding-x);
+      padding: var(--#{vars.$prefix}chip-state-padding-y) var(--#{vars.$prefix}chip-state-padding-x);
       display: inline-flex;
       align-items: center;
       max-width: 100%;
@@ -143,7 +156,7 @@
       }
 
       .#{vars.$prefix}chip-icon {
-        color: var(--#{vars.$prefix}chip-icon-color);
+        color: var(--#{vars.$prefix}chip-state-icon-color);
       }
 
       > .#{vars.$prefix}chip-avatar {
@@ -158,7 +171,7 @@
         }
 
         &.#{vars.$prefix}chip-avatar-bounded {
-          margin-left: calc(var(--#{vars.$prefix}chip-padding-x) * -1);
+          margin-left: calc(var(--#{vars.$prefix}chip-state-padding-x) * -1);
         }
       }
 
@@ -186,18 +199,19 @@
         }
       }
 
-      > .#{vars.$prefix}btn-icon {
-        margin-left: var(--#{vars.$prefix}chip-dismiss-btn-margin-left);
-        margin-right: var(--#{vars.$prefix}chip-dismiss-btn-margin-right);
-      }
+      //> .#{vars.$prefix}btn-icon {
+      //  margin-left: var(--#{vars.$prefix}chip-dismiss-btn-margin-left);
+      //  margin-right: var(--#{vars.$prefix}chip-dismiss-btn-margin-right);
+      //}
     }
 
     &.#{vars.$prefix}chip-sm {
-      --#{vars.$prefix}chip-border-radius: #{vars.$radius-md};
-      --#{vars.$prefix}chip-padding-x: 0.75rem;
+      --#{vars.$prefix}chip-state-border-radius: var(--#{vars.$prefix}chip-sm-border-radius);
+      --#{vars.$prefix}chip-state-height: var(--#{vars.$prefix}chip-sm-height);
+      --#{vars.$prefix}chip-state-padding-x: var(--#{vars.$prefix}chip-sm-padding-x);
+      --#{vars.$prefix}chip-state-padding-y: var(--#{vars.$prefix}chip-sm-padding-y);
 
       font-size: var(--#{vars.$prefix}chip-sm-font-size);
-      height: var(--#{vars.$prefix}chip-sm-height);
 
       > .#{vars.$prefix}chip-content {
         --#{vars.$prefix}chip-avatar-margin-left: #{vars.$padding-sm * -1};
@@ -205,21 +219,18 @@
       }
 
       .#{vars.$prefix}btn-icon {
-        --#{vars.$prefix}btn-state-line-height: #{vars.$padding-md + 0.125};
-
-        .#{vars.$prefix}ripple {
-          --#{vars.$prefix}btn-inner-state-width: #{vars.$padding-md + 0.125};
-          --#{vars.$prefix}btn-inner-state-height: #{vars.$padding-md + 0.125};
-        }
+        --#{vars.$prefix}btn-xs-height: 1.125rem; // 18px
+        --#{vars.$prefix}btn-xs-width: 1.125rem;  // 18px
       }
     }
 
     &.#{vars.$prefix}chip-lg {
-      --#{vars.$prefix}chip-border-radius: #{vars.$radius-lg + 0.25};
-      --#{vars.$prefix}chip-padding-x: #{vars.$padding-lg};
+      --#{vars.$prefix}chip-state-border-radius: var(--#{vars.$prefix}chip-lg-border-radius);
+      --#{vars.$prefix}chip-state-height: var(--#{vars.$prefix}chip-lg-height);
+      --#{vars.$prefix}chip-state-padding-x: var(--#{vars.$prefix}chip-lg-padding-x);
+      --#{vars.$prefix}chip-state-padding-y: var(--#{vars.$prefix}chip-lg-padding-y);
 
       font-size: var(--#{vars.$prefix}chip-lg-font-size);
-      height: var(--#{vars.$prefix}chip-lg-height);
 
       > .#{vars.$prefix}chip-content {
         --#{vars.$prefix}chip-avatar-margin-left: #{(vars.$padding-md + 0.125) * -1};
@@ -236,17 +247,13 @@
 
     &:not(.#{vars.$prefix}chip-lg):not(.#{vars.$prefix}chip-sm) {
       .#{vars.$prefix}btn-icon {
-        --#{vars.$prefix}btn-state-line-height: #{vars.$padding-lg};
-
-        .#{vars.$prefix}ripple {
-          --#{vars.$prefix}btn-inner-state-width: #{vars.$padding-lg};
-          --#{vars.$prefix}btn-inner-state-height: #{vars.$padding-lg};
-        }
+        --#{vars.$prefix}btn-sm-height: 1.375rem; // 22px
+        --#{vars.$prefix}btn-sm-width: 1.375rem;  // 22px
       }
     }
 
     &.#{vars.$prefix}chip-pill {
-      --#{vars.$prefix}chip-border-radius: #{vars.$radius-pill};
+      --#{vars.$prefix}chip-state-border-radius: #{vars.$radius-pill};
     }
 
     &[class*='chip-outline'] {
@@ -270,5 +277,29 @@
   @each $name, $color in colors.$context-colors {
     @include chip.make-default-variant($name, $color);
     @include chip.make-outline-variant($name, $color);
+  }
+}
+
+// Patch Bootstrap 'reboot.css'
+// This patch must be placed outside the css layer.
+.#{vars.$prefix}chip,
+a.#{vars.$prefix}chip {
+  color: var(--#{vars.$prefix}chip-state-color);
+  cursor: default;
+  outline: none;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  &.#{vars.$prefix}chip-clickable:not(.disabled):not(.readonly) {
+    user-select: none;
+    cursor: pointer;
+  }
+
+  .#{vars.$prefix}btn-icon {
+    margin-left: var(--#{vars.$prefix}chip-dismiss-btn-margin-left);
+    margin-right: var(--#{vars.$prefix}chip-dismiss-btn-margin-right);
   }
 }

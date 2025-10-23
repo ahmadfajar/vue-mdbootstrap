@@ -132,6 +132,7 @@ export function useRenderChip(
       h<TBsRipple>(
         BsRipple,
         {
+          tag: 'div' as Prop<string>,
           disabled: rippleDisabled as unknown as Prop<boolean>,
           class: `${cssPrefix}chip-content`,
         },
