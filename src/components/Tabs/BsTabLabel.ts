@@ -48,7 +48,6 @@ export default defineComponent<TBsTabLabel>({
             'flex-col': ['top', 'bottom'].includes(thisProps.iconPosition as string),
           },
           disabled: props.rippleOff,
-          tag: 'div' as Prop<string>,
         },
         {
           default: () =>

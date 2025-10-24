@@ -20,7 +20,7 @@ export declare type TRippleOptionProps = {
   disabled?: boolean;
 
   /**
-   * Html tag used to render this component, default is `span`.
+   * Html tag used to render this component, default is `div`.
    */
   tag?: HtmlTagName;
 };

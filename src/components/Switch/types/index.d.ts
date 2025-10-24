@@ -21,11 +21,15 @@ export declare type TSwitchOptionProps = TRadioOptionProps & {
 
   /**
    * Sets the switch style appearance to **Inset style**.
+   *
+   * @see [Switch Material Design](https://m3.material.io/components/switch/overview)
    */
   insetMode?: boolean;
 
   /**
    * Sets the switch style appearance to **Inset Outlined style**.
+   *
+   * @see [Switch Material Design](https://m3.material.io/components/switch/overview)
    */
   insetOutlined?: boolean;
 

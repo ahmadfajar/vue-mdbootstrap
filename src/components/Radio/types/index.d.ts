@@ -49,7 +49,7 @@ export declare type TRadioOptionProps = TInputBaseProps & {
   /**
    * Sets this component color.
    */
-  color?: string;
+  color?: TContextColor | string;
 
   /**
    * The `<input>` element `value` attribute.

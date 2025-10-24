@@ -26,7 +26,7 @@
     --#{vars.$prefix}switch-outlined-track-color: #{colors.$neutral-lighten-2};
 
     --#{vars.$prefix}switch-disabled-box-shadow: #{vars.$switch-disabled-shadows};
-    --#{vars.$prefix}switch-disabled-thumb-bg: #{colors.$neutral-base};
+    --#{vars.$prefix}switch-disabled-thumb-bg: #{colors.$neutral-lighten-1};
     --#{vars.$prefix}switch-disabled-thumb-color: #{colors.$neutral-base};
     --#{vars.$prefix}switch-disabled-track-color: #{colors.$gray-400};
 
@@ -41,6 +41,7 @@
     --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-track-color);
     --#{vars.$prefix}switch-state-track-height: var(--#{vars.$prefix}switch-track-height);
     --#{vars.$prefix}switch-state-track-width: var(--#{vars.$prefix}switch-track-width);
+    // end
 
     display: flex;
     align-items: center;
@@ -262,6 +263,10 @@
       --#{vars.$prefix}switch-state-thumb-color: var(--#{vars.$prefix}switch-disabled-thumb-color);
       // prettier-ignore
       --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-disabled-track-color);
+
+      > .#{vars.$prefix}switch-wrapper {
+        opacity: .6;
+      }
 
       > .#{vars.$prefix}switch-label {
         opacity: var(--#{vars.$prefix}field-disabled-opacity);

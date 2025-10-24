@@ -5,23 +5,20 @@ import {
 } from '@/components/Animation/mixins/rippleApi.ts';
 import type { TBsRipple, TRippleOptionProps } from '@/components/Animation/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import { booleanProp } from '@/mixins/CommonProps.ts';
+import { booleanProp, tagProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsRipple>({
   name: 'BsRipple',
   props: {
-    tag: {
-      type: String,
-      default: 'span',
-    },
     active: {
       type: [Boolean, Event],
       default: undefined,
     },
     centered: booleanProp,
     disabled: booleanProp,
+    tag: tagProp,
   },
   emits: ['update:active'],
   setup(props, { emit, slots }) {
@@ -68,7 +65,7 @@ export default defineComponent<TBsRipple>({
 
     return () =>
       useRenderRipples(
-        thisProps.tag || 'span',
+        thisProps.tag || 'div',
         slots,
         element,
         ripples,

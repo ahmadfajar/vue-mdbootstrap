@@ -65,7 +65,7 @@ function createSwitchUI(
             BsRipple,
             {
               centered: true as unknown as Prop<boolean>,
-              // active: rippleActive.value as unknown as Prop<boolean>,
+              active: rippleActive.value as unknown as Prop<boolean>,
               disabled: (props.disabled || props.readonly) as unknown as Prop<boolean>,
               'onUpdate:active': (value: boolean): void => {
                 rippleActive.value = value;
