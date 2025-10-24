@@ -75,9 +75,15 @@
       }
     }
 
-    > .form-label,
-    .#{vars.$prefix}field-label {
+    //> .form-label,
+    //.#{vars.$prefix}field-label {
+    //  color: var(--#{vars.$prefix}field-label-color);
+    //}
+    > .col-form-label {
       color: var(--#{vars.$prefix}field-label-color);
+      padding-top: var(--#{vars.$prefix}field-classic-padding-top);
+      padding-bottom: var(--#{vars.$prefix}field-classic-padding-bottom);
+      margin-bottom: 0;
     }
 
     &.required {
@@ -87,12 +93,22 @@
       }
     }
 
-    &.disabled {
-      > .col-form-label,
-      .#{vars.$prefix}field-value,
+    &.readonly {
       .#{vars.$prefix}prepend-inner,
       .#{vars.$prefix}append-inner {
+        opacity: calc(var(--#{vars.$prefix}field-readonly-opacity) - 0.15);
+      }
+    }
+
+    &.disabled {
+      > .col-form-label,
+      .#{vars.$prefix}field-value {
         opacity: var(--#{vars.$prefix}field-disabled-opacity);
+      }
+
+      .#{vars.$prefix}prepend-inner,
+      .#{vars.$prefix}append-inner {
+        opacity: calc(var(--#{vars.$prefix}field-disabled-opacity) - 0.05);
       }
     }
 
@@ -123,12 +139,6 @@
         opacity: vars.$text-field-support-text-opacity;
       }
     }
-
-    > .col-form-label {
-      padding-top: var(--#{vars.$prefix}field-classic-padding-top);
-      padding-bottom: var(--#{vars.$prefix}field-classic-padding-bottom);
-      margin-bottom: 0;
-    }
   }
 
   .#{vars.$prefix}field-control {
@@ -137,116 +147,49 @@
     flex-direction: column;
     max-width: 100%;
 
-    > .#{vars.$prefix}field-inner {
+    .#{vars.$prefix}field-activator {
       display: flex;
-      flex: 1 1 auto;
+      align-items: flex-start;
+      flex: 1 1;
+      flex-basis: 0;
+      transition: vars.$transition-stand;
+      outline: none;
       position: relative;
 
-      > .#{vars.$prefix}field-activator {
-        display: flex;
-        align-items: flex-start;
-        flex: 1 1;
-        flex-basis: 0;
-        transition: vars.$transition-stand;
-        outline: none;
-        position: relative;
+      > input,
+      > textarea {
+        transition: opacity vars.$transition-default;
+        @include placeholder.decorate-input-placeholder();
 
-        > input,
-        > textarea {
-          transition: opacity vars.$transition-default;
-          @include placeholder.decorate-input-placeholder();
-
-          & {
-            background-color: transparent;
-            border-width: 0;
-            color: inherit;
-            outline: 0 none;
-            opacity: 0.5;
-            width: 100%;
-            min-height: var(--#{vars.$prefix}field-control-height);
-            padding-inline-start: var(--#{vars.$prefix}field-padding-start);
-            padding-inline-end: var(--#{vars.$prefix}field-padding-end);
-            padding-top: var(--#{vars.$prefix}field-padding-top);
-            padding-bottom: var(--#{vars.$prefix}field-padding-bottom);
-          }
-        }
-
-        > .#{vars.$prefix}field-value,
-        > .#{vars.$prefix}field-placeholder {
+        & {
+          background-color: transparent;
+          border-width: 0;
+          color: inherit;
+          outline: 0 none;
+          opacity: 0.5;
+          width: 100%;
           min-height: var(--#{vars.$prefix}field-control-height);
+          padding-inline-start: var(--#{vars.$prefix}field-padding-start);
+          padding-inline-end: var(--#{vars.$prefix}field-padding-end);
           padding-top: var(--#{vars.$prefix}field-padding-top);
           padding-bottom: var(--#{vars.$prefix}field-padding-bottom);
-          padding-left: var(--#{vars.$prefix}field-padding-start);
-          pointer-events: none;
-        }
-
-        // used by BsCombobox component
-        > .#{vars.$prefix}field-placeholder {
-          color: currentColor;
-          font-weight: var(--font-weight-light, vars.$font-weight-light);
-          opacity: var(--#{vars.$prefix}field-readonly-opacity, 0.5);
         }
       }
 
-      .#{vars.$prefix}field-prefix,
-      .#{vars.$prefix}field-suffix {
-        opacity: vars.$text-field-support-text-opacity;
-        font-weight: var(--#{vars.$prefix}field-inline-text-font-weight);
+      > .#{vars.$prefix}field-value,
+      > .#{vars.$prefix}field-placeholder {
+        min-height: var(--#{vars.$prefix}field-control-height);
         padding-top: var(--#{vars.$prefix}field-padding-top);
-        white-space: nowrap;
-      }
-
-      .#{vars.$prefix}field-prefix {
+        padding-bottom: var(--#{vars.$prefix}field-padding-bottom);
         padding-left: var(--#{vars.$prefix}field-padding-start);
+        pointer-events: none;
       }
 
-      .#{vars.$prefix}field-suffix {
-        padding-right: var(--#{vars.$prefix}field-padding-end);
-      }
-
-      > .#{vars.$prefix}prepend-inner {
-        margin-left: vars.$padding-md - 0.25;
-      }
-
-      > .#{vars.$prefix}field-activator + .#{vars.$prefix}action-icon,
-      > .#{vars.$prefix}validation-icon,
-      > .#{vars.$prefix}append-inner {
-        margin-right: vars.$padding-md - 0.25;
-      }
-
-      > .#{vars.$prefix}action-icon {
-        > .icon-clear,
-        > .#{vars.$prefix}toggle-icon,
-        > .#{vars.$prefix}spin-button-left > .#{vars.$prefix}btn,
-        > .#{vars.$prefix}spin-button-right > .#{vars.$prefix}btn,
-        .#{vars.$prefix}btn-icon {
-          cursor: pointer;
-          opacity: 0.75;
-
-          &:hover {
-            opacity: 1;
-          }
-        }
-
-        > .#{vars.$prefix}icon ~ .#{vars.$prefix}icon,
-        > .#{vars.$prefix}icon ~ .#{vars.$prefix}toggle-icon,
-        > .#{vars.$prefix}toggle-icon ~ .#{vars.$prefix}icon {
-          margin-left: vars.$padding-sm;
-        }
-      }
-    }
-
-    &.active,
-    &.focused {
-      &:not(.disabled) {
-        > .#{vars.$prefix}field-inner {
-          > .#{vars.$prefix}field-activator {
-            > input,
-            > textarea {
-              opacity: 1;
-            }
-          }
-        }
+      // used by BsCombobox component
+      > .#{vars.$prefix}field-placeholder {
+        color: currentColor;
+        font-weight: var(--font-weight-light, vars.$font-weight-light);
+        opacity: var(--#{vars.$prefix}field-readonly-opacity, 0.5);
       }
     }
 
@@ -303,7 +246,7 @@
         width: 0.75rem;
       }
 
-      > .#{vars.$prefix}field-outline-middle {
+      > .#{vars.$prefix}field-outline-label {
         // prettier-ignore
         border: var(--#{vars.$prefix}field-outline-border-width) solid var(--#{vars.$prefix}field-outline-border-color);
         border-width: 0 0 var(--#{vars.$prefix}field-outline-border-width) 0;
@@ -327,6 +270,71 @@
         border-width: var(--#{vars.$prefix}field-outline-border-width) var(--#{vars.$prefix}field-outline-border-width) var(--#{vars.$prefix}field-outline-border-width) 0;
         opacity: var(--#{vars.$prefix}field-outline-opacity);
         flex: 1 1 auto;
+      }
+    }
+
+    > .#{vars.$prefix}field-inner {
+      display: flex;
+      flex: 1 1 auto;
+      position: relative;
+
+      .#{vars.$prefix}field-prefix,
+      .#{vars.$prefix}field-suffix {
+        opacity: vars.$text-field-support-text-opacity;
+        font-weight: var(--#{vars.$prefix}field-inline-text-font-weight);
+        padding-top: var(--#{vars.$prefix}field-padding-top);
+        white-space: nowrap;
+      }
+
+      .#{vars.$prefix}field-prefix {
+        padding-left: var(--#{vars.$prefix}field-padding-start);
+      }
+
+      .#{vars.$prefix}field-suffix {
+        padding-right: var(--#{vars.$prefix}field-padding-end);
+      }
+
+      > .#{vars.$prefix}prepend-inner {
+        margin-left: vars.$padding-md - 0.25;
+      }
+
+      > .#{vars.$prefix}field-activator + .#{vars.$prefix}action-icon,
+      > .#{vars.$prefix}validation-icon,
+      > .#{vars.$prefix}append-inner {
+        margin-right: vars.$padding-md - 0.25;
+      }
+
+      > .#{vars.$prefix}action-icon {
+        > .icon-clear,
+        > .#{vars.$prefix}toggle-icon,
+        > .#{vars.$prefix}spin-button-left > .#{vars.$prefix}btn,
+        > .#{vars.$prefix}spin-button-right > .#{vars.$prefix}btn,
+        .#{vars.$prefix}btn-icon {
+          cursor: pointer;
+          opacity: 0.75;
+
+          &:hover {
+            opacity: 1;
+          }
+        }
+
+        > .#{vars.$prefix}icon ~ .#{vars.$prefix}icon,
+        > .#{vars.$prefix}icon ~ .#{vars.$prefix}toggle-icon,
+        > .#{vars.$prefix}toggle-icon ~ .#{vars.$prefix}icon {
+          margin-left: vars.$padding-sm;
+        }
+      }
+    }
+
+    &.active,
+    &.focused {
+      &:not(.disabled) {
+        .#{vars.$prefix}field-activator {
+          > input,
+          > textarea {
+            opacity: 1;
+          }
+        }
       }
     }
 
@@ -420,8 +428,8 @@
         pointer-events: none;
       }
 
-      > .#{vars.$prefix}field-inner {
-        input {
+      .#{vars.$prefix}field-activator {
+        > input {
           @include borders.top-radius(var(--#{vars.$prefix}field-border-radius));
         }
       }
@@ -548,7 +556,7 @@
         }
 
         .#{vars.$prefix}field-outline-indicator {
-          > .#{vars.$prefix}field-outline-middle {
+          > .#{vars.$prefix}field-outline-label {
             display: inline-flex;
           }
         }
@@ -687,7 +695,7 @@
         --#{vars.$prefix}field-padding-bottom: var(--#{vars.$prefix}field-classic-padding-bottom);
 
         .#{vars.$prefix}field-outline-indicator {
-          > .#{vars.$prefix}field-outline-middle {
+          > .#{vars.$prefix}field-outline-label {
             display: none;
           }
         }
@@ -717,53 +725,48 @@
     --#{vars.$prefix}field-padding-top: #{vars.$text-field-padding-top + 0.25};
     --#{vars.$prefix}field-control-height: #{vars.$text-field-line-height * 2};
 
-    > .#{vars.$prefix}field-inner {
-      > .#{vars.$prefix}field-activator {
-        > textarea {
-          // prettier-ignore
-          margin: var(--#{vars.$prefix}field-padding-top) var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
-          padding-top: 0;
-          padding-bottom: 0;
-          padding-inline-start: 0;
-          padding-inline-end: 0;
-        }
+    .#{vars.$prefix}field-activator {
+      > textarea {
+        // prettier-ignore
+        margin: var(--#{vars.$prefix}field-padding-top) var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
+        padding-top: 0;
+        padding-bottom: 0;
+        padding-inline-start: 0;
+        padding-inline-end: 0;
       }
     }
 
     &.#{vars.$prefix}textarea-noresize {
-      > .#{vars.$prefix}field-inner {
-        > .#{vars.$prefix}field-activator {
-          > textarea {
-            resize: none;
-          }
+      .#{vars.$prefix}field-activator {
+        > textarea {
+          resize: none;
         }
       }
     }
 
     &.#{vars.$prefix}textarea-autogrow {
-      > .#{vars.$prefix}field-inner {
-        > .#{vars.$prefix}field-activator {
-          align-items: normal;
-          display: grid;
+      .#{vars.$prefix}field-activator {
+        align-items: normal;
+        display: grid;
 
-          &::after {
-            content: attr(data-clone) ' ';
-            font: inherit;
-            white-space: pre-wrap;
-            visibility: hidden;
-          }
+        // patch when textarea already has values
+        &::after {
+          content: attr(data-clone) ' ';
+          font: inherit;
+          white-space: pre-wrap;
+          visibility: hidden;
+        }
 
-          > textarea {
-            overflow-y: hidden;
-          }
+        > textarea {
+          overflow-y: hidden;
+        }
 
-          > textarea,
-          &::after {
-            margin: var(--#{vars.$prefix}field-padding-top) 0 0 0;
-            // prettier-ignore
-            padding: 0 var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
-            grid-area: 1 / 1 / 2 / 2;
-          }
+        > textarea,
+        &::after {
+          margin: var(--#{vars.$prefix}field-padding-top) 0 0 0;
+          // prettier-ignore
+          padding: 0 var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
+          grid-area: 1 / 1 / 2 / 2;
         }
       }
     }
@@ -802,16 +805,6 @@
         }
       }
     }
-  }
-
-  @include transitions.enterActive-leaveActive('field-feedback') {
-    transition: 0.15s ease;
-  }
-
-  @include transitions.enterFrom-leaveTo('field-feedback') {
-    transform: translateY(-8px);
-    // prettier-ignore
-    transition: opacity, transform 0.25s ease-out;
   }
 
   .#{vars.$prefix}field {
@@ -888,5 +881,14 @@
         }
       }
     }
+  }
+
+  @include transitions.enterActive-leaveActive('field-feedback') {
+    transition: 0.15s ease;
+  }
+
+  @include transitions.enterFrom-leaveTo('field-feedback') {
+    transform: translateY(-8px);
+    transition: opacity, transform 0.25s ease-out;
   }
 }

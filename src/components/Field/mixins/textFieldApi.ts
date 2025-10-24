@@ -289,9 +289,9 @@ export function useInputTextFieldAttrs(
 
 declare interface InputTextEventEmitter {
   clear: () => void;
-  blur: (target: Event) => void;
-  focus: (target: Event) => void;
-  keydown: (target: Event) => void;
+  blur: (evt: Event) => void;
+  focus: (evt: Event) => void;
+  keydown: (evt: Event) => void;
   'update:model-value': (value: MaybeNumberish) => void;
 }
 
