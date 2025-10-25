@@ -40,7 +40,7 @@ export default defineComponent<TBsChipField>({
         ? thisProps.autocomplete
         : thisProps.autocomplete
           ? 'on'
-          : Helper.uuid();
+          : null;
     const inputValue = ref<string>('');
     const localValue = ref<string[]>(convertValues(thisProps.modelValue));
     const isFocused = ref(false);

@@ -273,7 +273,7 @@ export function useInputFieldBaseAttrs(props: Readonly<TInputBaseProps>): TRecor
 
 export function useInputTextFieldAttrs(
   props: Readonly<TInputTextProps>,
-  autocomplete: string | boolean
+  autocomplete: string | boolean | null
 ): TRecord {
   const showPlaceHolder = !Helper.isEmpty(props.placeholder); // && !props.readonly && !props.disabled;
 
@@ -299,7 +299,7 @@ function createTextInputField(
   emit: EmitFn<InputTextEventEmitter>,
   props: Readonly<TTextFieldOptionProps>,
   type: TFieldType | undefined,
-  autocomplete: string | boolean,
+  autocomplete: string | boolean | null,
   localValue: Ref<MaybeNumberish>,
   isFocused: Ref<boolean>
 ): VNode[] {
@@ -408,7 +408,7 @@ export function useRenderTextField(
   localValue: Ref<string | number | undefined | null>,
   isFocused: Ref<boolean>,
   passwordToggled: Ref<boolean>,
-  autocomplete: string | boolean,
+  autocomplete: string | boolean | null,
   showClearButton: ComputedRef<boolean>,
   showPasswordToggle: ComputedRef<boolean>,
   showHelpText: ComputedRef<boolean>,
@@ -471,9 +471,9 @@ export function useRenderTextField(
 
 declare interface InputTextAreaEventEmitter {
   clear: VoidFunction;
-  blur: (target: Event) => void;
-  focus: (target: Event) => void;
-  keydown: (target: Event) => void;
+  blur: (evt: Event) => void;
+  focus: (evt: Event) => void;
+  keydown: (evt: Event) => void;
   'update:model-value': (value: string | null | undefined) => void;
 }
 
@@ -484,7 +484,7 @@ function createTextAreaInputField(
   localValue: Ref<string | undefined | null>,
   rowHeight: Ref<MaybeNumberish>,
   isFocused: Ref<boolean>,
-  autocomplete: string | boolean
+  autocomplete: string | boolean | null
 ): VNode {
   const canGrow = props.autoGrow && !props.noResize;
 
@@ -515,7 +515,7 @@ function createTextAreaInputField(
         }
       },
     }),
-    [[vModelText, localValue.value, '', { lazy: true }]]
+    [[vModelText, localValue.value, undefined, { lazy: true }]]
   );
 }
 
@@ -529,7 +529,7 @@ export function useRenderTextArea(
   localValue: Ref<string | undefined | null>,
   rowHeight: Ref<MaybeNumberish>,
   isFocused: Ref<boolean>,
-  autocomplete: string | boolean,
+  autocomplete: string | boolean | null,
   showClearButton: ComputedRef<boolean>,
   showHelpText: ComputedRef<boolean>,
   showValidationError: ComputedRef<boolean>,

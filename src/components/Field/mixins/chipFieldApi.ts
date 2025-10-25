@@ -51,7 +51,7 @@ function createFieldInput(
   inputValue: Ref<string>,
   localValue: Ref<string[]>,
   isFocused: Ref<boolean>,
-  autocomplete: string | boolean
+  autocomplete: string | boolean | null
 ): VNode {
   return h('input', {
     ...useInputFieldBaseAttrs(props),
@@ -139,7 +139,7 @@ export function useRenderChipField(
   inputValue: Ref<string>,
   localValue: Ref<string[]>,
   isFocused: Ref<boolean>,
-  autocomplete: string | boolean,
+  autocomplete: string | boolean | null,
   showClearButton: ComputedRef<boolean>,
   showHelpText: ComputedRef<boolean>,
   showValidationError: ComputedRef<boolean>,

@@ -384,7 +384,7 @@
   @include button.make-outline-variant('dark', colors.$dark-color);
   @include button.make-flat-variant('dark', colors.$dark-color);
 
-  .dark {
+  .dark, [data-theme=dark] {
     .#{vars.$prefix}btn,
     .#{vars.$prefix}btn-fab,
     .#{vars.$prefix}btn-icon {

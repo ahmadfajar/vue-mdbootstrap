@@ -187,7 +187,7 @@ export declare type TInputFieldProps = TInputBaseProps &
 
 export declare type TInputTextProps = TInputFieldProps & {
   /**
-   * Sets browsers autocomplete predictions on/off.
+   * Sets browsers `autocomplete` predictions on/off.
    */
   autocomplete?: string | boolean;
 
@@ -251,9 +251,9 @@ export declare type TTextFieldOptionProps = TInputTextProps & {
 
 export declare type TTextAreaOptionProps = TInputTextProps & {
   /**
-   * Enable/disable `<textarea>` element to auto grow.
+   * Sets browsers `autocomplete` predictions on/off.
    */
-  autoGrow?: boolean;
+  autoGrow?: boolean | string;
 
   /**
    * Disable resizing the `<textarea>` element.

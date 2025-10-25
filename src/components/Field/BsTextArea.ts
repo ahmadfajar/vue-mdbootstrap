@@ -44,7 +44,7 @@ export default defineComponent<TBsTextArea>({
         ? thisProps.autocomplete
         : thisProps.autocomplete
           ? 'on'
-          : Helper.uuid();
+          : null;
     const localValue = ref<string | undefined | null>(thisProps.modelValue);
     const rowHeight = ref<MaybeNumberish>(thisProps.rowHeight);
     const inputRef = ref<HTMLTextAreaElement>();
@@ -71,17 +71,15 @@ export default defineComponent<TBsTextArea>({
 
     watchEffect(() => {
       localValue.value = thisProps.modelValue;
-      if (thisProps.autoGrow && !thisProps.noResize && inputRef.value) {
-        inputRef.value.parentElement &&
-          (inputRef.value.parentElement.dataset.clone = localValue.value as string);
+      if (
+        thisProps.autoGrow &&
+        !thisProps.noResize &&
+        inputRef.value &&
+        inputRef.value.parentElement
+      ) {
+        localValue.value && (inputRef.value.parentElement.dataset.clone = localValue.value);
       }
     });
-    // watch(
-    //     () => thisProps.modelValue,
-    //     (value) => {
-    //         localValue.value = value;
-    //     }
-    // );
 
     return () =>
       useRenderTextArea(

@@ -62,7 +62,7 @@ export default defineComponent<TBsTextField>({
         ? thisProps.autocomplete
         : thisProps.autocomplete
           ? 'on'
-          : Helper.uuid();
+          : null;
     const localValue = ref<MaybeNumberish>(thisProps.modelValue);
     const passwordToggled = ref(false);
     const isFocused = ref(false);

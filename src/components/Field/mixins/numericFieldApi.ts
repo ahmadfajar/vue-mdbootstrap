@@ -322,7 +322,7 @@ function createNumericInputField(
   inputRef: Ref<HTMLElement | null>,
   localValue: Ref<number | null | undefined>,
   hasFocus: Ref<boolean>,
-  autocomplete: string | boolean
+  autocomplete: string | boolean | null
 ): VNode[] {
   let displayValue =
     hasFocus.value && !props.disabled && !props.readonly
@@ -417,7 +417,7 @@ export function useRenderNumericField(
   localValue: Ref<number | null | undefined>,
   inputRef: Ref<HTMLElement | null>,
   hasFocus: Ref<boolean>,
-  autocomplete: string | boolean,
+  autocomplete: string | boolean | null,
   showClearButton: ComputedRef<boolean>,
   showHelpText: ComputedRef<boolean>,
   showValidationError: ComputedRef<boolean>,

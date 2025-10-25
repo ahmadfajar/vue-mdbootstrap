@@ -642,6 +642,13 @@
           }
         }
       }
+
+      // patch input-field padding-left and make it closer to the prefix
+      .#{vars.$prefix}field-prefix {
+        + input {
+          padding-inline-start: .375rem;
+        }
+      }
     }
 
     &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
@@ -727,20 +734,10 @@
 
     .#{vars.$prefix}field-activator {
       > textarea {
-        // prettier-ignore
-        margin: var(--#{vars.$prefix}field-padding-top) var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
         padding-top: 0;
         padding-bottom: 0;
         padding-inline-start: 0;
         padding-inline-end: 0;
-      }
-    }
-
-    &.#{vars.$prefix}textarea-noresize {
-      .#{vars.$prefix}field-activator {
-        > textarea {
-          resize: none;
-        }
       }
     }
 
@@ -755,14 +752,6 @@
           font: inherit;
           white-space: pre-wrap;
           visibility: hidden;
-        }
-
-        > textarea {
-          overflow-y: hidden;
-        }
-
-        > textarea,
-        &::after {
           margin: var(--#{vars.$prefix}field-padding-top) 0 0 0;
           // prettier-ignore
           padding: 0 var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
@@ -837,7 +826,7 @@
     }
   }
 
-  .dark {
+  .dark, [data-theme=dark] {
     --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-accent-indicator);
 
     .#{vars.$prefix}field {
@@ -890,5 +879,36 @@
   @include transitions.enterFrom-leaveTo('field-feedback') {
     transform: translateY(-8px);
     transition: opacity, transform 0.25s ease-out;
+  }
+}
+
+// Patch Bootstrap 'reboot.css' and apply component styles as needed
+// This patch must be placed outside the css layer.
+.#{vars.$prefix}textarea {
+  .#{vars.$prefix}field-activator {
+    > textarea {
+      // prettier-ignore
+      margin: var(--#{vars.$prefix}field-padding-top) var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
+    }
+  }
+
+  &.#{vars.$prefix}textarea-noresize {
+    .#{vars.$prefix}field-activator {
+      > textarea {
+        resize: none;
+      }
+    }
+  }
+
+  &.#{vars.$prefix}textarea-autogrow {
+    .#{vars.$prefix}field-activator {
+      > textarea {
+        margin: var(--#{vars.$prefix}field-padding-top) 0 0 0;
+        // prettier-ignore
+        padding: 0 var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
+        grid-area: 1 / 1 / 2 / 2;
+        overflow-y: hidden;
+      }
+    }
   }
 }

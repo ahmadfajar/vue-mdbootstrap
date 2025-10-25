@@ -22,7 +22,7 @@ export default defineComponent<TBsNumericField>({
         ? thisProps.autocomplete
         : thisProps.autocomplete
           ? 'on'
-          : Helper.uuid();
+          : null;
     const localValue = ref<number | null | undefined>(thisProps.modelValue);
     const inputRef = ref<HTMLElement | null>(null);
     const hasFocus = ref(false);
