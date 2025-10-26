@@ -12,6 +12,7 @@ import {
   booleanTrueProp,
   dateProp,
   primaryColorProp,
+  stringOrArrayProp,
   stringOrNumberProp,
   stringProp,
   whiteColorProp,
@@ -70,7 +71,9 @@ export const datePickerCalendarProps = {
 export const datePickerProps = {
   fullWidth: booleanProp,
   buttonColor: stringProp,
+  selectedColor: stringProp,
   surfaceColor: whiteColorProp,
+  surfaceClass: stringOrArrayProp,
   headerColor: primaryColorProp,
   headerPanel: booleanTrueProp,
   landscape: booleanProp,

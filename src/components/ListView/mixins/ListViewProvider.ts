@@ -7,7 +7,6 @@ import type {
   TRecord,
   TSpaceAround,
 } from '@/types';
-import Helper from '@/utils/Helper.ts';
 import { type ComponentInternalInstance, isRef, type Ref, unref } from 'vue';
 
 class ListViewProvider implements IListViewProvider {
@@ -199,14 +198,20 @@ class ListViewProvider implements IListViewProvider {
       this.collapse(child);
     }
 
+    const collapsingStart = () => {
+      this.setExposedValue(item.component, 'collapsing', true);
+    };
+
+    const collapsingEnd = () => {
+      this.setExposedValue(item.component, 'collapsing', false);
+      this.setExposedValue(item.component, 'expanded', false);
+    };
+
     if (item.tag === 'BsListNav') {
-      Helper.defer(() => {
-        this.setExposedValue(item.component, 'collapsing', true);
-        Helper.defer(() => {
-          this.setExposedValue(item.component, 'collapsing', false);
-          this.setExposedValue(item.component, 'expanded', false);
-        }, 200);
-      }, 100);
+      window.requestAnimationFrame(() => {
+        collapsingStart();
+        window.requestAnimationFrame(() => collapsingEnd());
+      });
     } else if (item.tag === 'BsListNavItem') {
       this.setExposedValue(item.component, 'expanded', false);
       if (!item.hasChild()) {

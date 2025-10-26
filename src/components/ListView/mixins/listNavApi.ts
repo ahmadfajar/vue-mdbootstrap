@@ -7,7 +7,8 @@ import type {
   IListItem,
   IListViewProvider,
   Numberish,
-  TBsListNavItem,
+  TBadgeType,
+  TBadgeVariant,
   TBsRipple,
   TListNavItemOptionProps,
   TRecord,
@@ -16,7 +17,6 @@ import Helper from '@/utils/Helper.ts';
 import type {
   ComponentInternalInstance,
   ComputedRef,
-  ExtractPropTypes,
   Prop,
   Ref,
   ShallowRef,
@@ -78,30 +78,28 @@ export function useNavItemContentStyles(props: Readonly<TListNavItemOptionProps>
 }
 
 function renderNavItemContent(
-  props: Readonly<ExtractPropTypes<TBsListNavItem>>,
+  props: Readonly<TListNavItemOptionProps>,
   innerStyles: ComputedRef<string[]>,
   hasChild: Ref<boolean>,
   provider?: IListViewProvider
 ): VNode {
-  const cmpProps = props as Readonly<TListNavItemOptionProps>;
-
   return h<TBsRipple>(
     BsRipple,
     {
       class: {
-        rounded: provider?.itemRounded === true && !cmpProps.roundedOff,
+        rounded: provider?.itemRounded === true && !props.roundedOff,
         'rounded-pill':
-          provider?.itemRoundedPill === true && !provider.itemRounded && !cmpProps.pillOff,
+          provider?.itemRoundedPill === true && !provider.itemRounded && !props.pillOff,
       },
       style: innerStyles.value,
-      disabled: (cmpProps.rippleOff || cmpProps.disabled) as unknown as Prop<boolean>,
+      disabled: (props.rippleOff || props.disabled) as unknown as Prop<boolean>,
     },
     {
       default: () => [
-        !Helper.isEmpty(cmpProps.icon)
+        !Helper.isEmpty(props.icon)
           ? h(BsIcon, {
-              size: (cmpProps.iconSize ?? 24) as Prop<Numberish>,
-              ...useCreateIconProps(cmpProps),
+              size: (props.iconSize ?? 24) as Prop<Numberish>,
+              ...useCreateIconProps(props),
             })
           : createCommentVNode(' v-if-BsIcon '),
         h(
@@ -109,19 +107,19 @@ function renderNavItemContent(
           {
             class: [`${cssPrefix}nav-text`],
           },
-          createTextVNode(toDisplayString(cmpProps.label))
+          createTextVNode(toDisplayString(props.label))
         ),
-        !Helper.isEmpty(cmpProps.badge)
+        !Helper.isEmpty(props.badge)
           ? h(
               BsBadge,
               {
                 class: [hasChild.value ? 'me-3' : ''],
-                color: props.badgeColor,
-                type: props.badgeType,
-                variant: props.badgeVariant,
+                color: props.badgeColor as Prop<string>,
+                type: props.badgeType as Prop<TBadgeType>,
+                variant: props.badgeVariant as Prop<TBadgeVariant>,
               },
               {
-                default: () => createTextVNode(toDisplayString(cmpProps.badge)),
+                default: () => createTextVNode(toDisplayString(props.badge)),
               }
             )
           : createCommentVNode(' v-if-BsBadge '),
@@ -130,54 +128,6 @@ function renderNavItemContent(
           : createCommentVNode(' v-if-arrow '),
       ],
     }
-  );
-}
-
-function renderNavLink(
-  props: Readonly<ExtractPropTypes<TBsListNavItem>>,
-  classes: ComputedRef<TRecord>,
-  innerStyles: ComputedRef<string[]>,
-  isActive: Ref<boolean | undefined>,
-  isExpanded: Ref<boolean>,
-  hasChild: Ref<boolean>,
-  instance: ShallowRef<IListItem | undefined>,
-  provider?: IListViewProvider
-): VNode {
-  const cmpProps = props as Readonly<TListNavItemOptionProps>;
-
-  return h(
-    !cmpProps.disabled ? 'a' : 'div',
-    {
-      class: classes.value,
-      href: !cmpProps.disabled ? cmpProps.url : undefined,
-      onClick: (evt: Event) =>
-        onVNodeClickHandler(cmpProps, isActive, isExpanded, instance, evt, provider),
-    },
-    [renderNavItemContent(props, innerStyles, hasChild, provider)]
-  );
-}
-
-function renderRouterLink(
-  props: Readonly<ExtractPropTypes<TBsListNavItem>>,
-  classes: ComputedRef<TRecord>,
-  innerStyles: ComputedRef<string[]>,
-  isActive: Ref<boolean | undefined>,
-  isExpanded: Ref<boolean>,
-  hasChild: Ref<boolean>,
-  instance: ShallowRef<IListItem | undefined>,
-  provider?: IListViewProvider
-): VNode {
-  const cmpProps = props as Readonly<TListNavItemOptionProps>;
-
-  return useRenderRouter(
-    {
-      class: classes.value,
-      activeClass: cmpProps.activeClass || 'active',
-      to: cmpProps.location ?? (cmpProps.pathName ? { name: cmpProps.pathName } : cmpProps.path),
-      onClick: (evt: Event) =>
-        onVNodeClickHandler(cmpProps, isActive, isExpanded, instance, evt, provider),
-    },
-    renderNavItemContent(props, innerStyles, hasChild, provider)
   );
 }
 
@@ -212,6 +162,50 @@ function onVNodeClickHandler(
   }
 }
 
+function renderNavLink(
+  props: Readonly<TListNavItemOptionProps>,
+  classes: ComputedRef<TRecord>,
+  innerStyles: ComputedRef<string[]>,
+  isActive: Ref<boolean | undefined>,
+  isExpanded: Ref<boolean>,
+  hasChild: Ref<boolean>,
+  instance: ShallowRef<IListItem | undefined>,
+  provider?: IListViewProvider
+): VNode {
+  return h(
+    !props.disabled ? 'a' : 'div',
+    {
+      class: classes.value,
+      href: !props.disabled ? props.url : undefined,
+      onClick: (evt: Event) =>
+        onVNodeClickHandler(props, isActive, isExpanded, instance, evt, provider),
+    },
+    [renderNavItemContent(props, innerStyles, hasChild, provider)]
+  );
+}
+
+function renderRouterLink(
+  props: Readonly<TListNavItemOptionProps>,
+  classes: ComputedRef<TRecord>,
+  innerStyles: ComputedRef<string[]>,
+  isActive: Ref<boolean | undefined>,
+  isExpanded: Ref<boolean>,
+  hasChild: Ref<boolean>,
+  instance: ShallowRef<IListItem | undefined>,
+  provider?: IListViewProvider
+): VNode {
+  return useRenderRouter(
+    {
+      class: classes.value,
+      activeClass: props.activeClass || 'active',
+      to: props.location ?? (props.pathName ? { name: props.pathName } : props.path),
+      onClick: (evt: Event) =>
+        onVNodeClickHandler(props, isActive, isExpanded, instance, evt, provider),
+    },
+    renderNavItemContent(props, innerStyles, hasChild, provider)
+  );
+}
+
 export async function useAddChild(
   provider: IListViewProvider,
   parent?: ComponentInternalInstance | null,
@@ -233,7 +227,7 @@ export async function useAddChild(
 
 export function useRenderListNavItem(
   slots: Slots,
-  props: Readonly<ExtractPropTypes<TBsListNavItem>>,
+  props: Readonly<TListNavItemOptionProps>,
   classes: ComputedRef<TRecord>,
   innerClasses: ComputedRef<TRecord>,
   innerStyles: ComputedRef<string[]>,
@@ -243,16 +237,14 @@ export function useRenderListNavItem(
   instance: ShallowRef<IListItem | undefined>,
   provider?: IListViewProvider
 ): VNode {
-  const cmpProps = props as Readonly<TListNavItemOptionProps>;
-
   return h(
     'li',
     {
-      id: cmpProps.id,
+      id: props.id,
       class: classes.value,
     },
     [
-      useHasRouter(cmpProps) && !cmpProps.disabled
+      useHasRouter(props) && !props.disabled
         ? renderRouterLink(
             props,
             innerClasses,

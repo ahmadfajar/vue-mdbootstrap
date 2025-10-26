@@ -52,16 +52,32 @@ export default defineComponent<TBsListNavItem>({
     );
     const navItemInnerStyles = computed<string[]>(() => useNavItemContentStyles(thisProps));
 
+    const parentActive = (state: boolean) => {
+      let parent = refItem.value?.parent;
+      while (parent) {
+        parent.setActive(state);
+        parent = parent.parent;
+      }
+    };
+
     if (useHasRouter(thisProps)) {
       const route = useCurrentRoute();
 
       watchEffect(() => {
         if (provider && route && useRouteMatch(instance, route, thisProps)) {
           provider.activeItem = refItem.value;
-          let parent = refItem.value?.parent;
-          while (parent) {
-            parent.setActive(true);
-            parent = parent.parent;
+          parentActive(true);
+        } else {
+          isActive.value = false;
+          refItem.value?.setActive(false);
+          const parent = refItem.value?.parent;
+
+          if (parent) {
+            const children = parent.children;
+            const foundActive = children.some((item) => item.component.props.active === true);
+            if (!foundActive) {
+              parentActive(false);
+            }
           }
         }
       });
@@ -85,6 +101,7 @@ export default defineComponent<TBsListNavItem>({
       if (hasRouter.value) {
         const route = useCurrentRoute();
         if (route && useRouteMatch(instance, route, thisProps)) {
+          isActive.value = true;
           refItem.value?.setActive(true);
         }
       }
@@ -106,7 +123,7 @@ export default defineComponent<TBsListNavItem>({
     return () =>
       useRenderListNavItem(
         slots,
-        props,
+        thisProps,
         navItemClasses,
         navItemInnerClasses,
         navItemInnerStyles,

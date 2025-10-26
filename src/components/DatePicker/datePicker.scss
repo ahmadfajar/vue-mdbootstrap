@@ -9,6 +9,7 @@
     --#{vars.$prefix}datepicker-padding-x: #{vars.$padding-md};
     --#{vars.$prefix}datepicker-padding-y: #{vars.$padding-md};
     --#{vars.$prefix}datepicker-header-color: #{colors.$white};
+    //--#{vars.$prefix}datepicker-text-color: #{colors.$gray-900};
     // prettier-ignore
     --#{vars.$prefix}datepicker-header-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
     --#{vars.$prefix}datepicker-table-header-color: #{colors.$gray-600};
@@ -21,186 +22,210 @@
     > .#{vars.$prefix}datepicker-inner {
       width: 100%;
     }
+  }
 
-    .#{vars.$prefix}datepicker-body {
-      @include borders.radius(var(--#{vars.$prefix}datepicker-border-radius));
-      min-height: 280px;
-      position: relative;
+  .#{vars.$prefix}datepicker-body {
+    @include borders.radius(var(--#{vars.$prefix}datepicker-border-radius));
+    color: var(--#{vars.$prefix}datepicker-text-color);
+    min-height: 280px;
+    position: relative;
 
-      table {
-        display: table;
-        table-layout: fixed;
-        width: 100%;
-        transition: vars.$transition-stand;
+    table {
+      display: table;
+      table-layout: fixed;
+      width: 100%;
+      transition: vars.$transition-stand;
 
-        tr {
-          background-color: inherit;
-          border-width: 0;
-        }
-
-        td,
-        th {
-          background-color: inherit;
-          border-width: 0;
-          position: relative;
-          text-align: center;
-          padding: 0;
-        }
-      }
-    }
-
-    .#{vars.$prefix}datepicker-header,
-    .#{vars.$prefix}datepicker-days {
-      // prettier-ignore
-      padding: var(--#{vars.$prefix}datepicker-padding-y) var(--#{vars.$prefix}datepicker-padding-x);
-    }
-
-    .#{vars.$prefix}datepicker-header {
-      @include borders.top-radius(var(--#{vars.$prefix}datepicker-border-radius));
-
-      color: var(--#{vars.$prefix}datepicker-header-color);
-      font-weight: var(--#{vars.$prefix}datepicker-header-font-weight);
-      line-height: normal;
-
-      > .#{vars.$prefix}datepicker-title {
-        font-size: var(--#{vars.$prefix}datepicker-title-font-size);
-        overflow: hidden;
-        position: relative;
+      tr {
+        background-color: inherit;
+        border-width: 0;
       }
 
-      > .#{vars.$prefix}datepicker-subtitle {
-        font-size: var(--#{vars.$prefix}datepicker-subtitle-font-size);
-        margin-bottom: calc(var(--#{vars.$prefix}datepicker-padding-y) / 4);
-      }
-
-      .#{vars.$prefix}datepicker-year,
-      .#{vars.$prefix}datepicker-time,
-      > .#{vars.$prefix}datepicker-title {
-        transition: vars.$transition-drop;
-        user-select: none;
-
-        &:not(.active) {
-          opacity: var(--#{vars.$prefix}field-readonly-opacity);
-
-          &:hover {
-            opacity: 1;
-          }
-        }
-      }
-    }
-
-    .#{vars.$prefix}datepicker-nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      // prettier-ignore
-      padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) var(--#{vars.$prefix}datepicker-padding-x);
-
-      > .#{vars.$prefix}datepicker-nav-title {
-        flex: 1;
-        overflow: hidden;
+      td,
+      th {
+        background-color: inherit;
+        border-width: 0;
         position: relative;
         text-align: center;
-        cursor: pointer;
-
-        > .font-weight-bold {
-          transition: vars.$transition-stand;
-          display: block;
-          width: 100%;
-        }
-
-        &.disabled {
-          opacity: var(--#{vars.$prefix}field-readonly-opacity);
-        }
+        padding: 0;
       }
     }
+  }
 
-    .#{vars.$prefix}picker-seconds,
-    .#{vars.$prefix}picker-minutes,
-    .#{vars.$prefix}picker-hours,
-    .#{vars.$prefix}datepicker-days,
-    .#{vars.$prefix}datepicker-months,
-    .#{vars.$prefix}datepicker-years {
-      .#{vars.$prefix}btn {
-        &[class*='btn-flat'] {
-          --#{vars.$prefix}btn-md-padding-x: 3rem;
-        }
-      }
-    }
+  .#{vars.$prefix}datepicker-header,
+  .#{vars.$prefix}datepicker-days {
+    // prettier-ignore
+    padding: var(--#{vars.$prefix}datepicker-padding-y) var(--#{vars.$prefix}datepicker-padding-x);
+  }
 
-    .#{vars.$prefix}datepicker-days,
-    .#{vars.$prefix}datepicker-months,
-    .#{vars.$prefix}datepicker-years {
-      // prettier-ignore
-      padding: 0 calc(var(--#{vars.$prefix}datepicker-padding-x) - 0.25rem) calc(var(--#{vars.$prefix}datepicker-padding-y) - 0.25rem);
-      position: relative;
+  .#{vars.$prefix}datepicker-header {
+    @include borders.top-radius(var(--#{vars.$prefix}datepicker-border-radius));
+
+    color: var(--#{vars.$prefix}datepicker-header-color);
+    font-weight: var(--#{vars.$prefix}datepicker-header-font-weight);
+    line-height: normal;
+
+    > .#{vars.$prefix}datepicker-title {
+      font-size: var(--#{vars.$prefix}datepicker-title-font-size);
       overflow: hidden;
-
-      .#{vars.$prefix}btn-today {
-        --#{vars.$prefix}btn-border-color: var(--#{vars.$prefix}btn-color);
-      }
+      position: relative;
     }
 
-    .#{vars.$prefix}datepicker-days {
-      th {
-        color: var(--#{vars.$prefix}datepicker-table-header-color);
-        padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) 0;
-        font-weight: 700;
-        pointer-events: none;
-        user-select: none;
-      }
+    > .#{vars.$prefix}datepicker-subtitle {
+      font-size: var(--#{vars.$prefix}datepicker-subtitle-font-size);
+      margin-bottom: calc(var(--#{vars.$prefix}datepicker-padding-y) / 4);
+    }
 
-      td {
-        height: 2.5rem; // 40px;
-        vertical-align: middle;
-      }
+    .#{vars.$prefix}datepicker-year,
+    .#{vars.$prefix}datepicker-time,
+    > .#{vars.$prefix}datepicker-title {
+      transition: vars.$transition-drop;
+      user-select: none;
 
-      .#{vars.$prefix}btn-icon {
-        //--#{vars.$prefix}btn-sm-inner-height: 2.125rem;
-        //--#{vars.$prefix}btn-sm-inner-width: 2.125rem;
+      &:not(.active) {
+        opacity: var(--#{vars.$prefix}field-readonly-opacity);
 
-        &.disabled {
-          --#{vars.$prefix}btn-disabled-bg: transparent;
+        &:hover {
+          opacity: 1;
         }
       }
     }
+  }
 
-    .#{vars.$prefix}datepicker-months,
-    .#{vars.$prefix}datepicker-years,
-    .#{vars.$prefix}picker-times,
-    .#{vars.$prefix}picker-minutes,
-    .#{vars.$prefix}picker-seconds {
+  .#{vars.$prefix}datepicker-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    // prettier-ignore
+    padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) var(--#{vars.$prefix}datepicker-padding-x);
+
+    > .#{vars.$prefix}datepicker-nav-title {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      cursor: pointer;
+
+      > .font-weight-bold {
+        transition: vars.$transition-stand;
+        display: block;
+        width: 100%;
+      }
+
+      &.disabled {
+        opacity: var(--#{vars.$prefix}field-readonly-opacity);
+      }
+    }
+  }
+
+  .#{vars.$prefix}picker-seconds,
+  .#{vars.$prefix}picker-minutes,
+  .#{vars.$prefix}datepicker-days,
+  .#{vars.$prefix}datepicker-months {
+    .#{vars.$prefix}btn {
+      &[class*='btn-flat'] {
+        --#{vars.$prefix}btn-md-padding-x: 3rem;
+      }
+    }
+  }
+
+  .#{vars.$prefix}picker-hours,
+  .#{vars.$prefix}datepicker-years {
+    .#{vars.$prefix}btn {
+      --#{vars.$prefix}btn-md-padding-x: 1.25rem;
+
+      &[class*='btn-flat'] {
+        --#{vars.$prefix}btn-md-padding-x: 2.5rem;
+      }
+    }
+  }
+
+  .#{vars.$prefix}datepicker-days,
+  .#{vars.$prefix}datepicker-months,
+  .#{vars.$prefix}datepicker-years {
+    // prettier-ignore
+    padding: 0 calc(var(--#{vars.$prefix}datepicker-padding-x) - 0.25rem) calc(var(--#{vars.$prefix}datepicker-padding-y) - 0.25rem);
+    position: relative;
+    overflow: hidden;
+
+    .#{vars.$prefix}btn-today {
+      --#{vars.$prefix}btn-border-color: var(--#{vars.$prefix}btn-color);
+      //--#{vars.$prefix}btn-hover-bg: color-mix(in oklch, var(--#{vars.$prefix}btn-color) 45%, white 60%);
+    }
+  }
+
+  .#{vars.$prefix}datepicker-days {
+    th {
+      color: var(--#{vars.$prefix}datepicker-table-header-color);
+      padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) 0;
+      font-weight: 700;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    td {
+      height: 2.5rem; // 40px;
+      vertical-align: middle;
+    }
+
+    .#{vars.$prefix}btn-icon {
+      --#{vars.$prefix}btn-font-weight: var(--font-weight-normal);
+
+      &.disabled {
+        --#{vars.$prefix}btn-disabled-bg: transparent;
+      }
+    }
+  }
+
+  .#{vars.$prefix}datepicker-months,
+  .#{vars.$prefix}datepicker-years,
+  .#{vars.$prefix}picker-times,
+  .#{vars.$prefix}picker-minutes,
+  .#{vars.$prefix}picker-seconds {
+    td {
+      height: 3.375rem; // 54px;
+      vertical-align: middle;
+    }
+  }
+
+  .#{vars.$prefix}datepicker-times {
+    padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2)
+      calc(var(--#{vars.$prefix}datepicker-padding-x) - 0.25rem);
+
+    .#{vars.$prefix}picker-times {
+      margin-top: vars.$padding-sm;
+    }
+
+    .#{vars.$prefix}picker-hours {
       td {
-        height: 3.375rem; // 54px;
+        height: 2.75rem; // 44px;
         vertical-align: middle;
       }
     }
 
-    .#{vars.$prefix}datepicker-times {
-      padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2)
-        calc(var(--#{vars.$prefix}datepicker-padding-x) - 0.25rem);
-
-      .#{vars.$prefix}picker-times {
-        margin-top: vars.$padding-sm;
-      }
-
-      .#{vars.$prefix}picker-hours {
-        td {
-          height: 2.75rem; // 44px;
-          vertical-align: middle;
-        }
-      }
-
-      .#{vars.$prefix}picker-times-sep {
-        width: 1rem;
-        font-size: 22px;
-        font-weight: bold;
-        padding-bottom: vars.$padding-xs;
-        pointer-events: none;
-        user-select: none;
-      }
+    .#{vars.$prefix}picker-times-sep {
+      width: 1rem;
+      font-size: 22px;
+      font-weight: bold;
+      padding-bottom: vars.$padding-xs;
+      pointer-events: none;
+      user-select: none;
     }
 
+    .#{vars.$prefix}btn-flat-light:not([class*='btn-icon']) {
+      --#{vars.$prefix}btn-color: #{colors.$white};
+    }
+  }
+
+  .#{vars.$prefix}datepicker-days,
+  .#{vars.$prefix}datepicker-months,
+  .#{vars.$prefix}datepicker-years {
+    .#{vars.$prefix}btn-flat-light {
+      --#{vars.$prefix}btn-color: #{colors.$white};
+    }
+  }
+
+  .#{vars.$prefix}datepicker {
     &:not(.#{vars.$prefix}landscape) {
       .#{vars.$prefix}datepicker-header {
         + .#{vars.$prefix}datepicker-body {
@@ -238,5 +263,21 @@
         cursor: pointer;
       }
     }
+  }
+}
+
+// Patch Bootstrap 'reboot.css' and user-agent styles.
+.#{vars.$prefix}datepicker-body {
+  td,
+  th {
+    border-width: 0;
+    text-align: center;
+    padding: 0;
+  }
+}
+
+.#{vars.$prefix}datepicker-days {
+  th {
+    padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) 0;
   }
 }

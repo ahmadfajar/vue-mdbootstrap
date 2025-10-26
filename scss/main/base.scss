@@ -88,7 +88,7 @@
     --sidedrawer-item-hover-foreground: var(--foreground);
     --sidedrawer-item-border-indicator: var(--#{vars.$prefix}field-active-indicator);
     --sidedrawer-item-divider-color: var(--border-translucent);
-    --sidedrawer-item-expanded-background: oklch(0 0 0 / 0.07);
+    --sidedrawer-item-expanded-background: oklch(0 0 0 / 0.02);
 
     // Used in dropdown menus, list-tile, list-nav and other similar UI
     --navigation-background: var(--background-secondary);

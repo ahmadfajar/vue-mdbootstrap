@@ -54,19 +54,34 @@ export declare type TDatePickerOptionProps = {
   fullWidth?: boolean;
 
   /**
-   * This calendar date button and navigation button color. Default is `dark`.
+   * Sets calendar `date`, `month`, `year` `time` and `navigation` button color.
+   * Default is `dark`.
    */
   buttonColor?: TContextColor | string;
 
   /**
-   * This component's container background color.
+   * Sets selected calendar `date`, `month`, `year` and `time` button color.
+   * Default is interpolated from `headerColor`.
+   */
+  selectedColor?: TContextColor | string;
+
+  /**
+   * Optional, sets this component's container background color.
+   *
+   * @deprecated
+   * Use `surfaceClass` instead.
    */
   surfaceColor?: string;
 
   /**
-   * This component's header panel background color.
+   * Optional, sets component's container background and text color.
    */
-  headerColor?: string;
+  surfaceClass?: string | string[];
+
+  /**
+   * Sets component's header panel background color. Default is `primary`.
+   */
+  headerColor?: TContextColor | string;
 
   /**
    * Show or hide header panel.
