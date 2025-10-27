@@ -107,10 +107,4 @@
     --navigation-item-hover-foreground: var(--foreground);
     --navigation-item-hover-foreground-secondary: #{colors.$gray-700};
   }
-
-  // Create default colors for background and text
-  //-----------------------------------------------
-  @each $name, $color in colors.$context-colors {
-    @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
-  }
 }

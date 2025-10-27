@@ -1,5 +1,7 @@
 @use '../mixins/css3/borders';
+@use '../mixins/css3/text-decorators' as decorators;
 @use '../variables' as vars;
+@use '../color_vars' as colors;
 
 @layer utilities {
   .h-full {
@@ -344,5 +346,11 @@
     &:hover {
       box-shadow: vars.$z-depth-2;
     }
+  }
+
+  // Create utilities for colors, background and text
+  //--------------------------------------------------
+  @each $name, $color in colors.$context-colors {
+    @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
   }
 }

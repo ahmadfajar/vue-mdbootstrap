@@ -52,6 +52,7 @@
 
       h3,
       h4 {
+        --bs-heading-color: var(--#{vars.$prefix}image-uploader-text-color);
         color: var(--#{vars.$prefix}image-uploader-text-color);
       }
     }

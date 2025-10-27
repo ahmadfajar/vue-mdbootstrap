@@ -23,7 +23,27 @@ $final-colors: map.remove(
   'light-grey',
   'grey',
   'black',
-  'white'
+  'white',
+  'red',
+  'pink',
+  'purple',
+  'deep-purple',
+  'indigo',
+  'blue',
+  'light-blue',
+  'cyan',
+  'teal',
+  'green',
+  'light-green',
+  'lime',
+  'yellow',
+  'amber',
+  'orange',
+  'deep-orange',
+  'midnight-haze',
+  'brown',
+  'blue-grey',
+  'neutral'
 );
 
 @each $name, $color in $final-colors {
@@ -38,14 +58,23 @@ $final-colors: map.remove(
   $alias-name1: 'primary-color-dark'
 );
 
+@include decorators.decorate-color(
+  'dark',
+  colors.$elegant-color-dark,
+  $alias-name1: 'elegant-color-dark'
+);
+
 // Create full color palette for background
 //-------------------------------------------
 @each $name, $colors in colors.$full-palette {
   @each $sub_name, $color_value in $colors {
     @if $sub_name == 'base' {
+      .bg-#{$name},
       .bg-#{$name}-600 {
         background-color: $color_value;
       }
+
+      @include decorators.decorate-color($name, $color_value, $background: false);
 
       .bg-rgba-#{$name}-slight,
       .bg-rgba-#{$name}-slight:after {
@@ -72,8 +101,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         } @else if ($sub_name == 'lighten-4') {
           $color-name: '#{$name}-200';
@@ -81,8 +109,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         } @else if ($sub_name == 'lighten-3') {
           $color-name: '#{$name}-300';
@@ -90,8 +117,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         } @else if ($sub_name == 'lighten-2') {
           $color-name: '#{$name}-400';
@@ -99,8 +125,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         } @else if ($sub_name == 'lighten-1') {
           $color-name: '#{$name}-500';
@@ -108,8 +133,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         } @else if ($sub_name == 'darken-1') {
           $color-name: '#{$name}-700';
@@ -117,8 +141,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         } @else if ($sub_name == 'darken-2') {
           $color-name: '#{$name}-800';
@@ -126,8 +149,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         } @else if ($sub_name == 'darken-3') {
           $color-name: '#{$name}-900';
@@ -135,8 +157,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         } @else if ($sub_name == 'darken-4') {
           $color-name: '#{$name}-950';
@@ -144,8 +165,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         } @else {
           $color-name: '#{$name}-#{$sub_name}00';
@@ -153,8 +173,7 @@ $final-colors: map.remove(
             $color-name,
             $color_value,
             $border: false,
-            $text: false,
-            $alias-name1: '#{$name}.#{$sub_name}'
+            $text: false
           );
         }
       }

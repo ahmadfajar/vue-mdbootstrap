@@ -8,14 +8,21 @@ export default defineComponent<TBsBadge>({
   props: badgeProps,
   setup(props, { slots }) {
     const thisProps = props as Readonly<TBadgeOptionProps>;
+    const hasColor = () => {
+      return !!thisProps.color && !thisProps.variant && !thisProps.outlined;
+    };
+    const hasOutlined = () => {
+      return thisProps.outlined && !!(thisProps.color || thisProps.variant);
+    };
 
     return () =>
       useWrapSlotDefault(thisProps.tag || 'span', slots, {
         [`${cssPrefix}badge`]: true,
         [`${cssPrefix}badge-${thisProps.type}`]: thisProps.type,
-        [`bg-${thisProps.color}`]: thisProps.color && !thisProps.outlined,
+        [thisProps.color?.startsWith('bg-') ? thisProps.color : `bg-${thisProps.color}`]:
+          hasColor(),
         [`text-bg-${thisProps.variant}`]: thisProps.variant && !thisProps.outlined,
-        [`${cssPrefix}badge-outline-${thisProps.variant || thisProps.color}`]: thisProps.outlined,
+        [`${cssPrefix}badge-outline-${thisProps.variant || thisProps.color}`]: hasOutlined(),
         'border-thin': thisProps.outlined,
       });
   },
