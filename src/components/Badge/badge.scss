@@ -44,10 +44,10 @@
     }
   }
 
-  @each $name, $color in colors.$context-colors {
+  @each $name, $color in map.remove(colors.$context-colors, 'light') {
     .#{vars.$prefix}badge-outline-#{$name} {
       --#{vars.$prefix}badge-color: #{$color};
-      border-color: helper.to-oklch(color.adjust($color, $lightness: 10%));
+      --#{vars.$prefix}border-color: #{helper.to-oklch(color.adjust($color, $lightness: 10%))};
     }
   }
 }
@@ -58,12 +58,20 @@ a.#{vars.$prefix}badge {
   color: var(--#{vars.$prefix}badge-color);
   text-decoration: none;
 
+  &:focus,
+  &:hover {
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
   @each $name, $color in colors.$context-colors {
     &.text-bg-#{$name} {
       &:focus,
       &:hover {
         background-color: helper.to-oklch(color.adjust($color, $lightness: -10%)) !important;
-        text-decoration: none;
       }
 
       &:focus {
@@ -73,7 +81,6 @@ a.#{vars.$prefix}badge {
           color.adjust($color, $lightness: 8%)
         );
         box-shadow: #{0 0 0 0.25rem helper.to-oklch(color.change($shadow-color, $alpha: 0.65))};
-        outline: 0;
       }
     }
   }

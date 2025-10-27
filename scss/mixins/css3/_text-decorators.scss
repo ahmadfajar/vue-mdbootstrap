@@ -46,37 +46,17 @@
     @if $alias-name1 {
       .border-#{$name},
       .border-#{$alias-name1} {
-        border-color: $color;
+        --#{vars.$prefix}border-color: #{$color};
       }
     } @else if($alias-name1 and $alias-name2) {
       .border-#{$name},
       .border-#{$alias-name1},
       .border-#{$alias-name2} {
-        border-color: $color;
+        --#{vars.$prefix}border-color: #{$color};
       }
     } @else {
       .border-#{$name} {
-        border-color: $color;
-      }
-      .border-s-#{$name} {
-        border-left-color: $color;
-      }
-      .border-e-#{$name} {
-        border-right-color: $color;
-      }
-      .border-se-#{$name} {
-        border-left-color: $color;
-        border-right-color: $color;
-      }
-      .border-t-#{$name} {
-        border-top-color: $color;
-      }
-      .border-b-#{$name} {
-        border-bottom-color: $color;
-      }
-      .border-tb-#{$name} {
-        border-top-color: $color;
-        border-bottom-color: $color;
+        --#{vars.$prefix}border-color: #{$color};
       }
     }
   }

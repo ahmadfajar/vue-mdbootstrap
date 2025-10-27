@@ -213,7 +213,7 @@
     }
   }
 
-  @each $name, $color in colors.$context-colors {
+  @each $name, $color in map.remove(colors.$context-colors, 'light') {
     @include checkbox.make-default-variant($name, $color);
   }
 }
