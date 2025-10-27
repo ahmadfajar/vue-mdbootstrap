@@ -9,6 +9,14 @@
     transition: vars.$transition-default;
   }
 
+  .#{vars.$prefix}application-wrap {
+    &:not(.#{vars.$prefix}viewport-height) {
+      .#{vars.$prefix}drawer-host {
+        z-index: 100;
+      }
+    }
+  }
+
   .#{vars.$prefix}side-drawer {
     background-color: var(--sidedrawer-background, #{colors.$white});
     color: var(--sidedrawer-foreground, #{colors.$gray-900});

@@ -16,6 +16,10 @@
     //flex: 1 1 auto;
     flex-direction: column;
 
+    &:not(.#{vars.$prefix}viewport-height) {
+      overflow-x: hidden;
+    }
+
     &.#{vars.$prefix}viewport-height {
       min-height: 100vh;
     }
