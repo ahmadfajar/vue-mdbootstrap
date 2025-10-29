@@ -1,6 +1,5 @@
 @use 'sass:color';
 @use '../utils/color_helper' as helper;
-@use '../mixins/css3/text-decorators' as decorators;
 @use '../color_vars' as colors;
 @use '../variables' as vars;
 
@@ -68,7 +67,8 @@
     --foreground: #{colors.$neutral-darken-4};
     --background-secondary: #{colors.$white};
     --background-tertiary: #{colors.$white};
-    --foreground-secondary: #{colors.$gray-800};
+    --foreground-secondary: #{colors.$gray-900};
+    --foreground-tertiary: #{colors.$gray-900};
     --border-translucent: oklch(0.88 0.001 17.18);
 
     --appbar-background: var(--background);

@@ -74,12 +74,14 @@ export declare type TDatePickerOptionProps = {
   surfaceColor?: string;
 
   /**
-   * Optional, sets component's container background and text color.
+   * Optional, sets custom css class for component's background and text color.
    */
   surfaceClass?: string | string[];
 
   /**
    * Sets component's header panel background color. Default is `primary`.
+   *
+   * Custom CSS class can also be used as the value for this property.
    */
   headerColor?: TContextColor | string;
 
@@ -141,14 +143,21 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
   placeholder?: string;
 
   /**
-   * This component's header panel background color.
+   * Optional, sets DatePicker's header panel background color. Default is `primary`.
+   *
+   * Custom CSS class can also be used as the value for this property.
    */
-  headerColor?: string;
+  headerColor?: TContextColor | string;
 
   /**
-   * Show or hide header panel.
+   * Show or hide DatePicker's header panel.
    */
   headerPanel?: boolean;
+
+  /**
+   * Optional, sets custom CSS class for DatePicker's surface background and text color.
+   */
+  surfaceCls?: string | string[];
 
   /**
    * Display DatePicker component in landscape orientation.
@@ -198,7 +207,7 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
   pickerMode?: TDateTimePickerMode;
 
   /**
-   * Custom CSS class for the DatePicker container.
+   * Optional, sets custom CSS class for the DatePicker popover container.
    */
   pickerCls?: string | string[];
 
@@ -208,7 +217,16 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
   pickerButton?: TContextColor | string;
 
   /**
-   * The DatePicker surface background color.
+   * Sets DatePicker selected calendar `date`, `month`, `year` and `time` button color.
+   * Default is interpolated from `headerColor`.
+   */
+  pickerSelectedColor?: TContextColor | string;
+
+  /**
+   * Optional, sets DatePicker surface background color.
+   *
+   * @deprecated
+   * Use `surfaceCls` property instead.
    */
   pickerColor?: string;
 

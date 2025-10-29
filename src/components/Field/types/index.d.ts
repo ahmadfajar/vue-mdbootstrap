@@ -4,6 +4,7 @@ import {
   EventUpdateModelValueProps,
   MaybeNumberish,
   Numberish,
+  type TContextColor,
   TIconVariant,
   TPopoverPosition,
 } from '../../../types';
@@ -280,7 +281,7 @@ export declare type TChipFieldOptionProps = TInputTextProps & {
   /**
    * The default Chips color to apply.
    */
-  chipColor?: string;
+  chipColor?: TContextColor | string;
 
   /**
    * When defined, display the close button on every Chip to delete a Chip.

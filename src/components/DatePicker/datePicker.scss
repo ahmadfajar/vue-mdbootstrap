@@ -8,8 +8,9 @@
     --#{vars.$prefix}datepicker-border-radius: var(--#{vars.$prefix}radius, #{vars.$radius-md}) ;
     --#{vars.$prefix}datepicker-padding-x: #{vars.$padding-md};
     --#{vars.$prefix}datepicker-padding-y: #{vars.$padding-md};
+    --#{vars.$prefix}datepicker-bg: var(--background-tertiary);
+    //--#{vars.$prefix}datepicker-color: #{colors.$gray-900};
     --#{vars.$prefix}datepicker-header-color: #{colors.$white};
-    //--#{vars.$prefix}datepicker-text-color: #{colors.$gray-900};
     // prettier-ignore
     --#{vars.$prefix}datepicker-header-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
     --#{vars.$prefix}datepicker-table-header-color: #{colors.$gray-600};
@@ -26,7 +27,8 @@
 
   .#{vars.$prefix}datepicker-body {
     @include borders.radius(var(--#{vars.$prefix}datepicker-border-radius));
-    color: var(--#{vars.$prefix}datepicker-text-color);
+    background-color: var(--#{vars.$prefix}datepicker-bg);
+    color: var(--#{vars.$prefix}datepicker-color);
     min-height: 280px;
     position: relative;
 

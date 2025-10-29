@@ -6,7 +6,7 @@
 @layer components {
   .#{vars.$prefix}card {
     --#{vars.$prefix}card-bg: var(--background-secondary, #{colors.$white});
-    //--#{vars.$prefix}card-color: ;
+    --#{vars.$prefix}card-color: var(--foreground-secondary);
     --#{vars.$prefix}card-border-color: #{vars.$card-border-color};
     --#{vars.$prefix}card-border-radius: #{vars.$card-border-radius};
     --#{vars.$prefix}card-border-width: #{vars.$card-border-width};
@@ -36,9 +36,10 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    word-wrap: break-word;
     min-width: 0;
     height: var(--#{vars.$prefix}card-height);
-    word-wrap: break-word;
+    color: var(--#{vars.$prefix}card-color);
     background-color: var(--#{vars.$prefix}card-bg);
     background-clip: border-box;
     border: var(--#{vars.$prefix}card-border-width) solid var(--#{vars.$prefix}card-border-color);
@@ -110,7 +111,7 @@
     // Enable `flex-grow: 1` for decks and groups so that card blocks take up
     // as much space as possible, ensuring footers are aligned to the bottom.
     flex: 1 1 auto;
-    color: var(--#{vars.$prefix}card-color);
+    //color: var(--#{vars.$prefix}card-color);
     padding: var(--#{vars.$prefix}card-spacer-y) var(--#{vars.$prefix}card-spacer-x);
   }
 

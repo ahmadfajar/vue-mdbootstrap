@@ -49,7 +49,7 @@ export const isServer = typeof window == 'undefined';
  * @returns The generated ID
  */
 export function useGenerateId(): string {
-  return 'mdb-' + Helper.uuid(true);
+  return 'bs-' + Helper.uuid(true);
 }
 
 /**

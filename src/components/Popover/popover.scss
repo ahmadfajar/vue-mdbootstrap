@@ -5,10 +5,12 @@
 @layer components {
   .#{vars.$prefix}popover {
     --#{vars.$prefix}popover-bg: var(--background-tertiary, #{colors.$white});
+    --#{vars.$prefix}popover-color: var(--foreground-tertiary, #{colors.$neutral-darken-4});
     --#{vars.$prefix}popover-border-radius: var(--#{vars.$prefix}radius);
 
     @include borders.radius(var(--#{vars.$prefix}popover-border-radius));
     background-color: var(--#{vars.$prefix}popover-bg);
+    color: var(--#{vars.$prefix}popover-color);
     -webkit-overflow-scrolling: touch;
     position: fixed;
     max-height: 100%;

@@ -77,7 +77,7 @@ function createDateTimeInputField(
 ): VNode {
   return h('input', {
     ...useInputFieldBaseAttrs(props),
-    ...useInputTextFieldAttrs(props, false),
+    ...useInputTextFieldAttrs(props, null),
     readonly: true,
     role: 'textbox',
     type: 'text',
@@ -85,16 +85,40 @@ function createDateTimeInputField(
     style: {
       cursor: 'default',
     },
-    onBlur: (e: Event) => useOnFieldBlurred(emit, e, isFocused, props.disabled as boolean),
+    onBlur: (e: Event) => {
+      if (!props.openOnHover && !isPopoverOpen.value) {
+        useOnFieldBlurred(emit, e, isFocused, props.disabled as boolean);
+      } else {
+        e.preventDefault();
+      }
+    },
     onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, props.disabled as boolean),
-    onClick: () =>
+    onClick: () => {
       useTogglePopoverState(
         emit,
         isPopoverOpen,
         (props.disabled || props.readonly) as boolean,
         isPopoverOpen.value
-      ),
+      );
+      if (isPopoverOpen.value) {
+        isFocused.value = true;
+      }
+    },
   });
+}
+
+function toggleFocusedAndPopoverState(
+  emit: TEmitFn,
+  hasFocused: Ref<boolean>,
+  popoverOpen: Ref<boolean>,
+  openOnHover: boolean,
+  isDisabled: boolean,
+  popoverState: boolean
+): void {
+  useTogglePopoverState(emit, popoverOpen, isDisabled, popoverState);
+  if (!openOnHover) {
+    hasFocused.value = popoverOpen.value;
+  }
 }
 
 export function useRenderDateTimeField(
@@ -109,8 +133,8 @@ export function useRenderDateTimeField(
   displayValue: Ref<string | undefined>,
   locale: Ref<string>,
   calendarIcon: Ref<string>,
-  isPopoverOpen: Ref<boolean>,
   isFocused: Ref<boolean>,
+  isPopoverOpen: Ref<boolean>,
   showClearButton: ComputedRef<boolean>,
   showHelpText: ComputedRef<boolean>,
   showValidationError: ComputedRef<boolean>,
@@ -168,16 +192,20 @@ export function useRenderDateTimeField(
             },
             undefined,
             () =>
-              useTogglePopoverState(
+              toggleFocusedAndPopoverState(
                 emit,
+                isFocused,
                 isPopoverOpen,
+                props.openOnHover as boolean,
                 (props.disabled || props.readonly) as boolean,
                 isPopoverOpen.value
               ),
             () =>
-              useTogglePopoverState(
+              toggleFocusedAndPopoverState(
                 emit,
+                isFocused,
                 isPopoverOpen,
+                props.openOnHover as boolean,
                 (props.disabled || props.readonly) as boolean,
                 isPopoverOpen.value
               )
@@ -202,13 +230,18 @@ export function useRenderDateTimeField(
           transition: props.pickerTransition as Prop<string>,
           open: isPopoverOpen.value as unknown as Prop<boolean>,
           trigger: activator.value as Prop<HTMLElement>,
-          onClose: () => useTogglePopoverState(emit, isPopoverOpen, false, true),
+          onClose: () => {
+            isFocused.value = false;
+            useTogglePopoverState(emit, isPopoverOpen, false, true);
+          },
         },
         {
           default: () =>
             h<TBsDatePicker>(BsDatePicker, {
               buttonColor: (props.pickerButton || 'dark') as Prop<string>,
+              selectedColor: props.pickerSelectedColor as Prop<string>,
               surfaceColor: props.pickerColor as Prop<string>,
+              surfaceClass: props.surfaceCls as Prop<string>,
               headerColor: props.headerColor as Prop<string>,
               headerPanel: props.headerPanel as unknown as Prop<boolean>,
               landscape: props.landscapeMode as unknown as Prop<boolean>,

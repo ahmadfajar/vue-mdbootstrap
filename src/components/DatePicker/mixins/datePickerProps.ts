@@ -15,7 +15,6 @@ import {
   stringOrArrayProp,
   stringOrNumberProp,
   stringProp,
-  whiteColorProp,
 } from '@/mixins/CommonProps.ts';
 import type { Prop } from 'vue';
 
@@ -72,7 +71,7 @@ export const datePickerProps = {
   fullWidth: booleanProp,
   buttonColor: stringProp,
   selectedColor: stringProp,
-  surfaceColor: whiteColorProp,
+  surfaceColor: stringProp,
   surfaceClass: stringOrArrayProp,
   headerColor: primaryColorProp,
   headerPanel: booleanTrueProp,
@@ -107,6 +106,7 @@ export const dateTimeFieldProps = {
   },
   headerColor: primaryColorProp,
   headerPanel: booleanTrueProp,
+  surfaceCls: stringOrArrayProp,
   landscapeMode: booleanProp,
   openOnHover: booleanProp,
   viewMode: {
@@ -119,7 +119,8 @@ export const dateTimeFieldProps = {
     default: 'rounded shadow',
   },
   pickerButton: stringProp,
-  pickerColor: whiteColorProp,
+  pickerColor: stringProp,
+  pickerSelectedColor: stringProp,
   pickerMode: pickerModeProp,
   pickerPlacement: popoverPlacementProp,
   pickerTransition: popoverDefaultTransitionProp,

@@ -34,10 +34,6 @@
       font-weight: var(--font-weight-semibold, 600);
     }
 
-    > .flex-fill ~ .#{vars.$prefix}btn-icon:last-child {
-      margin-right: vars.$padding-sm * -1;
-    }
-
     &[class*='alert-solid'] {
       hr {
         border-top: 1px solid var(--#{vars.$prefix}alert-hr-color);
@@ -50,5 +46,13 @@
     @include alerts.make-default-variant($name, $color);
     @include alerts.make-outline-variant($name, $color);
     @include alerts.make-solid-variant($name, $color);
+  }
+}
+
+// Patch Bootstrap 'reboot.css'
+// This patch must be placed outside the css layer.
+.#{vars.$prefix}alert {
+  > .flex-fill + .#{vars.$prefix}btn-icon:last-child {
+    margin-right: vars.$padding-sm * -1;
   }
 }
