@@ -12,7 +12,6 @@ import { BsIcon } from '@/components/Icon';
 import { BsListTileTitle } from '@/components/ListView';
 import { BsPopover } from '@/components/Popover';
 import { useTogglePopoverState } from '@/components/Popover/mixins/popoverApi.ts';
-import { ClickOutside } from '@/directives';
 import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi.ts';
 import type {
   IArrayStore,
@@ -34,7 +33,7 @@ import type {
 import Helper from '@/utils/Helper.ts';
 import { kebabCase } from '@/utils/StringHelper.ts';
 import type { ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
-import { createCommentVNode, Fragment, h, nextTick, toDisplayString, withDirectives } from 'vue';
+import { createCommentVNode, Fragment, h, nextTick, toDisplayString } from 'vue';
 
 function createActionAppendIcon(
   showClearButton: boolean,
@@ -143,6 +142,46 @@ function renderComboboxInputField(
   ];
 }
 
+function createFieldInnerProps(
+  emit: TEmitFn,
+  props: Readonly<TComboboxOptionProps>,
+  activator: Ref<HTMLElement | null>,
+  isPopoverOpen: Ref<boolean>,
+  isFocused: Ref<boolean>
+): TRecord {
+  return {
+    ref: activator,
+    tabIndex: 0,
+    onMouseenter: () => {
+      if (props.openOnHover && !isPopoverOpen.value) {
+        useTogglePopoverState(
+          emit,
+          isPopoverOpen,
+          (props.readonly || props.disabled) as boolean,
+          false
+        );
+      }
+    },
+    onFocus: () => {
+      isFocused.value = !props.disabled;
+    },
+    onBlur: () => {
+      if (!props.disabled && !isPopoverOpen.value && !props.openOnHover) {
+        isFocused.value = false;
+      }
+    },
+    onClick: () => {
+      isFocused.value = !props.disabled;
+      useTogglePopoverState(
+        emit,
+        isPopoverOpen,
+        (props.readonly || props.disabled) as boolean,
+        isPopoverOpen.value
+      );
+    },
+  };
+}
+
 export function useRenderCombobox(
   slots: Slots,
   emit: TEmitFn,
@@ -169,213 +208,179 @@ export function useRenderCombobox(
 
   const iconSize = 24;
 
-  return withDirectives(
-    useCreateFieldWrapper(
-      slots,
-      iconSize,
-      wrapperCss,
-      props,
-      h(Fragment, [
-        h(
-          'div',
-          {
-            class: controlCss.value,
-          },
-          [
-            useCreateFieldInnerWrapper(
-              slots,
-              props,
-              renderComboboxInputField(props, schema, selectedItems, localValue),
+  return useCreateFieldWrapper(
+    slots,
+    iconSize,
+    wrapperCss,
+    props,
+    h(Fragment, [
+      h(
+        'div',
+        {
+          class: controlCss.value,
+        },
+        [
+          useCreateFieldInnerWrapper(
+            slots,
+            props,
+            renderComboboxInputField(props, schema, selectedItems, localValue),
+            iconSize,
+            props.appendIcon,
+            props.prependIcon,
+            useCreateValidationIcon(
+              props.actionIconVariant as TIconVariant,
+              hasValidated.value,
+              hasError.value,
+              props.validationIcon as boolean,
+              iconSize
+            ),
+            createActionAppendIcon(
+              showClearButton.value,
+              props.actionIconVariant as TIconVariant,
               iconSize,
-              props.appendIcon,
-              props.prependIcon,
-              useCreateValidationIcon(
-                props.actionIconVariant as TIconVariant,
-                hasValidated.value,
-                hasError.value,
-                props.validationIcon as boolean,
-                iconSize
-              ),
-              createActionAppendIcon(
-                showClearButton.value,
-                props.actionIconVariant as TIconVariant,
-                iconSize,
-                async () => {
-                  localValue.value = [];
-                  selectedItems.value = [];
-                  emit('update:model-value', props.multiple ? [] : undefined);
-                  await nextTick().then(() => emit('clear'));
-                },
-                () => {
-                  isFocused.value = !props.disabled;
-                  useTogglePopoverState(
-                    emit,
-                    isPopoverOpen,
-                    (props.readonly || props.disabled) as boolean,
-                    isPopoverOpen.value
-                  );
-                }
-              ),
-              undefined,
+              async () => {
+                localValue.value = [];
+                selectedItems.value = [];
+                emit('update:model-value', props.multiple ? [] : undefined);
+                await nextTick().then(() => emit('clear'));
+              },
+              () => {
+                isFocused.value = !props.disabled;
+                useTogglePopoverState(
+                  emit,
+                  isPopoverOpen,
+                  (props.readonly || props.disabled) as boolean,
+                  isPopoverOpen.value
+                );
+              }
+            ),
+            undefined,
+            createFieldInnerProps(emit, props, activator, isPopoverOpen, isFocused),
+            undefined,
+            () => useTogglePopoverState(emit, isPopoverOpen, props.disabled as boolean, true),
+            () => useTogglePopoverState(emit, isPopoverOpen, props.disabled as boolean, true)
+          ),
+          useRenderFieldFeedback(
+            slots,
+            props,
+            showHelpText.value,
+            showValidationError.value,
+            hasError.value,
+            errorItems.value
+          ),
+        ]
+      ),
+      h<TBsPopover>(
+        BsPopover,
+        {
+          color: null,
+          space: (props.outlined ? 2 : 1) as Prop<number>,
+          class: ['overflow-y-hidden', `${cssPrefix}shadow-1`],
+          placement: 'bottom' as Prop<TPopoverPosition>,
+          transition: props.transition as Prop<string>,
+          open: isPopoverOpen.value as unknown as Prop<boolean>,
+          trigger: activator.value as Prop<HTMLElement>,
+          style: {
+            minWidth: Helper.cssUnit(
+              Math.max(listboxWidth(), activator.value ? activator.value.offsetWidth : 0)
+            ),
+          },
+          onClose: () => {
+            isFocused.value = false;
+            useTogglePopoverState(emit, isPopoverOpen, false, true);
+          },
+        },
+        {
+          default: () =>
+            h<TBsListbox>(
+              BsListbox,
               {
-                ref: activator,
-                onMouseenter: () => {
-                  if (props.openOnHover && !isPopoverOpen.value) {
-                    useTogglePopoverState(
-                      emit,
-                      isPopoverOpen,
-                      (props.readonly || props.disabled) as boolean,
-                      false
-                    );
+                autoload: Helper.isEmpty(props.parentValue) as unknown as Prop<boolean>,
+                borderless: true as unknown as Prop<boolean>,
+                useCheckbox: true as unknown as Prop<boolean>,
+                color: props.listboxColor as Prop<string>,
+                dataSource: props.dataSource as Prop<TDataSource>,
+                readonly: props.readonly as unknown as Prop<boolean>,
+                multiple: props.multiple as unknown as Prop<boolean>,
+                emptyDataMessage: props.emptyDataMessage as Prop<string>,
+                notFoundMessage: props.notFoundMessage as Prop<string>,
+                searchLabel: props.listboxSearchLabel as Prop<string>,
+                // searchText: (!isPopoverOpen.value ? "" : undefined),
+                itemSeparator: props.itemSeparator as unknown as Prop<boolean>,
+                itemSeparatorDark: props.itemSeparatorDark as unknown as Prop<boolean>,
+                minSearchChars: props.minSearchChars as Prop<Numberish>,
+                minSearchLength: props.minSearchLength as Prop<Numberish>,
+                maxHeight: props.listboxMaxHeight as Prop<Numberish>,
+                checkboxColor: props.checkboxColor as Prop<string>,
+                checkboxPosition: props.checkboxPosition as Prop<TCheckboxPosition>,
+                showImage: props.showImage as unknown as Prop<boolean>,
+                imageSize: props.imageSize as Prop<Numberish>,
+                circleImage: props.circleImage as unknown as Prop<boolean>,
+                roundedImage: props.roundedImage as unknown as Prop<boolean>,
+                modelValue: <Prop<string | number | string[] | number[]>>(
+                  (props.multiple
+                    ? localValue.value
+                    : localValue.value.length > 0
+                      ? localValue.value[0]
+                      : undefined)
+                ),
+                onDataBind: (items: IBsModel[]) => {
+                  selectedItems.value = items.filter((it) =>
+                    localValue.value.some((v) => v === it.get(schema.valueField))
+                  );
+                  emit('data-bind', items);
+                },
+                onDataError: (error: unknown) => emit('data-error', error),
+                onDataFilter: (items: IBsModel[]) => emit('data-filter', items),
+                onSelect: (item: IBsModel) => emit('select', item),
+                onDeselect: (item: IBsModel) => emit('deselect', item),
+                'onUpdate:model-value': (
+                  values: string | number | string[] | number[] | undefined
+                ) => {
+                  localValue.value =
+                    values == null ? [] : Array.isArray(values) ? values : [values];
+                  emit('update:model-value', values);
+                },
+                'onUpdate:selected-value': (values: IBsModel[]) => {
+                  selectedItems.value = values;
+                  emit('update:selected-value', values);
+                  if (!props.multiple) {
+                    isFocused.value = false;
+                    useTogglePopoverState(emit, isPopoverOpen, false, true);
                   }
                 },
               },
               {
-                tabIndex: -1,
-                onFocus: () => {
-                  isFocused.value = !props.disabled;
-                },
-                onClick: () => {
-                  isFocused.value = !props.disabled;
-                  useTogglePopoverState(
-                    emit,
-                    isPopoverOpen,
-                    (props.readonly || props.disabled) as boolean,
-                    isPopoverOpen.value
-                  );
-                },
-              },
-              () => useTogglePopoverState(emit, isPopoverOpen, props.disabled as boolean, true),
-              () => useTogglePopoverState(emit, isPopoverOpen, props.disabled as boolean, true)
-            ),
-            useRenderFieldFeedback(
-              slots,
-              props,
-              showHelpText.value,
-              showValidationError.value,
-              hasError.value,
-              errorItems.value
-            ),
-          ]
-        ),
-        h<TBsPopover>(
-          BsPopover,
-          {
-            color: null,
-            space: (props.outlined ? 2 : 1) as Prop<number>,
-            class: ['overflow-y-hidden', `${cssPrefix}shadow-1`],
-            placement: 'bottom' as Prop<TPopoverPosition>,
-            transition: props.transition as Prop<string>,
-            open: isPopoverOpen.value as unknown as Prop<boolean>,
-            trigger: activator.value as Prop<HTMLElement>,
-            style: {
-              minWidth: Helper.cssUnit(
-                Math.max(listboxWidth(), activator.value ? activator.value.offsetWidth : 0)
-              ),
-              // maxHeight: Helper.cssUnit(thisProps.popoverMaxHeight || thisProps.listboxMaxHeight),
-            },
-            onClose: () => useTogglePopoverState(emit, isPopoverOpen, false, true),
-          },
-          {
-            default: () =>
-              h<TBsListbox>(
-                BsListbox,
-                {
-                  autoload: Helper.isEmpty(props.parentValue) as unknown as Prop<boolean>,
-                  borderless: true as unknown as Prop<boolean>,
-                  useCheckbox: true as unknown as Prop<boolean>,
-                  color: props.listboxColor as Prop<string>,
-                  dataSource: props.dataSource as Prop<TDataSource>,
-                  readonly: props.readonly as unknown as Prop<boolean>,
-                  multiple: props.multiple as unknown as Prop<boolean>,
-                  emptyDataMessage: props.emptyDataMessage as Prop<string>,
-                  notFoundMessage: props.notFoundMessage as Prop<string>,
-                  searchLabel: props.listboxSearchLabel as Prop<string>,
-                  // searchText: (!isPopoverOpen.value ? "" : undefined),
-                  itemSeparator: props.itemSeparator as unknown as Prop<boolean>,
-                  minSearchChars: props.minSearchChars as Prop<Numberish>,
-                  minSearchLength: props.minSearchLength as Prop<Numberish>,
-                  maxHeight: props.listboxMaxHeight as Prop<Numberish>,
-                  checkboxColor: props.checkboxColor as Prop<string>,
-                  checkboxPosition: props.checkboxPosition as Prop<TCheckboxPosition>,
-                  showImage: props.showImage as unknown as Prop<boolean>,
-                  imageSize: props.imageSize as Prop<Numberish>,
-                  circleImage: props.circleImage as unknown as Prop<boolean>,
-                  roundedImage: props.roundedImage as unknown as Prop<boolean>,
-                  modelValue: <Prop<string | number | string[] | number[]>>(
-                    (props.multiple
-                      ? localValue.value
-                      : localValue.value.length > 0
-                        ? localValue.value[0]
-                        : undefined)
+                'option-item': (args: TDataItem) =>
+                  useRenderSlot(
+                    slots,
+                    'option-item',
+                    { key: 'list-tile-content' },
+                    [
+                      h(BsListTileTitle, null, {
+                        default: () => toDisplayString(args.item.get(schema.displayField)),
+                      }),
+                    ],
+                    { item: args.item, index: args.index }
                   ),
-                  onDataBind: (items: IBsModel[]) => {
-                    selectedItems.value = items.filter((it) =>
-                      localValue.value.some((v) => v === it.get(schema.valueField))
-                    );
-                    emit('data-bind', items);
-                  },
-                  onDataError: (error: unknown) => emit('data-error', error),
-                  onDataFilter: (items: IBsModel[]) => emit('data-filter', items),
-                  onSelect: (item: IBsModel) => emit('select', item),
-                  onDeselect: (item: IBsModel) => emit('deselect', item),
-                  'onUpdate:model-value': (
-                    values: string | number | string[] | number[] | undefined
-                  ) => {
-                    localValue.value =
-                      values == null ? [] : Array.isArray(values) ? values : [values];
-                    emit('update:model-value', values);
-                  },
-                  'onUpdate:selected-value': (values: IBsModel[]) => {
-                    selectedItems.value = values;
-                    emit('update:selected-value', values);
-                    if (!props.multiple) {
-                      useTogglePopoverState(emit, isPopoverOpen, false, true);
-                    }
-                  },
-                },
-                {
-                  'option-item': (args: TDataItem) =>
-                    useRenderSlot(
-                      slots,
-                      'option-item',
-                      { key: 'list-tile-content' },
-                      [
-                        h(BsListTileTitle, null, {
-                          default: () => toDisplayString(args.item.get(schema.displayField)),
-                        }),
-                      ],
-                      { item: args.item, index: args.index }
-                    ),
-                  'empty-data-msg': () =>
-                    useRenderSlot(slots, 'empty-data-msg', { key: 'emptyDataMessage' }, [
-                      h(BsListTileTitle, null, {
-                        default: () => toDisplayString(props.emptyDataMessage),
-                      }),
-                    ]),
-                  'not-found-msg': () =>
-                    useRenderSlot(slots, 'not-found-msg', { key: 'notFoundMessage' }, [
-                      h(BsListTileTitle, null, {
-                        default: () => toDisplayString(props.notFoundMessage),
-                      }),
-                    ]),
-                }
-              ),
-          }
-        ),
-      ]),
-      (node: VNode) => useOnTextFieldNodeMounted(props, node)
-    ),
-    [
-      [
-        ClickOutside,
-        () => {
-          if (!props.disabled) {
-            isFocused.value = false;
-          }
-        },
-      ],
-    ]
+                'empty-data-msg': () =>
+                  useRenderSlot(slots, 'empty-data-msg', { key: 'emptyDataMessage' }, [
+                    h(BsListTileTitle, null, {
+                      default: () => toDisplayString(props.emptyDataMessage),
+                    }),
+                  ]),
+                'not-found-msg': () =>
+                  useRenderSlot(slots, 'not-found-msg', { key: 'notFoundMessage' }, [
+                    h(BsListTileTitle, null, {
+                      default: () => toDisplayString(props.notFoundMessage),
+                    }),
+                  ]),
+              }
+            ),
+        }
+      ),
+    ]),
+    (node: VNode) => useOnTextFieldNodeMounted(props, node)
   );
 }
 

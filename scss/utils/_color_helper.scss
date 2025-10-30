@@ -72,15 +72,15 @@ $black: #000;
 $default-active-bgcolor: to-oklch(#5f4a97);
 
 // Returns color in oklch color space
-@function set-alt-bgcolor($color, $transparency: 0, $brightness: 170) {
-  @if (brightness($color) > 254) {
-    @if ($transparency > 0) {
+@function set-alt-bgcolor($color, $transparency: 0, $lightnessLevel: 66%) {
+  @if (lightnessLevel($color) > 99%) {
+    @if (($transparency > 0) and ($transparency < 1)) {
       @return to-oklch(color.change($default-active-bgcolor, $alpha: $transparency));
     } @else {
       @return to-oklch($white);
     }
-  } @else if (brightness($color) > $brightness) {
-    @if ($transparency > 0) {
+  } @else if (lightnessLevel($color) > $lightnessLevel) {
+    @if (($transparency > 0) and ($transparency < 1)) {
       @return color.change(
         to-oklch(color.adjust($color, $lightness: -35%)),
         $alpha: ($transparency + 0.1)
@@ -89,7 +89,7 @@ $default-active-bgcolor: to-oklch(#5f4a97);
       @return color.change(to-oklch(color.adjust($color, $lightness: -25%)), $alpha: 0.2);
     }
   } @else {
-    @if ($transparency > 0) {
+    @if (($transparency > 0) and ($transparency < 1)) {
       @return color.change(
         to-oklch(color.adjust($color, $lightness: 30%)),
         $alpha: ($transparency + 0.1)

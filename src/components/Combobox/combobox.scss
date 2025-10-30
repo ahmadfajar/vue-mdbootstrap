@@ -14,7 +14,7 @@
             visibility: initial;
           }
 
-          .#{vars.$prefix}field-outline-control {
+          .#{vars.$prefix}field-outline-indicator {
             > .#{vars.$prefix}field-outline-label {
               display: none;
             }
@@ -89,18 +89,32 @@
       }
 
       .#{vars.$prefix}chip {
-        margin-bottom: vars.$text-field-padding-bottom;
+        margin-top: 0;
+        margin-bottom: 1px;
         margin-right: vars.$padding-sm;
+      }
 
-        //~ .#{vars.$prefix}chip {
-        //  margin-left: 0;
-        //}
+      &.#{vars.$prefix}field-filled {
+        .#{vars.$prefix}chip {
+          margin-bottom: 2px;
+        }
+      }
+
+      &.#{vars.$prefix}field-outlined {
+        .#{vars.$prefix}chip {
+          margin-top: 2px;
+          margin-bottom: 4px;
+        }
       }
 
       &.#{vars.$prefix}floating-label {
         .#{vars.$prefix}field-label {
           height: auto;
           top: vars.$padding-md;
+        }
+
+        .#{vars.$prefix}field-activator {
+          padding-bottom: 3px;
         }
 
         &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {

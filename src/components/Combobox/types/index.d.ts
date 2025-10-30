@@ -83,6 +83,11 @@ export declare type TListboxBaseProps = {
   itemSeparator?: boolean;
 
   /**
+   * Set to `TRUE` when Listbox has dark background color.
+   */
+  itemSeparatorDark?: boolean;
+
+  /**
    * Define the image size for each Listbox items when `show-image` is enabled.
    */
   imageSize?: Numberish;

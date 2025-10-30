@@ -4,8 +4,8 @@
 @use '../color_vars' as colors;
 @use '../variables' as vars;
 
-// BsListView variants mixins -- sass variables
-//----------------------------------------------
+// BsListView variants -- scss mixins
+//-----------------------------------
 @mixin make-listview-variant($name, $color) {
   .#{vars.$prefix}list-#{$name} {
     $subheader-color: helper.set-color-contrast(
@@ -17,21 +17,36 @@
     --#{vars.$prefix}listview-bg: #{helper.to-oklch($color)};
     --#{vars.$prefix}subheader-color: #{$subheader-color};
 
-    @if (helper.lightnessLevel($color) < 62.75%) {
-      .#{vars.$prefix}divider {
-        --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
-      }
+    $tile-indicator-border-color: helper.to-oklch(
+      helper.set-color-contrast(
+        $color,
+        color.adjust(colors.$mdb-default-color, $lightness: -5%),
+        color.adjust(helper.set-alt-bgcolor($color, 0.65), $lightness: 45%),
+        86.2%
+      )
+    );
 
-      // bootstrap patch
-      .dropdown-menu {
-        --#{vars.$prefix-bs}dropdown-divider-bg: #{color.change(colors.$white, $alpha: 0.15)};
-      }
-    }
-  }
-}
+    --#{vars.$prefix}tile-indicator-border-color: #{helper.set-color-contrast(
+        $color,
+        helper.to-oklch(
+          color.change(color.adjust(colors.$mdb-default-color, $lightness: -5%), $alpha: 0.9)
+        ),
+        $tile-indicator-border-color,
+        80%
+      )};
 
-@mixin make-list-item-variant($name, $color) {
-  .#{vars.$prefix}list-#{$name} {
+    //@if (helper.lightnessLevel($color) < 62.75%) {
+    //  .#{vars.$prefix}divider {
+    //    --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
+    //  }
+    //
+    //   //bootstrap patch
+    //  .dropdown-menu {
+    //    --#{vars.$prefix-bs}dropdown-divider-bg: #{color.change(colors.$white, $alpha: 0.15)};
+    //  }
+    //}
+
+    // configure list-items color scheme
     $tile-hover-bg: helper.to-oklch(
       helper.set-color-contrast(
         $color,
@@ -98,26 +113,10 @@
       )
     );
 
-    //$tile-disable-title-color: helper.set-color-contrast(
-    //  $color,
-    //  rgba(colors.$black, 0.5),
-    //  rgba(colors.$white, 0.4)
-    //);
-    //$tile-disable-subtitle-color: $tile-disable-title-color;
-    //$tile-disable-leading-color: $tile-disable-title-color;
-    $tile-indicator-border-color: helper.to-oklch(
-      helper.set-color-contrast(
-        $color,
-        color.adjust(colors.$mdb-default-color, $lightness: -5%),
-        color.adjust(helper.set-alt-bgcolor($color, 0.65), $lightness: 45%),
-        86.2%
-      )
-    );
-
-    .#{vars.$prefix}list-tile,
-    .#{vars.$prefix}list-nav {
+    .#{vars.$prefix}list-tile {
       --#{vars.$prefix}tile-action-color: #{$tile-leading-color};
       --#{vars.$prefix}tile-leading-color: #{$tile-leading-color};
+      --#{vars.$prefix}tile-leading-icon-color: #{$tile-leading-color};
       --#{vars.$prefix}tile-title-color: #{$tile-title-color};
       --#{vars.$prefix}tile-subtitle-color: #{$tile-subtitle-color};
       --#{vars.$prefix}tile-hover-bg: #{$tile-hover-bg};
@@ -129,20 +128,17 @@
       --#{vars.$prefix}tile-active-title-color: #{$tile-active-title-color};
       --#{vars.$prefix}tile-active-subtitle-color: #{$tile-active-subtitle-color};
 
-      $list-colors: 'amber', 'yellow', 'lime', 'warning', 'warning-color';
-      @if (not list.index($list-colors, $name)) {
-        --#{vars.$prefix}tile-indicator-border-color: #{$tile-indicator-border-color};
-      } @else {
-        --#{vars.$prefix}tile-indicator-border-color: #{helper.to-oklch(
-            color.change(color.adjust(colors.$mdb-default-color, $lightness: -5%), $alpha: 1)
-          )};
-      }
+      //$list-colors: 'amber', 'yellow', 'lime', 'warning', 'warning-color';
+      //@if (not list.index($list-colors, $name)) {
+      //  --#{vars.$prefix}tile-indicator-border-color: #{$tile-indicator-border-color};
+      //} @else {
+      //  --#{vars.$prefix}tile-indicator-border-color: #{helper.to-oklch(
+      //      color.change(color.adjust(colors.$mdb-default-color, $lightness: -5%), $alpha: 1)
+      //    )};
+      //}
+    }
 
-      //--#{vars.$prefix}tile-disable-action-color: #{$tile-disable-leading-color};
-      //--#{vars.$prefix}tile-disable-leading-color: #{$tile-disable-leading-color};
-      //--#{vars.$prefix}tile-disable-title-color: #{$tile-disable-title-color};
-      //--#{vars.$prefix}tile-disable-subtitle-color: #{$tile-disable-subtitle-color};
-
+    .#{vars.$prefix}list-nav {
       $divider-color: helper.set-color-contrast(
         $color,
         colors.$gray-300,
@@ -154,23 +150,13 @@
       --#{vars.$prefix}nav-item-color: #{$tile-title-color};
       --#{vars.$prefix}nav-item-divider-color: #{$divider-color};
       --#{vars.$prefix}nav-item-icon-color: #{$tile-leading-color};
-      --#{vars.$prefix}nav-item-expanded-bg: #{$nav-item-expanded-bg};
-      --#{vars.$prefix}nav-item-hover-bg: #{$tile-hover-bg};
       --#{vars.$prefix}nav-item-active-bg: #{$tile-active-bg};
       --#{vars.$prefix}nav-item-active-color: #{$tile-active-title-color};
       --#{vars.$prefix}nav-item-active-icon-color: #{$tile-active-leading-icon-color};
+      --#{vars.$prefix}nav-item-expanded-bg: #{$nav-item-expanded-bg};
+      --#{vars.$prefix}nav-item-hover-bg: #{$tile-hover-bg};
       //--#{vars.$prefix}nav-item-disable-color: #{$tile-disable-title-color};
       //--#{vars.$prefix}nav-item-disable-icon-color: #{$tile-disable-leading-color};
-    }
-
-    // bootstrap patch
-    .dropdown-menu {
-      --#{vars.$prefix-bs}dropdown-bg: var(--#{vars.$prefix}listview-bg);
-      --#{vars.$prefix-bs}dropdown-link-color: #{$tile-title-color};
-      --#{vars.$prefix-bs}dropdown-link-active-bg: #{$tile-active-bg};
-      --#{vars.$prefix-bs}dropdown-link-active-color: #{$tile-active-title-color};
-      --#{vars.$prefix-bs}dropdown-link-hover-bg: #{$tile-hover-bg};
-      --#{vars.$prefix-bs}dropdown-link-hover-color: #{$tile-active-title-color};
     }
   }
 }

@@ -17,6 +17,8 @@ import type {
   LoadedCallbackFn,
   Numberish,
   TBsCheckbox,
+  TBsDivider,
+  TBsListTile,
   TBsListTileAction,
   TBsListView,
   TDataListSchema,
@@ -196,7 +198,7 @@ function renderListboxItems(
 ): VNode[] | undefined {
   return dataItems.value.map((item, idx) =>
     h(Fragment, [
-      h(
+      h<TBsListTile>(
         BsListTile,
         {
           // key: Helper.uuid(true),
@@ -225,7 +227,10 @@ function renderListboxItems(
         }
       ),
       props.itemSeparator && idx + 1 < dataItems.value.length
-        ? h(BsDivider, { key: `divider-${idx}` })
+        ? h<TBsDivider>(BsDivider, {
+            key: `divider-${idx}`,
+            dark: props.itemSeparatorDark as unknown as Prop<boolean>,
+          })
         : undefined,
     ])
   );

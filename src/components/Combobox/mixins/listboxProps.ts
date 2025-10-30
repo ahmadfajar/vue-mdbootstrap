@@ -43,6 +43,7 @@ export const listboxProps = {
   disabled: booleanProp,
   readonly: booleanProp,
   itemSeparator: booleanProp,
+  itemSeparatorDark: booleanProp,
   maxHeight: listboxMaxHeight,
   modelValue: {
     type: [String, Number, Array],

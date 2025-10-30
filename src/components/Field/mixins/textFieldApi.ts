@@ -170,7 +170,7 @@ function createOutlineIndicator(props: Readonly<TInputFieldProps>): VNode {
           h('div', { class: `${cssPrefix}field-outline-end` }),
         ]
       )
-    : createCommentVNode(' v-if-outlined ');
+    : createCommentVNode(' v-if-outline-indicator ');
 }
 
 function createLineIndicator(props: Readonly<TInputFieldProps>): VNode {
@@ -179,7 +179,7 @@ function createLineIndicator(props: Readonly<TInputFieldProps>): VNode {
         class: `${cssPrefix}field-line-indicator`,
         'aria-hidden': 'true',
       })
-    : createCommentVNode(' v-if-filled ');
+    : createCommentVNode(' v-if-line-indicator ');
 }
 
 export function useCreateFieldInnerWrapper(

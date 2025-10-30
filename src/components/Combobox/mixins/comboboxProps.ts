@@ -48,6 +48,7 @@ export const comboboxProps = {
   chipPill: booleanProp,
   chipOutlined: booleanProp,
   itemSeparator: booleanProp,
+  itemSeparatorDark: booleanProp,
   imageSize: validNumberGtZeroProp,
   showImage: booleanProp,
   roundedImage: booleanProp,

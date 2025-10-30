@@ -277,6 +277,11 @@
       display: flex;
       flex: 1 1 auto;
       position: relative;
+      outline: 0 none;
+
+      &:focus-visible {
+        outline: 0 none;
+      }
 
       .#{vars.$prefix}field-prefix,
       .#{vars.$prefix}field-suffix {
