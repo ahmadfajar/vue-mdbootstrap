@@ -29,6 +29,7 @@
 
     .#{vars.$prefix}searchbox-inner {
       display: flex;
+      column-gap: .25rem;
       align-items: center;
       // prettier-ignore
       transition: border-color vars.$transition-basic, box-shadow vars.$transition-basic;
@@ -60,13 +61,6 @@
         --#{vars.$prefix}searchbox-state-opacity: var(--#{vars.$prefix}field-disabled-opacity);
       }
 
-      label {
-        display: block;
-        margin: 0 0 0 4px;
-        padding: 0;
-        width: 100%;
-      }
-
       input {
         @include placeholder.decorate-input-placeholder();
 
@@ -94,5 +88,16 @@
     --#{vars.$prefix}searchbox-active-bg: #{color.change(colors.$black, $alpha: 0.35)};
     --#{vars.$prefix}searchbox-border-color: #{color.change(colors.$white, $alpha: 0.12)};
     --#{vars.$prefix}searchbox-focused-shadow: oklch(0.743 0.102 303.276 / 0.32);
+  }
+}
+
+// Patch Bootstrap 'reboot.css'
+// This patch must be placed outside the css layer.
+.#{vars.$prefix}searchbox-inner {
+  label {
+    display: block;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
   }
 }

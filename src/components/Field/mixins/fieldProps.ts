@@ -94,13 +94,14 @@ export const searchFieldProps = {
   },
   popoverCls: {
     type: [String, Array],
-    default: 'bg-white rounded shadow',
+    default: 'rounded shadow',
   },
   popoverMinWidth: {
     type: [Number, String],
     default: 480,
     validator: (value: string) => parseInt(value, 10) > 0,
   },
+  popoverOpen: booleanProp,
   popoverPlacement: popoverPlacementProp,
   popoverTransition: popoverDefaultTransitionProp,
 };

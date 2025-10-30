@@ -448,6 +448,12 @@ export declare type TSearchFieldOptionProps = {
   popoverMinWidth?: number | string;
 
   /**
+   * Open or close the advance search popover panel. Only works if
+   * `advanceSearch` is sets to `true`.
+   */
+  popoverOpen?: boolean;
+
+  /**
    * Sets the Popover display placement.
    */
   popoverPlacement?: TPopoverPosition;

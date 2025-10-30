@@ -23,6 +23,12 @@ export default defineComponent<TBsSearchField>({
       () => thisProps.modelValue,
       (value) => (localValue.value = value)
     );
+    watch(
+      () => thisProps.popoverOpen as boolean,
+      (value) => {
+        thisProps.advanceSearch && (isPopoverOpen.value = value);
+      }
+    );
 
     return () =>
       useRenderSearchField(
