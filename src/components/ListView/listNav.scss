@@ -28,6 +28,15 @@
       transition: height 0.65s vars.$transition-drop-animation;
     }
 
+    &:not(.#{vars.$prefix}nav-child) {
+      > .#{vars.$prefix}nav-item {
+        &.#{vars.$prefix}expanded {
+          --#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
+          --#{vars.$prefix}nav-item-inner-state-bg: transparent;
+        }
+      }
+    }
+
     .#{vars.$prefix}nav-item {
       background-color: var(--#{vars.$prefix}nav-item-state-bg);
       position: relative;
@@ -75,8 +84,8 @@
       }
 
       &.#{vars.$prefix}expanded {
-        --#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
-        --#{vars.$prefix}nav-item-inner-state-bg: transparent;
+        //--#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
+        //--#{vars.$prefix}nav-item-inner-state-bg: transparent;
 
         > .#{vars.$prefix}nav-item-inner {
           > .#{vars.$prefix}ripple {
@@ -100,8 +109,7 @@
         &.#{vars.$prefix}nav-parent {
           &.#{vars.$prefix}expanded {
             --#{vars.$prefix}nav-item-inner-state-bg: transparent;
-            // prettier-ignore
-            --#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
+            //--#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
             --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-color);
             // prettier-ignore
             --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-icon-color);

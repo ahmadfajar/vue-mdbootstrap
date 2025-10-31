@@ -69,34 +69,32 @@ export function useTabViewClassNames(
 
 export function useTabItemClassNames(
   props: Readonly<TTabItemOptionProps>,
-  tagName: ComputedRef<string>,
   tabs?: TabsProvider
 ): TRecord {
   return {
     'tab-item': true,
-    'tab-item-link': tagName.value !== 'li',
-    'text-center': tagName.value !== 'li',
-    'flex-fill': tabs?.alignment === 'justified',
-    disabled: props.disabled === true,
-    [`${props.activeClass}`]:
-      props.activeClass && props.active === true && tagName.value !== 'li' && !useHasRouter(props),
-    [normalizeClass(tabs?.tabClass)]: !Helper.isEmpty(tabs?.tabClass) && !props.active,
-  };
-}
-
-export function useItemLinkClassNames(
-  props: Readonly<TTabItemOptionProps>,
-  tabs?: TabsProvider
-): TRecord {
-  return {
     'tab-item-link': true,
     'text-center': true,
     'flex-fill': tabs?.alignment === 'justified',
     disabled: props.disabled === true,
-    [`${props.activeClass}`]: props.activeClass && props.active === true, // && !useHasRouter(props),
+    [`${props.activeClass}`]: props.activeClass && props.active === true && !useHasRouter(props),
     [normalizeClass(tabs?.tabClass)]: !Helper.isEmpty(tabs?.tabClass) && !props.active,
   };
 }
+
+// export function useItemLinkClassNames(
+//   props: Readonly<TTabItemOptionProps>,
+//   tabs?: TabsProvider
+// ): TRecord {
+//   return {
+//     'tab-item-link': true,
+//     'text-center': true,
+//     'flex-fill': tabs?.alignment === 'justified',
+//     disabled: props.disabled === true,
+//     [`${props.activeClass}`]: props.activeClass && props.active === true, // && !useHasRouter(props),
+//     [normalizeClass(tabs?.tabClass)]: !Helper.isEmpty(tabs?.tabClass) && !props.active,
+//   };
+// }
 
 function renderTabIconWithCondition(
   condition: boolean,
@@ -164,7 +162,6 @@ function createTabItemLink(
     ...tabItemAttrs(props),
     class: itemClasses.value,
     href: !props.disabled ? props.url : undefined,
-    // onClick: (e: Event) => tabItemOnClick(props, provider, tabIndex.value, e),
   };
   if (mountedEvent) {
     thisProps.onVnodeBeforeMount = (vnode: VNode) => {
@@ -196,7 +193,6 @@ function createTabItemRouter(
     to: !props.disabled
       ? (props.location ?? (props.pathName ? { name: props.pathName } : props.path))
       : undefined,
-    // onClick: (e: Event) => tabItemOnClick(props, provider, tabIndex.value, e),
   };
   if (mountedEvent) {
     thisProps.onVnodeBeforeMount = (vnode: VNode) => {
@@ -217,31 +213,10 @@ function createTabItemRouter(
 export function useRenderTabItem(
   props: Readonly<TTabItemOptionProps>,
   tabItemClasses: ComputedRef<TRecord>,
-  itemLinkClasses: ComputedRef<TRecord>,
-  tagName: ComputedRef<string>,
   tabIndex: Ref<number | undefined>,
   provider?: TabsProvider
 ): VNode {
-  if (tagName.value === 'li') {
-    return h(
-      'li',
-      {
-        class: tabItemClasses.value,
-        role: 'presentation',
-        onVnodeBeforeMount: (vnode) => {
-          const vm = (vnode as IVNode).ctx;
-          if (vm && provider) {
-            tabIndex.value = provider.registerTabItem(vm) - 1;
-          }
-        },
-      },
-      [
-        useHasRouter(props)
-          ? createTabItemRouter(props, itemLinkClasses, tabIndex, provider)
-          : createTabItemLink(props, itemLinkClasses, tabIndex, provider),
-      ]
-    );
-  } else if (useHasRouter(props)) {
+  if (useHasRouter(props)) {
     return createTabItemRouter(props, tabItemClasses, tabIndex, provider, true);
   } else {
     return createTabItemLink(props, tabItemClasses, tabIndex, provider, true);
@@ -263,6 +238,7 @@ export function useRenderTabLabel(
           ['left', 'right'].includes(props.iconPosition as string) ? 'span' : 'div',
           {
             class: {
+              'tab-text': true,
               flex: orientation.value === 'vertical',
               'flex-fill': orientation.value === 'vertical',
               'ms-2': props.iconPosition === 'left' && orientation.value === 'horizontal',
@@ -312,7 +288,6 @@ function createTabItemProps(
 function renderVerticalTabView(
   slots: Slots,
   props: Readonly<TTabsOptionProps>,
-  tagName: ComputedRef<string>,
   tabClasses: ComputedRef<string[]>,
   provider: TabsProvider
 ): VNode {
@@ -333,23 +308,26 @@ function renderVerticalTabView(
         },
         [
           h(
-            tagName.value,
+            'div',
             {
               class: tabClasses.value,
               role: 'tablist',
               'aria-orientation': 'vertical',
             },
-            provider.tabPanels.map((it, idx) => {
-              return h<TBsTabItem>(BsTabItem, {
-                key: `tab-item-${idx}`,
-                ...createTabItemProps(
-                  props,
-                  it.props as Readonly<TTabItemOptionProps>,
-                  provider,
-                  idx
-                ),
-              });
-            })
+            [
+              ...provider.tabPanels.map((it, idx) => {
+                return h<TBsTabItem>(BsTabItem, {
+                  key: `tab-item-${idx}`,
+                  ...createTabItemProps(
+                    props,
+                    it.props as Readonly<TTabItemOptionProps>,
+                    provider,
+                    idx
+                  ),
+                });
+              }),
+              slots['append-header'] && slots['append-header'](),
+            ]
           ),
         ]
       ),
@@ -412,7 +390,6 @@ function tabOnWheel(scrollOffset: Ref<number>, event: WheelEvent, target?: HTMLE
 function renderHorizontalTabView(
   slots: Slots,
   props: Readonly<TTabsOptionProps>,
-  tagName: ComputedRef<string>,
   tabClasses: ComputedRef<string[]>,
   sliderRef: Ref<HTMLElement | undefined>,
   scrollOffset: Ref<number>,
@@ -427,7 +404,7 @@ function renderHorizontalTabView(
     [
       withDirectives(
         h(
-          tagName.value,
+          'div',
           {
             class: tabClasses.value,
             role: 'tablist',
@@ -460,6 +437,7 @@ function renderHorizontalTabView(
                 })
               )
             ),
+            slots['append-header'] && slots['append-header'](),
           ]
         ),
         [
@@ -489,23 +467,14 @@ export function useRenderTabView(
   slots: Slots,
   props: Readonly<TTabsOptionProps>,
   orientation: ComputedRef<TOrientation>,
-  tagName: ComputedRef<string>,
   tabClasses: ComputedRef<string[]>,
   sliderRef: Ref<HTMLElement | undefined>,
   scrollOffset: Ref<number>,
   provider: TabsProvider
 ): VNode {
   if (orientation.value === 'vertical') {
-    return renderVerticalTabView(slots, props, tagName, tabClasses, provider);
+    return renderVerticalTabView(slots, props, tabClasses, provider);
   } else {
-    return renderHorizontalTabView(
-      slots,
-      props,
-      tagName,
-      tabClasses,
-      sliderRef,
-      scrollOffset,
-      provider
-    );
+    return renderHorizontalTabView(slots, props, tabClasses, sliderRef, scrollOffset, provider);
   }
 }

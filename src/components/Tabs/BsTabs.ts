@@ -24,7 +24,6 @@ export default defineComponent<TBsTabs>({
     const orientation = computed<TOrientation>(() =>
       ['left', 'right'].includes(thisProps.tabPosition as string) ? 'vertical' : 'horizontal'
     );
-    const tagName = computed<string>(() => (thisProps.variant === 'pills' ? 'ul' : 'div'));
     const tabViewClasses = computed(() => useTabViewClassNames(thisProps, orientation));
 
     watch(
@@ -44,7 +43,6 @@ export default defineComponent<TBsTabs>({
         slots,
         thisProps,
         orientation,
-        tagName,
         tabViewClasses,
         tabSlidingRef,
         scrollOffset,

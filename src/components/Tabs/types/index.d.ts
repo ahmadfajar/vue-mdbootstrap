@@ -158,6 +158,7 @@ export declare const BsTabs: {
     $props: AllowedTabsProps & TTabsOptionProps;
     $slots: {
       default?: () => VNode[];
+      'append-header'?: () => VNode;
     };
     $emits: {
       (

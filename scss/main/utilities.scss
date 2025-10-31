@@ -183,37 +183,37 @@
   }
 
   .border {
-    border: 1px solid var(--#{vars.$prefix}border-color);
+    border: 1px solid var(--#{vars.$prefix}border-color, var(--border-translucent));
   }
 
   .border-thin {
-    border: thin solid var(--#{vars.$prefix}border-color);
+    border: thin solid var(--#{vars.$prefix}border-color, var(--border-translucent));
   }
 
   .border-t {
-    border-top: 1px solid var(--#{vars.$prefix}border-color);
+    border-top: 1px solid var(--#{vars.$prefix}border-color, var(--border-translucent));
   }
 
   .border-b {
-    border-bottom: 1px solid var(--#{vars.$prefix}border-color);
+    border-bottom: 1px solid var(--#{vars.$prefix}border-color, var(--border-translucent));
   }
 
   .border-tb {
-    border-top: 1px solid var(--#{vars.$prefix}border-color);
-    border-bottom: 1px solid var(--#{vars.$prefix}border-color);
+    border-top: 1px solid var(--#{vars.$prefix}border-color, var(--border-translucent));
+    border-bottom: 1px solid var(--#{vars.$prefix}border-color, var(--border-translucent));
   }
 
   .border-s {
-    border-left: 1px solid var(--#{vars.$prefix}border-color);
+    border-left: 1px solid var(--#{vars.$prefix}border-color, var(--border-translucent));
   }
 
   .border-e {
-    border-right: 1px solid var(--#{vars.$prefix}border-color);
+    border-right: 1px solid var(--#{vars.$prefix}border-color, var(--border-translucent));
   }
 
   .border-se {
-    border-left: 1px solid var(--#{vars.$prefix}border-color);
-    border-right: 1px solid var(--#{vars.$prefix}border-color);
+    border-left: 1px solid var(--#{vars.$prefix}border-color, var(--border-translucent));
+    border-right: 1px solid var(--#{vars.$prefix}border-color, var(--border-translucent));
   }
 
   .border-0 {

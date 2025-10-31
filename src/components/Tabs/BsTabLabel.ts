@@ -58,6 +58,7 @@ export default defineComponent<TBsTabLabel>({
                   {
                     class: {
                       flex: true,
+                      'items-end': true,
                       'text-nowrap': true,
                       'flex-fill': orientation.value === 'vertical',
                     },

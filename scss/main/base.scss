@@ -65,18 +65,25 @@
     //-------------------------------------------------
     --background: #{colors.$white};
     --foreground: #{colors.$neutral-darken-4};
+
     --background-secondary: #{colors.$white};
-    --background-tertiary: #{colors.$white};
     --foreground-secondary: #{colors.$gray-900};
+
+    --background-tertiary: #{colors.$white};
     --foreground-tertiary: #{colors.$gray-900};
-    --border-translucent: oklch(0.88 0.001 17.18);
+
+    --foreground-subtle: #{colors.$gray-600};
+    --foreground-subtle-secondary: oklch(0.62 0 0);
+    --foreground-subtle-tertiary: #{colors.$gray-500};
+
+    --border-translucent: oklch(0.88 0.001 17.18 / 0.75);
 
     --appbar-background: var(--background);
     --appbar-foreground: var(--foreground);
 
     --sidedrawer-background: oklch(0.969 0.005 247.877);
     --sidedrawer-item-foreground: var(--foreground);
-    --sidedrawer-item-foreground-secondary: #{colors.$gray-700};
+    --sidedrawer-item-foreground-secondary: var(--foreground-subtle-secondary);
     --sidedrawer-item-active-background: #{vars.$default-active-bgcolor};
     --sidedrawer-item-active-foreground: #{helper.to-oklch(
         color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 1)
@@ -88,12 +95,12 @@
     --sidedrawer-item-hover-foreground: var(--foreground);
     --sidedrawer-item-border-indicator: var(--#{vars.$prefix}field-active-indicator);
     --sidedrawer-item-divider-color: var(--border-translucent);
-    --sidedrawer-item-expanded-background: oklch(0 0 0 / 0.02);
+    --sidedrawer-item-expanded-background: oklch(0 0 0 / 0.03);
 
     // Used in dropdown menus, list-tile, list-nav and other similar UI
     --navigation-background: var(--background-secondary);
     --navigation-item-foreground: var(--foreground);
-    --navigation-item-foreground-secondary: #{colors.$gray-700};
+    --navigation-item-foreground-secondary: var(--foreground-subtle-secondary);
     --navigation-item-active-background: #{vars.$default-active-bgcolor};
     --navigation-item-active-foreground: #{helper.to-oklch(
         color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 1)
@@ -104,7 +111,7 @@
     --navigation-item-hover-background: #{vars.$default-hover-bgcolor};
     --navigation-item-hover-foreground: var(--foreground);
     --navigation-item-hover-foreground-secondary: #{colors.$gray-700};
-    --navigation-item-expanded-background: oklch(0 0 0 / 0.07);
+    --navigation-item-expanded-background: oklch(0 0 0 / 0.025);
     --navigation-item-border-indicator: var(--#{vars.$prefix}field-active-indicator);
   }
 }
