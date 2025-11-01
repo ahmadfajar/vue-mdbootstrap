@@ -26,11 +26,11 @@ export default defineComponent<TBsCard>({
         [
           thisProps.imgTopSrc
             ? useRenderCardImg(thisProps.imgTopSrc, thisProps.imgTopAlt, 'card-img-top')
-            : createCommentVNode(' v-if-imgTop '),
+            : createCommentVNode(' v-if-img-top '),
           slots.default && slots.default(),
           thisProps.imgBottomSrc
             ? useRenderCardImg(thisProps.imgBottomSrc, thisProps.imgBottomAlt, 'card-img-bottom')
-            : createCommentVNode(' v-if-imgBottom '),
+            : createCommentVNode(' v-if-img-bottom '),
         ]
       );
   },

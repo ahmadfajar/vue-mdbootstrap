@@ -57,19 +57,17 @@
     transition: #{vars.$btn-transition};
 
     > .#{vars.$prefix}ripple {
-      display: flex;
+      //display: flex;
       padding: 0;
       border-radius: inherit;
-      //border-radius: var(--#{vars.$prefix}btn-border-radius);
     }
 
     .#{vars.$prefix}btn-inner {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      //width: 100%;
+      //display: flex;
+      //align-items: center;
+      //justify-content: center;
       line-height: var(--#{vars.$prefix}btn-state-line-height);
-      //border-radius: var(--#{vars.$prefix}btn-border-radius);
       border-radius: inherit;
       // prettier-ignore
       padding: var(--#{vars.$prefix}btn-state-padding-y) var(--#{vars.$prefix}btn-state-padding-x);

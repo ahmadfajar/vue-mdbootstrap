@@ -323,9 +323,20 @@
       );
       $text-color: helper.set-color-contrast($color, colors.$gray-300, $color, 90%);
       $border-color: color.adjust(colors.$gray-600, $lightness: 20%);
+      $active-bg: helper.set-color-contrast(
+        $color,
+        color.change(color.scale($color, $lightness: 50%), $alpha: 0.45),
+        $color,
+        90%
+      );
       $active-text: helper.set-color-contrast(
         $color,
-        color.scale($color, $lightness: -75%),
+        helper.set-color-contrast(
+          $color,
+          colors.$white,
+          color.scale($color, $lightness: -75%),
+          90%
+        ),
         colors.$white
       );
       $hover-bg: helper.set-color-contrast(
@@ -344,9 +355,9 @@
 
       --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
       --#{vars.$prefix}btn-border-color: #{helper.to-oklch($border-color)};
-      --#{vars.$prefix}btn-active-bg: #{$color};
+      --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($active-bg)};
       --#{vars.$prefix}btn-active-color: #{helper.to-oklch($active-text)};
-      --#{vars.$prefix}btn-active-border-color: #{$color};
+      --#{vars.$prefix}btn-active-border-color: #{helper.to-oklch($active-bg)};
       --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
       --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($hover-text)};
       --#{vars.$prefix}btn-hover-border-color: #{helper.to-oklch($hover-border)};
@@ -382,10 +393,24 @@
         color.scale($color, $lightness: 10%)
       );
       $text-color: helper.set-color-contrast($color, color.scale($color, $lightness: -10%), $color);
-      $active-bg: helper.set-color-contrast($color, $color, color.adjust($color, $lightness: 15%));
+      $active-bg: helper.set-color-contrast(
+        $color,
+        helper.set-color-contrast(
+          $color,
+          color.change(color.scale($color, $lightness: 25%), $alpha: 0.4),
+          $color,
+          90%
+        ),
+        color.adjust($color, $lightness: 15%)
+      );
       $active-text: helper.set-color-contrast(
         $color,
-        color.scale($color, $lightness: -75%),
+        helper.set-color-contrast(
+          $color,
+          colors.$white,
+          color.scale($color, $lightness: -75%),
+          90%
+        ),
         colors.$white
       );
       $hover-bg: helper.set-color-contrast(

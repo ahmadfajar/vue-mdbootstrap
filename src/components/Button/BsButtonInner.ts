@@ -19,7 +19,7 @@ export default defineComponent<TBsButtonInner>({
       h<TBsRipple>(
         BsRipple,
         {
-          class: { 'dropdown-toggle': thisProps.dropdownToggle && !thisProps.iconMode },
+          class: { flex: true, 'dropdown-toggle': thisProps.dropdownToggle && !thisProps.iconMode },
           disabled: props.rippleOff,
           tag: 'span' as Prop<string>,
         },
@@ -27,6 +27,10 @@ export default defineComponent<TBsButtonInner>({
           default: () =>
             useWrapSlotDefault('span', slots, [
               `${cssPrefix}btn-inner`,
+              'flex',
+              'items-center',
+              'justify-center',
+              'w-full',
               thisProps.hasIcon ? 'has-icon' : '',
             ]),
         }
