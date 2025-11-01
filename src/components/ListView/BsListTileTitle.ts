@@ -13,6 +13,7 @@ export default defineComponent<TBsListTileTitle>({
     return () =>
       useRenderListTileText(slots, props as Readonly<TListTileTextOptionProps>, [
         `${cssPrefix}list-tile-title`,
+        'w-full',
       ]);
   },
 });

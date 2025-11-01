@@ -95,6 +95,7 @@ export function useRenderNotificationItem(
         [`${cssPrefix}dialog-${props.variant}`]: props.variant,
         [`${cssPrefix}dialog-icon-off`]: props.iconOff === true,
         flex: !props.title && !props.progressBar,
+        'relative overflow-hidden': true,
       },
       role: 'alert',
       'aria-live': 'assertive',

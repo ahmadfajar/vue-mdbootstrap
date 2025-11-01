@@ -5,8 +5,8 @@
 
 @layer components {
   .#{vars.$prefix}progress-spinner {
-    display: inline-flex;
-    position: relative;
+    //display: inline-flex;
+    //position: relative;
 
     &.#{vars.$prefix}indeterminate {
       animation: #{vars.$prefix}spin 2s linear infinite;
@@ -65,8 +65,8 @@
   }
 
   .#{vars.$prefix}progress-bar {
-    overflow: hidden;
-    position: relative;
+    //overflow: hidden;
+    //position: relative;
     transform: translateZ(0) scaleY(1);
     transform-origin: center center;
     // prettier-ignore
@@ -160,9 +160,9 @@
     --#{vars.$prefix}progress-border-radius: #{vars.$progress-border-radius};
     --#{vars.$prefix}progress-box-shadow: #{vars.$progress-box-shadow};
 
-    display: flex;
+    //display: flex;
     flex-grow: 1;
-    overflow: hidden;
+    //overflow: hidden;
     height: var(--#{vars.$prefix}progress-height);
     font-size: var(--#{vars.$prefix}progress-font-size);
     background-color: var(--#{vars.$prefix}progress-bg);

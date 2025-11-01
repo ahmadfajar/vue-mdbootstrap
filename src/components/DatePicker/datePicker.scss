@@ -18,11 +18,11 @@
     --#{vars.$prefix}datepicker-subtitle-font-size: 1.25rem;
 
     @include borders.radius(var(--#{vars.$prefix}datepicker-border-radius));
-    position: relative;
+    //position: relative;
 
-    > .#{vars.$prefix}datepicker-inner {
-      width: 100%;
-    }
+    //> .#{vars.$prefix}datepicker-inner {
+    //  width: 100%;
+    //}
   }
 
   .#{vars.$prefix}datepicker-body {
@@ -30,7 +30,7 @@
     background-color: var(--#{vars.$prefix}datepicker-bg);
     color: var(--#{vars.$prefix}datepicker-color);
     min-height: 280px;
-    position: relative;
+    //position: relative;
 
     table {
       display: table;
@@ -69,8 +69,8 @@
 
     > .#{vars.$prefix}datepicker-title {
       font-size: var(--#{vars.$prefix}datepicker-title-font-size);
-      overflow: hidden;
-      position: relative;
+      //overflow: hidden;
+      //position: relative;
     }
 
     > .#{vars.$prefix}datepicker-subtitle {
@@ -95,23 +95,23 @@
   }
 
   .#{vars.$prefix}datepicker-nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    //display: flex;
+    //align-items: center;
+    //justify-content: space-between;
     // prettier-ignore
     padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) var(--#{vars.$prefix}datepicker-padding-x);
 
     > .#{vars.$prefix}datepicker-nav-title {
       flex: 1;
-      overflow: hidden;
-      position: relative;
+      //overflow: hidden;
+      //position: relative;
       text-align: center;
       cursor: pointer;
 
       > .font-weight-bold {
         transition: vars.$transition-stand;
-        display: block;
-        width: 100%;
+        //display: block;
+        //width: 100%;
       }
 
       &.disabled {
@@ -147,8 +147,8 @@
   .#{vars.$prefix}datepicker-years {
     // prettier-ignore
     padding: 0 calc(var(--#{vars.$prefix}datepicker-padding-x) - 0.25rem) calc(var(--#{vars.$prefix}datepicker-padding-y) - 0.25rem);
-    position: relative;
-    overflow: hidden;
+    //position: relative;
+    //overflow: hidden;
 
     .#{vars.$prefix}btn-today {
       --#{vars.$prefix}btn-border-color: var(--#{vars.$prefix}btn-color);

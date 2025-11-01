@@ -13,6 +13,7 @@ export default defineComponent<TBsListTileSubtitle>({
     return () =>
       useRenderListTileText(slots, props as Readonly<TListTileTextOptionProps>, [
         `${cssPrefix}list-tile-subtitle`,
+        'w-full',
       ]);
   },
 });

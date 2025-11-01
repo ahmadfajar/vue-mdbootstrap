@@ -37,6 +37,7 @@ export default defineComponent<TBsListTileLeading>({
         {
           class: {
             [`${cssPrefix}list-tile-leading`]: true,
+            'max-w-full': true,
             'flex self-center': thisProps.center === true,
             'has-icon': !Helper.isEmpty(thisProps.icon),
           },

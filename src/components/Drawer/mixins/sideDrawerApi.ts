@@ -199,7 +199,15 @@ function renderSideDrawer(
         },
         attrs
       ),
-      useWrapSlotDefault('div', slots, `${cssPrefix}side-drawer-inner`)
+      useWrapSlotDefault('div', slots, [
+        `${cssPrefix}side-drawer-inner`,
+        'flex',
+        'flex-col',
+        'relative',
+        'h-full',
+        'w-full',
+        'overflow-hidden',
+      ])
     ),
     [[Resize, resizeHandler]]
   );

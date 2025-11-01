@@ -314,6 +314,7 @@ function createUploaderButtons(
     {
       class: {
         'upload-toolbar': true,
+        'flex absolute w-full': true,
         'justify-between': !props.clickedChange,
         'justify-end': props.clickedChange,
       },
@@ -365,12 +366,19 @@ function createPreviewContainer(
     'div',
     {
       ref: containerRef,
-      class: 'drop-image-container',
+      class: [
+        'drop-image-container',
+        'flex',
+        'items-center',
+        'justify-center',
+        'relative',
+        'w-full',
+      ],
     },
     [
       h('canvas', {
         ref: canvasRef,
-        class: { 'image-preview': true, 'dragging-over': draggingOver.value },
+        class: { 'image-preview': true, absolute: true, 'dragging-over': draggingOver.value },
         tabindex: 0,
         onDrag: preventEventTarget,
         onDragover: preventEventTarget,

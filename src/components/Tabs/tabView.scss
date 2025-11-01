@@ -87,8 +87,8 @@
     > .#{vars.$prefix}tab-content {
       padding: var(--#{vars.$prefix}tab-content-padding);
       transition: all vars.$transition-default;
-      overflow: hidden;
-      position: relative;
+      //overflow: hidden;
+      //position: relative;
     }
   }
 
@@ -122,7 +122,7 @@
   }
 
   .#{vars.$prefix}tab-items {
-    display: flex;
+    //display: flex;
     flex-wrap: wrap;
     padding-left: 0;
     margin-bottom: 0;

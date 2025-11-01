@@ -88,6 +88,8 @@ export function useRenderAnimatedProgressBar(
               `${cssPrefix}progress-bar`,
               `progress-bar-${props.color}`,
               `${cssPrefix}${props.mode?.toLowerCase()}`,
+              'relative',
+              'overflow-hidden',
             ],
             style: {
               height: `${props.height}px`,
@@ -132,6 +134,8 @@ export function useRenderAnimatedProgressSpinner(
           {
             class: [
               `${cssPrefix}progress-spinner`,
+              'inline-flex',
+              'relative',
               `spinner-${props.color}`,
               useBrowserIE() ? `${cssPrefix}indeterminate-fallback` : '',
               useDeterminateMode(props) ? `${cssPrefix}determinate` : `${cssPrefix}indeterminate`,
@@ -182,6 +186,7 @@ function createProgressBar(props: Readonly<TProgressBarOptionProps>): VNode {
             [`${cssPrefix}simple-progress-bar`]: true,
             [`${cssPrefix}progress-bar-striped`]: props.striped,
             [`${cssPrefix}progress-bar-animated`]: props.stripedAnimation,
+            'flex overflow-hidden': true,
             [`bg-${props.color}`]: props.color,
             [`${props.innerCls}`]: props.innerCls,
           },

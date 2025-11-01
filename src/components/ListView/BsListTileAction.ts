@@ -16,6 +16,7 @@ export default defineComponent<TBsListTileAction>({
     return () =>
       useWrapSlotDefault(thisProps.tag || 'div', slots, {
         [`${cssPrefix}list-tile-action`]: true,
+        'max-w-full': true,
         [`${cssPrefix}action-stack`]: thisProps.stack === true,
         flex: !thisProps.stack && thisProps.center === true,
         'self-center': thisProps.center === true,

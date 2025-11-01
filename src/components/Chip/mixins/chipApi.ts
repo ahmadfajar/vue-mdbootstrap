@@ -35,6 +35,11 @@ export function useChipClassNames(props: Readonly<TChipOptionProps>, attrs: TRec
     [`${cssPrefix}chip-${props.color}`]: enableColor && !props.outlined,
     [`${cssPrefix}chip-outline-${props.color}`]: enableColor && props.outlined,
     [props.activeClass as string]: props.activeClass && props.active === true && !props.disabled,
+    'inline-flex': true,
+    'items-center': true,
+    'max-w-full': true,
+    'overflow-hidden': true,
+    relative: true,
     active: props.active === true && !props.disabled && !props.activeClass,
     disabled: props.disabled === true,
     readonly: props.readonly === true && !props.disabled,
@@ -64,6 +69,8 @@ function createChipAvatar(props: Readonly<TChipOptionProps>): VNode {
     {
       class: [
         `${cssPrefix}chip-avatar`,
+        'flex',
+        'items-center',
         props.imgPaddingOff ? `${cssPrefix}chip-avatar-bounded` : '',
       ],
     },
@@ -133,7 +140,7 @@ export function useRenderChip(
         BsRipple,
         {
           disabled: rippleDisabled as unknown as Prop<boolean>,
-          class: `${cssPrefix}chip-content`,
+          class: [`${cssPrefix}chip-content`, 'inline-flex', 'items-center', 'max-w-full'],
         },
         {
           default: () => [
@@ -144,6 +151,9 @@ export function useRenderChip(
               {
                 class: [
                   `${cssPrefix}chip-icon`,
+                  'flex',
+                  'items-center',
+                  'w-full',
                   Helper.isEmpty(props.icon) && !slots.icon ? `${cssPrefix}empty-icon` : '',
                   props.iconPosition === 'right' ? 'order-1' : '',
                 ],

@@ -250,7 +250,12 @@ export function useRenderDatePickerHeader(
       h(
         'div',
         {
-          class: [`${cssPrefix}datepicker-title`, isTitleActive.value ? 'active' : ''],
+          class: [
+            `${cssPrefix}datepicker-title`,
+            'relative',
+            'overflow-hidden',
+            isTitleActive.value ? 'active' : '',
+          ],
           style: styles.value.title,
           onClick: () => {
             if (
@@ -328,7 +333,7 @@ export function useRenderDatePickerNav(
   return h(
     'div',
     {
-      class: [`${cssPrefix}datepicker-nav`],
+      class: [`${cssPrefix}datepicker-nav`, 'flex', 'items-center', 'justify-between'],
     },
     [
       createCalendarNavButton(props.buttonColor || 'dark', 'chevron_left', 30, props.disabled, () =>
@@ -337,7 +342,12 @@ export function useRenderDatePickerNav(
       h(
         'div',
         {
-          class: [`${cssPrefix}datepicker-nav-title`, props.disabled ? 'disabled' : ''],
+          class: [
+            `${cssPrefix}datepicker-nav-title`,
+            'relative',
+            'overflow-hidden',
+            props.disabled ? 'disabled' : '',
+          ],
           onClick: () => {
             !props.disabled && emit('toggle', props.displayMode);
           },
@@ -352,7 +362,7 @@ export function useRenderDatePickerNav(
                 'div',
                 {
                   key: text,
-                  class: ['font-weight-bold'],
+                  class: ['font-weight-bold', 'block', 'w-full'],
                 },
                 text
               ),
@@ -555,7 +565,7 @@ export function useRenderDatePickerDays(
     h(
       'div',
       {
-        class: [`${cssPrefix}datepicker-days`],
+        class: [`${cssPrefix}datepicker-days`, 'relative', 'overflow-hidden'],
         onWheel: (e: WheelEvent) => {
           e.preventDefault();
           debounceShiftDatePickerCalendar(
@@ -837,7 +847,7 @@ export function useRenderDatePickerMonths(
     h(
       'div',
       {
-        class: [`${cssPrefix}datepicker-months`],
+        class: [`${cssPrefix}datepicker-months`, 'relative', 'overflow-hidden'],
         onWheel: (e: WheelEvent) => {
           e.preventDefault();
           debounceShiftDatePickerCalendar(
@@ -950,7 +960,7 @@ export function useRenderDatePickerYears(
     h(
       'div',
       {
-        class: [`${cssPrefix}datepicker-years`],
+        class: [`${cssPrefix}datepicker-years`, 'relative', 'overflow-hidden'],
         onWheel: (e: WheelEvent) => {
           e.preventDefault();
           debounceShiftDatePickerCalendar(
@@ -1304,6 +1314,7 @@ export function useRenderDatePicker(
         [`${cssPrefix}landscape`]: isLandscapeMode,
         'inline-flex': isLandscapeMode,
         flex: props.fullWidth === true,
+        relative: true,
       },
       style: {
         width:
@@ -1319,6 +1330,7 @@ export function useRenderDatePicker(
         {
           class: {
             [`${cssPrefix}datepicker-inner`]: true,
+            'w-full': true,
             flex: props.landscape === true && useBreakpointMin('md'),
           },
         },
@@ -1346,6 +1358,7 @@ export function useRenderDatePicker(
                 [props.surfaceClass as string]: props.surfaceClass,
                 [`bg-${props.surfaceColor}`]: props.surfaceColor && !props.surfaceClass,
                 ['flex items-center']: pickerMode.value === DatePickerConst.TIME,
+                relative: true,
               },
               style: {
                 width:

@@ -23,17 +23,17 @@
     padding: var(--#{vars.$prefix}image-uploader-padding-y) var(--#{vars.$prefix}image-uploader-padding-x);
 
     .drop-image-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      width: 100%;
+      //display: flex;
+      //align-items: center;
+      //justify-content: center;
+      //position: relative;
+      //width: 100%;
       height: var(--#{vars.$prefix}image-uploader-height);
 
       > .image-preview {
         border-radius: var(--#{vars.$prefix}image-uploader-border-radius);
         cursor: pointer;
-        position: absolute;
+        //position: absolute;
         top: 0;
         left: 0;
         z-index: 2;
@@ -44,11 +44,11 @@
       }
 
       > .upload-toolbar {
-        display: flex;
-        position: absolute;
+        //display: flex;
+        //position: absolute;
         left: 0;
         bottom: 0;
-        width: 100%;
+        //width: 100%;
         padding: var(--#{vars.$prefix}image-uploader-toolbar-padding);
       }
 

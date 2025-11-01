@@ -17,6 +17,7 @@ export function useSwitchClasses(props: Readonly<TSwitchOptionProps>): TRecord {
     [`${cssPrefix}switch-${props.color}`]: props.color != null,
     [`${cssPrefix}switch-inset`]: props.insetMode || props.insetOutlined,
     [`${cssPrefix}switch-outlined`]: props.insetOutlined === true && !checked,
+    'flex items-center relative': true,
     checked: checked,
     required: props.required,
     disabled: props.disabled,
@@ -51,19 +52,20 @@ function createSwitchUI(
   rippleActive: Ref<boolean>,
   toggleCheckHandler: PromiseVoidFunction
 ): VNode {
-  return h('div', { class: [`${cssPrefix}switch-wrapper`] }, [
+  return h('div', { class: [`${cssPrefix}switch-wrapper`, 'inline-flex'] }, [
     h(
       'div',
       {
-        class: [`${cssPrefix}switch-track`],
+        class: [`${cssPrefix}switch-track`, 'flex', 'items-center', 'relative'],
         onClick: toggleCheckHandler,
       },
       [
-        h('div', { class: [`${cssPrefix}switch-thumb`] }, [
+        h('div', { class: [`${cssPrefix}switch-thumb`, 'relative'] }, [
           h('div', { class: `${cssPrefix}switch-overlay` }),
           h<TBsRipple>(
             BsRipple,
             {
+              class: ['flex', 'items-center', 'justify-center'],
               centered: true as unknown as Prop<boolean>,
               active: rippleActive.value as unknown as Prop<boolean>,
               disabled: (props.disabled || props.readonly) as unknown as Prop<boolean>,
@@ -85,7 +87,7 @@ function createSwitchUI(
 }
 
 function switchLabelClass(props: Readonly<TSwitchOptionProps>, position: string): string[] {
-  const labelClass = [`${cssPrefix}switch-label`, `${cssPrefix}label-${position}`];
+  const labelClass = [`${cssPrefix}switch-label`, `${cssPrefix}label-${position}`, 'relative'];
 
   return useMergeClass(labelClass, props.labelClass as string | string[]);
 }

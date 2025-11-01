@@ -16,7 +16,7 @@
     --#{vars.$prefix}alert-border-radius: var(--#{vars.$prefix}radius, #{vars.$alert-border-radius});
     --#{vars.$prefix}alert-icon-spacing: #{vars.$alert-icon-spacing};
 
-    position: relative;
+    //position: relative;
     padding: var(--#{vars.$prefix}alert-padding-y) var(--#{vars.$prefix}alert-padding-x);
     margin-bottom: var(--#{vars.$prefix}alert-margin-bottom);
     background-color: var(--#{vars.$prefix}alert-bg);

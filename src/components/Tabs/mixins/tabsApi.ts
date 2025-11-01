@@ -35,6 +35,7 @@ export function useTabViewClassNames(
   let cssClasses = [
     `${cssPrefix}tabs-${props.variant}`,
     `${cssPrefix}tab-items`,
+    'flex',
     props.alignment === 'justified' && orientation.value === 'horizontal'
       ? props.flex
         ? 'flex-col flex-lg-row lg:flex-row'
@@ -335,7 +336,7 @@ function renderVerticalTabView(
         'div',
         {
           class: useMergeClass(
-            `col ${cssPrefix}tab-content`,
+            ['col', `${cssPrefix}tab-content`, 'overflow-hidden', 'relative'],
             props.contentClass as string | string[]
           ),
         },
@@ -455,7 +456,10 @@ function renderHorizontalTabView(
       h(
         'div',
         {
-          class: useMergeClass([`${cssPrefix}tab-content`], props.contentClass as string),
+          class: useMergeClass(
+            [`${cssPrefix}tab-content`, 'overflow-hidden', 'relative'],
+            props.contentClass as string | string[]
+          ),
         },
         slots.default && slots.default()
       ),

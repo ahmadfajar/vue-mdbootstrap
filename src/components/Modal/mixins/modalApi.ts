@@ -106,7 +106,7 @@ function createModalDialog(
       ? h(
           'div',
           {
-            class: [`${cssPrefix}modal`],
+            class: [`${cssPrefix}modal`, 'flex', 'items-center', 'justify-center', 'fixed'],
             onClick: () => {
               props.overlayClickClose &&
                 useClosePopover(instance.value, modalOpen, 'Overlay clicked.');

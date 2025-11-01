@@ -45,6 +45,7 @@ export function useListTileClassNames(
 
   return {
     [`${cssPrefix}list-tile`]: true,
+    'flex relative': true,
     [`${cssPrefix}link`]: (tagName === 'a' || props.navigable) && !props.disabled,
     [`${cssPrefix}tile-border-${provider?.itemBorderVariant}`]:
       provider?.itemBorderVariant &&

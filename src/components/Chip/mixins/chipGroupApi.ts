@@ -141,7 +141,13 @@ export function useRenderChipGroup(
   return h(
     'div',
     {
-      class: [`${cssPrefix}chip-group`, props.column ? `${cssPrefix}chip-group-column` : ''],
+      class: [
+        `${cssPrefix}chip-group`,
+        props.column ? `${cssPrefix}chip-group-column` : '',
+        'flex',
+        'relative',
+        'max-w-full',
+      ],
     },
     [
       showSliderButton
@@ -151,14 +157,14 @@ export function useRenderChipGroup(
         'div',
         {
           id: slider.wrapperId,
-          class: [`${cssPrefix}chip-group-slider`],
+          class: [`${cssPrefix}chip-group-slider`, 'flex', 'flex-fill'],
         },
         [
           h(
             'div',
             {
               id: slider.contentId,
-              class: [`${cssPrefix}chip-group-content`],
+              class: [`${cssPrefix}chip-group-content`, 'flex', 'relative'],
             },
             props.items.map((item, idx) => {
               return createChipElement(slots, props, item, idx, clickHandler, closeHandler);

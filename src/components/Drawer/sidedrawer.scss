@@ -32,14 +32,14 @@
       box-shadow: none !important;
     }
 
-    > .#{vars.$prefix}side-drawer-inner {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-      width: 100%;
-      overflow: hidden;
-      position: relative;
-    }
+    //> .#{vars.$prefix}side-drawer-inner {
+    //  display: flex;
+    //  flex-direction: column;
+    //  height: 100%;
+    //  width: 100%;
+    //  overflow: hidden;
+    //  position: relative;
+    //}
 
     // Apply SideDrawer color scheme to ListView, List-Tile, and List-Nav
     .#{vars.$prefix}list {

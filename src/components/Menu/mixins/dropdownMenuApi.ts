@@ -73,14 +73,14 @@ export function useRenderDropdownMenu(
   return h(
     'div',
     {
-      class: [`${cssPrefix}dropdown-menu`],
+      class: [`${cssPrefix}dropdown-menu`, 'inline-flex', 'items-center', 'relative'],
     },
     [
       h(
         'div',
         {
           ref: activator,
-          class: [`${cssPrefix}dropdown-menu-activator`],
+          class: [`${cssPrefix}dropdown-menu-activator`, 'relative'],
           onClick: async () => {
             if (!props.openOnHover) {
               isActive.value

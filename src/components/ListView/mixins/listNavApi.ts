@@ -35,6 +35,7 @@ export function useListNavItemClasses(
     [`${cssPrefix}nav-item`]: true,
     [`${cssPrefix}nav-parent`]: hasChild.value,
     [`${cssPrefix}expanded`]: hasChild.value && expanded.value,
+    'relative w-full': true,
     'has-icon': !Helper.isEmpty(props.icon),
     active: !props.disabled && isActive.value,
     disabled: props.disabled === true,
@@ -87,6 +88,8 @@ function renderNavItemContent(
     BsRipple,
     {
       class: {
+        flex: true,
+        'items-center': true,
         rounded: provider?.itemRounded === true && !props.roundedOff,
         'rounded-pill':
           provider?.itemRoundedPill === true && !provider.itemRounded && !props.pillOff,

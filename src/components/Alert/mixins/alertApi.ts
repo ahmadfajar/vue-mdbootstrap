@@ -26,12 +26,13 @@ export function useAlertClassNames(
   color: ComputedRef<string | undefined>
 ): TBooleanRecord {
   return {
-    [`${cssPrefix}alert flex items-center`]: true,
+    [`${cssPrefix}alert`]: true,
     [`${cssPrefix}alert-${color.value}`]:
       !Helper.isEmpty(color.value) && !props.filled && !props.outlined,
     [`${cssPrefix}alert-solid-${color.value}`]:
       !Helper.isEmpty(color.value) && props.filled && !props.outlined,
     [`${cssPrefix}alert-outline-${color.value}`]: props.outlined,
+    'flex items-center relative': true,
     dismissible: props.dismissible,
   };
 }

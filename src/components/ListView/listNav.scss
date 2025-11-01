@@ -39,9 +39,9 @@
 
     .#{vars.$prefix}nav-item {
       background-color: var(--#{vars.$prefix}nav-item-state-bg);
-      position: relative;
+      //position: relative;
       white-space: nowrap;
-      width: 100%;
+      //width: 100%;
 
       > .#{vars.$prefix}nav-item-inner {
         background-color: var(--#{vars.$prefix}nav-item-inner-state-bg);
@@ -49,8 +49,8 @@
         font-weight: var(--#{vars.$prefix}nav-item-state-font-weight);
 
         > .#{vars.$prefix}ripple {
-          display: flex;
-          align-items: center;
+          //display: flex;
+          //align-items: center;
           line-height: var(--#{vars.$prefix}nav-item-line-height);
           // prettier-ignore
           padding: var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-right) var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-left);

@@ -15,6 +15,7 @@ export default defineComponent<TBsListTileContent>({
     return () =>
       useWrapSlotDefault(thisProps.tag || 'div', slots, {
         [`${cssPrefix}list-tile-content`]: true,
+        'flex flex-col self-center overflow-hidden max-w-full': true,
         [`${cssPrefix}multiline`]: thisProps.multiLine === true,
       });
   },
