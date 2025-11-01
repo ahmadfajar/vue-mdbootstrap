@@ -9,15 +9,15 @@
   &:-ms-input-placeholder {
     @content;
   }
-  &:-moz-placeholder {
-    @content;
-  }
-  &::-moz-placeholder {
-    @content;
-  }
-  &::-webkit-input-placeholder {
-    @content;
-  }
+  //&:-moz-placeholder {
+  //  @content;
+  //}
+  //&::-moz-placeholder {
+  //  @content;
+  //}
+  //&::-webkit-input-placeholder {
+  //  @content;
+  //}
 }
 
 @mixin decorate-input-placeholder {

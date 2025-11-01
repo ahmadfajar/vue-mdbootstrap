@@ -29,11 +29,11 @@
     }
 
     .#{vars.$prefix}action-icon {
-      > .#{vars.$prefix}action-button-left,
-      > .#{vars.$prefix}action-button-right {
-        display: flex;
-        align-items: center;
-      }
+      //> .#{vars.$prefix}action-button-left,
+      //> .#{vars.$prefix}action-button-right {
+      //  display: flex;
+      //  align-items: center;
+      //}
 
       .#{vars.$prefix}spin-down,
       .#{vars.$prefix}spin-up,
@@ -53,8 +53,8 @@
 
       > .#{vars.$prefix}spin-button-left,
       > .#{vars.$prefix}spin-button-right {
-        display: flex;
-        flex-direction: column;
+        //display: flex;
+        //flex-direction: column;
         width: 1.5rem;
         margin-top: 0.3rem;
         margin-bottom: 0.15rem;
@@ -66,9 +66,9 @@
           height: 1.125rem; // 18px;
           width: 1.5rem;
 
-          > .#{vars.$prefix}ripple {
-            justify-content: center;
-          }
+          //> .#{vars.$prefix}ripple {
+          //  justify-content: center;
+          //}
         }
 
         > .#{vars.$prefix}spin-down {
@@ -91,10 +91,10 @@
         // margin-top: .75rem;
 
         .#{vars.$prefix}btn-icon {
-          > .#{vars.$prefix}ripple {
-            align-items: center;
-            justify-content: center;
-          }
+          //> .#{vars.$prefix}ripple {
+          //  align-items: center;
+          //  justify-content: center;
+          //}
 
           + .#{vars.$prefix}btn-icon {
             margin-left: -0.25rem;

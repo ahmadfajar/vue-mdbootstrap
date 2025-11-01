@@ -116,10 +116,10 @@
       padding: var(--#{vars.$prefix}lightbox-element-padding-x);
       min-width: 100px;
 
-      .btn-menu {
-        --#{vars.$prefix}btn-active-bg: var(--#{vars.$prefix}btn-hover-bg);
-        --#{vars.$prefix}btn-active-color: var(--#{vars.$prefix}btn-hover-color);
-      }
+      //.btn-menu {
+      //  --#{vars.$prefix}btn-active-bg: var(--#{vars.$prefix}btn-hover-bg);
+      //  --#{vars.$prefix}btn-active-color: var(--#{vars.$prefix}btn-hover-color);
+      //}
     }
 
     .#{vars.$prefix}counter {

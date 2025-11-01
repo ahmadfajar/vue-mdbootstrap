@@ -329,6 +329,12 @@
         $color,
         90%
       );
+      $active-border: helper.set-color-contrast(
+        $color,
+        color.change(color.scale($color, $lightness: 50%), $alpha: 0.15),
+        $color,
+        90%
+      );
       $active-text: helper.set-color-contrast(
         $color,
         helper.set-color-contrast(
@@ -357,7 +363,7 @@
       --#{vars.$prefix}btn-border-color: #{helper.to-oklch($border-color)};
       --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($active-bg)};
       --#{vars.$prefix}btn-active-color: #{helper.to-oklch($active-text)};
-      --#{vars.$prefix}btn-active-border-color: #{helper.to-oklch($active-bg)};
+      --#{vars.$prefix}btn-active-border-color: #{helper.to-oklch($active-border)};
       --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
       --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($hover-text)};
       --#{vars.$prefix}btn-hover-border-color: #{helper.to-oklch($hover-border)};
@@ -397,7 +403,7 @@
         $color,
         helper.set-color-contrast(
           $color,
-          color.change(color.scale($color, $lightness: 25%), $alpha: 0.4),
+          color.change(color.scale($color, $lightness: 30%), $alpha: 0.45),
           $color,
           90%
         ),

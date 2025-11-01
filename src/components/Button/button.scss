@@ -429,7 +429,7 @@
   text-decoration: none;
   font-size: var(--#{vars.$prefix}btn-font-size);
   font-weight: var(--#{vars.$prefix}btn-font-weight);
-  -webkit-user-select: none;
+  //-webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
   // prettier-ignore

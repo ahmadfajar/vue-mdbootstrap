@@ -882,8 +882,8 @@
   }
 
   @include transitions.enterFrom-leaveTo('field-feedback') {
-    transform: translateY(-8px);
-    transition: opacity, transform 0.25s ease-out;
+    transform: translateY(-6px);
+    transition: opacity 0.1s, transform 0.15s ease-out;
   }
 }
 

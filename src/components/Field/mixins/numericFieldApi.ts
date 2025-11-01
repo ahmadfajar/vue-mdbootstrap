@@ -43,6 +43,7 @@ function createMinusButton(
       h(
         BsRipple,
         {
+          class: ['flex', 'items-center', 'justify-center'],
           disabled: props.disabled as unknown as Prop<boolean>,
           tag: 'span' as Prop<string>,
         },
@@ -72,6 +73,7 @@ function createPlusButton(
       h(
         BsRipple,
         {
+          class: ['flex', 'items-center', 'justify-center'],
           disabled: props.disabled as unknown as Prop<boolean>,
           tag: 'span' as Prop<string>,
         },
@@ -109,7 +111,7 @@ function createActionButtons(
   return h(
     'div',
     {
-      class: [`${cssPrefix}action-button-${position}`],
+      class: [`${cssPrefix}action-button-${position}`, 'flex', 'items-center'],
     },
     children
   );
@@ -123,7 +125,7 @@ function createSpinnerButton(
   return h(
     'div',
     {
-      class: [`${cssPrefix}spin-button-${props.spinButtonPlacement}`],
+      class: [`${cssPrefix}spin-button-${props.spinButtonPlacement}`, 'flex', 'flex-col'],
     },
     [
       h(
@@ -136,6 +138,7 @@ function createSpinnerButton(
           h(
             BsRipple,
             {
+              class: ['flex', 'justify-center'],
               disabled: props.disabled as unknown as Prop<boolean>,
               tag: 'span' as Prop<string>,
             },
@@ -158,6 +161,7 @@ function createSpinnerButton(
           h(
             BsRipple,
             {
+              class: ['flex', 'justify-center'],
               disabled: props.disabled as unknown as Prop<boolean>,
               tag: 'span' as Prop<string>,
             },

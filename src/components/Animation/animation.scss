@@ -19,7 +19,7 @@
     height: 100%;
     position: relative;
     overflow: hidden;
-    -webkit-mask-image: radial-gradient(circle, oklch(1 0 89.876) 100%, oklch(0 0 0) 100%);
+    //-webkit-mask-image: radial-gradient(circle, oklch(1 0 89.876) 100%, oklch(0 0 0) 100%);
     mask-image: radial-gradient(circle, oklch(1 0 89.876) 100%, oklch(0 0 0) 100%);
   }
 
