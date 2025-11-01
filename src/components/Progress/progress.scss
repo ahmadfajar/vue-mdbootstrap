@@ -161,7 +161,7 @@
     --#{vars.$prefix}progress-box-shadow: #{vars.$progress-box-shadow};
 
     //display: flex;
-    flex-grow: 1;
+    //flex-grow: 1;
     //overflow: hidden;
     height: var(--#{vars.$prefix}progress-height);
     font-size: var(--#{vars.$prefix}progress-font-size);
@@ -171,10 +171,10 @@
   }
 
   .#{vars.$prefix}simple-progress-bar {
-    display: flex;
+    //display: flex;
     flex-direction: column;
-    justify-content: center;
-    overflow: hidden;
+    //justify-content: center;
+    //overflow: hidden;
     text-align: center;
     white-space: nowrap;
     color: var(--#{vars.$prefix}progress-bar-color);

@@ -55,6 +55,6 @@
   }
 
   &.divider--light {
-    --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.35)};
+    --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.45)};
   }
 }

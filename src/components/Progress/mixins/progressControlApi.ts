@@ -173,7 +173,13 @@ function createProgressBar(props: Readonly<TProgressBarOptionProps>): VNode {
   return h(
     'div',
     {
-      class: [`${cssPrefix}simple-progress`, props.roundedOff ? 'rounded-0' : ''],
+      class: [
+        `${cssPrefix}simple-progress`,
+        'flex',
+        'flex-grow',
+        'overflow-hidden',
+        props.roundedOff ? 'rounded-0' : '',
+      ],
       style: {
         height: Helper.cssUnit(props.height),
       },
@@ -186,7 +192,7 @@ function createProgressBar(props: Readonly<TProgressBarOptionProps>): VNode {
             [`${cssPrefix}simple-progress-bar`]: true,
             [`${cssPrefix}progress-bar-striped`]: props.striped,
             [`${cssPrefix}progress-bar-animated`]: props.stripedAnimation,
-            'flex overflow-hidden': true,
+            'flex justify-center overflow-hidden': true,
             [`bg-${props.color}`]: props.color,
             [`${props.innerCls}`]: props.innerCls,
           },
