@@ -39,6 +39,8 @@ export function useRadioClasses(props: Readonly<TRadioOptionProps>): TRecord {
   return {
     [`${cssPrefix}radio`]: true,
     [`${cssPrefix}radio-${props.color}`]: props.color != null,
+    'inline-flex': true,
+    relative: true,
     checked: props.value === props.modelValue,
     required: props.required,
     disabled: props.disabled,
@@ -105,7 +107,7 @@ export function useRenderRadioOrCheckbox(
       h(
         'div',
         {
-          class: `${cssPrefix}${inputType}-inner`,
+          class: [`${cssPrefix}${inputType}-inner`, 'relative'],
           onClick: toggleCheckHandler,
         },
         [

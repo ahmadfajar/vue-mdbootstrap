@@ -24,6 +24,11 @@ export default defineComponent<TBsAvatar>({
         {
           class: {
             [`${cssPrefix}avatar`]: true,
+            relative: true,
+            'inline-flex': true,
+            'items-center': true,
+            'justify-center': true,
+            'max-w-full': true,
             [`border-${thisProps.borderColor}`]: thisProps.borderColor,
             'overflow-hidden': thisProps.circle || thisProps.rounded,
             'p-2': useGetCalcSize(thisProps) > 72,
@@ -47,7 +52,17 @@ export default defineComponent<TBsAvatar>({
                 })
               : h(
                   'span',
-                  { class: [`${cssPrefix}avatar-text`] },
+                  {
+                    class: [
+                      `${cssPrefix}avatar-text`,
+                      'flex',
+                      'items-center',
+                      'justify-center',
+                      'h-full',
+                      'w-full',
+                      'overflow-hidden',
+                    ],
+                  },
                   toDisplayString(thisProps.text) || '?'
                 ),
         ])

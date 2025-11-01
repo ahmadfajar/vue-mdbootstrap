@@ -15,8 +15,6 @@
     font-weight: var(--#{vars.$prefix}subheader-font-weight);
     // prettier-ignore
     padding: var(--#{vars.$prefix}subheader-padding-y) var(--#{vars.$prefix}subheader-padding-x);
-    display: flex;
-    align-items: center;
     height: 48px;
 
     &.subheader--dark {

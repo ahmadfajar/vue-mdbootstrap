@@ -87,12 +87,20 @@ export function useRenderAppbar(
           [`${cssPrefix}appbar`]: true,
           [`${cssPrefix}appbar-shadow`]: props.shadow,
           'smooth-animation': smoothAnimation.value,
+          'max-w-full': true,
           'fixed-top': props.fixedTop,
           'sticky-top': props.stickyTop && !props.fixedTop,
         },
         style: styles.value,
       },
-      [useWrapSlotDefault('nav', slots, `${cssPrefix}appbar-content`)]
+      [
+        useWrapSlotDefault('nav', slots, [
+          `${cssPrefix}appbar-content`,
+          'flex',
+          'flex-row',
+          'items-center',
+        ]),
+      ]
     ),
     [[Resize, resizeHandler]]
   );

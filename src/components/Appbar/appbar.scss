@@ -16,7 +16,7 @@
     justify-self: flex-start;
     background-color: var(--#{vars.$prefix}appbar-bg);
     color: var(--#{vars.$prefix}appbar-color);
-    max-width: 100%;
+    //max-width: 100%;
 
     &.smooth-animation {
       transition: vars.$transition-default;
@@ -27,9 +27,9 @@
     }
 
     > .#{vars.$prefix}appbar-content {
-      display: flex;
-      align-items: center;
-      flex-direction: row;
+      //display: flex;
+      //align-items: center;
+      //flex-direction: row;
       height: var(--#{vars.$prefix}appbar-height);
       padding: var(--#{vars.$prefix}appbar-padding);
     }
@@ -53,8 +53,8 @@
     }
 
     .#{vars.$prefix}appbar-items {
-      display: flex;
-      max-width: 100%;
+      //display: flex;
+      //max-width: 100%;
       padding: 0;
     }
   }

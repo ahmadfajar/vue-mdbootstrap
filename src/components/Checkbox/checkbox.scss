@@ -32,8 +32,8 @@
     --#{vars.$prefix}checkbox-state-overlay-opacity: 0;
 
     margin: var(--#{vars.$prefix}checkbox-margin);
-    display: inline-flex;
-    position: relative;
+    //display: inline-flex;
+    //position: relative;
     cursor: pointer;
 
     > .#{vars.$prefix}checkbox-inner {
@@ -46,7 +46,7 @@
       min-width: var(--#{vars.$prefix}checkbox-size);
       width: var(--#{vars.$prefix}checkbox-size);
       transition: #{vars.$transition-stand};
-      position: relative;
+      //position: relative;
 
       &:focus {
         outline: none;

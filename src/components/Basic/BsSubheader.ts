@@ -12,6 +12,8 @@ export default defineComponent<TBsSubheader>({
     return () =>
       useWrapSlotDefault('div', slots, [
         `${cssPrefix}subheader`,
+        'flex',
+        'items-center',
         props.dark ? 'subheader--dark' : 'subheader--light',
       ]);
   },

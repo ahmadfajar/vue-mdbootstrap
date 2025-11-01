@@ -55,25 +55,46 @@ function renderBreadcrumb(slots: Slots, props: Readonly<TBreadcrumbOptionProps>)
       ariaLabel: 'breadcrumb',
     },
     [
-      h('div', { class: `${cssPrefix}breadcrumb-container` }, [
-        useWrapSlot(
-          slots,
-          'icon',
-          'breadcrumb-icon',
-          { class: `${cssPrefix}breadcrumb-icon` },
-          !Helper.isEmpty(props.prependIcon)
-            ? h<TBsIcon>(BsIcon, {
-                icon: props.prependIcon as Prop<string>,
-                size: props.iconSize as Prop<string | number>,
-              })
-            : undefined
-        ),
-        h(
-          'ol',
-          { class: `${cssPrefix}breadcrumb-inner` },
-          props.items.map((it, idx) => createItemLabel(it, idx, itemCount))
-        ),
-      ]),
+      h(
+        'div',
+        {
+          class: [
+            `${cssPrefix}breadcrumb-container`,
+            'relative',
+            'flex',
+            'flex-nowrap',
+            'items-end',
+          ],
+        },
+        [
+          useWrapSlot(
+            slots,
+            'icon',
+            'breadcrumb-icon',
+            { class: [`${cssPrefix}breadcrumb-icon`, 'inline-flex'] },
+            !Helper.isEmpty(props.prependIcon)
+              ? h<TBsIcon>(BsIcon, {
+                  icon: props.prependIcon as Prop<string>,
+                  size: props.iconSize as Prop<string | number>,
+                })
+              : undefined
+          ),
+          h(
+            'ol',
+            {
+              class: [
+                `${cssPrefix}breadcrumb-inner`,
+                'relative',
+                'overflow-hidden',
+                'flex',
+                'flex-nowrap',
+                'items-center',
+              ],
+            },
+            props.items.map((it, idx) => createItemLabel(it, idx, itemCount))
+          ),
+        ]
+      ),
     ]
   );
 }
@@ -85,11 +106,13 @@ function createItemLabel(item: TBreadcrumb, index: number, length: number): VNod
     pathName: item.pathName,
   };
 
+  const itemLabelCls = [`${cssPrefix}breadcrumb-item`, 'flex', 'flex-nowrap'];
+
   if (index === length) {
     return h(
       'li',
       {
-        class: [`${cssPrefix}breadcrumb-item`, 'active'],
+        class: itemLabelCls.concat('active'),
         'aria-current': 'page',
       },
       toDisplayString(item.label)
@@ -98,7 +121,7 @@ function createItemLabel(item: TBreadcrumb, index: number, length: number): VNod
     return h(
       'li',
       {
-        class: [`${cssPrefix}breadcrumb-item`, `${cssPrefix}link`],
+        class: itemLabelCls.concat(`${cssPrefix}link`),
         onClick: item.handler(),
       },
       toDisplayString(item.label)
@@ -110,14 +133,12 @@ function createItemLabel(item: TBreadcrumb, index: number, length: number): VNod
         to: item.pathName ? { name: item.pathName } : item.path,
       } as RouterLinkProps);
 
-    return h('li', { class: `${cssPrefix}breadcrumb-item` }, [
-      useRenderRouter(_props, toDisplayString(item.label)),
-    ]);
+    return h('li', { class: itemLabelCls }, [useRenderRouter(_props, toDisplayString(item.label))]);
   } else if (item.href) {
-    return h('li', { class: `${cssPrefix}breadcrumb-item` }, [
+    return h('li', { class: itemLabelCls }, [
       h('a', { href: item.href }, toDisplayString(item.label)),
     ]);
   } else {
-    return h('li', { class: `${cssPrefix}breadcrumb-item` }, toDisplayString(item.label));
+    return h('li', { class: itemLabelCls }, toDisplayString(item.label));
   }
 }
