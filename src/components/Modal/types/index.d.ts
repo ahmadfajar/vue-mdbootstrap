@@ -56,10 +56,33 @@ export declare type TModalOptionProps = TPopupOptions & {
   transition?: string;
 };
 
-export declare type TImageDataset = {
-  imageSrc: string;
+export declare type SourceType = 'image' | 'video' | 'youtube';
+
+export declare type TLightboxSource = {
+  /**
+   * Image, video or YouTube source url.
+   */
+  sourceUrl: string;
+
+  /**
+   * The source content type.
+   */
+  type: SourceType | string;
+
+  /**
+   * Image thumbnail for the source url.
+   */
   thumbnail: string;
+
+  /**
+   * Title to display.
+   */
   title: string;
+
+  /**
+   * Additional css class to append to the viewer element when this item is active.
+   */
+  cssClass?: string | string[];
 };
 
 export declare type TTransitionMode = 'in-out' | 'out-in';
@@ -99,19 +122,19 @@ export declare type TLightboxOptionProps = {
   overlayClickClose?: boolean;
 
   /**
-   * Additional css class name for active image.
+   * Additional css class name for active image or video.
    */
-  imageClass?: string | string[];
+  viewerClass?: string | string[];
 
   /**
-   * Additional css styles for active image.
+   * Additional css styles for active image or video.
    */
-  imageStyles?: TRecord;
+  viewerStyles?: TRecord;
 
   /**
    * This component's source dataset.
    */
-  items?: TImageDataset[];
+  items?: TLightboxSource[];
 
   /**
    * Show or hide indicator counter.
@@ -189,22 +212,22 @@ export declare const BsModal: {
 };
 
 declare interface LightboxEvents extends EventClosableProps, EventUpdateOpenProps {
-  onChange?: (value: TImageDataset, index: number) => void;
-  'onExec-delete'?: (target: TImageDataset) => void;
-  'onExec-download'?: (target: TImageDataset) => void;
-  'onExec-info'?: (target: TImageDataset) => void;
-  'onExec-rotate-left'?: (target: TImageDataset, rotate: number) => void;
-  'onExec-rotate-right'?: (target: TImageDataset, rotate: number) => void;
-  'onExec-zoomin'?: (target: TImageDataset, zoom: number) => void;
-  'onExec-zoomout'?: (target: TImageDataset, zoom: number) => void;
-  '@change'?: (value: TImageDataset, index: number) => void;
-  '@exec-delete'?: (target: TImageDataset) => void;
-  '@exec-download'?: (target: TImageDataset) => void;
-  '@exec-info'?: (target: TImageDataset) => void;
-  '@exec-rotate-left'?: (target: TImageDataset, rotate: number) => void;
-  '@exec-rotate-right'?: (target: TImageDataset, rotate: number) => void;
-  '@exec-zoomin'?: (target: TImageDataset, zoom: number) => void;
-  '@exec-zoomout'?: (target: TImageDataset, zoom: number) => void;
+  onChange?: (value: TLightboxSource, index: number) => void;
+  'onExec-delete'?: (target: TLightboxSource) => void;
+  'onExec-download'?: (target: TLightboxSource) => void;
+  'onExec-info'?: (target: TLightboxSource) => void;
+  'onExec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
+  'onExec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
+  'onExec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
+  'onExec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
+  '@change'?: (value: TLightboxSource, index: number) => void;
+  '@exec-delete'?: (target: TLightboxSource) => void;
+  '@exec-download'?: (target: TLightboxSource) => void;
+  '@exec-info'?: (target: TLightboxSource) => void;
+  '@exec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
+  '@exec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
+  '@exec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
+  '@exec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
 }
 
 export declare const BsLightbox: {
@@ -216,14 +239,14 @@ export declare const BsLightbox: {
     $emits: {
       (event: 'update:open', state: boolean): void;
       (event: 'close', message: string): void;
-      (event: 'change', value: TImageDataset, index: number): void;
-      (event: 'exec-delete', target: TImageDataset): void;
-      (event: 'exec-download', target: TImageDataset): void;
-      (event: 'exec-info', target: TImageDataset): void;
-      (event: 'exec-rotate-left', target: TImageDataset, rotate: number): void;
-      (event: 'exec-rotate-right', target: TImageDataset, rotate: number): void;
-      (event: 'exec-zoomin', target: TImageDataset, zoom: number): void;
-      (event: 'exec-zoomout', target: TImageDataset, zoom: number): void;
+      (event: 'change', value: TLightboxSource, index: number): void;
+      (event: 'exec-delete', target: TLightboxSource): void;
+      (event: 'exec-download', target: TLightboxSource): void;
+      (event: 'exec-info', target: TLightboxSource): void;
+      (event: 'exec-rotate-left', target: TLightboxSource, rotate: number): void;
+      (event: 'exec-rotate-right', target: TLightboxSource, rotate: number): void;
+      (event: 'exec-zoomin', target: TLightboxSource, zoom: number): void;
+      (event: 'exec-zoomout', target: TLightboxSource, zoom: number): void;
     };
     $exposed: {
       setActive: (index: number) => void;

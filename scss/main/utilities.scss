@@ -36,6 +36,10 @@
     max-width: 100%;
   }
 
+  .aspect-video {
+    aspect-ratio: 16/9;
+  }
+
   .relative {
     position: relative;
   }
@@ -78,16 +82,19 @@
 
   .sticky {
     position: sticky;
+    z-index: 1020;
   }
 
   .sticky-top {
     position: sticky;
     top: 0;
+    z-index: 1020;
   }
 
   .sticky-bottom {
     position: sticky;
     bottom: 0;
+    z-index: 1020;
   }
 
   .float-start {

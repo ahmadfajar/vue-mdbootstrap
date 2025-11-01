@@ -1,10 +1,10 @@
-@use "sass:color";
+@use 'sass:color';
 @use '../../../scss/mixins/css3/breakpoints' as media;
 @use '../../../scss/color_vars' as colors;
 @use '../../../scss/variables' as vars;
 
 @layer components {
-  .#{vars.$prefix}lightbox-wrap {
+  .#{vars.$prefix}lightbox-container {
     --#{vars.$prefix}lightbox-element-padding-x: #{vars.$padding-sm};
     --#{vars.$prefix}lightbox-display-bg: #{color.change(colors.$black, $alpha: 0.3)};
     --#{vars.$prefix}lightbox-toolbar-bg: #{color.change(colors.$black, $alpha: 0.9)};
@@ -14,146 +14,159 @@
     --#{vars.$prefix}lightbox-title-color: #{colors.$gray-400};
     --#{vars.$prefix}lightbox-title-size: 1.25rem;
     --#{vars.$prefix}lightbox-thumbnail-bg: #{color.change(colors.$black, $alpha: 0.95)};
+    // prettier-ignore
     --#{vars.$prefix}lightbox-thumbnail-border: #{1px solid color.change(colors.$black, $alpha: 0.6)};
     --#{vars.$prefix}lightbox-thumbnail-opacity: 0.5;
     --#{vars.$prefix}lightbox-thumbnail-active-border-color: #{colors.$red-base};
     --#{vars.$prefix}lightbox-thumbnail-active-border-width: 2px;
 
-    left: 0;
-    right: 0;
-    top: 0;
+    //position: fixed;
+    //left: 0;
+    //right: 0;
+    //top: 0;
     bottom: 0;
-    position: fixed;
 
     &.#{vars.$prefix}lightbox-overlay {
       background-color: var(--#{vars.$prefix}lightbox-overlay-bg);
     }
+  }
 
-    > .#{vars.$prefix}lightbox-display {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+  //.#{vars.$prefix}lightbox-display {
+  //  display: flex;
+  //  align-items: center;
+  //  justify-content: center;
+  //  position: relative;
+  //}
 
-      .#{vars.$prefix}lightbox-item {
-        background: var(--#{vars.$prefix}lightbox-display-bg);
-        display: flex;
-        flex-direction: column;
-        max-width: 95%;
-        max-height: 96%;
-        position: relative;
-        overflow: hidden;
-      }
+  .#{vars.$prefix}lightbox-item {
+    background: var(--#{vars.$prefix}lightbox-display-bg);
+    max-width: 95%;
+    max-height: 96%;
+    //position: relative;
+    //overflow: hidden;
+  }
 
-      .#{vars.$prefix}lightbox-item-img {
-        display: flex;
-        flex: 1 1;
-        height: 100%;
-        overflow: hidden;
-        position: relative;
+  .#{vars.$prefix}lightbox-item-view {
+    //display: flex;
+    //flex: 1 1;
+    //height: 100%;
+    //overflow: hidden;
+    //position: relative;
 
-        > img {
-          transition: vars.$transition-basic;
-          max-width: 100%;
-          max-height: 100%;
-          height: auto;
-          //z-index: 10;
-        }
-      }
+    > img,
+    > iframe,
+    > video {
+      transition: vars.$transition-basic;
+      max-height: 100%;
+      height: auto;
+    }
 
-      .#{vars.$prefix}lightbox-item-title {
-        background: var(--#{vars.$prefix}lightbox-title-bg);
-        color: var(--#{vars.$prefix}lightbox-title-color);
-        font-size: var(--#{vars.$prefix}lightbox-title-size);
-        display: block;
-        line-height: normal;
-        padding: 12px;
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-      }
+    > img {
+      max-width: 100%;
+    }
 
-      > .#{vars.$prefix}lightbox-controls {
-        display: flex;
-        justify-content: space-between;
-        position: fixed;
-        left: 0;
-        right: 0;
-        z-index: 10;
+    > iframe,
+    > video {
+      width: 100%;
+    }
+  }
 
-        > .#{vars.$prefix}control-prev {
-          display: inline-flex;
-          padding-left: var(--#{vars.$prefix}lightbox-element-padding-x);
-        }
+  .#{vars.$prefix}lightbox-item-title {
+    background: var(--#{vars.$prefix}lightbox-title-bg);
+    color: var(--#{vars.$prefix}lightbox-title-color);
+    font-size: var(--#{vars.$prefix}lightbox-title-size);
+    display: block;
+    line-height: normal;
+    padding: 12px;
+    //position: absolute;
+    bottom: 0;
+    //width: 100%;
+  }
 
-        > .#{vars.$prefix}control-next {
-          display: inline-flex;
-          padding-right: var(--#{vars.$prefix}lightbox-element-padding-x);
-        }
+  .#{vars.$prefix}lightbox-controls {
+    //display: flex;
+    //justify-content: space-between;
+    //position: fixed;
+    left: 0;
+    right: 0;
+    z-index: 10;
+
+    > .#{vars.$prefix}control-prev {
+      //display: inline-flex;
+      padding-left: var(--#{vars.$prefix}lightbox-element-padding-x);
+    }
+
+    > .#{vars.$prefix}control-next {
+      //display: inline-flex;
+      padding-right: var(--#{vars.$prefix}lightbox-element-padding-x);
+    }
+  }
+
+  .#{vars.$prefix}lightbox-toolbar {
+    //display: flex;
+    //justify-content: space-between;
+    //top: 0;
+    //left: 0;
+    //right: 0;
+    //position: fixed;
+    z-index: 10;
+
+    .#{vars.$prefix}toolbar-items {
+      background: var(--#{vars.$prefix}lightbox-toolbar-bg);
+      padding: var(--#{vars.$prefix}lightbox-element-padding-x);
+      min-width: 100px;
+
+      .btn-menu {
+        --#{vars.$prefix}btn-active-bg: var(--#{vars.$prefix}btn-hover-bg);
+        --#{vars.$prefix}btn-active-color: var(--#{vars.$prefix}btn-hover-color);
       }
     }
 
-    > .#{vars.$prefix}lightbox-toolbar {
-      display: flex;
-      justify-content: space-between;
-      top: 0;
-      left: 0;
-      right: 0;
-      position: fixed;
-      z-index: 10;
-
-      .#{vars.$prefix}toolbar-items {
-        background: var(--#{vars.$prefix}lightbox-toolbar-bg);
-        padding: var(--#{vars.$prefix}lightbox-element-padding-x);
-        min-width: 100px;
-      }
-
-      .#{vars.$prefix}counter {
-        color: var(--#{vars.$prefix}lightbox-toolbar-color);
-        padding: var(--#{vars.$prefix}lightbox-element-padding-x) #{vars.$padding-md};
-      }
+    .#{vars.$prefix}counter {
+      color: var(--#{vars.$prefix}lightbox-toolbar-color);
+      padding: var(--#{vars.$prefix}lightbox-element-padding-x) #{vars.$padding-md};
     }
+  }
 
-    > .#{vars.$prefix}lightbox-thumbnail {
-      background: var(--#{vars.$prefix}lightbox-thumbnail-bg);
-      left: 0;
-      right: 0;
-      bottom: 0;
-      overflow-x: auto;
-      position: fixed;
-      padding: 0 vars.$padding-sm;
+  .#{vars.$prefix}lightbox-thumbnail-container {
+    background: var(--#{vars.$prefix}lightbox-thumbnail-bg);
+    //left: 0;
+    //right: 0;
+    //bottom: 0;
+    overflow-x: auto;
+    //position: fixed;
+    padding: 0 vars.$padding-sm;
+
+    > .#{vars.$prefix}lightbox-thumbnail-inner {
+      //display: flex;
+      //flex-direction: row;
 
       > .#{vars.$prefix}lightbox-thumbnail-row {
-        display: flex;
-        flex-direction: row;
+        //display: flex;
+        flex-flow: row nowrap;
 
-        > .#{vars.$prefix}lightbox-thumbnails {
-          display: flex;
-          flex-flow: row nowrap;
+        .#{vars.$prefix}thumbnail-item {
+          border: var(--#{vars.$prefix}lightbox-thumbnail-border);
+          opacity: var(--#{vars.$prefix}lightbox-thumbnail-opacity);
+          display: inline-block;
+          cursor: pointer;
 
-          .#{vars.$prefix}thumbnail-item {
-            border: var(--#{vars.$prefix}lightbox-thumbnail-border);
-            opacity: var(--#{vars.$prefix}lightbox-thumbnail-opacity);
-            display: inline-block;
-            cursor: pointer;
+          &:hover {
+            --#{vars.$prefix}lightbox-thumbnail-opacity: 1;
+          }
 
-            &:hover {
-              --#{vars.$prefix}lightbox-thumbnail-opacity: 1;
-            }
+          &.active {
+            --#{vars.$prefix}lightbox-thumbnail-opacity: 1;
 
-            &.active {
-              --#{vars.$prefix}lightbox-thumbnail-opacity: 1;
-
-              border-color: var(--#{vars.$prefix}lightbox-thumbnail-active-border-color);
-              border-left-width: var(--#{vars.$prefix}lightbox-thumbnail-active-border-width);
-              border-right-width: var(--#{vars.$prefix}lightbox-thumbnail-active-border-width);
-            }
+            border-color: var(--#{vars.$prefix}lightbox-thumbnail-active-border-color);
+            border-left-width: var(--#{vars.$prefix}lightbox-thumbnail-active-border-width);
+            border-right-width: var(--#{vars.$prefix}lightbox-thumbnail-active-border-width);
           }
         }
+      }
 
-        @include media.breakpoint-up(lg) {
-          justify-content: center;
-        }
+      @include media.breakpoint-up(lg) {
+        justify-content: center;
       }
     }
   }

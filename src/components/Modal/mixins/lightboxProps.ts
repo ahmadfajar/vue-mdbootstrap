@@ -1,17 +1,19 @@
-import { booleanProp, booleanTrueProp, stringOrArrayProp } from '@/mixins/CommonProps.ts';
-import type { TImageDataset, TLightboxToolbarItems, TRecord, TTransitionMode } from '@/types';
+import {
+  booleanProp,
+  booleanTrueProp,
+  objectProp,
+  stringOrArrayProp,
+} from '@/mixins/CommonProps.ts';
+import type { TLightboxSource, TLightboxToolbarItems, TTransitionMode } from '@/types';
 import type { Prop } from 'vue';
 
 export const lightboxProps = {
-  imageClass: stringOrArrayProp,
-  imageStyles: {
-    type: Object,
-    default: undefined,
-  } as Prop<TRecord>,
+  viewerClass: stringOrArrayProp,
+  viewerStyles: objectProp,
   items: {
     type: Array,
     default: undefined,
-  } as Prop<TImageDataset[]>,
+  } as Prop<TLightboxSource[]>,
   open: booleanProp,
   escClose: booleanTrueProp,
   overlay: booleanTrueProp,
@@ -22,7 +24,7 @@ export const lightboxProps = {
   showToolbar: booleanTrueProp,
   showNavControl: booleanTrueProp,
   thumbnailHeight: {
-    type: Number,
+    type: [Number, String],
     default: 72,
     validator: (v: string): boolean => parseInt(v, 10) > 0,
   },
@@ -49,7 +51,7 @@ export const lightboxProps = {
   } as Prop<TTransitionMode>,
   zIndex: {
     type: [String, Number],
-    default: 1990,
+    default: 1030,
     validator: (v: string): boolean => !isNaN(parseInt(v, 10)),
   },
 };

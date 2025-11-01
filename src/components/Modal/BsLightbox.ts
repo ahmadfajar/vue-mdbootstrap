@@ -1,5 +1,5 @@
 import {
-  useComputeImgStyle,
+  useComputeDisplayStyle,
   useNavigateNextSlide,
   useNavigatePrevSlide,
   useRenderLightbox,
@@ -12,8 +12,8 @@ import type {
   IEventListenerResult,
   IHTMLElement,
   TBsLightbox,
-  TImageDataset,
   TLightboxOptionProps,
+  TLightboxSource,
 } from '@/types';
 import type { ComponentInternalInstance } from 'vue';
 import {
@@ -46,7 +46,7 @@ export default defineComponent<TBsLightbox>({
   setup(props, { emit, expose, slots }) {
     const thisProps = props as Readonly<TLightboxOptionProps>;
     const instance = shallowRef<ComponentInternalInstance | null>(null);
-    const activeItem = ref<TImageDataset | undefined>(
+    const activeItem = ref<TLightboxSource | undefined>(
       thisProps.items && thisProps.items.length > 0 ? thisProps.items[0] : undefined
     );
     const itemIndex = ref(thisProps.items && thisProps.items.length > 0 ? 0 : -1);
@@ -54,7 +54,7 @@ export default defineComponent<TBsLightbox>({
     const zoom = ref(1);
     const isOpen = ref(false);
     const transition = ref(<string>thisProps.transition);
-    const imgStyles = computed(() => useComputeImgStyle(thisProps, rotate, zoom));
+    const viewerStyles = computed(() => useComputeDisplayStyle(thisProps, rotate, zoom));
     let keyEvent: IEventListenerResult | undefined;
 
     const setActive = (index: number) =>
@@ -102,8 +102,10 @@ export default defineComponent<TBsLightbox>({
       const images: HTMLImageElement[] = [];
       if (thisProps.items?.length) {
         thisProps.items.forEach((item, i) => {
-          images[i] = new Image();
-          images[i].src = item.imageSrc;
+          if (item.type === 'image') {
+            images[i] = new Image();
+            images[i].src = item.sourceUrl;
+          }
         });
       }
     });
@@ -129,7 +131,7 @@ export default defineComponent<TBsLightbox>({
         emit,
         instance,
         thisProps,
-        imgStyles,
+        viewerStyles,
         isOpen,
         activeItem,
         itemIndex,

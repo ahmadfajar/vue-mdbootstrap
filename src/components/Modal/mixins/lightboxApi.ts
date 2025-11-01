@@ -6,31 +6,40 @@ import { Touch } from '@/directives';
 import {
   cssPrefix,
   useBreakpointMax,
+  useMergeClass,
   useMobileDevice,
   useRenderTransition,
 } from '@/mixins/CommonApi.ts';
 import type {
+  TBsButton,
+  TBsDropdownMenu,
   TButtonMode,
   TButtonSize,
   TEmitFn,
-  TImageDataset,
   TLightboxOptionProps,
+  TLightboxSource,
   TPopoverPosition,
   TRecord,
 } from '@/types';
-import Helper from '@/utils/Helper';
-import type {
-  ComponentInternalInstance,
-  ComputedRef,
-  Prop,
-  Ref,
-  ShallowRef,
-  Slots,
-  VNode,
+import Helper from '@/utils/Helper.ts';
+import { isContains } from '@/utils/StringHelper.ts';
+import {
+  type ComponentInternalInstance,
+  type ComputedRef,
+  createCommentVNode,
+  h,
+  type Prop,
+  ref,
+  type Ref,
+  type ShallowRef,
+  type Slots,
+  Teleport,
+  toDisplayString,
+  type VNode,
+  withDirectives,
 } from 'vue';
-import { createCommentVNode, h, Teleport, toDisplayString, withDirectives } from 'vue';
 
-export function useComputeImgStyle(
+export function useComputeDisplayStyle(
   props: Readonly<TLightboxOptionProps>,
   rotate: Ref<number>,
   zoom: Ref<number>
@@ -41,21 +50,21 @@ export function useComputeImgStyle(
 
   if (scale !== '' && rotation !== '') {
     return {
-      ...props.imageStyles,
+      ...props.viewerStyles,
       transform: `${scale} ${rotation}`,
     };
   } else if (scale !== '') {
     return {
-      ...props.imageStyles,
+      ...props.viewerStyles,
       transform: scale,
     };
   } else if (rotation !== '') {
     return {
-      ...props.imageStyles,
+      ...props.viewerStyles,
       transform: rotation,
     };
   } else {
-    return props.imageStyles;
+    return props.viewerStyles;
   }
 }
 
@@ -66,7 +75,7 @@ export function useRenderLightbox(
   props: Readonly<TLightboxOptionProps>,
   imgStyle: ComputedRef<TRecord | undefined>,
   isOpen: Ref<boolean>,
-  activeItem: Ref<TImageDataset | undefined>,
+  activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
   rotate: Ref<number>,
   zoom: Ref<number>,
@@ -79,7 +88,8 @@ export function useRenderLightbox(
             'div',
             {
               class: [
-                `${cssPrefix}lightbox-wrap`,
+                `${cssPrefix}lightbox-container`,
+                'fixed-top',
                 props.overlay ? `${cssPrefix}lightbox-overlay` : '',
               ],
               style: { 'z-index': props.zIndex },
@@ -122,7 +132,7 @@ function createLightboxToolbar(
   instance: ShallowRef<ComponentInternalInstance | null>,
   props: Readonly<TLightboxOptionProps>,
   isOpen: Ref<boolean>,
-  activeItem: Ref<TImageDataset | undefined>,
+  activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
   rotate: Ref<number>,
   zoom: Ref<number>
@@ -131,10 +141,12 @@ function createLightboxToolbar(
     return createCommentVNode(' v-if-toolbar ');
   }
 
+  const dropdownOpen = ref(false);
+
   return h(
     'div',
     {
-      class: [`${cssPrefix}lightbox-toolbar`],
+      class: [`${cssPrefix}lightbox-toolbar`, 'flex', 'justify-between', 'fixed-top'],
     },
     [
       props.showCounter === true
@@ -167,7 +179,7 @@ function createLightboxToolbar(
         ? h(
             'div',
             {
-              class: [`${cssPrefix}toolbar-items`, 'flex'],
+              class: [`${cssPrefix}toolbar-items`, 'flex', `${cssPrefix}gap-x-1`],
             },
             [
               createButtonItem(
@@ -238,19 +250,22 @@ function createLightboxToolbar(
                 () => emit('exec-delete', activeItem.value)
               ),
               activeItem.value && props.toolbar?.menubar === true
-                ? h(
+                ? h<TBsDropdownMenu>(
                     BsDropdownMenu,
                     {
-                      color: 'transparent' as Prop<string>,
                       placement: 'bottom-right' as Prop<TPopoverPosition>,
+                      space: 4 as Prop<number>,
+                      'onUpdate:open': (state: boolean) => (dropdownOpen.value = state),
                     },
                     {
                       default: () =>
-                        h(BsButton, {
-                          color: 'light-grey' as Prop<string>,
+                        h<TBsButton>(BsButton, {
+                          class: 'btn-menu',
+                          color: 'light' as Prop<string>,
                           mode: 'icon' as Prop<TButtonMode>,
                           icon: 'more_vert' as Prop<string>,
                           flat: true as unknown as Prop<boolean>,
+                          active: dropdownOpen.value as unknown as Prop<boolean>,
                         }),
                       content: () => slots.menubar && slots.menubar(),
                     }
@@ -282,13 +297,107 @@ function createButtonItem(
     : undefined;
 }
 
+function sourceIsYoutube(item: TLightboxSource): boolean {
+  return item.type === 'youtube' || isContains(item.sourceUrl, ['youtube.com', 'youtu.be']);
+}
+
+function sourceIsMedia(item: TLightboxSource): boolean {
+  return sourceIsYoutube(item) || item.type === 'video';
+}
+
+function normalizeYoutubeUrl(source: string): string {
+  if (source.includes('youtube.com/watch?v=')) {
+    return source.replace('youtube.com/watch?v=', 'youtube.com/embed/');
+  } else if (source.includes('youtu.be')) {
+    return source.replace('youtu.be', 'youtube.com/embed');
+  }
+
+  return source;
+}
+
+function mergeCssClass(
+  props: Readonly<TLightboxOptionProps>,
+  activeItem: TLightboxSource,
+  other?: string | string[]
+): string | string[] | undefined {
+  if (props.viewerClass && activeItem.cssClass) {
+    return useMergeClass(props.viewerClass, activeItem.cssClass, other!);
+  }
+
+  return useMergeClass(other!, (props.viewerClass || activeItem.cssClass)!);
+}
+
+function createIframeNode(
+  props: Readonly<TLightboxOptionProps>,
+  viewerStyle: ComputedRef<TRecord | undefined>,
+  activeItem: TLightboxSource
+): VNode {
+  return h('iframe', {
+    src: normalizeYoutubeUrl(activeItem.sourceUrl),
+    allowfullscreen: true,
+    class: mergeCssClass(props, activeItem, ['w-full', 'aspect-video']),
+    style: viewerStyle.value,
+    onClick: (e: Event) => e.stopPropagation(),
+  });
+}
+
+function guessVideoType(source: string) {
+  if (source.endsWith('m4v')) {
+    return 'video/m4v';
+  } else if (source.endsWith('webm')) {
+    return 'video/webm';
+  } else {
+    return 'video/mp4';
+  }
+}
+
+function createVideoNode(
+  props: Readonly<TLightboxOptionProps>,
+  viewerStyle: ComputedRef<TRecord | undefined>,
+  activeItem: TLightboxSource
+): VNode {
+  return h(
+    'video',
+    {
+      autoplay: true,
+      controls: true,
+      crossorigin: 'anonymous',
+      // preload: 'metadata',
+      class: mergeCssClass(props, activeItem, ['w-full', 'aspect-video']),
+      style: viewerStyle.value,
+      onClick: (e: Event) => e.stopPropagation(),
+    },
+    [
+      h('source', {
+        src: activeItem.sourceUrl,
+        type: guessVideoType(activeItem.sourceUrl),
+      }),
+    ]
+  );
+}
+
+function createImageNode(
+  props: Readonly<TLightboxOptionProps>,
+  viewerStyle: ComputedRef<TRecord | undefined>,
+  activeItem: TLightboxSource
+): VNode {
+  return h('img', {
+    class: mergeCssClass(props, activeItem),
+    style: viewerStyle.value,
+    alt: activeItem.title,
+    src: activeItem.sourceUrl,
+    rel: 'preload',
+    onClick: (e: Event) => e.stopPropagation(),
+  });
+}
+
 function createLightboxDisplay(
   emit: TEmitFn,
   instance: ShallowRef<ComponentInternalInstance | null>,
   props: Readonly<TLightboxOptionProps>,
-  imgStyle: ComputedRef<TRecord | undefined>,
+  viewerStyle: ComputedRef<TRecord | undefined>,
   isOpen: Ref<boolean>,
-  activeItem: Ref<TImageDataset | undefined>,
+  activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
   zoom: Ref<number>,
   rotate: Ref<number>,
@@ -297,11 +406,11 @@ function createLightboxDisplay(
   return h(
     'div',
     {
-      class: `${cssPrefix}lightbox-display`,
+      class: [`${cssPrefix}lightbox-display`, 'flex', 'justify-center', 'items-center', 'relative'],
       style: {
         height:
           props.showThumbnail === true
-            ? 'calc(100% - ' + ((props.thumbnailHeight as number) + 2) + 'px)'
+            ? 'calc(100% - ' + (parseInt(props.thumbnailHeight as string) + 2) + 'px)'
             : '100%',
       },
       onClick: () => {
@@ -316,25 +425,35 @@ function createLightboxDisplay(
           ? h(
               'div',
               {
-                key: activeItem.value.imageSrc,
-                class: `${cssPrefix}lightbox-item`,
+                key: activeItem.value.sourceUrl,
+                class: [
+                  `${cssPrefix}lightbox-item`,
+                  'relative',
+                  'overflow-hidden',
+                  sourceIsMedia(activeItem.value) ? 'h-full' : '',
+                  sourceIsMedia(activeItem.value) ? 'w-full' : '',
+                ],
               },
               [
                 withDirectives(
                   h(
                     'div',
                     {
-                      class: `${cssPrefix}lightbox-item-img`,
+                      class: [
+                        `${cssPrefix}lightbox-item-view`,
+                        'flex',
+                        'items-center',
+                        'h-full',
+                        'relative',
+                        'overflow-hidden',
+                      ],
                     },
                     [
-                      h('img', {
-                        class: props.imageClass,
-                        style: imgStyle.value,
-                        alt: activeItem.value.title,
-                        src: activeItem.value.imageSrc,
-                        rel: 'preload',
-                        onClick: (e: Event) => e.stopPropagation(),
-                      }),
+                      sourceIsYoutube(activeItem.value)
+                        ? createIframeNode(props, viewerStyle, activeItem.value)
+                        : activeItem.value.type === 'video'
+                          ? createVideoNode(props, viewerStyle, activeItem.value)
+                          : createImageNode(props, viewerStyle, activeItem.value),
                     ]
                   ),
                   [
@@ -371,7 +490,7 @@ function createLightboxDisplay(
                   ? h(
                       'div',
                       {
-                        class: [`${cssPrefix}lightbox-item-title`],
+                        class: [`${cssPrefix}lightbox-item-title`, 'w-full', 'absolute'],
                         onClick: (e: Event) => e.stopPropagation(),
                       },
                       toDisplayString(activeItem.value?.title)
@@ -388,7 +507,7 @@ function createLightboxDisplay(
 function createLightboxNavCtrl(
   emit: TEmitFn,
   props: Readonly<TLightboxOptionProps>,
-  activeItem: Ref<TImageDataset | undefined>,
+  activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
   zoom: Ref<number>,
   rotate: Ref<number>,
@@ -401,13 +520,14 @@ function createLightboxNavCtrl(
   return h(
     'div',
     {
-      class: `${cssPrefix}lightbox-controls`,
+      class: [`${cssPrefix}lightbox-controls`, 'flex', 'justify-between', 'fixed'],
+      onClick: (e: Event) => e.stopPropagation(),
     },
     [
       h(
         'div',
         {
-          class: `${cssPrefix}control-prev`,
+          class: [`${cssPrefix}control-prev`, 'inline-flex'],
         },
         [
           h(BsButton, {
@@ -427,7 +547,7 @@ function createLightboxNavCtrl(
       h(
         'div',
         {
-          class: `${cssPrefix}control-next`,
+          class: [`${cssPrefix}control-next`, 'inline-flex'],
         },
         [
           h(BsButton, {
@@ -451,7 +571,7 @@ function createLightboxNavCtrl(
 export function useNavigatePrevSlide(
   emit: TEmitFn,
   props: Readonly<TLightboxOptionProps>,
-  activeItem: Ref<TImageDataset | undefined>,
+  activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
   zoom: Ref<number>,
   rotate: Ref<number>,
@@ -478,7 +598,7 @@ export function useNavigatePrevSlide(
 export function useNavigateNextSlide(
   emit: TEmitFn,
   props: Readonly<TLightboxOptionProps>,
-  activeItem: Ref<TImageDataset | undefined>,
+  activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
   zoom: Ref<number>,
   rotate: Ref<number>,
@@ -510,7 +630,7 @@ function resetZoomRotate(zoom: Ref<number>, rotate: Ref<number>) {
 function createLightboxThumbnail(
   emit: TEmitFn,
   props: Readonly<TLightboxOptionProps>,
-  activeItem: Ref<TImageDataset | undefined>,
+  activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
   zoom: Ref<number>,
   rotate: Ref<number>
@@ -522,19 +642,19 @@ function createLightboxThumbnail(
   return h(
     'div',
     {
-      class: `${cssPrefix}lightbox-thumbnail`,
+      class: [`${cssPrefix}lightbox-thumbnail-container`, 'fixed-bottom'],
     },
     [
       h(
         'div',
         {
-          class: `${cssPrefix}lightbox-thumbnail-row`,
+          class: [`${cssPrefix}lightbox-thumbnail-inner`, 'flex', 'flex-row'],
         },
         [
           h(
             'div',
             {
-              class: `${cssPrefix}lightbox-thumbnails`,
+              class: [`${cssPrefix}lightbox-thumbnail-row`, 'flex'],
             },
             props.items.map((it, idx) => {
               return h(
@@ -567,7 +687,7 @@ function createLightboxThumbnail(
 export function useSetActiveLightboxItem(
   emit: TEmitFn,
   props: Readonly<TLightboxOptionProps>,
-  activeItem: Ref<TImageDataset | undefined>,
+  activeItem: Ref<TLightboxSource | undefined>,
   activeIndex: Ref<number>,
   zoom: Ref<number>,
   rotate: Ref<number>,

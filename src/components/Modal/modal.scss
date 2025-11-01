@@ -10,6 +10,7 @@
     --#{vars.$prefix}modal-body-padding: #{vars.$padding-lg vars.$padding-lg 1.25rem};
     // prettier-ignore
     --#{vars.$prefix}modal-footer-padding: #{vars.$padding-sm vars.$padding-md vars.$padding-md vars.$padding-md};
+    --#{vars.$prefix}modal-footer-spacing: .375rem; // 6px
     --#{vars.$prefix}modal-max-width: 80%;
     --#{vars.$prefix}modal-title-font-size: 1.375rem;
     // prettier-ignore
@@ -83,6 +84,7 @@
       justify-content: flex-end;
       min-height: 48px;
       padding: var(--#{vars.$prefix}modal-footer-padding);
+      column-gap: var(--#{vars.$prefix}modal-footer-spacing);
     }
   }
 }
