@@ -139,6 +139,14 @@ export function kebabCase(text: string): string {
   return loKebabCase(text);
 }
 
+export function isStartWith(str?: string, searches?: string[]): boolean {
+  if (str && searches) {
+    return searches.some((s) => str.startsWith(s));
+  }
+
+  return false;
+}
+
 export function isEndWith(str?: string, searches?: string[]): boolean {
   if (str && searches) {
     return searches.some((s) => str.endsWith(s));

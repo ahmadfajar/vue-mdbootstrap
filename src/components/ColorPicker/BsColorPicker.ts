@@ -30,7 +30,13 @@ export default defineComponent<TBsColorPicker>({
     const thisData = useInitColorPickerData(thisProps);
     const pickerClasses = computed(() => [
       `${cssPrefix}color-picker`,
-      `bg-${thisProps.containerColor}`,
+      'inline-block',
+      'relative',
+      thisProps.containerColor
+        ? thisProps.containerColor.startsWith('bg-')
+          ? thisProps.containerColor
+          : `bg-${thisProps.containerColor}`
+        : '',
     ]);
     const inputIDs: TStringRecord = {
       H: useGenerateId(),

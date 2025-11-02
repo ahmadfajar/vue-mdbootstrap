@@ -14,7 +14,6 @@ import type {
 } from '@/types';
 import {
   hslaToHsva,
-  hslaToRgba,
   hslaToString,
   hsvaToHsla,
   hsvaToRgba,
@@ -24,6 +23,7 @@ import {
   rgbaToString,
 } from '@/utils/colorUtils.ts';
 import Helper from '@/utils/Helper.ts';
+import { isStartWith } from '@/utils/StringHelper.ts';
 import type { ComputedRef, Prop, VNode } from 'vue';
 import { createCommentVNode, h, mergeProps, nextTick, reactive, ref } from 'vue';
 
@@ -60,13 +60,13 @@ function createHueSliderControl(
     'div',
     {
       ref: pickerData.hueSlider,
-      class: [`${cssPrefix}hue-slider`],
+      class: [`${cssPrefix}hue-slider`, 'relative'],
     },
     [
       h(
         'div',
         {
-          class: [`${cssPrefix}slider-track`],
+          class: [`${cssPrefix}slider-track`, 'flex', 'items-center', 'relative', 'w-full'],
           onClick: (event: UIEvent) => {
             pickerData.hueSliderThumb.value?.classList.add(
               'move-transition',
@@ -84,7 +84,7 @@ function createHueSliderControl(
             {
               tabIndex: 0,
               ref: pickerData.hueSliderThumb,
-              class: [`${cssPrefix}slider-thumb`],
+              class: [`${cssPrefix}slider-thumb`, 'absolute'],
               onBlur: (event: Event) => {
                 (event.target as HTMLElement).classList.remove(`${cssPrefix}focused`);
               },
@@ -118,10 +118,10 @@ function createHueSliderControl(
             },
             [
               h('div', {
-                class: [`${cssPrefix}slider-thumb-surface`],
+                class: [`${cssPrefix}slider-thumb-surface`, 'h-full', 'w-full', 'select-none'],
               }),
               h('div', {
-                class: [`${cssPrefix}slider-thumb-ripple`],
+                class: [`${cssPrefix}slider-thumb-ripple`, 'absolute'],
               }),
             ]
           ),
@@ -140,13 +140,13 @@ function createAlphaSliderControl(
     'div',
     {
       ref: pickerData.alphaSlider,
-      class: [`${cssPrefix}alpha-slider`],
+      class: [`${cssPrefix}alpha-slider`, 'relative'],
     },
     [
       h(
         'div',
         {
-          class: [`${cssPrefix}slider-track`],
+          class: [`${cssPrefix}slider-track`, 'flex', 'items-center', 'relative', 'w-full'],
           onClick: (event: UIEvent) => {
             pickerData.alphaSliderThumb.value?.classList.add(
               'move-transition',
@@ -160,14 +160,14 @@ function createAlphaSliderControl(
         },
         [
           h('div', {
-            class: [`${cssPrefix}slider-track-alpha`],
+            class: [`${cssPrefix}slider-track-alpha`, 'h-full', 'w-full'],
           }),
           h(
             'div',
             {
               tabIndex: 0,
               ref: pickerData.alphaSliderThumb,
-              class: [`${cssPrefix}slider-thumb`],
+              class: [`${cssPrefix}slider-thumb`, 'absolute'],
               onBlur: (event: Event) => {
                 (event.target as HTMLElement).classList.remove(`${cssPrefix}focused`);
               },
@@ -201,10 +201,10 @@ function createAlphaSliderControl(
             },
             [
               h('div', {
-                class: [`${cssPrefix}slider-thumb-surface`],
+                class: [`${cssPrefix}slider-thumb-surface`, 'h-full', 'w-full', 'select-none'],
               }),
               h('div', {
-                class: [`${cssPrefix}slider-thumb-ripple`],
+                class: [`${cssPrefix}slider-thumb-ripple`, 'absolute'],
               }),
             ]
           ),
@@ -231,24 +231,24 @@ function renderColorPickerControls(
   return h(
     'div',
     {
-      class: [`${cssNamePrefix}controls`],
+      class: [`${cssNamePrefix}controls`, 'flex', 'items-center'],
     },
     [
       h(
         'div',
         {
           ref: pickerData.colorPreview,
-          class: [`${cssNamePrefix}preview`],
+          class: [`${cssNamePrefix}preview`, 'relative'],
         },
         [
           h(
             'div',
             {
-              class: [`${cssNamePrefix}selected-color`],
+              class: [`${cssNamePrefix}selected-color`, 'h-full', 'w-full'],
             },
             [
               h('div', {
-                class: [`${cssNamePrefix}selected-color-alpha`],
+                class: [`${cssNamePrefix}selected-color-alpha`, 'h-full', 'w-full'],
               }),
             ]
           ),
@@ -257,7 +257,7 @@ function renderColorPickerControls(
       h(
         'div',
         {
-          class: [`${cssNamePrefix}sliders`],
+          class: [`${cssNamePrefix}sliders`, 'flex', 'flex-col'],
         },
         sliders
       ),
@@ -275,7 +275,7 @@ function createInputLabel(
     'label',
     {
       class: useMergeClass(
-        `${cssNamePrefix}input-label`,
+        [`${cssNamePrefix}input-label`, 'select-none'],
         props.inputLabelClass as string | string[]
       ),
       for: forID,
@@ -289,7 +289,7 @@ function createInputNumber(
   emit: TEmitFn,
   cssNamePrefix: string,
   inputID: string,
-  label: string,
+  placeholder: string,
   maxValue = 255,
   step?: number,
   maxLength?: number
@@ -297,30 +297,30 @@ function createInputNumber(
   const mode = pickerData.config.mode;
   let value: number | string;
 
-  if (mode === 'RGB' && label === 'R') {
+  if (mode === 'RGB' && placeholder.startsWith('R')) {
     value = pickerData.colorRGB.r;
-  } else if (mode === 'RGB' && label === 'G') {
+  } else if (mode === 'RGB' && placeholder.startsWith('G')) {
     value = pickerData.colorRGB.g;
-  } else if (mode === 'RGB' && label === 'B') {
+  } else if (mode === 'RGB' && placeholder.startsWith('B')) {
     value = pickerData.colorRGB.b;
-  } else if (mode === 'HSL' && label === 'H') {
+  } else if (mode === 'HSL' && placeholder.startsWith('H')) {
     value = pickerData.colorHSL.h;
-  } else if (mode === 'HSL' && label === 'S') {
+  } else if (mode === 'HSL' && placeholder.startsWith('S')) {
     value = pickerData.colorHSL.s;
-  } else if (mode === 'HSL' && label === 'L') {
+  } else if (mode === 'HSL' && placeholder.startsWith('L')) {
     value = pickerData.colorHSL.l;
   } else {
-    value = pickerData.colorRGB.a;
+    value = mode === 'RGB' ? pickerData.colorRGB.a : pickerData.colorHSL.a;
   }
 
   return h(
     'div',
     {
-      class: [`${cssNamePrefix}input-col`],
+      class: [`${cssNamePrefix}input-col`, 'flex-fill'],
     },
     [
       h('input', {
-        class: ['form-input-number'],
+        class: ['form-input-number', 'block', 'w-full'],
         type: 'number',
         id: inputID,
         min: 0,
@@ -328,9 +328,14 @@ function createInputNumber(
         maxlength: maxLength,
         step: step,
         value: value,
-        placeholder: label,
+        placeholder: placeholder,
         onChange: (event: Event) => {
-          onUpdateInputNumber((event.target as HTMLInputElement).value, label, pickerData, emit);
+          onUpdateInputNumber(
+            (event.target as HTMLInputElement).value,
+            placeholder,
+            pickerData,
+            emit
+          );
         },
       }),
     ]
@@ -339,15 +344,17 @@ function createInputNumber(
 
 function onUpdateInputNumber(
   value: string,
-  label: string,
+  placeholder: string,
   pickerData: TColorPickerData,
   emit: TEmitFn
 ): void {
   const mode = pickerData.config.mode;
   let srcValue =
-    mode === 'RGB' && label !== 'A'
+    mode === 'RGB' && !placeholder.startsWith('A')
       ? Number.parseInt(value.trim())
-      : Number.parseFloat(value.trim());
+      : mode === 'HSL' && placeholder.startsWith('H')
+        ? Number.parseInt(value.trim())
+        : Number.parseFloat(value.trim());
 
   let rgba: Color.RGBA | undefined;
   let hsla: Color.HSLA | undefined;
@@ -356,22 +363,22 @@ function onUpdateInputNumber(
   // Prevent value from going out of bounds.
   if (srcValue < 0) {
     srcValue = 0;
-  } else if (['S', 'L', 'A'].includes(label) && srcValue > 1) {
+  } else if (isStartWith(placeholder, ['S', 'L', 'A']) && srcValue > 1) {
     srcValue = 1;
-  } else if (['R', 'G', 'B'].includes(label) && srcValue > 255) {
+  } else if (isStartWith(placeholder, ['R', 'G', 'B']) && srcValue > 255) {
     srcValue = 255;
-  } else if (label === 'H' && srcValue > 360) {
+  } else if (placeholder.startsWith('H') && srcValue > 360) {
     srcValue = 360;
   }
 
   if (mode === 'RGB') {
     rgba = pickerData.colorRGB;
 
-    if (label === 'R') {
+    if (placeholder.startsWith('R')) {
       rgba.r = srcValue;
-    } else if (label === 'G') {
+    } else if (placeholder.startsWith('G')) {
       rgba.g = srcValue;
-    } else if (label === 'B') {
+    } else if (placeholder.startsWith('B')) {
       rgba.b = srcValue;
     } else {
       rgba.a = srcValue;
@@ -381,19 +388,18 @@ function onUpdateInputNumber(
   } else {
     hsla = pickerData.colorHSL;
 
-    if (label === 'H') {
+    if (placeholder.startsWith('H')) {
       hsla.h = srcValue;
-    } else if (label === 'S') {
+    } else if (placeholder.startsWith('S')) {
       hsla.s = srcValue;
-    } else if (label === 'L') {
+    } else if (placeholder.startsWith('L')) {
       hsla.l = srcValue;
     } else {
       hsla.a = srcValue;
     }
 
     hsva = hslaToHsva(hsla);
-    rgba = hslaToRgba(hsla);
-    // rgba = hsvaToRgba(hsva);
+    rgba = hsvaToRgba(hsva);
   }
 
   updateColor(pickerData, rgba, hsva);
@@ -427,7 +433,7 @@ function createInputColorHSL(
   return h(
     'div',
     {
-      class: [`${cssNamePrefix}input-row`],
+      class: [`${cssNamePrefix}input-row`, `${cssPrefix}gap-x-2`, 'flex', 'items-center'],
     },
     inputHSL
   );
@@ -442,11 +448,11 @@ function createInputColorRGB(
 ): VNode {
   const inputRGB = [
     createInputLabel(props, cssNamePrefix, inputIDs.R!, 'R'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.R!, 'Red'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.R!, 'Re'),
     createInputLabel(props, cssNamePrefix, inputIDs.G!, 'G'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.G!, 'Green'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.G!, 'Gr'),
     createInputLabel(props, cssNamePrefix, inputIDs.B!, 'B'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.B!, 'Blue'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.B!, 'Bl'),
   ];
 
   if (!props.hideAlpha) {
@@ -459,7 +465,7 @@ function createInputColorRGB(
   return h(
     'div',
     {
-      class: [`${cssNamePrefix}input-row`],
+      class: [`${cssNamePrefix}input-row`, `${cssPrefix}gap-x-2`, 'flex', 'items-center'],
     },
     inputRGB
   );
@@ -475,23 +481,23 @@ function createInputColorHEX(
   return h(
     'div',
     {
-      class: [`${cssNamePrefix}input-row`],
+      class: [`${cssNamePrefix}input-row`, `${cssPrefix}gap-x-2`, 'flex', 'items-center'],
     },
     [
       createInputLabel(props, cssNamePrefix, inputIDs.HEX!, 'HEX'),
       h(
         'div',
         {
-          class: [`${cssNamePrefix}input-col`],
+          class: [`${cssNamePrefix}input-col`, 'flex-fill'],
         },
         [
           h('input', {
-            class: ['form-input-text'],
+            class: ['form-input-text', 'block', 'w-full'],
             type: 'text',
             id: inputIDs.HEX,
             maxlength: 9,
             value: pickerData.config.value,
-            placeholder: 'HEX color',
+            placeholder: 'Enter HEX color',
             onChange: (event: Event) => {
               onUpdateInputColorHex((event.target as HTMLInputElement).value, pickerData, emit);
             },
@@ -595,7 +601,7 @@ function renderColorPickerSwatches(
   return h(
     'div',
     {
-      class: [`${cssNamePrefix}swatches`],
+      class: [`${cssNamePrefix}swatches`, 'relative'],
       style: { 'max-height': Helper.cssUnit(props.swatchesMaxHeight) },
     },
     [
@@ -604,9 +610,10 @@ function renderColorPickerSwatches(
         {
           class: [
             `${cssNamePrefix}swatches-content`,
-            'd-flex',
+            `${cssPrefix}gap-2`,
+            'flex',
             'flex-wrap',
-            'justify-content-center',
+            'justify-center',
           ],
         },
         props.swatches?.map((it) =>
@@ -614,7 +621,7 @@ function renderColorPickerSwatches(
             type: 'button',
             key: it,
             title: it,
-            class: [`${cssPrefix}swatch-button`],
+            class: [`${cssPrefix}swatch-button`, 'relative', 'overflow-hidden'],
             style: { color: it },
             onClick: (event: Event) => {
               pickerData.config.value = (event.target as HTMLElement).title;
@@ -659,14 +666,14 @@ export function useRenderColorPicker(
       'div',
       {
         ref: pickerData.colorArea,
-        class: [`${cssNamePrefix}canvas`],
+        class: [`${cssNamePrefix}canvas`, 'w-full'],
         onClick: (event: UIEvent) => useMoveColorMarker(event, emit, pickerData),
       },
       [
         h('div', {
           tabIndex: 0,
           ref: pickerData.colorMarker,
-          class: [`${cssNamePrefix}canvas-marker`],
+          class: [`${cssNamePrefix}canvas-marker`, 'absolute'],
           onKeydown: (event: KeyboardEvent) => {
             const movements: Record<string, number[]> = {
               ArrowUp: [0, -1],

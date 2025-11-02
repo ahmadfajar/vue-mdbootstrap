@@ -82,7 +82,7 @@
     .#{vars.$prefix}datepicker-time,
     > .#{vars.$prefix}datepicker-title {
       transition: vars.$transition-drop;
-      user-select: none;
+      //user-select: none;
 
       &:not(.active) {
         opacity: var(--#{vars.$prefix}field-readonly-opacity);
@@ -211,7 +211,7 @@
       font-weight: bold;
       padding-bottom: vars.$padding-xs;
       pointer-events: none;
-      user-select: none;
+      //user-select: none;
     }
 
     .#{vars.$prefix}btn-flat-light:not([class*='btn-icon']) {

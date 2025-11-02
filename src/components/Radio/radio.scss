@@ -111,9 +111,9 @@
       line-height: var(--#{vars.$prefix}radio-size);
       margin-left: #{vars.$padding-md};
       margin-bottom: 0;
-      position: relative;
       cursor: pointer;
-      user-select: none;
+      //position: relative;
+      //user-select: none;
 
       &:focus-visible {
         outline-color: var(--#{vars.$prefix}radio-active-color);

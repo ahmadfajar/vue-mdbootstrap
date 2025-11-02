@@ -19,6 +19,16 @@ export declare type HSLA = {
 };
 
 /**
+ * Lightness, Chroma, Hue and Alpha color values.
+ */
+export declare type LCHA = {
+  l: number;
+  c: number;
+  h: number;
+  a: number;
+};
+
+/**
  * Red, Green, Blue and Alpha color values.
  */
 export declare type RGBA = {
@@ -50,7 +60,8 @@ export function hslaToRgba(color: HSLA): RGBA;
  * Convert HSV to HSL color space.
  *
  * @param color The HSV color value.
- * @return The HSL color value: Hue as degrees 0..360, Saturation and Lightness in reference range [0,100]
+ * @return The HSL color value.
+ * Hue as degrees 0..360, Saturation and Lightness in reference range [0,100]
  */
 export declare function hsvaToHsla(color: HSVA): HSLA;
 
@@ -73,7 +84,7 @@ export declare function hexToRgba(color: string): RGBA;
 /**
  * Convert sRGB to HSL color space.
  *
- * @param color The RGBA color
+ * @param color The RGBA color value
  * @return The HSL color value.
  * Hue as degrees [0..360], Saturation and Lightness as range [0..100]
  */
@@ -86,6 +97,15 @@ export function rgbaToHsla(color: RGBA): HSLA;
  * @return The HSVA color value.
  */
 export declare function rgbaToHsva(color: RGBA): HSVA;
+
+/**
+ * Convert sRGB to OKLCH color space.
+ *
+ * @param color The RGBA color value.
+ * @return The OKLCH color value.
+ * Lightness and Chroma as range [0..1], Hue as degrees [0..360]
+ */
+export declare function rgbaToOklch(color: RGBA): LCHA;
 
 /**
  * Parse a string to sRGB color space.

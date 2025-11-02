@@ -58,6 +58,8 @@ export function useListNavItemInnerClasses(
       ),
     [`${cssPrefix}tile-space-${provider?.spaceAround}`]:
       provider?.spaceAround && ['both', 'left', 'right'].includes(provider.spaceAround),
+    [`${cssPrefix}link`]: !props.disabled,
+    'select-none': true,
     [`${props.activeClass}`]:
       hasRouter.value && props.activeClass && !props.disabled && isActive.value,
     active: !hasRouter.value && !props.disabled && isActive.value,

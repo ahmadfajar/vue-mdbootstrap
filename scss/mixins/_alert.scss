@@ -6,7 +6,7 @@
 // BsAlert variants -- scss mixins
 //---------------------------------
 @mixin make-default-variant($name, $color) {
-  .#{vars.$prefix}alert-#{$name} {
+  .alert-#{$name} {
     $background-color: helper.shift-color($color, vars.$alert-bg-scale);
     $border-color: helper.shift-color($color, vars.$alert-border-scale);
     $text-color: helper.shift-color($color, vars.$alert-color-scale);
@@ -24,7 +24,7 @@
 }
 
 @mixin make-outline-variant($name, $color) {
-  .#{vars.$prefix}alert-outline-#{$name} {
+  .alert-outline-#{$name} {
     $border-color: helper.to-oklch(color.adjust($color, $lightness: 15%));
     $hr-border-color: helper.to-oklch(color.adjust($color, $lightness: -5%));
     $link-color: helper.to-oklch(color.adjust($color, $lightness: -10%));
@@ -38,7 +38,7 @@
 }
 
 @mixin make-solid-variant($name, $color) {
-  .#{vars.$prefix}alert-solid-#{$name} {
+  .alert-solid-#{$name} {
     $text-color: helper.set-color-contrast($color, colors.$gray-900, colors.$white);
     $hr-border-color: helper.set-color-contrast(
       $color,

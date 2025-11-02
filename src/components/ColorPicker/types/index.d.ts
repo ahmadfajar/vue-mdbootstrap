@@ -54,6 +54,9 @@ export declare type TColorPickerOptionProps = {
 
   /**
    * This ColorPicker container background color.
+   *
+   * @deprecated
+   * Use unified global css variable instead.
    */
   containerColor?: string;
 

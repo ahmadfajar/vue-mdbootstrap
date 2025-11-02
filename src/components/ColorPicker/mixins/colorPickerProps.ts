@@ -8,7 +8,6 @@ import {
   stringOrArrayProp,
   stringProp,
   validStringOrNumberProp,
-  whiteColorProp,
 } from '@/mixins/CommonProps.ts';
 import type { Prop } from 'vue';
 
@@ -17,7 +16,7 @@ export const colorPickerProps = {
     type: [String, Object],
     default: undefined,
   } as Prop<string | Element>,
-  containerColor: whiteColorProp,
+  containerColor: stringProp,
   cover: booleanProp,
   open: booleanProp,
   hideAlpha: booleanProp,

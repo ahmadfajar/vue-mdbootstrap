@@ -197,7 +197,7 @@ export function useRenderDatePickerHeader(
       h(
         'div',
         {
-          class: [`${cssPrefix}datepicker-subtitle`, 'flex justify-between'],
+          class: [`${cssPrefix}datepicker-subtitle`, 'flex', 'justify-between'],
         },
         [
           h(
@@ -206,6 +206,7 @@ export function useRenderDatePickerHeader(
               class: [
                 `${cssPrefix}datepicker-year`,
                 'inline-block',
+                'select-none',
                 isYearActive.value ? 'active' : '',
               ],
               style: styles.value.year,
@@ -233,6 +234,7 @@ export function useRenderDatePickerHeader(
                   class: [
                     `${cssPrefix}datepicker-time`,
                     'inline-block',
+                    'select-none',
                     isTimeActive.value ? 'active' : '',
                   ],
                   style: styles.value.time,
@@ -254,6 +256,7 @@ export function useRenderDatePickerHeader(
             `${cssPrefix}datepicker-title`,
             'relative',
             'overflow-hidden',
+            'select-none',
             isTitleActive.value ? 'active' : '',
           ],
           style: styles.value.title,
@@ -1101,9 +1104,9 @@ function renderPickerTimes(
   return h('table', { class: [`${cssPrefix}picker-times`, !props.backButton ? 'mt-0' : ''] }, [
     h('colgroup', [
       h('col'),
-      h('col', { class: [`${cssPrefix}picker-times-sep`] }),
+      h('col', { class: [`${cssPrefix}picker-times-sep`, 'select-none'] }),
       h('col'),
-      h('col', { class: [`${cssPrefix}picker-times-sep`] }),
+      h('col', { class: [`${cssPrefix}picker-times-sep`, 'select-none'] }),
       h('col'),
     ]),
     h('tbody', [

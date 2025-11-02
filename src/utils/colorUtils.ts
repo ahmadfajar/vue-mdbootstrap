@@ -1,11 +1,11 @@
 import { chunk } from '@/utils/StringHelper.ts';
-import type { HSLA, HSVA, RGBA } from '@/utils/types/colorUtils';
+import type { HSLA, HSVA, LCHA, RGBA } from '@/utils/types/colorUtils';
 
 /**
  * Convert HSL to HSV color space.
  *
- * @param color The HSLA color values.
- * @return The HSVA color values.
+ * @param color The HSLA color value.
+ * @return The HSVA color value.
  */
 export function hslaToHsva(color: HSLA): HSVA {
   const sat = color.s >= 0 && color.s <= 1 ? color.s : color.s / 100;
@@ -29,24 +29,30 @@ export function hslaToHsva(color: HSLA): HSVA {
  * @return The RGBA color value.
  */
 export function hslaToRgba(color: HSLA): RGBA {
-  const sat = color.s >= 0 && color.s <= 1 ? color.s : color.s / 100;
-  const light = color.l >= 0 && color.l <= 1 ? color.l : color.l / 100;
+  const hsva = hslaToHsva(color);
+  return hsvaToRgba(hsva);
 
-  function f(n: number) {
-    const k = (n + color.h / 30) % 12;
-    const a = sat * Math.min(light, 1 - light);
-
-    return light - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
-  }
-
-  return { r: f(0), g: f(8), b: f(4), a: color.a };
+  // Script below that I got from somewhere produce incorrect result.
+  //
+  // const sat = color.s >= 0 && color.s <= 1 ? color.s : color.s / 100;
+  // const light = color.l >= 0 && color.l <= 1 ? color.l : color.l / 100;
+  //
+  // function f(n: number) {
+  //   const k = (n + color.h / 30) % 12;
+  //   const a = sat * Math.min(light, 1 - light);
+  //
+  //   return light - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
+  // }
+  //
+  // return { r: f(0), g: f(8), b: f(4), a: color.a };
 }
 
 /**
  * Convert HSV to HSL color space.
  *
- * @param color The HSV color values.
- * @return The HSL color values.
+ * @param color The HSV color value.
+ * @return The HSL color value.
+ * Hue as degrees 0..360, Saturation and Lightness in reference range [0,100]
  */
 export function hsvaToHsla(color: HSVA): HSLA {
   const value = color.v / 100;
@@ -68,8 +74,8 @@ export function hsvaToHsla(color: HSVA): HSLA {
 /**
  * Convert HSV to sRGB color space.
  *
- * @param color The HSVA color values.
- * @return The RGBA color values.
+ * @param color The HSVA color value.
+ * @return The RGBA color value.
  */
 export function hsvaToRgba(color: HSVA): RGBA {
   const saturation = color.s / 100;
@@ -99,7 +105,7 @@ export function hsvaToRgba(color: HSVA): RGBA {
  * Convert CSS HEX color format to sRGB color space.
  *
  * @param color The css HEX color value.
- * @return The RGBA color values.
+ * @return The RGBA color value.
  */
 export function hexToRgba(color: string): RGBA {
   const hexColor = color.replace('#', '');
@@ -113,58 +119,64 @@ export function hexToRgba(color: string): RGBA {
 /**
  * Convert sRGB to HSL color space.
  *
- * @param color The RGBA color
- * @return The HSL color value. Hue as degrees [0..360], Saturation and Lightness as range [0..100]
+ * @param color The RGBA color value
+ * @return The HSL color value.
+ * Hue as degrees [0..360], Saturation and Lightness as range [0..100]
  */
 export function rgbaToHsla(color: RGBA): HSLA {
-  const max = Math.max(color.r, color.g, color.b);
-  const min = Math.min(color.r, color.g, color.b);
-  // eslint-disable-next-line prefer-const
-  let [hue, sat, light] = [NaN, 0, (min + max) / 2];
-  const delta = max - min;
-  const epsilon = 1 / 100000; // max Sat is 1, in this code
+  const hsva = rgbaToHsva(color);
+  return hsvaToHsla(hsva);
 
-  if (delta !== 0) {
-    sat = light === 0 || light === 1 ? 0 : (max - light) / Math.min(light, 1 - light);
-
-    switch (max) {
-      case color.r:
-        hue = (color.g - color.b) / delta + (color.g < color.b ? 6 : 0);
-        break;
-      case color.g:
-        hue = (color.b - color.r) / delta + 2;
-        break;
-      case color.b:
-        hue = (color.r - color.g) / delta + 4;
-    }
-
-    hue = hue * 60;
-  }
-
-  // Very out of gamut colors can produce negative saturation
-  // If so, just rotate the hue by 180 and use a positive saturation
-  // see https://github.com/w3c/csswg-drafts/issues/9222
-  if (sat < 0) {
-    hue += 180;
-    sat = Math.abs(sat);
-  }
-
-  if (hue >= 360) {
-    hue -= 360;
-  }
-
-  if (sat <= epsilon) {
-    hue = NaN;
-  }
-
-  return { h: hue, s: sat * 100, l: light * 100, a: color.a };
+  // Script below that I got from somewhere produce incorrect result.
+  //
+  // const max = Math.max(color.r, color.g, color.b);
+  // const min = Math.min(color.r, color.g, color.b);
+  // // eslint-disable-next-line prefer-const
+  // let [hue, sat, light] = [NaN, 0, (min + max) / 2];
+  // const delta = max - min;
+  // const epsilon = 1 / 100000; // max Sat is 1, in this code
+  //
+  // if (delta !== 0) {
+  //   sat = light === 0 || light === 1 ? 0 : (max - light) / Math.min(light, 1 - light);
+  //
+  //   switch (max) {
+  //     case color.r:
+  //       hue = (color.g - color.b) / delta + (color.g < color.b ? 6 : 0);
+  //       break;
+  //     case color.g:
+  //       hue = (color.b - color.r) / delta + 2;
+  //       break;
+  //     case color.b:
+  //       hue = (color.r - color.g) / delta + 4;
+  //   }
+  //
+  //   hue = hue * 60;
+  // }
+  //
+  // // Very out of gamut colors can produce negative saturation
+  // // If so, just rotate the hue by 180 and use a positive saturation
+  // // see https://github.com/w3c/csswg-drafts/issues/9222
+  // if (sat < 0) {
+  //   hue += 180;
+  //   sat = Math.abs(sat);
+  // }
+  //
+  // if (hue >= 360) {
+  //   hue -= 360;
+  // }
+  //
+  // if (sat <= epsilon) {
+  //   hue = NaN;
+  // }
+  //
+  // return { h: hue, s: sat * 100, l: light * 100, a: color.a };
 }
 
 /**
  * Convert sRGB to HSV color space.
  *
- * @param color The RGBA color values.
- * @return The HSVA color values.
+ * @param color The RGBA color value.
+ * @return The HSVA color value.
  */
 export function rgbaToHsva(color: RGBA): HSVA {
   const red = color.r / 255;
@@ -203,11 +215,59 @@ export function rgbaToHsva(color: RGBA): HSVA {
 }
 
 /**
- * Parse a rgb/rgba color string to sRGB color space.
+ * Convert sRGB to OKLCH color space.
+ *
+ * @param color The RGBA color value.
+ * @return The OKLCH color value.
+ * Lightness and Chroma as range [0..1], Hue as degrees [0..360]
+ */
+export function rgbaToOklch(color: RGBA): LCHA {
+  // Normalize RGB values to [0, 1]
+  const r1 = color.r / 255;
+  const g1 = color.g / 255;
+  const b1 = color.b / 255;
+
+  // Step 1: Convert RGB to Linear RGB
+  const linearize = (c: number) => (c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+  const rLin = linearize(r1);
+  const gLin = linearize(g1);
+  const bLin = linearize(b1);
+
+  // Step 2: Convert Linear RGB to XYZ
+  const x = rLin * 0.4124564 + gLin * 0.3575761 + bLin * 0.1804375;
+  const y = rLin * 0.2126729 + gLin * 0.7151522 + bLin * 0.072175;
+  const z = rLin * 0.0193339 + gLin * 0.119192 + bLin * 0.9503041;
+
+  // Step 3: Convert XYZ to LAB
+  const refX = 0.95047;
+  const refY = 1.0;
+  const refZ = 1.08883;
+
+  const f = (t: number) => (t > 0.008856 ? Math.cbrt(t) : (t * 903.3 + 16) / 116);
+  const l = 116 * f(y / refY) - 16;
+  const a = 500 * (f(x / refX) - f(y / refY));
+  const b2 = 200 * (f(y / refY) - f(z / refZ));
+
+  // Step 4: Convert LAB to OKLCH
+  const c = Math.sqrt(a * a + b2 * b2);
+  const h = Math.atan2(b2, a) * (180 / Math.PI);
+  // Ensure hue is in [0, 360]
+  const hDeg = h < 0 ? h + 360 : h;
+
+  return {
+    l: l / 100, // Normalize L to [0, 1]
+    c: c / 100, // Normalize C to [0, 1]
+    h: hDeg, // Hue in degrees
+    a: color.a,
+  };
+}
+
+/**
+ * Parse a string to sRGB color space.
  *
  * @param canvasCtx  The canvas rendering context
  * @param source     String representing a color.
- * @return The RGBA color values.
+ * @return The RGBA color value.
  */
 export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: string): RGBA {
   const regex = /^((rgba)|rgb)[\D]+([\d.]+)[\D]+([\d.]+)[\D]+([\d.]+)[\D]*?([\d.]+|$)/i;
@@ -219,6 +279,8 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
   // Use canvas to convert the string to a valid color string
   canvasCtx.fillStyle = source;
   const match = regex.exec(canvasCtx.fillStyle);
+  // console.log('Source: ', source);
+  // console.log('Match: ', match);
 
   if (match) {
     rgba = {
@@ -252,7 +314,7 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
 /**
  * Convert RGB/RGBA color to CSS HEX color format.
  *
- * @param rgba The RGBA color values.
+ * @param rgba The RGBA color value.
  * @return CSS Hex color.
  */
 export function rgbaToHex(rgba: RGBA): string {
@@ -288,7 +350,7 @@ export function rgbaToHex(rgba: RGBA): string {
 /**
  * Convert RGB/RGBA color to string.
  *
- * @param rgba The RGBA color values.
+ * @param rgba The RGBA color value.
  * @return CSS color string.
  */
 export function rgbaToString(rgba: RGBA): string {
@@ -302,7 +364,7 @@ export function rgbaToString(rgba: RGBA): string {
 /**
  * Convert HSL/HSLA color to string.
  *
- * @param hsla  The HSLA color values.
+ * @param hsla  The HSLA color value.
  * @return CSS color string.
  */
 export function hslaToString(hsla: HSLA): string {

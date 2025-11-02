@@ -122,9 +122,9 @@
       line-height: var(--#{vars.$prefix}checkbox-size);
       margin-left: #{vars.$padding-md};
       margin-bottom: 0;
-      position: relative;
-      user-select: none;
       cursor: pointer;
+      //position: relative;
+      //user-select: none;
 
       &:focus-visible {
         outline-color: var(--#{vars.$prefix}checkbox-checked-bg);

@@ -312,6 +312,10 @@
     padding-bottom: 0;
   }
 
+  .select-none {
+    user-select: none;
+  }
+
   .triangle-up,
   .caret-up {
     width: 0;

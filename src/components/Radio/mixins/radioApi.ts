@@ -135,7 +135,7 @@ export function useRenderRadioOrCheckbox(
         {
           for: props.id,
           tabIndex: 0,
-          class: `${cssPrefix}${inputType}-label`,
+          class: [`${cssPrefix}${inputType}-label`, 'relative', 'select-none'],
           onClickPrevent: toggleCheckHandler,
           onKeydown: async (e: KeyboardEvent) => {
             if (['Space', 'Enter'].includes(e.code)) {

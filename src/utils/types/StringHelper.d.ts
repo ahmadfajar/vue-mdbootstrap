@@ -89,6 +89,18 @@ export function encodeSpecialChars(
 export declare function chunk(source: string, size?: number): string[];
 
 /**
+ * Determines whether a string starts with any of the specified string,
+ * returning true or false as appropriate. The test is performed in
+ * case-sensitive manner.
+ *
+ * @param source   The input string.
+ * @param searches Collection of string to search at the start of string.
+ * @returns If any of the given strings in the collection is found at the start of
+ *          the string then `true` is returned, otherwise `false`.
+ */
+export declare function isStartWith(source?: string, searches?: string[]): boolean;
+
+/**
  * Determines whether a string ends with any of the specified string,
  * returning true or false as appropriate. The test is performed in
  * case-sensitive manner.
