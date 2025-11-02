@@ -30,21 +30,8 @@ export function hslaToHsva(color: HSLA): HSVA {
  */
 export function hslaToRgba(color: HSLA): RGBA {
   const hsva = hslaToHsva(color);
-  return hsvaToRgba(hsva);
 
-  // Script below that I got from somewhere produce incorrect result.
-  //
-  // const sat = color.s >= 0 && color.s <= 1 ? color.s : color.s / 100;
-  // const light = color.l >= 0 && color.l <= 1 ? color.l : color.l / 100;
-  //
-  // function f(n: number) {
-  //   const k = (n + color.h / 30) % 12;
-  //   const a = sat * Math.min(light, 1 - light);
-  //
-  //   return light - a * Math.max(-1, Math.min(k - 3, 9 - k, 1));
-  // }
-  //
-  // return { r: f(0), g: f(8), b: f(4), a: color.a };
+  return hsvaToRgba(hsva);
 }
 
 /**
@@ -52,7 +39,7 @@ export function hslaToRgba(color: HSLA): RGBA {
  *
  * @param color The HSV color value.
  * @return The HSL color value.
- * Hue as degrees 0..360, Saturation and Lightness in reference range [0,100]
+ * `Hue` as degrees [0..360], `Saturation` and `Lightness` in reference range [0..100]
  */
 export function hsvaToHsla(color: HSVA): HSLA {
   const value = color.v / 100;
@@ -215,49 +202,138 @@ export function rgbaToHsva(color: RGBA): HSVA {
 }
 
 /**
+ * Convert OKLCH value to OKLAB value.
+ */
+function oklchToOklab([L, C, H]: [number, number, number]): [number, number, number] {
+  const hRad = (H * Math.PI) / 180;
+
+  return [L, C * Math.cos(hRad), C * Math.sin(hRad)];
+}
+
+/**
+ * Convert OKLAB value to LMS value.
+ */
+function oklabToLms([L, a, b]: [number, number, number]): [number, number, number] {
+  const lmsPrime = [
+    L + 0.3963377774 * a + 0.2158037573 * b,
+    L - 0.1055613458 * a - 0.0638541728 * b,
+    L - 0.0894841775 * a - 1.291485548 * b,
+  ];
+
+  // Convert back from cube root
+  return lmsPrime.map((v) => v ** 3) as [number, number, number];
+}
+
+/**
+ * Convert LMS value to Linear sRGB value.
+ */
+function lmsToLinearRgb([l, m, s]: [number, number, number]): [number, number, number] {
+  return [
+    l * 4.0767416621 - m * 3.3077115913 + s * 0.2309699292,
+    l * -1.2684380046 + m * 2.6097574011 - s * 0.3413193965,
+    l * -0.0041960863 - m * 0.7034186147 + s * 1.707614701,
+  ];
+}
+
+/**
+ * Convert Linear sRGB value to RGB value.
+ */
+function linearRgbToRgb(rgb: [number, number, number]): [number, number, number] {
+  return rgb.map((v) => {
+    v = v <= 0.0031308 ? v * 12.92 : 1.055 * Math.pow(v, 1 / 2.4) - 0.055;
+
+    return Math.round(Math.max(0, Math.min(1, v)) * 255);
+  }) as [number, number, number];
+}
+
+/**
+ * Convert OKLCH to sRGB color space.
+ *
+ * @param color The OKLCH color value.
+ * @return The RGBA color value.
+ */
+export function oklchToRgba(color: LCHA): RGBA {
+  const oklab = oklchToOklab([color.l, color.c, color.h]);
+  const lms = oklabToLms(oklab);
+  const linearRgb = lmsToLinearRgb(lms);
+  const result = linearRgbToRgb(linearRgb);
+
+  return {
+    r: result[0],
+    g: result[1],
+    b: result[2],
+    a: color.a,
+  };
+}
+
+/**
+ * Convert sRGB value to Linear RGB value.
+ */
+function rgbToLinear([r, g, b]: [number, number, number]): [number, number, number] {
+  const gammaCorrection = (v: number) => {
+    v /= 255;
+
+    return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  };
+
+  return [gammaCorrection(r), gammaCorrection(g), gammaCorrection(b)];
+}
+
+/**
+ * Convert Linear sRGB value to LMS value.
+ */
+function linearRgbToLms([r, g, b]: [number, number, number]): [number, number, number] {
+  return [
+    r * 0.412165612 + g * 0.536275208 + b * 0.0514575653,
+    r * 0.211859107 + g * 0.6807189584 + b * 0.107406579,
+    r * 0.0883097947 + g * 0.2818474174 + b * 0.6298384131,
+  ];
+}
+
+/**
+ * Convert LMS value to OKLAB value.
+ */
+function lmsToOklab(lms: [number, number, number]): [number, number, number] {
+  const lmsPrime = lms.map((v) => Math.cbrt(v)) as [number, number, number];
+
+  return [
+    0.2104542553 * lmsPrime[0] + 0.793617785 * lmsPrime[1] - 0.0040720468 * lmsPrime[2],
+    1.9779984951 * lmsPrime[0] - 2.428592205 * lmsPrime[1] + 0.4505937099 * lmsPrime[2],
+    0.0259040371 * lmsPrime[0] + 0.7827717662 * lmsPrime[1] - 0.808675766 * lmsPrime[2],
+  ];
+}
+
+/**
+ * Convert OKLAB value to OKLCH value.
+ */
+function oklabToOklch([L, a, b]: [number, number, number]): [number, number, number] {
+  const C = Math.sqrt(a * a + b * b);
+  const H = (Math.atan2(b, a) * (180 / Math.PI) + 360) % 360;
+
+  return [
+    parseFloat(L.toFixed(5)), // Lightness
+    parseFloat(C.toFixed(5)), // Chroma
+    parseFloat(H.toFixed(3)), // Hue
+  ];
+}
+
+/**
  * Convert sRGB to OKLCH color space.
  *
  * @param color The RGBA color value.
  * @return The OKLCH color value.
- * Lightness and Chroma as range [0..1], Hue as degrees [0..360]
+ * `Lightness` and `Chroma` as number in range [0..1], `Hue` as degrees [0..360]
  */
 export function rgbaToOklch(color: RGBA): LCHA {
-  // Normalize RGB values to [0, 1]
-  const r1 = color.r / 255;
-  const g1 = color.g / 255;
-  const b1 = color.b / 255;
-
-  // Step 1: Convert RGB to Linear RGB
-  const linearize = (c: number) => (c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
-  const rLin = linearize(r1);
-  const gLin = linearize(g1);
-  const bLin = linearize(b1);
-
-  // Step 2: Convert Linear RGB to XYZ
-  const x = rLin * 0.4124564 + gLin * 0.3575761 + bLin * 0.1804375;
-  const y = rLin * 0.2126729 + gLin * 0.7151522 + bLin * 0.072175;
-  const z = rLin * 0.0193339 + gLin * 0.119192 + bLin * 0.9503041;
-
-  // Step 3: Convert XYZ to LAB
-  const refX = 0.95047;
-  const refY = 1.0;
-  const refZ = 1.08883;
-
-  const f = (t: number) => (t > 0.008856 ? Math.cbrt(t) : (t * 903.3 + 16) / 116);
-  const l = 116 * f(y / refY) - 16;
-  const a = 500 * (f(x / refX) - f(y / refY));
-  const b2 = 200 * (f(y / refY) - f(z / refZ));
-
-  // Step 4: Convert LAB to OKLCH
-  const c = Math.sqrt(a * a + b2 * b2);
-  const h = Math.atan2(b2, a) * (180 / Math.PI);
-  // Ensure hue is in [0, 360]
-  const hDeg = h < 0 ? h + 360 : h;
+  const linearRgb = rgbToLinear([color.r, color.g, color.b]);
+  const lms = linearRgbToLms(linearRgb);
+  const oklab = lmsToOklab(lms);
+  const result = oklabToOklch(oklab);
 
   return {
-    l: l / 100, // Normalize L to [0, 1]
-    c: c / 100, // Normalize C to [0, 1]
-    h: hDeg, // Hue in degrees
+    l: result[0],
+    c: result[1],
+    h: result[2],
     a: color.a,
   };
 }
@@ -314,29 +390,29 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
 /**
  * Convert RGB/RGBA color to CSS HEX color format.
  *
- * @param rgba The RGBA color value.
+ * @param color The RGBA color value.
  * @return CSS Hex color.
  */
-export function rgbaToHex(rgba: RGBA): string {
-  let R = rgba.r.toString(16);
-  let G = rgba.g.toString(16);
-  let B = rgba.b.toString(16);
+export function rgbaToHex(color: RGBA): string {
+  let R = color.r.toString(16);
+  let G = color.g.toString(16);
+  let B = color.b.toString(16);
   let A = '';
 
-  if (rgba.r < 16) {
+  if (color.r < 16) {
     R = '0' + R;
   }
 
-  if (rgba.g < 16) {
+  if (color.g < 16) {
     G = '0' + G;
   }
 
-  if (rgba.b < 16) {
+  if (color.b < 16) {
     B = '0' + B;
   }
 
-  if (rgba.a < 1) {
-    const alpha = (rgba.a * 255) | 0;
+  if (color.a < 1) {
+    const alpha = (color.a * 255) | 0;
     A = alpha.toString(16);
 
     if (alpha < 16) {
@@ -350,28 +426,42 @@ export function rgbaToHex(rgba: RGBA): string {
 /**
  * Convert RGB/RGBA color to string.
  *
- * @param rgba The RGBA color value.
+ * @param color The RGBA color value.
  * @return CSS color string.
  */
-export function rgbaToString(rgba: RGBA): string {
-  if (rgba.a < 1) {
-    return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${rgba.a})`;
+export function rgbaToString(color: RGBA): string {
+  if (color.a < 1) {
+    return `rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`;
   } else {
-    return `rgb(${rgba.r}, ${rgba.g}, ${rgba.b})`;
+    return `rgb(${color.r}, ${color.g}, ${color.b})`;
   }
 }
 
 /**
  * Convert HSL/HSLA color to string.
  *
- * @param hsla  The HSLA color value.
+ * @param color  The HSLA color value.
  * @return CSS color string.
  */
-export function hslaToString(hsla: HSLA): string {
-  if (hsla.a < 1) {
-    return `hsla(${hsla.h}, ${hsla.s}%, ${hsla.l}%, ${hsla.a})`;
+export function hslaToString(color: HSLA): string {
+  if (color.a < 1) {
+    return `hsla(${color.h}, ${Math.round(color.s * 100)}%, ${Math.round(color.l * 100)}%, ${color.a})`;
   } else {
-    return `hsl(${hsla.h}, ${hsla.s}%, ${hsla.l}%)`;
+    return `hsl(${color.h}, ${Math.round(color.s * 100)}%, ${Math.round(color.l * 100)}%)`;
+  }
+}
+
+/**
+ * Convert OKLCH color to string.
+ *
+ * @param color  The OKLCH color value.
+ * @return CSS color string.
+ */
+export function oklchToString(color: LCHA): string {
+  if (color.a < 1) {
+    return `oklch(${color.l.toFixed(3)} ${color.c.toFixed(3)} ${color.h.toFixed(1)} / ${color.a.toFixed(2)})`;
+  } else {
+    return `oklch(${color.l.toFixed(3)} ${color.c.toFixed(3)} ${color.h.toFixed(1)})`;
   }
 }
 

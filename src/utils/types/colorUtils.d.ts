@@ -38,8 +38,6 @@ export declare type RGBA = {
   a: number;
 };
 
-export declare type TColor = HSVA & RGBA;
-
 /**
  * Convert HSL to HSV color space.
  *
@@ -53,6 +51,8 @@ export declare function hslaToHsva(color: HSLA): HSVA;
  *
  * @param color The HSLA color value.
  * @return The RGBA color value.
+ * `Red`, `Green`, and `Blue` as number in range [0..255],
+ * and `Alpha` as number in range [0..1].
  */
 export function hslaToRgba(color: HSLA): RGBA;
 
@@ -61,7 +61,7 @@ export function hslaToRgba(color: HSLA): RGBA;
  *
  * @param color The HSV color value.
  * @return The HSL color value.
- * Hue as degrees 0..360, Saturation and Lightness in reference range [0,100]
+ * `Hue` as degrees [0..360], `Saturation` and `Lightness` in reference range [0..100].
  */
 export declare function hsvaToHsla(color: HSVA): HSLA;
 
@@ -70,6 +70,8 @@ export declare function hsvaToHsla(color: HSVA): HSLA;
  *
  * @param color The HSVA color value.
  * @return The RGBA color value.
+ * `Red`, `Green`, and `Blue` as number in range [0..255],
+ * and `Alpha` as number in range [0..1].
  */
 export declare function hsvaToRgba(color: HSVA): RGBA;
 
@@ -78,15 +80,27 @@ export declare function hsvaToRgba(color: HSVA): RGBA;
  *
  * @param color The css HEX color value.
  * @return The RGBA color value.
+ * `Red`, `Green`, and `Blue` as number in range [0..255],
+ * and `Alpha` as number in range [0..1].
  */
 export declare function hexToRgba(color: string): RGBA;
+
+/**
+ * Convert OKLCH to sRGB color space.
+ *
+ * @param color The OKLCH color value.
+ * @return The RGBA color value.
+ * `Red`, `Green`, and `Blue` as number in range [0..255],
+ * and `Alpha` as number in range [0..1].
+ */
+export declare function oklchToRgba(color: LCHA): RGBA;
 
 /**
  * Convert sRGB to HSL color space.
  *
  * @param color The RGBA color value
  * @return The HSL color value.
- * Hue as degrees [0..360], Saturation and Lightness as range [0..100]
+ * `Hue` as degrees [0..360], `Saturation` and `Lightness` as range [0..100].
  */
 export function rgbaToHsla(color: RGBA): HSLA;
 
@@ -103,7 +117,7 @@ export declare function rgbaToHsva(color: RGBA): HSVA;
  *
  * @param color The RGBA color value.
  * @return The OKLCH color value.
- * Lightness and Chroma as range [0..1], Hue as degrees [0..360]
+ * `Lightness` and `Chroma` as number in range [0..1], `Hue` as degrees [0..360].
  */
 export declare function rgbaToOklch(color: RGBA): LCHA;
 
@@ -113,32 +127,48 @@ export declare function rgbaToOklch(color: RGBA): LCHA;
  * @param canvasCtx  The canvas rendering context
  * @param source     String representing a color.
  * @return The RGBA color value.
+ * `Red`, `Green`, and `Blue` as number in range [0..255],
+ * and `Alpha` as number in range [0..1].
  */
 export declare function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: string): RGBA;
 
 /**
  * Convert RGB/RGBA color to CSS HEX color format.
  *
- * @param rgba The RGBA color value.
+ * @param color The RGBA value.
+ *              `Red`, `Green`, `Blue` as number in range [0..255],
+ *              and `Alpha` as number in range [0..1].
  * @return CSS Hex color.
  */
-export declare function rgbaToHex(rgba: RGBA): string;
+export declare function rgbaToHex(color: RGBA): string;
 
 /**
  * Convert RGB/RGBA color to string.
  *
- * @param rgba The RGBA color value.
+ * @param color The RGBA value.
+ *              `Red`, `Green`, `Blue` as number in range [0..255],
+ *              and `Alpha` as number in range [0..1].
  * @return CSS color string.
  */
-export declare function rgbaToString(rgba: RGBA): string;
+export declare function rgbaToString(color: RGBA): string;
 
 /**
  * Convert HSL/HSLA color to string.
  *
- * @param hsla  The HSLA color value.
+ * @param color  The HSLA value.
+ *               `Hue` as degrees [0..360] and `Saturation`, `Lightness` as number in range [0..1].
  * @return CSS color string.
  */
-export declare function hslaToString(hsla: HSLA): string;
+export declare function hslaToString(color: HSLA): string;
+
+/**
+ * Convert OKLCH color to string.
+ *
+ * @param color  The OKLCH value.
+ *               `Lightness`, `Chroma` as number in range [0..1] and `Hue` as degrees [0..360].
+ * @return CSS color string.
+ */
+export declare function oklchToString(color: LCHA): string;
 
 /**
  * Get brightness level from RGBA color.

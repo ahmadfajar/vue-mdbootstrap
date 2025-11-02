@@ -14,10 +14,12 @@ import {
   TPopoverPosition,
 } from '../../../types';
 
-export declare type TColorPickerMode = 'HEX' | 'RGB' | 'HSL';
+export declare type TColorPickerMode = 'HEX' | 'RGB' | 'HSL' | 'OKLCH';
+
+declare type TColor = Color.HSVA & Color.RGBA;
 
 declare type TColorPickerValue = {
-  currentColor: Color.TColor;
+  currentColor: TColor;
   hueSlider: number;
   alphaSlider: number;
   mode: TColorPickerMode;
@@ -31,6 +33,7 @@ export declare type TColorPickerData = {
   config: Reactive<TColorPickerValue>;
   colorRGB: Reactive<Color.RGBA>;
   colorHSL: Reactive<Color.HSLA>;
+  colorOKLCH: Reactive<Color.LCHA>;
   pickerEl: Ref<HTMLElement | null>;
   colorArea: Ref<HTMLElement | null>;
   colorAreaRect: DOMRect;
@@ -169,20 +172,23 @@ export declare const BsColorPicker: {
       (event: 'update:open', state: boolean): void;
     };
     $exposed: {
-      hexColor: () => string;
-      rgbColor: () => Color.RGBA;
-      hslColor: () => Color.HSLA;
+      hex: () => string;
+      rgba: () => Color.RGBA;
+      hsla: () => Color.HSLA;
+      oklch: () => Color.LCHA;
     };
-    hexColor: () => string;
-    rgbColor: () => Color.RGBA;
-    hslColor: () => Color.HSLA;
+    hex: () => string;
+    rgba: () => Color.RGBA;
+    hsla: () => Color.HSLA;
+    oklch: () => Color.LCHA;
   };
 };
 
 export declare interface BsColorPickerInstance extends ComponentPublicInstance {
-  hexColor: () => string;
-  rgbColor: () => Color.RGBA;
-  hslColor: () => Color.HSLA;
+  hex: () => string;
+  rgba: () => Color.RGBA;
+  hsla: () => Color.HSLA;
+  oklch: () => Color.LCHA;
 }
 
 export declare const BsColorPickerPlugin: ObjectPlugin;

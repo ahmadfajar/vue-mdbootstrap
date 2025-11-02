@@ -3,6 +3,7 @@ import { cssPrefix, useMergeClass } from '@/mixins/CommonApi.ts';
 import { preventEventTarget } from '@/mixins/DomHelper.ts';
 import type {
   Color,
+  TBsToggleButton,
   TButtonSize,
   TColorPickerData,
   TColorPickerMode,
@@ -17,9 +18,12 @@ import {
   hslaToString,
   hsvaToHsla,
   hsvaToRgba,
+  oklchToRgba,
+  oklchToString,
   rgbaFromString,
   rgbaToHex,
   rgbaToHsva,
+  rgbaToOklch,
   rgbaToString,
 } from '@/utils/colorUtils.ts';
 import Helper from '@/utils/Helper.ts';
@@ -38,6 +42,7 @@ export function useInitColorPickerData(props: Readonly<TColorPickerOptionProps>)
     }),
     colorRGB: reactive<Color.RGBA>({ r: 0, g: 0, b: 0, a: 1 }),
     colorHSL: reactive<Color.HSLA>({ h: 0, s: 0, l: 0, a: 1 }),
+    colorOKLCH: reactive<Color.LCHA>({ l: 0, c: 0, h: 0, a: 1 }),
     pickerEl: ref<HTMLElement | null>(null),
     colorArea: ref<HTMLElement | null>(null),
     colorAreaRect: DOMRect.fromRect({ width: 0, height: 0, x: 0, y: 0 }),
@@ -297,20 +302,43 @@ function createInputNumber(
   const mode = pickerData.config.mode;
   let value: number | string;
 
+  // process RGB color mode
   if (mode === 'RGB' && placeholder.startsWith('R')) {
     value = pickerData.colorRGB.r;
   } else if (mode === 'RGB' && placeholder.startsWith('G')) {
     value = pickerData.colorRGB.g;
   } else if (mode === 'RGB' && placeholder.startsWith('B')) {
     value = pickerData.colorRGB.b;
-  } else if (mode === 'HSL' && placeholder.startsWith('H')) {
+  }
+  // process HSL color mode
+  else if (mode === 'HSL' && placeholder.startsWith('H')) {
     value = pickerData.colorHSL.h;
   } else if (mode === 'HSL' && placeholder.startsWith('S')) {
     value = pickerData.colorHSL.s;
   } else if (mode === 'HSL' && placeholder.startsWith('L')) {
     value = pickerData.colorHSL.l;
+  }
+  // process OKLCH color mode
+  else if (mode === 'OKLCH' && placeholder.startsWith('L')) {
+    value = pickerData.colorOKLCH.l.toFixed(3);
+  } else if (mode === 'OKLCH' && placeholder.startsWith('C')) {
+    value = pickerData.colorOKLCH.c.toFixed(3);
+  } else if (mode === 'OKLCH' && placeholder.startsWith('H')) {
+    value = pickerData.colorOKLCH.h.toFixed(1);
   } else {
-    value = mode === 'RGB' ? pickerData.colorRGB.a : pickerData.colorHSL.a;
+    // process alpha transparency
+    if (mode === 'OKLCH') {
+      value =
+        pickerData.colorOKLCH.a < 1.0
+          ? pickerData.colorOKLCH.a.toFixed(2)
+          : pickerData.colorOKLCH.a;
+    } else if (mode === 'HSL') {
+      value =
+        pickerData.colorHSL.a < 1.0 ? pickerData.colorHSL.a.toFixed(2) : pickerData.colorHSL.a;
+    } else {
+      value =
+        pickerData.colorRGB.a < 1.0 ? pickerData.colorRGB.a.toFixed(2) : pickerData.colorRGB.a;
+    }
   }
 
   return h(
@@ -359,11 +387,12 @@ function onUpdateInputNumber(
   let rgba: Color.RGBA | undefined;
   let hsla: Color.HSLA | undefined;
   let hsva: Color.HSVA | undefined;
+  let lcha: Color.LCHA | undefined;
 
   // Prevent value from going out of bounds.
   if (srcValue < 0) {
     srcValue = 0;
-  } else if (isStartWith(placeholder, ['S', 'L', 'A']) && srcValue > 1) {
+  } else if (isStartWith(placeholder, ['S', 'L', 'C', 'A']) && srcValue > 1) {
     srcValue = 1;
   } else if (isStartWith(placeholder, ['R', 'G', 'B']) && srcValue > 255) {
     srcValue = 255;
@@ -371,21 +400,22 @@ function onUpdateInputNumber(
     srcValue = 360;
   }
 
-  if (mode === 'RGB') {
-    rgba = pickerData.colorRGB;
+  if (mode === 'OKLCH') {
+    lcha = pickerData.colorOKLCH;
 
-    if (placeholder.startsWith('R')) {
-      rgba.r = srcValue;
-    } else if (placeholder.startsWith('G')) {
-      rgba.g = srcValue;
-    } else if (placeholder.startsWith('B')) {
-      rgba.b = srcValue;
+    if (placeholder.startsWith('L')) {
+      lcha.l = srcValue;
+    } else if (placeholder.startsWith('C')) {
+      lcha.c = srcValue;
+    } else if (placeholder.startsWith('H')) {
+      lcha.h = srcValue;
     } else {
-      rgba.a = srcValue;
+      lcha.a = srcValue;
     }
 
+    rgba = oklchToRgba(lcha);
     hsva = rgbaToHsva(rgba);
-  } else {
+  } else if (mode === 'HSL') {
     hsla = pickerData.colorHSL;
 
     if (placeholder.startsWith('H')) {
@@ -400,6 +430,20 @@ function onUpdateInputNumber(
 
     hsva = hslaToHsva(hsla);
     rgba = hsvaToRgba(hsva);
+  } else {
+    rgba = pickerData.colorRGB;
+
+    if (placeholder.startsWith('R')) {
+      rgba.r = srcValue;
+    } else if (placeholder.startsWith('G')) {
+      rgba.g = srcValue;
+    } else if (placeholder.startsWith('B')) {
+      rgba.b = srcValue;
+    } else {
+      rgba.a = srcValue;
+    }
+
+    hsva = rgbaToHsva(rgba);
   }
 
   updateColor(pickerData, rgba, hsva);
@@ -407,6 +451,9 @@ function onUpdateInputNumber(
   updateColorPreview(pickerData, emit);
 }
 
+/**
+ * Create form input for HSLA.
+ */
 function createInputColorHSL(
   props: Readonly<TColorPickerOptionProps>,
   pickerData: TColorPickerData,
@@ -415,12 +462,12 @@ function createInputColorHSL(
   emit: TEmitFn
 ): VNode {
   const inputHSL = [
-    createInputLabel(props, cssNamePrefix, inputIDs.H!, 'H'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.H!, 'Hue', 360),
-    createInputLabel(props, cssNamePrefix, inputIDs.S!, 'S'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.S!, 'Sat', 1, 0.01),
-    createInputLabel(props, cssNamePrefix, inputIDs.L!, 'L'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.L!, 'Light', 1, 0.01),
+    createInputLabel(props, cssNamePrefix, inputIDs.H1!, 'H'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.H1!, 'Hue', 360),
+    createInputLabel(props, cssNamePrefix, inputIDs.S1!, 'S'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.S1!, 'Sat', 1, 0.01),
+    createInputLabel(props, cssNamePrefix, inputIDs.L1!, 'L'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.L1!, 'Light', 1, 0.01),
   ];
 
   if (!props.hideAlpha) {
@@ -439,6 +486,9 @@ function createInputColorHSL(
   );
 }
 
+/**
+ * Create form input for RGBA.
+ */
 function createInputColorRGB(
   props: Readonly<TColorPickerOptionProps>,
   pickerData: TColorPickerData,
@@ -447,12 +497,12 @@ function createInputColorRGB(
   emit: TEmitFn
 ): VNode {
   const inputRGB = [
-    createInputLabel(props, cssNamePrefix, inputIDs.R!, 'R'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.R!, 'Re'),
-    createInputLabel(props, cssNamePrefix, inputIDs.G!, 'G'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.G!, 'Gr'),
-    createInputLabel(props, cssNamePrefix, inputIDs.B!, 'B'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.B!, 'Bl'),
+    createInputLabel(props, cssNamePrefix, inputIDs.R2!, 'R'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.R2!, 'Red'),
+    createInputLabel(props, cssNamePrefix, inputIDs.G2!, 'G'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.G2!, 'Green'),
+    createInputLabel(props, cssNamePrefix, inputIDs.B2!, 'B'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.B2!, 'Blue'),
   ];
 
   if (!props.hideAlpha) {
@@ -471,6 +521,44 @@ function createInputColorRGB(
   );
 }
 
+/**
+ * Create form input for OKLCH.
+ */
+function createInputColorLCH(
+  props: Readonly<TColorPickerOptionProps>,
+  pickerData: TColorPickerData,
+  cssNamePrefix: string,
+  inputIDs: TStringRecord,
+  emit: TEmitFn
+): VNode {
+  const inputLCH = [
+    createInputLabel(props, cssNamePrefix, inputIDs.L3!, 'L'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.L3!, 'Light', 1, 0.001),
+    createInputLabel(props, cssNamePrefix, inputIDs.C3!, 'C'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.C3!, 'Chroma', 1, 0.001),
+    createInputLabel(props, cssNamePrefix, inputIDs.H3!, 'H'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.H3!, 'Hue', 360, 0.1),
+  ];
+
+  if (!props.hideAlpha) {
+    inputLCH.push(
+      createInputLabel(props, cssNamePrefix, inputIDs.A3!, 'A'),
+      createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.A3!, 'Alpha', 1, 0.01)
+    );
+  }
+
+  return h(
+    'div',
+    {
+      class: [`${cssNamePrefix}input-row`, `${cssPrefix}gap-x-2`, 'flex', 'items-center'],
+    },
+    inputLCH
+  );
+}
+
+/**
+ * Create form input for HEX color format.
+ */
 function createInputColorHEX(
   props: Readonly<TColorPickerOptionProps>,
   pickerData: TColorPickerData,
@@ -543,11 +631,13 @@ function renderColorPickerInputs(
       // style: { paddingTop: '0.5rem' },
     },
     [
-      pickerData.config.mode === 'HSL'
-        ? createInputColorHSL(props, pickerData, cssNamePrefix, inputIDs, emit)
-        : pickerData.config.mode === 'RGB'
-          ? createInputColorRGB(props, pickerData, cssNamePrefix, inputIDs, emit)
-          : createInputColorHEX(props, pickerData, cssNamePrefix, inputIDs, emit),
+      pickerData.config.mode === 'OKLCH'
+        ? createInputColorLCH(props, pickerData, cssNamePrefix, inputIDs, emit)
+        : pickerData.config.mode === 'HSL'
+          ? createInputColorHSL(props, pickerData, cssNamePrefix, inputIDs, emit)
+          : pickerData.config.mode === 'RGB'
+            ? createInputColorRGB(props, pickerData, cssNamePrefix, inputIDs, emit)
+            : createInputColorHEX(props, pickerData, cssNamePrefix, inputIDs, emit),
     ]
   );
 }
@@ -567,7 +657,7 @@ function renderColorPickerModeButtons(
       class: ['flex', 'justify-center', 'py-2'],
     },
     [
-      h(BsToggleButton, {
+      h<TBsToggleButton>(BsToggleButton, {
         size: 'sm' as Prop<TButtonSize>,
         color: props.modeButtonColor as Prop<string>,
         toggleColor: props.modeButtonToggleColor as Prop<string>,
@@ -576,6 +666,7 @@ function renderColorPickerModeButtons(
           { value: 'HEX', label: 'HEX' },
           { value: 'RGB', label: 'RGB' },
           { value: 'HSL', label: 'HSL' },
+          { value: 'OKLCH', label: 'OKLCH' },
         ] as Prop<TInputOptionItem[]>,
         modelValue: pickerData.config.mode as Prop<string>,
         'onUpdate:model-value': async (value: TColorPickerMode) => {
@@ -650,13 +741,13 @@ export function useRenderColorPicker(
     ? {
         ref: pickerData.pickerEl,
         class: pickerClasses.value,
-        style: props.hideAlpha ? { width: '250px' } : undefined,
+        style: props.hideAlpha ? { width: '310px' } : undefined,
       }
     : mergeProps(
         {
           ref: pickerData.pickerEl,
           class: pickerClasses.value,
-          style: props.hideAlpha ? { width: '250px' } : undefined,
+          style: props.hideAlpha ? { width: '310px' } : undefined,
         },
         attrs
       );
@@ -943,6 +1034,7 @@ function updateAlphaSliderThumbUI(emit: TEmitFn, pickerData: TColorPickerData, p
   pickerData.config.currentColor.a = posX / 100;
   pickerData.colorHSL.a = posX / 100;
   pickerData.colorRGB.a = posX / 100;
+  pickerData.colorOKLCH.a = posX / 100;
   updateColorPreview(pickerData, emit);
   (pickerData.alphaSliderThumb.value as HTMLElement).focus();
 }
@@ -963,6 +1055,7 @@ function updateColor(pickerData: TColorPickerData, rgba: Color.RGBA, hsva: Color
   pickerData.config.hueSlider = hsva.h;
   pickerData.config.alphaSlider = hsva.a * 100;
   pickerData.colorRGB = rgba;
+  pickerData.colorOKLCH = rgbaToOklch(rgba);
 
   const hsla = hsvaToHsla(hsva);
   pickerData.colorHSL = {
@@ -988,8 +1081,11 @@ function updateColorPreview(pickerData: TColorPickerData, emit?: TEmitFn): void 
 
 function dispatchModelValue(emit: TEmitFn, pickerData: TColorPickerData, hexColor?: string): void {
   switch (pickerData.config.mode) {
+    case 'OKLCH':
+      pickerData.config.value = oklchToString(pickerData.colorOKLCH);
+      break;
     case 'HSL':
-      pickerData.config.value = hslaToString(hsvaToHsla(pickerData.config.currentColor));
+      pickerData.config.value = hslaToString(pickerData.colorHSL);
       break;
     case 'RGB':
       pickerData.config.value = rgbaToString(pickerData.config.currentColor);

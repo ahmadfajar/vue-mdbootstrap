@@ -32,7 +32,7 @@ export const colorPickerProps = {
   mode: {
     type: String,
     default: 'HEX',
-    validator: (v: string) => ['RGB', 'HSL', 'HEX'].includes(v),
+    validator: (v: string) => ['OKLCH', 'RGB', 'HSL', 'HEX'].includes(v),
   } as Prop<TColorPickerMode>,
   modelValue: stringProp,
   placement: popoverPlacementProp,

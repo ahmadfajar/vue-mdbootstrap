@@ -16,7 +16,7 @@ import type {
 import type { TStringRecord } from '@/components/Field/types';
 import { BsPopover } from '@/components/Popover';
 import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
-import { hslaToString, hsvaToHsla, rgbaToHex, rgbaToString } from '@/utils/colorUtils.ts';
+import { hslaToString, oklchToString, rgbaToHex, rgbaToString } from '@/utils/colorUtils.ts';
 import Helper from '@/utils/Helper.ts';
 import { computed, defineComponent, h, mergeProps, onMounted, watch } from 'vue';
 
@@ -39,14 +39,22 @@ export default defineComponent<TBsColorPicker>({
         : '',
     ]);
     const inputIDs: TStringRecord = {
-      H: useGenerateId(),
-      S: useGenerateId(),
-      L: useGenerateId(),
+      // HSLA
+      H1: useGenerateId(),
+      S1: useGenerateId(),
+      L1: useGenerateId(),
       A1: useGenerateId(),
-      R: useGenerateId(),
-      G: useGenerateId(),
-      B: useGenerateId(),
+      // RGBA
+      R2: useGenerateId(),
+      G2: useGenerateId(),
+      B2: useGenerateId(),
       A2: useGenerateId(),
+      // OKLCH
+      L3: useGenerateId(),
+      C3: useGenerateId(),
+      H3: useGenerateId(),
+      A3: useGenerateId(),
+      // HEX color
       HEX: useGenerateId(),
     };
 
@@ -62,11 +70,12 @@ export default defineComponent<TBsColorPicker>({
       useMoveAlphaSliderThumb(event as UIEvent, emit, thisData);
     };
 
-    const hexColor = () => rgbaToHex(thisData.config.currentColor);
-    const rgbColor = () => thisData.colorRGB;
-    const hslColor = () => thisData.colorHSL;
+    const hex = () => rgbaToHex(thisData.config.currentColor);
+    const rgba = () => thisData.colorRGB;
+    const hsla = () => thisData.colorHSL;
+    const oklch = () => thisData.colorOKLCH;
 
-    expose({ hexColor, rgbColor, hslColor });
+    expose({ hex, rgba, hsla, oklch });
 
     watch(
       () => thisProps.mode,
@@ -83,8 +92,11 @@ export default defineComponent<TBsColorPicker>({
 
           // Sync internal data with the ColorPicker's Mode
           useUpdateColorCanvas(thisData);
-          if (thisData.config.mode === 'HSL') {
-            thisData.config.value = hslaToString(hsvaToHsla(thisData.config.currentColor));
+          if (thisData.config.mode === 'OKLCH') {
+            thisData.config.value = oklchToString(thisData.colorOKLCH);
+          } else if (thisData.config.mode === 'HSL') {
+            thisData.config.value = hslaToString(thisData.colorHSL);
+            // thisData.config.value = hslaToString(hsvaToHsla(thisData.config.currentColor));
           } else if (thisData.config.mode === 'RGB') {
             thisData.config.value = rgbaToString(thisData.config.currentColor);
           } else {

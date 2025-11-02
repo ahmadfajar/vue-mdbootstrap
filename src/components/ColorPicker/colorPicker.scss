@@ -25,7 +25,7 @@ $markerSize: 14px;
 
     @include borders.radius(var(--#{vars.$prefix}color-picker-border-radius));
     background-color: var(--#{vars.$prefix}color-picker-bg);
-    width: 300px;
+    width: 330px;
 
     > .#{$cmpCssName}canvas {
       @include borders.top-radius(inherit);
@@ -50,6 +50,10 @@ $markerSize: 14px;
 
     > .#{$cmpCssName}body {
       padding: vars.$padding-md;
+
+      .#{vars.$prefix}btn-sm {
+        --#{vars.$prefix}btn-sm-padding-x: 1rem;
+      }
 
       &:last-child {
         @include borders.bottom-radius(inherit);
