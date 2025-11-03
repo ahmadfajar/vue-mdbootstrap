@@ -30,18 +30,18 @@
     --#{vars.$prefix}chip-dismiss-btn-margin-left: #{vars.$padding-sm};
     --#{vars.$prefix}chip-dismiss-btn-margin-right: #{(vars.$padding-sm + 0.25) * -1};
 
-    --#{vars.$prefix}chip-md-border-radius: #{vars.$radius-lg};
+    --#{vars.$prefix}chip-md-border-radius: #{vars.$radius-md};
     --#{vars.$prefix}chip-md-height: #{vars.$chip-md-height};
     --#{vars.$prefix}chip-md-padding-x: #{vars.$padding-md};
     --#{vars.$prefix}chip-md-padding-y: 0;
 
-    --#{vars.$prefix}chip-sm-border-radius: #{vars.$radius-md};
+    --#{vars.$prefix}chip-sm-border-radius: #{vars.$radius-sm};
     --#{vars.$prefix}chip-sm-font-size: #{vars.$chip-sm-font-size};
     --#{vars.$prefix}chip-sm-height: #{vars.$chip-sm-height};
     --#{vars.$prefix}chip-sm-padding-x: 0.75rem;
     --#{vars.$prefix}chip-sm-padding-y: 0;
 
-    --#{vars.$prefix}chip-lg-border-radius: #{vars.$radius-lg + 0.25};
+    --#{vars.$prefix}chip-lg-border-radius: #{vars.$radius-lg};
     --#{vars.$prefix}chip-lg-font-size: #{vars.$chip-lg-font-size};
     --#{vars.$prefix}chip-lg-height: #{vars.$chip-lg-height};
     --#{vars.$prefix}chip-lg-padding-x: #{vars.$padding-lg};
@@ -69,6 +69,7 @@
     //display: inline-flex;
     //align-items: center;
     //max-width: 100%;
+    cursor: default;
     line-height: 1;
     //overflow: hidden;
     //position: relative;
@@ -252,8 +253,8 @@
       }
     }
 
-    &.#{vars.$prefix}chip-pill {
-      --#{vars.$prefix}chip-state-border-radius: #{vars.$radius-pill};
+    &.chip-rounded-pill {
+      --#{vars.$prefix}chip-state-border-radius: var(--#{vars.$prefix}radius-pill);
     }
 
     &[class*='chip-outline'] {
@@ -285,17 +286,11 @@
 .#{vars.$prefix}chip,
 a.#{vars.$prefix}chip {
   color: var(--#{vars.$prefix}chip-state-color);
-  cursor: default;
   outline: none;
   text-decoration: none;
 
   &:hover {
     text-decoration: none;
-  }
-
-  &.#{vars.$prefix}chip-clickable:not(.disabled):not(.readonly) {
-    user-select: none;
-    cursor: pointer;
   }
 
   .#{vars.$prefix}btn-icon {

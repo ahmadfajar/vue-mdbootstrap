@@ -10,6 +10,7 @@ import type {
   TAllowedIconProps,
   TBsButtonInner,
   TBsIcon,
+  TBsToggleButton,
   TBsToggleField,
   TButtonMode,
   TButtonOptionProps,
@@ -55,17 +56,15 @@ export function useMakeButtonProps(
     class: {
       [`${cssPrefix}btn`]: defaultMode,
       [`${cssPrefix}btn-icon`]: props.mode === 'icon',
-      [`${cssPrefix}btn-fab`]: props.mode === 'fab' || (props.mode as string) === 'floating',
-      [`${cssPrefix}btn-tonal`]: props.tonal,
-      [`${cssPrefix}btn-raised`]:
-        props.raised && props.mode !== 'fab' && (props.mode as string) !== 'floating',
+      [`${cssPrefix}btn-fab`]: ['fab', 'floating'].includes(props.mode as string),
       [`${cssPrefix}btn-${props.size}`]: ['xs', 'sm', 'lg'].includes(props.size!),
-      [`${cssPrefix}btn-rounded-sm`]: defaultMode && isPillOff && !props.rounded,
-      [`${cssPrefix}btn-rounded-pill`]: defaultMode && !isPillOff && !props.rounded,
-      [`${cssPrefix}btn-${props.color}`]: props.color && !props.outlined && !props.flat,
-      [`${cssPrefix}btn-outline-${props.color}`]: props.color && props.outlined && !props.tonal,
-      [`${cssPrefix}btn-flat-${props.color}`]:
-        props.color && props.flat && !props.outlined && !props.tonal,
+      'btn-tonal': props.tonal,
+      'btn-raised': props.raised && !['fab', 'floating'].includes(props.mode as string),
+      'btn-rounded-sm': defaultMode && isPillOff && !props.rounded,
+      'btn-rounded-pill': defaultMode && !isPillOff && !props.rounded,
+      [`btn-${props.color}`]: props.color && !props.outlined && !props.flat,
+      [`btn-outline-${props.color}`]: props.color && props.outlined && !props.tonal,
+      [`btn-flat-${props.color}`]: props.color && props.flat && !props.outlined && !props.tonal,
       disabled: disabled,
       readonly: props.readonly,
       active: props.active,
@@ -224,15 +223,14 @@ function makeToggleButtonItemClasses(
     [`${cssPrefix}btn`]: true,
     [`${cssPrefix}btn-${props.size}`]:
       !Helper.isEmpty(props.size) && ['xs', 'sm', 'lg'].includes(props.size),
-    [`${cssPrefix}btn-tonal`]: props.tonal,
-    [`${cssPrefix}btn-raised`]: props.raised,
-    [`${cssPrefix}btn-rounded-sm`]: isPillOff && !props.rounded,
-    [`${cssPrefix}btn-rounded-pill`]: !isPillOff && !props.rounded,
-    [`${cssPrefix}btn-${props.color}`]: enableColor && !props.outlined,
-    [`${cssPrefix}btn-${props.toggleColor}`]: enableToggleColor,
-    [`${cssPrefix}btn-outline-${props.color}`]: enableColor && props.outlined && !props.tonal,
-    [`${cssPrefix}btn-outline-${props.toggleColor}`]:
-      enableToggleColor && props.outlined && !props.tonal,
+    'btn-tonal': props.tonal,
+    'btn-raised': props.raised,
+    'btn-rounded-sm': isPillOff && !props.rounded,
+    'btn-rounded-pill': !isPillOff && !props.rounded,
+    [`btn-${props.color}`]: enableColor && !props.outlined,
+    [`btn-${props.toggleColor}`]: enableToggleColor,
+    [`btn-outline-${props.color}`]: enableColor && props.outlined && !props.tonal,
+    [`btn-outline-${props.toggleColor}`]: enableToggleColor && props.outlined && !props.tonal,
     // [`btn-flat-${props.color}`]: props.flat && !props.outlined && !props.tonal && (!isSelected || !props.toggleColor),
     active: isSelected && !props.toggleColor && !props.disabled && !item.disabled,
     selected: isSelected && !props.disabled && !item.disabled,
@@ -255,21 +253,21 @@ function renderToggleItemContent(
           'icon',
           'default',
           cloneProps,
-          `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
+          `icon-${item.id || kebabCase(item.label || String(item.value)) || useGenerateId()}`,
           item
         )
       : '',
     useRenderSlot(
       slots,
       'label',
-      { key: kebabCase(item.label) },
+      { key: kebabCase(item.label || String(item.value)) },
       [
         h(
           'span',
           {
             class: `${cssPrefix}btn-text`,
           },
-          toDisplayString(item.label)
+          toDisplayString(item.label || item.value)
         ),
       ],
       item
@@ -280,7 +278,7 @@ function renderToggleItemContent(
           'icon',
           'default',
           cloneProps,
-          `icon-${item.id || kebabCase(item.label) || useGenerateId()}`,
+          `icon-${item.id || kebabCase(item.label || String(item.value)) || useGenerateId()}`,
           item
         )
       : '',
@@ -401,7 +399,7 @@ export function useRenderToggleFieldButton(
               class: [`${cssPrefix}field-inner`],
             },
             [
-              h(
+              h<TBsToggleButton>(
                 BsToggleButton,
                 {
                   id: props.id,

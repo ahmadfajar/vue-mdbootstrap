@@ -171,9 +171,9 @@ export declare type TInputOptionItem = TAllowedIconProps & {
   value: string | number | boolean;
 
   /**
-   * Input item label.
+   * Input item label. If not sets then it will be assigned from `value` property.
    */
-  label: string;
+  label?: string;
 
   /**
    * Render the icon with equal height and width.

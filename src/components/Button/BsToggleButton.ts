@@ -25,12 +25,17 @@ export default defineComponent<TBsToggleButton>({
         {
           class: [
             `${cssPrefix}segmented-button`,
-            thisProps.disabled ? `${cssPrefix}disabled` : '',
-            thisProps.readonly ? `${cssPrefix}readonly` : '',
-            thisProps.required ? `${cssPrefix}required` : '',
+            thisProps.disabled ? 'disabled' : '',
+            thisProps.readonly ? 'readonly' : '',
+            thisProps.required ? 'required' : '',
           ],
           id: props.id,
           role: 'group',
+          'data-segmented-button': thisProps.disabled
+            ? 'disabled'
+            : thisProps.readonly
+              ? 'readonly'
+              : undefined,
         },
         thisProps.items?.map((item: TInputOptionItem, idx: number) => {
           item.id ??= useGenerateId();

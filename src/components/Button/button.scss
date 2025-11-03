@@ -54,6 +54,9 @@
     color: var(--#{vars.$prefix}btn-color);
     background-color: var(--#{vars.$prefix}btn-bg);
     box-shadow: var(--#{vars.$prefix}btn-box-shadow);
+    // prettier-ignore
+    border: var(--#{vars.$prefix}btn-border-width) solid var(--#{vars.$prefix}btn-state-border-color);
+    border-radius: var(--#{vars.$prefix}btn-border-radius);
     transition: #{vars.$btn-transition};
 
     > .#{vars.$prefix}ripple {
@@ -109,7 +112,7 @@
       --#{vars.$prefix}btn-disabled-border-color: #{$disabled-border-color};
     }
 
-    &.#{vars.$prefix}btn-raised {
+    &.btn-raised {
       --#{vars.$prefix}btn-box-shadow: var(--#{vars.$prefix}btn-elevated-box-shadow);
       --#{vars.$prefix}btn-active-box-shadow: var(--#{vars.$prefix}btn-elevated-active-box-shadow);
       --#{vars.$prefix}btn-hover-box-shadow: var(--#{vars.$prefix}btn-elevated-hover-box-shadow);
@@ -142,21 +145,27 @@
   }
 
   .#{vars.$prefix}btn {
-    --#{vars.$prefix}btn-border-radius: #{vars.$btn-border-radius-md};
-
+    --#{vars.$prefix}btn-xs-border-radius: #{vars.$btn-border-radius-sm};
+    --#{vars.$prefix}btn-xs-line-height: 1;
     --#{vars.$prefix}btn-xs-padding-x: #{vars.$spacing};
     --#{vars.$prefix}btn-xs-padding-y: #{vars.$spacing * 0.375};
+
+    --#{vars.$prefix}btn-sm-border-radius: #{vars.$btn-border-radius-md};
+    --#{vars.$prefix}btn-sm-line-height: 1.3;
     --#{vars.$prefix}btn-sm-padding-x: #{vars.$spacing * 1.25};
     --#{vars.$prefix}btn-sm-padding-y: #{vars.$spacing * 0.4};
+
+    --#{vars.$prefix}btn-md-border-radius: #{vars.$btn-border-radius-md};
+    --#{vars.$prefix}btn-md-line-height: 1.5;
     --#{vars.$prefix}btn-md-padding-x: #{vars.$spacing * 1.5};
     --#{vars.$prefix}btn-md-padding-y: #{vars.$spacing * 0.425};
+
+    --#{vars.$prefix}btn-lg-border-radius: #{vars.$btn-border-radius-lg};
+    --#{vars.$prefix}btn-lg-line-height: 1.5;
     --#{vars.$prefix}btn-lg-padding-x: #{vars.$spacing * 1.875};
     --#{vars.$prefix}btn-lg-padding-y: #{vars.$spacing * 0.75};
 
-    --#{vars.$prefix}btn-xs-line-height: 1;
-    --#{vars.$prefix}btn-sm-line-height: 1.3;
-    --#{vars.$prefix}btn-md-line-height: 1.5;
-    --#{vars.$prefix}btn-lg-line-height: 1.5;
+    --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-md-border-radius);
 
     &[class*='btn-flat'] {
       .#{vars.$prefix}btn-inner:not(.has-icon) {
@@ -186,7 +195,7 @@
     }
 
     &.#{vars.$prefix}btn-xs {
-      --#{vars.$prefix}btn-border-radius: #{vars.$btn-border-radius-sm};
+      --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-xs-border-radius);
       --#{vars.$prefix}btn-font-size: #{vars.$btn-font-size-xs};
 
       &[class*='btn-flat'] {
@@ -205,6 +214,7 @@
     }
 
     &.#{vars.$prefix}btn-sm {
+      --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-sm-border-radius);
       --#{vars.$prefix}btn-font-size: #{vars.$btn-font-size-sm};
 
       &[class*='btn-flat'] {
@@ -215,7 +225,7 @@
     }
 
     &.#{vars.$prefix}btn-lg {
-      --#{vars.$prefix}btn-border-radius: #{vars.$btn-border-radius-lg};
+      --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-lg-border-radius);
       --#{vars.$prefix}btn-font-size: #{vars.$btn-font-size-lg};
 
       &[class*='btn-flat'] {
@@ -225,12 +235,13 @@
       }
     }
 
-    &.#{vars.$prefix}btn-rounded-sm {
-      --#{vars.$prefix}btn-border-radius: #{vars.$btn-border-radius-sm};
+    &.btn-rounded-sm {
+      //--#{vars.$prefix}btn-border-radius: #{vars.$btn-border-radius-sm};
+      --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-xs-border-radius);
     }
 
-    &.#{vars.$prefix}btn-rounded-pill {
-      --#{vars.$prefix}btn-border-radius: #{vars.$radius-pill};
+    &.btn-rounded-pill {
+      --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}radius-pill);
     }
   }
 
@@ -351,12 +362,7 @@
         z-index: 1;
       }
 
-      //&:not(:last-child) {
-      //  @include borders.end-radius(0);
-      //}
-
       &:not(:first-child) {
-        //@include borders.start-radius(0);
         margin-left: -1px;
 
         &.disabled,
@@ -419,6 +425,14 @@
 
 // Patch Bootstrap 'reboot.css'
 // This patch must be placed outside the css layer.
+button {
+  &.#{vars.$prefix}btn,
+  &.#{vars.$prefix}btn-fab,
+  &.#{vars.$prefix}btn-icon {
+    border-radius: var(--#{vars.$prefix}btn-border-radius);
+  }
+}
+
 .#{vars.$prefix}btn,
 .#{vars.$prefix}btn-fab,
 .#{vars.$prefix}btn-icon {
@@ -432,9 +446,6 @@
   //-webkit-user-select: none;
   -moz-user-select: none;
   user-select: none;
-  // prettier-ignore
-  border: var(--#{vars.$prefix}btn-border-width) solid var(--#{vars.$prefix}btn-state-border-color);
-  border-radius: var(--#{vars.$prefix}btn-border-radius);
 
   &:hover {
     --#{vars.$prefix}btn-state-border-color: var(--#{vars.$prefix}btn-hover-border-color);

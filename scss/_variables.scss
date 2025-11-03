@@ -69,8 +69,9 @@ $padding-xl:                  $spacing * 2;
 // Borders radius variables
 //-----------------------------
 $radius:                      .25rem;
-$radius-md:                   .375rem;
-$radius-lg:                   .5rem;
+$radius-sm:                   .375rem;
+$radius-md:                   $radius * 2;
+$radius-lg:                   $radius * 3;
 $radius-pill:                 50rem;
 $radius-circle:               50%;
 

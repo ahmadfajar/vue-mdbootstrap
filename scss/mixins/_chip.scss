@@ -6,7 +6,7 @@
 // BsChip variants -- scss mixins
 //-------------------------------
 @mixin make-default-variant($name, $color) {
-  .#{vars.$prefix}chip-#{$name} {
+  .chip-#{$name} {
     $chip-bg: helper.set-color-contrast(
       $color,
       helper.set-color-contrast(
@@ -75,7 +75,7 @@
 }
 
 @mixin make-outline-variant($name, $color) {
-  .#{vars.$prefix}chip-outline-#{$name} {
+  .chip-outline-#{$name} {
     $border-color: helper.to-oklch(color.adjust(colors.$gray-600, $lightness: 25%));
     $hover-bg: helper.to-oklch(
       helper.set-color-contrast(
