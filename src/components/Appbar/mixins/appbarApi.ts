@@ -85,7 +85,7 @@ export function useRenderAppbar(
         ref: appbar,
         class: {
           [`${cssPrefix}appbar`]: true,
-          [`${cssPrefix}appbar-shadow`]: props.shadow,
+          'appbar-shadow': props.shadow,
           'smooth-animation': smoothAnimation.value,
           'max-w-full': true,
           'fixed-top': props.fixedTop,

@@ -166,9 +166,9 @@ declare module 'vue' {
     $http: IHttpService;
     $VueMdb: TVueMdb;
     $notification: INotificationProvider;
-    vClickOutside: ClickOutside;
-    vResize: Resize;
-    vScroll: Scroll;
-    vTouch: Touch;
+    vClickOutside: typeof ClickOutside;
+    vResize: typeof Resize;
+    vScroll: typeof Scroll;
+    vTouch: typeof Touch;
   }
 }

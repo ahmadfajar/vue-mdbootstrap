@@ -34,7 +34,7 @@ export default defineComponent<TBsFontawesomeIcon>({
     variant: {
       type: String,
       default: 'solid',
-      validator: (value: string): boolean => ['regular', 'solid', 'light'].includes(value),
+      // validator: (value: string): boolean => ['regular', 'solid', 'light'].includes(value),
     } as Prop<TFontAwesomeVariant>,
     version: {
       type: String,

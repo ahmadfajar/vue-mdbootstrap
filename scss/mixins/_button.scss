@@ -88,7 +88,7 @@
           helper.set-color-contrast(
             $color,
             color.change(color.adjust($color, $lightness: -5%), $alpha: 0.15),
-            color.change($color, $chroma: 20%, $lightness: 95%, $alpha: 0.5),
+            color.change($color, $chroma: 20%, $lightness: 95%, $alpha: 0.25),
             90%
           ),
           color.scale($color, $chroma: -15%, $lightness: 70%)
@@ -118,7 +118,7 @@
           color.scale($color, $lightness: -50%)
         )
       );
-      $active-bg: helper.to-oklch(color.adjust($color, $lightness: -10%));
+      $active-bg: helper.to-oklch(color.adjust($color, $lightness: -5%));
       $active-text: helper.to-oklch(
         helper.set-color-contrast($active-bg, color.scale($color, $lightness: -75%), colors.$white)
       );
@@ -131,7 +131,7 @@
       --#{vars.$prefix}btn-active-border-color: #{$active-bg};
       --#{vars.$prefix}btn-hover-bg: #{$hover-bg};
       --#{vars.$prefix}btn-hover-color: #{$hover-text};
-      --#{vars.$prefix}btn-hover-border-color: #{color.change($hover-bg, $alpha: 0.125)};
+      --#{vars.$prefix}btn-hover-border-color: transparent;
     }
   }
 
@@ -412,9 +412,15 @@
     );
     $hover-bg: helper.set-color-contrast(
       $color,
-      color.change(color.scale($color, $lightness: 15%), $alpha: 0.3),
-      color.change(color.mix($color, #fff, 25%, oklch), $alpha: 0.9),
-      90%
+      helper.set-color-contrast(
+        $color,
+        color.change(color.scale($color, $lightness: 15%), $alpha: 0.3),
+        color.change(color.mix($color, #fff, 25%, oklch), $alpha: 0.9),
+        90%
+      ),
+      // tune dark color variants
+      color.change(color.mix($color, #fff, 15%, oklch), $alpha: 0.75),
+      22%
     );
     $hover-text: helper.set-color-contrast(
       $color,

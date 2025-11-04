@@ -1,20 +1,12 @@
 import { Directive } from 'vue';
 
-export declare type ClickOutside = Directive<HTMLElement> & {
-  name?: 'click-outside';
-};
+export declare const ClickOutside: Directive<HTMLElement>;
 
-export declare type Resize = Directive<HTMLElement> & {
-  name?: 'resize';
-};
+export declare const Resize: Directive<HTMLElement>;
 
-export declare type Scroll = Directive<HTMLElement> & {
-  name?: 'scroll';
-};
+export declare const Scroll: Directive<HTMLElement>;
 
-export declare type Touch = Directive<HTMLElement> & {
-  name?: 'touch';
-};
+export declare const Touch: Directive<HTMLElement>;
 
 export declare interface TouchDirectiveEvent {
   touchstartX: number;

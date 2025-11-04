@@ -22,7 +22,7 @@
       transition: vars.$transition-default;
     }
 
-    &.#{vars.$prefix}appbar-shadow {
+    &.appbar-shadow {
       box-shadow: vars.$z-depth-1;
     }
 

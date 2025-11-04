@@ -51,7 +51,6 @@
     display: inline-block;
     position: relative;
     white-space: nowrap;
-    color: var(--#{vars.$prefix}btn-color);
     background-color: var(--#{vars.$prefix}btn-bg);
     box-shadow: var(--#{vars.$prefix}btn-box-shadow);
     // prettier-ignore
@@ -441,6 +440,7 @@ button {
   line-height: 1;
   cursor: pointer;
   text-decoration: none;
+  color: var(--#{vars.$prefix}btn-color);
   font-size: var(--#{vars.$prefix}btn-font-size);
   font-weight: var(--#{vars.$prefix}btn-font-weight);
   //-webkit-user-select: none;

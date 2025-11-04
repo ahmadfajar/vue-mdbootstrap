@@ -27,8 +27,8 @@
 @function to-oklch($color, $fractionDigits: 2) {
   $lightness: round(color.channel($color, 'lightness', $space: oklch), $fractionDigits);
   $chroma: round(color.channel($color, 'chroma', $space: oklch), $fractionDigits);
-  $hue: round(color.channel($color, 'hue', $space: oklch), $fractionDigits);
-  $alpha: round(color.channel($color, 'alpha', $space: oklch), max($fractionDigits, 3));
+  $hue: round(color.channel($color, 'hue', $space: oklch), 1); // $fractionDigits);
+  $alpha: round(color.channel($color, 'alpha', $space: oklch), $fractionDigits);
 
   @return oklch($lightness $chroma $hue / #{$alpha});
 }
