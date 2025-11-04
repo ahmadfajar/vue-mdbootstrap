@@ -22,7 +22,7 @@ export default defineComponent<TBsBadge>({
         [thisProps.color?.startsWith('bg-') ? thisProps.color : `bg-${thisProps.color}`]:
           hasColor(),
         [`text-bg-${thisProps.variant}`]: thisProps.variant && !thisProps.outlined,
-        [`${cssPrefix}badge-outline-${thisProps.variant || thisProps.color}`]: hasOutlined(),
+        [`badge-outline-${thisProps.variant || thisProps.color}`]: hasOutlined(),
         'border-thin': thisProps.outlined,
       });
   },

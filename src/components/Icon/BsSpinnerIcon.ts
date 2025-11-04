@@ -4,7 +4,7 @@ import {
   useCircleSizeStyles,
   useCreateSvgNode,
 } from '@/components/Icon/mixins/svgApi.ts';
-import type { TBsSpinnerIcon } from '@/components/Icon/types';
+import type { TBsSpinnerIcon, TSpinnerIconOptionProps } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { defineComponent, h } from 'vue';
 
@@ -12,14 +12,20 @@ export default defineComponent<TBsSpinnerIcon>({
   name: 'BsSpinnerIcon',
   props: iconSpinnerProps,
   setup(props) {
+    const thisProps = props as Readonly<TSpinnerIconOptionProps>;
+
     return () =>
       useCreateSvgNode(
         [
           `${cssPrefix}svg-inline`,
-          props.spin ? `${cssPrefix}spin` : props.pulse ? `${cssPrefix}pulse` : '',
-          props.color ? `text-${props.color as string}` : '',
+          thisProps.spin ? `${cssPrefix}spin` : thisProps.pulse ? `${cssPrefix}pulse` : '',
+          thisProps.color
+            ? thisProps.color.startsWith('text-')
+              ? thisProps.color
+              : `text-${thisProps.color}`
+            : '',
         ],
-        useCircleSizeStyles(props.size as number),
+        useCircleSizeStyles(thisProps.size as number),
         false,
         null,
         '0 0 512 512',

@@ -7,7 +7,7 @@
 @layer components {
   .#{vars.$prefix}badge {
     // prettier-ignore
-    --#{vars.$prefix}badge-border-radius: var(--#{vars.$prefix}radius, #{vars.$badge-border-radius});
+    --#{vars.$prefix}badge-border-radius: #{vars.$badge-border-radius};
     --#{vars.$prefix}badge-color: #{colors.$white};
     --#{vars.$prefix}badge-font-size: #{vars.$badge-font-size};
     // prettier-ignore
@@ -39,13 +39,13 @@
     }
 
     // Empty badges collapse automatically
-    &:empty {
-      display: none;
-    }
+    //&:empty {
+    //  display: none;
+    //}
   }
 
-  @each $name, $color in map.remove(colors.$context-colors, 'light') {
-    .#{vars.$prefix}badge-outline-#{$name} {
+  @each $name, $color in colors.$context-colors {
+    .badge-outline-#{$name} {
       --#{vars.$prefix}badge-color: #{$color};
       --#{vars.$prefix}border-color: #{helper.to-oklch(color.adjust($color, $lightness: 10%))};
     }

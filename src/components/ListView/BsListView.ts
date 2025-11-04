@@ -16,10 +16,10 @@ export default defineComponent<TBsListView>({
     const thisProps = props as Readonly<TListViewOptionProps>;
     const classNames = computed(() => ({
       [`${cssPrefix}list`]: true,
-      [`${cssPrefix}list-${thisProps.color}`]: thisProps.color,
       [`${cssPrefix}list-space-${thisProps.spaceAround}`]:
         thisProps.spaceAround &&
         ['both', 'left', 'right'].includes(thisProps.spaceAround as string),
+      [`list-${thisProps.color}`]: thisProps.color,
       'overflow-hidden': thisProps.overflowHidden,
     }));
 

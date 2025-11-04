@@ -14,9 +14,9 @@ export function useSwitchClasses(props: Readonly<TSwitchOptionProps>): TRecord {
 
   return {
     [`${cssPrefix}switch`]: true,
-    [`${cssPrefix}switch-${props.color}`]: props.color != null,
     [`${cssPrefix}switch-inset`]: props.insetMode || props.insetOutlined,
     [`${cssPrefix}switch-outlined`]: props.insetOutlined === true && !checked,
+    [`switch-${props.color}`]: props.color != null,
     'flex items-center relative': true,
     checked: checked,
     required: props.required,
@@ -61,11 +61,11 @@ function createSwitchUI(
       },
       [
         h('div', { class: [`${cssPrefix}switch-thumb`, 'relative'] }, [
-          h('div', { class: `${cssPrefix}switch-overlay` }),
+          h('div', { class: [`${cssPrefix}switch-overlay`, 'absolute'] }),
           h<TBsRipple>(
             BsRipple,
             {
-              class: ['flex', 'items-center', 'justify-center'],
+              class: ['flex', 'items-center', 'justify-center', 'absolute'],
               centered: true as unknown as Prop<boolean>,
               active: rippleActive.value as unknown as Prop<boolean>,
               disabled: (props.disabled || props.readonly) as unknown as Prop<boolean>,
@@ -103,6 +103,10 @@ export function useRenderSwitch(
     'div',
     {
       class: classnames.value,
+      'data-checked': useCheckSelected(props),
+      'data-required': props.required ? 'true' : undefined,
+      'data-disabled': props.disabled ? 'true' : undefined,
+      'data-readonly': props.readonly && !props.disabled ? 'true' : undefined,
     },
     [
       useWrapSlotWithCondition(

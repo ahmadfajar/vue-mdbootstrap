@@ -7,7 +7,7 @@
 // BsListView variants -- scss mixins
 //-----------------------------------
 @mixin make-listview-variant($name, $color) {
-  .#{vars.$prefix}list-#{$name} {
+  .list-#{$name} {
     $subheader-color: helper.set-color-contrast(
       $color,
       color.change(helper.to-oklch(color.adjust(colors.$gray-900, $lightness: 5%)), $alpha: 0.6),
@@ -34,17 +34,6 @@
         $tile-indicator-border-color,
         80%
       )};
-
-    //@if (helper.lightnessLevel($color) < 62.75%) {
-    //  .#{vars.$prefix}divider {
-    //    --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
-    //  }
-    //
-    //   //bootstrap patch
-    //  .dropdown-menu {
-    //    --#{vars.$prefix-bs}dropdown-divider-bg: #{color.change(colors.$white, $alpha: 0.15)};
-    //  }
-    //}
 
     // configure list-items color scheme
     $tile-hover-bg: helper.to-oklch(
@@ -127,15 +116,6 @@
       --#{vars.$prefix}tile-active-leading-icon-color: #{$tile-active-leading-icon-color};
       --#{vars.$prefix}tile-active-title-color: #{$tile-active-title-color};
       --#{vars.$prefix}tile-active-subtitle-color: #{$tile-active-subtitle-color};
-
-      //$list-colors: 'amber', 'yellow', 'lime', 'warning', 'warning-color';
-      //@if (not list.index($list-colors, $name)) {
-      //  --#{vars.$prefix}tile-indicator-border-color: #{$tile-indicator-border-color};
-      //} @else {
-      //  --#{vars.$prefix}tile-indicator-border-color: #{helper.to-oklch(
-      //      color.change(color.adjust(colors.$mdb-default-color, $lightness: -5%), $alpha: 1)
-      //    )};
-      //}
     }
 
     .#{vars.$prefix}list-nav {

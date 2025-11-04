@@ -38,7 +38,7 @@ import {
 export function useRadioClasses(props: Readonly<TRadioOptionProps>): TRecord {
   return {
     [`${cssPrefix}radio`]: true,
-    [`${cssPrefix}radio-${props.color}`]: props.color != null,
+    [`radio-${props.color}`]: props.color != null,
     'inline-flex': true,
     relative: true,
     checked: props.value === props.modelValue,
@@ -100,6 +100,7 @@ export function useRenderRadioOrCheckbox(
     {
       class: classnames.value,
       'data-checked': useCheckSelected(props),
+      'data-required': props.required ? 'true' : undefined,
       'data-disabled': props.disabled ? 'true' : undefined,
       'data-readonly': props.readonly && !props.disabled ? 'true' : undefined,
     },
@@ -111,7 +112,7 @@ export function useRenderRadioOrCheckbox(
           onClick: toggleCheckHandler,
         },
         [
-          h('div', { class: `${cssPrefix}${inputType}-overlay` }),
+          h('div', { class: [`${cssPrefix}${inputType}-overlay`, 'absolute'] }),
           h<TBsRipple>(
             BsRipple,
             {
@@ -211,7 +212,7 @@ export function useRenderRadioOrCheckboxGroup<D, M>(
         'div',
         {
           class: {
-            'row g-2': true,
+            'row gy-0 gx-2': true,
             'row-cols-1': !props.column || (props.column && props.items.length > 0),
             'row-cols-sm-auto': !props.column && props.items.length < 4,
             'row-cols-sm-2': !props.column && props.items.length > 3,

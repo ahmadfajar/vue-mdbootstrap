@@ -79,7 +79,7 @@
       width: var(--#{vars.$prefix}switch-touch-size);
       left: 50%;
       top: 50%;
-      position: absolute;
+      //position: absolute;
       transform: translate(-50%, -50%);
     }
 

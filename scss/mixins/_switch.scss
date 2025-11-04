@@ -6,7 +6,7 @@
 // BsSwitch variants -- scss mixins
 //---------------------------------
 @mixin make-default-variant($name, $color) {
-  .#{vars.$prefix}switch-#{$name} {
+  .switch-#{$name} {
     // prettier-ignore
     --#{vars.$prefix}switch-active-box-shadow: #{
       0 0 6px -1px color.change(colors.$black, $alpha: 0.13),

@@ -106,6 +106,7 @@ function createListTileElement(
         BsRipple,
         {
           class: {
+            relative: true,
             rounded: provider?.itemRounded === true && !props.roundedOff,
             'rounded-pill':
               provider?.itemRoundedPill === true && !provider.itemRounded && !props.pillOff,
@@ -162,7 +163,7 @@ function createListTileRouterElement(
         BsRipple,
         {
           class: {
-            flex: true,
+            'flex relative': true,
             rounded: provider?.itemRounded === true && !props.roundedOff,
             'rounded-pill':
               provider?.itemRoundedPill === true && !provider.itemRounded && !props.pillOff,

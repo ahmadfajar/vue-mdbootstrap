@@ -61,7 +61,9 @@ export default defineComponent<TBsMaskLoader>({
                         class: {
                           [`${cssPrefix}spinner-grow`]: loaderVariant.value === 'grow',
                           [`${cssPrefix}spinner-border`]: loaderVariant.value === 'linear',
-                          [`text-${thisProps.spinnerColor}`]: thisProps.spinnerColor,
+                          [thisProps.spinnerColor?.startsWith('text-')
+                            ? thisProps.spinnerColor
+                            : `text-${thisProps.spinnerColor}`]: thisProps.spinnerColor,
                         },
                         style: {
                           'border-width':

@@ -5,7 +5,7 @@
 // BsCheckbox variants -- scss mixins
 //-----------------------------------
 @mixin make-default-variant($name, $color) {
-  .#{vars.$prefix}checkbox-#{$name} {
+  .checkbox-#{$name} {
     $checked-color: helper.set-color-contrast($color, colors.$black, colors.$white);
 
     --#{vars.$prefix}checkbox-checked-bg: #{$color};

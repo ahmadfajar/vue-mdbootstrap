@@ -3,7 +3,7 @@
 // BsRadio variants -- scss mixins
 //--------------------------------
 @mixin make-default-variant($name, $color) {
-  .#{vars.$prefix}radio-#{$name} {
+  .radio-#{$name} {
     //--#{vars.$prefix}radio-color: currentColor;
     --#{vars.$prefix}radio-active-color: #{$color};
   }

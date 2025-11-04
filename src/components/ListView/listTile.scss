@@ -113,7 +113,7 @@
     > .#{vars.$prefix}ripple {
       min-height: var(--#{vars.$prefix}tile-minheight);
       padding: var(--#{vars.$prefix}tile-padding-y) var(--#{vars.$prefix}tile-padding-x);
-      position: relative;
+      //position: relative;
 
       > div > div[class^='#{vars.$prefix}list-tile-'] {
         &:nth-child(2),

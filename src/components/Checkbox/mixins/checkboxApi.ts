@@ -18,8 +18,8 @@ export function useCheckboxClasses(props: Readonly<TCheckboxOptionProps>): TReco
 
   return {
     [`${cssPrefix}checkbox`]: true,
-    [`${cssPrefix}checkbox-${props.color}`]: props.color != null,
     [`${cssPrefix}indeterminate`]: props.indeterminate && !checked,
+    [`checkbox-${props.color}`]: props.color != null,
     'inline-flex': true,
     relative: true,
     checked: checked,
