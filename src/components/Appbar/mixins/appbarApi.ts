@@ -28,7 +28,8 @@ export function useAppbarStyles(
       : props.clippedRight && appId.value
         ? (vueMdb.value?.app[appId.value]?.sideDrawer.right.width ?? 0) + 'px'
         : zeroPx,
-    'z-index': props.fixedTop ? '1030' : undefined,
+    // override bootstrap z-index
+    'z-index': props.fixedTop ? '1020' : undefined,
   };
 }
 

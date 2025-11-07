@@ -58,7 +58,7 @@ export function useSideDrawerStyles(
       marginTop: zeroPx,
       position: 'fixed',
       top: zeroPx,
-      'z-index': 1031, // zIndex.value + 1,
+      'z-index': 1030, // zIndex.value + 1,
       left:
         props.position === 'left'
           ? isOpen.value
@@ -139,10 +139,13 @@ export async function useOnMountedSideDrawer(
         //   }
         // });
 
-        if (vueMdb.value.app[appId.value]?.appbar.fixedTop) {
-          zIndex.value = 1030;
-        } else if (vueMdb.value.app[appId.value]?.appbar.stickyTop) {
+        if (
+          vueMdb.value.app[appId.value]?.appbar.stickyTop ||
+          vueMdb.value.app[appId.value]?.appbar.fixedTop
+        ) {
           zIndex.value = 1020;
+        } else {
+          zIndex.value = 1000;
         }
       }
     });

@@ -394,7 +394,16 @@
       color.scale($color, $lightness: -10%),
       color.scale($color, $lightness: 10%)
     );
-    $text-color: helper.set-color-contrast($color, color.scale($color, $lightness: -10%), $color);
+    $text-color: helper.set-color-contrast(
+      $color,
+      helper.set-color-contrast(
+        $color,
+        color.scale($color, $lightness: -15%),
+        color.scale($color, $lightness: -10%),
+        90%
+      ),
+      $color
+    );
     $active-bg: helper.set-color-contrast(
       $color,
       helper.set-color-contrast(

@@ -18,7 +18,6 @@
       helper.shift-color($color, 70%)
     );
     $icon-color: helper.to-oklch(color.adjust($color, $lightness: -5%));
-    //$hover-bg: helper.to-oklch(color.adjust($chip-bg, $lightness: -10%));
     $hover-bg: helper.set-color-contrast(
         $color,
         helper.set-color-contrast(

@@ -4,7 +4,6 @@
 //--------------------------------
 @mixin make-default-variant($name, $color) {
   .radio-#{$name} {
-    //--#{vars.$prefix}radio-color: currentColor;
     --#{vars.$prefix}radio-active-color: #{$color};
   }
 }

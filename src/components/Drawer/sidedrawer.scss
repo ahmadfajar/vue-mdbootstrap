@@ -5,7 +5,7 @@
   .#{vars.$prefix}drawer-host {
     height: 100%;
     position: absolute;
-    //z-index: vars.$zindex-sticky;
+    z-index: vars.$zindex-sticky + 1;
     transition: vars.$transition-default;
   }
 

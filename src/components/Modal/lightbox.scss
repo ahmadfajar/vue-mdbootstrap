@@ -6,7 +6,7 @@
 @layer components {
   .#{vars.$prefix}lightbox-container {
     --#{vars.$prefix}lightbox-element-padding-x: #{vars.$padding-sm};
-    --#{vars.$prefix}lightbox-display-bg: #{color.change(colors.$black, $alpha: 0.3)};
+    //--#{vars.$prefix}lightbox-display-bg: #{color.change(colors.$black, $alpha: 0.3)};
     --#{vars.$prefix}lightbox-toolbar-bg: #{color.change(colors.$black, $alpha: 0.9)};
     --#{vars.$prefix}lightbox-toolbar-color: var(--foreground-subtle-secondary);
     --#{vars.$prefix}lightbox-overlay-bg: #151515;

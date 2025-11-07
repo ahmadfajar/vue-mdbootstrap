@@ -245,28 +245,28 @@ $markerSize: 14px;
     }
 
     .#{$cmpCssName}swatches-content {
-      padding: 0 0.75rem 1rem 0.75rem;
+      padding: 0 1rem 1rem 1rem;
 
       > .#{vars.$prefix}swatch-button {
         @include borders.radius(vars.$radius-circle !important);
-        background-image:
-          repeating-linear-gradient(
-            45deg,
-            #aaa 25%,
-            transparent 25%,
-            transparent 75%,
-            #aaa 75%,
-            #aaa
-          ),
-          repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
-
-        // prettier-ignore
-        background-position: 0 0, 4px 4px;
-        background-size: 8px 8px;
+        //background-image:
+        //  repeating-linear-gradient(
+        //    45deg,
+        //    #aaa 25%,
+        //    transparent 25%,
+        //    transparent 75%,
+        //    #aaa 75%,
+        //    #aaa
+        //  ),
+        //  repeating-linear-gradient(45deg, #aaa 25%, #fff 25%, #fff 75%, #aaa 75%, #aaa);
+        //
+        //// prettier-ignore
+        //background-position: 0 0, 4px 4px;
+        //background-size: 8px 8px;
         border: 0;
-        width: 20px;
-        height: 20px;
-        margin: 0 vars.$padding-xs vars.$padding-sm vars.$padding-xs;
+        width: 24px;
+        height: 24px;
+        margin: 0;
         padding: 0;
         cursor: pointer;
         white-space: nowrap;

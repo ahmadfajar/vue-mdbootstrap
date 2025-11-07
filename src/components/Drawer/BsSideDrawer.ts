@@ -17,7 +17,7 @@ export default defineComponent<TBsSideDrawer>({
   setup(props, { attrs, emit, slots }) {
     const thisProps = props as Readonly<TSideDrawerOptionProps>;
     // see bootstrap: $zIndex-sticky
-    const zIndex = ref(1000);
+    const zIndex = ref(1021);
     const vueMdb = ref<TVueMdb>();
     const appId = ref<string>();
     const isMobile = ref<boolean>(false);
