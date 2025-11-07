@@ -5,7 +5,8 @@ import {
   EventVoidClosableProps,
   Numberish,
   TAllowedIconProps,
-  TContextColor,
+  TButtonColor,
+  TContextColorSecondary,
   TIconPosition,
 } from '../../../types';
 
@@ -43,12 +44,12 @@ declare type TChipBaseProps = {
   /**
    * The default color to apply to this Chip.
    */
-  color?: TContextColor | string;
+  color?: TContextColorSecondary | string;
 
   /**
    * Apply custom color to the **close button**.
    */
-  closeButtonColor?: TContextColor | string;
+  closeButtonColor?: TButtonColor | string;
 
   /**
    * Create chip's avatar with **circle shape** style.

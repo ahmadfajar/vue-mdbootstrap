@@ -67,14 +67,14 @@
     --foreground: #{colors.$neutral-darken-4};
 
     --background-secondary: #{colors.$white};
-    --foreground-secondary: #{colors.$gray-900};
+    --foreground-secondary: #{colors.$neutral-darken-4};
 
     --background-tertiary: #{colors.$white};
-    --foreground-tertiary: #{colors.$gray-900};
+    --foreground-tertiary: #{colors.$neutral-darken-4};
 
-    --foreground-subtle: #{colors.$gray-600};
-    --foreground-subtle-secondary: oklch(0.62 0 0);
-    --foreground-subtle-tertiary: #{colors.$gray-500};
+    --foreground-subtle: #{colors.$neutral-darken-1};
+    --foreground-subtle-secondary: #{colors.$neutral-base};
+    --foreground-subtle-tertiary: #{colors.$neutral-lighten-2};
 
     --border-translucent: oklch(0.88 0.001 17.18 / 0.75);
 
@@ -84,7 +84,8 @@
     --sidedrawer-background: oklch(0.969 0.005 247.877);
     --sidedrawer-foreground: var(--foreground);
     --sidedrawer-item-foreground: var(--foreground);
-    --sidedrawer-item-foreground-secondary: var(--foreground-subtle-secondary);
+    --sidedrawer-item-foreground-secondary: var(--foreground-subtle);
+    --sidedrawer-item-foreground-subtle: var(--foreground-subtle-secondary);
     --sidedrawer-item-active-background: #{vars.$default-active-bgcolor};
     --sidedrawer-item-active-foreground: #{helper.to-oklch(
         color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 1)
@@ -101,7 +102,8 @@
     // Used in dropdown menus, list-tile, list-nav and other similar UI
     --navigation-background: var(--background-secondary);
     --navigation-item-foreground: var(--foreground);
-    --navigation-item-foreground-secondary: var(--foreground-subtle-secondary);
+    --navigation-item-foreground-secondary: var(--foreground-subtle);
+    --navigation-item-foreground-subtle: var(--foreground-subtle-secondary);
     --navigation-item-active-background: #{vars.$default-active-bgcolor};
     --navigation-item-active-foreground: #{helper.to-oklch(
         color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 1)
@@ -111,7 +113,7 @@
       )};
     --navigation-item-hover-background: #{vars.$default-hover-bgcolor};
     --navigation-item-hover-foreground: var(--foreground);
-    --navigation-item-hover-foreground-secondary: #{colors.$gray-700};
+    --navigation-item-hover-foreground-secondary: #{colors.$gray-600};
     --navigation-item-expanded-background: oklch(0 0 0 / 0.025);
     --navigation-item-border-indicator: var(--#{vars.$prefix}field-active-indicator);
   }

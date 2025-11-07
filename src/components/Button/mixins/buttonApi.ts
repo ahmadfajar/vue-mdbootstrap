@@ -313,8 +313,8 @@ export function useRenderToggleButtonItem(
       tabIndex: 0,
       class: {
         ...makeToggleButtonItemClasses(props, item),
-        'rounded-end-0': itemIndex < nLength,
-        'rounded-start-0': itemIndex > 0,
+        'rounded-e-0': itemIndex < nLength,
+        'rounded-s-0': itemIndex > 0,
       },
       'data-active': isInputItemSelected(props, item),
       'data-selected': isInputItemSelected(props, item) ? 'true' : undefined,
@@ -354,8 +354,8 @@ export function useRenderToggleButtonItem(
         BsButtonInner,
         {
           class: {
-            'rounded-end-0': itemIndex < nLength,
-            'rounded-start-0': itemIndex > 0,
+            'rounded-e-0': itemIndex < nLength,
+            'rounded-s-0': itemIndex > 0,
           },
           rippleOff: rippleOff(props, item) as unknown as Prop<boolean>,
         },

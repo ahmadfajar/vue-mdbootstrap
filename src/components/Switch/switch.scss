@@ -12,7 +12,7 @@
     --#{vars.$prefix}switch-thumb-color: #{colors.$neutral-lighten-5};
     --#{vars.$prefix}switch-thumb-size: #{vars.$switch-thumb-size};
     --#{vars.$prefix}switch-touch-size: #{vars.$switch-touch-size};
-    --#{vars.$prefix}switch-track-color: #{colors.$neutral-lighten-1};
+    --#{vars.$prefix}switch-track-color: #{colors.$neutral-lighten-2};
     --#{vars.$prefix}switch-track-height: #{vars.$switch-track-height};
     --#{vars.$prefix}switch-track-width: #{vars.$switch-track-width};
 
@@ -20,16 +20,16 @@
     --#{vars.$prefix}switch-inset-track-height: #{vars.$switch-inset-track-height};
     --#{vars.$prefix}switch-inset-track-width: #{vars.$switch-inset-track-width};
 
-    --#{vars.$prefix}switch-outlined-thumb-color: #{colors.$gray-600};
+    --#{vars.$prefix}switch-outlined-thumb-color: #{colors.$gray-500};
     --#{vars.$prefix}switch-outlined-thumb-size: #{vars.$switch-outlined-thumb-size};
     --#{vars.$prefix}switch-outlined-stroke: #{vars.$switch-outline-stroke};
-    --#{vars.$prefix}switch-outlined-stroke-color: #{colors.$gray-600};
-    --#{vars.$prefix}switch-outlined-track-color: #{colors.$neutral-lighten-2};
+    --#{vars.$prefix}switch-outlined-stroke-color: #{colors.$gray-500};
+    --#{vars.$prefix}switch-outlined-track-color: #{colors.$neutral-lighten-3};
 
     --#{vars.$prefix}switch-disabled-box-shadow: #{vars.$switch-disabled-shadows};
-    --#{vars.$prefix}switch-disabled-thumb-bg: #{colors.$neutral-lighten-1};
+    --#{vars.$prefix}switch-disabled-thumb-bg: #{colors.$neutral-lighten-2};
     --#{vars.$prefix}switch-disabled-thumb-color: #{colors.$neutral-base};
-    --#{vars.$prefix}switch-disabled-track-color: #{colors.$gray-400};
+    --#{vars.$prefix}switch-disabled-track-color: #{colors.$gray-300};
 
     // used internally
     --#{vars.$prefix}switch-state-box-shadow: var(--#{vars.$prefix}switch-box-shadow);

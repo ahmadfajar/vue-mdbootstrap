@@ -82,7 +82,6 @@
 
   .sticky {
     position: sticky;
-    z-index: 1020;
   }
 
   .sticky-top {
@@ -149,19 +148,19 @@
     border-radius: 0;
   }
 
-  .rounded-top-0 {
+  .rounded-t-0 {
     @include borders.top-radius(0);
   }
 
-  .rounded-bottom-0 {
+  .rounded-b-0 {
     @include borders.bottom-radius(0);
   }
 
-  .rounded-start-0 {
+  .rounded-s-0 {
     @include borders.start-radius(0);
   }
 
-  .rounded-end-0 {
+  .rounded-e-0 {
     @include borders.end-radius(0);
   }
 
@@ -390,4 +389,8 @@
   @each $name, $color in colors.$context-colors {
     @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
   }
+
+  @include decorators.decorate-color('subtle', var(--foreground-subtle), $background: false, $border: false);
+  @include decorators.decorate-color('subtle-secondary', var(--foreground-subtle-secondary), $background: false, $border: false);
+  @include decorators.decorate-color('subtle-tertiary', var(--foreground-subtle-tertiary), $background: false, $border: false);
 }

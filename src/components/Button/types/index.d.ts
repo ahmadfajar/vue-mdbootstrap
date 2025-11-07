@@ -6,10 +6,20 @@ import {
   Numberish,
   TAllowedIconProps,
   TClassList,
-  TContextColor,
   TInputBaseProps,
   TValidationProps,
 } from '../../../types';
+
+export declare type TButtonColor =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
+  | 'light'
+  | 'dark'
+  | 'default';
 
 export declare type TButtonMode = 'default' | 'icon' | 'fab';
 
@@ -30,7 +40,7 @@ export declare type TButtonBaseProps = {
   /**
    * Sets this button color.
    */
-  color?: TContextColor | string;
+  color?: TButtonColor | string;
 
   /**
    * Render this button with flat style like Google Material
@@ -203,7 +213,7 @@ export declare type TToggleButtonOptionProps = TInputBaseProps &
     /**
      * Color to apply when Button is active or selected.
      */
-    toggleColor?: TContextColor | string;
+    toggleColor?: TButtonColor | string;
 
     /**
      * Place icon on the `left` side (before text) or on the `right` side (after text).

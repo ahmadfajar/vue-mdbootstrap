@@ -11,7 +11,7 @@ $markerSize: 14px;
   .#{vars.$prefix}color-picker {
     --#{vars.$prefix}color-picker-bg: var(--background-tertiary);
     --#{vars.$prefix}color-picker-border-radius: var(--#{vars.$prefix}radius);
-    --#{vars.$prefix}color-picker-input-bg: #{colors.$gray-200};
+    --#{vars.$prefix}color-picker-input-bg: #{colors.$gray-100};
     --#{vars.$prefix}color-picker-input-border: 1px solid oklch(0.867 0.011 247.949);
     --#{vars.$prefix}color-picker-input-color: var(--foreground, #{colors.$gray-900});
     // prettier-ignore

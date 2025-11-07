@@ -11,7 +11,7 @@
 @layer components {
   .#{vars.$prefix}field {
     --#{vars.$prefix}field-border-width: 1px;
-    --#{vars.$prefix}field-border-color: #{colors.$gray-500};
+    --#{vars.$prefix}field-border-color: #{colors.$gray-400};
     --#{vars.$prefix}field-border-radius: #{vars.$text-field-border-radius};
     --#{vars.$prefix}field-hover-border-color: currentColor;
     --#{vars.$prefix}field-active-border-width: 2px;

@@ -1,5 +1,5 @@
 import { ComponentObjectPropsOptions, ObjectPlugin, VNode } from 'vue';
-import { BaseComponentProps, HtmlTagName, TContextColor } from '../../../types';
+import { BaseComponentProps, HtmlTagName, TContextColorSecondary } from '../../../types';
 
 export declare type TBadgeType = 'label' | 'pill';
 
@@ -17,7 +17,7 @@ export declare type TBadgeOptionProps = {
   /**
    * This badge color appearance.
    */
-  color?: TContextColor | string;
+  color?: TContextColorSecondary | string;
 
   /**
    * Create outlined badge style.

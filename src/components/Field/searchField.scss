@@ -84,7 +84,7 @@
   .#{vars.$prefix}field-searchbox.#{vars.$prefix}searchbox-dark {
     --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-accent-indicator);
     --#{vars.$prefix}searchbox-bg: #{color.change(colors.$black, $alpha: 0.15)};
-    --#{vars.$prefix}searchbox-color: #{colors.$gray-300};
+    --#{vars.$prefix}searchbox-color: #{colors.$gray-200};
     --#{vars.$prefix}searchbox-active-bg: #{color.change(colors.$black, $alpha: 0.35)};
     --#{vars.$prefix}searchbox-border-color: #{color.change(colors.$white, $alpha: 0.12)};
     --#{vars.$prefix}searchbox-focused-shadow: oklch(0.743 0.102 303.276 / 0.32);

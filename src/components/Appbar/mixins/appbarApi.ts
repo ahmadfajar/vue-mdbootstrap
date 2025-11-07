@@ -18,16 +18,17 @@ export function useAppbarStyles(
   const zeroPx = '0px';
 
   return {
-    marginLeft: isMobile.value
+    paddingLeft: isMobile.value
       ? zeroPx
       : props.clippedLeft && appId.value
         ? (vueMdb.value?.app[appId.value]?.sideDrawer.left.width ?? 0) + 'px'
         : zeroPx,
-    marginRight: isMobile.value
+    paddingRight: isMobile.value
       ? zeroPx
       : props.clippedRight && appId.value
         ? (vueMdb.value?.app[appId.value]?.sideDrawer.right.width ?? 0) + 'px'
         : zeroPx,
+    'z-index': props.fixedTop ? '1030' : undefined,
   };
 }
 
@@ -88,7 +89,7 @@ export function useRenderAppbar(
           'appbar-shadow': props.shadow,
           'smooth-animation': smoothAnimation.value,
           'max-w-full': true,
-          'fixed-top': props.fixedTop,
+          'w-full fixed-top': props.fixedTop,
           'sticky-top': props.stickyTop && !props.fixedTop,
         },
         style: styles.value,

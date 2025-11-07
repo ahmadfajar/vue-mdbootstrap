@@ -1,3 +1,4 @@
+import Helper from '@/utils/Helper.ts';
 import { chunk } from '@/utils/StringHelper.ts';
 import type { HSLA, HSVA, LCHA, RGBA } from '@/utils/types/colorUtils';
 
@@ -113,50 +114,6 @@ export function hexToRgba(color: string): RGBA {
 export function rgbaToHsla(color: RGBA): HSLA {
   const hsva = rgbaToHsva(color);
   return hsvaToHsla(hsva);
-
-  // Script below that I got from somewhere produce incorrect result.
-  //
-  // const max = Math.max(color.r, color.g, color.b);
-  // const min = Math.min(color.r, color.g, color.b);
-  // // eslint-disable-next-line prefer-const
-  // let [hue, sat, light] = [NaN, 0, (min + max) / 2];
-  // const delta = max - min;
-  // const epsilon = 1 / 100000; // max Sat is 1, in this code
-  //
-  // if (delta !== 0) {
-  //   sat = light === 0 || light === 1 ? 0 : (max - light) / Math.min(light, 1 - light);
-  //
-  //   switch (max) {
-  //     case color.r:
-  //       hue = (color.g - color.b) / delta + (color.g < color.b ? 6 : 0);
-  //       break;
-  //     case color.g:
-  //       hue = (color.b - color.r) / delta + 2;
-  //       break;
-  //     case color.b:
-  //       hue = (color.r - color.g) / delta + 4;
-  //   }
-  //
-  //   hue = hue * 60;
-  // }
-  //
-  // // Very out of gamut colors can produce negative saturation
-  // // If so, just rotate the hue by 180 and use a positive saturation
-  // // see https://github.com/w3c/csswg-drafts/issues/9222
-  // if (sat < 0) {
-  //   hue += 180;
-  //   sat = Math.abs(sat);
-  // }
-  //
-  // if (hue >= 360) {
-  //   hue -= 360;
-  // }
-  //
-  // if (sat <= epsilon) {
-  //   hue = NaN;
-  // }
-  //
-  // return { h: hue, s: sat * 100, l: light * 100, a: color.a };
 }
 
 /**
@@ -458,21 +415,96 @@ export function hslaToString(color: HSLA): string {
  * @return CSS color string.
  */
 export function oklchToString(color: LCHA): string {
+  const lightness = Helper.roundNumber(color.l, 3);
+  const chroma = Helper.roundNumber(color.c, 3);
+  const hue = Helper.roundNumber(color.h, 2);
+
   if (color.a < 1) {
-    return `oklch(${color.l.toFixed(3)} ${color.c.toFixed(3)} ${color.h.toFixed(1)} / ${color.a.toFixed(2)})`;
+    return `oklch(${lightness} ${chroma} ${hue} / ${color.a.toFixed(2)})`;
   } else {
-    return `oklch(${color.l.toFixed(3)} ${color.c.toFixed(3)} ${color.h.toFixed(1)})`;
+    return `oklch(${lightness} ${chroma} ${hue})`;
   }
 }
 
 /**
- * Get brightness level from RGBA color.
+ * Parse a string that represent `oklch` color formatted string.
  *
- * @param rgba The RGBA color values.
- * @return The brightness level.
+ * @param source The `oklch` color formatted string.
+ * @return The OKLCH color value
+ * `Lightness`, `Chroma` as number in range [0..1] and `Hue` as degrees [0..360].
  */
-export function brightnessLevel(rgba: RGBA): number {
-  return (rgba.r * 299 + rgba.g * 587 + rgba.b * 114) / 1000;
+export function oklchFromString(source: string): LCHA {
+  const temp = source.toLowerCase();
+
+  if (temp.startsWith('oklch')) {
+    let result = temp.replace('oklch(', '');
+    result = result.replace(')', '');
+    result = result.replace('deg', '');
+
+    const rets = result.split(' ') as
+      | [string, string, string]
+      | [string, string, string, string, string];
+
+    const oklch = { l: 0, c: parseFloat(rets[1]), h: parseFloat(rets[2]), a: 1 };
+
+    if (rets.length > 3) {
+      oklch.l = rets[0].endsWith('%') ? parseFloat(rets[0]) / 100 : parseFloat(rets[0]);
+    } else {
+      oklch.l = rets[0].endsWith('%') ? parseFloat(rets[0]) / 100 : parseFloat(rets[0]);
+      oklch.a = parseFloat(rets[4]!);
+    }
+
+    return oklch;
+  }
+
+  // fallback if source is not recognized
+  return { l: 0, c: 0, h: 0, a: 1 };
+}
+
+/**
+ * Get Lightness level from `RGBA`, `HSLA` or `OKLCH` color object.
+ *
+ * @param color The `RGBA`, `HSLA` or `OKLCH` color value.
+ * @return The Lightness level in range [1..100].
+ */
+export function lightnessLevel(color: RGBA | HSLA | LCHA): number {
+  const lightness = (value: LCHA) => {
+    if (value.l <= 1.0) {
+      return value.l * 100;
+    }
+
+    return value.l;
+  };
+
+  if (Object.keys(color).every((it) => ['r', 'g', 'b', 'a'].includes(it))) {
+    const oklch = rgbaToOklch(color as RGBA);
+
+    return lightness(oklch);
+  } else if (Object.keys(color).every((it) => ['h', 's', 'l', 'a'].includes(it))) {
+    const rgb = hslaToRgba(color as HSLA);
+    const oklch = rgbaToOklch(rgb);
+
+    return lightness(oklch);
+  } else if (Object.keys(color).every((it) => ['l', 'c', 'h', 'a'].includes(it))) {
+    return lightness(color as LCHA);
+  }
+
+  // fallback to zero if object is not recognized
+  return 0;
+}
+
+/**
+ * Get Brightness level from RGBA color.
+ *
+ * @param color The RGBA color value or HEX color formatted string.
+ * @return The brightness level in range [1..255].
+ */
+export function brightnessLevel(color: string | RGBA): number {
+  if (Helper.isString(color)) {
+    color = hexToRgba(color);
+  }
+
+  return (color.r * 299 + color.g * 587 + color.b * 114) / 1000;
 }
 
 /**

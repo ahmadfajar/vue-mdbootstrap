@@ -4,6 +4,7 @@ import {
   EventUpdateModelValueProps,
   EventVoidClosableProps,
   Numberish,
+  TButtonColor,
   TContextColor,
   TInputFieldProps,
   TPopoverPosition,
@@ -57,13 +58,13 @@ export declare type TDatePickerOptionProps = {
    * Sets calendar `date`, `month`, `year` `time` and `navigation` button color.
    * Default is `dark`.
    */
-  buttonColor?: TContextColor | string;
+  buttonColor?: TButtonColor | string;
 
   /**
    * Sets selected calendar `date`, `month`, `year` and `time` button color.
    * Default is interpolated from `headerColor`.
    */
-  selectedColor?: TContextColor | string;
+  selectedColor?: TButtonColor | string;
 
   /**
    * Optional, sets this component's container background color.
@@ -214,13 +215,13 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
   /**
    * This DatePicker calendar date button and navigation button color. Default is `dark`.
    */
-  pickerButton?: TContextColor | string;
+  pickerButton?: TButtonColor | string;
 
   /**
    * Sets DatePicker selected calendar `date`, `month`, `year` and `time` button color.
    * Default is interpolated from `headerColor`.
    */
-  pickerSelectedColor?: TContextColor | string;
+  pickerSelectedColor?: TButtonColor | string;
 
   /**
    * Optional, sets DatePicker surface background color.

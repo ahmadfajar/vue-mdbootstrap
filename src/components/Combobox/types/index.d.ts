@@ -8,6 +8,7 @@ import {
   IBsStore,
   Numberish,
   TContextColor,
+  TContextColorSecondary,
   TInputFieldProps,
 } from '../../../types';
 
@@ -206,7 +207,7 @@ export declare type TComboboxOptionProps = TInputFieldProps &
     /**
      * The default Chips color to apply.
      */
-    chipColor?: TContextColor | string;
+    chipColor?: TContextColorSecondary | string;
 
     /**
      * Render the Chips with rounded-pill style.

@@ -22,6 +22,15 @@ export declare type TContextColor =
   | 'warning'
   | 'danger'
   | 'info'
+  | 'default';
+
+export declare type TContextColorSecondary =
+  | 'primary'
+  | 'secondary'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'info'
   | 'light'
   | 'default';
 

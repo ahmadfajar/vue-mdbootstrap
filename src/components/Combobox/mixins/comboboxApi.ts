@@ -281,6 +281,7 @@ export function useRenderCombobox(
           open: isPopoverOpen.value as unknown as Prop<boolean>,
           trigger: activator.value as Prop<HTMLElement>,
           style: {
+            [`--${cssPrefix}popover-border-radius`]: 0,
             minWidth: Helper.cssUnit(
               Math.max(listboxWidth(), activator.value ? activator.value.offsetWidth : 0)
             ),

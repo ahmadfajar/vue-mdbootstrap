@@ -8,7 +8,7 @@
   .#{vars.$prefix}list-tile {
     --#{vars.$prefix}tile-action-color: var(--navigation-item-foreground-secondary);
     --#{vars.$prefix}tile-leading-color: var(--navigation-item-foreground);
-    --#{vars.$prefix}tile-leading-icon-color: var(--navigation-item-foreground-secondary);
+    --#{vars.$prefix}tile-leading-icon-color: var(--navigation-item-foreground-subtle);
     --#{vars.$prefix}tile-subtitle-color: var(--navigation-item-foreground-secondary);
     --#{vars.$prefix}tile-title-color: var(--navigation-item-foreground);
 

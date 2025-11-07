@@ -109,7 +109,7 @@
   }
 
   @if $text-bg {
-    $text-color: helper.set-color-contrast($color, colors.$gray-900, colors.$white, 70%);
+    $text-color: helper.set-color-contrast($color, colors.$neutral-darken-4, colors.$white, 70%);
 
     @if $alias-name1 {
       .text-bg-#{$name},

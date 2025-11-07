@@ -76,7 +76,7 @@
 
 @mixin make-outline-variant($name, $color) {
   .chip-outline-#{$name} {
-    $border-color: helper.to-oklch(color.adjust(colors.$gray-600, $lightness: 25%));
+    $border-color: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 25%));
     $hover-bg: helper.to-oklch(
       helper.set-color-contrast(
         $color,

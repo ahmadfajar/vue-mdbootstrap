@@ -24,16 +24,16 @@
       min-height: 100vh;
     }
 
-    &.#{vars.$prefix}appbar-fixed-top {
-      > .#{vars.$prefix}container-wrap {
-        width: 100%;
-
-        > .#{vars.$prefix}content-wrap {
-          display: block;
-          overflow: auto;
-        }
-      }
-    }
+    //&.#{vars.$prefix}appbar-fixed-top {
+    //  > .#{vars.$prefix}container-wrap {
+    //    width: 100%;
+    //
+    //    > .#{vars.$prefix}content-wrap {
+    //      display: block;
+    //      overflow: auto;
+    //    }
+    //  }
+    //}
   }
 
   .#{vars.$prefix}container-wrap {

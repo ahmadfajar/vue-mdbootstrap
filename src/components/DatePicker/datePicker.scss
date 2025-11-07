@@ -13,7 +13,7 @@
     --#{vars.$prefix}datepicker-header-color: #{colors.$white};
     // prettier-ignore
     --#{vars.$prefix}datepicker-header-font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
-    --#{vars.$prefix}datepicker-table-header-color: #{colors.$gray-600};
+    --#{vars.$prefix}datepicker-table-header-color: #{colors.$gray-500};
     --#{vars.$prefix}datepicker-title-font-size: 1.8rem;
     --#{vars.$prefix}datepicker-subtitle-font-size: 1.25rem;
 
@@ -248,14 +248,14 @@
       }
     }
 
-    .#{vars.$prefix}datepicker-header {
-      &.bg-white,
-      &.bg-light,
-      &.bg-light-grey,
-      &.bg-yellow {
-        --#{vars.$prefix}datepicker-header-color: #{colors.$neutral-darken-3};
-      }
-    }
+    //.#{vars.$prefix}datepicker-header {
+    //  &.bg-white,
+    //  &.bg-light,
+    //  &.bg-light-grey,
+    //  &.bg-yellow {
+    //    --#{vars.$prefix}datepicker-header-color: #{colors.$neutral-darken-3};
+    //  }
+    //}
   }
 
   .#{vars.$prefix}field-control {

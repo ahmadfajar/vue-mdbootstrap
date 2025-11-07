@@ -5,7 +5,7 @@
   .#{vars.$prefix}drawer-host {
     height: 100%;
     position: absolute;
-    z-index: vars.$zindex-sticky;
+    //z-index: vars.$zindex-sticky;
     transition: vars.$transition-default;
   }
 
@@ -32,15 +32,6 @@
       box-shadow: none !important;
     }
 
-    //> .#{vars.$prefix}side-drawer-inner {
-    //  display: flex;
-    //  flex-direction: column;
-    //  height: 100%;
-    //  width: 100%;
-    //  overflow: hidden;
-    //  position: relative;
-    //}
-
     // Apply SideDrawer color scheme to ListView, List-Tile, and List-Nav
     .#{vars.$prefix}list {
       --#{vars.$prefix}listview-bg: var(--sidedrawer-background);
@@ -50,7 +41,7 @@
     .#{vars.$prefix}list-tile {
       --#{vars.$prefix}tile-action-color: var(--sidedrawer-item-foreground-secondary);
       --#{vars.$prefix}tile-leading-color: var(--sidedrawer-item-foreground);
-      --#{vars.$prefix}tile-leading-icon-color: var(--sidedrawer-item-foreground-secondary);
+      --#{vars.$prefix}tile-leading-icon-color: var(--sidedrawer-item-foreground-subtle);
       --#{vars.$prefix}tile-subtitle-color: var(--sidedrawer-item-foreground-secondary);
       --#{vars.$prefix}tile-title-color: var(--sidedrawer-item-foreground);
 
@@ -68,7 +59,7 @@
 
     .#{vars.$prefix}list-nav {
       --#{vars.$prefix}nav-item-color: var(--sidedrawer-item-foreground);
-      --#{vars.$prefix}nav-item-icon-color: var(--sidedrawer-item-foreground-secondary);
+      --#{vars.$prefix}nav-item-icon-color: var(--sidedrawer-item-foreground-subtle);
       --#{vars.$prefix}nav-item-divider-color: var(--sidedrawer-item-divider-color);
 
       --#{vars.$prefix}nav-item-active-bg: var(--sidedrawer-item-active-background);

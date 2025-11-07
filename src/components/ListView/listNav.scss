@@ -3,7 +3,7 @@
 @layer components {
   .#{vars.$prefix}list-nav {
     --#{vars.$prefix}nav-item-color: var(--navigation-item-foreground);
-    --#{vars.$prefix}nav-item-icon-color: var(--navigation-item-foreground-secondary);
+    --#{vars.$prefix}nav-item-icon-color: var(--navigation-item-foreground-subtle);
     --#{vars.$prefix}nav-item-divider-color: var(--border-translucent);
 
     --#{vars.$prefix}nav-item-active-bg: var(--navigation-item-active-background);

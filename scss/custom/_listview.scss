@@ -6,7 +6,3 @@
 @each $name, $color in colors.$custom-theme-colors {
   @include listview.make-listview-variant($name, $color);
 }
-
-@each $name, $color in colors.$custom-theme-colors {
-  @include listview.make-list-item-variant($name, $color);
-}

@@ -49,9 +49,9 @@ export default defineComponent<TBsContainer>({
                 : isMobile.value
                   ? 0
                   : `${sideDrawer.left.width}px`,
-            top: appbar.fixedTop ? Helper.cssUnit(appbar.height) : undefined,
-            bottom: appbar.fixedTop ? 0 : undefined,
-            position: appbar.fixedTop ? 'fixed' : undefined,
+            marginTop: appbar.fixedTop ? Helper.cssUnit(appbar.height) : undefined,
+            // bottom: appbar.fixedTop ? 0 : undefined,
+            // position: appbar.fixedTop ? 'fixed' : undefined,
           };
         }
       }

@@ -51,7 +51,7 @@ export const lightboxProps = {
   } as Prop<TTransitionMode>,
   zIndex: {
     type: [String, Number],
-    default: 1030,
+    default: 1024,
     validator: (v: string): boolean => !isNaN(parseInt(v, 10)),
   },
 };

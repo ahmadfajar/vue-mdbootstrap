@@ -12,7 +12,7 @@
     --#{vars.$prefix}image-uploader-padding-x: #{vars.$padding-sm};
     --#{vars.$prefix}image-uploader-padding-y: #{vars.$padding-sm};
     // prettier-ignore
-    --#{vars.$prefix}image-uploader-text-color: var(--foreground-subtle-tertiary, #{colors.$gray-500});
+    --#{vars.$prefix}image-uploader-text-color: var(--foreground-subtle-tertiary, #{colors.$neutral-lighten-2});
     // prettier-ignore
     --#{vars.$prefix}image-uploader-toolbar-padding: #{vars.$padding-sm} #{vars.$padding-sm};
 
@@ -54,7 +54,7 @@
 
       h3,
       h4 {
-        --bs-heading-color: var(--#{vars.$prefix}image-uploader-text-color);
+        --#{vars.$prefix-bs}heading-color: var(--#{vars.$prefix}image-uploader-text-color);
         color: var(--#{vars.$prefix}image-uploader-text-color);
       }
     }

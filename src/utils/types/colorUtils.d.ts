@@ -171,12 +171,29 @@ export declare function hslaToString(color: HSLA): string;
 export declare function oklchToString(color: LCHA): string;
 
 /**
+ * Parse a string that represent `oklch` color formatted string.
+ *
+ * @param source The `oklch` color formatted string.
+ * @return The OKLCH color value
+ * `Lightness`, `Chroma` as number in range [0..1] and `Hue` as degrees [0..360].
+ */
+export declare function oklchFromString(source: string): LCHA;
+
+/**
+ * Get Lightness level from `RGBA`, `HSLA` or `OKLCH` color object.
+ *
+ * @param color The `RGBA`, `HSLA` or `OKLCH` color value.
+ * @return The Lightness level in range [1..100].
+ */
+export function lightnessLevel(color: RGBA | HSLA | LCHA): number;
+
+/**
  * Get brightness level from RGBA color.
  *
- * @param rgba The RGBA color value.
- * @return The brightness level.
+ * @param color The RGBA color value or HEX color formatted string.
+ * @return The brightness level in range [1..255].
  */
-export declare function brightnessLevel(rgba: RGBA): number;
+export declare function brightnessLevel(color: string | RGBA): number;
 
 /**
  * Darken or lighten the input color.

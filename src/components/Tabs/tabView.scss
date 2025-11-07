@@ -7,6 +7,7 @@
 
 @layer components {
   .#{vars.$prefix}tabs {
+    --#{vars.$prefix}tab-content-background: var(--background-secondary, #{colors.$white});
     --#{vars.$prefix}tab-content-padding: #{vars.$padding-md + 0.25};
     --#{vars.$prefix}tab-placement-top-shadow: #{vars.$tabs-placement-top-shadow};
     --#{vars.$prefix}tab-placement-bottom-shadow: #{vars.$tabs-placement-bottom-shadow};
@@ -77,6 +78,7 @@
     --#{vars.$prefix}tab-modern-margin-horizontal: #{vars.$tabs-modern-margin-horizontal};
     --#{vars.$prefix}tab-modern-margin-vertical: #{vars.$tabs-modern-margin-vertical};
 
+    @include borders.radius(inherit);
     transition: vars.$transition-leave;
 
     @include media.breakpoint-down(sm) {
@@ -85,10 +87,10 @@
     }
 
     > .#{vars.$prefix}tab-content {
+      @include borders.bottom-radius(inherit);
+      background-color: var(--#{vars.$prefix}tab-content-background);
       padding: var(--#{vars.$prefix}tab-content-padding);
       transition: all vars.$transition-default;
-      //overflow: hidden;
-      //position: relative;
     }
   }
 
@@ -122,7 +124,6 @@
   }
 
   .#{vars.$prefix}tab-items {
-    //display: flex;
     flex-wrap: wrap;
     padding-left: 0;
     margin-bottom: 0;
@@ -139,6 +140,27 @@
         position: relative;
         transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.5, 1);
       }
+    }
+  }
+
+  .#{vars.$prefix}tabs-tabs,
+  .#{vars.$prefix}tabs-pills,
+  .#{vars.$prefix}tabs-material,
+  .#{vars.$prefix}tabs-modern {
+    &.#{vars.$prefix}tab-top {
+      @include borders.top-radius(inherit);
+    }
+
+    &.#{vars.$prefix}tab-bottom {
+      @include borders.bottom-radius(inherit);
+    }
+
+    &.#{vars.$prefix}tab-left {
+      @include borders.start-radius(inherit);
+    }
+
+    &.#{vars.$prefix}tab-right {
+      @include borders.end-radius(inherit);
     }
   }
 
@@ -390,56 +412,6 @@
     &.#{vars.$prefix}tab-right {
       .tab-item + .tab-item {
         margin-top: var(--#{vars.$prefix}tab-spacing);
-      }
-    }
-  }
-
-  .#{vars.$prefix}card {
-    > .#{vars.$prefix}tabs {
-      &:first-child {
-        .#{vars.$prefix}tabs-pills,
-        .#{vars.$prefix}tabs-material,
-        .#{vars.$prefix}tabs-modern {
-          &.#{vars.$prefix}tab-top {
-            @include borders.top-radius(var(--#{vars.$prefix}card-border-radius));
-          }
-
-          &.#{vars.$prefix}tab-left {
-            @include borders.top-start-radius(var(--#{vars.$prefix}card-border-radius));
-          }
-
-          &.#{vars.$prefix}tab-right {
-            @include borders.top-end-radius(var(--#{vars.$prefix}card-border-radius));
-          }
-        }
-      }
-
-      &:last-child {
-        .#{vars.$prefix}tabs-pills,
-        .#{vars.$prefix}tabs-material,
-        .#{vars.$prefix}tabs-modern {
-          &.#{vars.$prefix}tab-bottom {
-            @include borders.bottom-radius(var(--#{vars.$prefix}card-border-radius));
-          }
-
-          &.#{vars.$prefix}tab-left {
-            @include borders.bottom-start-radius(var(--#{vars.$prefix}card-border-radius));
-          }
-
-          &.#{vars.$prefix}tab-right {
-            @include borders.bottom-end-radius(var(--#{vars.$prefix}card-border-radius));
-          }
-        }
-      }
-    }
-
-    &.rounded-0 {
-      .#{vars.$prefix}tabs {
-        .#{vars.$prefix}tabs-pills,
-        .#{vars.$prefix}tabs-material,
-        .#{vars.$prefix}tabs-modern {
-          @include borders.radius(0);
-        }
       }
     }
   }

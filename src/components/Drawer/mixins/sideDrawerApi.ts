@@ -58,7 +58,7 @@ export function useSideDrawerStyles(
       marginTop: zeroPx,
       position: 'fixed',
       top: zeroPx,
-      'z-index': zIndex.value + 1,
+      'z-index': 1031, // zIndex.value + 1,
       left:
         props.position === 'left'
           ? isOpen.value
@@ -123,17 +123,27 @@ export async function useOnMountedSideDrawer(
   if (parent) {
     await nextTick().then(() => {
       appId.value = (parent.props as Readonly<TAppContainerOptionProps>).id;
+      // console.log('appId', appId);
 
       if (appId.value && vueMdb.value) {
         // Iterate VueMdb context and find if there is an appbar that positioned always on-top.
         // If found then set starting z-index to 1030, so it can be placed above appbar layer
         // displayed on small-screen.
-        Object.keys(vueMdb.value.app).forEach((it: string) => {
-          if (vueMdb.value?.app[it]?.appbar.fixedTop) {
-            zIndex.value = 1030;
-            return;
-          }
-        });
+        // Object.keys(vueMdb.value.app).forEach((it: string) => {
+        //   if (vueMdb.value?.app[it]?.appbar.fixedTop) {
+        //     zIndex.value = 1030;
+        //     return;
+        //   } else if (vueMdb.value?.app[it]?.appbar.stickyTop) {
+        //     zIndex.value = 1020;
+        //     return;
+        //   }
+        // });
+
+        if (vueMdb.value.app[appId.value]?.appbar.fixedTop) {
+          zIndex.value = 1030;
+        } else if (vueMdb.value.app[appId.value]?.appbar.stickyTop) {
+          zIndex.value = 1020;
+        }
       }
     });
   } else {
@@ -230,6 +240,7 @@ export function useRenderSideDrawer(
       class: `${cssPrefix}drawer-host`,
       style: {
         ...styles.value,
+        'z-index': styles.value['z-index'] ?? zIndex.value + 1,
         height: !isMobile.value && props.clipped ? styles.value.height : null,
         width: isMobile.value && !props.mini ? '0' : styles.value.width,
       },

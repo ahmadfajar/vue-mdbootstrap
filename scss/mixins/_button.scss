@@ -147,7 +147,7 @@
         }
 
         &.btn-tonal {
-          $border-color: helper.to-oklch(color.adjust($color, $lightness: 27%));
+          $border-color: helper.to-oklch(color.adjust($color, $lightness: 24%));
           border-left-color: color.change($border-color, $alpha: 0.8) !important;
         }
       }
@@ -299,7 +299,7 @@
       color.adjust($color, $lightness: 5%)
     );
     $text-color: helper.set-color-contrast($color, colors.$gray-300, $color, 90%);
-    $border-color: color.adjust(colors.$gray-600, $lightness: 20%);
+    $border-color: color.adjust(colors.$gray-500, $lightness: 20%);
     $active-bg: helper.set-color-contrast(
       $color,
       color.change(color.scale($color, $lightness: 50%), $alpha: 0.45),
@@ -355,7 +355,7 @@
         color.scale($color, $lightness: -60%)
       )
     );
-    $dark-border-color: color.change(color.adjust(colors.$gray-600, $lightness: 25%), $alpha: 0.35);
+    $dark-border-color: color.change(color.adjust(colors.$gray-500, $lightness: 25%), $alpha: 0.35);
     $dark-bg-active: helper.to-oklch(
       helper.set-color-contrast(
         $color,
