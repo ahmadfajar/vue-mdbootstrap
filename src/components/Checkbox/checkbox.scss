@@ -32,8 +32,6 @@
     --#{vars.$prefix}checkbox-state-overlay-opacity: 0;
 
     margin: var(--#{vars.$prefix}checkbox-margin);
-    //display: inline-flex;
-    //position: relative;
     cursor: pointer;
 
     > .#{vars.$prefix}checkbox-inner {
@@ -46,7 +44,6 @@
       min-width: var(--#{vars.$prefix}checkbox-size);
       width: var(--#{vars.$prefix}checkbox-size);
       transition: #{vars.$transition-stand};
-      //position: relative;
 
       &:focus {
         outline: none;
@@ -94,7 +91,6 @@
         left: 50% !important;
         top: 50% !important;
         pointer-events: none;
-        //position: absolute;
       }
 
       .#{vars.$prefix}ripple {
@@ -123,8 +119,6 @@
       margin-left: #{vars.$padding-md};
       margin-bottom: 0;
       cursor: pointer;
-      //position: relative;
-      //user-select: none;
 
       &:focus-visible {
         outline-color: var(--#{vars.$prefix}checkbox-checked-bg);

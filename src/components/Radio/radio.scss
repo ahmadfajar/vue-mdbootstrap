@@ -25,8 +25,6 @@
     --#{vars.$prefix}radio-state-overlay-opacity: 0;
 
     margin: var(--#{vars.$prefix}radio-margin);
-    //display: inline-flex;
-    //position: relative;
     cursor: pointer;
 
     > .#{vars.$prefix}radio-inner {
@@ -38,7 +36,6 @@
       width: var(--#{vars.$prefix}radio-size);
       opacity: var(--#{vars.$prefix}radio-state-opacity);
       transition: #{vars.$transition-stand};
-      //position: relative;
 
       &:focus {
         outline: none;
@@ -83,7 +80,6 @@
         left: 50% !important;
         top: 50% !important;
         pointer-events: none;
-        //position: absolute;
       }
 
       .#{vars.$prefix}ripple {
@@ -112,8 +108,6 @@
       margin-left: #{vars.$padding-md};
       margin-bottom: 0;
       cursor: pointer;
-      //position: relative;
-      //user-select: none;
 
       &:focus-visible {
         outline-color: var(--#{vars.$prefix}radio-active-color);

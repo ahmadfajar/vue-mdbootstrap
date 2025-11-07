@@ -66,13 +66,8 @@
     margin: var(--#{vars.$prefix}chip-gutter-y) var(--#{vars.$prefix}chip-gutter-x) var(--#{vars.$prefix}chip-gutter-y) 0;
     font-weight: var(--#{vars.$prefix}chip-font-weight);
     height: var(--#{vars.$prefix}chip-state-height);
-    //display: inline-flex;
-    //align-items: center;
-    //max-width: 100%;
     cursor: default;
     line-height: 1;
-    //overflow: hidden;
-    //position: relative;
     white-space: nowrap;
     vertical-align: middle;
     transition-duration: 0.3s;
@@ -139,10 +134,8 @@
       --#{vars.$prefix}chip-inner-border-radius: calc(var(--#{vars.$prefix}chip-state-border-radius) - 1px);
 
       @include borders.radius(var(--#{vars.$prefix}chip-inner-border-radius));
+      // prettier-ignore
       padding: var(--#{vars.$prefix}chip-state-padding-y) var(--#{vars.$prefix}chip-state-padding-x);
-      //display: inline-flex;
-      //align-items: center;
-      //max-width: 100%;
 
       > .#{vars.$prefix}chip-text {
         > .caret-up,
@@ -164,8 +157,6 @@
         margin-left: var(--#{vars.$prefix}chip-avatar-margin-left);
         margin-right: var(--#{vars.$prefix}chip-avatar-margin-right);
         transition: visibility 0.3s vars.$transition-leave-animation;
-        //display: flex;
-        //align-items: center;
 
         > img {
           @include borders.radius(var(--#{vars.$prefix}chip-inner-border-radius));
@@ -179,9 +170,6 @@
       > .#{vars.$prefix}chip-icon {
         margin-left: var(--#{vars.$prefix}chip-icon-margin-left);
         margin-right: var(--#{vars.$prefix}chip-icon-margin-right);
-        //display: flex;
-        //align-items: center;
-        //width: 100%;
         transition:
           width 200ms vars.$transition-default-animation,
           visibility 0ms vars.$transition-default-animation;
@@ -199,11 +187,6 @@
           margin-left: 0;
         }
       }
-
-      //> .#{vars.$prefix}btn-icon {
-      //  margin-left: var(--#{vars.$prefix}chip-dismiss-btn-margin-left);
-      //  margin-right: var(--#{vars.$prefix}chip-dismiss-btn-margin-right);
-      //}
     }
 
     &.#{vars.$prefix}chip-sm {

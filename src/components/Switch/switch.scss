@@ -44,10 +44,6 @@
     --#{vars.$prefix}switch-state-track-width: var(--#{vars.$prefix}switch-track-width);
     // end
 
-    //display: flex;
-    //align-items: center;
-    //position: relative;
-
     &:not(.disabled):not(.readonly) {
       > .#{vars.$prefix}switch-wrapper {
         cursor: pointer;
@@ -55,20 +51,16 @@
     }
 
     > .#{vars.$prefix}switch-wrapper {
-      //display: inline-flex;
       margin: var(--#{vars.$prefix}switch-margin);
     }
 
     .#{vars.$prefix}switch-track {
       @include borders.radius(var(--#{vars.$prefix}switch-state-track-height));
-      //display: flex;
-      //align-items: center;
       background-color: var(--#{vars.$prefix}switch-state-track-color);
       height: var(--#{vars.$prefix}switch-state-track-height);
       min-width: var(--#{vars.$prefix}switch-state-track-width);
       width: var(--#{vars.$prefix}switch-state-track-width);
       margin: 3px 0;
-      //position: relative;
       transition: vars.$transition-stand;
     }
 
@@ -79,7 +71,6 @@
       width: var(--#{vars.$prefix}switch-touch-size);
       left: 50%;
       top: 50%;
-      //position: absolute;
       transform: translate(-50%, -50%);
     }
 
@@ -90,7 +81,6 @@
       height: var(--#{vars.$prefix}switch-state-thumb-size);
       width: var(--#{vars.$prefix}switch-state-thumb-size);
       margin-left: var(--#{vars.$prefix}switch-state-thumb-margin-left);
-      //position: relative;
       transition: vars.$transition-stand;
 
       &:before {
@@ -106,14 +96,6 @@
 
       > .#{vars.$prefix}ripple {
         color: var(--#{vars.$prefix}switch-state-thumb-color);
-        //display: flex;
-        //align-items: center;
-        //justify-content: center;
-
-        //.#{vars.$prefix}ripple-animation {
-        //  background-color: var(--#{vars.$prefix}switch-state-thumb-color);
-        //  opacity: 0.65;
-        //}
       }
 
       input {
@@ -131,7 +113,6 @@
     .#{vars.$prefix}switch-label {
       margin-bottom: 0;
       padding-left: 0;
-      //position: relative;
 
       &.#{vars.$prefix}label-left {
         margin-right: vars.$padding-sm;

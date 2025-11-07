@@ -57,12 +57,10 @@ $markerSize: 14px;
 
       &:last-child {
         @include borders.bottom-radius(inherit);
-        //@include borders.bottom-radius(var(--#{vars.$prefix}color-picker-border-radius));
       }
     }
 
     > .#{$cmpCssName}swatches {
-      //@include borders.bottom-radius(var(--#{vars.$prefix}color-picker-border-radius));
       @include borders.bottom-radius(inherit);
       overflow-y: auto;
     }

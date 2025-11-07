@@ -2,24 +2,13 @@
 
 @layer components {
   .#{vars.$prefix}avatar {
-    //display: inline-flex;
-    //align-items: center;
-    //justify-content: center;
     font-weight: var(--font-weight-normal);
     font-size: var(--font-size-default);
     line-height: 1;
-    //max-width: 100%;
-    //position: relative;
 
     > .#{vars.$prefix}avatar-text {
-      //display: flex;
-      //align-items: center;
-      //justify-content: center;
       font-weight: var(--font-weight-medium, vars.$font-weight-medium);
       font-size: inherit;
-      //width: 100%;
-      //height: 100%;
-      //overflow: hidden;
       text-transform: uppercase;
     }
   }

@@ -35,8 +35,6 @@
     --#{vars.$prefix}tile-state-title-font-weight: var(--#{vars.$prefix}tile-title-font-weight);
 
     background-color: var(--#{vars.$prefix}tile-state-bg);
-    //display: flex;
-    //position: relative;
     transition: vars.$transition-hoverable;
 
     &:not(.disabled):not(.active) {
@@ -49,12 +47,10 @@
     .#{vars.$prefix}list-tile-subtitle {
       @include text-decorators.truncate();
       transition: 0.3s vars.$transition-stand-animation;
-      //width: 100%;
     }
 
     .#{vars.$prefix}list-tile-leading {
       color: var(--#{vars.$prefix}tile-state-leading-color);
-      //max-width: 100%;
 
       &.has-icon {
         color: var(--#{vars.$prefix}tile-state-leading-icon-color);
@@ -72,7 +68,6 @@
     .#{vars.$prefix}list-tile-action {
       color: var(--#{vars.$prefix}tile-state-action-color);
       min-width: var(--#{vars.$prefix}tile-action-minwidth);
-      //max-width: 100%;
 
       &.#{vars.$prefix}action-stack {
         display: flex;
@@ -86,12 +81,7 @@
     }
 
     .#{vars.$prefix}list-tile-content {
-      //display: flex;
-      //align-self: center;
       flex: 1;
-      //flex-direction: column;
-      //overflow: hidden;
-      //max-width: 100%;
       width: auto;
 
       > .#{vars.$prefix}list-tile-title {
@@ -113,7 +103,6 @@
     > .#{vars.$prefix}ripple {
       min-height: var(--#{vars.$prefix}tile-minheight);
       padding: var(--#{vars.$prefix}tile-padding-y) var(--#{vars.$prefix}tile-padding-x);
-      //position: relative;
 
       > div > div[class^='#{vars.$prefix}list-tile-'] {
         &:nth-child(2),

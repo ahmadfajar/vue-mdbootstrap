@@ -39,9 +39,7 @@
 
     .#{vars.$prefix}nav-item {
       background-color: var(--#{vars.$prefix}nav-item-state-bg);
-      //position: relative;
       white-space: nowrap;
-      //width: 100%;
 
       > .#{vars.$prefix}nav-item-inner {
         background-color: var(--#{vars.$prefix}nav-item-inner-state-bg);
@@ -49,8 +47,6 @@
         font-weight: var(--#{vars.$prefix}nav-item-state-font-weight);
 
         > .#{vars.$prefix}ripple {
-          //display: flex;
-          //align-items: center;
           line-height: var(--#{vars.$prefix}nav-item-line-height);
           // prettier-ignore
           padding: var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-right) var(--#{vars.$prefix}nav-item-padding-y) var(--#{vars.$prefix}nav-item-padding-left);
@@ -84,9 +80,6 @@
       }
 
       &.#{vars.$prefix}expanded {
-        //--#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
-        //--#{vars.$prefix}nav-item-inner-state-bg: transparent;
-
         > .#{vars.$prefix}nav-item-inner {
           > .#{vars.$prefix}ripple {
             > .expand-more {
@@ -109,7 +102,6 @@
         &.#{vars.$prefix}nav-parent {
           &.#{vars.$prefix}expanded {
             --#{vars.$prefix}nav-item-inner-state-bg: transparent;
-            //--#{vars.$prefix}nav-item-state-bg: var(--#{vars.$prefix}nav-item-expanded-bg);
             --#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-color);
             // prettier-ignore
             --#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-icon-color);
@@ -125,8 +117,6 @@
 
       &.disabled {
         opacity: var(--#{vars.$prefix}nav-item-disabled-opacity);
-        //--#{vars.$prefix}nav-item-state-color: var(--#{vars.$prefix}nav-item-disable-color);
-        //--#{vars.$prefix}nav-item-state-icon-color: var(--#{vars.$prefix}nav-item-disable-icon-color);
 
         > .#{vars.$prefix}nav-item-inner {
           cursor: default;
@@ -192,8 +182,6 @@
       text-decoration: none;
       display: block;
       outline: 0 none;
-      //cursor: pointer;
-      //user-select: none;
 
       &:hover,
       &:focus,

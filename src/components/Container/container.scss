@@ -11,9 +11,7 @@
   .#{vars.$prefix}application-wrap {
     background-color: var(--background);
     color: var(--foreground);
-    //backface-visibility: hidden;
     display: flex;
-    //flex: 1 1 auto;
     flex-direction: column;
 
     &:not(.#{vars.$prefix}viewport-height) {
@@ -23,17 +21,6 @@
     &.#{vars.$prefix}viewport-height {
       min-height: 100vh;
     }
-
-    //&.#{vars.$prefix}appbar-fixed-top {
-    //  > .#{vars.$prefix}container-wrap {
-    //    width: 100%;
-    //
-    //    > .#{vars.$prefix}content-wrap {
-    //      display: block;
-    //      overflow: auto;
-    //    }
-    //  }
-    //}
   }
 
   .#{vars.$prefix}container-wrap {
@@ -49,6 +36,5 @@
   .#{vars.$prefix}content-wrap {
     color: var(--foreground);
     flex: 1 0 auto;
-    //transition: vars.$transition-default;
   }
 }

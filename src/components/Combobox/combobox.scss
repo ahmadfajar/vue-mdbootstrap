@@ -54,8 +54,6 @@
 
     &.#{vars.$prefix}chip-enabled {
       > .#{vars.$prefix}field-inner {
-        //min-height: 58px;
-
         > .#{vars.$prefix}field-activator {
           align-items: end;
           flex: 1 1 auto;

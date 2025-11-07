@@ -155,9 +155,7 @@
         opacity: var(--#{vars.$prefix}notification-opacity);
         display: block;
         padding: 15px 15px 15px 54px;
-        //overflow: hidden;
         pointer-events: auto;
-        //position: relative;
 
         &:not(:last-child) {
           margin-bottom: var(--#{vars.$prefix}notification-spacing);

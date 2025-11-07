@@ -22,27 +22,17 @@
 
     .#{vars.$prefix}breadcrumb-container {
       margin: 0;
-      //position: relative;
-      //display: flex;
-      //flex-wrap: nowrap;
-      //align-items: flex-end;
       overflow-y: hidden;
       overflow-x: auto;
 
       > .#{vars.$prefix}breadcrumb-inner {
         font-size: var(--#{vars.$prefix}breadcrumb-font-size);
         font-weight: var(--#{vars.$prefix}breadcrumb-font-weight);
-        //position: relative;
-        //display: flex;
-        //flex-wrap: nowrap;
-        //align-items: center;
-        //overflow: hidden;
       }
     }
 
     .#{vars.$prefix}breadcrumb-icon {
       color: var(--#{vars.$prefix}breadcrumb-icon-color);
-      //display: inline-flex;
       margin: 0 vars.$padding-sm 0 0;
     }
 
@@ -74,8 +64,6 @@ ol.#{vars.$prefix}breadcrumb-inner {
 }
 
 li.#{vars.$prefix}breadcrumb-item {
-  //display: flex;
-  //flex-wrap: nowrap;
   white-space: nowrap;
   margin: 0;
 

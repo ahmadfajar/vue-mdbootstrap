@@ -3,26 +3,19 @@
 
 @layer components {
   .#{vars.$prefix}chip-group-slider {
-    //display: flex;
-    //flex: 1 1 auto;
     contain: content;
     overflow: auto hidden;
 
     > .#{vars.$prefix}chip-group-content {
-      //display: flex;
       flex: 1 0 auto;
       padding: vars.$padding-xs;
-      //position: relative;
       white-space: nowrap;
       transition: all vars.$transition-default-easing;
     }
   }
 
   .#{vars.$prefix}chip-group {
-    //display: flex;
     flex: 0 1 auto;
-    //position: relative;
-    //max-width: 100%;
 
     > .#{vars.$prefix}chip-slide-prev,
     > .#{vars.$prefix}chip-slide-next {

@@ -75,10 +75,6 @@
       }
     }
 
-    //> .form-label,
-    //.#{vars.$prefix}field-label {
-    //  color: var(--#{vars.$prefix}field-label-color);
-    //}
     > .col-form-label {
       color: var(--#{vars.$prefix}field-label-color);
       padding-top: var(--#{vars.$prefix}field-classic-padding-top);
@@ -209,7 +205,6 @@
         left: 0;
         width: 100%;
         height: var(--#{vars.$prefix}field-border-width);
-        //opacity: .5; // vars.$text-field-support-text-opacity;
         transition: opacity vars.$transition-default;
       }
 
@@ -349,7 +344,6 @@
           .#{vars.$prefix}field-line-indicator {
             &:before {
               background-color: var(--#{vars.$prefix}field-hover-border-color);
-              //opacity: vars.$text-field-hover-opacity;
             }
           }
         }

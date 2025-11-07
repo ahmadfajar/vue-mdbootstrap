@@ -3,19 +3,11 @@
 @use '../../../scss/variables' as vars;
 
 @layer components {
-  //.#{vars.$prefix}dropdown-menu {
-  //display: inline-flex;
-  //align-items: center;
-  //position: relative;
-
   .#{vars.$prefix}dropdown-menu-activator {
-    //position: relative;
-
     > * {
       cursor: pointer;
     }
   }
-  //}
 
   .#{vars.$prefix}popover-dropdown-menu {
     --#{vars.$prefix}popover-border-radius: var(--#{vars.$prefix}radius);

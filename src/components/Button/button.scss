@@ -59,16 +59,11 @@
     transition: #{vars.$btn-transition};
 
     > .#{vars.$prefix}ripple {
-      //display: flex;
       padding: 0;
       border-radius: inherit;
     }
 
     .#{vars.$prefix}btn-inner {
-      //width: 100%;
-      //display: flex;
-      //align-items: center;
-      //justify-content: center;
       line-height: var(--#{vars.$prefix}btn-state-line-height);
       border-radius: inherit;
       // prettier-ignore
@@ -235,7 +230,6 @@
     }
 
     &.btn-rounded-sm {
-      //--#{vars.$prefix}btn-border-radius: #{vars.$btn-border-radius-sm};
       --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-xs-border-radius);
     }
 
@@ -461,7 +455,6 @@ button {
     color: var(--#{vars.$prefix}btn-hover-color);
     background-color: var(--#{vars.$prefix}btn-hover-bg);
     outline: 3px solid var(--#{vars.$prefix}btn-focus-shadow-color);
-    //outline-offset: 1px;
     z-index: 1;
 
     &.active {
