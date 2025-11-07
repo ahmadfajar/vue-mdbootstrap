@@ -145,7 +145,7 @@ function createSpinnerButton(
             {
               default: () =>
                 h('span', {
-                  class: 'triangle-up',
+                  class: 'caret-up',
                 }),
             }
           ),
@@ -168,7 +168,7 @@ function createSpinnerButton(
             {
               default: () =>
                 h('span', {
-                  class: 'triangle-down',
+                  class: 'caret-down',
                 }),
             }
           ),

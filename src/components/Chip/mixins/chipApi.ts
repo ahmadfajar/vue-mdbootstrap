@@ -134,6 +134,9 @@ export function useRenderChip(
       class: classNames.value,
       href:
         !Helper.isEmpty(props.href) && !props.disabled && !props.readonly ? props.href : undefined,
+      'data-active': (props.active && !props.disabled) ?? undefined,
+      'data-disabled': props.disabled,
+      'aria-disabled': props.disabled,
     },
     [
       h<TBsRipple>(

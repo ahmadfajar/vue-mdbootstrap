@@ -104,6 +104,7 @@ function createFieldChips(
           key: label,
           color: props.chipColor,
           disabled: props.disabled,
+          readonly: props.readonly,
           pill: props.chipPill,
           outlined: props.chipOutlined,
           dismissible: (thisProps.chipDeletable &&

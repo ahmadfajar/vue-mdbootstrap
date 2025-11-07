@@ -62,13 +62,13 @@
         > .#{vars.$prefix}spin-down {
           margin-left: 0;
 
-          .triangle-down {
+          .caret-down {
             margin-top: 0.25rem;
           }
         }
 
         > .#{vars.$prefix}spin-up {
-          .triangle-up {
+          .caret-up {
             margin-top: 0.375rem;
           }
         }

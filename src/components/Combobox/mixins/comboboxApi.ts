@@ -82,6 +82,7 @@ function renderChipOrCsvItems(
             key: kebabCase(it.get(schema.displayField) as string),
             color: props.chipColor as Prop<string>,
             disabled: props.disabled as unknown as Prop<boolean>,
+            readonly: props.readonly as unknown as Prop<boolean>,
             pill: props.chipPill as unknown as Prop<boolean>,
             outlined: props.chipOutlined as unknown as Prop<boolean>,
           },

@@ -139,9 +139,7 @@
 
       > .#{vars.$prefix}chip-text {
         > .caret-up,
-        > .caret-down,
-        > .triangle-up,
-        > .triangle-down {
+        > .caret-down {
           &:last-child {
             margin-right: vars.$padding-xs * -1;
             margin-left: 0.65rem;
