@@ -41,15 +41,20 @@ export function useMakeButtonProps(
 ): TRecord {
   const isPillOff = props.pillOff || props.pill === false;
   const defaultMode = !['icon', 'fab', 'floating'].includes(props.mode!);
-  const buttonVariant = props.flat
-    ? 'flat'
+  const buttonVariant = props.tonal
+    ? 'tonal'
     : props.outlined
       ? 'outlined'
-      : props.raised
-        ? 'raised'
-        : props.tonal
-          ? 'tonal'
-          : undefined;
+      : props.flat
+        ? 'flat'
+        : 'default';
+  const btnState = disabled
+    ? 'disabled'
+    : props.readonly
+      ? 'readonly'
+      : props.active
+        ? 'active'
+        : undefined;
   const btnType = props.type as string;
 
   return {
@@ -66,17 +71,17 @@ export function useMakeButtonProps(
       [`btn-outline-${props.color}`]: props.color && props.outlined && !props.tonal,
       [`btn-flat-${props.color}`]: props.color && props.flat && !props.outlined && !props.tonal,
       disabled: disabled,
-      readonly: props.readonly && disabled,
-      active: props.active && !disabled,
+      readonly: props.readonly && !disabled,
+      active: props.active && !props.readonly && !disabled,
     },
     role: btnType !== 'div' ? 'button' : undefined,
     href:
       !Helper.isEmpty(props.href) && !props.disabled && !props.readonly ? props.href : undefined,
     type: Helper.isEmpty(props.href) && btnType !== 'div' ? props.type : undefined,
     disabled: btnType === 'div' ? undefined : disabled,
-    'data-active': props.active && !disabled,
-    'data-disabled': btnType === 'div' ? undefined : disabled,
     'data-variant': buttonVariant,
+    'data-state': btnState,
+    'data-disabled': btnType === 'div' ? undefined : disabled,
     'aria-disabled': btnType === 'div' ? undefined : disabled,
   };
 }
@@ -298,13 +303,15 @@ export function useRenderToggleButtonItem(
   itemIndex: number
 ): VNode {
   const nLength = props.items?.length - 1;
-  const buttonVariant = props.outlined
-    ? 'outlined'
-    : props.raised
-      ? 'raised'
-      : props.tonal
-        ? 'tonal'
-        : undefined;
+  const buttonVariant = props.tonal ? 'tonal' : props.outlined ? 'outlined' : 'default';
+  const btnState =
+    props.disabled || item.disabled
+      ? 'disabled'
+      : props.readonly || item.readonly
+        ? 'readonly'
+        : isInputItemSelected(props, item)
+          ? 'active'
+          : undefined;
 
   return h(
     'label',
@@ -316,10 +323,11 @@ export function useRenderToggleButtonItem(
         'rounded-e-0': itemIndex < nLength,
         'rounded-s-0': itemIndex > 0,
       },
-      'data-active': isInputItemSelected(props, item),
+      'data-variant': buttonVariant,
+      'data-state': btnState,
       'data-selected': isInputItemSelected(props, item) ? 'true' : undefined,
       'data-disabled': props.disabled || item.disabled,
-      'data-variant': buttonVariant,
+      'aria-disabled': props.disabled || item.disabled,
       onKeydown: (e: KeyboardEvent) => {
         if (['Space', 'Enter'].includes(e.code)) {
           (e.target as HTMLElement).focus();

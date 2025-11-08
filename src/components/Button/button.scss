@@ -97,12 +97,12 @@
     }
 
     &[class*='btn-outline'] {
-      $disabled-bg: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 20%));
+      //$disabled-bg: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 20%));
       $disabled-border-color: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 10%));
 
       --#{vars.$prefix}btn-bg: transparent;
       --#{vars.$prefix}btn-border-width: thin;
-      --#{vars.$prefix}btn-disabled-bg: #{color.change($disabled-bg, $alpha: 0.8)};
+      //--#{vars.$prefix}btn-disabled-bg: #{color.change($disabled-bg, $alpha: 0.8)};
       --#{vars.$prefix}btn-disabled-border-color: #{$disabled-border-color};
     }
 

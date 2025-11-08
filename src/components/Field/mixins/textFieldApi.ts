@@ -119,6 +119,18 @@ export function useCreateFieldWrapper(
   nodeMountedHandler?: (node: VNode) => void,
   wrapperID?: string
 ): VNode {
+  const fieldState = props.disabled ? 'disabled' : props.readonly ? 'readonly' : undefined;
+  const fieldVariant =
+    props.outlined && (props as TTextFieldOptionProps).rounded
+      ? 'outlined-pill'
+      : props.outlined
+        ? 'outlined'
+        : props.filled && (props as TTextFieldOptionProps).rounded
+          ? 'filled-pill'
+          : props.filled
+            ? 'filled'
+            : 'default';
+
   return h(
     'div',
     {
@@ -126,6 +138,11 @@ export function useCreateFieldWrapper(
       class: cssClass.value,
       onVnodeMounted: nodeMountedHandler,
       onVnodeUpdated: (node: VNode) => useOnFieldNodeMounted(props, node),
+      'data-variant': fieldVariant,
+      'data-floating-label': props.floatingLabel,
+      'data-state': fieldState,
+      'data-disabled': props.disabled,
+      'aria-disabled': props.disabled,
     },
     [
       !props.floatingLabel && slots.default && slots.default({ id: props.id }),

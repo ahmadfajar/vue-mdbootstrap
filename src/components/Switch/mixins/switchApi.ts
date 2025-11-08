@@ -87,7 +87,11 @@ function createSwitchUI(
 }
 
 function switchLabelClass(props: Readonly<TSwitchOptionProps>, position: string): string[] {
-  const labelClass = [`${cssPrefix}switch-label`, `${cssPrefix}label-${position}`, 'relative'];
+  const labelClass = [
+    `${cssPrefix}switch-label`,
+    `${cssPrefix}label-${position}`,
+    !props.disabled && !props.readonly ? `${cssPrefix}link relative` : 'relative',
+  ];
 
   return useMergeClass(labelClass, props.labelClass as string | string[]);
 }
@@ -99,14 +103,23 @@ export function useRenderSwitch(
   rippleActive: Ref<boolean>,
   toggleCheckHandler: PromiseVoidFunction
 ): VNode {
+  const switchState = props.disabled
+    ? 'disabled'
+    : props.readonly
+      ? 'readonly'
+      : useCheckSelected(props)
+        ? 'checked'
+        : undefined;
+
   return h(
     'div',
     {
       class: classnames.value,
+      'data-state': switchState,
       'data-checked': useCheckSelected(props),
       'data-required': props.required ? 'true' : undefined,
-      'data-disabled': props.disabled ? 'true' : undefined,
-      'data-readonly': props.readonly && !props.disabled ? 'true' : undefined,
+      'data-disabled': props.disabled,
+      'aria-disabled': props.disabled,
     },
     [
       useWrapSlotWithCondition(

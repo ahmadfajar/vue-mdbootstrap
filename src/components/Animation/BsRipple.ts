@@ -38,6 +38,13 @@ export default defineComponent<TBsRipple>({
     }));
 
     watch(
+      () => thisProps.disabled,
+      (value) => {
+        disabled.value = value ?? false;
+      }
+    );
+
+    watch(
       () => thisProps.active,
       (value) => {
         const isBoolean = typeof value === 'boolean';

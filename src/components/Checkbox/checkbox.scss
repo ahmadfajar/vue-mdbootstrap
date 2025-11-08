@@ -32,7 +32,6 @@
     --#{vars.$prefix}checkbox-state-overlay-opacity: 0;
 
     margin: var(--#{vars.$prefix}checkbox-margin);
-    cursor: pointer;
 
     > .#{vars.$prefix}checkbox-inner {
       @include borders.radius(var(--#{vars.$prefix}checkbox-border-radius));
@@ -118,7 +117,6 @@
       line-height: var(--#{vars.$prefix}checkbox-size);
       margin-left: #{vars.$padding-md};
       margin-bottom: 0;
-      cursor: pointer;
 
       &:focus-visible {
         outline-color: var(--#{vars.$prefix}checkbox-checked-bg);
@@ -179,24 +177,18 @@
 
     &.required {
       label:after {
-        right: 0;
         content: '*';
         line-height: 1em;
         position: absolute;
         vertical-align: top;
-        transform: translateX(calc(100% + 2px));
+        right: 0;
         top: var(--#{vars.$prefix}checkbox-stroke);
+        transform: translateX(calc(100% + 2px));
       }
     }
 
-    &.disabled,
     &.readonly {
       --#{vars.$prefix}checkbox-state-opacity: var(--#{vars.$prefix}field-readonly-opacity);
-      cursor: default;
-
-      > .#{vars.$prefix}checkbox-label {
-        cursor: default;
-      }
     }
 
     &.disabled {

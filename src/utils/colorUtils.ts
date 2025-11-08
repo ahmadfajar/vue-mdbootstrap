@@ -476,20 +476,23 @@ export function lightnessLevel(color: RGBA | HSLA | LCHA): number {
     return value.l;
   };
 
-  if (Object.keys(color).every((it) => ['r', 'g', 'b', 'a'].includes(it))) {
-    const oklch = rgbaToOklch(color as RGBA);
+  if (typeof color === 'object' && Object.keys(color).length > 2) {
+    if (Object.keys(color).every((it) => ['r', 'g', 'b', 'a'].includes(it))) {
+      const oklch = rgbaToOklch(color as RGBA);
 
-    return lightness(oklch);
-  } else if (Object.keys(color).every((it) => ['h', 's', 'l', 'a'].includes(it))) {
-    const rgb = hslaToRgba(color as HSLA);
-    const oklch = rgbaToOklch(rgb);
+      return lightness(oklch);
+    } else if (Object.keys(color).every((it) => ['h', 's', 'l', 'a'].includes(it))) {
+      const rgb = hslaToRgba(color as HSLA);
+      const oklch = rgbaToOklch(rgb);
 
-    return lightness(oklch);
-  } else if (Object.keys(color).every((it) => ['l', 'c', 'h', 'a'].includes(it))) {
-    return lightness(color as LCHA);
+      return lightness(oklch);
+    } else if (Object.keys(color).every((it) => ['l', 'c', 'h', 'a'].includes(it))) {
+      return lightness(color as LCHA);
+    }
   }
 
   // fallback to zero if object is not recognized
+  console.warn('Input argument "color" is invalid.');
   return 0;
 }
 

@@ -388,6 +388,23 @@
     @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
   }
 
+  // Create utilities for global CSS variables
+  //--------------------------------------------------
+  .text-bg-surface {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  .text-bg-surface-secondary {
+    background-color: var(--background-secondary);
+    color: var(--foreground-secondary);
+  }
+
+  .text-bg-surface-tertiary {
+    background-color: var(--background-tertiary);
+    color: var(--foreground-tertiary);
+  }
+
   @include decorators.decorate-color('subtle', var(--foreground-subtle), $background: false, $border: false);
   @include decorators.decorate-color('subtle-secondary', var(--foreground-subtle-secondary), $background: false, $border: false);
   @include decorators.decorate-color('subtle-tertiary', var(--foreground-subtle-tertiary), $background: false, $border: false);

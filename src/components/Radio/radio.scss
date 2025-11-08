@@ -25,7 +25,6 @@
     --#{vars.$prefix}radio-state-overlay-opacity: 0;
 
     margin: var(--#{vars.$prefix}radio-margin);
-    cursor: pointer;
 
     > .#{vars.$prefix}radio-inner {
       @include borders.radius(vars.$radius-circle);
@@ -107,7 +106,6 @@
       line-height: var(--#{vars.$prefix}radio-size);
       margin-left: #{vars.$padding-md};
       margin-bottom: 0;
-      cursor: pointer;
 
       &:focus-visible {
         outline-color: var(--#{vars.$prefix}radio-active-color);
@@ -150,24 +148,18 @@
 
     &.required {
       label:after {
-        transform: translateX(calc(100% + 2px));
         content: '*';
         line-height: 1em;
         position: absolute;
         vertical-align: top;
         right: 0;
         top: var(--#{vars.$prefix}radio-stroke);
+        transform: translateX(calc(100% + 2px));
       }
     }
 
-    &.disabled,
     &.readonly {
       --#{vars.$prefix}radio-state-opacity: var(--#{vars.$prefix}field-readonly-opacity);
-      cursor: default;
-
-      > .#{vars.$prefix}radio-label {
-        cursor: default;
-      }
     }
 
     &.disabled {

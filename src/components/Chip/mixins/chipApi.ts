@@ -128,13 +128,21 @@ export function useRenderChip(
   rippleDisabled: boolean,
   dismissHandler: PromiseVoidFunction
 ): VNode {
+  const chipState = props.disabled
+    ? 'disabled'
+    : props.readonly
+      ? 'readonly'
+      : props.active
+        ? 'active'
+        : undefined;
+
   return h(
     tagName,
     {
       class: classNames.value,
       href:
         !Helper.isEmpty(props.href) && !props.disabled && !props.readonly ? props.href : undefined,
-      'data-active': (props.active && !props.disabled) ?? undefined,
+      'data-state': chipState,
       'data-disabled': props.disabled,
       'aria-disabled': props.disabled,
     },

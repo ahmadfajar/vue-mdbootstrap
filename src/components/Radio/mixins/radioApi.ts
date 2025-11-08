@@ -95,20 +95,32 @@ export function useRenderRadioOrCheckbox(
   inputElement: VNode,
   toggleCheckHandler: PromiseVoidFunction
 ): VNode {
+  const radioState = props.disabled
+    ? 'disabled'
+    : props.readonly
+      ? 'readonly'
+      : useCheckSelected(props)
+        ? 'checked'
+        : undefined;
+
   return h(
     'div',
     {
       class: classnames.value,
+      'data-state': radioState,
       'data-checked': useCheckSelected(props),
       'data-required': props.required ? 'true' : undefined,
-      'data-disabled': props.disabled ? 'true' : undefined,
-      'data-readonly': props.readonly && !props.disabled ? 'true' : undefined,
+      'data-disabled': props.disabled,
+      'aria-disabled': props.disabled,
     },
     [
       h(
         'div',
         {
-          class: [`${cssPrefix}${inputType}-inner`, 'relative'],
+          class: [
+            `${cssPrefix}${inputType}-inner`,
+            !props.disabled && !props.readonly ? `${cssPrefix}link relative` : 'relative',
+          ],
           onClick: toggleCheckHandler,
         },
         [
@@ -136,7 +148,11 @@ export function useRenderRadioOrCheckbox(
         {
           for: props.id,
           tabIndex: 0,
-          class: [`${cssPrefix}${inputType}-label`, 'relative', 'select-none'],
+          class: [
+            `${cssPrefix}${inputType}-label`,
+            !props.disabled && !props.readonly ? `${cssPrefix}link relative` : 'relative',
+            'select-none',
+          ],
           onClickPrevent: toggleCheckHandler,
           onKeydown: async (e: KeyboardEvent) => {
             if (['Space', 'Enter'].includes(e.code)) {

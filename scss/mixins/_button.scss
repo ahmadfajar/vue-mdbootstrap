@@ -331,13 +331,19 @@
     );
     $hover-border: helper.set-color-contrast($color, $border-color, $color, 90%);
 
-    --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
+    @if($name == 'secondary') {
+      --#{vars.$prefix}btn-color: #{colors.$elegant-color-dark};
+      --#{vars.$prefix}btn-hover-color: #{colors.$neutral-darken-4};
+    } @else {
+      --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
+      --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($hover-text)};
+    }
+
     --#{vars.$prefix}btn-border-color: #{helper.to-oklch($border-color)};
     --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($active-bg)};
     --#{vars.$prefix}btn-active-color: #{helper.to-oklch($active-text)};
     --#{vars.$prefix}btn-active-border-color: #{helper.to-oklch($active-border)};
     --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
-    --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($hover-text)};
     --#{vars.$prefix}btn-hover-border-color: #{helper.to-oklch($hover-border)};
     --#{vars.$prefix}btn-focus-shadow-color: #{$focus-box-shadow-color};
   }
@@ -406,13 +412,9 @@
     );
     $active-bg: helper.set-color-contrast(
       $color,
-      helper.set-color-contrast(
-        $color,
-        color.change(color.scale($color, $lightness: 30%), $alpha: 0.45),
-        $color,
-        90%
-      ),
-      color.adjust($color, $lightness: 15%)
+      color.change(color.scale($color, $lightness: 30%), $alpha: 0.45),
+      $color,
+      90%
     );
     $active-text: helper.set-color-contrast(
       $color,
@@ -438,9 +440,15 @@
       90%
     );
 
-    --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
+    @if($name == 'secondary') {
+      --#{vars.$prefix}btn-color: #{colors.$elegant-color-dark};
+      --#{vars.$prefix}btn-hover-color: #{colors.$neutral-darken-4};
+    } @else {
+      --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
+      --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($hover-text)};
+    }
+
     --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
-    --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($hover-text)};
     --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($active-bg)};
     --#{vars.$prefix}btn-active-color: #{helper.to-oklch($active-text)};
     --#{vars.$prefix}btn-focus-shadow-color: #{helper.to-oklch($focus-box-shadow-color)};
