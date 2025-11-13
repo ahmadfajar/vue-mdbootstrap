@@ -132,18 +132,6 @@
     overflow-y: hidden;
   }
 
-  .rounded {
-    border-radius: var(--#{vars.$prefix}radius);
-  }
-
-  .rounded-circle {
-    border-radius: #{vars.$radius-circle};
-  }
-
-  .rounded-pill {
-    border-radius: var(--#{vars.$prefix}radius-pill);
-  }
-
   .rounded-0 {
     border-radius: 0;
   }
@@ -405,7 +393,35 @@
     color: var(--foreground-tertiary);
   }
 
-  @include decorators.decorate-color('subtle', var(--foreground-subtle), $background: false, $border: false);
-  @include decorators.decorate-color('subtle-secondary', var(--foreground-subtle-secondary), $background: false, $border: false);
-  @include decorators.decorate-color('subtle-tertiary', var(--foreground-subtle-tertiary), $background: false, $border: false);
+  @include decorators.decorate-color(
+    'subtle',
+    var(--foreground-subtle),
+    $background: false,
+    $border: false
+  );
+  @include decorators.decorate-color(
+    'subtle-secondary',
+    var(--foreground-subtle-secondary),
+    $background: false,
+    $border: false
+  );
+  @include decorators.decorate-color(
+    'subtle-tertiary',
+    var(--foreground-subtle-tertiary),
+    $background: false,
+    $border: false
+  );
+}
+
+// Prevent overriden by Bootstrap or TailwindCSS
+.rounded {
+  border-radius: var(--#{vars.$prefix}radius);
+}
+
+.rounded-circle {
+  border-radius: #{vars.$radius-circle};
+}
+
+.rounded-pill {
+  border-radius: var(--#{vars.$prefix}radius-pill);
 }

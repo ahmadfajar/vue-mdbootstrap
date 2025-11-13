@@ -42,7 +42,7 @@ export default defineComponent<TBsListNav>({
     const classNames = computed(() => ({
       [`${cssPrefix}list-nav`]: true,
       [`${cssPrefix}nav-child`]: thisProps.child === true,
-      collapse: thisProps.child === true && !expanded.value,
+      'collapse hidden': thisProps.child === true && !expanded.value,
       collapsing: thisProps.child === true && collapsing.value,
     }));
 

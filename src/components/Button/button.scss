@@ -49,6 +49,7 @@
     // end
 
     display: inline-block;
+    font-family: inherit;
     position: relative;
     white-space: nowrap;
     background-color: var(--#{vars.$prefix}btn-bg);

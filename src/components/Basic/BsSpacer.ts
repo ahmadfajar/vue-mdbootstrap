@@ -17,7 +17,7 @@ export default defineComponent<TBsSpacer>({
       useWrapSlotDefault(
         'div',
         undefined,
-        { 'flex-grow-1': thisProps.fill && !thisProps.width },
+        { 'flex-grow': thisProps.fill && !thisProps.width },
         { width: thisProps.width ? Helper.cssUnit(thisProps.width) : undefined }
       );
   },

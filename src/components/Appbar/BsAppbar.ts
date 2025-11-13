@@ -6,7 +6,7 @@ import {
 import { useBreakpointMax } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TAppbarOptionProps, TBsAppbar, TVueMdb } from '@/types';
-import { computed, defineComponent, onMounted, ref } from 'vue';
+import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 
 export default defineComponent<TBsAppbar>({
   name: 'BsAppbar',
@@ -31,6 +31,24 @@ export default defineComponent<TBsAppbar>({
     const smoothAnimation = ref<boolean>(false);
 
     const styles = computed(() => useAppbarStyles(thisProps, appId, vueMdb, isMobile));
+
+    watch(
+      () => thisProps.fixedTop as boolean,
+      (value) => {
+        if (appId.value && vueMdb.value) {
+          vueMdb.value.app[appId.value]!.appbar.fixedTop = value;
+        }
+      }
+    );
+
+    watch(
+      () => thisProps.stickyTop as boolean,
+      (value) => {
+        if (appId.value && vueMdb.value) {
+          vueMdb.value.app[appId.value]!.appbar.stickyTop = value;
+        }
+      }
+    );
 
     const resizeHandler = (el: Element) => {
       isMobile.value = useBreakpointMax('md');

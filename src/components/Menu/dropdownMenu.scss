@@ -10,7 +10,7 @@
   }
 
   .#{vars.$prefix}popover-dropdown-menu {
-    --#{vars.$prefix}popover-border-radius: var(--#{vars.$prefix}radius);
+    // --#{vars.$prefix}popover-border-radius: var(--#{vars.$prefix}radius);
 
     > .#{vars.$prefix}list {
       @include borders.radius(var(--#{vars.$prefix}radius));

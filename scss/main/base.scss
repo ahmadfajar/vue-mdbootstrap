@@ -3,7 +3,7 @@
 @use '../color_vars' as colors;
 @use '../variables' as vars;
 
-@layer base, components, animations, utilities;
+@layer theme, base, components, animations, utilities;
 
 @layer base {
   // Global css variables

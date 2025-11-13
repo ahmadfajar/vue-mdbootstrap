@@ -21,8 +21,12 @@ export default defineComponent<TBsSideDrawer>({
     const vueMdb = ref<TVueMdb>();
     const appId = ref<string>();
     const isMobile = ref<boolean>(false);
-    const isOpen = ref<boolean>(thisProps.open as boolean);
-    const initialState = thisProps.open as boolean;
+    const isOpen = ref<boolean>(false); 
+    
+    // initialize side-drawer state
+    isMobile.value = useBreakpointMax('md');
+    const initialState = isMobile.value ? false : (thisProps.open as boolean ?? !isMobile.value);
+    isOpen.value = initialState;
 
     const clipHeight = computed(() => {
       if (thisProps.clipped && appId.value && vueMdb.value) {

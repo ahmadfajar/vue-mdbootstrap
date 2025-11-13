@@ -16,7 +16,7 @@ export default defineComponent<TBsCard>({
         {
           class: {
             [`${cssPrefix}card`]: true,
-            shadow: thisProps.shadow,
+            [`${cssPrefix}shadow`]: thisProps.shadow,
           },
           style: {
             [`--${cssPrefix}card-border-radius`]: thisProps.roundedOff === true ? 0 : undefined,

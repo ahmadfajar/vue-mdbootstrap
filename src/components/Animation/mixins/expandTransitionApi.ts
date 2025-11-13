@@ -40,7 +40,7 @@ export function afterEnter(element: Element) {
 
   refEl.style.display = '';
   refEl.style.height = '';
-  refEl.style.overflow = refEl.dataset.oldOverflow || 'auto';
+  refEl.style.overflow = refEl.dataset.oldOverflow!;
   refEl.style.paddingTop = refEl.dataset.oldPaddingTop || '0';
   refEl.style.paddingBottom = refEl.dataset.oldPaddingBottom || '0';
 }
@@ -76,7 +76,7 @@ export function afterLeave(element: Element) {
 
   refEl.style.display = 'none';
   refEl.style.height = '';
-  refEl.style.overflow = refEl.dataset.oldOverflow || 'auto';
+  refEl.style.overflow = refEl.dataset.oldOverflow!;
   refEl.style.paddingTop = refEl.dataset.oldPaddingTop || '0';
   refEl.style.paddingBottom = refEl.dataset.oldPaddingBottom || '0';
 }

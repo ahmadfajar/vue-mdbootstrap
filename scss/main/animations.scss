@@ -283,4 +283,10 @@
   .#{vars.$prefix}pulse {
     animation: #{vars.$prefix}spin 1.5s infinite steps(8);
   }
+
+  .collapsing {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.35s ease;
+  }
 }

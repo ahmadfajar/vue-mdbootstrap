@@ -116,7 +116,7 @@ export const dateTimeFieldProps = {
   } as Prop<TDateTimePickerMode>,
   pickerCls: {
     type: [String, Array],
-    default: 'rounded shadow',
+    default: 'shadow',
   },
   pickerButton: stringProp,
   pickerColor: stringProp,

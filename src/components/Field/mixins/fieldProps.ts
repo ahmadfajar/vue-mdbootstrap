@@ -94,7 +94,7 @@ export const searchFieldProps = {
   },
   popoverCls: {
     type: [String, Array],
-    default: 'rounded shadow',
+    default: 'shadow',
   },
   popoverMinWidth: {
     type: [Number, String],
