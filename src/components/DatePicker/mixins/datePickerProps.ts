@@ -7,6 +7,7 @@ import {
   popoverDefaultTransitionProp,
   popoverPlacementProp,
 } from '@/components/Popover/mixins/popoverProps.ts';
+import { cssPrefix } from '@/mixins/CommonApi';
 import {
   booleanProp,
   booleanTrueProp,
@@ -116,7 +117,7 @@ export const dateTimeFieldProps = {
   } as Prop<TDateTimePickerMode>,
   pickerCls: {
     type: [String, Array],
-    default: 'shadow',
+    default: `${cssPrefix}shadow-1`,
   },
   pickerButton: stringProp,
   pickerColor: stringProp,

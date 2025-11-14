@@ -52,7 +52,7 @@ export function useTabViewClassNames(
     props.tabPosition === 'top'
       ? `${cssPrefix}tab-top`
       : props.tabPosition === 'bottom'
-        ? `${cssPrefix}tab-bottom order-last`
+        ? `${cssPrefix}tab-bottom`
         : props.tabPosition === 'right'
           ? `${cssPrefix}tab-right`
           : `${cssPrefix}tab-left`,
@@ -302,10 +302,8 @@ function renderVerticalTabView(
       h(
         'div',
         {
-          class: {
-            'col-auto px-0': true,
-            'order-last': props.tabPosition === 'right',
-          },
+          class: ['col-auto px-0'],
+          style: props.tabPosition === 'right' ? { order: 2 } : null,
         },
         [
           h(
@@ -410,6 +408,7 @@ function renderHorizontalTabView(
             class: tabClasses.value,
             role: 'tablist',
             'aria-orientation': 'horizontal',
+            style: props.tabPosition === 'bottom' ? { order: 2 } : null,
             onWheel: (evt: WheelEvent) => tabOnWheel(scrollOffset, evt, sliderRef.value),
           },
           [

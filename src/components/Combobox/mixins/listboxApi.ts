@@ -106,7 +106,7 @@ function renderSearchbox(
       'label',
       {
         ref: searchboxRef,
-        class: [`${cssPrefix}listbox-search`],
+        class: [`${cssPrefix}listbox-search`, 'block'],
       },
       [
         withDirectives(

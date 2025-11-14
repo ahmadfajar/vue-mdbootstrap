@@ -5,7 +5,7 @@ import {
   popoverDefaultTransitionProp,
   popoverPlacementProp,
 } from '@/components/Popover/mixins/popoverProps.ts';
-import { useGenerateId } from '@/mixins/CommonApi.ts';
+import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
 import {
   booleanProp,
   booleanTrueProp,
@@ -94,7 +94,7 @@ export const searchFieldProps = {
   },
   popoverCls: {
     type: [String, Array],
-    default: 'shadow',
+    default: `${cssPrefix}shadow-1`,
   },
   popoverMinWidth: {
     type: [Number, String],
