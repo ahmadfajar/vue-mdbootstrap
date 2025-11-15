@@ -452,6 +452,13 @@
     --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($active-bg)};
     --#{vars.$prefix}btn-active-color: #{helper.to-oklch($active-text)};
     --#{vars.$prefix}btn-focus-shadow-color: #{helper.to-oklch($focus-box-shadow-color)};
+
+    @if($name == 'secondary' or $name == 'dark') {
+      &.btn-close-action {
+        --#{vars.$prefix}btn-color: #{helper.shift-color(colors.$elegant-color-dark, 30%)};
+        --#{vars.$prefix}btn-hover-bg: oklch(0 0 0 / 0.125);
+      }
+    }
   }
 }
 

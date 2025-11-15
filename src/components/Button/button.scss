@@ -343,6 +343,12 @@
       --#{vars.$prefix}btn-state-height: var(--#{vars.$prefix}btn-lg-height);
       --#{vars.$prefix}btn-state-width: var(--#{vars.$prefix}btn-lg-width);
     }
+
+    &.btn-close-action {
+      --#{vars.$prefix}btn-border-radius: #{vars.$radius-md};
+      --#{vars.$prefix}btn-sm-height: 1.875rem; // 30px;
+      --#{vars.$prefix}btn-sm-width: 1.875rem; // 30px;
+    }
   }
 
   .#{vars.$prefix}segmented-button {
@@ -382,7 +388,8 @@
   @include button.make-outline-variant('dark', colors.$dark-color);
   @include button.make-flat-variant('dark', colors.$dark-color);
 
-  .dark, [data-theme=dark] {
+  .dark,
+  [data-theme='dark'] {
     .#{vars.$prefix}btn,
     .#{vars.$prefix}btn-fab,
     .#{vars.$prefix}btn-icon {

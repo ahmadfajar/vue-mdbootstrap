@@ -5,7 +5,9 @@ import type {
   TNotificationItemOptionProps,
   TNotificationVariant,
 } from '@/components/Notification/types';
+import { BsCloseButton } from '@/framework';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { TButtonColor } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type { EmitFn, Prop, Ref, ShallowRef, VNode } from 'vue';
 import { h, Teleport, toDisplayString } from 'vue';
@@ -94,8 +96,8 @@ export function useRenderNotificationItem(
         [`${cssPrefix}notification-dialog`]: true,
         [`${cssPrefix}dialog-${props.variant}`]: props.variant,
         [`${cssPrefix}dialog-icon-off`]: props.iconOff === true,
-        flex: !props.title && !props.progressBar,
         'relative overflow-hidden': true,
+        flex: !props.title && !props.progressBar,
       },
       role: 'alert',
       'aria-live': 'assertive',
@@ -118,17 +120,25 @@ export function useRenderNotificationItem(
         : undefined,
       props.closeButton
         ? h(
-            'button',
+            'div',
             {
-              class: `${cssPrefix}btn-close`,
-              role: 'button',
-              type: 'button',
-              onClick: () => {
-                clearNotificationTimer(timerId);
-                emit('dismiss');
+              class: 'absolute',
+              style: {
+                right: '8px',
+                top: '8px',
+                zIndex: 2,
               },
             },
-            '×'
+            [
+              h(BsCloseButton, {
+                flat: true as unknown as Prop<boolean>,
+                color: (props.variant === 'warning' ? 'dark' : 'light') as Prop<TButtonColor>,
+                onClick: () => {
+                  clearNotificationTimer(timerId);
+                  emit('dismiss');
+                },
+              }),
+            ]
           )
         : undefined,
       props.title
@@ -143,7 +153,7 @@ export function useRenderNotificationItem(
       h('div', {
         class: {
           [`${cssPrefix}dialog-message`]: true,
-          'self-center flex-fill order-first': !props.title && !props.progressBar,
+          'flex-fill self-center': !props.title && !props.progressBar,
         },
         innerHTML: props.message,
       }),

@@ -39,7 +39,7 @@ export declare type TNotificationOption = {
 };
 
 export declare type TNotificationItemOptionProps = {
-  variant: string | TNotificationVariant;
+  variant: TNotificationVariant | string;
   message: string;
   title?: string;
   timeout?: number;

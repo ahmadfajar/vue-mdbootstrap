@@ -154,6 +154,39 @@ export declare type TButtonOptionProps = TAllowedIconProps &
     type?: TButtonType;
   };
 
+export declare type TCloseButtonOptionProps = {
+  /**
+   * Sets this button color.
+   */
+  color?: TButtonColor;
+
+  /**
+   * Render this button with flat style like Google Material
+   * [Text Button](https://m3.material.io/components/buttons/specs).
+   */
+  flat?: boolean;
+
+  /**
+   * Enable filled tonal button style.
+   */
+  tonal?: boolean;
+
+  /**
+   * Sets this button state: `enabled` or `disabled`.
+   */
+  disabled?: boolean;
+
+  /**
+   * Sets this button state to `readonly`.
+   */
+  readonly?: boolean;
+
+  /**
+   * Disable the **ripple** effect.
+   */
+  rippleOff?: boolean;
+};
+
 export declare type TInputOptionItem = TAllowedIconProps & {
   /**
    * Html `<input>` element ID.
@@ -227,6 +260,8 @@ export declare type TBsButtonInner = ComponentObjectPropsOptions<TButtonInnerOpt
 
 export declare type TBsButton = ComponentObjectPropsOptions<TButtonOptionProps>;
 
+export declare type TBsCloseButton = ComponentObjectPropsOptions<TCloseButtonOptionProps>;
+
 export declare type TBsToggleButton = ComponentObjectPropsOptions<TToggleButtonOptionProps>;
 
 export declare type TBsToggleField = ComponentObjectPropsOptions<TToggleFieldOptionProps>;
@@ -238,6 +273,12 @@ export declare const BsButton: {
       default?: () => VNode[];
       icon?: () => VNode;
     };
+  };
+};
+
+export declare const BsCloseButton: {
+  new (): {
+    $props: BaseComponentProps & TCloseButtonOptionProps;
   };
 };
 

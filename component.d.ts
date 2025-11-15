@@ -20,6 +20,7 @@ import type {
   BsChip,
   BsChipField,
   BsChipGroup,
+  BsCloseButton,
   BsColorPicker,
   BsCombobox,
   BsContainer,
@@ -104,6 +105,7 @@ declare module 'vue' {
     BsChip: typeof BsChip;
     BsChipField: typeof BsChipField;
     BsChipGroup: typeof BsChipGroup;
+    BsCloseButton: typeof BsCloseButton;
     BsColorPicker: typeof BsColorPicker;
     BsCombobox: typeof BsCombobox;
     BsContainer: typeof BsContainer;
