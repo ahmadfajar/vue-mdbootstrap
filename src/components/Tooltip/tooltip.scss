@@ -14,7 +14,7 @@
     --#{vars.$prefix}tooltip-padding-y: #{vars.$tooltip-padding-y};
 
     margin: 0;
-    position: absolute;
+    position: fixed;
 
     > .#{vars.$prefix}tooltip-arrow {
       width: var(--#{vars.$prefix}tooltip-arrow-size);

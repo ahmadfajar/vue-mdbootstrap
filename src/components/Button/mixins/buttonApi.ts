@@ -106,7 +106,7 @@ function renderSlotIcon(
             btnMode === 'default' ||
             (['fab', 'floating'].includes(btnMode as string) && slots.default),
           [`${cssPrefix}empty-icon`]:
-            Helper.isEmpty(slots[name]) || !Helper.isFunction(slots[name]),
+            !Helper.isFunction(slots[name]) || Helper.isEmpty(slots[name]?.call(undefined)),
         },
         style:
           props.iconSize && slots[name]?.call(undefined) != null
@@ -249,7 +249,7 @@ function renderToggleItemContent(
   props: Readonly<TToggleButtonOptionProps>,
   item: TInputOptionItem
 ): VNodeArrayChildren {
-  const cloneProps = { ...item, iconPosition: props.iconPosition };
+  const cloneProps = { iconSize: props.iconSize, iconPosition: props.iconPosition, ...item };
 
   return [
     props.iconPosition === 'left'
@@ -428,6 +428,7 @@ export function useRenderToggleFieldButton(
                   color: props.color,
                   toggleColor: props.toggleColor,
                   iconPosition: props.iconPosition,
+                  iconSize: props.iconSize,
                   onMouseenter: () =>
                     !Helper.isEmpty(thisProps.helpText) &&
                     !thisProps.persistentHelpText &&

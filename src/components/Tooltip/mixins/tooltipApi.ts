@@ -1,141 +1,12 @@
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { EventListener } from '@/mixins/DomHelper.ts';
+import { useFloatingElement } from '@/mixins/floatingElement.ts';
 import type { IBindingElement, IHTMLElement, IMouseEvents, TPlacementPosition } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type { ComponentInternalInstance, ComponentPublicInstance, Ref, VNode } from 'vue';
 import { unref } from 'vue';
 
 const SPACE = 4;
-
-/**
- * Calculate Tooltip left offset.
- *
- * @param placementRef Tooltip placement.
- * @param activatorEl  Activator Element.
- * @param arrowEl      Arrow Element.
- * @param tooltipWidth Tooltip element width.
- * @returns Tooltip left offset
- */
-function tooltipLeftPosition(
-  placementRef: Ref<TPlacementPosition>,
-  activatorEl: Element,
-  arrowEl: Element | null,
-  tooltipWidth: number
-): number {
-  const domRect = activatorEl.getBoundingClientRect();
-  const parentRect = activatorEl.parentElement?.getBoundingClientRect();
-  const arrowRect = arrowEl?.getBoundingClientRect();
-  const limitX = window.innerWidth - tooltipWidth - SPACE;
-  const leftX = domRect.left - tooltipWidth - SPACE;
-  const rightX = domRect.right + SPACE;
-
-  switch (placementRef.value) {
-    case 'left':
-      if (leftX - (arrowRect ? arrowRect.width / 2 : 0) >= SPACE) {
-        return leftX - (arrowRect ? arrowRect.width / 2 : 0);
-      } else {
-        placementRef.value = 'right';
-        return rightX + (arrowRect ? arrowRect.width / 2 : 0);
-      }
-    case 'right':
-      if (rightX + (arrowRect ? arrowRect.width / 2 : 0) <= limitX) {
-        return rightX + (arrowRect ? arrowRect.width / 2 : 0);
-      } else {
-        placementRef.value = 'left';
-        return leftX - (arrowRect ? arrowRect.width / 2 : 0);
-      }
-    case 'top':
-    case 'bottom':
-    default:
-      const tw = Math.min(domRect.width / 2, (parentRect?.width ?? domRect.width) / 2);
-      const tx = domRect.left + tw - tooltipWidth / 2;
-      return Math.min(limitX, tx);
-  }
-}
-
-/**
- * Calculate Tooltip top offset.
- *
- * @param placementRef  Tooltip placement reference.
- * @param activatorEl   Activator Element.
- * @param arrowEl       Arrow Element.
- * @param tooltipHeight Tooltip element height.
- * @returns Tooltip top offset
- */
-function tooltipTopPosition(
-  placementRef: Ref<TPlacementPosition>,
-  activatorEl: Element,
-  arrowEl: Element | null,
-  tooltipHeight: number
-): number {
-  const domRect = activatorEl.getBoundingClientRect();
-  const arrowRect = arrowEl?.getBoundingClientRect();
-  const ptY = domRect.top - tooltipHeight - SPACE;
-  const pbY = domRect.bottom + SPACE;
-
-  switch (placementRef.value) {
-    case 'top':
-      if (ptY >= SPACE) {
-        return ptY - (arrowRect ? arrowRect.height / 2 - 2 : 0);
-      } else {
-        placementRef.value = 'bottom';
-        return pbY + (arrowRect ? arrowRect.height / 2 : 0);
-      }
-    case 'bottom':
-      const maxY = domRect.bottom + tooltipHeight + SPACE;
-      if (pbY + tooltipHeight <= maxY) {
-        return pbY + (arrowRect ? arrowRect.height / 2 : 0);
-      } else {
-        placementRef.value = 'top';
-        return ptY - (arrowRect ? arrowRect.height / 2 - 2 : 0);
-      }
-    case 'left':
-    case 'right':
-    default:
-      return domRect.top + domRect.height / 2 - tooltipHeight / 2;
-  }
-}
-
-function arrowLeftPosition(
-  placement: TPlacementPosition,
-  activatorEl: Element,
-  arrowWidth: number
-): number {
-  const activatorRect = activatorEl.getBoundingClientRect();
-  const parentRect = activatorEl.parentElement?.getBoundingClientRect();
-  const maxWidth = window.innerWidth - activatorRect.left - SPACE;
-
-  switch (placement) {
-    case 'left':
-      return activatorRect.left - arrowWidth / 2 - SPACE * 2;
-    case 'right':
-      return activatorRect.right + arrowWidth / 2;
-    case 'top':
-    case 'bottom':
-    default:
-      const width = Math.min(maxWidth, activatorRect.width, parentRect?.width ?? maxWidth);
-      return activatorRect.left + width / 2 - arrowWidth / 2;
-  }
-}
-
-function arrowTopPosition(
-  placement: TPlacementPosition,
-  activatorEl: Element,
-  arrowHeight: number
-): number {
-  const activatorRect = activatorEl.getBoundingClientRect();
-
-  switch (placement) {
-    case 'top':
-      return activatorRect.top - arrowHeight / 2 - SPACE - 2;
-    case 'bottom':
-      return activatorRect.bottom + SPACE + 2;
-    case 'left':
-    case 'right':
-    default:
-      return activatorRect.top + (activatorRect.height / 2 - arrowHeight / 2) + 1;
-  }
-}
 
 /**
  * Find first `VNode` within the `BsTooltip` virtual-node subtree.
@@ -188,7 +59,7 @@ export function useSetTooltipPosition(
   tooltipArrowRef: Ref<Element | null>,
   placementRef: Ref<TPlacementPosition>
 ): void {
-  const activatorEl = unref(activatorRef);
+  const activatorEl = unref(activatorRef) as HTMLElement | null;
   const tooltipEl = unref(tooltipRef) as HTMLElement | null;
   const arrowEl = unref(tooltipArrowRef) as HTMLElement | null;
 
@@ -196,23 +67,29 @@ export function useSetTooltipPosition(
     return;
   }
 
-  if (tooltipEl && Helper.isFunction(tooltipEl['getBoundingClientRect'])) {
-    const tooltipRect = tooltipEl.getBoundingClientRect();
-    const posY = tooltipTopPosition(placementRef, activatorEl, arrowEl, tooltipRect.height);
-    const posX = tooltipLeftPosition(placementRef, activatorEl, arrowEl, tooltipRect.width);
+  if (Helper.isFunction(tooltipEl['getBoundingClientRect'])) {
+    const computed = useFloatingElement(
+      tooltipEl,
+      activatorEl,
+      placementRef.value,
+      SPACE,
+      false,
+      true,
+      arrowEl
+    );
 
-    if (arrowEl) {
-      const placement = unref(placementRef);
-      const arrowRect = arrowEl.getBoundingClientRect();
-      const pY = arrowTopPosition(placement, activatorEl, arrowRect.height);
-      const px = arrowLeftPosition(placement, activatorEl, arrowRect.width);
+    placementRef.value = computed.placement as TPlacementPosition;
 
-      arrowEl.style.top = pY > 0 ? `${pY - posY}px` : '';
-      arrowEl.style.left = px > 0 ? `${px - posX}px` : '';
+    if (arrowEl && computed.arrow) {
+      arrowEl.style.top = computed.arrow.top;
+      arrowEl.style.bottom = computed.arrow.bottom;
+      arrowEl.style.left = computed.arrow.left;
     }
 
-    tooltipEl.style.top = `${posY}px`;
-    tooltipEl.style.left = `${posX}px`;
+    tooltipEl.style.top = computed.top;
+    tooltipEl.style.bottom = computed.bottom;
+    tooltipEl.style.left = computed.left;
+    tooltipEl.style.height = computed.height;
   }
 }
 

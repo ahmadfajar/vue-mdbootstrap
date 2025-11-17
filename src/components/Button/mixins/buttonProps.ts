@@ -6,6 +6,7 @@ import {
   booleanTrueProp,
   defaultColorProp,
   stringArrayOrObjectProp,
+  stringOrNumberProp,
   stringProp,
 } from '@/mixins/CommonProps.ts';
 import type { TButtonMode, TButtonSize, TButtonType, TInputOptionItem } from '@/types';
@@ -80,5 +81,6 @@ export const toggleButtonProps = {
   size: buttonSize,
   toggleColor: stringProp,
   tonal: booleanProp,
+  iconSize: stringOrNumberProp,
   iconPosition,
 };

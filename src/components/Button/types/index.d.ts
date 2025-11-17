@@ -252,6 +252,11 @@ export declare type TToggleButtonOptionProps = TInputBaseProps &
      * Place icon on the `left` side (before text) or on the `right` side (after text).
      */
     iconPosition?: TIconPosition;
+
+    /**
+     * Render the icon with equal height and width.
+     */
+    iconSize?: Numberish;
   };
 
 export declare type TToggleFieldOptionProps = TToggleButtonOptionProps & TValidationProps;

@@ -18,6 +18,7 @@ export default defineConfig(
   {
     rules: {
       '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/no-unused-vars': 'off',
       '@typescript-eslint/no-redundant-type-constituents': 'off',
       '@typescript-eslint/no-base-to-string': 'warn',
     },

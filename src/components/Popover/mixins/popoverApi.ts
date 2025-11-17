@@ -3,6 +3,7 @@ import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
 import { ClickOutside, Resize, Scroll } from '@/directives';
 import { useRenderTransition } from '@/mixins/CommonApi.ts';
 import { isChildOf, isSVGElement } from '@/mixins/DomHelper.ts';
+import { useFloatingElement } from '@/mixins/floatingElement.ts';
 import type { Numberish, TEmitFn, TPopoverOptionProps, TPopoverPosition, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import {
@@ -21,139 +22,12 @@ import {
   withDirectives,
 } from 'vue';
 
-const SPACE = 8;
-
 function shiftedValue(value?: Numberish): number {
   return Helper.isNumber(value)
     ? value
     : !value || isNaN(parseInt(value, 10))
       ? 0
       : parseInt(value, 10);
-}
-
-function getPopoverLeftPosition(
-  activatorRect: DOMRect,
-  placement: TPopoverPosition,
-  width: number,
-  shift: number,
-  cover: boolean
-): number {
-  let offsetLeft = 0;
-  const maxLeft = window.innerWidth - SPACE - width;
-  const minLeft = SPACE;
-
-  switch (placement) {
-    case 'left':
-    case 'left-top':
-    case 'left-bottom':
-      offsetLeft = activatorRect.left - width - shift;
-      if (cover) {
-        offsetLeft += activatorRect.width;
-      } else if (offsetLeft < SPACE) {
-        offsetLeft = activatorRect.left + activatorRect.width + shift;
-      }
-      break;
-    case 'right':
-    case 'right-top':
-    case 'right-bottom':
-      offsetLeft = cover
-        ? activatorRect.left
-        : activatorRect.left + activatorRect.width > maxLeft
-          ? activatorRect.left - width - shift
-          : activatorRect.left + activatorRect.width + shift;
-      break;
-    case 'top':
-    case 'bottom':
-      offsetLeft = activatorRect.left + activatorRect.width / 2 - width / 2;
-      break;
-    case 'bottom-left':
-    case 'top-left':
-      offsetLeft = activatorRect.left;
-      break;
-    case 'bottom-right':
-    case 'top-right':
-      offsetLeft = activatorRect.left + activatorRect.width - width;
-      break;
-  }
-
-  if (['top', 'top-left', 'bottom', 'bottom-left'].includes(placement as string)) {
-    if (offsetLeft + width >= maxLeft + width) {
-      offsetLeft = maxLeft;
-    }
-  }
-
-  return Math.max(minLeft, offsetLeft);
-}
-
-function getPopoverTopPosition(
-  activatorRect: DOMRect,
-  placement: TPopoverPosition,
-  height: number,
-  shift: number,
-  cover: boolean
-): number {
-  const posY = activatorRect.top + activatorRect.height + shift;
-  const spaceAvailable = window.innerHeight - SPACE - height;
-  const minTop = SPACE;
-  let offsetTop = 0;
-
-  switch (placement) {
-    case 'top':
-    case 'top-left':
-    case 'top-right':
-      offsetTop = activatorRect.top - height - shift;
-      if (!cover) {
-        if (offsetTop < minTop) {
-          offsetTop = activatorRect.top + activatorRect.height - shift;
-        }
-      } else {
-        offsetTop += activatorRect.height;
-      }
-      break;
-    case 'bottom':
-    case 'bottom-left':
-    case 'bottom-right':
-      offsetTop = cover
-        ? activatorRect.top
-        : posY > spaceAvailable
-          ? posY - Math.abs(window.innerHeight - posY - height)
-          : posY;
-      break;
-    case 'left':
-    case 'right':
-      offsetTop = activatorRect.top + activatorRect.height / 2 - height / 2;
-      break;
-    case 'left-top':
-    case 'right-top':
-      offsetTop = activatorRect.top;
-      break;
-    case 'left-bottom':
-    case 'right-bottom':
-      offsetTop = activatorRect.top + activatorRect.height - height;
-      break;
-  }
-  offsetTop = Math.min(spaceAvailable, offsetTop);
-  offsetTop = Math.max(minTop, offsetTop);
-
-  return offsetTop;
-}
-
-function getPopoverBottomPosition(
-  activatorRect: DOMRect,
-  height: number,
-  shift: number,
-  cover: boolean
-): number {
-  let offsetBottom = window.innerHeight - activatorRect.top - shift + 4;
-
-  if (cover) {
-    offsetBottom += activatorRect.height / 2 - height / 2;
-  }
-  if (window.innerHeight < offsetBottom + height) {
-    offsetBottom -= Math.abs(window.innerHeight - offsetBottom - height);
-  }
-
-  return offsetBottom;
 }
 
 export function useSetPopoverPosition(
@@ -174,50 +48,25 @@ export function useSetPopoverPosition(
 
   if (activatorEl) {
     const elRect = activatorEl.getBoundingClientRect();
-    // console.log('Top: ', elRect.top, ', bottom: ', elRect.bottom);
     if (elRect.top < -elRect.height || elRect.top > window.innerHeight) {
       useClosePopover(instance, isActive, 'Activator overflow.');
     }
 
     const shifted = shiftedValue(props.space);
-    const deltaYTop = elRect.top - popoverEl.offsetHeight - shifted;
-    const deltaYBottom = window.innerHeight - (elRect.top + popoverEl.offsetHeight + shifted);
+    const computed = useFloatingElement(
+      popoverEl,
+      activatorEl as HTMLElement,
+      placementRef.value as TPopoverPosition,
+      shifted,
+      props.cover ?? false,
+      true
+    );
 
-    if (props.placement?.startsWith('bottom') && deltaYBottom < deltaYTop) {
-      placementRef.value = props.placement.replace('bottom', 'top') as TPopoverPosition;
-    } else if (props.placement?.startsWith('top') && deltaYTop < deltaYBottom) {
-      placementRef.value = props.placement.replace('top', 'bottom') as TPopoverPosition;
-    } else {
-      placementRef.value = props.placement;
-    }
-
-    if (placementRef.value?.startsWith('top')) {
-      popoverEl.style.height = 'fit-content';
-      popoverEl.style.top = '';
-      popoverEl.style.bottom =
-        getPopoverBottomPosition(elRect, popoverEl.offsetHeight, shifted, props.cover as boolean) +
-        'px';
-    } else {
-      popoverEl.style.bottom = '';
-      popoverEl.style.height = '';
-      popoverEl.style.top =
-        getPopoverTopPosition(
-          elRect,
-          props.placement as TPopoverPosition,
-          popoverEl.offsetHeight,
-          shifted,
-          props.cover as boolean
-        ) + 'px';
-    }
-
-    popoverEl.style.left =
-      getPopoverLeftPosition(
-        elRect,
-        props.placement as TPopoverPosition,
-        popoverEl.offsetWidth,
-        shifted,
-        props.cover as boolean
-      ) + 'px';
+    placementRef.value = computed.placement;
+    popoverEl.style.top = computed.top;
+    popoverEl.style.bottom = computed.bottom;
+    popoverEl.style.left = computed.left;
+    popoverEl.style.height = computed.height;
 
     PopupManager.add(instance, props, isActive);
   }
@@ -275,7 +124,6 @@ export function useRenderPopover(
 ): VNode {
   const thisSetPosition = async () => {
     await nextTick().then(() => {
-      // console.log('Activator:', props.trigger);
       useSetPopoverPosition(instance.value, props, popoverRef, placementRef, isActive);
     });
   };

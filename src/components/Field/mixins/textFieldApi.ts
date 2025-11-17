@@ -334,7 +334,7 @@ function createTextInputField(
         maxlength: props.maxlength,
         minlength: props.minlength,
         'onUpdate:modelValue': (value: MaybeNumberish) =>
-          useOnFieldValueUpdated(emit, localValue, value),
+          useOnFieldValueUpdated<MaybeNumberish>(emit, localValue, value),
         onBlur: (e: Event) => useOnFieldBlurred(emit, e, isFocused, props.disabled as boolean),
         onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, props.disabled as boolean),
         onKeydown: (e: KeyboardEvent) => emit('keydown', e),
