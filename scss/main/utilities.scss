@@ -116,14 +116,6 @@
     overflow: hidden;
   }
 
-  //.overflow-visible {
-  //  overflow: visible;
-  //}
-  //
-  //.overflow-scroll {
-  //  overflow: scroll;
-  //}
-
   .overflow-x-auto {
     overflow-x: auto;
   }
@@ -338,7 +330,6 @@
   }
 
   .#{vars.$prefix}shadow {
-    border-width: 0;
     box-shadow:
       0 1px 2px 0 oklch(0.369 0.007 240.019 / 0.35),
       0 1px 4px 3px oklch(0.369 0.007 240.019 / 0.05);
@@ -416,7 +407,7 @@
   );
 }
 
-// Prevent overriden by Bootstrap or TailwindCSS
+// Prevent overridden by Bootstrap or TailwindCSS
 .rounded {
   border-radius: var(--#{vars.$prefix}radius);
 }

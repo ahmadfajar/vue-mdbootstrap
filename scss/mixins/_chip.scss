@@ -11,18 +11,19 @@
       $color,
       helper.set-color-contrast(
         $color,
-        helper.shift-color($color, 25%),
+        color.change(helper.shift-color($color, 25%), $alpha: 0.3),
         helper.shift-color($color, 65%),
         90%
       ),
       color.change(helper.shift-color($color, 60%), $alpha: 0.75)
     );
+    $chip-color: helper.set-color-contrast($color, colors.$white, colors.$black, 90%);
     $icon-color: helper.to-oklch(color.adjust($color, $lightness: -5%));
     $hover-bg: helper.set-color-contrast(
       $color,
       helper.set-color-contrast(
         $color,
-        helper.shift-color($color, 25%),
+        color.change(helper.shift-color($color, 25%), $alpha: 0.5),
         helper.shift-color($color, 45%),
         90%
       ),
@@ -51,7 +52,7 @@
       )
     );
 
-    @if($name == 'secondary') {
+    @if ($name == 'secondary') {
       --#{vars.$prefix}chip-bg: oklch(0.6 0 0 / 0.25); // #{helper.shift-color($color, 70%)};
       --#{vars.$prefix}chip-hover-bg: #{helper.shift-color($color, 60%)};
     } @else {
@@ -59,10 +60,10 @@
       --#{vars.$prefix}chip-hover-bg: #{$hover-bg};
     }
 
-    --#{vars.$prefix}chip-color: #{colors.$black};
+    --#{vars.$prefix}chip-color: #{$chip-color};
     --#{vars.$prefix}chip-border-color: #{$chip-bg};
     --#{vars.$prefix}chip-icon-color: #{$icon-color};
-    --#{vars.$prefix}chip-hover-color: #{colors.$black};
+    --#{vars.$prefix}chip-hover-color: #{$chip-color};
     --#{vars.$prefix}chip-hover-border-color: #{$hover-bg};
     --#{vars.$prefix}chip-active-bg: #{$active-bg};
     --#{vars.$prefix}chip-active-color: #{$active-color};
@@ -75,15 +76,15 @@
 
 @mixin make-outline-variant($name, $color) {
   .chip-outline-#{$name} {
-    $border-color: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 25%));
-    $text-color: helper.to-oklch(
+    $border-color: helper.to-oklch(
       helper.set-color-contrast(
         $color,
-        $color,
-        colors.$gray-800,
+        color.change(color.adjust(colors.$gray-500, $lightness: 25%), $alpha: 0.5),
+        color.adjust(colors.$gray-500, $lightness: 25%),
         90%
       )
     );
+    $text-color: helper.to-oklch(helper.set-color-contrast($color, $color, colors.$gray-800, 90%));
     $hover-bg: helper.to-oklch(
       helper.set-color-contrast(
         $color,
