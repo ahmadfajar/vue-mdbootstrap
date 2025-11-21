@@ -109,13 +109,15 @@ function createCloseBtnAttr(
     flat: true as unknown as Prop<boolean>,
     mode: 'icon' as Prop<TButtonMode>,
     icon: 'close' as Prop<string>,
-    iconSize: (props.size === 'sm' ? 14 : props.size === 'lg' ? 22 : 20) as Prop<number>,
+    iconSize: (props.size === 'sm' ? 14 : props.size === 'lg' ? 24 : 20) as Prop<number>,
     size: (props.size === 'sm' ? 'xs' : 'sm') as Prop<TButtonSize>,
     color: (props.closeButtonColor
       ? props.closeButtonColor
       : isLightColor(props.color as string)
         ? 'secondary'
         : props.color) as Prop<string>,
+    style: { order: 2 },
+    ariaLabel: 'Close',
     onClick: clickHandler,
   };
 }
@@ -164,13 +166,16 @@ export function useRenderChip(
                   `${cssPrefix}chip-icon`,
                   'flex',
                   'items-center',
-                  'w-full',
                   Helper.isEmpty(props.icon) && !slots.icon ? `${cssPrefix}empty-icon` : '',
                   props.iconPosition === 'right' ? 'order-1' : '',
                 ],
                 style: {
-                  width: !props.size && !Helper.isEmpty(props.icon) ? '18px' : undefined,
-                  height: !props.size && !Helper.isEmpty(props.icon) ? '18px' : undefined,
+                  // width: !props.size && !Helper.isEmpty(props.icon) ? '18px' : undefined,
+                  // height: !props.size && !Helper.isEmpty(props.icon) ? '18px' : undefined,
+                  paddingLeft:
+                    props.size === 'sm' && props.iconPosition !== 'right' ? '4px' : undefined,
+                  marginRight:
+                    props.size === 'sm' && props.iconPosition !== 'right' ? '6px' : undefined,
                 },
               },
               !Helper.isEmpty(props.icon)
@@ -179,7 +184,7 @@ export function useRenderChip(
                     size: (props.size === 'sm'
                       ? 18
                       : props.size === 'lg'
-                        ? 40
+                        ? 38
                         : 22) as Prop<number>,
                   })
                 : undefined

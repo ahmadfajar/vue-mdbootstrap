@@ -89,7 +89,7 @@
 
   .#{vars.$prefix}card-header {
     margin-bottom: 0;
-    font-weight: var(--font-weight-semibold, #{vars.$font-weight-semibold});
+    font-weight: var(--font-weight-medium, #{vars.$font-weight-medium});
     // prettier-ignore
     border-bottom: var(--#{vars.$prefix}card-border-width) solid var(--#{vars.$prefix}card-border-color);
 

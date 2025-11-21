@@ -157,7 +157,11 @@ export function useRenderChipGroup(
         'div',
         {
           id: slider.wrapperId,
-          class: [`${cssPrefix}chip-group-slider`, 'flex', 'flex-fill'],
+          class: [
+            `${cssPrefix}chip-group-slider`,
+            'flex flex-fill',
+            !props.column && !showSliderButton ? 'overflow-x-auto' : '',
+          ],
         },
         [
           h(

@@ -123,6 +123,7 @@
     &.disabled {
       --#{vars.$prefix}chip-state-bg: var(--#{vars.$prefix}chip-disabled-bg);
       --#{vars.$prefix}chip-state-color: var(--#{vars.$prefix}chip-disabled-color);
+      --#{vars.$prefix}chip-state-icon-color: #{colors.$gray-500};
       // prettier-ignore
       --#{vars.$prefix}chip-state-border-color: var(--#{vars.$prefix}chip-disabled-border-color);
 
@@ -175,13 +176,14 @@
         &.order-1 {
           margin-left: vars.$padding-sm;
           margin-right: math.div((vars.$padding-xs * -1), 2);
+          order: 1;
         }
 
         &.#{vars.$prefix}empty-icon {
           width: 0;
         }
 
-        &:not(.#{vars.$prefix}empty-icon) ~ .#{vars.$prefix}chip-avatar {
+        &:not(.#{vars.$prefix}empty-icon):not(.order-1) ~ .#{vars.$prefix}chip-avatar {
           margin-left: 0;
         }
       }
