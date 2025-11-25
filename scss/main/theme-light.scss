@@ -1,0 +1,22 @@
+@use '../mixins/css3/text-decorators' as decorators;
+@use '../mixins/theme-maker' as themer;
+@use '../color_vars' as colors;
+
+// Specify the layer order that follows the TailwindCSS,
+// this is necessary so that TailwindCSS does not break.
+//
+// The layer is not mandatory and they can be skip or removed.
+// The most important thing is the script to build the theme colors.
+@layer theme, base, components, animations, utilities;
+
+@layer components {
+  @include themer.make-theme-light(colors.$context-colors);
+}
+
+@layer utilities {
+  // Create utilities for colors, background and text
+  //--------------------------------------------------
+  @each $name, $color in colors.$context-colors {
+    @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
+  }
+}

@@ -696,6 +696,45 @@ $context-colors: (
     "warning":      $warning-color,
     "info":         $info-color,
     "light":        $gray-200,
+    "dark":         $dark-color,
+);
+
+// Bootstrap custom theme colors
+$theme-colors: (
+  "default":          $default-color,
+  "primary":          $primary-color,
+  "secondary":        $gray-500,
+  "success":          $success-color,
+  "danger":           $danger-color,
+  "warning":          $warning-color,
+  "info":             $info-color,
+  "light":            $gray-200,
+  "dark":             $dark-color,
+  "yellow":           $yellow-base,
+  "amber":            $amber-base,
+  "blue":             $blue-base,
+  "blue-green":       $blue-green-color,
+  "blue-grey":        $blue-grey-base,
+  "brown":            $brown-base,
+  "cyan":             $cyan-base,
+  "dark-blue":        $blue-darken-4,
+  "dark-green":       $green-darken-4,
+  "deep-orange":      $deep-orange-base,
+  "deep-purple":      $deep-purple-base,
+  "green":            $green-base,
+  "neutral":          $neutral-base,
+  "indigo":           $indigo-base,
+  "light-blue":       $light-blue-lighten-2,
+  "light-green":      $light-green-base,
+  "lime":             $lime-base,
+  "midnight-haze":    $midnight-haze-base,
+  "orange":           $orange-base,
+  "pink":             $pink-base,
+  "purple":           $purple-base,
+  "red":              $red-base,
+  "teal":             $teal-base,
+  "unique":           $mdb-unique-color,
+  "black":            $black
 );
 
 // Material theme color
@@ -726,51 +765,13 @@ $material-colors: (
     "special-color-dark":     $special-color-dark,
 );
 
-// Bootstrap custom theme colors
-$theme-colors: (
-    "default":          $default-color,
-    "primary":          $primary-color,
-    "secondary":        $gray-500,
-    "success":          $success-color,
-    "warning":          $warning-color,
-    "danger":           $danger-color,
-    "info":             $info-color,
-    "dark":             $dark-color,
-    "light":            $mdb-light-color,
-    "yellow":           $yellow-base,
-    "amber":            $amber-base,
-    "blue":             $blue-base,
-    "blue-green":       $blue-green-color,
-    "blue-grey":        $blue-grey-base,
-    "brown":            $brown-base,
-    "cyan":             $cyan-base,
-    "dark-blue":        $blue-darken-4,
-    "dark-green":       $green-darken-4,
-    "deep-orange":      $deep-orange-base,
-    "deep-purple":      $deep-purple-base,
-    "green":            $green-base,
-    "neutral":          $neutral-base,
-    "indigo":           $indigo-base,
-    "light-blue":       $light-blue-lighten-2,
-    "light-green":      $light-green-base,
-    "lime":             $lime-base,
-    "midnight-haze":    $midnight-haze-base,
-    "orange":           $orange-base,
-    "pink":             $pink-base,
-    "purple":           $purple-base,
-    "red":              $red-base,
-    "teal":             $teal-base,
-    "unique":           $mdb-unique-color,
-    "black":            $black
-);
+// Merge color scheme to reduced duplication when creating css
+$merged-theme-colors: map.merge($material-colors, $theme-colors);
 
-// Merge theme colors to reduced duplication when creating css
-$merge-theme-colors: map.merge($material-colors, $theme-colors);
-
-// This theme color is distributed independently.
+// This color scheme is distributed independently.
 // Colors that already exist on default bundle is removed to prevent duplication,
 //
-// This theme color can be used for most components.
+// This custom color scheme can be used for most components.
 $common-theme-colors: map.remove($theme-colors,
     "default", "primary", "secondary", "info", "success", "warning", "danger",
     "grey", "light", "dark", "black", "white"
@@ -779,8 +780,8 @@ $common-theme-colors: map.remove($theme-colors,
 // This theme color is distributed independently.
 // Colors that already exist on default bundle is removed to prevent duplication,
 //
-// This theme color can only be used on some components.
-$custom-theme-colors: map.remove($merge-theme-colors,
+// This custom color scheme can only be used on some components.
+$custom-theme-colors: map.remove($merged-theme-colors,
     "default", "primary", "secondary", "info", "success", "warning", "danger",
     "grey", "light", "dark", "black", "white"
 );

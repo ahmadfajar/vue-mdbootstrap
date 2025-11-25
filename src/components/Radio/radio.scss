@@ -1,4 +1,4 @@
-@use 'sass:map';
+//@use 'sass:map';
 @use '../../../scss/mixins/css3/borders';
 @use '../../../scss/mixins/radio';
 @use '../../../scss/color_vars' as colors;
@@ -170,7 +170,7 @@
     }
   }
 
-  @each $name, $color in map.remove(colors.$context-colors, 'light') {
-    @include radio.make-default-variant($name, $color);
-  }
+  //@each $name, $color in map.remove(colors.$context-colors, 'light') {
+  //  @include radio.make-default-variant($name, $color);
+  //}
 }

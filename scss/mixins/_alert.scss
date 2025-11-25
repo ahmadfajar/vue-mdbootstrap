@@ -7,33 +7,85 @@
 //---------------------------------
 @mixin make-default-variant($name, $color) {
   .alert-#{$name} {
-    $background-color: helper.shift-color($color, vars.$alert-bg-scale);
-    $border-color: helper.shift-color($color, vars.$alert-border-scale);
-    $text-color: helper.shift-color($color, vars.$alert-color-scale);
+    $background-color: helper.set-color-contrast(
+      $color,
+      helper.shift-color($color, 65%),
+      helper.shift-color($color, 80%),
+      90%
+    );
+    $border-color: helper.set-color-contrast(
+      $color,
+      helper.set-color-contrast(
+        $color,
+        helper.shift-color($color, 5%),
+        helper.shift-color($color, 45%),
+        90%
+      ),
+      helper.shift-color($color, 60%),
+      80%
+    );
+    $text-color: helper.shift-color($color, -40%);
 
     --#{vars.$prefix}alert-bg: #{$background-color};
     --#{vars.$prefix}alert-border-color: #{$border-color};
     --#{vars.$prefix}alert-color: #{$text-color};
 
-    $hr-border-color: helper.to-oklch(color.adjust($border-color, $lightness: -10%));
-    --#{vars.$prefix}alert-hr-color: #{$hr-border-color};
-
     $link-color: helper.to-oklch(color.mix(colors.$black, $text-color, 20%, oklch));
     --#{vars.$prefix}alert-link-color: #{$link-color};
+
+    @if ($name != 'secondary' and $name != 'dark' and $name != 'light') {
+      .btn-flat-#{$name} {
+        $hover-bg: helper.set-color-contrast(
+          $color,
+          color.change(color.scale($color, $lightness: 30%), $alpha: 0.45),
+          color.change($color, $alpha: 0.25),
+          90%
+        );
+
+        &.btn-close-action {
+          --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
+          --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
+        }
+      }
+    }
   }
 }
 
 @mixin make-outline-variant($name, $color) {
   .alert-outline-#{$name} {
-    $border-color: helper.to-oklch(color.adjust($color, $lightness: 15%));
-    $hr-border-color: helper.to-oklch(color.adjust($color, $lightness: -5%));
-    $link-color: helper.to-oklch(color.adjust($color, $lightness: -10%));
-    $text-color: helper.shift-color($color, 10%);
+    $border-color: helper.set-color-contrast(
+      $color,
+      helper.set-color-contrast($color, $color, color.adjust($color, $lightness: -10%), 90%),
+      helper.to-oklch(color.adjust($color, $lightness: 15%)),
+      80%
+    );
 
-    --#{vars.$prefix}alert-color: #{$text-color};
+    $link-color: helper.set-color-contrast(
+      $color,
+      colors.$neutral-darken-3,
+      color.adjust($color, $lightness: -10%),
+      90%
+    );
+    $text-color: helper.set-color-contrast(
+      $color,
+      helper.set-color-contrast(
+        $color,
+        colors.$neutral-darken-3,
+        color.adjust($color, $lightness: -15%),
+        90%
+      ),
+      helper.shift-color($color, 10%)
+    );
+
+    @if ($name == 'secondary') {
+      --#{vars.$prefix}alert-color: #{colors.$neutral-darken-3};
+      --#{vars.$prefix}alert-link-color: #{colors.$neutral-darken-3};
+    } @else {
+      --#{vars.$prefix}alert-color: #{helper.to-oklch($text-color)};
+      --#{vars.$prefix}alert-link-color: #{helper.to-oklch($link-color)};
+    }
+
     --#{vars.$prefix}alert-border-color: #{$border-color};
-    --#{vars.$prefix}alert-hr-color: #{$hr-border-color};
-    --#{vars.$prefix}alert-link-color: #{$link-color};
   }
 }
 

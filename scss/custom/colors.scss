@@ -8,7 +8,7 @@
 // Create custom colors for background, borders and text
 //--------------------------------------------------------
 $final-colors: map.remove(
-  colors.$merge-theme-colors,
+  colors.$merged-theme-colors,
   'dark-blue',
   'primary-color-dark',
   'default',
@@ -62,12 +62,11 @@ $final-colors: map.remove(
 @each $name, $colors in colors.$full-palette {
   @each $sub_name, $value in $colors {
     @if $sub_name == '500' {
-      .bg-#{$name},
-      .bg-#{$name}-500 {
-        background-color: $value;
-      }
-
-      @include decorators.decorate-color($name, $value, $background: false);
+      //.bg-#{$name},
+      //.bg-#{$name}-500 {
+      //  background-color: $value;
+      //}
+      @include decorators.decorate-color($name, $value, $alias-name1: '#{$name}-500');
 
       .bg-rgba-#{$name}-slight {
         background-color: color.change($value, $alpha: 0.1);

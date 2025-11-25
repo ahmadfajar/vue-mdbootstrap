@@ -24,7 +24,7 @@ export declare type TContextColor =
   | 'info'
   | 'default';
 
-export declare type TContextColorSecondary =
+export declare type TExtendedContextColor =
   | 'primary'
   | 'secondary'
   | 'success'

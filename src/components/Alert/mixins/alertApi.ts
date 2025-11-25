@@ -1,5 +1,5 @@
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
-import { BsButton } from '@/components/Button';
+import { BsCloseButton } from '@/components/Button';
 import { BsIcon } from '@/components/Icon';
 import { useNormalizeIconName } from '@/components/Icon/mixins/iconApi.ts';
 import {
@@ -12,9 +12,11 @@ import type {
   PromiseVoidFunction,
   TAlertOptionProps,
   TBooleanRecord,
-  TBsButton,
+  TBsCloseButton,
   TBsIcon,
-  TButtonMode,
+  TButtonColor,
+  TContextColor,
+  TExtendedContextColor,
 } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { isEndWith } from '@/utils/StringHelper.ts';
@@ -35,16 +37,16 @@ export function useAlertClassNames(
   };
 }
 
-export function useAlertColor(props: Readonly<TAlertOptionProps>): string | undefined {
+export function useAlertColor(props: Readonly<TAlertOptionProps>): TContextColor {
   if (props.variant) {
     if (props.variant === 'help') {
-      return Helper.isEmpty(props.color) ? 'secondary' : props.color;
+      return Helper.isEmpty(props.color) ? 'secondary' : (props.color as TContextColor);
     } else {
-      return Helper.isEmpty(props.color) ? props.variant : props.color;
+      return Helper.isEmpty(props.color) ? props.variant : (props.color as TContextColor);
     }
   }
 
-  return Helper.isEmpty(props.color) ? 'primary' : props.color;
+  return Helper.isEmpty(props.color) ? 'default' : (props.color as TContextColor);
 }
 
 export function useAlertIcon(props: Readonly<TAlertOptionProps>): string | undefined {
@@ -92,7 +94,7 @@ function doRenderAlert(
   slots: Slots,
   props: Readonly<TAlertOptionProps>,
   classNames: ComputedRef<TBooleanRecord>,
-  alertColor: ComputedRef<string | undefined>,
+  alertColor: ComputedRef<TExtendedContextColor>,
   alertIcon: ComputedRef<string | undefined>,
   dismissHandler: PromiseVoidFunction
 ): VNode {
@@ -119,15 +121,17 @@ function doRenderAlert(
       ),
       useWrapSlotDefault('div', slots, 'flex-fill'),
       props.dismissible
-        ? h<TBsButton>(BsButton, {
-            class: 'ms-auto',
-            color: (!props.filled
-              ? alertColor.value
-              : ['light', 'light-grey'].includes(props.color as string)
-                ? 'secondary'
-                : 'light') as Prop<string>,
-            icon: 'close' as Prop<string>,
-            mode: 'icon' as Prop<TButtonMode>,
+        ? h<TBsCloseButton>(BsCloseButton, {
+            class: 'self-start',
+            color: (props.closeButtonColor
+              ? props.closeButtonColor
+              : props.filled
+                ? ['warning', 'info', 'light'].includes(alertColor.value)
+                  ? 'dark'
+                  : 'light'
+                : alertColor.value === 'light'
+                  ? 'dark'
+                  : alertColor.value) as Prop<TButtonColor>,
             flat: true as unknown as Prop<boolean>,
             onClick: dismissHandler,
           })
@@ -141,7 +145,7 @@ export function useRenderAlert(
   props: Readonly<TAlertOptionProps>,
   showAlert: ComputedRef<boolean | undefined>,
   classNames: ComputedRef<TBooleanRecord>,
-  alertColorName: ComputedRef<string | undefined>,
+  alertColorName: ComputedRef<TContextColor>,
   alertIconName: ComputedRef<string | undefined>,
   dismissHandler: PromiseVoidFunction
 ): VNode {

@@ -23,5 +23,6 @@ export const alertProps = {
   filled: booleanProp,
   transition: defaultTransitionProp,
   modelValue: booleanTrueProp,
+  closeButtonColor: stringProp,
   ...iconBaseProps,
 };

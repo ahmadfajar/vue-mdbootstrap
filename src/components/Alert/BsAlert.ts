@@ -6,7 +6,7 @@ import {
 } from '@/components/Alert/mixins/alertApi.ts';
 import { alertProps } from '@/components/Alert/mixins/alertProps.ts';
 import type { TAlertOptionProps, TBsAlert } from '@/components/Alert/types';
-import type { TBooleanRecord } from '@/types';
+import type { TBooleanRecord, TContextColor } from '@/types';
 import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 
 export default defineComponent<TBsAlert>({
@@ -16,7 +16,7 @@ export default defineComponent<TBsAlert>({
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TAlertOptionProps>;
     const dismissed = ref<boolean>(false);
-    const alertColor = computed<string | undefined>(() => useAlertColor(thisProps));
+    const alertColor = computed<TContextColor>(() => useAlertColor(thisProps));
     const alertIcon = computed<string | undefined>(() => useAlertIcon(thisProps));
     const classNames = computed<TBooleanRecord>(() => useAlertClassNames(thisProps, alertColor));
     const show = computed(() => !dismissed.value && thisProps.modelValue);

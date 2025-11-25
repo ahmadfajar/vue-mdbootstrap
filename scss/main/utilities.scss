@@ -364,12 +364,6 @@
     }
   }
 
-  // Create utilities for colors, background and text
-  //--------------------------------------------------
-  @each $name, $color in colors.$context-colors {
-    @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
-  }
-
   // Create utilities for global CSS variables
   //--------------------------------------------------
   .text-bg-surface {

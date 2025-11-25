@@ -6,7 +6,7 @@ import {
   Numberish,
   TAllowedIconProps,
   TButtonColor,
-  TContextColorSecondary,
+  TExtendedContextColor,
   TIconPosition,
 } from '../../../types';
 
@@ -44,7 +44,7 @@ declare type TChipBaseProps = {
   /**
    * The default color to apply to this Chip.
    */
-  color?: TContextColorSecondary | string;
+  color?: TExtendedContextColor | string;
 
   /**
    * Apply custom color to the **close button**.

@@ -376,17 +376,17 @@
 
   // BsButton with basic colors
   //----------------------------
-  @each $name, $color in colors.$context-colors {
-    @include button.make-default-variant($name, $color);
-    @include button.make-outline-variant($name, $color);
-    @include button.make-flat-variant($name, $color);
-  }
+  //@each $name, $color in colors.$context-colors {
+  //  @include button.make-default-variant($name, $color);
+  //  @include button.make-outline-variant($name, $color);
+  //  @include button.make-flat-variant($name, $color);
+  //}
 
   // BsButton with dark color variant
   //----------------------------------
-  @include button.make-default-variant('dark', colors.$dark-color);
-  @include button.make-outline-variant('dark', colors.$dark-color);
-  @include button.make-flat-variant('dark', colors.$dark-color);
+  //@include button.make-default-variant('dark', colors.$dark-color);
+  //@include button.make-outline-variant('dark', colors.$dark-color);
+  //@include button.make-flat-variant('dark', colors.$dark-color);
 
   .dark,
   [data-theme='dark'] {

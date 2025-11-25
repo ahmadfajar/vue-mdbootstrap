@@ -1,4 +1,4 @@
-@use 'sass:map';
+//@use 'sass:map';
 @use '../../../scss/mixins/progress';
 @use '../../../scss/color_vars' as colors;
 @use '../../../scss/variables' as vars;
@@ -140,10 +140,10 @@
     @include progress.make-css-vars();
   }
 
-  @each $name, $color in map.remove(colors.$context-colors, 'light') {
-    @include progress.make-bar-variant($name, $color);
-    @include progress.make-spinner-variant($name, $color);
-  }
+  //@each $name, $color in map.remove(colors.$context-colors, 'light') {
+  //  @include progress.make-bar-variant($name, $color);
+  //  @include progress.make-spinner-variant($name, $color);
+  //}
 
   .#{vars.$prefix}simple-progress {
     --#{vars.$prefix}progress-bg: #{vars.$progress-bg};

@@ -4,13 +4,14 @@
 
 @layer components {
   .#{vars.$prefix}modal {
-    --#{vars.$prefix}modal-background: #{colors.$white};
+    --#{vars.$prefix}modal-background: var(--background-tertiary, #{colors.$white});
+    --#{vars.$prefix}modal-color: var(--foreground-tertiary, #{colors.$neutral-darken-4});
     --#{vars.$prefix}modal-border-radius: 1rem;
     --#{vars.$prefix}modal-header-padding: #{vars.$padding-lg vars.$padding-lg 1.25rem};
     --#{vars.$prefix}modal-body-padding: #{vars.$padding-lg vars.$padding-lg 1.25rem};
     // prettier-ignore
     --#{vars.$prefix}modal-footer-padding: #{vars.$padding-sm vars.$padding-md vars.$padding-md vars.$padding-md};
-    --#{vars.$prefix}modal-footer-spacing: .375rem; // 6px
+    --#{vars.$prefix}modal-footer-spacing: 0.375rem; // 6px
     --#{vars.$prefix}modal-max-width: 80%;
     --#{vars.$prefix}modal-title-font-size: 1.375rem;
     // prettier-ignore
@@ -28,6 +29,7 @@
       @include borders.radius(var(--#{vars.$prefix}modal-border-radius));
       box-shadow: var(--#{vars.$prefix}modal-box-shadow);
       background-color: var(--#{vars.$prefix}modal-background);
+      color: var(--#{vars.$prefix}modal-color);
       max-width: var(--#{vars.$prefix}modal-max-width);
       font-size: inherit;
       padding: 0;

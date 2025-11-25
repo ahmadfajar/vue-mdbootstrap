@@ -1,4 +1,4 @@
-@use 'sass:map';
+//@use 'sass:map';
 @use '../../../scss/mixins/css3/borders';
 @use '../../../scss/mixins/alert' as alerts;
 @use '../../../scss/color_vars' as colors;
@@ -16,7 +16,6 @@
     --#{vars.$prefix}alert-border-radius: var(--#{vars.$prefix}radius, #{vars.$alert-border-radius});
     --#{vars.$prefix}alert-icon-spacing: #{vars.$alert-icon-spacing};
 
-    //position: relative;
     padding: var(--#{vars.$prefix}alert-padding-y) var(--#{vars.$prefix}alert-padding-x);
     margin-bottom: var(--#{vars.$prefix}alert-margin-bottom);
     background-color: var(--#{vars.$prefix}alert-bg);
@@ -32,6 +31,8 @@
     .alert-link {
       color: var(--#{vars.$prefix}alert-link-color);
       font-weight: var(--font-weight-semibold, 600);
+      text-decoration: underline dotted;
+      text-underline-offset: 5px;
     }
 
     &[class*='alert-solid'] {
@@ -42,17 +43,18 @@
     }
   }
 
-  @each $name, $color in map.remove(colors.$context-colors, 'light') {
-    @include alerts.make-default-variant($name, $color);
-    @include alerts.make-outline-variant($name, $color);
-    @include alerts.make-solid-variant($name, $color);
-  }
+  //@each $name, $color in colors.$context-colors {
+  //  @include alerts.make-default-variant($name, $color);
+  //  @include alerts.make-outline-variant($name, $color);
+  //  @include alerts.make-solid-variant($name, $color);
+  //}
 }
 
 // Patch Bootstrap 'reboot.css'
 // This patch must be placed outside the css layer.
 .#{vars.$prefix}alert {
   > .flex-fill + .#{vars.$prefix}btn-icon:last-child {
+    margin-left: vars.$padding-sm;
     margin-right: vars.$padding-sm * -1;
   }
 }

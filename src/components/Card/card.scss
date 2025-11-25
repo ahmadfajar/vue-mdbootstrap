@@ -204,13 +204,16 @@
   @include borders.bottom-radius(var(--#{vars.$prefix}card-inner-border-radius));
 }
 
-.card-img-start,
-.card-img-left {
+.card-img-start, .card-img-end {
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-img-start {
   @include borders.start-radius(var(--#{vars.$prefix}card-inner-border-radius));
 }
 
-.card-img-end,
-.card-img-right {
+.card-img-end {
   @include borders.end-radius(var(--#{vars.$prefix}card-inner-border-radius));
 }
 

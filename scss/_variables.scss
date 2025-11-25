@@ -82,9 +82,6 @@ $alert-padding-x:             $spacing;
 $alert-margin-bottom:         $spacing;
 $alert-border-radius:         $radius-md;
 $alert-icon-spacing:          $padding-md;
-$alert-bg-scale:              80%;
-$alert-border-scale:          70%;
-$alert-color-scale:           -40%;
 
 // Badge components
 //-----------------------------
@@ -203,7 +200,7 @@ $tabs-item-padding:                 .75rem 1.25rem;
 $tabs-item-link-transition:         color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 $tabs-pills-margin:                 .75rem 1.25rem;
 $tabs-material-indicator-border:    .2rem;
-$tabs-material-padding:             1.125rem 1.5rem 1rem 1.5rem;
+$tabs-material-padding:             0.75rem 1.5rem 0.75rem 1.5rem;
 $tabs-modern-margin-horizontal:     .625rem 1.25rem;
 $tabs-modern-margin-vertical:       .625rem;
 $tabs-modern-border-radius:         $radius-pill;

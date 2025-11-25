@@ -16,6 +16,11 @@ export declare type TAlertOptionProps = TAllowedIconProps & {
   color?: TContextColor | string;
 
   /**
+   * Define close button color explicitly.
+   */
+  closeButtonColor?: TContextColor | string;
+
+  /**
    * When sets, display the close button to dismiss/hide the component.
    */
   dismissible?: boolean;

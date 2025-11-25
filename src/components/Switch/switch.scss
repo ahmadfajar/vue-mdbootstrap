@@ -1,4 +1,4 @@
-@use "sass:map";
+//@use 'sass:map';
 @use '../../../scss/mixins/css3/borders';
 @use '../../../scss/mixins/switch';
 @use '../../../scss/color_vars' as colors;
@@ -247,7 +247,7 @@
       --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-disabled-track-color);
 
       > .#{vars.$prefix}switch-wrapper {
-        opacity: .6;
+        opacity: 0.6;
       }
 
       > .#{vars.$prefix}switch-label {
@@ -263,7 +263,7 @@
     }
   }
 
-  @each $name, $color in map.remove(colors.$context-colors, 'light') {
-    @include switch.make-default-variant($name, $color);
-  }
+  //@each $name, $color in map.remove(colors.$context-colors, 'light') {
+  //  @include switch.make-default-variant($name, $color);
+  //}
 }

@@ -1,0 +1,7 @@
+@use '../mixins/badge';
+@use '../color_vars' as colors;
+
+@each $name, $color in colors.$common-theme-colors {
+  @include badge.make-default-variant($name, $color);
+  @include badge.make-outline-variant($name, $color);
+}
