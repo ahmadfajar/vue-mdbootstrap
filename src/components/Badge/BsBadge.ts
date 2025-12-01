@@ -8,22 +8,30 @@ export default defineComponent<TBsBadge>({
   props: badgeProps,
   setup(props, { slots }) {
     const thisProps = props as Readonly<TBadgeOptionProps>;
-    const hasColor = () => {
-      return !!thisProps.color && !thisProps.variant && !thisProps.outlined;
-    };
-    const hasOutlined = () => {
-      return thisProps.outlined && !!(thisProps.color || thisProps.variant);
-    };
 
-    return () =>
-      useWrapSlotDefault(thisProps.tag || 'span', slots, {
-        [`${cssPrefix}badge`]: true,
-        [`${cssPrefix}badge-${thisProps.type}`]: thisProps.type,
-        [thisProps.color?.startsWith('bg-') ? thisProps.color : `bg-${thisProps.color}`]:
-          hasColor(),
-        [`text-bg-${thisProps.variant}`]: thisProps.variant && !thisProps.outlined,
-        [`badge-outline-${thisProps.variant || thisProps.color}`]: hasOutlined(),
-        'border-thin': thisProps.outlined,
-      });
+    return () => useWrapSlotDefault(thisProps.tag || 'span', slots, makeBadgeClasses(thisProps));
   },
 });
+
+function makeBadgeClasses(props: TBadgeOptionProps): string[] {
+  const config = [`${cssPrefix}badge`, props.type ? `${cssPrefix}badge-${props.type}` : ''];
+
+  if (props.outlined) {
+    config.push('border-thin');
+    if (props.color && !props.variant) {
+      config.push(props.color?.startsWith('text-') ? props.color : `text-${props.color}`);
+    } else if (props.variant) {
+      config.push(`text-${props.variant}`);
+    }
+  } else {
+    if (props.color && !props.variant) {
+      config.push(props.color?.startsWith('bg-') ? props.color : `bg-${props.color}`);
+    } else if (props.variant) {
+      config.push(`text-bg-${props.variant}`);
+    } else {
+      config.push('text-bg-default');
+    }
+  }
+
+  return config;
+}

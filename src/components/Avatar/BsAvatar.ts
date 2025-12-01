@@ -29,14 +29,14 @@ export default defineComponent<TBsAvatar>({
             'items-center': true,
             'justify-center': true,
             'max-w-full': true,
+            border: thisProps.border,
             [`border-${thisProps.borderColor}`]: thisProps.borderColor,
             'overflow-hidden': thisProps.circle || thisProps.rounded,
-            'p-2': useGetCalcSize(thisProps) > 72,
+            'p-2': useGetCalcSize(thisProps) > 72 && Helper.isEmpty(props.imgSrc),
             ...useShapeClasses(thisProps.circle, thisProps.rounded),
           },
           style: {
             ...useSizeStyles(thisProps),
-            borderStyle: thisProps.border ? 'solid' : undefined,
             borderWidth: thisProps.border
               ? Helper.cssUnit(thisProps.border) + ' !important'
               : undefined,
@@ -47,7 +47,7 @@ export default defineComponent<TBsAvatar>({
             ? useRenderAvatarImage(thisProps)
             : !Helper.isEmpty(thisProps.icon)
               ? h<TBsIcon>(BsIcon, {
-                  size: useAvatarIconSize(thisProps) as Prop<number>,
+                  size: useAvatarIconSize(thisProps) as Prop<number | undefined>,
                   ...useCreateIconProps(thisProps),
                 })
               : h(

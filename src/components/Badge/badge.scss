@@ -55,7 +55,7 @@
 // Patch Bootstrap 'reboot.css'
 // This patch must be placed outside the css layer.
 a.#{vars.$prefix}badge {
-  color: var(--#{vars.$prefix}badge-color);
+  // color: var(--#{vars.$prefix}badge-color);
   text-decoration: none;
 
   &:focus,

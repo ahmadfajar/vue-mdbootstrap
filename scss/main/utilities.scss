@@ -181,7 +181,7 @@
   }
 
   .border-thin {
-    border: thin solid var(--#{vars.$prefix}border-color, var(--border-translucent));
+    border: thin solid;
   }
 
   .border-t {

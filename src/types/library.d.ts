@@ -45,7 +45,11 @@ export declare type HtmlTagName =
   | 'span'
   | 'h5'
   | 'h4'
+  | 'h3'
+  | 'h2'
+  | 'h1'
   | 'p'
+  | 'a'
   | string;
 
 export declare type Numberish = number | string;

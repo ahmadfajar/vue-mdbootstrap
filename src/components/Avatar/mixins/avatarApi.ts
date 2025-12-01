@@ -17,7 +17,7 @@ export function useAvatarIconSize(props: Readonly<TSizeOptionProps>): number {
   } else if (size > 32) {
     return size - 12;
   } else {
-    return size - 8;
+    return !size ? 36 : size > 24 ? size - 8 : size;
   }
 }
 

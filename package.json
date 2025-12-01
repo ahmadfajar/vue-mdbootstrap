@@ -25,7 +25,6 @@
   "css-core": "dist/bundle-core.min.css",
   "css-colors": "dist/decorator-colors.min.css",
   "theme-light": "dist/theme-light.min.css",
-  "theme-custom": "dist/theme-custom.min.css",
   "types": "dist/vue-mdb.d.ts",
   "unpkg": "dist/vue-mdb.umd.min.js",
   "jsdelivr": "dist/vue-mdb.umd.min.js",
@@ -53,7 +52,6 @@
     "./css-core": "./dist/bundle-core.min.css",
     "./css-colors": "./dist/decorator-colors.css",
     "./theme-light": "./dist/theme-light.css",
-    "./theme-custom": "./dist/theme-custom.css",
     "./dist/*": "./dist/*",
     "./scss/*": "./scss/*",
     "./package.json": "./package.json"

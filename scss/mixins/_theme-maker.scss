@@ -17,8 +17,7 @@
   // BsBadge color scheme
   //-----------------------
   @each $name, $color in $no-dark {
-    @include badge.make-default-variant($name, $color);
-    @include badge.make-outline-variant($name, $color);
+    @include badge.make-actionable-variant($name, $color);
   }
 
   // BsButton color scheme
