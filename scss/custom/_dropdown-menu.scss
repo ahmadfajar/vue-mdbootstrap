@@ -1,0 +1,8 @@
+@use '../mixins/dropdown-menu' as dropdown;
+@use '../color_vars' as colors;
+
+// BsListTile, BsListNav and BsListView with custom colors
+//---------------------------------------------------------
+@each $name, $color in colors.$custom-theme-colors {
+  @include dropdown.make-dropdown-menu-variant($name, $color);
+}

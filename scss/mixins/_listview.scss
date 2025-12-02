@@ -1,5 +1,4 @@
 @use 'sass:color';
-@use 'sass:list';
 @use '../utils/color_helper' as helper;
 @use '../color_vars' as colors;
 @use '../variables' as vars;
@@ -118,13 +117,14 @@
       --#{vars.$prefix}tile-active-subtitle-color: #{$tile-active-subtitle-color};
     }
 
+    $divider-color: helper.set-color-contrast(
+      $color,
+      colors.$gray-300,
+      color.change(colors.$white, $alpha: 0.18),
+      86.2%
+    );
+
     .#{vars.$prefix}list-nav {
-      $divider-color: helper.set-color-contrast(
-        $color,
-        colors.$gray-300,
-        color.change(colors.$white, $alpha: 0.18),
-        86.2%
-      );
       $nav-item-expanded-bg: helper.set-alt-bgcolor($color);
 
       --#{vars.$prefix}nav-item-color: #{$tile-title-color};
@@ -135,6 +135,10 @@
       --#{vars.$prefix}nav-item-active-icon-color: #{$tile-active-leading-icon-color};
       --#{vars.$prefix}nav-item-expanded-bg: #{$nav-item-expanded-bg};
       --#{vars.$prefix}nav-item-hover-bg: #{$tile-hover-bg};
+    }
+
+    .#{vars.$prefix}divider {
+      --#{vars.$prefix}divider-color: #{$divider-color};
     }
   }
 }

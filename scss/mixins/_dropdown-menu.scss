@@ -1,0 +1,67 @@
+@use 'sass:color';
+@use '../utils/color_helper' as helper;
+@use '../color_vars' as colors;
+@use '../variables' as vars;
+
+// BsDropdownMenu variants -- scss mixins
+//----------------------------------------
+@mixin make-dropdown-menu-variant($name, $color) {
+  .#{vars.$prefix}popover {
+    .list-#{$name} {
+      $subheader-color: helper.set-color-contrast(
+        $color,
+        color.change(helper.to-oklch(color.adjust(colors.$gray-900, $lightness: 5%)), $alpha: 0.6),
+        color.change(colors.$white, $alpha: 0.6)
+      );
+
+      --#{vars.$prefix}listview-bg: #{helper.to-oklch($color)};
+      --#{vars.$prefix}subheader-color: #{$subheader-color};
+
+      $divider-color: helper.set-color-contrast(
+        $color,
+        colors.$gray-300,
+        color.change(colors.$white, $alpha: 0.18),
+        86.2%
+      );
+
+      $item-color: helper.set-color-contrast($color, colors.$gray-900, colors.$white);
+      $item-active-bg: helper.set-alt-bgcolor($color, 0.2);
+      $item-active-color: helper.set-color-contrast(
+        $color,
+        color.change(
+          helper.to-oklch(color.adjust(vars.$default-active-bgcolor, $lightness: -20%)),
+          $alpha: 1
+        ),
+        colors.$white,
+        86.2%
+      );
+      $item-hover-bg: helper.to-oklch(
+        helper.set-color-contrast(
+          $color,
+          vars.$default-hover-bgcolor,
+          helper.set-color-contrast(
+            $color,
+            color.change(color.adjust($color, $lightness: -30%), $alpha: 0.25),
+            color.change(color.adjust($color, $lightness: -20%), $alpha: 0.25),
+            62.75%
+          ),
+          86%
+        )
+      );
+
+      .#{vars.$prefix}divider {
+        --#{vars.$prefix}divider-color: #{$divider-color};
+      }
+
+      .dropdown-menu {
+        --#{vars.$prefix}dropdown-border-color: #{$divider-color};
+        --#{vars.$prefix}dropdown-header-color: #{$subheader-color};
+        --#{vars.$prefix}dropdown-link-color: #{$item-color};
+        --#{vars.$prefix}dropdown-link-active-bg: #{$item-active-bg};
+        --#{vars.$prefix}dropdown-link-active-color: #{$item-active-color};
+        --#{vars.$prefix}dropdown-link-hover-bg: #{$item-hover-bg};
+        --#{vars.$prefix}dropdown-link-hover-color: #{$item-color};
+      }
+    }
+  }
+}
