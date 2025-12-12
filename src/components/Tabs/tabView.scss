@@ -87,7 +87,7 @@
     }
 
     > .#{vars.$prefix}tab-content {
-      @include borders.bottom-radius(inherit);
+      @include borders.radius(inherit);
       background-color: var(--#{vars.$prefix}tab-content-background);
       padding: var(--#{vars.$prefix}tab-content-padding);
       transition: all vars.$transition-default;

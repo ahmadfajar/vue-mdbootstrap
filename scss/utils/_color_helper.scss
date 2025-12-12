@@ -60,11 +60,7 @@
 }
 
 @function set-color-contrast($color, $lightColor, $darkColor, $lightness: 75%) {
-  @if (lightnessLevel($color) > $lightness) {
-    @return $lightColor;
-  } @else {
-    @return $darkColor;
-  }
+  @return if(sass(lightnessLevel($color) > $lightness): $lightColor; else: $darkColor);
 }
 
 $white: #fff;
@@ -106,7 +102,7 @@ $default-active-bgcolor: to-oklch(#5f4a97);
 // $lightness is positive it will tint with white and the color result becomes lighter
 @function shift-color($color, $lightness: 10%) {
   $weight: math.abs($lightness);
-  $tint-color: if($lightness > 0, $white, $black);
+  $tint-color: if(sass($lightness > 0): $white; else: $black);
 
   @return to-oklch(color.mix($tint-color, $color, $weight, oklch));
 }

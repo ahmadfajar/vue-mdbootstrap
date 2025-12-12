@@ -137,8 +137,7 @@
     }
   }
 
-  .#{vars.$prefix}list-tile,
-  .#{vars.$prefix}nav-item-inner {
+  .#{vars.$prefix}list-tile {
     &.#{vars.$prefix}tile-space-both,
     &.#{vars.$prefix}tile-space-left,
     &.#{vars.$prefix}tile-space-right {
@@ -288,28 +287,6 @@
           &.rounded-pill {
             &:after {
               @include borders.top-radius(6px);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .#{vars.$prefix}nav-item {
-    &.#{vars.$prefix}expanded {
-      > .#{vars.$prefix}nav-item-inner {
-        &.#{vars.$prefix}tile-border-top,
-        &.#{vars.$prefix}tile-border-bottom,
-        &.#{vars.$prefix}tile-border-top-bottom,
-        &.#{vars.$prefix}tile-border-right,
-        &.#{vars.$prefix}tile-border-left,
-        &.#{vars.$prefix}tile-border-left-right {
-          &.active {
-            > .#{vars.$prefix}ripple {
-              &:before,
-              &:after {
-                --#{vars.$prefix}tile-indicator-border-width: 0;
-              }
             }
           }
         }

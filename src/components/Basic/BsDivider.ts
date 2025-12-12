@@ -19,7 +19,7 @@ export default defineComponent<TBsDivider>({
       useWrapSlotDefault(
         'hr',
         undefined,
-        [`${cssPrefix}divider`, thisProps.dark ? 'divider--dark' : 'divider--light'],
+        { [`${cssPrefix}divider`]: true, 'divider--dark': thisProps.dark },
         {
           marginLeft: thisProps.leftIndent ? Helper.cssUnit(thisProps.leftIndent) : undefined,
           marginRight: thisProps.rightIndent ? Helper.cssUnit(thisProps.rightIndent) : undefined,

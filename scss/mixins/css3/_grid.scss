@@ -48,7 +48,7 @@
 
 @mixin make-col-offset($size, $columns: vars.$grid-columns) {
   $num: math.div($size, $columns);
-  margin-left: if($num == 0, 0, math.percentage($num));
+  margin-left: if(sass($num == 0): 0; else: math.percentage($num));
 }
 
 // Row columns

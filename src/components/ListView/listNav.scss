@@ -1,3 +1,4 @@
+@use '../../../scss/mixins/css3/borders';
 @use '../../../scss/variables' as vars;
 
 @layer components {
@@ -162,6 +163,167 @@
                 // prettier-ignore
                 --#{vars.$prefix}nav-item-padding-left: calc(var(--#{vars.$prefix}nav-item-padding-x) + 2rem);
               }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .#{vars.$prefix}nav-item-inner {
+    &.#{vars.$prefix}nav-space-both,
+    &.#{vars.$prefix}nav-space-left,
+    &.#{vars.$prefix}nav-space-right {
+      margin-bottom: var(--#{vars.$prefix}tile-spacing-y);
+      margin-top: var(--#{vars.$prefix}tile-spacing-y);
+    }
+
+    &.#{vars.$prefix}nav-space-both,
+    &.#{vars.$prefix}nav-space-left {
+      margin-left: var(--#{vars.$prefix}tile-spacing-x);
+    }
+
+    &.#{vars.$prefix}nav-space-both,
+    &.#{vars.$prefix}nav-space-right {
+      margin-right: var(--#{vars.$prefix}tile-spacing-x);
+    }
+  }
+
+  .#{vars.$prefix}nav-item {
+    &.active {
+      > .#{vars.$prefix}nav-border-left,
+      > .#{vars.$prefix}nav-border-right,
+      > .#{vars.$prefix}nav-border-left-right,
+      > .#{vars.$prefix}nav-border-top,
+      > .#{vars.$prefix}nav-border-bottom,
+      > .#{vars.$prefix}nav-border-top-bottom {
+        > .#{vars.$prefix}ripple {
+          &:before,
+          &:after {
+            background: var(--#{vars.$prefix}tile-indicator-border-color);
+            content: ' ';
+            display: block;
+            position: absolute;
+            transition: 0.3s vars.$transition-stand-animation;
+          }
+        }
+      }
+
+      > .#{vars.$prefix}nav-border-left,
+      > .#{vars.$prefix}nav-border-left-right {
+        > .#{vars.$prefix}ripple {
+          &:before {
+            width: var(--#{vars.$prefix}tile-indicator-border-width);
+            height: 100%;
+            left: 0;
+            top: 0;
+          }
+        }
+      }
+
+      > .#{vars.$prefix}nav-border-right,
+      > .#{vars.$prefix}nav-border-left-right {
+        > .#{vars.$prefix}ripple {
+          &:after {
+            width: var(--#{vars.$prefix}tile-indicator-border-width);
+            height: 100%;
+            right: 0;
+            top: 0;
+          }
+        }
+      }
+
+      > .#{vars.$prefix}nav-border-left,
+      > .#{vars.$prefix}nav-border-right,
+      > .#{vars.$prefix}nav-border-left-right {
+        > .#{vars.$prefix}ripple {
+          &.rounded-pill {
+            &:before,
+            &:after {
+              --#{vars.$prefix}tile-indicator-border-width: 6px;
+
+              @include borders.radius(40%);
+              top: 30%;
+              height: 40%;
+            }
+          }
+        }
+      }
+
+      > .#{vars.$prefix}nav-border-top,
+      > .#{vars.$prefix}nav-border-top-bottom {
+        > .#{vars.$prefix}ripple {
+          &:before {
+            height: var(--#{vars.$prefix}tile-indicator-border-width);
+            width: 100%;
+            left: 0;
+            top: 0;
+          }
+        }
+      }
+
+      > .#{vars.$prefix}nav-border-bottom,
+      > .#{vars.$prefix}nav-border-top-bottom {
+        > .#{vars.$prefix}ripple {
+          &:after {
+            height: var(--#{vars.$prefix}tile-indicator-border-width);
+            width: 100%;
+            left: 0;
+            bottom: 0;
+          }
+        }
+      }
+
+      > .#{vars.$prefix}nav-border-top,
+      > .#{vars.$prefix}nav-border-bottom,
+      > .#{vars.$prefix}nav-border-top-bottom {
+        > .#{vars.$prefix}ripple {
+          &.rounded-pill {
+            &:before,
+            &:after {
+              --#{vars.$prefix}tile-indicator-border-width: 5px;
+              width: 85%;
+              left: 7.5%;
+            }
+          }
+        }
+      }
+
+      > .#{vars.$prefix}nav-border-top,
+      > .#{vars.$prefix}nav-border-top-bottom {
+        > .#{vars.$prefix}ripple {
+          &.rounded-pill {
+            &:before {
+              @include borders.bottom-radius(6px);
+            }
+          }
+        }
+      }
+
+      > .#{vars.$prefix}nav-border-bottom,
+      > .#{vars.$prefix}nav-border-top-bottom {
+        > .#{vars.$prefix}ripple {
+          &.rounded-pill {
+            &:after {
+              @include borders.top-radius(6px);
+            }
+          }
+        }
+      }
+    }
+
+    &.#{vars.$prefix}expanded {
+      > .#{vars.$prefix}nav-border-top,
+      > .#{vars.$prefix}nav-border-bottom,
+      > .#{vars.$prefix}nav-border-top-bottom,
+      > .#{vars.$prefix}nav-border-right,
+      > .#{vars.$prefix}nav-border-left,
+      > .#{vars.$prefix}nav-border-left-right {
+        &.active {
+          > .#{vars.$prefix}ripple {
+            &:before,
+            &:after {
+              --#{vars.$prefix}tile-indicator-border-width: 0;
             }
           }
         }

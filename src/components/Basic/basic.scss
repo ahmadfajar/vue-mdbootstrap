@@ -40,6 +40,7 @@
 .#{vars.$prefix}divider {
   --#{vars.$prefix}divider-height: 1px;
   --#{vars.$prefix}divider-margin-y: #{vars.$padding-xs};
+  --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.15)};
 
   background-color: var(--#{vars.$prefix}divider-color);
   height: var(--#{vars.$prefix}divider-height);
@@ -52,9 +53,5 @@
 
   &.divider--dark {
     --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
-  }
-
-  &.divider--light {
-    --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.15)};
   }
 }
