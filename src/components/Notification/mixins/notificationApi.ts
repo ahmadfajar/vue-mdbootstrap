@@ -155,6 +155,7 @@ export function useRenderNotificationItem(
           [`${cssPrefix}dialog-message`]: true,
           'flex-fill self-center': !props.title && !props.progressBar,
         },
+        style: !props.title ? { paddingRight: '1.5rem' } : undefined,
         innerHTML: props.message,
       }),
     ]

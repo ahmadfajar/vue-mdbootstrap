@@ -364,6 +364,22 @@
     }
   }
 
+  .text-start {
+    text-align: start;
+  }
+
+  .text-center {
+    text-align: center;
+  }
+
+  .text-end {
+    text-align: end;
+  }
+
+  .text-justify {
+    text-align: justify;
+  }
+  
   // Create utilities for global CSS variables
   //--------------------------------------------------
   .text-bg-surface {

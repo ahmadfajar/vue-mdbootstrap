@@ -51,7 +51,7 @@ export declare type TMaskLoaderOptionProps = {
   spinnerThickness?: Numberish;
 
   /**
-   * Mask loader variant type.
+   * Mask loader type variant.
    */
   type?: TMaskLoaderVariant;
 

@@ -225,15 +225,12 @@ function createProgressBarLabel(
         (props.valuePosition === 'end' && props.valuePosition === position)
           ? 'ms-2'
           : '',
-        props.labelAlignment === 'start' &&
-        props.labelPosition === position &&
-        ['top', 'bottom'].includes(props.labelPosition)
-          ? 'text-start'
-          : '',
-        props.labelAlignment === 'end' &&
-        props.labelPosition === position &&
-        ['top', 'bottom'].includes(props.labelPosition)
-          ? 'text-end'
+        props.labelPosition === position && ['top', 'bottom'].includes(props.labelPosition)
+          ? props.labelAlignment === 'start'
+            ? 'text-start'
+            : props.labelAlignment === 'end'
+              ? 'text-end'
+              : 'text-center'
           : '',
       ],
     },

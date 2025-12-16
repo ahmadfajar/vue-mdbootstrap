@@ -185,7 +185,7 @@
 
     .#{vars.$prefix}progress-label {
       color: var(--#{vars.$prefix}progress-color);
-      text-align: center;
+      // text-align: center;
 
       > .text-label {
         font-size: var(--#{vars.$prefix}progress-label-font-size);
