@@ -23,9 +23,9 @@ export declare type TTabsVariant = 'tabs' | 'pills' | 'modern' | 'material';
 
 export declare type TTabsBaseProps = {
   /**
-   * Tabs style variant. Valid values: `tabs`, `pills`, `material`, `modern`.
+   * Tabs style variant. Built in variants are: `tabs`, `pills`, `material`, `modern`.
    */
-  variant?: TTabsVariant;
+  variant?: TTabsVariant | string;
 
   /**
    * Tabs alignment. Valid values: `left`, `right`, `start`, `end`, `center`, `justified`.

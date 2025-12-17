@@ -231,7 +231,7 @@ function createProgressBarLabel(
             : props.labelAlignment === 'end'
               ? 'text-end'
               : 'text-center'
-          : '',
+          : 'text-center',
       ],
     },
     [
@@ -255,7 +255,8 @@ function createProgressBarLabel(
 export function useRenderProgressBar(props: Readonly<TProgressBarOptionProps>): VNode {
   if (props.label || (props.showValue && props.valuePosition !== 'inside')) {
     return h('div', { class: `${cssPrefix}simple-progress-wrapper` }, [
-      props.labelPosition === 'top' || props.valuePosition === 'top'
+      (props.labelPosition === 'top' && !Helper.isEmpty(props.label)) ||
+      (props.valuePosition === 'top' && props.showValue)
         ? createProgressBarLabel(props, 'top')
         : undefined,
       h('div', { class: 'flex' }, [

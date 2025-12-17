@@ -183,6 +183,10 @@
       margin-bottom: 3px;
     }
 
+    > .#{vars.$prefix}progress-label:last-child {
+      margin-top: 3px;
+    }
+
     .#{vars.$prefix}progress-label {
       color: var(--#{vars.$prefix}progress-color);
       // text-align: center;
