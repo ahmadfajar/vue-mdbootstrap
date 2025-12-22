@@ -33,7 +33,7 @@ export function useOnFieldFocused(
 }
 
 export async function useOnFieldValueCleared<T>(
-  emit: EmitFn<{ clear: VoidFunction; 'update:model-value': (value: T | null) => void }>,
+  emit: EmitFn<{ clear: () => void; 'update:model-value': (value: T | null) => void }>,
   localValue: Ref<T | undefined | null>
 ): Promise<void> {
   localValue.value = null;

@@ -171,15 +171,6 @@ function createFieldInnerProps(
         isFocused.value = false;
       }
     },
-    onClick: () => {
-      isFocused.value = !props.disabled;
-      useTogglePopoverState(
-        emit,
-        isPopoverOpen,
-        (props.readonly || props.disabled) as boolean,
-        isPopoverOpen.value
-      );
-    },
   };
 }
 
@@ -257,9 +248,30 @@ export function useRenderCombobox(
             ),
             undefined,
             createFieldInnerProps(emit, props, activator, isPopoverOpen, isFocused),
-            undefined,
-            () => useTogglePopoverState(emit, isPopoverOpen, props.disabled as boolean, true),
-            () => useTogglePopoverState(emit, isPopoverOpen, props.disabled as boolean, true)
+            {
+              onClick: () => {
+                isFocused.value = !props.disabled;
+                useTogglePopoverState(
+                  emit,
+                  isPopoverOpen,
+                  (props.readonly || props.disabled) as boolean,
+                  isPopoverOpen.value
+                );
+              },
+            },
+            () => useTogglePopoverState(
+              emit,
+              isPopoverOpen,
+              (props.readonly || props.disabled) as boolean,
+              isPopoverOpen.value
+            ),
+            () =>
+              useTogglePopoverState(
+                emit,
+                isPopoverOpen,
+                (props.readonly || props.disabled) as boolean,
+                isPopoverOpen.value
+              )
           ),
           useRenderFieldFeedback(
             slots,

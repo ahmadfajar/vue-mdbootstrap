@@ -122,11 +122,11 @@ export function useCreateFieldWrapper(
   const fieldState = props.disabled ? 'disabled' : props.readonly ? 'readonly' : undefined;
   const fieldVariant =
     props.outlined && (props as TTextFieldOptionProps).rounded
-      ? 'outlined-pill'
+      ? 'outlined-rounded'
       : props.outlined
         ? 'outlined'
         : props.filled && (props as TTextFieldOptionProps).rounded
-          ? 'filled-pill'
+          ? 'filled-rounded'
           : props.filled
             ? 'filled'
             : 'default';
@@ -304,16 +304,16 @@ export function useInputTextFieldAttrs(
   };
 }
 
-declare interface InputTextEventEmitter {
+export declare interface InputTextEventEmitter<T> {
   clear: () => void;
   blur: (evt: Event) => void;
   focus: (evt: Event) => void;
   keydown: (evt: Event) => void;
-  'update:model-value': (value: MaybeNumberish) => void;
+  'update:model-value': (value: T) => void;
 }
 
 function createTextInputField(
-  emit: EmitFn<InputTextEventEmitter>,
+  emit: EmitFn<InputTextEventEmitter<MaybeNumberish>>,
   props: Readonly<TTextFieldOptionProps>,
   type: TFieldType | undefined,
   autocomplete: string | boolean | null,
@@ -417,7 +417,7 @@ export function useCreateValidationIcon(
 
 export function useRenderTextField(
   slots: Slots,
-  emit: EmitFn<InputTextEventEmitter>,
+  emit: EmitFn<InputTextEventEmitter<MaybeNumberish>>,
   props: Readonly<TTextFieldOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
@@ -486,16 +486,8 @@ export function useRenderTextField(
   );
 }
 
-declare interface InputTextAreaEventEmitter {
-  clear: VoidFunction;
-  blur: (evt: Event) => void;
-  focus: (evt: Event) => void;
-  keydown: (evt: Event) => void;
-  'update:model-value': (value: string | null | undefined) => void;
-}
-
 function createTextAreaInputField(
-  emit: EmitFn<InputTextAreaEventEmitter>,
+  emit: EmitFn<InputTextEventEmitter<string | null | undefined>>,
   props: Readonly<TTextAreaOptionProps>,
   inputRef: Ref<HTMLTextAreaElement | undefined>,
   localValue: Ref<string | undefined | null>,
@@ -538,7 +530,7 @@ function createTextAreaInputField(
 
 export function useRenderTextArea(
   slots: Slots,
-  emit: EmitFn<InputTextAreaEventEmitter>,
+  emit: EmitFn<InputTextEventEmitter<string | null | undefined>>,
   props: Readonly<TTextAreaOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,

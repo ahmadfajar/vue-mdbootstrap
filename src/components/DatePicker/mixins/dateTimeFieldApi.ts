@@ -44,11 +44,9 @@ export function useParseDateTimeFromFormat(
         return !Helper.isEmpty(format)
           ? DateTime.fromFormat(value, format, { locale: locale })
           : DateTime.fromISO(value, { locale: locale });
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (e) {
         try {
           return DateTime.fromSQL(value, { locale: locale });
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (e) {
           return undefined;
         }

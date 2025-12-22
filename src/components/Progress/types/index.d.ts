@@ -66,6 +66,20 @@ export declare type TMaskLoaderOptionProps = {
   zIndex?: Numberish;
 };
 
+export declare type TSpinLoaderOptionProps = {
+  /**
+   * Component size. Numbers get converted to pixel. Any other value must
+   * include the units (such as `px`, `em`, or `rem`).
+   */
+  size?: Numberish;
+
+  /**
+   * Component border thickness. Numbers get converted to pixel.
+   * Any other value must include the units (such as `px`, `em`, or `rem`).
+   */
+  thickness?: Numberish;
+};
+
 export declare type TProgressOptionProps = {
   /**
    * ProgressBar buffer length.
@@ -172,6 +186,8 @@ export declare type TProgressBarOptionProps = {
 
 export declare type TBsMaskLoader = ComponentObjectPropsOptions<TMaskLoaderOptionProps>;
 
+export declare type TBsSpinLoader = ComponentObjectPropsOptions<TSpinLoaderOptionProps>;
+
 export declare type TBsProgress = ComponentObjectPropsOptions<TProgressOptionProps>;
 
 export declare type TBsProgressBar = ComponentObjectPropsOptions<TProgressBarOptionProps>;
@@ -179,6 +195,12 @@ export declare type TBsProgressBar = ComponentObjectPropsOptions<TProgressBarOpt
 export declare const BsMaskLoader: {
   new (): {
     $props: BaseComponentProps & TMaskLoaderOptionProps;
+  };
+};
+
+export declare const BsSpinLoader: {
+  new (): {
+    $props: BaseComponentProps & TSpinLoaderOptionProps;
   };
 };
 

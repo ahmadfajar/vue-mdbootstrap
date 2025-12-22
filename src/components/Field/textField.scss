@@ -121,6 +121,17 @@
       }
     }
 
+    &[data-floating-label='false'] {
+      > .#{vars.$prefix}field-wrapper {
+        .#{vars.$prefix}prepend-outer,
+        .#{vars.$prefix}append-outer {
+          > .#{vars.$prefix}icon {
+            margin-top: vars.$padding-sm;
+          }
+        }
+      }
+    }
+
     &.#{vars.$prefix}checkbox-group,
     &.#{vars.$prefix}radio-group {
       --#{vars.$prefix}field-padding-start: 0;
@@ -645,7 +656,7 @@
       // patch input-field padding-left and make it closer to the prefix
       .#{vars.$prefix}field-prefix {
         + input {
-          padding-inline-start: .375rem;
+          padding-inline-start: 0.375rem;
         }
       }
     }
@@ -825,7 +836,8 @@
     }
   }
 
-  .dark, [data-theme=dark] {
+  .dark,
+  [data-theme='dark'] {
     --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-accent-indicator);
 
     .#{vars.$prefix}field {
@@ -877,7 +889,9 @@
 
   @include transitions.enterFrom-leaveTo('field-feedback') {
     transform: translateY(-6px);
-    transition: opacity 0.1s, transform 0.15s ease-out;
+    transition:
+      opacity 0.1s,
+      transform 0.15s ease-out;
   }
 }
 

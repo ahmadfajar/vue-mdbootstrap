@@ -206,8 +206,8 @@ $tabs-modern-margin-vertical:       .625rem;
 $tabs-modern-border-radius:         $radius-pill;
 $tabs-placement-top-shadow:         0px 4px 5px oklch(0 0 0 / 0.15), 0px 2px 2px oklch(0 0 0 / 0.14), 0px 3px 1px -2px oklch(0 0 0 / 0.12);
 $tabs-placement-bottom-shadow:      0px -1px 5px oklch(0 0 0 / 0.2), 0px -1px 2px oklch(0 0 0 / 0.14), 0px -3px 1px -2px oklch(0 0 0 / 0.12);
-$tabs-placement-left-shadow:        1px 0px 5px oklch(0 0 0 / 0.2), 2px 0px 2px oklch(0 0 0 / 0.14), 3px 0px 1px -2px oklch(0 0 0 / 0.12);
-$tabs-placement-right-shadow:       -1px 0px 5px oklch(0 0 0 / 0.2), -2px 0px 2px oklch(0 0 0 / 0.14), -3px 0px 1px -2px oklch(0 0 0 / 0.12);
+$tabs-placement-left-shadow:        0px 0px 0px oklch(0 0 0 / 0.2), 2px 2px 4px oklch(0 0 0 / 0.14), 0px 2px 2px 0px oklch(0 0 0 / 0.12);
+$tabs-placement-right-shadow:       0px 0px 0px oklch(0 0 0 / 0.2), -2px 0px 2px oklch(0 0 0 / 0.14), -3px 0px 1px -2px oklch(0 0 0 / 0.12);
 
 // Tooltips components
 //-----------------------------

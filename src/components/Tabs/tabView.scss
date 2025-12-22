@@ -312,6 +312,7 @@
 
     &.#{vars.$prefix}tab-top {
       box-shadow: var(--#{vars.$prefix}tab-placement-top-shadow);
+      z-index: 1;
 
       .tab-item-link {
         border-bottom-width: var(--#{vars.$prefix}tab-material-indicator-border);
@@ -336,6 +337,7 @@
 
     &.#{vars.$prefix}tab-left {
       box-shadow: var(--#{vars.$prefix}tab-placement-left-shadow);
+      z-index: 1;
 
       > .tab-item-link {
         border-right-width: var(--#{vars.$prefix}tab-material-indicator-border);
@@ -358,10 +360,10 @@
       }
     }
 
-    &.#{vars.$prefix}tab-top,
-    &.#{vars.$prefix}tab-bottom {
-      .tab-item-link {
-        @include media.breakpoint-up(lg) {
+    @include media.breakpoint-up(lg) {
+      &.#{vars.$prefix}tab-top,
+      &.#{vars.$prefix}tab-bottom {
+        .tab-item-link {
           &:first-child {
             margin-left: var(--#{vars.$prefix}tab-material-margin-start);
           }
@@ -382,13 +384,13 @@
       padding: var(--#{vars.$prefix}tab-modern-margin-vertical);
     }
 
-    &.#{vars.$prefix}tab-top {
-      box-shadow: var(--#{vars.$prefix}tab-placement-top-shadow);
-    }
+    // &.#{vars.$prefix}tab-top {
+    //   box-shadow: var(--#{vars.$prefix}tab-placement-top-shadow);
+    // }
 
-    &.#{vars.$prefix}tab-bottom {
-      box-shadow: var(--#{vars.$prefix}tab-placement-bottom-shadow);
-    }
+    // &.#{vars.$prefix}tab-bottom {
+    //   box-shadow: var(--#{vars.$prefix}tab-placement-bottom-shadow);
+    // }
 
     .tab-item-link {
       @include borders.radius(var(--#{vars.$prefix}tab-modern-border-radius));

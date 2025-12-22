@@ -59,6 +59,7 @@ import type {
   BsSearchField,
   BsSideDrawer,
   BsSpacer,
+  BsSpinLoader,
   BsSpinnerIcon,
   BsSubheader,
   BsSvgIcon,
@@ -149,6 +150,7 @@ declare module 'vue' {
     BsSearchField: typeof BsSearchField;
     BsSideDrawer: typeof BsSideDrawer;
     BsSpacer: typeof BsSpacer;
+    BsSpinLoader: typeof BsSpinLoader;
     BsSpinnerIcon: typeof BsSpinnerIcon;
     BsSubheader: typeof BsSubheader;
     BsSvgIcon: typeof BsSvgIcon;

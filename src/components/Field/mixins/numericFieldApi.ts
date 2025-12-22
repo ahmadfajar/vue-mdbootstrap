@@ -5,6 +5,7 @@ import {
   useCreateValidationIcon,
   useInputFieldBaseAttrs,
   useInputTextFieldAttrs,
+  type InputTextEventEmitter,
 } from '@/components/Field/mixins/textFieldApi.ts';
 import {
   useOnFieldBlurred,
@@ -275,7 +276,7 @@ function isGreaterOrEqualMinValue(value: number, options: TNumericOptions): bool
 }
 
 function decrementValue(
-  emit: EmitFn<InputNumericEventEmitter>,
+  emit: EmitFn<InputTextEventEmitter<number | null | undefined>>,
   props: Readonly<TNumericFieldOptionProps>,
   options: TNumericOptions,
   localValue: Ref<number | null | undefined>
@@ -293,7 +294,7 @@ function decrementValue(
 }
 
 function incrementValue(
-  emit: EmitFn<InputNumericEventEmitter>,
+  emit: EmitFn<InputTextEventEmitter<number | null | undefined>>,
   props: Readonly<TNumericFieldOptionProps>,
   options: TNumericOptions,
   localValue: Ref<number | null | undefined>
@@ -310,16 +311,8 @@ function incrementValue(
   }
 }
 
-declare interface InputNumericEventEmitter {
-  clear: VoidFunction;
-  blur: (target: Event) => void;
-  focus: (target: Event) => void;
-  keydown: (target: Event) => void;
-  'update:model-value': (value: number | null | undefined) => void;
-}
-
 function createNumericInputField(
-  emit: EmitFn<InputNumericEventEmitter>,
+  emit: EmitFn<InputTextEventEmitter<number | null | undefined>>,
   props: Readonly<TNumericFieldOptionProps>,
   numericOptions: TNumericOptions,
   formatOptions: Intl.NumberFormatOptions,
@@ -412,7 +405,7 @@ function createNumericInputField(
 
 export function useRenderNumericField(
   slots: Slots,
-  emit: EmitFn<InputNumericEventEmitter>,
+  emit: EmitFn<InputTextEventEmitter<number | null | undefined>>,
   props: Readonly<TNumericFieldOptionProps>,
   operationOptions: TNumericOptions,
   formatOptions: Intl.NumberFormatOptions,
