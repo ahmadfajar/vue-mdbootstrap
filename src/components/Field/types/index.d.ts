@@ -11,9 +11,9 @@ import {
 
 export declare type TFieldType = 'text' | 'email' | 'password' | 'tel' | 'url';
 
-export declare type TPlusMinusButtonPlacement = 'left' | 'right' | 'both';
+export declare type TActionButtonPlacement = 'left' | 'right' | 'both';
 
-export declare type TSpinButtonPlacement = 'left' | 'right';
+export declare type TActionButtonType = 'up-down' | 'plus-minus';
 
 declare type TBoolRecord = Record<string, boolean>;
 
@@ -324,31 +324,16 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
   locale?: string;
 
   /**
-   * Format the displayed numeric value with digit grouping.
+   * Shows the **Up-Down** or **Plus-Minus** action buttons which is used to
+   * <b>increment</b> / <b>decrement</b> the numeric value.
    */
-  useGrouping?: boolean;
+  actionButton?: TActionButtonType;
 
   /**
-   * Enable and shows the Spinner action buttons which is used to
-   * increment/decrement the numeric value.
+   * Sets the **Up-Down** or **Plus-Minus** action buttons placement,
+   * valid values: `left`, `right` and `both`.
    */
-  spinButton?: boolean;
-
-  /**
-   * Sets the Spinner action buttons placement, valid values: `left` and `right`.
-   */
-  spinButtonPlacement?: TSpinButtonPlacement;
-
-  /**
-   * Enable and shows the Plus-Minus action buttons which is used to
-   * increment/decrement the numeric value.
-   */
-  actionButton?: boolean;
-
-  /**
-   * Sets the Plus-Minus action buttons placement, valid values: `left`, `right` and `both`.
-   */
-  actionButtonPlacement?: TPlusMinusButtonPlacement;
+  actionButtonPlacement?: TActionButtonPlacement;
 
   /**
    * Sets the maximum allowed fraction or decimal digits for the displayed value.
@@ -369,6 +354,11 @@ export declare type TNumericFieldOptionProps = TInputTextProps & {
    * Sets the increment/decrement steps value.
    */
   step?: Numberish;
+
+  /**
+   * Format the displayed numeric value with digit grouping.
+   */
+  useGrouping?: boolean;
 
   /**
    * Create this component with **rounded-pill** appearance.

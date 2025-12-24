@@ -42,7 +42,7 @@
         --#{vars.$prefix}btn-active-bg: var(--#{vars.$prefix}field-button-active-bg);
         --#{vars.$prefix}btn-active-color: var(--#{vars.$prefix}field-button-color);
         --#{vars.$prefix}btn-hover-bg: var(--#{vars.$prefix}field-button-hover-bg);
-        --#{vars.$prefix}btn-hover-color: var(--#{vars.$prefix}field-button-color);
+        --#{vars.$prefix}btn-hover-color: var(--#{vars.$prefix}field-button-hover-color);
       }
 
       > .#{vars.$prefix}spin-button-left,
@@ -53,7 +53,7 @@
 
         > .#{vars.$prefix}spin-down,
         > .#{vars.$prefix}spin-up {
-          --#{vars.$prefix}btn-border-radius: .25rem;
+          --#{vars.$prefix}btn-border-radius: 0.25rem;
 
           height: 1.125rem; // 18px;
           width: 1.5rem;
@@ -96,6 +96,12 @@
     }
 
     &:not(.#{vars.$prefix}floating-label) {
+      --#{vars.$prefix}field-padding-top: 0.6rem;
+
+      &.#{vars.$prefix}field-outlined {
+        --#{vars.$prefix}field-padding-top: 0.6rem;
+      }
+
       &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
         .#{vars.$prefix}action-icon {
           > .#{vars.$prefix}spin-button-left,

@@ -53,6 +53,7 @@
     --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-primary-indicator);
     --#{vars.$prefix}field-button-active-bg: oklch(0.154 0 89.876 / 0.25);
     --#{vars.$prefix}field-button-hover-bg: oklch(0.431 0 89.876 / 0.2);
+    --#{vars.$prefix}field-button-hover-color: oklch(0.209 0 89.876);
     --#{vars.$prefix}field-button-color: currentColor;
     --#{vars.$prefix}field-disabled-opacity: 0.4;
     --#{vars.$prefix}field-readonly-opacity: 0.55;

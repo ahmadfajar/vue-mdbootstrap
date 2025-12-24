@@ -13,7 +13,7 @@ import {
   stringProp,
   validStringOrFloatProp,
 } from '@/mixins/CommonProps.ts';
-import type { TPlusMinusButtonPlacement, TSpinButtonPlacement } from '@/types';
+import type { TActionButtonPlacement, TActionButtonType } from '@/types';
 import type { Prop, PropType } from 'vue';
 
 export const textFieldProps = {
@@ -40,21 +40,21 @@ export const numericFieldProps = {
   autofocus: booleanProp,
   modelValue: numberProp,
   placeholder: stringProp,
+  prefix: stringProp,
+  suffix: stringProp,
   locale: stringProp,
   rounded: booleanProp,
   useGrouping: booleanTrueProp,
-  spinButton: booleanTrueProp,
-  spinButtonPlacement: {
-    type: String as PropType<TSpinButtonPlacement>,
-    default: 'right',
-    validator: (v: TSpinButtonPlacement) => ['left', 'right'].includes(v),
-  } as Prop<TSpinButtonPlacement>,
-  actionButton: booleanProp,
+  actionButton: {
+    type: String as PropType<TActionButtonType>,
+    default: 'up-down',
+    validator: (v: TActionButtonType) => ['up-down', 'plus-minus'].includes(v),
+  } as Prop<TActionButtonType>,
   actionButtonPlacement: {
-    type: String as PropType<TPlusMinusButtonPlacement>,
+    type: String as PropType<TActionButtonPlacement>,
     default: 'right',
-    validator: (v: TPlusMinusButtonPlacement) => ['left', 'right', 'both'].includes(v),
-  } as Prop<TPlusMinusButtonPlacement>,
+    validator: (v: TActionButtonPlacement) => ['left', 'right', 'both'].includes(v),
+  } as Prop<TActionButtonPlacement>,
   maxFraction: {
     type: [Number, String],
     default: 3,
@@ -67,8 +67,6 @@ export const numericFieldProps = {
     default: 1.0,
     validator: (v: string) => !isNaN(parseFloat(v)),
   },
-  prefix: stringProp,
-  suffix: stringProp,
 };
 
 export const searchFieldProps = {

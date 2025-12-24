@@ -45,7 +45,7 @@
       width: 100%;
       max-width: 100%;
 
-      .#{vars.$prefix}action-icon,
+      //.#{vars.$prefix}action-icon,
       .#{vars.$prefix}validation-icon,
       .#{vars.$prefix}prepend-inner,
       .#{vars.$prefix}prepend-outer,
@@ -63,6 +63,16 @@
         .#{vars.$prefix}text {
           font-size: 0.88rem;
           white-space: nowrap;
+        }
+      }
+
+      .#{vars.$prefix}action-icon {
+        display: inline-flex;
+
+        > .#{vars.$prefix}icon,
+        > .#{vars.$prefix}toggle-icon {
+          align-self: flex-start;
+          margin-top: vars.$padding-md;
         }
       }
 
@@ -185,6 +195,7 @@
 
       > .#{vars.$prefix}field-value,
       > .#{vars.$prefix}field-placeholder {
+        line-height: 1;
         min-height: var(--#{vars.$prefix}field-control-height);
         padding-top: var(--#{vars.$prefix}field-padding-top);
         padding-bottom: var(--#{vars.$prefix}field-padding-bottom);
@@ -316,13 +327,13 @@
       }
 
       > .#{vars.$prefix}action-icon {
-        > .icon-clear,
+        //> .icon-clear,
+        > .#{vars.$prefix}icon,
         > .#{vars.$prefix}toggle-icon,
-        > .#{vars.$prefix}spin-button-left > .#{vars.$prefix}btn,
-        > .#{vars.$prefix}spin-button-right > .#{vars.$prefix}btn,
+        .#{vars.$prefix}btn,
         .#{vars.$prefix}btn-icon {
           cursor: pointer;
-          opacity: 0.75;
+          opacity: 0.6;
 
           &:hover {
             opacity: 1;
@@ -703,7 +714,8 @@
 
     &:not(.#{vars.$prefix}floating-label) {
       --#{vars.$prefix}field-control-height: 2.5rem;
-      --#{vars.$prefix}field-padding-top: 0.425rem;
+      --#{vars.$prefix}field-padding-top: 0.375rem;
+      //--#{vars.$prefix}field-padding-top: 0.425rem;
 
       &.#{vars.$prefix}field-outlined {
         // prettier-ignore
@@ -849,12 +861,17 @@
           )};
 
         > .#{vars.$prefix}field-wrapper {
-          .#{vars.$prefix}action-icon,
+          .#{vars.$prefix}action-icon .#{vars.$prefix}btn,
+          .#{vars.$prefix}action-icon .#{vars.$prefix}btn-icon,
+          .#{vars.$prefix}action-icon > .#{vars.$prefix}icon,
+          .#{vars.$prefix}action-icon > .#{vars.$prefix}toggle-icon,
           .#{vars.$prefix}prepend-inner,
           .#{vars.$prefix}prepend-outer,
           .#{vars.$prefix}append-inner,
           .#{vars.$prefix}append-outer {
-            opacity: var(--#{vars.$prefix}field-disabled-opacity);
+            &:not(:hover) {
+              opacity: var(--#{vars.$prefix}field-disabled-opacity);
+            }
           }
         }
       }

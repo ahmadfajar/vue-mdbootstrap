@@ -388,7 +388,7 @@ export function useCreateValidationIcon(
   hasError: boolean,
   showIcon: boolean,
   iconSize?: number
-): VNode | undefined {
+): VNode {
   if (showIcon) {
     return useRenderTransition(
       { name: 'fade' },

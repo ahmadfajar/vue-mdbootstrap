@@ -1,5 +1,5 @@
 import { cssPrefix } from '@/mixins/CommonApi';
-import { stringOrNumberProp } from '@/mixins/CommonProps';
+import { stringOrNumberProp, stringProp } from '@/mixins/CommonProps';
 import Helper from '@/utils/Helper';
 import { defineComponent, h } from 'vue';
 import type { TBsSpinLoader, TSpinLoaderOptionProps } from './types';
@@ -7,6 +7,7 @@ import type { TBsSpinLoader, TSpinLoaderOptionProps } from './types';
 export default defineComponent<TBsSpinLoader>({
   name: 'BsSpinLoader',
   props: {
+    tag: stringProp,
     size: stringOrNumberProp,
     thickness: stringOrNumberProp,
   },
@@ -14,7 +15,7 @@ export default defineComponent<TBsSpinLoader>({
     const thisProps = props as Readonly<TSpinLoaderOptionProps>;
 
     return () =>
-      h('div', {
+      h(thisProps.tag || 'div', {
         class: [`${cssPrefix}spinner-border`],
         style:
           thisProps.size || thisProps.thickness

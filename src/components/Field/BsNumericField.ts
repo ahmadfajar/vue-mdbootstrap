@@ -33,13 +33,8 @@ export default defineComponent<TBsNumericField>({
         slots['append-inner'] != null ||
         !Helper.isEmpty(thisProps.appendIcon) ||
         showClearButton.value ||
-        (thisProps.actionButton === true &&
-          (thisProps.actionButtonPlacement === 'right' ||
-            thisProps.actionButtonPlacement === 'both') &&
-          !thisProps.disabled &&
-          !thisProps.readonly) ||
-        (thisProps.spinButton === true &&
-          thisProps.spinButtonPlacement === 'right' &&
+        (!!thisProps.actionButton &&
+          ['right', 'both'].includes(thisProps.actionButtonPlacement as string) &&
           !thisProps.disabled &&
           !thisProps.readonly)
     );
@@ -49,13 +44,9 @@ export default defineComponent<TBsNumericField>({
         !Helper.isEmpty(thisProps.prependIcon) ||
         (!thisProps.disabled &&
           !thisProps.readonly &&
-          thisProps.actionButton === true &&
-          (thisProps.actionButtonPlacement === 'left' ||
-            thisProps.actionButtonPlacement === 'both')) ||
-        (thisProps.spinButton === true &&
-          thisProps.spinButtonPlacement === 'left' &&
-          !thisProps.disabled &&
-          !thisProps.readonly)
+          ((thisProps.actionButton === 'up-down' && thisProps.actionButtonPlacement === 'left') ||
+            (thisProps.actionButton === 'plus-minus' &&
+              ['left', 'both'].includes(thisProps.actionButtonPlacement as string))))
     );
     const fieldWrapperClasses = computed<TRecord>(() =>
       useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)

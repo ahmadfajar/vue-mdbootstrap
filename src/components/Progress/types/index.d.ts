@@ -68,6 +68,11 @@ export declare type TMaskLoaderOptionProps = {
 
 export declare type TSpinLoaderOptionProps = {
   /**
+   * HTML tag name to be used to create this component.
+   */
+  tag?: 'span' | 'div';
+
+  /**
    * Component size. Numbers get converted to pixel. Any other value must
    * include the units (such as `px`, `em`, or `rem`).
    */

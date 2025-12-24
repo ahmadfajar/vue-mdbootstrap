@@ -19,11 +19,11 @@ import { BsIcon } from '@/components/Icon';
 import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import type {
   PromiseVoidFunction,
+  TActionButtonPlacement,
   TBsIcon,
   TIconVariant,
   TNumericFieldOptionProps,
   TNumericOptions,
-  TPlusMinusButtonPlacement,
   TRecord,
 } from '@/types';
 import Helper from '@/utils/Helper.ts';
@@ -92,9 +92,9 @@ function createPlusButton(
 
 function createActionButtons(
   props: Readonly<TNumericFieldOptionProps>,
-  position: TPlusMinusButtonPlacement,
-  incrementValueHandler: () => void,
-  decrementValueHandler: () => void
+  position: TActionButtonPlacement,
+  incrementValueHandler: VoidFunction,
+  decrementValueHandler: VoidFunction
 ): VNode {
   const children = [];
 
@@ -120,13 +120,14 @@ function createActionButtons(
 
 function createSpinnerButton(
   props: Readonly<TNumericFieldOptionProps>,
-  incrementValueHandler: () => void,
-  decrementValueHandler: () => void
+  position: 'left' | 'right',
+  incrementValueHandler: VoidFunction,
+  decrementValueHandler: VoidFunction
 ): VNode {
   return h(
     'div',
     {
-      class: [`${cssPrefix}spin-button-${props.spinButtonPlacement}`, 'flex', 'flex-col'],
+      class: [`${cssPrefix}spin-button-${position}`, 'flex', 'flex-col'],
     },
     [
       h(
@@ -194,7 +195,6 @@ function createAppendFieldActionNode(
     showClearButton ||
       hasValidated ||
       hasError ||
-      (props.spinButton && props.spinButtonPlacement === 'right') ||
       (props.actionButton && ['right', 'both'].includes(props.actionButtonPlacement as string))
       ? h(
           'div',
@@ -212,12 +212,12 @@ function createAppendFieldActionNode(
               : undefined,
             !props.disabled &&
             !props.readonly &&
-            props.spinButton &&
-            props.spinButtonPlacement === 'right'
-              ? createSpinnerButton(props, incrementValueHandler, decrementValueHandler)
+            props.actionButton === 'up-down' &&
+            ['right', 'both'].includes(props.actionButtonPlacement as string)
+              ? createSpinnerButton(props, 'right', incrementValueHandler, decrementValueHandler)
               : !props.disabled &&
                   !props.readonly &&
-                  props.actionButton &&
+                  props.actionButton === 'plus-minus' &&
                   ['right', 'both'].includes(props.actionButtonPlacement as string)
                 ? createActionButtons(props, 'right', incrementValueHandler, decrementValueHandler)
                 : '',
@@ -235,21 +235,20 @@ function createPrependFieldActionNode(
   if (
     !props.disabled &&
     !props.readonly &&
-    props.spinButton &&
-    props.spinButtonPlacement === 'left'
+    props.actionButton === 'up-down' &&
+    props.actionButtonPlacement === 'left'
   ) {
     return h(
       'div',
       {
         class: `${cssPrefix}action-icon`,
       },
-      [createSpinnerButton(props, incrementValueHandler, decrementValueHandler)]
+      [createSpinnerButton(props, 'left', incrementValueHandler, decrementValueHandler)]
     );
   } else if (
     !props.disabled &&
     !props.readonly &&
-    !props.spinButton &&
-    props.actionButton &&
+    props.actionButton === 'plus-minus' &&
     ['left', 'both'].includes(props.actionButtonPlacement as string)
   ) {
     return h(

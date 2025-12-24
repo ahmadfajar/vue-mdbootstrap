@@ -23,7 +23,21 @@
       }
     }
 
+    &:not(.#{vars.$prefix}floating-label) {
+      --#{vars.$prefix}field-padding-top: 0.75rem;
+
+      &.#{vars.$prefix}field-outlined {
+        --#{vars.$prefix}field-padding-top: 0.75rem;
+      }
+    }
+
     &.#{vars.$prefix}floating-label {
+      --#{vars.$prefix}field-padding-top: 1.825rem;
+
+      &.#{vars.$prefix}field-outlined {
+        --#{vars.$prefix}field-padding-top: 1.25rem;
+      }
+
       .#{vars.$prefix}field-label {
         height: var(--#{vars.$prefix}field-control-height);
       }
