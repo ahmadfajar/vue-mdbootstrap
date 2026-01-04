@@ -199,7 +199,7 @@ function createAppendFieldActionNode(
       ? h(
           'div',
           {
-            class: `${cssPrefix}action-icon`,
+            class: { [`${cssPrefix}action-icon`]: true, 'items-center': !props.floatingLabel },
           },
           [
             showClearButton
@@ -426,6 +426,7 @@ export function useRenderNumericField(
   return useCreateFieldWrapper(
     slots,
     iconSize,
+    'numeric-field',
     wrapperCss,
     props,
     h(
@@ -436,6 +437,7 @@ export function useRenderNumericField(
       [
         useCreateFieldInnerWrapper(
           slots,
+          'numeric-field',
           props,
           createNumericInputField(
             emit,

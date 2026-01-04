@@ -45,35 +45,35 @@
       width: 100%;
       max-width: 100%;
 
-      //.#{vars.$prefix}action-icon,
+      .#{vars.$prefix}action-icon,
       .#{vars.$prefix}validation-icon,
       .#{vars.$prefix}prepend-inner,
       .#{vars.$prefix}prepend-outer,
       .#{vars.$prefix}append-inner,
       .#{vars.$prefix}append-outer {
         display: inline-flex;
-        opacity: vars.$text-field-support-text-opacity;
 
-        > .#{vars.$prefix}icon,
-        > .#{vars.$prefix}toggle-icon {
-          align-self: flex-start;
+        > .#{vars.$prefix}icon {
           margin-top: vars.$padding-md;
         }
+      }
 
+      .#{vars.$prefix}prepend-inner,
+      .#{vars.$prefix}prepend-outer,
+      .#{vars.$prefix}append-inner,
+      .#{vars.$prefix}append-outer {
         .#{vars.$prefix}text {
           font-size: 0.88rem;
           white-space: nowrap;
         }
       }
 
-      .#{vars.$prefix}action-icon {
-        display: inline-flex;
-
-        > .#{vars.$prefix}icon,
-        > .#{vars.$prefix}toggle-icon {
-          align-self: flex-start;
-          margin-top: vars.$padding-md;
-        }
+      .#{vars.$prefix}validation-icon,
+      .#{vars.$prefix}prepend-inner,
+      .#{vars.$prefix}prepend-outer,
+      .#{vars.$prefix}append-inner,
+      .#{vars.$prefix}append-outer {
+        opacity: vars.$text-field-support-text-opacity;
       }
 
       .#{vars.$prefix}prepend-outer {
@@ -124,8 +124,7 @@
       .#{vars.$prefix}prepend-outer,
       .#{vars.$prefix}append-inner,
       .#{vars.$prefix}prepend-inner {
-        > .#{vars.$prefix}icon,
-        > .#{vars.$prefix}toggle-icon {
+        > [class*='-icon'] {
           margin-top: 1.375rem; // 22px;
         }
       }
@@ -195,7 +194,6 @@
 
       > .#{vars.$prefix}field-value,
       > .#{vars.$prefix}field-placeholder {
-        line-height: 1;
         min-height: var(--#{vars.$prefix}field-control-height);
         padding-top: var(--#{vars.$prefix}field-padding-top);
         padding-bottom: var(--#{vars.$prefix}field-padding-bottom);
@@ -320,14 +318,12 @@
         margin-left: vars.$padding-md - 0.25;
       }
 
-      > .#{vars.$prefix}field-activator + .#{vars.$prefix}action-icon,
       > .#{vars.$prefix}validation-icon,
       > .#{vars.$prefix}append-inner {
         margin-right: vars.$padding-md - 0.25;
       }
 
       > .#{vars.$prefix}action-icon {
-        //> .icon-clear,
         > .#{vars.$prefix}icon,
         > .#{vars.$prefix}toggle-icon,
         .#{vars.$prefix}btn,
@@ -643,9 +639,15 @@
       }
     }
 
-    // patch when input value is filled by autocomplete
     &.#{vars.$prefix}field-outlined,
     &.#{vars.$prefix}field-filled {
+      .#{vars.$prefix}field-activator {
+        + .#{vars.$prefix}action-icon {
+          margin-right: vars.$padding-md - 0.25;
+        }
+      }
+
+      // patch when input value is filled by autocomplete
       &.active {
         .#{vars.$prefix}field-activator {
           &.has-prepend-icon,
@@ -674,6 +676,14 @@
 
     &:not(.#{vars.$prefix}field-outlined):not(.#{vars.$prefix}field-filled) {
       --#{vars.$prefix}field-padding-start: 0;
+
+      .#{vars.$prefix}field-activator {
+        &.has-append-icon {
+          + .#{vars.$prefix}action-icon {
+            margin-right: vars.$padding-md - 0.25;
+          }
+        }
+      }
 
       &:not(.append-icon) {
         --#{vars.$prefix}field-padding-end: 0;
@@ -734,7 +744,7 @@
         > .#{vars.$prefix}prepend-inner,
         > .#{vars.$prefix}append-inner {
           > .#{vars.$prefix}icon {
-            align-self: center;
+            //align-self: center;
             margin-top: 0;
           }
         }
@@ -742,7 +752,7 @@
         > .#{vars.$prefix}action-icon {
           > .#{vars.$prefix}icon,
           > .#{vars.$prefix}toggle-icon {
-            align-self: center;
+            //align-self: center;
             margin-top: 0;
           }
         }
@@ -751,8 +761,8 @@
   }
 
   .#{vars.$prefix}textarea {
-    --#{vars.$prefix}field-padding-top: #{vars.$text-field-padding-top + 0.25};
     --#{vars.$prefix}field-control-height: #{vars.$text-field-line-height * 2};
+    --#{vars.$prefix}field-padding-top: #{vars.$text-field-padding-top + 0.25};
 
     .#{vars.$prefix}field-activator {
       > textarea {
@@ -802,7 +812,6 @@
         > .#{vars.$prefix}prepend-inner,
         > .#{vars.$prefix}append-inner {
           > .#{vars.$prefix}icon {
-            align-self: flex-start;
             margin-top: 0.75rem;
           }
         }
@@ -810,7 +819,6 @@
         > .#{vars.$prefix}action-icon {
           > .#{vars.$prefix}icon,
           > .#{vars.$prefix}toggle-icon {
-            align-self: flex-start;
             margin-top: 0.75rem;
           }
         }
@@ -846,6 +854,10 @@
         }
       }
     }
+  }
+
+  [data-component='toggle-field'] {
+    --#{vars.$prefix}field-padding-start: #{vars.$padding-xs};
   }
 
   .dark,

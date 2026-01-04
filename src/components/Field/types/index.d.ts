@@ -9,6 +9,16 @@ import {
   TPopoverPosition,
 } from '../../../types';
 
+export declare type TFieldComponent =
+  | 'chip-field'
+  | 'combobox-field'
+  | 'datetime-field'
+  | 'numeric-field'
+  | 'search-field'
+  | 'textarea-field'
+  | 'text-field'
+  | 'toggle-field';
+
 export declare type TFieldType = 'text' | 'email' | 'password' | 'tel' | 'url';
 
 export declare type TActionButtonPlacement = 'left' | 'right' | 'both';

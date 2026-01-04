@@ -155,6 +155,7 @@ export function useRenderChipField(
   return useCreateFieldWrapper(
     slots,
     iconSize,
+    'chip-field',
     wrapperCss,
     thisProps,
     h(
@@ -165,6 +166,7 @@ export function useRenderChipField(
       [
         useCreateFieldInnerWrapper(
           slots,
+          'chip-field',
           thisProps,
           [
             createFieldChips(props, emit, localValue),
@@ -181,6 +183,8 @@ export function useRenderChipField(
             iconSize
           ),
           useCreateFieldActionIcon(
+            'chip-field',
+            thisProps,
             showClearButton.value,
             thisProps.actionIconVariant as TIconVariant,
             iconSize,

@@ -1,4 +1,4 @@
-@use "sass:color";
+@use 'sass:color';
 @use '../../../scss/color_vars' as colors;
 @use '../../../scss/variables' as vars;
 
@@ -50,6 +50,7 @@
   // max-width: 100%;
   border: none;
   display: block;
+  opacity: 1;
 
   &.divider--dark {
     --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};

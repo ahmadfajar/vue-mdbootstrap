@@ -203,6 +203,7 @@ export function useRenderCombobox(
   return useCreateFieldWrapper(
     slots,
     iconSize,
+    'combobox-field',
     wrapperCss,
     props,
     h(Fragment, [
@@ -214,6 +215,7 @@ export function useRenderCombobox(
         [
           useCreateFieldInnerWrapper(
             slots,
+            'combobox-field',
             props,
             renderComboboxInputField(props, schema, selectedItems, localValue),
             iconSize,
@@ -259,12 +261,13 @@ export function useRenderCombobox(
                 );
               },
             },
-            () => useTogglePopoverState(
-              emit,
-              isPopoverOpen,
-              (props.readonly || props.disabled) as boolean,
-              isPopoverOpen.value
-            ),
+            () =>
+              useTogglePopoverState(
+                emit,
+                isPopoverOpen,
+                (props.readonly || props.disabled) as boolean,
+                isPopoverOpen.value
+              ),
             () =>
               useTogglePopoverState(
                 emit,

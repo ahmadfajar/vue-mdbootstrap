@@ -1,6 +1,56 @@
 @use '../../../scss/variables' as vars;
 
 @layer components {
+  [data-component='chip-field'] {
+    &[data-floating-label='false'] {
+      .#{vars.$prefix}field-inner {
+        > .#{vars.$prefix}action-icon,
+        > .#{vars.$prefix}append-inner,
+        > .#{vars.$prefix}prepend-inner {
+          > .#{vars.$prefix}icon {
+            align-self: flex-start;
+            margin-top: 0.5rem;
+          }
+        }
+      }
+
+      &.#{vars.$prefix}field-filled {
+        .#{vars.$prefix}append-outer,
+        .#{vars.$prefix}prepend-outer {
+          > .#{vars.$prefix}icon {
+            margin-top: 0.8rem;
+          }
+        }
+      }
+
+      &.#{vars.$prefix}field-outlined {
+        .#{vars.$prefix}action-icon,
+        .#{vars.$prefix}append-outer,
+        .#{vars.$prefix}append-inner,
+        .#{vars.$prefix}prepend-outer,
+        .#{vars.$prefix}prepend-inner {
+          > .#{vars.$prefix}icon {
+            margin-top: 1rem;
+          }
+        }
+      }
+    }
+
+    &[data-floating-label='true'] {
+      &.#{vars.$prefix}field-filled {
+        .#{vars.$prefix}action-icon,
+        .#{vars.$prefix}prepend-inner,
+        .#{vars.$prefix}prepend-outer,
+        .#{vars.$prefix}append-inner,
+        .#{vars.$prefix}append-outer {
+          > .#{vars.$prefix}icon {
+            margin-top: 1.35rem;
+          }
+        }
+      }
+    }
+  }
+
   .#{vars.$prefix}chip-field {
     --#{vars.$prefix}field-control-height: 2.5rem;
     --#{vars.$prefix}field-padding-top: 0;
@@ -30,41 +80,71 @@
 
     &.#{vars.$prefix}field-filled,
     &.#{vars.$prefix}field-outlined {
+      --#{vars.$prefix}field-padding-start: 0;
+      --#{vars.$prefix}field-padding-end: 0;
+
+      > .#{vars.$prefix}field-inner {
+        padding-left: vars.$padding-md;
+        padding-right: vars.$padding-md;
+      }
+
+      &.append-icon {
+        > .#{vars.$prefix}field-inner {
+          padding-right: 0;
+        }
+
+        .#{vars.$prefix}action-icon,
+        .#{vars.$prefix}append-inner {
+          margin-left: vars.$padding-md - 0.25;
+        }
+
+        .#{vars.$prefix}action-icon + .#{vars.$prefix}append-inner {
+          margin-left: 0;
+        }
+      }
+
+      &.prepend-icon {
+        > .#{vars.$prefix}field-inner {
+          padding-left: 0;
+        }
+
+        .#{vars.$prefix}prepend-inner {
+          margin-right: vars.$padding-md - 0.25;
+        }
+      }
+
       .#{vars.$prefix}field-feedback {
-        --#{vars.$prefix}field-padding-start: 1rem;
+        --#{vars.$prefix}field-padding-start: #{vars.$padding-md};
       }
     }
 
     &.#{vars.$prefix}field-filled {
-      --#{vars.$prefix}field-padding-start: 0;
-      --#{vars.$prefix}field-padding-end: 0;
-
       &:not(.#{vars.$prefix}floating-label) {
         --#{vars.$prefix}field-padding-bottom: 0.65rem;
       }
 
       > .#{vars.$prefix}field-inner {
-        padding: 0.375rem vars.$padding-md 0 vars.$padding-md;
+        padding-top: 0.375rem;
+        padding-bottom: 0;
       }
     }
 
     &.#{vars.$prefix}field-outlined {
       --#{vars.$prefix}field-padding-bottom: #{vars.$text-field-padding-bottom};
       --#{vars.$prefix}field-padding-top: 0;
-      --#{vars.$prefix}field-padding-start: 0;
-      --#{vars.$prefix}field-padding-end: 0;
 
       &:not(.#{vars.$prefix}floating-label) {
         --#{vars.$prefix}field-padding-top: 0.125rem;
       }
 
       > .#{vars.$prefix}field-inner {
-        padding: 0 vars.$padding-md 0 vars.$padding-md;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
 
-        > .#{vars.$prefix}field-activator {
-          margin-top: 0.65rem;
-          margin-bottom: 0.25rem;
-        }
+      .#{vars.$prefix}field-activator {
+        margin-top: 0.65rem;
+        margin-bottom: 0.25rem;
       }
     }
 
@@ -77,11 +157,12 @@
         --#{vars.$prefix}field-floating-label-transform: translateY(-14px) scale(0.85);
 
         > .#{vars.$prefix}field-inner {
-          padding: 0 vars.$padding-md 0 vars.$padding-md;
+          padding-top: 0;
+          padding-bottom: 0;
+        }
 
-          > .#{vars.$prefix}field-activator {
-            margin-top: vars.$padding-lg;
-          }
+        .#{vars.$prefix}field-activator {
+          margin-top: vars.$padding-lg;
         }
 
         .#{vars.$prefix}field-label {
@@ -95,11 +176,11 @@
 
         > .#{vars.$prefix}field-inner {
           min-height: 56px;
+        }
 
-          > .#{vars.$prefix}field-activator {
-            margin-top: vars.$padding-md - vars.$padding-xs;
-            margin-bottom: vars.$text-field-padding-bottom;
-          }
+        .#{vars.$prefix}field-activator {
+          margin-top: vars.$padding-md - vars.$padding-xs;
+          margin-bottom: vars.$text-field-padding-bottom;
         }
 
         .#{vars.$prefix}field-label {
@@ -109,29 +190,6 @@
         &.prepend-icon {
           // prettier-ignore
           --#{vars.$prefix}field-floating-label-transform: translateY(-27px) translateX(-36px) scale(0.85);
-        }
-      }
-
-      &.#{vars.$prefix}field-filled,
-      &.#{vars.$prefix}field-outlined {
-        &.prepend-icon {
-          > .#{vars.$prefix}field-inner {
-            padding-left: 0;
-
-            > .#{vars.$prefix}field-activator {
-              margin-left: vars.$padding-md;
-            }
-          }
-        }
-
-        &.append-icon {
-          > .#{vars.$prefix}field-inner {
-            padding-right: 0;
-
-            > .#{vars.$prefix}field-activator {
-              margin-right: vars.$padding-md;
-            }
-          }
         }
       }
 

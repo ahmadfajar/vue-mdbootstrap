@@ -319,6 +319,8 @@ function createListTileCheckbox(
           color: (props.checkboxColor || 'default') as Prop<string>,
           value: item.get(schema.valueField) as Prop<Numberish>,
           modelValue: localValue.value as Prop<Numberish>,
+          readonly: props.readonly as unknown as Prop<boolean>,
+          disabled: props.disabled as unknown as Prop<boolean>,
         }),
     }
   );

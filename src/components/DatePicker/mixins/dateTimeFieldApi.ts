@@ -145,6 +145,7 @@ export function useRenderDateTimeField(
   return useCreateFieldWrapper(
     slots,
     iconSize,
+    'datetime-field',
     wrapperCss,
     props,
     h(Fragment, [
@@ -156,6 +157,7 @@ export function useRenderDateTimeField(
         [
           useCreateFieldInnerWrapper(
             slots,
+            'datetime-field',
             props,
             createDateTimeInputField(emit, props, displayValue, isFocused, isPopoverOpen),
             iconSize,
@@ -169,6 +171,8 @@ export function useRenderDateTimeField(
               iconSize
             ),
             useCreateFieldActionIcon(
+              'datetime-field',
+              props,
               showClearButton.value,
               props.actionIconVariant as TIconVariant,
               iconSize,

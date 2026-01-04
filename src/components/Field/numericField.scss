@@ -137,35 +137,35 @@
       &.#{vars.$prefix}field-outlined {
         &:not(.prepend-icon) {
           .#{vars.$prefix}action-icon + .#{vars.$prefix}field-activator {
-            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-36px)
-              scale(0.85);
+            // prettier-ignore
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-36px) scale(0.85);
           }
 
           .#{vars.$prefix}button-wrapper-left + .#{vars.$prefix}field-activator {
-            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-72px)
-              scale(0.85);
+            // prettier-ignore
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-72px) scale(0.85);
           }
 
           .#{vars.$prefix}button-wrapper-both + .#{vars.$prefix}field-activator {
-            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-44px)
-              scale(0.85);
+            // prettier-ignore
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-44px) scale(0.85);
           }
         }
 
         &.prepend-icon {
           .#{vars.$prefix}action-icon + .#{vars.$prefix}field-activator {
-            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-68px)
-              scale(0.85);
+            // prettier-ignore
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-68px) scale(0.85);
           }
 
           .#{vars.$prefix}button-wrapper-left + .#{vars.$prefix}field-activator {
-            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-104px)
-              scale(0.85);
+            // prettier-ignore
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-104px) scale(0.85);
           }
 
           .#{vars.$prefix}button-wrapper-both + .#{vars.$prefix}field-activator {
-            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-76px)
-              scale(0.85);
+            // prettier-ignore
+            --#{vars.$prefix}field-floating-label-transform: translateY(-25px) translateX(-76px) scale(0.85);
           }
         }
       }

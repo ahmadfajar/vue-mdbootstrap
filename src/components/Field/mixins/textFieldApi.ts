@@ -20,6 +20,8 @@ import type {
   PromiseVoidFunction,
   TBsIcon,
   TBsToggleIcon,
+  TClassList,
+  TFieldComponent,
   TFieldType,
   TIconVariant,
   TInputBaseProps,
@@ -88,7 +90,7 @@ export function useShowClearButton(
 function createFieldIcon(
   slots: Slots,
   slotName: string,
-  cssClass: string,
+  cssClass: TClassList,
   iconName?: string,
   iconSize?: number,
   onClickHandler?: EventListener
@@ -113,6 +115,7 @@ function createFieldIcon(
 export function useCreateFieldWrapper(
   slots: Slots,
   iconSize: number,
+  component: TFieldComponent,
   cssClass: ComputedRef<TRecord>,
   props: Readonly<TInputFieldProps>,
   fieldElement: VNode,
@@ -138,6 +141,7 @@ export function useCreateFieldWrapper(
       class: cssClass.value,
       onVnodeMounted: nodeMountedHandler,
       onVnodeUpdated: (node: VNode) => useOnFieldNodeMounted(props, node),
+      'data-component': component,
       'data-variant': fieldVariant,
       'data-floating-label': props.floatingLabel,
       'data-state': fieldState,
@@ -201,6 +205,7 @@ function createLineIndicator(props: Readonly<TInputFieldProps>): VNode {
 
 export function useCreateFieldInnerWrapper(
   slots: Slots,
+  component: TFieldComponent,
   props: Readonly<TInputFieldProps>,
   inputFieldNodes: VNode[] | VNode,
   iconSize: number,
@@ -255,7 +260,12 @@ export function useCreateFieldInnerWrapper(
       createFieldIcon(
         slots,
         'prepend-inner',
-        `${cssPrefix}prepend-inner`,
+        {
+          [`${cssPrefix}prepend-inner`]: true,
+          'items-center':
+            !props.floatingLabel &&
+            ['text-field', 'numeric-field', 'datetime-field'].includes(component as string),
+        },
         prependIcon,
         iconSize,
         onPrependIconClick
@@ -266,7 +276,12 @@ export function useCreateFieldInnerWrapper(
       createFieldIcon(
         slots,
         'append-inner',
-        `${cssPrefix}append-inner`,
+        {
+          [`${cssPrefix}append-inner`]: true,
+          'items-center':
+            !props.floatingLabel &&
+            ['text-field', 'numeric-field', 'datetime-field'].includes(component as string),
+        },
         appendIcon,
         iconSize,
         onAppendIconClick
@@ -348,6 +363,8 @@ function createTextInputField(
 }
 
 export function useCreateFieldActionIcon(
+  component: TFieldComponent,
+  props: Readonly<TInputFieldProps>,
   showClearButton: boolean,
   iconVariant: TIconVariant,
   iconSize?: number,
@@ -359,25 +376,36 @@ export function useCreateFieldActionIcon(
   return useRenderTransition(
     { name: 'fade' },
     showClearButton || showPasswordToggle
-      ? h('div', { class: `${cssPrefix}action-icon` }, [
-          showClearButton
-            ? h<TBsIcon>(BsIcon, {
-                class: 'icon-clear',
-                icon: `cancel_${iconVariant}` as Prop<string>,
-                size: iconSize as Prop<Numberish>,
-                onClick: clearHandler,
-              })
-            : undefined,
-          showPasswordToggle
-            ? h<TBsToggleIcon>(BsToggleIcon, {
-                icon: `visibility_${iconVariant}` as Prop<string>,
-                toggleIcon: `visibility_off_${iconVariant}` as Prop<string>,
-                size: iconSize as Prop<Numberish>,
-                modelValue: passwordToggled?.value as unknown as Prop<boolean | undefined>,
-                'onUpdate:model-value': passwordToggleHandler,
-              })
-            : undefined,
-        ])
+      ? h(
+          'div',
+          {
+            class: {
+              [`${cssPrefix}action-icon`]: true,
+              'items-center':
+                !props.floatingLabel &&
+                ['text-field', 'numeric-field', 'datetime-field'].includes(component as string),
+            },
+          },
+          [
+            showClearButton
+              ? h<TBsIcon>(BsIcon, {
+                  class: 'icon-clear',
+                  icon: `cancel_${iconVariant}` as Prop<string>,
+                  size: iconSize as Prop<Numberish>,
+                  onClick: clearHandler,
+                })
+              : undefined,
+            showPasswordToggle
+              ? h<TBsToggleIcon>(BsToggleIcon, {
+                  icon: `visibility_${iconVariant}` as Prop<string>,
+                  toggleIcon: `visibility_off_${iconVariant}` as Prop<string>,
+                  size: iconSize as Prop<Numberish>,
+                  modelValue: passwordToggled?.value as unknown as Prop<boolean | undefined>,
+                  'onUpdate:model-value': passwordToggleHandler,
+                })
+              : undefined,
+          ]
+        )
       : createCommentVNode(' v-if-action-icon ')
   );
 }
@@ -440,6 +468,7 @@ export function useRenderTextField(
   return useCreateFieldWrapper(
     slots,
     iconSize,
+    'text-field',
     wrapperCss,
     props,
     h(
@@ -450,6 +479,7 @@ export function useRenderTextField(
       [
         useCreateFieldInnerWrapper(
           slots,
+          'text-field',
           props,
           createTextInputField(emit, props, fieldType, autocomplete, localValue, isFocused),
           iconSize,
@@ -463,6 +493,8 @@ export function useRenderTextField(
             iconSize
           ),
           useCreateFieldActionIcon(
+            'text-field',
+            props,
             showClearButton.value,
             props.actionIconVariant as TIconVariant,
             iconSize,
@@ -551,6 +583,7 @@ export function useRenderTextArea(
   return useCreateFieldWrapper(
     slots,
     iconSize,
+    'textarea-field',
     wrapperCss,
     props,
     h(
@@ -561,6 +594,7 @@ export function useRenderTextArea(
       [
         useCreateFieldInnerWrapper(
           slots,
+          'textarea-field',
           props,
           createTextAreaInputField(
             emit,
@@ -582,6 +616,8 @@ export function useRenderTextArea(
             iconSize
           ),
           useCreateFieldActionIcon(
+            'textarea-field',
+            props,
             showClearButton.value,
             props.actionIconVariant as TIconVariant,
             iconSize,

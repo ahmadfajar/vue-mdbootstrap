@@ -387,81 +387,77 @@ export function useRenderToggleFieldButton(
   errorItems: ComputedRef<string[]>
 ): VNode {
   const thisProps = props as Readonly<TToggleFieldOptionProps>;
+  const fieldState = thisProps.disabled ? 'disabled' : thisProps.readonly ? 'readonly' : undefined;
+  const canShowHelpText =
+    !Helper.isEmpty(thisProps.helpText) &&
+    (thisProps.persistentHelpOff || thisProps.persistentHelpText === false);
 
   return h(
     'div',
     {
       class: wrapperCss.value,
+      'data-component': 'toggle-field',
+      'data-state': fieldState,
+      'data-disabled': thisProps.disabled,
+      'aria-disabled': thisProps.disabled,
     },
     [
       slots.default && slots.default(),
-      h(
-        'div',
-        {
-          class: 'col-md',
-        },
-        [
-          h(
-            'div',
-            {
-              class: [`${cssPrefix}field-inner`],
-            },
-            [
-              h<TBsToggleButton>(
-                BsToggleButton,
-                {
-                  id: props.id,
-                  name: props.name,
-                  disabled: props.disabled,
-                  readonly: props.readonly,
-                  required: props.required,
-                  items: thisProps.items as Prop<TInputOptionItem[]>,
-                  multiple: props.multiple,
-                  modelValue: props.modelValue,
-                  // flat: props.flat,
-                  outlined: props.outlined,
-                  tonal: props.tonal,
-                  raised: props.raised,
-                  rounded: props.rounded,
-                  pill: props.pill,
-                  size: props.size,
-                  color: props.color,
-                  toggleColor: props.toggleColor,
-                  iconPosition: props.iconPosition,
-                  iconSize: props.iconSize,
-                  onMouseenter: () =>
-                    !Helper.isEmpty(thisProps.helpText) &&
-                    !thisProps.persistentHelpText &&
-                    (hasFocused.value = true),
-                  onMouseleave: () =>
-                    !Helper.isEmpty(thisProps.helpText) &&
-                    !thisProps.persistentHelpText &&
-                    (hasFocused.value = false),
-                  'onUpdate:model-value': (value: string | number | boolean) => {
-                    emit('update:model-value', value);
-                  },
+      h('div', { class: 'col' }, [
+        h(
+          'div',
+          {
+            class: [`${cssPrefix}field-inner`],
+          },
+          [
+            h<TBsToggleButton>(
+              BsToggleButton,
+              {
+                id: props.id,
+                name: props.name,
+                disabled: props.disabled,
+                readonly: props.readonly,
+                required: props.required,
+                items: thisProps.items as Prop<TInputOptionItem[]>,
+                multiple: props.multiple,
+                modelValue: props.modelValue,
+                // flat: props.flat,
+                outlined: props.outlined,
+                tonal: props.tonal,
+                raised: props.raised,
+                rounded: props.rounded,
+                pill: props.pill,
+                size: props.size,
+                color: props.color,
+                toggleColor: props.toggleColor,
+                iconPosition: props.iconPosition,
+                iconSize: props.iconSize,
+                onMouseenter: () => canShowHelpText && (hasFocused.value = true),
+                onMouseleave: () => canShowHelpText && (hasFocused.value = false),
+                'onUpdate:model-value': (value: string | number | boolean) => {
+                  emit('update:model-value', value);
                 },
-                {
-                  label: slots.label
-                    ? (item: TInputOptionItem) => useRenderSlot(slots, 'label', item)
-                    : undefined,
-                  icon: slots.icon
-                    ? (item: TInputOptionItem) => useRenderSlot(slots, 'icon', item)
-                    : undefined,
-                }
-              ),
-            ]
-          ),
-          useRenderFieldFeedback(
-            slots,
-            thisProps,
-            showHelpText.value,
-            showValidationError.value,
-            hasError.value,
-            errorItems.value
-          ),
-        ]
-      ),
+              },
+              {
+                label: slots.label
+                  ? (item: TInputOptionItem) => useRenderSlot(slots, 'label', item)
+                  : undefined,
+                icon: slots.icon
+                  ? (item: TInputOptionItem) => useRenderSlot(slots, 'icon', item)
+                  : undefined,
+              }
+            ),
+          ]
+        ),
+        useRenderFieldFeedback(
+          slots,
+          thisProps,
+          showHelpText.value,
+          showValidationError.value,
+          hasError.value,
+          errorItems.value
+        ),
+      ]),
     ]
   );
 }

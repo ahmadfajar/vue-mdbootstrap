@@ -21,8 +21,7 @@ export default defineComponent<TBsToggleField>({
       useGetValidationResult(thisProps, hasFocused);
 
     const wrapperClasses = computed<TRecord>(() => ({
-      [`${cssPrefix}field`]: true,
-      [`${cssPrefix}toggle-field row`]: true,
+      [`${cssPrefix}field row`]: true,
       required: thisProps.required,
       readonly: thisProps.readonly,
       disabled: thisProps.disabled,
