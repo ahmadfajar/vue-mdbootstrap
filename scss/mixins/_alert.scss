@@ -5,7 +5,7 @@
 
 // BsAlert variants -- scss mixins
 //---------------------------------
-@mixin make-default-variant($name, $color) {
+@mixin make-default-variant-light($name, $color) {
   .alert-#{$name} {
     $background-color: helper.set-color-contrast(
       $color,
@@ -51,7 +51,7 @@
   }
 }
 
-@mixin make-outline-variant($name, $color) {
+@mixin make-outline-variant-light($name, $color) {
   .alert-outline-#{$name} {
     $border-color: helper.set-color-contrast(
       $color,

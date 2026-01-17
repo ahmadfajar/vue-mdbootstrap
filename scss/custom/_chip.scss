@@ -4,6 +4,6 @@
 // BsChip with custom colors
 //----------------------------
 @each $name, $color in colors.$custom-theme-colors {
-  @include chip.make-default-variant($name, $color);
-  @include chip.make-outline-variant($name, $color);
+  @include chip.make-default-variant-light($name, $color);
+  @include chip.make-outline-variant-light($name, $color);
 }

@@ -1,0 +1,112 @@
+@use 'sass:color';
+@use '../mixins/css3/text-decorators' as decorators;
+@use '../mixins/theme-maker' as themer;
+@use '../utils/color_helper' as helper;
+@use '../color_vars' as colors;
+@use '../variables' as vars;
+
+// Specify the layer order that follows the TailwindCSS,
+// this is necessary so that TailwindCSS does not break.
+//
+// The layer order is not mandatory and they can be removed
+// if the script to build the theme is not placed inside a layer.
+@layer theme, base, components, animations, utilities;
+
+$theme-colors: (
+  'default': oklch(0.82 0.1 297.94),
+  'primary': oklch(0.636 0.137 235.915),
+  'secondary': colors.$gray-500,
+  'success': oklch(0.55 0.1 177.8),
+  // oklch(0.592 0.106 160.377),
+  'danger': oklch(0.618 0.203 20.568),
+  'warning': colors.$warning-color,
+  'info': colors.$info-color,
+  'light': colors.$gray-200,
+  'dark': colors.$dark-color,
+);
+
+@layer theme {
+  .dark,
+  [data-theme='dark'] {
+    --#{vars.$prefix}dropdown-border-color: var(--border-translucent);
+    --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-accent-indicator);
+
+    // Field validation state color scheme
+    //-------------------------------------
+    .#{vars.$prefix}field {
+      &:not(.has-success):not(.has-error) {
+        --#{vars.$prefix}field-border-color: #{color.change(colors.$gray-100, $alpha: 0.2)};
+        --#{vars.$prefix}field-hover-border-color: #{color.change(
+            helper.to-oklch(color.scale(colors.$gray-100, $lightness: 20%)),
+            $alpha: 0.45
+          )};
+
+        > .#{vars.$prefix}field-wrapper {
+          .#{vars.$prefix}action-icon .#{vars.$prefix}btn,
+          .#{vars.$prefix}action-icon .#{vars.$prefix}btn-icon,
+          .#{vars.$prefix}action-icon > .#{vars.$prefix}icon,
+          .#{vars.$prefix}action-icon > .#{vars.$prefix}toggle-icon,
+          .#{vars.$prefix}prepend-inner,
+          .#{vars.$prefix}prepend-outer,
+          .#{vars.$prefix}append-inner,
+          .#{vars.$prefix}append-outer {
+            &:not(:hover) {
+              opacity: var(--#{vars.$prefix}field-disabled-opacity);
+            }
+          }
+        }
+      }
+
+      &.has-success {
+        .#{vars.$prefix}field-control {
+          $color: helper.to-oklch(color.scale(colors.$success-color, $lightness: 15%));
+          $active-color: helper.to-oklch(color.scale(colors.$success-color, $lightness: 20%));
+
+          --#{vars.$prefix}field-border-color: #{color.change($color, $alpha: 0.5)};
+          --#{vars.$prefix}field-hover-border-color: #{color.change($active-color, $alpha: 0.6)};
+        }
+      }
+
+      &.has-error {
+        .#{vars.$prefix}field-control {
+          $color: helper.to-oklch(color.scale(colors.$danger-color, $lightness: 15%));
+          $active-color: helper.to-oklch(color.scale(colors.$danger-color, $lightness: 10%));
+
+          --#{vars.$prefix}field-border-color: #{color.change($color, $alpha: 0.6)};
+          --#{vars.$prefix}field-hover-border-color: #{color.change($active-color, $alpha: 0.8)};
+          --#{vars.$prefix}field-active-border-color: #{color.change($active-color, $alpha: 0.85)};
+          --#{vars.$prefix}field-floating-label-color: #{color.change($active-color, $alpha: 0.85)};
+        }
+      }
+    }
+
+    // BsButton state color scheme
+    //-----------------------------
+    .#{vars.$prefix}btn,
+    .#{vars.$prefix}btn-fab,
+    .#{vars.$prefix}btn-icon {
+      $disabled-bg: helper.to-oklch(color.adjust(colors.$gray-400, $lightness: 50%));
+
+      --#{vars.$prefix}btn-disabled-bg: #{color.change($disabled-bg, $alpha: 0.08)};
+      --#{vars.$prefix}btn-disabled-color: #{colors.$gray-300};
+      --#{vars.$prefix}btn-disabled-border-color: #{color.change(colors.$gray-500, $alpha: 0.08)};
+      --#{vars.$prefix}btn-focus-border-color: #{colors.$gray-800};
+
+      &[class*='btn-outline'] {
+        --#{vars.$prefix}btn-disabled-border-color: #{color.change(colors.$gray-500, $alpha: 0.7)};
+      }
+    }
+  }
+
+  .dark {
+    @include themer.make-theme-dark(colors.$context-colors);
+  }
+}
+
+// Create utilities for colors, background and text
+//--------------------------------------------------
+.dark {
+  @each $name, $color in $theme-colors {
+    @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
+  }
+}

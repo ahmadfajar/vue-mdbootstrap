@@ -5,7 +5,7 @@
 
 // BsSwitch variants -- scss mixins
 //---------------------------------
-@mixin make-default-variant($name, $color) {
+@mixin make-default-variant-light($name, $color) {
   .switch-#{$name} {
     // prettier-ignore
     --#{vars.$prefix}switch-active-box-shadow: #{
@@ -21,9 +21,9 @@
       $color,
       helper.to-oklch(color.scale($color, $lightness: -20%)),
       $color,
-      220
+      86.3%
     );
-    $thumb-color: helper.set-color-contrast($color, colors.$black, colors.$white, 86.3%);
+    $thumb-color: helper.set-color-contrast($color, colors.$black, colors.$white);
 
     --#{vars.$prefix}switch-active-inset-track-color: #{helper.to-oklch(
         color.scale($color, $lightness: 60%)

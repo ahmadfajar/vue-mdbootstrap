@@ -42,12 +42,6 @@
       }
     }
   }
-
-  //@each $name, $color in colors.$context-colors {
-  //  @include alerts.make-default-variant($name, $color);
-  //  @include alerts.make-outline-variant($name, $color);
-  //  @include alerts.make-solid-variant($name, $color);
-  //}
 }
 
 // Patch Bootstrap 'reboot.css'

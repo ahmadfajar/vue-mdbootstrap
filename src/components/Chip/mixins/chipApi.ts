@@ -109,11 +109,11 @@ function createCloseBtnAttr(
     flat: true as unknown as Prop<boolean>,
     mode: 'icon' as Prop<TButtonMode>,
     icon: 'close' as Prop<string>,
-    iconSize: (props.size === 'sm' ? 14 : props.size === 'lg' ? 24 : 20) as Prop<number>,
+    iconSize: (props.size === 'sm' ? 14 : props.size === 'lg' ? 24 : 18) as Prop<number>,
     size: (props.size === 'sm' ? 'xs' : 'sm') as Prop<TButtonSize>,
     color: (props.closeButtonColor
       ? props.closeButtonColor
-      : isLightColor(props.color as string)
+      : isLightColor(props.color as string) || props.outlined
         ? 'secondary'
         : props.color) as Prop<string>,
     style: { order: 2 },

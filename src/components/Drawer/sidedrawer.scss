@@ -32,7 +32,7 @@
       box-shadow: none !important;
     }
 
-    // Apply SideDrawer color scheme to ListView, List-Tile, and List-Nav
+    // Apply SideDrawer color scheme to ListView, ListTile, and ListNav
     .#{vars.$prefix}list {
       --#{vars.$prefix}listview-bg: var(--sidedrawer-background);
       --#{vars.$prefix}listview-color: var(--sidedrawer-item-foreground);

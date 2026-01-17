@@ -13,7 +13,7 @@ $markerSize: 14px;
     --#{vars.$prefix}color-picker-border-radius: var(--#{vars.$prefix}radius);
     --#{vars.$prefix}color-picker-input-bg: #{colors.$gray-100};
     --#{vars.$prefix}color-picker-input-border: 1px solid oklch(0.867 0.011 247.949);
-    --#{vars.$prefix}color-picker-input-color: var(--foreground, #{colors.$gray-900});
+    --#{vars.$prefix}color-picker-input-color: inherit; // var(--foreground, #{colors.$gray-900});
     // prettier-ignore
     --#{vars.$prefix}color-picker-input-focus-bg: var(--background-secondary, #{colors.$white});
     --#{vars.$prefix}color-picker-input-focus-color: inherit;
@@ -73,7 +73,7 @@ $markerSize: 14px;
 
         > .#{$cmpCssName}selected-color {
           @include borders.radius(vars.$radius-circle);
-          border: colors.$gray-200 1px solid;
+          border: 1px solid oklch(0.464 0 89.876);
 
           > .#{$cmpCssName}selected-color-alpha {
             @include borders.radius(vars.$radius-circle);

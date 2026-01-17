@@ -4,7 +4,7 @@
 // BsAlert with custom colors
 //----------------------------
 @each $name, $color in colors.$common-theme-colors {
-  @include alerts.make-default-variant($name, $color);
-  @include alerts.make-outline-variant($name, $color);
+  @include alerts.make-default-variant-light($name, $color);
+  @include alerts.make-outline-variant-light($name, $color);
   @include alerts.make-solid-variant($name, $color);
 }

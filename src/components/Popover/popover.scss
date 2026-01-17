@@ -26,6 +26,13 @@
       --#{vars.$prefix}listbox-bg: inherit;
     }
   }
+
+  .#{vars.$prefix}popover > .#{vars.$prefix}listbox,
+  .#{vars.$prefix}popover-dropdown-menu,
+  .#{vars.$prefix}popover-datetime {
+    // prettier-ignore
+    border: var(--#{vars.$prefix}dropdown-border-width) solid var(--#{vars.$prefix}dropdown-border-color);
+  }
 }
 
 @layer animations {

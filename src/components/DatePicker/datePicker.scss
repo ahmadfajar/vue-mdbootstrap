@@ -46,6 +46,10 @@
         padding: 0;
       }
     }
+
+    .#{vars.$prefix}btn-today {
+      --#{vars.$prefix}btn-border-color: var(--#{vars.$prefix}btn-color);
+    }
   }
 
   .#{vars.$prefix}datepicker-header,
@@ -131,10 +135,6 @@
   .#{vars.$prefix}datepicker-years {
     // prettier-ignore
     padding: 0 calc(var(--#{vars.$prefix}datepicker-padding-x) - 0.25rem) calc(var(--#{vars.$prefix}datepicker-padding-y) - 0.25rem);
-
-    .#{vars.$prefix}btn-today {
-      --#{vars.$prefix}btn-border-color: var(--#{vars.$prefix}btn-color);
-    }
   }
 
   .#{vars.$prefix}datepicker-days {

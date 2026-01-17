@@ -96,30 +96,13 @@
             $color,
             color.change(color.adjust($color, $lightness: -2%), $alpha: 0.5),
             // tune warning and info colors
-            color.change($color, $chroma: 20%, $lightness: 95%),
+            color.mix($color, #fff, 25%, oklch),
             90%
           ),
-          color.scale($color, $chroma: -15%, $lightness: 70%)
+          color.mix($color, #fff, 20%, oklch)
         ),
         // tune dark colors
-        color.adjust($color, $chroma: -10%, $lightness: 55%),
-        25%
-      );
-      $border-color: helper.set-color-contrast(
-        $color,
-        helper.set-color-contrast(
-          $color,
-          helper.set-color-contrast(
-            $color,
-            color.change(color.adjust($color, $lightness: -5%), $alpha: 0.15),
-            // tune warning and info colors
-            color.change($color, $chroma: 20%, $lightness: 95%, $alpha: 0.125),
-            90%
-          ),
-          color.scale($color, $chroma: -15%, $lightness: 70%)
-        ),
-        // tune dark colors
-        color.adjust($color, $chroma: -10%, $lightness: 55%),
+        color.change(color.adjust($color, $chroma: -10%, $lightness: 55%), $alpha: 0.8),
         25%
       );
       $hover-bg: helper.set-color-contrast(
@@ -133,7 +116,7 @@
             color.scale($color, $chroma: -10%, $lightness: 65%),
             90%
           ),
-          color.scale($color, $chroma: -25%, $lightness: 55%)
+          color.scale($color, $chroma: -25%, $lightness: 65%)
         ),
         // tune dark colors
         color.adjust($color, $chroma: -10%, $lightness: 50%),
@@ -165,15 +148,13 @@
 
       --#{vars.$prefix}btn-bg: #{helper.to-oklch($bg-color)};
       --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
-      --#{vars.$prefix}btn-border-color: #{helper.to-oklch($border-color)};
+      --#{vars.$prefix}btn-border-color: transparent;
       --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($active-bg)};
       --#{vars.$prefix}btn-active-color: #{helper.to-oklch($active-text)};
       --#{vars.$prefix}btn-active-border-color: #{helper.to-oklch($active-bg)};
       --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
       --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($hover-text)};
-      --#{vars.$prefix}btn-hover-border-color: #{helper.to-oklch(
-          color.change($hover-bg, $alpha: 0.125)
-        )};
+      --#{vars.$prefix}btn-hover-border-color: transparent;
     }
   }
 
@@ -189,8 +170,8 @@
         }
 
         &.btn-tonal {
-          $border-color: helper.to-oklch(color.adjust($color, $lightness: 24%));
-          border-left-color: color.change($border-color, $alpha: 0.8) !important;
+          //$border-color: helper.to-oklch(color.adjust($color, $lightness: 24%));
+          border-left-color: color.change($color, $alpha: 0.14) !important;
         }
       }
     }
@@ -478,8 +459,8 @@
       $color,
       helper.set-color-contrast(
         $color,
+        // tune light colors
         color.change(color.scale($color, $lightness: 15%), $alpha: 0.3),
-        // tune warning and info colors
         color.change(color.mix($color, #fff, 25%, oklch), $alpha: 0.9),
         90%
       ),

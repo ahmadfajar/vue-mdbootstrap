@@ -33,26 +33,27 @@
   .#{vars.$prefix}anchor-center {
     text-anchor: middle;
   }
+
+  .#{vars.$prefix}divider {
+    --#{vars.$prefix}divider-height: 1px;
+    --#{vars.$prefix}divider-margin-y: #{vars.$padding-xs};
+    --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.15)};
+
+    &.divider--dark {
+      --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
+    }
+  }
 }
 
 // Patch Bootstrap 'reboot.css' styles
 // This patch must be placed outside the css layer.
 .#{vars.$prefix}divider {
-  --#{vars.$prefix}divider-height: 1px;
-  --#{vars.$prefix}divider-margin-y: #{vars.$padding-xs};
-  --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.15)};
-
   background-color: var(--#{vars.$prefix}divider-color);
   height: var(--#{vars.$prefix}divider-height);
   min-height: var(--#{vars.$prefix}divider-height);
   margin-bottom: var(--#{vars.$prefix}divider-margin-y);
   margin-top: var(--#{vars.$prefix}divider-margin-y);
-  // max-width: 100%;
   border: none;
   display: block;
   opacity: 1;
-
-  &.divider--dark {
-    --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
-  }
 }

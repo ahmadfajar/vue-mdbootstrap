@@ -9,6 +9,7 @@
 @use 'switch';
 @use 'css3/text-decorators' as decorators;
 @use '../color_vars' as colors;
+@use '../variables' as vars;
 
 @mixin make-theme-light($theme-colors) {
   $no-dark: map.remove($theme-colors, 'dark');
@@ -17,22 +18,22 @@
   // BsBadge color scheme
   //-----------------------
   @each $name, $color in $no-dark {
-    @include badge.make-actionable-variant($name, $color);
+    @include badge.make-actionable-variant-light($name, $color);
   }
 
   // BsButton color scheme
   //-----------------------
   @each $name, $color in $theme-colors {
-    @include button.make-default-variant($name, $color);
-    @include button.make-outline-variant($name, $color);
-    @include button.make-flat-variant($name, $color);
+    @include button.make-default-variant-light($name, $color);
+    @include button.make-outline-variant-light($name, $color);
+    @include button.make-flat-variant-light($name, $color);
   }
 
   // BsAlert color scheme
   //-----------------------
   @each $name, $color in $no-dark {
-    @include alert.make-default-variant($name, $color);
-    @include alert.make-outline-variant($name, $color);
+    @include alert.make-default-variant-light($name, $color);
+    @include alert.make-outline-variant-light($name, $color);
     @include alert.make-solid-variant($name, $color);
   }
 
@@ -51,14 +52,14 @@
   // BsSwitch color scheme
   //-----------------------
   @each $name, $color in $no-dark-light {
-    @include switch.make-default-variant($name, $color);
+    @include switch.make-default-variant-light($name, $color);
   }
 
   // BsChip color scheme
   //---------------------
   @each $name, $color in $no-dark {
-    @include chip.make-default-variant($name, $color);
-    @include chip.make-outline-variant($name, $color);
+    @include chip.make-default-variant-light($name, $color);
+    @include chip.make-outline-variant-light($name, $color);
   }
 
   // BsProgress color scheme
@@ -87,5 +88,11 @@
     @include button.make-default-variant($name, $color, true);
     @include button.make-outline-variant($name, $color, true);
     @include button.make-flat-variant($name, $color, true);
+  }
+
+  // BsColorPicker color scheme
+  //----------------------------
+  .#{vars.$prefix}color-picker {
+    --#{vars.$prefix}color-picker-input-bg: oklch(0.287 0.003 48.605);
   }
 }

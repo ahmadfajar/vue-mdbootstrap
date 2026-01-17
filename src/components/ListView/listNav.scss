@@ -332,7 +332,8 @@
   }
 }
 
-// separate these styles from layer to override Bootstrap 'reboot.css'
+// Patch Bootstrap 'reboot.css'
+// This patch must be placed outside the css layer.
 .#{vars.$prefix}list-nav {
   padding: 0;
   margin: 0;

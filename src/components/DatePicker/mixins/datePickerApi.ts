@@ -12,6 +12,7 @@ import type {
   TBsDatePickerCalendar,
   TBsDatePickerNav,
   TBsDatePickerTimes,
+  TButtonColor,
   TButtonMode,
   TButtonSize,
   TDatePickerBaseProps,
@@ -304,7 +305,7 @@ export function useRenderDatePickerHeader(
 }
 
 function createCalendarNavButton(
-  color: string,
+  color: TButtonColor | string,
   icon: string,
   iconSize: number,
   disabled?: boolean,
@@ -339,8 +340,12 @@ export function useRenderDatePickerNav(
       class: [`${cssPrefix}datepicker-nav`, 'flex', 'items-center', 'justify-between'],
     },
     [
-      createCalendarNavButton(props.buttonColor || 'dark', 'chevron_left', 30, props.disabled, () =>
-        datePickerNavButtonHandler(props, localValue, emit, -1)
+      createCalendarNavButton(
+        props.buttonColor || 'secondary',
+        'chevron_left',
+        30,
+        props.disabled,
+        () => datePickerNavButtonHandler(props, localValue, emit, -1)
       ),
       h(
         'div',
@@ -374,7 +379,7 @@ export function useRenderDatePickerNav(
         ]
       ),
       createCalendarNavButton(
-        props.buttonColor || 'dark',
+        props.buttonColor || 'secondary',
         'chevron_right',
         30,
         props.disabled,
@@ -661,8 +666,8 @@ function createCalendarDayButton(
       mode: 'icon' as Prop<TButtonMode>,
       readonly: props.disabled as unknown as Prop<boolean>,
       color: (!today.hasSame(data.value, 'day') && !selected
-        ? props.calendarButton || 'dark'
-        : props.selectedColor) as Prop<string>,
+        ? props.calendarButton || 'secondary'
+        : props.selectedColor) as Prop<TButtonColor | string>,
       class: isOutlined ? `${cssPrefix}btn-today` : undefined,
       flat: (!today.hasSame(data.value, 'day') && !selected) as unknown as Prop<boolean>,
       outlined: isOutlined as unknown as Prop<boolean>,
@@ -931,8 +936,8 @@ function createCalendarButton(
       readonly: props.disabled as unknown as Prop<boolean>,
       class: isOutlined ? `${cssPrefix}btn-today` : undefined,
       color: (!today.hasSame(data.value, unit) && !selected
-        ? props.calendarButton || 'dark'
-        : props.selectedColor) as Prop<string>,
+        ? props.calendarButton || 'secondary'
+        : props.selectedColor) as Prop<TButtonColor | string>,
       flat: (!today.hasSame(data.value, unit) && !selected) as unknown as Prop<boolean>,
       outlined: isOutlined as unknown as Prop<boolean>,
       pill: false as unknown as Prop<boolean>,
@@ -1256,11 +1261,9 @@ export function useParseDate(value?: string | number | Date | null): DateTime {
     if (Helper.isString(value)) {
       try {
         return DateTime.fromISO(value);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_e) {
         try {
           return DateTime.fromSQL(value);
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
         } catch (_e) {
           return DateTime.now().set({ millisecond: 0 });
         }
@@ -1378,7 +1381,7 @@ export function useRenderDatePicker(
                 [
                   currentView.value !== DatePickerConst.TIME
                     ? h<TBsDatePickerNav>(BsDatePickerNav, {
-                        buttonColor: (props.buttonColor || 'dark') as Prop<string>,
+                        buttonColor: (props.buttonColor || 'secondary') as Prop<string>,
                         displayMode: currentView.value as Prop<TDateTimePickerMode>,
                         // disabled: props.readonly,
                         locale: locale.value as Prop<string>,
@@ -1405,7 +1408,7 @@ export function useRenderDatePicker(
                         modelValue: thisValue as Prop<Date>,
                         disabled: props.readonly as unknown as Prop<boolean>,
                         calendarDate: calendarValue.value as Prop<Date>,
-                        calendarButton: (props.buttonColor || 'dark') as Prop<string>,
+                        calendarButton: (props.buttonColor || 'secondary') as Prop<string>,
                         selectedColor: selectedButtonColor(props) as Prop<string>,
                         'onUpdate:model-value': (value: Date) => {
                           // calendarValue.value = value;
@@ -1422,7 +1425,7 @@ export function useRenderDatePicker(
                         modelValue: thisValue as Prop<Date>,
                         disabled: props.readonly as unknown as Prop<boolean>,
                         calendarDate: calendarValue.value as Prop<Date>,
-                        calendarButton: (props.buttonColor || 'dark') as Prop<string>,
+                        calendarButton: (props.buttonColor || 'secondary') as Prop<string>,
                         selectedColor: selectedButtonColor(props) as Prop<string>,
                         'onUpdate:model-value': (value: Date) => {
                           calendarValue.value = value;
@@ -1446,7 +1449,7 @@ export function useRenderDatePicker(
                         modelValue: thisValue as Prop<Date>,
                         disabled: props.readonly as unknown as Prop<boolean>,
                         calendarDate: calendarValue.value as Prop<Date>,
-                        calendarButton: (props.buttonColor || 'dark') as Prop<string>,
+                        calendarButton: (props.buttonColor || 'secondary') as Prop<string>,
                         selectedColor: selectedButtonColor(props) as Prop<string>,
                         'onUpdate:model-value': (value: Date) => {
                           dispatchDatePickerValue(emit, pickerMode.value, value);
@@ -1470,7 +1473,7 @@ export function useRenderDatePicker(
                         locale: locale.value as Prop<string>,
                         modelValue: thisValue as Prop<Date>,
                         disabled: props.readonly as unknown as Prop<boolean>,
-                        calendarButton: (props.buttonColor || 'dark') as Prop<string>,
+                        calendarButton: (props.buttonColor || 'secondary') as Prop<string>,
                         selectedColor: selectedButtonColor(props) as Prop<string>,
                         backButton: (pickerMode.value !==
                           DatePickerConst.TIME) as unknown as Prop<boolean>,

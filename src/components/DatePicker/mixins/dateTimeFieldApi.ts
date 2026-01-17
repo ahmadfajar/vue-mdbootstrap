@@ -17,10 +17,12 @@ import {
 import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
 import { BsPopover } from '@/components/Popover';
 import { useTogglePopoverState } from '@/components/Popover/mixins/popoverApi.ts';
+import { cssPrefix, useMergeClass } from '@/mixins/CommonApi.ts';
 import type {
   Numberish,
   TBsDatePicker,
   TBsPopover,
+  TButtonColor,
   TDateTimeFieldOptionProps,
   TDateTimePickerMode,
   TEmitFn,
@@ -227,7 +229,9 @@ export function useRenderDateTimeField(
         {
           color: null,
           space: (props.outlined ? 2 : 1) as Prop<number>,
-          class: props.pickerCls,
+          class: props.pickerCls
+            ? useMergeClass(props.pickerCls, `${cssPrefix}popover-datetime`)
+            : `${cssPrefix}popover-datetime`,
           placement: props.pickerPlacement as Prop<TPopoverPosition>,
           transition: props.pickerTransition as Prop<string>,
           open: isPopoverOpen.value as unknown as Prop<boolean>,
@@ -240,7 +244,7 @@ export function useRenderDateTimeField(
         {
           default: () =>
             h<TBsDatePicker>(BsDatePicker, {
-              buttonColor: (props.pickerButton || 'dark') as Prop<string>,
+              buttonColor: (props.pickerButton || 'secondary') as Prop<TButtonColor>,
               selectedColor: props.pickerSelectedColor as Prop<string>,
               surfaceColor: props.pickerColor as Prop<string>,
               surfaceClass: props.surfaceCls as Prop<string>,

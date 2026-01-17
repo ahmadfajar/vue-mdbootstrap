@@ -368,41 +368,8 @@
         &.disabled,
         &:disabled {
           $disabled-border-color: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: -7%));
-          border-left-color: color.change($disabled-border-color, $alpha: 0.5) !important;
+          border-left-color: color.change($disabled-border-color, $alpha: 0.2) !important;
         }
-      }
-    }
-  }
-
-  // BsButton with basic colors
-  //----------------------------
-  //@each $name, $color in colors.$context-colors {
-  //  @include button.make-default-variant($name, $color);
-  //  @include button.make-outline-variant($name, $color);
-  //  @include button.make-flat-variant($name, $color);
-  //}
-
-  // BsButton with dark color variant
-  //----------------------------------
-  //@include button.make-default-variant('dark', colors.$dark-color);
-  //@include button.make-outline-variant('dark', colors.$dark-color);
-  //@include button.make-flat-variant('dark', colors.$dark-color);
-
-  .dark,
-  [data-theme='dark'] {
-    .#{vars.$prefix}btn,
-    .#{vars.$prefix}btn-fab,
-    .#{vars.$prefix}btn-icon {
-      $disabled-bg: helper.to-oklch(color.adjust(colors.$gray-400, $lightness: 50%));
-      $disabled-border-color: helper.to-oklch(color.adjust(colors.$gray-400, $lightness: 10%));
-
-      --#{vars.$prefix}btn-disabled-bg: #{color.change($disabled-bg, $alpha: 0.08)};
-      --#{vars.$prefix}btn-disabled-color: #{colors.$gray-300};
-      --#{vars.$prefix}btn-disabled-border-color: #{color.change(colors.$gray-500, $alpha: 0.08)};
-      --#{vars.$prefix}btn-focus-border-color: #{colors.$gray-800};
-
-      &[class*='btn-outline'] {
-        --#{vars.$prefix}btn-disabled-border-color: #{color.change(colors.$gray-500, $alpha: 0.7)};
       }
     }
   }

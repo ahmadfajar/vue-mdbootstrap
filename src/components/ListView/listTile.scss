@@ -77,6 +77,7 @@
 
       .#{vars.$prefix}checkbox {
         --#{vars.$prefix}checkbox-margin: #{vars.$padding-xs vars.$padding-sm vars.$padding-xs 0};
+        --#{vars.$prefix}checkbox-disabled-opacity: 0.5;
       }
     }
 
@@ -300,7 +301,8 @@
   }
 }
 
-// separate these styles from layer to override Bootstrap 'reboot.css'
+// Patch Bootstrap 'reboot.css'
+// This patch must be placed outside the css layer.
 .#{vars.$prefix}list-tile {
   user-select: none;
   text-decoration: none;

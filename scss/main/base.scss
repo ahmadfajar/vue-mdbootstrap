@@ -1,6 +1,3 @@
-@use 'sass:color';
-@use '../utils/color_helper' as helper;
-@use '../color_vars' as colors;
 @use '../variables' as vars;
 
 @layer theme, base, components, animations, utilities;
@@ -44,7 +41,7 @@
 
 // Global component css variables
 //--------------------------------
-@layer components {
+@layer theme {
   :root {
     // Global css variables to maintain UI component aspects
     //-------------------------------------------------------
@@ -58,64 +55,10 @@
     --#{vars.$prefix}field-disabled-opacity: 0.4;
     --#{vars.$prefix}field-readonly-opacity: 0.55;
 
+    --#{vars.$prefix}dropdown-border-color: transparent;
+    --#{vars.$prefix}dropdown-border-width: 0;
     --#{vars.$prefix}caret-size: 5px;
     --#{vars.$prefix}radius: #{vars.$radius-md};
     --#{vars.$prefix}radius-pill: #{vars.$radius-pill};
-
-    // Global css variables to maintain apps UI colors
-    //-------------------------------------------------
-    --background: #{colors.$white};
-    --foreground: #{colors.$neutral-darken-4};
-
-    --background-secondary: #{colors.$white};
-    --foreground-secondary: #{colors.$neutral-darken-4};
-
-    --background-tertiary: #{colors.$white};
-    --foreground-tertiary: #{colors.$neutral-darken-4};
-
-    --foreground-subtle: #{colors.$neutral-darken-1};
-    --foreground-subtle-secondary: #{colors.$neutral-base};
-    --foreground-subtle-tertiary: #{colors.$neutral-lighten-2};
-
-    --border-translucent: oklch(0.88 0.001 17.18 / 0.75);
-
-    --appbar-background: var(--background);
-    --appbar-foreground: var(--foreground);
-
-    --sidedrawer-background: oklch(0.969 0.005 247.877);
-    --sidedrawer-foreground: var(--foreground);
-    --sidedrawer-item-foreground: var(--foreground);
-    --sidedrawer-item-foreground-secondary: var(--foreground-subtle);
-    --sidedrawer-item-foreground-subtle: var(--foreground-subtle-secondary);
-    --sidedrawer-item-active-background: #{vars.$default-active-bgcolor};
-    --sidedrawer-item-active-foreground: #{helper.to-oklch(
-        color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 1)
-      )};
-    --sidedrawer-item-active-foreground-secondary: #{helper.to-oklch(
-        color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 0.75)
-      )};
-    --sidedrawer-item-hover-background: #{vars.$default-hover-bgcolor};
-    --sidedrawer-item-hover-foreground: var(--foreground);
-    --sidedrawer-item-border-indicator: var(--#{vars.$prefix}field-active-indicator);
-    --sidedrawer-item-divider-color: var(--border-translucent);
-    --sidedrawer-item-expanded-background: oklch(0 0 0 / 0.03);
-
-    // Used in dropdown menus, list-tile, list-nav and other similar UI
-    --navigation-background: var(--background-secondary);
-    --navigation-item-foreground: var(--foreground);
-    --navigation-item-foreground-secondary: var(--foreground-subtle);
-    --navigation-item-foreground-subtle: var(--foreground-subtle-secondary);
-    --navigation-item-active-background: #{vars.$default-active-bgcolor};
-    --navigation-item-active-foreground: #{helper.to-oklch(
-        color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 1)
-      )};
-    --navigation-item-active-foreground-secondary: #{helper.to-oklch(
-        color.change(color.scale(vars.$default-active-bgcolor, $lightness: -10%), $alpha: 0.75)
-      )};
-    --navigation-item-hover-background: #{vars.$default-hover-bgcolor};
-    --navigation-item-hover-foreground: var(--foreground);
-    --navigation-item-hover-foreground-secondary: #{colors.$gray-600};
-    --navigation-item-expanded-background: oklch(0 0 0 / 0.025);
-    --navigation-item-border-indicator: var(--#{vars.$prefix}field-active-indicator);
   }
 }

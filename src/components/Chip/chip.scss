@@ -11,12 +11,13 @@
     $disabled-bg: helper.to-oklch(color.adjust(colors.$gray-400, $lightness: 15%));
     $disabled-border-color: helper.to-oklch(color.adjust(colors.$gray-400, $lightness: 8%));
 
-    --#{vars.$prefix}chip-border-width: 0;
+    --#{vars.$prefix}chip-border-width: thin;
     --#{vars.$prefix}chip-font-weight: #{vars.$font-weight-normal};
 
     --#{vars.$prefix}chip-disabled-bg: #{$disabled-bg};
     --#{vars.$prefix}chip-disabled-border-color: #{$disabled-border-color};
     --#{vars.$prefix}chip-disabled-color: #{colors.$gray-800};
+    --#{vars.$prefix}chip-disabled-icon-color: #{colors.$gray-500};
     --#{vars.$prefix}chip-disabled-opacity: 0.5;
     --#{vars.$prefix}chip-readonly-opacity: 0.65;
 
@@ -31,6 +32,7 @@
     --#{vars.$prefix}chip-dismiss-btn-margin-right: #{(vars.$padding-sm + 0.25) * -1};
 
     --#{vars.$prefix}chip-md-border-radius: #{vars.$radius-md};
+    --#{vars.$prefix}chip-md-font-size: #{vars.$chip-md-font-size};
     --#{vars.$prefix}chip-md-height: #{vars.$chip-md-height};
     --#{vars.$prefix}chip-md-padding-x: #{vars.$padding-md};
     --#{vars.$prefix}chip-md-padding-y: 0;
@@ -53,6 +55,7 @@
     --#{vars.$prefix}chip-state-border-color: var(--#{vars.$prefix}chip-border-color);
     --#{vars.$prefix}chip-state-icon-color: var(--#{vars.$prefix}chip-icon-color);
     --#{vars.$prefix}chip-state-border-radius: var(--#{vars.$prefix}chip-md-border-radius);
+    --#{vars.$prefix}chip-state-font-size: var(--#{vars.$prefix}chip-md-font-size);
     --#{vars.$prefix}chip-state-height: var(--#{vars.$prefix}chip-md-height);
     --#{vars.$prefix}chip-state-padding-x: var(--#{vars.$prefix}chip-md-padding-x);
     --#{vars.$prefix}chip-state-padding-y: var(--#{vars.$prefix}chip-md-padding-y);
@@ -64,6 +67,7 @@
     border: var(--#{vars.$prefix}chip-border-width) solid var(--#{vars.$prefix}chip-state-border-color);
     // prettier-ignore
     margin: var(--#{vars.$prefix}chip-gutter-y) var(--#{vars.$prefix}chip-gutter-x) var(--#{vars.$prefix}chip-gutter-y) 0;
+    font-size: var(--#{vars.$prefix}chip-state-font-size);
     font-weight: var(--#{vars.$prefix}chip-font-weight);
     height: var(--#{vars.$prefix}chip-state-height);
     cursor: default;
@@ -123,7 +127,7 @@
     &.disabled {
       --#{vars.$prefix}chip-state-bg: var(--#{vars.$prefix}chip-disabled-bg);
       --#{vars.$prefix}chip-state-color: var(--#{vars.$prefix}chip-disabled-color);
-      --#{vars.$prefix}chip-state-icon-color: #{colors.$gray-500};
+      --#{vars.$prefix}chip-state-icon-color: var(--#{vars.$prefix}chip-disabled-icon-color);
       // prettier-ignore
       --#{vars.$prefix}chip-state-border-color: var(--#{vars.$prefix}chip-disabled-border-color);
 
@@ -194,8 +198,7 @@
       --#{vars.$prefix}chip-state-height: var(--#{vars.$prefix}chip-sm-height);
       --#{vars.$prefix}chip-state-padding-x: var(--#{vars.$prefix}chip-sm-padding-x);
       --#{vars.$prefix}chip-state-padding-y: var(--#{vars.$prefix}chip-sm-padding-y);
-
-      font-size: var(--#{vars.$prefix}chip-sm-font-size);
+      --#{vars.$prefix}chip-state-font-size: var(--#{vars.$prefix}chip-sm-font-size);
 
       > .#{vars.$prefix}chip-content {
         --#{vars.$prefix}chip-avatar-margin-left: #{vars.$padding-sm * -1};
@@ -213,8 +216,7 @@
       --#{vars.$prefix}chip-state-height: var(--#{vars.$prefix}chip-lg-height);
       --#{vars.$prefix}chip-state-padding-x: var(--#{vars.$prefix}chip-lg-padding-x);
       --#{vars.$prefix}chip-state-padding-y: var(--#{vars.$prefix}chip-lg-padding-y);
-
-      font-size: var(--#{vars.$prefix}chip-lg-font-size);
+      --#{vars.$prefix}chip-state-font-size: var(--#{vars.$prefix}chip-lg-font-size);
 
       > .#{vars.$prefix}chip-content {
         --#{vars.$prefix}chip-avatar-margin-left: #{(vars.$padding-md + 0.125) * -1};
@@ -241,8 +243,7 @@
     }
 
     &[class*='chip-outline'] {
-      --#{vars.$prefix}chip-border-width: thin;
-
+      //--#{vars.$prefix}chip-border-width: thin;
       &.#{vars.$prefix}chip-sm {
         .#{vars.$prefix}chip-avatar:not(.#{vars.$prefix}chip-avatar-bounded) {
           margin-left: calc(var(--#{vars.$prefix}chip-avatar-margin-left) - 1px);
@@ -257,11 +258,6 @@
       margin-left: 0;
     }
   }
-
-  //@each $name, $color in colors.$context-colors {
-  //  @include chip.make-default-variant($name, $color);
-  //  @include chip.make-outline-variant($name, $color);
-  //}
 }
 
 // Patch Bootstrap 'reboot.css'

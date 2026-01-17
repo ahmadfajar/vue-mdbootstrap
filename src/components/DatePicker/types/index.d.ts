@@ -29,7 +29,7 @@ export declare type TDatePickerHeaderProps = TDatePickerBaseProps & {
 };
 
 export declare type TDatePickerNavProps = TDatePickerBaseProps & {
-  buttonColor?: string;
+  buttonColor?: TButtonColor | string;
   displayMode?: TDateTimePickerMode;
   disabled?: boolean;
 };
@@ -37,15 +37,15 @@ export declare type TDatePickerNavProps = TDatePickerBaseProps & {
 export declare type TDatePickerCalendarProps = TDatePickerBaseProps & {
   disabled?: boolean;
   calendarDate?: Date;
-  calendarButton: string;
-  selectedColor?: string;
+  calendarButton: TButtonColor | string;
+  selectedColor?: TButtonColor | string;
 };
 
 export declare type TTimePickerProps = TDatePickerBaseProps & {
   backButton?: boolean;
   disabled?: boolean;
   selectedColor?: string;
-  calendarButton: string;
+  calendarButton: TButtonColor | string;
 };
 
 export declare type TDatePickerOptionProps = {
@@ -270,8 +270,7 @@ export declare const BsDatePicker: {
 };
 
 declare interface DateTimeFieldEvents
-  extends EventVoidClosableProps,
-    EventUpdateModelValueProps<string> {
+  extends EventVoidClosableProps, EventUpdateModelValueProps<string> {
   /**
    * Fired when this component lost focus.
    */

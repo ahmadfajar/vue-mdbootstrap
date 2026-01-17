@@ -2,6 +2,10 @@
 @use 'sass:math';
 @use 'sass:string';
 
+@function fn-if($condition, $valueTrue, $valueFalse) {
+  @return if(sass($condition): $valueTrue; else: $valueFalse);
+}
+
 @function round($value, $fractionDigits: 0) {
   $power: math.pow(10, $fractionDigits);
   @return math.div(math.round($power * $value), $power);
@@ -102,6 +106,7 @@ $default-active-bgcolor: to-oklch(#5f4a97);
 // $lightness is positive it will tint with white and the color result becomes lighter
 @function shift-color($color, $lightness: 10%) {
   $weight: math.abs($lightness);
+  // prettier-ignore
   $tint-color: if(sass($lightness > 0): $white; else: $black);
 
   @return to-oklch(color.mix($tint-color, $color, $weight, oklch));

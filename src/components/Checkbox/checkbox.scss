@@ -1,4 +1,3 @@
-//@use 'sass:map';
 @use '../../../scss/mixins/css3/borders';
 @use '../../../scss/mixins/checkbox';
 @use '../../../scss/color_vars' as colors;
@@ -198,8 +197,4 @@
       --#{vars.$prefix}checkbox-state-inner-color: currentColor;
     }
   }
-
-  //@each $name, $color in map.remove(colors.$context-colors, 'light') {
-  //  @include checkbox.make-default-variant($name, $color);
-  //}
 }
