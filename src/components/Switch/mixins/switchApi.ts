@@ -15,7 +15,7 @@ export function useSwitchClasses(props: Readonly<TSwitchOptionProps>): TRecord {
   return {
     [`${cssPrefix}switch`]: true,
     [`${cssPrefix}switch-inset`]: props.insetMode || props.insetOutlined,
-    [`${cssPrefix}switch-outlined`]: props.insetOutlined === true && !checked,
+    [`${cssPrefix}switch-outlined`]: props.insetOutlined === true,
     [`switch-${props.color}`]: props.color != null,
     'flex items-center relative': true,
     checked: checked,

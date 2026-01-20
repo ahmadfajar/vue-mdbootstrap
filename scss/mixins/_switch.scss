@@ -24,11 +24,12 @@
       86.3%
     );
     $thumb-color: helper.set-color-contrast($color, colors.$black, colors.$white);
+    $track-color: helper.to-oklch(color.scale($color, $lightness: 60%));
 
-    --#{vars.$prefix}switch-active-inset-track-color: #{helper.to-oklch(
-        color.scale($color, $lightness: 60%)
-      )};
+    --#{vars.$prefix}switch-active-inset-track-color: #{$track-color};
     --#{vars.$prefix}switch-active-inset-thumb-bg: #{$thumb-bg};
     --#{vars.$prefix}switch-active-inset-thumb-color: #{$thumb-color};
+    // prettier-ignore
+    --#{vars.$prefix}switch-active-outlined-stroke-color: #{color.change($track-color, $alpha: 0.15)};
   }
 }

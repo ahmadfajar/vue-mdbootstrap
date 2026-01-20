@@ -41,6 +41,8 @@
     --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-track-color);
     --#{vars.$prefix}switch-state-track-height: var(--#{vars.$prefix}switch-track-height);
     --#{vars.$prefix}switch-state-track-width: var(--#{vars.$prefix}switch-track-width);
+    // prettier-ignore
+    --#{vars.$prefix}switch-state-outlined-stroke-color: var(--#{vars.$prefix}switch-outlined-stroke-color);
     // end
 
     &:not(.disabled):not(.readonly) {
@@ -138,14 +140,14 @@
     &.#{vars.$prefix}switch-inset {
       --#{vars.$prefix}switch-state-thumb-color: #{colors.$gray-800};
       // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-margin-left: calc((var(--#{vars.$prefix}switch-inset-track-height) - var(--#{vars.$prefix}switch-inset-thumb-size)) / 2);
+      // prettier-ignore
       --#{vars.$prefix}switch-state-thumb-size: var(--#{vars.$prefix}switch-inset-thumb-size);
       --#{vars.$prefix}switch-state-track-color: var(--#{vars.$prefix}switch-track-color);
       // prettier-ignore
       --#{vars.$prefix}switch-state-track-height: var(--#{vars.$prefix}switch-inset-track-height);
       // prettier-ignore
       --#{vars.$prefix}switch-state-track-width: var(--#{vars.$prefix}switch-inset-track-width);
-      // prettier-ignore
-      --#{vars.$prefix}switch-state-thumb-margin-left: calc((var(--#{vars.$prefix}switch-inset-track-height) - var(--#{vars.$prefix}switch-inset-thumb-size)) / 2);
     }
 
     &.#{vars.$prefix}switch-outlined {
@@ -155,13 +157,22 @@
       // prettier-ignore
       --#{vars.$prefix}switch-state-thumb-bg: var(--#{vars.$prefix}switch-outlined-thumb-color);
       // prettier-ignore
-      --#{vars.$prefix}switch-state-thumb-size: var(--#{vars.$prefix}switch-outlined-thumb-size);
-      // prettier-ignore
       --#{vars.$prefix}switch-state-thumb-margin-left: calc((var(--#{vars.$prefix}switch-inset-track-height) - var(--#{vars.$prefix}switch-outlined-thumb-size)) / 2);
+      // prettier-ignore
+      --#{vars.$prefix}switch-state-thumb-size: var(--#{vars.$prefix}switch-outlined-thumb-size);
 
       .#{vars.$prefix}switch-track {
         // prettier-ignore
-        border: var(--#{vars.$prefix}switch-outlined-stroke) solid var(--#{vars.$prefix}switch-outlined-stroke-color);
+        border: var(--#{vars.$prefix}switch-outlined-stroke) solid var(--#{vars.$prefix}switch-state-outlined-stroke-color);
+      }
+
+      &.checked {
+        // prettier-ignore
+        --#{vars.$prefix}switch-state-outlined-stroke-color: var(--#{vars.$prefix}switch-active-outlined-stroke-color);
+        // prettier-ignore
+        --#{vars.$prefix}switch-state-thumb-margin-left: calc((var(--#{vars.$prefix}switch-inset-track-height) - var(--#{vars.$prefix}switch-inset-thumb-size)) / 2 + 1px);
+        // prettier-ignore
+        --#{vars.$prefix}switch-state-thumb-size: var(--#{vars.$prefix}switch-inset-thumb-size);
       }
     }
 
