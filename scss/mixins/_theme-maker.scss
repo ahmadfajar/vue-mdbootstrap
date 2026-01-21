@@ -1,9 +1,11 @@
+@use 'sass:color';
 @use 'sass:map';
 @use 'alert';
 @use 'badge';
 @use 'button';
 @use 'checkbox';
 @use 'chip';
+@use 'field';
 @use 'progress';
 @use 'radio';
 @use 'switch';
@@ -70,29 +72,146 @@
   }
 }
 
-// TODO: dark color scheme for other components is still incomplete
 @mixin make-theme-dark($theme-colors) {
   $no-dark: map.remove($theme-colors, 'dark');
   $no-dark-light: map.remove($theme-colors, 'dark', 'light');
 
+  // Field validation state color scheme
+  //-------------------------------------
+  @include field.make-state-validation-variant-dark();
+
   // BsBadge color scheme
   //-----------------------
-  //@each $name, $color in $no-dark {
-  //  @include badge.make-default-variant($name, $color);
-  //  @include badge.make-outline-variant($name, $color);
-  //}
+  @each $name, $color in $no-dark {
+    @include badge.make-actionable-variant-dark($name, $color);
+  }
+
+  // BsButton with disabled state color scheme
+  //-------------------------------------------
+  @include button.make-disabled-variant-dark();
 
   // BsButton color scheme
   //-----------------------
   @each $name, $color in $theme-colors {
-    @include button.make-default-variant($name, $color, true);
-    @include button.make-outline-variant($name, $color, true);
-    @include button.make-flat-variant($name, $color, true);
+    @include button.make-default-variant-dark($name, $color);
+    @include button.make-outline-variant-dark($name, $color);
+    @include button.make-flat-variant-dark($name, $color);
+  }
+
+  // BsAlert color scheme
+  //-----------------------
+  @each $name, $color in $no-dark {
+    @include alert.make-default-variant-dark($name, $color);
+    @include alert.make-outline-variant-dark($name, $color);
+  }
+
+  // BsCheckbox color scheme
+  //-------------------------
+  @each $name, $color in $no-dark-light {
+    @include checkbox.make-default-variant($name, $color);
+  }
+
+  // BsRadio color scheme
+  //----------------------
+  @each $name, $color in $no-dark-light {
+    @include radio.make-default-variant($name, $color);
+  }
+
+  // BsSwitch disable state color scheme
+  //------------------------------------
+  @include switch.make-disabled-variant-dark();
+
+  // BsSwitch color scheme
+  //-----------------------
+  @each $name, $color in $no-dark-light {
+    @include switch.make-default-variant-dark($name, $color);
+  }
+
+  // BsChip disable state color scheme
+  //----------------------------------
+  @include chip.make-disabled-variant-dark();
+
+  // BsChip color scheme
+  //---------------------
+  @each $name, $color in $no-dark {
+    @include chip.make-default-variant-dark($name, $color);
+    @include chip.make-outline-variant-dark($name, $color);
+  }
+
+  // BsProgress color scheme
+  //-------------------------
+  @each $name, $color in $no-dark-light {
+    @include progress.make-bar-variant($name, $color);
+    @include progress.make-spinner-variant($name, $color);
+  }
+
+  // BsBreadcrumb color scheme
+  //--------------------
+  .#{vars.$prefix}breadcrumb {
+    --#{vars.$prefix}breadcrumb-item-active-color: #{colors.$neutral-lighten-1};
+    --#{vars.$prefix}breadcrumb-item-hover-color: #{map.get($theme-colors, 'primary')};
+    --#{vars.$prefix}breadcrumb-item-separator-color: #{colors.$gray-500};
+  }
+
+  // BsCard color scheme
+  //--------------------
+  .#{vars.$prefix}card {
+    --#{vars.$prefix}card-border-color: oklch(0.9 0 0 / 0.08);
+    --#{vars.$prefix}card-cap-bg: oklch(0 0 0 / 0.08);
+  }
+
+  // BsDivider color scheme
+  //-----------------------
+  .#{vars.$prefix}divider {
+    --#{vars.$prefix}divider-color: var(--border-translucent);
+  }
+
+  // BsListbox searchbox state
+  //--------------------------
+  .#{vars.$prefix}listbox {
+    //--#{vars.$prefix}searchbox-bg: #{color.change(colors.$black, $alpha: 0.025)};
+    --#{vars.$prefix}searchbox-active-bg: #{color.change(colors.$black, $alpha: 0.25)};
+    --#{vars.$prefix}searchbox-border-color: #{colors.$neutral-darken-1};
   }
 
   // BsColorPicker color scheme
   //----------------------------
   .#{vars.$prefix}color-picker {
     --#{vars.$prefix}color-picker-input-bg: oklch(0.287 0.003 48.605);
+    --#{vars.$prefix}color-picker-input-border: 1px solid oklch(0.967 0.003 264.542 / 0.18);
+    --#{vars.$prefix}color-picker-slider-thumb-color: oklch(0.592 0.012 261.776);
+  }
+
+  // BsProgressBar color scheme
+  //----------------------------
+  .#{vars.$prefix}simple-progress {
+    --#{vars.$prefix}progress-bg: oklch(0.967 0.003 264.542 / 0.1);
+    --#{vars.$prefix}progress-bar-bg: #{map.get($theme-colors, 'primary')};
+  }
+
+  // BsTabs color scheme
+  //--------------------
+  .#{vars.$prefix}tabs {
+    --#{vars.$prefix}tab-tabs-background: oklch(0 0 0 / 0.08);
+    --#{vars.$prefix}tab-tabs-border-color: oklch(87.2% 0.01 258.338deg / 0.15);
+    --#{vars.$prefix}tab-tabs-color: #{colors.$neutral-lighten-2};
+    --#{vars.$prefix}tab-tabs-active-bg: var(--background-secondary);
+    --#{vars.$prefix}tab-tabs-active-border-color: oklch(87.2% 0.01 258.338deg / 0.15);
+    --#{vars.$prefix}tab-tabs-hover-border-color: oklch(92.8% 0.006 264.531deg / 0.05);
+    --#{vars.$prefix}tab-pills-color: var(--#{vars.$prefix}tab-tabs-color);
+    --#{vars.$prefix}tab-pills-active-color: #{colors.$neutral-darken-2};
+  }
+
+  // BsNotification color scheme
+  //----------------------------
+  .#{vars.$prefix}notification {
+    --#{vars.$prefix}notification-background-color: oklch(0.305 0.002 247.9);
+  }
+
+  // BsTooltip color scheme
+  //-----------------------
+  .#{vars.$prefix}tooltip {
+    --#{vars.$prefix}tooltip-bg: oklch(0.307 0.018 258.37);
+    --#{vars.$prefix}tooltip-opacity: 1;
   }
 }

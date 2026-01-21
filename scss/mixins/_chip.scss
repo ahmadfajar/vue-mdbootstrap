@@ -111,6 +111,88 @@
   }
 }
 
+// Make default BsChip with dark theme
+//------------------------------------
+@mixin make-default-variant-dark($name, $color) {
+  .chip-#{$name} {
+    $chip-bg: helper.set-color-contrast(
+      $color,
+      helper.set-color-contrast(
+        $color,
+        color.change($color, $alpha: 0.05),
+        color.change(helper.shift-color($color, 10%), $alpha: 0.12),
+        90%
+      ),
+      color.change(helper.shift-color($color, 25%), $alpha: 0.12),
+      80%
+    );
+    $chip-color: helper.set-color-contrast(
+      $chip-bg,
+      colors.$neutral-lighten-3,
+      helper.fn-if(
+        ($name == 'secondary'),
+        helper.shift-color(colors.$neutral-lighten-2, 10%),
+        helper.shift-color($color, 25%)
+      ),
+      90%
+    );
+    $icon-color: helper.to-oklch(color.adjust($color, $lightness: -10%));
+    $hover-bg: helper.set-color-contrast(
+      $color,
+      color.change(helper.shift-color($color, 10%), $alpha: 0.22),
+      color.change(helper.shift-color($color, 25%), $alpha: 0.22),
+      80%
+    );
+    $active-bg: helper.set-color-contrast(
+      $color,
+      color.change(helper.shift-color($color, 30%), $alpha: 0.4),
+      helper.to-oklch(color.change(color.adjust($color, $lightness: 20%), $alpha: 0.35)),
+      80%
+    );
+    $active-color: helper.set-color-contrast(
+      $active-bg,
+      colors.$white,
+      colors.$neutral-lighten-3,
+      95%
+    );
+    $active-icon-color: helper.to-oklch(
+      helper.set-color-contrast(
+        $active-bg,
+        colors.$gray-900,
+        color.adjust($color, $lightness: 15%),
+        95%
+      )
+    );
+    $box-shadow-color: helper.to-oklch(
+      helper.set-color-contrast(
+        $color,
+        color.adjust($color, $lightness: 5%),
+        color.adjust($color, $lightness: 40%),
+        25%
+      )
+    );
+    $focus-border: helper.to-oklch(
+      helper.set-color-contrast($color, colors.$gray-800, colors.$black, 25%)
+    );
+
+    --#{vars.$prefix}chip-bg: #{$chip-bg};
+    --#{vars.$prefix}chip-color: #{$chip-color};
+    --#{vars.$prefix}chip-border-color: #{color.change($chip-bg, $alpha: 0.05)};
+    --#{vars.$prefix}chip-icon-color: #{$color};
+    --#{vars.$prefix}chip-hover-bg: #{$hover-bg};
+    --#{vars.$prefix}chip-hover-color: #{$chip-color};
+    --#{vars.$prefix}chip-hover-border-color: #{color.change($hover-bg, $alpha: 0.1)};
+    --#{vars.$prefix}chip-active-bg: #{$active-bg};
+    --#{vars.$prefix}chip-active-color: #{$active-color};
+    --#{vars.$prefix}chip-active-border-color: #{color.change($active-bg, $alpha: 0.2)};
+    --#{vars.$prefix}chip-active-icon-color: #{$active-icon-color};
+    --#{vars.$prefix}chip-focus-border-color: #{$focus-border};
+    --#{vars.$prefix}chip-focus-shadow-color: #{$box-shadow-color};
+  }
+}
+
+// Make outlined BsChip with light theme
+//--------------------------------------
 @mixin make-outline-variant-light($name, $color) {
   .chip-outline-#{$name} {
     $chip-border: colors.$gray-500;
@@ -200,5 +282,100 @@
     --#{vars.$prefix}chip-active-icon-color: #{$active-icon-color};
     --#{vars.$prefix}chip-focus-border-color: #{$focus-border};
     --#{vars.$prefix}chip-focus-shadow-color: #{$box-shadow-color};
+  }
+}
+
+// Make outlined BsChip with dark theme
+//-------------------------------------
+@mixin make-outline-variant-dark($name, $color) {
+  .chip-outline-#{$name} {
+    $border-color: helper.to-oklch(color.change(colors.$gray-500, $alpha: 0.4));
+    $chip-color: helper.shift-color(colors.$neutral-lighten-2, 7%);
+    $hover-bg: helper.to-oklch(
+      helper.set-color-contrast(
+        $color,
+        color.change(color.adjust($color, $lightness: -5%), $alpha: 0.2),
+        color.change(color.adjust($color, $lightness: 20%), $alpha: 0.2),
+        90%
+      )
+    );
+    $hover-border: helper.to-oklch(
+      helper.set-color-contrast(
+        $color,
+        helper.set-color-contrast(
+          $color,
+          color.scale(colors.$neutral-lighten-3, $lightness: -10%),
+          color.adjust($color, $lightness: -10%),
+          90%
+        ),
+        color.adjust($color, $lightness: 12%)
+      )
+    );
+    $hover-color: helper.to-oklch(
+      helper.set-color-contrast(
+        $color,
+        colors.$neutral-lighten-4,
+        color.adjust($color, $lightness: 20%),
+        90%
+      )
+    );
+    $active-bg: helper.set-color-contrast(
+      $color,
+      color.change(helper.shift-color($color, 15%), $alpha: 0.35),
+      color.change(helper.shift-color($color, 30%), $alpha: 0.35),
+      80%
+    );
+    $active-border: helper.set-color-contrast($color, colors.$neutral-lighten-3, $active-bg, 90%);
+    $active-color: helper.set-color-contrast(
+      $active-bg,
+      colors.$white,
+      colors.$neutral-lighten-3,
+      95%
+    );
+    $active-icon-color: helper.to-oklch(
+      helper.set-color-contrast(
+        $active-bg,
+        colors.$gray-900,
+        color.adjust($color, $lightness: 15%),
+        95%
+      )
+    );
+    $box-shadow-color: helper.to-oklch(
+      helper.set-color-contrast(
+        $color,
+        color.adjust($color, $lightness: 5%),
+        color.adjust($color, $lightness: 40%),
+        25%
+      )
+    );
+    $focus-border: helper.to-oklch(
+      helper.set-color-contrast($color, colors.$gray-800, colors.$black, 25%)
+    );
+
+    --#{vars.$prefix}chip-bg: transparent;
+    --#{vars.$prefix}chip-color: #{$chip-color};
+    --#{vars.$prefix}chip-border-color: #{$border-color};
+    --#{vars.$prefix}chip-icon-color: #{$color};
+    --#{vars.$prefix}chip-hover-bg: #{$hover-bg};
+    // prettier-ignore
+    --#{vars.$prefix}chip-hover-color: #{helper.fn-if(($name == 'secondary'), colors.$neutral-lighten-3, $hover-color)};
+    --#{vars.$prefix}chip-hover-border-color: #{$hover-border};
+    --#{vars.$prefix}chip-active-bg: #{$active-bg};
+    --#{vars.$prefix}chip-active-color: #{$active-color};
+    --#{vars.$prefix}chip-active-border-color: #{$active-bg};
+    --#{vars.$prefix}chip-active-icon-color: #{$active-icon-color};
+    --#{vars.$prefix}chip-focus-border-color: #{$focus-border};
+    --#{vars.$prefix}chip-focus-shadow-color: #{$box-shadow-color};
+  }
+}
+
+// BsChip disable state with dark theme
+//-------------------------------------
+@mixin make-disabled-variant-dark() {
+  .#{vars.$prefix}chip {
+    --#{vars.$prefix}chip-disabled-bg: oklch(0.53 0.01 261.34 / 0.15);
+    --#{vars.$prefix}chip-disabled-border-color: oklch(0.234 0.005 248.037);
+    --#{vars.$prefix}chip-disabled-color: #{colors.$neutral-base};
+    --#{vars.$prefix}chip-disabled-icon-color: oklch(0.52 0 0);
   }
 }

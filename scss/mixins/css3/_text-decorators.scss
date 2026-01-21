@@ -37,7 +37,30 @@
       }
     } @else {
       .bg-#{$name} {
-        background-color: $color;
+        @if (
+          $name ==
+            'primary' or
+            $name ==
+            'secondary' or
+            $name ==
+            'success' or
+            $name ==
+            'info' or
+            $name ==
+            'warning' or
+            $name ==
+            'danger' or
+            $name ==
+            'danger' or
+            $name ==
+            'light' or
+            $name ==
+            'dark'
+        ) {
+          background-color: $color !important;
+        } @else {
+          background-color: $color;
+        }
       }
     }
   }
@@ -75,7 +98,30 @@
       }
     } @else {
       .text-#{$name} {
-        color: $color;
+        @if (
+          $name ==
+            'primary' or
+            $name ==
+            'secondary' or
+            $name ==
+            'success' or
+            $name ==
+            'info' or
+            $name ==
+            'warning' or
+            $name ==
+            'danger' or
+            $name ==
+            'danger' or
+            $name ==
+            'light' or
+            $name ==
+            'dark'
+        ) {
+          color: $color !important;
+        } @else {
+          color: $color;
+        }
       }
     }
   }
@@ -126,8 +172,32 @@
       }
     } @else {
       .text-bg-#{$name} {
-        color: $text-color;
-        background-color: $color;
+        @if (
+          $name ==
+            'primary' or
+            $name ==
+            'secondary' or
+            $name ==
+            'success' or
+            $name ==
+            'info' or
+            $name ==
+            'warning' or
+            $name ==
+            'danger' or
+            $name ==
+            'danger' or
+            $name ==
+            'light' or
+            $name ==
+            'dark'
+        ) {
+          color: $text-color !important;
+          background-color: $color !important;
+        } @else {
+          color: $text-color;
+          background-color: $color;
+        }
       }
     }
   }

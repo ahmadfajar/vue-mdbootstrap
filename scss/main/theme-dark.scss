@@ -1,9 +1,11 @@
 @use 'sass:color';
+@use 'sass:map';
 @use '../mixins/css3/text-decorators' as decorators;
 @use '../mixins/theme-maker' as themer;
 @use '../utils/color_helper' as helper;
 @use '../color_vars' as colors;
 @use '../variables' as vars;
+@use '../banner';
 
 // Specify the layer order that follows the TailwindCSS,
 // this is necessary so that TailwindCSS does not break.
@@ -15,9 +17,8 @@
 $theme-colors: (
   'default': oklch(0.82 0.1 297.94),
   'primary': oklch(0.636 0.137 235.915),
-  'secondary': colors.$gray-500,
+  'secondary': oklch(55% 0.02 244.89),
   'success': oklch(0.55 0.1 177.8),
-  // oklch(0.592 0.106 160.377),
   'danger': oklch(0.618 0.203 20.568),
   'warning': colors.$warning-color,
   'info': colors.$info-color,
@@ -25,88 +26,58 @@ $theme-colors: (
   'dark': colors.$dark-color,
 );
 
-@layer theme {
-  .dark,
-  [data-theme='dark'] {
-    --#{vars.$prefix}dropdown-border-color: var(--border-translucent);
-    --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-accent-indicator);
-
-    // Field validation state color scheme
-    //-------------------------------------
-    .#{vars.$prefix}field {
-      &:not(.has-success):not(.has-error) {
-        --#{vars.$prefix}field-border-color: #{color.change(colors.$gray-100, $alpha: 0.2)};
-        --#{vars.$prefix}field-hover-border-color: #{color.change(
-            helper.to-oklch(color.scale(colors.$gray-100, $lightness: 20%)),
-            $alpha: 0.45
-          )};
-
-        > .#{vars.$prefix}field-wrapper {
-          .#{vars.$prefix}action-icon .#{vars.$prefix}btn,
-          .#{vars.$prefix}action-icon .#{vars.$prefix}btn-icon,
-          .#{vars.$prefix}action-icon > .#{vars.$prefix}icon,
-          .#{vars.$prefix}action-icon > .#{vars.$prefix}toggle-icon,
-          .#{vars.$prefix}prepend-inner,
-          .#{vars.$prefix}prepend-outer,
-          .#{vars.$prefix}append-inner,
-          .#{vars.$prefix}append-outer {
-            &:not(:hover) {
-              opacity: var(--#{vars.$prefix}field-disabled-opacity);
-            }
-          }
-        }
-      }
-
-      &.has-success {
-        .#{vars.$prefix}field-control {
-          $color: helper.to-oklch(color.scale(colors.$success-color, $lightness: 15%));
-          $active-color: helper.to-oklch(color.scale(colors.$success-color, $lightness: 20%));
-
-          --#{vars.$prefix}field-border-color: #{color.change($color, $alpha: 0.5)};
-          --#{vars.$prefix}field-hover-border-color: #{color.change($active-color, $alpha: 0.6)};
-        }
-      }
-
-      &.has-error {
-        .#{vars.$prefix}field-control {
-          $color: helper.to-oklch(color.scale(colors.$danger-color, $lightness: 15%));
-          $active-color: helper.to-oklch(color.scale(colors.$danger-color, $lightness: 10%));
-
-          --#{vars.$prefix}field-border-color: #{color.change($color, $alpha: 0.6)};
-          --#{vars.$prefix}field-hover-border-color: #{color.change($active-color, $alpha: 0.8)};
-          --#{vars.$prefix}field-active-border-color: #{color.change($active-color, $alpha: 0.85)};
-          --#{vars.$prefix}field-floating-label-color: #{color.change($active-color, $alpha: 0.85)};
-        }
-      }
-    }
-
-    // BsButton state color scheme
-    //-----------------------------
-    .#{vars.$prefix}btn,
-    .#{vars.$prefix}btn-fab,
-    .#{vars.$prefix}btn-icon {
-      $disabled-bg: helper.to-oklch(color.adjust(colors.$gray-400, $lightness: 50%));
-
-      --#{vars.$prefix}btn-disabled-bg: #{color.change($disabled-bg, $alpha: 0.08)};
-      --#{vars.$prefix}btn-disabled-color: #{colors.$gray-300};
-      --#{vars.$prefix}btn-disabled-border-color: #{color.change(colors.$gray-500, $alpha: 0.08)};
-      --#{vars.$prefix}btn-focus-border-color: #{colors.$gray-800};
-
-      &[class*='btn-outline'] {
-        --#{vars.$prefix}btn-disabled-border-color: #{color.change(colors.$gray-500, $alpha: 0.7)};
-      }
-    }
-  }
-
+// The layer is not mandatory and they can be removed.
+@layer components {
   .dark {
-    @include themer.make-theme-dark(colors.$context-colors);
+    @include themer.make-theme-dark($theme-colors);
   }
 }
 
 // Create utilities for colors, background and text
 //--------------------------------------------------
+$theme-colors: map.remove($theme-colors, 'secondary', 'warning', 'info', 'light', 'dark');
+$theme-colors: map.set($theme-colors, 'danger', oklch(0.68 0.17 18));
 .dark {
+  color-scheme: dark;
+
   @each $name, $color in $theme-colors {
     @include decorators.decorate-color($name, $color, $text-bg: true, $hyperlink: true);
+  }
+}
+
+// Global component css variables
+//--------------------------------
+@layer theme {
+  .dark {
+    // Global css variables to maintain UI component aspects
+    //-------------------------------------------------------
+    --#{vars.$prefix}dropdown-border-color: var(--border-translucent);
+    --#{vars.$prefix}dropdown-border-width: thin;
+    --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-accent-indicator);
+    --#{vars.$prefix}field-button-hover-color: #{colors.$neutral-lighten-2};
+
+    // Global css variables to maintain apps UI colors
+    //------------------------------------------------
+    --background: oklch(0.213 0 89.876);
+    --foreground: oklch(0.8 0 0);
+    --background-secondary: oklch(0.25 0 0);
+    --foreground-secondary: oklch(0.85 0 0);
+    --background-tertiary: oklch(0.3 0 0);
+    --foreground-tertiary: oklch(0.85 0 0);
+    --foreground-subtle: oklch(0.65 0 0);
+    --border-translucent: oklch(0.967 0.003 264.542 / 0.08);
+
+    --appbar-background: oklch(0.22 0 89.876);
+    --appbar-foreground: var(--foreground);
+
+    --sidedrawer-background: oklch(0.182 0 89.876);
+    --sidedrawer-foreground: var(--foreground);
+    --sidedrawer-item-active-foreground: oklch(0.829 0.09 297.293);
+    --sidedrawer-item-active-foreground-secondary: oklch(0.796 0.062 295.364 / 0.75);
+    --sidedrawer-item-hover-background: oklch(0.535 0.005 271.325 / 0.15);
+
+    --navigation-item-active-foreground: oklch(0.829 0.09 297.293);
+    --navigation-item-active-foreground-secondary: oklch(0.796 0.062 295.364 / 0.75);
+    --navigation-item-hover-background: oklch(0.535 0.005 271.325 / 0.15);
   }
 }

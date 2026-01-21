@@ -1,0 +1,55 @@
+@use 'sass:color';
+@use '../utils/color_helper' as helper;
+@use '../color_vars' as colors;
+@use '../variables' as vars;
+
+// Make field validation with dark theme
+//--------------------------------------
+@mixin make-state-validation-variant-dark() {
+  .#{vars.$prefix}field {
+    &:not(.has-success):not(.has-error) {
+      --#{vars.$prefix}field-border-color: #{color.change(colors.$gray-100, $alpha: 0.2)};
+      --#{vars.$prefix}field-hover-border-color: #{color.change(
+          helper.to-oklch(color.scale(colors.$gray-100, $lightness: 20%)),
+          $alpha: 0.45
+        )};
+
+      > .#{vars.$prefix}field-wrapper {
+        .#{vars.$prefix}action-icon .#{vars.$prefix}btn,
+        .#{vars.$prefix}action-icon .#{vars.$prefix}btn-icon,
+        .#{vars.$prefix}action-icon > .#{vars.$prefix}icon,
+        .#{vars.$prefix}action-icon > .#{vars.$prefix}toggle-icon,
+        .#{vars.$prefix}prepend-inner,
+        .#{vars.$prefix}prepend-outer,
+        .#{vars.$prefix}append-inner,
+        .#{vars.$prefix}append-outer {
+          &:not(:hover) {
+            opacity: var(--#{vars.$prefix}field-disabled-opacity);
+          }
+        }
+      }
+    }
+
+    &.has-success {
+      .#{vars.$prefix}field-control {
+        $color: helper.to-oklch(color.scale(colors.$success-color, $lightness: 15%));
+        $active-color: helper.to-oklch(color.scale(colors.$success-color, $lightness: 20%));
+
+        --#{vars.$prefix}field-border-color: #{color.change($color, $alpha: 0.5)};
+        --#{vars.$prefix}field-hover-border-color: #{color.change($active-color, $alpha: 0.6)};
+      }
+    }
+
+    &.has-error {
+      .#{vars.$prefix}field-control {
+        $color: helper.to-oklch(color.scale(colors.$danger-color, $lightness: 15%));
+        $active-color: helper.to-oklch(color.scale(colors.$danger-color, $lightness: 10%));
+
+        --#{vars.$prefix}field-border-color: #{color.change($color, $alpha: 0.6)};
+        --#{vars.$prefix}field-hover-border-color: #{color.change($active-color, $alpha: 0.8)};
+        --#{vars.$prefix}field-active-border-color: #{color.change($active-color, $alpha: 0.85)};
+        --#{vars.$prefix}field-floating-label-color: oklch(0.72 0.22 20.75);
+      }
+    }
+  }
+}

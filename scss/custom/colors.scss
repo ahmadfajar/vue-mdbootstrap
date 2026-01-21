@@ -9,8 +9,6 @@
 //--------------------------------------------------------
 $final-colors: map.remove(
   colors.$merged-theme-colors,
-  'dark-blue',
-  'primary-color-dark',
   'default',
   'primary',
   'secondary',
@@ -42,7 +40,9 @@ $final-colors: map.remove(
   'midnight-haze',
   'brown',
   'blue-grey',
-  'neutral'
+  'neutral',
+  'blue-green',
+  'blue-green-color'
 );
 
 @each $name, $color in $final-colors {
@@ -52,9 +52,9 @@ $final-colors: map.remove(
 // Manually adds duplicate custom colors
 //---------------------------------------
 @include decorators.decorate-color(
-  'dark-blue',
-  colors.$primary-color-dark,
-  $alias-name1: 'primary-color-dark'
+  'blue-green',
+  colors.$blue-green-color,
+  $alias-name1: 'blue-green-color'
 );
 
 // Create full color palette for background

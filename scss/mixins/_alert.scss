@@ -51,6 +51,56 @@
   }
 }
 
+// Make default alert with dark theme
+//-----------------------------------
+@mixin make-default-variant-dark($name, $color) {
+  .alert-#{$name} {
+    $bg-color: helper.set-color-contrast(
+      $color,
+      color.change(helper.shift-color($color, -67%), $alpha: 0.85),
+      color.change(helper.shift-color($color, -65%), $alpha: 0.5),
+      90%
+    );
+    $border-color: helper.set-color-contrast(
+      $color,
+      helper.set-color-contrast(
+        $color,
+        helper.shift-color($color, -50%),
+        helper.shift-color($color, -35%),
+        90%
+      ),
+      helper.shift-color($color, -35%),
+      80%
+    );
+    $text-color: helper.shift-color($color, 38%);
+
+    --#{vars.$prefix}alert-bg: #{$bg-color};
+    --#{vars.$prefix}alert-border-color: #{$border-color};
+    --#{vars.$prefix}alert-color: #{$text-color};
+
+    $link-color: helper.shift-color($text-color, 20%);
+    --#{vars.$prefix}alert-link-color: #{$link-color};
+
+    @if ($name != 'secondary' and $name != 'dark' and $name != 'light') {
+      .btn-flat-#{$name} {
+        $hover-bg: helper.set-color-contrast(
+          $color,
+          color.change(color.scale($color, $lightness: 30%), $alpha: 0.45),
+          color.change($color, $alpha: 0.25),
+          90%
+        );
+
+        &.btn-close-action {
+          --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
+          --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
+        }
+      }
+    }
+  }
+}
+
+// Make outlined alert with light theme
+//-------------------------------------
 @mixin make-outline-variant-light($name, $color) {
   .alert-outline-#{$name} {
     $border-color: helper.set-color-contrast(
@@ -89,6 +139,27 @@
   }
 }
 
+// Make outlined alert with dark theme
+//------------------------------------
+@mixin make-outline-variant-dark($name, $color) {
+  .alert-outline-#{$name} {
+    $border-color: helper.set-color-contrast(
+      $color,
+      helper.set-color-contrast($color, $color, color.adjust($color, $lightness: -10%), 90%),
+      helper.to-oklch(color.adjust($color, $lightness: 15%)),
+      80%
+    );
+    $text-color: helper.shift-color($color, 35%);
+    $link-color: helper.shift-color($color, 20%);
+
+    --#{vars.$prefix}alert-color: #{$text-color};
+    --#{vars.$prefix}alert-link-color: #{$link-color};
+    --#{vars.$prefix}alert-border-color: #{color.change($border-color, $alpha: 0.6)};
+  }
+}
+
+// Make solid alert with generic theme
+//------------------------------------
 @mixin make-solid-variant($name, $color) {
   .alert-solid-#{$name} {
     $text-color: helper.set-color-contrast($color, colors.$gray-900, colors.$white);

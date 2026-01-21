@@ -29,7 +29,8 @@
   }
 }
 
-// Private used, make default button with light theme
+// Make default BsButton with light theme
+//---------------------------------------
 @mixin make-default-variant-light($name, $color) {
   .btn-#{$name} {
     $focus-box-shadow-color: helper.to-oklch(
@@ -178,142 +179,112 @@
   }
 }
 
-// Private used, make default button with dark theme
+// Make default BsButton with dark theme
+//--------------------------------------
 @mixin make-default-variant-dark($name, $color) {
   .btn-#{$name} {
-    $dark-box-shadow-focus: helper.to-oklch(
+    $box-shadow-focus: helper.to-oklch(
       helper.set-color-contrast(
         $color,
-        color.scale($color, $lightness: -15%),
-        color.adjust($color, $lightness: 35%)
+        color.adjust($color, $lightness: 5%),
+        color.adjust($color, $lightness: 40%),
+        25%
       )
     );
-    $dark-text-color: helper.to-oklch(
+    $border-focus: helper.to-oklch(
+      helper.set-color-contrast($color, colors.$gray-800, colors.$black, 25%)
+    );
+    $text-color: helper.to-oklch(
       helper.set-color-contrast(
         $color,
-        color.scale($color, $lightness: 75%),
-        color.scale($color, $lightness: -40%)
+        color.adjust($color, $lightness: -50%),
+        color.adjust(colors.$white, $lightness: -5%)
       )
     );
-    $dark-text-active: helper.to-oklch(
+    $text-active: helper.to-oklch(
+      helper.set-color-contrast($color, color.adjust($color, $lightness: -55%), colors.$white)
+    );
+    $bg-hover: helper.to-oklch(
       helper.set-color-contrast(
         $color,
-        color.scale($color, $lightness: 40%),
-        color.scale($color, $lightness: -60%)
+        color.adjust($color, $lightness: -8%),
+        color.adjust($color, $lightness: 8%),
+        25%
       )
     );
-    $dark-bg-color: helper.to-oklch(
-      helper.set-color-contrast(
-        $color,
-        color.change(color.scale($color, $lightness: -25%), $alpha: 0.8),
-        color.scale($color, $lightness: 50%)
-      )
-    );
-    $dark-bg-hover: helper.to-oklch(
-      helper.set-color-contrast(
-        $color,
-        color.change(color.scale($color, $lightness: -20%), $alpha: 0.5),
-        color.scale($color, $lightness: 45%)
-      )
-    );
-    $dark-bg-active: helper.to-oklch(
-      helper.set-color-contrast(
-        $color,
-        color.change(color.scale($color, $lightness: -10%), $alpha: 0.5),
-        color.scale($color, $lightness: 15%)
-      )
-    );
+    $bg-active: helper.to-oklch(color.adjust($color, $lightness: -20%));
 
-    @if ($color == colors.$primary-color) {
-      // special case, color preference only
-      $primary-color: oklch(0.636 0.137 235.915);
-
-      --#{vars.$prefix}btn-bg: #{$primary-color};
-      --#{vars.$prefix}btn-color: #{colors.$white};
-      --#{vars.$prefix}btn-border-color: #{$primary-color};
-      --#{vars.$prefix}btn-active-bg: #{helper.to-oklch(
-          color.scale($primary-color, $lightness: -10%)
-        )};
-      --#{vars.$prefix}btn-active-color: #{colors.$white};
-      --#{vars.$prefix}btn-active-border-color: #{helper.to-oklch(
-          color.scale($primary-color, $lightness: -10%)
-        )};
-      --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch(
-          color.scale($primary-color, $lightness: 15%)
-        )};
-      --#{vars.$prefix}btn-hover-color: #{colors.$white};
-      --#{vars.$prefix}btn-hover-border-color: #{helper.to-oklch(
-          color.scale($primary-color, $lightness: 10%)
-        )};
-    } @else {
-      --#{vars.$prefix}btn-bg: #{$dark-bg-color};
-      --#{vars.$prefix}btn-color: #{$dark-text-color};
-      --#{vars.$prefix}btn-border-color: #{color.change($dark-bg-color, $alpha: 0.1)};
-      --#{vars.$prefix}btn-active-bg: #{$dark-bg-active};
-      --#{vars.$prefix}btn-active-color: #{$dark-text-active};
-      --#{vars.$prefix}btn-active-border-color: #{color.change($dark-bg-active, $alpha: 0.1)};
-      --#{vars.$prefix}btn-hover-bg: #{$dark-bg-hover};
-      --#{vars.$prefix}btn-hover-color: #{$dark-text-color};
-      --#{vars.$prefix}btn-hover-border-color: #{color.change($dark-bg-hover, $alpha: 0.1)};
-    }
-
-    --#{vars.$prefix}btn-focus-shadow-color: #{$dark-box-shadow-focus};
+    --#{vars.$prefix}btn-bg: #{$color};
+    --#{vars.$prefix}btn-color: #{$text-color};
+    --#{vars.$prefix}btn-border-color: #{color.change($color, $alpha: 0.1)};
+    --#{vars.$prefix}btn-active-bg: #{$bg-active};
+    --#{vars.$prefix}btn-active-color: #{$text-active};
+    --#{vars.$prefix}btn-active-border-color: #{color.change($bg-active, $alpha: 0.1)};
+    --#{vars.$prefix}btn-hover-bg: #{$bg-hover};
+    --#{vars.$prefix}btn-hover-color: #{$text-color};
+    --#{vars.$prefix}btn-hover-border-color: #{color.change($bg-hover, $alpha: 0.1)};
+    --#{vars.$prefix}btn-focus-border-color: #{$border-focus};
+    --#{vars.$prefix}btn-focus-shadow-color: #{$box-shadow-focus};
 
     &.#{vars.$prefix}btn-fab,
     &.btn-tonal {
-      $tonal-text-color: helper.to-oklch(color.scale($color, $lightness: 90%));
-      $tonal-bg: helper.to-oklch(color.scale($color, $lightness: 50%));
-      $tonal-bg-active: helper.to-oklch(
-        color.change(color.scale($color, $lightness: 75%), $alpha: 0.75)
+      $tonal-text-color: helper.to-oklch(
+        helper.set-color-contrast(
+          $color,
+          color.adjust($color, $lightness: 65%),
+          color.adjust(colors.$white, $lightness: -5%),
+          23%
+        )
+      );
+      $tonal-text-hover: helper.to-oklch(color.adjust(colors.$white, $lightness: -2%));
+      $tonal-text-active: helper.to-oklch(
+        helper.set-color-contrast($color, color.adjust($color, $lightness: -55%), colors.$white)
       );
       $tonal-bg-hover: helper.to-oklch(
         color.change(color.scale($color, $lightness: 40%), $alpha: 0.5)
       );
-      $tonal-text-active: helper.to-oklch(
-        color.change(color.scale($color, $lightness: -70%), $alpha: 0.85)
+      $tonal-bg-active: helper.to-oklch(
+        helper.set-color-contrast(
+          $color,
+          $color,
+          color.change(color.adjust($color, $lightness: 30%), $alpha: 0.35),
+          23%
+        )
       );
 
-      --#{vars.$prefix}btn-bg: #{color.change($tonal-bg, $alpha: 0.35)};
+      --#{vars.$prefix}btn-bg: #{color.change($color, $alpha: 0.35)};
       --#{vars.$prefix}btn-color: #{$tonal-text-color};
-      --#{vars.$prefix}btn-border-color: #{color.change($tonal-bg, $alpha: 0.05)};
+      --#{vars.$prefix}btn-border-color: #{color.change($color, $alpha: 0.05)};
       --#{vars.$prefix}btn-hover-bg: #{$tonal-bg-hover};
-      --#{vars.$prefix}btn-hover-color: #{$tonal-text-color};
+      --#{vars.$prefix}btn-hover-color: #{$tonal-text-hover};
       --#{vars.$prefix}btn-hover-border-color: #{color.change($tonal-bg-hover, $alpha: 0.1)};
       --#{vars.$prefix}btn-active-bg: #{$tonal-bg-active};
       --#{vars.$prefix}btn-active-color: #{$tonal-text-active};
-      --#{vars.$prefix}btn-active-border-color: #{color.change($tonal-bg-active, $alpha: 0.1)};
+      --#{vars.$prefix}btn-active-border-color: #{color.change($color, $alpha: 0.1)};
     }
   }
 
   .#{vars.$prefix}segmented-button {
     > .btn-#{$name}:not(:first-child):not(:focus-visible) {
       &:not(:disabled):not(.disabled):not(.active) {
-        $border-color: helper.set-color-contrast(
-          $color,
-          color.scale($color, $lightness: -70%),
-          color.scale($color, $lightness: 35%)
-        );
-        border-left-color: helper.to-oklch($border-color) !important;
+        $border-color: color.adjust($color, $lightness: -15%);
+        border-left-color: #{color.change($border-color, $alpha: 0.7)} !important;
 
         &.readonly {
-          $border-color: helper.set-color-contrast(
-            $color,
-            color.change(color.scale($color, $lightness: -75%), $alpha: 0.8),
-            color.adjust($color, $lightness: 10%, $alpha: 30)
-          );
-          border-left-color: #{helper.to-oklch(color.change($border-color, $alpha: 0.9))} !important;
+          $border-color: color.adjust($color, $lightness: -25%);
+          border-left-color: #{helper.to-oklch(color.change($border-color, $alpha: 0.8))} !important;
         }
 
         &.btn-tonal {
-          $border-color: helper.to-oklch(color.scale($color, $lightness: 20%));
-          border-left-color: #{color.change($border-color, $alpha: 0.02)} !important;
+          border-left-color: transparent !important;
         }
       }
     }
   }
 }
 
-// Private used, make outlined button with light theme
+// Make outlined BsButton with light theme
+//----------------------------------------
 @mixin make-outline-variant-light($name, $color) {
   .btn-outline-#{$name} {
     $focus-box-shadow-color: helper.set-color-contrast(
@@ -382,50 +353,73 @@
   }
 }
 
-// Private used, make outlined button with dark theme
+// Make outlined BsButton with dark theme
+//---------------------------------------
 @mixin make-outline-variant-dark($name, $color) {
   .btn-outline-#{$name} {
-    $dark-box-shadow-focus: helper.to-oklch(color.scale($color, $lightness: 55%));
-    $dark-text-color: helper.to-oklch(color.scale($color, $lightness: 55%));
-    $dark-text-active: helper.to-oklch(
+    $box-shadow-focus: helper.to-oklch(
       helper.set-color-contrast(
         $color,
-        color.scale($color, $lightness: 40%),
-        color.scale($color, $lightness: -60%)
+        color.adjust($color, $lightness: 10%),
+        color.adjust($color, $lightness: 40%),
+        25%
       )
     );
-    $dark-border-color: color.change(color.adjust(colors.$gray-500, $lightness: 25%), $alpha: 0.35);
-    $dark-bg-active: helper.to-oklch(
+    $border-focus: helper.to-oklch(
+      helper.set-color-contrast($color, colors.$gray-800, colors.$black, 25%)
+    );
+    $border-color: color.change(color.adjust(colors.$gray-500, $lightness: 25%), $alpha: 0.35);
+    $border-hover: color.change(
       helper.set-color-contrast(
         $color,
-        color.change(color.scale($color, $lightness: -25%), $alpha: 0.8),
-        color.scale($color, $lightness: 60%, $alpha: 50%)
+        color.adjust($color, $lightness: 10%),
+        color.adjust(colors.$gray-500, $lightness: 25%),
+        25%
+      ),
+      $alpha: 0.35
+    );
+    $text-color: helper.to-oklch(color.scale($color, $lightness: 55%));
+    $text-active: helper.to-oklch(
+      helper.set-color-contrast($color, color.adjust($color, $lightness: -55%), colors.$white)
+    );
+    $bg-active: helper.to-oklch(
+      helper.set-color-contrast(
+        $color,
+        $color,
+        color.change(color.adjust($color, $lightness: 30%), $alpha: 0.35),
+        25%
       )
     );
-    $dark-bg-hover: helper.set-color-contrast(
+    $bg-hover: helper.set-color-contrast(
       $color,
       color.change(color.scale($color, $lightness: 15%), $alpha: 0.125),
       color.change(color.scale($color, $lightness: 20%), $alpha: 0.14)
     );
-    $dark-border-hover: color.change(color.adjust($color, $lightness: 10%), $alpha: 0.35);
 
-    --#{vars.$prefix}btn-color: #{$dark-text-color};
-    --#{vars.$prefix}btn-border-color: #{helper.to-oklch($dark-border-color)};
-    --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($dark-bg-active)};
-    --#{vars.$prefix}btn-active-color: #{$dark-text-active};
-    --#{vars.$prefix}btn-active-border-color: #{helper.set-color-contrast(
-        $color,
-        $dark-border-color,
-        $color
-      )};
-    --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($dark-bg-hover)};
-    --#{vars.$prefix}btn-hover-color: #{$dark-text-color};
-    --#{vars.$prefix}btn-hover-border-color: #{helper.to-oklch($dark-border-hover)};
-    --#{vars.$prefix}btn-focus-shadow-color: #{$dark-box-shadow-focus};
+    --#{vars.$prefix}btn-color: #{$text-color};
+    --#{vars.$prefix}btn-border-color: #{helper.to-oklch($border-color)};
+    --#{vars.$prefix}btn-active-bg: #{$bg-active};
+    --#{vars.$prefix}btn-active-color: #{$text-active};
+    --#{vars.$prefix}btn-active-border-color: #{color.change($bg-active, $alpha: 0.1)};
+    --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($bg-hover)};
+    --#{vars.$prefix}btn-hover-color: #{$text-color};
+    --#{vars.$prefix}btn-hover-border-color: #{helper.to-oklch($border-hover)};
+    --#{vars.$prefix}btn-focus-border-color: #{$border-focus};
+    --#{vars.$prefix}btn-focus-shadow-color: #{$box-shadow-focus};
+  }
+
+  .#{vars.$prefix}segmented-button {
+    > .btn-outline-#{$name}:not(:first-child):not(:focus-visible) {
+      &:not(:disabled):not(.disabled):not(.active):not(:hover) {
+        $border-color: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 25%));
+        border-left-color: #{color.change($border-color, $alpha: 0.1)};
+      }
+    }
   }
 }
 
-// Private used, make flat button with light theme
+// Make flat BsButton with light theme
+//------------------------------------
 @mixin make-flat-variant-light($name, $color) {
   .btn-flat-#{$name} {
     $focus-box-shadow-color: helper.set-color-contrast(
@@ -497,23 +491,68 @@
   }
 }
 
-// Private used, make flat button with dark theme
+// Make flat BsButton with dark theme
+//-----------------------------------
 @mixin make-flat-variant-dark($name, $color) {
   .btn-flat-#{$name} {
-    $dark-text-color: helper.to-oklch(
+    $box-shadow-focus: helper.to-oklch(
       helper.set-color-contrast(
         $color,
-        color.change($color, $alpha: 0.8),
-        color.scale($color, $lightness: 55%),
-        90
+        color.adjust($color, $lightness: 10%),
+        color.adjust($color, $lightness: 40%),
+        25%
       )
     );
-    $dark-active-text-color: helper.to-oklch(
-      helper.set-color-contrast($color, colors.$white, color.scale($color, $lightness: 60%), 90)
+    $border-focus: helper.to-oklch(
+      helper.set-color-contrast($color, colors.$gray-800, colors.$black, 25%)
+    );
+    $text-color: helper.set-color-contrast(
+      $color,
+      color.change($color, $alpha: 0.8),
+      color.scale($color, $lightness: 55%),
+      90
+    );
+    $text-active: helper.set-color-contrast(
+      $color,
+      color.adjust($color, $lightness: -55%),
+      colors.$white
+    );
+    $bg-active: helper.set-color-contrast(
+      $color,
+      color.change($color, $alpha: 0.8),
+      color.change(color.adjust($color, $lightness: 30%), $alpha: 0.35),
+      25%
+    );
+    $bg-hover: helper.set-color-contrast(
+      $color,
+      color.change(color.scale($color, $lightness: 15%), $alpha: 0.125),
+      color.change(color.scale($color, $lightness: 20%), $alpha: 0.2)
     );
 
-    --#{vars.$prefix}btn-color: #{$dark-text-color};
-    --#{vars.$prefix}btn-hover-color: #{$dark-active-text-color};
-    --#{vars.$prefix}btn-active-color: #{$dark-active-text-color};
+    --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
+    --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($bg-active)};
+    --#{vars.$prefix}btn-active-color: #{helper.to-oklch($text-active)};
+    --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($bg-hover)};
+    --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($text-color)};
+    --#{vars.$prefix}btn-focus-border-color: #{$border-focus};
+    --#{vars.$prefix}btn-focus-shadow-color: #{$box-shadow-focus};
+  }
+}
+
+// BsButton disable state with dark theme
+//---------------------------------------
+@mixin make-disabled-variant-dark() {
+  .#{vars.$prefix}btn,
+  .#{vars.$prefix}btn-fab,
+  .#{vars.$prefix}btn-icon {
+    $disabled-bg: helper.to-oklch(color.adjust(colors.$gray-400, $lightness: 50%));
+
+    --#{vars.$prefix}btn-disabled-bg: #{color.change($disabled-bg, $alpha: 0.08)};
+    --#{vars.$prefix}btn-disabled-color: #{colors.$neutral-base};
+    --#{vars.$prefix}btn-disabled-border-color: #{color.change(colors.$gray-500, $alpha: 0.05)};
+
+    &[class*='btn-outline'] {
+      --#{vars.$prefix}btn-disabled-border-color: #{color.change(colors.$gray-500, $alpha: 0.3)};
+    }
   }
 }

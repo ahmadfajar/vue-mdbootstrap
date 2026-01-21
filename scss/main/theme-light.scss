@@ -4,6 +4,7 @@
 @use '../utils/color_helper' as helper;
 @use '../color_vars' as colors;
 @use '../variables' as vars;
+@use '../banner';
 
 // Specify the layer order that follows the TailwindCSS,
 // this is necessary so that TailwindCSS does not break.

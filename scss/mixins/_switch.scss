@@ -33,3 +33,50 @@
     --#{vars.$prefix}switch-active-outlined-stroke-color: #{color.change($track-color, $alpha: 0.15)};
   }
 }
+
+// Make BsSwitch with dark theme
+//------------------------------
+@mixin make-default-variant-dark($name, $color) {
+  .switch-#{$name} {
+    $switch-color: helper.set-color-contrast(
+      $color,
+      $color,
+      helper.to-oklch(color.scale($color, $lightness: 10%))
+    );
+    --#{vars.$prefix}switch-active-thumb-bg: #{helper.to-oklch($switch-color)};
+    --#{vars.$prefix}switch-active-thumb-color: #{helper.to-oklch($switch-color)};
+    --#{vars.$prefix}switch-active-track-color: #{color.change($color, $alpha: 0.38)};
+
+    $thumb-bg: helper.set-color-contrast(
+      $color,
+      helper.to-oklch(color.scale($color, $lightness: -20%)),
+      helper.to-oklch(color.scale($color, $lightness: 10%)),
+      86.3%
+    );
+    $thumb-color: helper.set-color-contrast($color, colors.$black, colors.$white);
+    $track-color: color.change(helper.shift-color($color, 30%), $alpha: 0.4);
+
+    --#{vars.$prefix}switch-active-inset-track-color: #{$track-color};
+    --#{vars.$prefix}switch-active-inset-thumb-bg: #{$thumb-bg};
+    --#{vars.$prefix}switch-active-inset-thumb-color: #{$thumb-color};
+    // prettier-ignore
+    --#{vars.$prefix}switch-active-outlined-stroke-color: #{color.change($track-color, $alpha: 0.05)};
+  }
+}
+
+// BsSwitch disable state with dark theme
+//---------------------------------------
+@mixin make-disabled-variant-dark() {
+  .#{vars.$prefix}switch {
+    --#{vars.$prefix}switch-thumb-bg: #{colors.$neutral-lighten-3};
+    --#{vars.$prefix}switch-thumb-color: #{colors.$neutral-lighten-3};
+    --#{vars.$prefix}switch-track-color: #{color.change(colors.$neutral-base, $alpha: 0.5)};
+    --#{vars.$prefix}switch-outlined-stroke-color: #{colors.$neutral-base};
+    --#{vars.$prefix}switch-outlined-track-color: #{color.change(colors.$neutral-base, $alpha: 0.5)};
+    --#{vars.$prefix}switch-outlined-thumb-color: #{colors.$neutral-darken-3};
+
+    --#{vars.$prefix}switch-disabled-thumb-bg: #{colors.$neutral-lighten-1};
+    --#{vars.$prefix}switch-disabled-thumb-color: #{colors.$white};
+    --#{vars.$prefix}switch-disabled-track-color: #{color.change(colors.$gray-300, $alpha: 0.3)};
+  }
+}
