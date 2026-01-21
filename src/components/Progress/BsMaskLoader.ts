@@ -41,7 +41,6 @@ export default defineComponent<TBsMaskLoader>({
                   color: props.overlayColor,
                   opacity: props.overlayOpacity,
                   show: props.show,
-                  zIndex: ((props.zIndex as number) - 1) as Prop<string>,
                 }),
                 ['linear-alt', 'progress'].includes(loaderVariant.value)
                   ? h<TBsProgress>(BsProgress, {
@@ -50,12 +49,14 @@ export default defineComponent<TBsMaskLoader>({
                       diameter: props.spinnerDiameter,
                       stroke: props.spinnerThickness,
                       type: 'spinner' as Prop<TProgressControlVariant>,
+                      style: { zIndex: 5 },
                     })
                   : loaderVariant.value === 'spinner'
                     ? h<TBsSpinnerIcon>(BsSpinnerIcon, {
                         color: props.spinnerColor,
                         size: props.spinnerDiameter,
                         spin: true as unknown as Prop<boolean>,
+                        style: { zIndex: 5 },
                       })
                     : h('div', {
                         class: {
@@ -72,6 +73,7 @@ export default defineComponent<TBsMaskLoader>({
                               : null,
                           height: Helper.cssUnit(thisProps.spinnerDiameter),
                           width: Helper.cssUnit(thisProps.spinnerDiameter),
+                          zIndex: 5,
                         },
                       }),
               ]
