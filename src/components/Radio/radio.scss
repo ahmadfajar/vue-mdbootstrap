@@ -11,8 +11,7 @@
     --#{vars.$prefix}radio-margin: #{vars.$radio-margin};
     --#{vars.$prefix}radio-color: currentColor;
     --#{vars.$prefix}radio-disabled-bg: transparent;
-    // prettier-ignore
-    --#{vars.$prefix}radio-disabled-opacity: calc(var(--#{vars.$prefix}field-disabled-opacity) - 0.2);
+    --#{vars.$prefix}radio-disabled-opacity: var(--#{vars.$prefix}field-disabled-opacity);
 
     // used internally
     --#{vars.$prefix}radio-state-bg: transparent;

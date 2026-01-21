@@ -113,14 +113,18 @@
 
 @mixin make-outline-variant-light($name, $color) {
   .chip-outline-#{$name} {
-    $chip-border: helper.to-oklch(color.adjust(colors.$gray-500, $lightness: 25%));
+    $chip-border: colors.$gray-500;
     $chip-color: colors.$gray-800;
     $icon-color: helper.set-color-contrast($color, colors.$gray-800, $color, 90%);
     $hover-bg: helper.to-oklch(
       helper.set-color-contrast(
         $color,
         colors.$white,
-        color.change(color.adjust($color, $lightness: 20%), $alpha: 0.2),
+        helper.fn-if(
+          ($name == 'secondary'),
+          color.change($color, $alpha: 0.2),
+          color.change(color.adjust($color, $lightness: 20%), $alpha: 0.2)
+        ),
         90%
       )
     );
@@ -130,7 +134,11 @@
         helper.set-color-contrast(
           $color,
           colors.$neutral-lighten-1,
-          color.scale($color, $lightness: -20%),
+          helper.fn-if(
+            ($name == 'secondary'),
+            colors.$gray-600,
+            color.scale($color, $lightness: -20%)
+          ),
           90%
         ),
         $color

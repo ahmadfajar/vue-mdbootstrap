@@ -34,7 +34,7 @@
     --#{vars.$prefix}tab-tabs-border-width: var(--#{vars.$prefix}card-border-width, thin);
     --#{vars.$prefix}tab-tabs-active-bg: #{colors.$white};
     --#{vars.$prefix}tab-tabs-active-border-color: #{colors.$gray-300};
-    --#{vars.$prefix}tab-tabs-hover-border-color: #{colors.$gray-200};
+    --#{vars.$prefix}tab-tabs-hover-border-color: oklch(0.92 0 0);
     --#{vars.$prefix}tab-tabs-color: #{helper.to-oklch(
         color.mix(
           colors.$mdb-default-color,
@@ -183,7 +183,7 @@
 
         &.active {
           // prettier-ignore
-          border-color: var(--#{vars.$prefix}tab-tabs-active-border-color) #{colors.$white} var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color);
+          border-color: var(--#{vars.$prefix}tab-tabs-active-border-color) transparent var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color);
         }
       }
     }
@@ -202,7 +202,7 @@
 
         &.active {
           // prettier-ignore
-          border-color: var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color) #{colors.$white};
+          border-color: var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color) transparent;
         }
       }
     }
@@ -232,12 +232,12 @@
         &:hover,
         &:focus {
           // prettier-ignore
-          border-color:  var(--#{vars.$prefix}tab-tabs-hover-border-color) var(--#{vars.$prefix}tab-tabs-hover-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color);
+          border-color:  var(--#{vars.$prefix}tab-tabs-hover-border-color) var(--#{vars.$prefix}tab-tabs-hover-border-color) transparent;
         }
 
         &.active {
           // prettier-ignore
-          border-color:  var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color) #{colors.$white};
+          border-color:  var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color) transparent;
         }
       }
     }
@@ -260,12 +260,12 @@
         &:hover,
         &:focus {
           // prettier-ignore
-          border-color:  var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-hover-border-color) var(--#{vars.$prefix}tab-tabs-hover-border-color);
+          border-color: transparent var(--#{vars.$prefix}tab-tabs-hover-border-color) var(--#{vars.$prefix}tab-tabs-hover-border-color);
         }
 
         &.active {
           // prettier-ignore
-          border-color: #{colors.$white} var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color);
+          border-color: transparent var(--#{vars.$prefix}tab-tabs-active-border-color) var(--#{vars.$prefix}tab-tabs-active-border-color);
         }
       }
     }

@@ -14,8 +14,7 @@
     --#{vars.$prefix}checkbox-disabled-bg: transparent;
     --#{vars.$prefix}checkbox-unchecked-bg: transparent;
     --#{vars.$prefix}checkbox-unchecked-color: currentColor;
-    // prettier-ignore
-    --#{vars.$prefix}checkbox-disabled-opacity: calc(var(--#{vars.$prefix}field-disabled-opacity) - 0.2);
+    --#{vars.$prefix}checkbox-disabled-opacity: var(--#{vars.$prefix}field-disabled-opacity);
     --#{vars.$prefix}checkbox-checkmark-height: #{vars.$checkbox-checkmark-height};
     --#{vars.$prefix}checkbox-checkmark-width: #{vars.$checkbox-checkmark-width};
     --#{vars.$prefix}checkbox-checkmark-pos-x: 4px;
