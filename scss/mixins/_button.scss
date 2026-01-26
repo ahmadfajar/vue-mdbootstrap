@@ -201,9 +201,6 @@
         color.adjust(colors.$white, $lightness: -5%)
       )
     );
-    $text-active: helper.to-oklch(
-      helper.set-color-contrast($color, color.adjust($color, $lightness: -55%), colors.$white)
-    );
     $bg-hover: helper.to-oklch(
       helper.set-color-contrast(
         $color,
@@ -213,6 +210,9 @@
       )
     );
     $bg-active: helper.to-oklch(color.adjust($color, $lightness: -20%));
+    $text-active: helper.to-oklch(
+      helper.set-color-contrast($bg-active, color.adjust($color, $lightness: -55%), colors.$white)
+    );
 
     --#{vars.$prefix}btn-bg: #{$color};
     --#{vars.$prefix}btn-color: #{$text-color};
@@ -240,8 +240,13 @@
       $tonal-text-active: helper.to-oklch(
         helper.set-color-contrast($color, color.adjust($color, $lightness: -55%), colors.$white)
       );
+      $tonal-bg: helper.set-color-contrast(
+        $color,
+        color.change($color, $alpha: 0.15),
+        color.change($color, $alpha: 0.25)
+      );
       $tonal-bg-hover: helper.to-oklch(
-        color.change(color.scale($color, $lightness: 40%), $alpha: 0.5)
+        color.change(color.scale($color, $lightness: 30%), $alpha: 0.4)
       );
       $tonal-bg-active: helper.to-oklch(
         helper.set-color-contrast(
@@ -252,9 +257,9 @@
         )
       );
 
-      --#{vars.$prefix}btn-bg: #{color.change($color, $alpha: 0.35)};
+      --#{vars.$prefix}btn-bg: #{$tonal-bg};
       --#{vars.$prefix}btn-color: #{$tonal-text-color};
-      --#{vars.$prefix}btn-border-color: #{color.change($color, $alpha: 0.05)};
+      --#{vars.$prefix}btn-border-color: #{color.change($color, $alpha: 0.01)};
       --#{vars.$prefix}btn-hover-bg: #{$tonal-bg-hover};
       --#{vars.$prefix}btn-hover-color: #{$tonal-text-hover};
       --#{vars.$prefix}btn-hover-border-color: #{color.change($tonal-bg-hover, $alpha: 0.1)};
@@ -303,7 +308,7 @@
       ),
       $color
     );
-    $border-color: color.adjust(colors.$gray-500, $lightness: 20%);
+    $border-color: color.scale(colors.$gray-500, $lightness: 10%);
     $active-bg: helper.set-color-contrast(
       $color,
       color.change(color.scale($color, $lightness: 50%), $alpha: 0.45),

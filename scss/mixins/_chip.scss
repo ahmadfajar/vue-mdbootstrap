@@ -10,7 +10,7 @@
     $chip-bg: helper.set-color-contrast(
       $color,
       helper.set-color-contrast($color, colors.$white, helper.shift-color($color, 65%), 90%),
-      color.change(helper.shift-color($color, 60%), $alpha: 0.75)
+      color.change(helper.shift-color($color, 60%), $alpha: 0.5)
     );
     $chip-border: helper.set-color-contrast($color, colors.$neutral-lighten-3, $chip-bg, 90%);
     $chip-color: helper.set-color-contrast($color, colors.$neutral-darken-1, colors.$black, 90%);
@@ -35,7 +35,7 @@
         helper.shift-color($color, 45%),
         90%
       ),
-      color.change(helper.shift-color($color, 45%), $alpha: 0.85)
+      color.change(helper.shift-color($color, 45%), $alpha: 0.7)
     );
     $hover-border: helper.set-color-contrast(
       $color,
@@ -52,7 +52,7 @@
           helper.shift-color($color, 10%),
           90%
         ),
-        color.adjust($color, $lightness: 25%)
+        color.change(color.adjust($color, $lightness: 25%), $alpha: 0.8)
       )
     );
     $active-border: helper.set-color-contrast($color, colors.$gray-300, $active-bg, 90%);
@@ -115,32 +115,39 @@
 //------------------------------------
 @mixin make-default-variant-dark($name, $color) {
   .chip-#{$name} {
+    //$chip-bg: helper.set-color-contrast(
+    //  $color,
+    //  helper.set-color-contrast(
+    //    $color,
+    //    color.change($color, $alpha: 0.05),
+    //    color.change(helper.shift-color($color, 10%), $alpha: 0.12),
+    //    90%
+    //  ),
+    //  color.change(helper.shift-color($color, 25%), $alpha: 0.12),
+    //  80%
+    //);
     $chip-bg: helper.set-color-contrast(
       $color,
-      helper.set-color-contrast(
-        $color,
-        color.change($color, $alpha: 0.05),
-        color.change(helper.shift-color($color, 10%), $alpha: 0.12),
-        90%
-      ),
-      color.change(helper.shift-color($color, 25%), $alpha: 0.12),
+      color.change(helper.shift-color($color, 10%), $alpha: 0.15),
+      color.change(helper.shift-color($color, 25%), $alpha: 0.22),
       80%
     );
     $chip-color: helper.set-color-contrast(
       $chip-bg,
       colors.$neutral-lighten-3,
-      helper.fn-if(
-        ($name == 'secondary'),
-        helper.shift-color(colors.$neutral-lighten-2, 10%),
-        helper.shift-color($color, 25%)
-      ),
+      helper.shift-color(colors.$neutral-lighten-2, 10%),
+      //helper.fn-if(
+      //  ($name == 'secondary'),
+      //  helper.shift-color(colors.$neutral-lighten-2, 10%),
+      //  helper.shift-color($color, 25%)
+      //),
       90%
     );
     $icon-color: helper.to-oklch(color.adjust($color, $lightness: -10%));
     $hover-bg: helper.set-color-contrast(
       $color,
-      color.change(helper.shift-color($color, 10%), $alpha: 0.22),
-      color.change(helper.shift-color($color, 25%), $alpha: 0.22),
+      color.change(helper.shift-color($color, 15%), $alpha: 0.22),
+      color.change(helper.shift-color($color, 30%), $alpha: 0.28),
       80%
     );
     $active-bg: helper.set-color-contrast(
@@ -158,7 +165,7 @@
     $active-icon-color: helper.to-oklch(
       helper.set-color-contrast(
         $active-bg,
-        colors.$gray-900,
+        colors.$white,
         color.adjust($color, $lightness: 15%),
         95%
       )
@@ -314,7 +321,7 @@
     $hover-color: helper.to-oklch(
       helper.set-color-contrast(
         $color,
-        colors.$neutral-lighten-4,
+        colors.$neutral-lighten-3,
         color.adjust($color, $lightness: 20%),
         90%
       )
@@ -335,7 +342,7 @@
     $active-icon-color: helper.to-oklch(
       helper.set-color-contrast(
         $active-bg,
-        colors.$gray-900,
+        colors.$white,
         color.adjust($color, $lightness: 15%),
         95%
       )

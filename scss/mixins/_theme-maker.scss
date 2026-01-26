@@ -105,6 +105,10 @@
     @include alert.make-outline-variant-dark($name, $color);
   }
 
+  .alert-solid-secondary {
+    --#{vars.$prefix}alert-bg: oklch(0.46 0.01 240);
+  }
+
   // BsCheckbox color scheme
   //-------------------------
   @each $name, $color in $no-dark-light {

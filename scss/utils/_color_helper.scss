@@ -12,18 +12,18 @@
 }
 
 @function to-rgb($color, $fractionDigits: 1) {
-  $red: round(color.channel($color, 'red'), $fractionDigits);
-  $green: round(color.channel($color, 'green'), $fractionDigits);
-  $blue: round(color.channel($color, 'blue'), $fractionDigits);
+  $red: round(color.channel($color, 'red', $space: rgb), $fractionDigits);
+  $green: round(color.channel($color, 'green', $space: rgb), $fractionDigits);
+  $blue: round(color.channel($color, 'blue', $space: rgb), $fractionDigits);
 
   @return rgb($red, $green, $blue);
 }
 
 @function to-rgba($color, $fractionDigits: 1) {
-  $red: round(color.channel($color, 'red'), $fractionDigits);
-  $green: round(color.channel($color, 'green'), $fractionDigits);
-  $blue: round(color.channel($color, 'blue'), $fractionDigits);
-  $alpha: round(color.channel($color, 'alpha'), $fractionDigits);
+  $red: round(color.channel($color, 'red', $space: rgb), $fractionDigits);
+  $green: round(color.channel($color, 'green', $space: rgb), $fractionDigits);
+  $blue: round(color.channel($color, 'blue', $space: rgb), $fractionDigits);
+  $alpha: round(color.channel($color, 'alpha', $space: rgb), $fractionDigits);
 
   @return rgba($red, $green, $blue, $alpha);
 }

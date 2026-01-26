@@ -1,4 +1,5 @@
 @use 'sass:color';
+@use 'sass:list';
 @use '../../utils/color_helper' as helper;
 @use '../../color_vars' as colors;
 @use '../../variables' as vars;
@@ -23,6 +24,8 @@
   $alias-name1: false,
   $alias-name2: false
 ) {
+  $color-names: (primary secondary success danger warning info dark light);
+
   @if $background {
     @if $alias-name1 {
       .bg-#{$name},
@@ -37,26 +40,7 @@
       }
     } @else {
       .bg-#{$name} {
-        @if (
-          $name ==
-            'primary' or
-            $name ==
-            'secondary' or
-            $name ==
-            'success' or
-            $name ==
-            'info' or
-            $name ==
-            'warning' or
-            $name ==
-            'danger' or
-            $name ==
-            'danger' or
-            $name ==
-            'light' or
-            $name ==
-            'dark'
-        ) {
+        @if (list.index($color-names, $name)) {
           background-color: $color !important;
         } @else {
           background-color: $color;
@@ -80,6 +64,19 @@
     } @else {
       .border-#{$name} {
         --#{vars.$prefix}border-color: #{$color};
+
+        @if (list.index($color-names, $name)) {
+          $red: helper.round(color.channel($color, 'red', $space: rgb));
+          $green: helper.round(color.channel($color, 'green', $space: rgb));
+          $blue: helper.round(color.channel($color, 'blue', $space: rgb));
+          $red1: helper.fn-if(($red < 0), 0, $red);
+          $green1: helper.fn-if(($green < 0), 0, $green);
+          $blue1: helper.fn-if(($blue < 0), 0, $blue);
+
+          --#{vars.$prefix-bs}#{$name}-rgb: #{$red1, $green1, $blue1};
+        } @else {
+          --#{vars.$prefix-bs}border-color: #{$color};
+        }
       }
     }
   }
@@ -98,26 +95,7 @@
       }
     } @else {
       .text-#{$name} {
-        @if (
-          $name ==
-            'primary' or
-            $name ==
-            'secondary' or
-            $name ==
-            'success' or
-            $name ==
-            'info' or
-            $name ==
-            'warning' or
-            $name ==
-            'danger' or
-            $name ==
-            'danger' or
-            $name ==
-            'light' or
-            $name ==
-            'dark'
-        ) {
+        @if (list.index($color-names, $name)) {
           color: $color !important;
         } @else {
           color: $color;
@@ -172,26 +150,7 @@
       }
     } @else {
       .text-bg-#{$name} {
-        @if (
-          $name ==
-            'primary' or
-            $name ==
-            'secondary' or
-            $name ==
-            'success' or
-            $name ==
-            'info' or
-            $name ==
-            'warning' or
-            $name ==
-            'danger' or
-            $name ==
-            'danger' or
-            $name ==
-            'light' or
-            $name ==
-            'dark'
-        ) {
+        @if (list.index($color-names, $name)) {
           color: $text-color !important;
           background-color: $color !important;
         } @else {
