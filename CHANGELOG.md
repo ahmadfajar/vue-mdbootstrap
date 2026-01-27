@@ -3,15 +3,132 @@
 > All notable changes to this project will be documented in this file.
 
 
-## v2.1.8
+## v2.2.0
 
-Released: July xx, 2025
+Released: February xx, 2026
 
-### Improvements
+### Features & Improvements
 
-- **BsModal**: improve inner body height when `scrollable` and `full-page` is defined.
-- **BsTooltip**: improve inner padding and scss variables.
+- Add support for **Bootstrap v5.3** and **TailwindCSS v4.1**.
+- Add support for dark theme.
+- Add css utility classes.
+- Create global css variables for UI color consistency.
+- Convert all `rgb` and `hex` css color to `oklch` and improve scss mixin.
+- Improve components css rules, utilize css `@layer` and make it compatible with TailwindCSS.
+- New components: **BsCloseButton**, **BsSpinLoader**.
+- **BsAlert**: 
+  - Decouple from Bootstrap alert css. 
+  - Improve close button.
+  - Improve color variants.
+- **BsBadge**: 
+  - Decouple from Bootstrap badge css. 
+  - Remove default value from `color` property. 
+- **BsBreadcrumb**: decouple from Bootstrap breadcrumb css, small improvement. 
+- **BsButton**: 
+  - Decouple from Bootstrap button css.
+  - Add properties: `iconClass` and `pillOff`.
+  - Provide `data-*` attributes when rendering html.
+  - Improve color variants.
+- **BsCard**, **BsCardBody**, **BsCardContent**, **BsCardFooter**, **BsCardHeader**: 
+  - Decouple from Bootstrap card css.
+  - Integrate with global css variables.
+- **BsCardMedia**: 
+  - Decouple from Bootstrap card css.
+  - Add slots: `title` and `subtitle`. 
+- **BsCheckbox**, **BsRadio**, **BsSwitch**: provide `data-*` attributes when rendering html.
+- **BsCheckboxGroup**, **BsRadioGroup**: add property `persistentHelpOff`.
+- **BsChip**: 
+  - Add property `closeButtonColor`.
+  - Provide `data-*` attributes when rendering html.
+  - Improve close button.
+  - Improve color variants.
+- **BsChipField**: Correctly set chips to readonly when field in readonly state.
+- **BsChipGroup**: add property `closeButtonColor`.
+- **BsColorPicker**: 
+  - Add support `oklch` color space.
+  - Add `oklch` to toggle button.
+  - Mark `containerColor` property as deprecated and remove its default value.
+  - Enable change the value via input box.
+  - Improve swatch container and buttons.
+  - Improve sync between color preview and value.
+  - Improve exposed methods.
+- **BsCombobox**: 
+  - Add property `itemSeparatorDark`.
+  - Mark `listboxColor` property as deprecated.
+  - Correctly set chips to readonly when field in readonly state.
+  - Improve focus and disable state.
+  - Integrate with global css variables.
+- **BsContent**, **BsApp**, **BsAppBar**: 
+  - Improve html rendering.
+  - Integrate with global css variables.
+- **BsDatePicker**: 
+  - Add properties: `buttonColor`, `selectedColor`, `surfaceClass`.
+  - Mark `surfaceColor` property as deprecated and remove its default value.
+  - Improve color consistency using global css variables.
+- **BsDateTimeField**: 
+  - Add properties: `pickerButton`, `pickerSelectedColor`, `surfaceCls`.
+  - Mark `pickerColor` property as deprecated and remove its default value.
+  - Improve focus state.
+  - Improve color consistency using global css variables.
+- **BsDivider**: adjusts width to fit the container width.
+- **BsDropdownMenu**: improve color consistency using global css variables.
+- **BsIcon**: add property `svgClass`.
+- **BsListbox**: 
+  - Add property `itemSeparatorDark`.
+  - Improve focus and disable state.
+  - Integrate with global css variables.
+- **BsLightbox**: 
+  - Add support for video and YouTube.
+  - Improve `thumbnailHeight` property implementation.
+  - Fixed dropdown-menus didn't display correctly.
+- **BsListView**, **BsListTile**, **BsListNav**: improve color consistency using global css variables.
+- **BsMaskLoader**, **BsProgressBar**, **BsTabs**, **BsTab**: decouple from Bootstrap css, small improvement. 
+- **BsModal**: 
+  - Improve inner body height when `scrollable` and `fullPage` is defined.
+  - Integrate with global css variables.
+- **BsNotification**: improve close button.
+- **BsPopover**: 
+  - Improve animation transition and scroll event.
+  - Integrate with global css variables.
+- **BsSearchField**: add property `popoverOpen`.
+- **BsSvgIcon**: add property `size`.
+- **BsSideDrawer**: 
+  - Mark `color` property as deprecated.
+  - Improve rendering html.
+  - Improve color consistency using global css variables.
+- **BsTabs**: add slot `append-header`.
+- **BsToggleButton**, **BsToggleField**: 
+  - Add properties: `pillOff`, `iconSize`.
+  - Provide `data-*` attributes when rendering html.
+- **BsTooltip**: improve animation, inner padding, border radius and css variables.
+- **CacheManager**: improve performance using sessionStorage if available
 
+### Breaking Changes
+
+- **BsAlert**: remove deprecated properties: `iconType`, `solidFill`.
+- **BsCheckboxGroup**, **BsRadioGroup**: remove deprecated property `externalValidator`.
+- **BsChip**, **BsChipGroup**: remove deprecated property `imgPadding`.
+- **BsChipField**: remove deprecated property `externalValidator`.
+- **BsTextArea**, **BsTextField**, **BsToggleField**: 
+  - Remove deprecated property `externalValidator`.
+  - Remove `flat` property.
+- **BsCombobox**: remove deprecated properties: `externalValidator`, `checkOptionColor`, `checkOptionPosition`, `popoverMaxHeight`, `popoverMinHeight`.
+- **BsDateTimeField**: remove deprecated properties: `transition`, `externalValidator`, `flat`.
+- **BsIconSvg** is deprecated, use **BsSvgIcon** instead.
+- **BsIconSpinner** is deprecated, use **BsSpinnerIcon** instead.
+- **BsIconFontawesome** is deprecated, use **BsFontawesomeIcon** instead.
+- **BsImageHolder**: remove deprecated property `placeHolder`.
+- **BsLightbox**: 
+  - Remove deprecated property `overlayClose`.
+  - Remove unused properties: `overlayColor`, `overlayOpacity`.
+  - Rename property `imageClass` to `viewerClass`.
+  - Rename property `imageStyles` to `viewerStyles`.
+- **BsModal**: remove deprecated property `overlayClose`.
+- **BsNumericField**: 
+  - Remove deprecated property: `externalValidator`.
+  - Remove properties: `spinButton`, `spinButtonPlacement`, `flat`.
+  - Change the type of `actionButton` property to string to accommodate **up/down** and **plus/minus** buttons.
+- **BsToggleButton**: remove `flat` property.
 
 ## v2.1.7
 

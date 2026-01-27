@@ -1,7 +1,7 @@
 {
   "name": "vue-mdbootstrap",
   "version": "2.2.0",
-  "description": "Material Design UI Components for Vue.js",
+  "description": "Material Design UI Component Library for Vue.js",
   "author": {
     "name": "Ahmad Fajar",
     "email": "ahmad.fajar234@hotmail.com"
