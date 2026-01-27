@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://ahmadfajar.github.io/">
-    <img src="https://raw.githubusercontent.com/ahmadfajar/vue3-mdb-example/refs/heads/master/src/bootstrap/assets/logo.png" alt="Vue MDBootstrap" height="120">
+  <a href="https://ahmadfajar.github.io/" target="_blank">
+    <img src="https://raw.githubusercontent.com/ahmadfajar/vue-mdbootstrap/refs/heads/master/.github/logo.png" alt="Vue MDBootstrap" height="120">
   </a>
 </p>
 
