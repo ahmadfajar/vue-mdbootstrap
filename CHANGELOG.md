@@ -113,7 +113,9 @@ Released: February xx, 2026
   - Remove deprecated property `externalValidator`.
   - Remove `flat` property.
 - **BsCombobox**: remove deprecated properties: `externalValidator`, `checkOptionColor`, `checkOptionPosition`, `popoverMaxHeight`, `popoverMinHeight`.
-- **BsDateTimeField**: remove deprecated properties: `transition`, `externalValidator`, `flat`.
+- **BsDateTimeField**: 
+  - Remove deprecated properties: `transition`, `externalValidator`.
+  - Remove `flat` property.
 - **BsIconSvg** is deprecated, use **BsSvgIcon** instead.
 - **BsIconSpinner** is deprecated, use **BsSpinnerIcon** instead.
 - **BsIconFontawesome** is deprecated, use **BsFontawesomeIcon** instead.
