@@ -106,7 +106,7 @@ createVueMdb(App).use(router).mount('#app');
 Now, everything is registered and you are ready to go. Please note, the provided CSS only handles
 component styling. You still need **Bootstrap 5** or **TailwindCSS 4** to handle page 
 responsiveness and to quickly style your web pages. Use code below in the `<head>` section of
-your HTML to load the Bootstrap css framework.
+your HTML to load the Bootstrap CSS framework.
 
 ```html
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
