@@ -15,7 +15,7 @@
 @layer theme, base, components, animations, utilities;
 
 $theme-colors: (
-  'default': oklch(0.82 0.1 297.94),
+  'default': oklch(0.75 0.1 297.94),
   'primary': oklch(0.636 0.137 235.915),
   'secondary': oklch(55% 0.02 244.89),
   'success': oklch(0.55 0.1 177.8),
@@ -72,11 +72,12 @@ $theme-colors: map.set($theme-colors, 'danger', oklch(0.68 0.17 18));
 
     --sidedrawer-background: oklch(0.182 0 89.876);
     --sidedrawer-foreground: var(--foreground);
-    --sidedrawer-item-active-foreground: oklch(0.829 0.09 297.293);
+    --sidedrawer-item-active-background: oklch(0.4 0.04 284.73);
+    --sidedrawer-item-active-foreground: oklch(0.95 0.03 298.65);
     --sidedrawer-item-active-foreground-secondary: oklch(0.796 0.062 295.364 / 0.75);
     --sidedrawer-item-hover-background: oklch(0.535 0.005 271.325 / 0.15);
 
-    --navigation-item-active-foreground: oklch(0.829 0.09 297.293);
+    --navigation-item-active-foreground: oklch(0.88 0.07 297.73);
     --navigation-item-active-foreground-secondary: oklch(0.796 0.062 295.364 / 0.75);
     --navigation-item-hover-background: oklch(0.535 0.005 271.325 / 0.15);
   }

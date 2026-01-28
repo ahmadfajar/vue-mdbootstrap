@@ -53,7 +53,7 @@
       helper.to-oklch(color.scale($color, $lightness: 10%)),
       86.3%
     );
-    $thumb-color: helper.set-color-contrast($color, colors.$black, colors.$white);
+    $thumb-color: helper.set-color-contrast($color, colors.$black, colors.$white, 72%);
     $track-color: color.change(helper.shift-color($color, 30%), $alpha: 0.4);
 
     --#{vars.$prefix}switch-active-inset-track-color: #{$track-color};

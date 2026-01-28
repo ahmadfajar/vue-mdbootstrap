@@ -9,6 +9,7 @@
   .#{vars.$prefix}list {
     --#{vars.$prefix}listview-bg: inherit;
     --#{vars.$prefix}listview-color: var(--navigation-item-foreground, #{colors.$gray-900});
+    --#{vars.$prefix}listview-item-gap: 0;
     --#{vars.$prefix}listview-padding-x: 0;
     --#{vars.$prefix}listview-padding-y: #{vars.$padding-sm};
 

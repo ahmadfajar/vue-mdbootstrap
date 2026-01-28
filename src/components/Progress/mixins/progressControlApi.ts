@@ -259,7 +259,7 @@ export function useRenderProgressBar(props: Readonly<TProgressBarOptionProps>): 
       (props.valuePosition === 'top' && props.showValue)
         ? createProgressBarLabel(props, 'top')
         : undefined,
-      h('div', { class: 'flex' }, [
+      h('div', { class: 'flex items-center' }, [
         props.labelPosition === 'start' || props.valuePosition === 'start'
           ? createProgressBarLabel(props, 'start')
           : undefined,

@@ -35,7 +35,16 @@
     --#{vars.$prefix}tile-state-title-font-weight: var(--#{vars.$prefix}tile-title-font-weight);
 
     background-color: var(--#{vars.$prefix}tile-state-bg);
+    margin: var(--#{vars.$prefix}listview-item-gap) 0;
     transition: vars.$transition-hoverable;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &:not(.disabled):not(.active) {
       &.#{vars.$prefix}link:hover {

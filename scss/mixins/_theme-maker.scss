@@ -42,7 +42,7 @@
   // BsCheckbox color scheme
   //-------------------------
   @each $name, $color in $no-dark-light {
-    @include checkbox.make-default-variant($name, $color);
+    @include checkbox.make-default-variant-light($name, $color);
   }
 
   // BsRadio color scheme
@@ -112,7 +112,7 @@
   // BsCheckbox color scheme
   //-------------------------
   @each $name, $color in $no-dark-light {
-    @include checkbox.make-default-variant($name, $color);
+    @include checkbox.make-default-variant-dark($name, $color);
   }
 
   // BsRadio color scheme

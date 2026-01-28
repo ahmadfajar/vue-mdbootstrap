@@ -4,9 +4,18 @@
 
 // BsCheckbox variants -- scss mixins
 //-----------------------------------
-@mixin make-default-variant($name, $color) {
+@mixin make-default-variant-light($name, $color) {
   .checkbox-#{$name} {
     $checked-color: helper.set-color-contrast($color, colors.$black, colors.$white);
+
+    --#{vars.$prefix}checkbox-checked-bg: #{$color};
+    --#{vars.$prefix}checkbox-checked-color: #{$checked-color};
+  }
+}
+
+@mixin make-default-variant-dark($name, $color) {
+  .checkbox-#{$name} {
+    $checked-color: helper.set-color-contrast($color, colors.$black, colors.$white, 72%);
 
     --#{vars.$prefix}checkbox-checked-bg: #{$color};
     --#{vars.$prefix}checkbox-checked-color: #{$checked-color};

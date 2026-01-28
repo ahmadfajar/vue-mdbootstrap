@@ -50,10 +50,10 @@ export function useSetDialogMaxHeight(
     if (headerEl.value) {
       maxBodyHeight -= headerEl.value.offsetHeight;
     }
-    bodyEl.value.style.maxHeight = <string>Helper.cssUnit(maxBodyHeight);
+    bodyEl.value.style.maxHeight = Helper.cssUnit(maxBodyHeight) as string;
   }
 
-  dialogEl.value.style.maxHeight = <string>Helper.cssUnit(contentMaxHeight);
+  dialogEl.value.style.maxHeight = Helper.cssUnit(contentMaxHeight) as string;
 }
 
 export function useRenderModalDialog(
@@ -107,9 +107,11 @@ function createModalDialog(
           'div',
           {
             class: [`${cssPrefix}modal`, 'flex', 'items-center', 'justify-center', 'fixed'],
-            onClick: () => {
-              props.overlayClickClose &&
-                useClosePopover(instance.value, modalOpen, 'Overlay clicked.');
+            onClick: (e: Event) => {
+              if (e.target && (e.target as Element).classList.contains(`${cssPrefix}modal`)) {
+                props.overlayClickClose &&
+                  useClosePopover(instance.value, modalOpen, 'Overlay clicked.');
+              }
             },
           },
           [

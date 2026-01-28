@@ -40,7 +40,16 @@
 
     .#{vars.$prefix}nav-item {
       background-color: var(--#{vars.$prefix}nav-item-state-bg);
+      margin: var(--#{vars.$prefix}listview-item-gap) 0;
       white-space: nowrap;
+
+      &:first-child {
+        margin-top: 0;
+      }
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
 
       > .#{vars.$prefix}nav-item-inner {
         background-color: var(--#{vars.$prefix}nav-item-inner-state-bg);
