@@ -9,10 +9,12 @@
     --#{vars.$prefix}breadcrumb-font-size: inherit;
     --#{vars.$prefix}breadcrumb-font-weight: var(--font-weight-medium);
 
-    --#{vars.$prefix}breadcrumb-item-color: inherit;
-    --#{vars.$prefix}breadcrumb-item-active-color: #{colors.$gray-800};
+    // prettier-ignore
+    --#{vars.$prefix}breadcrumb-item-color: var(--foreground-subtle, #{colors.$neutral-darken-1});
+    --#{vars.$prefix}breadcrumb-item-active-color: inherit;
     --#{vars.$prefix}breadcrumb-item-hover-color: var(--link-color, #{colors.$primary-color});
-    --#{vars.$prefix}breadcrumb-item-separator-color: #{colors.$gray-400};
+    // prettier-ignore
+    --#{vars.$prefix}breadcrumb-item-separator-color: var(--foreground-subtle-tertiary, #{colors.$neutral-lighten-2});
     --#{vars.$prefix}breadcrumb-item-spacing: #{vars.$breadcrumb-item-spacing};
     --#{vars.$prefix}breadcrumb-line-height: #{vars.$breadcrumb-line-height};
 

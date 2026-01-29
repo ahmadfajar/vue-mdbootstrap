@@ -18,7 +18,7 @@
   $no-dark-light: map.remove($theme-colors, 'dark', 'light');
 
   // BsBadge color scheme
-  //-----------------------
+  //----------------------
   @each $name, $color in $no-dark {
     @include badge.make-actionable-variant-light($name, $color);
   }
@@ -32,7 +32,7 @@
   }
 
   // BsAlert color scheme
-  //-----------------------
+  //----------------------
   @each $name, $color in $no-dark {
     @include alert.make-default-variant-light($name, $color);
     @include alert.make-outline-variant-light($name, $color);
@@ -81,7 +81,7 @@
   @include field.make-state-validation-variant-dark();
 
   // BsBadge color scheme
-  //-----------------------
+  //----------------------
   @each $name, $color in $no-dark {
     @include badge.make-actionable-variant-dark($name, $color);
   }
@@ -99,7 +99,7 @@
   }
 
   // BsAlert color scheme
-  //-----------------------
+  //----------------------
   @each $name, $color in $no-dark {
     @include alert.make-default-variant-dark($name, $color);
     @include alert.make-outline-variant-dark($name, $color);
@@ -122,7 +122,7 @@
   }
 
   // BsSwitch disable state color scheme
-  //------------------------------------
+  //-------------------------------------
   @include switch.make-disabled-variant-dark();
 
   // BsSwitch color scheme
@@ -132,7 +132,7 @@
   }
 
   // BsChip disable state color scheme
-  //----------------------------------
+  //-----------------------------------
   @include chip.make-disabled-variant-dark();
 
   // BsChip color scheme
@@ -150,28 +150,26 @@
   }
 
   // BsBreadcrumb color scheme
-  //--------------------
+  //---------------------------
   .#{vars.$prefix}breadcrumb {
-    --#{vars.$prefix}breadcrumb-item-active-color: #{colors.$neutral-lighten-1};
     --#{vars.$prefix}breadcrumb-item-hover-color: #{map.get($theme-colors, 'primary')};
-    --#{vars.$prefix}breadcrumb-item-separator-color: #{colors.$gray-500};
   }
 
   // BsCard color scheme
-  //--------------------
+  //---------------------
   .#{vars.$prefix}card {
     --#{vars.$prefix}card-border-color: oklch(0.9 0 0 / 0.08);
     --#{vars.$prefix}card-cap-bg: oklch(0 0 0 / 0.08);
   }
 
   // BsDivider color scheme
-  //-----------------------
+  //------------------------
   .#{vars.$prefix}divider {
     --#{vars.$prefix}divider-color: var(--border-translucent);
   }
 
   // BsListbox searchbox state
-  //--------------------------
+  //---------------------------
   .#{vars.$prefix}listbox {
     //--#{vars.$prefix}searchbox-bg: #{color.change(colors.$black, $alpha: 0.025)};
     --#{vars.$prefix}searchbox-active-bg: #{color.change(colors.$black, $alpha: 0.25)};
@@ -194,7 +192,7 @@
   }
 
   // BsTabs color scheme
-  //--------------------
+  //---------------------
   .#{vars.$prefix}tabs {
     --#{vars.$prefix}tab-tabs-background: oklch(0 0 0 / 0.08);
     --#{vars.$prefix}tab-tabs-border-color: oklch(87.2% 0.01 258.338deg / 0.15);
@@ -207,13 +205,13 @@
   }
 
   // BsNotification color scheme
-  //----------------------------
+  //-----------------------------
   .#{vars.$prefix}notification {
     --#{vars.$prefix}notification-background-color: oklch(0.305 0.002 247.9);
   }
 
   // BsTooltip color scheme
-  //-----------------------
+  //------------------------
   .#{vars.$prefix}tooltip {
     --#{vars.$prefix}tooltip-bg: oklch(0.307 0.018 258.37);
     --#{vars.$prefix}tooltip-opacity: 1;

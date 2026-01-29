@@ -112,7 +112,7 @@ export declare type TFontawesomeIconOptionProps = TSizeOptionProps & {
   variant?: TFontAwesomeVariant;
 
   /**
-   * Font Awesome vendor version. Default is `7.0.1`.
+   * Font Awesome vendor version. Default is `7.1.0`.
    */
   version?: string;
 
