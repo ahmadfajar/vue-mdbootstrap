@@ -98,7 +98,7 @@ $lime-accent-2:             oklch(0.86 0.18 139.88);
 $lime-accent-3:             oklch(0.74 0.21 140.45);
 $lime-accent-4:             oklch(0.66 0.21 140.8);
 
-$light-green-base:          oklch(0.868 0.156 144.088);
+$light-green-base:          oklch(0.82 0.19 144.01); // oklch(0.868 0.156 144.088);
 $light-green-lighten-5:     helper.shift-color($light-green-base, 90%);
 $light-green-lighten-4:     helper.shift-color($light-green-base, 75%);
 $light-green-lighten-3:     helper.shift-color($light-green-base, 50%);
@@ -114,7 +114,7 @@ $light-green-accent-2:      oklch(0.87 0.18 151.15);
 $light-green-accent-3:      oklch(0.77 0.22 149.1);
 $light-green-accent-4:      oklch(0.66 0.19 149);
 
-$green-base:                oklch(0.684 0.144 154.999);
+$green-base:                oklch(60.024% 0.16635 149.005); // oklch(0.684 0.144 154.999);
 $green-lighten-5:           helper.shift-color($green-base, 90%);
 $green-lighten-4:           helper.shift-color($green-base, 75%);
 $green-lighten-3:           helper.shift-color($green-base, 50%);
@@ -268,7 +268,7 @@ $midnight-haze-darken-1:    color.adjust($midnight-haze-base, $lightness: -5%);
 $midnight-haze-darken-2:    color.adjust($midnight-haze-base, $lightness: -10%);
 $midnight-haze-darken-3:    color.adjust($midnight-haze-base, $lightness: -15%);
 $midnight-haze-darken-4:    color.adjust($midnight-haze-base, $lightness: -20%);
-$midnight-haze-darken-5:    oklch(0.2 0.04 265.9); // color.adjust($midnight-haze-base, $lightness: -30%);
+$midnight-haze-darken-5:    oklch(0.2 0.04 265.9);
 
 $blue-grey-base:            oklch(0.572 0.04 229.025);
 $blue-grey-lighten-5:       oklch(0.96 0.03 229.38);
@@ -301,11 +301,11 @@ $neutral-lighten-4:         helper.shift-color($neutral-base, 90%);
 $neutral-lighten-3:         helper.shift-color($neutral-base, 75%);
 $neutral-lighten-2:         helper.shift-color($neutral-base, 45%);
 $neutral-lighten-1:         helper.shift-color($neutral-base, 15%);
-$neutral-darken-1:          oklch(0.439 0 0); // helper.shift-color($neutral-base, -15%);
-$neutral-darken-2:          oklch(0.371 0 0); // helper.shift-color($neutral-base, -30%);
-$neutral-darken-3:          oklch(0.269 0 0); // helper.shift-color($neutral-base, -45%);
-$neutral-darken-4:          oklch(0.205 0 0); // helper.shift-color($neutral-base, -60%);
-$neutral-darken-5:          oklch(0.145 0 0); // helper.shift-color($neutral-base, -75%);
+$neutral-darken-1:          oklch(0.439 0 0);
+$neutral-darken-2:          oklch(0.371 0 0);
+$neutral-darken-3:          oklch(0.269 0 0);
+$neutral-darken-4:          oklch(0.205 0 0);
+$neutral-darken-5:          oklch(0.145 0 0);
 
 // Not used anymore
 $brown-lighten-5:           helper.to-oklch(#efebe9);
@@ -717,7 +717,7 @@ $theme-colors: (
   "blue-grey":        $blue-grey-base,
   "brown":            $brown-base,
   "cyan":             $cyan-base,
-  "dark-blue":        $blue-darken-4,
+  "dark-blue":        $primary-color-dark,
   "dark-green":       $green-darken-4,
   "deep-orange":      $deep-orange-base,
   "deep-purple":      $deep-purple-base,

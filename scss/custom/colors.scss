@@ -43,7 +43,9 @@ $final-colors: map.remove(
   'blue-grey',
   'neutral',
   'blue-green',
-  'blue-green-color'
+  'blue-green-color',
+  'dark-blue',
+  'primary-color-dark'
 );
 
 @each $name, $color in $final-colors {
@@ -56,6 +58,12 @@ $final-colors: map.remove(
   'blue-green',
   colors.$blue-green-color,
   $alias-name1: 'blue-green-color'
+);
+
+@include decorators.decorate-color(
+  'dark-blue',
+  colors.$primary-color-dark,
+  $alias-name1: 'primary-color-dark'
 );
 
 // Create full color palette for background
