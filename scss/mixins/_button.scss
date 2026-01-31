@@ -483,12 +483,13 @@
     @if ($name == 'secondary') {
       --#{vars.$prefix}btn-color: #{colors.$elegant-color-dark};
       --#{vars.$prefix}btn-hover-color: #{colors.$neutral-darken-4};
+      --#{vars.$prefix}btn-hover-bg: oklch(0.87 0.01 253.71 / 0.9);
     } @else {
       --#{vars.$prefix}btn-color: #{helper.to-oklch($text-color)};
       --#{vars.$prefix}btn-hover-color: #{helper.to-oklch($hover-text)};
+      --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
     }
 
-    --#{vars.$prefix}btn-hover-bg: #{helper.to-oklch($hover-bg)};
     --#{vars.$prefix}btn-active-bg: #{helper.to-oklch($active-bg)};
     --#{vars.$prefix}btn-active-color: #{helper.to-oklch($active-text)};
     --#{vars.$prefix}btn-focus-shadow-color: #{helper.to-oklch($focus-box-shadow-color)};

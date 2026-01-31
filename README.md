@@ -8,7 +8,7 @@
 Vue MDBootstrap
 </p>
 <p align="center">
-Vue.js UI component library that leverages Bootstrap or Tailwind to build beautiful web applications.
+Vue.js UI component library that leverages Bootstrap or TailwindCSS to build beautiful web applications.
 </p>
 
 <p align="center">
@@ -179,6 +179,8 @@ You can clone the github repository below and run it by your self to see it in a
    show component usage examples.
 2. [vue3-mdb-starter](https://github.com/ahmadfajar/vue3-mdb-starter) - A starter kit 
    project template that leverages the Bootstrap v5 CSS framework.
+3. [vue3-mdb-starter-tw](https://github.com/ahmadfajar/vue3-mdb-starter-tw) - A starter kit 
+   project template that leverages the TailwindCSS v4 CSS framework.
 
 
 ## Browser Support

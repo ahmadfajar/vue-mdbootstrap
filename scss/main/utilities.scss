@@ -403,12 +403,14 @@
     $background: false,
     $border: false
   );
+
   @include decorators.decorate-color(
     'subtle-secondary',
     var(--foreground-subtle-secondary),
     $background: false,
     $border: false
   );
+
   @include decorators.decorate-color(
     'subtle-tertiary',
     var(--foreground-subtle-tertiary),
