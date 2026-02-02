@@ -73,10 +73,10 @@ If not, please read the
 
 ```bash
 # With npm
-npm install vue-mdbootstrap@next --save
+npm install vue-mdbootstrap --save
 
 # With yarn
-yarn add vue-mdbootstrap@next
+yarn add vue-mdbootstrap
 ```
 
 Create Vue application and mount at `#app` entry point.
