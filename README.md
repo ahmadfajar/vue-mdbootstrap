@@ -138,7 +138,7 @@ Code below is an example on how to create HTML page using Vue MDBootstrap.
 <body>
   <div id="app" class="container">
     <h3 class="mt-4">Contextual Buttons</h3>
-    <bs-card class="bg-gray-200 mt-3" border-off>
+    <bs-card class="mt-3" border-off>
       <bs-card-body>
         <div class="flex justify-center">
           <bs-button @click="count++">Click me</bs-button>

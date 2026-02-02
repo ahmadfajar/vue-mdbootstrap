@@ -5,44 +5,49 @@
 
 ## v2.2.0
 
-Released: February xx, 2026
+Released: February 02, 2026
 
 ### Features & Improvements
 
 - Add support for **Bootstrap v5.3** and **TailwindCSS v4.1**.
 - Add support for dark theme.
-- Add css utility classes.
-- Create global css variables for UI color consistency.
+- Add CSS utility classes.
+- Create global CSS variables for UI color consistency.
 - Convert all `rgb` and `hex` css color to `oklch` and improve scss mixin.
-- Improve components css rules, utilize css `@layer` and make it compatible with TailwindCSS.
+- Improve components CSS rules, utilize css `@layer` and make it compatible with TailwindCSS.
 - New components: **BsCloseButton**, **BsSpinLoader**.
 - **BsAlert**: 
-  - Decouple from Bootstrap alert css. 
+  - Decouple from Bootstrap alert CSS. 
   - Improve close button.
   - Improve color variants.
 - **BsBadge**: 
-  - Decouple from Bootstrap badge css. 
+  - Decouple from Bootstrap badge CSS. 
   - Remove default value from `color` property. 
-- **BsBreadcrumb**: decouple from Bootstrap breadcrumb css, small improvement. 
+- **BsBreadcrumb**: 
+  - Decouple from Bootstrap breadcrumb CSS. 
+  - Small improvement. 
 - **BsButton**: 
-  - Decouple from Bootstrap button css.
+  - Decouple from Bootstrap button CSS.
   - Add properties: `iconClass` and `pillOff`.
-  - Provide `data-*` attributes when rendering html.
+  - Provide `data-*` attributes when rendering HTML.
   - Improve color variants.
 - **BsCard**, **BsCardBody**, **BsCardContent**, **BsCardFooter**, **BsCardHeader**: 
-  - Decouple from Bootstrap card css.
-  - Integrate with global css variables.
+  - Decouple from Bootstrap card CSS.
+  - Integrate with global CSS variables.
 - **BsCardMedia**: 
-  - Decouple from Bootstrap card css.
+  - Decouple from Bootstrap card CSS.
   - Add slots: `title` and `subtitle`. 
-- **BsCheckbox**, **BsRadio**, **BsSwitch**: provide `data-*` attributes when rendering html.
+- **BsCheckbox**, **BsRadio**, **BsSwitch**, **BsNumericField**, **BsTextField**,
+  **BsTextArea**: provide `data-*` attributes when rendering html.
 - **BsCheckboxGroup**, **BsRadioGroup**: add property `persistentHelpOff`.
 - **BsChip**: 
   - Add property `closeButtonColor`.
-  - Provide `data-*` attributes when rendering html.
+  - Provide `data-*` attributes when rendering HTML.
   - Improve close button.
   - Improve color variants.
-- **BsChipField**: Correctly set chips to readonly when field in readonly state.
+- **BsChipField**: 
+  - Correctly set chips to readonly when the field is in readonly state.
+  - Provide `data-*` attributes when rendering HTML.
 - **BsChipGroup**: add property `closeButtonColor`.
 - **BsColorPicker**: 
   - Add support `oklch` color space.
@@ -55,60 +60,67 @@ Released: February xx, 2026
 - **BsCombobox**: 
   - Add property `itemSeparatorDark`.
   - Mark `listboxColor` property as deprecated.
-  - Correctly set chips to readonly when field in readonly state.
+  - Correctly set chips to readonly when the field is in readonly state.
+  - Provide `data-*` attributes when rendering HTML.
   - Improve focus and disable state.
-  - Integrate with global css variables.
+  - Integrate with global CSS variables.
 - **BsContent**, **BsApp**, **BsAppBar**: 
-  - Improve html rendering.
-  - Integrate with global css variables.
+  - Improve rendering the HTML.
+  - Integrate with global CSS variables.
 - **BsDatePicker**: 
   - Add properties: `buttonColor`, `selectedColor`, `surfaceClass`.
   - Mark `surfaceColor` property as deprecated and remove its default value.
-  - Improve color consistency using global css variables.
+  - Integrate with global CSS variables.
 - **BsDateTimeField**: 
   - Add properties: `pickerButton`, `pickerSelectedColor`, `surfaceCls`.
   - Mark `pickerColor` property as deprecated and remove its default value.
+  - Provide `data-*` attributes when rendering HTML.
   - Improve focus state.
-  - Improve color consistency using global css variables.
+  - Integrate with global CSS variables.
 - **BsDivider**: adjusts width to fit the container width.
-- **BsDropdownMenu**: improve color consistency using global css variables.
+- **BsDropdownMenu**: integrate with global CSS variables.
 - **BsIcon**: add property `svgClass`.
 - **BsListbox**: 
   - Add property `itemSeparatorDark`.
   - Improve focus and disable state.
-  - Integrate with global css variables.
+  - Integrate with global CSS variables.
 - **BsLightbox**: 
   - Add support for video and YouTube.
   - Improve `thumbnailHeight` property implementation.
   - Fixed dropdown-menus didn't display correctly.
-- **BsListView**, **BsListTile**, **BsListNav**: improve color consistency using global css variables.
-- **BsMaskLoader**, **BsProgressBar**, **BsTabs**, **BsTab**: decouple from Bootstrap css, small improvement. 
+- **BsListView**, **BsListTile**, **BsListNav**: integrate with global css variables.
+- **BsMaskLoader**, **BsProgressBar**: 
+  - Decouple from Bootstrap CSS.
+  - Small improvement. 
 - **BsModal**: 
   - Improve inner body height when `scrollable` and `fullPage` is defined.
-  - Integrate with global css variables.
+  - Fix modal is closed when the modal dialog body is clicked.
+  - Integrate with global CSS variables.
 - **BsNotification**: improve close button.
 - **BsPopover**: 
   - Improve animation transition and scroll event.
-  - Integrate with global css variables.
+  - Integrate with global CSS variables.
 - **BsSearchField**: add property `popoverOpen`.
 - **BsSvgIcon**: add property `size`.
 - **BsSideDrawer**: 
   - Mark `color` property as deprecated.
   - Improve rendering html.
-  - Improve color consistency using global css variables.
-- **BsTabs**: add slot `append-header`.
+  - Integrate with global CSS variables.
+- **BsTabs**: 
+  - Decouple from Bootstrap CSS.
+  - Add slot `append-header`.
+  - Small improvement.
 - **BsToggleButton**, **BsToggleField**: 
   - Add properties: `pillOff`, `iconSize`.
-  - Provide `data-*` attributes when rendering html.
-- **BsTooltip**: improve animation, inner padding, border radius and css variables.
+  - Provide `data-*` attributes when rendering HTML.
+- **BsTooltip**: improve animation, inner padding, border radius and CSS variables.
 - **CacheManager**: improve performance using sessionStorage if available
 
 ### Breaking Changes
 
 - **BsAlert**: remove deprecated properties: `iconType`, `solidFill`.
-- **BsCheckboxGroup**, **BsRadioGroup**: remove deprecated property `externalValidator`.
+- **BsCheckboxGroup**, **BsRadioGroup**, **BsChipField**: remove deprecated property `externalValidator`.
 - **BsChip**, **BsChipGroup**: remove deprecated property `imgPadding`.
-- **BsChipField**: remove deprecated property `externalValidator`.
 - **BsTextArea**, **BsTextField**, **BsToggleField**: 
   - Remove deprecated property `externalValidator`.
   - Remove `flat` property.
@@ -129,7 +141,7 @@ Released: February xx, 2026
 - **BsNumericField**: 
   - Remove deprecated property: `externalValidator`.
   - Remove properties: `spinButton`, `spinButtonPlacement`, `flat`.
-  - Change the type of `actionButton` property to string to accommodate **up/down** and **plus/minus** buttons.
+  - Change the type of `actionButton` property to `string` to accommodate **up/down** and **plus/minus** buttons.
 - **BsToggleButton**: remove `flat` property.
 
 ## v2.1.7
@@ -192,7 +204,7 @@ Released: December 10, 2024
 
 - **BsNotification**: 
   - Add feature to enable hiding the notification icon. 
-  - Improves initializing and removes unnecessary html element. 
+  - Improves initializing and removes unnecessary HTML element. 
   - Improves the notification provider in handling and processing notification items. 
   - Improves css variables and classes.
 
@@ -207,7 +219,7 @@ Released: December 08, 2024
 - **BsBreadcrumb**: fixed css variables.
 - **BsCheckboxGroup**, **BsRadioGroup**: fixed column layout bug that did not
   respect the `column` property when its value was set to `1`.
-- **BsIconFontawesome**: removed unused property and fixed typescript declaration.
+- **BsIconFontawesome**: removed unused property and fixed TypeScript declaration.
 
 
 ## v2.1.1
@@ -234,9 +246,9 @@ Released: December 03, 2024
 - Migrate **Google Material Icons** to **[Google Material Symbol](https://fonts.google.com/icons?icon.set=Material+Symbols)**.
   This migration improve icon naming consistency, clarity and reduce the bundle size.
 - Migrate scss files from legacy SASS to modern SASS.
-- Reduce the number of color variants for each component on main css file
+- Reduce the number of color variants for each component on main CSS file
   (comply to [Bootstrap](https://getbootstrap.com/docs/5.2/getting-started/introduction/) colors with some addition)
-  and put other color variants on different css file. This action greatly reduces the size of the main css file.
+  and put other color variants on different CSS file. This action greatly reduces the size of the main CSS file.
 - New components: **BsFontAwesome**, **BsBreadcrumb** and **BsImageUploader**. 
 - **BsIcon**, **BsIconSvg**, **BsToggleIcon**: 
   - Improve `icon` property to better accommodate **Google Material Symbols**.
@@ -360,7 +372,7 @@ Released: May 18, 2024
 
 - **BsChipField**: improve UI padding on **filled** and **outlined** style variant.
 - **BsCombobox**: 
-  - Improve floating label css.
+  - Improve floating label CSS.
   - Improve UI padding when **chip mode** is active.
 - **BsCheckboxGroup**, **BsRadioGroup**, **BsToggleField**: improve padding on feedback message.
 - **BsNumericField**: transform internal value to integer when `max-fraction` property is set to `0`.
@@ -379,7 +391,7 @@ Released: April 20, 2024
 
 ### Improvements
 
-- **BsCheckbox**: improve css variables to enable changing the checkbox appearance.
+- **BsCheckbox**: improve CSS variables to enable changing the checkbox appearance.
 
 ### Bug Fixes
 
@@ -407,8 +419,8 @@ Released: April 8, 2024
 - **AbstractStore**, **BsStore**, **BsModel**: improve data-model processing and 
   make property `restUrl` writable.
 - **BsButton**: 
-  - Improve css styles when `dropdown-toggle` and `tonal` property is defined.
-  - improve css styles on `xs` (extra-small) button size.
+  - Improve CSS styles when `dropdown-toggle` and `tonal` property is defined.
+  - improve CSS styles on `xs` (extra-small) button size.
 - **BsCombobox**: 
   - Improve popover display placement coordinates.
   - Improve chain loading dataset when `parentValue` is defined.
@@ -429,9 +441,9 @@ Released: April 8, 2024
 - **BsButton**: fix border style on `flat` button variant.
 - **BsCheckboxGroup**, **BsRadioGroup**: bug fix when `column` props is defined.
 - **BsListbox**: fix searchbox visibility.
-- **BsListNavItem**: fix incorrect html tag when component is disabled.
+- **BsListNavItem**: fix incorrect HTML tag when component is disabled.
 - **BsTabs**: 
-  - Fix `tabClass` property for custom css is not applied.
+  - Fix `tabClass` property for custom CSS is not applied.
   - Fix activeTab not sync when `modelValue` is changed programmatically.
 - **BsNumericField**: fix `maxValue` and `minValue` property didn't work properly.
 - **BsTextField**: fix field value doesn't change immediately when the `type` property is `password`.
@@ -456,7 +468,7 @@ Released: November 25, 2023
     Design 3 - Text Button** style.
 - **BsMaskLoader**: refactor property `variant` to `type`, and change its valid 
   values to: `linear`, `linear-alt`, `spinner`, `grow`.
-- **BsChip**, **BsChipGroup**: add property `imgPaddingOff` and improve css styles.
+- **BsChip**, **BsChipGroup**: add property `imgPaddingOff` and improve CSS styles.
 - **BsToggleButton**: add property `tonal`.
 
 ### Bug Fixes
@@ -525,7 +537,7 @@ Released: July 4, 2023
 ### Bug Fixes
 
 - Fix custom slot-name doesn't work properly when used as web component using 
-  **UMD/ESM javascript** resource. All custom slot-name now using `kebab-case` naming convention.
+  **UMD/ESM JavaScript** resource. All custom slot-name now using `kebab-case` naming convention.
 - **BsChipGroup**: fix checked icon doesn't display correctly.
 - **BsCheckboxGroup**, **BsRadioGroup**: fix wrong multi-column.  
 
@@ -789,7 +801,7 @@ Released: June 29, 2021
 - Improve **BsAlert**: enable using internal icon via `icon` property
 - **BsNumericField**: prevent value changing with UP/DOWN arrows when field state is `readonly` 
   or `disabled` and fix `tab` key  
-- **BsNumericField, BsTextField, BsTextArea**: fix css when field state is `readonly` or `disabled` 
+- **BsNumericField, BsTextField, BsTextArea**: fix CSS when field state is `readonly` or `disabled` 
 - **BsDateTimeField**: disabling focus when field state is `disabled`  
 - Expose `FontAwesomeLayers` and `FontAwesomeLayersText` components
 
@@ -867,7 +879,7 @@ Released: December 18, 2020
 - **BsGridColumn**: add properties `order`, `cell-data`
 - **BsModal**: add properties `body-class`, `footer-class`, and `header-class`
 - **BsLightbox**: add properties `image-class`, and `image-styles`
-- Add css classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
+- Add CSS classes: `font-weight-bold`, `font-weight-bolder`, `font-weight-boldest`
 
 ### Bug Fixes & Improvements
 
@@ -882,11 +894,11 @@ Released: December 18, 2020
 - **BsProgress**: change property `type` default value to 'bar' 
 - **BsSideDrawer**: computed inline style improvement
 - **BsCheckbox, BsSwitch**: improve css classes
-- **BsCombobox**: improve html template and css classes
-- **BsTextArea**: improve html template and css classes
-- **BsTextField**: improve html template and css classes
-- **BsDateTimeField**: improve html template and css classes
-- **BsGrid**: improve html template and css classes, rename property `borderless` to `bordered`
+- **BsCombobox**: improve HTML template and CSS classes
+- **BsTextArea**: improve HTML template and CSS classes
+- **BsTextField**: improve HTML template and CSS classes
+- **BsDateTimeField**: improve HTML template and CSS classes
+- **BsGrid**: improve HTML template and CSS classes, rename property `borderless` to `bordered`
 - **BsModal**: rename slot `title` to `header`, and rename property `fullscreen` to `full-page`
 - **BsTabLabel**: fix icon padding
 - Improve scss color variables
@@ -902,7 +914,7 @@ Released: August 10, 2020
 - **BsMaskLoader, BsButtonToggle, BsContent, BsCheckboxGroup, BsRadioGroup, BsSearchField, BsGrid, 
   BsLightbox, BsPagination** : add missing import and components declaration
 - **BsAppbar**: smooth transition when minimize SideDrawer
-- **BsModal**: fix invalid css padding and line-height at modal title 
+- **BsModal**: fix invalid CSS padding and line-height at modal title 
 - **AbstractStore**: add functions `find()`, `findBy()`, `findIndex()`, `remove()`, `removeAt()`, 
   and some improvement
 - **BsModel**: constructor improvement and function `delete()`  

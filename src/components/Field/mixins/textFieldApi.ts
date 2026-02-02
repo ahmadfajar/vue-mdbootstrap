@@ -450,7 +450,7 @@ export function useRenderTextField(
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
   fieldType: TFieldType | undefined,
-  localValue: Ref<string | number | undefined | null>,
+  localValue: Ref<MaybeNumberish>,
   isFocused: Ref<boolean>,
   passwordToggled: Ref<boolean>,
   autocomplete: string | boolean | null,
