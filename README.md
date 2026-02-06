@@ -52,7 +52,7 @@ bundler or built common web page by using resources from the CDN.
 - [Vue.js](https://vuejs.org) `v3.x` is required, `v3.5.x` is recommended
 - [Bootstrap](https://getbootstrap.com) `v5.x` is optional, `v5.3.8` is recommended
 - [TailwindCSS](https://tailwindcss.com) `v4.x` is optional, `v4.1.8` is recommended
-- [Vue Router](https://router.vuejs.org/) `v4.x` is optional, and is required for building SPA using module bundler 
+- [Vue Router](https://router.vuejs.org/) is optional, and is required for building SPA using module bundler 
 - [Pinia](https://pinia.vuejs.org/) is optional, and is required for building SPA using module bundler 
 - [Vuelidate](https://vuelidate-next.netlify.app/) is optional, and is required for forms validation 
 
