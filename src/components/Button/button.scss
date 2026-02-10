@@ -52,10 +52,7 @@
     font-family: inherit;
     position: relative;
     white-space: nowrap;
-    background-color: var(--#{vars.$prefix}btn-bg);
     box-shadow: var(--#{vars.$prefix}btn-box-shadow);
-    // prettier-ignore
-    border: var(--#{vars.$prefix}btn-border-width) solid var(--#{vars.$prefix}btn-state-border-color);
     border-radius: var(--#{vars.$prefix}btn-border-radius);
     transition: #{vars.$btn-transition};
 
@@ -308,18 +305,18 @@
     --#{vars.$prefix}btn-border-radius: #{vars.$radius-circle};
 
     --#{vars.$prefix}btn-lg-line-height: 3.625rem; // 58px
-    --#{vars.$prefix}btn-md-line-height: 2.25rem; // 36px
-    --#{vars.$prefix}btn-sm-line-height: 2rem; // 32px
-    --#{vars.$prefix}btn-xs-line-height: 1.5rem; // 24px
+    --#{vars.$prefix}btn-md-line-height: 2.25rem;  // 36px
+    --#{vars.$prefix}btn-sm-line-height: 2rem;     // 32px
+    --#{vars.$prefix}btn-xs-line-height: 1.5rem;   // 24px
 
     --#{vars.$prefix}btn-lg-height: 3.625rem; // 58px
-    --#{vars.$prefix}btn-lg-width: 3.625rem; // 58px
+    --#{vars.$prefix}btn-lg-width: 3.625rem;  // 58px
     --#{vars.$prefix}btn-md-height: 2.625rem; // 42px
-    --#{vars.$prefix}btn-md-width: 2.625rem; // 42px
+    --#{vars.$prefix}btn-md-width: 2.625rem;  // 42px
     --#{vars.$prefix}btn-sm-height: 2.125rem; // 34px
-    --#{vars.$prefix}btn-sm-width: 2.125rem; // 34px
-    --#{vars.$prefix}btn-xs-height: 1.75rem; // 28px
-    --#{vars.$prefix}btn-xs-width: 1.75rem; // 28px
+    --#{vars.$prefix}btn-sm-width: 2.125rem;  // 34px
+    --#{vars.$prefix}btn-xs-height: 1.75rem;  // 28px
+    --#{vars.$prefix}btn-xs-width: 1.75rem;   // 28px
 
     --#{vars.$prefix}btn-state-height: var(--#{vars.$prefix}btn-md-height);
     --#{vars.$prefix}btn-state-width: var(--#{vars.$prefix}btn-md-width);
@@ -345,7 +342,7 @@
     &.btn-close-action {
       --#{vars.$prefix}btn-border-radius: #{vars.$radius-md};
       --#{vars.$prefix}btn-sm-height: 1.875rem; // 30px;
-      --#{vars.$prefix}btn-sm-width: 1.875rem; // 30px;
+      --#{vars.$prefix}btn-sm-width: 1.875rem;  // 30px;
     }
   }
 
@@ -399,6 +396,14 @@ button {
   }
 }
 
+a {
+  &.#{vars.$prefix}btn,
+  &.#{vars.$prefix}btn-fab,
+  &.#{vars.$prefix}btn-icon {
+    text-decoration: none;
+  }
+}
+
 .#{vars.$prefix}btn,
 .#{vars.$prefix}btn-fab,
 .#{vars.$prefix}btn-icon {
@@ -406,7 +411,9 @@ button {
   outline: 0;
   line-height: 1;
   cursor: pointer;
-  text-decoration: none;
+  background-color: var(--#{vars.$prefix}btn-bg);
+  // prettier-ignore
+  border: var(--#{vars.$prefix}btn-border-width) solid var(--#{vars.$prefix}btn-state-border-color);
   color: var(--#{vars.$prefix}btn-color);
   font-size: var(--#{vars.$prefix}btn-font-size);
   font-weight: var(--#{vars.$prefix}btn-font-weight);

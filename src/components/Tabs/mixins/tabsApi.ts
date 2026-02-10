@@ -56,7 +56,7 @@ export function useTabViewClassNames(
         : props.tabPosition === 'right'
           ? `${cssPrefix}tab-right`
           : `${cssPrefix}tab-left`,
-    ['material', 'modern'].includes(props.variant as string) && props.color ? props.color : '',
+    !['tabs', 'pills'].includes(props.variant as string) && props.color ? props.color : '',
   ];
 
   if (Helper.isString(props.innerClass) && !Helper.isEmpty(props.innerClass)) {

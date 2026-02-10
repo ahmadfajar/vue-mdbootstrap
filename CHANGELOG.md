@@ -3,6 +3,22 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.2.1
+
+Released: February XX, 2026
+
+### Improvements
+
+- **BsTooltip**: improve `background-color` on dark theme.
+
+### Bug Fixes
+
+- **BsButton**: fixed bug css `background-color` and `border` did not working correctly 
+  under VitePress.
+- **BsTabs**: fixed bug where the `color` property did not work correctly when the 
+  `variant` property was set with a custom value.
+
+
 ## v2.2.0
 
 Released: February 02, 2026
@@ -144,6 +160,7 @@ Released: February 02, 2026
   - Change the type of `actionButton` property to `string` to accommodate **up/down** and **plus/minus** buttons.
 - **BsToggleButton**: remove `flat` property.
 
+
 ## v2.1.7
 
 Released: February 03, 2025
@@ -158,7 +175,7 @@ Released: February 03, 2025
 
 Released: February 01, 2025
 
-### Features & Improvements
+### Improvements
 
 - **BsButton**: 
   - Improve inner element spacing and padding when `dropdown-toggle` is enabled.

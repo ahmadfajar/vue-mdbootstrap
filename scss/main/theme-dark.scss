@@ -49,13 +49,6 @@ $theme-colors: map.set($theme-colors, 'danger', oklch(0.68 0.17 18));
 //--------------------------------
 @layer theme {
   .dark {
-    // Global css variables to maintain UI component aspects
-    //-------------------------------------------------------
-    --#{vars.$prefix}dropdown-border-color: var(--border-translucent);
-    --#{vars.$prefix}dropdown-border-width: thin;
-    --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-accent-indicator);
-    --#{vars.$prefix}field-button-hover-color: #{colors.$neutral-lighten-2};
-
     // Global css variables to maintain apps UI colors
     //------------------------------------------------
     --background: oklch(0.213 0 89.876);
@@ -81,5 +74,12 @@ $theme-colors: map.set($theme-colors, 'danger', oklch(0.68 0.17 18));
     --navigation-item-active-foreground: oklch(0.88 0.07 297.73);
     --navigation-item-active-foreground-secondary: oklch(0.796 0.062 295.364 / 0.75);
     --navigation-item-hover-background: oklch(0.535 0.005 271.325 / 0.15);
+
+    // Global css variables to maintain UI component aspects
+    //-------------------------------------------------------
+    --#{vars.$prefix}dropdown-border-color: var(--border-translucent);
+    --#{vars.$prefix}dropdown-border-width: thin;
+    --#{vars.$prefix}field-active-indicator: var(--#{vars.$prefix}field-accent-indicator);
+    --#{vars.$prefix}field-button-hover-color: #{colors.$neutral-lighten-2};
   }
 }

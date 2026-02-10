@@ -8,7 +8,7 @@
 Vue MDBootstrap
 </p>
 <p align="center">
-Vue.js UI component library that leverages Bootstrap or TailwindCSS to build beautiful web applications.
+A Vue.js UI component library that can leverage Bootstrap or TailwindCSS to build beautiful web apps.
 </p>
 
 <p align="center">
@@ -34,7 +34,7 @@ Vue.js UI component library that leverages Bootstrap or TailwindCSS to build bea
 **Vue MDBootstrap** is a collection of UI components for **Vue 3** and built 
 according to the [Google Material Design 3](https://m3.material.io/)
 specifications. This component library is built in the spirit of **Vue 3** framework and 
-can leverages the **Bootstrap v5** or **TailwindCSS v4** css framework to built beautiful web-apps.
+can leverage **Bootstrap v5** or **TailwindCSS v4** css framework to build beautiful web-apps.
 
 Whether you are building an amazing **Single Page Application (SPA)** or common web page, 
 you have the power at your fingertips. You don't have to be a great programmer and
@@ -44,7 +44,7 @@ most of the components you need are already there.
 
 ## Getting Started
 
-**Vue MDBootstrap** can be used to built Single Page Application (SPA) by using module 
+**Vue MDBootstrap** can be used to build Single Page Application (SPA) by using module 
 bundler or built common web page by using resources from the CDN.
 
 ### Requirements
@@ -57,7 +57,7 @@ bundler or built common web page by using resources from the CDN.
 - [Vuelidate](https://vuelidate-next.netlify.app/) is optional, and is required for forms validation 
 
 
-## Project Setup
+## Quick Setup
 
 ### Using Module Bundler
 
@@ -138,9 +138,9 @@ Code below is an example on how to create HTML page using Vue MDBootstrap.
 <body>
   <div id="app" class="container">
     <h3 class="mt-4">Contextual Buttons</h3>
-    <bs-card class="mt-3" border-off>
+    <bs-card class="mt-4">
       <bs-card-body>
-        <div class="flex justify-center">
+        <div class="flex flex-wrap md-gap-3">
           <bs-button @click="count++">Click me</bs-button>
           <bs-button color="primary" @click="count++">Click me</bs-button>
           <bs-button color="secondary" @click="count++">Click me</bs-button>
@@ -149,8 +149,8 @@ Code below is an example on how to create HTML page using Vue MDBootstrap.
           <bs-button color="warning" @click="count++">Click me</bs-button>
           <bs-button color="info" @click="count++">Click me</bs-button>
         </div>
-        <div class="mt-3 text-center font-weight-semibold">Count: {{ count }}</div>
       </bs-card-body>
+      <bs-card-footer class="font-weight-semibold">Count: {{ count }}</bs-card-footer>
     </bs-card>
   </div>
   <script>
@@ -172,7 +172,7 @@ Code below is an example on how to create HTML page using Vue MDBootstrap.
 
 For full documentation, please visit [Our Website](https://ahmadfajar.github.io/).
 
-## Demo and Examples
+## Starter Kit and Examples
 
 You can clone the github repository below and run it by your self to see it in action. 
 1. [vue3-mdb-example](https://github.com/ahmadfajar/vue3-mdb-example) - A web-apps that 

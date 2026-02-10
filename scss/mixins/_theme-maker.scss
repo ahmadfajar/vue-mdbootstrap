@@ -213,7 +213,7 @@
   // BsTooltip color scheme
   //------------------------
   .#{vars.$prefix}tooltip {
-    --#{vars.$prefix}tooltip-bg: oklch(0.307 0.018 258.37);
+    --#{vars.$prefix}tooltip-bg: oklch(47.894% 0.02043 256.396); // oklch(0.307 0.018 258.37);
     --#{vars.$prefix}tooltip-opacity: 1;
   }
 }
