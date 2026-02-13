@@ -42,7 +42,7 @@ export default defineConfig({
           preset: 'es2015',
         },
         interop: 'auto',
-        banner: bannerText,
+        // banner: bannerText,
         assetFileNames: 'bundle.min.[ext]',
         plugins: [
           terser({
@@ -57,7 +57,7 @@ export default defineConfig({
     },
   },
   esbuild: {
-    // banner: bannerText,
+    banner: bannerText,
     treeShaking: true,
   },
   resolve: {

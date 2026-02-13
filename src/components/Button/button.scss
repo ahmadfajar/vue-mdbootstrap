@@ -23,7 +23,13 @@
 
     --#{vars.$prefix}btn-disabled-opacity: 0.6;
     --#{vars.$prefix}btn-readonly-opacity: 0.75;
-    --#{vars.$prefix}btn-font-size: var(--font-size-default, #{vars.$btn-font-size-md});
+
+    --#{vars.$prefix}btn-xs-font-size: #{vars.$btn-font-size-xs};
+    --#{vars.$prefix}btn-sm-font-size: #{vars.$btn-font-size-sm};
+    --#{vars.$prefix}btn-md-font-size:var(--font-size-default, #{vars.$btn-font-size-md});
+    --#{vars.$prefix}btn-lg-font-size: #{vars.$btn-font-size-lg};
+
+    --#{vars.$prefix}btn-font-size: var(--#{vars.$prefix}btn-md-font-size);
     --#{vars.$prefix}btn-font-weight: var(--font-weight-medium, 500);
 
     --#{vars.$prefix}btn-hover-bg: transparent;
@@ -72,18 +78,21 @@
       --#{vars.$prefix}btn-state-line-height: var(--#{vars.$prefix}btn-xs-line-height);
       --#{vars.$prefix}btn-state-padding-x: var(--#{vars.$prefix}btn-xs-padding-x);
       --#{vars.$prefix}btn-state-padding-y: var(--#{vars.$prefix}btn-xs-padding-y);
+      --#{vars.$prefix}btn-font-size: var(--#{vars.$prefix}btn-xs-font-size);
     }
 
     &.#{vars.$prefix}btn-sm {
       --#{vars.$prefix}btn-state-line-height: var(--#{vars.$prefix}btn-sm-line-height);
       --#{vars.$prefix}btn-state-padding-x: var(--#{vars.$prefix}btn-sm-padding-x);
       --#{vars.$prefix}btn-state-padding-y: var(--#{vars.$prefix}btn-sm-padding-y);
+      --#{vars.$prefix}btn-font-size: var(--#{vars.$prefix}btn-sm-font-size);
     }
 
     &.#{vars.$prefix}btn-lg {
       --#{vars.$prefix}btn-state-line-height: var(--#{vars.$prefix}btn-lg-line-height);
       --#{vars.$prefix}btn-state-padding-x: var(--#{vars.$prefix}btn-lg-padding-x);
       --#{vars.$prefix}btn-state-padding-y: var(--#{vars.$prefix}btn-lg-padding-y);
+      --#{vars.$prefix}btn-font-size: var(--#{vars.$prefix}btn-lg-font-size);
     }
 
     &[class*='btn-flat'] {
@@ -186,7 +195,6 @@
 
     &.#{vars.$prefix}btn-xs {
       --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-xs-border-radius);
-      --#{vars.$prefix}btn-font-size: #{vars.$btn-font-size-xs};
 
       &[class*='btn-flat'] {
         .#{vars.$prefix}btn-inner:not(.has-icon) {
@@ -205,7 +213,6 @@
 
     &.#{vars.$prefix}btn-sm {
       --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-sm-border-radius);
-      --#{vars.$prefix}btn-font-size: #{vars.$btn-font-size-sm};
 
       &[class*='btn-flat'] {
         .#{vars.$prefix}btn-inner:not(.has-icon) {
@@ -216,7 +223,6 @@
 
     &.#{vars.$prefix}btn-lg {
       --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-lg-border-radius);
-      --#{vars.$prefix}btn-font-size: #{vars.$btn-font-size-lg};
 
       &[class*='btn-flat'] {
         .#{vars.$prefix}btn-inner:not(.has-icon) {
@@ -235,16 +241,23 @@
   }
 
   .#{vars.$prefix}btn-fab {
-    --#{vars.$prefix}btn-lg-padding-x: #{vars.$padding-lg};
-    --#{vars.$prefix}btn-lg-padding-y: #{vars.$padding-lg};
-    --#{vars.$prefix}btn-md-padding-x: #{vars.$padding-md};
-    --#{vars.$prefix}btn-md-padding-y: #{vars.$padding-md};
-    --#{vars.$prefix}btn-sm-padding-x: #{vars.$padding-sm};
-    --#{vars.$prefix}btn-sm-padding-y: #{vars.$padding-sm};
     --#{vars.$prefix}btn-xs-padding-x: #{vars.$spacing * 0.375};
     --#{vars.$prefix}btn-xs-padding-y: #{vars.$spacing * 0.375};
+    --#{vars.$prefix}btn-xs-border-radius: #{vars.$btn-fab-border-radius-xs};
 
-    --#{vars.$prefix}btn-border-radius: #{vars.$btn-fab-border-radius-md};
+    --#{vars.$prefix}btn-sm-padding-x: #{vars.$padding-sm};
+    --#{vars.$prefix}btn-sm-padding-y: #{vars.$padding-sm};
+    --#{vars.$prefix}btn-sm-border-radius: #{vars.$btn-fab-border-radius-sm};
+
+    --#{vars.$prefix}btn-md-padding-x: #{vars.$padding-md};
+    --#{vars.$prefix}btn-md-padding-y: #{vars.$padding-md};
+    --#{vars.$prefix}btn-md-border-radius: #{vars.$btn-fab-border-radius-md};
+
+    --#{vars.$prefix}btn-lg-padding-x: #{vars.$padding-lg};
+    --#{vars.$prefix}btn-lg-padding-y: #{vars.$padding-lg};
+    --#{vars.$prefix}btn-lg-border-radius: #{vars.$btn-fab-border-radius-lg};
+
+    --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-md-border-radius);
     --#{vars.$prefix}btn-box-shadow: #{vars.$z-depth-half};
 
     &[class*='btn-flat'] {
@@ -286,18 +299,15 @@
     }
 
     &.#{vars.$prefix}btn-xs {
-      --#{vars.$prefix}btn-border-radius: #{vars.$btn-fab-border-radius-xs};
-      --#{vars.$prefix}btn-font-size: #{vars.$btn-font-size-xs};
+      --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-xs-border-radius);
     }
 
     &.#{vars.$prefix}btn-sm {
-      --#{vars.$prefix}btn-border-radius: #{vars.$btn-fab-border-radius-sm};
-      --#{vars.$prefix}btn-font-size: #{vars.$btn-font-size-sm};
+      --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-sm-border-radius);
     }
 
     &.#{vars.$prefix}btn-lg {
-      --#{vars.$prefix}btn-border-radius: #{vars.$btn-fab-border-radius-lg};
-      --#{vars.$prefix}btn-font-size: #{vars.$btn-font-size-lg};
+      --#{vars.$prefix}btn-border-radius: var(--#{vars.$prefix}btn-lg-border-radius);
     }
   }
 

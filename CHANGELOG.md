@@ -9,6 +9,7 @@ Released: February XX, 2026
 
 ### Improvements
 
+- **BsButton**: improve CSS variables.
 - **BsTooltip**: improve `background-color` on dark theme.
 
 ### Bug Fixes
@@ -47,6 +48,7 @@ Released: February 02, 2026
   - Add properties: `iconClass` and `pillOff`.
   - Provide `data-*` attributes when rendering HTML.
   - Improve color variants.
+  - Improve CSS variables.
 - **BsCard**, **BsCardBody**, **BsCardContent**, **BsCardFooter**, **BsCardHeader**: 
   - Decouple from Bootstrap card CSS.
   - Integrate with global CSS variables.
@@ -149,11 +151,9 @@ Released: February 02, 2026
 - **BsIconFontawesome** is deprecated, use **BsFontawesomeIcon** instead.
 - **BsImageHolder**: remove deprecated property `placeHolder`.
 - **BsLightbox**: 
-  - Remove deprecated property `overlayClose`.
   - Remove unused properties: `overlayColor`, `overlayOpacity`.
   - Rename property `imageClass` to `viewerClass`.
   - Rename property `imageStyles` to `viewerStyles`.
-- **BsModal**: remove deprecated property `overlayClose`.
 - **BsNumericField**: 
   - Remove deprecated property: `externalValidator`.
   - Remove properties: `spinButton`, `spinButtonPlacement`, `flat`.
