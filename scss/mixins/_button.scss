@@ -229,12 +229,16 @@
 
     &.#{vars.$prefix}btn-fab,
     &.btn-tonal {
-      $tonal-text-color: helper.to-oklch(
-        helper.set-color-contrast(
-          $color,
-          color.adjust($color, $lightness: 65%),
-          color.adjust(colors.$white, $lightness: -5%),
-          23%
+      $tonal-text-color: helper.fn-if(
+        $name == 'warning',
+        oklch(0.91 0.11 84.51),
+        helper.to-oklch(
+          helper.set-color-contrast(
+            $color,
+            color.adjust($color, $lightness: 65%),
+            color.adjust(colors.$white, $lightness: -5%),
+            23%
+          )
         )
       );
       $tonal-text-hover: helper.to-oklch(color.adjust(colors.$white, $lightness: -2%));
@@ -389,7 +393,11 @@
       ),
       $alpha: 0.35
     );
-    $text-color: helper.to-oklch(color.scale($color, $lightness: 55%));
+    $text-color: helper.fn-if(
+      $name == 'warning',
+      oklch(0.91 0.11 84.51),
+      helper.to-oklch(color.scale($color, $lightness: 55%))
+    );
     $text-active: helper.to-oklch(
       helper.set-color-contrast($color, color.adjust($color, $lightness: -70%), colors.$white, 72%)
     );

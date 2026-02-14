@@ -115,17 +115,6 @@
 //------------------------------------
 @mixin make-default-variant-dark($name, $color) {
   .chip-#{$name} {
-    //$chip-bg: helper.set-color-contrast(
-    //  $color,
-    //  helper.set-color-contrast(
-    //    $color,
-    //    color.change($color, $alpha: 0.05),
-    //    color.change(helper.shift-color($color, 10%), $alpha: 0.12),
-    //    90%
-    //  ),
-    //  color.change(helper.shift-color($color, 25%), $alpha: 0.12),
-    //  80%
-    //);
     $chip-bg: helper.set-color-contrast(
       $color,
       color.change(helper.shift-color($color, 10%), $alpha: 0.15),
@@ -136,11 +125,6 @@
       $chip-bg,
       colors.$neutral-lighten-3,
       helper.shift-color(colors.$neutral-lighten-2, 10%),
-      //helper.fn-if(
-      //  ($name == 'secondary'),
-      //  helper.shift-color(colors.$neutral-lighten-2, 10%),
-      //  helper.shift-color($color, 25%)
-      //),
       90%
     );
     $icon-color: helper.to-oklch(color.adjust($color, $lightness: -10%));
@@ -187,7 +171,7 @@
     --#{vars.$prefix}chip-border-color: #{color.change($chip-bg, $alpha: 0.05)};
     --#{vars.$prefix}chip-icon-color: #{$color};
     --#{vars.$prefix}chip-hover-bg: #{$hover-bg};
-    --#{vars.$prefix}chip-hover-color: #{$chip-color};
+    --#{vars.$prefix}chip-hover-color: #{$active-color};
     --#{vars.$prefix}chip-hover-border-color: #{color.change($hover-bg, $alpha: 0.1)};
     --#{vars.$prefix}chip-active-bg: #{$active-bg};
     --#{vars.$prefix}chip-active-color: #{$active-color};
@@ -318,12 +302,16 @@
         color.adjust($color, $lightness: 12%)
       )
     );
-    $hover-color: helper.to-oklch(
-      helper.set-color-contrast(
-        $color,
-        colors.$neutral-lighten-3,
-        color.adjust($color, $lightness: 20%),
-        90%
+    $hover-color: helper.fn-if(
+      $name == 'warning',
+      oklch(0.91 0.11 84.51),
+      helper.to-oklch(
+        helper.set-color-contrast(
+          $color,
+          colors.$neutral-lighten-3,
+          color.adjust($color, $lightness: 20%),
+          90%
+        )
       )
     );
     $active-bg: helper.set-color-contrast(

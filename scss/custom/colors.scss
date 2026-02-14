@@ -71,10 +71,6 @@ $final-colors: map.remove(
 @each $name, $colors in colors.$full-palette {
   @each $sub_name, $value in $colors {
     @if $sub_name == '500' {
-      //.bg-#{$name},
-      //.bg-#{$name}-500 {
-      //  background-color: $value;
-      //}
       @include decorators.decorate-color($name, $value, $alias-name1: '#{$name}-500');
 
       .bg-rgba-#{$name}-slight {
@@ -88,7 +84,7 @@ $final-colors: map.remove(
       .bg-rgba-#{$name}-strong {
         background-color: color.change(
           helper.to-oklch(color.adjust($value, $lightness: -5%)),
-          $alpha: 0.7
+          $alpha: 0.6
         );
       }
     } @else {
