@@ -110,7 +110,7 @@ export declare type TColorPickerOptionProps = {
   open?: boolean;
 
   /**
-   * This ColorPicker mode. Valid values: `HEX`, `RGB`, `HSL`.
+   * This ColorPicker mode. Valid values: `HEX`, `RGB`, `HSL`, `OKLCH`.
    */
   mode?: TColorPickerMode;
 

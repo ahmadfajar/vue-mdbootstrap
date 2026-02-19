@@ -26,27 +26,6 @@
     color: var(--#{vars.$prefix}datepicker-color);
     min-height: 280px;
 
-    table {
-      display: table;
-      table-layout: fixed;
-      width: 100%;
-      transition: vars.$transition-stand;
-
-      tr {
-        background-color: inherit;
-        border-width: 0;
-      }
-
-      td,
-      th {
-        background-color: inherit;
-        border-width: 0;
-        position: relative;
-        text-align: center;
-        padding: 0;
-      }
-    }
-
     .#{vars.$prefix}btn-today {
       --#{vars.$prefix}btn-border-color: var(--#{vars.$prefix}btn-color);
     }
@@ -241,11 +220,25 @@
 
 // Patch Bootstrap 'reboot.css' and user-agent styles.
 .#{vars.$prefix}datepicker-body {
-  td,
-  th {
-    border-width: 0;
-    text-align: center;
-    padding: 0;
+  table {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    transition: vars.$transition-stand;
+
+    tr {
+      background-color: inherit !important;
+      border-width: 0;
+    }
+
+    td,
+    th {
+      background-color: inherit !important;
+      border-width: 0;
+      position: relative;
+      text-align: center;
+      padding: 0;
+    }
   }
 }
 

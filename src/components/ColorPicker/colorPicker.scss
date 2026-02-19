@@ -225,22 +225,11 @@ $markerSize: 14px;
 
       .form-input-number,
       .form-input-text {
-        background-color: var(--#{vars.$prefix}color-picker-input-bg);
         background-clip: padding-box;
-        border: var(--#{vars.$prefix}color-picker-input-border);
         border-radius: 0.25rem;
-        color: var(--#{vars.$prefix}color-picker-input-color);
         min-height: calc(1.5em + 0.5rem + 2px);
-        padding: 0.25rem 0.375rem;
         // prettier-ignore
         transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-
-        &:focus {
-          color: var(--#{vars.$prefix}color-picker-input-focus-color);
-          background-color: var(--#{vars.$prefix}color-picker-input-focus-bg);
-          outline: var(--#{vars.$prefix}color-picker-input-focus-outline);
-          box-shadow: 0 0 0 0.325rem var(--#{vars.$prefix}color-picker-input-focus-shadow);
-        }
       }
     }
 
@@ -313,5 +302,16 @@ $markerSize: 14px;
     font-size: 0.85em;
     line-height: 1.5;
     appearance: none;
+    padding: 0.25rem 0.375rem;
+    background-color: var(--#{vars.$prefix}color-picker-input-bg);
+    border: var(--#{vars.$prefix}color-picker-input-border);
+    color: var(--#{vars.$prefix}color-picker-input-color);
+
+    &:focus {
+      color: var(--#{vars.$prefix}color-picker-input-focus-color);
+      background-color: var(--#{vars.$prefix}color-picker-input-focus-bg);
+      outline: var(--#{vars.$prefix}color-picker-input-focus-outline);
+      box-shadow: 0 0 0 0.325rem var(--#{vars.$prefix}color-picker-input-focus-shadow);
+    }
   }
 }

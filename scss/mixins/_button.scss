@@ -387,8 +387,12 @@
     $border-hover: color.change(
       helper.set-color-contrast(
         $color,
-        color.adjust($color, $lightness: 10%),
-        color.adjust(colors.$gray-500, $lightness: 25%),
+        helper.fn-if(
+          $name == 'secondary',
+          color.adjust(colors.$gray-500, $lightness: 30%),
+          color.adjust($color, $lightness: 10%)
+        ),
+        color.adjust(colors.$gray-500, $lightness: 30%),
         25%
       ),
       $alpha: 0.35

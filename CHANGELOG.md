@@ -14,10 +14,11 @@ Released: February XX, 2026
 
 ### Bug Fixes
 
-- **BsButton**: fixed bug css `background-color` and `border` did not working correctly 
-  under VitePress.
-- **BsTabs**: fixed bug where the `color` property did not work correctly when the 
+- **BsButton**: fixed bug where CSS `background-color` and `border` were not working properly 
+  in VitePress.
+- **BsTabs**: fixed bug where the `color` property wasn't working properly when the 
   `variant` property was set with a custom value.
+- **BsTextArea**, **BsTextField**: fixed CSS layout bug not working correctly in VitePress.
 
 
 ## v2.2.0
@@ -55,8 +56,7 @@ Released: February 02, 2026
 - **BsCardMedia**: 
   - Decouple from Bootstrap card CSS.
   - Add slots: `title` and `subtitle`. 
-- **BsCheckbox**, **BsRadio**, **BsSwitch**, **BsNumericField**, **BsTextField**,
-  **BsTextArea**: provide `data-*` attributes when rendering html.
+- **BsCheckbox**, **BsRadio**, **BsSwitch**: provide `data-*` attributes when rendering html.
 - **BsCheckboxGroup**, **BsRadioGroup**: add property `persistentHelpOff`.
 - **BsChip**: 
   - Add property `closeButtonColor`.
@@ -64,19 +64,20 @@ Released: February 02, 2026
   - Improve close button.
   - Improve color variants.
 - **BsChipField**: 
-  - Correctly set chips to readonly when the field is in readonly state.
+  - Add property `persistentHelpOff`.
   - Provide `data-*` attributes when rendering HTML.
+  - Correctly set chips to readonly when the field is in readonly state.
 - **BsChipGroup**: add property `closeButtonColor`.
 - **BsColorPicker**: 
   - Add support `oklch` color space.
   - Add `oklch` to toggle button.
-  - Mark `containerColor` property as deprecated and remove its default value.
+  - Mark `containerColor` property as **deprecated** and remove its default value.
   - Enable change the value via input box.
   - Improve swatch container and buttons.
   - Improve sync between color preview and value.
   - Improve exposed methods.
 - **BsCombobox**: 
-  - Add property `itemSeparatorDark`.
+  - Add properties: `itemSeparatorDark`, `persistentHelpOff`.
   - Mark `listboxColor` property as deprecated.
   - Correctly set chips to readonly when the field is in readonly state.
   - Provide `data-*` attributes when rendering HTML.
@@ -90,7 +91,7 @@ Released: February 02, 2026
   - Mark `surfaceColor` property as deprecated and remove its default value.
   - Integrate with global CSS variables.
 - **BsDateTimeField**: 
-  - Add properties: `pickerButton`, `pickerSelectedColor`, `surfaceCls`.
+  - Add properties: `pickerButton`, `pickerSelectedColor`, `surfaceCls`, `persistentHelpOff`.
   - Mark `pickerColor` property as deprecated and remove its default value.
   - Provide `data-*` attributes when rendering HTML.
   - Improve focus state.
@@ -115,6 +116,9 @@ Released: February 02, 2026
   - Fix modal is closed when the modal dialog body is clicked.
   - Integrate with global CSS variables.
 - **BsNotification**: improve close button.
+- **BsNumericField**, **BsTextField**, **BsTextArea**: 
+  - Add property `persistentHelpOff`.
+  - Provide `data-*` attributes when rendering html. 
 - **BsPopover**: 
   - Improve animation transition and scroll event.
   - Integrate with global CSS variables.
@@ -128,8 +132,11 @@ Released: February 02, 2026
   - Decouple from Bootstrap CSS.
   - Add slot `append-header`.
   - Small improvement.
-- **BsToggleButton**, **BsToggleField**: 
+- **BsToggleButton**: 
   - Add properties: `pillOff`, `iconSize`.
+  - Provide `data-*` attributes when rendering HTML.
+- **BsToggleField**: 
+  - Add properties: `pillOff`, `iconSize`, `persistentHelpOff`.
   - Provide `data-*` attributes when rendering HTML.
 - **BsTooltip**: improve animation, inner padding, border radius and CSS variables.
 - **CacheManager**: improve performance using sessionStorage if available
@@ -137,11 +144,10 @@ Released: February 02, 2026
 ### Breaking Changes
 
 - **BsAlert**: remove deprecated properties: `iconType`, `solidFill`.
-- **BsCheckboxGroup**, **BsRadioGroup**, **BsChipField**: remove deprecated property `externalValidator`.
-- **BsChip**, **BsChipGroup**: remove deprecated property `imgPadding`.
-- **BsTextArea**, **BsTextField**, **BsToggleField**: 
+- **BsCheckboxGroup**, **BsRadioGroup**, **BsChipField**: 
   - Remove deprecated property `externalValidator`.
-  - Remove `flat` property.
+  - Mark `persistent-help-text` property as **deprecated**.
+- **BsChip**, **BsChipGroup**: remove deprecated property `imgPadding`.
 - **BsCombobox**: remove deprecated properties: `externalValidator`, `checkOptionColor`, `checkOptionPosition`, `popoverMaxHeight`, `popoverMinHeight`.
 - **BsDateTimeField**: 
   - Remove deprecated properties: `transition`, `externalValidator`.
@@ -157,8 +163,20 @@ Released: February 02, 2026
 - **BsNumericField**: 
   - Remove deprecated property: `externalValidator`.
   - Remove properties: `spinButton`, `spinButtonPlacement`, `flat`.
-  - Change the type of `actionButton` property to `string` to accommodate **up/down** and **plus/minus** buttons.
-- **BsToggleButton**: remove `flat` property.
+  - Change the type of `actionButton` property to `string` to accommodate **up/down** and 
+    **plus/minus** buttons.
+  - Mark `persistent-help-text` property as **deprecated**.
+- **BsTextArea**, **BsTextField**: 
+  - Remove deprecated property `externalValidator`.
+  - Remove `flat` property.
+  - Mark `persistent-help-text` property as **deprecated**.
+- **BsToggleButton**: 
+  - Remove `flat` property.
+  - Mark `pill` property as **deprecated**.
+- **BsToggleField**: 
+  - Remove deprecated property `externalValidator`.
+  - Remove `flat` property.
+  - Mark properties: `persistent-help-text` and `pill` as **deprecated**.
 
 
 ## v2.1.7

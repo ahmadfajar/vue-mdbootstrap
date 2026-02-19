@@ -427,6 +427,7 @@ export function useRenderToggleFieldButton(
                 raised: props.raised,
                 rounded: props.rounded,
                 pill: props.pill,
+                pillOff: props.pillOff,
                 size: props.size,
                 color: props.color,
                 toggleColor: props.toggleColor,

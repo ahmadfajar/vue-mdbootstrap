@@ -179,9 +179,18 @@
   // BsColorPicker color scheme
   //----------------------------
   .#{vars.$prefix}color-picker {
-    --#{vars.$prefix}color-picker-input-bg: oklch(0.287 0.003 48.605);
+    --#{vars.$prefix}color-picker-input-bg: oklch(0.287 0.003 48.605 / 0.15);
     --#{vars.$prefix}color-picker-input-border: 1px solid oklch(0.967 0.003 264.542 / 0.18);
     --#{vars.$prefix}color-picker-slider-thumb-color: oklch(0.592 0.012 261.776);
+  }
+
+  // BsDatePicker color scheme
+  //----------------------------
+  .#{vars.$prefix}datepicker-body {
+    .#{vars.$prefix}btn-today {
+      --#{vars.$prefix}btn-border-color: var(--#{vars.$prefix}btn-active-bg);
+      --#{vars.$prefix}btn-hover-border-color: var(--#{vars.$prefix}btn-active-bg);
+    }
   }
 
   // BsProgressBar color scheme

@@ -181,14 +181,11 @@
           background-color: transparent;
           border-width: 0;
           color: inherit;
+          font-size: inherit;
           outline: 0 none;
           opacity: 0.5;
           width: 100%;
           min-height: var(--#{vars.$prefix}field-control-height);
-          padding-inline-start: var(--#{vars.$prefix}field-padding-start);
-          padding-inline-end: var(--#{vars.$prefix}field-padding-end);
-          padding-top: var(--#{vars.$prefix}field-padding-top);
-          padding-bottom: var(--#{vars.$prefix}field-padding-bottom);
         }
       }
 
@@ -470,6 +467,7 @@
         &.#{vars.$prefix}numeric-field {
           &:not(.prepend-icon) {
             --#{vars.$prefix}field-padding-start: #{math.div(vars.$text-field-height, 2)};
+            --#{vars.$prefix}field-padding-end: #{vars.$padding-lg};
 
             &:not(.#{vars.$prefix}floating-label) {
               --#{vars.$prefix}field-padding-start: 1.375rem;
@@ -606,6 +604,7 @@
 
           &:not(.prepend-icon) {
             --#{vars.$prefix}field-padding-start: #{math.div(vars.$text-field-height, 2)};
+            --#{vars.$prefix}field-padding-end: #{vars.$padding-lg};
 
             &:not(.#{vars.$prefix}floating-label) {
               --#{vars.$prefix}field-padding-start: 1.375rem;
@@ -764,15 +763,6 @@
     --#{vars.$prefix}field-control-height: #{vars.$text-field-line-height * 2};
     --#{vars.$prefix}field-padding-top: #{vars.$text-field-padding-top + 0.25};
 
-    .#{vars.$prefix}field-activator {
-      > textarea {
-        padding-top: 0;
-        padding-bottom: 0;
-        padding-inline-start: 0;
-        padding-inline-end: 0;
-      }
-    }
-
     &.#{vars.$prefix}textarea-autogrow {
       .#{vars.$prefix}field-activator {
         align-items: normal;
@@ -874,11 +864,26 @@
 
 // Patch Bootstrap 'reboot.css' and apply component styles as needed
 // This patch must be placed outside the css layer.
+.#{vars.$prefix}field-control {
+  .#{vars.$prefix}field-activator {
+    > input {
+      padding-inline-start: var(--#{vars.$prefix}field-padding-start);
+      padding-inline-end: var(--#{vars.$prefix}field-padding-end);
+      padding-top: var(--#{vars.$prefix}field-padding-top);
+      padding-bottom: var(--#{vars.$prefix}field-padding-bottom);
+    }
+  }
+}
+
 .#{vars.$prefix}textarea {
   .#{vars.$prefix}field-activator {
     > textarea {
       // prettier-ignore
       margin: var(--#{vars.$prefix}field-padding-top) var(--#{vars.$prefix}field-padding-end) var(--#{vars.$prefix}field-padding-bottom) var(--#{vars.$prefix}field-padding-start);
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-inline-start: 0;
+      padding-inline-end: 0;
     }
   }
 

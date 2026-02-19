@@ -56,7 +56,7 @@ export declare type TDatePickerOptionProps = {
 
   /**
    * Sets calendar `date`, `month`, `year` `time` and `navigation` button color.
-   * Default is `dark`.
+   * Default is `secondary`.
    */
   buttonColor?: TButtonColor | string;
 
