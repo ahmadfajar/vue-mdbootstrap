@@ -8,6 +8,8 @@ import {
 
 export declare type TLabelPosition = 'left' | 'right';
 
+export declare type TSwitchVariant = 'default' | 'inset' | 'outline-inset';
+
 export declare type TSwitchOptionProps = TRadioOptionProps & {
   /**
    * Additional css class for the text label.
@@ -20,16 +22,23 @@ export declare type TSwitchOptionProps = TRadioOptionProps & {
   labelPosition?: TLabelPosition;
 
   /**
-   * Sets the switch style appearance to **Inset style**.
-   *
+   * Sets the switch style appearance. Valid values are: `default`, `inset`, `outline-inset`.
+   * 
    * @see [Switch Material Design](https://m3.material.io/components/switch/overview)
+   */
+  variant?: TSwitchVariant;
+
+  /**
+   * Sets the switch style appearance to **Inset style**.
+   * 
+   * @deprecated Use `variant` instead.
    */
   insetMode?: boolean;
 
   /**
    * Sets the switch style appearance to **Inset Outlined style**.
    *
-   * @see [Switch Material Design](https://m3.material.io/components/switch/overview)
+   * @deprecated Use `variant` instead.
    */
   insetOutlined?: boolean;
 

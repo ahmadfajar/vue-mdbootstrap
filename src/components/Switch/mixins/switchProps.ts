@@ -10,6 +10,11 @@ export const switchProps = {
     default: 'right',
     validator: (value: string) => ['left', 'right'].includes(value),
   },
+  variant: {
+    type: String,
+    default: 'default',
+    validator: (value: string) => ['default', 'inset', 'inset-outlined'].includes(value),
+  },
   insetMode: booleanProp,
   insetOutlined: booleanProp,
   checkoffIcon: booleanProp,

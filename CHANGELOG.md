@@ -7,14 +7,18 @@
 
 Released: February XX, 2026
 
-### Improvements
+### Features & Improvements
 
 - **BsButton**: improve CSS variables.
+- **BsSwitch**: 
+  - Add property `variant` to change the component style appearance.
+  - Mark properties: `inset-mode` and `inset-outlined` as **deprecated**, 
+    use `variant` property instead.
 - **BsTooltip**: improve `background-color` on dark theme.
 
 ### Bug Fixes
 
-- **BsButton**: fixed bug where CSS `background-color` and `border` were not working properly 
+- **BsButton**: fixed bug where the CSS `background-color` and `border` were not working properly 
   in VitePress.
 - **BsTabs**: fixed bug where the `color` property wasn't working properly when the 
   `variant` property was set with a custom value.

@@ -14,8 +14,12 @@ export function useSwitchClasses(props: Readonly<TSwitchOptionProps>): TRecord {
 
   return {
     [`${cssPrefix}switch`]: true,
-    [`${cssPrefix}switch-inset`]: props.insetMode || props.insetOutlined,
-    [`${cssPrefix}switch-outlined`]: props.insetOutlined === true,
+    [`${cssPrefix}switch-inset`]:
+      ['inset', 'outline-inset'].includes(props.variant!) ||
+      props.insetMode ||
+      props.insetOutlined,
+    [`${cssPrefix}switch-outlined`]:
+      (props.variant === 'outline-inset' || props.insetOutlined) && !props.insetMode,
     [`switch-${props.color}`]: props.color != null,
     'flex items-center relative': true,
     checked: checked,
@@ -26,7 +30,12 @@ export function useSwitchClasses(props: Readonly<TSwitchOptionProps>): TRecord {
 }
 
 function createThumbIcon(props: Readonly<TSwitchOptionProps>): VNode {
-  if ((props.insetMode || props.insetOutlined) && (props.checkedIcon || props.checkoffIcon)) {
+  if (
+    (['inset', 'outline-inset'].includes(props.variant!) ||
+      props.insetMode ||
+      props.insetOutlined) &&
+    (props.checkedIcon || props.checkoffIcon)
+  ) {
     const checked = useCheckSelected(props);
 
     if (checked && props.checkedIcon) {
