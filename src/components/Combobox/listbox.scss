@@ -20,31 +20,35 @@
     --#{vars.$prefix}searchbox-padding-y: #{vars.$padding-sm};
 
     background-color: var(--#{vars.$prefix}listbox-bg);
+  }
 
-    > .#{vars.$prefix}listbox-search {
-      padding: vars.$padding-md - 0.25;
+  .#{vars.$prefix}listbox-search {
+    padding: vars.$padding-md - 0.25;
+    width: 100%;
+  }
+}
+
+// Patch Bootstrap 'reboot.css' and apply component styles as needed
+// This patch must be placed outside the css layer.
+.#{vars.$prefix}listbox-search {
+  > input {
+    @include placeholder.decorate-input-placeholder();
+
+    & {
+      background: var(--#{vars.$prefix}searchbox-bg);
+      border: 1px solid var(--#{vars.$prefix}searchbox-border-color);
+      color: var(--#{vars.$prefix}searchbox-text-color);
+      font-size: var(--#{vars.$prefix}searchbox-font-size);
+      // prettier-ignore
+      padding: var(--#{vars.$prefix}searchbox-padding-y) var(--#{vars.$prefix}searchbox-padding-x);
+      outline: none;
       width: 100%;
+    }
 
-      > input {
-        @include placeholder.decorate-input-placeholder();
-
-        & {
-          background: var(--#{vars.$prefix}searchbox-bg);
-          border: 1px solid var(--#{vars.$prefix}searchbox-border-color);
-          color: var(--#{vars.$prefix}searchbox-text-color);
-          font-size: var(--#{vars.$prefix}searchbox-font-size);
-          // prettier-ignore
-          padding: var(--#{vars.$prefix}searchbox-padding-y) var(--#{vars.$prefix}searchbox-padding-x);
-          outline: none;
-          width: 100%;
-        }
-
-        &:focus {
-          background: var(--#{vars.$prefix}searchbox-active-bg);
-          border-color: var(--#{vars.$prefix}searchbox-focused-border-color);
-          box-shadow: 0 0 0.15rem 0.25rem var(--#{vars.$prefix}searchbox-focused-box-shadow);
-        }
-      }
+    &:focus {
+      background: var(--#{vars.$prefix}searchbox-active-bg);
+      border-color: var(--#{vars.$prefix}searchbox-focused-border-color);
+      box-shadow: 0 0 0.15rem 0.25rem var(--#{vars.$prefix}searchbox-focused-box-shadow);
     }
   }
 }
