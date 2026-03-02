@@ -662,6 +662,7 @@ function renderColorPickerModeButtons(
         color: props.modeButtonColor as Prop<string>,
         toggleColor: props.modeButtonToggleColor as Prop<string>,
         outlined: props.modeButtonOutlined as unknown as Prop<boolean>,
+        tonal: props.modeButtonTonal as unknown as Prop<boolean>,
         items: [
           { value: 'HEX', label: 'HEX' },
           { value: 'RGB', label: 'RGB' },

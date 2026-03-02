@@ -23,6 +23,7 @@ export const colorPickerProps = {
   hideInputs: booleanProp,
   hideModeButton: booleanProp,
   modeButtonOutlined: booleanProp,
+  modeButtonTonal: booleanProp,
   modeButtonColor: {
     type: String,
     default: 'secondary',

@@ -31,6 +31,7 @@ export default defineComponent<TBsToggleButton>({
           ],
           id: props.id,
           role: 'group',
+          'data-multiple': thisProps.multiple ? 'true' : undefined,
           'data-segmented-button': thisProps.disabled
             ? 'disabled'
             : thisProps.readonly

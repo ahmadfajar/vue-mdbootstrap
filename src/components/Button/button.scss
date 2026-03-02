@@ -490,6 +490,16 @@ a {
   }
 }
 
+.#{vars.$prefix}segmented-button {
+  &[data-multiple='true'] {
+    > .#{vars.$prefix}btn {
+      &[data-state='active']:not(:first-child) {
+        border-left-color: color-mix(in oklch, var(--#{vars.$prefix}btn-bg), transparent 10%);
+      }
+    }
+  }
+}
+
 .#{vars.$prefix}button-group {
   display: inline-flex;
   position: relative;

@@ -5,24 +5,30 @@
 
 ## v2.2.1
 
-Released: February XX, 2026
+Released: March XX, 2026
 
 ### Features & Improvements
 
-- **BsButton**: improve CSS variables.
+- **BsButton**: improve CSS variables and color variants.
+- **BsColorPicker**: 
+  - Add property `mode-button-tonal`.
+  - Improve input fields.
 - **BsSwitch**: 
   - Add property `variant` to change the component style appearance.
   - Mark properties: `inset-mode` and `inset-outlined` as **deprecated**, 
     use `variant` property instead.
+- **BsToggleButton**: improve active button border color when property `mulptiple` is set to `true`.
 - **BsTooltip**: improve `background-color` on dark theme.
 
 ### Bug Fixes
 
-- **BsButton**: fixed bug where the CSS `background-color` and `border` were not working properly 
-  in VitePress.
+- **BsButton**: fixed bug where the CSS `background-color` and `border` were not working properly. 
+- **BsDatePicker**: fixed calendar table CSS rules break on VitePress.
+- **BsListbox**, **BsSearchField**: fixed input field CSS breaks on VitePress.
 - **BsTabs**: fixed bug where the `color` property wasn't working properly when the 
   `variant` property was set with a custom value.
-- **BsTextArea**, **BsTextField**: fixed CSS layout bug not working correctly in VitePress.
+- **BsTextArea**, **BsTextField**: fixed CSS layout breaks on VitePress.
+- **BsToggleField**: fixed bug property `pillOff` not working properly.
 
 
 ## v2.2.0
