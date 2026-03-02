@@ -118,9 +118,6 @@
 
   .#{vars.$prefix}datepicker-days {
     th {
-      color: var(--#{vars.$prefix}datepicker-table-header-color);
-      padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) 0;
-      font-weight: 700;
       pointer-events: none;
       user-select: none;
     }
@@ -237,13 +234,18 @@
       border-width: 0;
       position: relative;
       text-align: center;
+    }
+
+    td {
       padding: 0;
     }
   }
 }
 
-.#{vars.$prefix}datepicker-days {
+.#{vars.$prefix}datepicker-days table {
   th {
+    color: var(--#{vars.$prefix}datepicker-table-header-color);
     padding: calc(var(--#{vars.$prefix}datepicker-padding-y) / 2) 0;
+    font-weight: 700;
   }
 }
