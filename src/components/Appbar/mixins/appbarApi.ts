@@ -54,12 +54,9 @@ export async function useAppbarOnMountedHook(
       appId.value = (parent.props as Readonly<TAppContainerOptionProps>).id;
 
       if (appId.value && vueMdb.value) {
-        const rect = appbar.value?.getBoundingClientRect();
-
-        vueMdb.value.app[appId.value]!.appbar.height = rect!.height;
+        vueMdb.value.app[appId.value]!.appbar.height = appbar.value?.offsetHeight || 0;
         vueMdb.value.app[appId.value]!.appbar.fixedTop = props.fixedTop ?? false;
         vueMdb.value.app[appId.value]!.appbar.stickyTop = props.stickyTop ?? false;
-        // console.info('appbar-vueMdb:', vueMdb.value);
       }
     });
   } else {

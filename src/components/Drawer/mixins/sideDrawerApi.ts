@@ -23,7 +23,7 @@ export function useSideDrawerStyles(
   props: Readonly<TSideDrawerOptionProps>,
   isMobile: Ref<boolean>,
   isOpen: Ref<boolean>,
-  clipHeight: ComputedRef<number | undefined>,
+  clipHeight: Ref<number | undefined>,
   zIndex: Ref<number>
 ): TRecord {
   const zeroPx = '0px';

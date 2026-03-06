@@ -21,19 +21,14 @@ export default defineComponent<TBsSideDrawer>({
     const vueMdb = ref<TVueMdb>();
     const appId = ref<string>();
     const isMobile = ref<boolean>(false);
-    const isOpen = ref<boolean>(false); 
+    const isOpen = ref<boolean>(false);
+    const clipHeight = ref<number>(0);
     
     // initialize side-drawer state
     isMobile.value = useBreakpointMax('md');
     const initialState = isMobile.value ? false : (thisProps.open as boolean ?? !isMobile.value);
     isOpen.value = initialState;
 
-    const clipHeight = computed(() => {
-      if (thisProps.clipped && appId.value && vueMdb.value) {
-        return vueMdb.value.app[appId.value]?.appbar.height;
-      }
-      return 0;
-    });
     const styles = computed(() =>
       useSideDrawerStyles(thisProps, isMobile, isOpen, clipHeight, zIndex)
     );
@@ -65,6 +60,10 @@ export default defineComponent<TBsSideDrawer>({
       await useOnMountedSideDrawer(vueMdb, appId, zIndex);
       await nextTick().then(() => {
         if (appId.value && vueMdb.value) {
+          if (thisProps.clipped) {
+            clipHeight.value = vueMdb.value.app[appId.value]?.appbar.height || 0;
+          }
+
           useUpdateSideDrawerConfig(
             thisProps,
             vueMdb.value,

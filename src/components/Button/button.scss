@@ -410,7 +410,12 @@ a {
   &.#{vars.$prefix}btn,
   &.#{vars.$prefix}btn-fab,
   &.#{vars.$prefix}btn-icon {
+    color: var(--#{vars.$prefix}btn-color);
     text-decoration: none;
+
+    &:hover {
+      color: var(--#{vars.$prefix}btn-hover-color);
+    }
   }
 }
 
