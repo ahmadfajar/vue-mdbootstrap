@@ -1,17 +1,30 @@
-import { badgeProps } from '@/components/Badge/mixins/badgeProps.ts';
-import type { TBadgeOptionProps, TBsBadge } from '@/components/Badge/types';
+import type { TBadgeOptionProps, TBadgeType, TBsBadge } from '@/components/Badge/types';
 import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
+import { booleanProp, stringProp } from '@/mixins/CommonProps.ts';
+import type { Prop } from 'vue';
 import { defineComponent } from 'vue';
 
-export default defineComponent<TBsBadge>({
-  name: 'BsBadge',
-  props: badgeProps,
-  setup(props, { slots }) {
-    const thisProps = props as Readonly<TBadgeOptionProps>;
-
-    return () => useWrapSlotDefault(thisProps.tag || 'span', slots, makeBadgeClasses(thisProps));
+const badgeProps = {
+  color: stringProp,
+  outlined: booleanProp,
+  tag: {
+    type: String,
+    default: 'span',
   },
-});
+  type: {
+    type: String,
+    default: undefined,
+    validator: (value: string): boolean => ['label', 'pill'].includes(value),
+  } as Prop<TBadgeType>,
+  variant: {
+    type: String,
+    default: undefined,
+    validator: (value: string): boolean =>
+      ['primary', 'secondary', 'success', 'warning', 'danger', 'info', 'light', 'default'].includes(
+        value
+      ),
+  },
+};
 
 function makeBadgeClasses(props: TBadgeOptionProps): string[] {
   const config = [`${cssPrefix}badge`, props.type ? `${cssPrefix}badge-${props.type}` : ''];
@@ -35,3 +48,13 @@ function makeBadgeClasses(props: TBadgeOptionProps): string[] {
 
   return config;
 }
+
+export default defineComponent<TBsBadge>({
+  name: 'BsBadge',
+  props: badgeProps,
+  setup(props, { slots }) {
+    const thisProps = props as Readonly<TBadgeOptionProps>;
+
+    return () => useWrapSlotDefault(thisProps.tag || 'span', slots, makeBadgeClasses(thisProps));
+  },
+});

@@ -46,6 +46,7 @@ Released: February 02, 2026
 - New components: **BsCloseButton**, **BsSpinLoader**.
 - **BsAlert**: 
   - Decouple from Bootstrap alert CSS. 
+  - Add property `closeButtonColor`.
   - Improve close button.
   - Improve color variants.
 - **BsBadge**: 

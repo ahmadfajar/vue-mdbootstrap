@@ -5,6 +5,7 @@ import {
   EventVoidClosableProps,
   TAllowedIconProps,
   TContextColor,
+  TExtendedContextColor
 } from '../../../types';
 
 export declare type TAlertVariant = 'success' | 'info' | 'warning' | 'danger' | 'help';
@@ -13,7 +14,7 @@ export declare type TAlertOptionProps = TAllowedIconProps & {
   /**
    * Alert color
    */
-  color?: TContextColor | string;
+  color?: TExtendedContextColor | string;
 
   /**
    * Define close button color explicitly.
