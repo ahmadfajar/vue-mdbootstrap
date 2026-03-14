@@ -10,8 +10,6 @@ import {
 export declare type TFontAwesomeVariant =
   | 'regular'
   | 'solid'
-  | 'light'
-  | 'duotone'
   | 'brands'
   | string;
 
@@ -101,18 +99,18 @@ export declare type TFontawesomeIconOptionProps = TSizeOptionProps & {
   /**
    * Any valid font awesome icon name.
    *
-   * @see [Font Awesome](https://fontawesome.com/v6/search?o=r&m=free) for details.
+   * @see [Font Awesome](https://fontawesome.com/search?ic=free-collection) for details.
    */
   icon: string;
 
   /**
-   * Font Awesome style variant, valid values are: `regular`, `solid`, `light`, `duotone`, `brands`.
+   * Font Awesome style variant, valid values are: `regular`, `solid`, `brands`.
    * Default is `solid`.
    */
   variant?: TFontAwesomeVariant;
 
   /**
-   * Font Awesome vendor version. Default is `7.1.0`.
+   * Font Awesome vendor version. Default is `7.2.0`.
    */
   version?: string;
 

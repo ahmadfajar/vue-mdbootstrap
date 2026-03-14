@@ -34,11 +34,11 @@ export default defineComponent<TBsFontawesomeIcon>({
     variant: {
       type: String,
       default: 'solid',
-      // validator: (value: string): boolean => ['regular', 'solid', 'light'].includes(value),
+      // validator: (value: string): boolean => ['regular', 'solid', 'brands'].includes(value),
     } as Prop<TFontAwesomeVariant>,
     version: {
       type: String,
-      default: '7.1.0',
+      default: '7.2.0',
     },
     ...iconProps,
   },

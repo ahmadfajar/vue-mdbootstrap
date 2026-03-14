@@ -96,13 +96,14 @@ export function useGetGoogleIcon(name: string, filled?: boolean): Promise<TIconD
 }
 
 function fontAwesomeIconUrl(name: string, variant: string, version: string): string {
-  return `https://site-assets.fontawesome.com/releases/v${version}/svgs/${variant}/${name}.svg`;
+  // return `https://site-assets.fontawesome.com/releases/v${version}/svgs/${variant}/${name}.svg`;
+  return `https://raw.githubusercontent.com/FortAwesome/Font-Awesome/refs/heads/fa-release-${version}/svgs-full/${variant}/${name}.svg`
 }
 
 export function useGetFontAwesome(
   name?: string,
-  variant: TFontAwesomeVariant = 'regular',
-  version: string = '7.1.0'
+  variant: TFontAwesomeVariant = 'solid',
+  version: string = '7.2.0'
 ): Promise<TIconData | undefined> {
   if (!name) {
     return Promise.resolve(undefined);

@@ -13,6 +13,11 @@ Released: March XX, 2026
 - **BsColorPicker**: 
   - Add property `mode-button-tonal`.
   - Improve input fields.
+- **BsFontawesomeIcon**:
+  - Update valid value for `variant` property to `solid`, `regular` and `brands`. 
+    See [Font Awesome](https://fontawesome.com/search?ic=free-collection) free icons documentation for details.
+  - Change resource url to github because the official website is now blocked for CDN.
+  - Update the value of `version` property to `7.2.0`.
 - **BsSwitch**: 
   - Add property `variant` to change the component style appearance.
   - Mark properties: `inset-mode` and `inset-outlined` as **deprecated**, 

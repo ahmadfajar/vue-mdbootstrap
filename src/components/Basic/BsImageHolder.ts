@@ -1,11 +1,36 @@
 import { useShapeClasses } from '@/components/Avatar/mixins/avatarApi.ts';
-import { imageHolderProps } from '@/components/Basic/mixins/imageHolderProps.ts';
 import type { TBsImageHolder, TImageHolderOptionProps } from '@/components/Basic/types';
 import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
 import { useCreateSvgNode } from '@/components/Icon/mixins/svgApi.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
+import { booleanProp, stringOrNumberProp, stringProp } from '@/mixins/CommonProps.ts';
 import Helper from '@/utils/Helper.ts';
 import { computed, defineComponent, h, toDisplayString } from 'vue';
+
+const imageHolderProps = {
+  height: stringOrNumberProp,
+  width: stringOrNumberProp,
+  size: stringOrNumberProp,
+  circle: booleanProp,
+  rounded: booleanProp,
+  bgColor: {
+    type: String,
+    default: '#868e96',
+  },
+  textColor: {
+    type: String,
+    default: '#dee2e6',
+  },
+  placeholderText: stringProp,
+  xPos: {
+    type: [String, Number],
+    default: '50%',
+  },
+  yPos: {
+    type: [String, Number],
+    default: '50%',
+  },
+};
 
 export default defineComponent<TBsImageHolder>({
   name: 'BsImageHolder',
