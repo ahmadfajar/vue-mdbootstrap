@@ -14,7 +14,7 @@ Released: March XX, 2026
   - Add property `mode-button-tonal`.
   - Improve input fields.
 - **BsFontawesomeIcon**:
-  - Update valid value for `variant` property to `solid`, `regular` and `brands`. 
+  - Update the valid value of `variant` property to `solid`, `regular` and `brands`. 
     See [Font Awesome](https://fontawesome.com/search?ic=free-collection) free icons documentation for details.
   - Change resource url to github because the official website is now blocked for CDN.
   - Update the value of `version` property to `7.2.0`.
@@ -22,7 +22,8 @@ Released: March XX, 2026
   - Add property `variant` to change the component style appearance.
   - Mark properties: `inset-mode` and `inset-outlined` as **deprecated**, 
     use `variant` property instead.
-- **BsToggleButton**: improve active button border color when property `mulptiple` is set to `true`.
+- **BsTabs**: improve vertical tabs.    
+- **BsToggleButton**: improve active button border color when property `multiple` is set to `true`.
 - **BsTooltip**: improve `background-color` on dark theme.
 
 ### Bug Fixes
@@ -30,6 +31,7 @@ Released: March XX, 2026
 - **BsButton**: fixed bug where the CSS `background-color` and `border` were not working properly. 
 - **BsDatePicker**: fixed calendar table CSS rules break on VitePress.
 - **BsListbox**, **BsSearchField**: fixed input field CSS breaks on VitePress.
+- **BsListNav**: fixed CSS layout breaks on VitePress.
 - **BsTabs**: fixed bug where the `color` property wasn't working properly when the 
   `variant` property was set with a custom value.
 - **BsTextArea**, **BsTextField**: fixed CSS layout breaks on VitePress.

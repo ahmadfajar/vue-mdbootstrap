@@ -303,7 +303,14 @@ function renderVerticalTabView(
         'div',
         {
           class: ['col-auto px-0'],
-          style: props.tabPosition === 'right' ? { order: 2 } : null,
+          style:
+            props.tabPosition === 'right'
+              ? {
+                  order: 2,
+                  'border-top-right-radius': 'inherit',
+                  'border-bottom-right-radius': 'inherit',
+                }
+              : { 'border-top-left-radius': 'inherit', 'border-bottom-left-radius': 'inherit' },
         },
         [
           h(
