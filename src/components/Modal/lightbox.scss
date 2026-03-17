@@ -8,10 +8,10 @@
     --#{vars.$prefix}lightbox-element-padding-x: #{vars.$padding-sm};
     //--#{vars.$prefix}lightbox-display-bg: #{color.change(colors.$black, $alpha: 0.3)};
     --#{vars.$prefix}lightbox-toolbar-bg: #{color.change(colors.$black, $alpha: 0.9)};
-    --#{vars.$prefix}lightbox-toolbar-color: var(--foreground-subtle-secondary);
-    --#{vars.$prefix}lightbox-overlay-bg: #151515;
+    --#{vars.$prefix}lightbox-toolbar-color: oklch(55.6% 0 89.876);
+    --#{vars.$prefix}lightbox-overlay-bg: oklch(20% 0 0);
     --#{vars.$prefix}lightbox-title-bg: #{color.change(colors.$black, $alpha: 0.7)};
-    --#{vars.$prefix}lightbox-title-color: var(--foreground-subtle-tertiary);
+    --#{vars.$prefix}lightbox-title-color: oklch(65% 0 0);
     --#{vars.$prefix}lightbox-title-size: 1.25rem;
     --#{vars.$prefix}lightbox-thumbnail-bg: #{color.change(colors.$black, $alpha: 0.95)};
     // prettier-ignore
@@ -49,6 +49,7 @@
     > iframe,
     > video {
       width: 100%;
+      border-width: 0;
     }
   }
 

@@ -41,6 +41,9 @@ export default defineComponent<TBsMaskLoader>({
                   color: props.overlayColor,
                   opacity: props.overlayOpacity,
                   show: props.show,
+                  style: {
+                    'border-radius': 'inherit',
+                  },
                 }),
                 ['linear-alt', 'progress'].includes(loaderVariant.value)
                   ? h<TBsProgress>(BsProgress, {
