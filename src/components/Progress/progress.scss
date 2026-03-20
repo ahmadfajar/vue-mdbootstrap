@@ -139,35 +139,16 @@
     @include progress.make-css-vars();
   }
 
-  .#{vars.$prefix}simple-progress {
+  .#{vars.$prefix}progressbar-simple {
     --#{vars.$prefix}progress-bg: #{vars.$progress-bg};
-    --#{vars.$prefix}progress-font-size: #{vars.$progress-font-size};
-    --#{vars.$prefix}progress-height: #{vars.$progress-height};
     --#{vars.$prefix}progress-bar-bg: #{vars.$progress-bar-bg};
     --#{vars.$prefix}progress-bar-color: #{vars.$progress-bar-color};
     --#{vars.$prefix}progress-bar-transition: #{vars.$progress-bar-transition};
     --#{vars.$prefix}progress-border-radius: #{vars.$progress-border-radius};
     --#{vars.$prefix}progress-box-shadow: #{vars.$progress-box-shadow};
-
-    height: var(--#{vars.$prefix}progress-height);
-    font-size: var(--#{vars.$prefix}progress-font-size);
-    background-color: var(--#{vars.$prefix}progress-bg);
-    border-radius: var(--#{vars.$prefix}progress-border-radius);
-    box-shadow: var(--#{vars.$prefix}progress-box-shadow);
-  }
-
-  .#{vars.$prefix}simple-progress-bar {
-    flex-direction: column;
-    text-align: center;
-    white-space: nowrap;
-    color: var(--#{vars.$prefix}progress-bar-color);
-    background-color: var(--#{vars.$prefix}progress-bar-bg);
-    transition: var(--#{vars.$prefix}progress-bar-transition);
-  }
-
-  .#{vars.$prefix}simple-progress-wrapper {
     --#{vars.$prefix}progress-color: currentColor;
     --#{vars.$prefix}progress-font-size: #{vars.$progress-font-size};
+    --#{vars.$prefix}progress-height: #{vars.$progress-height};
     --#{vars.$prefix}progress-label-font-size: 0.825rem;
     --#{vars.$prefix}progress-label-font-weight: 600;
 
@@ -183,7 +164,6 @@
 
     .#{vars.$prefix}progress-label {
       color: var(--#{vars.$prefix}progress-color);
-      // text-align: center;
 
       > .text-label {
         font-size: var(--#{vars.$prefix}progress-label-font-size);
@@ -192,14 +172,31 @@
     }
   }
 
-  .#{vars.$prefix}progress-bar-striped {
+  .#{vars.$prefix}progress-simple {
+    height: var(--#{vars.$prefix}progress-height);
+    font-size: var(--#{vars.$prefix}progress-font-size);
+    background-color: var(--#{vars.$prefix}progress-bg);
+    border-radius: var(--#{vars.$prefix}progress-border-radius);
+    box-shadow: var(--#{vars.$prefix}progress-box-shadow);
+  }
+
+  .#{vars.$prefix}progress-simple-bar {
+    flex-direction: column;
+    text-align: center;
+    white-space: nowrap;
+    color: var(--#{vars.$prefix}progress-bar-color);
+    background-color: var(--#{vars.$prefix}progress-bar-bg);
+    transition: var(--#{vars.$prefix}progress-bar-transition);
+  }
+
+  .#{vars.$prefix}progress-simple-striped {
     // prettier-ignore
     background-image: linear-gradient(45deg, oklch(1 0 89.876 / 0.15) 25%, transparent 25%, transparent 50%, oklch(1 0 89.876 / 0.15) 50%, oklch(1 0 89.876 / 0.15) 75%, transparent 75%, transparent);
     // prettier-ignore
     background-size: var(--#{vars.$prefix}progress-height) var(--#{vars.$prefix}progress-height);
   }
 
-  .#{vars.$prefix}progress-bar-animated {
+  .#{vars.$prefix}progress-simple-animated {
     animation: vars.$progress-bar-animation-timing #{vars.$prefix}progress-bar-stripes;
 
     @media (prefers-reduced-motion: reduce) {

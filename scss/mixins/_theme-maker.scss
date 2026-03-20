@@ -199,7 +199,7 @@
 
   // BsProgressBar color scheme
   //----------------------------
-  .#{vars.$prefix}simple-progress {
+  .#{vars.$prefix}progressbar-simple {
     --#{vars.$prefix}progress-bg: oklch(0.967 0.003 264.542 / 0.1);
     --#{vars.$prefix}progress-bar-bg: #{map.get($theme-colors, 'primary')};
   }

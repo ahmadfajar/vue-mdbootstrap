@@ -1,4 +1,3 @@
-import terser from '@rollup/plugin-terser';
 import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
@@ -28,12 +27,11 @@ export default defineConfig({
     emptyOutDir: false,
     cssMinify: false,
     minify: false,
-    rollupOptions: {
+    rolldownOptions: {
       // make sure to externalize deps that shouldn't be bundled into your library
       external: ['axios', 'fast-xml-parser', 'lodash-es', 'luxon', 'vue'],
-      // treeshake: false,
       treeshake: {
-        preset: 'smallest',
+        moduleSideEffects: false,
       },
       // preserveEntrySignatures: 'strict',
       output: {
@@ -44,29 +42,16 @@ export default defineConfig({
           luxon: 'luxon',
           vue: 'vue',
         },
-        generatedCode: {
-          constBindings: true,
-          preset: 'es2015',
+        comments: false,
+        postBanner: bannerText,
+        minify: {
+          compress: false,
+          codegen: { removeWhitespace: false },
+          mangle: { keepNames: true },
         },
-        interop: 'auto',
         assetFileNames: 'bundle.[ext]',
       },
-      plugins: [
-        terser({
-          compress: false,
-          ecma: 2020,
-          keep_classnames: true,
-          keep_fnames: true,
-          format: {
-            comments: false,
-          },
-        }),
-      ],
     },
-  },
-  esbuild: {
-    banner: bannerText,
-    treeShaking: true,
   },
   resolve: {
     alias: {

@@ -5,7 +5,7 @@
 
 ## v2.2.1
 
-Released: March XX, 2026
+Released: March 20, 2026
 
 ### Features & Improvements
 
@@ -13,16 +13,21 @@ Released: March XX, 2026
 - **BsColorPicker**: 
   - Add property `mode-button-tonal`.
   - Improve input fields.
+- **BsDivider**: improve color when `dark` property is defined.
 - **BsFontawesomeIcon**:
   - Update the valid value of `variant` property to `solid`, `regular` and `brands`. 
     See [Font Awesome](https://fontawesome.com/search?ic=free-collection) free icons documentation for details.
   - Change resource url to github because the official website is now blocked for CDN.
   - Update the value of `version` property to `7.2.0`.
+- **BsProgressBar**: 
+  - Make CSS classes more consistent.   
+  - Improve CSS variables.
+  - Small improvement on rendering HTML.
 - **BsSwitch**: 
   - Add property `variant` to change the component style appearance.
   - Mark properties: `inset-mode` and `inset-outlined` as **deprecated**, 
     use `variant` property instead.
-- **BsTabs**: improve vertical tabs.    
+- **BsTabs**: improve vertical tabs.
 - **BsToggleButton**: improve active button border color when property `multiple` is set to `true`.
 - **BsTooltip**: improve `background-color` on dark theme.
 
@@ -162,6 +167,7 @@ Released: February 02, 2026
 ### Breaking Changes
 
 - **BsAlert**: remove deprecated properties: `iconType`, `solidFill`.
+- **BsButton**: mark `pill` property as **deprecated**.
 - **BsCheckboxGroup**, **BsRadioGroup**, **BsChipField**: 
   - Remove deprecated property `externalValidator`.
   - Mark `persistent-help-text` property as **deprecated**.

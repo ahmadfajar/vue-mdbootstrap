@@ -13,7 +13,7 @@ export const switchProps = {
   variant: {
     type: String,
     default: 'default',
-    validator: (value: string) => ['default', 'inset', 'inset-outlined'].includes(value),
+    validator: (value: string) => ['default', 'inset', 'outline-inset'].includes(value),
   },
   insetMode: booleanProp,
   insetOutlined: booleanProp,

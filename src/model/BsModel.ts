@@ -177,7 +177,6 @@ export class BsModel implements IBsModel {
 
     autoBind(this);
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   onAfterFetch?(_data: TRecord): void {
     throw new Error('Method not implemented.');
   }

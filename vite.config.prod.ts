@@ -1,4 +1,3 @@
-import terser from '@rollup/plugin-terser';
 import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
@@ -24,41 +23,25 @@ export default defineConfig({
       },
     },
     emptyOutDir: false,
-    cssMinify: true,
-    minify: false,
-    rollupOptions: {
+    cssMinify: false,
+    minify: 'oxc',
+    rolldownOptions: {
       // make sure to externalize deps that shouldn't be bundled into your library
       external: ['vue'],
       treeshake: {
-        preset: 'smallest',
+        moduleSideEffects: false,
       },
       output: {
         // Provide global variables to use in the ES build for externalized deps
         globals: {
           vue: 'Vue',
         },
-        generatedCode: {
-          constBindings: true,
-          preset: 'es2015',
-        },
-        interop: 'auto',
-        // banner: bannerText,
+        comments: false,
+        postBanner: bannerText,
+        minify: true,
         assetFileNames: 'bundle.min.[ext]',
-        plugins: [
-          terser({
-            compress: true,
-            ecma: 2020,
-            format: {
-              comments: /^\/*!/,
-            },
-          }),
-        ],
       },
     },
-  },
-  esbuild: {
-    banner: bannerText,
-    treeShaking: true,
   },
   resolve: {
     alias: {

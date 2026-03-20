@@ -40,7 +40,7 @@
     --#{vars.$prefix}divider-color: #{color.change(colors.$black, $alpha: 0.15)};
 
     &.divider--dark {
-      --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.4)};
+      --#{vars.$prefix}divider-color: #{color.change(colors.$white, $alpha: 0.3)};
     }
   }
 }

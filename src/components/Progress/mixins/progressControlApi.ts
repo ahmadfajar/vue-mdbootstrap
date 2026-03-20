@@ -174,7 +174,7 @@ function createProgressBar(props: Readonly<TProgressBarOptionProps>): VNode {
     'div',
     {
       class: [
-        `${cssPrefix}simple-progress`,
+        `${cssPrefix}progress-simple`,
         'flex',
         'flex-grow',
         'overflow-hidden',
@@ -189,9 +189,9 @@ function createProgressBar(props: Readonly<TProgressBarOptionProps>): VNode {
         'div',
         {
           class: {
-            [`${cssPrefix}simple-progress-bar`]: true,
-            [`${cssPrefix}progress-bar-striped`]: props.striped,
-            [`${cssPrefix}progress-bar-animated`]: props.stripedAnimation,
+            [`${cssPrefix}progress-simple-bar`]: true,
+            [`${cssPrefix}progress-simple-striped`]: props.striped,
+            [`${cssPrefix}progress-simple-animated`]: props.stripedAnimation,
             'flex justify-center overflow-hidden': true,
             [props.color?.startsWith('bg-') ? props.color : `bg-${props.color}`]: props.color,
             [`${props.innerCls}`]: props.innerCls,
@@ -254,7 +254,7 @@ function createProgressBarLabel(
 
 export function useRenderProgressBar(props: Readonly<TProgressBarOptionProps>): VNode {
   if (props.label || (props.showValue && props.valuePosition !== 'inside')) {
-    return h('div', { class: `${cssPrefix}simple-progress-wrapper` }, [
+    return h('div', { class: `${cssPrefix}progressbar-simple` }, [
       (props.labelPosition === 'top' && !Helper.isEmpty(props.label)) ||
       (props.valuePosition === 'top' && props.showValue)
         ? createProgressBarLabel(props, 'top')
@@ -273,6 +273,6 @@ export function useRenderProgressBar(props: Readonly<TProgressBarOptionProps>): 
         : undefined,
     ]);
   } else {
-    return createProgressBar(props);
+    return h('div', { class: `${cssPrefix}progressbar-simple` }, [createProgressBar(props)]);
   }
 }
