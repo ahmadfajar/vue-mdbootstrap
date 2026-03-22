@@ -18,7 +18,7 @@ class StorageProxy {
   }
 
   private hasSessionStorage() {
-    return !!(window && window.sessionStorage);
+    return typeof window != 'undefined';
   }
 
   clear(): void {
@@ -113,13 +113,14 @@ export const CacheManager = {
     const len = keys.length - 1;
 
     for (let i = len; i >= 0; i--) {
-      this.deleteItem(keys[i]!);
+      this.deleteItem(keys[i]);
     }
   },
   getItem(key: string): ICacheItem | undefined {
     const ret = this._cacheStorage.getItem(key);
 
     if (ret && ret.expiry > Date.now()) {
+      this._cacheStorage.setItem(key, { value: ret.value, expiry: ret.expiry, hits: ret.hits + 1 });
       return this._createItem(key, ret.value, ret.expiry, ret.hits + 1);
     } else {
       this.deleteItem(key);
@@ -132,7 +133,7 @@ export const CacheManager = {
     const len = keys.length - 1;
 
     for (let i = len; i >= 0; i--) {
-      const it = this.getItem(keys[i]!);
+      const it = this.getItem(keys[i]);
       it && results.push(it);
     }
 

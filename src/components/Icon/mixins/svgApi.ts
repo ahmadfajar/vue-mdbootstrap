@@ -196,7 +196,7 @@ export function useRenderIconFromSVG(
 
   const parser = new XMLParser({ ignoreAttributes: false });
   const jsonObj = parser.parse(data) as Record<string, [string, unknown]>;
-  const svgData = Object.entries(jsonObj.svg as [string, unknown]);
+  const svgData = Object.entries(jsonObj.svg);
   const props = createNodeAttrs(svgData);
   const children = svgData.filter((el) => !el[0].startsWith('@_'));
 
@@ -221,11 +221,11 @@ export function useRenderNodeFromSVG(
 
   const parser = new XMLParser({ ignoreAttributes: false });
   const jsonObj = parser.parse(data) as Record<string, [string, unknown]>;
-  const svgData = Object.entries(jsonObj.svg as [string, unknown]);
+  const svgData = Object.entries(jsonObj.svg);
   const props = createNodeAttrs(svgData);
   const viewBox = (props['viewBox'] as string).split(' ');
-  const pW = parseFloat(viewBox[2]!);
-  const pH = parseFloat(viewBox[3]!);
+  const pW = parseFloat(viewBox[2]);
+  const pH = parseFloat(viewBox[3]);
   let ratio: number;
   let uW: MaybeNumberish;
   let uH: MaybeNumberish;
