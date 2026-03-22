@@ -28,31 +28,57 @@ export declare function useMobileDevice(): boolean;
 
 /**
  * Simple function to render a VNode with custom slot.
- * If the custom slot doesn't exist or `undefined` then
- * render default `children`.
+ * If the custom slot doesn't exist or `undefined` 
+ * then the default `children` will be rendered.
  *
  * @param slots    The slot instance
  * @param name     The slot name
- * @param props    Fragment key identifier
- * @param children The VNode children
+ * @param props    VNode property, include slot identifier
+ * @param children The default VNode children to replace the slot
  * @param slotArgs The argument for the given slot
- * @returns The Rendered node.
+ * @returns The rendered VNode.
  */
 export declare function useRenderSlot(
   slots: Slots,
   name: string,
   props?: Readonly<TRecord>,
   children?: VNode | VNodeArrayChildren,
-  slotArgs?: unknown
+  slotArgs?: TRecord
 ): VNode;
 
 /**
- * Simple function to render an HTML tag as VNode and apply default slot to its child.
+ * Simple function to render a VNode with custom slot and wrap it with the given 
+ * `wrapperTag` and properties. If the custom slot doesn't exist or `undefined` then
+ * the default `children` will be rendered inside the `wrapperTag`.
+ *
+ * @param slots        The slot instance
+ * @param name         The slot name
+ * @param key          Fragment key identifier
+ * @param wrapperProps The VNode wrapper properties
+ * @param children     The default VNode children to replace the slot
+ * @param wrapperTag   Valid html tag name, default is `div`
+ * @param slotArgs     The argument for the given slot
+ * @returns The rendered VNode.
+ */
+export declare function useWrapSlot(
+  slots: Slots,
+  name: string,
+  key: string,
+  wrapperProps?: Readonly<TRecord>,
+  children?: VNode | VNodeArrayChildren,
+  wrapperTag?: string,
+  slotArgs?: TRecord
+): VNode;
+
+/**
+ * Simple function to render an HTML tag as VNode or render default slot and wrap 
+ * an HTML tag around it.
  *
  * @param tag      Valid HTML tag name
  * @param slots    The slot instance
- * @param classes  Custom css classes to apply
+ * @param classes  Custom CSS classes to apply
  * @param styles   Custom inline stylesheet to apply
+ * @returns The rendered VNode.
  */
 export declare function useWrapSlotDefault(
   tag: string,
@@ -62,41 +88,16 @@ export declare function useWrapSlotDefault(
 ): VNode;
 
 /**
- * Simple function to render a VNode with custom slot and wrap it
- * with the given `wrapperTag` and properties.
- * If the custom slot doesn't exist or `undefined` then
- * render default `children` inside the `wrapperTag`.
- *
- * @param slots        The slot instance
- * @param name         The slot name
- * @param key          Fragment key identifier
- * @param wrapperProps The VNode wrapper properties
- * @param children     The VNode children
- * @param wrapperTag   Valid html tag name
- * @param slotArgs     The argument for the given slot
- * @returns The Rendered node.
- */
-export declare function useWrapSlot(
-  slots: Slots,
-  name: string,
-  key: string,
-  wrapperProps?: Readonly<TRecord>,
-  children?: VNode | VNodeArrayChildren,
-  wrapperTag?: string,
-  slotArgs?: unknown
-): VNode;
-
-/**
- * Simple function to render a VNode with custom slot and wrap it
- * with the given `wrapTag` and properties only if the `condition` is match.
+ * Simple function to render a VNode with custom slot and wrap it with the given
+ * `wrapTag` and properties. The VNode will be rendered if the given `condition` is matched.
  *
  * @param slots      The slot instance
  * @param name       The slot name
  * @param condition  The given condition
  * @param wrapProps  The VNode wrapper properties
- * @param wrapTag    Valid html tag name
+ * @param wrapTag    Valid html tag name, default is `div`
  * @param slotArgs   The argument for the given slot
- * @returns The Rendered node.
+ * @returns The rendered VNode.
  */
 export declare function useWrapSlotWithCondition(
   slots: Slots,
@@ -104,7 +105,7 @@ export declare function useWrapSlotWithCondition(
   condition: boolean,
   wrapProps?: Readonly<TRecord>,
   wrapTag?: string,
-  slotArgs?: unknown
+  slotArgs?: TRecord
 ): VNode | undefined;
 
 /**
@@ -113,7 +114,7 @@ export declare function useWrapSlotWithCondition(
  * @param props    The transition properties
  * @param children The child nodes
  * @param asBlock  Render the Transition as block VNode.
- * @returns The Rendered node.
+ * @returns The rendered VNode.
  */
 export declare function useRenderTransition(
   props: Readonly<TransitionProps> | undefined,
@@ -126,7 +127,7 @@ export declare function useRenderTransition(
  *
  * @param props    The RouterLink's component properties
  * @param children The child nodes
- * @returns The Rendered node.
+ * @returns The rendered VNode.
  */
 export declare function useRenderRouter(
   props: Readonly<TRouterLinkProps>,
@@ -158,7 +159,9 @@ export declare function useCurrentRoute(): Ref<RouteLocationNormalizedLoaded> | 
 
 /**
  * Simple function to detect whether a device's screen is within allowable
- * maximum screen resolution.
+ * maximum screen resolution. Returns `true` when the screen resolution is within 
+ * allowable resolution otherwise `false`. Available breakpoints are: 
+ * `xs`, `sm`, `md`, `lg`, and `xl`.
  *
  * @param breakpoint Allowable maximum screen resolution.
  * @returns TRUE when the screen resolution is within allowable resolution.
@@ -167,7 +170,9 @@ export declare function useBreakpointMax(breakpoint: TBreakpoint | number): bool
 
 /**
  * Simple function to detect whether a device's screen is within allowable
- * minimum screen resolution.
+ * minimum screen resolution. Returns `true` when the screen resolution is within 
+ * allowable resolution otherwise `false`. Available breakpoints are: 
+ * `xs`, `sm`, `md`, `lg`, and `xl`. 
  *
  * @param breakpoint Allowable minimum screen resolution.
  * @returns TRUE when the screen resolution is within allowable resolution.
@@ -175,9 +180,9 @@ export declare function useBreakpointMax(breakpoint: TBreakpoint | number): bool
 export declare function useBreakpointMin(breakpoint: TBreakpoint | number): boolean;
 
 /**
- * Merge one or more css classes.
+ * Merge one or more CSS classes.
  *
- * @param args The css classes to be merged.
+ * @param args The CSS classes to be merged.
  */
 export declare function useMergeClass(...args: (string | string[])[]): string[];
 

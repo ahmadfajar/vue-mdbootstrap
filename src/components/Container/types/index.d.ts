@@ -44,7 +44,7 @@ export declare interface AllowedContainerProps extends BaseComponentProps {
   '@resize'?: (target: HTMLElement) => void;
 }
 
-export declare interface _BsApp {
+declare interface _BsApp {
   new (): {
     $props: BaseComponentProps & TAppContainerOptionProps;
     $slots: {

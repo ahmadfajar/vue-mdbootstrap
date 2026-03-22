@@ -18,7 +18,11 @@ class StorageProxy {
   }
 
   private hasSessionStorage() {
-    return typeof window != 'undefined';
+    if (typeof window == 'undefined') {
+      return false;
+    }
+
+    return !!(window && window.sessionStorage);
   }
 
   clear(): void {

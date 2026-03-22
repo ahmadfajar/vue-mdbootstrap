@@ -48,56 +48,54 @@ export declare interface ICacheItem {
 
 export declare interface ICacheManager {
   /**
-   * Delete all items in the cache.
+   * Remove all items in the cache storage.
    */
   clear(): void;
 
   /**
-   * Remove an item from the cache.
-   *
-   * Returns true if an item exists in the cache otherwise false.
+   * Remove an item from the cache storage if exists.
    *
    * @param key The key to delete
    */
   deleteItem(key: string): void;
 
   /**
-   * Remove multiple items from the cache.
+   * Remove multiple items from the cache storage.
    *
    * @param keys The keys to delete
    */
   deleteItems(keys: string[]): void;
 
   /**
-   * Returns a Cache Item representing the specified key.
+   * Returns the cached item that represents the specified key.
    *
-   * @param key The key for which to return the corresponding Cache Item
+   * @param key The key to be used to return the corresponding cached item
    */
   getItem(key: string): ICacheItem | undefined;
 
   /**
-   * Get multiple items from the cache and each of them is representing a Cache item.
+   * Get multiple items from the cache storage and each of them is representing a cached item.
    *
-   * @param keys An indexed array of keys of items to retrieve
+   * @param keys An indexed array of keys to be used to return the corresponding cached items
    */
   getItems(keys: string[]): ICacheItem[];
 
   /**
-   * Confirms if the cache contains specified cache item.
+   * Confirms if the cache storage contains the specified cached item.
    *
-   * @param key The key for which to check existence.
+   * @param key The key for which to check its existence.
    */
   hasItem(key: string): boolean;
 
   /**
-   * Persists a cache item immediately.
+   * Persists an item to the cache storage immediately.
    *
-   * @param item The cache item to save
+   * @param item A data object to be cached
    */
   save(item: TRawCacheItem | ICacheItem): void;
 
   /**
-   * Returns the number of item in the cache.
+   * Returns the number of items stored in the cache.
    */
   get size(): number;
 }

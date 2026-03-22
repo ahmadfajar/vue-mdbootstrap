@@ -72,8 +72,8 @@ export function useMobileDevice(): boolean {
 
 /**
  * Simple function to render a VNode with custom slot.
- * If the custom slot doesn't exist or `undefined` then
- * render default `children`.
+ * If the custom slot doesn't exist or `undefined`
+ * then the default `children` will be rendered.
  *
  * @param slots    The slot instance
  * @param name     The slot name
@@ -99,7 +99,8 @@ export function useRenderSlot(
 }
 
 /**
- * Simple function to render an HTML tag as VNode and apply default slot to its child.
+ * Simple function to render an HTML tag as VNode or render default slot and wrap 
+ * an HTML tag around it.
  *
  * @param tag      Valid HTML tag name
  * @param slots    The slot instance
@@ -118,17 +119,16 @@ export function useWrapSlotDefault(
 }
 
 /**
- * Simple function to render a VNode with custom slot and wrap it
- * with the given `wrapperTag` and properties.
- * If the custom slot doesn't exist or `undefined` then
- * render default `children` inside the `wrapperTag`.
+ * Simple function to render a VNode with custom slot and wrap it with the given 
+ * `wrapperTag` and properties. If the custom slot doesn't exist or `undefined` then
+ * the default `children` will be rendered inside the `wrapperTag`.
  *
  * @param slots        The slot instance
  * @param name         The slot name
  * @param key          Fragment key identifier
  * @param wrapperProps The VNode wrapper properties
  * @param children     The default VNode children to replace the slot
- * @param wrapperTag   Valid html tag name
+ * @param wrapperTag   Valid html tag name, default is `div`
  * @param slotArgs     The argument for the given slot
  * @returns The rendered VNode.
  */
@@ -153,14 +153,14 @@ export function useWrapSlot(
 }
 
 /**
- * Simple function to render a VNode with custom slot and wrap it
- * with the given `wrapTag` and properties only if the `condition` is match.
+ * Simple function to render a VNode with custom slot and wrap it with the given
+ * `wrapTag` and properties. The VNode will be rendered if the given `condition` is matched.
  *
  * @param slots      The slot instance
  * @param name       The slot name
  * @param condition  The given condition
  * @param wrapProps  The VNode wrapper properties
- * @param wrapTag    Valid html tag name
+ * @param wrapTag    Valid html tag name, default is `div`
  * @param slotArgs   The argument for the given slot
  * @returns The rendered VNode.
  */
@@ -475,9 +475,9 @@ export function useFindParentComponent(
 }
 
 /**
- * Merge one or more css classes.
+ * Merge one or more CSS classes.
  *
- * @param args The css classes to be merged.
+ * @param args The CSS classes to be merged.
  */
 export function useMergeClass(...args: (string | string[])[]): string[] {
   const count = args.length;
