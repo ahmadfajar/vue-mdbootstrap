@@ -13,13 +13,10 @@ export default defineConfig({
       name: 'VueMdb',
       fileName: (format) => {
         switch (format) {
-          case 'es':
-          case 'esm':
-            return 'vue-mdb.esm.js';
           case 'umd':
             return 'vue-mdb.umd.js';
           default:
-            return 'vue-mdb.js';
+            return 'vue-mdb.esm.js';
         }
       },
     },

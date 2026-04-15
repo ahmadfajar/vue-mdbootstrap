@@ -46,7 +46,7 @@
       helper.set-color-contrast(
         $color,
         color.scale($color, $lightness: -10%),
-        // tune dark colors
+        /* tune dark colors */
         color.adjust($color, $lightness: 25%),
         25%
       )
@@ -59,7 +59,7 @@
           color.scale($color, $lightness: -10%),
           color.scale($color, $lightness: -20%)
         ),
-        // tune dark colors
+        /* tune dark colors */
         color.adjust($color, $lightness: -35%),
         25%
       )
@@ -85,7 +85,7 @@
           helper.set-color-contrast($color, $color, color.adjust($color, $lightness: -35%), 90%),
           color.scale($color, $lightness: -35%)
         ),
-        // tune dark colors
+        /* tune dark colors */
         colors.$black,
         25%
       );
@@ -96,13 +96,13 @@
           helper.set-color-contrast(
             $color,
             color.change(color.adjust($color, $lightness: -2%), $alpha: 0.5),
-            // tune warning and info colors
+            /* tune warning and info colors */
             color.mix($color, #fff, 25%, oklch),
             90%
           ),
           color.mix($color, #fff, 20%, oklch)
         ),
-        // tune dark colors
+        /* tune dark colors */
         color.change(color.adjust($color, $chroma: -10%, $lightness: 55%), $alpha: 0.8),
         25%
       );
@@ -113,13 +113,13 @@
           helper.set-color-contrast(
             $color,
             color.change(color.adjust($color, $lightness: 20%), $alpha: 0.5),
-            // tune warning and info colors
+            /* tune warning and info colors */
             color.scale($color, $chroma: -10%, $lightness: 65%),
             90%
           ),
           color.scale($color, $chroma: -25%, $lightness: 65%)
         ),
-        // tune dark colors
+        /* tune dark colors */
         color.adjust($color, $chroma: -10%, $lightness: 50%),
         25%
       );
@@ -130,13 +130,13 @@
           helper.set-color-contrast(
             $color,
             color.scale($color, $lightness: 60%),
-            // tune warning and info colors
+            /* tune warning and info colors */
             color.adjust($color, $lightness: -40%),
             90%
           ),
           color.scale($color, $lightness: -50%)
         ),
-        // tune dark colors
+        /* tune dark colors */
         colors.$black,
         25%
       );
@@ -312,7 +312,7 @@
       helper.set-color-contrast(
         $color,
         colors.$gray-300,
-        // tune warning and info colors
+        /* tune warning and info colors */
         color.scale($color, $lightness: -20%),
         90%
       ),
@@ -455,7 +455,7 @@
       helper.set-color-contrast(
         $color,
         color.scale($color, $lightness: -15%),
-        // tune warning and info colors
+        /* tune warning and info colors */
         color.scale($color, $lightness: -10%),
         90%
       ),
@@ -476,12 +476,12 @@
       $color,
       helper.set-color-contrast(
         $color,
-        // tune light colors
+        /* tune light colors */
         color.change(color.scale($color, $lightness: 15%), $alpha: 0.3),
         color.change(color.mix($color, #fff, 25%, oklch), $alpha: 0.9),
         90%
       ),
-      // tune dark colors
+      /* tune dark colors */
       color.change(color.mix($color, #fff, 15%, oklch), $alpha: 0.75),
       25%
     );

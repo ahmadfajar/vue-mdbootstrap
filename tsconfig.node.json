@@ -15,6 +15,7 @@
     "vite.config.prod.ts",
     "eslint.config.mjs",
     "banner.ts",
-    "component.d.ts"
+    "component.d.ts",
+    "package.json"
   ]
 }
