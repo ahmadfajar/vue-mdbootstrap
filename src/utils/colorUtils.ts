@@ -77,9 +77,9 @@ export function hsvaToRgba(color: HSVA): RGBA {
   x = x + m;
 
   const index = Math.floor(hueBy60) % 6;
-  const red = [chroma, x, m, m, x, chroma][index]!;
-  const green = [x, chroma, chroma, x, m, m][index]!;
-  const blue = [m, m, x, chroma, chroma, x][index]!;
+  const red = [chroma, x, m, m, x, chroma][index];
+  const green = [x, chroma, chroma, x, m, m][index];
+  const blue = [m, m, x, chroma, chroma, x][index];
 
   return {
     r: Math.round(red * 255),
@@ -101,7 +101,7 @@ export function hexToRgba(color: string): RGBA {
   const [r, g, b, a] = chunk(hexColor, 2).map((c: string) => parseInt(c, 16));
   const a1 = a == null ? 1 : Math.round((a / 255) * 100) / 100;
 
-  return { r: r!, g: g!, b: b!, a: a1 };
+  return { r: r, g: g, b: b, a: a1 };
 }
 
 /**
@@ -317,10 +317,10 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
 
   if (match) {
     rgba = {
-      r: parseInt(match[3]!),
-      g: parseInt(match[4]!),
-      b: parseInt(match[5]!),
-      a: parseFloat(match[6]!),
+      r: parseInt(match[3]),
+      g: parseInt(match[4]),
+      b: parseInt(match[5]),
+      a: parseFloat(match[6]),
     };
 
     // Workaround to mitigate a Chromium bug where the alpha value is rounded incorrectly
@@ -333,9 +333,9 @@ export function rgbaFromString(canvasCtx: CanvasRenderingContext2D, source: stri
 
     if (match1) {
       rgba = {
-        r: match1[0] as number,
-        g: match1[1] as number,
-        b: match1[2] as number,
+        r: match1[0],
+        g: match1[1],
+        b: match1[2],
         a: 1,
       };
     }

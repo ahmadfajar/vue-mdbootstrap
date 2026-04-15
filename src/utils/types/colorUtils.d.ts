@@ -39,7 +39,7 @@ export declare type RGBA = {
 };
 
 /**
- * Convert HSL to HSV color space.
+ * Convert HSL color space to HSV color space.
  *
  * @param color The HSLA color value.
  * @return The HSVA color value.
@@ -47,7 +47,7 @@ export declare type RGBA = {
 export declare function hslaToHsva(color: HSLA): HSVA;
 
 /**
- * Convert HSL to sRGB color space.
+ * Convert HSL color space to sRGB color space.
  *
  * @param color The HSLA color value.
  * @return The RGBA color value.
@@ -57,16 +57,16 @@ export declare function hslaToHsva(color: HSLA): HSVA;
 export function hslaToRgba(color: HSLA): RGBA;
 
 /**
- * Convert HSV to HSL color space.
+ * Convert HSV color space to HSL color space.
  *
  * @param color The HSV color value.
  * @return The HSL color value.
- * `Hue` as degrees [0..360], `Saturation` and `Lightness` in reference range [0..100].
+ * `Hue` as degrees [0..360], `Saturation` and `Lightness` as number in range [0..100].
  */
 export declare function hsvaToHsla(color: HSVA): HSLA;
 
 /**
- * Convert HSV to sRGB color space.
+ * Convert HSV color space to sRGB color space.
  *
  * @param color The HSVA color value.
  * @return The RGBA color value.
@@ -86,7 +86,7 @@ export declare function hsvaToRgba(color: HSVA): RGBA;
 export declare function hexToRgba(color: string): RGBA;
 
 /**
- * Convert OKLCH to sRGB color space.
+ * Convert OKLCH color space to sRGB color space.
  *
  * @param color The OKLCH color value.
  * @return The RGBA color value.
@@ -96,7 +96,7 @@ export declare function hexToRgba(color: string): RGBA;
 export declare function oklchToRgba(color: LCHA): RGBA;
 
 /**
- * Convert sRGB to HSL color space.
+ * Convert sRGB color space to HSL color space.
  *
  * @param color The RGBA color value
  * @return The HSL color value.
@@ -105,7 +105,7 @@ export declare function oklchToRgba(color: LCHA): RGBA;
 export function rgbaToHsla(color: RGBA): HSLA;
 
 /**
- * Convert sRGB to HSV color space.
+ * Convert sRGB color space to HSV color space.
  *
  * @param color The RGBA color value.
  * @return The HSVA color value.
@@ -113,7 +113,7 @@ export function rgbaToHsla(color: RGBA): HSLA;
 export declare function rgbaToHsva(color: RGBA): HSVA;
 
 /**
- * Convert sRGB to OKLCH color space.
+ * Convert sRGB color space to OKLCH color space.
  *
  * @param color The RGBA color value.
  * @return The OKLCH color value.
@@ -156,7 +156,7 @@ export declare function rgbaToString(color: RGBA): string;
  * Convert HSL/HSLA color to string.
  *
  * @param color  The HSLA value.
- *               `Hue` as degrees [0..360] and `Saturation`, `Lightness` as number in range [0..1].
+ *               `Hue` as degrees [0..360], `Saturation` and `Lightness` as number in range [0..1].
  * @return CSS color string.
  */
 export declare function hslaToString(color: HSLA): string;

@@ -62,7 +62,7 @@ export function titleCase(text?: string): string {
       ?.toLowerCase()
       .split(/[-_\s]+/)
       .map(function (word: string) {
-        return word.replace(word[0]!, word[0]!.toUpperCase());
+        return word.replace(word[0], word[0].toUpperCase());
       })
       .join(' ')
       .trim() ?? ''
@@ -118,7 +118,7 @@ export function encodeSpecialChars(
     } else if (s1.includes(source.charAt(i))) {
       const n = s1.indexOf(source.charAt(i));
 
-      if ((s2[n] as string).startsWith('%')) {
+      if ((s2[n]).startsWith('%')) {
         retVal += s2[n];
       } else {
         retVal += '%' + s2[n];
