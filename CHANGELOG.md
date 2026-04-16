@@ -5,7 +5,7 @@
 
 ## v2.2.2
 
-Released: April XX, 2026
+Released: April 17, 2026
 
 ### Improvements
 
