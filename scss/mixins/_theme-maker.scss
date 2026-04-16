@@ -10,7 +10,7 @@
 @use 'radio';
 @use 'switch';
 @use 'css3/text-decorators' as decorators;
-@use '../color_vars' as colors;
+@use '../color-vars' as colors;
 @use '../variables' as vars;
 
 @mixin make-theme-light($theme-colors) {

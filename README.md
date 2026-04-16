@@ -4,8 +4,8 @@
   </a>
 </p>
 
-<p align="center" style="font-size:1.5em; font-weight: 600">
-Vue MDBootstrap
+<p align="center" style="font-size:1.5em;">
+  <strong>Vue MDBootstrap</strong>
 </p>
 <p align="center">
 A Vue.js UI component library that can leverage Bootstrap or TailwindCSS to build beautiful web apps.
@@ -34,7 +34,7 @@ A Vue.js UI component library that can leverage Bootstrap or TailwindCSS to buil
 **Vue MDBootstrap** is a collection of UI components for **Vue 3** and built 
 according to the [Google Material Design 3](https://m3.material.io/)
 specifications. This component library is built in the spirit of **Vue 3** framework and 
-can leverage **Bootstrap v5** or **TailwindCSS v4** css framework to build beautiful web-apps.
+can leverage **Bootstrap v5** or **TailwindCSS v4** CSS framework to build beautiful web-apps.
 
 Whether you are building an amazing **Single Page Application (SPA)** or common web page, 
 you have the power at your fingertips. You don't have to be a great programmer and
@@ -50,8 +50,8 @@ bundler or built common web page by using resources from the CDN.
 ### Requirements
 
 - [Vue.js](https://vuejs.org) `v3.x` is required, `v3.5.x` is recommended
-- [Bootstrap](https://getbootstrap.com) `v5.x` is optional, `v5.3.8` is recommended
-- [TailwindCSS](https://tailwindcss.com) `v4.x` is optional, `v4.1.8` is recommended
+- [Bootstrap](https://getbootstrap.com) `v5.x` is optional, `v5.3.x` is recommended
+- [TailwindCSS](https://tailwindcss.com) `v4.x` is optional, `v4.2.x` is recommended
 - [Vue Router](https://router.vuejs.org/) is optional, and is required for building SPA using module bundler 
 - [Pinia](https://pinia.vuejs.org/) is optional, and is required for building SPA using module bundler 
 - [Vuelidate](https://vuelidate-next.netlify.app/) is optional, and is required for forms validation 
@@ -159,7 +159,7 @@ Code below is an example on how to create HTML page using Vue MDBootstrap.
     const app = createVueMdb({
       setup() {
         const count = ref(0);
-        return {count};
+        return { count };
       }
     });
     app.mount('#app');

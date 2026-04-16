@@ -4,8 +4,8 @@
 @use '../../../scss/mixins/css3/placeholder';
 @use '../../../scss/mixins/css3/text-decorators';
 @use '../../../scss/mixins/transitions';
-@use '../../../scss/utils/color_helper' as helper;
-@use '../../../scss/color_vars' as colors;
+@use '../../../scss/utils/color-helper' as helper;
+@use '../../../scss/color-vars' as colors;
 @use '../../../scss/variables' as vars;
 
 @layer components {

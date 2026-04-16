@@ -1,7 +1,7 @@
 @use '../mixins/css3/borders';
 @use '../mixins/css3/text-decorators' as decorators;
 @use '../variables' as vars;
-@use '../color_vars' as colors;
+@use '../color-vars' as colors;
 
 @layer utilities {
   .h-full {

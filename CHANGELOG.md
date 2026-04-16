@@ -3,6 +3,21 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.2.2
+
+Released: April XX, 2026
+
+### Improvements
+
+- **BsButton**, **BsChip**: improve ripple effect on mobile device.
+- **CacheManager**: improve `getItem()` method.
+- Improve build script to support latest **Vite** version.
+
+### Bug Fixes
+
+- **CacheManager**: fix `hasSessionStorage()` method failed on SSR.
+
+
 ## v2.2.1
 
 Released: March 20, 2026

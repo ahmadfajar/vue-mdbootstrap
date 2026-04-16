@@ -1,7 +1,7 @@
 @use 'sass:color';
 @use 'sass:list';
-@use '../../utils/color_helper' as helper;
-@use '../../color_vars' as colors;
+@use '../../utils/color-helper' as helper;
+@use '../../color-vars' as colors;
 @use '../../variables' as vars;
 
 @mixin truncate($no-wrap: true) {

@@ -1,7 +1,7 @@
 //@use 'sass:map';
 @use '../../../scss/mixins/css3/borders';
 @use '../../../scss/mixins/alert' as alerts;
-@use '../../../scss/color_vars' as colors;
+@use '../../../scss/color-vars' as colors;
 @use '../../../scss/variables' as vars;
 
 @layer components {

@@ -1,6 +1,6 @@
 {
   "name": "vue-mdbootstrap",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Material Design UI Component Library for Vue.js",
   "author": {
     "name": "Ahmad Fajar",
@@ -56,7 +56,7 @@
     "./styles-color": "./dist/decorator-colors.css",
     "./theme-light": "./dist/theme-light.css",
     "./theme-dark": "./dist/theme-dark.css",
-    "./scss/color_vars": "./scss/_color_vars.scss",
+    "./scss/color-vars": "./scss/_color-vars.scss",
     "./scss/variables": "./scss/_variables.scss",
     "./scss/mixins/css3/borders": "./scss/mixins/css3/_borders.scss",
     "./scss/mixins/css3/breakpoints": "./scss/mixins/css3/_breakpoints.scss",
@@ -76,7 +76,7 @@
     "./scss/mixins/switch": "./scss/mixins/_switch.scss",
     "./scss/mixins/theme-maker": "./scss/mixins/_theme-maker.scss",
     "./scss/mixins/transitions": "./scss/mixins/_transitions.scss",
-    "./scss/utils/color_helper": "./scss/utils/_color_helper.scss"
+    "./scss/utils/color-helper": "./scss/utils/_color-helper.scss"
   },
   "scripts": {
     "dev": "rimraf dist && run-p type-check build:dev css:compile-core css:compile-light css:compile-dark css:compile-color",

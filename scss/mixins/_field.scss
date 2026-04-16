@@ -1,6 +1,6 @@
 @use 'sass:color';
-@use '../utils/color_helper' as helper;
-@use '../color_vars' as colors;
+@use '../utils/color-helper' as helper;
+@use '../color-vars' as colors;
 @use '../variables' as vars;
 
 // Make field validation with dark theme

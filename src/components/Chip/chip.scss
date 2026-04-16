@@ -2,8 +2,8 @@
 @use 'sass:math';
 @use '../../../scss/mixins/css3/borders';
 @use '../../../scss/mixins/chip';
-@use '../../../scss/utils/color_helper' as helper;
-@use '../../../scss/color_vars' as colors;
+@use '../../../scss/utils/color-helper' as helper;
+@use '../../../scss/color-vars' as colors;
 @use '../../../scss/variables' as vars;
 
 @layer components {
@@ -76,6 +76,7 @@
     vertical-align: middle;
     transition-duration: 0.3s;
     transition-property: all, opacity;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     //transition-timing-function: $md-transition-drop-timing;
 
     &:not(.disabled):not(.readonly) {

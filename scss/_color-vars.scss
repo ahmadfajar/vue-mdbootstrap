@@ -1,6 +1,6 @@
 @use "sass:color";
 @use "sass:map";
-@use "utils/color_helper" as helper;
+@use "utils/color-helper" as helper;
 
 $red-base:                  oklch(0.577 0.245 27.325);
 $red-lighten-5:             helper.shift-color($red-base, 90%);
