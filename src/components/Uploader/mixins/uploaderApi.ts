@@ -191,21 +191,21 @@ function onImageFileChanged(
     (event.target as HTMLInputElement)?.files || event.dataTransfer?.files;
 
   if (files && files.length) {
-    if (!isFileSizeValid(props.limit as string, files[0]!, emit, props.alertOnError)) {
+    if (!isFileSizeValid(props.limit as string, files[0], emit, props.alertOnError)) {
       return;
     }
-    if (!isFileTypeValid(mimeTypes.value, files[0]!, emit, props.alertOnError)) {
+    if (!isFileTypeValid(mimeTypes.value, files[0], emit, props.alertOnError)) {
       return;
     }
     if (
-      fileBag.name === files[0]!.name &&
-      fileBag.size === files[0]!.size &&
-      fileBag.lastModified === files[0]!.lastModified
+      fileBag.name === files[0].name &&
+      fileBag.size === files[0].size &&
+      fileBag.lastModified === files[0].lastModified
     ) {
       return;
     }
 
-    doImageFileChanged(emit, files[0]!, fileBag, containerRef, canvasRef);
+    doImageFileChanged(emit, files[0], fileBag, containerRef, canvasRef);
   }
 }
 

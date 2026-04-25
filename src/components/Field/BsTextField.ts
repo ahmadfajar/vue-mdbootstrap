@@ -69,9 +69,11 @@ export default defineComponent<TBsTextField>({
     const validator = useGetValidationResult(thisProps, isFocused);
 
     const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
+
     const showPasswordToggle = computed<boolean>(
       () => thisProps.type === 'password' && thisProps.passwordToggle === true
     );
+    
     const showAppendIcon = computed(
       () =>
         slots['append-inner'] != null ||
@@ -79,14 +81,17 @@ export default defineComponent<TBsTextField>({
         showClearButton.value ||
         showPasswordToggle.value
     );
+
     const fieldWrapperClasses = computed<TRecord>(() =>
       useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
     );
+    
     const fieldControlClasses = computed<TRecord>(() => ({
       ...useFieldControlClasses(slots, thisProps, localValue, isFocused, showAppendIcon.value),
       [`${cssPrefix}field-rounded`]: (thisProps.outlined || thisProps.filled) && thisProps.rounded,
       [`${cssPrefix}text-field`]: true,
     }));
+    
     const fieldType = computed<TFieldType | undefined>(() => {
       if (showPasswordToggle.value) {
         return passwordToggled.value ? 'text' : 'password';

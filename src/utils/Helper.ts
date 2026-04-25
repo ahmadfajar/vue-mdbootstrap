@@ -61,7 +61,7 @@ export default class Helper {
         return fallbackFn;
       }
       // @ts-expect-error: Overwrite variable
-      _temp = _temp[path[i]!];
+      _temp = _temp[path[i]];
     }
 
     if (_temp == null) {
@@ -210,11 +210,11 @@ export default class Helper {
   }
 
   /**
-   * Convert Number or String to any valid html css unit size.
+   * Convert Number or String to any valid CSS unit size.
    *
    * @param value The value to convert
    * @param unit  The dimension to add
-   * @returns Css inline dimension
+   * @returns CSS inline dimension
    */
   static cssUnit(
     value: string | number | undefined | null,

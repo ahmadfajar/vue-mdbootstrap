@@ -22,11 +22,13 @@ function getValidator(props: Readonly<TValidationProps>): TValidator | undefined
 
 export function useHasValidationError(props: Readonly<TValidationProps>): boolean {
   const validator = getValidator(props);
+  
   return validator != null && validator.hasError;
 }
 
 export function useHasValidated(props: Readonly<TValidationProps>): boolean {
   const validator = getValidator(props);
+
   return validator && validator.dirty != null ? validator.dirty : false;
 }
 
@@ -91,7 +93,8 @@ export function useGetValidationResult(
 
 function validationErrorMessage(props: Readonly<TValidationProps>, ruleName: string): string {
   const validator = getValidator(props);
-  return validator ? unref(validator.messages[ruleName])! : '';
+
+  return validator ? unref(validator.messages[ruleName]) : '';
 }
 
 function renderErrorMessage(

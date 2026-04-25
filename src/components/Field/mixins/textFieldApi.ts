@@ -312,10 +312,10 @@ export function useInputTextFieldAttrs(
   return {
     autocomplete: autocomplete,
     placeholder: showPlaceHolder ? props.placeholder : undefined,
-    'aria-placeholder': showPlaceHolder ? props.placeholder : undefined,
     'aria-disabled': props.disabled,
-    'aria-required': props.required && !props.disabled && !props.readonly,
     'aria-readonly': props.readonly && !props.disabled,
+    'aria-required': props.required && !props.disabled && !props.readonly,
+    'aria-placeholder': showPlaceHolder ? props.placeholder : undefined,
   };
 }
 
@@ -519,7 +519,7 @@ export function useRenderTextField(
 }
 
 function createTextAreaInputField(
-  emit: EmitFn<InputTextEventEmitter<string | null | undefined>>,
+  emit: EmitFn<InputTextEventEmitter<string | undefined | null>>,
   props: Readonly<TTextAreaOptionProps>,
   inputRef: Ref<HTMLTextAreaElement | undefined>,
   localValue: Ref<string | undefined | null>,
@@ -562,7 +562,7 @@ function createTextAreaInputField(
 
 export function useRenderTextArea(
   slots: Slots,
-  emit: EmitFn<InputTextEventEmitter<string | null | undefined>>,
+  emit: EmitFn<InputTextEventEmitter<string | undefined | null>>,
   props: Readonly<TTextAreaOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,

@@ -52,15 +52,18 @@ export default defineComponent<TBsTextArea>({
     const validator = useGetValidationResult(thisProps, isFocused);
 
     const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
+
     const showAppendIcon = computed(
       () =>
         slots['append-inner'] != null ||
         !Helper.isEmpty(thisProps.appendIcon) ||
         showClearButton.value
     );
+
     const wrapperClasses = computed<TRecord>(() =>
       useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
     );
+
     const controlClasses = computed<TRecord>(() => ({
       ...useFieldControlClasses(slots, thisProps, localValue, isFocused, showAppendIcon.value),
       [`${cssPrefix}textarea`]: true,
@@ -71,6 +74,7 @@ export default defineComponent<TBsTextArea>({
 
     watchEffect(() => {
       localValue.value = thisProps.modelValue;
+      
       if (
         thisProps.autoGrow &&
         !thisProps.noResize &&
