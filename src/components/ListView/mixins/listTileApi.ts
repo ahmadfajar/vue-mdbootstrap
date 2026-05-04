@@ -1,34 +1,18 @@
 import { BsRipple } from '@/components/Animation';
-import ListItem from '@/components/ListView/mixins/ListItem.ts';
+import { type IListItem, ListItem } from '@/components/ListView/mixins/ListItem.ts';
+import type { IListViewProvider } from '@/components/ListView/mixins/ListViewProvider.ts';
+import type { TListTileOptionProps, TListTileTextOptionProps } from '@/components/ListView/types';
 import {
   cssPrefix,
   useHasRouter,
   useRenderRouter,
   useWrapSlotDefault,
 } from '@/mixins/CommonApi.ts';
-import type {
-  HtmlTagName,
-  IListItem,
-  IListTileEventEmitter,
-  IListViewProvider,
-  IVNode,
-  TBsRipple,
-  TClassList,
-  TListTileOptionProps,
-  TListTileTextOptionProps,
-  TRecord,
-} from '@/types';
+import type { TClassList, TRecord } from '@/types';
+import type { VNodeContext } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
-import {
-  type ComputedRef,
-  type EmitFn,
-  h,
-  type Prop,
-  type Ref,
-  type ShallowRef,
-  type Slots,
-  type VNode,
-} from 'vue';
+import type { ComputedRef, EmitFn, Ref, RendererNode, ShallowRef, Slots, VNode } from 'vue';
+import { h } from 'vue';
 
 export function useListTileClassNames(
   props: Readonly<TListTileOptionProps>,
@@ -63,6 +47,15 @@ export function useListTileClassNames(
   };
 }
 
+export declare interface IListTileEventEmitter {
+  [key: string]: (...args: unknown[]) => void;
+
+  // @ts-expect-error: Trigger clicked event
+  click: (target: Event, node: RendererNode | null | undefined) => void;
+  // @ts-expect-error: Trigger 'update:active' event
+  'update:active': (active: boolean) => void;
+}
+
 function createListTileElement(
   tagName: string,
   slots: Slots,
@@ -82,7 +75,7 @@ function createListTileElement(
         instance.value = new ListItem(
           props.id as string,
           'BsListTile',
-          (vNode as IVNode).ctx,
+          (vNode as VNodeContext).ctx,
           emit
         );
         provider?.addItem(instance.value);
@@ -102,7 +95,7 @@ function createListTileElement(
       },
     },
     [
-      h<TBsRipple>(
+      h(
         BsRipple,
         {
           class: {
@@ -111,10 +104,8 @@ function createListTileElement(
             'rounded-pill':
               provider?.itemRoundedPill === true && !provider.itemRounded && !props.pillOff,
           },
-          tag: 'div' as Prop<HtmlTagName>,
-          disabled: (props.rippleOff ||
-            props.disabled ||
-            !(tagName === 'a' || props.navigable)) as unknown as Prop<boolean>,
+          tag: 'div',
+          disabled: props.rippleOff || props.disabled || !(tagName === 'a' || props.navigable),
         },
         {
           default: () => useWrapSlotDefault('div', slots, 'flex'),
@@ -142,7 +133,7 @@ function createListTileRouterElement(
         instance.value = new ListItem(
           props.id as string,
           'BsListTile',
-          (vNode as IVNode).ctx,
+          (vNode as VNodeContext).ctx,
           emit
         );
         provider?.addItem(instance.value);
@@ -159,7 +150,7 @@ function createListTileRouterElement(
       },
     },
     [
-      h<TBsRipple>(
+      h(
         BsRipple,
         {
           class: {
@@ -168,8 +159,8 @@ function createListTileRouterElement(
             'rounded-pill':
               provider?.itemRoundedPill === true && !provider.itemRounded && !props.pillOff,
           },
-          tag: 'div' as Prop<HtmlTagName>,
-          disabled: (props.rippleOff || props.disabled) as unknown as Prop<boolean>,
+          tag: 'div',
+          disabled: props.rippleOff || props.disabled,
         },
         {
           default: () => slots.default && slots.default(),

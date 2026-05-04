@@ -1,3 +1,5 @@
+import type { TAppbarOptionProps } from '@/components/Appbar/types';
+import type { TSideDrawer } from '@/components/Drawer/types';
 import { Resize } from '@/directives';
 import {
   cssPrefix,
@@ -5,9 +7,10 @@ import {
   useVueMdbService,
   useWrapSlotDefault,
 } from '@/mixins/CommonApi.ts';
-import type { TAppbarOptionProps, TAppContainerOptionProps, TRecord, TVueMdb } from '@/types';
+import type { TRecord, TVueMdb } from '@/types';
 import type { ComputedRef, Ref, Slots, VNode } from 'vue';
 import { getCurrentInstance, h, nextTick, withDirectives } from 'vue';
+import type { TAppContainerOptionProps } from '../../Container/types';
 
 export function useAppbarStyles(
   props: Readonly<TAppbarOptionProps>,
@@ -16,17 +19,21 @@ export function useAppbarStyles(
   isMobile: Ref<boolean>
 ): TRecord {
   const zeroPx = '0px';
+  const sideDrawer: TSideDrawer | undefined =
+    appId.value && vueMdb.value && vueMdb.value.app[appId.value]
+      ? vueMdb.value.app[appId.value].sideDrawer
+      : undefined;
 
   return {
     paddingLeft: isMobile.value
       ? zeroPx
-      : props.clippedLeft && appId.value
-        ? (vueMdb.value?.app[appId.value]?.sideDrawer.left.width ?? 0) + 'px'
+      : props.clippedLeft
+        ? (sideDrawer?.left.width ?? 0) + 'px'
         : zeroPx,
     paddingRight: isMobile.value
       ? zeroPx
-      : props.clippedRight && appId.value
-        ? (vueMdb.value?.app[appId.value]?.sideDrawer.right.width ?? 0) + 'px'
+      : props.clippedRight
+        ? (sideDrawer?.right.width ?? 0) + 'px'
         : zeroPx,
     // override bootstrap z-index
     'z-index': props.fixedTop ? '1020' : undefined,
@@ -54,9 +61,9 @@ export async function useAppbarOnMountedHook(
       appId.value = (parent.props as Readonly<TAppContainerOptionProps>).id;
 
       if (appId.value && vueMdb.value) {
-        vueMdb.value.app[appId.value]!.appbar.height = appbar.value?.offsetHeight || 0;
-        vueMdb.value.app[appId.value]!.appbar.fixedTop = props.fixedTop ?? false;
-        vueMdb.value.app[appId.value]!.appbar.stickyTop = props.stickyTop ?? false;
+        vueMdb.value.app[appId.value].appbar.height = appbar.value?.offsetHeight || 0;
+        vueMdb.value.app[appId.value].appbar.fixedTop = props.fixedTop ?? false;
+        vueMdb.value.app[appId.value].appbar.stickyTop = props.stickyTop ?? false;
       }
     });
   } else {

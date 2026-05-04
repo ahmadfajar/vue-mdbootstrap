@@ -1,7 +1,18 @@
-import { booleanProp, defaultColorProp } from '@/mixins/CommonProps';
-import { defineComponent, h, type Prop } from 'vue';
-import BsButton from './BsButton';
-import type { TBsButton, TBsCloseButton, TButtonMode, TButtonSize } from './types';
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import type { TBsCloseButton, TCloseButtonOptionProps } from '@/components/Button/types';
+import { booleanProp, defaultColorProp } from '@/mixins/CommonProps.ts';
+import type { TRecord } from '@/types';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
+import { defineComponent, h } from 'vue';
+import BsButton from './BsButton.ts';
 
 export default defineComponent<TBsCloseButton>({
   name: 'BsCloseButton',
@@ -14,21 +25,44 @@ export default defineComponent<TBsCloseButton>({
     tonal: booleanProp,
   },
   setup(props) {
+    const thisProps = props as Readonly<TCloseButtonOptionProps>;
+
     return () => {
-      return h<TBsButton>(BsButton, {
-        mode: 'icon' as Prop<TButtonMode>,
-        size: 'sm' as Prop<TButtonSize>,
-        color: props.color,
-        flat: props.flat,
-        tonal: props.tonal,
-        disabled: props.disabled,
-        readonly: props.readonly,
-        rippleOff: props.rippleOff,
-        icon: 'close' as Prop<string>,
-        iconSize: 22 as Prop<number>,
+      return h(BsButton, {
+        mode: 'icon',
+        size: 'sm',
+        color: thisProps.color,
+        flat: thisProps.flat,
+        tonal: thisProps.tonal,
+        disabled: thisProps.disabled,
+        readonly: thisProps.readonly,
+        rippleOff: thisProps.rippleOff,
+        icon: 'close',
+        iconSize: 22,
         class: ['btn-close-action'],
         ariaLabel: 'Close',
       });
     };
   },
-});
+}) as DefineComponent<
+  TBsCloseButton,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TCloseButtonOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsCloseButton>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

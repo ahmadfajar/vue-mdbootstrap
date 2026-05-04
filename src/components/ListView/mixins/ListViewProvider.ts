@@ -1,21 +1,92 @@
+import type { IListItem } from '@/components/ListView/mixins/ListItem.ts';
 import type {
-  IListItem,
-  IListViewProvider,
-  TEmitFn,
   TListItemBorder,
   TListViewOptionProps,
-  TRecord,
   TSpaceAround,
-} from '@/types';
-import { type ComponentInternalInstance, isRef, type Ref, unref } from 'vue';
+} from '@/components/ListView/types';
+import type { ObjectBase } from '@/model';
+import type { TRecord } from '@/types';
+import { type ComponentInternalInstance, type EmitFn, isRef, type Ref, unref } from 'vue';
 
-class ListViewProvider implements IListViewProvider {
-  private readonly _emit: TEmitFn;
+export declare interface IListViewProvider extends ObjectBase {
+  readonly config: Readonly<TListViewOptionProps>;
+  readonly itemBorderVariant?: TListItemBorder;
+  readonly itemRounded: boolean;
+  readonly itemRoundedPill: boolean;
+  readonly spaceAround?: TSpaceAround;
+  readonly singleExpand: boolean;
+  readonly items: IListItem[];
+
+  /**
+   * Get/Set the active item.
+   */
+  get activeItem(): IListItem | undefined;
+
+  set activeItem(value: IListItem | undefined);
+
+  /**
+   * Add an item to the collection.
+   *
+   * @param item The item to add.
+   * @returns The collection new length or `-1` if the item already exists.
+   */
+  addItem(item: IListItem): number;
+
+  /**
+   * The findItem() method returns the value of the first element in the provided array
+   * that satisfies the provided testing function. If no values satisfy the testing function,
+   * {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined undefined} is returned.
+   */
+  findItem(
+    predicate: (value: IListItem, sources: IListItem[]) => boolean,
+    recursive: boolean
+  ): IListItem | undefined;
+
+  /**
+   * Execute an action for each item with the provided callback.
+   *
+   * @param actionFn         The callback which will be executed.
+   * @param recursive        When `TRUE` the callback will be executed for every child.
+   * @param stopImmediately  When `TRUE` if the callback returns a result, function will be stopped immediately.
+   */
+  execAction(
+    actionFn: (value: IListItem, sources: IListItem[]) => unknown,
+    recursive: boolean,
+    stopImmediately: boolean
+  ): Promise<void>;
+
+  /**
+   * Remove an item from the collection.
+   *
+   * @param item The item to remove.
+   */
+  removeItem(item: IListItem): void;
+
+  /**
+   * Sets the active item.
+   *
+   * @param value The item to assign as active.
+   */
+  setActiveItem(value?: IListItem): Promise<void>;
+
+  /**
+   * Collapse current item and hide its child-items.
+   */
+  collapse(item: IListItem): void;
+
+  /**
+   * Expand current item and show its child-items.
+   */
+  expand(item: IListItem): void;
+}
+
+export class ListViewProvider implements IListViewProvider {
+  private readonly _emit: EmitFn;
   private readonly _config: Readonly<TListViewOptionProps>;
   private _items: Array<IListItem>;
   private _activeItem: IListItem | undefined;
 
-  constructor(config: Readonly<TListViewOptionProps>, emitter: TEmitFn) {
+  constructor(config: Readonly<TListViewOptionProps>, emitter: EmitFn) {
     this._config = config;
     this._items = [];
     this._emit = emitter;
@@ -237,7 +308,7 @@ class ListViewProvider implements IListViewProvider {
     item.setRippleOff(false);
 
     if (item.hasChild()) {
-      this.setExposedValue(item.children[0]!.component, 'expanded', true);
+      this.setExposedValue(item.children[0].component, 'expanded', true);
       item.children[0]?.children.forEach((it) => it.setRippleOff(false));
     }
   }
@@ -262,5 +333,3 @@ class ListViewProvider implements IListViewProvider {
     }
   }
 }
-
-export default ListViewProvider;

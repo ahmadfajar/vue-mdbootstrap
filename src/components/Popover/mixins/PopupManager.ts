@@ -3,13 +3,13 @@ import { isServer } from '@/mixins/CommonApi.ts';
 import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import type { ComponentInternalInstance, Ref } from 'vue';
 
-declare type TPopupItem = {
+export declare type TPopupItem = {
   target: ComponentInternalInstance;
   props: Readonly<TPopupOptions>;
   active: Ref<boolean>;
 };
 
-const PopupManager = {
+export const PopupManager = {
   items: [] as TPopupItem[],
   locked: false,
   allowScrolling() {
@@ -90,5 +90,3 @@ if (!isServer) {
     }
   });
 }
-
-export default PopupManager;

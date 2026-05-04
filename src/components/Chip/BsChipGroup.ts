@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useChipIsSelected,
   useRenderChipGroup,
@@ -12,6 +13,23 @@ import type {
   TChipValue,
 } from '@/components/Chip/types';
 import { useGenerateId } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type {
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import { computed, defineComponent, nextTick, onMounted, reactive, ref, watch } from 'vue';
 
 export default defineComponent<TBsChipGroup>({
@@ -91,4 +109,73 @@ export default defineComponent<TBsChipGroup>({
         chipCloseHandler
       );
   },
-});
+}) as DefineComponent<
+  TBsChipGroup,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ChipGroupEventProps,
+  string,
+  PublicProps,
+  Readonly<TChipGroupOptionProps> & Readonly<ChipGroupEventPublic>,
+  ExtractDefaultPropTypes<TBsChipGroup>,
+  SlotsType<ChipGroupSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type ChipGroupEventProps = UpdateModelValueEventProps<TChipValue | TChipValue[] | null> & {
+  /**
+   * Fired immediately when this component's value is changed.
+   */
+  change?: (newValue: TChipValue | TChipValue[] | null) => void;
+
+  /**
+   * Fired when this component's item is dismissed (hide).
+   */
+  'item:close'?: (active: boolean) => void;
+};
+
+declare interface ChipGroupEventPublic extends UpdateModelValueEventPublic<
+  TChipValue | TChipValue[] | null
+> {
+  /**
+   * Fired immediately when this component's value is changed.
+   */
+  onChange?: (newValue: TChipValue | TChipValue[] | null) => void;
+
+  /**
+   * Fired when this component's item is dismissed (hide).
+   */
+  'onItem:close'?: (dismissedItem: TChipValue) => void;
+
+  /**
+   * Fired immediately when this component's value is changed.
+   */
+  '@change'?: (newValue: TChipValue | TChipValue[] | null) => void;
+
+  /**
+   * Fired when this component's item is dismissed (hide).
+   */
+  '@item:close'?: (dismissedItem: TChipValue) => void;
+}
+
+declare interface ChipGroupSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the item's custom text of the Chip component.
+   */
+  text?: (props: TChipOptionItem) => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place the item's custom icon of the ChipGroup component.
+   */
+  icon?: (props: TChipOptionItem) => VNode[] | VNode;
+}

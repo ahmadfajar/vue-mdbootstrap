@@ -9,6 +9,7 @@ export function createVueMdb(rootComponent: Component): App {
 
   for (const [key, drv] of Object.entries(_directives)) {
     // console.info(`${key}: Directive<${key}>`);
+    // @ts-expect-error: Assigned Directives from collection
     vApp.directive(key, drv);
   }
 

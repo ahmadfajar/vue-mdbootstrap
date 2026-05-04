@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { numericFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import { useRenderNumericField } from '@/components/Field/mixins/numericFieldApi.ts';
 import {
@@ -6,9 +7,29 @@ import {
   useShowClearButton,
 } from '@/components/Field/mixins/textFieldApi.ts';
 import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
+import type {
+  TBsNumericField,
+  TNumericFieldOptionProps,
+  TNumericOptions,
+} from '@/components/Field/types';
+import type {
+  FieldSlots,
+  NumericFieldEventProps,
+  NumericFieldEventPublic,
+} from '@/components/Field/types/internals.ts';
 import { cssPrefix, isServer } from '@/mixins/CommonApi.ts';
-import type { TBsNumericField, TNumericFieldOptionProps, TNumericOptions, TRecord } from '@/types';
+import type { MaybeNumber, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsNumericField>({
@@ -23,11 +44,13 @@ export default defineComponent<TBsNumericField>({
         : thisProps.autocomplete
           ? 'on'
           : null;
-    const localValue = ref<number | null | undefined>(thisProps.modelValue);
+    const localValue = ref<MaybeNumber>(thisProps.modelValue);
     const inputRef = ref<HTMLElement | null>(null);
     const hasFocus = ref(false);
-    const validator = useGetValidationResult(thisProps, hasFocus);
+    const { hasError, hasValidated, showValidationError, showHelpText, errorItems } =
+      useGetValidationResult(thisProps, hasFocus);
     const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
+
     const showAppendIcon = computed(
       () =>
         slots['append-inner'] != null ||
@@ -38,6 +61,7 @@ export default defineComponent<TBsNumericField>({
           !thisProps.disabled &&
           !thisProps.readonly)
     );
+
     const showPrependIcon = computed(
       () =>
         slots['prepend-inner'] != null ||
@@ -48,9 +72,11 @@ export default defineComponent<TBsNumericField>({
             (thisProps.actionButton === 'plus-minus' &&
               ['left', 'both'].includes(thisProps.actionButtonPlacement as string))))
     );
+
     const fieldWrapperClasses = computed<TRecord>(() =>
-      useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
+      useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)
     );
+
     const fieldControlClasses = computed<TRecord>(() => ({
       ...useFieldControlClasses(
         slots,
@@ -96,11 +122,32 @@ export default defineComponent<TBsNumericField>({
         hasFocus,
         autocomplete,
         showClearButton,
-        validator.showHelpText,
-        validator.showValidationError,
-        validator.hasValidated,
-        validator.hasError,
-        validator.errorItems
+        showHelpText,
+        showValidationError,
+        hasValidated,
+        hasError,
+        errorItems
       );
   },
-});
+}) as DefineComponent<
+  TBsNumericField,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  NumericFieldEventProps,
+  string,
+  PublicProps,
+  Readonly<TNumericFieldOptionProps> & Readonly<NumericFieldEventPublic>,
+  ExtractDefaultPropTypes<TBsNumericField>,
+  SlotsType<FieldSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

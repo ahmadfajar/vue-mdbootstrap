@@ -1,7 +1,7 @@
+import type { TDropdownMenuOptionProps } from '@/components/Menu/types';
 import { BsPopover } from '@/components/Popover';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import type { TBsPopover, TDropdownMenuOptionProps, TEmitFn, TPopoverPosition } from '@/types';
-import { type EmitFn, h, type Prop, type Ref, type Slots, type VNode } from 'vue';
+import { type EmitFn, h, type Ref, type Slots, type VNode } from 'vue';
 
 declare type DropdownMenuEventEmitter = {
   close: () => void;
@@ -26,12 +26,6 @@ async function hideDropdownMenu(
   }).then(() => {
     emit('close');
   });
-
-  // timer.value = window.setTimeout(() => {
-  //   isActive.value = false;
-  //   emit('update:open', false);
-  //   emit('close');
-  // }, 100);
 }
 
 function showDropdownMenu(
@@ -52,7 +46,7 @@ function showDropdownMenu(
 
 export function useRenderDropdownMenu(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TDropdownMenuOptionProps>,
   activator: Ref<Element | null>,
   isActive: Ref<boolean>,
@@ -93,17 +87,17 @@ export function useRenderDropdownMenu(
         },
         slots.default && slots.default()
       ),
-      h<TBsPopover>(
+      h(
         BsPopover,
         {
           class: [`${cssPrefix}popover-dropdown-menu`, `${cssPrefix}shadow-1`],
-          color: props.color as Prop<string>,
-          cover: props.cover as unknown as Prop<boolean>,
-          open: isActive.value as unknown as Prop<boolean>,
-          placement: props.placement as Prop<TPopoverPosition>,
-          space: props.space as Prop<number>,
-          transition: props.transition as Prop<string>,
-          trigger: activator.value as Prop<HTMLElement>,
+          color: props.color,
+          cover: props.cover,
+          open: isActive.value,
+          placement: props.placement,
+          space: props.space,
+          transition: props.transition,
+          trigger: activator.value,
           onClick: async () => {
             if (props.contentClickClose) {
               await hideDropdownMenu(emit, isActive, timer);

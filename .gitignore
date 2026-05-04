@@ -26,6 +26,7 @@ yarn.lock
 /cypress/videos/
 /cypress/screenshots/
 /dist/
+/src/_tests_/
 
 # Editor directories and files
 .vscode/*

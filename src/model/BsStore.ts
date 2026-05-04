@@ -1,22 +1,167 @@
-import { AbstractStore, RestProxyAdapter } from '@/model';
-import {
-  appendErrMsg,
-  emptyDataErrMsg,
-  parsingDataErrMsg,
-  proxyErrMsg,
-} from '@/model/AbstractStore.ts';
-import type {
-  IBsModel,
-  IBsStore,
-  TDataStoreConfig,
-  TMessageResponse,
-  TSortDirection,
-  TSortOption,
-} from '@/model/types';
+import { AbstractStore, type DataStoreConfig } from '@/model/AbstractStore.ts';
+import type { PlainModel, TBsModel } from '@/model/BsModel.ts';
+import { appendError, emptyDataMessage, parsingDataError, proxyError } from '@/model/Constants.ts';
+import { RestProxyAdapter } from '@/model/RestProxyAdapter.ts';
+import type { SortDirection, SortOption } from '@/model/types';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { meanBy, sumBy } from 'lodash-es';
+import meanBy from 'lodash-es/meanBy';
+import sumBy from 'lodash-es/sumBy';
+
+export declare type MessageResponse = {
+  success: boolean;
+  message: string;
+};
+
+export declare interface IBsStore<T extends TRecord = TRecord> extends AbstractStore<T> {
+  /**
+   * Returns dataset from the active page.
+   *
+   * If a filter or sorter has been applied before,
+   * then the returned dataset will also be affected by it.
+   */
+  readonly dataItems: TBsModel<T>[];
+
+  /**
+   * Check if the data Store is using server filtering or local filtering.
+   */
+  get remoteFilter(): boolean;
+
+  /**
+   * Enable or disable data Store server filtering.
+   *
+   * @param {boolean} value If TRUE then using local filtering and FALSE otherwise
+   */
+  set remoteFilter(value: boolean);
+
+  /**
+   * Check if the data Store is using server paging or local paging.
+   */
+  get remotePaging(): boolean;
+
+  /**
+   * Enable or disable data Store server paging.
+   *
+   * @param value If TRUE then using server paging and FALSE otherwise
+   */
+  set remotePaging(value: boolean);
+
+  /**
+   * Check if the Store is using server sorting or local sorting.
+   */
+  get remoteSort(): boolean;
+
+  /**
+   * Enable or disable data Store server sorting.
+   *
+   * @param value If TRUE then using server sorting and FALSE otherwise
+   */
+  set remoteSort(value: boolean);
+
+  /**
+   * Calculate means or average value based on the given field.
+   *
+   * @param field The field name of the dataset to calculate.
+   */
+  aggregateAvg(field: string): number;
+
+  /**
+   * Count number of items in the internal dataset specified by the given criteria.
+   *
+   * @param field The grouping field name criteria.
+   * @param value The grouping value criteria.
+   */
+  aggregateCountBy(field: string, value: unknown): number;
+
+  /**
+   * Calculate the SUM or total value based on the given field.
+   *
+   * @param field The field name to be used when calculating value.
+   */
+  aggregateSum(field: string): number;
+
+  /**
+   * Append an item to the internal dataset and also save the item as a new record to the
+   * remote server whenever possible. The item can be saved to the remote server,
+   * if 'restUrl' property contains a 'save' key.
+   *
+   * @param item Data to append to the internal dataset
+   */
+  append(item: TRecord): void;
+
+  /**
+   * Replace internal dataset with new data. The proses only affected the internal dataset
+   * and nothing is sent to the remote service.
+   *
+   * @param data   The new data to be assigned.
+   * @param silent Append the data silently and don't trigger data transformer.
+   */
+  assignData(data: unknown, silent?: boolean): void;
+
+  /**
+   * Delete specific item from internal dataset as well as from remote service whenever possible.
+   * The item can be deleted from the remote service, if 'restUrl' property contains a 'delete' key.
+   *
+   * @param item Data Model instance to be removed
+   */
+  delete<P extends TBsModel<T>>(item: P): Promise<AxiosResponse | MessageResponse>;
+
+  /**
+   * Delete specific items from internal dataset as well as from remote
+   * service whenever possible. The items can be deleted from the remote
+   * service, if 'restUrl' property contains a 'delete' key.
+   *
+   * @param items Collection of data Model instances to be removed
+   */
+  deletes<P extends TBsModel<T>>(items: P[]): Promise<MessageResponse>;
+
+  /**
+   * Fetch single item from the remote service via REST API and
+   * replace internal dataset with the one comes from the remote service.
+   *
+   * @param id The item ID to fetch
+   */
+  fetch(id: string | number): Promise<AxiosResponse>;
+
+  /**
+   * Load data from the remote server or assign new data directly.
+   * The internal dataset will be replaced by the loaded data.
+   *
+   * @param data The new data to replace the internal dataset
+   */
+  load(data?: unknown): Promise<TBsModel<T>[] | AxiosResponse>;
+
+  /**
+   * Load data from the remote server and assign query parameters and configuration.
+   *
+   * @deprecated
+   * Use `load` instead.
+   */
+  query(): Promise<TBsModel<T>[] | AxiosResponse>;
+
+  /**
+   * Sorts the internal dataset with the given criteria and returns the reference
+   * of the internal dataset. This method depends on `remoteSort` property.
+   *
+   * @example
+   * // sort by a single field
+   * const results = await myStore.sort('myField', 'asc');
+   *
+   * // sorting by multiple fields
+   * const results = await myStore.sort([
+   *  {property: 'age', direction: 'desc'},
+   *  {property: 'name', direction: 'asc'}
+   * ]);
+   *
+   * @param options   The field name to sort or sort method criteria.
+   * @param direction The sort direction.
+   */
+  sort(
+    options: string | string[] | SortOption | SortOption[],
+    direction?: SortDirection
+  ): Promise<TBsModel<T>[]>;
+}
 
 /**
  * Data Store class to work with collection of entity objects and remote API.
@@ -42,12 +187,11 @@ import { meanBy, sumBy } from 'lodash-es';
  * });
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 19/10/2025 05:01
+ * @since  20/07/2018 modified: 30/04/2026 17:17
  */
-// @ts-expect-error: export class BsStore
-export class BsStore extends AbstractStore implements IBsStore {
+export class BsStore<T extends TRecord = TRecord> extends AbstractStore<T> implements IBsStore<T> {
   /**
-   * Construct {@link BsStore} object instance.
+   * Construct new {@link BsStore} object instance.
    *
    * @param config  The configuration properties
    * @param adapter Axios adapter instance
@@ -72,8 +216,8 @@ export class BsStore extends AbstractStore implements IBsStore {
    *     },
    * });
    */
-  constructor(config: TDataStoreConfig, adapter?: AxiosInstance | null) {
-    const initialCfg: TDataStoreConfig = {
+  constructor(config: DataStoreConfig, adapter?: AxiosInstance | null) {
+    const initialCfg: DataStoreConfig = {
       idProperty: 'id',
       dataProperty: 'data',
       totalProperty: 'total',
@@ -102,7 +246,7 @@ export class BsStore extends AbstractStore implements IBsStore {
     }
   }
 
-  get dataItems(): IBsModel[] {
+  get dataItems(): TBsModel<T>[] {
     const page =
       this.currentPage > 0 && this.currentPage <= this.totalPages ? this.currentPage - 1 : 0;
     const offset = this.pageSize > 0 ? page * this.pageSize : 0;
@@ -117,7 +261,7 @@ export class BsStore extends AbstractStore implements IBsStore {
       );
       this._state.length = result.length;
 
-      return result;
+      return result as TBsModel<T>[];
     }
 
     if (!this.remotePaging) {
@@ -127,14 +271,14 @@ export class BsStore extends AbstractStore implements IBsStore {
       );
       this._state.length = result.length;
 
-      return result;
+      return result as TBsModel<T>[];
     }
 
-    return this._items;
+    return this._items as TBsModel<T>[];
   }
 
   get remoteFilter(): boolean {
-    return this._config.remoteFilter as boolean;
+    return this._config.remoteFilter ?? false;
   }
 
   set remoteFilter(value: boolean) {
@@ -142,7 +286,7 @@ export class BsStore extends AbstractStore implements IBsStore {
   }
 
   get remotePaging(): boolean {
-    return this._config.remotePaging as boolean;
+    return this._config.remotePaging ?? false;
   }
 
   set remotePaging(value: boolean) {
@@ -150,7 +294,7 @@ export class BsStore extends AbstractStore implements IBsStore {
   }
 
   get remoteSort(): boolean {
-    return this._config.remoteSort as boolean;
+    return this._config.remoteSort ?? false;
   }
 
   set remoteSort(value: boolean) {
@@ -162,14 +306,14 @@ export class BsStore extends AbstractStore implements IBsStore {
   }
 
   aggregateCountBy(field: string, value: unknown): number {
-    let results: IBsModel[];
+    let results: TBsModel<T>[];
 
     if (this.remotePaging) {
       results = this.dataItems.filter((item) => {
         return value === Helper.getObjectValueByPath(item, field);
       });
     } else {
-      results = this._items.filter((item) => {
+      results = (this._items as TBsModel<T>[]).filter((item) => {
         return value === Helper.getObjectValueByPath(item, field);
       });
     }
@@ -219,10 +363,10 @@ export class BsStore extends AbstractStore implements IBsStore {
     } else if (Helper.isObject(item)) {
       // Got incorrect entity object, just store as is on the internal dataset.
       this._state.updating = true;
-      this._items.push(this.createModel(item).seal());
+      this._items.push(this.createModel(item as PlainModel<T>).seal() as TBsModel<T>);
       _finalizeAppend();
     } else {
-      console.error(appendErrMsg);
+      console.error(appendError);
     }
   }
 
@@ -235,10 +379,13 @@ export class BsStore extends AbstractStore implements IBsStore {
     this._onLoadingSuccess();
   }
 
-  delete(item: IBsModel): Promise<AxiosResponse | TMessageResponse> {
+  delete<P extends TBsModel<T>>(item: P): Promise<AxiosResponse | MessageResponse> {
     this._state.deleting = true;
 
     if (AbstractStore.isModel(item) && !Helper.isEmpty(item.restUrl?.delete)) {
+      // Got correct entity object.
+      // Remove the given item from the remote service before
+      // removing it from the internal dataset.
       return new Promise((resolve, reject) => {
         item
           .delete()
@@ -247,7 +394,7 @@ export class BsStore extends AbstractStore implements IBsStore {
             this._state.deleting = false;
             this._state.hasError = false;
             resolve(response);
-            this._fireEvent('loaded', this.dataItems);
+            this._fireEvent('deleted', item);
           })
           .catch((error: AxiosError) => {
             this._state.deleting = false;
@@ -262,21 +409,22 @@ export class BsStore extends AbstractStore implements IBsStore {
           this.remove(item);
           this._state.deleting = false;
           this._state.hasError = false;
+          this._fireEvent('deleted', item);
+
           resolve({
             success: true,
             message: 'Item has been removed from local store.',
           });
-          this._fireEvent('loaded', this.dataItems);
-        } catch (e) {
+        } catch (error) {
           this._state.deleting = false;
           this._state.hasError = true;
-          reject(e as Error);
+          reject(error as AxiosError);
         }
       });
     }
   }
 
-  deletes(items: IBsModel[]): Promise<TMessageResponse> {
+  deletes<P extends TBsModel<T>>(items: P[]): Promise<MessageResponse> {
     this._state.deleting = true;
     this._state.hasError = false;
 
@@ -285,6 +433,7 @@ export class BsStore extends AbstractStore implements IBsStore {
         try {
           for (const item of items) {
             if (AbstractStore.isModel(item) && !Helper.isEmpty(item.restUrl?.delete)) {
+              // Got correct DataModel instance, deal with remote server
               item
                 .delete()
                 .then(() => this.remove(item))
@@ -292,12 +441,12 @@ export class BsStore extends AbstractStore implements IBsStore {
                   throw error;
                 });
             } else {
+              // Got PlainModel, just remove it from internal dataset
               this.remove(item);
             }
           }
 
-          this._fireEvent('loaded', this.dataItems);
-
+          this._fireEvent('deleted', items);
           resolve({
             success: true,
             message: 'Items have been successfully removed.',
@@ -319,7 +468,7 @@ export class BsStore extends AbstractStore implements IBsStore {
 
   fetch(id: string | number): Promise<AxiosResponse> {
     if (!this.proxy || !this.restUrl) {
-      throw Error(proxyErrMsg);
+      throw Error(proxyError);
     }
 
     RestProxyAdapter.checkRestUrl(this.restUrl);
@@ -348,18 +497,18 @@ export class BsStore extends AbstractStore implements IBsStore {
     );
   }
 
-  load(data?: unknown): Promise<IBsModel[] | AxiosResponse> {
+  load(data?: unknown): Promise<TBsModel<T>[] | AxiosResponse> {
     if (data && !Helper.isEmpty(data)) {
       this._state.loading = true;
 
       return new Promise((resolve) => {
         this.assignData(data, false);
         this._items = this.localSort();
-        resolve(this._items);
+        resolve(this._items as TBsModel<T>[]);
       });
     } else {
       if (!this.proxy || !this.restUrl) {
-        throw Error(proxyErrMsg);
+        throw Error(proxyError);
       }
 
       RestProxyAdapter.checkRestUrl(this.restUrl);
@@ -384,30 +533,24 @@ export class BsStore extends AbstractStore implements IBsStore {
     }
   }
 
-  query(): Promise<IBsModel[] | AxiosResponse> {
+  query(): Promise<TBsModel<T>[] | AxiosResponse> {
     return this.load();
   }
 
   sort(
-    options: string | string[] | TSortOption | TSortOption[],
-    direction: TSortDirection = 'asc'
-  ): Promise<IBsModel[]> {
+    options: string | string[] | SortOption | SortOption[],
+    direction: SortDirection = 'asc'
+  ): Promise<TBsModel<T>[]> {
     return new Promise((resolve, reject) => {
       this.createSorters(options, direction, true);
 
       if (!this.remoteSort) {
         this._items = this.localSort();
-        resolve(this._items);
+        resolve(this._items as TBsModel<T>[]);
       } else {
         this.load()
-          .then(() => resolve(this._items))
+          .then(() => resolve(this._items as TBsModel<T>[]))
           .catch((error: AxiosError) => reject(error));
-        // try {
-        //   await this.load();
-        //   resolve(this._items);
-        // } catch (e) {
-        //   reject(e as AxiosError);
-        // }
       }
     });
   }
@@ -421,7 +564,7 @@ export class BsStore extends AbstractStore implements IBsStore {
     const responseData = response.data as TRecord[];
 
     if (Helper.isEmpty(responseData)) {
-      console.warn(emptyDataErrMsg);
+      console.warn(emptyDataMessage);
     } else {
       if (Object.hasOwn(responseData, this._config.dataProperty as PropertyKey)) {
         this.assignData(responseData[this._config.dataProperty as never]);
@@ -432,7 +575,7 @@ export class BsStore extends AbstractStore implements IBsStore {
           ] as unknown as number;
         }
       } else {
-        console.warn(parsingDataErrMsg);
+        console.warn(parsingDataError);
       }
     }
   }

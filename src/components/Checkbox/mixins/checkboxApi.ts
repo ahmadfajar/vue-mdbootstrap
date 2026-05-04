@@ -1,15 +1,9 @@
 import { BsCheckbox } from '@/components/Checkbox';
+import type { TCheckboxGroupOptionProps, TCheckboxOptionProps } from '@/components/Checkbox/types';
 import { useCheckSelected } from '@/components/Radio/mixins/radioApi.ts';
+import type { TRadioInputProps, TRadioOptionProps } from '@/components/Radio/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import type {
-  Numberish,
-  TBsCheckbox,
-  TCheckboxGroupOptionProps,
-  TCheckboxOptionProps,
-  TRadioInputProps,
-  TRadioOptionProps,
-  TRecord,
-} from '@/types';
+import type { Numberish, TRecord } from '@/types';
 import type { EmitFn, Prop, Ref, VNodeArrayChildren } from 'vue';
 import { h, nextTick } from 'vue';
 
@@ -38,18 +32,17 @@ export function useCreateCheckboxItems(
 ): VNodeArrayChildren {
   return props.items.map((it, idx) => {
     return h('div', { class: 'col', key: `checkbox-${idx}` }, [
-      h<TBsCheckbox>(
+      h(
         BsCheckbox,
         {
-          color: (it.color || props.color) as Prop<string>,
-          disabled: (it.disabled || props.disabled) as unknown as Prop<boolean>,
-          readonly: (it.readonly || props.readonly) as unknown as Prop<boolean>,
-          indeterminate: (it.indeterminate || props.indeterminate) as unknown as Prop<boolean>,
+          color: it.color || props.color,
+          disabled: it.disabled || props.disabled,
+          readonly: it.readonly || props.readonly,
+          indeterminate: it.indeterminate || props.indeterminate,
           value: it.value as Prop<string | number | TRecord>,
-          // prettier-ignore
-          name: (it.name ? it.name : props.name ? `${props.name}[${idx}]` : undefined) as Prop<Numberish | undefined>,
-          modelValue: props.modelValue as Prop<Numberish | unknown | Numberish[] | unknown[]>,
-          'onUpdate:model-value': (value: Numberish | unknown | Numberish[] | unknown[]): void =>
+          name: it.name ? it.name : props.name ? `${props.name}[${idx}]` : undefined,
+          modelValue: props.modelValue,
+          'onUpdate:modelValue': (value: Numberish | unknown | Numberish[] | unknown[]): void =>
             toggleCheckHandler(value, it),
         },
         {

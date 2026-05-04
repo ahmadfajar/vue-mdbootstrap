@@ -1,4 +1,10 @@
 import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps.ts';
+import type {
+  TButtonMode,
+  TButtonSize,
+  TButtonType,
+  TInputOptionItem,
+} from '@/components/Button/types';
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import { iconSizeProp } from '@/components/Icon/mixins/iconProps.ts';
 import {
@@ -9,7 +15,6 @@ import {
   stringOrNumberProp,
   stringProp,
 } from '@/mixins/CommonProps.ts';
-import type { TButtonMode, TButtonSize, TButtonType, TInputOptionItem } from '@/types';
 import type { Prop } from 'vue';
 
 export const buttonMode = {

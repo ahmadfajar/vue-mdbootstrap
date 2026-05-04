@@ -1,4 +1,5 @@
-import type { HtmlTagName, TCardContentType, TClassList } from '@/types';
+import type { TCardContentType } from '@/components/Card/types';
+import type { HtmlTagName, TClassList } from '@/types';
 import type { VNode } from 'vue';
 import { h } from 'vue';
 

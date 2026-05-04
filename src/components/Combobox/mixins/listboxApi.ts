@@ -1,5 +1,6 @@
 import { BsDivider } from '@/components/Basic';
 import { BsCheckbox } from '@/components/Checkbox';
+import type { TDataListSchema, TListboxOptionProps } from '@/components/Combobox/types';
 import {
   BsListTile,
   BsListTileAction,
@@ -9,25 +10,17 @@ import {
   BsListView,
 } from '@/components/ListView';
 import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi.ts';
-import { AbstractStore, BsStore } from '@/model';
-import type {
-  IArrayStore,
-  IBsModel,
-  IBsStore,
-  LoadedCallbackFn,
-  Numberish,
-  TBsCheckbox,
-  TBsDivider,
-  TBsListTile,
-  TBsListTileAction,
-  TBsListView,
-  TDataListSchema,
-  TEmitFn,
-  TListboxOptionProps,
-  TRecord,
-} from '@/types';
+import {
+  AbstractStore,
+  BsStore,
+  type IArrayStore,
+  type IBsStore,
+  type LoadedCallbackFn,
+  type TBsModel,
+} from '@/model';
+import type { Numberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
+import type { EmitFn, Ref, ShallowRef, Slots, VNode } from 'vue';
 import {
   createCommentVNode,
   Fragment,
@@ -42,11 +35,11 @@ import {
 } from 'vue';
 
 function filterListboxItems(
-  emit: TEmitFn,
+  emit: EmitFn,
   schema: TDataListSchema,
-  dataSource: IBsStore | IArrayStore | AbstractStore | undefined,
-  cachedItems: ShallowRef<IBsModel[]>,
-  selectedItems: ShallowRef<IBsModel[]>,
+  dataSource: IBsStore | IArrayStore | undefined,
+  cachedItems: ShallowRef<TBsModel[]>,
+  selectedItems: ShallowRef<TBsModel[]>,
   searchTextRef: Ref<string | undefined>,
   search: string
 ) {
@@ -88,11 +81,11 @@ function filterListboxItems(
 }
 
 function renderSearchbox(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TListboxOptionProps>,
   schema: TDataListSchema,
-  cachedItems: ShallowRef<IBsModel[]>,
-  selectedItems: ShallowRef<IBsModel[]>,
+  cachedItems: ShallowRef<TBsModel[]>,
+  selectedItems: ShallowRef<TBsModel[]>,
   showSearchbox: Ref<boolean>,
   searchboxRef: Ref<HTMLElement | null>,
   searchTextRef: Ref<string | undefined>
@@ -143,22 +136,22 @@ function renderSearchbox(
 
 function renderListboxView(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TListboxOptionProps>,
   schema: TDataListSchema,
-  dataItems: ShallowRef<IBsModel[]>,
+  dataItems: ShallowRef<TBsModel[]>,
   listviewStyles: TRecord,
-  selectedItems: ShallowRef<IBsModel[]>,
-  localValue: Ref<string | number | string[] | number[] | undefined | null>
+  selectedItems: ShallowRef<TBsModel[]>,
+  localValue: Ref<Numberish | Numberish[] | undefined | null>
 ): VNode {
   const dataSource = props.dataSource?.proxy;
 
-  return h<TBsListView>(
+  return h(
     BsListView,
     {
-      color: props.color as Prop<string>,
+      color: props.color,
       style: listviewStyles,
-      individualState: true as unknown as Prop<boolean>,
+      individualState: true,
     },
     {
       default: () =>
@@ -189,26 +182,26 @@ function renderListboxView(
 
 function renderListboxItems(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TListboxOptionProps>,
   schema: TDataListSchema,
-  dataItems: ShallowRef<IBsModel[]>,
-  selectedItems: ShallowRef<IBsModel[]>,
-  localValue: Ref<string | number | string[] | number[] | undefined | null>
+  dataItems: ShallowRef<TBsModel[]>,
+  selectedItems: ShallowRef<TBsModel[]>,
+  localValue: Ref<Numberish | Numberish[] | undefined | null>
 ): VNode[] | undefined {
   return dataItems.value.map((item, idx) =>
     h(Fragment, [
-      h<TBsListTile>(
+      h(
         BsListTile,
         {
           // key: Helper.uuid(true),
           key: item.get('_oid') as never,
-          navigable: (!props.readonly && !props.disabled) as unknown as Prop<boolean>,
-          disabled: (props.disabled === true ||
-            item.get(<string>schema.disableField) === true) as unknown as Prop<boolean>,
-          active: item.get('_selected') as Prop<boolean>,
-          'onUpdate:active': (value: boolean) =>
-            dispatchListboxEvent(
+          navigable: !props.readonly && !props.disabled,
+          disabled: props.disabled === true || item.get(schema.disableField!) === true,
+          active: item.get('_selected') as boolean,
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          'onUpdate:active': async (value: boolean) => {
+            await dispatchListboxEvent(
               emit,
               props,
               dataItems,
@@ -217,7 +210,8 @@ function renderListboxItems(
               item,
               schema.valueField,
               value
-            ),
+            );
+          },
         },
         {
           default: () =>
@@ -227,9 +221,9 @@ function renderListboxItems(
         }
       ),
       props.itemSeparator && idx + 1 < dataItems.value.length
-        ? h<TBsDivider>(BsDivider, {
+        ? h(BsDivider, {
             key: `divider-${idx}`,
-            dark: props.itemSeparatorDark as unknown as Prop<boolean>,
+            dark: props.itemSeparatorDark,
           })
         : undefined,
     ])
@@ -237,12 +231,12 @@ function renderListboxItems(
 }
 
 async function dispatchListboxEvent(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TListboxOptionProps>,
-  dataItems: ShallowRef<IBsModel[]>,
-  selectedItems: ShallowRef<IBsModel[]>,
-  localValue: Ref<string | number | string[] | number[] | undefined | null>,
-  item: IBsModel,
+  dataItems: ShallowRef<TBsModel[]>,
+  selectedItems: ShallowRef<TBsModel[]>,
+  localValue: Ref<Numberish | Numberish[] | undefined | null>,
+  item: TBsModel,
   valueField: string,
   isSelected: boolean
 ): Promise<void> {
@@ -254,24 +248,22 @@ async function dispatchListboxEvent(
     }
     emit('select', item);
   } else {
-    selectedItems.value = selectedItems.value.filter(
-      (it) => it.get(valueField) !== item.get(valueField)
-    );
+    selectedItems.value = selectedItems.value.filter((it) => it[valueField] !== item[valueField]);
     emit('deselect', item);
   }
 
   if (props.multiple === true) {
-    localValue.value = selectedItems.value.map((it) => it.get(valueField)) as never;
+    localValue.value = selectedItems.value.map((it) => it[valueField]) as never;
   } else {
     localValue.value = (
-      selectedItems.value.length > 0 ? selectedItems.value[0]?.get(valueField) : undefined
+      selectedItems.value.length > 0 ? selectedItems.value[0][valueField] : undefined
     ) as never;
   }
 
   dataItems.value = dataItems.value.map((it) => {
     it.set(
       '_selected',
-      selectedItems.value.find((row) => row.get(valueField) === it.get(valueField)) != null
+      selectedItems.value.find((row) => row[valueField] === it[valueField]) != null
     );
     return it;
   });
@@ -286,8 +278,8 @@ function createListboxItemContentWithCheckbox(
   slots: Slots,
   props: Readonly<TListboxOptionProps>,
   schema: TDataListSchema,
-  localValue: Ref<string | number | string[] | number[] | undefined | null>,
-  item: IBsModel,
+  localValue: Ref<Numberish | Numberish[] | undefined | null>,
+  item: TBsModel,
   index: number
 ): VNode[] {
   const nodes: VNode[] = [];
@@ -305,22 +297,22 @@ function createListboxItemContentWithCheckbox(
 function createListTileCheckbox(
   props: Readonly<TListboxOptionProps>,
   schema: TDataListSchema,
-  localValue: Ref<string | number | string[] | number[] | undefined | null>,
-  item: IBsModel
+  localValue: Ref<Numberish | Numberish[] | undefined | null>,
+  item: TBsModel
 ): VNode {
-  return h<TBsListTileAction>(
+  return h(
     BsListTileAction,
     {
-      center: true as unknown as Prop<boolean>,
+      center: true,
     },
     {
       default: () =>
-        h<TBsCheckbox>(BsCheckbox, {
-          color: (props.checkboxColor || 'default') as Prop<string>,
-          value: item.get(schema.valueField) as Prop<Numberish>,
-          modelValue: localValue.value as Prop<Numberish>,
-          readonly: props.readonly as unknown as Prop<boolean>,
-          disabled: props.disabled as unknown as Prop<boolean>,
+        h(BsCheckbox, {
+          color: props.checkboxColor || 'default',
+          value: item.get(schema.valueField),
+          modelValue: localValue.value,
+          readonly: props.readonly,
+          disabled: props.disabled,
         }),
     }
   );
@@ -330,14 +322,13 @@ function createListboxItemContent(
   slots: Slots,
   props: Readonly<TListboxOptionProps>,
   schema: TDataListSchema,
-  item: IBsModel,
+  item: TBsModel,
   index: number
 ): VNode[] {
   const nodes: VNode[] = [];
   if (
     props.showImage === true &&
-    (Object.hasOwn(item, schema.imageField as string) ||
-      item.get(schema.imageField as string) != null)
+    (Object.hasOwn(item, schema.imageField!) || item.get(schema.imageField!) != null)
   ) {
     nodes.push(createListTileLeading(props, schema, item));
   }
@@ -349,20 +340,20 @@ function createListboxItemContent(
 function createListTileLeading(
   props: Readonly<TListboxOptionProps>,
   schema: TDataListSchema,
-  item: IBsModel
+  item: TBsModel
 ): VNode {
   return h(BsListTileLeading, {
-    imgSrc: item.get(schema.imageField as string) as Prop<string>,
-    circle: props.circleImage as unknown as Prop<boolean>,
-    rounded: props.roundedImage as unknown as Prop<boolean>,
-    size: props.imageSize as Prop<number>,
+    imgSrc: item.get(schema.imageField!) as string,
+    circle: props.circleImage,
+    rounded: props.roundedImage,
+    size: props.imageSize,
   });
 }
 
 function createListTileContent(
   slots: Slots,
   schema: TDataListSchema,
-  item: IBsModel,
+  item: TBsModel,
   index: number
 ): VNode {
   return h(BsListTileContent, null, {
@@ -380,10 +371,10 @@ function createListTileContent(
 }
 
 function findSelectedItems(
-  localValue: Ref<string | number | string[] | number[] | undefined | null>,
+  localValue: Ref<Numberish | Numberish[] | undefined | null>,
   fieldName: string,
   dataStore?: IBsStore | IArrayStore
-): IBsModel[] {
+): TBsModel[] {
   return (
     dataStore?.dataItems.filter((it) => {
       if (Array.isArray(localValue.value)) {
@@ -396,10 +387,10 @@ function findSelectedItems(
 }
 
 function cloneDataItems(
-  dataSource: IBsStore | IArrayStore | AbstractStore,
-  selectedItems: ShallowRef<IBsModel[]>,
+  dataSource: IBsStore | IArrayStore,
+  selectedItems: ShallowRef<TBsModel[]>,
   fieldName: string
-): IBsModel[] {
+): TBsModel[] {
   return dataSource.dataItems.map((it) => {
     const tmpObj = dataSource.createModel(it.toObject());
     if (!tmpObj.get('_oid')) {
@@ -416,15 +407,15 @@ function cloneDataItems(
 
 export function useRenderListbox(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TListboxOptionProps>,
   schema: TDataListSchema,
-  cacheItems: ShallowRef<IBsModel[]>,
-  selectedItems: ShallowRef<IBsModel[]>,
+  cacheItems: ShallowRef<TBsModel[]>,
+  selectedItems: ShallowRef<TBsModel[]>,
   listviewStyles: TRecord,
   showSearchbox: Ref<boolean>,
   searchboxRef: Ref<HTMLElement | null>,
-  localValue: Ref<string | number | string[] | number[] | undefined | null>,
+  localValue: Ref<Numberish | Numberish[] | undefined | null>,
   searchRef: Ref<string | undefined>
 ): VNode {
   return h(
@@ -462,13 +453,13 @@ export function useRenderListbox(
 }
 
 export function useRegisterListboxWatchers(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TListboxOptionProps>,
   dataSource: IBsStore | IArrayStore | undefined,
   schema: TDataListSchema,
-  cachedItems: ShallowRef<IBsModel[]>,
-  selectedItems: ShallowRef<IBsModel[]>,
-  localValue: Ref<string | number | string[] | number[] | undefined | null>,
+  cachedItems: ShallowRef<TBsModel[]>,
+  selectedItems: ShallowRef<TBsModel[]>,
+  localValue: Ref<Numberish | Numberish[] | undefined | null>,
   listviewStyles: TRecord,
   showSearchbox: Ref<boolean>,
   searchboxRef: Ref<HTMLElement | null>,
@@ -478,7 +469,7 @@ export function useRegisterListboxWatchers(
   const minItems = parseInt(props.minSearchLength as string, 10);
 
   if (dataSource) {
-    const listener: LoadedCallbackFn = (data: IBsModel[]) => {
+    const listener: LoadedCallbackFn<TRecord> = (data: TBsModel[]) => {
       if (data.length === 0) {
         cachedItems.value = [];
       } else {

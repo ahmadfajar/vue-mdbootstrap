@@ -1,6 +1,20 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { cardMediaProps } from '@/components/Card/mixins/cardProps.ts';
 import type { TBsCardMedia, TCardMediaOptionProps } from '@/components/Card/types';
 import { cssPrefix, useWrapSlot } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import { createCommentVNode, createTextVNode, defineComponent, h, toDisplayString } from 'vue';
 
 export default defineComponent<TBsCardMedia>({
@@ -46,4 +60,37 @@ export default defineComponent<TBsCardMedia>({
         slots.default && slots.default(),
       ]);
   },
-});
+}) as DefineComponent<
+  TBsCardMedia,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TCardMediaOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsCardMedia>,
+  SlotsType<CardMediaSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare interface CardMediaSlots extends VoidDefaultSlots {
+  /**
+   * The default slot used to place the CardMedia's title.
+   */
+  title?: () => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place the CardMedia's subtitle.
+   */
+  subtitle?: () => VNode[] | VNode;
+}

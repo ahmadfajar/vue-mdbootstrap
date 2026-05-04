@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useComputeDisplayStyle,
   useNavigateNextSlide,
@@ -6,16 +7,28 @@ import {
   useSetActiveLightboxItem,
 } from '@/components/Modal/mixins/lightboxApi.ts';
 import { lightboxProps } from '@/components/Modal/mixins/lightboxProps.ts';
-import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
+import type { TBsLightbox, TLightboxOptionProps, TLightboxSource } from '@/components/Modal/types';
+import { PopupManager } from '@/components/Popover/mixins/PopupManager.ts';
 import { EventListener } from '@/mixins/DomHelper.ts';
+import type { IEventListenerResult, IHTMLElement, TRecord } from '@/types';
 import type {
-  IEventListenerResult,
-  IHTMLElement,
-  TBsLightbox,
-  TLightboxOptionProps,
-  TLightboxSource,
-} from '@/types';
-import type { ComponentInternalInstance } from 'vue';
+  ClosableEventProps,
+  ClosableEventPublic,
+  UpdateOpenEventProps,
+  UpdateOpenEventPublic,
+} from '@/types/internals.ts';
+import type {
+  ComponentInternalInstance,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import {
   computed,
   defineComponent,
@@ -140,4 +153,63 @@ export default defineComponent<TBsLightbox>({
         transition
       );
   },
-});
+}) as DefineComponent<
+  TBsLightbox,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  LightboxEventProps,
+  string,
+  PublicProps,
+  Readonly<TLightboxOptionProps> & Readonly<LightboxEventPublic>,
+  ExtractDefaultPropTypes<TBsLightbox>,
+  SlotsType<LightboxSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare interface LightboxSlots {
+  /**
+   * The default slot used to place the dropdown-menu content.
+   */
+  menubar?: () => VNode[];
+}
+
+declare type LightboxEventProps = ClosableEventProps &
+  UpdateOpenEventProps & {
+    change?: (value: TLightboxSource, index: number) => void;
+    'exec-delete'?: (target: TLightboxSource) => void;
+    'exec-download'?: (target: TLightboxSource) => void;
+    'exec-info'?: (target: TLightboxSource) => void;
+    'exec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
+    'exec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
+    'exec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
+    'exec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
+  };
+
+declare interface LightboxEventPublic extends ClosableEventPublic, UpdateOpenEventPublic {
+  onChange?: (value: TLightboxSource, index: number) => void;
+  onExecDelete?: (target: TLightboxSource) => void;
+  onExecDownload?: (target: TLightboxSource) => void;
+  onExecInfo?: (target: TLightboxSource) => void;
+  onExecRotateLeft?: (target: TLightboxSource, rotate: number) => void;
+  onExecRotateRight?: (target: TLightboxSource, rotate: number) => void;
+  onExecZoomin?: (target: TLightboxSource, zoom: number) => void;
+  onExecZoomout?: (target: TLightboxSource, zoom: number) => void;
+  '@change'?: (value: TLightboxSource, index: number) => void;
+  '@exec-delete'?: (target: TLightboxSource) => void;
+  '@exec-download'?: (target: TLightboxSource) => void;
+  '@exec-info'?: (target: TLightboxSource) => void;
+  '@exec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
+  '@exec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
+  '@exec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
+  '@exec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
+}

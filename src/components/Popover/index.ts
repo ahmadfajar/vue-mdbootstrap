@@ -3,8 +3,10 @@ import BsPopover from './BsPopover';
 
 const BsPopoverPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsPopover.name as string, BsPopover);
+    app.component('BsPopover', BsPopover);
   },
 };
 
+export * from '@/components/Popover/mixins/PopupManager';
+export type * from '@/components/Popover/types';
 export { BsPopover, BsPopoverPlugin };

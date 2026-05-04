@@ -64,7 +64,8 @@ function unmounted(el: IBindingElement): void {
   }
 }
 
-export const ClickOutside: Directive = {
-  mounted,
-  unmounted,
-};
+export const ClickOutside: Directive<HTMLElement, TDirectiveBinding | VoidFunction, string, never> =
+  {
+    mounted,
+    unmounted,
+  };

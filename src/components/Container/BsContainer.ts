@@ -1,3 +1,9 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import type {
+  TAppContainerOptionProps,
+  TBsContainer,
+  TContainerOptionProps,
+} from '@/components/Container/types';
 import { Resize } from '@/directives';
 import {
   cssPrefix,
@@ -6,14 +12,19 @@ import {
   useVueMdbService,
 } from '@/mixins/CommonApi.ts';
 import { booleanProp, tagProp } from '@/mixins/CommonProps.ts';
-import type {
-  TAppContainerOptionProps,
-  TBsContainer,
-  TContainerOptionProps,
-  TRecord,
-  TVueMdb,
-} from '@/types';
+import type { TRecord, TVueMdb } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { computed, defineComponent, h, onMounted, ref, withDirectives } from 'vue';
 
 export default defineComponent<TBsContainer>({
@@ -34,7 +45,7 @@ export default defineComponent<TBsContainer>({
     const styles = computed((): TRecord | undefined => {
       if (thisProps.app && appId.value) {
         if (vueMdb.value) {
-          const { appbar, sideDrawer } = vueMdb.value.app[appId.value]!;
+          const { appbar, sideDrawer } = vueMdb.value.app[appId.value];
 
           return {
             paddingRight:
@@ -100,4 +111,44 @@ export default defineComponent<TBsContainer>({
         [[Resize, resizeHandler]]
       );
   },
-});
+}) as DefineComponent<
+  TBsContainer,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ContainerEventProps,
+  string,
+  PublicProps,
+  Readonly<TContainerOptionProps> & Readonly<ContainerEventPublic>,
+  ExtractDefaultPropTypes<TBsContainer>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type ContainerEventProps = {
+  /**
+   * Fired when this component size is changed.
+   */
+  resize?: (target: HTMLElement) => void;
+};
+
+declare interface ContainerEventPublic {
+  /**
+   * Fired when this component size is changed.
+   */
+  onResize?: (target: HTMLElement) => void;
+
+  /**
+   * Fired when this component size is changed.
+   */
+  '@resize'?: (target: HTMLElement) => void;
+}

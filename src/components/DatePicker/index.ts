@@ -4,9 +4,10 @@ import BsDateTimeField from './BsDateTimeField.ts';
 
 const BsDatePickerPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsDatePicker.name as string, BsDatePicker);
-    app.component(BsDateTimeField.name as string, BsDateTimeField);
+    app.component('BsDatePicker', BsDatePicker);
+    app.component('BsDateTimeField', BsDateTimeField);
   },
 };
 
+export type * from '@/components/DatePicker/types';
 export { BsDatePicker, BsDatePickerPlugin, BsDateTimeField };

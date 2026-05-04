@@ -1,25 +1,30 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.json",
-  "include": [
-    "src/types/*.d.ts",
-    "src/**/types/*.d.ts",
-    "src/components/Popover/mixins/PopupManager.ts",
-    "src/utils/colorUtils.ts",
-    "src/mixins/CommonApi.ts",
-    "src/utils/StringHelper.ts",
-    "src/model/index.ts",
-    "src/directives/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "src/**/__tests__/*"
-  ],
   "compilerOptions": {
-    "outDir": "./types-temp/",
-    "declaration": true,
-    "emitDeclarationOnly": true,
-    "removeComments": false,
+    "target": "ES2024",
+    "module": "ESNext",
+    "lib": [
+      "ES2024",
+      "DOM",
+      "DOM.Iterable",
+      "ESNext.Array",
+      "ESNext.Collection",
+      "ESNext.Promise",
+      "ESNext.Symbol"
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "outDir": "./dist/",
+    "skipLibCheck": true,
     "esModuleInterop": true,
+    "moduleResolution": "bundler",
+    // "moduleDetection": "force",
+    "allowImportingTsExtensions": true,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "removeComments": false,
     "sourceMap": false
-  }
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "src/**/__tests__/*"]
 }

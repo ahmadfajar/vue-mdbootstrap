@@ -5,19 +5,12 @@ import {
   useOnFieldValueCleared,
   useOnFieldValueUpdated,
 } from '@/components/Field/mixins/textFieldEventApi.ts';
+import type { TSearchFieldOptionProps } from '@/components/Field/types';
 import { BsPopover } from '@/components/Popover';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import type {
-  TBsButton,
-  TButtonMode,
-  TButtonSize,
-  TContextColor,
-  TPopoverPosition,
-  TRecord,
-  TSearchFieldOptionProps,
-} from '@/types';
+import type { MaybeString, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { ComputedRef, EmitFn, Prop, Ref, Slots, VNode } from 'vue';
+import type { ComputedRef, EmitFn, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h, mergeProps, vModelText, withDirectives } from 'vue';
 
 export function useSearchFieldClasses(
@@ -51,14 +44,11 @@ declare interface SearchEventEmitter {
   open: () => void;
   blur: (target: Event) => void;
   focus: (target: Event) => void;
-  search: (value: string | null | undefined) => void;
-  'update:model-value': (value: string | null | undefined) => void;
+  search: (value: MaybeString) => void;
+  'update:model-value': (value: MaybeString) => void;
 }
 
-function dispatchSearch(
-  emit: EmitFn<SearchEventEmitter>,
-  localValue: Ref<string | undefined | null>
-) {
+function dispatchSearch(emit: EmitFn<SearchEventEmitter>, localValue: Ref<MaybeString>) {
   if (!Helper.isEmpty(localValue.value)) {
     emit('search', localValue.value);
   } else {
@@ -73,7 +63,7 @@ export function useRenderSearchField(
   attrs: TRecord,
   cssClasses: ComputedRef<TRecord>,
   activator: Ref<HTMLElement | null>,
-  localValue: Ref<string | undefined | null>,
+  localValue: Ref<MaybeString>,
   isFocused: Ref<boolean>,
   isPopoverOpen: Ref<boolean>
 ): VNode {
@@ -97,11 +87,11 @@ export function useRenderSearchField(
         ),
         [
           h(BsButton, {
-            color: (props.darkMode ? 'light' : 'secondary') as Prop<TContextColor>,
-            icon: 'search' as Prop<string>,
-            mode: 'icon' as Prop<TButtonMode>,
-            size: 'sm' as Prop<TButtonSize>,
-            flat: true as unknown as Prop<boolean>,
+            color: props.darkMode ? 'light' : 'secondary',
+            icon: 'search',
+            mode: 'icon',
+            size: 'sm',
+            flat: true,
             onClick: () => {
               !props.readonly && !props.disabled && dispatchSearch(emit, localValue);
             },
@@ -142,12 +132,12 @@ export function useRenderSearchField(
             )
           ),
           !Helper.isEmpty(localValue.value)
-            ? h<TBsButton>(BsButton, {
-                color: (props.darkMode ? 'light' : 'secondary') as Prop<TContextColor>,
-                icon: 'clear' as Prop<string>,
-                mode: 'icon' as Prop<TButtonMode>,
-                size: 'sm' as Prop<TButtonSize>,
-                flat: true as unknown as Prop<boolean>,
+            ? h(BsButton, {
+                color: props.darkMode ? 'light' : 'secondary',
+                icon: 'clear',
+                mode: 'icon',
+                size: 'sm',
+                flat: true,
                 onClick: async () => {
                   if (!props.disabled && !props.readonly) {
                     await useOnFieldValueCleared(emit, localValue);
@@ -156,18 +146,17 @@ export function useRenderSearchField(
               })
             : '',
           props.advanceSearch
-            ? h<TBsButton>(BsButton, {
-                color: (props.darkMode ? 'light' : 'secondary') as Prop<TContextColor>,
-                icon: 'arrow_drop_down' as Prop<string>,
-                mode: 'icon' as Prop<TButtonMode>,
-                size: 'sm' as Prop<TButtonSize>,
-                flat: true as unknown as Prop<boolean>,
+            ? h(BsButton, {
+                color: props.darkMode ? 'light' : 'secondary',
+                icon: 'arrow_drop_down',
+                mode: 'icon',
+                size: 'sm',
+                flat: true,
                 onClick: () => {
                   if (!props.readonly && !props.disabled) {
                     const open = isPopoverOpen.value;
                     isPopoverOpen.value = !open;
-                    // @ts-expect-error: Dispatch emit with arg expression
-                    emit(isPopoverOpen.value ? 'open' : 'close');
+                    isPopoverOpen.value ? emit('open') : emit('close');
                   }
                 },
               })
@@ -178,20 +167,19 @@ export function useRenderSearchField(
         ? h(
             BsPopover,
             {
-              space: 2 as Prop<number>,
-              color: null,
+              space: 2,
+              color: undefined,
               class: props.popoverCls,
-              placement: props.popoverPlacement as Prop<TPopoverPosition>,
-              transition: props.popoverTransition as Prop<string>,
-              open: isPopoverOpen.value as unknown as Prop<boolean>,
-              trigger: activator.value as Prop<HTMLElement>,
+              placement: props.popoverPlacement,
+              transition: props.popoverTransition,
+              open: isPopoverOpen.value,
+              trigger: activator.value,
               style: {
                 minWidth: Helper.cssUnit(popoverWidth(props, activator)),
               },
               'onUpdate:open': (value: boolean) => {
                 isPopoverOpen.value = value;
-                // @ts-expect-error: Dispatch emit with arg expression
-                emit(value ? 'open' : 'close');
+                value ? emit('open') : emit('close');
               },
             },
             {

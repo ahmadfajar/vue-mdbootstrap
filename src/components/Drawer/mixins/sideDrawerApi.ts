@@ -1,5 +1,7 @@
 import { BsOverlay } from '@/components/Animation';
-import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
+import type { TAppContainerOptionProps } from '@/components/Container';
+import type { TSideDrawerOptionProps, TSideDrawerPosition } from '@/components/Drawer/types';
+import { PopupManager } from '@/components/Popover/mixins/PopupManager.ts';
 import { Resize } from '@/directives';
 import {
   cssPrefix,
@@ -7,17 +9,22 @@ import {
   useVueMdbService,
   useWrapSlotDefault,
 } from '@/mixins/CommonApi.ts';
-import type {
-  TAppContainerOptionProps,
-  TEmitFn,
-  TRecord,
-  TSideDrawerOptionProps,
-  TSideDrawerPosition,
-  TVueMdb,
-} from '@/types';
+import type { TRecord, TVueMdb } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
-import { h, mergeProps, nextTick, Teleport, withDirectives } from 'vue';
+import {
+  type ComputedRef,
+  type EmitFn,
+  h,
+  mergeProps,
+  nextTick,
+  onMounted,
+  type Ref,
+  type Slots,
+  Teleport,
+  type VNode,
+  watch,
+  withDirectives,
+} from 'vue';
 
 export function useSideDrawerStyles(
   props: Readonly<TSideDrawerOptionProps>,
@@ -84,7 +91,7 @@ export function useSideDrawerStyles(
   return properties;
 }
 
-export function useUpdateSideDrawerConfig(
+function updateSideDrawerConfig(
   props: Readonly<TSideDrawerOptionProps>,
   vueMdb: TVueMdb,
   appId: string,
@@ -109,7 +116,7 @@ export function useUpdateSideDrawerConfig(
   }
 }
 
-export async function useOnMountedSideDrawer(
+async function mountSideDrawer(
   vueMdb: Ref<TVueMdb | undefined>,
   appId: Ref<string | undefined>,
   zIndex: Ref<number>
@@ -154,21 +161,60 @@ export async function useOnMountedSideDrawer(
   }
 }
 
+export function useSetupSideDrawer(
+  props: Readonly<TSideDrawerOptionProps>,
+  vueMdb: Ref<TVueMdb | undefined>,
+  appId: Ref<string | undefined>,
+  isMobile: Ref<boolean>,
+  isOpen: Ref<boolean>,
+  clipHeight: Ref<number>,
+  zIndex: Ref<number>
+): void {
+  watch(
+    () => props.open as boolean,
+    (value) => {
+      isOpen.value = value;
+      if (appId.value && vueMdb.value) {
+        updateSideDrawerConfig(props, vueMdb.value, appId.value, isMobile.value, value);
+      }
+    }
+  );
+
+  onMounted(async () => {
+    await mountSideDrawer(vueMdb, appId, zIndex);
+    await nextTick().then(() => {
+      if (appId.value && vueMdb.value) {
+        if (props.clipped) {
+          clipHeight.value = vueMdb.value.app[appId.value]?.appbar.height || 0;
+        }
+
+        updateSideDrawerConfig(
+          props,
+          vueMdb.value,
+          appId.value,
+          isMobile.value,
+          props.open as boolean
+        );
+      }
+    });
+  });
+}
+
 function renderOverlay(
   props: Readonly<TSideDrawerOptionProps>,
   zIndex: Ref<number>,
   isOpen: Ref<boolean>,
-  emit: TEmitFn
+  emit: EmitFn
 ): VNode {
   if (isOpen.value) {
     PopupManager.preventScrolling();
   }
 
   return h(BsOverlay, {
-    color: props.overlayColor as Prop<string | undefined>,
-    fixed: true as unknown as Prop<boolean>,
-    show: isOpen.value as unknown as Prop<boolean>,
-    zIndex: zIndex.value as Prop<number>,
+    color: props.overlayColor,
+    fixed: true,
+    show: isOpen.value,
+    zIndex: zIndex.value,
     onClick: () => {
       PopupManager.allowScrolling();
       isOpen.value = false;
@@ -228,7 +274,7 @@ function renderSideDrawer(
 
 export function useRenderSideDrawer(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TSideDrawerOptionProps>,
   attrs: TRecord,
   styles: ComputedRef<TRecord>,

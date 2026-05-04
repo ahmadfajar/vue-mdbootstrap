@@ -13,8 +13,9 @@ import {
   useOnTextFieldNodeMounted,
 } from '@/components/Field/mixins/textFieldEventApi.ts';
 import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
-import type { TBsChipField, TChipFieldOptionProps, TIconVariant, TRecord } from '@/types';
-import type { ComputedRef, EmitFn, ExtractPropTypes, Prop, Ref, Slots, VNode } from 'vue';
+import type { TChipFieldOptionProps } from '@/components/Field/types';
+import type { TRecord } from '@/types';
+import type { ComputedRef, EmitFn, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, Fragment, h, nextTick, toDisplayString } from 'vue';
 
 declare interface ChipEventEmitter {
@@ -84,15 +85,13 @@ function createFieldInput(
 }
 
 function createFieldChips(
-  props: Readonly<ExtractPropTypes<TBsChipField>>,
+  props: Readonly<TChipFieldOptionProps>,
   emit: EmitFn<ChipEventEmitter>,
   localValue: Ref<string[]>
 ): VNode {
   if (localValue.value.length === 0) {
     return createCommentVNode(' v-if-chips ');
   }
-
-  const thisProps = props as Readonly<TChipFieldOptionProps>;
 
   return h(
     Fragment,
@@ -107,10 +106,9 @@ function createFieldChips(
           readonly: props.readonly,
           pill: props.chipPill,
           outlined: props.chipOutlined,
-          dismissible: (thisProps.chipDeletable &&
-            !thisProps.readonly &&
-            !thisProps.disabled) as unknown as Prop<boolean>,
-          onClose: async () => {
+          dismissible: props.chipDeletable && !props.readonly && !props.disabled,
+          // eslint-disable-next-line @typescript-eslint/no-misused-promises
+          onClose: async (): Promise<void> => {
             emit('delete-item', label);
             await nextTick().then(() => {
               const result = localValue.value.filter((v) => v !== label);
@@ -134,7 +132,7 @@ function createFieldChips(
 export function useRenderChipField(
   slots: Slots,
   emit: EmitFn<ChipEventEmitter>,
-  props: Readonly<ExtractPropTypes<TBsChipField>>,
+  props: Readonly<TChipFieldOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
   inputValue: Ref<string>,
@@ -148,7 +146,6 @@ export function useRenderChipField(
   hasError: ComputedRef<boolean>,
   errorItems: ComputedRef<string[]>
 ): VNode {
-  const thisProps = props as Readonly<TChipFieldOptionProps>;
   const valueAsArray = Array.isArray(props.modelValue);
   const iconSize = 24;
 
@@ -157,7 +154,7 @@ export function useRenderChipField(
     iconSize,
     'chip-field',
     wrapperCss,
-    thisProps,
+    props,
     h(
       'div',
       {
@@ -167,26 +164,26 @@ export function useRenderChipField(
         useCreateFieldInnerWrapper(
           slots,
           'chip-field',
-          thisProps,
+          props,
           [
             createFieldChips(props, emit, localValue),
-            createFieldInput(thisProps, emit, inputValue, localValue, isFocused, autocomplete),
+            createFieldInput(props, emit, inputValue, localValue, isFocused, autocomplete),
           ],
           iconSize,
-          thisProps.appendIcon,
-          thisProps.prependIcon,
+          props.appendIcon,
+          props.prependIcon,
           useCreateValidationIcon(
-            thisProps.actionIconVariant as TIconVariant,
+            props.actionIconVariant!,
             hasValidated.value,
             hasError.value,
-            thisProps.validationIcon as boolean,
+            props.validationIcon as boolean,
             iconSize
           ),
           useCreateFieldActionIcon(
             'chip-field',
-            thisProps,
+            props,
             showClearButton.value,
-            thisProps.actionIconVariant as TIconVariant,
+            props.actionIconVariant!,
             iconSize,
             async () => {
               inputValue.value = '';
@@ -198,7 +195,7 @@ export function useRenderChipField(
         ),
         useRenderFieldFeedback(
           slots,
-          thisProps,
+          props,
           showHelpText.value,
           showValidationError.value,
           hasError.value,
@@ -206,6 +203,6 @@ export function useRenderChipField(
         ),
       ]
     ),
-    (node: VNode) => useOnTextFieldNodeMounted(thisProps, node)
+    (node: VNode) => useOnTextFieldNodeMounted(props, node)
   );
 }

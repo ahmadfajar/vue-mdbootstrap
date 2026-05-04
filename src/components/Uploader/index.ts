@@ -3,8 +3,9 @@ import BsImageUploader from './BsImageUploader.ts';
 
 const BsUploaderPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsImageUploader.name as string, BsImageUploader);
+    app.component('BsImageUploader', BsImageUploader);
   },
 };
 
+export type * from '@/components/Uploader/types';
 export { BsImageUploader, BsUploaderPlugin };

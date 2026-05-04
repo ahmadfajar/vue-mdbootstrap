@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useAlertClassNames,
   useAlertColor,
@@ -6,7 +7,25 @@ import {
 } from '@/components/Alert/mixins/alertApi.ts';
 import { alertProps } from '@/components/Alert/mixins/alertProps.ts';
 import type { TAlertOptionProps, TBsAlert } from '@/components/Alert/types';
-import type { TBooleanRecord, TContextColor } from '@/types';
+import type { TBooleanRecord, TContextColor, TRecord } from '@/types';
+import type {
+  ClosableVoidEventProps,
+  ClosableVoidEventPublic,
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 
 export default defineComponent<TBsAlert>({
@@ -39,4 +58,37 @@ export default defineComponent<TBsAlert>({
     return () =>
       useRenderAlert(slots, thisProps, show, classNames, alertColor, alertIcon, dismissedAlert);
   },
-});
+}) as DefineComponent<
+  TBsAlert,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  AlertEventProps,
+  string,
+  PublicProps,
+  Readonly<TAlertOptionProps> & Readonly<AlertEventPublic>,
+  ExtractDefaultPropTypes<TBsAlert>,
+  SlotsType<AlertSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type AlertEventProps = ClosableVoidEventProps & UpdateModelValueEventProps<boolean>;
+
+declare interface AlertEventPublic
+  extends ClosableVoidEventPublic, UpdateModelValueEventPublic<boolean> {}
+
+declare interface AlertSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the custom icon.
+   */
+  icon?: () => VNode[] | VNode;
+}

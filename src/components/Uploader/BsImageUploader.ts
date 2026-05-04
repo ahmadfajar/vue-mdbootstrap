@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useRenderImageUploader,
   useSetupImageUploader,
@@ -7,6 +8,7 @@ import type {
   TCustomText,
   TFileBag,
   TImageUploaderOptionProps,
+  TUploadError,
 } from '@/components/Uploader/types';
 import { useGenerateId } from '@/mixins/CommonApi.ts';
 import {
@@ -16,7 +18,18 @@ import {
   stringOrNumberProp,
   stringProp,
 } from '@/mixins/CommonProps.ts';
-import { computed, defineComponent, type Prop, reactive, ref } from 'vue';
+import type { TRecord } from '@/types';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  Prop,
+  PublicProps,
+} from 'vue';
+import { computed, defineComponent, reactive, ref } from 'vue';
 
 export default defineComponent<TBsImageUploader>({
   name: 'BsImageUploader',
@@ -77,4 +90,74 @@ export default defineComponent<TBsImageUploader>({
         draggingOver
       );
   },
-});
+}) as DefineComponent<
+  TBsImageUploader,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ImageUploaderEventProps,
+  string,
+  PublicProps,
+  Readonly<TImageUploaderOptionProps> & Readonly<ImageUploaderEventPublic>,
+  ExtractDefaultPropTypes<TBsImageUploader>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type ImageUploaderEventProps = {
+  /**
+   * Fired when the image on this component is changed.
+   */
+  change?: (value: File) => void;
+
+  /**
+   * Fired when the image on this component is cleared or removed.
+   */
+  clear?: () => void;
+
+  /**
+   * Fired when error is occurred while changing the image.
+   */
+  error?: (error: TUploadError) => void;
+};
+
+declare interface ImageUploaderEventPublic {
+  /**
+   * Fired when the image on this component is changed.
+   */
+  onChange?: (value: File) => void;
+
+  /**
+   * Fired when the image on this component is cleared or removed.
+   */
+  onClear?: () => void;
+
+  /**
+   * Fired when error is occurred while changing the image
+   */
+  onError?: (error: TUploadError) => void;
+
+  /**
+   * Fired when the image on this component is changed.
+   */
+  '@change'?: (value: File) => void;
+
+  /**
+   * Fired when the image on this component is cleared or removed.
+   */
+  '@clear'?: () => void;
+
+  /**
+   * Fired when error is occurred while changing the image
+   */
+  '@error'?: (error: TUploadError) => void;
+}

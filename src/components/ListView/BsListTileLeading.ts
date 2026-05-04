@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { BsAvatar } from '@/components/Avatar';
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
 import { iconBaseProps, imageBaseProps } from '@/components/Avatar/mixins/avatarProps.ts';
@@ -6,9 +7,19 @@ import { useGetCalcSize, useSizeStyles } from '@/components/Icon/mixins/iconApi.
 import type { TBsListTileLeading, TListTileLeadingOptionProps } from '@/components/ListView/types';
 import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
-import type { Numberish } from '@/types';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
-import type { Prop } from 'vue';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { computed, createCommentVNode, defineComponent, h } from 'vue';
 
 export default defineComponent<TBsListTileLeading>({
@@ -49,20 +60,42 @@ export default defineComponent<TBsListTileLeading>({
           { key: Helper.uuid(true) },
           !Helper.isEmpty(thisProps.imgSrc)
             ? h(BsAvatar, {
-                imgSrc: props.imgSrc,
-                size: props.size,
-                rounded: props.rounded,
-                circle: props.circle,
+                imgSrc: thisProps.imgSrc,
+                size: thisProps.size,
+                rounded: thisProps.rounded,
+                circle: thisProps.circle,
               })
             : !Helper.isEmpty(thisProps.icon)
               ? h(BsIcon, {
-                  size: (!thisProps.size || useGetCalcSize(thisProps) === 48
-                    ? 24
-                    : useGetCalcSize(thisProps)) as Prop<Numberish>,
+                  size:
+                    !thisProps.size || useGetCalcSize(thisProps) === 48
+                      ? 24
+                      : useGetCalcSize(thisProps),
                   ...useCreateIconProps(thisProps),
                 })
               : createCommentVNode(' v-if-BsIcon ')
         )
       );
   },
-});
+}) as DefineComponent<
+  TBsListTileLeading,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TListTileLeadingOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsListTileLeading>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

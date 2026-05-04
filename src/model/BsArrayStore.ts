@@ -1,15 +1,89 @@
-import { AbstractStore } from '@/model';
-import type {
-  IArrayStore,
-  IBsModel,
-  TDataStoreConfig,
-  TSortDirection,
-  TSortOption,
-} from '@/model/types';
+import type { DataStoreConfig } from '@/model/AbstractStore.ts';
+import { AbstractStore } from '@/model/AbstractStore.ts';
+import type { PlainModel, TBsModel } from '@/model/BsModel.ts';
+import type { SortDirection, SortOption } from '@/model/types';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { AxiosResponse } from 'axios';
-import { meanBy, sumBy } from 'lodash-es';
+import meanBy from 'lodash-es/meanBy';
+import sumBy from 'lodash-es/sumBy';
+
+export declare interface IArrayStore<T extends TRecord = TRecord> extends AbstractStore<T> {
+  /**
+   * Returns dataset from the active page.
+   *
+   * If a filter or sorter has been applied before,
+   * then the returned dataset will also be affected by it.
+   */
+  get dataItems(): TBsModel<T>[];
+
+  /**
+   * Calculate means or average value based on the given field.
+   *
+   * @param field The field name of the dataset to calculate
+   */
+  aggregateAvg(field: string): number;
+
+  /**
+   * Count number of items in the internal dataset specified by the given criteria.
+   *
+   * @param field The grouping field name criteria
+   * @param value  The grouping value criteria
+   */
+  aggregateCountBy(field: string, value: unknown): number;
+
+  /**
+   * Calculate the SUM or total value based on the given field.
+   *
+   * @param field The field name to be used when calculating value
+   */
+  aggregateSum(field: string): number;
+
+  /**
+   * Append an item to the internal dataset and sorted if needed.
+   *
+   * @param item    Data to append to the Store
+   * @param sorted  Sort dataset after appended
+   */
+  append<P extends PlainModel<T>>(item: P, sorted?: boolean): void;
+
+  /**
+   * Replace the dataset with new data.
+   *
+   * @param data   The new data to be assigned
+   * @param silent Append the data silently and don't trigger data transformer
+   */
+  assignData(data: unknown, silent?: boolean): void;
+
+  /**
+   * Load and replace internal dataset with the given data.
+   *
+   * @param data The new data to replace the internal dataset.
+   */
+  load(data?: unknown): Promise<TBsModel<T>[]>;
+
+  /**
+   * Sorts the internal dataset with the given criteria and returns
+   * the reference of the internal dataset.
+   *
+   * @param options    The field for sorting or `TSortOption` objects
+   * @param direction  The sort direction
+   * @returns The sorted dataset.
+   *
+   * @example
+   * // sort by a single field
+   * const results = await myStore.sort('myField', 'asc');
+   *
+   * // sorting by multiple fields
+   * const results = await myStore.sort([
+   *  {property: 'age', direction: 'desc'},
+   *  {property: 'name', direction: 'asc'}
+   * ]);
+   */
+  sort(
+    options: string | string[] | SortOption | SortOption[],
+    direction?: SortDirection
+  ): Promise<TBsModel<T>[]>;
+}
 
 /**
  * Data store class to work with collection of entity objects locally.
@@ -31,10 +105,12 @@ import { meanBy, sumBy } from 'lodash-es';
  * );
  *
  * @author Ahmad Fajar
- * @since  13/03/2019 modified: 19/10/2025 05:00
+ * @since  13/03/2019 modified: 30/04/2026 09:29
  */
-// @ts-expect-error: export class BsArrayStore
-export class BsArrayStore extends AbstractStore implements IArrayStore {
+export class BsArrayStore<T extends TRecord = TRecord>
+  extends AbstractStore<T>
+  implements IArrayStore<T>
+{
   /**
    * Construct new {@link BsArrayStore} object instance.
    *
@@ -57,7 +133,7 @@ export class BsArrayStore extends AbstractStore implements IArrayStore {
    *   }
    * );
    */
-  constructor(data: unknown[], config: TDataStoreConfig = {}) {
+  constructor(data: unknown[], config: DataStoreConfig = {}) {
     super(config);
 
     if (Array.isArray(data) && data.length > 0) {
@@ -65,20 +141,23 @@ export class BsArrayStore extends AbstractStore implements IArrayStore {
     }
   }
 
-  get dataItems(): IBsModel[] {
+  get dataItems(): TBsModel<T>[] {
     const page =
       this.currentPage > 0 && this.currentPage <= this.totalPages ? this.currentPage - 1 : 0;
     const offset = this.pageSize > 0 ? page * this.pageSize : 0;
-    let result: IBsModel[];
+    let result: TBsModel<T>[];
 
     if (this.filters.length > 0) {
       this._filteredItems = this.localFilter();
       result = this._filteredItems.slice(
         offset,
         this.pageSize > 0 ? offset + this.pageSize : undefined
-      );
+      ) as TBsModel<T>[];
     } else {
-      result = this._items.slice(offset, this.pageSize > 0 ? offset + this.pageSize : undefined);
+      result = this._items.slice(
+        offset,
+        this.pageSize > 0 ? offset + this.pageSize : undefined
+      ) as TBsModel<T>[];
     }
 
     this._state.length = result.length;
@@ -101,7 +180,7 @@ export class BsArrayStore extends AbstractStore implements IArrayStore {
     return sumBy(this._items, field);
   }
 
-  append(item: TRecord, sorted = false): void {
+  append<P extends PlainModel<T>>(item: P, sorted = false): void {
     if (!Helper.isEmpty(item)) {
       this._append(item, false);
 
@@ -119,7 +198,7 @@ export class BsArrayStore extends AbstractStore implements IArrayStore {
     this._onLoadingSuccess();
   }
 
-  load(data?: unknown): Promise<IBsModel[] | AxiosResponse> {
+  load(data?: unknown): Promise<TBsModel<T>[]> {
     this._state.loading = true;
 
     return new Promise((resolve) => {
@@ -132,17 +211,18 @@ export class BsArrayStore extends AbstractStore implements IArrayStore {
         this._onLoadingSuccess();
       }
 
-      resolve(this._items);
+      resolve(this._items as TBsModel<T>[]);
     });
   }
 
   sort(
-    options: string | string[] | TSortOption | TSortOption[],
-    direction: TSortDirection = 'asc'
-  ): IBsModel[] {
-    this.createSorters(options, direction, true);
-    this._items = this.localSort();
-
-    return this._items;
+    options: string | string[] | SortOption | SortOption[],
+    direction: SortDirection = 'asc'
+  ): Promise<TBsModel<T>[]> {
+    return new Promise((resolve) => {
+      this.createSorters(options, direction, true);
+      this._items = this.localSort();
+      resolve(this._items as TBsModel<T>[]);
+    });
   }
 }

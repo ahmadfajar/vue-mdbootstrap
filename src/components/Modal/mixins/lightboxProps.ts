@@ -1,10 +1,14 @@
+import type {
+  TLightboxSource,
+  TLightboxToolbarItems,
+  TTransitionMode,
+} from '@/components/Modal/types';
 import {
   booleanProp,
   booleanTrueProp,
   objectProp,
   stringOrArrayProp,
 } from '@/mixins/CommonProps.ts';
-import type { TLightboxSource, TLightboxToolbarItems, TTransitionMode } from '@/types';
 import type { Prop } from 'vue';
 
 export const lightboxProps = {

@@ -1,5 +1,4 @@
 import type {
-  INotificationProvider,
   TNotificationOption,
   TNotificationPosition,
   TNotificationVariant,
@@ -7,7 +6,79 @@ import type {
 import Helper from '@/utils/Helper.ts';
 import { type Reactive, reactive } from 'vue';
 
-export default class NotificationProvider implements INotificationProvider {
+export declare interface INotificationProvider {
+  /**
+   * Get the notification data store.
+   */
+  get collection(): Map<TNotificationPosition, TNotificationOption[]>;
+
+  /**
+   * Create and display new Notification.
+   *
+   * @param data The notification to be added.
+   */
+  add(data: string | TNotificationOption): TNotificationOption | null;
+
+  /**
+   * Close all notification and remove from the DOM.
+   */
+  clearAll(): void;
+
+  /**
+   * Alias for {@link remove} method.
+   *
+   * @param item The notification to be removed.
+   */
+  close(item: TNotificationOption): void;
+
+  /**
+   * Close and remove a notification from the DOM.
+   *
+   * @param item The notification to be removed.
+   */
+  remove(item: TNotificationOption): void;
+
+  /**
+   * Close and remove notification by its variant.
+   *
+   * @param variant The notification variant to be removed.
+   */
+  removeByType(variant: TNotificationVariant): void;
+
+  /**
+   * Shortcut method to create and display Error Notification.
+   *
+   * @param data  The notification configuration or message.
+   * @param title The notification title.
+   */
+  error(data: string | TNotificationOption, title?: string): TNotificationOption | null;
+
+  /**
+   * Shortcut method to create and display Info Notification.
+   *
+   * @param data  The notification configuration or message.
+   * @param title The notification title.
+   */
+  info(data: string | TNotificationOption, title?: string): TNotificationOption | null;
+
+  /**
+   * Shortcut method to create and display Success Notification.
+   *
+   * @param data  The notification configuration or message.
+   * @param title The notification title.
+   */
+  success(data: string | TNotificationOption, title?: string): TNotificationOption | null;
+
+  /**
+   * Shortcut method to create and display Warning Notification.
+   *
+   * @param data  The notification configuration or message.
+   * @param title The notification title.
+   */
+  warning(data: string | TNotificationOption, title?: string): TNotificationOption | null;
+}
+
+export class NotificationProvider implements INotificationProvider {
   private readonly _collection: Reactive<Map<TNotificationPosition, TNotificationOption[]>>;
 
   constructor() {
@@ -110,8 +181,8 @@ export default class NotificationProvider implements INotificationProvider {
       iconOff: false,
       progressBar: false,
       preventDuplicates: false,
-      position: 'bottom-right' as TNotificationPosition,
-      variant: 'default' as TNotificationVariant,
+      position: 'bottom-right',
+      variant: 'default',
       timeout: 6000,
     } as TNotificationOption;
 

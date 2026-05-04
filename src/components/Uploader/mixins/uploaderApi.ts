@@ -3,10 +3,11 @@ import { BsIcon } from '@/components/Icon';
 import type { TCustomText, TFileBag, TImageUploaderOptionProps } from '@/components/Uploader/types';
 import { cssPrefix, useHttpService } from '@/mixins/CommonApi.ts';
 import { preventEventTarget } from '@/mixins/DomHelper.ts';
-import type { IHttpService, TBsButton, TButtonMode, TButtonSize, TRecord } from '@/types';
+import type { TRecord } from '@/types';
+import type { IHttpService } from '@/utils/AxiosPlugin.ts';
 import Helper from '@/utils/Helper.ts';
 import type { AxiosPromise } from 'axios';
-import type { ComputedRef, EmitFn, Prop, Reactive, Ref, VNode } from 'vue';
+import type { ComputedRef, EmitFn, Reactive, Ref, VNode } from 'vue';
 import { computed, h, onMounted, onUnmounted, toDisplayString, unref } from 'vue';
 
 function isUploadSupported(): boolean {
@@ -286,8 +287,8 @@ function createSelectOrDropText(props: Readonly<TImageUploaderOptionProps>): VNo
     },
     [
       h(BsIcon, {
-        icon: 'cloud_upload_outlined' as Prop<string>,
-        size: (props.iconSize || 84) as Prop<number>,
+        icon: 'cloud_upload_outlined',
+        size: props.iconSize || 84,
       }),
       h(
         'span',
@@ -324,8 +325,8 @@ function createUploaderButtons(
         h(
           BsButton,
           {
-            color: (props.buttonColor || 'primary') as Prop<string>,
-            size: 'sm' as Prop<TButtonSize>,
+            color: props.buttonColor || 'primary',
+            size: 'sm',
             style: { zIndex: 4 },
             title: 'Change image',
             onClick: (evt: Event) => {
@@ -336,14 +337,14 @@ function createUploaderButtons(
             default: () => toDisplayString(props.customText?.changeImage || 'Change'),
           }
         ),
-      h<TBsButton>(BsButton, {
-        color: (props.buttonColor || 'primary') as Prop<string>,
-        icon: 'delete_outlined' as Prop<string>,
-        mode: 'icon' as Prop<TButtonMode>,
-        size: 'sm' as Prop<TButtonSize>,
+      h(BsButton, {
+        color: props.buttonColor || 'primary',
+        icon: 'delete_outlined',
+        mode: 'icon',
+        size: 'sm',
         style: { zIndex: 4 },
         title: 'Remove image',
-        tonal: true as unknown as Prop<boolean>,
+        tonal: true,
         onClick: () => {
           onRemoveImage(emit, canvasRef, inputRef, fileBag);
         },
@@ -571,6 +572,7 @@ export function useSetupImageUploader(
       window.requestAnimationFrame(onResize);
     }
   });
+
   onUnmounted(() => {
     window && window.removeEventListener('resize', onResize);
   });

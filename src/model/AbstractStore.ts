@@ -1,55 +1,84 @@
-import { BsModel, RestProxyAdapter } from '@/model';
+import {
+  BsModel,
+  type DataModel,
+  type ModelConfig,
+  type ModelState,
+  type PlainModel,
+  type TBsModel,
+} from '@/model/BsModel.ts';
+import { appendError } from '@/model/Constants.ts';
+import { type IRestAdapter, RestProxyAdapter } from '@/model/RestProxyAdapter.ts';
 import type {
-  ErrorCallbackFn,
-  IBsModel,
-  IRestAdapter,
-  ListenerFn,
-  LoadedCallbackFn,
-  TDataStoreConfig,
-  TDataStoreState,
-  TFilterLogic,
-  TFilterOperator,
-  TFilterOption,
-  TModelOptions,
-  TQueryParameter,
-  TRestConfig,
-  TRestUrlOption,
-  TSortDirection,
-  TSortOption,
+  CSRFConfig,
+  FilterLogic,
+  FilterOperator,
+  FilterOptions,
+  ObjectBase,
+  QueryParameter,
+  RestConfig,
+  RestPropConfig,
+  SortDirection,
+  SortOption,
 } from '@/model/types';
-import type { ObjectBase, TRecord } from '@/types';
+import type { TRecord } from '@/types';
 import { autoBind } from '@/utils/AutoBind.ts';
 import Helper from '@/utils/Helper.ts';
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import type { Many } from 'lodash';
-import { orderBy } from 'lodash-es';
-import { reactive, readonly, type UnwrapNestedRefs } from 'vue';
+import orderBy from 'lodash-es/orderBy';
+import { type Reactive, reactive, readonly } from 'vue';
 
-export const appendErrMsg = 'Can not assign primitive type to the dataset.';
-export const proxyErrMsg = 'Unable to send request to remote server if REST proxy is not defined.';
-export const emptyDataErrMsg = 'Server returns empty data.';
-export const parsingDataErrMsg = 'Unable to parse data coming from server.';
+export declare type DataStoreConfig = TRecord & {
+  idProperty?: string;
+  dataProperty?: string;
+  totalProperty?: string;
+  pageSize?: number;
+  remoteFilter?: boolean;
+  remotePaging?: boolean;
+  remoteSort?: boolean;
+  restProxy?: RestPropConfig;
+  csrfConfig?: CSRFConfig;
+  filterLogic?: FilterLogic;
+  filters?: FilterOptions[];
+  sortOptions?: SortOption[];
+};
+
+export declare type DataStoreState = ModelState & {
+  length: number;
+  totalCount: number;
+  currentPage: number;
+};
+
+export declare type ListenerFn<T> = (arg: T) => void;
+
+export declare type LoadedCallbackFn<T extends TRecord> = (data: TBsModel<T>[]) => void;
+
+export declare type ResponseCallbackFn = (response: AxiosResponse) => void;
+
+export declare type ResponseErrorCallbackFn = (error: AxiosError) => void;
+
+declare type ResponseLike<T extends TRecord> = (TBsModel<T> | PlainModel<T>)[] | AxiosResponse;
 
 /**
  * Class AbstractStore is superclass of {@link BsArrayStore}, and {@link BsStore}.
  * It's never used directly, but offers a set of methods used by those subclasses.
  *
  * @author Ahmad Fajar
- * @since  15/03/2019 modified: 19/10/2025 05:00
+ * @since  15/03/2019 modified: 30/04/2026 09:19
  */
-export abstract class AbstractStore implements ObjectBase {
+export abstract class AbstractStore<T extends TRecord> implements ObjectBase {
   private _eventMap: Map<string, ListenerFn<never>[]>;
-  protected _config: TDataStoreConfig;
-  protected _filters: TFilterOption[];
-  protected _filteredItems: IBsModel[];
-  protected _items: IBsModel[];
+  protected _config: DataStoreConfig;
+  protected _filters: FilterOptions[];
+  protected _filteredItems: (TBsModel<T> | PlainModel<T>)[];
+  protected _items: (TBsModel<T> | PlainModel<T>)[];
   protected _proxy: IRestAdapter | undefined;
-  protected _state: UnwrapNestedRefs<TDataStoreState>;
+  protected _state: Reactive<DataStoreState>;
 
   /**
    * Returns the reactive state of the DataStore.
    */
-  public storeState: Readonly<UnwrapNestedRefs<TDataStoreState>>;
+  public storeState: Readonly<Reactive<DataStoreState>>;
 
   /**
    * Check if the given item is a data model or not.
@@ -57,17 +86,17 @@ export abstract class AbstractStore implements ObjectBase {
    * @param item The item to check
    * @returns TRUE if the given item is a data model otherwise FALSE
    */
-  static isModel(item: unknown): item is BsModel {
+  static isModel<P>(item: unknown): item is DataModel<P> {
     return item instanceof BsModel;
   }
 
-  static isCandidateForFilterOption(item: TRecord): item is TFilterOption {
+  static isCandidateForFilterOption(item: TRecord): item is FilterOptions {
     return Object.keys(item).every((k) =>
       ['property', 'value', 'operator', 'type', 'logic', 'expression'].includes(k)
     );
   }
 
-  static isCandidateForSortOption(item: TRecord): item is TSortOption {
+  static isCandidateForSortOption(item: TRecord): item is SortOption {
     return Object.keys(item).every((k) => ['property', 'direction'].includes(k));
   }
 
@@ -76,8 +105,8 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param config  The configuration properties
    */
-  protected constructor(config: TDataStoreConfig = {}) {
-    const initialCfg: TDataStoreConfig = {
+  protected constructor(config: DataStoreConfig = {}) {
+    const initialCfg: DataStoreConfig = {
       idProperty: undefined,
       dataProperty: undefined,
       totalProperty: undefined,
@@ -90,8 +119,8 @@ export abstract class AbstractStore implements ObjectBase {
       initialCfg.pageSize && Helper.isNumber(initialCfg.pageSize) ? initialCfg.pageSize : -1;
 
     this._config = initialCfg;
-    this._filteredItems = [] as IBsModel[];
-    this._items = [] as IBsModel[];
+    this._filteredItems = [];
+    this._items = [];
 
     if (!Helper.isEmpty(initialCfg.filters)) {
       const filters = this.createFilters(initialCfg.filters);
@@ -106,7 +135,7 @@ export abstract class AbstractStore implements ObjectBase {
     this._eventMap.set('error', []);
 
     // Add reactivity to the state.
-    this._state = reactive<TDataStoreState>({
+    this._state = reactive<DataStoreState>({
       loading: false,
       updating: false,
       deleting: false,
@@ -208,8 +237,8 @@ export abstract class AbstractStore implements ObjectBase {
   }
 
   /**
-   * Get REST URL configuration in the form <code>{key: url}</code>,
-   * where the keys are: <tt>'save', 'fetch', 'delete', 'update'</tt>.
+   * Get REST URL configuration in the form `{key: url}`,
+   * where the keys are: `save`, `fetch`, `delete`, `update`.
    *
    * For backward compatibility you can override this function
    * as needed on the inheritance class or put it on the constructor
@@ -223,13 +252,13 @@ export abstract class AbstractStore implements ObjectBase {
    *    'delete': '/api/user/{id}/delete'
    * };
    *
-   * // above is an example of the returns data
+   * // This is an example of the returns data
    */
-  get restUrl(): TRestConfig | undefined {
-    return (this._config.restProxy ?? this._config.restUrl) as TRestConfig;
+  get restUrl(): RestConfig | undefined {
+    return (this._config.restProxy ?? this._config.restUrl) as RestConfig;
   }
 
-  set restUrl(option: TRestConfig) {
+  set restUrl(option: RestConfig) {
     this._config.restProxy = option;
   }
 
@@ -241,7 +270,7 @@ export abstract class AbstractStore implements ObjectBase {
   }
 
   /**
-   * Get or Set the number of items within a page.
+   * Get/Set the number of items within a page.
    */
   get pageSize(): number {
     return this._config.pageSize as number;
@@ -273,9 +302,9 @@ export abstract class AbstractStore implements ObjectBase {
   }
 
   /**
-   * Get or set the default filters.
+   * Get/Set the default filters.
    */
-  get defaultFilters(): TFilterOption[] {
+  get defaultFilters(): FilterOptions[] {
     if (!Helper.isArray(this._config.filters)) {
       return [];
     } else {
@@ -283,9 +312,9 @@ export abstract class AbstractStore implements ObjectBase {
     }
   }
 
-  set defaultFilters(values: TFilterOption[] | TFilterOption) {
+  set defaultFilters(values: FilterOptions[] | FilterOptions) {
     let oldFilters = !Helper.isEmpty(this._config.filters)
-      ? ([] as TFilterOption[]).concat(...this._config.filters)
+      ? ([] as FilterOptions[]).concat(...this._config.filters)
       : [];
     this._config.filters = Array.isArray(values)
       ? values
@@ -311,13 +340,13 @@ export abstract class AbstractStore implements ObjectBase {
   }
 
   /**
-   * Get or Set collection of filters to be used.
+   * Get/Set the collection of filters to be used.
    */
-  get filters(): TFilterOption[] {
+  get filters(): FilterOptions[] {
     return this._filters;
   }
 
-  set filters(newFilters: TFilterOption[] | TFilterOption) {
+  set filters(newFilters: FilterOptions[] | FilterOptions) {
     this._filters = this.createFilters(newFilters);
     this._filteredItems = [];
   }
@@ -345,7 +374,7 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param fn Callback function when error occurred.
    */
-  onError(fn: ErrorCallbackFn): void {
+  onError(fn: ResponseErrorCallbackFn): void {
     this.addListener('error', fn);
   }
 
@@ -354,7 +383,7 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param fn Callback function when data is successfully loaded to this store dataset.
    */
-  onLoaded(fn: LoadedCallbackFn): void {
+  onLoaded(fn: LoadedCallbackFn<T>): void {
     this.addListener('loaded', fn);
   }
 
@@ -371,14 +400,14 @@ export abstract class AbstractStore implements ObjectBase {
   addFilter(
     field: string,
     value: string | number | boolean,
-    operator?: TFilterOperator,
+    operator?: FilterOperator,
     type?: string,
-    logic?: TFilterLogic
+    logic?: FilterLogic
   ): this {
-    const flt: TFilterOption = {
+    const flt: FilterOptions = {
       property: field,
       value: value,
-      operator: (Helper.isEmpty(operator) ? 'eq' : operator.toLowerCase()) as TFilterOperator,
+      operator: (Helper.isEmpty(operator) ? 'eq' : operator.toLowerCase()) as FilterOperator,
     };
     if (type) {
       flt.type = type;
@@ -398,7 +427,7 @@ export abstract class AbstractStore implements ObjectBase {
    * @param newFilters     The filters to apply
    * @param includeDefault Include default filters or not
    */
-  setFilters(newFilters: TFilterOption[] | TFilterOption, includeDefault = false): this {
+  setFilters(newFilters: FilterOptions[] | FilterOptions, includeDefault = false): this {
     if (Array.isArray(newFilters)) {
       this.filters = includeDefault ? newFilters.concat(this.defaultFilters) : newFilters;
     } else if (
@@ -418,7 +447,7 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param logic The filter logic, valid values: 'AND', 'OR'
    */
-  setFilterLogic(logic: TFilterLogic): this {
+  setFilterLogic(logic: FilterLogic): this {
     if (Helper.isString(logic) && logic.trim() !== '') {
       const trimmed = logic.trim().toUpperCase();
 
@@ -431,14 +460,14 @@ export abstract class AbstractStore implements ObjectBase {
   }
 
   /**
-   * Get or Set the sorter's object collection to be used
+   * Get/Set the sorter's object collection to be used
    * when sorting the Store's dataset.
    */
-  get sorters(): TSortOption[] {
-    return this._config.sortOptions as TSortOption[];
+  get sorters(): SortOption[] {
+    return this._config.sortOptions as SortOption[];
   }
 
-  set sorters(sortOptions: TSortOption[] | TSortOption) {
+  set sorters(sortOptions: SortOption[] | SortOption) {
     this._config.sortOptions = this.createSorters(sortOptions);
   }
 
@@ -459,8 +488,13 @@ export abstract class AbstractStore implements ObjectBase {
    * @param value       The value to match
    * @param startIndex  The index to start searching at
    */
-  find(property: string, value: unknown, startIndex = 0): IBsModel | undefined {
-    return this._items.find((item, idx) => item.get(property) === value && idx >= startIndex);
+  find(property: string, value: unknown, startIndex = 0): TBsModel<T> | PlainModel<T> | undefined {
+    return this._items.find(
+      (item, idx) =>
+        // @ts-expect-error: trying to access 'item.get()' method.
+        (('get' in item && item.get(property) === value) || item[property] === value) &&
+        idx >= startIndex
+    );
   }
 
   /**
@@ -471,7 +505,9 @@ export abstract class AbstractStore implements ObjectBase {
    * @returns The item of the first element in the array that satisfies
    * the provided testing function. Otherwise, `undefined` is returned.
    */
-  findBy(predicate: (value: IBsModel, index: number) => boolean): IBsModel | undefined {
+  findBy(
+    predicate: (value: TBsModel<T> | PlainModel<T>, index: number) => boolean
+  ): TBsModel<T> | PlainModel<T> | undefined {
     return this._items.find(predicate);
   }
 
@@ -484,21 +520,26 @@ export abstract class AbstractStore implements ObjectBase {
    * @returns The index of first match element, otherwise -1
    */
   findIndex(property: string, value: unknown, startIndex = 0): number {
-    return this._items.findIndex((item, idx) => item.get(property) === value && idx >= startIndex);
+    return this._items.findIndex(
+      (item, idx) =>
+        // @ts-expect-error: trying to access 'item.get()' method.
+        (('get' in item && item.get(property) === value) || item[property] === value) &&
+        idx >= startIndex
+    );
   }
 
   /**
    * Filter the dataset locally and returns new array with
    * all elements that pass the test.
    */
-  localFilter(): IBsModel[] {
+  localFilter(): (TBsModel<T> | PlainModel<T>)[] {
     if (this.filters.length > 0) {
       return this._items.filter((item) => {
         const conditions = [];
 
         for (const flt of this.filters) {
           const itemValue = Helper.getObjectValueByPath(item, flt.property) as never;
-          const operator = flt.operator.toLowerCase() as TFilterOperator;
+          const operator = flt.operator.toLowerCase() as FilterOperator;
 
           if (operator === 'gt') {
             conditions.push(itemValue > <number>flt.value);
@@ -531,9 +572,9 @@ export abstract class AbstractStore implements ObjectBase {
           }
         }
         if (this._config.filterLogic === 'OR') {
-          return conditions.some((it) => it === true);
+          return conditions.some((it) => it);
         } else {
-          return conditions.every((it) => it === true);
+          return conditions.every((it) => it);
         }
       });
     } else {
@@ -544,12 +585,12 @@ export abstract class AbstractStore implements ObjectBase {
   /**
    * Sorts the dataset locally and returns new sorted dataset.
    */
-  localSort(): IBsModel[] {
+  localSort(): (TBsModel<T> | PlainModel<T>)[] {
     const fields: string[] = [];
     const orders: Many<'asc' | 'desc'> = [];
 
     for (const sorter of this.sorters) {
-      fields.push(<string>(sorter.property || sorter.field));
+      fields.push((sorter.property || sorter.field) as string);
       (orders as string[]).push(sorter.direction.toLowerCase());
     }
 
@@ -572,7 +613,7 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param value The new page number, based-1 index.
    */
-  page(value: number): this {
+  page(value: number): AbstractStore<T> {
     this._state.currentPage = value;
     return this;
   }
@@ -580,7 +621,7 @@ export abstract class AbstractStore implements ObjectBase {
   /**
    * Marks data Store to load the previous page.
    */
-  previousPage(): this {
+  previousPage(): AbstractStore<T> {
     if (this.currentPage > 1) {
       return this.page(this.currentPage - 1);
     } else {
@@ -591,7 +632,7 @@ export abstract class AbstractStore implements ObjectBase {
   /**
    * Marks data Store to load the next page.
    */
-  nextPage(): this {
+  nextPage(): AbstractStore<T> {
     if (this.currentPage < this.totalPages) {
       return this.page(this.currentPage + 1);
     } else {
@@ -604,7 +645,7 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param item The item to be checked
    */
-  isCandidateForModel(item: TRecord): boolean {
+  isCandidateForModel(item: TRecord): item is TBsModel<T> | PlainModel<T> {
     return (
       Helper.isObject(item) &&
       !Helper.isEmpty(this._config.idProperty) &&
@@ -617,14 +658,14 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param items Model instance or array of model instances to be removed
    */
-  remove<T extends IBsModel>(items: T | T[]): void {
+  remove<P extends TBsModel<T> | PlainModel<T>>(items: P | P[]): void {
     if (Array.isArray(items)) {
       for (const item of items) {
         this.remove(item);
       }
-    } else if (this.isCandidateForModel(items as TRecord) || AbstractStore.isModel(items)) {
+    } else if (this.isCandidateForModel(items) || AbstractStore.isModel(items)) {
       const idProperty = this._config.idProperty as string;
-      const index = this.findIndex(idProperty, items.get(idProperty));
+      const index = this.findIndex(idProperty, items[idProperty]);
 
       index > -1 && this.removeAt(index);
     } else {
@@ -690,7 +731,7 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param sortOptions One or more sorting method criteria(s).
    */
-  setSorters(sortOptions: TSortOption[] | TSortOption): this {
+  setSorters(sortOptions: SortOption[] | SortOption): this {
     this.sorters = sortOptions;
     return this;
   }
@@ -700,23 +741,23 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param values  An array of filter options configuration.
    */
-  createFilters(values: TFilterOption | TFilterOption[]): TFilterOption[] {
-    const filters: TFilterOption[] = [];
+  createFilters(values: FilterOptions | FilterOptions[]): FilterOptions[] {
+    const filters: FilterOptions[] = [];
 
     if (Array.isArray(values)) {
       for (const flt of values) {
         if (Helper.isObject(flt) && AbstractStore.isCandidateForFilterOption(flt)) {
-          const cFilter: TFilterOption = {
+          const cFilter: FilterOptions = {
             ...flt,
-            operator: (flt.operator?.toLowerCase() as TFilterOperator) || 'eq',
+            operator: (flt.operator?.toLowerCase() as FilterOperator) || 'eq',
           };
           filters.push(cFilter);
         }
       }
     } else if (Helper.isObject(values) && AbstractStore.isCandidateForFilterOption(values)) {
-      const vFilter: TFilterOption = {
+      const vFilter: FilterOptions = {
         ...values,
-        operator: (values.operator?.toLowerCase() as TFilterOperator) || 'eq',
+        operator: (values.operator?.toLowerCase() as FilterOperator) || 'eq',
       };
       filters.push(vFilter);
     }
@@ -732,17 +773,17 @@ export abstract class AbstractStore implements ObjectBase {
    * @param replace   Replace existing sort criteria or not.
    */
   createSorters(
-    property: string | string[] | TSortOption | TSortOption[],
-    direction: TSortDirection = 'asc',
+    property: string | string[] | SortOption | SortOption[],
+    direction: SortDirection = 'asc',
     replace = false
-  ): TSortOption[] {
-    const sorters: TSortOption[] = [];
-    const createOption = (opt: TSortOption) => {
+  ): SortOption[] {
+    const sorters: SortOption[] = [];
+    const createOption = (opt: SortOption) => {
       return {
         property: opt.property ?? opt.field,
         direction: (opt.direction && !Helper.isEmpty(opt.direction)
           ? opt.direction.toLowerCase()
-          : direction.toLowerCase()) as TSortDirection,
+          : direction.toLowerCase()) as SortDirection,
       };
     };
 
@@ -753,7 +794,7 @@ export abstract class AbstractStore implements ObjectBase {
         } else if (Helper.isString(fld) && !Helper.isEmpty(fld)) {
           sorters.push({
             property: fld,
-            direction: direction.toLowerCase() as TSortDirection,
+            direction: direction.toLowerCase() as SortDirection,
           });
         }
       }
@@ -762,7 +803,7 @@ export abstract class AbstractStore implements ObjectBase {
     } else if (Helper.isString(property) && !Helper.isEmpty(property)) {
       sorters.push({
         property: property,
-        direction: direction.toLowerCase() as TSortDirection,
+        direction: direction.toLowerCase() as SortDirection,
       });
     }
 
@@ -778,8 +819,8 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param item The data to convert
    */
-  createModel(item: TRecord): IBsModel {
-    const proxyCfg: TRestUrlOption = {};
+  createModel<P extends PlainModel<T>>(item: P): TBsModel<T> {
+    const proxyCfg: RestPropConfig = {};
 
     if (this.restUrl) {
       if (!Helper.isEmpty(this.restUrl.delete)) {
@@ -799,9 +840,9 @@ export abstract class AbstractStore implements ObjectBase {
         this.adapterInstance,
         this._config.idProperty,
         this._config.dataProperty
-      );
+      ) as unknown as TBsModel<P>;
     } else {
-      const data: TModelOptions = {
+      const data: ModelConfig = {
         schema: item,
         proxy: proxyCfg,
       };
@@ -814,16 +855,16 @@ export abstract class AbstractStore implements ObjectBase {
         this.adapterInstance,
         this._config.idProperty,
         this._config.dataProperty
-      );
+      ) as unknown as TBsModel<P>;
     }
   }
 
   /**
    * Get current query parameter's configuration.
    */
-  queryParams(): TQueryParameter {
-    const params: TQueryParameter = {
-      logic: this._config.filterLogic as TFilterLogic,
+  queryParams(): QueryParameter {
+    const params: QueryParameter = {
+      logic: this._config.filterLogic as FilterLogic,
     };
 
     if (this.currentPage > 0) {
@@ -867,7 +908,7 @@ export abstract class AbstractStore implements ObjectBase {
    *
    * @param data The record(s) to be assigned
    */
-  abstract load(data?: unknown): Promise<IBsModel[] | AxiosResponse>;
+  abstract load(data?: unknown): Promise<ResponseLike<T>>;
 
   /**
    * Returns dataset from the active page.
@@ -875,17 +916,17 @@ export abstract class AbstractStore implements ObjectBase {
    * If a filter or sorter has been applied before,
    * then the returned dataset will also be affected by it.
    */
-  abstract get dataItems(): IBsModel[];
+  abstract get dataItems(): (TBsModel<T> | PlainModel<T>)[];
 
   /**
    * Append an item to the local dataset.
    *
-   * @param item   Data to append to the dataset
+   * @param item   The Data to append to the dataset
    * @param force  Force adds even if the data supplied
    *               is not suitable for the Data Model
    * @param silent Append data silently and doesn't trigger length counting
    */
-  protected _append(item: TRecord, force = true, silent = false): void {
+  protected _append<P extends PlainModel<T>>(item: P, force = true, silent = false): void {
     if (this.isCandidateForModel(item)) {
       this._items.push(this.createModel(item));
       if (!silent) {
@@ -894,7 +935,7 @@ export abstract class AbstractStore implements ObjectBase {
       }
     } else if (force && !Helper.isPrimitive(item)) {
       if (Helper.isObject(item)) {
-        this._items.push(this.createModel(item).seal());
+        this._items.push(this.createModel(item).seal() as TBsModel<T>);
       } else {
         this._items.push(Object.seal(item));
       }
@@ -903,7 +944,7 @@ export abstract class AbstractStore implements ObjectBase {
         this._state.length++;
       }
     } else {
-      console.error(appendErrMsg);
+      console.error(appendError);
     }
   }
 
@@ -922,7 +963,7 @@ export abstract class AbstractStore implements ObjectBase {
     }
 
     this._state.loading = true;
-    const items = (Array.isArray(source) ? source : [source]) as IBsModel[];
+    const items = (Array.isArray(source) ? source : [source]) as PlainModel<T>[];
 
     if (silent) {
       this._items = items;

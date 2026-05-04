@@ -1,7 +1,7 @@
 import type { TMaskLoaderVariant } from '@/components/Progress/types';
 import {
   booleanProp,
-  defaultTransitionProp,
+  fadeTransitionProp,
   primaryColorProp,
   stringProp,
 } from '@/mixins/CommonProps.ts';
@@ -35,7 +35,7 @@ export const maskLoaderProps = {
     validator: (value: string): boolean => !isNaN(parseInt(value, 10)),
   },
   type: maskLoaderVariant,
-  transition: defaultTransitionProp,
+  transition: fadeTransitionProp,
   zIndex: {
     type: [String, Number],
     default: 100,

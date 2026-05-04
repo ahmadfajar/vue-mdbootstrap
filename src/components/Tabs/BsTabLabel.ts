@@ -1,16 +1,26 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { BsRipple } from '@/components/Animation';
 import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps.ts';
 import { useRenderTabLabel } from '@/components/Tabs/mixins/tabsApi.ts';
-import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
 import type {
-  TBsRipple,
   TBsTabLabel,
   TOrientation,
   TPlacementPosition,
   TTabLabelOptionProps,
-} from '@/types';
+} from '@/components/Tabs/types';
+import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { Prop } from 'vue';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  Prop,
+  PublicProps,
+} from 'vue';
 import { computed, defineComponent, h, toDisplayString } from 'vue';
 
 export default defineComponent<TBsTabLabel>({
@@ -38,7 +48,7 @@ export default defineComponent<TBsTabLabel>({
     );
 
     return () =>
-      h<TBsRipple>(
+      h(
         BsRipple,
         {
           class: {
@@ -47,7 +57,7 @@ export default defineComponent<TBsTabLabel>({
             'justify-center': true,
             'flex-col': ['top', 'bottom'].includes(thisProps.iconPosition as string),
           },
-          disabled: props.rippleOff,
+          disabled: thisProps.rippleOff,
         },
         {
           default: () =>
@@ -72,4 +82,25 @@ export default defineComponent<TBsTabLabel>({
         }
       );
   },
-});
+}) as DefineComponent<
+  TBsTabLabel,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TTabLabelOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsTabLabel>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

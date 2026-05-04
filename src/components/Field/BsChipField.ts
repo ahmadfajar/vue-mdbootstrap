@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import { useRenderChipField } from '@/components/Field/mixins/chipFieldApi.ts';
-import { textFieldProps } from '@/components/Field/mixins/fieldProps.ts';
+import { inputFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
   useFieldControlClasses,
   useFieldWrapperClasses,
@@ -8,30 +9,56 @@ import {
 } from '@/components/Field/mixins/textFieldApi.ts';
 import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
 import { validationProps } from '@/components/Field/mixins/validationProps.ts';
+import type { TBsChipField, TChipFieldOptionProps } from '@/components/Field/types';
+import type {
+  ChipFieldEventProps,
+  ChipFieldEventPublic,
+  FieldSlots,
+} from '@/components/Field/types/internals.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp, stringOrArrayProp, stringProp } from '@/mixins/CommonProps.ts';
-import type { TBsChipField, TChipFieldOptionProps, TRecord } from '@/types';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
+
+function convertValues(sources: string | string[] | undefined | null): string[] {
+  return Helper.isString(sources) && !Helper.isEmpty(sources)
+    ? sources.split(',').map((v) => v.trim())
+    : Array.isArray(sources)
+      ? sources
+      : [];
+}
+
+const chipFieldProps = {
+  ...inputProps,
+  ...inputFieldProps,
+  ...validationProps,
+  autocomplete: {
+    type: [String, Boolean],
+    default: false,
+  },
+  autofocus: booleanProp,
+  chipColor: stringProp,
+  chipDeletable: booleanProp,
+  chipPill: booleanProp,
+  chipOutlined: booleanProp,
+  modelValue: stringOrArrayProp,
+  placeholder: stringProp,
+};
 
 export default defineComponent<TBsChipField>({
   name: 'BsChipField',
-  props: {
-    ...inputProps,
-    ...textFieldProps,
-    ...validationProps,
-    autocomplete: {
-      type: [String, Boolean],
-      default: false,
-    },
-    autofocus: booleanProp,
-    chipColor: stringProp,
-    chipDeletable: booleanProp,
-    chipPill: booleanProp,
-    chipOutlined: booleanProp,
-    modelValue: stringOrArrayProp,
-    placeholder: stringProp,
-  },
+  props: chipFieldProps,
   emits: ['blur', 'focus', 'clear', 'keydown', 'delete-item', 'update:model-value'],
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TChipFieldOptionProps>;
@@ -44,18 +71,21 @@ export default defineComponent<TBsChipField>({
     const inputValue = ref<string>('');
     const localValue = ref<string[]>(convertValues(thisProps.modelValue));
     const isFocused = ref(false);
-    const validator = useGetValidationResult(thisProps, isFocused);
-
+    const { hasError, hasValidated, showValidationError, showHelpText, errorItems } =
+      useGetValidationResult(thisProps, isFocused);
     const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
+
     const showAppendIcon = computed(
       () =>
         slots['append-inner'] != null ||
         !Helper.isEmpty(thisProps.appendIcon) ||
         showClearButton.value
     );
+
     const wrapperClasses = computed<TRecord>(() =>
-      useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
+      useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)
     );
+
     const controlClasses = computed<TRecord>(() => ({
       ...useFieldControlClasses(slots, thisProps, localValue, isFocused, showAppendIcon.value),
       [`${cssPrefix}chip-field`]: true,
@@ -72,7 +102,7 @@ export default defineComponent<TBsChipField>({
       useRenderChipField(
         slots,
         emit,
-        props,
+        thisProps,
         wrapperClasses,
         controlClasses,
         inputValue,
@@ -80,19 +110,32 @@ export default defineComponent<TBsChipField>({
         isFocused,
         autocomplete,
         showClearButton,
-        validator.showHelpText,
-        validator.showValidationError,
-        validator.hasValidated,
-        validator.hasError,
-        validator.errorItems
+        showHelpText,
+        showValidationError,
+        hasValidated,
+        hasError,
+        errorItems
       );
   },
-});
-
-function convertValues(sources: string | string[] | undefined | null) {
-  return Array.isArray(sources)
-    ? sources
-    : !Helper.isEmpty(sources)
-      ? sources.split(',').map((v) => v.trim())
-      : [];
-}
+}) as DefineComponent<
+  TBsChipField,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ChipFieldEventProps,
+  string,
+  PublicProps,
+  Readonly<TChipFieldOptionProps> & Readonly<ChipFieldEventPublic>,
+  ExtractDefaultPropTypes<TBsChipField>,
+  SlotsType<FieldSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

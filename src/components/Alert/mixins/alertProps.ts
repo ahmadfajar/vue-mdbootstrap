@@ -3,9 +3,9 @@ import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps.ts';
 import {
   booleanProp,
   booleanTrueProp,
-  defaultTransitionProp,
+  fadeTransitionProp,
   stringProp,
-} from '@/mixins/CommonProps';
+} from '@/mixins/CommonProps.ts';
 import type { Prop } from 'vue';
 
 const alertVariant = {
@@ -21,7 +21,7 @@ export const alertProps = {
   variant: alertVariant,
   outlined: booleanProp,
   filled: booleanProp,
-  transition: defaultTransitionProp,
+  transition: fadeTransitionProp,
   modelValue: booleanTrueProp,
   closeButtonColor: stringProp,
   ...iconBaseProps,

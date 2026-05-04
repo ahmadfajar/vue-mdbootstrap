@@ -1,13 +1,22 @@
-import ListItem from '@/components/ListView/mixins/ListItem.ts';
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import { type IListItem, ListItem } from '@/components/ListView/mixins/ListItem.ts';
 import { useAddChild } from '@/components/ListView/mixins/listNavApi.ts';
-import type {
-  IListItem,
-  IListViewProvider,
-  TBsListNav,
-  TListNavOptionProps,
-} from '@/components/ListView/types';
+import type { IListViewProvider } from '@/components/ListView/mixins/ListViewProvider.ts';
+import type { TBsListNav, TListNavOptionProps } from '@/components/ListView/types';
 import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import {
   computed,
   defineComponent,
@@ -73,4 +82,25 @@ export default defineComponent<TBsListNav>({
         slots.default && slots.default()
       );
   },
-});
+}) as DefineComponent<
+  TBsListNav,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TListNavOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsListNav>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

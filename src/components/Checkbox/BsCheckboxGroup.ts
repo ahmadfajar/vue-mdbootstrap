@@ -1,5 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useCreateCheckboxItems } from '@/components/Checkbox/mixins/checkboxApi.ts';
 import { baseInputProps, checkboxGroupProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
+import type {
+  TBsCheckboxGroup,
+  TCheckboxGroupOptionProps,
+  TCheckboxInputProps,
+} from '@/components/Checkbox/types';
 import { validationProps } from '@/components/Field/mixins/validationProps.ts';
 import {
   useInputGroupClasses,
@@ -7,12 +13,23 @@ import {
   useRenderRadioOrCheckboxGroup,
 } from '@/components/Radio/mixins/radioApi.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { Numberish, TRecord } from '@/types';
 import type {
-  Numberish,
-  TBsCheckboxGroup,
-  TCheckboxGroupOptionProps,
-  TCheckboxInputProps,
-} from '@/types';
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent<TBsCheckboxGroup>({
@@ -34,7 +51,7 @@ export default defineComponent<TBsCheckboxGroup>({
     }));
 
     const toggleCheckHandler = (
-      values: Numberish | unknown | Numberish[] | unknown[],
+      values: Numberish | unknown | (Numberish | unknown)[],
       item: TCheckboxInputProps
     ): void => {
       if (!thisProps.disabled && !thisProps.readonly && !item.disabled && !item.readonly) {
@@ -54,4 +71,38 @@ export default defineComponent<TBsCheckboxGroup>({
         errorItems.value
       );
   },
-});
+}) as DefineComponent<
+  TBsCheckboxGroup,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  CheckboxGroupEventProps,
+  string,
+  PublicProps,
+  Readonly<TCheckboxGroupOptionProps> & Readonly<CheckboxGroupEventPublic>,
+  ExtractDefaultPropTypes<TBsCheckboxGroup>,
+  SlotsType<CheckboxGroupSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type CheckboxGroupEventProps = UpdateModelValueEventProps<(string | number | unknown)[]>;
+
+declare interface CheckboxGroupEventPublic extends UpdateModelValueEventPublic<
+  (string | number | unknown)[]
+> {}
+
+declare interface CheckboxGroupSlots extends VoidDefaultSlots {
+  /**
+   * The default slot used to place the custom help text of the CheckboxGroup.
+   */
+  'help-text'?: () => VNode[] | VNode;
+}

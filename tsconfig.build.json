@@ -1,22 +1,13 @@
 {
   "extends": "@vue/tsconfig/tsconfig.json",
-  "include": [
-    "env.d.ts",
-    "src/**/*.ts",
-    "src/**/*.d.ts",
-    "src/**/*.vue"
-  ],
-  "exclude": [
-    "node_modules",
-    "rollup.config.dts.mjs",
-    "src/**/__tests__/*"
-  ],
+  "include": ["env.d.ts", "src/**/*.ts", "src/**/*.d.ts", "src/**/*.vue"],
+  "exclude": ["node_modules", "src/**/__tests__/*"],
   "compilerOptions": {
     "outDir": "./dist/",
+    "esModuleInterop": true,
     "declaration": false,
     "removeComments": true,
     "sourceMap": false,
-    "esModuleInterop": true,
     "lib": [
       "ES2024",
       "DOM",
@@ -24,7 +15,6 @@
       "ESNext.Array",
       "ESNext.Collection",
       "ESNext.Promise",
-      "ESNext.String",
       "ESNext.Symbol"
     ],
     "paths": {

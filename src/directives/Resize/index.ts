@@ -2,7 +2,7 @@ import type { EventListenerTarget, IBindingElement, TDirectiveBinding } from '@/
 import Helper from '@/utils/Helper.ts';
 import type { Directive, DirectiveBinding } from 'vue';
 
-interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
+export interface ResizeDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
   value: EventListenerTarget | TDirectiveBinding;
   modifiers?: {
     active?: boolean;
@@ -43,7 +43,12 @@ function unmounted(el: IBindingElement): void {
   }
 }
 
-export const Resize: Directive = {
+export const Resize: Directive<
+  HTMLElement,
+  EventListenerTarget | TDirectiveBinding,
+  string,
+  never
+> = {
   mounted,
   unmounted,
 };

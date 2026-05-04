@@ -1,21 +1,34 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useFetchData, useRenderCombobox } from '@/components/Combobox/mixins/comboboxApi.ts';
 import { comboboxProps } from '@/components/Combobox/mixins/comboboxProps.ts';
+import type {
+  TBsCombobox,
+  TComboboxOptionProps,
+  TDataListSchema,
+} from '@/components/Combobox/types';
 import {
   useFieldControlClasses,
   useFieldWrapperClasses,
   useShowClearButton,
 } from '@/components/Field/mixins/textFieldApi.ts';
 import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
+import type { FieldSlots } from '@/components/Field/types/internals.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import type {
-  IBsModel,
-  Numberish,
-  TBsCombobox,
-  TComboboxOptionProps,
-  TDataListSchema,
-  TRecord,
-} from '@/types';
+import type { TBsModel } from '@/model';
+import type { Numberish, TRecord } from '@/types';
+import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import { computed, defineComponent, ref, shallowRef, watch } from 'vue';
 
 export default defineComponent<TBsCombobox>({
@@ -51,7 +64,7 @@ export default defineComponent<TBsCombobox>({
           ? [thisProps.modelValue]
           : []
     );
-    const selectedItems = shallowRef<IBsModel[]>([]);
+    const selectedItems = shallowRef<TBsModel[]>([]);
     const isFocused = ref(false);
     const isPopoverOpen = ref(false);
     const activator = ref<HTMLElement | null>(null);
@@ -106,7 +119,7 @@ export default defineComponent<TBsCombobox>({
           ) {
             selectedItems.value =
               dataSource?.dataItems.filter((it) =>
-                fieldValues.value.some((v) => v === it.get(dataSchema.valueField))
+                fieldValues.value.some((v) => v === it[dataSchema.valueField])
               ) || [];
           }
         }
@@ -134,4 +147,170 @@ export default defineComponent<TBsCombobox>({
         validator.errorItems
       );
   },
-});
+}) as DefineComponent<
+  TBsCombobox,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ComboboxEventProps,
+  string,
+  PublicProps,
+  Readonly<TComboboxOptionProps> & Readonly<ComboboxEventPublic>,
+  ExtractDefaultPropTypes<TBsCombobox>,
+  SlotsType<ComboboxSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare interface ComboboxSlots extends FieldSlots {
+  /**
+   * Additional slot used to customize the listbox items appearance.
+   */
+  'option-item'?: (arg: { item: TBsModel; index: number }) => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place custom message when listbox is empty.
+   */
+  'empty-data-msg'?: () => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place custom message when filtering listbox items returns no result.
+   */
+  'not-found-msg'?: () => VNode[] | VNode;
+}
+
+declare type ComboboxEventProps = UpdateModelValueEventProps<
+  Numberish | Numberish[] | undefined
+> & {
+  /**
+   * Fired when this component's value is being cleared.
+   */
+  clear?: VoidFunction;
+
+  /**
+   * Fired when the Popover is show.
+   */
+  open?: VoidFunction;
+
+  /**
+   * Fired when an item is selected.
+   */
+  select?: (item: TBsModel) => void;
+
+  /**
+   * Fired when an item is deselected.
+   */
+  deselect?: (item: TBsModel) => void;
+
+  /**
+   * Fired when the data has been fetched.
+   */
+  'data-bind'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when error loading data items.
+   */
+  'data-error'?: (error: unknown) => void;
+
+  /**
+   * Fired when this component's data items is filtered.
+   */
+  'data-filter'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when this component's selected value is updated.
+   */
+  'update:selected-value'?: (selected: TBsModel[]) => void;
+};
+
+declare interface ComboboxEventPublic extends UpdateModelValueEventPublic<
+  Numberish | Numberish[] | undefined
+> {
+  /**
+   * Fired when this component's value is being cleared.
+   */
+  onClear?: VoidFunction;
+
+  /**
+   * Fired when the Popover is show.
+   */
+  onOpen?: VoidFunction;
+
+  /**
+   * Fired when an item is selected.
+   */
+  onSelect?: (item: TBsModel) => void;
+
+  /**
+   * Fired when an item is deselected.
+   */
+  onDeselect?: (item: TBsModel) => void;
+
+  /**
+   * Fired when the data has been fetched.
+   */
+  onDataBind?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when error loading data items.
+   */
+  onDataError?: (error: unknown) => void;
+
+  /**
+   * Fired when this component's data items is filtered.
+   */
+  onDataFilter?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when this component's selected value is updated.
+   */
+  'onUpdate:selectedValue'?: (selected: TBsModel[]) => void;
+
+  /**
+   * Fired when this component's value is being cleared.
+   */
+  '@clear'?: VoidFunction;
+
+  /**
+   * Fired when the Popover is show.
+   */
+  '@open'?: VoidFunction;
+
+  /**
+   * Fired when an item is selected.
+   */
+  '@select'?: (item: TBsModel) => void;
+
+  /**
+   * Fired when an item is deselected.
+   */
+  '@deselect'?: (item: TBsModel) => void;
+
+  /**
+   * Fired when the data has been fetched.
+   */
+  '@data-bind'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when error loading data items.
+   */
+  '@data-error'?: (error: unknown) => void;
+
+  /**
+   * Fired when this component's data items is filtered.
+   */
+  '@data-filter'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when this component's selected value is updated.
+   */
+  '@update:selected-value'?: (selected: TBsModel[]) => void;
+}

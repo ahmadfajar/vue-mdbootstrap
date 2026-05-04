@@ -1,5 +1,6 @@
 import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps.ts';
 import { iconSizeProp } from '@/components/Icon/mixins/iconProps.ts';
+import type { TAlignment, TPlacementPosition, TTabsVariant } from '@/components/Tabs/types';
 import {
   booleanProp,
   routerProps,
@@ -7,7 +8,6 @@ import {
   stringOrNumberProp,
   stringProp,
 } from '@/mixins/CommonProps';
-import type { TAlignment, TPlacementPosition, TTabsVariant } from '@/types';
 import type { Prop } from 'vue';
 
 export const tabItemProps = {

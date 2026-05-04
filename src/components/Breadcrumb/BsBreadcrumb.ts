@@ -1,103 +1,29 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type {
   TBreadcrumb,
   TBreadcrumbOptionProps,
   TBsBreadcrumb,
 } from '@/components/Breadcrumb/types';
 import { BsIcon } from '@/components/Icon';
-import type { TBsIcon } from '@/components/Icon/types';
 import { cssPrefix, useHasRouter, useRenderRouter, useWrapSlot } from '@/mixins/CommonApi.ts';
 import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import { defineComponent, h, type Prop, type Slots, toDisplayString, type VNode } from 'vue';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  Prop,
+  PublicProps,
+  Slots,
+  SlotsType,
+  VNode,
+} from 'vue';
+import { defineComponent, h, toDisplayString } from 'vue';
 import type { RouterLinkProps } from 'vue-router';
-
-export default defineComponent<TBsBreadcrumb>({
-  name: 'BsBreadcrumb',
-  props: {
-    items: {
-      type: Array,
-      default: undefined,
-      required: true,
-    } as Prop<TBreadcrumb[]>,
-    prependIcon: stringProp,
-    iconSize: validStringOrNumberProp,
-    separator: stringProp,
-    sticky: booleanProp,
-    tag: {
-      type: String,
-      default: 'nav',
-    },
-  },
-  setup(props, { slots }) {
-    const thisProps = props as Readonly<TBreadcrumbOptionProps>;
-
-    return () => renderBreadcrumb(slots, thisProps);
-  },
-});
-
-function renderBreadcrumb(slots: Slots, props: Readonly<TBreadcrumbOptionProps>): VNode {
-  const itemCount = props.items.length > 0 ? props.items.length - 1 : 0;
-  let separator: string;
-
-  if (props.separator && props.separator.startsWith('url')) {
-    separator = decodeURI(props.separator).replaceAll('#', '%23');
-  } else {
-    separator = `'${props.separator}'`;
-  }
-
-  return h(
-    props.tag || 'nav',
-    {
-      class: [`${cssPrefix}breadcrumb`, props.sticky ? 'sticky-top' : ''],
-      style: props.separator
-        ? { [`--${cssPrefix}breadcrumb-item-separator`]: separator }
-        : undefined,
-      ariaLabel: 'breadcrumb',
-    },
-    [
-      h(
-        'div',
-        {
-          class: [
-            `${cssPrefix}breadcrumb-container`,
-            'relative',
-            'flex',
-            'flex-nowrap',
-            'items-end',
-          ],
-        },
-        [
-          useWrapSlot(
-            slots,
-            'icon',
-            'breadcrumb-icon',
-            { class: [`${cssPrefix}breadcrumb-icon`, 'inline-flex'] },
-            !Helper.isEmpty(props.prependIcon)
-              ? h<TBsIcon>(BsIcon, {
-                  icon: props.prependIcon as Prop<string>,
-                  size: props.iconSize as Prop<string | number>,
-                })
-              : undefined
-          ),
-          h(
-            'ol',
-            {
-              class: [
-                `${cssPrefix}breadcrumb-inner`,
-                'relative',
-                'overflow-hidden',
-                'flex',
-                'flex-nowrap',
-                'items-center',
-              ],
-            },
-            props.items.map((it, idx) => createItemLabel(it, idx, itemCount))
-          ),
-        ]
-      ),
-    ]
-  );
-}
 
 function createItemLabel(item: TBreadcrumb, index: number, length: number): VNode {
   const routerProps = {
@@ -141,4 +67,120 @@ function createItemLabel(item: TBreadcrumb, index: number, length: number): VNod
   } else {
     return h('li', { class: itemLabelCls }, toDisplayString(item.label));
   }
+}
+
+function renderBreadcrumb(slots: Slots, props: Readonly<TBreadcrumbOptionProps>): VNode {
+  const itemCount = props.items.length > 0 ? props.items.length - 1 : 0;
+  let separator: string;
+
+  if (props.separator && props.separator.startsWith('url')) {
+    separator = decodeURI(props.separator).replaceAll('#', '%23');
+  } else {
+    separator = `'${props.separator}'`;
+  }
+
+  return h(
+    props.tag || 'nav',
+    {
+      class: [`${cssPrefix}breadcrumb`, props.sticky ? 'sticky-top' : ''],
+      style: props.separator
+        ? { [`--${cssPrefix}breadcrumb-item-separator`]: separator }
+        : undefined,
+      ariaLabel: 'breadcrumb',
+    },
+    [
+      h(
+        'div',
+        {
+          class: [
+            `${cssPrefix}breadcrumb-container`,
+            'relative',
+            'flex',
+            'flex-nowrap',
+            'items-end',
+          ],
+        },
+        [
+          useWrapSlot(
+            slots,
+            'icon',
+            'breadcrumb-icon',
+            { class: [`${cssPrefix}breadcrumb-icon`, 'inline-flex'] },
+            !Helper.isEmpty(props.prependIcon)
+              ? h(BsIcon, {
+                  icon: props.prependIcon,
+                  size: props.iconSize,
+                })
+              : undefined
+          ),
+          h(
+            'ol',
+            {
+              class: [
+                `${cssPrefix}breadcrumb-inner`,
+                'relative',
+                'overflow-hidden',
+                'flex',
+                'flex-nowrap',
+                'items-center',
+              ],
+            },
+            props.items.map((it, idx) => createItemLabel(it, idx, itemCount))
+          ),
+        ]
+      ),
+    ]
+  );
+}
+
+export default defineComponent<TBsBreadcrumb>({
+  name: 'BsBreadcrumb',
+  props: {
+    items: {
+      type: Array,
+      default: undefined,
+      required: true,
+    } as Prop<TBreadcrumb[]>,
+    prependIcon: stringProp,
+    iconSize: validStringOrNumberProp,
+    separator: stringProp,
+    sticky: booleanProp,
+    tag: {
+      type: String,
+      default: 'nav',
+    },
+  },
+  setup(props, { slots }) {
+    const thisProps = props as Readonly<TBreadcrumbOptionProps>;
+
+    return () => renderBreadcrumb(slots, thisProps);
+  },
+}) as DefineComponent<
+  TBsBreadcrumb,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TBreadcrumbOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsBreadcrumb>,
+  SlotsType<BreadcrumbSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare interface BreadcrumbSlots {
+  /**
+   * Additional slot used to place custom icon of the Breadcrumb.
+   */
+  icon?: () => VNode[] | VNode;
 }

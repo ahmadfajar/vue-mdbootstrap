@@ -8,13 +8,14 @@ import BsCardMedia from './BsCardMedia.ts';
 
 const BsCardPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsCard.name as string, BsCard);
-    app.component(BsCardBody.name as string, BsCardBody);
-    app.component(BsCardContent.name as string, BsCardContent);
-    app.component(BsCardFooter.name as string, BsCardFooter);
-    app.component(BsCardHeader.name as string, BsCardHeader);
-    app.component(BsCardMedia.name as string, BsCardMedia);
+    app.component('BsCard', BsCard);
+    app.component('BsCardBody', BsCardBody);
+    app.component('BsCardContent', BsCardContent);
+    app.component('BsCardFooter', BsCardFooter);
+    app.component('BsCardHeader', BsCardHeader);
+    app.component('BsCardMedia', BsCardMedia);
   },
 };
 
+export type * from '@/components/Card/types';
 export { BsCard, BsCardBody, BsCardContent, BsCardFooter, BsCardHeader, BsCardMedia, BsCardPlugin };

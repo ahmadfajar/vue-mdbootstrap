@@ -1,7 +1,8 @@
+import type { TPlacementPosition } from '@/components/Tabs/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { EventListener } from '@/mixins/DomHelper.ts';
-import { useFloatingElement } from '@/mixins/floatingElement.ts';
-import type { IBindingElement, IHTMLElement, IMouseEvents, TPlacementPosition } from '@/types';
+import { useFloatingElement } from '@/mixins/FloatingElement.ts';
+import type { IBindingElement, IHTMLElement, IMouseEvents } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type { ComponentInternalInstance, ComponentPublicInstance, Ref, VNode } from 'vue';
 import { unref } from 'vue';
@@ -142,8 +143,8 @@ export function useAddTooltipListener(
   }
 }
 
-export function useRemoveTooltipListener(activatorRef: Ref<Element | null>) {
-  const activatorEl = unref(activatorRef) as IBindingElement | null;
+export function useRemoveTooltipListener(activatorRef: Ref<IBindingElement | null>) {
+  const activatorEl = unref(activatorRef);
 
   if (activatorEl) {
     const { mouseEnter, mouseLeave, focus, blur } = activatorEl.__mouseEvents as IMouseEvents;

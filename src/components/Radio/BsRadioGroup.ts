@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { baseInputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import { validationProps } from '@/components/Field/mixins/validationProps.ts';
 import {
@@ -13,6 +14,23 @@ import type {
   TRadioInputProps,
 } from '@/components/Radio/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { Numberish } from '@/types';
+import type {
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import { computed, defineComponent } from 'vue';
 
 export default defineComponent<TBsRadioGroup>({
@@ -52,4 +70,35 @@ export default defineComponent<TBsRadioGroup>({
         errorItems.value
       );
   },
-});
+}) as DefineComponent<
+  TBsRadioGroup,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  RadioGroupEventProps,
+  string,
+  PublicProps,
+  Readonly<TRadioGroupOptionProps> & Readonly<RadioGroupEventPublic>,
+  ExtractDefaultPropTypes<TBsRadioGroup>,
+  SlotsType<RadioGroupSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  never
+>;
+
+declare type RadioGroupEventProps = UpdateModelValueEventProps<Numberish | boolean>;
+
+declare interface RadioGroupEventPublic extends UpdateModelValueEventPublic<Numberish | boolean> {}
+
+declare interface RadioGroupSlots extends VoidDefaultSlots {
+  /**
+   * The default slot used to place the custom help text of the RadioGroup.
+   */
+  'help-text'?: () => VNode[] | VNode;
+}

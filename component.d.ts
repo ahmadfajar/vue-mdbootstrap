@@ -165,14 +165,17 @@ declare module 'vue' {
     BsTooltip: typeof BsTooltip;
   }
 
+  export interface GlobalDirectives {
+    vClickOutside: typeof ClickOutside;
+    vResize: typeof Resize;
+    vScroll: typeof Scroll;
+    vTouch: typeof Touch;
+  }
+
   export interface ComponentCustomProperties {
     $axios: AxiosInstance;
     $http: IHttpService;
     $VueMdb: TVueMdb;
     $notification: INotificationProvider;
-    vClickOutside: typeof ClickOutside;
-    vResize: typeof Resize;
-    vScroll: typeof Scroll;
-    vTouch: typeof Touch;
   }
 }

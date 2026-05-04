@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useDeferHideNotification,
   useRenderNotificationItem,
@@ -14,7 +15,17 @@ import {
   stringMandatoryProp,
   stringProp,
 } from '@/mixins/CommonProps.ts';
-import type { Prop } from 'vue';
+import type { TRecord } from '@/types';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  Prop,
+  PublicProps,
+} from 'vue';
 import { defineComponent, onMounted, ref } from 'vue';
 
 export default defineComponent<TBsNotificationItem>({
@@ -40,4 +51,44 @@ export default defineComponent<TBsNotificationItem>({
 
     return () => useRenderNotificationItem(emit, thisProps, timerId);
   },
-});
+}) as DefineComponent<
+  TBsNotificationItem,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  NotificationItemEventProps,
+  string,
+  PublicProps,
+  Readonly<TNotificationItemOptionProps> & Readonly<NotificationItemEventPublic>,
+  ExtractDefaultPropTypes<TBsNotificationItem>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type NotificationItemEventProps = {
+  /**
+   * Fired when this notification item is dismissed or closed.
+   */
+  dismiss?: () => void;
+};
+
+declare interface NotificationItemEventPublic {
+  /**
+   * Fired when this notification item is dismissed or closed.
+   */
+  onDismiss?: () => void;
+
+  /**
+   * Fired when this notification item is dismissed or closed.
+   */
+  '@dismiss'?: () => void;
+}

@@ -1,18 +1,19 @@
 import { BsOverlay } from '@/components/Animation';
-import PopupManager from '@/components/Popover/mixins/PopupManager.ts';
+import { PopupManager } from '@/components/Popover/mixins/PopupManager.ts';
+import type { TPopoverOptionProps, TPopoverPosition } from '@/components/Popover/types';
 import { ClickOutside, Resize, Scroll } from '@/directives';
 import { useRenderTransition } from '@/mixins/CommonApi.ts';
 import { isChildOf, isSVGElement } from '@/mixins/DomHelper.ts';
-import { useFloatingElement } from '@/mixins/floatingElement.ts';
-import type { Numberish, TEmitFn, TPopoverOptionProps, TPopoverPosition, TRecord } from '@/types';
+import { useFloatingElement } from '@/mixins/FloatingElement.ts';
+import type { Numberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import {
   type ComponentInternalInstance,
   type ComputedRef,
+  type EmitFn,
   h,
   mergeProps,
   nextTick,
-  type Prop,
   type Ref,
   type ShallowRef,
   type Slots,
@@ -138,9 +139,9 @@ export function useRenderPopover(
     {
       default: () => [
         h(BsOverlay, {
-          show: (props.overlay && isActive.value) as unknown as Prop<boolean>,
-          opacity: props.overlayOpacity as Prop<Numberish>,
-          color: props.overlayColor as Prop<string>,
+          show: props.overlay && isActive.value,
+          opacity: props.overlayOpacity,
+          color: props.overlayColor,
           onClick: () => {
             if (props.overlayClickClose) {
               useClosePopover(instance.value, isActive, 'Overlay clicked.');
@@ -176,7 +177,7 @@ export function useRenderPopover(
  * @param state          Current Popover state that will be toggled or reversed.
  */
 export function useTogglePopoverState(
-  emit: TEmitFn,
+  emit: EmitFn,
   isPopoverOpen: Ref<boolean>,
   isDisabled: boolean,
   state: boolean

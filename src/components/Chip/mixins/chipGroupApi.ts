@@ -1,17 +1,15 @@
 import { BsButton } from '@/components/Button';
 import { BsChip } from '@/components/Chip';
-import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type {
-  TBsButton,
-  TBsChip,
-  TButtonMode,
   TChipContainer,
   TChipGroupOptionProps,
   TChipOptionItem,
+  TChipOptionProps,
   TChipValue,
-  TRecord,
-} from '@/types';
-import type { Prop, Ref, Slots, VNode } from 'vue';
+} from '@/components/Chip/types';
+import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type { Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, createTextVNode, h, renderSlot, toDisplayString } from 'vue';
 
 export function useSetSliderSize(slider: TChipContainer): void {
@@ -63,20 +61,23 @@ function createSliderArrow(
       class: [`${cssPrefix}chip-slide-${direction}`],
     },
     [
-      h<TBsButton>(BsButton, {
-        mode: 'icon' as Prop<TButtonMode>,
-        flat: true as unknown as Prop<boolean>,
-        color: props.sliderButtonColor as Prop<string>,
-        icon: (direction === 'prev' ? 'chevron_backward' : 'chevron_forward') as Prop<string>,
-        iconSize: 24 as Prop<number>,
-        disabled: !canScroll as unknown as Prop<boolean>,
+      h(BsButton, {
+        mode: 'icon',
+        flat: true,
+        color: props.sliderButtonColor,
+        icon: direction === 'prev' ? 'chevron_backward' : 'chevron_forward',
+        iconSize: 24,
+        disabled: !canScroll,
         onClick: () => scrollTo(direction, scrollOffset, slider),
       }),
     ]
   );
 }
 
-function createChipAttrs(props: Readonly<TChipGroupOptionProps>, item: TChipOptionItem): TBsChip {
+function createChipAttrs(
+  props: Readonly<TChipGroupOptionProps>,
+  item: TChipOptionItem
+): TChipOptionProps {
   const selected = useChipIsSelected(item, props.modelValue);
   const attrs: TRecord = {
     ...item,
@@ -111,7 +112,7 @@ function createChipElement(
 ): VNode {
   const chipProps = createChipAttrs(props, item);
 
-  return h<TBsChip>(
+  return h(
     BsChip,
     {
       key: `chip-${index}`,

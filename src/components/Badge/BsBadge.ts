@@ -1,7 +1,20 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TBadgeOptionProps, TBadgeType, TBsBadge } from '@/components/Badge/types';
 import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
 import { booleanProp, stringProp } from '@/mixins/CommonProps.ts';
-import type { Prop } from 'vue';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  Prop,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { defineComponent } from 'vue';
 
 const badgeProps = {
@@ -57,4 +70,25 @@ export default defineComponent<TBsBadge>({
 
     return () => useWrapSlotDefault(thisProps.tag || 'span', slots, makeBadgeClasses(thisProps));
   },
-});
+}) as DefineComponent<
+  TBsBadge,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TBadgeOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsBadge>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

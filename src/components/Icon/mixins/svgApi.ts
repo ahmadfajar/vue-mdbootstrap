@@ -6,8 +6,9 @@ import {
 } from '@/components/Icon/mixins/iconApi.ts';
 import type { TFontAwesomeVariant, TIconData, TIconOptionProps } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import type { MaybeNumberish, Numberish, RawProps, TRawCacheItem, TRecord } from '@/types';
-import { CacheManager } from '@/utils/CacheManager.ts';
+import type { MaybeNumberish, Numberish, TRecord } from '@/types';
+import type { RawProps } from '@/types/internals.ts';
+import { CacheManager, type TRawCacheItem } from '@/utils/CacheManager.ts';
 import Helper from '@/utils/Helper.ts';
 import axios, { type AxiosError } from 'axios';
 import { XMLParser } from 'fast-xml-parser';
@@ -97,7 +98,7 @@ export function useGetGoogleIcon(name: string, filled?: boolean): Promise<TIconD
 
 function fontAwesomeIconUrl(name: string, variant: string, version: string): string {
   // return `https://site-assets.fontawesome.com/releases/v${version}/svgs/${variant}/${name}.svg`;
-  return `https://raw.githubusercontent.com/FortAwesome/Font-Awesome/refs/heads/fa-release-${version}/svgs-full/${variant}/${name}.svg`
+  return `https://raw.githubusercontent.com/FortAwesome/Font-Awesome/refs/heads/fa-release-${version}/svgs-full/${variant}/${name}.svg`;
 }
 
 export function useGetFontAwesome(
@@ -270,9 +271,9 @@ export function useSvgIconClasses(props: Readonly<TIconOptionProps>): TRecord {
     [`${cssPrefix}flip-both`]: props.flip === 'both',
     [`${cssPrefix}flip-vertical`]: props.flip === 'vertical',
     [`${cssPrefix}flip-horizontal`]: props.flip === 'horizontal',
-    [`${cssPrefix}rotate-90`]: props.rotate && parseInt(props.rotate as string, 10) === 90,
-    [`${cssPrefix}rotate-180`]: props.rotate && parseInt(props.rotate as string, 10) === 180,
-    [`${cssPrefix}rotate-270`]: props.rotate && parseInt(props.rotate as string, 10) === 270,
+    [`${cssPrefix}rotate-90`]: props.rotate && parseInt(props.rotate, 10) === 90,
+    [`${cssPrefix}rotate-180`]: props.rotate && parseInt(props.rotate, 10) === 180,
+    [`${cssPrefix}rotate-270`]: props.rotate && parseInt(props.rotate, 10) === 270,
   };
 }
 
@@ -324,6 +325,14 @@ export function useCircleSizeStyles(diameter: number): Record<string, string> {
   };
 }
 
+/**
+ * Function to draw inline SVG XML directly.
+ *
+ * @param data   The SVG XML string
+ * @param width  The desired {@link Element} width
+ * @param height The desired {@link Element} height
+ * @param clazz  Optional CSS class name
+ */
 export function useRenderSVG(
   data: string,
   width: Numberish,

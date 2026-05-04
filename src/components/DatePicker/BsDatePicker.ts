@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   DatePickerConst,
   useParseDate,
   useRenderDatePicker,
+  useSetupDatePickerWatchers,
 } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import { datePickerProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
 import type {
@@ -10,7 +12,18 @@ import type {
   TDateTimePickerMode,
 } from '@/components/DatePicker/types';
 import { isServer } from '@/mixins/CommonApi.ts';
-import { computed, defineComponent, ref, watch } from 'vue';
+import type { TRecord } from '@/types';
+import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent<TBsDatePicker>({
   name: 'BsDatePicker',
@@ -32,37 +45,14 @@ export default defineComponent<TBsDatePicker>({
     const showTime = computed(() =>
       [DatePickerConst.DATETIME, DatePickerConst.TIME].includes(pickerMode.value)
     );
-    const ensureViewMode = () => {
-      if (currentView.value === DatePickerConst.DATETIME) {
-        currentView.value = DatePickerConst.DATE as TDateTimePickerMode;
-      }
-    };
 
-    ensureViewMode();
-    watch(
-      () => thisProps.viewMode || thisProps.mode,
-      (value) => {
-        value && (currentView.value = value);
-        ensureViewMode();
-      }
-    );
-    watch(
-      () => thisProps.modelValue,
-      (value) => {
-        localValue.value = useParseDate(value).setLocale(locale.value);
-        if (pickerMode.value !== DatePickerConst.YEAR) {
-          calendarDate.value = localValue.value.toJSDate();
-        }
-      }
-    );
-    watch(
-      () => thisProps.locale,
-      (value) => {
-        if (value) {
-          locale.value = value;
-          localValue.value = localValue.value.setLocale(value);
-        }
-      }
+    useSetupDatePickerWatchers(
+      thisProps,
+      pickerMode,
+      currentView,
+      locale,
+      localValue,
+      calendarDate
     );
 
     return () =>
@@ -77,4 +67,25 @@ export default defineComponent<TBsDatePicker>({
         calendarDate
       );
   },
-});
+}) as DefineComponent<
+  TBsDatePicker,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  UpdateModelValueEventProps<string>,
+  string,
+  PublicProps,
+  Readonly<TDatePickerOptionProps> & Readonly<UpdateModelValueEventPublic<string>>,
+  ExtractDefaultPropTypes<TBsDatePicker>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

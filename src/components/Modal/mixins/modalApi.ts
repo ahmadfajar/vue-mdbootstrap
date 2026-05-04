@@ -1,4 +1,5 @@
 import { BsOverlay } from '@/components/Animation';
+import type { TModalOptionProps } from '@/components/Modal/types';
 import { useClosePopover } from '@/components/Popover/mixins/popoverApi.ts';
 import {
   cssPrefix,
@@ -7,17 +8,9 @@ import {
   useRenderTransition,
   useWrapSlot,
 } from '@/mixins/CommonApi.ts';
-import type { TModalOptionProps, TRecord } from '@/types';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type {
-  ComponentInternalInstance,
-  ComputedRef,
-  Prop,
-  Ref,
-  ShallowRef,
-  Slots,
-  VNode,
-} from 'vue';
+import type { ComponentInternalInstance, ComputedRef, Ref, ShallowRef, Slots, VNode } from 'vue';
 import { createCommentVNode, createTextVNode, h, Teleport } from 'vue';
 
 export function useSetDialogMaxHeight(
@@ -69,11 +62,11 @@ export function useRenderModalDialog(
 ): VNode {
   return h(Teleport, { to: 'body' }, [
     h(BsOverlay, {
-      color: props.overlayColor as Prop<string>,
-      opacity: props.overlayOpacity as Prop<number>,
-      show: (modalOpen.value && props.overlay) as unknown as Prop<boolean>,
-      fixed: true as unknown as Prop<boolean>,
-      zIndex: 1037 as Prop<number>,
+      color: props.overlayColor,
+      opacity: props.overlayOpacity,
+      show: modalOpen.value && props.overlay,
+      fixed: true,
+      zIndex: 1037,
     }),
     createModalDialog(
       slots,

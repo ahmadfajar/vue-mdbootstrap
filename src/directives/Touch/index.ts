@@ -1,5 +1,29 @@
-import type { IBindingElement, TouchDirectiveEvent, TouchEventListener, TRecord } from '@/types';
+import type { IBindingElement, TRecord } from '@/types';
 import type { Directive, DirectiveBinding } from 'vue';
+
+export declare interface TouchDirectiveEvent {
+  touchstartX: number;
+  touchstartY: number;
+  touchendX: number;
+  touchendY: number;
+  touchmoveX: number;
+  touchmoveY: number;
+  deltaX: number;
+  deltaY: number;
+  left?: (evt: TouchDirectiveEvent) => void;
+  right?: (evt: TouchDirectiveEvent) => void;
+  up?: (evt: TouchDirectiveEvent) => void;
+  down?: (evt: TouchDirectiveEvent) => void;
+  start?: (evt: TouchDirectiveEvent) => void;
+  move?: (evt: TouchDirectiveEvent) => void;
+  end?: (evt: TouchDirectiveEvent) => void;
+}
+
+export declare interface TouchEventListener {
+  touchstart(e: TouchEvent): void;
+  touchend(e: TouchEvent): void;
+  touchmove(e: TouchEvent): void;
+}
 
 function handleGesture(binding: TouchDirectiveEvent) {
   const { touchstartX, touchendX, touchstartY, touchendY } = binding;
@@ -23,8 +47,8 @@ function touchStart(event: TouchEvent, binding: TouchDirectiveEvent) {
   // event.preventDefault();
   const touch = event.changedTouches[0];
 
-  binding.touchstartX = touch!.clientX;
-  binding.touchstartY = touch!.clientY;
+  binding.touchstartX = touch.clientX;
+  binding.touchstartY = touch.clientY;
 
   binding.start && binding.start(Object.assign(event, binding));
 }
@@ -32,8 +56,8 @@ function touchStart(event: TouchEvent, binding: TouchDirectiveEvent) {
 function touchEnd(event: TouchEvent, binding: TouchDirectiveEvent) {
   const touch = event.changedTouches[0];
 
-  binding.touchendX = touch!.clientX;
-  binding.touchendY = touch!.clientY;
+  binding.touchendX = touch.clientX;
+  binding.touchendY = touch.clientY;
 
   binding.end && binding.end(Object.assign(event, binding));
   handleGesture(binding);
@@ -43,13 +67,13 @@ function touchMove(event: TouchEvent, binding: TouchDirectiveEvent) {
   // event.preventDefault();
   const touch = event.changedTouches[0];
 
-  binding.touchmoveX = touch!.clientX;
-  binding.touchmoveY = touch!.clientY;
+  binding.touchmoveX = touch.clientX;
+  binding.touchmoveY = touch.clientY;
 
   binding.move && binding.move(Object.assign(event, binding));
 }
 
-declare interface TouchValueBinding {
+export declare interface TouchValueBinding {
   left?: (evt: TouchDirectiveEvent) => void;
   right?: (evt: TouchDirectiveEvent) => void;
   up?: (evt: TouchDirectiveEvent) => void;
@@ -59,7 +83,7 @@ declare interface TouchValueBinding {
   end?: (evt: TouchDirectiveEvent) => void;
 }
 
-declare interface TouchDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
+export declare interface TouchDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
   value: TouchValueBinding;
   modifiers?: {
     parent?: boolean;
@@ -133,7 +157,7 @@ function unmounted(el: IBindingElement, binding: TouchDirectiveBinding) {
   (target as IBindingElement).__touchEvents = undefined;
 }
 
-export const Touch: Directive = {
+export const Touch: Directive<HTMLElement, TouchValueBinding, string, never> = {
   mounted,
   unmounted,
 };

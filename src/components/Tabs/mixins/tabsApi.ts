@@ -1,8 +1,15 @@
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
+import type { TAllowedIconProps } from '@/components/Avatar/types';
 import { BsIcon } from '@/components/Icon';
 import BsTabItem from '@/components/Tabs/BsTabItem.ts';
 import BsTabLabel from '@/components/Tabs/BsTabLabel.ts';
-import TabsProvider from '@/components/Tabs/mixins/TabsProvider.ts';
+import { type ITabsProvider } from '@/components/Tabs/mixins/TabsProvider.ts';
+import type {
+  TOrientation,
+  TTabItemOptionProps,
+  TTabLabelOptionProps,
+  TTabsOptionProps,
+} from '@/components/Tabs/types';
 import { Touch } from '@/directives';
 import {
   cssPrefix,
@@ -11,21 +18,10 @@ import {
   useMergeClass,
   useRenderRouter,
 } from '@/mixins/CommonApi.ts';
-import type {
-  IVNode,
-  Numberish,
-  TAllowedIconProps,
-  TBsIcon,
-  TBsTabItem,
-  TOrientation,
-  TRecord,
-  TRouterLinkProps,
-  TTabItemOptionProps,
-  TTabLabelOptionProps,
-  TTabsOptionProps,
-} from '@/types';
+import type { Numberish, TRecord, TRouterLinkProps } from '@/types';
+import type { VNodeContext } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
-import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import type { ComputedRef, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h, normalizeClass, toDisplayString, withDirectives } from 'vue';
 
 export function useTabViewClassNames(
@@ -62,7 +58,7 @@ export function useTabViewClassNames(
   if (Helper.isString(props.innerClass) && !Helper.isEmpty(props.innerClass)) {
     cssClasses.push(props.innerClass);
   } else if (!Helper.isEmpty(props.innerClass)) {
-    cssClasses = cssClasses.concat(props.innerClass as string | string[]);
+    cssClasses = cssClasses.concat(props.innerClass);
   }
 
   return cssClasses;
@@ -70,7 +66,7 @@ export function useTabViewClassNames(
 
 export function useTabItemClassNames(
   props: Readonly<TTabItemOptionProps>,
-  tabs?: TabsProvider
+  tabs?: ITabsProvider
 ): TRecord {
   return {
     'tab-item': true,
@@ -104,8 +100,8 @@ function renderTabIconWithCondition(
   unMatchCondition?: VNode
 ): VNode {
   if (condition) {
-    return h<TBsIcon>(BsIcon, {
-      size: iconSize as Prop<Numberish>,
+    return h(BsIcon, {
+      size: iconSize,
       ...useCreateIconProps(props),
     });
   } else {
@@ -122,7 +118,10 @@ function tabItemAttrs(props: Readonly<TTabItemOptionProps>): TRecord {
   };
 }
 
-function tabLabelAttrs(props: Readonly<TTabItemOptionProps>, provider?: TabsProvider): TRecord {
+function tabLabelAttrs(
+  props: Readonly<TTabItemOptionProps>,
+  provider?: ITabsProvider
+): TTabLabelOptionProps {
   return {
     label: props.label,
     icon: props.icon,
@@ -140,7 +139,7 @@ function tabLabelAttrs(props: Readonly<TTabItemOptionProps>, provider?: TabsProv
 
 function tabItemOnClick(
   props: Readonly<TTabItemOptionProps>,
-  provider?: TabsProvider,
+  provider?: ITabsProvider,
   tabIndex?: number,
   event?: Event
 ): void {
@@ -156,7 +155,7 @@ function createTabItemLink(
   props: Readonly<TTabItemOptionProps>,
   itemClasses: ComputedRef<TRecord>,
   tabIndex: Ref<number | undefined>,
-  provider?: TabsProvider,
+  provider?: ITabsProvider,
   mountedEvent = false
 ): VNode {
   const thisProps: TRouterLinkProps = {
@@ -164,9 +163,10 @@ function createTabItemLink(
     class: itemClasses.value,
     href: !props.disabled ? props.url : undefined,
   };
+
   if (mountedEvent) {
     thisProps.onVnodeBeforeMount = (vnode: VNode) => {
-      const vm = (vnode as IVNode).ctx;
+      const vm = (vnode as VNodeContext).ctx;
       if (vm && provider) {
         tabIndex.value = provider.registerTabItem(vm) - 1;
       }
@@ -184,7 +184,7 @@ function createTabItemRouter(
   props: Readonly<TTabItemOptionProps>,
   itemClasses: ComputedRef<TRecord>,
   tabIndex: Ref<number | undefined>,
-  provider?: TabsProvider,
+  provider?: ITabsProvider,
   mountedEvent = false
 ): VNode {
   const thisProps: TRouterLinkProps = {
@@ -195,9 +195,10 @@ function createTabItemRouter(
       ? (props.location ?? (props.pathName ? { name: props.pathName } : props.path))
       : undefined,
   };
+
   if (mountedEvent) {
     thisProps.onVnodeBeforeMount = (vnode: VNode) => {
-      const vm = (vnode as IVNode).ctx;
+      const vm = (vnode as VNodeContext).ctx;
       if (vm && provider) {
         tabIndex.value = provider.registerTabItem(vm) - 1;
       }
@@ -215,7 +216,7 @@ export function useRenderTabItem(
   props: Readonly<TTabItemOptionProps>,
   tabItemClasses: ComputedRef<TRecord>,
   tabIndex: Ref<number | undefined>,
-  provider?: TabsProvider
+  provider?: ITabsProvider
 ): VNode {
   if (useHasRouter(props)) {
     return createTabItemRouter(props, tabItemClasses, tabIndex, provider, true);
@@ -264,9 +265,9 @@ export function useRenderTabLabel(
 function createTabItemProps(
   props: Readonly<TTabsOptionProps>,
   tabPane: Readonly<TTabItemOptionProps>,
-  provider: TabsProvider,
+  provider: ITabsProvider,
   index: number
-): TRecord {
+): TTabItemOptionProps {
   return {
     id: tabPane.id ? `tabItem-${tabPane.id}` : undefined,
     icon: tabPane.icon,
@@ -282,6 +283,7 @@ function createTabItemProps(
     ariaLabel: tabPane.ariaLabel,
     active: tabPane.active || props.modelValue === tabPane.id || props.modelValue === index,
     activeClass: tabPane.activeClass || props.activeClass,
+    // @ts-expect-error: assigned onClick event
     onClick: (e: Event) => !tabPane.disabled && tabItemOnClick(props, provider, index, e),
   };
 }
@@ -290,7 +292,7 @@ function renderVerticalTabView(
   slots: Slots,
   props: Readonly<TTabsOptionProps>,
   tabClasses: ComputedRef<string[]>,
-  provider: TabsProvider
+  provider: ITabsProvider
 ): VNode {
   return h(
     'div',
@@ -322,7 +324,7 @@ function renderVerticalTabView(
             },
             [
               ...provider.tabPanels.map((it, idx) => {
-                return h<TBsTabItem>(BsTabItem, {
+                return h(BsTabItem, {
                   key: `tab-item-${idx}`,
                   ...createTabItemProps(
                     props,
@@ -399,7 +401,7 @@ function renderHorizontalTabView(
   tabClasses: ComputedRef<string[]>,
   sliderRef: Ref<HTMLElement | undefined>,
   scrollOffset: Ref<number>,
-  provider: TabsProvider
+  provider: ITabsProvider
 ): VNode {
   return h(
     'div',
@@ -433,7 +435,7 @@ function renderHorizontalTabView(
                 ],
               },
               provider.tabPanels.map((it, idx) =>
-                h<TBsTabItem>(BsTabItem, {
+                h(BsTabItem, {
                   key: `tab-item-${idx}`,
                   ...createTabItemProps(
                     props,
@@ -480,7 +482,7 @@ export function useRenderTabView(
   tabClasses: ComputedRef<string[]>,
   sliderRef: Ref<HTMLElement | undefined>,
   scrollOffset: Ref<number>,
-  provider: TabsProvider
+  provider: ITabsProvider
 ): VNode {
   if (orientation.value === 'vertical') {
     return renderVerticalTabView(slots, props, tabClasses, provider);

@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
-import { textFieldProps } from '@/components/Field/mixins/fieldProps.ts';
+import { inputFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
   useFieldControlClasses,
   useFieldWrapperClasses,
@@ -8,34 +9,52 @@ import {
 } from '@/components/Field/mixins/textFieldApi.ts';
 import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
 import { validationProps } from '@/components/Field/mixins/validationProps.ts';
+import type { TBsTextArea, TTextAreaOptionProps } from '@/components/Field/types';
+import type {
+  FieldSlots,
+  TextAreaEventProps,
+  TextAreaEventPublic,
+} from '@/components/Field/types/internals.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
-import type { MaybeNumberish, TBsTextArea, TRecord, TTextAreaOptionProps } from '@/types';
+import type { MaybeNumberish, MaybeString, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { computed, defineComponent, ref, watchEffect } from 'vue';
+
+const textAreaProps = {
+  ...inputProps,
+  ...inputFieldProps,
+  ...validationProps,
+  autocomplete: {
+    type: [String, Boolean],
+    default: false,
+  },
+  autofocus: booleanProp,
+  autoGrow: booleanProp,
+  modelValue: stringProp,
+  noResize: booleanProp,
+  placeholder: stringProp,
+  rows: {
+    type: [String, Number],
+    default: 2,
+    validator: (v: string): boolean => !isNaN(parseInt(v, 10)),
+  },
+  rowHeight: validStringOrNumberProp,
+};
 
 export default defineComponent<TBsTextArea>({
   name: 'BsTextArea',
-  props: {
-    ...inputProps,
-    ...textFieldProps,
-    ...validationProps,
-    autocomplete: {
-      type: [String, Boolean],
-      default: false,
-    },
-    autofocus: booleanProp,
-    autoGrow: booleanProp,
-    modelValue: stringProp,
-    noResize: booleanProp,
-    placeholder: stringProp,
-    rows: {
-      type: [String, Number],
-      default: 2,
-      validator: (v: string): boolean => !isNaN(parseInt(v, 10)),
-    },
-    rowHeight: validStringOrNumberProp,
-  },
+  props: textAreaProps,
   emits: ['blur', 'focus', 'clear', 'keydown', 'update:model-value'],
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TTextAreaOptionProps>;
@@ -45,12 +64,12 @@ export default defineComponent<TBsTextArea>({
         : thisProps.autocomplete
           ? 'on'
           : null;
-    const localValue = ref<string | undefined | null>(thisProps.modelValue);
+    const localValue = ref<MaybeString>(thisProps.modelValue);
     const rowHeight = ref<MaybeNumberish>(thisProps.rowHeight);
     const inputRef = ref<HTMLTextAreaElement>();
     const isFocused = ref(false);
-    const validator = useGetValidationResult(thisProps, isFocused);
-
+    const { hasError, hasValidated, showValidationError, showHelpText, errorItems } =
+      useGetValidationResult(thisProps, isFocused);
     const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, localValue));
 
     const showAppendIcon = computed(
@@ -61,7 +80,7 @@ export default defineComponent<TBsTextArea>({
     );
 
     const wrapperClasses = computed<TRecord>(() =>
-      useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
+      useFieldWrapperClasses(thisProps, hasValidated.value, hasError.value)
     );
 
     const controlClasses = computed<TRecord>(() => ({
@@ -74,7 +93,7 @@ export default defineComponent<TBsTextArea>({
 
     watchEffect(() => {
       localValue.value = thisProps.modelValue;
-      
+
       if (
         thisProps.autoGrow &&
         !thisProps.noResize &&
@@ -98,11 +117,32 @@ export default defineComponent<TBsTextArea>({
         isFocused,
         autocomplete,
         showClearButton,
-        validator.showHelpText,
-        validator.showValidationError,
-        validator.hasValidated,
-        validator.hasError,
-        validator.errorItems
+        showHelpText,
+        showValidationError,
+        hasValidated,
+        hasError,
+        errorItems
       );
   },
-});
+}) as DefineComponent<
+  TBsTextArea,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  TextAreaEventProps,
+  string,
+  PublicProps,
+  Readonly<TTextAreaOptionProps> & Readonly<TextAreaEventPublic>,
+  ExtractDefaultPropTypes<TBsTextArea>,
+  SlotsType<FieldSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

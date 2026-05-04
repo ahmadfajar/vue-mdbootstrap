@@ -1,5 +1,5 @@
+import type { TSideDrawerPosition } from '@/components/Drawer/types';
 import { booleanProp, booleanTrueProp, stringProp } from '@/mixins/CommonProps.ts';
-import type { TSideDrawerPosition } from '@/types';
 import type { Prop } from 'vue';
 
 export const sideDrawerProps = {

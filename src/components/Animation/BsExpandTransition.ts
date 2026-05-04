@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   afterEnter,
   afterLeave,
@@ -6,6 +7,18 @@ import {
   onEnter,
   onLeave,
 } from '@/components/Animation/mixins/expandTransitionApi.ts';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import { defineComponent, h, Transition } from 'vue';
 
 export default defineComponent({
@@ -28,4 +41,25 @@ export default defineComponent({
         }
       );
   },
-});
+}) as DefineComponent<
+  {},
+  () => VNode,
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<{}>,
+  {},
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

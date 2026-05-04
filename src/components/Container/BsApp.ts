@@ -1,12 +1,20 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import type { TAppContainerOptionProps, TBsAppContainer } from '@/components/Container/types';
 import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
-import type {
-  IComponentInstance,
-  TAppContainerOptionProps,
-  TBsAppContainer,
-  TVueMdb,
-} from '@/types';
+import type { TRecord, TVueMdb } from '@/types';
+import type { ComponentContextInstance, VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { defineComponent, getCurrentInstance, h, onMounted, onUnmounted, ref } from 'vue';
 
 export default defineComponent<TBsAppContainer>({
@@ -30,7 +38,7 @@ export default defineComponent<TBsAppContainer>({
       if (instance && vueMdb.value) {
         const rect =
           (
-            (instance as IComponentInstance).ctx.$el as HTMLElement | null
+            (instance as ComponentContextInstance).ctx.$el as HTMLElement | null
           )?.getBoundingClientRect() ?? thisElement.value?.getBoundingClientRect();
 
         vueMdb.value.app[thisProps.id as string] = {
@@ -76,4 +84,25 @@ export default defineComponent<TBsAppContainer>({
         slots.default && slots.default()
       );
   },
-});
+}) as DefineComponent<
+  TBsAppContainer,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TAppContainerOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsAppContainer>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

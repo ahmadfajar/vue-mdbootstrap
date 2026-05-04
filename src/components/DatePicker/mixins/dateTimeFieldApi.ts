@@ -1,5 +1,7 @@
-import { BsDatePicker } from '@/components/DatePicker';
+import type { TIconVariant } from '@/components/Avatar/types';
+import BsDatePicker from '@/components/DatePicker/BsDatePicker.ts';
 import { useParseDate } from '@/components/DatePicker/mixins/datePickerApi.ts';
+import type { TDateTimeFieldOptionProps, TDateTimePickerMode } from '@/components/DatePicker/types';
 import {
   useCreateFieldActionIcon,
   useCreateFieldInnerWrapper,
@@ -18,21 +20,10 @@ import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.
 import { BsPopover } from '@/components/Popover';
 import { useTogglePopoverState } from '@/components/Popover/mixins/popoverApi.ts';
 import { cssPrefix, useMergeClass } from '@/mixins/CommonApi.ts';
-import type {
-  Numberish,
-  TBsDatePicker,
-  TBsPopover,
-  TButtonColor,
-  TDateTimeFieldOptionProps,
-  TDateTimePickerMode,
-  TEmitFn,
-  TIconVariant,
-  TPopoverPosition,
-  TRecord,
-} from '@/types';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { DateTime } from 'luxon';
-import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import type { ComputedRef, EmitFn, Ref, Slots, VNode } from 'vue';
 import { Fragment, h } from 'vue';
 
 export function useParseDateTimeFromFormat(
@@ -69,7 +60,7 @@ export function useParseDateTimeFromFormat(
 }
 
 function createDateTimeInputField(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TDateTimeFieldOptionProps>,
   displayValue: Ref<string | undefined>,
   isFocused: Ref<boolean>,
@@ -108,7 +99,7 @@ function createDateTimeInputField(
 }
 
 function toggleFocusedAndPopoverState(
-  emit: TEmitFn,
+  emit: EmitFn,
   hasFocused: Ref<boolean>,
   popoverOpen: Ref<boolean>,
   openOnHover: boolean,
@@ -123,7 +114,7 @@ function toggleFocusedAndPopoverState(
 
 export function useRenderDateTimeField(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TDateTimeFieldOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
@@ -224,18 +215,18 @@ export function useRenderDateTimeField(
           ),
         ]
       ),
-      h<TBsPopover>(
+      h(
         BsPopover,
         {
-          color: null,
-          space: (props.outlined ? 2 : 1) as Prop<number>,
+          color: undefined,
+          space: props.outlined ? 2 : 1,
           class: props.pickerCls
             ? useMergeClass(props.pickerCls, `${cssPrefix}popover-datetime`)
             : `${cssPrefix}popover-datetime`,
-          placement: props.pickerPlacement as Prop<TPopoverPosition>,
-          transition: props.pickerTransition as Prop<string>,
-          open: isPopoverOpen.value as unknown as Prop<boolean>,
-          trigger: activator.value as Prop<HTMLElement>,
+          placement: props.pickerPlacement,
+          transition: props.pickerTransition,
+          open: isPopoverOpen.value,
+          trigger: activator.value,
           onClose: () => {
             isFocused.value = false;
             useTogglePopoverState(emit, isPopoverOpen, false, true);
@@ -243,20 +234,20 @@ export function useRenderDateTimeField(
         },
         {
           default: () =>
-            h<TBsDatePicker>(BsDatePicker, {
-              buttonColor: (props.pickerButton || 'secondary') as Prop<TButtonColor>,
-              selectedColor: props.pickerSelectedColor as Prop<string>,
-              surfaceColor: props.pickerColor as Prop<string>,
-              surfaceClass: props.surfaceCls as Prop<string>,
-              headerColor: props.headerColor as Prop<string>,
-              headerPanel: props.headerPanel as unknown as Prop<boolean>,
-              landscape: props.landscapeMode as unknown as Prop<boolean>,
-              locale: locale.value as Prop<string>,
-              readonly: (props.readonly || props.disabled) as unknown as Prop<boolean>,
-              mode: pickerMode.value as Prop<TDateTimePickerMode>,
-              modelValue: localFieldValue.value?.toJSDate() as Prop<Date | undefined>,
-              width: props.pickerWidth as Prop<Numberish>,
-              'onUpdate:model-value': (value: string) => {
+            h(BsDatePicker, {
+              buttonColor: props.pickerButton || 'secondary',
+              selectedColor: props.pickerSelectedColor,
+              surfaceColor: props.pickerColor,
+              surfaceClass: props.surfaceCls,
+              headerColor: props.headerColor,
+              headerPanel: props.headerPanel,
+              landscape: props.landscapeMode,
+              locale: locale.value,
+              readonly: props.readonly || props.disabled,
+              mode: pickerMode.value,
+              modelValue: localFieldValue.value?.toJSDate(),
+              width: props.pickerWidth,
+              'onUpdate:modelValue': (value: string) => {
                 localFieldValue.value = useParseDate(value).setLocale(locale.value);
                 emit(
                   'update:model-value',

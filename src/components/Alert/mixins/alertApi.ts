@@ -1,5 +1,7 @@
+import type { TAlertOptionProps } from '@/components/Alert/types';
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
 import { BsCloseButton } from '@/components/Button';
+import type { TButtonColor } from '@/components/Button/types';
 import { BsIcon } from '@/components/Icon';
 import { useNormalizeIconName } from '@/components/Icon/mixins/iconApi.ts';
 import {
@@ -10,17 +12,13 @@ import {
 } from '@/mixins/CommonApi.ts';
 import type {
   PromiseVoidFunction,
-  TAlertOptionProps,
   TBooleanRecord,
-  TBsCloseButton,
-  TBsIcon,
-  TButtonColor,
   TContextColor,
   TExtendedContextColor,
 } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { isEndWith } from '@/utils/StringHelper.ts';
-import type { ComputedRef, Prop, Slots, VNode } from 'vue';
+import type { ComputedRef, Slots, VNode } from 'vue';
 import { createCommentVNode, h } from 'vue';
 
 export function useAlertClassNames(
@@ -112,16 +110,16 @@ function doRenderAlert(
         Helper.uuid(),
         { class: 'alert-icon' },
         alertIcon.value
-          ? h<TBsIcon>(BsIcon, {
+          ? h(BsIcon, {
               ...useCreateIconProps(props),
-              icon: alertIcon.value as Prop<string>,
-              size: 32 as Prop<number>,
+              icon: alertIcon.value,
+              size: 32,
             })
           : undefined
       ),
       useWrapSlotDefault('div', slots, 'flex-fill'),
       props.dismissible
-        ? h<TBsCloseButton>(BsCloseButton, {
+        ? h(BsCloseButton, {
             class: 'self-start',
             color: (props.closeButtonColor
               ? props.closeButtonColor
@@ -131,8 +129,8 @@ function doRenderAlert(
                   : 'light'
                 : alertColor.value === 'light'
                   ? 'dark'
-                  : alertColor.value) as Prop<TButtonColor>,
-            flat: true as unknown as Prop<boolean>,
+                  : alertColor.value) as TButtonColor,
+            flat: true,
             onClick: dismissHandler,
           })
         : createCommentVNode(' v-if-alert-dismissible '),
@@ -153,6 +151,6 @@ export function useRenderAlert(
     { name: props.transition },
     showAlert.value
       ? doRenderAlert(slots, props, classNames, alertColorName, alertIconName, dismissHandler)
-      : createCommentVNode(' BsAlert ')
+      : createCommentVNode(' v-if-BsAlert ')
   );
 }

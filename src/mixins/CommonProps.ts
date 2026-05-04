@@ -87,7 +87,7 @@ export const whiteColorProp = {
   default: 'white',
 };
 
-export const defaultTransitionProp = {
+export const fadeTransitionProp = {
   type: String,
   default: 'fade',
 };

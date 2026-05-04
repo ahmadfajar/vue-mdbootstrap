@@ -1,6 +1,7 @@
 import { iconVariant } from '@/components/Avatar/mixins/avatarProps.ts';
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import { validationProps } from '@/components/Field/mixins/validationProps';
+import type { TActionButtonPlacement, TActionButtonType } from '@/components/Field/types';
 import {
   popoverDefaultTransitionProp,
   popoverPlacementProp,
@@ -13,10 +14,9 @@ import {
   stringProp,
   validStringOrFloatProp,
 } from '@/mixins/CommonProps.ts';
-import type { TActionButtonPlacement, TActionButtonType } from '@/types';
 import type { Prop, PropType } from 'vue';
 
-export const textFieldProps = {
+export const inputFieldProps = {
   filled: booleanProp,
   floatingLabel: booleanProp,
   outlined: booleanProp,
@@ -31,7 +31,7 @@ export const textFieldProps = {
 
 export const numericFieldProps = {
   ...inputProps,
-  ...textFieldProps,
+  ...inputFieldProps,
   ...validationProps,
   autocomplete: {
     type: [String, Boolean],

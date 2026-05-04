@@ -1,19 +1,25 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { BsOverlay } from '@/components/Animation';
 import { BsSpinnerIcon } from '@/components/Icon';
 import { BsProgress } from '@/components/Progress';
 import { maskLoaderProps } from '@/components/Progress/mixins/maskLoaderProps.ts';
-import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import type {
   TBsMaskLoader,
-  TBsOverlay,
-  TBsProgress,
-  TBsSpinnerIcon,
   TMaskLoaderOptionProps,
   TMaskLoaderVariant,
-  TProgressControlVariant,
-} from '@/types';
+} from '@/components/Progress/types';
+import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { Prop } from 'vue';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
 import { computed, createCommentVNode, defineComponent, h } from 'vue';
 
 export default defineComponent<TBsMaskLoader>({
@@ -37,28 +43,28 @@ export default defineComponent<TBsMaskLoader>({
                 },
               },
               [
-                h<TBsOverlay>(BsOverlay, {
-                  color: props.overlayColor,
-                  opacity: props.overlayOpacity,
-                  show: props.show,
+                h(BsOverlay, {
+                  color: thisProps.overlayColor,
+                  opacity: thisProps.overlayOpacity,
+                  show: thisProps.show,
                   style: {
                     'border-radius': 'inherit',
                   },
                 }),
                 ['linear-alt', 'progress'].includes(loaderVariant.value)
-                  ? h<TBsProgress>(BsProgress, {
+                  ? h(BsProgress, {
                       class: 'self-center',
-                      color: props.spinnerColor,
-                      diameter: props.spinnerDiameter,
-                      stroke: props.spinnerThickness,
-                      type: 'spinner' as Prop<TProgressControlVariant>,
+                      color: thisProps.spinnerColor,
+                      diameter: thisProps.spinnerDiameter,
+                      stroke: thisProps.spinnerThickness,
+                      type: 'spinner',
                       style: { zIndex: 5 },
                     })
                   : loaderVariant.value === 'spinner'
-                    ? h<TBsSpinnerIcon>(BsSpinnerIcon, {
-                        color: props.spinnerColor,
-                        size: props.spinnerDiameter,
-                        spin: true as unknown as Prop<boolean>,
+                    ? h(BsSpinnerIcon, {
+                        color: thisProps.spinnerColor,
+                        size: thisProps.spinnerDiameter,
+                        spin: true,
                         style: { zIndex: 5 },
                       })
                     : h('div', {
@@ -84,4 +90,25 @@ export default defineComponent<TBsMaskLoader>({
           : createCommentVNode(' BsMaskLoader ', true)
       );
   },
-});
+}) as DefineComponent<
+  TBsMaskLoader,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TMaskLoaderOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsMaskLoader>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

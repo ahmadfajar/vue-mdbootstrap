@@ -1,13 +1,28 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import { DatePickerConst } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import {
-  DatePickerConst,
   useDatePickerHeaderStyles,
   useHeaderTitleFormatOpts,
   useRenderDatePickerHeader,
   useWatchOfDatePickerHeaderProps,
-} from '@/components/DatePicker/mixins/datePickerApi.ts';
+} from '@/components/DatePicker/mixins/datePickerHeader.ts';
 import { datePickerHeaderProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
-import type { TBsDatePickerHeader, TDatePickerHeaderProps, TRecord } from '@/types';
+import type { TDateTimePickerMode } from '@/components/DatePicker/types';
+import type {
+  TBsDatePickerHeader,
+  TDatePickerHeaderProps,
+} from '@/components/DatePicker/types/internals.ts';
+import type { TRecord } from '@/types';
 import { DateTime } from 'luxon';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent<TBsDatePickerHeader>({
@@ -62,4 +77,34 @@ export default defineComponent<TBsDatePickerHeader>({
         localValue
       );
   },
-});
+}) as DefineComponent<
+  TBsDatePickerHeader,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  DatePickerHeaderEventProps,
+  string,
+  PublicProps,
+  Readonly<TDatePickerHeaderProps> & Readonly<DatePickerHeaderEventPublic>,
+  ExtractDefaultPropTypes<TBsDatePickerHeader>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type DatePickerHeaderEventProps = {
+  'change-view'?: (view: TDateTimePickerMode) => void;
+};
+
+declare interface DatePickerHeaderEventPublic {
+  onChangeView?: (view: TDateTimePickerMode) => void;
+  '@change-view'?: (view: TDateTimePickerMode) => void;
+}

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
 import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps.ts';
 import {
@@ -8,6 +9,15 @@ import {
 import type { TBsSvgIcon, TIconData, TSvgIconOptionProps } from '@/components/Icon/types';
 import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
 import { computed, defineComponent, onBeforeMount, ref, watch } from 'vue';
 
 export default defineComponent<TBsSvgIcon>({
@@ -40,4 +50,24 @@ export default defineComponent<TBsSvgIcon>({
         svgClasses.value
       );
   },
-});
+}) as DefineComponent<
+  TBsSvgIcon,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TSvgIconOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsSvgIcon>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  never
+>;

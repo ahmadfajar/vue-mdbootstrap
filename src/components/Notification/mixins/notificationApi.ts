@@ -1,15 +1,11 @@
+import { BsCloseButton } from '@/components/Button';
 import BsNotificationBar from '@/components/Notification/BsNotificationBar.ts';
 import BsNotificationItem from '@/components/Notification/BsNotificationItem.ts';
-import type {
-  INotificationProvider,
-  TNotificationItemOptionProps,
-  TNotificationVariant,
-} from '@/components/Notification/types';
-import { BsCloseButton } from '@/framework';
+import type { INotificationProvider } from '@/components/Notification/mixins/NotificationProvider.ts';
+import type { TNotificationItemOptionProps } from '@/components/Notification/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import type { TButtonColor } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { EmitFn, Prop, Ref, ShallowRef, VNode } from 'vue';
+import type { EmitFn, Ref, ShallowRef, VNode } from 'vue';
 import { h, Teleport, toDisplayString } from 'vue';
 
 function createNotificationHolder(
@@ -33,14 +29,14 @@ function createNotificationHolder(
       value.map((option) => {
         return h(BsNotificationItem, {
           key: option.oid,
-          message: option.message as Prop<string>,
-          title: option.title as Prop<string>,
-          timeout: option.timeout as Prop<number>,
-          variant: option.variant as Prop<TNotificationVariant>,
-          clickClose: option.clickClose as unknown as Prop<boolean | undefined>,
-          closeButton: option.closeButton as unknown as Prop<boolean | undefined>,
-          iconOff: option.iconOff as unknown as Prop<boolean | undefined>,
-          progressBar: option.progressBar as unknown as Prop<boolean | undefined>,
+          message: option.message,
+          title: option.title,
+          timeout: option.timeout,
+          variant: option.variant!,
+          clickClose: option.clickClose,
+          closeButton: option.closeButton,
+          iconOff: option.iconOff,
+          progressBar: option.progressBar,
           onDismiss: () => provider.value?.remove(option),
         });
       })
@@ -114,8 +110,8 @@ export function useRenderNotificationItem(
     [
       props.progressBar
         ? h(BsNotificationBar, {
-            timeout: props.timeout as Prop<number>,
-            pause: !timerId.value as unknown as Prop<boolean>,
+            timeout: props.timeout,
+            pause: !timerId.value,
           })
         : undefined,
       props.closeButton
@@ -131,8 +127,8 @@ export function useRenderNotificationItem(
             },
             [
               h(BsCloseButton, {
-                flat: true as unknown as Prop<boolean>,
-                color: (props.variant === 'warning' ? 'dark' : 'light') as Prop<TButtonColor>,
+                flat: true,
+                color: props.variant === 'warning' ? 'dark' : 'light',
                 onClick: () => {
                   clearNotificationTimer(timerId);
                   emit('dismiss');

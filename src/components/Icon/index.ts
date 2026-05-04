@@ -7,11 +7,11 @@ import BsToggleIcon from './BsToggleIcon.ts';
 
 const BsIconPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsIcon.name as string, BsIcon);
-    app.component(BsSvgIcon.name as string, BsSvgIcon);
-    app.component(BsSpinnerIcon.name as string, BsSpinnerIcon);
-    app.component(BsToggleIcon.name as string, BsToggleIcon);
-    app.component(BsFontawesomeIcon.name as string, BsFontawesomeIcon);
+    app.component('BsIcon', BsIcon);
+    app.component('BsSvgIcon', BsSvgIcon);
+    app.component('BsSpinnerIcon', BsSpinnerIcon);
+    app.component('BsToggleIcon', BsToggleIcon);
+    app.component('BsFontawesomeIcon', BsFontawesomeIcon);
 
     // Backward compatibility
     app.component('BsIconToggle', BsToggleIcon);
@@ -21,4 +21,5 @@ const BsIconPlugin: ObjectPlugin = {
   },
 };
 
+export type * from '@/components/Icon/types';
 export { BsFontawesomeIcon, BsIcon, BsIconPlugin, BsSpinnerIcon, BsSvgIcon, BsToggleIcon };

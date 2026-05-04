@@ -1,8 +1,11 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import type { TPlacementPosition } from '@/components/Tabs/types';
 import {
   useAddTooltipListener,
   useRemoveTooltipListener,
   useSetTooltipPosition,
 } from '@/components/Tooltip/mixins/tooltipApi.ts';
+import type { TBsTooltip, TTooltipOptionProps } from '@/components/Tooltip/types';
 import { Resize, Scroll } from '@/directives';
 import { cssPrefix, useGenerateId, useRenderTransition } from '@/mixins/CommonApi.ts';
 import {
@@ -11,9 +14,23 @@ import {
   stringProp,
   validStringOrNumberProp,
 } from '@/mixins/CommonProps.ts';
-import type { TBsTooltip, TPlacementPosition, TTooltipOptionProps } from '@/types';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
-import type { ComponentInternalInstance, ComponentPublicInstance, Prop } from 'vue';
+import type {
+  ComponentInternalInstance,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComponentPublicInstance,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  Prop,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import {
   computed,
   createCommentVNode,
@@ -62,15 +79,15 @@ export default defineComponent<TBsTooltip>({
     const tooltipRef = ref<Element | null>(null);
     const tooltipArrow = ref<Element | null>(null);
     const activator = ref<Element | null>(null);
-    const active = ref<boolean>(false);
-    const isDisabled = ref<boolean>(thisProps.disabled ?? false);
+    const active = ref(false);
+    const isDisabled = ref(thisProps.disabled ?? false);
     const placementRef = ref<TPlacementPosition>(thisProps.placement || 'bottom');
 
     const isActive = computed(() => active.value || thisProps.show);
     const transition = computed(() => `${cssPrefix}tooltip-${placementRef.value}`);
     const classNames = computed(() => [`${cssPrefix}tooltip`, transition.value]);
 
-    const styles = computed(() => ({
+    const styles = computed<TRecord>(() => ({
       width: thisProps.width === 'auto' ? undefined : Helper.cssUnit(thisProps.width),
       'max-width': Helper.cssUnit(thisProps.maxWidth),
       'z-index': thisProps.zIndex,
@@ -93,6 +110,7 @@ export default defineComponent<TBsTooltip>({
 
     onMounted(() => {
       instance = getCurrentInstance();
+
       useAddTooltipListener(
         tooltipID,
         tooltipRef,
@@ -150,4 +168,51 @@ export default defineComponent<TBsTooltip>({
         slots.default && slots.default(),
       ]);
   },
-});
+}) as DefineComponent<
+  TBsTooltip,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  TooltipEventProps,
+  string,
+  PublicProps,
+  Readonly<TTooltipOptionProps> & Readonly<TooltipEventPublic>,
+  ExtractDefaultPropTypes<TBsTooltip>,
+  SlotsType<TooltipSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type TooltipEventProps = {
+  /**
+   * Fired when this Tooltip state is updated.
+   */
+  'update:show'?: (value: boolean) => void;
+};
+
+declare interface TooltipEventPublic {
+  /**
+   * Fired when this Tooltip state is updated.
+   */
+  'onUpdate:show'?: (value: boolean) => void;
+
+  /**
+   * Fired when this Tooltip state is updated.
+   */
+  '@update:show'?: (value: boolean) => void;
+}
+
+declare interface TooltipSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the Tooltip's custom content.
+   */
+  content?: () => VNode[] | VNode;
+}

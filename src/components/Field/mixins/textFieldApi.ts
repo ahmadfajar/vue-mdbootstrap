@@ -1,3 +1,4 @@
+import type { TIconVariant } from '@/components/Avatar/types';
 import {
   useOnFieldBlurred,
   useOnFieldFocused,
@@ -7,6 +8,15 @@ import {
   useOnTextFieldNodeMounted,
 } from '@/components/Field/mixins/textFieldEventApi.ts';
 import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
+import type {
+  TFieldComponent,
+  TFieldType,
+  TInputBaseProps,
+  TInputFieldProps,
+  TInputTextProps,
+  TTextAreaOptionProps,
+  TTextFieldOptionProps,
+} from '@/components/Field/types';
 import { BsIcon, BsToggleIcon } from '@/components/Icon';
 import {
   cssPrefix,
@@ -16,23 +26,14 @@ import {
 } from '@/mixins/CommonApi.ts';
 import type {
   MaybeNumberish,
+  MaybeString,
   Numberish,
   PromiseVoidFunction,
-  TBsIcon,
-  TBsToggleIcon,
   TClassList,
-  TFieldComponent,
-  TFieldType,
-  TIconVariant,
-  TInputBaseProps,
-  TInputFieldProps,
-  TInputTextProps,
   TRecord,
-  TTextAreaOptionProps,
-  TTextFieldOptionProps,
 } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { ComputedRef, EmitFn, Prop, Ref, Slots, VNode } from 'vue';
+import type { ComputedRef, EmitFn, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h, toDisplayString, vModelText, withDirectives } from 'vue';
 
 export function useFieldWrapperClasses(
@@ -77,7 +78,7 @@ export function useFieldControlClasses<T>(
 
 export function useShowClearButton(
   props: Readonly<TInputFieldProps>,
-  localValue: Ref<string | number | (string | number)[] | undefined | null>
+  localValue: Ref<Numberish | Numberish[] | undefined | null>
 ): boolean {
   return (
     props.clearButton === true &&
@@ -104,9 +105,9 @@ function createFieldIcon(
       onClick: onClickHandler,
     },
     iconName
-      ? h<TBsIcon>(BsIcon, {
-          icon: iconName as Prop<string>,
-          size: iconSize as Prop<number | undefined>,
+      ? h(BsIcon, {
+          icon: iconName,
+          size: iconSize,
         })
       : undefined
   );
@@ -388,20 +389,20 @@ export function useCreateFieldActionIcon(
           },
           [
             showClearButton
-              ? h<TBsIcon>(BsIcon, {
+              ? h(BsIcon, {
                   class: 'icon-clear',
-                  icon: `cancel_${iconVariant}` as Prop<string>,
-                  size: iconSize as Prop<Numberish>,
+                  icon: `cancel_${iconVariant}`,
+                  size: iconSize,
                   onClick: clearHandler,
                 })
               : undefined,
             showPasswordToggle
-              ? h<TBsToggleIcon>(BsToggleIcon, {
-                  icon: `visibility_${iconVariant}` as Prop<string>,
-                  toggleIcon: `visibility_off_${iconVariant}` as Prop<string>,
-                  size: iconSize as Prop<Numberish>,
-                  modelValue: passwordToggled?.value as unknown as Prop<boolean | undefined>,
-                  'onUpdate:model-value': passwordToggleHandler,
+              ? h(BsToggleIcon, {
+                  icon: `visibility_${iconVariant}`,
+                  toggleIcon: `visibility_off_${iconVariant}`,
+                  size: iconSize,
+                  modelValue: passwordToggled?.value,
+                  'onUpdate:modelValue': passwordToggleHandler,
                 })
               : undefined,
           ]
@@ -423,16 +424,16 @@ export function useCreateValidationIcon(
       hasValidated || hasError
         ? h('div', { class: `${cssPrefix}validation-icon` }, [
             hasValidated && hasError
-              ? h<TBsIcon>(BsIcon, {
+              ? h(BsIcon, {
                   class: 'icon-error text-danger',
-                  icon: `error_${iconVariant}` as Prop<string>,
-                  size: iconSize as Prop<Numberish>,
+                  icon: `error_${iconVariant}`,
+                  size: iconSize,
                 })
               : hasValidated && !hasError
-                ? h<TBsIcon>(BsIcon, {
+                ? h(BsIcon, {
                     class: 'icon-success text-success',
-                    icon: `check_${iconVariant}` as Prop<string>,
-                    size: iconSize as Prop<Numberish>,
+                    icon: `check_${iconVariant}`,
+                    size: iconSize,
                   })
                 : undefined,
           ])
@@ -498,7 +499,7 @@ export function useRenderTextField(
             showClearButton.value,
             props.actionIconVariant as TIconVariant,
             iconSize,
-            async () => await useOnFieldValueCleared(emit, localValue),
+            async () => await useOnFieldValueCleared<MaybeNumberish>(emit, localValue),
             showPasswordToggle.value,
             passwordToggled,
             passwordToggleHandler
@@ -519,10 +520,10 @@ export function useRenderTextField(
 }
 
 function createTextAreaInputField(
-  emit: EmitFn<InputTextEventEmitter<string | undefined | null>>,
+  emit: EmitFn<InputTextEventEmitter<MaybeString>>,
   props: Readonly<TTextAreaOptionProps>,
   inputRef: Ref<HTMLTextAreaElement | undefined>,
-  localValue: Ref<string | undefined | null>,
+  localValue: Ref<MaybeString>,
   rowHeight: Ref<MaybeNumberish>,
   isFocused: Ref<boolean>,
   autocomplete: string | boolean | null
@@ -539,7 +540,7 @@ function createTextAreaInputField(
       style: rowHeight.value && {
         height: Helper.cssUnit(rowHeight.value),
       },
-      'onUpdate:modelValue': (value: string | undefined | null) =>
+      'onUpdate:modelValue': (value: MaybeString) =>
         useOnFieldValueUpdated(emit, localValue, value),
       onBlur: (e: Event) => useOnFieldBlurred(emit, e, isFocused, props.disabled as boolean),
       onFocus: (e: Event) => useOnFieldFocused(emit, e, isFocused, props.disabled as boolean),
@@ -562,12 +563,12 @@ function createTextAreaInputField(
 
 export function useRenderTextArea(
   slots: Slots,
-  emit: EmitFn<InputTextEventEmitter<string | undefined | null>>,
+  emit: EmitFn<InputTextEventEmitter<MaybeString>>,
   props: Readonly<TTextAreaOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
   inputRef: Ref<HTMLTextAreaElement | undefined>,
-  localValue: Ref<string | undefined | null>,
+  localValue: Ref<MaybeString>,
   rowHeight: Ref<MaybeNumberish>,
   isFocused: Ref<boolean>,
   autocomplete: string | boolean | null,

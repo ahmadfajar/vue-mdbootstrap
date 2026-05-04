@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useAvatarIconSize,
   useCreateIconProps,
@@ -5,12 +6,24 @@ import {
   useShapeClasses,
 } from '@/components/Avatar/mixins/avatarApi.ts';
 import { avatarProps } from '@/components/Avatar/mixins/avatarProps.ts';
+import type { TAvatarOptionProps, TBsAvatar } from '@/components/Avatar/types';
 import { BsIcon } from '@/components/Icon';
 import { useGetCalcSize, useSizeStyles } from '@/components/Icon/mixins/iconApi.ts';
 import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi.ts';
-import type { TAvatarOptionProps, TBsAvatar, TBsIcon } from '@/types';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
-import { defineComponent, h, type Prop, toDisplayString } from 'vue';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
+import { defineComponent, h, toDisplayString } from 'vue';
 
 export default defineComponent<TBsAvatar>({
   name: 'BsAvatar',
@@ -46,8 +59,8 @@ export default defineComponent<TBsAvatar>({
           !Helper.isEmpty(thisProps.imgSrc)
             ? useRenderAvatarImage(thisProps)
             : !Helper.isEmpty(thisProps.icon)
-              ? h<TBsIcon>(BsIcon, {
-                  size: useAvatarIconSize(thisProps) as Prop<number | undefined>,
+              ? h(BsIcon, {
+                  size: useAvatarIconSize(thisProps),
                   ...useCreateIconProps(thisProps),
                 })
               : h(
@@ -68,4 +81,25 @@ export default defineComponent<TBsAvatar>({
         ])
       );
   },
-});
+}) as DefineComponent<
+  TBsAvatar,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TAvatarOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsAvatar>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

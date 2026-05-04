@@ -1,5 +1,7 @@
+import type { TIconVariant } from '@/components/Avatar/types';
 import { BsChip } from '@/components/Chip';
 import { BsListbox } from '@/components/Combobox';
+import type { TComboboxOptionProps, TDataListSchema } from '@/components/Combobox/types';
 import {
   useCreateFieldInnerWrapper,
   useCreateFieldWrapper,
@@ -13,26 +15,11 @@ import { BsListTileTitle } from '@/components/ListView';
 import { BsPopover } from '@/components/Popover';
 import { useTogglePopoverState } from '@/components/Popover/mixins/popoverApi.ts';
 import { cssPrefix, useRenderSlot } from '@/mixins/CommonApi.ts';
-import type {
-  IArrayStore,
-  IBsModel,
-  IBsStore,
-  Numberish,
-  PromiseVoidFunction,
-  TBsListbox,
-  TBsPopover,
-  TCheckboxPosition,
-  TComboboxOptionProps,
-  TDataListSchema,
-  TDataSource,
-  TEmitFn,
-  TIconVariant,
-  TPopoverPosition,
-  TRecord,
-} from '@/types';
+import type { IArrayStore, IBsStore, TBsModel } from '@/model';
+import type { Numberish, PromiseVoidFunction, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { kebabCase } from '@/utils/StringHelper.ts';
-import type { ComputedRef, Prop, Ref, ShallowRef, Slots, VNode } from 'vue';
+import type { ComputedRef, EmitFn, Ref, ShallowRef, Slots, VNode } from 'vue';
 import { createCommentVNode, Fragment, h, nextTick, toDisplayString } from 'vue';
 
 function createActionAppendIcon(
@@ -51,15 +38,15 @@ function createActionAppendIcon(
       showClearButton
         ? h(BsIcon, {
             class: 'icon-clear',
-            icon: `cancel_${iconVariant}` as Prop<string>,
-            size: iconSize as Prop<number | undefined>,
+            icon: `cancel_${iconVariant}`,
+            size: iconSize,
             onClick: clearHandler,
           })
         : '',
       h(BsIcon, {
         class: 'icon-expand',
-        icon: `keyboard_arrow_down_${iconVariant}` as Prop<string>,
-        size: iconSize as Prop<number | undefined>,
+        icon: `keyboard_arrow_down_${iconVariant}`,
+        size: iconSize,
         onClick: popoverHandler,
       }),
     ]
@@ -69,7 +56,7 @@ function createActionAppendIcon(
 function renderChipOrCsvItems(
   props: Readonly<TComboboxOptionProps>,
   schema: TDataListSchema,
-  selectedItems: ShallowRef<IBsModel[]>
+  selectedItems: ShallowRef<TBsModel[]>
 ): VNode {
   if (props.multiple && props.chipEnabled && selectedItems.value.length > 0) {
     return h(
@@ -80,11 +67,11 @@ function renderChipOrCsvItems(
           BsChip,
           {
             key: kebabCase(it.get(schema.displayField) as string),
-            color: props.chipColor as Prop<string>,
-            disabled: props.disabled as unknown as Prop<boolean>,
-            readonly: props.readonly as unknown as Prop<boolean>,
-            pill: props.chipPill as unknown as Prop<boolean>,
-            outlined: props.chipOutlined as unknown as Prop<boolean>,
+            color: props.chipColor,
+            disabled: props.disabled,
+            readonly: props.readonly,
+            pill: props.chipPill,
+            outlined: props.chipOutlined,
           },
           {
             default: () => toDisplayString(it.get(schema.displayField)),
@@ -101,7 +88,7 @@ function renderChipOrCsvItems(
 function renderComboboxInputField(
   props: Readonly<TComboboxOptionProps>,
   dataSchema: TDataListSchema,
-  selectedItems: ShallowRef<IBsModel[]>,
+  selectedItems: ShallowRef<TBsModel[]>,
   localValue: Ref<Numberish[]>
 ): VNode[] {
   const showPlaceholder = Helper.isEmpty(localValue.value) && !Helper.isEmpty(props.placeholder);
@@ -144,7 +131,7 @@ function renderComboboxInputField(
 }
 
 function createFieldInnerProps(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TComboboxOptionProps>,
   activator: Ref<HTMLElement | null>,
   isPopoverOpen: Ref<boolean>,
@@ -176,14 +163,14 @@ function createFieldInnerProps(
 
 export function useRenderCombobox(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TComboboxOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
   schema: TDataListSchema,
   activator: Ref<HTMLElement | null>,
   localValue: Ref<Numberish[]>,
-  selectedItems: ShallowRef<IBsModel[]>,
+  selectedItems: ShallowRef<TBsModel[]>,
   isPopoverOpen: Ref<boolean>,
   isFocused: Ref<boolean>,
   showClearButton: ComputedRef<boolean>,
@@ -286,16 +273,16 @@ export function useRenderCombobox(
           ),
         ]
       ),
-      h<TBsPopover>(
+      h(
         BsPopover,
         {
-          color: null,
-          space: (props.outlined ? 2 : 1) as Prop<number>,
-          class: ['overflow-y-hidden', `${cssPrefix}shadow-1`],
-          placement: 'bottom' as Prop<TPopoverPosition>,
-          transition: props.transition as Prop<string>,
-          open: isPopoverOpen.value as unknown as Prop<boolean>,
-          trigger: activator.value as Prop<HTMLElement>,
+          color: undefined,
+          space: props.outlined ? 2 : 1,
+          class: ['overflow-y-hidden', `${cssPrefix}shadow-1`] as never,
+          placement: 'bottom',
+          transition: props.transition,
+          open: isPopoverOpen.value,
+          trigger: activator.value,
           style: {
             [`--${cssPrefix}popover-border-radius`]: 0,
             minWidth: Helper.cssUnit(
@@ -309,56 +296,52 @@ export function useRenderCombobox(
         },
         {
           default: () =>
-            h<TBsListbox>(
+            h(
               BsListbox,
               {
-                autoload: Helper.isEmpty(props.parentValue) as unknown as Prop<boolean>,
-                borderless: true as unknown as Prop<boolean>,
-                useCheckbox: true as unknown as Prop<boolean>,
-                color: props.listboxColor as Prop<string>,
-                dataSource: props.dataSource as Prop<TDataSource>,
-                readonly: props.readonly as unknown as Prop<boolean>,
-                multiple: props.multiple as unknown as Prop<boolean>,
-                emptyDataMessage: props.emptyDataMessage as Prop<string>,
-                notFoundMessage: props.notFoundMessage as Prop<string>,
-                searchLabel: props.listboxSearchLabel as Prop<string>,
+                autoload: Helper.isEmpty(props.parentValue),
+                borderless: true,
+                useCheckbox: true,
+                color: props.listboxColor,
+                dataSource: props.dataSource,
+                readonly: props.readonly,
+                multiple: props.multiple,
+                emptyDataMessage: props.emptyDataMessage,
+                notFoundMessage: props.notFoundMessage,
+                searchLabel: props.listboxSearchLabel,
                 // searchText: (!isPopoverOpen.value ? "" : undefined),
-                itemSeparator: props.itemSeparator as unknown as Prop<boolean>,
-                itemSeparatorDark: props.itemSeparatorDark as unknown as Prop<boolean>,
-                minSearchChars: props.minSearchChars as Prop<Numberish>,
-                minSearchLength: props.minSearchLength as Prop<Numberish>,
-                maxHeight: props.listboxMaxHeight as Prop<Numberish>,
-                checkboxColor: props.checkboxColor as Prop<string>,
-                checkboxPosition: props.checkboxPosition as Prop<TCheckboxPosition>,
-                showImage: props.showImage as unknown as Prop<boolean>,
-                imageSize: props.imageSize as Prop<Numberish>,
-                circleImage: props.circleImage as unknown as Prop<boolean>,
-                roundedImage: props.roundedImage as unknown as Prop<boolean>,
-                modelValue: <Prop<string | number | string[] | number[]>>(
-                  (props.multiple
-                    ? localValue.value
-                    : localValue.value.length > 0
-                      ? localValue.value[0]
-                      : undefined)
-                ),
-                onDataBind: (items: IBsModel[]) => {
+                itemSeparator: props.itemSeparator,
+                itemSeparatorDark: props.itemSeparatorDark,
+                minSearchChars: props.minSearchChars,
+                minSearchLength: props.minSearchLength,
+                maxHeight: props.listboxMaxHeight,
+                checkboxColor: props.checkboxColor,
+                checkboxPosition: props.checkboxPosition,
+                showImage: props.showImage,
+                imageSize: props.imageSize,
+                circleImage: props.circleImage,
+                roundedImage: props.roundedImage,
+                modelValue: props.multiple
+                  ? localValue.value
+                  : localValue.value.length > 0
+                    ? localValue.value[0]
+                    : undefined,
+                onDataBind: (items: TBsModel[]) => {
                   selectedItems.value = items.filter((it) =>
                     localValue.value.some((v) => v === it.get(schema.valueField))
                   );
                   emit('data-bind', items);
                 },
                 onDataError: (error: unknown) => emit('data-error', error),
-                onDataFilter: (items: IBsModel[]) => emit('data-filter', items),
-                onSelect: (item: IBsModel) => emit('select', item),
-                onDeselect: (item: IBsModel) => emit('deselect', item),
-                'onUpdate:model-value': (
-                  values: string | number | string[] | number[] | undefined
-                ) => {
+                onDataFilter: (items: TBsModel[]) => emit('data-filter', items),
+                onSelect: (item: TBsModel) => emit('select', item),
+                onDeselect: (item: TBsModel) => emit('deselect', item),
+                'onUpdate:modelValue': (values: Numberish | Numberish[] | undefined) => {
                   localValue.value =
                     values == null ? [] : Array.isArray(values) ? values : [values];
                   emit('update:model-value', values);
                 },
-                'onUpdate:selected-value': (values: IBsModel[]) => {
+                'onUpdate:selectedValue': (values: TBsModel[]) => {
                   selectedItems.value = values;
                   emit('update:selected-value', values);
                   if (!props.multiple) {
@@ -406,7 +389,7 @@ export function useRenderCombobox(
  */
 export async function useFetchData(
   dataSchema: TDataListSchema,
-  parentValue: string | number | undefined,
+  parentValue: Numberish | undefined,
   dataSource?: IBsStore | IArrayStore
 ): Promise<void> {
   if (dataSource) {
@@ -435,6 +418,6 @@ export async function useFetchData(
 }
 
 declare type TDataItem = {
-  item: IBsModel;
+  item: TBsModel;
   index: number;
 };

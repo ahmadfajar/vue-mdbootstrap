@@ -1,9 +1,20 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type {
   TBsNotificationBar,
   TNotificationBarOptionProps,
 } from '@/components/Notification/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
+import type { TRecord } from '@/types';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
 import { defineComponent, h, onMounted, ref, watch } from 'vue';
 
 export default defineComponent<TBsNotificationBar>({
@@ -61,4 +72,25 @@ export default defineComponent<TBsNotificationBar>({
         style: { width: barWidth.value + '%' },
       });
   },
-});
+}) as DefineComponent<
+  TBsNotificationBar,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TNotificationBarOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsNotificationBar>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

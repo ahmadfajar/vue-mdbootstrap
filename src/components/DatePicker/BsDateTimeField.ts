@@ -1,24 +1,41 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { DatePickerConst } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import { dateTimeFieldProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
 import {
   useParseDateTimeFromFormat,
   useRenderDateTimeField,
 } from '@/components/DatePicker/mixins/dateTimeFieldApi.ts';
+import type {
+  TBsDateTimeField,
+  TDateTimeFieldOptionProps,
+  TDateTimePickerMode,
+} from '@/components/DatePicker/types';
 import {
   useFieldControlClasses,
   useFieldWrapperClasses,
   useShowClearButton,
 } from '@/components/Field/mixins/textFieldApi.ts';
 import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
-import { cssPrefix, isServer } from '@/mixins/CommonApi.ts';
 import type {
-  TBsDateTimeField,
-  TDateTimeFieldOptionProps,
-  TDateTimePickerMode,
-  TRecord,
-} from '@/types';
+  FieldEventProps,
+  FieldEventPublic,
+  FieldSlots,
+} from '@/components/Field/types/internals.ts';
+import { cssPrefix, isServer } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type { ClosableVoidEventProps, ClosableVoidEventPublic } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import { DateTime } from 'luxon';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsDateTimeField>({
@@ -40,24 +57,29 @@ export default defineComponent<TBsDateTimeField>({
       localFieldValue.value?.toFormat(displayFormat.value as string)
     );
     const activator = ref<HTMLElement | null>(null);
+
     const pickerMode = computed(
       () =>
         (thisProps.viewMode || thisProps.pickerMode || DatePickerConst.DATE) as TDateTimePickerMode
     );
+
     const calendarIcon = computed(() => {
       return thisProps.appendIcon || `calendar_month_${thisProps.actionIconVariant}`;
     });
-    const validator = useGetValidationResult(thisProps, isFocused);
     const showClearButton = computed<boolean>(() => useShowClearButton(thisProps, displayValue));
+    const validator = useGetValidationResult(thisProps, isFocused);
+
     const showAppendIcon = computed(
       () =>
         slots['append-inner'] != null ||
         !Helper.isEmpty(calendarIcon.value) ||
         showClearButton.value
     );
+
     const fieldWrapperClasses = computed<TRecord>(() =>
       useFieldWrapperClasses(thisProps, validator.hasValidated.value, validator.hasError.value)
     );
+
     const fieldControlClasses = computed<TRecord>(() => ({
       ...useFieldControlClasses(slots, thisProps, displayValue, isFocused, showAppendIcon.value),
       [`${cssPrefix}datetime-field`]: true,
@@ -98,4 +120,46 @@ export default defineComponent<TBsDateTimeField>({
         validator.errorItems
       );
   },
-});
+}) as DefineComponent<
+  TBsDateTimeField,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  DateTimeFieldEventProps,
+  string,
+  PublicProps,
+  Readonly<TDateTimeFieldOptionProps> & Readonly<DateTimeFieldEventPublic>,
+  ExtractDefaultPropTypes<TBsDateTimeField>,
+  SlotsType<FieldSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type DateTimeFieldEventProps = FieldEventProps<string> &
+  ClosableVoidEventProps & {
+    /**
+     * Fired when the DatePicker popup is open or showed.
+     */
+    open?: VoidFunction;
+  };
+
+declare interface DateTimeFieldEventPublic
+  extends FieldEventPublic<string>, ClosableVoidEventPublic {
+  /**
+   * Fired when the DatePicker popup is open or showed.
+   */
+  onOpen?: VoidFunction;
+
+  /**
+   * Fired when the DatePicker popup is open or showed.
+   */
+  '@open'?: VoidFunction;
+}

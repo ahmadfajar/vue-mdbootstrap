@@ -7,12 +7,13 @@ import BsTextField from './BsTextField.ts';
 
 const BsFieldPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsTextField.name as string, BsTextField);
-    app.component(BsTextArea.name as string, BsTextArea);
-    app.component(BsChipField.name as string, BsChipField);
-    app.component(BsNumericField.name as string, BsNumericField);
-    app.component(BsSearchField.name as string, BsSearchField);
+    app.component('BsTextField', BsTextField);
+    app.component('BsTextArea', BsTextArea);
+    app.component('BsChipField', BsChipField);
+    app.component('BsNumericField', BsNumericField);
+    app.component('BsSearchField', BsSearchField);
   },
 };
 
+export type * from '@/components/Field/types';
 export { BsChipField, BsFieldPlugin, BsNumericField, BsSearchField, BsTextArea, BsTextField };

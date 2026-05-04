@@ -2,23 +2,17 @@ import { BsRipple } from '@/components/Animation';
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
 import { BsBadge } from '@/components/Badge';
 import { BsIcon } from '@/components/Icon';
+import type { IListItem } from '@/components/ListView/mixins/ListItem.ts';
+import type { IListViewProvider } from '@/components/ListView/mixins/ListViewProvider.ts';
+import type { TListNavItemOptionProps } from '@/components/ListView/types';
 import { cssPrefix, useHasRouter, useRenderRouter } from '@/mixins/CommonApi.ts';
-import type {
-  IListItem,
-  IListViewProvider,
-  Numberish,
-  TBadgeType,
-  TBadgeVariant,
-  TBsRipple,
-  TListNavItemOptionProps,
-  TRecord,
-} from '@/types';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
   ComponentInternalInstance,
   ComputedRef,
-  Prop,
   Ref,
+  RendererNode,
   ShallowRef,
   Slots,
   VNode,
@@ -86,7 +80,7 @@ function renderNavItemContent(
   hasChild: Ref<boolean>,
   provider?: IListViewProvider
 ): VNode {
-  return h<TBsRipple>(
+  return h(
     BsRipple,
     {
       class: {
@@ -97,13 +91,13 @@ function renderNavItemContent(
           provider?.itemRoundedPill === true && !provider.itemRounded && !props.pillOff,
       },
       style: innerStyles.value,
-      disabled: (props.rippleOff || props.disabled) as unknown as Prop<boolean>,
+      disabled: props.rippleOff || props.disabled,
     },
     {
       default: () => [
         !Helper.isEmpty(props.icon)
           ? h(BsIcon, {
-              size: (props.iconSize ?? 24) as Prop<Numberish>,
+              size: props.iconSize ?? 24,
               ...useCreateIconProps(props),
             })
           : createCommentVNode(' v-if-BsIcon '),
@@ -119,9 +113,9 @@ function renderNavItemContent(
               BsBadge,
               {
                 class: [hasChild.value ? 'me-3' : ''],
-                color: props.badgeColor as Prop<string>,
-                type: props.badgeType as Prop<TBadgeType>,
-                variant: props.badgeVariant as Prop<TBadgeVariant>,
+                color: props.badgeColor,
+                type: props.badgeType,
+                variant: props.badgeVariant,
               },
               {
                 default: () => createTextVNode(toDisplayString(props.badge)),
@@ -129,7 +123,7 @@ function renderNavItemContent(
             )
           : createCommentVNode(' v-if-BsBadge '),
         hasChild.value
-          ? h(BsIcon, { icon: 'expand_more' as Prop<string>, class: 'expand-more' })
+          ? h(BsIcon, { class: 'expand-more', icon: 'expand_more' })
           : createCommentVNode(' v-if-arrow '),
       ],
     }
@@ -273,4 +267,38 @@ export function useRenderListNavItem(
       slots.default && slots.default(),
     ]
   );
+}
+
+export declare type ListNavItemEventProps = {
+  /**
+   * Fired when this ListNavItem or ListTile is clicked.
+   */
+  click?: (target: Event, node: RendererNode | null) => void;
+
+  /**
+   * Fired when this ListNavItem or ListTile state is updated.
+   */
+  'update:active'?: (active: boolean) => void;
+};
+
+export declare interface ListNavItemEventPublic {
+  /**
+   * Fired when this ListNavItem or ListTile is clicked.
+   */
+  onClick?: (target: Event, node: RendererNode | null) => void;
+
+  /**
+   * Fired when this ListNavItem or ListTile state is updated.
+   */
+  'onUpdate:active'?: (active: boolean) => void;
+
+  /**
+   * Fired when this ListNavItem or ListTile is clicked.
+   */
+  '@click'?: (target: Event, node: RendererNode | null) => void;
+
+  /**
+   * Fired when this ListNavItem or ListTile state is updated.
+   */
+  '@update:active'?: (active: boolean) => void;
 }

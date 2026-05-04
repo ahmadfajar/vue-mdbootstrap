@@ -1,10 +1,21 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useShapeClasses } from '@/components/Avatar/mixins/avatarApi.ts';
 import type { TBsImageHolder, TImageHolderOptionProps } from '@/components/Basic/types';
 import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
 import { useCreateSvgNode } from '@/components/Icon/mixins/svgApi.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp, stringOrNumberProp, stringProp } from '@/mixins/CommonProps.ts';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
 import { computed, defineComponent, h, toDisplayString } from 'vue';
 
 const imageHolderProps = {
@@ -77,4 +88,25 @@ export default defineComponent<TBsImageHolder>({
         ]
       );
   },
-});
+}) as DefineComponent<
+  TBsImageHolder,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TImageHolderOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsImageHolder>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

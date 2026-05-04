@@ -1,33 +1,84 @@
 import type {
-  MaybeNumberish,
-  Numberish,
   TAlignment,
-  TEmitFn,
   TPlacementPosition,
-  TRecord,
   TTabItemOptionProps,
   TTabsBaseProps,
   TTabsVariant,
-} from '@/types';
+} from '@/components/Tabs/types';
+import type { MaybeNumberish, Numberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { ComponentInternalInstance, Ref, ShallowReactive } from 'vue';
+import type { ComponentInternalInstance, EmitFn, Ref, ShallowReactive } from 'vue';
 import { isRef, shallowReactive } from 'vue';
 
+export interface ITabsProvider {
+  tabItems: ShallowReactive<ComponentInternalInstance[]>;
+  tabPanels: ShallowReactive<ComponentInternalInstance[]>;
+  readonly activeTab: ComponentInternalInstance | undefined;
+  readonly activeTabIndex: number | undefined;
+  readonly alignment: TAlignment;
+  readonly contentTransition: string;
+  readonly iconPosition: TPlacementPosition;
+  readonly iconSize: number;
+  readonly tabClass: string | string[] | undefined;
+  readonly tabPosition: TPlacementPosition | undefined;
+  readonly variant: TTabsVariant | string | undefined;
+
+  /**
+   * Register a TabItem.
+   *
+   * @param {ComponentInternalInstance} item The TabItem item
+   * @returns {number} The TabItem index position
+   */
+  registerTabItem(item: ComponentInternalInstance): number;
+
+  /**
+   * Register a TabPanel.
+   *
+   * @param {ComponentInternalInstance} item The TabPanel item
+   * @returns {number} The TabPanel index position
+   */
+  registerTabPanel(item: ComponentInternalInstance): number;
+
+  /**
+   * Unregister all the TabItems and TabPanels.
+   *
+   * @returns {void}
+   */
+  unRegisterAll(): void;
+
+  /**
+   * Unregister the TabItem and TabPanel.
+   *
+   * @param {string|number} key The tab index position or tab ID.
+   * @returns {void}
+   */
+  unRegisterTab(key: Numberish): void;
+
+  /**
+   * Set the active tab.
+   *
+   * @param {string|number} key The tab index position or tab ID.
+   * @returns {void}
+   */
+  setActiveTab(key: MaybeNumberish): void;
+}
+
 /**
- * Class TabsProvider which is used for BsTab's component dependency injection.
+ * Class TabsProvider which is used by BsTabs component to controls its children.
  *
  * @author Ahmad Fajar
- * @since  22/11/2022, modified: 01/02/2025 16:18
+ * @since  22/11/2022, modified: 04/05/2026 15:53
  */
-class TabsProvider {
+export class TabsProvider implements ITabsProvider {
   private _activeTab: ComponentInternalInstance | undefined;
   private _activeTabIndex: number | undefined;
   private _props: TTabsBaseProps;
-  private readonly _emit: TEmitFn;
+  private readonly _emit: EmitFn;
+
   public tabItems: ShallowReactive<ComponentInternalInstance[]>;
   public tabPanels: ShallowReactive<ComponentInternalInstance[]>;
 
-  constructor(tabConfig: Readonly<TTabsBaseProps>, emitter: TEmitFn, activeTab?: number) {
+  constructor(tabConfig: Readonly<TTabsBaseProps>, emitter: EmitFn, activeTab?: number) {
     this._props = tabConfig;
     this._activeTab = undefined;
     this._activeTabIndex = activeTab;
@@ -74,10 +125,10 @@ class TabsProvider {
   }
 
   /**
-   * Register a TabIem.
+   * Register a TabItem.
    *
-   * @param {ComponentInternalInstance} item The TabIem item
-   * @returns {number} The TabIem index position
+   * @param {ComponentInternalInstance} item The TabItem item
+   * @returns {number} The TabItem index position
    */
   registerTabItem(item: ComponentInternalInstance): number {
     return this.tabItems.push(item);
@@ -146,6 +197,7 @@ class TabsProvider {
         (el.props as TTabItemOptionProps).active = Helper.isString(key) && pid === `tabItem-${key}`;
       }
     });
+
     this.tabPanels.forEach((el: ShallowReactive<ComponentInternalInstance>, idx) => {
       const pid = (el.props as TTabItemOptionProps).id;
 
@@ -171,12 +223,10 @@ class TabsProvider {
     });
   }
 
-  private triggerEvent(tab: ComponentInternalInstance, index: number) {
-    this._emit('change', tab, this.activeTab, index, this.activeTabIndex);
+  private triggerEvent(tab: ComponentInternalInstance, index: number): void {
+    this._emit('change', tab, index, this.activeTab, this.activeTabIndex);
     this._activeTab = tab;
     this._activeTabIndex = index;
     this._emit('update:model-value', index);
   }
 }
-
-export default TabsProvider;

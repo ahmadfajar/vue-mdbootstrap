@@ -1,38 +1,22 @@
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
+import type { TAllowedIconProps } from '@/components/Avatar/types';
 import { BsToggleButton } from '@/components/Button';
 import BsButtonInner from '@/components/Button/BsButtonInner.ts';
-import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
-import { BsIcon } from '@/components/Icon';
-import { cssPrefix, useGenerateId, useRenderSlot, useWrapSlot } from '@/mixins/CommonApi.ts';
 import type {
-  MaybeNumberish,
-  Numberish,
-  TAllowedIconProps,
-  TBsButtonInner,
-  TBsIcon,
-  TBsToggleButton,
-  TBsToggleField,
   TButtonMode,
   TButtonOptionProps,
   TCustomIconProps,
-  TEmitFn,
   TInputOptionItem,
-  TRecord,
   TToggleButtonOptionProps,
   TToggleFieldOptionProps,
-} from '@/types';
+} from '@/components/Button/types';
+import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
+import { BsIcon } from '@/components/Icon';
+import { cssPrefix, useGenerateId, useRenderSlot, useWrapSlot } from '@/mixins/CommonApi.ts';
+import type { MaybeNumberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { kebabCase } from '@/utils/StringHelper.ts';
-import type {
-  ComputedRef,
-  EmitFn,
-  ExtractPropTypes,
-  Prop,
-  Ref,
-  Slots,
-  VNode,
-  VNodeArrayChildren,
-} from 'vue';
+import type { ComputedRef, EmitFn, Ref, Slots, VNode, VNodeArrayChildren } from 'vue';
 import { h, toDisplayString, vModelCheckbox, vModelRadio, withDirectives } from 'vue';
 
 export function useMakeButtonProps(
@@ -126,14 +110,14 @@ function renderSlotIcon(
       name,
       { key: iconId },
       !Helper.isEmpty(props.icon)
-        ? h<TBsIcon>(BsIcon, {
+        ? h(BsIcon, {
             // id: iconId,
             class: {
               [`${cssPrefix}icon-${props.iconPosition}`]:
                 btnMode === 'default' ||
                 (['fab', 'floating'].includes(btnMode as string) && slots.default),
             },
-            size: props.iconSize as Prop<Numberish | undefined>,
+            size: props.iconSize,
             ...useCreateIconProps(props),
           })
         : [],
@@ -296,7 +280,7 @@ function rippleOff(props: Readonly<TToggleButtonOptionProps>, item: TInputOption
 
 export function useRenderToggleButtonItem(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TToggleButtonOptionProps>,
   localValue: Ref<MaybeNumberish | boolean | unknown[]>,
   item: TInputOptionItem,
@@ -358,14 +342,14 @@ export function useRenderToggleButtonItem(
     },
     [
       makeToggleItemInputElement(props, localValue, item, emit),
-      h<TBsButtonInner>(
+      h(
         BsButtonInner,
         {
           class: {
             'rounded-e-0': itemIndex < nLength,
             'rounded-s-0': itemIndex > 0,
           },
-          rippleOff: rippleOff(props, item) as unknown as Prop<boolean>,
+          rippleOff: rippleOff(props, item),
         },
         {
           default: () => renderToggleItemContent(slots, props, item),
@@ -377,8 +361,8 @@ export function useRenderToggleButtonItem(
 
 export function useRenderToggleFieldButton(
   slots: Slots,
-  emit: TEmitFn,
-  props: Readonly<ExtractPropTypes<TBsToggleField>>,
+  emit: EmitFn,
+  props: Readonly<TToggleFieldOptionProps>,
   wrapperCss: ComputedRef<TRecord>,
   hasFocused: Ref<boolean>,
   showHelpText: ComputedRef<boolean>,
@@ -386,11 +370,10 @@ export function useRenderToggleFieldButton(
   hasError: ComputedRef<boolean>,
   errorItems: ComputedRef<string[]>
 ): VNode {
-  const thisProps = props as Readonly<TToggleFieldOptionProps>;
-  const fieldState = thisProps.disabled ? 'disabled' : thisProps.readonly ? 'readonly' : undefined;
+  const fieldState = props.disabled ? 'disabled' : props.readonly ? 'readonly' : undefined;
   const canShowHelpText =
-    !Helper.isEmpty(thisProps.helpText) &&
-    (thisProps.persistentHelpOff || thisProps.persistentHelpText === false);
+    !Helper.isEmpty(props.helpText) &&
+    (props.persistentHelpOff || props.persistentHelpText === false);
 
   return h(
     'div',
@@ -398,8 +381,8 @@ export function useRenderToggleFieldButton(
       class: wrapperCss.value,
       'data-component': 'toggle-field',
       'data-state': fieldState,
-      'data-disabled': thisProps.disabled,
-      'aria-disabled': thisProps.disabled,
+      'data-disabled': props.disabled,
+      'aria-disabled': props.disabled,
     },
     [
       slots.default && slots.default(),
@@ -410,7 +393,7 @@ export function useRenderToggleFieldButton(
             class: [`${cssPrefix}field-inner`],
           },
           [
-            h<TBsToggleButton>(
+            h(
               BsToggleButton,
               {
                 id: props.id,
@@ -418,7 +401,7 @@ export function useRenderToggleFieldButton(
                 disabled: props.disabled,
                 readonly: props.readonly,
                 required: props.required,
-                items: thisProps.items as Prop<TInputOptionItem[]>,
+                items: props.items,
                 multiple: props.multiple,
                 modelValue: props.modelValue,
                 // flat: props.flat,
@@ -452,7 +435,7 @@ export function useRenderToggleFieldButton(
         ),
         useRenderFieldFeedback(
           slots,
-          thisProps,
+          props,
           showHelpText.value,
           showValidationError.value,
           hasError.value,

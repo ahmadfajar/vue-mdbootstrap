@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
-    "composite": true,
-    "skipLibCheck": true,
-    "outDir": "./dist/",
     "module": "ESNext",
     "moduleResolution": "bundler",
+    "outDir": "./dist/",
+    "composite": true,
+    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "strict": true
   },
   "include": [
-    "vite.config.ts",
-    "vite.config.lib.ts",
-    "vite.config.prod.ts",
-    "eslint.config.mjs",
+    "eslint.config.js",
+    "rollup.config.js",
+    "vite.config.*",
     "banner.ts",
     "component.d.ts",
     "package.json"

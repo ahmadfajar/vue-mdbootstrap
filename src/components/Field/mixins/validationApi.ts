@@ -22,7 +22,7 @@ function getValidator(props: Readonly<TValidationProps>): TValidator | undefined
 
 export function useHasValidationError(props: Readonly<TValidationProps>): boolean {
   const validator = getValidator(props);
-  
+
   return validator != null && validator.hasError;
 }
 

@@ -7,16 +7,16 @@ import {
   listboxMinSearchLength,
   notFoundMessage,
 } from '@/components/Combobox/mixins/listboxProps.ts';
-import { textFieldProps } from '@/components/Field/mixins/fieldProps.ts';
+import type { TDataSource } from '@/components/Combobox/types';
+import { inputFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import { validationProps } from '@/components/Field/mixins/validationProps.ts';
 import { popoverDefaultTransitionProp } from '@/components/Popover/mixins/popoverProps.ts';
 import { booleanProp, stringProp, validNumberGtZeroProp } from '@/mixins/CommonProps.ts';
-import type { TDataSource } from '@/types';
 import type { Prop } from 'vue';
 
 export const comboboxProps = {
   ...inputProps,
-  ...textFieldProps,
+  ...inputFieldProps,
   ...validationProps,
   autofocus: booleanProp,
   placeholder: stringProp,

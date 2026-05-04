@@ -1,5 +1,8 @@
-import ListItem from '@/components/ListView/mixins/ListItem.ts';
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import { type IListItem, ListItem } from '@/components/ListView/mixins/ListItem.ts';
 import {
+  type ListNavItemEventProps,
+  type ListNavItemEventPublic,
   useAddChild,
   useListNavItemClasses,
   useListNavItemInnerClasses,
@@ -7,14 +10,21 @@ import {
   useRenderListNavItem,
 } from '@/components/ListView/mixins/listNavApi.ts';
 import { listNavItemProps } from '@/components/ListView/mixins/listViewProps.ts';
+import type { IListViewProvider } from '@/components/ListView/mixins/ListViewProvider.ts';
+import type { TBsListNavItem, TListNavItemOptionProps } from '@/components/ListView/types';
 import { useCurrentRoute, useHasRouter, useRouteMatch } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
-  IListItem,
-  IListViewProvider,
-  TBsListNavItem,
-  TListNavItemOptionProps,
-  TRecord,
-} from '@/types';
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import {
   computed,
   defineComponent,
@@ -37,9 +47,9 @@ export default defineComponent<TBsListNavItem>({
     const instance = shallowRef(getCurrentInstance());
     const refItem = shallowRef<IListItem>();
     const isActive = ref<boolean | undefined>(thisProps.active);
-    const expanded = ref<boolean>(false);
-    const hasChild = ref<boolean>(false);
-    const hasRouter = ref<boolean>(false);
+    const expanded = ref(false);
+    const hasChild = ref(false);
+    const hasRouter = ref(false);
 
     expose({ isActive, expanded });
 
@@ -87,7 +97,7 @@ export default defineComponent<TBsListNavItem>({
       instance.value = getCurrentInstance();
 
       if (instance.value) {
-        refItem.value = new ListItem(thisProps.id as string, 'BsListNavItem', instance.value, emit);
+        refItem.value = new ListItem(thisProps.id!, 'BsListNavItem', instance.value, emit);
 
         if (provider) {
           await nextTick().then(() => useAddChild(provider, instance.value?.parent, refItem.value));
@@ -134,4 +144,25 @@ export default defineComponent<TBsListNavItem>({
         provider
       );
   },
-});
+}) as DefineComponent<
+  TBsListNavItem,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ListNavItemEventProps,
+  string,
+  PublicProps,
+  Readonly<TListNavItemOptionProps> & Readonly<ListNavItemEventPublic>,
+  ExtractDefaultPropTypes<TBsListNavItem>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

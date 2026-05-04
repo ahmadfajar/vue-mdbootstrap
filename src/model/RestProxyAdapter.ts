@@ -1,16 +1,41 @@
 import { useAxiosPlugin } from '@/mixins/CommonApi.ts';
-import type { IRestAdapter, TRestKey, TRestMethodOptions } from '@/model/types';
+import { vueAppAxiosPluginError } from '@/model/Constants.ts';
+import type { RestKey, RestMethodOptions } from '@/model/types';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import axios from 'axios';
 import type { AppConfig } from 'vue';
 
+export declare interface IRestAdapter {
+  get adapterInstance(): AxiosInstance;
+
+  /**
+   * Perform REST request to the remote server.
+   *
+   * @param config    Request configuration
+   * @param onRequest Promise function called before the request is made.
+   * @param onSuccess Promise function called when the request is successful.
+   * @param onFailure Promise function called when the request is failed.
+   */
+  request(
+    config: AxiosRequestConfig,
+    onRequest: () => boolean,
+    onSuccess: (response: AxiosResponse) => void,
+    onFailure: (error: AxiosError) => void
+  ): Promise<AxiosResponse>;
+
+  /**
+   * Get REST request methods options.
+   */
+  requestMethods(): RestMethodOptions;
+}
+
 /**
  * Class RestProxyAdapter which is used to load data from the remote server.
  *
  * @author Ahmad Fajar
- * @since  20/07/2018 modified: 19/10/2025 05:01
+ * @since  20/07/2018 modified: 30/04/2026 17:39
  */
 export class RestProxyAdapter implements IRestAdapter {
   private readonly _adapter: AxiosInstance;
@@ -32,10 +57,7 @@ export class RestProxyAdapter implements IRestAdapter {
       !appConfig.globalProperties.$http &&
       !appConfig.globalProperties.$axios
     ) {
-      throw Error(
-        "Vue Application doesn't have AxiosPlugin installed. " +
-          'Please define it some where in the application before using RestProxyAdapter.'
-      );
+      throw Error(vueAppAxiosPluginError);
     }
     if (
       'get' in appConfig &&
@@ -82,7 +104,7 @@ export class RestProxyAdapter implements IRestAdapter {
    *
    * @returns REST method options
    */
-  static get defaultHttpMethods(): TRestMethodOptions {
+  static get defaultHttpMethods(): RestMethodOptions {
     return {
       browse: 'get',
       fetch: 'get',
@@ -98,7 +120,7 @@ export class RestProxyAdapter implements IRestAdapter {
    * @param adapter      Axios adapter instance
    * @param httpMethods  Custom HTTP methods to override the default methods
    */
-  constructor(adapter?: AxiosInstance | null, httpMethods = {} as TRestKey) {
+  constructor(adapter?: AxiosInstance | null, httpMethods = {} as RestKey) {
     // Resolve and pick axios adapter from any available sources
     this._adapter = adapter ?? useAxiosPlugin() ?? axios;
     // Define custom http methods
@@ -110,10 +132,7 @@ export class RestProxyAdapter implements IRestAdapter {
       return this._adapter;
     }
 
-    throw Error(
-      "Vue Application doesn't have AxiosPlugin installed. " +
-        'Please define it some where in the application before using RestProxyAdapter.'
-    );
+    throw Error(vueAppAxiosPluginError);
   }
 
   /**
@@ -167,7 +186,7 @@ export class RestProxyAdapter implements IRestAdapter {
    *
    * @returns REST request method options
    */
-  requestMethods(): TRestMethodOptions & TRestKey {
+  requestMethods(): RestMethodOptions & RestKey {
     return {
       ...RestProxyAdapter.defaultHttpMethods,
       ...this._httpMethods,

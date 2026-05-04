@@ -1,4 +1,5 @@
-import { camelCase as loCamelCase, kebabCase as loKebabCase } from 'lodash-es';
+import loCamelCase from 'lodash-es/camelCase';
+import loKebabCase from 'lodash-es/kebabCase';
 
 /**
  * Pads the input string with a given string (possibly repeated) so that the resulting string
@@ -47,10 +48,10 @@ export function padRight(str: string | number, maxLength = 2, fillString = '0'):
 }
 
 /**
- * Simple function to transform the input string into Title Case.
+ * Simple function to transform the input string into "Title Case".
  *
- * @param text The input string.
- * @returns New string that has been transform to Title Case.
+ * @param text The input string to transform.
+ * @returns New string that has been transform to "Title Case".
  */
 export function titleCase(text?: string): string {
   if (!text) {
@@ -89,10 +90,10 @@ export function chunk(source: string, size = 1): string[] {
 /**
  * Replace special characters from the given `source` with encoded chars.
  *
- * Double quote will always be encoded to html entity unless `excludeDblQuote` is set to `true`.
+ * Double quote will always be encoded to HTML entity unless `excludeDblQuote` is set to `true`.
  *
  * @param source            The input string to encode.
- * @param excludeDblQuote   Optional, don't convert double quote to html entity.
+ * @param excludeDblQuote   Optional, don't convert double quote to HTML entity.
  * @param chars             Optional, special characters to encode.
  * @param replaces          Optional, the encoded characters or replacement characters for the given `chars`.
  */
@@ -107,6 +108,7 @@ export function encodeSpecialChars(
     Array.isArray(replaces) &&
     chars.length > 0 &&
     chars.length === replaces.length;
+
   const s1 = validReps ? chars : ['#', '!', '$', '%', '&', '<', '>', '?', '@'];
   const s2 = validReps ? replaces : ['23', '21', '24', '25', '26', '3C', '3E', '3F', '40'];
   const nLength = source.length;
@@ -118,7 +120,7 @@ export function encodeSpecialChars(
     } else if (s1.includes(source.charAt(i))) {
       const n = s1.indexOf(source.charAt(i));
 
-      if ((s2[n]).startsWith('%')) {
+      if (s2[n].startsWith('%')) {
         retVal += s2[n];
       } else {
         retVal += '%' + s2[n];
@@ -131,33 +133,77 @@ export function encodeSpecialChars(
   return retVal;
 }
 
+/**
+ * Simple function to convert the input string into
+ * [camel Case](https://en.wikipedia.org/wiki/Camel_case).
+ *
+ * @param text The input string to convert.
+ * @returns New string that has been transform to "camelCase".
+ */
 export function camelCase(text: string): string {
   return loCamelCase(text);
 }
 
+/**
+ * Simple function to convert the input string into
+ * [kebab-case](https://en.wikipedia.org/wiki/Letter_case#Use_within_programming_languages).
+ *
+ * @param text The input string to convert.
+ * @returns New string that has been transform to "kebab-case".
+ */
 export function kebabCase(text: string): string {
   return loKebabCase(text);
 }
 
-export function isStartWith(str?: string, searches?: string[]): boolean {
-  if (str && searches) {
-    return searches.some((s) => str.startsWith(s));
+/**
+ * Determines whether an input string starts with any of the specified string,
+ * returning true or false as appropriate. The test is performed in
+ * case-sensitive manner.
+ *
+ * @param source   The input string.
+ * @param searches Collection of string to search at the start of input string.
+ * @returns If any of the given strings in the collection is found at the start of
+ *          the input string then `true` is returned, otherwise `false`.
+ */
+export function isStartWith(source?: string, searches?: string[]): boolean {
+  if (source && searches) {
+    return searches.some((s) => source.startsWith(s));
   }
 
   return false;
 }
 
-export function isEndWith(str?: string, searches?: string[]): boolean {
-  if (str && searches) {
-    return searches.some((s) => str.endsWith(s));
+/**
+ * Determines whether an input string ends with any of the specified string,
+ * returning true or false as appropriate. The test is performed in
+ * case-sensitive manner.
+ *
+ * @param source   The input string.
+ * @param searches Collection of string to search at the end of input string.
+ * @returns If any of the given strings in the collection is found at the end of
+ *          the input string then `true` is returned, otherwise `false`.
+ */
+export function isEndWith(source?: string, searches?: string[]): boolean {
+  if (source && searches) {
+    return searches.some((s) => source.endsWith(s));
   }
 
   return false;
 }
 
-export function isContains(str?: string, searches?: string[]): boolean {
-  if (str && searches) {
-    return searches.some((s) => str.includes(s));
+/**
+ * Determines whether an input string contains any of the specified string,
+ * returning true or false as appropriate. The test is performed in
+ * case-sensitive manner.
+ *
+ * @param source   The input string.
+ * @param searches Collection of string to be searched.
+ * @returns If any of the given strings in the collection is found at any position
+ *          of the input string then `true` is returned, otherwise `false`.
+ */
+export function isContains(source?: string, searches?: string[]): boolean {
+  if (source && searches) {
+    return searches.some((s) => source.includes(s));
   }
 
   return false;

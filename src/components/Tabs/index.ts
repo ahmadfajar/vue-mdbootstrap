@@ -4,9 +4,11 @@ import BsTabs from './BsTabs.ts';
 
 const BsTabsPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsTab.name as string, BsTab);
-    app.component(BsTabs.name as string, BsTabs);
+    app.component('BsTab', BsTab);
+    app.component('BsTabs', BsTabs);
   },
 };
 
+export type { ITabsProvider } from '@/components/Tabs/mixins/TabsProvider.ts';
+export type * from '@/components/Tabs/types';
 export { BsTab, BsTabs, BsTabsPlugin };

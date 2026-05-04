@@ -1,18 +1,13 @@
 import { BsToggleButton } from '@/components/Button';
-import { cssPrefix, useMergeClass } from '@/mixins/CommonApi.ts';
-import { preventEventTarget } from '@/mixins/DomHelper.ts';
 import type {
-  Color,
-  TBsToggleButton,
-  TButtonSize,
   TColorPickerData,
   TColorPickerMode,
   TColorPickerOptionProps,
-  TEmitFn,
-  TInputOptionItem,
-  TRecord,
-  TStringRecord,
-} from '@/types';
+} from '@/components/ColorPicker/types';
+import { cssPrefix, useMergeClass } from '@/mixins/CommonApi.ts';
+import { preventEventTarget } from '@/mixins/DomHelper.ts';
+import type { MaybeNumberish, TRecord } from '@/types';
+import type * as Color from '@/utils/ColorUtils.ts';
 import {
   hslaToHsva,
   hslaToString,
@@ -25,11 +20,12 @@ import {
   rgbaToHsva,
   rgbaToOklch,
   rgbaToString,
-} from '@/utils/colorUtils.ts';
+} from '@/utils/ColorUtils.ts';
 import Helper from '@/utils/Helper.ts';
 import { isStartWith } from '@/utils/StringHelper.ts';
-import type { ComputedRef, Prop, VNode } from 'vue';
+import type { ComputedRef, EmitFn, VNode } from 'vue';
 import { createCommentVNode, h, mergeProps, nextTick, reactive, ref } from 'vue';
+import type { TStringRecord } from '../../Field/types';
 
 export function useInitColorPickerData(props: Readonly<TColorPickerOptionProps>): TColorPickerData {
   return {
@@ -57,7 +53,7 @@ export function useInitColorPickerData(props: Readonly<TColorPickerOptionProps>)
 }
 
 function createHueSliderControl(
-  emit: TEmitFn,
+  emit: EmitFn,
   pickerData: TColorPickerData,
   hueSliderThumbMoveHandler: EventListener
 ): VNode {
@@ -102,7 +98,7 @@ function createHueSliderControl(
                   pickerData.hueSliderThumb.value?.classList.add(`${cssPrefix}focused`);
                   moveSliderThumbOnKeydown(
                     pickerData.hueSliderThumb.value as HTMLElement,
-                    movements[event.key]!,
+                    movements[event.key],
                     pickerData,
                     emit,
                     updateHueSliderThumbUI
@@ -137,7 +133,7 @@ function createHueSliderControl(
 }
 
 function createAlphaSliderControl(
-  emit: TEmitFn,
+  emit: EmitFn,
   pickerData: TColorPickerData,
   alphaSliderThumbMoveHandler: EventListener
 ): VNode {
@@ -185,7 +181,7 @@ function createAlphaSliderControl(
                   pickerData.alphaSliderThumb.value?.classList.add(`${cssPrefix}focused`);
                   moveSliderThumbOnKeydown(
                     pickerData.alphaSliderThumb.value as HTMLElement,
-                    movements[event.key]!,
+                    movements[event.key],
                     pickerData,
                     emit,
                     updateAlphaSliderThumbUI
@@ -223,7 +219,7 @@ function renderColorPickerControls(
   props: Readonly<TColorPickerOptionProps>,
   pickerData: TColorPickerData,
   cssNamePrefix: string,
-  emit: TEmitFn,
+  emit: EmitFn,
   hueSliderThumbMoveHandler: EventListener,
   alphaSliderThumbMoveHandler: EventListener
 ): VNode {
@@ -291,7 +287,7 @@ function createInputLabel(
 
 function createInputNumber(
   pickerData: TColorPickerData,
-  emit: TEmitFn,
+  emit: EmitFn,
   cssNamePrefix: string,
   inputID: string,
   placeholder: string,
@@ -374,7 +370,7 @@ function onUpdateInputNumber(
   value: string,
   placeholder: string,
   pickerData: TColorPickerData,
-  emit: TEmitFn
+  emit: EmitFn
 ): void {
   const mode = pickerData.config.mode;
   let srcValue =
@@ -459,21 +455,21 @@ function createInputColorHSL(
   pickerData: TColorPickerData,
   cssNamePrefix: string,
   inputIDs: TStringRecord,
-  emit: TEmitFn
+  emit: EmitFn
 ): VNode {
   const inputHSL = [
-    createInputLabel(props, cssNamePrefix, inputIDs.H1!, 'H'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.H1!, 'Hue', 360),
-    createInputLabel(props, cssNamePrefix, inputIDs.S1!, 'S'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.S1!, 'Sat', 1, 0.01),
-    createInputLabel(props, cssNamePrefix, inputIDs.L1!, 'L'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.L1!, 'Light', 1, 0.01),
+    createInputLabel(props, cssNamePrefix, inputIDs.H1, 'H'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.H1, 'Hue', 360),
+    createInputLabel(props, cssNamePrefix, inputIDs.S1, 'S'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.S1, 'Sat', 1, 0.01),
+    createInputLabel(props, cssNamePrefix, inputIDs.L1, 'L'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.L1, 'Light', 1, 0.01),
   ];
 
   if (!props.hideAlpha) {
     inputHSL.push(
-      createInputLabel(props, cssNamePrefix, inputIDs.A1!, 'A'),
-      createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.A1!, 'Alpha', 1, 0.01)
+      createInputLabel(props, cssNamePrefix, inputIDs.A1, 'A'),
+      createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.A1, 'Alpha', 1, 0.01)
     );
   }
 
@@ -494,21 +490,21 @@ function createInputColorRGB(
   pickerData: TColorPickerData,
   cssNamePrefix: string,
   inputIDs: TStringRecord,
-  emit: TEmitFn
+  emit: EmitFn
 ): VNode {
   const inputRGB = [
-    createInputLabel(props, cssNamePrefix, inputIDs.R2!, 'R'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.R2!, 'Red'),
-    createInputLabel(props, cssNamePrefix, inputIDs.G2!, 'G'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.G2!, 'Green'),
-    createInputLabel(props, cssNamePrefix, inputIDs.B2!, 'B'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.B2!, 'Blue'),
+    createInputLabel(props, cssNamePrefix, inputIDs.R2, 'R'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.R2, 'Red'),
+    createInputLabel(props, cssNamePrefix, inputIDs.G2, 'G'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.G2, 'Green'),
+    createInputLabel(props, cssNamePrefix, inputIDs.B2, 'B'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.B2, 'Blue'),
   ];
 
   if (!props.hideAlpha) {
     inputRGB.push(
-      createInputLabel(props, cssNamePrefix, inputIDs.A2!, 'A'),
-      createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.A2!, 'Alpha', 1, 0.01)
+      createInputLabel(props, cssNamePrefix, inputIDs.A2, 'A'),
+      createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.A2, 'Alpha', 1, 0.01)
     );
   }
 
@@ -529,21 +525,21 @@ function createInputColorLCH(
   pickerData: TColorPickerData,
   cssNamePrefix: string,
   inputIDs: TStringRecord,
-  emit: TEmitFn
+  emit: EmitFn
 ): VNode {
   const inputLCH = [
-    createInputLabel(props, cssNamePrefix, inputIDs.L3!, 'L'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.L3!, 'Light', 1, 0.001),
-    createInputLabel(props, cssNamePrefix, inputIDs.C3!, 'C'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.C3!, 'Chroma', 1, 0.001),
-    createInputLabel(props, cssNamePrefix, inputIDs.H3!, 'H'),
-    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.H3!, 'Hue', 360, 0.1),
+    createInputLabel(props, cssNamePrefix, inputIDs.L3, 'L'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.L3, 'Light', 1, 0.001),
+    createInputLabel(props, cssNamePrefix, inputIDs.C3, 'C'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.C3, 'Chroma', 1, 0.001),
+    createInputLabel(props, cssNamePrefix, inputIDs.H3, 'H'),
+    createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.H3, 'Hue', 360, 0.1),
   ];
 
   if (!props.hideAlpha) {
     inputLCH.push(
-      createInputLabel(props, cssNamePrefix, inputIDs.A3!, 'A'),
-      createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.A3!, 'Alpha', 1, 0.01)
+      createInputLabel(props, cssNamePrefix, inputIDs.A3, 'A'),
+      createInputNumber(pickerData, emit, cssNamePrefix, inputIDs.A3, 'Alpha', 1, 0.01)
     );
   }
 
@@ -564,7 +560,7 @@ function createInputColorHEX(
   pickerData: TColorPickerData,
   cssNamePrefix: string,
   inputIDs: Record<string, string>,
-  emit: TEmitFn
+  emit: EmitFn
 ): VNode {
   return h(
     'div',
@@ -572,7 +568,7 @@ function createInputColorHEX(
       class: [`${cssNamePrefix}input-row`, `${cssPrefix}gap-x-2`, 'flex', 'items-center'],
     },
     [
-      createInputLabel(props, cssNamePrefix, inputIDs.HEX!, 'HEX'),
+      createInputLabel(props, cssNamePrefix, inputIDs.HEX, 'HEX'),
       h(
         'div',
         {
@@ -596,7 +592,7 @@ function createInputColorHEX(
   );
 }
 
-function onUpdateInputColorHex(value: string, pickerData: TColorPickerData, emit: TEmitFn): void {
+function onUpdateInputColorHex(value: string, pickerData: TColorPickerData, emit: EmitFn): void {
   if (value && pickerData.config.value !== value && [6, 7, 9].includes(value.length)) {
     let srcStr = value.trim();
 
@@ -618,7 +614,7 @@ function renderColorPickerInputs(
   pickerData: TColorPickerData,
   cssNamePrefix: string,
   inputIDs: Record<string, string>,
-  emit: TEmitFn
+  emit: EmitFn
 ): VNode {
   if (props.hideInputs === true) {
     return createCommentVNode(' v-if-inputs ', true);
@@ -645,7 +641,7 @@ function renderColorPickerInputs(
 function renderColorPickerModeButtons(
   props: Readonly<TColorPickerOptionProps>,
   pickerData: TColorPickerData,
-  emit: TEmitFn
+  emit: EmitFn
 ): VNode {
   if (props.hideModeButton === true) {
     return createCommentVNode(' v-if-mode-buttons ', true);
@@ -657,21 +653,22 @@ function renderColorPickerModeButtons(
       class: ['flex', 'justify-center', 'py-2'],
     },
     [
-      h<TBsToggleButton>(BsToggleButton, {
-        size: 'sm' as Prop<TButtonSize>,
-        color: props.modeButtonColor as Prop<string>,
-        toggleColor: props.modeButtonToggleColor as Prop<string>,
-        outlined: props.modeButtonOutlined as unknown as Prop<boolean>,
-        tonal: props.modeButtonTonal as unknown as Prop<boolean>,
+      h(BsToggleButton, {
+        size: 'sm',
+        color: props.modeButtonColor,
+        toggleColor: props.modeButtonToggleColor,
+        outlined: props.modeButtonOutlined,
+        tonal: props.modeButtonTonal,
         items: [
           { value: 'HEX', label: 'HEX' },
           { value: 'RGB', label: 'RGB' },
           { value: 'HSL', label: 'HSL' },
           { value: 'OKLCH', label: 'OKLCH' },
-        ] as Prop<TInputOptionItem[]>,
-        modelValue: pickerData.config.mode as Prop<string>,
-        'onUpdate:model-value': async (value: TColorPickerMode) => {
-          pickerData.config.mode = value;
+        ],
+        modelValue: pickerData.config.mode,
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        'onUpdate:modelValue': async (value: MaybeNumberish | unknown[]) => {
+          pickerData.config.mode = value as TColorPickerMode;
           dispatchModelValue(emit, pickerData);
           await nextTick().then(() => emit('update:mode', value));
         },
@@ -684,7 +681,7 @@ function renderColorPickerSwatches(
   props: Readonly<TColorPickerOptionProps>,
   pickerData: TColorPickerData,
   cssNamePrefix: string,
-  emit: TEmitFn
+  emit: EmitFn
 ): VNode {
   if (Helper.isEmpty(props.swatches)) {
     return createCommentVNode(' v-if-swatches ', true);
@@ -732,7 +729,7 @@ export function useRenderColorPicker(
   pickerData: TColorPickerData,
   inputIDs: Record<string, string>,
   attrs: TRecord,
-  emit: TEmitFn,
+  emit: EmitFn,
   colorMarkerMoveHandler: EventListener,
   hueSliderThumbMoveHandler: EventListener,
   alphaSliderThumbMoveHandler: EventListener
@@ -777,8 +774,8 @@ export function useRenderColorPicker(
               moveColorMarkerOnKeydown(
                 emit,
                 pickerData,
-                movements[event.key]![0]!,
-                movements[event.key]![1]!
+                movements[event.key][0],
+                movements[event.key][1]
               );
               event.preventDefault();
             }
@@ -787,7 +784,7 @@ export function useRenderColorPicker(
           onTouchstart: () =>
             document.addEventListener('touchmove', colorMarkerMoveHandler, {
               passive: false,
-            } as EventListenerOptions),
+            }),
         }),
       ]
     ),
@@ -870,7 +867,7 @@ function getPointerPosition(event: UIEvent) {
 
 export function useMoveColorMarker(
   event: UIEvent,
-  emit: TEmitFn,
+  emit: EmitFn,
   pickerData: TColorPickerData
 ): void {
   if (pickerData.colorArea.value) {
@@ -887,7 +884,7 @@ export function useMoveColorMarker(
 }
 
 function moveColorMarkerOnKeydown(
-  emit: TEmitFn,
+  emit: EmitFn,
   pickerData: TColorPickerData,
   deltaX: number,
   deltaY: number
@@ -900,7 +897,7 @@ function moveColorMarkerOnKeydown(
 }
 
 function setColorMarkerPosition(
-  emit: TEmitFn,
+  emit: EmitFn,
   pickerData: TColorPickerData,
   posX: number,
   posY: number
@@ -922,7 +919,7 @@ function setColorMarkerPosition(
 }
 
 function setColorAtPosition(
-  emit: TEmitFn,
+  emit: EmitFn,
   pickerData: TColorPickerData,
   posX: number,
   posY: number
@@ -941,7 +938,7 @@ function setColorAtPosition(
 
 export function useMoveHueSliderThumb(
   event: UIEvent,
-  emit: TEmitFn,
+  emit: EmitFn,
   pickerData: TColorPickerData
 ): void {
   if (!pickerData.hueSlider.value) {
@@ -970,8 +967,8 @@ function moveSliderThumbOnKeydown(
   thumb: HTMLElement,
   delta: number,
   pickerData: TColorPickerData,
-  emit: TEmitFn,
-  handlerFn: (emit: TEmitFn, pickerData: TColorPickerData, posX: number) => void
+  emit: EmitFn,
+  handlerFn: (emit: EmitFn, pickerData: TColorPickerData, posX: number) => void
 ): void {
   let posX = parseFloat(thumb.style.left.replace('%', '')) + delta;
 
@@ -985,7 +982,7 @@ function moveSliderThumbOnKeydown(
   handlerFn(emit, pickerData, posX);
 }
 
-function updateHueSliderThumbUI(emit: TEmitFn, pickerData: TColorPickerData, posX: number): void {
+function updateHueSliderThumbUI(emit: EmitFn, pickerData: TColorPickerData, posX: number): void {
   const hsva = {
     h: Math.round((posX / 100) * 360),
     s: pickerData.config.currentColor.s,
@@ -1004,7 +1001,7 @@ function updateHueSliderThumbUI(emit: TEmitFn, pickerData: TColorPickerData, pos
 
 export function useMoveAlphaSliderThumb(
   event: UIEvent,
-  emit: TEmitFn,
+  emit: EmitFn,
   pickerData: TColorPickerData
 ): void {
   if (!pickerData.alphaSlider.value) {
@@ -1029,7 +1026,7 @@ export function useMoveAlphaSliderThumb(
   preventEventTarget(event);
 }
 
-function updateAlphaSliderThumbUI(emit: TEmitFn, pickerData: TColorPickerData, posX: number): void {
+function updateAlphaSliderThumbUI(emit: EmitFn, pickerData: TColorPickerData, posX: number): void {
   (pickerData.alphaSliderThumb.value as HTMLElement).style.left = `${posX}%`;
   pickerData.config.alphaSlider = posX;
   pickerData.config.currentColor.a = posX / 100;
@@ -1067,7 +1064,7 @@ function updateColor(pickerData: TColorPickerData, rgba: Color.RGBA, hsva: Color
   };
 }
 
-function updateColorPreview(pickerData: TColorPickerData, emit?: TEmitFn): void {
+function updateColorPreview(pickerData: TColorPickerData, emit?: EmitFn): void {
   const hex = rgbaToHex(pickerData.config.currentColor);
   (pickerData.colorMarker.value as HTMLElement).style.color = hex.substring(0, 7);
   (pickerData.colorPreview.value as HTMLElement).style.color = hex;
@@ -1080,7 +1077,7 @@ function updateColorPreview(pickerData: TColorPickerData, emit?: TEmitFn): void 
   }
 }
 
-function dispatchModelValue(emit: TEmitFn, pickerData: TColorPickerData, hexColor?: string): void {
+function dispatchModelValue(emit: EmitFn, pickerData: TColorPickerData, hexColor?: string): void {
   switch (pickerData.config.mode) {
     case 'OKLCH':
       pickerData.config.value = oklchToString(pickerData.colorOKLCH);
@@ -1099,7 +1096,7 @@ function dispatchModelValue(emit: TEmitFn, pickerData: TColorPickerData, hexColo
   emit('update:model-value', pickerData.config.value);
 }
 
-export function useUpdateColorCanvas(pickerData: TColorPickerData, emit?: TEmitFn): void {
+export function useUpdateColorCanvas(pickerData: TColorPickerData, emit?: EmitFn): void {
   let hsva: Color.HSVA | undefined;
   let rgba: Color.RGBA | undefined;
 

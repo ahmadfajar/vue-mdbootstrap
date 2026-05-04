@@ -1,5 +1,5 @@
+import type { TInputFieldProps, TInputTextProps } from '@/components/Field/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import type { TInputFieldProps, TInputTextProps } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type { EmitFn, Ref, VNode } from 'vue';
 import { nextTick } from 'vue';

@@ -1,8 +1,21 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { tabPanelProps } from '@/components/Tabs/mixins/tabsProps.ts';
-import type TabsProvider from '@/components/Tabs/mixins/TabsProvider.ts';
-import type { TBsTabPanel, TTabItemOptionProps } from '@/components/Tabs/types';
+import type { ITabsProvider } from '@/components/Tabs/mixins/TabsProvider.ts';
+import type { TBsTabPanel, TTabPanelOptionProps } from '@/components/Tabs/types';
 import { useRenderTransition } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import {
   computed,
   defineComponent,
@@ -25,8 +38,8 @@ export default defineComponent<TBsTabPanel>({
     },
   },
   setup(props, { slots, expose }) {
-    const thisProps = props as Readonly<TTabItemOptionProps>;
-    const tabProvider = inject<TabsProvider>('tabs');
+    const thisProps = props as Readonly<TTabPanelOptionProps>;
+    const provider = inject<ITabsProvider>('tabs');
     const isActive = ref<boolean | undefined>(false);
 
     expose({ isActive });
@@ -37,15 +50,15 @@ export default defineComponent<TBsTabPanel>({
 
     onBeforeMount(() => {
       const vm = getCurrentInstance();
-      if (vm && tabProvider) {
+      if (vm && provider) {
         // console.log('Registering tabPanel:', thisProps.id);
-        tabProvider.registerTabPanel(vm);
+        provider.registerTabPanel(vm);
       }
     });
 
     return () =>
       useRenderTransition(
-        { name: tabProvider?.contentTransition },
+        { name: provider?.contentTransition },
         withDirectives(
           h(
             'div',
@@ -55,7 +68,7 @@ export default defineComponent<TBsTabPanel>({
               role: 'tabpanel',
               'aria-labelledby': thisProps.ariaLabel,
               onVnodeUnmounted: () => {
-                tabProvider && thisProps.id && tabProvider.unRegisterTab(thisProps.id);
+                provider && thisProps.id && provider.unRegisterTab(thisProps.id);
               },
             },
             slots.default && slots.default()
@@ -64,4 +77,25 @@ export default defineComponent<TBsTabPanel>({
         )
       );
   },
-});
+}) as DefineComponent<
+  TBsTabPanel,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TTabPanelOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsTabPanel>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

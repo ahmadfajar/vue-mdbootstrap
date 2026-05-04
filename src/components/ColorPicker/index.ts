@@ -3,8 +3,9 @@ import BsColorPicker from './BsColorPicker.ts';
 
 const BsColorPickerPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsColorPicker.name as string, BsColorPicker);
+    app.component('BsColorPicker', BsColorPicker);
   },
 };
 
+export type * from '@/components/ColorPicker/types';
 export { BsColorPicker, BsColorPickerPlugin };

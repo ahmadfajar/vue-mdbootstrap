@@ -4,9 +4,10 @@ import BsModal from './BsModal.ts';
 
 const BsModalPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsModal.name as string, BsModal);
-    app.component(BsLightbox.name as string, BsLightbox);
+    app.component('BsModal', BsModal);
+    app.component('BsLightbox', BsLightbox);
   },
 };
 
+export type * from '@/components/Modal/types';
 export { BsLightbox, BsModal, BsModalPlugin };

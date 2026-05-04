@@ -1,8 +1,21 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { BsContainer } from '@/components/Container';
 import type { TBsContainer, TBsContent, TContainerOptionProps } from '@/components/Container/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
-import type { VNode } from 'vue';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import { defineComponent, h } from 'vue';
 
 export default defineComponent<TBsContent>({
@@ -28,11 +41,11 @@ export default defineComponent<TBsContent>({
 
     return () =>
       thisProps.app
-        ? h<TBsContainer>(
+        ? h(
             BsContainer,
             {
-              app: props.app,
-              tag: props.tag,
+              app: thisProps.app,
+              tag: thisProps.tag,
             },
             {
               default: () => renderContent(),
@@ -40,4 +53,25 @@ export default defineComponent<TBsContent>({
           )
         : renderContent();
   },
-});
+}) as DefineComponent<
+  TBsContainer,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TContainerOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsContainer>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

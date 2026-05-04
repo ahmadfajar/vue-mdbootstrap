@@ -1,6 +1,5 @@
+import type { INotificationProvider } from '@/components/Notification/mixins/NotificationProvider.ts';
 import type {
-  IHttpService,
-  INotificationProvider,
   TBreakpoint,
   TClassList,
   TRecord,
@@ -8,6 +7,7 @@ import type {
   TRouterOptionProps,
   TVueMdb,
 } from '@/types';
+import type { IHttpService } from '@/utils/AxiosPlugin';
 import Helper from '@/utils/Helper';
 import type { AxiosInstance } from 'axios';
 import type {
@@ -92,34 +92,14 @@ export function useRenderSlot(
   const slotProps = {
     ...slotArgs,
     ...props,
-  } as TRecord;
+  };
   const fallback = children ? () => (Array.isArray(children) ? children : [children]) : undefined;
 
   return renderSlot(slots, name, slotProps, fallback);
 }
 
 /**
- * Simple function to render an HTML tag as VNode or render default slot and wrap 
- * an HTML tag around it.
- *
- * @param tag      Valid HTML tag name
- * @param slots    The slot instance
- * @param classes  Custom css classes to apply
- * @param styles   Custom inline stylesheet to apply
- */
-export function useWrapSlotDefault(
-  tag: string,
-  slots?: Slots,
-  classes?: TClassList,
-  styles?: TRecord
-): VNode {
-  return slots
-    ? h(tag, { class: classes, style: styles }, renderSlot(slots, 'default'))
-    : h(tag, { class: classes, style: styles });
-}
-
-/**
- * Simple function to render a VNode with custom slot and wrap it with the given 
+ * Simple function to render a VNode with custom slot and wrap it with the given
  * `wrapperTag` and properties. If the custom slot doesn't exist or `undefined` then
  * the default `children` will be rendered inside the `wrapperTag`.
  *
@@ -128,7 +108,7 @@ export function useWrapSlotDefault(
  * @param key          Fragment key identifier
  * @param wrapperProps The VNode wrapper properties
  * @param children     The default VNode children to replace the slot
- * @param wrapperTag   Valid html tag name, default is `div`
+ * @param wrapperTag   Valid HTML tag name, default is `div`
  * @param slotArgs     The argument for the given slot
  * @returns The rendered VNode.
  */
@@ -153,6 +133,27 @@ export function useWrapSlot(
 }
 
 /**
+ * Simple function to render an HTML tag as VNode or render default slot and wrap
+ * an HTML tag around it.
+ *
+ * @param tag      Valid HTML tag name
+ * @param slots    The slot instance
+ * @param classes  Custom CSS classes to apply
+ * @param styles   Custom inline stylesheet to apply
+ * @returns The rendered VNode.
+ */
+export function useWrapSlotDefault(
+  tag: string,
+  slots?: Slots,
+  classes?: TClassList,
+  styles?: TRecord
+): VNode {
+  return slots
+    ? h(tag, { class: classes, style: styles }, renderSlot(slots, 'default'))
+    : h(tag, { class: classes, style: styles });
+}
+
+/**
  * Simple function to render a VNode with custom slot and wrap it with the given
  * `wrapTag` and properties. The VNode will be rendered if the given `condition` is matched.
  *
@@ -160,7 +161,7 @@ export function useWrapSlot(
  * @param name       The slot name
  * @param condition  The given condition
  * @param wrapProps  The VNode wrapper properties
- * @param wrapTag    Valid html tag name, default is `div`
+ * @param wrapTag    Valid HTML tag name, default is `div`
  * @param slotArgs   The argument for the given slot
  * @returns The rendered VNode.
  */
@@ -214,14 +215,14 @@ export function useRenderRouter(
   children: VNodeArrayChildren | VNode | string
 ): VNode {
   const routerLinkCmp = resolveComponent('RouterLink');
+
   return createVNode(routerLinkCmp, props, {
     default: () => children,
   });
 }
 
 /**
- * Check if `$router` exists within the application context and one of component
- * property that related to `<RouterLink>` has been defined.
+ * Check if component instance has a `$router` and `path` property has been defined.
  *
  * @param props The component properties.
  * @returns TRUE when Router property
@@ -395,7 +396,9 @@ export function useRouteMatch(
 
 /**
  * Simple function to detect whether a device's screen is within allowable
- * maximum screen resolution.
+ * maximum screen resolution. Returns `true` when the screen resolution is within
+ * allowable resolution otherwise `false`. Available breakpoints are:
+ * `xs`, `sm`, `md`, `lg`, and `xl`.
  *
  * @param breakpoint Allowable maximum screen resolution.
  * @returns TRUE when the screen resolution is within allowable resolution.
@@ -422,7 +425,9 @@ export function useBreakpointMax(breakpoint: TBreakpoint | number): boolean {
 
 /**
  * Simple function to detect whether a device's screen is within allowable
- * minimum screen resolution.
+ * minimum screen resolution. Returns `true` when the screen resolution is within
+ * allowable resolution otherwise `false`. Available breakpoints are:
+ * `xs`, `sm`, `md`, `lg`, and `xl`.
  *
  * @param breakpoint Allowable minimum screen resolution.
  * @returns TRUE when the screen resolution is within allowable resolution.
@@ -474,24 +479,30 @@ export function useFindParentComponent(
   return iterator;
 }
 
+function mergeClass(sources: string[], target: string[]): void {
+  sources.forEach((value) => {
+    !target.includes(value) && target.push(value);
+  });
+}
+
 /**
- * Merge one or more CSS classes.
+ * Merge one or more CSS classes and prevents duplicate.
  *
  * @param args The CSS classes to be merged.
  */
-export function useMergeClass(...args: (string | string[])[]): string[] {
+export function useMergeClass(...args: unknown[]): string[] {
   const count = args.length;
-  let result: string[] = [];
+  const result: string[] = [];
 
   for (let i = 0; i < count; i++) {
-    const src = args[i];
+    const value = args[i];
 
-    if (!Helper.isEmpty(src) && Array.isArray(src)) {
-      result = result.concat(src);
-    } else if (Helper.isString(src) && !Helper.isEmpty(src)) {
-      !result.includes(src) && result.push(src);
-    } else {
-      result.push(normalizeClass(src));
+    if (Helper.isString(value) && !Helper.isEmpty(value)) {
+      !result.includes(value) && result.push(value);
+    } else if (Array.isArray(value) && !Helper.isEmpty(value)) {
+      mergeClass(normalizeClass(value).split(' '), result);
+    } else if (Helper.isObject(value) && Object.keys(value).length > 0) {
+      mergeClass(normalizeClass(value).split(' '), result);
     }
   }
 
@@ -536,6 +547,6 @@ export function useVueMdbService(): TVueMdb | undefined {
  * @returns The notification provider instance.
  */
 export function useVueMdbNotification(): INotificationProvider | undefined {
-  const vm = getCurrentInstance();
-  return (vm?.appContext.config.globalProperties.$VueMdb as TVueMdb).notification;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return useVueMdbService()?.notification;
 }

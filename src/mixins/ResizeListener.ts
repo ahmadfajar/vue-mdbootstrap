@@ -17,26 +17,38 @@ const resizeHandler = function (entries: TResizeTarget[]) {
   }
 };
 
-export function useAddResizeListener(el: IBindingElement, fn: CallableFunction) {
+/**
+ * Register event 'resizeListener' and utilize the ResizeObserver to monitor the event.
+ *
+ * @param target The target element.
+ * @param fn     The callback function.
+ */
+export function useAddResizeListener(target: IBindingElement, fn: CallableFunction) {
   if (isServer) {
     return;
   }
 
-  if (!el.__resizeListeners) {
-    el.__resizeListeners = [];
-    el.__observer = new ResizeObserver(resizeHandler);
-    el.__observer.observe(el);
+  if (!target.__resizeListeners) {
+    target.__resizeListeners = [];
+    target.__observer = new ResizeObserver(resizeHandler);
+    target.__observer.observe(target);
   }
-  el.__resizeListeners.push(fn);
+  target.__resizeListeners.push(fn);
 }
 
-export function useRemoveResizeListener(el: IBindingElement, fn?: CallableFunction) {
-  if (el && el.__resizeListeners) {
+/**
+ * Un-register event 'resizeListener' and disconnect it from ResizeObserver.
+ *
+ * @param target The target element.
+ * @param fn     The callback function.
+ */
+export function useRemoveResizeListener(target: IBindingElement, fn?: CallableFunction) {
+  if (target && target.__resizeListeners) {
     if (fn) {
-      el.__resizeListeners.splice(el.__resizeListeners.indexOf(fn), 1);
+      target.__resizeListeners.splice(target.__resizeListeners.indexOf(fn), 1);
     }
-    if (!el.__resizeListeners.length) {
-      el.__observer?.disconnect();
+    if (!target.__resizeListeners.length) {
+      target.__observer?.disconnect();
     }
   }
 }

@@ -1,10 +1,27 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useCalendarTableDays,
   useRenderDatePickerDays,
   useSetupDatePickerCalender,
-} from '@/components/DatePicker/mixins/datePickerApi.ts';
+} from '@/components/DatePicker/mixins/datePickerCalendar.ts';
 import { datePickerCalendarProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
-import type { TBsDatePickerCalendar, TDatePickerCalendarProps, TDebounce } from '@/types';
+import type {
+  DatePickerCalendarEventProps,
+  DatePickerCalendarEventPublic,
+  TBsDatePickerCalendar,
+  TDatePickerCalendarProps,
+} from '@/components/DatePicker/types/internals.ts';
+import type { TRecord } from '@/types';
+import type { TDebounce } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
 import { computed, defineComponent, reactive } from 'vue';
 
 export default defineComponent<TBsDatePickerCalendar>({
@@ -28,4 +45,25 @@ export default defineComponent<TBsDatePickerCalendar>({
         debounce
       );
   },
-});
+}) as DefineComponent<
+  TBsDatePickerCalendar,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  DatePickerCalendarEventProps,
+  string,
+  PublicProps,
+  Readonly<TDatePickerCalendarProps> & Readonly<DatePickerCalendarEventPublic>,
+  ExtractDefaultPropTypes<TBsDatePickerCalendar>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

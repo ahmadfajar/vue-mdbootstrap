@@ -5,10 +5,11 @@ import BsRipple from './BsRipple.ts';
 
 const BsAnimationPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsExpandTransition.name as string, BsExpandTransition);
-    app.component(BsOverlay.name as string, BsOverlay);
-    app.component(BsRipple.name as string, BsRipple);
+    app.component('BsExpandTransition', BsExpandTransition);
+    app.component('BsOverlay', BsOverlay);
+    app.component('BsRipple', BsRipple);
   },
 };
 
+export type * from '@/components/Animation/types';
 export { BsAnimationPlugin, BsExpandTransition, BsOverlay, BsRipple };

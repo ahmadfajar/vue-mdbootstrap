@@ -1,7 +1,20 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderCardImg } from '@/components/Card/mixins/cardApi.ts';
 import { cardProps } from '@/components/Card/mixins/cardProps.ts';
 import type { TBsCard, TCardOptionProps } from '@/components/Card/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { createCommentVNode, defineComponent, h } from 'vue';
 
 export default defineComponent<TBsCard>({
@@ -34,4 +47,25 @@ export default defineComponent<TBsCard>({
         ]
       );
   },
-});
+}) as DefineComponent<
+  TBsCard,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TCardOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsCard>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

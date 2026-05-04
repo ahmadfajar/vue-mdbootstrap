@@ -3,8 +3,9 @@ import BsBreadcrumb from './BsBreadcrumb.ts';
 
 const BsBreadcrumbPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsBreadcrumb.name as string, BsBreadcrumb);
+    app.component('BsBreadcrumb', BsBreadcrumb);
   },
 };
 
+export type * from '@/components/Breadcrumb/types';
 export { BsBreadcrumb, BsBreadcrumbPlugin };

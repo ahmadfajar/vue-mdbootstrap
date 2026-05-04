@@ -1,6 +1,7 @@
 import { BsSpacer } from '@/components/Basic';
 import { BsButton } from '@/components/Button';
 import { BsDropdownMenu } from '@/components/Menu';
+import type { TLightboxOptionProps, TLightboxSource } from '@/components/Modal/types';
 import { useClosePopover } from '@/components/Popover/mixins/popoverApi.ts';
 import { Touch } from '@/directives';
 import {
@@ -10,25 +11,15 @@ import {
   useMobileDevice,
   useRenderTransition,
 } from '@/mixins/CommonApi.ts';
-import type {
-  TBsButton,
-  TBsDropdownMenu,
-  TButtonMode,
-  TButtonSize,
-  TEmitFn,
-  TLightboxOptionProps,
-  TLightboxSource,
-  TPopoverPosition,
-  TRecord,
-} from '@/types';
+import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { isContains } from '@/utils/StringHelper.ts';
 import {
   type ComponentInternalInstance,
   type ComputedRef,
   createCommentVNode,
+  type EmitFn,
   h,
-  type Prop,
   ref,
   type Ref,
   type ShallowRef,
@@ -70,7 +61,7 @@ export function useComputeDisplayStyle(
 
 export function useRenderLightbox(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   instance: ShallowRef<ComponentInternalInstance | null>,
   props: Readonly<TLightboxOptionProps>,
   imgStyle: ComputedRef<TRecord | undefined>,
@@ -128,7 +119,7 @@ export function useRenderLightbox(
 
 function createLightboxToolbar(
   slots: Slots,
-  emit: TEmitFn,
+  emit: EmitFn,
   instance: ShallowRef<ComponentInternalInstance | null>,
   props: Readonly<TLightboxOptionProps>,
   isOpen: Ref<boolean>,
@@ -250,22 +241,22 @@ function createLightboxToolbar(
                 () => emit('exec-delete', activeItem.value)
               ),
               activeItem.value && props.toolbar?.menubar === true
-                ? h<TBsDropdownMenu>(
+                ? h(
                     BsDropdownMenu,
                     {
-                      placement: 'bottom-right' as Prop<TPopoverPosition>,
-                      space: 4 as Prop<number>,
+                      placement: 'bottom-right',
+                      space: 4,
                       'onUpdate:open': (state: boolean) => (dropdownOpen.value = state),
                     },
                     {
                       default: () =>
-                        h<TBsButton>(BsButton, {
+                        h(BsButton, {
                           class: 'btn-menu',
-                          color: 'light' as Prop<string>,
-                          mode: 'icon' as Prop<TButtonMode>,
-                          icon: 'more_vert' as Prop<string>,
-                          flat: true as unknown as Prop<boolean>,
-                          active: dropdownOpen.value as unknown as Prop<boolean>,
+                          color: 'light',
+                          mode: 'icon',
+                          icon: 'more_vert',
+                          flat: true,
+                          active: dropdownOpen.value,
                         }),
                       content: () => slots.menubar && slots.menubar(),
                     }
@@ -288,10 +279,10 @@ function createButtonItem(
 ): VNode | undefined {
   return condition
     ? h(BsButton, {
-        color: 'light' as Prop<string>,
-        mode: 'icon' as Prop<TButtonMode>,
-        icon: icon as Prop<string>,
-        flat: true as unknown as Prop<boolean>,
+        color: 'light',
+        mode: 'icon',
+        icon: icon,
+        flat: true,
         onClick: () => clickHandler(),
       })
     : undefined;
@@ -392,7 +383,7 @@ function createImageNode(
 }
 
 function createLightboxDisplay(
-  emit: TEmitFn,
+  emit: EmitFn,
   instance: ShallowRef<ComponentInternalInstance | null>,
   props: Readonly<TLightboxOptionProps>,
   viewerStyle: ComputedRef<TRecord | undefined>,
@@ -505,7 +496,7 @@ function createLightboxDisplay(
 }
 
 function createLightboxNavCtrl(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TLightboxOptionProps>,
   activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
@@ -531,12 +522,12 @@ function createLightboxNavCtrl(
         },
         [
           h(BsButton, {
-            color: 'light' as Prop<string>,
-            mode: 'icon' as Prop<TButtonMode>,
-            icon: 'chevron_backward' as Prop<string>,
-            size: 'lg' as Prop<TButtonSize>,
-            flat: true as unknown as Prop<boolean>,
-            iconSize: 40 as Prop<number>,
+            color: 'light',
+            mode: 'icon',
+            icon: 'chevron_backward',
+            size: 'lg',
+            flat: true,
+            iconSize: 40,
             onClick: (e: Event) => {
               e.stopPropagation();
               useNavigatePrevSlide(emit, props, activeItem, itemIndex, zoom, rotate, transition);
@@ -551,12 +542,12 @@ function createLightboxNavCtrl(
         },
         [
           h(BsButton, {
-            color: 'light' as Prop<string>,
-            mode: 'icon' as Prop<TButtonMode>,
-            icon: 'chevron_forward' as Prop<string>,
-            size: 'lg' as Prop<TButtonSize>,
-            flat: true as unknown as Prop<boolean>,
-            iconSize: 40 as Prop<number>,
+            color: 'light',
+            mode: 'icon',
+            icon: 'chevron_forward',
+            size: 'lg',
+            flat: true,
+            iconSize: 40,
             onClick: (e: Event) => {
               e.stopPropagation();
               useNavigateNextSlide(emit, props, activeItem, itemIndex, zoom, rotate, transition);
@@ -569,7 +560,7 @@ function createLightboxNavCtrl(
 }
 
 export function useNavigatePrevSlide(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TLightboxOptionProps>,
   activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
@@ -596,7 +587,7 @@ export function useNavigatePrevSlide(
 }
 
 export function useNavigateNextSlide(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TLightboxOptionProps>,
   activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
@@ -628,7 +619,7 @@ function resetZoomRotate(zoom: Ref<number>, rotate: Ref<number>) {
 }
 
 function createLightboxThumbnail(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TLightboxOptionProps>,
   activeItem: Ref<TLightboxSource | undefined>,
   itemIndex: Ref<number>,
@@ -685,7 +676,7 @@ function createLightboxThumbnail(
 }
 
 export function useSetActiveLightboxItem(
-  emit: TEmitFn,
+  emit: EmitFn,
   props: Readonly<TLightboxOptionProps>,
   activeItem: Ref<TLightboxSource | undefined>,
   activeIndex: Ref<number>,

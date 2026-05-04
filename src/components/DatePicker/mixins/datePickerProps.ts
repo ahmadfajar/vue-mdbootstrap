@@ -1,7 +1,7 @@
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import { DatePickerConst } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import type { TDateTimePickerMode } from '@/components/DatePicker/types';
-import { textFieldProps } from '@/components/Field/mixins/fieldProps.ts';
+import { inputFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import { validationProps } from '@/components/Field/mixins/validationProps.ts';
 import {
   popoverDefaultTransitionProp,
@@ -94,7 +94,7 @@ export const datePickerProps = {
 
 export const dateTimeFieldProps = {
   ...inputProps,
-  ...textFieldProps,
+  ...inputFieldProps,
   ...validationProps,
   autofocus: booleanProp,
   modelValue: stringOrNumberProp,

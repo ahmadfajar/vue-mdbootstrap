@@ -1,13 +1,27 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import BsButtonInner from '@/components/Button/BsButtonInner.ts';
 import {
   useMakeButtonProps,
   useRenderButtonContent,
 } from '@/components/Button/mixins/buttonApi.ts';
 import { buttonProps } from '@/components/Button/mixins/buttonProps.ts';
-import type { TBsButton, TBsButtonInner, TButtonOptionProps } from '@/components/Button/types';
+import type { TBsButton, TButtonOptionProps } from '@/components/Button/types';
 import { useGenerateId } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
-import { computed, defineComponent, h, type Prop } from 'vue';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
+import { computed, defineComponent, h } from 'vue';
 
 export default defineComponent<TBsButton>({
   name: 'BsButton',
@@ -40,14 +54,14 @@ export default defineComponent<TBsButton>({
           ...useMakeButtonProps(thisProps, isDisabled.value),
         },
         [
-          h<TBsButtonInner>(
+          h(
             BsButtonInner,
             {
               class: { 'empty-text': !slots.default && thisProps.dropdownToggle },
-              dropdownToggle: props.dropdownToggle,
-              iconMode: (thisProps.mode === 'icon') as unknown as Prop<boolean | undefined>,
-              hasIcon: hasIcon.value as unknown as Prop<boolean | undefined>,
-              rippleOff: rippleOff.value as unknown as Prop<boolean | undefined>,
+              dropdownToggle: thisProps.dropdownToggle,
+              iconMode: thisProps.mode === 'icon',
+              hasIcon: hasIcon.value,
+              rippleOff: rippleOff.value,
             },
             {
               default: () => useRenderButtonContent(slots, thisProps, iconId),
@@ -57,4 +71,32 @@ export default defineComponent<TBsButton>({
       );
     };
   },
-});
+}) as DefineComponent<
+  TBsButton,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TButtonOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsButton>,
+  SlotsType<ButtonSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare interface ButtonSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the custom button icon.
+   */
+  icon?: () => VNode[] | VNode;
+}

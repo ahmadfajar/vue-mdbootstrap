@@ -1,13 +1,29 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
-  useOnMountedSideDrawer,
   useRenderSideDrawer,
+  useSetupSideDrawer,
   useSideDrawerStyles,
-  useUpdateSideDrawerConfig,
 } from '@/components/Drawer/mixins/sideDrawerApi.ts';
 import { sideDrawerProps } from '@/components/Drawer/mixins/sideDrawerProps.ts';
+import type { TBsSideDrawer, TSideDrawerOptionProps } from '@/components/Drawer/types';
 import { useBreakpointMax } from '@/mixins/CommonApi.ts';
-import type { TBsSideDrawer, TSideDrawerOptionProps, TVueMdb } from '@/types';
-import { computed, defineComponent, nextTick, onMounted, ref, watch } from 'vue';
+import type { TRecord, TVueMdb } from '@/types';
+import type {
+  UpdateOpenEventProps,
+  UpdateOpenEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 
 export default defineComponent<TBsSideDrawer>({
   name: 'BsSideDrawer',
@@ -23,10 +39,10 @@ export default defineComponent<TBsSideDrawer>({
     const isMobile = ref<boolean>(false);
     const isOpen = ref<boolean>(false);
     const clipHeight = ref<number>(0);
-    
+
     // initialize side-drawer state
     isMobile.value = useBreakpointMax('md');
-    const initialState = isMobile.value ? false : (thisProps.open as boolean ?? !isMobile.value);
+    const initialState = isMobile.value ? false : ((thisProps.open as boolean) ?? !isMobile.value);
     isOpen.value = initialState;
 
     const styles = computed(() =>
@@ -46,34 +62,7 @@ export default defineComponent<TBsSideDrawer>({
       }
     };
 
-    watch(
-      () => thisProps.open as boolean,
-      (value) => {
-        isOpen.value = value;
-        if (appId.value && vueMdb.value) {
-          useUpdateSideDrawerConfig(thisProps, vueMdb.value, appId.value, isMobile.value, value);
-        }
-      }
-    );
-
-    onMounted(async () => {
-      await useOnMountedSideDrawer(vueMdb, appId, zIndex);
-      await nextTick().then(() => {
-        if (appId.value && vueMdb.value) {
-          if (thisProps.clipped) {
-            clipHeight.value = vueMdb.value.app[appId.value]?.appbar.height || 0;
-          }
-
-          useUpdateSideDrawerConfig(
-            thisProps,
-            vueMdb.value,
-            appId.value,
-            isMobile.value,
-            thisProps.open as boolean
-          );
-        }
-      });
-    });
+    useSetupSideDrawer(thisProps, vueMdb, appId, isMobile, isOpen, clipHeight, zIndex);
 
     return () =>
       useRenderSideDrawer(
@@ -88,4 +77,44 @@ export default defineComponent<TBsSideDrawer>({
         resizeHandler
       );
   },
-});
+}) as DefineComponent<
+  TBsSideDrawer,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  SideDrawerEventProps,
+  string,
+  PublicProps,
+  Readonly<TSideDrawerOptionProps> & Readonly<SideDrawerEventPublic>,
+  ExtractDefaultPropTypes<TBsSideDrawer>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type SideDrawerEventProps = UpdateOpenEventProps & {
+  /**
+   * Fired when this SideDrawer size is resized.
+   */
+  resize?: (target: HTMLElement) => void;
+};
+
+declare interface SideDrawerEventPublic extends UpdateOpenEventPublic {
+  /**
+   * Fired when this SideDrawer size is resized.
+   */
+  onResize?: (target: HTMLElement) => void;
+
+  /**
+   * Fired when this SideDrawer size is resized.
+   */
+  '@resize'?: (target: HTMLElement) => void;
+}

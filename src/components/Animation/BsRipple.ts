@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   startRipple,
   type TRippleData,
@@ -7,6 +8,17 @@ import type { TBsRipple, TRippleOptionProps } from '@/components/Animation/types
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp, tagProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsRipple>({
@@ -49,7 +61,7 @@ export default defineComponent<TBsRipple>({
       (value) => {
         const isBoolean = typeof value === 'boolean';
         // prettier-ignore
-        // @ts-expect-error constructor may be null
+        // @ts-expect-error: constructor may be null
         const isEvent = value?.constructor.toString().match(/function (\w*)/)[1].toLowerCase() === 'mouseevent';
 
         if (isBoolean && !disabled.value && value) {
@@ -84,4 +96,44 @@ export default defineComponent<TBsRipple>({
         touchTimeout
       );
   },
-});
+}) as DefineComponent<
+  TBsRipple,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  RippleEventProps,
+  string,
+  PublicProps,
+  Readonly<TRippleOptionProps> & Readonly<RippleEventPublic>,
+  ExtractDefaultPropTypes<TBsRipple>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type RippleEventProps = {
+  /**
+   * Fired when the ripple effect is updated.
+   */
+  'update:active'?: (value: boolean) => void;
+};
+
+declare interface RippleEventPublic {
+  /**
+   * Fired when the ripple effect is updated.
+   */
+  'onUpdate:active'?: (value: boolean) => void;
+
+  /**
+   * Fired when the ripple effect is updated.
+   */
+  '@update:active'?: (value: boolean) => void;
+}

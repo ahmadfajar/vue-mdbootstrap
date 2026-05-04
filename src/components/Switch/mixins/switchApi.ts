@@ -4,9 +4,10 @@ import {
   useCheckSelected,
   useCreateInputRadioOrCheckbox,
 } from '@/components/Radio/mixins/radioApi.ts';
+import type { TSwitchOptionProps } from '@/components/Switch/types';
 import { cssPrefix, useMergeClass, useWrapSlotWithCondition } from '@/mixins/CommonApi.ts';
-import type { PromiseVoidFunction, TBsRipple, TRecord, TSwitchOptionProps } from '@/types';
-import type { ComputedRef, Prop, Ref, Slots, VNode } from 'vue';
+import type { PromiseVoidFunction, TRecord } from '@/types';
+import type { ComputedRef, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h } from 'vue';
 
 export function useSwitchClasses(props: Readonly<TSwitchOptionProps>): TRecord {
@@ -15,9 +16,7 @@ export function useSwitchClasses(props: Readonly<TSwitchOptionProps>): TRecord {
   return {
     [`${cssPrefix}switch`]: true,
     [`${cssPrefix}switch-inset`]:
-      ['inset', 'outline-inset'].includes(props.variant!) ||
-      props.insetMode ||
-      props.insetOutlined,
+      ['inset', 'outline-inset'].includes(props.variant!) || props.insetMode || props.insetOutlined,
     [`${cssPrefix}switch-outlined`]:
       (props.variant === 'outline-inset' || props.insetOutlined) && !props.insetMode,
     [`switch-${props.color}`]: props.color != null,
@@ -40,15 +39,15 @@ function createThumbIcon(props: Readonly<TSwitchOptionProps>): VNode {
 
     if (checked && props.checkedIcon) {
       return h(BsSvgIcon, {
-        icon: 'check' as Prop<string>,
-        height: 16 as Prop<number>,
-        width: 16 as Prop<number>,
+        icon: 'check',
+        height: 16,
+        width: 16,
       });
     } else if (!checked && props.checkoffIcon && props.insetMode) {
       return h(BsSvgIcon, {
-        icon: 'close' as Prop<string>,
-        height: 16 as Prop<number>,
-        width: 16 as Prop<number>,
+        icon: 'close',
+        height: 16,
+        width: 16,
       });
     }
   }
@@ -71,13 +70,13 @@ function createSwitchUI(
       [
         h('div', { class: [`${cssPrefix}switch-thumb`, 'relative'] }, [
           h('div', { class: [`${cssPrefix}switch-overlay`, 'absolute'] }),
-          h<TBsRipple>(
+          h(
             BsRipple,
             {
               class: ['flex', 'items-center', 'justify-center', 'absolute'],
-              centered: true as unknown as Prop<boolean>,
-              active: rippleActive.value as unknown as Prop<boolean>,
-              disabled: (props.disabled || props.readonly) as unknown as Prop<boolean>,
+              centered: true,
+              active: rippleActive.value,
+              disabled: props.disabled || props.readonly,
               'onUpdate:active': (value: boolean): void => {
                 rippleActive.value = value;
               },
@@ -102,7 +101,7 @@ function switchLabelClass(props: Readonly<TSwitchOptionProps>, position: string)
     !props.disabled && !props.readonly ? `${cssPrefix}link relative` : 'relative',
   ];
 
-  return useMergeClass(labelClass, props.labelClass as string | string[]);
+  return useMergeClass(labelClass, props.labelClass);
 }
 
 export function useRenderSwitch(

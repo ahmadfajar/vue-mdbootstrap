@@ -1,5 +1,4 @@
-export { default as Helper } from '@/utils/Helper.ts';
-export { AxiosPlugin } from '@/utils/AxiosPlugin.ts';
+export * from '@/types/index.ts';
 export * from '@/model';
 export * from '@/shared.ts';
 export * from '@/components/Animation';

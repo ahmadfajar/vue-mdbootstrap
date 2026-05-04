@@ -4,9 +4,10 @@ import BsChipGroup from './BsChipGroup.ts';
 
 const BsChipPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsChip.name as string, BsChip);
-    app.component(BsChipGroup.name as string, BsChipGroup);
+    app.component('BsChip', BsChip);
+    app.component('BsChipGroup', BsChipGroup);
   },
 };
 
+export type * from '@/components/Chip/types';
 export { BsChip, BsChipGroup, BsChipPlugin };

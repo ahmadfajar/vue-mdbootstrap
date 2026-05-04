@@ -4,10 +4,10 @@ export class EventListener {
   /**
    * Listen to DOM events during the bubble phase.
    *
-   * @param target      DOM element to register listener on.
-   * @param eventName   Event name, e.g. 'click' or 'mouseover'.
-   * @param callback    Callback function.
-   * @param options     Listener options.
+   * @param target    DOM element to register listener on.
+   * @param eventName Event type, e.g. 'click' or 'mouseover'.
+   * @param callback  Callback function.
+   * @param options   Listener options.
    * @returns Object with a `remove` method.
    */
   static listen(

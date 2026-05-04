@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useAttachStyleTag,
   useBufferMode,
@@ -9,6 +10,16 @@ import {
 import { progressProps } from '@/components/Progress/mixins/progressProps.ts';
 import type { TBsProgress, TProgressOptionProps } from '@/components/Progress/types';
 import { useBrowserIE } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
 import { computed, defineComponent, onMounted, watch } from 'vue';
 
 export default defineComponent<TBsProgress>({
@@ -80,4 +91,25 @@ export default defineComponent<TBsProgress>({
           );
     };
   },
-});
+}) as DefineComponent<
+  TBsProgress,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TProgressOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsProgress>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

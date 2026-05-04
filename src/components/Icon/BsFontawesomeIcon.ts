@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
 import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps.ts';
 import {
@@ -15,16 +16,17 @@ import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { stringArrayOrObjectProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import {
-  computed,
-  defineComponent,
-  h,
-  normalizeClass,
-  onBeforeMount,
-  type Prop,
-  ref,
-  watchEffect,
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  Prop,
+  PublicProps,
 } from 'vue';
+import { computed, defineComponent, h, normalizeClass, onBeforeMount, ref, watchEffect } from 'vue';
 
 export default defineComponent<TBsFontawesomeIcon>({
   name: 'BsFontawesomeIcon',
@@ -97,4 +99,24 @@ export default defineComponent<TBsFontawesomeIcon>({
         useRenderNodeFromSVG(svgIcon.value?.data, szWidth.value, szHeight.value, svgClasses.value)
       );
   },
-});
+}) as DefineComponent<
+  TBsFontawesomeIcon,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TFontawesomeIconOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsFontawesomeIcon>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  never
+>;

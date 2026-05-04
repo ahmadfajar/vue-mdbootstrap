@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useInitColorPickerData,
   useMoveAlphaSliderThumb,
@@ -16,8 +17,24 @@ import type {
 import type { TStringRecord } from '@/components/Field/types';
 import { BsPopover } from '@/components/Popover';
 import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
-import { hslaToString, oklchToString, rgbaToHex, rgbaToString } from '@/utils/colorUtils.ts';
+import type { TRecord } from '@/types';
+import type {
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  UpdateOpenEventProps,
+  UpdateOpenEventPublic,
+} from '@/types/internals.ts';
+import { hslaToString, oklchToString, rgbaToHex, rgbaToString } from '@/utils/ColorUtils.ts';
 import Helper from '@/utils/Helper.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
 import { computed, defineComponent, h, mergeProps, onMounted, watch } from 'vue';
 
 export default defineComponent<TBsColorPicker>({
@@ -28,6 +45,7 @@ export default defineComponent<TBsColorPicker>({
   setup(props, { emit, attrs, expose }) {
     const thisProps = props as Readonly<TColorPickerOptionProps>;
     const thisData = useInitColorPickerData(thisProps);
+
     const pickerClasses = computed(() => [
       `${cssPrefix}color-picker`,
       'inline-block',
@@ -38,6 +56,7 @@ export default defineComponent<TBsColorPicker>({
           : `bg-${thisProps.containerColor}`
         : '',
     ]);
+
     const inputIDs: TStringRecord = {
       // HSLA
       H1: useGenerateId(),
@@ -167,4 +186,46 @@ export default defineComponent<TBsColorPicker>({
             moveAlphaSliderThumbHandler
           );
   },
-});
+}) as DefineComponent<
+  TBsColorPicker,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ColorPickerEventProps,
+  string,
+  PublicProps,
+  Readonly<TColorPickerOptionProps> & Readonly<ColorPickerEventPublic>,
+  ExtractDefaultPropTypes<TBsColorPicker>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type ColorPickerEventProps = UpdateModelValueEventProps<string> &
+  UpdateOpenEventProps & {
+    /**
+     * Fired when this ColorPicker's mode is updated or changed.
+     */
+    'update:mode'?: (mode: TColorPickerMode) => void;
+  };
+
+declare interface ColorPickerEventPublic
+  extends UpdateModelValueEventPublic<string>, UpdateOpenEventPublic {
+  /**
+   * Fired when this ColorPicker's mode is updated or changed.
+   */
+  'OnUpdate:mode'?: (mode: TColorPickerMode) => void;
+
+  /**
+   * Fired when this ColorPicker's mode is updated or changed.
+   */
+  '@update:mode'?: (mode: TColorPickerMode) => void;
+}

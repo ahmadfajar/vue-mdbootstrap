@@ -1,16 +1,31 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import type { IListItem } from '@/components/ListView/mixins/ListItem.ts';
+import type {
+  ListNavItemEventProps,
+  ListNavItemEventPublic,
+} from '@/components/ListView/mixins/listNavApi.ts';
 import {
+  type IListTileEventEmitter,
   useListTileClassNames,
   useRenderListTile,
 } from '@/components/ListView/mixins/listTileApi.ts';
 import { listTileProps } from '@/components/ListView/mixins/listViewProps.ts';
+import type { IListViewProvider } from '@/components/ListView/mixins/ListViewProvider.ts';
+import type { TBsListTile, TListTileOptionProps } from '@/components/ListView/types';
 import { useCurrentRoute, useHasLink, useHasRouter, useRouteMatch } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
-  IListItem,
-  IListViewProvider,
-  TBsListTile,
-  TListTileOptionProps,
-  TRecord,
-} from '@/types';
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  EmitFn,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import {
   computed,
   defineComponent,
@@ -73,6 +88,35 @@ export default defineComponent<TBsListTile>({
     });
 
     return () =>
-      useRenderListTile(tagName.value, slots, emit, thisProps, tileClasses, listItem, provider);
+      useRenderListTile(
+        tagName.value,
+        slots,
+        emit as EmitFn<IListTileEventEmitter>,
+        thisProps,
+        tileClasses,
+        listItem,
+        provider
+      );
   },
-});
+}) as DefineComponent<
+  TBsListTile,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ListNavItemEventProps,
+  string,
+  PublicProps,
+  Readonly<TListTileOptionProps> & Readonly<ListNavItemEventPublic>,
+  ExtractDefaultPropTypes<TBsListTile>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

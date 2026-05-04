@@ -1,4 +1,5 @@
 import { BsRipple } from '@/components/Animation';
+import type { TInputGroupProps } from '@/components/Checkbox/types';
 import { useInputFieldBaseAttrs } from '@/components/Field/mixins/textFieldApi.ts';
 import {
   useGetErrorItems,
@@ -7,28 +8,21 @@ import {
   useRenderFieldFeedback,
   useShowValidationError,
 } from '@/components/Field/mixins/validationApi.ts';
+import type { TInputBaseProps, TValidationProps } from '@/components/Field/types';
 import { BsRadio } from '@/components/Radio';
-import { cssPrefix, useWrapSlot } from '@/mixins/CommonApi.ts';
 import type {
-  Numberish,
-  PromiseVoidFunction,
-  TBsRadio,
-  TBsRipple,
-  TInputBaseProps,
-  TInputGroupProps,
   TRadioGroupOptionProps,
   TRadioInputProps,
   TRadioOptionProps,
-  TRecord,
-  TValidationProps,
-} from '@/types';
+} from '@/components/Radio/types';
+import { cssPrefix, useWrapSlot } from '@/mixins/CommonApi.ts';
+import type { PromiseVoidFunction, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import {
   computed,
   h,
   renderSlot,
   type ComputedRef,
-  type Prop,
   type Ref,
   type Slots,
   type VNode,
@@ -125,12 +119,12 @@ export function useRenderRadioOrCheckbox(
         },
         [
           h('div', { class: [`${cssPrefix}${inputType}-overlay`, 'absolute'] }),
-          h<TBsRipple>(
+          h(
             BsRipple,
             {
-              centered: true as unknown as Prop<boolean>,
-              active: rippleActive.value as unknown as Prop<boolean>,
-              disabled: (props.disabled || props.readonly) as unknown as Prop<boolean>,
+              centered: true,
+              active: rippleActive.value,
+              disabled: props.disabled || props.readonly,
               'onUpdate:active': (value: boolean): void => {
                 rippleActive.value = value;
               },
@@ -189,17 +183,16 @@ export function useCreateRadioItems(
 ): VNodeArrayChildren {
   return props.items.map((it, idx) => {
     return h('div', { class: 'col', key: `radio-${idx}` }, [
-      h<TBsRadio>(
+      h(
         BsRadio,
         {
-          color: (it.color || props.color) as Prop<string>,
-          disabled: (it.disabled || props.disabled) as unknown as Prop<boolean>,
-          readonly: (it.readonly || props.readonly) as unknown as Prop<boolean>,
-          value: it.value as Prop<Numberish | boolean | unknown>,
-          // prettier-ignore
-          name: (it.name ? it.name : props.name ? props.name : undefined) as Prop<Numberish | undefined>,
-          modelValue: props.modelValue as Prop<Numberish | boolean | unknown>,
-          'onUpdate:model-value': (): void => toggleCheckHandler(it),
+          color: it.color || props.color,
+          disabled: it.disabled || props.disabled,
+          readonly: it.readonly || props.readonly,
+          value: it.value,
+          name: it.name ? it.name : props.name ? props.name : undefined,
+          modelValue: props.modelValue,
+          'onUpdate:modelValue': (): void => toggleCheckHandler(it),
         },
         {
           default: () => it.label,

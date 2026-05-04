@@ -1,11 +1,24 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useAppbarOnMountedHook,
   useAppbarStyles,
   useRenderAppbar,
 } from '@/components/Appbar/mixins/appbarApi.ts';
+import type { TAppbarOptionProps, TBsAppbar } from '@/components/Appbar/types';
 import { useBreakpointMax } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
-import type { TAppbarOptionProps, TBsAppbar, TVueMdb } from '@/types';
+import type { TRecord, TVueMdb } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import { computed, defineComponent, onMounted, ref, watch } from 'vue';
 
 export default defineComponent<TBsAppbar>({
@@ -36,7 +49,7 @@ export default defineComponent<TBsAppbar>({
       () => thisProps.fixedTop as boolean,
       (value) => {
         if (appId.value && vueMdb.value) {
-          vueMdb.value.app[appId.value]!.appbar.fixedTop = value;
+          vueMdb.value.app[appId.value].appbar.fixedTop = value;
         }
       }
     );
@@ -45,7 +58,7 @@ export default defineComponent<TBsAppbar>({
       () => thisProps.stickyTop as boolean,
       (value) => {
         if (appId.value && vueMdb.value) {
-          vueMdb.value.app[appId.value]!.appbar.stickyTop = value;
+          vueMdb.value.app[appId.value].appbar.stickyTop = value;
         }
       }
     );
@@ -59,4 +72,44 @@ export default defineComponent<TBsAppbar>({
 
     return () => useRenderAppbar(thisProps, appbar, styles, smoothAnimation, slots, resizeHandler);
   },
-});
+}) as DefineComponent<
+  TBsAppbar,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  AppbarEventProps,
+  string,
+  PublicProps,
+  Readonly<TAppbarOptionProps> & Readonly<AppbarEventPublic>,
+  ExtractDefaultPropTypes<TBsAppbar>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type AppbarEventProps = {
+  /**
+   * Fired when the Appbar is resized.
+   */
+  resize?: (target: HTMLElement) => void;
+};
+
+declare interface AppbarEventPublic {
+  /**
+   * Fired when the Appbar is resized.
+   */
+  onResize?: (target: HTMLElement) => void;
+
+  /**
+   * Fired when the Appbar is resized.
+   */
+  '@resize'?: (target: HTMLElement) => void;
+}

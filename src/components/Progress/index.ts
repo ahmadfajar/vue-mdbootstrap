@@ -6,11 +6,12 @@ import BsSpinLoader from './BsSpinLoader.ts';
 
 const BsProgressPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsMaskLoader.name as string, BsMaskLoader);
-    app.component(BsProgress.name as string, BsProgress);
-    app.component(BsProgressBar.name as string, BsProgressBar);
-    app.component(BsSpinLoader.name as string, BsSpinLoader);
+    app.component('BsMaskLoader', BsMaskLoader);
+    app.component('BsProgress', BsProgress);
+    app.component('BsProgressBar', BsProgressBar);
+    app.component('BsSpinLoader', BsSpinLoader);
   },
 };
 
+export type * from '@/components/Progress/types';
 export { BsMaskLoader, BsProgress, BsProgressBar, BsProgressPlugin, BsSpinLoader };

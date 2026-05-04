@@ -1,12 +1,22 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import BsSvgIcon from '@/components/Icon/BsSvgIcon.ts';
 import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
 import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps.ts';
-import type { TBsIcon, TBsSvgIcon, TIconOptionProps } from '@/components/Icon/types';
+import type { TBsIcon, TIconOptionProps } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp, stringArrayOrObjectProp } from '@/mixins/CommonProps.ts';
 import type { Numberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import { computed, defineComponent, h, type Prop } from 'vue';
-import BsSvgIcon from './BsSvgIcon.ts';
+import type {
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+} from 'vue';
+import { computed, defineComponent, h } from 'vue';
 
 export default defineComponent<TBsIcon>({
   name: 'BsIcon',
@@ -32,17 +42,37 @@ export default defineComponent<TBsIcon>({
           class: [`${cssPrefix}icon`, 'items-center', 'justify-center'],
           style: styles.value,
         },
-        h<TBsSvgIcon>(BsSvgIcon, {
-          class: thisProps.svgClass,
-          icon: props.icon,
-          filled: props.filled,
-          height: szHeight as Prop<Numberish>,
-          width: szWidth as Prop<Numberish>,
-          spin: props.spin,
-          pulse: props.pulse,
-          flip: props.flip,
-          rotate: props.rotate,
+        h(BsSvgIcon, {
+          class: thisProps.svgClass as never,
+          icon: thisProps.icon,
+          filled: thisProps.filled,
+          height: szHeight as Numberish,
+          width: szWidth as Numberish,
+          spin: thisProps.spin,
+          pulse: thisProps.pulse,
+          flip: thisProps.flip,
+          rotate: thisProps.rotate,
         })
       );
   },
-});
+}) as DefineComponent<
+  TBsIcon,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  {},
+  string,
+  PublicProps,
+  Readonly<TIconOptionProps> & Readonly<{}>,
+  ExtractDefaultPropTypes<TBsIcon>,
+  {},
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  never
+>;

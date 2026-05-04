@@ -1,8 +1,27 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderPopover, useSetPopoverPosition } from '@/components/Popover/mixins/popoverApi.ts';
 import { popoverProps } from '@/components/Popover/mixins/popoverProps.ts';
 import type { TBsPopover, TPopoverOptionProps, TPopoverPosition } from '@/components/Popover/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import type { ComponentInternalInstance } from 'vue';
+import type { TRecord } from '@/types';
+import type {
+  ClosableEventProps,
+  ClosableEventPublic,
+  UpdateOpenEventProps,
+  UpdateOpenEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals.ts';
+import type {
+  ComponentInternalInstance,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 import {
   computed,
   defineComponent,
@@ -21,7 +40,7 @@ export default defineComponent<TBsPopover>({
   emits: ['close', 'update:open'],
   setup(props, { slots, attrs }) {
     const thisProps = props as Readonly<TPopoverOptionProps>;
-    const isActive = ref<boolean>(<boolean>thisProps.open);
+    const isActive = ref<boolean>(thisProps.open as boolean);
     const placementRef = ref<TPopoverPosition | undefined>(thisProps.placement);
     const popoverRef = ref<HTMLElement | null>(null);
     const instance = shallowRef<ComponentInternalInstance | null>(null);
@@ -43,6 +62,7 @@ export default defineComponent<TBsPopover>({
         }
       }
     );
+
     onMounted(() => {
       instance.value = getCurrentInstance();
       useSetPopoverPosition(instance.value, thisProps, popoverRef, placementRef, isActive);
@@ -60,4 +80,29 @@ export default defineComponent<TBsPopover>({
         isActive
       );
   },
-});
+}) as DefineComponent<
+  TBsPopover,
+  {},
+  {},
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  PopoverEventProps,
+  string,
+  PublicProps,
+  Readonly<TPopoverOptionProps> & Readonly<PopoverEventPublic>,
+  ExtractDefaultPropTypes<TBsPopover>,
+  SlotsType<VoidDefaultSlots>,
+  {},
+  {},
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+declare type PopoverEventProps = ClosableEventProps & UpdateOpenEventProps;
+
+declare interface PopoverEventPublic extends ClosableEventPublic, UpdateOpenEventPublic {}

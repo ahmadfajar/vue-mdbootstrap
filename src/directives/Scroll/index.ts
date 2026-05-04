@@ -2,7 +2,7 @@ import type { EventListenerTarget, IBindingElement, TDirectiveBinding } from '@/
 import Helper from '@/utils/Helper.ts';
 import type { Directive, DirectiveBinding } from 'vue';
 
-interface ScrollDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
+export interface ScrollDirectiveBinding extends Omit<DirectiveBinding, 'modifiers'> {
   value: EventListenerTarget | TDirectiveBinding;
   modifiers?: {
     passive?: boolean;
@@ -72,7 +72,12 @@ function updated(el: HTMLElement, binding: ScrollDirectiveBinding): void {
   mounted(el, binding);
 }
 
-export const Scroll: Directive = {
+export const Scroll: Directive<
+  HTMLElement,
+  EventListenerTarget | TDirectiveBinding,
+  string,
+  never
+> = {
   mounted,
   unmounted,
   updated,

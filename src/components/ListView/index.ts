@@ -11,18 +11,20 @@ import BsListView from './BsListView.ts';
 
 const BsListViewPlugin: ObjectPlugin = {
   install: (app: App): void => {
-    app.component(BsListView.name as string, BsListView);
-    app.component(BsListNav.name as string, BsListNav);
-    app.component(BsListNavItem.name as string, BsListNavItem);
-    app.component(BsListTile.name as string, BsListTile);
-    app.component(BsListTileAction.name as string, BsListTileAction);
-    app.component(BsListTileContent.name as string, BsListTileContent);
-    app.component(BsListTileLeading.name as string, BsListTileLeading);
-    app.component(BsListTileSubtitle.name as string, BsListTileSubtitle);
-    app.component(BsListTileTitle.name as string, BsListTileTitle);
+    app.component('BsListView', BsListView);
+    app.component('BsListNav', BsListNav);
+    app.component('BsListNavItem', BsListNavItem);
+    app.component('BsListTile', BsListTile);
+    app.component('BsListTileAction', BsListTileAction);
+    app.component('BsListTileContent', BsListTileContent);
+    app.component('BsListTileLeading', BsListTileLeading);
+    app.component('BsListTileSubtitle', BsListTileSubtitle);
+    app.component('BsListTileTitle', BsListTileTitle);
   },
 };
 
+export type { IListViewProvider } from '@/components/ListView/mixins/ListViewProvider.ts';
+export type * from '@/components/ListView/types';
 export {
   BsListNav,
   BsListNavItem,

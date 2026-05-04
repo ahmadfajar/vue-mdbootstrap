@@ -1,22 +1,13 @@
 import { BsRipple } from '@/components/Animation';
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
-import { BsButton } from '@/components/Button';
+import { BsButton, type TButtonOptionProps } from '@/components/Button';
+import type { TChipOptionProps, TChipSize } from '@/components/Chip/types';
 import { BsIcon } from '@/components/Icon';
+import type { TSizeProps } from '@/components/Icon/types';
 import { cssPrefix, useWrapSlot, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
-import type {
-  PromiseVoidFunction,
-  TBsButton,
-  TBsIcon,
-  TBsRipple,
-  TButtonMode,
-  TButtonSize,
-  TChipOptionProps,
-  TChipSize,
-  TRecord,
-  TSizeProps,
-} from '@/types';
+import type { PromiseVoidFunction, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { ComputedRef, Prop, Slots, VNode } from 'vue';
+import type { ComputedRef, Slots, VNode } from 'vue';
 import { createCommentVNode, h } from 'vue';
 
 export function useChipClassNames(props: Readonly<TChipOptionProps>, attrs: TRecord): TRecord {
@@ -104,22 +95,22 @@ function isLightColor(color: string): boolean {
 function createCloseBtnAttr(
   props: Readonly<TChipOptionProps>,
   clickHandler: PromiseVoidFunction
-): TBsButton {
-  return <TBsButton>{
-    flat: true as unknown as Prop<boolean>,
-    mode: 'icon' as Prop<TButtonMode>,
-    icon: 'close' as Prop<string>,
-    iconSize: (props.size === 'sm' ? 14 : props.size === 'lg' ? 24 : 18) as Prop<number>,
-    size: (props.size === 'sm' ? 'xs' : 'sm') as Prop<TButtonSize>,
-    color: (props.closeButtonColor
+): TButtonOptionProps {
+  return {
+    flat: true,
+    mode: 'icon',
+    icon: 'close',
+    iconSize: props.size === 'sm' ? 14 : props.size === 'lg' ? 24 : 18,
+    size: props.size === 'sm' ? 'xs' : 'sm',
+    color: props.closeButtonColor
       ? props.closeButtonColor
       : isLightColor(props.color as string) || props.outlined
         ? 'secondary'
-        : props.color) as Prop<string>,
+        : props.color,
     style: { order: 2 },
     ariaLabel: 'Close',
     onClick: clickHandler,
-  };
+  } as TButtonOptionProps;
 }
 
 export function useRenderChip(
@@ -149,10 +140,10 @@ export function useRenderChip(
       'aria-disabled': props.disabled,
     },
     [
-      h<TBsRipple>(
+      h(
         BsRipple,
         {
-          disabled: rippleDisabled as unknown as Prop<boolean>,
+          disabled: rippleDisabled,
           class: [`${cssPrefix}chip-content`, 'inline-flex', 'items-center', 'max-w-full'],
         },
         {
@@ -179,20 +170,16 @@ export function useRenderChip(
                 },
               },
               !Helper.isEmpty(props.icon)
-                ? h<TBsIcon>(BsIcon, {
+                ? h(BsIcon, {
                     ...useCreateIconProps(props),
-                    size: (props.size === 'sm'
-                      ? 18
-                      : props.size === 'lg'
-                        ? 38
-                        : 22) as Prop<number>,
+                    size: props.size === 'sm' ? 18 : props.size === 'lg' ? 38 : 22,
                   })
                 : undefined
             ),
             props.imgSrc ? createChipAvatar(props) : createCommentVNode(' v-if-chip-avatar '),
             useWrapSlotDefault('div', slots, [`${cssPrefix}chip-text`, 'flex', 'items-center']),
             props.dismissible
-              ? h<TBsButton>(BsButton, createCloseBtnAttr(props, dismissHandler))
+              ? h(BsButton, createCloseBtnAttr(props, dismissHandler))
               : createCommentVNode(' v-if-chip-dismissible '),
           ],
         }

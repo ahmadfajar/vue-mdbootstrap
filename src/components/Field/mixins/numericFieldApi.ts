@@ -15,19 +15,16 @@ import {
   useOnTextFieldNodeMounted,
 } from '@/components/Field/mixins/textFieldEventApi.ts';
 import { useRenderFieldFeedback } from '@/components/Field/mixins/validationApi.ts';
-import { BsIcon } from '@/components/Icon';
-import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import type {
-  PromiseVoidFunction,
   TActionButtonPlacement,
-  TBsIcon,
-  TIconVariant,
   TNumericFieldOptionProps,
   TNumericOptions,
-  TRecord,
-} from '@/types';
+} from '@/components/Field/types';
+import { BsIcon } from '@/components/Icon';
+import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
+import type { MaybeNumber, PromiseVoidFunction, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type { ComputedRef, EmitFn, Prop, Ref, Slots, VNode } from 'vue';
+import type { ComputedRef, EmitFn, Ref, Slots, VNode } from 'vue';
 import { createCommentVNode, h, toDisplayString } from 'vue';
 
 function createMinusButton(
@@ -45,14 +42,14 @@ function createMinusButton(
         BsRipple,
         {
           class: ['flex', 'items-center', 'justify-center'],
-          disabled: props.disabled as unknown as Prop<boolean>,
-          tag: 'span' as Prop<string>,
+          disabled: props.disabled,
+          tag: 'span',
         },
         {
           default: () =>
             h(BsIcon, {
-              icon: `do_not_disturb_on_${props.actionIconVariant}` as Prop<string>,
-              size: 24 as Prop<number>,
+              icon: `do_not_disturb_on_${props.actionIconVariant}`,
+              size: 24,
             }),
         }
       ),
@@ -75,14 +72,14 @@ function createPlusButton(
         BsRipple,
         {
           class: ['flex', 'items-center', 'justify-center'],
-          disabled: props.disabled as unknown as Prop<boolean>,
-          tag: 'span' as Prop<string>,
+          disabled: props.disabled,
+          tag: 'span',
         },
         {
           default: () =>
             h(BsIcon, {
-              icon: `add_circle_${props.actionIconVariant}` as Prop<string>,
-              size: 24 as Prop<number>,
+              icon: `add_circle_${props.actionIconVariant}`,
+              size: 24,
             }),
         }
       ),
@@ -141,8 +138,8 @@ function createSpinnerButton(
             BsRipple,
             {
               class: ['flex', 'justify-center'],
-              disabled: props.disabled as unknown as Prop<boolean>,
-              tag: 'span' as Prop<string>,
+              disabled: props.disabled,
+              tag: 'span',
             },
             {
               default: () =>
@@ -164,8 +161,8 @@ function createSpinnerButton(
             BsRipple,
             {
               class: ['flex', 'justify-center'],
-              disabled: props.disabled as unknown as Prop<boolean>,
-              tag: 'span' as Prop<string>,
+              disabled: props.disabled,
+              tag: 'span',
             },
             {
               default: () =>
@@ -203,10 +200,10 @@ function createAppendFieldActionNode(
           },
           [
             showClearButton
-              ? h<TBsIcon>(BsIcon, {
+              ? h(BsIcon, {
                   class: 'icon-clear',
-                  icon: `cancel_${props.actionIconVariant}` as Prop<string>,
-                  size: iconSize as Prop<number | undefined>,
+                  icon: `cancel_${props.actionIconVariant}`,
+                  size: iconSize,
                   onClick: clearHandler,
                 })
               : undefined,
@@ -275,10 +272,10 @@ function isGreaterOrEqualMinValue(value: number, options: TNumericOptions): bool
 }
 
 function decrementValue(
-  emit: EmitFn<InputTextEventEmitter<number | null | undefined>>,
+  emit: EmitFn<InputTextEventEmitter<MaybeNumber>>,
   props: Readonly<TNumericFieldOptionProps>,
   options: TNumericOptions,
-  localValue: Ref<number | null | undefined>
+  localValue: Ref<MaybeNumber>
 ): void {
   if (!props.disabled && !props.readonly) {
     let result = (localValue.value || 0.0) - options.step;
@@ -293,10 +290,10 @@ function decrementValue(
 }
 
 function incrementValue(
-  emit: EmitFn<InputTextEventEmitter<number | null | undefined>>,
+  emit: EmitFn<InputTextEventEmitter<MaybeNumber>>,
   props: Readonly<TNumericFieldOptionProps>,
   options: TNumericOptions,
-  localValue: Ref<number | null | undefined>
+  localValue: Ref<MaybeNumber>
 ): void {
   if (!props.disabled && !props.readonly) {
     let result = (localValue.value ?? 0.0) + options.step;
@@ -311,12 +308,12 @@ function incrementValue(
 }
 
 function createNumericInputField(
-  emit: EmitFn<InputTextEventEmitter<number | null | undefined>>,
+  emit: EmitFn<InputTextEventEmitter<MaybeNumber>>,
   props: Readonly<TNumericFieldOptionProps>,
   numericOptions: TNumericOptions,
   formatOptions: Intl.NumberFormatOptions,
   inputRef: Ref<HTMLElement | null>,
-  localValue: Ref<number | null | undefined>,
+  localValue: Ref<MaybeNumber>,
   hasFocus: Ref<boolean>,
   autocomplete: string | boolean | null
 ): VNode[] {
@@ -404,13 +401,13 @@ function createNumericInputField(
 
 export function useRenderNumericField(
   slots: Slots,
-  emit: EmitFn<InputTextEventEmitter<number | null | undefined>>,
+  emit: EmitFn<InputTextEventEmitter<MaybeNumber>>,
   props: Readonly<TNumericFieldOptionProps>,
   operationOptions: TNumericOptions,
   formatOptions: Intl.NumberFormatOptions,
   wrapperCss: ComputedRef<TRecord>,
   controlCss: ComputedRef<TRecord>,
-  localValue: Ref<number | null | undefined>,
+  localValue: Ref<MaybeNumber>,
   inputRef: Ref<HTMLElement | null>,
   hasFocus: Ref<boolean>,
   autocomplete: string | boolean | null,
@@ -453,7 +450,7 @@ export function useRenderNumericField(
           props.appendIcon,
           props.prependIcon,
           useCreateValidationIcon(
-            props.actionIconVariant as TIconVariant,
+            props.actionIconVariant!,
             hasValidated.value,
             hasError.value,
             props.validationIcon as boolean,
