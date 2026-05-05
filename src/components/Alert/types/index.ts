@@ -7,12 +7,17 @@ export declare type TAlertVariant = 'success' | 'info' | 'warning' | 'danger' | 
 
 export declare type TAlertOptionProps = TAllowedIconProps & {
   /**
-   * Alert color
+   * Alert color.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`, `default`.
    */
   color?: TExtendedContextColor | string;
 
   /**
    * Define close button color explicitly.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
   closeButtonColor?: TButtonColor | string;
 

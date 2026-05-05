@@ -32,6 +32,9 @@ export declare type TButtonInnerOptionProps = {
 export declare type TButtonBaseProps = {
   /**
    * Sets this button color.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
   color?: TButtonColor | string;
 
@@ -238,6 +241,9 @@ export declare type TToggleButtonOptionProps = TInputBaseProps &
 
     /**
      * Color to apply when Button is active or selected.
+     *
+     * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+     * `dark`, `default`.
      */
     toggleColor?: TButtonColor | string;
 

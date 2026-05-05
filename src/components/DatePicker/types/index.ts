@@ -15,12 +15,18 @@ export declare type TDatePickerOptionProps = {
   /**
    * Sets calendar `date`, `month`, `year` `time` and `navigation` button color.
    * Default is `secondary`.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
   buttonColor?: TButtonColor | string;
 
   /**
    * Sets selected calendar `date`, `month`, `year` and `time` button color.
    * Default is interpolated from `headerColor`.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
   selectedColor?: TButtonColor | string;
 
@@ -41,6 +47,8 @@ export declare type TDatePickerOptionProps = {
    * Sets component's header panel background color. Default is `primary`.
    *
    * Custom CSS class can also be used as the value for this property.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
   headerColor?: TContextColor | string;
 
@@ -105,6 +113,8 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
    * Optional, sets DatePicker's header panel background color. Default is `primary`.
    *
    * Custom CSS class can also be used as the value for this property.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
   headerColor?: TContextColor | string;
 
@@ -172,12 +182,18 @@ export declare type TDateTimeFieldOptionProps = TInputFieldProps & {
 
   /**
    * This DatePicker calendar date button and navigation button color. Default is `dark`.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
   pickerButton?: TButtonColor | string;
 
   /**
    * Sets DatePicker selected calendar `date`, `month`, `year` and `time` button color.
    * Default is interpolated from `headerColor`.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
   pickerSelectedColor?: TButtonColor | string;
 

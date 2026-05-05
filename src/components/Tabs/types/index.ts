@@ -55,6 +55,8 @@ export declare type TTabsOptionProps = TTabsBaseProps & {
 
   /**
    * Tabs color style for tab variant: `modern` and `material`.
+   *
+   * Must use valid CSS name for this to work properly, example: bg-primary, bg-indigo-600.
    */
   color?: string;
 

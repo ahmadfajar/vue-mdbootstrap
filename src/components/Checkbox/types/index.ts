@@ -7,6 +7,8 @@ export declare type TInputGroupProps<D, M> = TInputBaseProps &
   TValidationProps & {
     /**
      * Sets this component color.
+     *
+     * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
      */
     color?: TContextColor | string;
 

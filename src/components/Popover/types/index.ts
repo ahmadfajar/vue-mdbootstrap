@@ -38,6 +38,7 @@ export declare type TPopupOptions = {
 
   /**
    * The backdrop overlay color.
+   * Must be a valid CSS color formatted string.
    */
   overlayColor?: string;
 

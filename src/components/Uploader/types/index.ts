@@ -42,6 +42,9 @@ export declare type TImageUploaderOptionProps = {
 
   /**
    * Sets the color of Button element. Default is `primary`.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
   buttonColor?: TButtonColor | string;
 

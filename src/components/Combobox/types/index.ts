@@ -1,7 +1,7 @@
+import type { TInputFieldProps } from '@/components/Field/types';
 import type { IArrayStore, IBsStore } from '@/model';
 import type { Numberish, TContextColor, TExtendedContextColor } from '@/types';
 import type { ComponentObjectPropsOptions } from 'vue';
-import type { TInputFieldProps } from '../../Field/types';
 
 export declare type TCheckboxPosition = 'left' | 'right';
 
@@ -61,6 +61,8 @@ export declare type TListboxBaseProps = {
 
   /**
    * Sets this component's Listbox checkbox color.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
   checkboxColor?: TContextColor | string;
 
@@ -197,6 +199,8 @@ export declare type TComboboxOptionProps = TInputFieldProps &
 
     /**
      * The default Chips color to apply.
+     *
+     * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`, `default`.
      */
     chipColor?: TExtendedContextColor | string;
 

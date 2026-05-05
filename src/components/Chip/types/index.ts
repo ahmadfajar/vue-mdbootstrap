@@ -36,11 +36,16 @@ declare type TChipBaseProps = {
 
   /**
    * The default color to apply to this Chip.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`, `default`.
    */
   color?: TExtendedContextColor | string;
 
   /**
    * Apply custom color to the **close button**.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
   closeButtonColor?: TButtonColor | string;
 

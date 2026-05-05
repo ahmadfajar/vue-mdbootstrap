@@ -1,7 +1,8 @@
+import type { TButtonColor } from '@/components/Button';
+import type { TPopoverPosition } from '@/components/Popover/types';
 import type { Numberish } from '@/types';
 import type * as Color from '@/utils/ColorUtils.ts';
 import type { ComponentObjectPropsOptions, ComponentPublicInstance, Reactive, Ref } from 'vue';
-import type { TPopoverPosition } from '../../Popover/types';
 
 export declare type TColorPickerMode = 'HEX' | 'RGB' | 'HSL' | 'OKLCH';
 
@@ -84,13 +85,19 @@ export declare type TColorPickerOptionProps = {
 
   /**
    * Default the toggle mode button color style.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
-  modeButtonColor?: string;
+  modeButtonColor?: TButtonColor | string;
 
   /**
    * Color to apply to the active toggle mode button.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`,
+   * `dark`, `default`.
    */
-  modeButtonToggleColor?: string;
+  modeButtonToggleColor?: TButtonColor | string;
 
   /**
    * Apply custom CSS style to the input field label.

@@ -32,13 +32,16 @@ export declare type TMaskLoaderOptionProps = {
 
   /**
    * Backdrop overlay color.
+   * Must be a valid CSS color formatted string.
    */
   overlayColor?: string;
 
   /**
    * Mask loader spinner color.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
-  spinnerColor?: string;
+  spinnerColor?: TContextColor | string;
 
   /**
    * Mask loader spinner diameter.
@@ -93,6 +96,8 @@ export declare type TProgressOptionProps = {
 
   /**
    * The component color appearance.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
   color?: TContextColor | string;
 
@@ -130,6 +135,8 @@ export declare type TProgressOptionProps = {
 export declare type TProgressBarOptionProps = {
   /**
    * The control bar color appearance.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
   color?: TContextColor | string;
 

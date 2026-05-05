@@ -16,6 +16,8 @@ export declare type TBadgeVariant =
 export declare type TBadgeOptionProps = {
   /**
    * This badge color appearance.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`, `default`.
    */
   color?: TExtendedContextColor | string;
 

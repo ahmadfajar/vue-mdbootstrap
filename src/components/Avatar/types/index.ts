@@ -107,6 +107,8 @@ export declare type TAvatarImageOptionProps = TSizeOptionProps & {
 
   /**
    * Apply border color to this component.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
   borderColor?: TContextColor | string;
 };

@@ -284,6 +284,8 @@ export declare type TTextAreaOptionProps = TInputTextProps & {
 export declare type TChipFieldOptionProps = TInputTextProps & {
   /**
    * The default Chips color to apply.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `light`, `default`.
    */
   chipColor?: TExtendedContextColor | string;
 
@@ -439,7 +441,7 @@ export declare type TSearchFieldOptionProps = {
   /**
    * Sets minimum width for the Popover container.
    */
-  popoverMinWidth?: number | string;
+  popoverMinWidth?: Numberish;
 
   /**
    * Open or close the advance search popover panel. Only works if

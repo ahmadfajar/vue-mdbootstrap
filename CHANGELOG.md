@@ -19,6 +19,8 @@ Released: May 05, 2026
     (_tested on VS Code and PhpStorm_).
   - Add hints and documentation of an **Event** when using it inside the `*.vue` 
     file (_tested on VS Code and PhpStorm_).
+- Improve registration of custom directives in `vue` module, so they can show up on 
+  the IDE autocomplete (_tested on VS Code and PhpStorm_). 
 - Improve build script and dts build script.
 - Upgrade third-party libraries.
 

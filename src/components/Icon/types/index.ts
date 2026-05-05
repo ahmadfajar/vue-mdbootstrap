@@ -132,12 +132,14 @@ export declare type TFontawesomeIconOptionProps = TSizeOptionProps & {
 
 export declare type TSpinnerIconOptionProps = {
   /**
-   * The Icon color.
+   * Sets the Icon color.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
   color?: TContextColor | string;
 
   /**
-   * The icon’s size in pixel.
+   * Sets the icon’s size in pixel.
    */
   size?: Numberish;
 

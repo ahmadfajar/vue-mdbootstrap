@@ -26,6 +26,8 @@ export declare interface TRadioInputProps {
 
   /**
    * Sets this component color.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
   color?: TContextColor | string;
 
@@ -43,6 +45,8 @@ export declare interface TRadioInputProps {
 export declare type TRadioOptionProps = TInputBaseProps & {
   /**
    * Sets this component color.
+   *
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
    */
   color?: TContextColor | string;
 
