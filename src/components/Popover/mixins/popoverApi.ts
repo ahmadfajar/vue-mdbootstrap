@@ -8,19 +8,19 @@ import { useFloatingElement } from '@/mixins/FloatingElement.ts';
 import type { Numberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import {
-  type ComponentInternalInstance,
-  type ComputedRef,
-  type EmitFn,
   h,
   mergeProps,
   nextTick,
+  Teleport,
+  vShow,
+  withDirectives,
+  type ComponentInternalInstance,
+  type ComputedRef,
+  type EmitFn,
   type Ref,
   type ShallowRef,
   type Slots,
-  Teleport,
   type VNode,
-  vShow,
-  withDirectives,
 } from 'vue';
 
 function shiftedValue(value?: Numberish): number {

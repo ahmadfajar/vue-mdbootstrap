@@ -6,7 +6,7 @@ import type {
 } from '@/components/ListView/types';
 import type { ObjectBase } from '@/model';
 import type { TRecord } from '@/types';
-import { type ComponentInternalInstance, type EmitFn, isRef, type Ref, unref } from 'vue';
+import { isRef, unref, type ComponentInternalInstance, type EmitFn, type Ref } from 'vue';
 
 export declare interface IListViewProvider extends ObjectBase {
   readonly config: Readonly<TListViewOptionProps>;

@@ -164,7 +164,7 @@ export declare interface IEventListenerResult {
 }
 
 export declare interface EventListenerTarget {
-  (target: Element | Window | undefined | null, event: Event | undefined | null): void;
+  (event: Event | undefined | null, target: Element | Window | undefined | null): void;
 }
 
 export declare interface IMouseEvents {

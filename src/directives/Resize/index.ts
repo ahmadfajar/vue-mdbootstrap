@@ -23,7 +23,7 @@ function mounted(el: IBindingElement, binding: ResizeDirectiveBinding): void {
     if (debounceTimeout) {
       clearTimeout(debounceTimeout);
     }
-    debounceTimeout = window.setTimeout(() => callback(el as Element & Event, evt), debounce);
+    debounceTimeout = window.setTimeout(() => callback(evt!, el), debounce);
   };
 
   window.addEventListener('resize', onResizeHandler, options);

@@ -38,7 +38,7 @@ function mounted(el: IBindingElement, binding: ScrollDirectiveBinding): void {
 
   if (target) {
     const scrollHandler = (evt: Event) => {
-      callback(target as Element & Event, evt);
+      callback(evt, target);
     };
     target.addEventListener('scroll', scrollHandler, options);
     el.__scrollListener = {

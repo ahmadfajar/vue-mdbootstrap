@@ -1,4 +1,5 @@
 import type { TAppbarOptionProps } from '@/components/Appbar/types';
+import type { TAppContainerOptionProps } from '@/components/Container/types';
 import type { TSideDrawer } from '@/components/Drawer/types';
 import { Resize } from '@/directives';
 import {
@@ -10,7 +11,6 @@ import {
 import type { TRecord, TVueMdb } from '@/types';
 import type { ComputedRef, Ref, Slots, VNode } from 'vue';
 import { getCurrentInstance, h, nextTick, withDirectives } from 'vue';
-import type { TAppContainerOptionProps } from '../../Container/types';
 
 export function useAppbarStyles(
   props: Readonly<TAppbarOptionProps>,

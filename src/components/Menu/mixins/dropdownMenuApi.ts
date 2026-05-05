@@ -1,7 +1,7 @@
 import type { TDropdownMenuOptionProps } from '@/components/Menu/types';
 import { BsPopover } from '@/components/Popover';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
-import { type EmitFn, h, type Ref, type Slots, type VNode } from 'vue';
+import { h, type EmitFn, type Ref, type Slots, type VNode } from 'vue';
 
 declare type DropdownMenuEventEmitter = {
   close: () => void;

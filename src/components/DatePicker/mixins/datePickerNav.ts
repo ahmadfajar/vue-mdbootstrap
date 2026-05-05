@@ -10,7 +10,7 @@ import type { TDatePickerNavProps } from '@/components/DatePicker/types/internal
 import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import { preventEventTarget } from '@/mixins/DomHelper.ts';
 import type { DateTime } from 'luxon';
-import { type ComputedRef, type EmitFn, h, type Ref, type VNode, watch } from 'vue';
+import { h, watch, type ComputedRef, type EmitFn, type Ref, type VNode } from 'vue';
 
 export function useWatchOfDatePickerNavProps(
   props: Readonly<TDatePickerNavProps>,

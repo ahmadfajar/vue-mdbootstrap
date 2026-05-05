@@ -10,7 +10,7 @@ import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import { preventEventTarget } from '@/mixins/DomHelper.ts';
 import type { TValueText } from '@/types/internals.ts';
 import { DateTime, type DateTimeUnit, type DurationObjectUnits } from 'luxon';
-import { type ComputedRef, type EmitFn, h, type Ref, toDisplayString, type VNode } from 'vue';
+import { h, toDisplayString, type ComputedRef, type EmitFn, type Ref, type VNode } from 'vue';
 
 export function useCalendarTableHours(date: DateTime): TValueText<DateTime>[][] {
   const numHours = 24;

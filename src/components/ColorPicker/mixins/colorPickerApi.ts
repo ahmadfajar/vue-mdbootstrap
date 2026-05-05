@@ -4,6 +4,7 @@ import type {
   TColorPickerMode,
   TColorPickerOptionProps,
 } from '@/components/ColorPicker/types';
+import type { TStringRecord } from '@/components/Field/types';
 import { cssPrefix, useMergeClass } from '@/mixins/CommonApi.ts';
 import { preventEventTarget } from '@/mixins/DomHelper.ts';
 import type { MaybeNumberish, TRecord } from '@/types';
@@ -25,7 +26,6 @@ import Helper from '@/utils/Helper.ts';
 import { isStartWith } from '@/utils/StringHelper.ts';
 import type { ComputedRef, EmitFn, VNode } from 'vue';
 import { createCommentVNode, h, mergeProps, nextTick, reactive, ref } from 'vue';
-import type { TStringRecord } from '../../Field/types';
 
 export function useInitColorPickerData(props: Readonly<TColorPickerOptionProps>): TColorPickerData {
   return {

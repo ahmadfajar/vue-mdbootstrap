@@ -1,8 +1,8 @@
 import type { TButtonColor } from '@/components/Button/types';
+import type { TInputFieldProps } from '@/components/Field/types';
 import type { TPopoverPosition } from '@/components/Popover/types';
 import type { Numberish, TContextColor } from '@/types';
 import type { ComponentObjectPropsOptions } from 'vue';
-import type { TInputFieldProps } from '../../Field/types';
 
 export declare type TDateTimePickerMode = 'date' | 'datetime' | 'year' | 'month' | 'time';
 
