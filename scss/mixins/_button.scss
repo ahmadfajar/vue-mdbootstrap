@@ -1,5 +1,6 @@
 @use 'sass:color';
 @use '../utils/color-helper' as helper;
+@use '../utils/functions';
 @use '../color-vars' as colors;
 @use '../variables' as vars;
 
@@ -46,8 +47,7 @@
       helper.set-color-contrast(
         $color,
         color.scale($color, $lightness: -10%),
-        /* tune dark colors */
-        color.adjust($color, $lightness: 25%),
+        /* tune dark colors */ color.adjust($color, $lightness: 25%),
         25%
       )
     );
@@ -59,8 +59,7 @@
           color.scale($color, $lightness: -10%),
           color.scale($color, $lightness: -20%)
         ),
-        /* tune dark colors */
-        color.adjust($color, $lightness: -35%),
+        /* tune dark colors */ color.adjust($color, $lightness: -35%),
         25%
       )
     );
@@ -85,8 +84,7 @@
           helper.set-color-contrast($color, $color, color.adjust($color, $lightness: -35%), 90%),
           color.scale($color, $lightness: -35%)
         ),
-        /* tune dark colors */
-        colors.$black,
+        /* tune dark colors */ colors.$black,
         25%
       );
       $bg-color: helper.set-color-contrast(
@@ -96,14 +94,13 @@
           helper.set-color-contrast(
             $color,
             color.change(color.adjust($color, $lightness: -2%), $alpha: 0.5),
-            /* tune warning and info colors */
-            color.mix($color, #fff, 25%, oklch),
+            /* tune warning and info colors */ color.mix($color, #fff, 25%, oklch),
             90%
           ),
           color.mix($color, #fff, 20%, oklch)
         ),
         /* tune dark colors */
-        color.change(color.adjust($color, $chroma: -10%, $lightness: 55%), $alpha: 0.8),
+          color.change(color.adjust($color, $chroma: -10%, $lightness: 55%), $alpha: 0.8),
         25%
       );
       $hover-bg: helper.set-color-contrast(
@@ -113,14 +110,12 @@
           helper.set-color-contrast(
             $color,
             color.change(color.adjust($color, $lightness: 20%), $alpha: 0.5),
-            /* tune warning and info colors */
-            color.scale($color, $chroma: -10%, $lightness: 65%),
+            /* tune warning and info colors */ color.scale($color, $chroma: -10%, $lightness: 65%),
             90%
           ),
           color.scale($color, $chroma: -25%, $lightness: 65%)
         ),
-        /* tune dark colors */
-        color.adjust($color, $chroma: -10%, $lightness: 50%),
+        /* tune dark colors */ color.adjust($color, $chroma: -10%, $lightness: 50%),
         25%
       );
       $hover-text: helper.set-color-contrast(
@@ -130,14 +125,12 @@
           helper.set-color-contrast(
             $color,
             color.scale($color, $lightness: 60%),
-            /* tune warning and info colors */
-            color.adjust($color, $lightness: -40%),
+            /* tune warning and info colors */ color.adjust($color, $lightness: -40%),
             90%
           ),
           color.scale($color, $lightness: -50%)
         ),
-        /* tune dark colors */
-        colors.$black,
+        /* tune dark colors */ colors.$black,
         25%
       );
       $active-bg: color.adjust($color, $lightness: -5%);
@@ -229,7 +222,7 @@
 
     &.#{vars.$prefix}btn-fab,
     &.btn-tonal {
-      $tonal-text-color: helper.fn-if(
+      $tonal-text-color: functions.fn-if(
         $name == 'warning',
         oklch(0.91 0.11 84.51),
         helper.to-oklch(
@@ -312,8 +305,7 @@
       helper.set-color-contrast(
         $color,
         colors.$gray-300,
-        /* tune warning and info colors */
-        color.scale($color, $lightness: -20%),
+        /* tune warning and info colors */ color.scale($color, $lightness: -20%),
         90%
       ),
       $color
@@ -387,7 +379,7 @@
     $border-hover: color.change(
       helper.set-color-contrast(
         $color,
-        helper.fn-if(
+        functions.fn-if(
           $name == 'secondary',
           color.adjust(colors.$gray-500, $lightness: 30%),
           color.adjust($color, $lightness: 10%)
@@ -397,7 +389,7 @@
       ),
       $alpha: 0.35
     );
-    $text-color: helper.fn-if(
+    $text-color: functions.fn-if(
       $name == 'warning',
       oklch(0.91 0.11 84.51),
       helper.to-oklch(color.scale($color, $lightness: 55%))
@@ -455,8 +447,7 @@
       helper.set-color-contrast(
         $color,
         color.scale($color, $lightness: -15%),
-        /* tune warning and info colors */
-        color.scale($color, $lightness: -10%),
+        /* tune warning and info colors */ color.scale($color, $lightness: -10%),
         90%
       ),
       $color
@@ -476,13 +467,11 @@
       $color,
       helper.set-color-contrast(
         $color,
-        /* tune light colors */
-        color.change(color.scale($color, $lightness: 15%), $alpha: 0.3),
+        /* tune light colors */ color.change(color.scale($color, $lightness: 15%), $alpha: 0.3),
         color.change(color.mix($color, #fff, 25%, oklch), $alpha: 0.9),
         90%
       ),
-      /* tune dark colors */
-      color.change(color.mix($color, #fff, 15%, oklch), $alpha: 0.75),
+      /* tune dark colors */ color.change(color.mix($color, #fff, 15%, oklch), $alpha: 0.75),
       25%
     );
     $hover-text: helper.set-color-contrast(

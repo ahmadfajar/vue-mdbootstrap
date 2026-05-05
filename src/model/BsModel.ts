@@ -9,6 +9,15 @@ import {
   sealedObjectError,
 } from '@/model/Constants.ts';
 import { type IRestAdapter, RestProxyAdapter } from '@/model/RestProxyAdapter.ts';
+import type {
+  CSRFConfig,
+  HttpMethod,
+  ObjectBase,
+  RestConfig,
+  RestKey,
+  RestMethodOptions,
+  RestPropConfig,
+} from '@/model/types';
 import type { Numberish, TRecord } from '@/types';
 import { autoBind } from '@/utils/AutoBind.ts';
 import Helper from '@/utils/Helper.ts';
@@ -21,15 +30,6 @@ import type {
 } from 'axios';
 import type { Reactive } from 'vue';
 import { reactive, readonly } from 'vue';
-import type {
-  CSRFConfig,
-  HttpMethod,
-  ObjectBase,
-  RestConfig,
-  RestKey,
-  RestMethodOptions,
-  RestPropConfig,
-} from './types';
 
 export declare type ModelConfig = {
   schema: TRecord;

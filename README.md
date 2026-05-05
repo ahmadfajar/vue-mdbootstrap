@@ -117,7 +117,7 @@ your HTML to load the Bootstrap CSS framework.
 
 You can get the latest version of Vue MDBootstrap directly from 
 [unpkg](https://unpkg.com/) or [jsdelivr](https://www.jsdelivr.com/package/npm/vue-mdbootstrap).
-Then use the js and css files in the `<head>` section or your html to get started. 
+Then use the js and CSS files in the `<head>` section or your HTML to get started. 
 
 Code below is an example on how to create HTML page using Vue MDBootstrap.
 
@@ -174,7 +174,7 @@ For full documentation, please visit [Our Website](https://ahmadfajar.github.io/
 
 ## Starter Kit and Examples
 
-You can clone the github repository below and run it by your self to see it in action. 
+You can clone the GitHub repository below and run it by your self to see it in action. 
 1. [vue3-mdb-example](https://github.com/ahmadfajar/vue3-mdb-example) - A web-apps that 
    show component usage examples.
 2. [vue3-mdb-starter](https://github.com/ahmadfajar/vue3-mdb-starter) - A starter kit 

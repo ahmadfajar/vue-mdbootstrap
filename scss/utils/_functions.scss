@@ -1,0 +1,10 @@
+@use 'sass:math';
+
+@function fn-if($condition, $trueValue, $falseValue) {
+  @return if(sass($condition): $trueValue; else: $falseValue);
+}
+
+@function round($value, $fractionDigits: 0) {
+  $power: math.pow(10, $fractionDigits);
+  @return math.div(math.round($power * $value), $power);
+}

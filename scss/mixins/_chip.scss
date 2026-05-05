@@ -1,5 +1,6 @@
 @use 'sass:color';
 @use '../utils/color-helper' as helper;
+@use '../utils/functions';
 @use '../color-vars' as colors;
 @use '../variables' as vars;
 
@@ -193,7 +194,7 @@
       helper.set-color-contrast(
         $color,
         colors.$white,
-        helper.fn-if(
+        functions.fn-if(
           ($name == 'secondary'),
           color.change($color, $alpha: 0.2),
           color.change(color.adjust($color, $lightness: 20%), $alpha: 0.2)
@@ -207,7 +208,7 @@
         helper.set-color-contrast(
           $color,
           colors.$neutral-lighten-1,
-          helper.fn-if(
+          functions.fn-if(
             ($name == 'secondary'),
             colors.$gray-600,
             color.scale($color, $lightness: -20%)
@@ -233,7 +234,7 @@
         helper.shift-color($color, 65%),
         90%
       ),
-      helper.fn-if(
+      functions.fn-if(
         ($name == 'secondary'),
         helper.to-oklch(color.scale($color, $lightness: 75%)),
         helper.shift-color($color, 70%)
@@ -302,7 +303,7 @@
         color.adjust($color, $lightness: 12%)
       )
     );
-    $hover-color: helper.fn-if(
+    $hover-color: functions.fn-if(
       $name == 'warning',
       oklch(0.91 0.11 84.51),
       helper.to-oklch(
@@ -353,7 +354,7 @@
     --#{vars.$prefix}chip-icon-color: #{$color};
     --#{vars.$prefix}chip-hover-bg: #{$hover-bg};
     // prettier-ignore
-    --#{vars.$prefix}chip-hover-color: #{helper.fn-if(($name == 'secondary'), colors.$neutral-lighten-3, $hover-color)};
+    --#{vars.$prefix}chip-hover-color: #{functions.fn-if(($name == 'secondary'), colors.$neutral-lighten-3, $hover-color)};
     --#{vars.$prefix}chip-hover-border-color: #{$hover-border};
     --#{vars.$prefix}chip-active-bg: #{$active-bg};
     --#{vars.$prefix}chip-active-color: #{$active-color};

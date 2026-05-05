@@ -1,4 +1,4 @@
-import type { TPopoverPosition } from '../components/Popover/types';
+import type { TPopoverPosition } from '@/components/Popover/types';
 
 declare type TFloatingArrow = {
   top: string;

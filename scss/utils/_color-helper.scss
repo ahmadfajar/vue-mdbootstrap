@@ -1,38 +1,30 @@
 @use 'sass:color';
 @use 'sass:math';
 @use 'sass:string';
-
-@function fn-if($condition, $valueTrue, $valueFalse) {
-  @return if(sass($condition): $valueTrue; else: $valueFalse);
-}
-
-@function round($value, $fractionDigits: 0) {
-  $power: math.pow(10, $fractionDigits);
-  @return math.div(math.round($power * $value), $power);
-}
+@use 'functions';
 
 @function to-rgb($color, $fractionDigits: 1) {
-  $red: round(color.channel($color, 'red', $space: rgb), $fractionDigits);
-  $green: round(color.channel($color, 'green', $space: rgb), $fractionDigits);
-  $blue: round(color.channel($color, 'blue', $space: rgb), $fractionDigits);
+  $red: functions.round(color.channel($color, 'red', $space: rgb), $fractionDigits);
+  $green: functions.round(color.channel($color, 'green', $space: rgb), $fractionDigits);
+  $blue: functions.round(color.channel($color, 'blue', $space: rgb), $fractionDigits);
 
   @return rgb($red, $green, $blue);
 }
 
 @function to-rgba($color, $fractionDigits: 1) {
-  $red: round(color.channel($color, 'red', $space: rgb), $fractionDigits);
-  $green: round(color.channel($color, 'green', $space: rgb), $fractionDigits);
-  $blue: round(color.channel($color, 'blue', $space: rgb), $fractionDigits);
-  $alpha: round(color.channel($color, 'alpha', $space: rgb), $fractionDigits);
+  $red: functions.round(color.channel($color, 'red', $space: rgb), $fractionDigits);
+  $green: functions.round(color.channel($color, 'green', $space: rgb), $fractionDigits);
+  $blue: functions.round(color.channel($color, 'blue', $space: rgb), $fractionDigits);
+  $alpha: functions.round(color.channel($color, 'alpha', $space: rgb), $fractionDigits);
 
   @return rgba($red, $green, $blue, $alpha);
 }
 
 @function to-oklch($color, $fractionDigits: 2) {
-  $lightness: round(color.channel($color, 'lightness', $space: oklch), $fractionDigits);
-  $chroma: round(color.channel($color, 'chroma', $space: oklch), $fractionDigits);
-  $hue: round(color.channel($color, 'hue', $space: oklch), $fractionDigits);
-  $alpha: round(color.channel($color, 'alpha', $space: oklch), $fractionDigits);
+  $lightness: functions.round(color.channel($color, 'lightness', $space: oklch), $fractionDigits);
+  $chroma: functions.round(color.channel($color, 'chroma', $space: oklch), $fractionDigits);
+  $hue: functions.round(color.channel($color, 'hue', $space: oklch), $fractionDigits);
+  $alpha: functions.round(color.channel($color, 'alpha', $space: oklch), $fractionDigits);
 
   @return oklch($lightness $chroma $hue / #{$alpha});
 }
@@ -64,7 +56,7 @@
 }
 
 @function set-color-contrast($color, $lightColor, $darkColor, $lightness: 75%) {
-  @return if(sass(lightnessLevel($color) > $lightness): $lightColor; else: $darkColor);
+  @return functions.fn-if(lightnessLevel($color) > $lightness, $lightColor, $darkColor);
 }
 
 $white: #fff;
@@ -106,8 +98,7 @@ $default-active-bgcolor: to-oklch(#5f4a97);
 // $lightness is positive it will tint with white and the color result becomes lighter
 @function shift-color($color, $lightness: 10%) {
   $weight: math.abs($lightness);
-  // prettier-ignore
-  $tint-color: if(sass($lightness > 0): $white; else: $black);
+  $tint-color: functions.fn-if($lightness > 0, $white, $black);
 
   @return to-oklch(color.mix($tint-color, $color, $weight, oklch));
 }

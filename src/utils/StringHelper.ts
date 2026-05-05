@@ -1,5 +1,4 @@
-import loCamelCase from 'lodash-es/camelCase';
-import loKebabCase from 'lodash-es/kebabCase';
+import { camelCase as loCamelCase, kebabCase as loKebabCase } from 'lodash-es';
 
 /**
  * Pads the input string with a given string (possibly repeated) so that the resulting string
@@ -162,7 +161,7 @@ export function kebabCase(text: string): string {
  *
  * @param source   The input string.
  * @param searches Collection of string to search at the start of input string.
- * @returns If any of the given strings in the collection is found at the start of
+ * @returns If any of the given string in the collection is found at the start of
  *          the input string then `true` is returned, otherwise `false`.
  */
 export function isStartWith(source?: string, searches?: string[]): boolean {
@@ -180,7 +179,7 @@ export function isStartWith(source?: string, searches?: string[]): boolean {
  *
  * @param source   The input string.
  * @param searches Collection of string to search at the end of input string.
- * @returns If any of the given strings in the collection is found at the end of
+ * @returns If any of the given string in the collection is found at the end of
  *          the input string then `true` is returned, otherwise `false`.
  */
 export function isEndWith(source?: string, searches?: string[]): boolean {
@@ -198,7 +197,7 @@ export function isEndWith(source?: string, searches?: string[]): boolean {
  *
  * @param source   The input string.
  * @param searches Collection of string to be searched.
- * @returns If any of the given strings in the collection is found at any position
+ * @returns If any of the given string in the collection is found at any position
  *          of the input string then `true` is returned, otherwise `false`.
  */
 export function isContains(source?: string, searches?: string[]): boolean {

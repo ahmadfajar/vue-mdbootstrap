@@ -133,7 +133,7 @@ export function hsvaToRgba(color: HSVA): RGBA {
 /**
  * Convert CSS HEX color format to RGB color space.
  *
- * @param color The css HEX color value.
+ * @param color The CSS HEX color value.
  * @return The RGBA color value.
  * `Red`, `Green`, and `Blue` as number in range [0..255],
  * and `Alpha` as number in range [0..1].
@@ -225,7 +225,7 @@ function oklabToLms([L, a, b]: [number, number, number]): [number, number, numbe
 }
 
 /**
- * Convert LMS value to Linear sRGB value.
+ * Convert LMS value to Linear RGB value.
  */
 function lmsToLinearRgb([l, m, s]: [number, number, number]): [number, number, number] {
   return [
@@ -236,7 +236,7 @@ function lmsToLinearRgb([l, m, s]: [number, number, number]): [number, number, n
 }
 
 /**
- * Convert Linear sRGB value to RGB value.
+ * Convert Linear RGB value to RGB value.
  */
 function linearRgbToRgb(rgb: [number, number, number]): [number, number, number] {
   return rgb.map((v) => {
@@ -269,7 +269,7 @@ export function oklchToRgba(color: LCHA): RGBA {
 }
 
 /**
- * Convert sRGB value to Linear RGB value.
+ * Convert RGB value to Linear RGB value.
  */
 function rgbToLinear([r, g, b]: [number, number, number]): [number, number, number] {
   const gammaCorrection = (v: number) => {
@@ -282,7 +282,7 @@ function rgbToLinear([r, g, b]: [number, number, number]): [number, number, numb
 }
 
 /**
- * Convert Linear sRGB value to LMS value.
+ * Convert Linear RGB value to LMS value.
  */
 function linearRgbToLms([r, g, b]: [number, number, number]): [number, number, number] {
   return [

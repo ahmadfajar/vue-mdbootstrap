@@ -3,6 +3,26 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.2.3
+
+Released: May 05, 2026
+
+### Improvements
+
+- **BsAbstractStore**, **BsArrayStore**, **BsModel**, **BsStore**: 
+  - Improve performance.
+  - Improve TS type-hints and doc-comments (_tested on VS Code and PhpStorm_).
+- Visual components: 
+  - Improve **property** hints, autocomplete and documentation when using it inside 
+    the `*.vue` file (_tested on VS Code and PhpStorm_).
+  - Add hints and documentation of a **Slot** when using it inside the `*.vue` file 
+    (_tested on VS Code and PhpStorm_).
+  - Add hints and documentation of an **Event** when using it inside the `*.vue` 
+    file (_tested on VS Code and PhpStorm_).
+- Improve build script and dts build script.
+- Upgrade third-party libraries.
+
+
 ## v2.2.2
 
 Released: April 17, 2026
@@ -32,7 +52,7 @@ Released: March 20, 2026
 - **BsFontawesomeIcon**:
   - Update the valid value of `variant` property to `solid`, `regular` and `brands`. 
     See [Font Awesome](https://fontawesome.com/search?ic=free-collection) free icons documentation for details.
-  - Change resource url to github because the official website is now blocked for CDN.
+  - Change resource url to GitHub because the official website is now blocked for CDN.
   - Update the value of `version` property to `7.2.0`.
 - **BsProgressBar**: 
   - Make CSS classes more consistent.   
@@ -94,7 +114,7 @@ Released: February 02, 2026
 - **BsCardMedia**: 
   - Decouple from Bootstrap card CSS.
   - Add slots: `title` and `subtitle`. 
-- **BsCheckbox**, **BsRadio**, **BsSwitch**: provide `data-*` attributes when rendering html.
+- **BsCheckbox**, **BsRadio**, **BsSwitch**: provide `data-*` attributes when rendering HTML.
 - **BsCheckboxGroup**, **BsRadioGroup**: add property `persistentHelpOff`.
 - **BsChip**: 
   - Add property `closeButtonColor`.
@@ -145,7 +165,7 @@ Released: February 02, 2026
   - Add support for video and YouTube.
   - Improve `thumbnailHeight` property implementation.
   - Fixed dropdown-menus didn't display correctly.
-- **BsListView**, **BsListTile**, **BsListNav**: integrate with global css variables.
+- **BsListView**, **BsListTile**, **BsListNav**: integrate with global CSS variables.
 - **BsMaskLoader**, **BsProgressBar**: 
   - Decouple from Bootstrap CSS.
   - Small improvement. 
@@ -156,7 +176,7 @@ Released: February 02, 2026
 - **BsNotification**: improve close button.
 - **BsNumericField**, **BsTextField**, **BsTextArea**: 
   - Add property `persistentHelpOff`.
-  - Provide `data-*` attributes when rendering html. 
+  - Provide `data-*` attributes when rendering HTML. 
 - **BsPopover**: 
   - Improve animation transition and scroll event.
   - Integrate with global CSS variables.
@@ -164,7 +184,7 @@ Released: February 02, 2026
 - **BsSvgIcon**: add property `size`.
 - **BsSideDrawer**: 
   - Mark `color` property as deprecated.
-  - Improve rendering html.
+  - Improve rendering HTML.
   - Integrate with global CSS variables.
 - **BsTabs**: 
   - Decouple from Bootstrap CSS.
@@ -280,7 +300,7 @@ Released: December 10, 2024
   - Add feature to enable hiding the notification icon. 
   - Improves initializing and removes unnecessary HTML element. 
   - Improves the notification provider in handling and processing notification items. 
-  - Improves css variables and classes.
+  - Improves CSS variables and classes.
 
 
 ## v2.1.2
@@ -290,7 +310,7 @@ Released: December 08, 2024
 ### Bug Fixes
 
 - **BsAppbarTitle**: fixed bug incorrect left margin when placed as the first child of `<BsAppbar>`.
-- **BsBreadcrumb**: fixed css variables.
+- **BsBreadcrumb**: fixed CSS variables.
 - **BsCheckboxGroup**, **BsRadioGroup**: fixed column layout bug that did not
   respect the `column` property when its value was set to `1`.
 - **BsIconFontawesome**: removed unused property and fixed TypeScript declaration.
@@ -349,7 +369,7 @@ Released: November 14, 2024
 - **BsPopover**: improve UI display positioning.
 - **BsTooltip**: 
   - Add new properties: `activator` and `arrow-off`.
-  - Improve UI performance and css variables.
+  - Improve UI performance and CSS variables.
 
 ### Bug Fixes
 
@@ -432,7 +452,7 @@ Released: July 10, 2024
 
 ### Bug Fixes
 
-- **BsColorPicker**: fix color thumb strange behaviour on VitePress.
+- **BsColorPicker**: fix color thumb strange behavior on VitePress.
 - **BsDatePicker**: fix picker element hover size.
 - **BsDateTimeField**: prevent closing popup DatePicker when time element is clicked.
 - **BsTab**: fix `icon-flip`, `icon-pulse`, `icon-spin`, `icon-rotation` properties not working properly.
@@ -572,7 +592,7 @@ Released: July 12, 2023
 - **BsAvatar**: add property `border`, `borderColor`.
 - **BsCard**: add property `roundedOff`, `borderOff`.
 - **BsChip**: add property `readonly`, `iconPosition`, 
-- **BsContainer**, **BsContent**: improve css styles when **BsAppbar** `fixedTop` property is set.
+- **BsContainer**, **BsContent**: improve CSS styles when **BsAppbar** `fixedTop` property is set.
 - **BsProgressBar**: add property `valuePosition`.
 - **BsSideDrawer**: improve computing of drawer position.
 - Improve TypeScript definition. 
@@ -923,7 +943,7 @@ Released: December 21, 2020
 
 - **Touch**: directive did not expose correctly
 - **BsCard**: add DOM event listener
-- **BsNotification**: change default variant and update css styles
+- **BsNotification**: change default variant and update CSS styles
 - **BsTextField, BsTextArea, BsRadioGroup, BsDateTimeField, BsCombobox, BsCheckboxGroup**: bug fix 
   when form reset
 
@@ -960,14 +980,14 @@ Released: December 18, 2020
 - **BsAlert**: improve css alert-variant
 - **BsMaskLoader**: incorrect z-index
 - **BsButton**: rename property `button` to `type` and `ripple` to `ripple-off`
-- **BsIcon**: remove css class `d-flex` and `align-items-center`
+- **BsIcon**: remove CSS class `d-flex` and `align-items-center`
 - **BsImageHolder**: computed cssClass, height and width improvement
 - **BsListView**: beforeDestroy improvement, add function` addItem()`, `addChild()`, `findActive()`, 
   `removeItem()`, `removeChild()`
 - **BsListTile:** improve when to generate `<a>` element or `<div>` element and update component scss
 - **BsProgress**: change property `type` default value to 'bar' 
 - **BsSideDrawer**: computed inline style improvement
-- **BsCheckbox, BsSwitch**: improve css classes
+- **BsCheckbox, BsSwitch**: improve CSS classes
 - **BsCombobox**: improve HTML template and CSS classes
 - **BsTextArea**: improve HTML template and CSS classes
 - **BsTextField**: improve HTML template and CSS classes

@@ -517,7 +517,7 @@ export function useMergeClass(...args: unknown[]): string[] {
  */
 export function useAxiosPlugin(): AxiosInstance | undefined {
   const vm = getCurrentInstance();
-  return vm?.appContext.config.globalProperties.$axios as AxiosInstance;
+  return vm?.appContext.config.globalProperties.$axios;
 }
 
 /**
@@ -528,7 +528,7 @@ export function useAxiosPlugin(): AxiosInstance | undefined {
  */
 export function useHttpService(): IHttpService | undefined {
   const vm = getCurrentInstance();
-  return vm?.appContext.config.globalProperties.$http as IHttpService;
+  return vm?.appContext.config.globalProperties.$http;
 }
 
 /**
@@ -538,7 +538,7 @@ export function useHttpService(): IHttpService | undefined {
  */
 export function useVueMdbService(): TVueMdb | undefined {
   const vm = getCurrentInstance();
-  return vm?.appContext.config.globalProperties.$VueMdb as TVueMdb;
+  return vm?.appContext.config.globalProperties.$VueMdb;
 }
 
 /**
@@ -547,6 +547,5 @@ export function useVueMdbService(): TVueMdb | undefined {
  * @returns The notification provider instance.
  */
 export function useVueMdbNotification(): INotificationProvider | undefined {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return useVueMdbService()?.notification;
 }

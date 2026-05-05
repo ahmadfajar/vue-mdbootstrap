@@ -35,7 +35,6 @@ export default defineConfig({
         // Provide global variables to use in the ES build for externalized deps
         globals: {
           axios: 'axios',
-          lodash: 'lodash-es',
           luxon: 'luxon',
           vue: 'vue',
         },

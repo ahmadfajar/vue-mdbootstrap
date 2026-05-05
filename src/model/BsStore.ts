@@ -6,8 +6,7 @@ import type { SortDirection, SortOption } from '@/model/types';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
-import meanBy from 'lodash-es/meanBy';
-import sumBy from 'lodash-es/sumBy';
+import { meanBy, sumBy } from 'lodash-es';
 
 export declare type MessageResponse = {
   success: boolean;
@@ -84,9 +83,10 @@ export declare interface IBsStore<T extends TRecord = TRecord> extends AbstractS
   /**
    * Append an item to the internal dataset and also save the item as a new record to the
    * remote server whenever possible. The item can be saved to the remote server,
-   * if 'restUrl' property contains a 'save' key.
+   * if `restUrl` property contains a `save` key.
    *
    * @param item Data to append to the internal dataset
+   * @see {@link restUrl} property
    */
   append(item: TRecord): void;
 
@@ -101,18 +101,20 @@ export declare interface IBsStore<T extends TRecord = TRecord> extends AbstractS
 
   /**
    * Delete specific item from internal dataset as well as from remote service whenever possible.
-   * The item can be deleted from the remote service, if 'restUrl' property contains a 'delete' key.
+   * The item can be deleted from the remote service, if `restUrl` property contains a `delete` key.
    *
    * @param item Data Model instance to be removed
+   * @see {@link restUrl} property
    */
   delete<P extends TBsModel<T>>(item: P): Promise<AxiosResponse | MessageResponse>;
 
   /**
    * Delete specific items from internal dataset as well as from remote
    * service whenever possible. The items can be deleted from the remote
-   * service, if 'restUrl' property contains a 'delete' key.
+   * service, if `restUrl` property contains a `delete` key.
    *
    * @param items Collection of data Model instances to be removed
+   * @see {@link restUrl} property
    */
   deletes<P extends TBsModel<T>>(items: P[]): Promise<MessageResponse>;
 
@@ -325,6 +327,14 @@ export class BsStore<T extends TRecord = TRecord> extends AbstractStore<T> imple
     return sumBy(this.remotePaging ? this.dataItems : this._items, field);
   }
 
+  /**
+   * Append an item to the internal dataset and also save the item as a new record to the
+   * remote server whenever possible. The item can be saved to the remote server,
+   * if `restUrl` property contains a `save` key.
+   *
+   * @param item Data to append to the internal dataset
+   * @see {@link restUrl} property
+   */
   append(item: TRecord): void {
     if (Helper.isEmptyObject(item)) {
       return;
@@ -379,6 +389,13 @@ export class BsStore<T extends TRecord = TRecord> extends AbstractStore<T> imple
     this._onLoadingSuccess();
   }
 
+  /**
+   * Delete specific item from internal dataset as well as from remote service whenever possible.
+   * The item can be deleted from the remote service, if `restUrl` property contains a `delete` key.
+   *
+   * @param item Data Model instance to be removed
+   * @see {@link restUrl} property
+   */
   delete<P extends TBsModel<T>>(item: P): Promise<AxiosResponse | MessageResponse> {
     this._state.deleting = true;
 
@@ -424,6 +441,14 @@ export class BsStore<T extends TRecord = TRecord> extends AbstractStore<T> imple
     }
   }
 
+  /**
+   * Delete specific items from internal dataset as well as from remote
+   * service whenever possible. The items can be deleted from the remote
+   * service, if `restUrl` property contains a `delete` key.
+   *
+   * @param items Collection of data Model instances to be removed
+   * @see {@link restUrl} property
+   */
   deletes<P extends TBsModel<T>>(items: P[]): Promise<MessageResponse> {
     this._state.deleting = true;
     this._state.hasError = false;

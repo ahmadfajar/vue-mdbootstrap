@@ -4,8 +4,7 @@ import type { PlainModel, TBsModel } from '@/model/BsModel.ts';
 import type { SortDirection, SortOption } from '@/model/types';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import meanBy from 'lodash-es/meanBy';
-import sumBy from 'lodash-es/sumBy';
+import { meanBy, sumBy } from 'lodash-es';
 
 export declare interface IArrayStore<T extends TRecord = TRecord> extends AbstractStore<T> {
   /**

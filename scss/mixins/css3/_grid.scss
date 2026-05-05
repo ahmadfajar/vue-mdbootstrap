@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use 'sass:math';
+@use '../../utils/functions';
 @use '../../mixins/css3/breakpoints' as media;
 @use '../../variables' as vars;
 
@@ -48,7 +49,7 @@
 
 @mixin make-col-offset($size, $columns: vars.$grid-columns) {
   $num: math.div($size, $columns);
-  margin-left: if(sass($num == 0): 0; else: math.percentage($num));
+  margin-left: functions.fn-if($num == 0, 0, math.percentage($num));
 }
 
 // Row columns

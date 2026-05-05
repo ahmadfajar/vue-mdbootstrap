@@ -25,7 +25,7 @@ import { autoBind } from '@/utils/AutoBind.ts';
 import Helper from '@/utils/Helper.ts';
 import type { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import type { Many } from 'lodash';
-import orderBy from 'lodash-es/orderBy';
+import { orderBy } from 'lodash-es';
 import { type Reactive, reactive, readonly } from 'vue';
 
 export declare type DataStoreConfig = TRecord & {

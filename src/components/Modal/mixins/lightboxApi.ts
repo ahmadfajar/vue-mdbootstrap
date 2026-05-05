@@ -14,23 +14,18 @@ import {
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import { isContains } from '@/utils/StringHelper.ts';
-import {
-  type ComponentInternalInstance,
-  type ComputedRef,
-  createCommentVNode,
-  type EmitFn,
-  h,
-  ref,
-  type Ref,
-  type ShallowRef,
-  type Slots,
-  Teleport,
-  toDisplayString,
-  type VNode,
-  withDirectives,
+import type {
+  ComponentInternalInstance,
+  ComputedRef,
+  EmitFn,
+  Ref,
+  ShallowRef,
+  Slots,
+  VNode,
 } from 'vue';
+import { createCommentVNode, h, ref, Teleport, toDisplayString, withDirectives } from 'vue';
 
-export function useComputeDisplayStyle(
+export function useDisplayStyle(
   props: Readonly<TLightboxOptionProps>,
   rotate: Ref<number>,
   zoom: Ref<number>
@@ -292,7 +287,7 @@ function sourceIsYoutube(item: TLightboxSource): boolean {
   return item.type === 'youtube' || isContains(item.sourceUrl, ['youtube.com', 'youtu.be']);
 }
 
-function sourceIsMedia(item: TLightboxSource): boolean {
+function sourceIsVideo(item: TLightboxSource): boolean {
   return sourceIsYoutube(item) || item.type === 'video';
 }
 
@@ -421,8 +416,8 @@ function createLightboxDisplay(
                   `${cssPrefix}lightbox-item`,
                   'relative',
                   'overflow-hidden',
-                  sourceIsMedia(activeItem.value) ? 'h-full' : '',
-                  sourceIsMedia(activeItem.value) ? 'w-full' : '',
+                  sourceIsVideo(activeItem.value) ? 'h-full' : '',
+                  sourceIsVideo(activeItem.value) ? 'w-full' : '',
                 ],
               },
               [

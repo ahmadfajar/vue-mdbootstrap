@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
-  useComputeDisplayStyle,
+  useDisplayStyle,
   useNavigateNextSlide,
   useNavigatePrevSlide,
   useRenderLightbox,
@@ -67,7 +67,7 @@ export default defineComponent<TBsLightbox>({
     const zoom = ref(1);
     const isOpen = ref(false);
     const transition = ref(<string>thisProps.transition);
-    const viewerStyles = computed(() => useComputeDisplayStyle(thisProps, rotate, zoom));
+    const viewerStyles = computed(() => useDisplayStyle(thisProps, rotate, zoom));
     let keyEvent: IEventListenerResult | undefined;
 
     const setActive = (index: number) =>

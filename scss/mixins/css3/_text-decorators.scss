@@ -1,6 +1,7 @@
 @use 'sass:color';
 @use 'sass:list';
 @use '../../utils/color-helper' as helper;
+@use '../../utils/functions';
 @use '../../color-vars' as colors;
 @use '../../variables' as vars;
 
@@ -66,12 +67,12 @@
         --#{vars.$prefix}border-color: #{$color};
 
         @if (list.index($color-names, $name)) {
-          $red: helper.round(color.channel($color, 'red', $space: rgb));
-          $green: helper.round(color.channel($color, 'green', $space: rgb));
-          $blue: helper.round(color.channel($color, 'blue', $space: rgb));
-          $red1: helper.fn-if(($red < 0), 0, $red);
-          $green1: helper.fn-if(($green < 0), 0, $green);
-          $blue1: helper.fn-if(($blue < 0), 0, $blue);
+          $red: functions.round(color.channel($color, 'red', $space: rgb));
+          $green: functions.round(color.channel($color, 'green', $space: rgb));
+          $blue: functions.round(color.channel($color, 'blue', $space: rgb));
+          $red1: functions.fn-if(($red < 0), 0, $red);
+          $green1: functions.fn-if(($green < 0), 0, $green);
+          $blue1: functions.fn-if(($blue < 0), 0, $blue);
 
           --#{vars.$prefix-bs}#{$name}-rgb: #{$red1, $green1, $blue1};
         } @else {
