@@ -666,7 +666,6 @@ function renderColorPickerModeButtons(
           { value: 'OKLCH', label: 'OKLCH' },
         ],
         modelValue: pickerData.config.mode,
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         'onUpdate:modelValue': async (value: MaybeNumberish | unknown[]) => {
           pickerData.config.mode = value as TColorPickerMode;
           dispatchModelValue(emit, pickerData);

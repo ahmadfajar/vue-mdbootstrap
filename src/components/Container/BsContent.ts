@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { BsContainer } from '@/components/Container';
 import type { TBsContainer, TBsContent, TContainerOptionProps } from '@/components/Container/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
@@ -6,10 +5,13 @@ import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -54,21 +56,21 @@ export default defineComponent<TBsContent>({
         : renderContent();
   },
 }) as DefineComponent<
-  TBsContainer,
-  {},
-  {},
+  TBsContent,
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TContainerOptionProps> & Readonly<{}>,
+  Readonly<TContainerOptionProps> & Readonly<EmitsOptions>,
   ExtractDefaultPropTypes<TBsContainer>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

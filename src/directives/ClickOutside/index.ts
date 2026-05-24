@@ -1,12 +1,12 @@
 import { isChildOf, isSVGElement } from '@/mixins/DomHelper.ts';
-import type { IBindingElement, TDirectiveBinding } from '@/types';
+import type { EventListenerTarget, IBindingElement, TDirectiveBinding } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type { Directive, DirectiveBinding } from 'vue';
 
 function mounted(el: IBindingElement, binding: DirectiveBinding<VoidFunction | TDirectiveBinding>) {
   const callback = Helper.isFunction(binding.value)
-    ? (binding.value as VoidFunction | EventListener)
-    : (binding.value.handler as EventListener);
+    ? (binding.value as VoidFunction | EventListenerTarget)
+    : binding.value.handler;
 
   let target: Element | null = null;
 
@@ -36,7 +36,7 @@ function mounted(el: IBindingElement, binding: DirectiveBinding<VoidFunction | T
     }
     // console.info("evtTarget-isSVGElement:", isSVGElement(<HTMLElement>evt.target))
 
-    callback(evt);
+    callback(evt, target);
   };
 
   el.__clickOutsideListener = {

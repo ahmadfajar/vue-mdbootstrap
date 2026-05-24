@@ -278,7 +278,7 @@ export declare type ListNavItemEventProps = {
   /**
    * Fired when this ListNavItem or ListTile state is updated.
    */
-  'update:active'?: (active: boolean) => void;
+  'update:active'?: (active: boolean) => void | Promise<void>;
 };
 
 export declare interface ListNavItemEventPublic {
@@ -290,7 +290,7 @@ export declare interface ListNavItemEventPublic {
   /**
    * Fired when this ListNavItem or ListTile state is updated.
    */
-  'onUpdate:active'?: (active: boolean) => void;
+  'onUpdate:active'?: (active: boolean) => void | Promise<void>;
 
   /**
    * Fired when this ListNavItem or ListTile is clicked.
@@ -300,5 +300,5 @@ export declare interface ListNavItemEventPublic {
   /**
    * Fired when this ListNavItem or ListTile state is updated.
    */
-  '@update:active'?: (active: boolean) => void;
+  '@update:active'?: (active: boolean) => void | Promise<void>;
 }

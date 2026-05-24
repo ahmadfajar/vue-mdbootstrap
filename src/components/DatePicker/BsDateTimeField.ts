@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { DatePickerConst } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import { dateTimeFieldProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
 import {
@@ -27,10 +26,12 @@ import type { ClosableVoidEventProps, ClosableVoidEventPublic } from '@/types/in
 import Helper from '@/utils/Helper.ts';
 import { DateTime } from 'luxon';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -122,8 +123,8 @@ export default defineComponent<TBsDateTimeField>({
   },
 }) as DefineComponent<
   TBsDateTimeField,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -134,8 +135,8 @@ export default defineComponent<TBsDateTimeField>({
   Readonly<TDateTimeFieldOptionProps> & Readonly<DateTimeFieldEventPublic>,
   ExtractDefaultPropTypes<TBsDateTimeField>,
   SlotsType<FieldSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

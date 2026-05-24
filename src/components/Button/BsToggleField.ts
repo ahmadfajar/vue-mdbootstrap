@@ -75,7 +75,8 @@ export default defineComponent<TBsToggleField>({
   ToggleFieldEventProps,
   string,
   PublicProps,
-  Readonly<TToggleFieldOptionProps> & Readonly<ToggleFieldEventPublic>,
+  Readonly<TToggleFieldOptionProps> &
+    Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
   ExtractDefaultPropTypes<TBsToggleField>,
   SlotsType<ToggleFieldSlots>,
   {},
@@ -88,10 +89,6 @@ export default defineComponent<TBsToggleField>({
 >;
 
 declare type ToggleFieldEventProps = UpdateModelValueEventProps<MaybeNumberish | unknown[]>;
-
-declare interface ToggleFieldEventPublic extends UpdateModelValueEventPublic<
-  MaybeNumberish | unknown[]
-> {}
 
 declare interface ToggleFieldSlots extends VoidDefaultSlots {
   /**

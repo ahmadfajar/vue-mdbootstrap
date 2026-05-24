@@ -517,7 +517,7 @@ export function useMergeClass(...args: unknown[]): string[] {
  */
 export function useAxiosPlugin(): AxiosInstance | undefined {
   const vm = getCurrentInstance();
-  return vm?.appContext.config.globalProperties.$axios;
+  return vm?.appContext.config.globalProperties.$axios as AxiosInstance | undefined;
 }
 
 /**
@@ -528,7 +528,7 @@ export function useAxiosPlugin(): AxiosInstance | undefined {
  */
 export function useHttpService(): IHttpService | undefined {
   const vm = getCurrentInstance();
-  return vm?.appContext.config.globalProperties.$http;
+  return vm?.appContext.config.globalProperties.$http as IHttpService | undefined;
 }
 
 /**
@@ -538,7 +538,7 @@ export function useHttpService(): IHttpService | undefined {
  */
 export function useVueMdbService(): TVueMdb | undefined {
   const vm = getCurrentInstance();
-  return vm?.appContext.config.globalProperties.$VueMdb;
+  return vm?.appContext.config.globalProperties.$VueMdb as TVueMdb | undefined;
 }
 
 /**

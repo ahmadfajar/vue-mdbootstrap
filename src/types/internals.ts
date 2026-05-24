@@ -1,4 +1,4 @@
-import type { TRecord } from '@/types/index.ts';
+import type { PromiseVoidFunction, TRecord } from '@/types/index.ts';
 import type {
   AllowedComponentProps,
   ComponentCustomProps,
@@ -26,40 +26,52 @@ export declare type TDebounce = {
 
 export declare type ClosableEventProps = {
   /**
-   * Fired when this component is closed or dismissed (hide).
+   * Fired when the criteria below is matched:
+   * - If the component has popover, then this event is triggered when the popover is closed,
+   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
    */
   close?: (msg: string) => void;
 };
 
 export declare interface ClosableEventPublic {
   /**
-   * Fired when this component is closed or dismissed (hide).
+   * Fired when the criteria below is matched:
+   * - If the component has popover, then this event is triggered when the popover is closed,
+   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
    */
   onClose?: (msg: string) => void;
 
   /**
-   * Fired when this component is closed or dismissed (hide).
+   * Fired when the criteria below is matched:
+   * - If the component has popover, then this event is triggered when the popover is closed,
+   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
    */
   '@close'?: (msg: string) => void;
 }
 
 export declare type ClosableVoidEventProps = {
   /**
-   * Fired when this component is closed or dismissed (hide).
+   * Fired when the criteria below is matched:
+   * - If the component has popover, then this event is triggered when the popover is closed,
+   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
    */
-  close?: VoidFunction;
+  close?: VoidFunction | PromiseVoidFunction;
 };
 
 export declare interface ClosableVoidEventPublic {
   /**
-   * Fired when this component is closed or dismissed (hide).
+   * Fired when the criteria below is matched:
+   * - If the component has popover, then this event is triggered when the popover is closed,
+   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
    */
-  onClose?: VoidFunction;
+  onClose?: VoidFunction | PromiseVoidFunction;
 
   /**
-   * Fired when this component is closed or dismissed (hide).
+   * Fired when the criteria below is matched:
+   * - If the component has popover, then this event is triggered when the popover is closed,
+   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
    */
-  '@close'?: VoidFunction;
+  '@close'?: VoidFunction | PromiseVoidFunction;
 }
 
 export declare type UpdateOpenEventProps = {
@@ -85,19 +97,19 @@ export declare type UpdateModelValueEventProps<T> = {
   /**
    * Fired when this component's `modelValue` is updated.
    */
-  'update:model-value'?: (value: T) => void;
+  'update:model-value'?: (value: T) => void | Promise<void>;
 };
 
 export declare interface UpdateModelValueEventPublic<T> {
   /**
    * Fired when this component's `modelValue` is updated.
    */
-  'onUpdate:modelValue'?: (value: T) => void;
+  'onUpdate:modelValue'?: (value: T) => void | Promise<void>;
 
   /**
    * Fired when this component's `modelValue` is updated.
    */
-  '@update:model-value'?: (value: T) => void;
+  '@update:model-value'?: (value: T) => void | Promise<void>;
 }
 
 export declare interface VoidDefaultSlots {

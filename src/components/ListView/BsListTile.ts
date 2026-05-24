@@ -5,7 +5,7 @@ import type {
   ListNavItemEventPublic,
 } from '@/components/ListView/mixins/listNavApi.ts';
 import {
-  type IListTileEventEmitter,
+  type ListTileEventEmitter,
   useListTileClassNames,
   useRenderListTile,
 } from '@/components/ListView/mixins/listTileApi.ts';
@@ -91,7 +91,7 @@ export default defineComponent<TBsListTile>({
       useRenderListTile(
         tagName.value,
         slots,
-        emit as EmitFn<IListTileEventEmitter>,
+        emit as EmitFn<ListTileEventEmitter>,
         thisProps,
         tileClasses,
         listItem,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type {
   TAppContainerOptionProps,
   TBsContainer,
@@ -16,10 +15,12 @@ import type { TRecord, TVueMdb } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -113,8 +114,8 @@ export default defineComponent<TBsContainer>({
   },
 }) as DefineComponent<
   TBsContainer,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -125,8 +126,8 @@ export default defineComponent<TBsContainer>({
   Readonly<TContainerOptionProps> & Readonly<ContainerEventPublic>,
   ExtractDefaultPropTypes<TBsContainer>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

@@ -199,7 +199,6 @@ function renderListboxItems(
           navigable: !props.readonly && !props.disabled,
           disabled: props.disabled === true || item.get(schema.disableField!) === true,
           active: item.get('_selected') as boolean,
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
           'onUpdate:active': async (value: boolean) => {
             await dispatchListboxEvent(
               emit,

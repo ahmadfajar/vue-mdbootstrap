@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useRegisterListboxWatchers,
   useRenderListbox,
@@ -9,10 +8,12 @@ import type { TBsModel } from '@/model';
 import type { Numberish, TRecord } from '@/types';
 import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -85,8 +86,8 @@ export default defineComponent<TBsListbox>({
   },
 }) as DefineComponent<
   TBsListbox,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -97,8 +98,8 @@ export default defineComponent<TBsListbox>({
   Readonly<TListboxOptionProps> & Readonly<ListboxEventPublic>,
   ExtractDefaultPropTypes<TBsListbox>,
   SlotsType<ListboxSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

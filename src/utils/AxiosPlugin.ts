@@ -1,13 +1,21 @@
 import type { TRecord } from '@/types';
-import type { AxiosError, AxiosPromise, AxiosResponse, RawAxiosRequestConfig } from 'axios';
+import type {
+  AxiosError,
+  AxiosPromise,
+  AxiosResponse,
+  InternalAxiosRequestConfig,
+  RawAxiosRequestConfig,
+} from 'axios';
 import axios from 'axios';
 import type { App, ObjectPlugin } from 'vue';
 
-declare interface IRequestConfig extends RawAxiosRequestConfig {
-  requestHandler: CallableFunction;
-  requestErrorHandler: CallableFunction;
-  responseHandler: CallableFunction;
-  responseErrorHandler: CallableFunction;
+declare interface IAxiosRequestConfig extends RawAxiosRequestConfig {
+  requestHandler: (
+    config: InternalAxiosRequestConfig
+  ) => InternalAxiosRequestConfig | Promise<InternalAxiosRequestConfig>;
+  requestErrorHandler: (error: AxiosError) => Promise<AxiosError>;
+  responseHandler: (response: AxiosResponse) => AxiosResponse;
+  responseErrorHandler: (error: AxiosError) => Promise<AxiosError>;
 }
 
 export declare interface IHttpService {
@@ -63,16 +71,16 @@ export declare interface IHttpService {
 }
 
 function _axiosPlugin(options?: RawAxiosRequestConfig) {
-  const defaultOptions: IRequestConfig = {
+  const defaultOptions: IAxiosRequestConfig = {
     // request interceptor handler
-    requestHandler: (config: unknown) => config,
+    requestHandler: (config: InternalAxiosRequestConfig) => config,
     requestErrorHandler: (error: AxiosError) => Promise.reject(error),
     // response interceptor handler
     responseHandler: (response: AxiosResponse) => response,
     responseErrorHandler: (error: AxiosError) => Promise.reject(error),
   };
 
-  const initOptions: IRequestConfig = {
+  const initOptions: IAxiosRequestConfig = {
     ...defaultOptions,
     ...options,
   };
@@ -89,17 +97,13 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
     ) {
       // Add a request interceptor
       service.interceptors.request.use(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
         (config) => initOptions.requestHandler(config),
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
-        (error) => initOptions.requestErrorHandler(error)
+        (error: AxiosError) => initOptions.requestErrorHandler(error)
       );
       // Add a response interceptor
       service.interceptors.response.use(
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
         (response) => initOptions.responseHandler(response),
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
-        (error) => initOptions.responseErrorHandler(error)
+        (error: AxiosError) => initOptions.responseErrorHandler(error)
       );
     }
   }
@@ -148,7 +152,7 @@ function _axiosPlugin(options?: RawAxiosRequestConfig) {
 }
 
 export const AxiosPlugin: ObjectPlugin = {
-  install: (app: App, options?: RawAxiosRequestConfig): void => {
+  install: (app: App, options?: IAxiosRequestConfig): void => {
     const { service, http } = _axiosPlugin(options);
     app.config.globalProperties.$axios = service;
     app.config.globalProperties.$http = http;

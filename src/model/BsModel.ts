@@ -238,7 +238,7 @@ export declare interface DataModel<T> extends ObjectBase {
   /**
    * Convert field attributes that exists in the schema definition into a JavaScript plain object.
    *
-   * The result of this method is used on REST method like: {@link save } and {@link update }.
+   * The result of this method will be used on REST method like: {@link save } and {@link update }.
    *
    * This method can be overridden on inherited classes to produce the desired DTO.
    */
@@ -928,12 +928,13 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
 
     if (csrfUrl !== '') {
       const response = await this.proxy.adapterInstance.get(csrfUrl);
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      headers['X-CSRF-TOKEN'] =
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        response.data[this.csrfConfig?.dataField as string] ??
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        response.data[this.csrfConfig?.responseField as string];
+
+      if (this.csrfConfig) {
+        headers['X-CSRF-TOKEN'] =
+          (response.data as TRecord)[this.csrfConfig.responseField as string] ??
+          (response.data as TRecord)[this.csrfConfig.dataField as string];
+      }
+
       config['headers'] = headers;
 
       return this.proxy.request(config, onRequest, onSuccess, onFailure);

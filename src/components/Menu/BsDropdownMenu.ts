@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderDropdownMenu } from '@/components/Menu/mixins/dropdownMenuApi.ts';
 import type { TBsDropdownMenu, TDropdownMenuOptionProps } from '@/components/Menu/types';
 import {
@@ -20,10 +19,12 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -63,8 +64,8 @@ export default defineComponent<TBsDropdownMenu>({
   },
 }) as DefineComponent<
   TBsDropdownMenu,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -75,8 +76,8 @@ export default defineComponent<TBsDropdownMenu>({
   Readonly<TDropdownMenuOptionProps> & Readonly<DropdownMenuEventPublic>,
   ExtractDefaultPropTypes<TBsDropdownMenu>,
   SlotsType<DropdownMenuSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

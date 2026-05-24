@@ -284,7 +284,7 @@ function decrementValue(
     }
 
     if (isGreaterOrEqualMinValue(result, options) && isLessOrEqualMaxValue(result, options)) {
-      useOnFieldValueUpdated(emit, localValue, result);
+      useOnFieldValueUpdated<MaybeNumber>(emit, localValue, result);
     }
   }
 }
@@ -302,7 +302,7 @@ function incrementValue(
     }
 
     if (isGreaterOrEqualMinValue(result, options) && isLessOrEqualMaxValue(result, options)) {
-      useOnFieldValueUpdated(emit, localValue, result);
+      useOnFieldValueUpdated<MaybeNumber>(emit, localValue, result);
     }
   }
 }
@@ -337,7 +337,7 @@ function createNumericInputField(
       onChange: () => {
         const field = inputRef.value as HTMLInputElement;
         if (field.value == null || field.value === '') {
-          useOnFieldValueUpdated(emit, localValue, null);
+          useOnFieldValueUpdated<MaybeNumber>(emit, localValue, null);
           displayValue = '';
         } else {
           const result = parseFloat(field.value);
@@ -345,7 +345,7 @@ function createNumericInputField(
             isGreaterOrEqualMinValue(result, numericOptions) &&
             isLessOrEqualMaxValue(result, numericOptions)
           ) {
-            useOnFieldValueUpdated(emit, localValue, result);
+            useOnFieldValueUpdated<MaybeNumber>(emit, localValue, result);
             displayValue = result.toLocaleString(numericOptions.locale, formatOptions);
           }
         }

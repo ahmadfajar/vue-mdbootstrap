@@ -70,7 +70,8 @@ export default defineComponent<TBsToggleButton>({
   ToggleButtonEventProps,
   string,
   PublicProps,
-  Readonly<TToggleButtonOptionProps> & Readonly<ToggleButtonEventPublic>,
+  Readonly<TToggleButtonOptionProps> &
+    Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
   ExtractDefaultPropTypes<TBsToggleButton>,
   SlotsType<ToggleButtonSlots>,
   {},
@@ -83,10 +84,6 @@ export default defineComponent<TBsToggleButton>({
 >;
 
 declare type ToggleButtonEventProps = UpdateModelValueEventProps<MaybeNumberish | unknown[]>;
-
-declare interface ToggleButtonEventPublic extends UpdateModelValueEventPublic<
-  MaybeNumberish | unknown[]
-> {}
 
 declare interface ToggleButtonSlots {
   /**

@@ -1,7 +1,7 @@
 import type { IBindingElement, TRecord } from '@/types';
 import type { Directive, DirectiveBinding } from 'vue';
 
-export declare interface TouchDirectiveEvent {
+export declare interface TouchDirectiveEvent extends Event {
   touchstartX: number;
   touchstartY: number;
   touchendX: number;
@@ -92,7 +92,7 @@ export declare interface TouchDirectiveBinding extends Omit<DirectiveBinding, 'm
 }
 
 function createHandlers(value: TouchValueBinding): TouchEventListener {
-  const wrapper: TouchDirectiveEvent = {
+  const wrapper = {
     touchstartX: 0,
     touchstartY: 0,
     touchendX: 0,
@@ -108,7 +108,7 @@ function createHandlers(value: TouchValueBinding): TouchEventListener {
     start: value.start,
     move: value.move,
     end: value.end,
-  };
+  } as TouchDirectiveEvent;
 
   return {
     touchstart: (e: TouchEvent) => touchStart(e, wrapper),
@@ -133,7 +133,7 @@ function mounted(el: IBindingElement, binding: TouchDirectiveBinding) {
   Object.keys(handlers).forEach((name) => {
     target.addEventListener(
       name,
-      handlers[name as keyof TouchEventListener] as unknown as EventListener,
+      handlers[name as keyof TouchEventListener] as EventListener,
       options
     );
   });
@@ -149,9 +149,10 @@ function unmounted(el: IBindingElement, binding: TouchDirectiveBinding) {
     return;
   }
 
-  const handlers = (target as IBindingElement).__touchEvents as TRecord;
+  const handlers = (target as IBindingElement).__touchEvents as TouchEventListener;
+  
   Object.keys(handlers).forEach((name) => {
-    target.removeEventListener(name, handlers[name] as EventListenerObject, options);
+    target.removeEventListener(name, handlers[name as keyof TouchEventListener] as EventListener, options);
   });
 
   (target as IBindingElement).__touchEvents = undefined;

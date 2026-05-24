@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TAppContainerOptionProps, TBsAppContainer } from '@/components/Container/types';
 import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
@@ -6,10 +5,13 @@ import type { TRecord, TVueMdb } from '@/types';
 import type { ComponentContextInstance, VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -86,20 +88,20 @@ export default defineComponent<TBsAppContainer>({
   },
 }) as DefineComponent<
   TBsAppContainer,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TAppContainerOptionProps> & Readonly<{}>,
+  Readonly<TAppContainerOptionProps> & Readonly<EmitsOptions>,
   ExtractDefaultPropTypes<TBsAppContainer>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

@@ -1,6 +1,6 @@
 import type { TInputFieldProps } from '@/components/Field/types';
 import type { IArrayStore, IBsStore } from '@/model';
-import type { Numberish, TContextColor, TExtendedContextColor } from '@/types';
+import type { Numberish, TContextColor, TExtendedContextColor, TRecord } from '@/types';
 import type { ComponentObjectPropsOptions } from 'vue';
 
 export declare type TCheckboxPosition = 'left' | 'right';
@@ -13,8 +13,8 @@ export declare type TDataListSchema = {
   disableField?: string;
 };
 
-export declare type TDataSource = {
-  proxy: IBsStore | IArrayStore;
+export declare type TDataSource<T extends TRecord = TRecord> = {
+  proxy: IBsStore<T> | IArrayStore<T>;
 
   /**
    * The data schema which will be used to recognize and render

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useAlertClassNames,
   useAlertColor,
@@ -16,10 +15,12 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -60,8 +61,8 @@ export default defineComponent<TBsAlert>({
   },
 }) as DefineComponent<
   TBsAlert,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -72,8 +73,8 @@ export default defineComponent<TBsAlert>({
   Readonly<TAlertOptionProps> & Readonly<AlertEventPublic>,
   ExtractDefaultPropTypes<TBsAlert>,
   SlotsType<AlertSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

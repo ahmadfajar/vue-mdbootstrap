@@ -846,9 +846,9 @@
     }
   }
 
-  [data-component='toggle-field'] {
-    --#{vars.$prefix}field-padding-start: #{vars.$padding-xs};
-  }
+  // [data-component='toggle-field'] {
+  //   --#{vars.$prefix}field-padding-start: #{vars.$padding-xs};
+  // }
 
   @include transitions.enterActive-leaveActive('field-feedback') {
     transition: 0.15s ease;

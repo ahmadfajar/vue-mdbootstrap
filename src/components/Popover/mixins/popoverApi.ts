@@ -70,6 +70,7 @@ export function useSetPopoverPosition(
     popoverEl.style.height = computed.height;
 
     PopupManager.add(instance, props, isActive);
+    instance.emit('update:open', true);
   }
 }
 

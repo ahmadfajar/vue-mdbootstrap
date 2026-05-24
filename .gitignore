@@ -27,6 +27,7 @@ yarn.lock
 /cypress/screenshots/
 /dist/
 /src/_tests_/
+/src/types/vue-mdb.d.ts
 
 # Editor directories and files
 .vscode/*

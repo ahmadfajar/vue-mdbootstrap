@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useFetchData, useRenderCombobox } from '@/components/Combobox/mixins/comboboxApi.ts';
 import { comboboxProps } from '@/components/Combobox/mixins/comboboxProps.ts';
 import type {
@@ -16,13 +15,15 @@ import type { FieldSlots } from '@/components/Field/types/internals.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { TBsModel } from '@/model';
 import type { Numberish, TRecord } from '@/types';
-import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
+import type { ClosableVoidEventProps, ClosableVoidEventPublic, UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -149,8 +150,8 @@ export default defineComponent<TBsCombobox>({
   },
 }) as DefineComponent<
   TBsCombobox,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -161,8 +162,8 @@ export default defineComponent<TBsCombobox>({
   Readonly<TComboboxOptionProps> & Readonly<ComboboxEventPublic>,
   ExtractDefaultPropTypes<TBsCombobox>,
   SlotsType<ComboboxSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,
@@ -189,7 +190,7 @@ declare interface ComboboxSlots extends FieldSlots {
 
 declare type ComboboxEventProps = UpdateModelValueEventProps<
   Numberish | Numberish[] | undefined
-> & {
+> & ClosableVoidEventProps & {
   /**
    * Fired when this component's value is being cleared.
    */
@@ -233,7 +234,7 @@ declare type ComboboxEventProps = UpdateModelValueEventProps<
 
 declare interface ComboboxEventPublic extends UpdateModelValueEventPublic<
   Numberish | Numberish[] | undefined
-> {
+>, ClosableVoidEventPublic {
   /**
    * Fired when this component's value is being cleared.
    */

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderPopover, useSetPopoverPosition } from '@/components/Popover/mixins/popoverApi.ts';
 import { popoverProps } from '@/components/Popover/mixins/popoverProps.ts';
 import type { TBsPopover, TPopoverOptionProps, TPopoverPosition } from '@/components/Popover/types';
@@ -12,11 +11,13 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentInternalInstance,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -55,10 +56,17 @@ export default defineComponent<TBsPopover>({
       () => thisProps.open as boolean,
       async (value) => {
         isActive.value = value;
+
         if (value) {
-          await nextTick().then(() =>
-            useSetPopoverPosition(instance.value, thisProps, popoverRef, placementRef, isActive)
-          );
+          await nextTick().then(() => {
+            useSetPopoverPosition(
+              instance.value,
+              thisProps,
+              popoverRef,
+              placementRef,
+              isActive
+            );
+          });
         }
       }
     );
@@ -82,8 +90,8 @@ export default defineComponent<TBsPopover>({
   },
 }) as DefineComponent<
   TBsPopover,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -94,8 +102,8 @@ export default defineComponent<TBsPopover>({
   Readonly<TPopoverOptionProps> & Readonly<PopoverEventPublic>,
   ExtractDefaultPropTypes<TBsPopover>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

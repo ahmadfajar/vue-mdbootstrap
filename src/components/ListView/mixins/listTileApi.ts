@@ -47,19 +47,15 @@ export function useListTileClassNames(
   };
 }
 
-export declare interface IListTileEventEmitter {
-  [key: string]: (...args: unknown[]) => void;
-
-  // @ts-expect-error: Trigger clicked event
+export declare type ListTileEventEmitter = {[key: string]: (...args: unknown[]) => void} & {
   click: (target: Event, node: RendererNode | null | undefined) => void;
-  // @ts-expect-error: Trigger 'update:active' event
   'update:active': (active: boolean) => void;
 }
 
 function createListTileElement(
   tagName: string,
   slots: Slots,
-  emit: EmitFn<IListTileEventEmitter>,
+  emit: EmitFn<ListTileEventEmitter>,
   props: Readonly<TListTileOptionProps>,
   classes: ComputedRef<TRecord>,
   instance: ShallowRef<IListItem | undefined>,
@@ -117,7 +113,7 @@ function createListTileElement(
 
 function createListTileRouterElement(
   slots: Slots,
-  emit: EmitFn<IListTileEventEmitter>,
+  emit: EmitFn<ListTileEventEmitter>,
   props: Readonly<TListTileOptionProps>,
   classes: ComputedRef<TRecord>,
   instance: ShallowRef<IListItem | undefined>,
@@ -173,7 +169,7 @@ function createListTileRouterElement(
 export function useRenderListTile(
   tagName: string,
   slots: Slots,
-  emit: EmitFn<IListTileEventEmitter>,
+  emit: EmitFn<ListTileEventEmitter>,
   props: Readonly<TListTileOptionProps>,
   classes: ComputedRef<TRecord>,
   instance: ShallowRef<IListItem | undefined>,

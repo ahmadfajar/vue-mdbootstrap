@@ -1,4 +1,4 @@
-import type { IListTileEventEmitter } from '@/components/ListView/mixins/listTileApi.ts';
+import type { ListTileEventEmitter } from '@/components/ListView/mixins/listTileApi.ts';
 import type { ObjectBase } from '@/model';
 import Helper from '@/utils/Helper.ts';
 import type { ComponentInternalInstance, EmitFn, Ref } from 'vue';
@@ -42,7 +42,7 @@ export declare interface IListItem extends ObjectBase {
    * @param name The event name
    * @param args The event arguments
    */
-  fireEvent(name: keyof IListTileEventEmitter, ...args: unknown[]): void;
+  fireEvent(name: keyof ListTileEventEmitter, ...args: unknown[]): void;
   fireEvent(name: string, ...args: unknown[]): void;
 
   setActive(value: boolean): void;
@@ -111,7 +111,7 @@ export class ListItem implements IListItem {
     return this.children.length > 0;
   }
 
-  fireEvent(name: keyof IListTileEventEmitter | string, ...args: unknown[]): void {
+  fireEvent(name: keyof ListTileEventEmitter | string, ...args: unknown[]): void {
     this._emit(name as string, ...args);
   }
 

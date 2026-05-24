@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useInitColorPickerData,
   useMoveAlphaSliderThumb,
@@ -27,13 +26,16 @@ import type {
 import { hslaToString, oklchToString, rgbaToHex, rgbaToString } from '@/utils/ColorUtils.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { computed, defineComponent, h, mergeProps, onMounted, watch } from 'vue';
 
@@ -188,8 +190,8 @@ export default defineComponent<TBsColorPicker>({
   },
 }) as DefineComponent<
   TBsColorPicker,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -199,9 +201,9 @@ export default defineComponent<TBsColorPicker>({
   PublicProps,
   Readonly<TColorPickerOptionProps> & Readonly<ColorPickerEventPublic>,
   ExtractDefaultPropTypes<TBsColorPicker>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

@@ -107,8 +107,7 @@ function createFieldChips(
           pill: props.chipPill,
           outlined: props.chipOutlined,
           dismissible: props.chipDeletable && !props.readonly && !props.disabled,
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onClose: async (): Promise<void> => {
+          onClose: async () => {
             emit('delete-item', label);
             await nextTick().then(() => {
               const result = localValue.value.filter((v) => v !== label);
