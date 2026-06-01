@@ -3,7 +3,7 @@
 @layer theme, base, components, animations, utilities;
 
 @layer base {
-  // Global css variables
+  // Global CSS variables
   //----------------------
   :root {
     // prettier-ignore
@@ -99,11 +99,11 @@
   // end patch
 }
 
-// Global component css variables
+// Global component CSS variables
 //--------------------------------
 @layer theme {
   :root {
-    // Global css variables to maintain UI component aspects
+    // Global CSS variables to maintain UI component aspects
     //-------------------------------------------------------
     --#{vars.$prefix}field-primary-indicator: oklch(0.458 0.23 304.441);
     --#{vars.$prefix}field-accent-indicator: oklch(0.743 0.102 303.276);
@@ -120,5 +120,12 @@
     --#{vars.$prefix}caret-size: 5px;
     --#{vars.$prefix}radius: #{vars.$radius-md};
     --#{vars.$prefix}radius-pill: #{vars.$radius-pill};
+
+    --#{vars.$prefix}z-index-sticky: 1000;
+    --#{vars.$prefix}z-index-backdrop: 1019;
+    --#{vars.$prefix}z-index-lightbox: 1020;
+    --#{vars.$prefix}z-index-modal: 1021;
+    --#{vars.$prefix}z-index-popover: 1025;
+    --#{vars.$prefix}z-index-sidedrawer: 1030;
   }
 }

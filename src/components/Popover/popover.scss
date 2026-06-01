@@ -16,7 +16,7 @@
     max-height: 100%;
     max-width: 95%;
     overflow: auto;
-    z-index: 1025;
+    z-index: var(--#{vars.$prefix}z-index-popover);
 
     > .#{vars.$prefix}list {
       --#{vars.$prefix}listview-bg: inherit;

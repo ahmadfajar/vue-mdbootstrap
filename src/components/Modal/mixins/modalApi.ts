@@ -66,7 +66,7 @@ export function useRenderModalDialog(
       opacity: props.overlayOpacity,
       show: modalOpen.value && props.overlay,
       fixed: true,
-      zIndex: 1037,
+      // zIndex: 1024,
     }),
     createModalDialog(
       slots,
@@ -149,7 +149,7 @@ function createModalDialog(
                   ? useWrapSlot(slots, 'footer', 'modal-footer', {
                       ref: footerEl,
                       class: useMergeClass(
-                        `${cssPrefix}modal-footer`,
+                        [`${cssPrefix}modal-footer`, 'flex', 'flex-wrap', 'items-center', 'justify-end'],
                         props.footerClass as string | string[]
                       ),
                     })

@@ -255,7 +255,7 @@ export declare interface DataModel<T> extends ObjectBase {
    *
    * @param data The response data
    */
-  onAfterFetch?(data: TRecord): void;
+  onAfterFetch(data: TRecord): void;
 }
 
 export declare type TBsModel<T extends TRecord = TRecord> = DataModel<T> & {
@@ -411,8 +411,8 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
     autoBind(this);
   }
 
-  onAfterFetch?(_data: TRecord): void {
-    throw new Error('Method not implemented.');
+  onAfterFetch(_data: TRecord): void {
+    // throw new Error('Method not implemented.');
   }
 
   private _initSchema(schema: TRecord): void {
@@ -782,7 +782,9 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
         this._schema.has(k) && this._schema.set(k, values[k]);
       });
 
-      Helper.isFunction(this['onAfterFetch']) && this['onAfterFetch'](values);
+      if (Helper.isFunction(this['onAfterFetch'])) {
+        this['onAfterFetch'](values)
+      };
     };
 
     if (Helper.isEmpty(_data)) {

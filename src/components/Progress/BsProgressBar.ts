@@ -1,16 +1,19 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderProgressBar } from '@/components/Progress/mixins/progressControlApi.ts';
 import { progressBarProps } from '@/components/Progress/mixins/progressProps.ts';
 import type { TBsProgressBar, TProgressBarOptionProps } from '@/components/Progress/types';
 import type { TRecord } from '@/types';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { defineComponent } from 'vue';
 
@@ -24,20 +27,20 @@ export default defineComponent<TBsProgressBar>({
   },
 }) as DefineComponent<
   TBsProgressBar,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TProgressBarOptionProps> & Readonly<{}>,
+  Readonly<TProgressBarOptionProps>,
   ExtractDefaultPropTypes<TBsProgressBar>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

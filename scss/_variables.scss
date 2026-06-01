@@ -14,6 +14,7 @@ $font-weight-medium:          500;
 $font-weight-semibold:        600;
 $font-weight-bold:            700;
 $font-weight-boldest:         900;
+$spacing:                     1rem;
 
 // Grid breakpoints
 //
@@ -28,8 +29,6 @@ $grid-breakpoints: (
     xxl: 1400px
 );
 
-$zindex-sticky:               1020;
-$spacing:                     1rem;
 $gutters: (
   0: 0,
   1: $spacing * .25,

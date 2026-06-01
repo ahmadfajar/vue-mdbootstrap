@@ -65,7 +65,7 @@ export function useSideDrawerStyles(
       marginTop: zeroPx,
       position: 'fixed',
       top: zeroPx,
-      'z-index': 1030, // zIndex.value + 1,
+      'z-index': `var(--${cssPrefix}z-index-sidedrawer)`, // 1030,
       left:
         props.position === 'left'
           ? isOpen.value
@@ -202,7 +202,6 @@ export function useSetupSideDrawer(
 
 function renderOverlay(
   props: Readonly<TSideDrawerOptionProps>,
-  zIndex: Ref<number>,
   isOpen: Ref<boolean>,
   emit: EmitFn
 ): VNode {
@@ -214,7 +213,7 @@ function renderOverlay(
     color: props.overlayColor,
     fixed: true,
     show: isOpen.value,
-    zIndex: zIndex.value,
+    // zIndex: zIndex.value,
     onClick: () => {
       PopupManager.allowScrolling();
       isOpen.value = false;
@@ -298,7 +297,7 @@ export function useRenderSideDrawer(
       isMobile.value &&
         !props.mini &&
         h(Teleport, { to: 'body' }, [
-          renderOverlay(props, zIndex, isOpen, emit),
+          renderOverlay(props, isOpen, emit),
           renderSideDrawer(props, slots, attrs, styles, isMobile, isOpen, resizeHandler),
         ]),
       (!isMobile.value || props.mini) &&

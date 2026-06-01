@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TBsOverlay, TOverlayOptionProps } from '@/components/Animation/types';
 import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import {
@@ -11,10 +10,12 @@ import { preventEventTarget } from '@/mixins/DomHelper.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -60,8 +61,8 @@ export default defineComponent<TBsOverlay>({
   },
 }) as DefineComponent<
   TBsOverlay,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -72,8 +73,8 @@ export default defineComponent<TBsOverlay>({
   Readonly<TOverlayOptionProps> & Readonly<OverlayEventPublic>,
   ExtractDefaultPropTypes<TBsOverlay>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

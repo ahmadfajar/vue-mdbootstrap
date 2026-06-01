@@ -87,13 +87,13 @@
   .sticky-top {
     position: sticky;
     top: 0;
-    z-index: 1020;
+    z-index: var(--#{vars.$prefix}z-index-sticky);
   }
 
   .sticky-bottom {
     position: sticky;
     bottom: 0;
-    z-index: 1020;
+    z-index: var(--#{vars.$prefix}z-index-sticky);
   }
 
   .float-start {

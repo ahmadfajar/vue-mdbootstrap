@@ -23,7 +23,7 @@
     right: 0;
     top: 0;
     bottom: 0;
-    z-index: 1038;
+    z-index: var(--#{vars.$prefix}z-index-modal);
 
     > .#{vars.$prefix}modal-inner {
       @include borders.radius(var(--#{vars.$prefix}modal-border-radius));
@@ -72,17 +72,19 @@
       font-weight: var(--#{vars.$prefix}modal-title-font-weight);
 
       ~ .#{vars.$prefix}modal-body {
-        --#{vars.$prefix}modal-body-padding: #{0 vars.$padding-lg 1.25rem};
+        padding-top: 0;
       }
     }
 
     .#{vars.$prefix}modal-footer {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
+      // display: flex;
+      // flex-wrap: wrap;
+      // align-items: center;
+      // justify-content: flex-end;
       min-height: 48px;
       padding: var(--#{vars.$prefix}modal-footer-padding);
       column-gap: var(--#{vars.$prefix}modal-footer-spacing);
+      row-gap: var(--#{vars.$prefix}modal-footer-spacing);
     }
   }
 }

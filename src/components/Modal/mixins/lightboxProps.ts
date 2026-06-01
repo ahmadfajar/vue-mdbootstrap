@@ -8,6 +8,7 @@ import {
   booleanTrueProp,
   objectProp,
   stringOrArrayProp,
+  validStringOrNumberProp,
 } from '@/mixins/CommonProps.ts';
 import type { Prop } from 'vue';
 
@@ -27,6 +28,7 @@ export const lightboxProps = {
   showThumbnail: booleanTrueProp,
   showToolbar: booleanTrueProp,
   showNavControl: booleanTrueProp,
+  zIndex: validStringOrNumberProp,
   thumbnailHeight: {
     type: [Number, String],
     default: 72,
@@ -53,9 +55,4 @@ export const lightboxProps = {
     default: undefined,
     validator: (v: string) => ['out-in', 'in-out'].includes(v),
   } as Prop<TTransitionMode>,
-  zIndex: {
-    type: [String, Number],
-    default: 1024,
-    validator: (v: string): boolean => !isNaN(parseInt(v, 10)),
-  },
 };

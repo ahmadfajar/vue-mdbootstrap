@@ -1,17 +1,20 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TBsSpinLoader, TSpinLoaderOptionProps } from '@/components/Progress/types';
 import { cssPrefix } from '@/mixins/CommonApi';
 import { stringOrNumberProp, stringProp } from '@/mixins/CommonProps';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { defineComponent, h } from 'vue';
 
@@ -40,20 +43,20 @@ export default defineComponent<TBsSpinLoader>({
   },
 }) as DefineComponent<
   TBsSpinLoader,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TSpinLoaderOptionProps> & Readonly<{}>,
+  Readonly<TSpinLoaderOptionProps>,
   ExtractDefaultPropTypes<TBsSpinLoader>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

@@ -78,7 +78,7 @@ export function useRenderLightbox(
                 'fixed-top',
                 props.overlay ? `${cssPrefix}lightbox-overlay` : '',
               ],
-              style: { 'z-index': props.zIndex },
+              style: props.zIndex ? { 'z-index': props.zIndex } : undefined,
             },
             [
               createLightboxToolbar(

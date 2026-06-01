@@ -32,7 +32,8 @@ export declare type TOverlayOptionProps = {
   color?: string;
 
   /**
-   * Sets the css-style `position` value. If `true` then css-style `position` is set to `fixed`.
+   * Sets the inline CSS `position` rule. If `true` then inline CSS `position` 
+   * rule is set to `fixed`.
    */
   fixed?: boolean;
 
@@ -47,7 +48,7 @@ export declare type TOverlayOptionProps = {
   opacity?: Numberish;
 
   /**
-   * Overlay inline-css `z-index`.
+   * Sets the inline CSS `z-index` rule.
    */
   zIndex?: Numberish;
 };

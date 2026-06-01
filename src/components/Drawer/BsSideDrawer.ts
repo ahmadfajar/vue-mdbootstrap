@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useRenderSideDrawer,
   useSetupSideDrawer,
@@ -14,10 +13,12 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -32,8 +33,7 @@ export default defineComponent<TBsSideDrawer>({
   emits: ['resize', 'update:open'],
   setup(props, { attrs, emit, slots }) {
     const thisProps = props as Readonly<TSideDrawerOptionProps>;
-    // see bootstrap: $zIndex-sticky
-    const zIndex = ref(1021);
+    const zIndex = ref(1000);
     const vueMdb = ref<TVueMdb>();
     const appId = ref<string>();
     const isMobile = ref<boolean>(false);
@@ -79,8 +79,8 @@ export default defineComponent<TBsSideDrawer>({
   },
 }) as DefineComponent<
   TBsSideDrawer,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -91,8 +91,8 @@ export default defineComponent<TBsSideDrawer>({
   Readonly<TSideDrawerOptionProps> & Readonly<SideDrawerEventPublic>,
   ExtractDefaultPropTypes<TBsSideDrawer>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

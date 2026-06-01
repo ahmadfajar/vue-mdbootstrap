@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useDisplayStyle,
   useNavigateNextSlide,
@@ -18,11 +17,13 @@ import type {
   UpdateOpenEventPublic,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentInternalInstance,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -155,8 +156,8 @@ export default defineComponent<TBsLightbox>({
   },
 }) as DefineComponent<
   TBsLightbox,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -167,8 +168,8 @@ export default defineComponent<TBsLightbox>({
   Readonly<TLightboxOptionProps> & Readonly<LightboxEventPublic>,
   ExtractDefaultPropTypes<TBsLightbox>,
   SlotsType<LightboxSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

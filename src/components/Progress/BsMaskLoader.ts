@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { BsOverlay } from '@/components/Animation';
 import { BsSpinnerIcon } from '@/components/Icon';
 import { BsProgress } from '@/components/Progress';
@@ -12,13 +11,17 @@ import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { computed, createCommentVNode, defineComponent, h } from 'vue';
 
@@ -48,6 +51,7 @@ export default defineComponent<TBsMaskLoader>({
                   opacity: thisProps.overlayOpacity,
                   show: thisProps.show,
                   style: {
+                    'z-index': 'auto',
                     'border-radius': 'inherit',
                   },
                 }),
@@ -92,20 +96,20 @@ export default defineComponent<TBsMaskLoader>({
   },
 }) as DefineComponent<
   TBsMaskLoader,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TMaskLoaderOptionProps> & Readonly<{}>,
+  Readonly<TMaskLoaderOptionProps>,
   ExtractDefaultPropTypes<TBsMaskLoader>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

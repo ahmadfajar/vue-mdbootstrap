@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderModalDialog, useSetDialogMaxHeight } from '@/components/Modal/mixins/modalApi.ts';
 import { modalProps } from '@/components/Modal/mixins/modalProps.ts';
 import type { TBsModal, TModalOptionProps } from '@/components/Modal/types';
@@ -13,11 +12,13 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentInternalInstance,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -88,8 +89,8 @@ export default defineComponent<TBsModal>({
   },
 }) as DefineComponent<
   TBsModal,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -100,8 +101,8 @@ export default defineComponent<TBsModal>({
   Readonly<TModalOptionProps> & Readonly<ModalEventPublic>,
   ExtractDefaultPropTypes<TBsModal>,
   SlotsType<ModalSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

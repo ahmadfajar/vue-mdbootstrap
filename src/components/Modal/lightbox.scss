@@ -21,6 +21,7 @@
     --#{vars.$prefix}lightbox-thumbnail-active-border-width: 2px;
 
     bottom: 0;
+    z-index: var(--#{vars.$prefix}z-index-lightbox);
 
     &.#{vars.$prefix}lightbox-overlay {
       background-color: var(--#{vars.$prefix}lightbox-overlay-bg);
