@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { numericFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import { useRenderNumericField } from '@/components/Field/mixins/numericFieldApi.ts';
 import {
@@ -21,10 +20,12 @@ import { cssPrefix, isServer } from '@/mixins/CommonApi.ts';
 import type { MaybeNumber, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -131,8 +132,8 @@ export default defineComponent<TBsNumericField>({
   },
 }) as DefineComponent<
   TBsNumericField,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -143,8 +144,8 @@ export default defineComponent<TBsNumericField>({
   Readonly<TNumericFieldOptionProps> & Readonly<NumericFieldEventPublic>,
   ExtractDefaultPropTypes<TBsNumericField>,
   SlotsType<FieldSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

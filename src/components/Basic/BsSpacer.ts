@@ -1,17 +1,20 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TBsSpacer, TSpacerOptionProps } from '@/components/Basic/types';
 import { useWrapSlotDefault } from '@/mixins/CommonApi.ts';
 import { booleanTrueProp, validStringOrNumberProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { defineComponent } from 'vue';
 
@@ -34,20 +37,20 @@ export default defineComponent<TBsSpacer>({
   },
 }) as DefineComponent<
   TBsSpacer,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TSpacerOptionProps> & Readonly<{}>,
+  Readonly<TSpacerOptionProps>,
   ExtractDefaultPropTypes<TBsSpacer>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

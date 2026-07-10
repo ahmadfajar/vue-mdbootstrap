@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { DatePickerConst } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import {
   useRenderDatePickerNav,
@@ -14,13 +13,16 @@ import type { TRecord } from '@/types';
 import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
 import { DateTime } from 'luxon';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 
@@ -49,8 +51,8 @@ export default defineComponent<TBsDatePickerNav>({
   },
 }) as DefineComponent<
   TBsDatePickerNav,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -60,9 +62,9 @@ export default defineComponent<TBsDatePickerNav>({
   PublicProps,
   Readonly<TDatePickerNavProps> & Readonly<DatePickerNavEventPublic>,
   ExtractDefaultPropTypes<TBsDatePickerNav>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

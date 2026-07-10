@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
 import { iconProps, iconSizeObjectProp } from '@/components/Icon/mixins/iconProps.ts';
 import {
@@ -17,14 +16,19 @@ import { stringArrayOrObjectProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   Prop,
   PublicProps,
+  SlotsType,
+  VNode,
 } from 'vue';
 import { computed, defineComponent, h, normalizeClass, onBeforeMount, ref, watchEffect } from 'vue';
 
@@ -101,22 +105,23 @@ export default defineComponent<TBsFontawesomeIcon>({
   },
 }) as DefineComponent<
   TBsFontawesomeIcon,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TFontawesomeIconOptionProps> & Readonly<{}>,
+  Readonly<TFontawesomeIconOptionProps>,
   ExtractDefaultPropTypes<TBsFontawesomeIcon>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
+  TRecord,
   never
 >;

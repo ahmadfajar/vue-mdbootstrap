@@ -3,6 +3,26 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.2.4
+
+Released: July 11, 2026
+
+### Improvements
+
+- Create global CSS variables to improve floating component's `z-index`.
+- **BsSideDrawer**, **BsLightbox**, **BsModal**: integrate with `z-index` global CSS variables.
+
+### Bug Fixes
+
+- **BsModel**: fix bug `onAfterFetch` event.
+- **BsModal**: fix bug when there is popover component placed inside it.
+- **BsPopover**: 
+  - Fix event `update:open` never trigger when popover is shown.
+  - Fix bug when placing inside **BsModal**.
+- **BsTooltip**: fix bug `maxWidth` property not working properly.
+- **Resize** and **Scroll** directives: fix binding value data types.
+
+
 ## v2.2.3
 
 Released: May 05, 2026

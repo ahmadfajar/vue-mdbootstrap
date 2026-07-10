@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useCreateCheckboxItems } from '@/components/Checkbox/mixins/checkboxApi.ts';
 import { baseInputProps, checkboxGroupProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import type {
@@ -20,10 +19,12 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -73,32 +74,27 @@ export default defineComponent<TBsCheckboxGroup>({
   },
 }) as DefineComponent<
   TBsCheckboxGroup,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  CheckboxGroupEventProps,
+  UpdateModelValueEventProps<(string | number | unknown)[]>,
   string,
   PublicProps,
-  Readonly<TCheckboxGroupOptionProps> & Readonly<CheckboxGroupEventPublic>,
+  Readonly<TCheckboxGroupOptionProps> &
+    Readonly<UpdateModelValueEventPublic<(string | number | unknown)[]>>,
   ExtractDefaultPropTypes<TBsCheckboxGroup>,
   SlotsType<CheckboxGroupSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
-
-declare type CheckboxGroupEventProps = UpdateModelValueEventProps<(string | number | unknown)[]>;
-
-declare interface CheckboxGroupEventPublic extends UpdateModelValueEventPublic<
-  (string | number | unknown)[]
-> {}
 
 declare interface CheckboxGroupSlots extends VoidDefaultSlots {
   /**

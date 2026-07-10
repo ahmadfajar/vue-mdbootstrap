@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   startRipple,
   type TRippleData,
@@ -10,10 +9,12 @@ import { booleanProp, tagProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -98,8 +99,8 @@ export default defineComponent<TBsRipple>({
   },
 }) as DefineComponent<
   TBsRipple,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -110,8 +111,8 @@ export default defineComponent<TBsRipple>({
   Readonly<TRippleOptionProps> & Readonly<RippleEventPublic>,
   ExtractDefaultPropTypes<TBsRipple>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

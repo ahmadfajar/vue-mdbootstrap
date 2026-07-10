@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useChipIsSelected,
   useRenderChipGroup,
@@ -20,10 +19,12 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -111,8 +112,8 @@ export default defineComponent<TBsChipGroup>({
   },
 }) as DefineComponent<
   TBsChipGroup,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -123,11 +124,11 @@ export default defineComponent<TBsChipGroup>({
   Readonly<TChipGroupOptionProps> & Readonly<ChipGroupEventPublic>,
   ExtractDefaultPropTypes<TBsChipGroup>,
   SlotsType<ChipGroupSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   DatePickerConst,
   useParseDate,
@@ -15,13 +14,16 @@ import { isServer } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
 import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 
@@ -69,8 +71,8 @@ export default defineComponent<TBsDatePicker>({
   },
 }) as DefineComponent<
   TBsDatePicker,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -80,9 +82,9 @@ export default defineComponent<TBsDatePicker>({
   PublicProps,
   Readonly<TDatePickerOptionProps> & Readonly<UpdateModelValueEventPublic<string>>,
   ExtractDefaultPropTypes<TBsDatePicker>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

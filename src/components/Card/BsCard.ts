@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderCardImg } from '@/components/Card/mixins/cardApi.ts';
 import { cardProps } from '@/components/Card/mixins/cardProps.ts';
 import type { TBsCard, TCardOptionProps } from '@/components/Card/types';
@@ -6,10 +5,13 @@ import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -49,20 +51,20 @@ export default defineComponent<TBsCard>({
   },
 }) as DefineComponent<
   TBsCard,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TCardOptionProps> & Readonly<{}>,
+  Readonly<TCardOptionProps>,
   ExtractDefaultPropTypes<TBsCard>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

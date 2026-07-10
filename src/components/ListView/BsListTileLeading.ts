@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { BsAvatar } from '@/components/Avatar';
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
 import { iconBaseProps, imageBaseProps } from '@/components/Avatar/mixins/avatarProps.ts';
@@ -11,10 +10,13 @@ import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -79,20 +81,20 @@ export default defineComponent<TBsListTileLeading>({
   },
 }) as DefineComponent<
   TBsListTileLeading,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TListTileLeadingOptionProps> & Readonly<{}>,
+  Readonly<TListTileLeadingOptionProps>,
   ExtractDefaultPropTypes<TBsListTileLeading>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

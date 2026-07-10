@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { searchFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
   useRenderSearchField,
@@ -11,10 +10,12 @@ import type {
 } from '@/components/Field/types/internals.ts';
 import type { MaybeString, TRecord } from '@/types';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -62,8 +63,8 @@ export default defineComponent<TBsSearchField>({
   },
 }) as DefineComponent<
   TBsSearchField,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -74,8 +75,8 @@ export default defineComponent<TBsSearchField>({
   Readonly<TSearchFieldOptionProps> & Readonly<SearchFieldEventPublic>,
   ExtractDefaultPropTypes<TBsSearchField>,
   SlotsType<SearchFieldSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

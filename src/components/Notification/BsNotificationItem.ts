@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useDeferHideNotification,
   useRenderNotificationItem,
@@ -17,14 +16,18 @@ import {
 } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   Prop,
   PublicProps,
+  SlotsType,
+  VNode,
 } from 'vue';
 import { defineComponent, onMounted, ref } from 'vue';
 
@@ -53,8 +56,8 @@ export default defineComponent<TBsNotificationItem>({
   },
 }) as DefineComponent<
   TBsNotificationItem,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -64,12 +67,12 @@ export default defineComponent<TBsNotificationItem>({
   PublicProps,
   Readonly<TNotificationItemOptionProps> & Readonly<NotificationItemEventPublic>,
   ExtractDefaultPropTypes<TBsNotificationItem>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

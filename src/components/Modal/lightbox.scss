@@ -10,8 +10,8 @@
     --#{vars.$prefix}lightbox-toolbar-bg: #{color.change(colors.$black, $alpha: 0.9)};
     --#{vars.$prefix}lightbox-toolbar-color: oklch(55.6% 0 89.876);
     --#{vars.$prefix}lightbox-overlay-bg: oklch(20% 0 0);
-    --#{vars.$prefix}lightbox-title-bg: #{color.change(colors.$black, $alpha: 0.7)};
-    --#{vars.$prefix}lightbox-title-color: oklch(65% 0 0);
+    --#{vars.$prefix}lightbox-title-bg: #{color.change(colors.$black, $alpha: 0.8)};
+    --#{vars.$prefix}lightbox-title-color: oklch(75% 0 0);
     --#{vars.$prefix}lightbox-title-size: 1.25rem;
     --#{vars.$prefix}lightbox-thumbnail-bg: #{color.change(colors.$black, $alpha: 0.95)};
     // prettier-ignore

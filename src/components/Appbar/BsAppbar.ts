@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useAppbarOnMountedHook,
   useAppbarStyles,
@@ -10,10 +9,12 @@ import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TRecord, TVueMdb } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -74,8 +75,8 @@ export default defineComponent<TBsAppbar>({
   },
 }) as DefineComponent<
   TBsAppbar,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -83,11 +84,11 @@ export default defineComponent<TBsAppbar>({
   AppbarEventProps,
   string,
   PublicProps,
-  Readonly<TAppbarOptionProps> & Readonly<AppbarEventPublic>,
+  Readonly<TAppbarOptionProps>,
   ExtractDefaultPropTypes<TBsAppbar>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

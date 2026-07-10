@@ -1,14 +1,16 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TBsCardBody, TTagProp } from '@/components/Card/types';
 import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
 import { tagProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -28,20 +30,20 @@ export default defineComponent<TBsCardBody>({
   },
 }) as DefineComponent<
   TBsCardBody,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TTagProp> & Readonly<{}>,
+  Readonly<TTagProp>,
   ExtractDefaultPropTypes<TBsCardBody>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

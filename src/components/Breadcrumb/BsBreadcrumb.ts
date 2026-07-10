@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type {
   TBreadcrumb,
   TBreadcrumbOptionProps,
@@ -10,10 +9,13 @@ import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/Commo
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   Prop,
@@ -157,23 +159,23 @@ export default defineComponent<TBsBreadcrumb>({
   },
 }) as DefineComponent<
   TBsBreadcrumb,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TBreadcrumbOptionProps> & Readonly<{}>,
+  Readonly<TBreadcrumbOptionProps>,
   ExtractDefaultPropTypes<TBsBreadcrumb>,
   SlotsType<BreadcrumbSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

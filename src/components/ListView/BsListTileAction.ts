@@ -1,14 +1,16 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TBsListTileAction, TListTileActionOptionProps } from '@/components/ListView/types';
 import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
 import { booleanProp, tagProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -37,20 +39,20 @@ export default defineComponent<TBsListTileAction>({
   },
 }) as DefineComponent<
   TBsListTileAction,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TListTileActionOptionProps> & Readonly<{}>,
+  Readonly<TListTileActionOptionProps>,
   ExtractDefaultPropTypes<TBsListTileAction>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

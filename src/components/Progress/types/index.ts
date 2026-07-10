@@ -13,6 +13,8 @@ export declare type TTextLabelAlignment = 'start' | 'end' | 'center';
 
 export declare type TMaskLoaderVariant = 'linear' | 'linear-alt' | 'progress' | 'spinner' | 'grow';
 
+declare type TSpinnerColor = TContextColor | 'white';
+
 export declare type TMaskLoaderOptionProps = {
   /**
    * Sets the inline css-style `position` property. If `true` then the inline
@@ -39,9 +41,10 @@ export declare type TMaskLoaderOptionProps = {
   /**
    * Mask loader spinner color.
    *
-   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, `info`, `default`.
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, 
+   * `info`, `default` and `white`.
    */
-  spinnerColor?: TContextColor | string;
+  spinnerColor?: TSpinnerColor | string;
 
   /**
    * Mask loader spinner diameter.

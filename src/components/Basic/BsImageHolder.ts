@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useShapeClasses } from '@/components/Avatar/mixins/avatarApi.ts';
 import type { TBsImageHolder, TImageHolderOptionProps } from '@/components/Basic/types';
 import { useSizeHeight, useSizeWidth } from '@/components/Icon/mixins/iconApi.ts';
@@ -8,13 +7,17 @@ import { booleanProp, stringOrNumberProp, stringProp } from '@/mixins/CommonProp
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { computed, defineComponent, h, toDisplayString } from 'vue';
 
@@ -90,20 +93,20 @@ export default defineComponent<TBsImageHolder>({
   },
 }) as DefineComponent<
   TBsImageHolder,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TImageHolderOptionProps> & Readonly<{}>,
+  Readonly<TImageHolderOptionProps>,
   ExtractDefaultPropTypes<TBsImageHolder>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

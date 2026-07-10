@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { DatePickerConst } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import { useWatchOfDatePickerBaseProps } from '@/components/DatePicker/mixins/datePickerCalendar.ts';
 import { datePickerTimesProps } from '@/components/DatePicker/mixins/datePickerProps.ts';
@@ -22,13 +21,17 @@ import type {
 } from '@/types/internals.ts';
 import { DateTime } from 'luxon';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
+  VNode,
 } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 
@@ -62,8 +65,8 @@ export default defineComponent<TBsDatePickerTimes>({
   },
 }) as DefineComponent<
   TBsDatePickerTimes,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -73,12 +76,12 @@ export default defineComponent<TBsDatePickerTimes>({
   PublicProps,
   Readonly<TTimePickerProps> & Readonly<TimePickerEventPublic>,
   ExtractDefaultPropTypes<TBsDatePickerTimes>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

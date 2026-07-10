@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import BsButtonInner from '@/components/Button/BsButtonInner.ts';
 import {
   useMakeButtonProps,
@@ -11,10 +10,13 @@ import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -73,20 +75,20 @@ export default defineComponent<TBsButton>({
   },
 }) as DefineComponent<
   TBsButton,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TButtonOptionProps> & Readonly<{}>,
+  Readonly<TButtonOptionProps>,
   ExtractDefaultPropTypes<TBsButton>,
   SlotsType<ButtonSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

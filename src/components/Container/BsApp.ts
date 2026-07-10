@@ -97,7 +97,7 @@ export default defineComponent<TBsAppContainer>({
   EmitsOptions,
   string,
   PublicProps,
-  Readonly<TAppContainerOptionProps> & Readonly<EmitsOptions>,
+  Readonly<TAppContainerOptionProps>,
   ExtractDefaultPropTypes<TBsAppContainer>,
   SlotsType<VoidDefaultSlots>,
   Record<string, Component>,

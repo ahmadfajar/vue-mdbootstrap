@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TPlacementPosition } from '@/components/Tabs/types';
 import {
   useAddTooltipListener,
@@ -18,12 +17,14 @@ import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentInternalInstance,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComponentPublicInstance,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   Prop,
@@ -170,8 +171,8 @@ export default defineComponent<TBsTooltip>({
   },
 }) as DefineComponent<
   TBsTooltip,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -182,8 +183,8 @@ export default defineComponent<TBsTooltip>({
   Readonly<TTooltipOptionProps> & Readonly<TooltipEventPublic>,
   ExtractDefaultPropTypes<TBsTooltip>,
   SlotsType<TooltipSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

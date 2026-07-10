@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useToggleChecked } from '@/components/Checkbox/mixins/checkboxApi.ts';
 import { useRenderSwitch, useSwitchClasses } from '@/components/Switch/mixins/switchApi.ts';
 import { switchProps } from '@/components/Switch/mixins/switchProps.ts';
@@ -10,10 +9,12 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -36,8 +37,8 @@ export default defineComponent<TBsSwitch>({
   },
 }) as DefineComponent<
   TBsSwitch,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -48,8 +49,8 @@ export default defineComponent<TBsSwitch>({
   Readonly<TSwitchOptionProps> & Readonly<SwitchEventPublic>,
   ExtractDefaultPropTypes<TBsSwitch>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

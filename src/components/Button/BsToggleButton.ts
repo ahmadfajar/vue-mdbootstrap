@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderToggleButtonItem } from '@/components/Button/mixins/buttonApi.ts';
 import { toggleButtonProps } from '@/components/Button/mixins/buttonProps.ts';
 import type {
@@ -10,10 +9,12 @@ import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
 import type { MaybeNumberish, TRecord } from '@/types';
 import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -61,8 +62,8 @@ export default defineComponent<TBsToggleButton>({
   },
 }) as DefineComponent<
   TBsToggleButton,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -74,11 +75,11 @@ export default defineComponent<TBsToggleButton>({
     Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
   ExtractDefaultPropTypes<TBsToggleButton>,
   SlotsType<ToggleButtonSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

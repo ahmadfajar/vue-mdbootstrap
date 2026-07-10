@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useRenderImageUploader,
   useSetupImageUploader,
@@ -20,14 +19,18 @@ import {
 } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   Prop,
   PublicProps,
+  SlotsType,
+  VNode,
 } from 'vue';
 import { computed, defineComponent, reactive, ref } from 'vue';
 
@@ -92,8 +95,8 @@ export default defineComponent<TBsImageUploader>({
   },
 }) as DefineComponent<
   TBsImageUploader,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -103,12 +106,12 @@ export default defineComponent<TBsImageUploader>({
   PublicProps,
   Readonly<TImageUploaderOptionProps> & Readonly<ImageUploaderEventPublic>,
   ExtractDefaultPropTypes<TBsImageUploader>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

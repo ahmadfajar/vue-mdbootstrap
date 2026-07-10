@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { DatePickerConst } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import {
   useDatePickerHeaderStyles,
@@ -15,13 +14,16 @@ import type {
 import type { TRecord } from '@/types';
 import { DateTime } from 'luxon';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { computed, defineComponent, ref } from 'vue';
 
@@ -79,8 +81,8 @@ export default defineComponent<TBsDatePickerHeader>({
   },
 }) as DefineComponent<
   TBsDatePickerHeader,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -90,9 +92,9 @@ export default defineComponent<TBsDatePickerHeader>({
   PublicProps,
   Readonly<TDatePickerHeaderProps> & Readonly<DatePickerHeaderEventPublic>,
   ExtractDefaultPropTypes<TBsDatePickerHeader>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

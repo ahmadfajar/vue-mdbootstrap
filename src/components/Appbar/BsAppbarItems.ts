@@ -1,12 +1,16 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
+  ComponentPropsOptions,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
   Slots,
@@ -22,24 +26,24 @@ export default defineComponent({
       useWrapSlotDefault('div', slots as Slots, [`${cssPrefix}appbar-items`, 'flex', 'max-w-full']);
   },
 }) as DefineComponent<
-  {},
+  TRecord,
   () => VNode,
-  {},
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<{}>,
-  {},
+  Readonly<ComponentPropsOptions>,
+  ExtractDefaultPropTypes<TRecord>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

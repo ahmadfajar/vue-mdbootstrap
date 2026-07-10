@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import { useRenderChipField } from '@/components/Field/mixins/chipFieldApi.ts';
 import { inputFieldProps } from '@/components/Field/mixins/fieldProps.ts';
@@ -20,10 +19,12 @@ import { booleanProp, stringOrArrayProp, stringProp } from '@/mixins/CommonProps
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -119,8 +120,8 @@ export default defineComponent<TBsChipField>({
   },
 }) as DefineComponent<
   TBsChipField,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -131,8 +132,8 @@ export default defineComponent<TBsChipField>({
   Readonly<TChipFieldOptionProps> & Readonly<ChipFieldEventPublic>,
   ExtractDefaultPropTypes<TBsChipField>,
   SlotsType<FieldSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

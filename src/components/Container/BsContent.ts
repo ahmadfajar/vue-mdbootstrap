@@ -66,7 +66,7 @@ export default defineComponent<TBsContent>({
   EmitsOptions,
   string,
   PublicProps,
-  Readonly<TContainerOptionProps> & Readonly<EmitsOptions>,
+  Readonly<TContainerOptionProps>,
   ExtractDefaultPropTypes<TBsContainer>,
   SlotsType<VoidDefaultSlots>,
   Record<string, Component>,

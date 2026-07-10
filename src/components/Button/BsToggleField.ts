@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderToggleFieldButton } from '@/components/Button/mixins/buttonApi.ts';
 import { toggleButtonProps } from '@/components/Button/mixins/buttonProps.ts';
 import type {
@@ -16,10 +15,12 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -66,8 +67,8 @@ export default defineComponent<TBsToggleField>({
   },
 }) as DefineComponent<
   TBsToggleField,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -79,11 +80,11 @@ export default defineComponent<TBsToggleField>({
     Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
   ExtractDefaultPropTypes<TBsToggleField>,
   SlotsType<ToggleFieldSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

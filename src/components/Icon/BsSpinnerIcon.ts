@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { iconSpinnerProps } from '@/components/Icon/mixins/iconProps.ts';
 import {
   spinnerSvgData,
@@ -7,14 +6,19 @@ import {
 } from '@/components/Icon/mixins/svgApi.ts';
 import type { TBsSpinnerIcon, TSpinnerIconOptionProps } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { defineComponent, h } from 'vue';
 
@@ -52,20 +56,20 @@ export default defineComponent<TBsSpinnerIcon>({
   },
 }) as DefineComponent<
   TBsSpinnerIcon,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TSpinnerIconOptionProps> & Readonly<{}>,
+  Readonly<TSpinnerIconOptionProps>,
   ExtractDefaultPropTypes<TBsSpinnerIcon>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

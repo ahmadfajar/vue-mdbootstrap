@@ -1,14 +1,16 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { cardMediaProps } from '@/components/Card/mixins/cardProps.ts';
 import type { TBsCardMedia, TCardMediaOptionProps } from '@/components/Card/types';
 import { cssPrefix, useWrapSlot } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -62,23 +64,23 @@ export default defineComponent<TBsCardMedia>({
   },
 }) as DefineComponent<
   TBsCardMedia,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TCardMediaOptionProps> & Readonly<{}>,
+  Readonly<TCardMediaOptionProps>,
   ExtractDefaultPropTypes<TBsCardMedia>,
   SlotsType<CardMediaSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

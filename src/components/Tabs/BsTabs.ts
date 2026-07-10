@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useRenderTabView, useTabViewClassNames } from '@/components/Tabs/mixins/tabsApi.ts';
 import { tabsProps } from '@/components/Tabs/mixins/tabsProps.ts';
 import { type ITabsProvider, TabsProvider } from '@/components/Tabs/mixins/TabsProvider.ts';
@@ -11,11 +10,13 @@ import type {
 } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentInternalInstance,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -71,8 +72,8 @@ export default defineComponent<TBsTabs>({
   },
 }) as DefineComponent<
   TBsTabs,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -83,8 +84,8 @@ export default defineComponent<TBsTabs>({
   Readonly<TTabsOptionProps> & Readonly<TabEventPublic>,
   ExtractDefaultPropTypes<TBsTabs>,
   SlotsType<TabSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

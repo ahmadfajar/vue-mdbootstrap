@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useChipClassNames, useRenderChip } from '@/components/Chip/mixins/chipApi.ts';
 import { chipProps } from '@/components/Chip/mixins/chipProps.ts';
 import type { TBsChip, TChipOptionProps } from '@/components/Chip/types';
@@ -13,10 +12,12 @@ import type {
 } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -80,8 +81,8 @@ export default defineComponent<TBsChip>({
   },
 }) as DefineComponent<
   TBsChip,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -92,8 +93,8 @@ export default defineComponent<TBsChip>({
   Readonly<TChipOptionProps> & Readonly<ChipEventPublic>,
   ExtractDefaultPropTypes<TBsChip>,
   SlotsType<ChipSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

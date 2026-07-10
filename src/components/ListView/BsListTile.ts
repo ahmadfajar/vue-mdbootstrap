@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { IListItem } from '@/components/ListView/mixins/ListItem.ts';
 import type {
   ListNavItemEventProps,
@@ -16,10 +15,12 @@ import { useCurrentRoute, useHasLink, useHasRouter, useRouteMatch } from '@/mixi
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   EmitFn,
   ExtractDefaultPropTypes,
   MethodOptions,
@@ -100,8 +101,8 @@ export default defineComponent<TBsListTile>({
   },
 }) as DefineComponent<
   TBsListTile,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -112,8 +113,8 @@ export default defineComponent<TBsListTile>({
   Readonly<TListTileOptionProps> & Readonly<ListNavItemEventPublic>,
   ExtractDefaultPropTypes<TBsListTile>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

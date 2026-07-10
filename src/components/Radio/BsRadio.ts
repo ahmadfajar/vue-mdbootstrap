@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useCreateInputRadioOrCheckbox,
   useRadioClasses,
@@ -6,17 +5,19 @@ import {
 } from '@/components/Radio/mixins/radioApi.ts';
 import { radioProps } from '@/components/Radio/mixins/radioProps.ts';
 import type { TBsRadio, TRadioOptionProps } from '@/components/Radio/types';
-import type { Numberish } from '@/types';
+import type { Numberish, TRecord } from '@/types';
 import type {
   UpdateModelValueEventProps,
   UpdateModelValueEventPublic,
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -58,8 +59,8 @@ export default defineComponent<TBsRadio>({
   },
 }) as DefineComponent<
   TBsRadio,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -70,8 +71,8 @@ export default defineComponent<TBsRadio>({
   Readonly<TRadioOptionProps> & Readonly<RadioEventPublic>,
   ExtractDefaultPropTypes<TBsRadio>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { type IListItem, ListItem } from '@/components/ListView/mixins/ListItem.ts';
 import { useAddChild } from '@/components/ListView/mixins/listNavApi.ts';
 import type { IListViewProvider } from '@/components/ListView/mixins/ListViewProvider.ts';
@@ -8,10 +7,13 @@ import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -84,20 +86,20 @@ export default defineComponent<TBsListNav>({
   },
 }) as DefineComponent<
   TBsListNav,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TListNavOptionProps> & Readonly<{}>,
+  Readonly<TListNavOptionProps>,
   ExtractDefaultPropTypes<TBsListNav>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

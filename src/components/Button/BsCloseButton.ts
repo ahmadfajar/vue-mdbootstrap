@@ -1,15 +1,18 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TBsCloseButton, TCloseButtonOptionProps } from '@/components/Button/types';
 import { booleanProp, defaultColorProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { defineComponent, h } from 'vue';
 import BsButton from './BsButton.ts';
@@ -46,20 +49,20 @@ export default defineComponent<TBsCloseButton>({
   },
 }) as DefineComponent<
   TBsCloseButton,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TCloseButtonOptionProps> & Readonly<{}>,
+  Readonly<TCloseButtonOptionProps>,
   ExtractDefaultPropTypes<TBsCloseButton>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

@@ -1,14 +1,16 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import type { TBadgeOptionProps, TBadgeType, TBsBadge } from '@/components/Badge/types';
 import { cssPrefix, useWrapSlotDefault } from '@/mixins/CommonApi.ts';
 import { booleanProp, stringProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   Prop,
@@ -72,20 +74,20 @@ export default defineComponent<TBsBadge>({
   },
 }) as DefineComponent<
   TBsBadge,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TBadgeOptionProps> & Readonly<{}>,
+  Readonly<TBadgeOptionProps>,
   ExtractDefaultPropTypes<TBsBadge>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

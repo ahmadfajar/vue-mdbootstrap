@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import {
   useCalendarTableMonths,
   useRenderDatePickerMonths,
@@ -14,13 +13,17 @@ import type {
 import type { TRecord } from '@/types';
 import type { TDebounce } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
+  VNode,
 } from 'vue';
 import { computed, defineComponent, reactive } from 'vue';
 
@@ -47,8 +50,8 @@ export default defineComponent<TBsDatePickerCalendar>({
   },
 }) as DefineComponent<
   TBsDatePickerCalendar,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -58,12 +61,12 @@ export default defineComponent<TBsDatePickerCalendar>({
   PublicProps,
   Readonly<TDatePickerCalendarProps> & Readonly<DatePickerCalendarEventPublic>,
   ExtractDefaultPropTypes<TBsDatePickerCalendar>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

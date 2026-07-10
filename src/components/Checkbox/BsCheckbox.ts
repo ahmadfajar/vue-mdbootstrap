@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { useCheckboxClasses, useToggleChecked } from '@/components/Checkbox/mixins/checkboxApi.ts';
 import { checkboxProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import type { TBsCheckbox, TCheckboxOptionProps } from '@/components/Checkbox/types';
@@ -13,10 +12,12 @@ import type {
   VoidDefaultSlots,
 } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -52,8 +53,8 @@ export default defineComponent<TBsCheckbox>({
   },
 }) as DefineComponent<
   TBsCheckbox,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -64,8 +65,8 @@ export default defineComponent<TBsCheckbox>({
   Readonly<TCheckboxOptionProps> & Readonly<CheckboxEventPublic>,
   ExtractDefaultPropTypes<TBsCheckbox>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

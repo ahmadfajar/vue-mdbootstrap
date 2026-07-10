@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { inputProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import { inputFieldProps } from '@/components/Field/mixins/fieldProps.ts';
 import {
@@ -26,10 +25,12 @@ import {
 import type { MaybeNumberish, TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   Prop,
@@ -148,8 +149,8 @@ export default defineComponent<TBsTextField>({
   },
 }) as DefineComponent<
   TBsTextField,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -160,8 +161,8 @@ export default defineComponent<TBsTextField>({
   Readonly<TTextFieldOptionProps> & Readonly<TextFieldEventPublic>,
   ExtractDefaultPropTypes<TBsTextField>,
   SlotsType<FieldSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

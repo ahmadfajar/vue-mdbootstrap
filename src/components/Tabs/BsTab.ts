@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { tabPanelProps } from '@/components/Tabs/mixins/tabsProps.ts';
 import type { ITabsProvider } from '@/components/Tabs/mixins/TabsProvider.ts';
 import type { TBsTabPanel, TTabPanelOptionProps } from '@/components/Tabs/types';
@@ -7,10 +6,13 @@ import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -79,20 +81,20 @@ export default defineComponent<TBsTabPanel>({
   },
 }) as DefineComponent<
   TBsTabPanel,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TTabPanelOptionProps> & Readonly<{}>,
+  Readonly<TTabPanelOptionProps>,
   ExtractDefaultPropTypes<TBsTabPanel>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { type IListItem, ListItem } from '@/components/ListView/mixins/ListItem.ts';
 import {
   type ListNavItemEventProps,
@@ -16,14 +15,17 @@ import { useCurrentRoute, useHasRouter, useRouteMatch } from '@/mixins/CommonApi
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
   SlotsType,
+  VNode,
 } from 'vue';
 import {
   computed,
@@ -146,8 +148,8 @@ export default defineComponent<TBsListNavItem>({
   },
 }) as DefineComponent<
   TBsListNavItem,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -158,11 +160,11 @@ export default defineComponent<TBsListNavItem>({
   Readonly<TListNavItemOptionProps> & Readonly<ListNavItemEventPublic>,
   ExtractDefaultPropTypes<TBsListNavItem>,
   SlotsType<VoidDefaultSlots>,
-  {},
-  {},
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

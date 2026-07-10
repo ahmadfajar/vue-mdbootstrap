@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { BsRipple } from '@/components/Animation';
 import { iconBaseProps } from '@/components/Avatar/mixins/avatarProps.ts';
 import { useRenderTabLabel } from '@/components/Tabs/mixins/tabsApi.ts';
@@ -12,14 +11,18 @@ import { booleanProp, stringProp, validStringOrNumberProp } from '@/mixins/Commo
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
+  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   Prop,
   PublicProps,
+  SlotsType,
 } from 'vue';
 import { computed, defineComponent, h, toDisplayString } from 'vue';
 
@@ -84,20 +87,20 @@ export default defineComponent<TBsTabLabel>({
   },
 }) as DefineComponent<
   TBsTabLabel,
-  {},
-  {},
+  TRecord,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  {},
+  EmitsOptions,
   string,
   PublicProps,
-  Readonly<TTabLabelOptionProps> & Readonly<{}>,
+  Readonly<TTabLabelOptionProps>,
   ExtractDefaultPropTypes<TBsTabLabel>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
   false,

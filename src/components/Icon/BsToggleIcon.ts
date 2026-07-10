@@ -1,16 +1,20 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { toggleIconProps } from '@/components/Icon/mixins/iconProps.ts';
 import type { TBsToggleIcon, TToggleIconOptionProps } from '@/components/Icon/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
+import type { TRecord } from '@/types';
 import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
 import type {
+  Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
+  Directive,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  SlotsType,
+  VNode,
 } from 'vue';
 import { defineComponent, h } from 'vue';
 import BsIconSvg from './BsSvgIcon.ts';
@@ -39,8 +43,8 @@ export default defineComponent<TBsToggleIcon>({
   },
 }) as DefineComponent<
   TBsToggleIcon,
-  {},
-  {},
+  () => VNode,
+  TRecord,
   ComputedOptions,
   MethodOptions,
   ComponentOptionsMixin,
@@ -50,11 +54,12 @@ export default defineComponent<TBsToggleIcon>({
   PublicProps,
   Readonly<TToggleIconOptionProps> & Readonly<UpdateModelValueEventPublic<boolean>>,
   ExtractDefaultPropTypes<TBsToggleIcon>,
-  {},
-  {},
-  {},
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
+  TRecord,
   never
 >;
