@@ -1,5 +1,18 @@
-import type { Numberish, TContextColor } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TContextColor, TRecord } from '@/types';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TProgressControlMode = 'determinate' | 'indeterminate' | 'buffer';
 
@@ -41,7 +54,7 @@ export declare type TMaskLoaderOptionProps = {
   /**
    * Mask loader spinner color.
    *
-   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`, 
+   * Built-in colors are: `primary`, `secondary`, `success`, `warning`, `danger`,
    * `info`, `default` and `white`.
    */
   spinnerColor?: TSpinnerColor | string;
@@ -230,5 +243,95 @@ export declare type TBsProgressBar = ComponentObjectPropsOptions<TProgressBarOpt
 //     $props: PublicComponentProps & TProgressBarOptionProps;
 //   };
 // };
-//
-// export declare const BsProgressPlugin: ObjectPlugin;
+
+export declare type BsMaskLoader = DefineComponent<
+  TBsMaskLoader,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TMaskLoaderOptionProps>,
+  ExtractDefaultPropTypes<TBsMaskLoader>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsProgress = DefineComponent<
+  TBsProgress,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TProgressOptionProps>,
+  ExtractDefaultPropTypes<TBsProgress>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsProgressBar = DefineComponent<
+  TBsProgressBar,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TProgressBarOptionProps>,
+  ExtractDefaultPropTypes<TBsProgressBar>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsSpinLoader = DefineComponent<
+  TBsSpinLoader,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TSpinLoaderOptionProps>,
+  ExtractDefaultPropTypes<TBsSpinLoader>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

@@ -4,7 +4,6 @@ import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
-  ComponentPropsOptions,
   ComponentProvideOptions,
   ComputedOptions,
   DefineComponent,
@@ -15,7 +14,6 @@ import type {
   PublicProps,
   Slots,
   SlotsType,
-  VNode,
 } from 'vue';
 import { defineComponent } from 'vue';
 
@@ -27,7 +25,7 @@ export default defineComponent({
   },
 }) as DefineComponent<
   TRecord,
-  () => VNode,
+  TRecord,
   TRecord,
   ComputedOptions,
   MethodOptions,
@@ -36,7 +34,7 @@ export default defineComponent({
   EmitsOptions,
   string,
   PublicProps,
-  Readonly<ComponentPropsOptions>,
+  Readonly<TRecord>,
   ExtractDefaultPropTypes<TRecord>,
   SlotsType<VoidDefaultSlots>,
   Record<string, Component>,

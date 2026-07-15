@@ -1,5 +1,19 @@
-import type { HtmlTagName } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { HtmlTagName, TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TAppContainerOptionProps = {
   /**
@@ -44,7 +58,7 @@ export declare type TBsContent = ComponentObjectPropsOptions<TContainerOptionPro
 //   '@resize'?: (target: HTMLElement) => void;
 // }
 //
-// declare interface _BsApp {
+// declare const BsApp: {
 //   new (): {
 //     $props: PublicComponentProps & TAppContainerOptionProps;
 //     $slots: {
@@ -52,13 +66,6 @@ export declare type TBsContent = ComponentObjectPropsOptions<TContainerOptionPro
 //     };
 //   };
 // }
-//
-// export declare const BsApp: _BsApp;
-//
-// /**
-//  * @deprecated use `<BsApp>` instead.
-//  */
-// export declare const BsAppContainer: _BsApp;
 //
 // export declare const BsContainer: {
 //   new (): {
@@ -80,5 +87,91 @@ export declare type TBsContent = ComponentObjectPropsOptions<TContainerOptionPro
 //     };
 //   };
 // };
-//
-// export declare const BsContainerPlugin: ObjectPlugin;
+
+export declare type BsApp = DefineComponent<
+  TBsAppContainer,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TAppContainerOptionProps>,
+  ExtractDefaultPropTypes<TBsAppContainer>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type ContainerEventProps = {
+  /**
+   * Fired when this component size is changed.
+   */
+  resize?: (target: HTMLElement) => void;
+};
+
+export declare interface ContainerEventPublic {
+  /**
+   * Fired when this component size is changed.
+   */
+  onResize?: (target: HTMLElement) => void;
+
+  /**
+   * Fired when this component size is changed.
+   */
+  '@resize'?: (target: HTMLElement) => void;
+}
+
+export declare type BsContainer = DefineComponent<
+  TBsContainer,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ContainerEventProps,
+  string,
+  PublicProps,
+  Readonly<TContainerOptionProps> & Readonly<ContainerEventPublic>,
+  ExtractDefaultPropTypes<TBsContainer>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsContent = DefineComponent<
+  TBsContent,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TContainerOptionProps>,
+  ExtractDefaultPropTypes<TBsContainer>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

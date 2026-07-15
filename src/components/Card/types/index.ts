@@ -1,5 +1,20 @@
-import type { HtmlTagName } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { HtmlTagName, TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TCardContentType = 'title' | 'subtitle' | 'text';
 
@@ -138,5 +153,153 @@ export declare type TBsCardMedia = ComponentObjectPropsOptions<TCardMediaOptionP
 //     };
 //   };
 // };
-//
-// export declare const BsCardPlugin: ObjectPlugin;
+
+export declare type BsCard = DefineComponent<
+  TBsCard,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TCardOptionProps>,
+  ExtractDefaultPropTypes<TBsCard>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsCardBody = DefineComponent<
+  TBsCardBody,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TTagProp>,
+  ExtractDefaultPropTypes<TBsCardBody>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsCardContent = DefineComponent<
+  TBsCardContent,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TCardContentOptionProps>,
+  ExtractDefaultPropTypes<TBsCardContent>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsCardFooter = DefineComponent<
+  TBsCardFooter,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TTagProp>,
+  ExtractDefaultPropTypes<TBsCardFooter>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsCardHeader = DefineComponent<
+  TBsCardHeader,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TTagProp>,
+  ExtractDefaultPropTypes<TBsCardHeader>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare interface CardMediaSlots extends VoidDefaultSlots {
+  /**
+   * The default slot used to place the CardMedia's title.
+   */
+  title?: () => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place the CardMedia's subtitle.
+   */
+  subtitle?: () => VNode[] | VNode;
+}
+
+export declare type BsCardMedia = DefineComponent<
+  TBsCardMedia,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TCardMediaOptionProps>,
+  ExtractDefaultPropTypes<TBsCardMedia>,
+  SlotsType<CardMediaSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;

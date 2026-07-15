@@ -1,5 +1,23 @@
 import type { TRadioOptionProps } from '@/components/Radio/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TRecord } from '@/types';
+import type {
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TLabelPosition = 'left' | 'right';
 
@@ -75,5 +93,47 @@ export declare type TBsSwitch = ComponentObjectPropsOptions<TSwitchOptionProps>;
 //     };
 //   };
 // };
-//
-// export declare const BsSwitchPlugin: ObjectPlugin;
+
+export declare type SwitchEventProps = UpdateModelValueEventProps<Numberish | boolean> & {
+  /**
+   * Fired when this Switch component's checked state is changed.
+   */
+  checked?: (checked: boolean) => void;
+};
+
+export declare interface SwitchEventPublic extends UpdateModelValueEventPublic<
+  Numberish | boolean
+> {
+  /**
+   * Fired when this Switch component's checked state is changed.
+   */
+  onChecked?: (checked: boolean) => void;
+
+  /**
+   * Fired when this Switch component's checked state is changed.
+   */
+  '@checked'?: (checked: boolean) => void;
+}
+
+export declare type BsSwitch = DefineComponent<
+  TBsSwitch,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  SwitchEventProps,
+  string,
+  PublicProps,
+  Readonly<TSwitchOptionProps> & Readonly<SwitchEventPublic>,
+  ExtractDefaultPropTypes<TBsSwitch>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

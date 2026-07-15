@@ -3,6 +3,19 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.2.5
+
+Released: July 15, 2026
+
+### Improvements
+
+- Improve **TS declarations** so the Jetbrains IDE recognizes the components and 
+  can resolve the component's _properties_, _type-hints_ and _doc-comments_.
+- Improve component's **property** hints and autocomplete when using it inside 
+  the `*.vue` file with _Jetbrains IDE_.
+- Downgrade **fast-xml-parser** to _v5.7.3_ to reduce package size.
+
+
 ## v2.2.4
 
 Released: July 11, 2026

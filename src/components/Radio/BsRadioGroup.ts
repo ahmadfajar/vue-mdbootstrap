@@ -8,17 +8,14 @@ import {
 } from '@/components/Radio/mixins/radioApi.ts';
 import { radioGroupProps } from '@/components/Radio/mixins/radioProps.ts';
 import type {
+  RadioGroupSlots,
   TBsRadioGroup,
   TRadioGroupOptionProps,
   TRadioInputProps,
 } from '@/components/Radio/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { Numberish, TRecord } from '@/types';
-import type {
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
+import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -93,10 +90,3 @@ export default defineComponent<TBsRadioGroup>({
   TRecord,
   never
 >;
-
-declare interface RadioGroupSlots extends VoidDefaultSlots {
-  /**
-   * The default slot used to place the custom help text of the RadioGroup.
-   */
-  'help-text'?: () => VNode[] | VNode;
-}

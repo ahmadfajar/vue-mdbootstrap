@@ -4,8 +4,22 @@ import type {
   TSizeOptionProps,
   TSizeProps,
 } from '@/components/Icon/types';
-import type { Numberish, TContextColor } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TContextColor, TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TIconVariant =
   | 'outlined'
@@ -131,5 +145,26 @@ export declare type TBsAvatar = ComponentObjectPropsOptions<TAvatarOptionProps>;
 //     };
 //   };
 // };
-//
-// export declare const BsAvatarPlugin: ObjectPlugin;
+
+export declare type BsAvatar = DefineComponent<
+  TBsAvatar,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TAvatarOptionProps>,
+  ExtractDefaultPropTypes<TBsAvatar>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

@@ -2,18 +2,15 @@ import { useRenderToggleFieldButton } from '@/components/Button/mixins/buttonApi
 import { toggleButtonProps } from '@/components/Button/mixins/buttonProps.ts';
 import type {
   TBsToggleField,
-  TInputOptionItem,
+  ToggleFieldEventProps,
+  ToggleFieldSlots,
   TToggleFieldOptionProps,
 } from '@/components/Button/types';
 import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
 import { validationProps } from '@/components/Field/mixins/validationProps.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { MaybeNumberish, TRecord } from '@/types';
-import type {
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
+import type { UpdateModelValueEventPublic } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -88,22 +85,3 @@ export default defineComponent<TBsToggleField>({
   TRecord,
   never
 >;
-
-declare type ToggleFieldEventProps = UpdateModelValueEventProps<MaybeNumberish | unknown[]>;
-
-declare interface ToggleFieldSlots extends VoidDefaultSlots {
-  /**
-   * The default slot used to place custom item's label of the ToggleField.
-   */
-  label?: (props: TInputOptionItem) => VNode[] | VNode;
-
-  /**
-   * Additional slot used to place custom item's icon of the ToggleField.
-   */
-  icon?: (props: TInputOptionItem) => VNode[] | VNode;
-
-  /**
-   * Additional slot used to place custom help text of the ToggleField.
-   */
-  'help-text'?: () => VNode[] | VNode;
-}

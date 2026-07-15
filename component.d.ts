@@ -72,104 +72,104 @@ import type {
   BsToggleField,
   BsToggleIcon,
   BsTooltip,
-  ClickOutside,
   IHttpService,
   INotificationProvider,
-  Resize,
-  Scroll,
   TVueMdb,
-  Touch,
+  vClickOutside,
+  vResize,
+  vScroll,
+  vTouch,
 } from './dist/vue-mdb';
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BsAlert: typeof BsAlert;
-    BsApp: typeof BsApp;
-    BsAppContainer: typeof BsApp;
-    BsAppbar: typeof BsAppbar;
-    BsAppbarItems: typeof BsAppbarItems;
-    BsAppbarTitle: typeof BsAppbarTitle;
-    BsAvatar: typeof BsAvatar;
-    BsBadge: typeof BsBadge;
-    BsBreadcrumb: typeof BsBreadcrumb;
-    BsButton: typeof BsButton;
-    BsButtonToggle: typeof BsToggleButton;
-    BsButtonToggleField: typeof BsToggleField;
-    BsCard: typeof BsCard;
-    BsCardBody: typeof BsCardBody;
-    BsCardContent: typeof BsCardContent;
-    BsCardFooter: typeof BsCardFooter;
-    BsCardHeader: typeof BsCardHeader;
-    BsCardMedia: typeof BsCardMedia;
-    BsCheckbox: typeof BsCheckbox;
-    BsCheckboxGroup: typeof BsCheckboxGroup;
-    BsChip: typeof BsChip;
-    BsChipField: typeof BsChipField;
-    BsChipGroup: typeof BsChipGroup;
-    BsCloseButton: typeof BsCloseButton;
-    BsColorPicker: typeof BsColorPicker;
-    BsCombobox: typeof BsCombobox;
-    BsContainer: typeof BsContainer;
-    BsContent: typeof BsContent;
-    BsDatePicker: typeof BsDatePicker;
-    BsDateTimeField: typeof BsDateTimeField;
-    BsDivider: typeof BsDivider;
-    BsDropdownMenu: typeof BsDropdownMenu;
-    BsExpandTransition: typeof BsExpandTransition;
-    BsFontawesomeIcon: typeof BsFontawesomeIcon;
-    BsIcon: typeof BsIcon;
-    BsIconFontawesome: typeof BsFontawesomeIcon;
-    BsIconSpinner: typeof BsSpinnerIcon;
-    BsIconSvg: typeof BsSvgIcon;
-    BsIconToggle: typeof BsToggleIcon;
-    BsImageHolder: typeof BsImageHolder;
-    BsImageUploader: typeof BsImageUploader;
-    BsLightbox: typeof BsLightbox;
-    BsListNav: typeof BsListNav;
-    BsListNavItem: typeof BsListNavItem;
-    BsListTile: typeof BsListTile;
-    BsListTileAction: typeof BsListTileAction;
-    BsListTileContent: typeof BsListTileContent;
-    BsListTileLeading: typeof BsListTileLeading;
-    BsListTileSubtitle: typeof BsListTileSubtitle;
-    BsListTileTitle: typeof BsListTileTitle;
-    BsListView: typeof BsListView;
-    BsListbox: typeof BsListbox;
-    BsMaskLoader: typeof BsMaskLoader;
-    BsMenu: typeof BsDropdownMenu;
-    BsModal: typeof BsModal;
-    BsNotification: typeof BsNotification;
-    BsNumericField: typeof BsNumericField;
-    BsOverlay: typeof BsOverlay;
-    BsPopover: typeof BsPopover;
-    BsProgress: typeof BsProgress;
-    BsProgressBar: typeof BsProgressBar;
-    BsRadio: typeof BsRadio;
-    BsRadioGroup: typeof BsRadioGroup;
-    BsRipple: typeof BsRipple;
-    BsSearchField: typeof BsSearchField;
-    BsSideDrawer: typeof BsSideDrawer;
-    BsSpacer: typeof BsSpacer;
-    BsSpinLoader: typeof BsSpinLoader;
-    BsSpinnerIcon: typeof BsSpinnerIcon;
-    BsSubheader: typeof BsSubheader;
-    BsSvgIcon: typeof BsSvgIcon;
-    BsSwitch: typeof BsSwitch;
-    BsTab: typeof BsTab;
-    BsTabs: typeof BsTabs;
-    BsTextArea: typeof BsTextArea;
-    BsTextField: typeof BsTextField;
-    BsToggleButton: typeof BsToggleButton;
-    BsToggleField: typeof BsToggleField;
-    BsToggleIcon: typeof BsToggleIcon;
-    BsTooltip: typeof BsTooltip;
+    BsAlert: BsAlert;
+    BsApp: BsApp;
+    BsAppContainer: BsApp;
+    BsAppbar: BsAppbar;
+    BsAppbarItems: BsAppbarItems;
+    BsAppbarTitle: BsAppbarTitle;
+    BsAvatar: BsAvatar;
+    BsBadge: BsBadge;
+    BsBreadcrumb: BsBreadcrumb;
+    BsButton: BsButton;
+    BsButtonToggle: BsToggleButton;
+    BsButtonToggleField: BsToggleField;
+    BsCard: BsCard;
+    BsCardBody: BsCardBody;
+    BsCardContent: BsCardContent;
+    BsCardFooter: BsCardFooter;
+    BsCardHeader: BsCardHeader;
+    BsCardMedia: BsCardMedia;
+    BsCheckbox: BsCheckbox;
+    BsCheckboxGroup: BsCheckboxGroup;
+    BsChip: BsChip;
+    BsChipField: BsChipField;
+    BsChipGroup: BsChipGroup;
+    BsCloseButton: BsCloseButton;
+    BsColorPicker: BsColorPicker;
+    BsCombobox: BsCombobox;
+    BsContainer: BsContainer;
+    BsContent: BsContent;
+    BsDatePicker: BsDatePicker;
+    BsDateTimeField: BsDateTimeField;
+    BsDivider: BsDivider;
+    BsDropdownMenu: BsDropdownMenu;
+    BsExpandTransition: BsExpandTransition;
+    BsFontawesomeIcon: BsFontawesomeIcon;
+    BsIcon: BsIcon;
+    BsIconFontawesome: BsFontawesomeIcon;
+    BsIconSpinner: BsSpinnerIcon;
+    BsIconSvg: BsSvgIcon;
+    BsIconToggle: BsToggleIcon;
+    BsImageHolder: BsImageHolder;
+    BsImageUploader: BsImageUploader;
+    BsLightbox: BsLightbox;
+    BsListNav: BsListNav;
+    BsListNavItem: BsListNavItem;
+    BsListTile: BsListTile;
+    BsListTileAction: BsListTileAction;
+    BsListTileContent: BsListTileContent;
+    BsListTileLeading: BsListTileLeading;
+    BsListTileSubtitle: BsListTileSubtitle;
+    BsListTileTitle: BsListTileTitle;
+    BsListView: BsListView;
+    BsListbox: BsListbox;
+    BsMaskLoader: BsMaskLoader;
+    BsMenu: BsDropdownMenu;
+    BsModal: BsModal;
+    BsNotification: BsNotification;
+    BsNumericField: BsNumericField;
+    BsOverlay: BsOverlay;
+    BsPopover: BsPopover;
+    BsProgress: BsProgress;
+    BsProgressBar: BsProgressBar;
+    BsRadio: BsRadio;
+    BsRadioGroup: BsRadioGroup;
+    BsRipple: BsRipple;
+    BsSearchField: BsSearchField;
+    BsSideDrawer: BsSideDrawer;
+    BsSpacer: BsSpacer;
+    BsSpinLoader: BsSpinLoader;
+    BsSpinnerIcon: BsSpinnerIcon;
+    BsSubheader: BsSubheader;
+    BsSvgIcon: BsSvgIcon;
+    BsSwitch: BsSwitch;
+    BsTab: BsTab;
+    BsTabs: BsTabs;
+    BsTextArea: BsTextArea;
+    BsTextField: BsTextField;
+    BsToggleButton: BsToggleButton;
+    BsToggleField: BsToggleField;
+    BsToggleIcon: BsToggleIcon;
+    BsTooltip: BsTooltip;
   }
 
   export interface GlobalDirectives {
-    vClickOutside: typeof ClickOutside;
-    vResize: typeof Resize;
-    vScroll: typeof Scroll;
-    vTouch: typeof Touch;
+    vClickOutside: vClickOutside;
+    vResize: vResize;
+    vScroll: vScroll;
+    vTouch: vTouch;
   }
 
   export interface ComponentCustomProperties {

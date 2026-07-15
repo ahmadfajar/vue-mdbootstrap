@@ -4,10 +4,9 @@ import {
   useRenderButtonContent,
 } from '@/components/Button/mixins/buttonApi.ts';
 import { buttonProps } from '@/components/Button/mixins/buttonProps.ts';
-import type { TBsButton, TButtonOptionProps } from '@/components/Button/types';
+import type { ButtonSlots, TBsButton, TButtonOptionProps } from '@/components/Button/types';
 import { useGenerateId } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
-import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
   Component,
@@ -21,7 +20,6 @@ import type {
   MethodOptions,
   PublicProps,
   SlotsType,
-  VNode,
 } from 'vue';
 import { computed, defineComponent, h } from 'vue';
 
@@ -95,10 +93,3 @@ export default defineComponent<TBsButton>({
   TRecord,
   never
 >;
-
-declare interface ButtonSlots extends VoidDefaultSlots {
-  /**
-   * Additional slot used to place the custom button icon.
-   */
-  icon?: () => VNode[] | VNode;
-}

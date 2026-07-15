@@ -1,7 +1,21 @@
 import type { TButtonColor } from '@/components/Button';
 import type { Numberish, TRecord } from '@/types';
 import type { AxiosPromise } from 'axios';
-import type { ComponentObjectPropsOptions, ComponentPublicInstance } from 'vue';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComponentPublicInstance,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TFileBag = {
   file?: File | null;
@@ -166,4 +180,74 @@ export declare interface BsImageUploaderInstance extends ComponentPublicInstance
   };
 }
 
-// export declare const BsUploaderPlugin: ObjectPlugin;
+export declare type ImageUploaderEventProps = {
+  /**
+   * Fired when the image on this component is changed.
+   */
+  change?: (value: File) => void;
+
+  /**
+   * Fired when the image on this component is cleared or removed.
+   */
+  clear?: () => void;
+
+  /**
+   * Fired when error is occurred while changing the image.
+   */
+  error?: (error: TUploadError) => void;
+};
+
+export declare interface ImageUploaderEventPublic {
+  /**
+   * Fired when the image on this component is changed.
+   */
+  onChange?: (value: File) => void;
+
+  /**
+   * Fired when the image on this component is cleared or removed.
+   */
+  onClear?: () => void;
+
+  /**
+   * Fired when error is occurred while changing the image
+   */
+  onError?: (error: TUploadError) => void;
+
+  /**
+   * Fired when the image on this component is changed.
+   */
+  '@change'?: (value: File) => void;
+
+  /**
+   * Fired when the image on this component is cleared or removed.
+   */
+  '@clear'?: () => void;
+
+  /**
+   * Fired when error is occurred while changing the image
+   */
+  '@error'?: (error: TUploadError) => void;
+}
+
+export declare type BsImageUploader = DefineComponent<
+  TBsImageUploader,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ImageUploaderEventProps,
+  string,
+  PublicProps,
+  Readonly<TImageUploaderOptionProps> & Readonly<ImageUploaderEventPublic>,
+  ExtractDefaultPropTypes<TBsImageUploader>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;

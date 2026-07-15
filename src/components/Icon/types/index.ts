@@ -1,5 +1,20 @@
-import type { Numberish, TClassList, TContextColor } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TClassList, TContextColor, TRecord } from '@/types';
+import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TFontAwesomeVariant = 'regular' | 'solid' | 'brands' | string;
 
@@ -249,19 +264,116 @@ export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptio
 //   };
 // };
 
-// /**
-//  * Function to draw inline SVG XML directly.
-//  *
-//  * @param data   The SVG XML string
-//  * @param width  The desired {@link Element} width
-//  * @param height The desired {@link Element} height
-//  * @param clazz  Optional CSS class name
-//  */
-// export declare function useRenderSVG(
-//   data: string,
-//   width: Numberish,
-//   height: Numberish,
-//   clazz: unknown
-// ): VNode;
+export declare type BsFontawesomeIcon = DefineComponent<
+  TBsFontawesomeIcon,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TFontawesomeIconOptionProps>,
+  ExtractDefaultPropTypes<TBsFontawesomeIcon>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;
 
-// export declare const BsIconPlugin: ObjectPlugin;
+export declare type BsIcon = DefineComponent<
+  TBsIcon,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TIconOptionProps>,
+  ExtractDefaultPropTypes<TBsIcon>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;
+
+export declare type BsSpinnerIcon = DefineComponent<
+  TBsSpinnerIcon,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TSpinnerIconOptionProps>,
+  ExtractDefaultPropTypes<TBsSpinnerIcon>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  never
+>;
+
+export declare type BsSvgIcon = DefineComponent<
+  TBsSvgIcon,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TSvgIconOptionProps>,
+  ExtractDefaultPropTypes<TBsSvgIcon>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;
+
+export declare type BsToggleIcon = DefineComponent<
+  TBsToggleIcon,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  UpdateModelValueEventProps<boolean>,
+  string,
+  PublicProps,
+  Readonly<TToggleIconOptionProps> & Readonly<UpdateModelValueEventPublic<boolean>>,
+  ExtractDefaultPropTypes<TBsToggleIcon>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;

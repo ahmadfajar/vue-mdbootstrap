@@ -9,6 +9,8 @@ import {
 } from '@/components/ColorPicker/mixins/colorPickerApi.ts';
 import { colorPickerProps } from '@/components/ColorPicker/mixins/colorPickerProps.ts';
 import type {
+  ColorPickerEventProps,
+  ColorPickerEventPublic,
   TBsColorPicker,
   TColorPickerMode,
   TColorPickerOptionProps,
@@ -17,12 +19,6 @@ import type { TStringRecord } from '@/components/Field/types';
 import { BsPopover } from '@/components/Popover';
 import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
-import type {
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  UpdateOpenEventProps,
-  UpdateOpenEventPublic,
-} from '@/types/internals.ts';
 import { hslaToString, oklchToString, rgbaToHex, rgbaToString } from '@/utils/ColorUtils.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
@@ -210,24 +206,3 @@ export default defineComponent<TBsColorPicker>({
   TRecord,
   never
 >;
-
-declare type ColorPickerEventProps = UpdateModelValueEventProps<string> &
-  UpdateOpenEventProps & {
-    /**
-     * Fired when this ColorPicker's mode is updated or changed.
-     */
-    'update:mode'?: (mode: TColorPickerMode) => void;
-  };
-
-declare interface ColorPickerEventPublic
-  extends UpdateModelValueEventPublic<string>, UpdateOpenEventPublic {
-  /**
-   * Fired when this ColorPicker's mode is updated or changed.
-   */
-  'OnUpdate:mode'?: (mode: TColorPickerMode) => void;
-
-  /**
-   * Fired when this ColorPicker's mode is updated or changed.
-   */
-  '@update:mode'?: (mode: TColorPickerMode) => void;
-}

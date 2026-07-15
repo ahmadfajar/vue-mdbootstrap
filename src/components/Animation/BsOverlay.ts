@@ -1,4 +1,9 @@
-import type { TBsOverlay, TOverlayOptionProps } from '@/components/Animation/types';
+import type {
+  OverlayEventProps,
+  OverlayEventPublic,
+  TBsOverlay,
+  TOverlayOptionProps,
+} from '@/components/Animation/types';
 import { cssPrefix, useRenderTransition } from '@/mixins/CommonApi.ts';
 import {
   booleanProp,
@@ -8,20 +13,23 @@ import {
 } from '@/mixins/CommonProps.ts';
 import { preventEventTarget } from '@/mixins/DomHelper.ts';
 import type { TRecord } from '@/types';
-import type { VoidDefaultSlots } from '@/types/internals.ts';
-import type {
-  Component,
-  ComponentOptionsMixin,
-  ComponentProvideOptions,
-  ComputedOptions,
-  DefineComponent,
-  Directive,
-  ExtractDefaultPropTypes,
-  MethodOptions,
-  PublicProps,
-  SlotsType,
+import type { VoidDefaultSlots } from '@/types/internals';
+import {
+  computed,
+  createCommentVNode,
+  defineComponent,
+  h,
+  type Component,
+  type ComponentOptionsMixin,
+  type ComponentProvideOptions,
+  type ComputedOptions,
+  type DefineComponent,
+  type Directive,
+  type ExtractDefaultPropTypes,
+  type MethodOptions,
+  type PublicProps,
+  type SlotsType,
 } from 'vue';
-import { computed, createCommentVNode, defineComponent, h } from 'vue';
 
 export default defineComponent<TBsOverlay>({
   name: 'BsOverlay',
@@ -81,22 +89,3 @@ export default defineComponent<TBsOverlay>({
   TRecord,
   never
 >;
-
-declare type OverlayEventProps = {
-  /**
-   * Fired when the Overlay component is clicked.
-   */
-  click?: (event: Event) => void;
-};
-
-declare interface OverlayEventPublic {
-  /**
-   * Fired when the Overlay component is clicked.
-   */
-  onClick?: (event: Event) => void;
-
-  /**
-   * Fired when the Overlay component is clicked.
-   */
-  '@click'?: (event: Event) => void;
-}

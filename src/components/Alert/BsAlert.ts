@@ -5,29 +5,31 @@ import {
   useRenderAlert,
 } from '@/components/Alert/mixins/alertApi.ts';
 import { alertProps } from '@/components/Alert/mixins/alertProps.ts';
-import type { TAlertOptionProps, TBsAlert } from '@/components/Alert/types';
+import type {
+  AlertEventProps,
+  AlertEventPublic,
+  AlertSlots,
+  TAlertOptionProps,
+  TBsAlert,
+} from '@/components/Alert/types';
 import type { TBooleanRecord, TContextColor, TRecord } from '@/types';
-import type {
-  ClosableVoidEventProps,
-  ClosableVoidEventPublic,
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
-import type {
-  Component,
-  ComponentOptionsMixin,
-  ComponentProvideOptions,
-  ComputedOptions,
-  DefineComponent,
-  Directive,
-  ExtractDefaultPropTypes,
-  MethodOptions,
-  PublicProps,
-  SlotsType,
-  VNode,
+import {
+  computed,
+  defineComponent,
+  nextTick,
+  ref,
+  watch,
+  type Component,
+  type ComponentOptionsMixin,
+  type ComponentProvideOptions,
+  type ComputedOptions,
+  type DefineComponent,
+  type Directive,
+  type ExtractDefaultPropTypes,
+  type MethodOptions,
+  type PublicProps,
+  type SlotsType,
 } from 'vue';
-import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 
 export default defineComponent<TBsAlert>({
   name: 'BsAlert',
@@ -81,15 +83,3 @@ export default defineComponent<TBsAlert>({
   TRecord,
   never
 >;
-
-declare type AlertEventProps = ClosableVoidEventProps & UpdateModelValueEventProps<boolean>;
-
-declare interface AlertEventPublic
-  extends ClosableVoidEventPublic, UpdateModelValueEventPublic<boolean> {}
-
-declare interface AlertSlots extends VoidDefaultSlots {
-  /**
-   * Additional slot used to place the custom icon.
-   */
-  icon?: () => VNode[] | VNode;
-}

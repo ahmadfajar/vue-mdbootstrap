@@ -1,23 +1,42 @@
 import type { TAllowedIconProps, TAllowedImageProps } from '@/components/Avatar/types';
 import type { TBadgeType, TBadgeVariant } from '@/components/Badge/types';
 import type { TTagProp } from '@/components/Card/types';
-import type { Numberish, TRouterOptionProps } from '@/types';
+import type { IListItem } from '@/components/ListView/mixins/ListItem';
 import type {
+  ListNavItemEventProps,
+  ListNavItemEventPublic,
+} from '@/components/ListView/mixins/listNavApi';
+import type { Numberish, TRecord, TRouterOptionProps } from '@/types';
+import type {
+  UpdateActiveEventProps,
+  UpdateActiveEventPublic,
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
   ComponentInternalInstance,
   ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
   ComponentPublicInstance,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
   Ref,
+  SlotsType,
+  VNode,
 } from 'vue';
 
 export declare type TSpaceAround = 'left' | 'right' | 'both' | 'none';
 
 export declare type TListItemBorder =
-  | 'left'
-  | 'right'
-  | 'left-right'
-  | 'top'
-  | 'bottom'
-  | 'top-bottom';
+  'left' | 'right' | 'left-right' | 'top' | 'bottom' | 'top-bottom';
 
 export declare type TListViewOptionProps = {
   /**
@@ -430,5 +449,229 @@ export declare interface BsListTileInstance extends ComponentPublicInstance {
 //     };
 //   };
 // };
-//
-// export declare const BsListViewPlugin: ObjectPlugin;
+
+export declare type BsListNav = DefineComponent<
+  TBsListNav,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  UpdateActiveEventProps,
+  string,
+  PublicProps,
+  Readonly<TListNavOptionProps> & Readonly<UpdateActiveEventPublic>,
+  ExtractDefaultPropTypes<TBsListNav>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsListNavItem = DefineComponent<
+  TBsListNavItem,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ListNavItemEventProps,
+  string,
+  PublicProps,
+  Readonly<TListNavItemOptionProps> & Readonly<ListNavItemEventPublic>,
+  ExtractDefaultPropTypes<TBsListNavItem>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;
+
+export declare type BsListTile = DefineComponent<
+  TBsListTile,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ListNavItemEventProps,
+  string,
+  PublicProps,
+  Readonly<TListTileOptionProps> & Readonly<ListNavItemEventPublic>,
+  ExtractDefaultPropTypes<TBsListTile>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsListTileAction = DefineComponent<
+  TBsListTileAction,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TListTileActionOptionProps>,
+  ExtractDefaultPropTypes<TBsListTileAction>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsListTileContent = DefineComponent<
+  TBsListTileContent,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TListTileContentOptionProps>,
+  ExtractDefaultPropTypes<TBsListTileContent>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsListTileLeading = DefineComponent<
+  TBsListTileLeading,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TListTileLeadingOptionProps>,
+  ExtractDefaultPropTypes<TBsListTileLeading>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsListTileSubtitle = DefineComponent<
+  TBsListTileSubtitle,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TListTileTextOptionProps>,
+  ExtractDefaultPropTypes<TBsListTileSubtitle>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsListTileTitle = DefineComponent<
+  TBsListTileTitle,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TListTileTextOptionProps>,
+  ExtractDefaultPropTypes<TBsListTileTitle>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type ListViewEventProps = UpdateModelValueEventProps<IListItem> & {
+  /**
+   * Fired when the ListView is mutated its modelValue.
+   */
+  change?: (value: IListItem, oldValue: IListItem) => void;
+};
+
+export declare interface ListViewEventPublic extends UpdateModelValueEventPublic<IListItem> {
+  /**
+   * Fired when the ListView is mutated its modelValue.
+   */
+  onChange?: (value: IListItem, oldValue: IListItem) => void;
+
+  /**
+   * Fired when the ListView is mutated its modelValue.
+   */
+  '@change'?: (value: IListItem, oldValue: IListItem) => void;
+}
+
+export declare type BsListView = DefineComponent<
+  TBsListView,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ListViewEventProps,
+  string,
+  PublicProps,
+  Readonly<TListViewOptionProps> & Readonly<ListViewEventPublic>,
+  ExtractDefaultPropTypes<TBsListView>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

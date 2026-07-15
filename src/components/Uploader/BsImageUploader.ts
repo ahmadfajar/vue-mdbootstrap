@@ -3,11 +3,12 @@ import {
   useSetupImageUploader,
 } from '@/components/Uploader/mixins/uploaderApi.ts';
 import type {
+  ImageUploaderEventProps,
+  ImageUploaderEventPublic,
   TBsImageUploader,
   TCustomText,
   TFileBag,
   TImageUploaderOptionProps,
-  TUploadError,
 } from '@/components/Uploader/types';
 import { useGenerateId } from '@/mixins/CommonApi.ts';
 import {
@@ -115,52 +116,3 @@ export default defineComponent<TBsImageUploader>({
   TRecord,
   never
 >;
-
-declare type ImageUploaderEventProps = {
-  /**
-   * Fired when the image on this component is changed.
-   */
-  change?: (value: File) => void;
-
-  /**
-   * Fired when the image on this component is cleared or removed.
-   */
-  clear?: () => void;
-
-  /**
-   * Fired when error is occurred while changing the image.
-   */
-  error?: (error: TUploadError) => void;
-};
-
-declare interface ImageUploaderEventPublic {
-  /**
-   * Fired when the image on this component is changed.
-   */
-  onChange?: (value: File) => void;
-
-  /**
-   * Fired when the image on this component is cleared or removed.
-   */
-  onClear?: () => void;
-
-  /**
-   * Fired when error is occurred while changing the image
-   */
-  onError?: (error: TUploadError) => void;
-
-  /**
-   * Fired when the image on this component is changed.
-   */
-  '@change'?: (value: File) => void;
-
-  /**
-   * Fired when the image on this component is cleared or removed.
-   */
-  '@clear'?: () => void;
-
-  /**
-   * Fired when error is occurred while changing the image
-   */
-  '@error'?: (error: TUploadError) => void;
-}

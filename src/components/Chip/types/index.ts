@@ -1,7 +1,29 @@
 import type { TAllowedIconProps } from '@/components/Avatar/types';
 import type { TButtonColor, TIconPosition } from '@/components/Button/types';
-import type { Numberish, TExtendedContextColor } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TExtendedContextColor, TRecord } from '@/types';
+import type {
+  ClosableVoidEventProps,
+  ClosableVoidEventPublic,
+  UpdateActiveEventProps,
+  UpdateActiveEventPublic,
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TChipSize = 'sm' | 'lg';
 
@@ -230,5 +252,113 @@ export declare type TBsChipGroup = ComponentObjectPropsOptions<TChipGroupOptionP
 //     };
 //   };
 // };
-//
-// export declare const BsChipPlugin: ObjectPlugin;
+
+export declare type ChipEventProps = ClosableVoidEventProps &
+  UpdateActiveEventProps &
+  UpdateModelValueEventProps<boolean>;
+
+export declare interface ChipEventPublic
+  extends ClosableVoidEventPublic, UpdateActiveEventPublic, UpdateModelValueEventPublic<boolean> {}
+
+export declare interface ChipSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the custom icon of the Chip component.
+   */
+  icon?: () => VNode[] | VNode;
+}
+
+export declare type BsChip = DefineComponent<
+  TBsChip,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ChipEventProps,
+  string,
+  PublicProps,
+  Readonly<TChipOptionProps> & Readonly<ChipEventPublic>,
+  ExtractDefaultPropTypes<TBsChip>,
+  SlotsType<ChipSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type ChipGroupEventProps = UpdateModelValueEventProps<
+  TChipValue | TChipValue[] | null
+> & {
+  /**
+   * Fired immediately when this component's value is changed.
+   */
+  change?: (newValue: TChipValue | TChipValue[] | null) => void;
+
+  /**
+   * Fired when this component's item is dismissed (hide).
+   */
+  'item:close'?: (active: boolean) => void;
+};
+
+export declare interface ChipGroupEventPublic extends UpdateModelValueEventPublic<
+  TChipValue | TChipValue[] | null
+> {
+  /**
+   * Fired immediately when this component's value is changed.
+   */
+  onChange?: (newValue: TChipValue | TChipValue[] | null) => void;
+
+  /**
+   * Fired when this component's item is dismissed (hide).
+   */
+  'onItem:close'?: (dismissedItem: TChipValue) => void;
+
+  /**
+   * Fired immediately when this component's value is changed.
+   */
+  '@change'?: (newValue: TChipValue | TChipValue[] | null) => void;
+
+  /**
+   * Fired when this component's item is dismissed (hide).
+   */
+  '@item:close'?: (dismissedItem: TChipValue) => void;
+}
+
+export declare interface ChipGroupSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the item's custom text of the Chip component.
+   */
+  text?: (props: TChipOptionItem) => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place the item's custom icon of the ChipGroup component.
+   */
+  icon?: (props: TChipOptionItem) => VNode[] | VNode;
+}
+
+export declare type BsChipGroup = DefineComponent<
+  TBsChipGroup,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ChipGroupEventProps,
+  string,
+  PublicProps,
+  Readonly<TChipGroupOptionProps> & Readonly<ChipGroupEventPublic>,
+  ExtractDefaultPropTypes<TBsChipGroup>,
+  SlotsType<ChipGroupSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;

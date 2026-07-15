@@ -1,8 +1,7 @@
 import { cardMediaProps } from '@/components/Card/mixins/cardProps.ts';
-import type { TBsCardMedia, TCardMediaOptionProps } from '@/components/Card/types';
+import type { CardMediaSlots, TBsCardMedia, TCardMediaOptionProps } from '@/components/Card/types';
 import { cssPrefix, useWrapSlot } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
-import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -84,15 +83,3 @@ export default defineComponent<TBsCardMedia>({
   TRecord,
   never
 >;
-
-declare interface CardMediaSlots extends VoidDefaultSlots {
-  /**
-   * The default slot used to place the CardMedia's title.
-   */
-  title?: () => VNode[] | VNode;
-
-  /**
-   * Additional slot used to place the CardMedia's subtitle.
-   */
-  subtitle?: () => VNode[] | VNode;
-}

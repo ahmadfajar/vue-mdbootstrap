@@ -1,8 +1,29 @@
 import type { TButtonColor } from '@/components/Button';
 import type { TPopoverPosition } from '@/components/Popover/types';
-import type { Numberish } from '@/types';
+import type { Numberish, TRecord } from '@/types';
+import type {
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  UpdateOpenEventProps,
+  UpdateOpenEventPublic,
+} from '@/types/internals';
 import type * as Color from '@/utils/ColorUtils.ts';
-import type { ComponentObjectPropsOptions, ComponentPublicInstance, Reactive, Ref } from 'vue';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComponentPublicInstance,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  Reactive,
+  Ref,
+  SlotsType,
+} from 'vue';
 
 export declare type TColorPickerMode = 'HEX' | 'RGB' | 'HSL' | 'OKLCH';
 
@@ -190,4 +211,46 @@ export declare interface BsColorPickerInstance extends ComponentPublicInstance {
   oklch: () => Color.LCHA;
 }
 
-// export declare const BsColorPickerPlugin: ObjectPlugin;
+export declare type ColorPickerEventProps = UpdateModelValueEventProps<string> &
+  UpdateOpenEventProps & {
+    /**
+     * Fired when this ColorPicker's mode is updated or changed.
+     */
+    'update:mode'?: (mode: TColorPickerMode) => void;
+  };
+
+export declare interface ColorPickerEventPublic
+  extends UpdateModelValueEventPublic<string>, UpdateOpenEventPublic {
+  /**
+   * Fired when this ColorPicker's mode is updated or changed.
+   */
+  'OnUpdate:mode'?: (mode: TColorPickerMode) => void;
+
+  /**
+   * Fired when this ColorPicker's mode is updated or changed.
+   */
+  '@update:mode'?: (mode: TColorPickerMode) => void;
+}
+
+export declare type BsColorPicker = DefineComponent<
+  TBsColorPicker,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ColorPickerEventProps,
+  string,
+  PublicProps,
+  Readonly<TColorPickerOptionProps> & Readonly<ColorPickerEventPublic>,
+  ExtractDefaultPropTypes<TBsColorPicker>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

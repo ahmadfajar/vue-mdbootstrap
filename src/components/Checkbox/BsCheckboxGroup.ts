@@ -1,6 +1,7 @@
 import { useCreateCheckboxItems } from '@/components/Checkbox/mixins/checkboxApi.ts';
 import { baseInputProps, checkboxGroupProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
 import type {
+  CheckboxGroupSlots,
   TBsCheckboxGroup,
   TCheckboxGroupOptionProps,
   TCheckboxInputProps,
@@ -13,11 +14,7 @@ import {
 } from '@/components/Radio/mixins/radioApi.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { Numberish, TRecord } from '@/types';
-import type {
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
+import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -95,10 +92,3 @@ export default defineComponent<TBsCheckboxGroup>({
   TRecord,
   never
 >;
-
-declare interface CheckboxGroupSlots extends VoidDefaultSlots {
-  /**
-   * The default slot used to place the custom help text of the CheckboxGroup.
-   */
-  'help-text'?: () => VNode[] | VNode;
-}

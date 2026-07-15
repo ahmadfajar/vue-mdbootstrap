@@ -1,5 +1,22 @@
-import type { HtmlTagName, Numberish } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { HtmlTagName, Numberish, TRecord } from '@/types';
+import type {
+  UpdateOpenEventProps,
+  UpdateOpenEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TSideDrawerPosition = 'left' | 'right';
 
@@ -106,5 +123,45 @@ export declare type TBsSideDrawer = ComponentObjectPropsOptions<TSideDrawerOptio
 //     };
 //   };
 // };
-//
-// export declare const BsDrawerPlugin: ObjectPlugin;
+
+export declare type SideDrawerEventProps = UpdateOpenEventProps & {
+  /**
+   * Fired when this SideDrawer size is resized.
+   */
+  resize?: (target: HTMLElement) => void;
+};
+
+export declare interface SideDrawerEventPublic extends UpdateOpenEventPublic {
+  /**
+   * Fired when this SideDrawer size is resized.
+   */
+  onResize?: (target: HTMLElement) => void;
+
+  /**
+   * Fired when this SideDrawer size is resized.
+   */
+  '@resize'?: (target: HTMLElement) => void;
+}
+
+export declare type BsSideDrawer = DefineComponent<
+  TBsSideDrawer,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  SideDrawerEventProps,
+  string,
+  PublicProps,
+  Readonly<TSideDrawerOptionProps> & Readonly<SideDrawerEventPublic>,
+  ExtractDefaultPropTypes<TBsSideDrawer>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

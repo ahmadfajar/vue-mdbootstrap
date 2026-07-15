@@ -1,6 +1,21 @@
 import type { TPlacementPosition } from '@/components/Tabs/types';
-import type { Numberish } from '@/types';
-import type { ComponentObjectPropsOptions, ComponentPublicInstance } from 'vue';
+import type { Numberish, TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComponentPublicInstance,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TTooltipOptionProps = {
   /**
@@ -76,5 +91,52 @@ export declare type TBsTooltip = ComponentObjectPropsOptions<TTooltipOptionProps
 //     };
 //   };
 // };
-//
-// export declare const BsTooltipPlugin: ObjectPlugin;
+
+export declare type TooltipEventProps = {
+  /**
+   * Fired when this Tooltip state is updated.
+   */
+  'update:show'?: (value: boolean) => void;
+};
+
+export declare interface TooltipEventPublic {
+  /**
+   * Fired when this Tooltip state is updated.
+   */
+  'onUpdate:show'?: (value: boolean) => void;
+
+  /**
+   * Fired when this Tooltip state is updated.
+   */
+  '@update:show'?: (value: boolean) => void;
+}
+
+export declare interface TooltipSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the Tooltip's custom content.
+   */
+  content?: () => VNode[] | VNode;
+}
+
+export declare type BsTooltip = DefineComponent<
+  TBsTooltip,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  TooltipEventProps,
+  string,
+  PublicProps,
+  Readonly<TTooltipOptionProps> & Readonly<TooltipEventPublic>,
+  ExtractDefaultPropTypes<TBsTooltip>,
+  SlotsType<TooltipSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

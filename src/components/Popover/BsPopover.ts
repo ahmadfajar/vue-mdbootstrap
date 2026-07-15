@@ -1,15 +1,15 @@
 import { useRenderPopover, useSetPopoverPosition } from '@/components/Popover/mixins/popoverApi.ts';
 import { popoverProps } from '@/components/Popover/mixins/popoverProps.ts';
-import type { TBsPopover, TPopoverOptionProps, TPopoverPosition } from '@/components/Popover/types';
+import type {
+  PopoverEventProps,
+  PopoverEventPublic,
+  TBsPopover,
+  TPopoverOptionProps,
+  TPopoverPosition,
+} from '@/components/Popover/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
-import type {
-  ClosableEventProps,
-  ClosableEventPublic,
-  UpdateOpenEventProps,
-  UpdateOpenEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
   Component,
   ComponentInternalInstance,
@@ -59,13 +59,7 @@ export default defineComponent<TBsPopover>({
 
         if (value) {
           await nextTick().then(() => {
-            useSetPopoverPosition(
-              instance.value,
-              thisProps,
-              popoverRef,
-              placementRef,
-              isActive
-            );
+            useSetPopoverPosition(instance.value, thisProps, popoverRef, placementRef, isActive);
           });
         }
       }
@@ -110,7 +104,3 @@ export default defineComponent<TBsPopover>({
   TRecord,
   never
 >;
-
-declare type PopoverEventProps = ClosableEventProps & UpdateOpenEventProps;
-
-declare interface PopoverEventPublic extends ClosableEventPublic, UpdateOpenEventPublic {}

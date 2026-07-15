@@ -121,6 +121,13 @@ export declare interface NumericFieldEventPublic extends FieldEventPublic<MaybeN
   keydown?: EventListener;
 }
 
+export declare interface SearchFieldSlots {
+  /**
+   * The default slot used to place one or more components inside the popover.
+   */
+  popover?: () => VNode[];
+}
+
 export declare type SearchFieldEventProps = FieldEventProps<MaybeString> & {
   /**
    * Fired when the Popover is hiding.

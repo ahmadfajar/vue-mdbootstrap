@@ -1,5 +1,19 @@
-import type { HtmlTagName } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { HtmlTagName, TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TAppbarOptionProps = {
   /**
@@ -87,5 +101,91 @@ export declare type TBsAppbarTitle = ComponentObjectPropsOptions<TAppbarTitleOpt
 //     };
 //   };
 // };
-//
-// export declare const BsAppbarPlugin: ObjectPlugin;
+
+export declare type AppbarEventProps = {
+  /**
+   * Fired when the Appbar is resized.
+   */
+  resize?: (target: HTMLElement) => void;
+};
+
+export declare interface AppbarEventPublic {
+  /**
+   * Fired when the Appbar is resized.
+   */
+  onResize?: (target: HTMLElement) => void;
+
+  /**
+   * Fired when the Appbar is resized.
+   */
+  '@resize'?: (target: HTMLElement) => void;
+}
+
+export declare type BsAppbar = DefineComponent<
+  TBsAppbar,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  AppbarEventProps,
+  string,
+  PublicProps,
+  Readonly<TAppbarOptionProps> & Readonly<AppbarEventPublic>,
+  ExtractDefaultPropTypes<TBsAppbar>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsAppbarItems = DefineComponent<
+  TRecord,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TRecord>,
+  ExtractDefaultPropTypes<TRecord>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;
+
+export declare type BsAppbarTitle = DefineComponent<
+  TBsAppbarTitle,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TAppbarTitleOptionProps>,
+  ExtractDefaultPropTypes<TBsAppbarTitle>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

@@ -64,6 +64,13 @@ function unmounted(el: IBindingElement): void {
   }
 }
 
+export declare type vClickOutside = Directive<
+  HTMLElement,
+  TDirectiveBinding | VoidFunction,
+  string,
+  never
+>;
+
 export const ClickOutside: Directive<HTMLElement, TDirectiveBinding | VoidFunction, string, never> =
   {
     mounted,

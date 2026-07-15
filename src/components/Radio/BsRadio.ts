@@ -4,13 +4,14 @@ import {
   useRenderRadioOrCheckbox,
 } from '@/components/Radio/mixins/radioApi.ts';
 import { radioProps } from '@/components/Radio/mixins/radioProps.ts';
-import type { TBsRadio, TRadioOptionProps } from '@/components/Radio/types';
-import type { Numberish, TRecord } from '@/types';
 import type {
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
+  RadioEventProps,
+  RadioEventPublic,
+  TBsRadio,
+  TRadioOptionProps,
+} from '@/components/Radio/types';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -78,22 +79,3 @@ export default defineComponent<TBsRadio>({
   false,
   never
 >;
-
-declare type RadioEventProps = UpdateModelValueEventProps<Numberish | boolean | null> & {
-  /**
-   * Fired when this Radio component's "checked" state is updated.
-   */
-  checked?: (checked: boolean) => void;
-};
-
-declare interface RadioEventPublic extends UpdateModelValueEventPublic<Numberish | boolean | null> {
-  /**
-   * Fired when this Radio component's "checked" state is updated.
-   */
-  onChecked?: (checked: boolean) => void;
-
-  /**
-   * Fired when this Radio component's "checked" state is updated.
-   */
-  '@checked'?: (checked: boolean) => void;
-}

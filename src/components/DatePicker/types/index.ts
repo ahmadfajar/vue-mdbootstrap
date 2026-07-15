@@ -1,8 +1,31 @@
 import type { TButtonColor } from '@/components/Button/types';
 import type { TInputFieldProps } from '@/components/Field/types';
+import type {
+  FieldEventProps,
+  FieldEventPublic,
+  FieldSlots,
+} from '@/components/Field/types/internals';
 import type { TPopoverPosition } from '@/components/Popover/types';
-import type { Numberish, TContextColor } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TContextColor, TRecord } from '@/types';
+import type {
+  ClosableVoidEventProps,
+  ClosableVoidEventPublic,
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TDateTimePickerMode = 'date' | 'datetime' | 'year' | 'month' | 'time';
 
@@ -299,5 +322,70 @@ export declare type TBsDateTimeField = ComponentObjectPropsOptions<TDateTimeFiel
 //     };
 //   };
 // };
-//
-// export declare const BsDatePickerPlugin: ObjectPlugin;
+
+export declare type BsDatePicker = DefineComponent<
+  TBsDatePicker,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  UpdateModelValueEventProps<string>,
+  string,
+  PublicProps,
+  Readonly<TDatePickerOptionProps> & Readonly<UpdateModelValueEventPublic<string>>,
+  ExtractDefaultPropTypes<TBsDatePicker>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type DateTimeFieldEventProps = FieldEventProps<string> &
+  ClosableVoidEventProps & {
+    /**
+     * Fired when the DatePicker popup is open or showed.
+     */
+    open?: VoidFunction;
+  };
+
+export declare interface DateTimeFieldEventPublic
+  extends FieldEventPublic<string>, ClosableVoidEventPublic {
+  /**
+   * Fired when the DatePicker popup is open or showed.
+   */
+  onOpen?: VoidFunction;
+
+  /**
+   * Fired when the DatePicker popup is open or showed.
+   */
+  '@open'?: VoidFunction;
+}
+
+export declare type BsDateTimeField = DefineComponent<
+  TBsDateTimeField,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  DateTimeFieldEventProps,
+  string,
+  PublicProps,
+  Readonly<TDateTimeFieldOptionProps> & Readonly<DateTimeFieldEventPublic>,
+  ExtractDefaultPropTypes<TBsDateTimeField>,
+  SlotsType<FieldSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

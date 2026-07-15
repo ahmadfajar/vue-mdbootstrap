@@ -7,6 +7,7 @@ import type { TBsSearchField, TSearchFieldOptionProps } from '@/components/Field
 import type {
   SearchFieldEventProps,
   SearchFieldEventPublic,
+  SearchFieldSlots,
 } from '@/components/Field/types/internals.ts';
 import type { MaybeString, TRecord } from '@/types';
 import type {
@@ -20,7 +21,6 @@ import type {
   MethodOptions,
   PublicProps,
   SlotsType,
-  VNode,
 } from 'vue';
 import { computed, defineComponent, ref, watch } from 'vue';
 
@@ -83,10 +83,3 @@ export default defineComponent<TBsSearchField>({
   TRecord,
   never
 >;
-
-declare interface SearchFieldSlots {
-  /**
-   * The default slot used to place one or more components inside the popover.
-   */
-  popover?: () => VNode[];
-}

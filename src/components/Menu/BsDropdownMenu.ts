@@ -1,5 +1,11 @@
 import { useRenderDropdownMenu } from '@/components/Menu/mixins/dropdownMenuApi.ts';
-import type { TBsDropdownMenu, TDropdownMenuOptionProps } from '@/components/Menu/types';
+import type {
+  DropdownMenuEventProps,
+  DropdownMenuEventPublic,
+  DropdownMenuSlots,
+  TBsDropdownMenu,
+  TDropdownMenuOptionProps,
+} from '@/components/Menu/types';
 import {
   popoverDefaultTransitionProp,
   popoverPlacementProp,
@@ -12,13 +18,6 @@ import {
 } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
 import type {
-  ClosableVoidEventProps,
-  ClosableVoidEventPublic,
-  UpdateOpenEventProps,
-  UpdateOpenEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
-import type {
   Component,
   ComponentOptionsMixin,
   ComponentProvideOptions,
@@ -29,7 +28,6 @@ import type {
   MethodOptions,
   PublicProps,
   SlotsType,
-  VNode,
 } from 'vue';
 import { defineComponent, ref, watch } from 'vue';
 
@@ -84,14 +82,3 @@ export default defineComponent<TBsDropdownMenu>({
   TRecord,
   never
 >;
-
-declare interface DropdownMenuSlots extends VoidDefaultSlots {
-  /**
-   * Additional slot used to place the dropdown-menu content.
-   */
-  content?: () => VNode[] | VNode;
-}
-
-declare type DropdownMenuEventProps = ClosableVoidEventProps & UpdateOpenEventProps;
-
-declare interface DropdownMenuEventPublic extends ClosableVoidEventPublic, UpdateOpenEventPublic {}

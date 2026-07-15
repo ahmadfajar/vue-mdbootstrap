@@ -1,17 +1,24 @@
-import type { HtmlTagName, TExtendedContextColor } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { HtmlTagName, TExtendedContextColor, TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TBadgeType = 'label' | 'pill';
 
 export declare type TBadgeVariant =
-  | 'default'
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info'
-  | 'light';
+  'default' | 'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'light';
 
 export declare type TBadgeOptionProps = {
   /**
@@ -53,5 +60,26 @@ export declare type TBsBadge = ComponentObjectPropsOptions<TBadgeOptionProps>;
 //     };
 //   };
 // };
-//
-// export declare const BsBadgePlugin: ObjectPlugin;
+
+export declare type BsBadge = DefineComponent<
+  TBsBadge,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TBadgeOptionProps>,
+  ExtractDefaultPropTypes<TBsBadge>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

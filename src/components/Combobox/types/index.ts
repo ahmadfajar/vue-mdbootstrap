@@ -1,7 +1,27 @@
 import type { TInputFieldProps } from '@/components/Field/types';
-import type { IArrayStore, IBsStore } from '@/model';
+import type { FieldSlots } from '@/components/Field/types/internals';
+import type { IArrayStore, IBsStore, TBsModel } from '@/model';
 import type { Numberish, TContextColor, TExtendedContextColor, TRecord } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type {
+  ClosableVoidEventProps,
+  ClosableVoidEventPublic,
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TCheckboxPosition = 'left' | 'right';
 
@@ -439,5 +459,326 @@ export declare type TBsCombobox = ComponentObjectPropsOptions<TComboboxOptionPro
 //     };
 //   };
 // };
-//
-// export declare const BsComboboxPlugin: ObjectPlugin;
+
+export declare interface ComboboxSlots extends FieldSlots {
+  /**
+   * Additional slot used to customize the listbox items appearance.
+   */
+  'option-item'?: (arg: { item: TBsModel; index: number }) => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place custom message when listbox is empty.
+   */
+  'empty-data-msg'?: () => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place custom message when filtering listbox items returns no result.
+   */
+  'not-found-msg'?: () => VNode[] | VNode;
+}
+
+export declare type ComboboxEventProps = UpdateModelValueEventProps<
+  Numberish | Numberish[] | undefined
+> &
+  ClosableVoidEventProps & {
+    /**
+     * Fired when this component's value is being cleared.
+     */
+    clear?: VoidFunction;
+
+    /**
+     * Fired when the Popover is show.
+     */
+    open?: VoidFunction;
+
+    /**
+     * Fired when an item is selected.
+     */
+    select?: (item: TBsModel) => void;
+
+    /**
+     * Fired when an item is deselected.
+     */
+    deselect?: (item: TBsModel) => void;
+
+    /**
+     * Fired when the data has been fetched.
+     */
+    'data-bind'?: (data: TBsModel[]) => void;
+
+    /**
+     * Fired when error loading data items.
+     */
+    'data-error'?: (error: unknown) => void;
+
+    /**
+     * Fired when this component's data items is filtered.
+     */
+    'data-filter'?: (data: TBsModel[]) => void;
+
+    /**
+     * Fired when this component's selected value is updated.
+     */
+    'update:selected-value'?: (selected: TBsModel[]) => void;
+  };
+
+export declare interface ComboboxEventPublic
+  extends
+    UpdateModelValueEventPublic<Numberish | Numberish[] | undefined>,
+    ClosableVoidEventPublic {
+  /**
+   * Fired when this component's value is being cleared.
+   */
+  onClear?: VoidFunction;
+
+  /**
+   * Fired when the Popover is show.
+   */
+  onOpen?: VoidFunction;
+
+  /**
+   * Fired when an item is selected.
+   */
+  onSelect?: (item: TBsModel) => void;
+
+  /**
+   * Fired when an item is deselected.
+   */
+  onDeselect?: (item: TBsModel) => void;
+
+  /**
+   * Fired when the data has been fetched.
+   */
+  onDataBind?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when error loading data items.
+   */
+  onDataError?: (error: unknown) => void;
+
+  /**
+   * Fired when this component's data items is filtered.
+   */
+  onDataFilter?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when this component's selected value is updated.
+   */
+  'onUpdate:selectedValue'?: (selected: TBsModel[]) => void;
+
+  /**
+   * Fired when this component's value is being cleared.
+   */
+  '@clear'?: VoidFunction;
+
+  /**
+   * Fired when the Popover is show.
+   */
+  '@open'?: VoidFunction;
+
+  /**
+   * Fired when an item is selected.
+   */
+  '@select'?: (item: TBsModel) => void;
+
+  /**
+   * Fired when an item is deselected.
+   */
+  '@deselect'?: (item: TBsModel) => void;
+
+  /**
+   * Fired when the data has been fetched.
+   */
+  '@data-bind'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when error loading data items.
+   */
+  '@data-error'?: (error: unknown) => void;
+
+  /**
+   * Fired when this component's data items is filtered.
+   */
+  '@data-filter'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when this component's selected value is updated.
+   */
+  '@update:selected-value'?: (selected: TBsModel[]) => void;
+}
+
+export declare type BsCombobox = DefineComponent<
+  TBsCombobox,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ComboboxEventProps,
+  string,
+  PublicProps,
+  Readonly<TComboboxOptionProps> & Readonly<ComboboxEventPublic>,
+  ExtractDefaultPropTypes<TBsCombobox>,
+  SlotsType<ComboboxSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare interface ListboxSlots {
+  /**
+   * Additional slot used to customize the listbox items appearance.
+   */
+  'option-item'?: (arg: { item: TBsModel; index: number }) => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place custom message when listbox is empty.
+   */
+  'empty-data-msg'?: () => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place custom message when filtering listbox items returns no result.
+   */
+  'not-found-msg'?: () => VNode[] | VNode;
+}
+
+export declare type ListboxEventProps = UpdateModelValueEventProps<
+  Numberish | Numberish[] | undefined
+> & {
+  /**
+   * Fired when an item is selected.
+   */
+  select?: (item: TBsModel) => void;
+
+  /**
+   * Fired when an item is deselected.
+   */
+  deselect?: (item: TBsModel) => void;
+
+  /**
+   * Fired when the data has been fetched.
+   */
+  'data-bind'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when error loading data items.
+   */
+  'data-error'?: (error: unknown) => void;
+
+  /**
+   * Fired when the Listbox data items is filtered.
+   */
+  'data-filter'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when the Listbox search value is updated.
+   */
+  'update:search-text'?: (search?: string) => void;
+
+  /**
+   * Fired when the Listbox selected value is updated.
+   */
+  'update:selected-value'?: (selected: TBsModel[]) => void;
+};
+
+export declare interface ListboxEventPublic extends UpdateModelValueEventPublic<
+  Numberish | Numberish[] | undefined
+> {
+  /**
+   * Fired when an item is selected.
+   */
+  onSelect?: (item: TBsModel) => void;
+
+  /**
+   * Fired when an item is deselected.
+   */
+  onDeselect?: (item: TBsModel) => void;
+
+  /**
+   * Fired when the data has been fetched.
+   */
+  onDataBind?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when error loading data items.
+   */
+  onDataError?: (error: unknown) => void;
+
+  /**
+   * Fired when the Listbox data items is filtered.
+   */
+  onDataFilter?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when the Listbox search value is updated.
+   */
+  'onUpdate:search-text'?: (search?: string) => void;
+
+  /**
+   * Fired when the Listbox selected value is updated.
+   */
+  'onUpdate:selectedValue'?: (selected: TBsModel[]) => void;
+
+  /**
+   * Fired when an item is selected.
+   */
+  '@select'?: (item: TBsModel) => void;
+
+  /**
+   * Fired when an item is deselected.
+   */
+  '@deselect'?: (item: TBsModel) => void;
+
+  /**
+   * Fired when the data has been fetched.
+   */
+  '@data-bind'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when error loading data items.
+   */
+  '@data-error'?: (error: unknown) => void;
+
+  /**
+   * Fired when the Listbox data items is filtered.
+   */
+  '@data-filter'?: (data: TBsModel[]) => void;
+
+  /**
+   * Fired when the Listbox search value is updated.
+   */
+  '@update:search-text'?: (search?: string) => void;
+
+  /**
+   * Fired when the Listbox selected value is updated.
+   */
+  '@update:selected-value'?: (selected: TBsModel[]) => void;
+}
+
+export declare type BsListbox = DefineComponent<
+  TBsListbox,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ListboxEventProps,
+  string,
+  PublicProps,
+  Readonly<TListboxOptionProps> & Readonly<ListboxEventPublic>,
+  ExtractDefaultPropTypes<TBsListbox>,
+  SlotsType<ListboxSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

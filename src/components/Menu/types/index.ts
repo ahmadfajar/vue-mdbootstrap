@@ -1,6 +1,26 @@
 import type { TPopoverPosition } from '@/components/Popover';
-import type { Numberish } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TRecord } from '@/types';
+import type {
+  ClosableVoidEventProps,
+  ClosableVoidEventPublic,
+  UpdateOpenEventProps,
+  UpdateOpenEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TDropdownMenuOptionProps = {
   /**
@@ -71,5 +91,38 @@ export declare type TBsDropdownMenu = ComponentObjectPropsOptions<TDropdownMenuO
 //     };
 //   };
 // };
-//
-// export declare const BsMenuPlugin: ObjectPlugin;
+
+export declare type DropdownMenuEventProps = ClosableVoidEventProps & UpdateOpenEventProps;
+
+export declare interface DropdownMenuEventPublic
+  extends ClosableVoidEventPublic, UpdateOpenEventPublic {}
+
+export declare interface DropdownMenuSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the dropdown-menu content.
+   */
+  content?: () => VNode[] | VNode;
+}
+
+export declare type BsDropdownMenu = DefineComponent<
+  TBsDropdownMenu,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  DropdownMenuEventProps,
+  string,
+  PublicProps,
+  Readonly<TDropdownMenuOptionProps> & Readonly<DropdownMenuEventPublic>,
+  ExtractDefaultPropTypes<TBsDropdownMenu>,
+  SlotsType<DropdownMenuSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

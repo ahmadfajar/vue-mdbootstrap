@@ -3,7 +3,12 @@ import {
   useAppbarStyles,
   useRenderAppbar,
 } from '@/components/Appbar/mixins/appbarApi.ts';
-import type { TAppbarOptionProps, TBsAppbar } from '@/components/Appbar/types';
+import type {
+  AppbarEventProps,
+  AppbarEventPublic,
+  TAppbarOptionProps,
+  TBsAppbar,
+} from '@/components/Appbar/types';
 import { useBreakpointMax } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TRecord, TVueMdb } from '@/types';
@@ -84,7 +89,7 @@ export default defineComponent<TBsAppbar>({
   AppbarEventProps,
   string,
   PublicProps,
-  Readonly<TAppbarOptionProps>,
+  Readonly<TAppbarOptionProps> & Readonly<AppbarEventPublic>,
   ExtractDefaultPropTypes<TBsAppbar>,
   SlotsType<VoidDefaultSlots>,
   Record<string, Component>,
@@ -95,22 +100,3 @@ export default defineComponent<TBsAppbar>({
   TRecord,
   never
 >;
-
-declare type AppbarEventProps = {
-  /**
-   * Fired when the Appbar is resized.
-   */
-  resize?: (target: HTMLElement) => void;
-};
-
-declare interface AppbarEventPublic {
-  /**
-   * Fired when the Appbar is resized.
-   */
-  onResize?: (target: HTMLElement) => void;
-
-  /**
-   * Fired when the Appbar is resized.
-   */
-  '@resize'?: (target: HTMLElement) => void;
-}

@@ -5,6 +5,9 @@ import {
 } from '@/components/Chip/mixins/chipGroupApi.ts';
 import { chipGroupProps } from '@/components/Chip/mixins/chipProps.ts';
 import type {
+  ChipGroupEventProps,
+  ChipGroupEventPublic,
+  ChipGroupSlots,
   TBsChipGroup,
   TChipContainer,
   TChipGroupOptionProps,
@@ -13,11 +16,6 @@ import type {
 } from '@/components/Chip/types';
 import { useGenerateId } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
-import type {
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -132,51 +130,3 @@ export default defineComponent<TBsChipGroup>({
   TRecord,
   never
 >;
-
-declare type ChipGroupEventProps = UpdateModelValueEventProps<TChipValue | TChipValue[] | null> & {
-  /**
-   * Fired immediately when this component's value is changed.
-   */
-  change?: (newValue: TChipValue | TChipValue[] | null) => void;
-
-  /**
-   * Fired when this component's item is dismissed (hide).
-   */
-  'item:close'?: (active: boolean) => void;
-};
-
-declare interface ChipGroupEventPublic extends UpdateModelValueEventPublic<
-  TChipValue | TChipValue[] | null
-> {
-  /**
-   * Fired immediately when this component's value is changed.
-   */
-  onChange?: (newValue: TChipValue | TChipValue[] | null) => void;
-
-  /**
-   * Fired when this component's item is dismissed (hide).
-   */
-  'onItem:close'?: (dismissedItem: TChipValue) => void;
-
-  /**
-   * Fired immediately when this component's value is changed.
-   */
-  '@change'?: (newValue: TChipValue | TChipValue[] | null) => void;
-
-  /**
-   * Fired when this component's item is dismissed (hide).
-   */
-  '@item:close'?: (dismissedItem: TChipValue) => void;
-}
-
-declare interface ChipGroupSlots extends VoidDefaultSlots {
-  /**
-   * Additional slot used to place the item's custom text of the Chip component.
-   */
-  text?: (props: TChipOptionItem) => VNode[] | VNode;
-
-  /**
-   * Additional slot used to place the item's custom icon of the ChipGroup component.
-   */
-  icon?: (props: TChipOptionItem) => VNode[] | VNode;
-}

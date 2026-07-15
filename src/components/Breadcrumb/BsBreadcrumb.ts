@@ -1,4 +1,5 @@
 import type {
+  BreadcrumbSlots,
   TBreadcrumb,
   TBreadcrumbOptionProps,
   TBsBreadcrumb,
@@ -179,10 +180,3 @@ export default defineComponent<TBsBreadcrumb>({
   TRecord,
   never
 >;
-
-declare interface BreadcrumbSlots {
-  /**
-   * Additional slot used to place custom icon of the Breadcrumb.
-   */
-  icon?: () => VNode[] | VNode;
-}

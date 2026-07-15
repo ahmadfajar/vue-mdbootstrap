@@ -1,6 +1,20 @@
 import type { TSizeOptionProps } from '@/components/Icon/types';
-import type { Numberish } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TDividerOptionProps = {
   /**
@@ -114,5 +128,95 @@ export declare type TBsSubheader = ComponentObjectPropsOptions<TSubheaderOptionP
 //     };
 //   };
 // };
-//
-// export declare const BsBasicCmpPlugin: ObjectPlugin;
+
+export declare type BsDivider = DefineComponent<
+  TBsDivider,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TDividerOptionProps>,
+  ExtractDefaultPropTypes<TBsDivider>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsImageHolder = DefineComponent<
+  TBsImageHolder,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TImageHolderOptionProps>,
+  ExtractDefaultPropTypes<TBsImageHolder>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsSpacer = DefineComponent<
+  TBsSpacer,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TSpacerOptionProps>,
+  ExtractDefaultPropTypes<TBsSpacer>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsSubheader = DefineComponent<
+  TBsSubheader,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TSubheaderOptionProps>,
+  ExtractDefaultPropTypes<TBsSubheader>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

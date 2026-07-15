@@ -1,7 +1,27 @@
 import type { TAllowedIconProps } from '@/components/Avatar/types';
 import type { TButtonColor } from '@/components/Button/types';
-import type { TExtendedContextColor } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { TExtendedContextColor, TRecord } from '@/types';
+import type {
+  ClosableVoidEventProps,
+  ClosableVoidEventPublic,
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TAlertVariant = 'success' | 'info' | 'warning' | 'danger' | 'help';
 
@@ -70,5 +90,38 @@ export declare type TBsAlert = ComponentObjectPropsOptions<TAlertOptionProps>;
 //     };
 //   };
 // };
-//
-// export declare const BsAlertPlugin: ObjectPlugin;
+
+export declare type AlertEventProps = ClosableVoidEventProps & UpdateModelValueEventProps<boolean>;
+
+export declare interface AlertEventPublic
+  extends ClosableVoidEventPublic, UpdateModelValueEventPublic<boolean> {}
+
+export declare interface AlertSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the custom icon.
+   */
+  icon?: () => VNode[] | VNode;
+}
+
+export declare type BsAlert = DefineComponent<
+  TBsAlert,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  AlertEventProps,
+  string,
+  PublicProps,
+  Readonly<TAlertOptionProps> & Readonly<AlertEventPublic>,
+  ExtractDefaultPropTypes<TBsAlert>,
+  SlotsType<AlertSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

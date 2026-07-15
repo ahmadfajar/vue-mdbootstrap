@@ -6,16 +6,17 @@ import {
   useSetActiveLightboxItem,
 } from '@/components/Modal/mixins/lightboxApi.ts';
 import { lightboxProps } from '@/components/Modal/mixins/lightboxProps.ts';
-import type { TBsLightbox, TLightboxOptionProps, TLightboxSource } from '@/components/Modal/types';
+import type {
+  LightboxEventProps,
+  LightboxEventPublic,
+  LightboxSlots,
+  TBsLightbox,
+  TLightboxOptionProps,
+  TLightboxSource,
+} from '@/components/Modal/types';
 import { PopupManager } from '@/components/Popover/mixins/PopupManager.ts';
 import { EventListener } from '@/mixins/DomHelper.ts';
 import type { IEventListenerResult, IHTMLElement, TRecord } from '@/types';
-import type {
-  ClosableEventProps,
-  ClosableEventPublic,
-  UpdateOpenEventProps,
-  UpdateOpenEventPublic,
-} from '@/types/internals.ts';
 import type {
   Component,
   ComponentInternalInstance,
@@ -28,7 +29,6 @@ import type {
   MethodOptions,
   PublicProps,
   SlotsType,
-  VNode,
 } from 'vue';
 import {
   computed,
@@ -176,41 +176,3 @@ export default defineComponent<TBsLightbox>({
   TRecord,
   never
 >;
-
-declare interface LightboxSlots {
-  /**
-   * The default slot used to place the dropdown-menu content.
-   */
-  menubar?: () => VNode[];
-}
-
-declare type LightboxEventProps = ClosableEventProps &
-  UpdateOpenEventProps & {
-    change?: (value: TLightboxSource, index: number) => void;
-    'exec-delete'?: (target: TLightboxSource) => void;
-    'exec-download'?: (target: TLightboxSource) => void;
-    'exec-info'?: (target: TLightboxSource) => void;
-    'exec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
-    'exec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
-    'exec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
-    'exec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
-  };
-
-declare interface LightboxEventPublic extends ClosableEventPublic, UpdateOpenEventPublic {
-  onChange?: (value: TLightboxSource, index: number) => void;
-  onExecDelete?: (target: TLightboxSource) => void;
-  onExecDownload?: (target: TLightboxSource) => void;
-  onExecInfo?: (target: TLightboxSource) => void;
-  onExecRotateLeft?: (target: TLightboxSource, rotate: number) => void;
-  onExecRotateRight?: (target: TLightboxSource, rotate: number) => void;
-  onExecZoomin?: (target: TLightboxSource, zoom: number) => void;
-  onExecZoomout?: (target: TLightboxSource, zoom: number) => void;
-  '@change'?: (value: TLightboxSource, index: number) => void;
-  '@exec-delete'?: (target: TLightboxSource) => void;
-  '@exec-download'?: (target: TLightboxSource) => void;
-  '@exec-info'?: (target: TLightboxSource) => void;
-  '@exec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
-  '@exec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
-  '@exec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
-  '@exec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
-}

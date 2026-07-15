@@ -1,17 +1,17 @@
-import type { IListItem } from '@/components/ListView/mixins/ListItem.ts';
 import { listViewProps } from '@/components/ListView/mixins/listViewProps.ts';
 import {
   type IListViewProvider,
   ListViewProvider,
 } from '@/components/ListView/mixins/ListViewProvider.ts';
-import type { TBsListView, TListViewOptionProps } from '@/components/ListView/types';
+import type {
+  ListViewEventProps,
+  ListViewEventPublic,
+  TBsListView,
+  TListViewOptionProps,
+} from '@/components/ListView/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
-import type {
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -75,22 +75,3 @@ export default defineComponent<TBsListView>({
   TRecord,
   never
 >;
-
-declare type ListViewEventProps = UpdateModelValueEventProps<IListItem> & {
-  /**
-   * Fired when the ListView is mutated its modelValue.
-   */
-  change?: (value: IListItem, oldValue: IListItem) => void;
-};
-
-declare interface ListViewEventPublic extends UpdateModelValueEventPublic<IListItem> {
-  /**
-   * Fired when the ListView is mutated its modelValue.
-   */
-  onChange?: (value: IListItem, oldValue: IListItem) => void;
-
-  /**
-   * Fired when the ListView is mutated its modelValue.
-   */
-  '@change'?: (value: IListItem, oldValue: IListItem) => void;
-}

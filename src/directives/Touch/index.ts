@@ -1,4 +1,4 @@
-import type { IBindingElement, TRecord } from '@/types';
+import type { IBindingElement } from '@/types';
 import type { Directive, DirectiveBinding } from 'vue';
 
 export declare interface TouchDirectiveEvent extends Event {
@@ -150,13 +150,19 @@ function unmounted(el: IBindingElement, binding: TouchDirectiveBinding) {
   }
 
   const handlers = (target as IBindingElement).__touchEvents as TouchEventListener;
-  
+
   Object.keys(handlers).forEach((name) => {
-    target.removeEventListener(name, handlers[name as keyof TouchEventListener] as EventListener, options);
+    target.removeEventListener(
+      name,
+      handlers[name as keyof TouchEventListener] as EventListener,
+      options
+    );
   });
 
   (target as IBindingElement).__touchEvents = undefined;
 }
+
+export declare type vTouch = Directive<HTMLElement, TouchValueBinding, string, never>;
 
 export const Touch: Directive<HTMLElement, TouchValueBinding, string, never> = {
   mounted,

@@ -72,6 +72,13 @@ function updated(el: HTMLElement, binding: ScrollDirectiveBinding): void {
   mounted(el, binding);
 }
 
+export declare type vScroll = Directive<
+  HTMLElement,
+  EventListenerTarget | TDirectiveBinding,
+  string,
+  never
+>;
+
 export const Scroll: Directive<
   HTMLElement,
   EventListenerTarget | TDirectiveBinding,

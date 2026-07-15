@@ -74,6 +74,25 @@ export declare interface ClosableVoidEventPublic {
   '@close'?: VoidFunction | PromiseVoidFunction;
 }
 
+export declare type UpdateActiveEventProps = {
+  /**
+   * Fired when the `active` state of this component is being updated.
+   */
+  'update:active'?: (value: boolean) => void;
+};
+
+export declare interface UpdateActiveEventPublic {
+  /**
+   * Fired when the `active` state of this component is being updated.
+   */
+  'onUpdate:active'?: (value: boolean) => void;
+
+  /**
+   * Fired when the `active` state of this component is being updated.
+   */
+  '@update:active'?: (state: boolean) => void;
+}
+
 export declare type UpdateOpenEventProps = {
   /**
    * Fired when the component's state is updated.

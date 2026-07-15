@@ -1,4 +1,6 @@
 import type {
+  ContainerEventProps,
+  ContainerEventPublic,
   TAppContainerOptionProps,
   TBsContainer,
   TContainerOptionProps,
@@ -134,22 +136,3 @@ export default defineComponent<TBsContainer>({
   TRecord,
   never
 >;
-
-declare type ContainerEventProps = {
-  /**
-   * Fired when this component size is changed.
-   */
-  resize?: (target: HTMLElement) => void;
-};
-
-declare interface ContainerEventPublic {
-  /**
-   * Fired when this component size is changed.
-   */
-  onResize?: (target: HTMLElement) => void;
-
-  /**
-   * Fired when this component size is changed.
-   */
-  '@resize'?: (target: HTMLElement) => void;
-}

@@ -5,6 +5,8 @@ import {
   useRenderDateTimeField,
 } from '@/components/DatePicker/mixins/dateTimeFieldApi.ts';
 import type {
+  DateTimeFieldEventProps,
+  DateTimeFieldEventPublic,
   TBsDateTimeField,
   TDateTimeFieldOptionProps,
   TDateTimePickerMode,
@@ -15,14 +17,9 @@ import {
   useShowClearButton,
 } from '@/components/Field/mixins/textFieldApi.ts';
 import { useGetValidationResult } from '@/components/Field/mixins/validationApi.ts';
-import type {
-  FieldEventProps,
-  FieldEventPublic,
-  FieldSlots,
-} from '@/components/Field/types/internals.ts';
+import type { FieldSlots } from '@/components/Field/types/internals.ts';
 import { cssPrefix, isServer } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
-import type { ClosableVoidEventProps, ClosableVoidEventPublic } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import { DateTime } from 'luxon';
 import type {
@@ -143,24 +140,3 @@ export default defineComponent<TBsDateTimeField>({
   TRecord,
   never
 >;
-
-declare type DateTimeFieldEventProps = FieldEventProps<string> &
-  ClosableVoidEventProps & {
-    /**
-     * Fired when the DatePicker popup is open or showed.
-     */
-    open?: VoidFunction;
-  };
-
-declare interface DateTimeFieldEventPublic
-  extends FieldEventPublic<string>, ClosableVoidEventPublic {
-  /**
-   * Fired when the DatePicker popup is open or showed.
-   */
-  onOpen?: VoidFunction;
-
-  /**
-   * Fired when the DatePicker popup is open or showed.
-   */
-  '@open'?: VoidFunction;
-}

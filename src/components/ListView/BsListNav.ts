@@ -5,7 +5,11 @@ import type { TBsListNav, TListNavOptionProps } from '@/components/ListView/type
 import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
 import { booleanProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
-import type { VoidDefaultSlots } from '@/types/internals.ts';
+import type {
+  UpdateActiveEventProps,
+  UpdateActiveEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -13,7 +17,6 @@ import type {
   ComputedOptions,
   DefineComponent,
   Directive,
-  EmitsOptions,
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
@@ -40,6 +43,7 @@ export default defineComponent<TBsListNav>({
     },
     child: booleanProp,
   },
+  emits: ['update:active'],
   setup(props, { emit, expose, slots }) {
     const thisProps = props as Readonly<TListNavOptionProps>;
     const refItem = shallowRef<IListItem>();
@@ -92,10 +96,10 @@ export default defineComponent<TBsListNav>({
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  EmitsOptions,
+  UpdateActiveEventProps,
   string,
   PublicProps,
-  Readonly<TListNavOptionProps>,
+  Readonly<TListNavOptionProps> & Readonly<UpdateActiveEventPublic>,
   ExtractDefaultPropTypes<TBsListNav>,
   SlotsType<VoidDefaultSlots>,
   Record<string, Component>,

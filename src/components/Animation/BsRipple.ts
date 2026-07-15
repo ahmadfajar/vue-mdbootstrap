@@ -1,26 +1,33 @@
 import {
   startRipple,
-  type TRippleData,
   useRenderRipples,
+  type TRippleData,
 } from '@/components/Animation/mixins/rippleApi.ts';
 import type { TBsRipple, TRippleOptionProps } from '@/components/Animation/types';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import { booleanProp, tagProp } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
-import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
-  Component,
-  ComponentOptionsMixin,
-  ComponentProvideOptions,
-  ComputedOptions,
-  DefineComponent,
-  Directive,
-  ExtractDefaultPropTypes,
-  MethodOptions,
-  PublicProps,
-  SlotsType,
+  UpdateActiveEventProps,
+  UpdateActiveEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import {
+  computed,
+  defineComponent,
+  ref,
+  watch,
+  type Component,
+  type ComponentOptionsMixin,
+  type ComponentProvideOptions,
+  type ComputedOptions,
+  type DefineComponent,
+  type Directive,
+  type ExtractDefaultPropTypes,
+  type MethodOptions,
+  type PublicProps,
+  type SlotsType,
 } from 'vue';
-import { computed, defineComponent, ref, watch } from 'vue';
 
 export default defineComponent<TBsRipple>({
   name: 'BsRipple',
@@ -105,10 +112,10 @@ export default defineComponent<TBsRipple>({
   MethodOptions,
   ComponentOptionsMixin,
   ComponentOptionsMixin,
-  RippleEventProps,
+  UpdateActiveEventProps,
   string,
   PublicProps,
-  Readonly<TRippleOptionProps> & Readonly<RippleEventPublic>,
+  Readonly<TRippleOptionProps> & Readonly<UpdateActiveEventPublic>,
   ExtractDefaultPropTypes<TBsRipple>,
   SlotsType<VoidDefaultSlots>,
   Record<string, Component>,
@@ -119,22 +126,3 @@ export default defineComponent<TBsRipple>({
   TRecord,
   never
 >;
-
-declare type RippleEventProps = {
-  /**
-   * Fired when the ripple effect is updated.
-   */
-  'update:active'?: (value: boolean) => void;
-};
-
-declare interface RippleEventPublic {
-  /**
-   * Fired when the ripple effect is updated.
-   */
-  'onUpdate:active'?: (value: boolean) => void;
-
-  /**
-   * Fired when the ripple effect is updated.
-   */
-  '@update:active'?: (value: boolean) => void;
-}

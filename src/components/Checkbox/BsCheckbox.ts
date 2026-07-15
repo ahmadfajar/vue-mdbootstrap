@@ -1,16 +1,17 @@
 import { useCheckboxClasses, useToggleChecked } from '@/components/Checkbox/mixins/checkboxApi.ts';
 import { checkboxProps } from '@/components/Checkbox/mixins/checkboxProps.ts';
-import type { TBsCheckbox, TCheckboxOptionProps } from '@/components/Checkbox/types';
+import type {
+  CheckboxEventProps,
+  CheckboxEventPublic,
+  TBsCheckbox,
+  TCheckboxOptionProps,
+} from '@/components/Checkbox/types';
 import {
   useCreateInputRadioOrCheckbox,
   useRenderRadioOrCheckbox,
 } from '@/components/Radio/mixins/radioApi.ts';
-import type { Numberish, TRecord } from '@/types';
-import type {
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -73,24 +74,3 @@ export default defineComponent<TBsCheckbox>({
   TRecord,
   never
 >;
-
-declare type CheckboxEventProps = UpdateModelValueEventProps<Numberish | boolean | null> & {
-  /**
-   * Fired when this checkbox component's "checked" state is updated.
-   */
-  checked?: (checked: boolean) => void;
-};
-
-declare interface CheckboxEventPublic extends UpdateModelValueEventPublic<
-  Numberish | boolean | null
-> {
-  /**
-   * Fired when this checkbox component's "checked" state is updated.
-   */
-  onChecked?: (checked: boolean) => void;
-
-  /**
-   * Fired when this checkbox component's "checked" state is updated.
-   */
-  '@checked'?: (checked: boolean) => void;
-}

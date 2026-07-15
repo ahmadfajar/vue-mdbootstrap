@@ -122,9 +122,9 @@
     --#{vars.$prefix}radius-pill: #{vars.$radius-pill};
 
     --#{vars.$prefix}z-index-sticky: 1000;
-    --#{vars.$prefix}z-index-backdrop: 1019;
-    --#{vars.$prefix}z-index-lightbox: 1020;
-    --#{vars.$prefix}z-index-modal: 1021;
+    --#{vars.$prefix}z-index-backdrop: 1020;
+    --#{vars.$prefix}z-index-lightbox: 1021;
+    --#{vars.$prefix}z-index-modal: 1022;
     --#{vars.$prefix}z-index-popover: 1025;
     --#{vars.$prefix}z-index-sidedrawer: 1030;
   }

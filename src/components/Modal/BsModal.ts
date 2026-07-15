@@ -1,16 +1,15 @@
 import { useRenderModalDialog, useSetDialogMaxHeight } from '@/components/Modal/mixins/modalApi.ts';
 import { modalProps } from '@/components/Modal/mixins/modalProps.ts';
-import type { TBsModal, TModalOptionProps } from '@/components/Modal/types';
+import type {
+  ModalEventProps,
+  ModalEventPublic,
+  ModalSlots,
+  TBsModal,
+  TModalOptionProps,
+} from '@/components/Modal/types';
 import { PopupManager } from '@/components/Popover/mixins/PopupManager.ts';
 import { cssPrefix } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
-import type {
-  ClosableEventProps,
-  ClosableEventPublic,
-  UpdateOpenEventProps,
-  UpdateOpenEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
 import type {
   Component,
   ComponentInternalInstance,
@@ -23,7 +22,6 @@ import type {
   MethodOptions,
   PublicProps,
   SlotsType,
-  VNode,
 } from 'vue';
 import {
   computed,
@@ -109,19 +107,3 @@ export default defineComponent<TBsModal>({
   TRecord,
   never
 >;
-
-declare interface ModalSlots extends VoidDefaultSlots {
-  /**
-   * Additional slot used to place the modal dialog header content.
-   */
-  header?: () => VNode[] | VNode;
-
-  /**
-   * Additional slot used to place the modal dialog footer content.
-   */
-  footer?: () => VNode[] | VNode;
-}
-
-declare type ModalEventProps = ClosableEventProps & UpdateOpenEventProps;
-
-declare interface ModalEventPublic extends ClosableEventPublic, UpdateOpenEventPublic {}

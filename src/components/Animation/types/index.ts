@@ -1,5 +1,24 @@
-import type { HtmlTagName, Numberish } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { HtmlTagName, Numberish, TRecord } from '@/types';
+import type {
+  UpdateActiveEventProps,
+  UpdateActiveEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TRippleOptionProps = {
   /**
@@ -32,7 +51,7 @@ export declare type TOverlayOptionProps = {
   color?: string;
 
   /**
-   * Sets the inline CSS `position` rule. If `true` then inline CSS `position` 
+   * Sets the inline CSS `position` rule. If `true` then inline CSS `position`
    * rule is set to `fixed`.
    */
   fixed?: boolean;
@@ -99,5 +118,91 @@ export declare type TBsRipple = ComponentObjectPropsOptions<TRippleOptionProps>;
 //     };
 //   };
 // };
-//
-// export declare const BsAnimationPlugin: ObjectPlugin;
+
+export declare type BsExpandTransition = DefineComponent<
+  TRecord,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TRecord>,
+  ExtractDefaultPropTypes<TRecord>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;
+
+export declare type OverlayEventProps = {
+  /**
+   * Fired when the Overlay component is clicked.
+   */
+  click?: (event: Event) => void;
+};
+
+export declare interface OverlayEventPublic {
+  /**
+   * Fired when the Overlay component is clicked.
+   */
+  onClick?: (event: Event) => void;
+
+  /**
+   * Fired when the Overlay component is clicked.
+   */
+  '@click'?: (event: Event) => void;
+}
+
+export declare type BsOverlay = DefineComponent<
+  TBsOverlay,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  OverlayEventProps,
+  string,
+  PublicProps,
+  Readonly<TOverlayOptionProps> & Readonly<OverlayEventPublic>,
+  ExtractDefaultPropTypes<TBsOverlay>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsRipple = DefineComponent<
+  TBsRipple,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  UpdateActiveEventProps,
+  string,
+  PublicProps,
+  Readonly<TRippleOptionProps> & Readonly<UpdateActiveEventPublic>,
+  ExtractDefaultPropTypes<TBsRipple>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

@@ -4,7 +4,13 @@ import {
   useRemoveTooltipListener,
   useSetTooltipPosition,
 } from '@/components/Tooltip/mixins/tooltipApi.ts';
-import type { TBsTooltip, TTooltipOptionProps } from '@/components/Tooltip/types';
+import type {
+  TBsTooltip,
+  TooltipEventProps,
+  TooltipEventPublic,
+  TooltipSlots,
+  TTooltipOptionProps,
+} from '@/components/Tooltip/types';
 import { Resize, Scroll } from '@/directives';
 import { cssPrefix, useGenerateId, useRenderTransition } from '@/mixins/CommonApi.ts';
 import {
@@ -14,7 +20,6 @@ import {
   validStringOrNumberProp,
 } from '@/mixins/CommonProps.ts';
 import type { TRecord } from '@/types';
-import type { VoidDefaultSlots } from '@/types/internals.ts';
 import Helper from '@/utils/Helper.ts';
 import type {
   Component,
@@ -30,7 +35,6 @@ import type {
   Prop,
   PublicProps,
   SlotsType,
-  VNode,
 } from 'vue';
 import {
   computed,
@@ -191,29 +195,3 @@ export default defineComponent<TBsTooltip>({
   TRecord,
   never
 >;
-
-declare type TooltipEventProps = {
-  /**
-   * Fired when this Tooltip state is updated.
-   */
-  'update:show'?: (value: boolean) => void;
-};
-
-declare interface TooltipEventPublic {
-  /**
-   * Fired when this Tooltip state is updated.
-   */
-  'onUpdate:show'?: (value: boolean) => void;
-
-  /**
-   * Fired when this Tooltip state is updated.
-   */
-  '@update:show'?: (value: boolean) => void;
-}
-
-declare interface TooltipSlots extends VoidDefaultSlots {
-  /**
-   * Additional slot used to place the Tooltip's custom content.
-   */
-  content?: () => VNode[] | VNode;
-}

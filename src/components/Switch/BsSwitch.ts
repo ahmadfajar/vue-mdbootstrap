@@ -1,13 +1,14 @@
 import { useToggleChecked } from '@/components/Checkbox/mixins/checkboxApi.ts';
 import { useRenderSwitch, useSwitchClasses } from '@/components/Switch/mixins/switchApi.ts';
 import { switchProps } from '@/components/Switch/mixins/switchProps.ts';
-import type { TBsSwitch, TSwitchOptionProps } from '@/components/Switch/types';
-import type { Numberish, TRecord } from '@/types';
 import type {
-  UpdateModelValueEventProps,
-  UpdateModelValueEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
+  SwitchEventProps,
+  SwitchEventPublic,
+  TBsSwitch,
+  TSwitchOptionProps,
+} from '@/components/Switch/types';
+import type { TRecord } from '@/types';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -57,22 +58,3 @@ export default defineComponent<TBsSwitch>({
   TRecord,
   never
 >;
-
-declare type SwitchEventProps = UpdateModelValueEventProps<Numberish | boolean> & {
-  /**
-   * Fired when this Switch component's checked state is changed.
-   */
-  checked?: (checked: boolean) => void;
-};
-
-declare interface SwitchEventPublic extends UpdateModelValueEventPublic<Numberish | boolean> {
-  /**
-   * Fired when this Switch component's checked state is changed.
-   */
-  onChecked?: (checked: boolean) => void;
-
-  /**
-   * Fired when this Switch component's checked state is changed.
-   */
-  '@checked'?: (checked: boolean) => void;
-}

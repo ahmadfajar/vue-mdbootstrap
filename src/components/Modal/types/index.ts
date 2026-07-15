@@ -1,6 +1,27 @@
 import type { TPopupOptions } from '@/components/Popover/types';
 import type { Numberish, TRecord } from '@/types';
-import type { ComponentObjectPropsOptions, ComponentPublicInstance } from 'vue';
+import type {
+  ClosableEventProps,
+  ClosableEventPublic,
+  UpdateOpenEventProps,
+  UpdateOpenEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComponentPublicInstance,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TModalOptionProps = TPopupOptions & {
   /**
@@ -83,13 +104,7 @@ export declare type TLightboxSource = {
 export declare type TTransitionMode = 'in-out' | 'out-in';
 
 export declare type TLightboxButtonType =
-  | 'close'
-  | 'delete'
-  | 'download'
-  | 'info'
-  | 'menubar'
-  | 'rotate'
-  | 'zoom';
+  'close' | 'delete' | 'download' | 'info' | 'menubar' | 'rotate' | 'zoom';
 
 export declare type TLightboxToolbarItems = {
   [K in TLightboxButtonType]?: boolean;
@@ -256,6 +271,67 @@ export declare type TBsLightbox = ComponentObjectPropsOptions<TLightboxOptionPro
 //   };
 // };
 
+export declare type LightboxEventProps = ClosableEventProps &
+  UpdateOpenEventProps & {
+    change?: (value: TLightboxSource, index: number) => void;
+    'exec-delete'?: (target: TLightboxSource) => void;
+    'exec-download'?: (target: TLightboxSource) => void;
+    'exec-info'?: (target: TLightboxSource) => void;
+    'exec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
+    'exec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
+    'exec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
+    'exec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
+  };
+
+export declare interface LightboxEventPublic extends ClosableEventPublic, UpdateOpenEventPublic {
+  onChange?: (value: TLightboxSource, index: number) => void;
+  onExecDelete?: (target: TLightboxSource) => void;
+  onExecDownload?: (target: TLightboxSource) => void;
+  onExecInfo?: (target: TLightboxSource) => void;
+  onExecRotateLeft?: (target: TLightboxSource, rotate: number) => void;
+  onExecRotateRight?: (target: TLightboxSource, rotate: number) => void;
+  onExecZoomin?: (target: TLightboxSource, zoom: number) => void;
+  onExecZoomout?: (target: TLightboxSource, zoom: number) => void;
+  '@change'?: (value: TLightboxSource, index: number) => void;
+  '@exec-delete'?: (target: TLightboxSource) => void;
+  '@exec-download'?: (target: TLightboxSource) => void;
+  '@exec-info'?: (target: TLightboxSource) => void;
+  '@exec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
+  '@exec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
+  '@exec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
+  '@exec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
+}
+
+export declare interface LightboxSlots {
+  /**
+   * The default slot used to place the dropdown-menu content.
+   */
+  menubar?: () => VNode[];
+}
+
+export declare type BsLightbox = DefineComponent<
+  TBsLightbox,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  LightboxEventProps,
+  string,
+  PublicProps,
+  Readonly<TLightboxOptionProps> & Readonly<LightboxEventPublic>,
+  ExtractDefaultPropTypes<TBsLightbox>,
+  SlotsType<LightboxSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
 export declare interface BsLightboxInstance extends ComponentPublicInstance {
   openAt(index: number): void;
   setActive(index: number): void;
@@ -263,4 +339,41 @@ export declare interface BsLightboxInstance extends ComponentPublicInstance {
   prevSlide(): void;
 }
 
-// export declare const BsModalPlugin: ObjectPlugin;
+export declare type ModalEventProps = ClosableEventProps & UpdateOpenEventProps;
+
+export declare interface ModalEventPublic extends ClosableEventPublic, UpdateOpenEventPublic {}
+
+export declare interface ModalSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the modal dialog header content.
+   */
+  header?: () => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place the modal dialog footer content.
+   */
+  footer?: () => VNode[] | VNode;
+}
+
+export declare type BsModal = DefineComponent<
+  TBsModal,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ModalEventProps,
+  string,
+  PublicProps,
+  Readonly<TModalOptionProps> & Readonly<ModalEventPublic>,
+  ExtractDefaultPropTypes<TBsModal>,
+  SlotsType<ModalSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

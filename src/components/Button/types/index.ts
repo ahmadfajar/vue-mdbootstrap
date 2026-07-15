@@ -1,7 +1,26 @@
 import type { TAllowedIconProps } from '@/components/Avatar/types';
-import type { MaybeNumberish, Numberish, TClassList } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
-import type { TInputBaseProps, TValidationProps } from '../../Field/types';
+import type { TInputBaseProps, TValidationProps } from '@/components/Field/types';
+import type { MaybeNumberish, Numberish, TClassList, TRecord } from '@/types';
+import type {
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TButtonColor =
   | 'primary'
@@ -316,5 +335,137 @@ export declare type TBsToggleField = ComponentObjectPropsOptions<TToggleFieldOpt
 //     };
 //   };
 // };
-//
-// export declare const BsButtonPlugin: ObjectPlugin;
+
+export declare interface ButtonSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place the custom button icon.
+   */
+  icon?: () => VNode[] | VNode;
+}
+
+export declare type BsButton = DefineComponent<
+  TBsButton,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TButtonOptionProps>,
+  ExtractDefaultPropTypes<TBsButton>,
+  SlotsType<ButtonSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsCloseButton = DefineComponent<
+  TBsCloseButton,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TCloseButtonOptionProps>,
+  ExtractDefaultPropTypes<TBsCloseButton>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type ToggleButtonEventProps = UpdateModelValueEventProps<MaybeNumberish | unknown[]>;
+
+export declare interface ToggleButtonSlots {
+  /**
+   * The default slot used to place the ToggleButton's label.
+   */
+  label?: (item: TInputOptionItem) => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place the ToggleButton's icon.
+   */
+  icon?: (item: TInputOptionItem) => VNode[] | VNode;
+}
+
+export declare type BsToggleButton = DefineComponent<
+  TBsToggleButton,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ToggleButtonEventProps,
+  string,
+  PublicProps,
+  Readonly<TToggleButtonOptionProps> &
+    Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
+  ExtractDefaultPropTypes<TBsToggleButton>,
+  SlotsType<ToggleButtonSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;
+
+export declare type ToggleFieldEventProps = UpdateModelValueEventProps<MaybeNumberish | unknown[]>;
+
+export declare interface ToggleFieldSlots extends VoidDefaultSlots {
+  /**
+   * The default slot used to place custom item's label of the ToggleField.
+   */
+  label?: (props: TInputOptionItem) => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place custom item's icon of the ToggleField.
+   */
+  icon?: (props: TInputOptionItem) => VNode[] | VNode;
+
+  /**
+   * Additional slot used to place custom help text of the ToggleField.
+   */
+  'help-text'?: () => VNode[] | VNode;
+}
+
+export declare type BsToggleField = DefineComponent<
+  TBsToggleField,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ToggleFieldEventProps,
+  string,
+  PublicProps,
+  Readonly<TToggleFieldOptionProps> &
+    Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
+  ExtractDefaultPropTypes<TBsToggleField>,
+  SlotsType<ToggleFieldSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;

@@ -1,7 +1,7 @@
 import dts from 'rollup-plugin-dts';
 
 const config = {
-  input: './src/framework.ts',
+  input: './src/declaration.ts',
   output: [
     {
       file: 'dist/vue-mdb.d.ts',

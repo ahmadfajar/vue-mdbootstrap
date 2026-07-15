@@ -3,11 +3,13 @@ import { toggleButtonProps } from '@/components/Button/mixins/buttonProps.ts';
 import type {
   TBsToggleButton,
   TInputOptionItem,
+  ToggleButtonEventProps,
+  ToggleButtonSlots,
   TToggleButtonOptionProps,
 } from '@/components/Button/types';
 import { cssPrefix, useGenerateId } from '@/mixins/CommonApi.ts';
 import type { MaybeNumberish, TRecord } from '@/types';
-import type { UpdateModelValueEventProps, UpdateModelValueEventPublic } from '@/types/internals.ts';
+import type { UpdateModelValueEventPublic } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -83,17 +85,3 @@ export default defineComponent<TBsToggleButton>({
   TRecord,
   never
 >;
-
-declare type ToggleButtonEventProps = UpdateModelValueEventProps<MaybeNumberish | unknown[]>;
-
-declare interface ToggleButtonSlots {
-  /**
-   * The default slot used to place the ToggleButton's label.
-   */
-  label?: (item: TInputOptionItem) => VNode[] | VNode;
-
-  /**
-   * Additional slot used to place the ToggleButton's icon.
-   */
-  icon?: (item: TInputOptionItem) => VNode[] | VNode;
-}

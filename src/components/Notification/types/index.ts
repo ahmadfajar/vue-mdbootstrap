@@ -1,4 +1,19 @@
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { TRecord } from '@/types';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TNotificationPosition =
   | 'top-right'
@@ -11,12 +26,7 @@ export declare type TNotificationPosition =
   | 'bottom-full-width';
 
 export declare type TNotificationVariant =
-  | 'default'
-  | 'info'
-  | 'success'
-  | 'error'
-  | 'warning'
-  | 'custom';
+  'default' | 'info' | 'success' | 'error' | 'warning' | 'custom';
 
 export declare type TNotificationOption = {
   message: string;
@@ -57,5 +67,26 @@ export declare type TBsNotificationBar = ComponentObjectPropsOptions<TNotificati
 //     $props: AllowedComponentProps & ComponentCustomProps & VNodeProps;
 //   };
 // };
-//
-// export declare const BsNotificationPlugin: ObjectPlugin;
+
+export declare type BsNotification = DefineComponent<
+  TRecord,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TRecord>,
+  ExtractDefaultPropTypes<TRecord>,
+  SlotsType,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;

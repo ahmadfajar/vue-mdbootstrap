@@ -4,14 +4,15 @@ import {
   useSideDrawerStyles,
 } from '@/components/Drawer/mixins/sideDrawerApi.ts';
 import { sideDrawerProps } from '@/components/Drawer/mixins/sideDrawerProps.ts';
-import type { TBsSideDrawer, TSideDrawerOptionProps } from '@/components/Drawer/types';
+import type {
+  SideDrawerEventProps,
+  SideDrawerEventPublic,
+  TBsSideDrawer,
+  TSideDrawerOptionProps,
+} from '@/components/Drawer/types';
 import { useBreakpointMax } from '@/mixins/CommonApi.ts';
 import type { TRecord, TVueMdb } from '@/types';
-import type {
-  UpdateOpenEventProps,
-  UpdateOpenEventPublic,
-  VoidDefaultSlots,
-} from '@/types/internals.ts';
+import type { VoidDefaultSlots } from '@/types/internals.ts';
 import type {
   Component,
   ComponentOptionsMixin,
@@ -99,22 +100,3 @@ export default defineComponent<TBsSideDrawer>({
   TRecord,
   never
 >;
-
-declare type SideDrawerEventProps = UpdateOpenEventProps & {
-  /**
-   * Fired when this SideDrawer size is resized.
-   */
-  resize?: (target: HTMLElement) => void;
-};
-
-declare interface SideDrawerEventPublic extends UpdateOpenEventPublic {
-  /**
-   * Fired when this SideDrawer size is resized.
-   */
-  onResize?: (target: HTMLElement) => void;
-
-  /**
-   * Fired when this SideDrawer size is resized.
-   */
-  '@resize'?: (target: HTMLElement) => void;
-}

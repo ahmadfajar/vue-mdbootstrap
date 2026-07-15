@@ -43,6 +43,13 @@ function unmounted(el: IBindingElement): void {
   }
 }
 
+export declare type vResize = Directive<
+  HTMLElement,
+  EventListenerTarget | TDirectiveBinding,
+  string,
+  never
+>;
+
 export const Resize: Directive<
   HTMLElement,
   EventListenerTarget | TDirectiveBinding,

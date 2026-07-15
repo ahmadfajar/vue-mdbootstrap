@@ -1,5 +1,24 @@
-import type { Numberish } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TRecord } from '@/types';
+import type {
+  ClosableEventProps,
+  ClosableEventPublic,
+  UpdateOpenEventProps,
+  UpdateOpenEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
 
 export declare type TPopoverPosition =
   | 'top'
@@ -101,6 +120,30 @@ export declare type TBsPopover = ComponentObjectPropsOptions<TPopoverOptionProps
 //   };
 // };
 //
-// export declare const BsPopoverPlugin: ObjectPlugin;
-//
-// export { PopupManager } from './PopupManager';
+
+export declare type PopoverEventProps = ClosableEventProps & UpdateOpenEventProps;
+
+export declare interface PopoverEventPublic extends ClosableEventPublic, UpdateOpenEventPublic {}
+
+export declare type BsPopover = DefineComponent<
+  TBsPopover,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  PopoverEventProps,
+  string,
+  PublicProps,
+  Readonly<TPopoverOptionProps> & Readonly<PopoverEventPublic>,
+  ExtractDefaultPropTypes<TBsPopover>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

@@ -1,7 +1,34 @@
 import type { TIconVariant } from '@/components/Avatar/types';
 import type { TPopoverPosition } from '@/components/Popover/types';
-import type { MaybeNumberish, Numberish, TExtendedContextColor } from '@/types';
-import type { ComponentObjectPropsOptions, ComputedRef } from 'vue';
+import type { MaybeNumberish, Numberish, TExtendedContextColor, TRecord } from '@/types';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  ComputedRef,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+} from 'vue';
+import type {
+  ChipFieldEventProps,
+  ChipFieldEventPublic,
+  FieldSlots,
+  NumericFieldEventProps,
+  NumericFieldEventPublic,
+  SearchFieldEventProps,
+  SearchFieldEventPublic,
+  SearchFieldSlots,
+  TextAreaEventProps,
+  TextAreaEventPublic,
+  TextFieldEventProps,
+  TextFieldEventPublic,
+} from './internals';
 
 export declare type TFieldComponent =
   | 'chip-field'
@@ -671,5 +698,118 @@ export declare type TBsSearchField = ComponentObjectPropsOptions<TSearchFieldOpt
 //     };
 //   };
 // };
-//
-// export declare const BsFieldPlugin: ObjectPlugin;
+
+export declare type BsChipField = DefineComponent<
+  TBsChipField,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  ChipFieldEventProps,
+  string,
+  PublicProps,
+  Readonly<TChipFieldOptionProps> & Readonly<ChipFieldEventPublic>,
+  ExtractDefaultPropTypes<TBsChipField>,
+  SlotsType<FieldSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsNumericField = DefineComponent<
+  TBsNumericField,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  NumericFieldEventProps,
+  string,
+  PublicProps,
+  Readonly<TNumericFieldOptionProps> & Readonly<NumericFieldEventPublic>,
+  ExtractDefaultPropTypes<TBsNumericField>,
+  SlotsType<FieldSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsSearchField = DefineComponent<
+  TBsSearchField,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  SearchFieldEventProps,
+  string,
+  PublicProps,
+  Readonly<TSearchFieldOptionProps> & Readonly<SearchFieldEventPublic>,
+  ExtractDefaultPropTypes<TBsSearchField>,
+  SlotsType<SearchFieldSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsTextArea = DefineComponent<
+  TBsTextArea,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  TextAreaEventProps,
+  string,
+  PublicProps,
+  Readonly<TTextAreaOptionProps> & Readonly<TextAreaEventPublic>,
+  ExtractDefaultPropTypes<TBsTextArea>,
+  SlotsType<FieldSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsTextField = DefineComponent<
+  TBsTextField,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  TextFieldEventProps,
+  string,
+  PublicProps,
+  Readonly<TTextFieldOptionProps> & Readonly<TextFieldEventPublic>,
+  ExtractDefaultPropTypes<TBsTextField>,
+  SlotsType<FieldSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

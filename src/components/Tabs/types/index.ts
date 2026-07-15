@@ -1,6 +1,26 @@
 import type { TAllowedIconProps } from '@/components/Avatar/types';
-import type { Numberish, TRouterOptionProps } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
+import type { Numberish, TRecord, TRouterOptionProps } from '@/types';
+import type {
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentInternalInstance,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TAlignment = 'left' | 'start' | 'right' | 'end' | 'center' | 'justified';
 
@@ -179,4 +199,89 @@ export declare type TBsTabLabel = ComponentObjectPropsOptions<TTabLabelOptionPro
 //   };
 // };
 
-// export declare const BsTabPlugin: ObjectPlugin;
+export declare type TabEventProps = UpdateModelValueEventProps<number> & {
+  /**
+   * Fired when active tab is changed.
+   */
+  change?: (
+    newTab: ComponentInternalInstance,
+    newIndex: number,
+    oldTab?: ComponentInternalInstance,
+    oldIndex?: number
+  ) => void;
+};
+
+export declare interface TabEventPublic extends UpdateModelValueEventPublic<number> {
+  /**
+   * Fired when active tab is changed.
+   */
+  onChange?: (
+    newTab: ComponentInternalInstance,
+    newIndex: number,
+    oldTab?: ComponentInternalInstance,
+    oldIndex?: number
+  ) => void;
+
+  /**
+   * Fired when active tab is changed.
+   */
+  '@change'?: (
+    newTab: ComponentInternalInstance,
+    newIndex: number,
+    oldTab?: ComponentInternalInstance,
+    oldIndex?: number
+  ) => void;
+}
+
+export declare interface TabSlots extends VoidDefaultSlots {
+  /**
+   * Additional slot used to place custom components or elements on the right side of the Tabs.
+   */
+  'append-header'?: () => VNode[] | VNode;
+}
+
+export declare type BsTabs = DefineComponent<
+  TBsTabs,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  TabEventProps,
+  string,
+  PublicProps,
+  Readonly<TTabsOptionProps> & Readonly<TabEventPublic>,
+  ExtractDefaultPropTypes<TBsTabs>,
+  SlotsType<TabSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare type BsTab = DefineComponent<
+  TBsTabPanel,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  EmitsOptions,
+  string,
+  PublicProps,
+  Readonly<TTabPanelOptionProps>,
+  ExtractDefaultPropTypes<TBsTabPanel>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;

@@ -1,7 +1,25 @@
+import type { TInputBaseProps, TValidationProps } from '@/components/Field/types';
 import type { TRadioInputProps, TRadioOptionProps } from '@/components/Radio/types';
-import type { Numberish, TContextColor } from '@/types';
-import type { ComponentObjectPropsOptions } from 'vue';
-import type { TInputBaseProps, TValidationProps } from '../../Field/types';
+import type { Numberish, TContextColor, TRecord } from '@/types';
+import type {
+  UpdateModelValueEventProps,
+  UpdateModelValueEventPublic,
+  VoidDefaultSlots,
+} from '@/types/internals';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 
 export declare type TInputGroupProps<D, M> = TInputBaseProps &
   TValidationProps & {
@@ -91,5 +109,78 @@ export declare type TBsCheckboxGroup = ComponentObjectPropsOptions<TCheckboxGrou
 //     };
 //   };
 // };
-//
-// export declare const BsCheckboxPlugin: ObjectPlugin;
+
+export declare type CheckboxEventProps = UpdateModelValueEventProps<Numberish | boolean | null> & {
+  /**
+   * Fired when this checkbox component's "checked" state is updated.
+   */
+  checked?: (checked: boolean) => void;
+};
+
+export declare interface CheckboxEventPublic extends UpdateModelValueEventPublic<
+  Numberish | boolean | null
+> {
+  /**
+   * Fired when this checkbox component's "checked" state is updated.
+   */
+  onChecked?: (checked: boolean) => void;
+
+  /**
+   * Fired when this checkbox component's "checked" state is updated.
+   */
+  '@checked'?: (checked: boolean) => void;
+}
+
+export declare type BsCheckbox = DefineComponent<
+  TBsCheckbox,
+  TRecord,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  CheckboxEventProps,
+  string,
+  PublicProps,
+  Readonly<TCheckboxOptionProps> & Readonly<CheckboxEventPublic>,
+  ExtractDefaultPropTypes<TBsCheckbox>,
+  SlotsType<VoidDefaultSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  false,
+  TRecord,
+  never
+>;
+
+export declare interface CheckboxGroupSlots extends VoidDefaultSlots {
+  /**
+   * The default slot used to place the custom help text of the CheckboxGroup.
+   */
+  'help-text'?: () => VNode[] | VNode;
+}
+
+export declare type BsCheckboxGroup = DefineComponent<
+  TBsCheckboxGroup,
+  () => VNode,
+  TRecord,
+  ComputedOptions,
+  MethodOptions,
+  ComponentOptionsMixin,
+  ComponentOptionsMixin,
+  UpdateModelValueEventProps<(string | number | unknown)[]>,
+  string,
+  PublicProps,
+  Readonly<TCheckboxGroupOptionProps> &
+    Readonly<UpdateModelValueEventPublic<(string | number | unknown)[]>>,
+  ExtractDefaultPropTypes<TBsCheckboxGroup>,
+  SlotsType<CheckboxGroupSlots>,
+  Record<string, Component>,
+  Record<string, Directive>,
+  string,
+  ComponentProvideOptions,
+  true,
+  TRecord,
+  never
+>;
