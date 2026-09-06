@@ -46,49 +46,7 @@ export declare type TBsContainer = ComponentObjectPropsOptions<TContainerOptionP
 
 export declare type TBsContent = ComponentObjectPropsOptions<TContainerOptionProps>;
 
-// export declare interface AllowedContainerProps extends PublicComponentProps {
-//   /**
-//    * Fired when this component size is changed.
-//    */
-//   onResize?: (target: HTMLElement) => void;
-//
-//   /**
-//    * Fired when this component size is changed.
-//    */
-//   '@resize'?: (target: HTMLElement) => void;
-// }
-//
-// declare const BsApp: {
-//   new (): {
-//     $props: PublicComponentProps & TAppContainerOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// }
-//
-// export declare const BsContainer: {
-//   new (): {
-//     $props: AllowedContainerProps & TContainerOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'resize', target: HTMLElement): void;
-//     };
-//   };
-// };
-//
-// export declare const BsContent: {
-//   new (): {
-//     $props: PublicComponentProps & TContainerOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-
-export declare type BsApp = DefineComponent<
+export declare type BsAppConstructor = DefineComponent<
   TBsAppContainer,
   TRecord,
   TRecord,
@@ -106,10 +64,17 @@ export declare type BsApp = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsApp: {
+  new (): {
+    $props: TAppContainerOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
 
 export declare type ContainerEventProps = {
   /**
@@ -130,7 +95,7 @@ export declare interface ContainerEventPublic {
   '@resize'?: (target: HTMLElement) => void;
 }
 
-export declare type BsContainer = DefineComponent<
+export declare type BsContainerConstructor = DefineComponent<
   TBsContainer,
   TRecord,
   TRecord,
@@ -148,12 +113,20 @@ export declare type BsContainer = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsContent = DefineComponent<
+export declare const BsContainer: {
+  new (): {
+    $props: TContainerOptionProps & ContainerEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: ContainerEventProps;
+  };
+};
+
+export declare type BsContentConstructor = DefineComponent<
   TBsContent,
   TRecord,
   TRecord,
@@ -171,7 +144,14 @@ export declare type BsContent = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsContent: {
+  new (): {
+    $props: TContainerOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};

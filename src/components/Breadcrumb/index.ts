@@ -7,5 +7,4 @@ const BsBreadcrumbPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Breadcrumb/types';
 export { BsBreadcrumb, BsBreadcrumbPlugin };

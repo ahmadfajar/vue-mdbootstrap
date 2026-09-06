@@ -79,7 +79,7 @@ export default defineComponent<TBsAlert>({
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

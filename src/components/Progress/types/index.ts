@@ -220,31 +220,7 @@ export declare type TBsProgress = ComponentObjectPropsOptions<TProgressOptionPro
 
 export declare type TBsProgressBar = ComponentObjectPropsOptions<TProgressBarOptionProps>;
 
-// export declare const BsMaskLoader: {
-//   new (): {
-//     $props: PublicComponentProps & TMaskLoaderOptionProps;
-//   };
-// };
-//
-// export declare const BsSpinLoader: {
-//   new (): {
-//     $props: PublicComponentProps & TSpinLoaderOptionProps;
-//   };
-// };
-//
-// export declare const BsProgress: {
-//   new (): {
-//     $props: PublicComponentProps & TProgressOptionProps;
-//   };
-// };
-//
-// export declare const BsProgressBar: {
-//   new (): {
-//     $props: PublicComponentProps & TProgressBarOptionProps;
-//   };
-// };
-
-export declare type BsMaskLoader = DefineComponent<
+export declare type BsMaskLoaderConstructor = DefineComponent<
   TBsMaskLoader,
   TRecord,
   TRecord,
@@ -262,12 +238,18 @@ export declare type BsMaskLoader = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsProgress = DefineComponent<
+export declare const BsMaskLoader: {
+  new (): {
+    $props: TMaskLoaderOptionProps & PublicProps;
+  };
+};
+
+export declare type BsProgressConstructor = DefineComponent<
   TBsProgress,
   TRecord,
   TRecord,
@@ -285,12 +267,18 @@ export declare type BsProgress = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsProgressBar = DefineComponent<
+export declare const BsProgress: {
+  new (): {
+    $props: TProgressOptionProps & PublicProps;
+  };
+};
+
+export declare type BsProgressBarConstructor = DefineComponent<
   TBsProgressBar,
   TRecord,
   TRecord,
@@ -308,12 +296,18 @@ export declare type BsProgressBar = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsSpinLoader = DefineComponent<
+export declare const BsProgressBar: {
+  new (): {
+    $props: TProgressBarOptionProps & PublicProps;
+  };
+};
+
+export declare type BsSpinLoaderConstructor = DefineComponent<
   TBsSpinLoader,
   TRecord,
   TRecord,
@@ -331,7 +325,13 @@ export declare type BsSpinLoader = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsSpinLoader: {
+  new (): {
+    $props: TSpinLoaderOptionProps & PublicProps;
+  };
+};

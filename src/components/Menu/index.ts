@@ -9,5 +9,4 @@ const BsMenuPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Menu/types';
 export { BsDropdownMenu, BsMenuPlugin };

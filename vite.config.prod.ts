@@ -1,14 +1,14 @@
 import path from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
-import { bannerText } from './banner';
+import { bannerText } from './banner.ts';
 
 export default defineConfig({
   mode: 'production',
   build: {
     lib: {
       // Could also be a dictionary or array of multiple entry points
-      entry: path.resolve(__dirname, 'src/index.ts'),
+      entry: path.resolve(import.meta.dirname, 'src/index.ts'),
       name: 'VueMdb',
       fileName: (format) => {
         switch (format) {

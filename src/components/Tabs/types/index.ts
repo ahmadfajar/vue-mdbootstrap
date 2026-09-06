@@ -18,6 +18,7 @@ import type {
   ExtractDefaultPropTypes,
   MethodOptions,
   PublicProps,
+  Ref,
   SlotsType,
   VNode,
 } from 'vue';
@@ -143,62 +144,6 @@ export declare type TBsTabPanel = ComponentObjectPropsOptions<TTabPanelOptionPro
 
 export declare type TBsTabLabel = ComponentObjectPropsOptions<TTabLabelOptionProps>;
 
-// export declare const BsTab: {
-//   new (): {
-//     $props: PublicComponentProps & TTabPanelOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $exposed: {
-//       isActive: Ref<boolean>;
-//     };
-//     isActive: Ref<boolean>;
-//   };
-// };
-
-// declare interface AllowedTabsProps
-//   extends PublicComponentProps, UpdateModelValueEventPublic<number> {
-//   /**
-//    * Fired when active tab is changed.
-//    */
-//   onChange?: (
-//     newTab: ComponentInternalInstance,
-//     newIndex: number,
-//     oldTab: ComponentInternalInstance | undefined,
-//     oldIndex?: number
-//   ) => void;
-//
-//   /**
-//    * Fired when active tab is changed.
-//    */
-//   '@change'?: (
-//     newTab: ComponentInternalInstance,
-//     newIndex: number,
-//     oldTab: ComponentInternalInstance | undefined,
-//     oldIndex?: number
-//   ) => void;
-// }
-
-// export declare const BsTabs: {
-//   new (): {
-//     $props: AllowedTabsProps & TTabsOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       'append-header'?: () => VNode;
-//     };
-//     $emits: {
-//       (
-//         event: 'change',
-//         newTab: ComponentInternalInstance,
-//         newIndex: number,
-//         oldTab: ComponentInternalInstance | undefined,
-//         oldIndex?: number
-//       ): void;
-//       (event: 'update:model-value', value: number): void;
-//     };
-//   };
-// };
-
 export declare type TabEventProps = UpdateModelValueEventProps<number> & {
   /**
    * Fired when active tab is changed.
@@ -240,7 +185,7 @@ export declare interface TabSlots extends VoidDefaultSlots {
   'append-header'?: () => VNode[] | VNode;
 }
 
-export declare type BsTabs = DefineComponent<
+export declare type BsTabsConstructor = DefineComponent<
   TBsTabs,
   TRecord,
   TRecord,
@@ -258,12 +203,20 @@ export declare type BsTabs = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsTab = DefineComponent<
+export declare const BsTabs: {
+  new (): {
+    $props: TTabsOptionProps & TabEventPublic & PublicProps;
+    $slots: TabSlots;
+    $emit: TabEventProps;
+  };
+};
+
+export declare type BsTabConstructor = DefineComponent<
   TBsTabPanel,
   TRecord,
   TRecord,
@@ -281,7 +234,18 @@ export declare type BsTab = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsTab: {
+  new (): {
+    $props: TTabPanelOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+    $expose: {
+      isActive: Ref<boolean>;
+    };
+    isActive: Ref<boolean>;
+  };
+};

@@ -64,13 +64,15 @@ export declare interface DataModel<T> extends ObjectBase {
    * as needed on the inheritance class or put it on the constructor
    * of the inheritance class or when instantiate the model.
    *
-   * @example
+   * Example overriding the returns value:
+   * ```js
    * return {
    *    'url'       : '/api/token/{name}',
    *    'tokenName' : 'token_name',
    *    'dataField' : 'token',
    *    'suffix'    : false
    * }
+   * ```
    */
   readonly csrfConfig: Readonly<CSRFConfig> | undefined;
 
@@ -87,13 +89,15 @@ export declare interface DataModel<T> extends ObjectBase {
    * as needed on the inheritance class or put it on the constructor
    * of the inheritance class or when instantiate the model.
    *
-   * @example
+   * Example overriding the returns value:
+   * ```js
    * return {
    *    'save'  : '/api/user/create',
    *    'fetch' : '/api/user/{id}',
    *    'update': '/api/user/{id}/save',
    *    'delete': '/api/user/{id}/delete'
    * }
+   * ```
    */
   get restUrl(): RestConfig;
   set restUrl(option: RestConfig);
@@ -265,7 +269,8 @@ export declare type TBsModel<T extends TRecord = TRecord> = DataModel<T> & {
 /**
  * Data Model class for working with entity object and remote API.
  *
- * @example
+ * Usage examples:
+ * ```js
  * const model1 = new BsModel({
  *     uid: null,
  *     username: null,
@@ -299,6 +304,7 @@ export declare type TBsModel<T extends TRecord = TRecord> = DataModel<T> & {
  *         suffix: false,
  *     },
  * }, adapter, 'uid');
+ * ```
  *
  * @author Ahmad Fajar
  * @since  09/07/2018 modified: 01/05/2026 14:38
@@ -320,12 +326,8 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
   /**
    * Construct new {@link BsModel} object instance.
    *
-   * @param schema       The data model schema
-   * @param adapter      Axios adapter instance
-   * @param idProperty   Data model ID field name
-   * @param dataProperty REST response data property
-   *
-   * @example
+   * Usage examples:
+   * ```js
    * const model1 = new BsModel({
    *     uid: null,
    *     username: null,
@@ -359,6 +361,13 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
    *         suffix: false,
    *     },
    * }, adapter, 'uid');
+   * ```
+   *
+   * @param schema       The data model schema
+   * @param adapter      Axios adapter instance
+   * @param idProperty   Data model ID field name
+   * @param dataProperty REST response data property
+   *
    */
   constructor(
     schema: ModelConfig | TRecord,
@@ -443,18 +452,6 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
     return Object.getPrototypeOf(this).constructor.name as string;
   }
 
-  /**
-   * Get/Override CSRF configuration in the form `{key: value}`, where the keys are:
-   * `url`, `tokenName`, `dataField`, `suffix`.
-   *
-   * @example
-   * return {
-   *    'url'       : '/api/token/{name}',
-   *    'tokenName' : 'token_name',
-   *    'dataField' : 'token',
-   *    'suffix'    : false
-   * }
-   */
   get csrfConfig(): Readonly<CSRFConfig> | undefined {
     return this._csrfConfig;
   }
@@ -463,22 +460,6 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
     return this._proxy;
   }
 
-  /**
-   * Get/Set REST URL configuration in the form `{key: url}`,
-   * where the keys are: `save`, `fetch`, `delete`, `update`.
-   *
-   * For backward compatibility you can override this function
-   * as needed on the inheritance class or put it on the constructor
-   * of the inheritance class or when instantiate the model.
-   *
-   * @example
-   * return {
-   *    'save'  : '/api/user/create',
-   *    'fetch' : '/api/user/{id}',
-   *    'update': '/api/user/{id}/save',
-   *    'delete': '/api/user/{id}/delete'
-   * }
-   */
   get restUrl(): RestConfig {
     return this._restUrl;
   }
@@ -552,8 +533,11 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
 
     return this._requestWithToken(
       config,
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_checkBeforeDelete'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_onDeleteSuccess'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_onDeleteFailure'],
       '-delete'
     );
@@ -574,8 +558,11 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
 
     return this.proxy.request(
       config,
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_checkBeforeLoading'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_onLoadingSuccess'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_onLoadingFailure']
     );
   }
@@ -673,18 +660,24 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
     return this._requestWithToken(
       config,
       ['post', 'put', 'patch'].includes(config['method'])
-        ? this['_checkBeforeSave']
-        : this['_checkBeforeLoading'],
+        ? // eslint-disable-next-line @typescript-eslint/unbound-method
+          this['_checkBeforeSave']
+        : // eslint-disable-next-line @typescript-eslint/unbound-method
+          this['_checkBeforeLoading'],
       Helper.isFunction(successCb)
         ? successCb
         : ['post', 'put', 'patch'].includes(config['method'])
-          ? this['_onSaveSuccess']
-          : this['_onLoadingSuccess'],
+          ? // eslint-disable-next-line @typescript-eslint/unbound-method
+            this['_onSaveSuccess']
+          : // eslint-disable-next-line @typescript-eslint/unbound-method
+            this['_onLoadingSuccess'],
       Helper.isFunction(errorCb)
         ? errorCb
         : ['post', 'put', 'patch'].includes(config['method'])
-          ? this['_onSaveFailure']
-          : this['_onLoadingFailure']
+          ? // eslint-disable-next-line @typescript-eslint/unbound-method
+            this['_onSaveFailure']
+          : // eslint-disable-next-line @typescript-eslint/unbound-method
+            this['_onLoadingFailure']
     );
   }
 
@@ -738,8 +731,11 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
 
     return this._requestWithToken(
       config,
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_checkBeforeSave'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_onSaveSuccess'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_onSaveFailure'],
       '-create'
     );
@@ -750,8 +746,11 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
 
     return this._requestWithToken(
       config,
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_checkBeforeSave'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_onSaveSuccess'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_onSaveFailure'],
       '-update'
     );
@@ -782,9 +781,10 @@ export class BsModel<T extends TRecord = TRecord> implements DataModel<T> {
         this._schema.has(k) && this._schema.set(k, values[k]);
       });
 
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       if (Helper.isFunction(this['onAfterFetch'])) {
-        this['onAfterFetch'](values)
-      };
+        this['onAfterFetch'](values);
+      }
     };
 
     if (Helper.isEmpty(_data)) {

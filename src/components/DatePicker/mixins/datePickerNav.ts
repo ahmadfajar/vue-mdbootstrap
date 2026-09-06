@@ -1,4 +1,5 @@
-import { BsButton, type TButtonColor } from '@/components/Button';
+import { BsButton } from '@/components/Button';
+import type { TButtonColor } from '@/components/Button/types';
 import { DatePickerConst } from '@/components/DatePicker/mixins/datePickerApi.ts';
 import {
   dispatchDateTimeValue,

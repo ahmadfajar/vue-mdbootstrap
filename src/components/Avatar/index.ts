@@ -7,5 +7,4 @@ const BsAvatarPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Avatar/types';
 export { BsAvatar, BsAvatarPlugin };

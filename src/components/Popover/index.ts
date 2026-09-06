@@ -8,5 +8,4 @@ const BsPopoverPlugin: ObjectPlugin = {
 };
 
 export * from '@/components/Popover/mixins/PopupManager';
-export type * from '@/components/Popover/types';
 export { BsPopover, BsPopoverPlugin };

@@ -3,5 +3,6 @@
 /scss/banner.scss
 /src/components/index.ts
 /src/framework.ts
+/src/declaration.ts
 /src/index.ts
 /src/shared.ts

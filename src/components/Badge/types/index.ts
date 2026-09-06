@@ -52,16 +52,7 @@ export declare type TBadgeOptionProps = {
 
 export declare type TBsBadge = ComponentObjectPropsOptions<TBadgeOptionProps>;
 
-// export declare const BsBadge: {
-//   new (): {
-//     $props: PublicComponentProps & TBadgeOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-
-export declare type BsBadge = DefineComponent<
+export declare type BsBadgeConstructor = DefineComponent<
   TBsBadge,
   TRecord,
   TRecord,
@@ -83,3 +74,10 @@ export declare type BsBadge = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsBadge: {
+  new (): {
+    $props: TBadgeOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};

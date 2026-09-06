@@ -622,7 +622,7 @@ export function useRenderTextArea(
             showClearButton.value,
             props.actionIconVariant as TIconVariant,
             iconSize,
-            async () => await useOnFieldValueCleared(emit, localValue)
+            async () => await useOnFieldValueCleared<string>(emit, localValue)
           )
         ),
         useRenderFieldFeedback(

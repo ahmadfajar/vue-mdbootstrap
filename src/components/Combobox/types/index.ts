@@ -249,230 +249,19 @@ export declare type TBsListbox = ComponentObjectPropsOptions<TListboxOptionProps
 
 export declare type TBsCombobox = ComponentObjectPropsOptions<TComboboxOptionProps>;
 
-// declare interface AllowedListboxProps
-//   extends
-//     PublicComponentProps,
-//     UpdateModelValueEventPublic<string | number | string[] | number[] | undefined> {
-//   /**
-//    * Fired when an item is selected.
-//    */
-//   onSelect?: (item: IBsModel) => void;
-//
-//   /**
-//    * Fired when an item is deselected.
-//    */
-//   onDeselect?: (item: IBsModel) => void;
-//
-//   /**
-//    * Fired when the data has been fetched.
-//    */
-//   onDataBind?: (data: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when error loading data items.
-//    */
-//   onDataError?: (error: unknown) => void;
-//
-//   /**
-//    * Fired when the Listbox data items is filtered.
-//    */
-//   onDataFilter?: (data: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when the Listbox search value is updated.
-//    */
-//   'onUpdate:search-text'?: (search?: string) => void;
-//
-//   /**
-//    * Fired when the Listbox selected value is updated.
-//    */
-//   'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when an item is selected.
-//    */
-//   '@select'?: (item: IBsModel) => void;
-//
-//   /**
-//    * Fired when an item is deselected.
-//    */
-//   '@deselect'?: (item: IBsModel) => void;
-//
-//   /**
-//    * Fired when the data has been fetched.
-//    */
-//   '@data-bind'?: (data: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when error loading data items.
-//    */
-//   '@data-error'?: (error: unknown) => void;
-//
-//   /**
-//    * Fired when the Listbox data items is filtered.
-//    */
-//   '@data-filter'?: (data: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when the Listbox search value is updated.
-//    */
-//   '@update:search-text'?: (search?: string) => void;
-//
-//   /**
-//    * Fired when the Listbox selected value is updated.
-//    */
-//   '@update:selected-value'?: (selected: IBsModel[]) => void;
-// }
-//
-// export declare const BsListbox: {
-//   new (): {
-//     $props: AllowedListboxProps & TListboxOptionProps;
-//     $slots: {
-//       'option-item'?: (arg: { item: IBsModel; index: number }) => VNode;
-//       'empty-data-msg'?: () => VNode;
-//       'not-found-msg'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'select', item: IBsModel): void;
-//       (event: 'deselect', item: IBsModel): void;
-//       (event: 'data-bind', data: IBsModel[]): void;
-//       (event: 'data-error', error: unknown): void;
-//       (event: 'data-filter', data: IBsModel[]): void;
-//       (event: 'update:model-value', value: string | number | string[] | number[] | undefined): void;
-//       (event: 'update:search-text', search?: string): void;
-//       (event: 'update:search-value', selected: IBsModel[]): void;
-//     };
-//   };
-// };
-
-// declare interface AllowedComboboxProps
-//   extends
-//     PublicComponentProps,
-//     ClosableVoidEventPublic,
-//     UpdateModelValueEventPublic<string | number | string[] | number[] | undefined> {
-//   /**
-//    * Fired when this component's value is being cleared.
-//    */
-//   onClear?: VoidFunction;
-//
-//   /**
-//    * Fired when the Popover is show.
-//    */
-//   onOpen?: VoidFunction;
-//
-//   /**
-//    * Fired when an item is selected.
-//    */
-//   onSelect?: (item: IBsModel) => void;
-//
-//   /**
-//    * Fired when an item is deselected.
-//    */
-//   onDeselect?: (item: IBsModel) => void;
-//
-//   /**
-//    * Fired when the data has been fetched.
-//    */
-//   onDataBind?: (data: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when error loading data items.
-//    */
-//   onDataError?: (error: unknown) => void;
-//
-//   /**
-//    * Fired when this component's data items is filtered.
-//    */
-//   onDataFilter?: (data: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when this component's selected value is updated.
-//    */
-//   'onUpdate:selected-value'?: (selected: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when this component's value is being cleared.
-//    */
-//   '@clear'?: VoidFunction;
-//
-//   /**
-//    * Fired when the Popover is show.
-//    */
-//   '@open'?: VoidFunction;
-//
-//   /**
-//    * Fired when an item is selected.
-//    */
-//   '@select'?: (item: IBsModel) => void;
-//
-//   /**
-//    * Fired when an item is deselected.
-//    */
-//   '@deselect'?: (item: IBsModel) => void;
-//
-//   /**
-//    * Fired when the data has been fetched.
-//    */
-//   '@data-bind'?: (data: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when error loading data items.
-//    */
-//   '@data-error'?: (error: unknown) => void;
-//
-//   /**
-//    * Fired when this component's data items is filtered.
-//    */
-//   '@data-filter'?: (data: IBsModel[]) => void;
-//
-//   /**
-//    * Fired when this component's selected value is updated.
-//    */
-//   '@update:selected-value'?: (selected: IBsModel[]) => void;
-// }
-//
-// export declare const BsCombobox: {
-//   new (): {
-//     $props: AllowedComboboxProps & TComboboxOptionProps;
-//     $slots: {
-//       default?: (arg: { id: string }) => VNode[];
-//       'option-item'?: (arg: { item: IBsModel; index: number }) => VNode;
-//       'append-inner'?: () => VNode;
-//       'append-outer'?: () => VNode;
-//       'prepend-inner'?: () => VNode;
-//       'prepend-outer'?: () => VNode;
-//       'empty-data-msg'?: () => VNode;
-//       'not-found-msg'?: () => VNode;
-//       'help-text'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'clear'): void;
-//       (event: 'close'): void;
-//       (event: 'open'): void;
-//       (event: 'select', item: IBsModel): void;
-//       (event: 'deselect', item: IBsModel): void;
-//       (event: 'data-bind', data: IBsModel[]): void;
-//       (event: 'data-error', error: unknown): void;
-//       (event: 'data-filter', data: IBsModel[]): void;
-//       (event: 'update:model-value', value: string | number | string[] | number[] | undefined): void;
-//       (event: 'update:search-value', selected: IBsModel[]): void;
-//     };
-//   };
-// };
-
 export declare interface ComboboxSlots extends FieldSlots {
   /**
-   * Additional slot used to customize the listbox items appearance.
+   * Additional slot used to customize the Listbox items appearance.
    */
-  'option-item'?: (arg: { item: TBsModel; index: number }) => VNode[] | VNode;
+  'option-item'?: ({ item, index }: { item: TBsModel; index: number }) => VNode[] | VNode;
 
   /**
-   * Additional slot used to place custom message when listbox is empty.
+   * Additional slot used to place custom message when Listbox is empty.
    */
   'empty-data-msg'?: () => VNode[] | VNode;
 
   /**
-   * Additional slot used to place custom message when filtering listbox items returns no result.
+   * Additional slot used to place custom message when filtering Listbox items returns no result.
    */
   'not-found-msg'?: () => VNode[] | VNode;
 }
@@ -607,7 +396,7 @@ export declare interface ComboboxEventPublic
   '@update:selected-value'?: (selected: TBsModel[]) => void;
 }
 
-export declare type BsCombobox = DefineComponent<
+export declare type BsComboboxConstructor = DefineComponent<
   TBsCombobox,
   TRecord,
   TRecord,
@@ -625,14 +414,22 @@ export declare type BsCombobox = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
+export declare const BsCombobox: {
+  new (): {
+    $props: TComboboxOptionProps & ComboboxEventPublic & PublicProps;
+    $slots: ComboboxSlots;
+    $emit: ComboboxEventProps;
+  };
+};
+
 export declare interface ListboxSlots {
   /**
-   * Additional slot used to customize the listbox items appearance.
+   * Additional slot used to customize the Listbox items appearance.
    */
   'option-item'?: (arg: { item: TBsModel; index: number }) => VNode[] | VNode;
 
@@ -760,7 +557,7 @@ export declare interface ListboxEventPublic extends UpdateModelValueEventPublic<
   '@update:selected-value'?: (selected: TBsModel[]) => void;
 }
 
-export declare type BsListbox = DefineComponent<
+export declare type BsListboxConstructor = DefineComponent<
   TBsListbox,
   TRecord,
   TRecord,
@@ -778,7 +575,15 @@ export declare type BsListbox = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsListbox: {
+  new (): {
+    $props: TListboxOptionProps & ListboxEventPublic & PublicProps;
+    $slots: ListboxSlots;
+    $emit: ListboxEventProps;
+  };
+};

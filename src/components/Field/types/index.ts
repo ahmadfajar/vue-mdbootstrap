@@ -497,209 +497,7 @@ export declare type TBsNumericField = ComponentObjectPropsOptions<TNumericFieldO
 
 export declare type TBsSearchField = ComponentObjectPropsOptions<TSearchFieldOptionProps>;
 
-// declare interface AllowedInputFieldEvents extends PublicComponentProps {
-//   /**
-//    * Fired when this component lost focus.
-//    */
-//   onBlur?: EventListener;
-//
-//   /**
-//    * Fired when this component's value is being cleared.
-//    */
-//   onClear?: VoidFunction;
-//
-//   /**
-//    * Fired when this component got focused.
-//    */
-//   onFocus?: EventListener;
-//
-//   /**
-//    * Fired when `KeyboardEvent` is triggered by the `<input>` element.
-//    */
-//   onKeydown?: EventListener;
-//
-//   /**
-//    * Fired when this component lost focus.
-//    */
-//   '@blur'?: EventListener;
-//
-//   /**
-//    * Fired when this component's value is being cleared.
-//    */
-//   '@clear'?: VoidFunction;
-//
-//   /**
-//    * Fired when this component got focused.
-//    */
-//   '@focus'?: EventListener;
-//
-//   /**
-//    * Fired when `KeyboardEvent` is triggered by the `<input>` element.
-//    */
-//   '@keydown'?: EventListener;
-// }
-
-// export declare const BsTextField: {
-//   new (): {
-//     $props: AllowedInputFieldEvents &
-//       UpdateModelValueEventPublic<string | null> &
-//       TTextFieldOptionProps;
-//     $slots: {
-//       default?: (arg: { id: string }) => VNode[];
-//       'append-inner'?: () => VNode;
-//       'append-outer'?: () => VNode;
-//       'prepend-inner'?: () => VNode;
-//       'prepend-outer'?: () => VNode;
-//       'help-text'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'clear'): void;
-//       (event: 'blur', target: Event): void;
-//       (event: 'focus', target: Event): void;
-//       (event: 'keydown', target: Event): void;
-//       (event: 'update:model-value', value: string | null): void;
-//     };
-//   };
-// };
-
-// export declare const BsTextArea: {
-//   new (): {
-//     $props: AllowedInputFieldEvents &
-//       UpdateModelValueEventPublic<string | null> &
-//       TTextAreaOptionProps;
-//     $slots: {
-//       default?: (arg: { id: string }) => VNode[];
-//       'append-inner'?: () => VNode;
-//       'append-outer'?: () => VNode;
-//       'prepend-inner'?: () => VNode;
-//       'prepend-outer'?: () => VNode;
-//       'help-text'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'clear'): void;
-//       (event: 'blur', target: Event): void;
-//       (event: 'focus', target: Event): void;
-//       (event: 'keydown', target: Event): void;
-//       (event: 'update:model-value', value: string | null): void;
-//     };
-//   };
-// };
-
-// declare interface ChipFieldEvents extends AllowedInputFieldEvents {
-//   /**
-//    * Fired when an item is deleted from the collection.
-//    */
-//   'onDelete-item'?: (deletedItem: string) => void;
-//
-//   /**
-//    * Fired when an item is deleted from the collection.
-//    */
-//   '@delete-item'?: (deletedItem: string) => void;
-// }
-
-// export declare const BsChipField: {
-//   new (): {
-//     $props: ChipFieldEvents &
-//       UpdateModelValueEventPublic<string | string[]> &
-//       TChipFieldOptionProps;
-//     $slots: {
-//       default?: (arg: { id: string }) => VNode[];
-//       'append-inner'?: () => VNode;
-//       'append-outer'?: () => VNode;
-//       'prepend-inner'?: () => VNode;
-//       'prepend-outer'?: () => VNode;
-//       'help-text'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'clear'): void;
-//       (event: 'blur', target: Event): void;
-//       (event: 'focus', target: Event): void;
-//       (event: 'keydown', target: Event): void;
-//       (event: 'delete-item', deletedItem: string): void;
-//       (event: 'update:model-value', value: string | string[]): void;
-//     };
-//   };
-// };
-
-// export declare const BsNumericField: {
-//   new (): {
-//     $props: AllowedInputFieldEvents &
-//       UpdateModelValueEventPublic<number | null> &
-//       TNumericFieldOptionProps;
-//     $slots: {
-//       default?: (arg: { id: string }) => VNode[];
-//       'append-inner'?: () => VNode;
-//       'append-outer'?: () => VNode;
-//       'prepend-inner'?: () => VNode;
-//       'prepend-outer'?: () => VNode;
-//       'help-text'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'clear'): void;
-//       (event: 'blur', target: Event): void;
-//       (event: 'focus', target: Event): void;
-//       (event: 'keydown', target: Event): void;
-//       (event: 'update:model-value', value: number | null): void;
-//     };
-//   };
-// };
-
-// declare type SearchFieldBaseEvents = Omit<AllowedInputFieldEvents, 'onKeydown' | '@keydown'>;
-//
-// declare interface SearchFieldEvents extends SearchFieldBaseEvents {
-//   /**
-//    * Fired when the Popover is hiding.
-//    */
-//   onClose?: VoidFunction;
-//
-//   /**
-//    * Fired when the Popover is show.
-//    */
-//   onOpen?: VoidFunction;
-//
-//   /**
-//    * Asks handler to start searching for the given keyword.
-//    */
-//   onSearch?: (value: string) => void;
-//
-//   /**
-//    * Fired when the Popover is hiding.
-//    */
-//   '@close'?: VoidFunction;
-//
-//   /**
-//    * Fired when the Popover is show.
-//    */
-//   '@open'?: VoidFunction;
-//
-//   /**
-//    * Asks handler to start searching for the given keyword.
-//    */
-//   '@search'?: (value: string) => void;
-// }
-//
-// export declare const BsSearchField: {
-//   new (): {
-//     $props: SearchFieldEvents &
-//       UpdateModelValueEventPublic<string | null> &
-//       TSearchFieldOptionProps;
-//     $slots: {
-//       popover?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'clear'): void;
-//       (event: 'close'): void;
-//       (event: 'open'): void;
-//       (event: 'blur', target: Event): void;
-//       (event: 'focus', target: Event): void;
-//       (event: 'keydown', target: Event): void;
-//       (event: 'search', value: string): void;
-//       (event: 'update:model-value', value: string | null): void;
-//     };
-//   };
-// };
-
-export declare type BsChipField = DefineComponent<
+export declare type BsChipFieldConstructor = DefineComponent<
   TBsChipField,
   TRecord,
   TRecord,
@@ -717,12 +515,20 @@ export declare type BsChipField = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsNumericField = DefineComponent<
+export declare const BsChipField: {
+  new (): {
+    $props: TChipFieldOptionProps & ChipFieldEventPublic & PublicProps;
+    $slots: FieldSlots;
+    $emit: ChipFieldEventProps;
+  };
+};
+
+export declare type BsNumericFieldConstructor = DefineComponent<
   TBsNumericField,
   TRecord,
   TRecord,
@@ -740,12 +546,20 @@ export declare type BsNumericField = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsSearchField = DefineComponent<
+export declare const BsNumericField: {
+  new (): {
+    $props: TNumericFieldOptionProps & NumericFieldEventPublic & PublicProps;
+    $slots: FieldSlots;
+    $emit: NumericFieldEventProps;
+  };
+};
+
+export declare type BsSearchFieldConstructor = DefineComponent<
   TBsSearchField,
   TRecord,
   TRecord,
@@ -763,12 +577,20 @@ export declare type BsSearchField = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsTextArea = DefineComponent<
+export declare const BsSearchField: {
+  new (): {
+    $props: TSearchFieldOptionProps & SearchFieldEventPublic & PublicProps;
+    $slots: SearchFieldSlots;
+    $emit: SearchFieldEventProps;
+  };
+};
+
+export declare type BsTextAreaConstructor = DefineComponent<
   TBsTextArea,
   TRecord,
   TRecord,
@@ -786,12 +608,20 @@ export declare type BsTextArea = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsTextField = DefineComponent<
+export declare const BsTextArea: {
+  new (): {
+    $props: TTextAreaOptionProps & TextAreaEventPublic & PublicProps;
+    $slots: FieldSlots;
+    $emit: TextAreaEventProps;
+  };
+};
+
+export declare type BsTextFieldConstructor = DefineComponent<
   TBsTextField,
   TRecord,
   TRecord,
@@ -809,7 +639,15 @@ export declare type BsTextField = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsTextField: {
+  new (): {
+    $props: TTextFieldOptionProps & TextFieldEventPublic & PublicProps;
+    $slots: FieldSlots;
+    $emit: TextFieldEventProps;
+  };
+};

@@ -666,7 +666,7 @@ function renderColorPickerModeButtons(
           { value: 'OKLCH', label: 'OKLCH' },
         ],
         modelValue: pickerData.config.mode,
-        'onUpdate:modelValue': async (value: MaybeNumberish | unknown[]) => {
+        'onUpdate:modelValue': async (value: MaybeNumberish | boolean | unknown[]) => {
           pickerData.config.mode = value as TColorPickerMode;
           dispatchModelValue(emit, pickerData);
           await nextTick().then(() => emit('update:mode', value));

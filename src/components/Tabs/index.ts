@@ -9,6 +9,4 @@ const BsTabsPlugin: ObjectPlugin = {
   },
 };
 
-export type { ITabsProvider } from '@/components/Tabs/mixins/TabsProvider.ts';
-export type * from '@/components/Tabs/types';
 export { BsTab, BsTabs, BsTabsPlugin };

@@ -18,5 +18,4 @@ const BsNotificationPlugin: ObjectPlugin = {
 };
 
 export * from '@/components/Notification/mixins/NotificationProvider.ts';
-export type * from '@/components/Notification/types';
 export { BsNotification, BsNotificationPlugin };

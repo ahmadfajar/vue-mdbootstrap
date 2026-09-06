@@ -68,32 +68,6 @@ export declare type TSwitchOptionProps = TRadioOptionProps & {
 
 export declare type TBsSwitch = ComponentObjectPropsOptions<TSwitchOptionProps>;
 
-// declare interface AllowedSwitchProps
-//   extends PublicComponentProps, UpdateModelValueEventPublic<Numberish | boolean> {
-//   /**
-//    * Fired when this component's state is changed.
-//    */
-//   onChecked?: (checked: boolean) => void;
-//
-//   /**
-//    * Fired when this component's state is changed.
-//    */
-//   '@checked'?: (checked: boolean) => void;
-// }
-
-// export declare const BsSwitch: {
-//   new (): {
-//     $props: AllowedSwitchProps & TSwitchOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'checked', checked: boolean): void;
-//       (event: 'update:model-value', value: Numberish | boolean): void;
-//     };
-//   };
-// };
-
 export declare type SwitchEventProps = UpdateModelValueEventProps<Numberish | boolean> & {
   /**
    * Fired when this Switch component's checked state is changed.
@@ -115,7 +89,7 @@ export declare interface SwitchEventPublic extends UpdateModelValueEventPublic<
   '@checked'?: (checked: boolean) => void;
 }
 
-export declare type BsSwitch = DefineComponent<
+export declare type BsSwitchConstructor = DefineComponent<
   TBsSwitch,
   TRecord,
   TRecord,
@@ -133,7 +107,15 @@ export declare type BsSwitch = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsSwitch: {
+  new (): {
+    $props: TSwitchOptionProps & SwitchEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: SwitchEventProps;
+  };
+};

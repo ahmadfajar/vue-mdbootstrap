@@ -64,11 +64,8 @@ export declare interface IArrayStore<T extends TRecord = TRecord> extends Abstra
    * Sorts the internal dataset with the given criteria and returns
    * the reference of the internal dataset.
    *
-   * @param options    The field for sorting or `TSortOption` objects
-   * @param direction  The sort direction
-   * @returns The sorted dataset.
-   *
-   * @example
+   * Usage examples:
+   * ```js
    * // sort by a single field
    * const results = await myStore.sort('myField', 'asc');
    *
@@ -77,6 +74,11 @@ export declare interface IArrayStore<T extends TRecord = TRecord> extends Abstra
    *  {property: 'age', direction: 'desc'},
    *  {property: 'name', direction: 'asc'}
    * ]);
+   * ```
+   *
+   * @param options    The field for sorting or `TSortOption` objects
+   * @param direction  The sort direction
+   * @returns The sorted dataset.
    */
   sort(
     options: string | string[] | SortOption | SortOption[],
@@ -87,7 +89,8 @@ export declare interface IArrayStore<T extends TRecord = TRecord> extends Abstra
 /**
  * Data store class to work with collection of entity objects locally.
  *
- * @example
+ * Usage example:
+ * ```js
  * const myStore = new BsArrayStore(
  *   [
  *     {id: 1, name: 'Sandra Adams'},
@@ -102,6 +105,7 @@ export declare interface IArrayStore<T extends TRecord = TRecord> extends Abstra
  *     idProperty: 'id'
  *   }
  * );
+ * ```
  *
  * @author Ahmad Fajar
  * @since  13/03/2019 modified: 30/04/2026 09:29
@@ -113,10 +117,8 @@ export class BsArrayStore<T extends TRecord = TRecord>
   /**
    * Construct new {@link BsArrayStore} object instance.
    *
-   * @param data   Collection of records to be assigned
-   * @param config The configuration properties
-   *
-   * @example
+   * Usage example:
+   * ```js
    * const myStore = new BsArrayStore(
    *   [
    *     {id: 1, name: 'Sandra Adams'},
@@ -131,6 +133,10 @@ export class BsArrayStore<T extends TRecord = TRecord>
    *     idProperty: 'id'
    *   }
    * );
+   * ```
+   *
+   * @param data   Collection of records to be assigned
+   * @param config The configuration properties
    */
   constructor(data: unknown[], config: DataStoreConfig = {}) {
     super(config);

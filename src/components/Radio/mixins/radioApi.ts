@@ -58,7 +58,8 @@ export function useCreateInputRadioOrCheckbox(
   const thisValue = !Helper.isEmpty(props.value)
     ? Helper.isObject(props.value)
       ? JSON.stringify(props.value)
-      : String(props.value)
+      : // eslint-disable-next-line @typescript-eslint/no-base-to-string
+        String(props.value)
     : '';
 
   let inputProps = {

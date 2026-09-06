@@ -1,7 +1,5 @@
 import { type IListItem, ListItem } from '@/components/ListView/mixins/ListItem.ts';
 import {
-  type ListNavItemEventProps,
-  type ListNavItemEventPublic,
   useAddChild,
   useListNavItemClasses,
   useListNavItemInnerClasses,
@@ -10,7 +8,12 @@ import {
 } from '@/components/ListView/mixins/listNavApi.ts';
 import { listNavItemProps } from '@/components/ListView/mixins/listViewProps.ts';
 import type { IListViewProvider } from '@/components/ListView/mixins/ListViewProvider.ts';
-import type { TBsListNavItem, TListNavItemOptionProps } from '@/components/ListView/types';
+import type {
+  ListNavItemEventProps,
+  ListNavItemEventPublic,
+  TBsListNavItem,
+  TListNavItemOptionProps,
+} from '@/components/ListView/types';
 import { useCurrentRoute, useHasRouter, useRouteMatch } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
 import type { VoidDefaultSlots } from '@/types/internals.ts';

@@ -187,72 +187,6 @@ export declare type TBsChip = ComponentObjectPropsOptions<TChipOptionProps>;
 
 export declare type TBsChipGroup = ComponentObjectPropsOptions<TChipGroupOptionProps>;
 
-// declare interface AllowedChipProps
-//   extends PublicComponentProps, ClosableVoidEventPublic, UpdateModelValueEventPublic<boolean> {
-//   /**
-//    * Fired when this component state is updated.
-//    */
-//   'onUpdate:active'?: (active: boolean) => void;
-//
-//   /**
-//    * Fired when this component state is updated.
-//    */
-//   '@update:active'?: (active: boolean) => void;
-// }
-//
-// export declare const BsChip: {
-//   new (): {
-//     $props: AllowedChipProps & TChipOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       icon?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'close'): void;
-//       (event: 'update:model-value', value: boolean): void;
-//       (event: 'update:active', active: boolean): void;
-//     };
-//   };
-// };
-//
-// declare interface AllowedChipGroupProps
-//   extends PublicComponentProps, UpdateModelValueEventPublic<TChipValue | TChipValue[] | null> {
-//   /**
-//    * Fired immediately when this component's value is changed.
-//    */
-//   onChange?: (newValue: TChipValue | TChipValue[] | null) => void;
-//
-//   /**
-//    * Fired when this component's item is dismissed (hide).
-//    */
-//   'onItem:close'?: (dismissedItem: TChipValue) => void;
-//
-//   /**
-//    * Fired immediately when this component's value is changed.
-//    */
-//   '@change'?: (newValue: TChipValue | TChipValue[] | null) => void;
-//
-//   /**
-//    * Fired when this component's item is dismissed (hide).
-//    */
-//   '@item:close'?: (dismissedItem: TChipValue) => void;
-// }
-//
-// export declare const BsChipGroup: {
-//   new (): {
-//     $props: AllowedChipGroupProps & TChipGroupOptionProps;
-//     $slots: {
-//       text?: (props: TChipOptionItem) => VNode;
-//       icon?: (props: TChipOptionItem) => VNode;
-//     };
-//     $emits: {
-//       (event: 'change', newValue: TChipValue | TChipValue[] | null): void;
-//       (event: 'item:close', dismissedItem: TChipValue): void;
-//       (event: 'update:model-value', value: TChipValue | TChipValue[] | null): void;
-//     };
-//   };
-// };
-
 export declare type ChipEventProps = ClosableVoidEventProps &
   UpdateActiveEventProps &
   UpdateModelValueEventProps<boolean>;
@@ -267,7 +201,7 @@ export declare interface ChipSlots extends VoidDefaultSlots {
   icon?: () => VNode[] | VNode;
 }
 
-export declare type BsChip = DefineComponent<
+export declare type BsChipConstructor = DefineComponent<
   TBsChip,
   TRecord,
   TRecord,
@@ -285,10 +219,18 @@ export declare type BsChip = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsChip: {
+  new (): {
+    $props: TChipOptionProps & ChipEventPublic & PublicProps;
+    $slots: ChipSlots;
+    $emit: ChipEventProps;
+  };
+};
 
 export declare type ChipGroupEventProps = UpdateModelValueEventProps<
   TChipValue | TChipValue[] | null
@@ -340,7 +282,7 @@ export declare interface ChipGroupSlots extends VoidDefaultSlots {
   icon?: (props: TChipOptionItem) => VNode[] | VNode;
 }
 
-export declare type BsChipGroup = DefineComponent<
+export declare type BsChipGroupConstructor = DefineComponent<
   TBsChipGroup,
   () => VNode,
   TRecord,
@@ -362,3 +304,11 @@ export declare type BsChipGroup = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsChipGroup: {
+  new (): {
+    $props: TChipGroupOptionProps & ChipGroupEventPublic & PublicProps;
+    $slots: ChipGroupSlots;
+    $emit: ChipGroupEventProps;
+  };
+};

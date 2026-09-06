@@ -137,16 +137,7 @@ export declare type TAvatarOptionProps = TAvatarImageOptionProps &
 
 export declare type TBsAvatar = ComponentObjectPropsOptions<TAvatarOptionProps>;
 
-// export declare const BsAvatar: {
-//   new (): {
-//     $props: PublicComponentProps & TAvatarOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-
-export declare type BsAvatar = DefineComponent<
+export declare type BsAvatarConstructor = DefineComponent<
   TBsAvatar,
   TRecord,
   TRecord,
@@ -168,3 +159,10 @@ export declare type BsAvatar = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsAvatar: {
+  new (): {
+    $props: TAvatarOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};

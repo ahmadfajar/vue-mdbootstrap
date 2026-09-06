@@ -74,7 +74,7 @@ export default defineComponent<TBsToggleField>({
   string,
   PublicProps,
   Readonly<TToggleFieldOptionProps> &
-    Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
+    Readonly<UpdateModelValueEventPublic<MaybeNumberish | boolean | unknown[]>>,
   ExtractDefaultPropTypes<TBsToggleField>,
   SlotsType<ToggleFieldSlots>,
   Record<string, Component>,

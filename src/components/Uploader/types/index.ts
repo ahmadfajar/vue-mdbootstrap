@@ -1,4 +1,4 @@
-import type { TButtonColor } from '@/components/Button';
+import type { TButtonColor } from '@/components/Button/types';
 import type { Numberish, TRecord } from '@/types';
 import type { AxiosPromise } from 'axios';
 import type {
@@ -8,6 +8,7 @@ import type {
   ComponentProvideOptions,
   ComponentPublicInstance,
   ComputedOptions,
+  ComputedRef,
   DefineComponent,
   Directive,
   ExtractDefaultPropTypes,
@@ -16,6 +17,34 @@ import type {
   SlotsType,
   VNode,
 } from 'vue';
+
+export declare type TUploaderFileBag = {
+  /**
+   * The picture's file that exists within the component instance and ready to upload.
+   */
+  file?: File | null;
+
+  /**
+   * The name of the file. The path is stripped off, for security reason.
+   *
+   * @see [File](https://developer.mozilla.org/en-US/docs/Web/API/File) for more details.
+   */
+  filename?: string | null;
+
+  /**
+   * The size of the file, in bytes.
+   *
+   * @see [File](https://developer.mozilla.org/en-US/docs/Web/API/File) for more details.
+   */
+  filesize?: number | null;
+
+  /**
+   * The MIME type of the file.
+   *
+   * @see [File](https://developer.mozilla.org/en-US/docs/Web/API/File) for more details.
+   */
+  filetype?: string | null;
+};
 
 export declare type TFileBag = {
   file?: File | null;
@@ -93,49 +122,6 @@ export declare type TUploadError = {
   message: string;
 };
 
-// declare interface ImageUploaderEvents {
-//   /**
-//    * Fired when the image on this component is changed.
-//    */
-//   onChange?: (value: File) => void;
-//
-//   /**
-//    * Fired when the image on this component is cleared or removed.
-//    */
-//   onClear?: () => void;
-//
-//   /**
-//    * Fired when error is occurred.
-//    */
-//   onError?: (error: TUploadError) => void;
-//
-//   /**
-//    * Fired when the image on this component is changed.
-//    */
-//   '@change'?: (value: File) => void;
-//
-//   /**
-//    * Fired when the image on this component is cleared or removed.
-//    */
-//   '@clear'?: () => void;
-//
-//   /**
-//    * Fired when error is occurred.
-//    */
-//   '@error'?: (error: TUploadError) => void;
-// }
-
-// export declare const BsImageUploader: {
-//   new (): {
-//     $props: ImageUploaderEvents & PublicComponentProps & TImageUploaderOptionProps;
-//     $emits: {
-//       (event: 'clear'): void;
-//       (event: 'change', value: File): void;
-//       (event: 'error', error: TUploadError): void;
-//     };
-//   };
-// };
-
 /**
  * `<BsImageUploader>` component instance when exposed by `ref` attribute.
  */
@@ -151,33 +137,7 @@ export declare interface BsImageUploaderInstance extends ComponentPublicInstance
    */
   upload(url: string, property?: string, data?: TRecord): AxiosPromise;
 
-  fileBag: {
-    /**
-     * The picture's file that exists within the component instance and ready to upload.
-     */
-    file?: File | null;
-
-    /**
-     * The name of the file. The path is stripped off, for security reason.
-     *
-     * @see [File](https://developer.mozilla.org/en-US/docs/Web/API/File) for more details.
-     */
-    filename?: string | null;
-
-    /**
-     * The size of the file, in bytes.
-     *
-     * @see [File](https://developer.mozilla.org/en-US/docs/Web/API/File) for more details.
-     */
-    filesize?: number | null;
-
-    /**
-     * The MIME type of the file.
-     *
-     * @see [File](https://developer.mozilla.org/en-US/docs/Web/API/File) for more details.
-     */
-    filetype?: string | null;
-  };
+  fileBag: ComputedRef<TUploaderFileBag>;
 }
 
 export declare type ImageUploaderEventProps = {
@@ -229,7 +189,7 @@ export declare interface ImageUploaderEventPublic {
   '@error'?: (error: TUploadError) => void;
 }
 
-export declare type BsImageUploader = DefineComponent<
+export declare type BsImageUploaderConstructor = DefineComponent<
   TBsImageUploader,
   () => VNode,
   TRecord,
@@ -251,3 +211,16 @@ export declare type BsImageUploader = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsImageUploader: {
+  new (): {
+    $props: TImageUploaderOptionProps & ImageUploaderEventPublic & PublicProps;
+    $emit: ImageUploaderEventProps;
+    $expose: {
+      upload: (url: string, property?: string, data?: TRecord) => AxiosPromise;
+      fileBag: ComputedRef<TUploaderFileBag>;
+    };
+    upload: (url: string, property?: string, data?: TRecord) => AxiosPromise;
+    fileBag: ComputedRef<TUploaderFileBag>;
+  };
+};

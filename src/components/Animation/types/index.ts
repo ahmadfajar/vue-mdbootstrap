@@ -76,50 +76,7 @@ export declare type TBsOverlay = ComponentObjectPropsOptions<TOverlayOptionProps
 
 export declare type TBsRipple = ComponentObjectPropsOptions<TRippleOptionProps>;
 
-// export declare const BsExpandTransition: {
-//   new (): {
-//     $props: PublicComponentProps & TransitionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// declare interface AllowedOverlayProps extends PublicComponentProps {
-//   onClick?: (e: Event) => void;
-//   '@click'?: (e: Event) => void;
-// }
-//
-// export declare const BsOverlay: {
-//   new (): {
-//     $props: AllowedOverlayProps & TOverlayOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'click', value: Event): void;
-//     };
-//   };
-// };
-
-// declare interface AllowedRippleProps extends PublicComponentProps {
-//   'onUpdate:active'?: (value: boolean) => void;
-//   '@update:active'?: (value: boolean) => void;
-// }
-//
-// export declare const BsRipple: {
-//   new (): {
-//     $props: AllowedRippleProps & TRippleOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'update:active', value: boolean): void;
-//     };
-//   };
-// };
-
-export declare type BsExpandTransition = DefineComponent<
+export declare type BsExpandTransitionConstructor = DefineComponent<
   TRecord,
   () => VNode,
   TRecord,
@@ -142,6 +99,13 @@ export declare type BsExpandTransition = DefineComponent<
   never
 >;
 
+export declare const BsExpandTransition: {
+  new (): {
+    $props: PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
 export declare type OverlayEventProps = {
   /**
    * Fired when the Overlay component is clicked.
@@ -161,7 +125,7 @@ export declare interface OverlayEventPublic {
   '@click'?: (event: Event) => void;
 }
 
-export declare type BsOverlay = DefineComponent<
+export declare type BsOverlayConstructor = DefineComponent<
   TBsOverlay,
   TRecord,
   TRecord,
@@ -179,12 +143,20 @@ export declare type BsOverlay = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsRipple = DefineComponent<
+export declare const BsOverlay: {
+  new (): {
+    $props: TOverlayOptionProps & OverlayEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: OverlayEventProps;
+  };
+};
+
+export declare type BsRippleConstructor = DefineComponent<
   TBsRipple,
   TRecord,
   TRecord,
@@ -202,7 +174,15 @@ export declare type BsRipple = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsRipple: {
+  new (): {
+    $props: TRippleOptionProps & UpdateActiveEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: UpdateActiveEventProps;
+  };
+};

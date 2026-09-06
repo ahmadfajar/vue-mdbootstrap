@@ -15,5 +15,4 @@ const BsContainerPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Container/types';
 export { BsApp, BsContainer, BsContainerPlugin, BsContent };

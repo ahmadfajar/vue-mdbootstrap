@@ -35,5 +35,15 @@ export * from '@/components/Notification/types';
 export * from '@/components/Notification/mixins/NotificationProvider.ts';
 export * from '@/components/Breadcrumb/types';
 export * from '@/components/Uploader/types';
-export type { vClickOutside, vResize, vScroll, vTouch } from '@/directives';
+export type {
+  ResizeDirectiveBinding,
+  ScrollDirectiveBinding,
+  TouchDirectiveBinding,
+  TouchDirectiveEvent,
+  TouchEventListener,
+  vClickOutside,
+  vResize,
+  vScroll,
+  vTouch,
+} from '@/directives';
 export { createVueMdb } from '@/createVueMdb.ts';

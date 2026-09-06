@@ -204,73 +204,6 @@ export declare type TBsModal = ComponentObjectPropsOptions<TModalOptionProps>;
 
 export declare type TBsLightbox = ComponentObjectPropsOptions<TLightboxOptionProps>;
 
-// declare interface ModalEvents extends ClosableEventPublic, UpdateOpenEventPublic {}
-//
-// export declare const BsModal: {
-//   new (): {
-//     $props: PublicComponentProps & ModalEvents & TModalOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       header?: () => VNode;
-//       footer?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'close', message: string): void;
-//       (event: 'update:open', state: boolean): void;
-//     };
-//   };
-// };
-//
-// declare interface LightboxEvents extends ClosableEventPublic, UpdateOpenEventPublic {
-//   onChange?: (value: TLightboxSource, index: number) => void;
-//   'onExec-delete'?: (target: TLightboxSource) => void;
-//   'onExec-download'?: (target: TLightboxSource) => void;
-//   'onExec-info'?: (target: TLightboxSource) => void;
-//   'onExec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
-//   'onExec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
-//   'onExec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
-//   'onExec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
-//   '@change'?: (value: TLightboxSource, index: number) => void;
-//   '@exec-delete'?: (target: TLightboxSource) => void;
-//   '@exec-download'?: (target: TLightboxSource) => void;
-//   '@exec-info'?: (target: TLightboxSource) => void;
-//   '@exec-rotate-left'?: (target: TLightboxSource, rotate: number) => void;
-//   '@exec-rotate-right'?: (target: TLightboxSource, rotate: number) => void;
-//   '@exec-zoomin'?: (target: TLightboxSource, zoom: number) => void;
-//   '@exec-zoomout'?: (target: TLightboxSource, zoom: number) => void;
-// }
-//
-// export declare const BsLightbox: {
-//   new (): {
-//     $props: PublicComponentProps & LightboxEvents & TLightboxOptionProps;
-//     $slots: {
-//       menubar?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'update:open', state: boolean): void;
-//       (event: 'close', message: string): void;
-//       (event: 'change', value: TLightboxSource, index: number): void;
-//       (event: 'exec-delete', target: TLightboxSource): void;
-//       (event: 'exec-download', target: TLightboxSource): void;
-//       (event: 'exec-info', target: TLightboxSource): void;
-//       (event: 'exec-rotate-left', target: TLightboxSource, rotate: number): void;
-//       (event: 'exec-rotate-right', target: TLightboxSource, rotate: number): void;
-//       (event: 'exec-zoomin', target: TLightboxSource, zoom: number): void;
-//       (event: 'exec-zoomout', target: TLightboxSource, zoom: number): void;
-//     };
-//     $exposed: {
-//       setActive: (index: number) => void;
-//       openAt: (index: number) => void;
-//       nextSlide: () => void;
-//       prevSlide: () => void;
-//     };
-//     setActive: (index: number) => void;
-//     openAt: (index: number) => void;
-//     nextSlide: () => void;
-//     prevSlide: () => void;
-//   };
-// };
-
 export declare type LightboxEventProps = ClosableEventProps &
   UpdateOpenEventProps & {
     change?: (value: TLightboxSource, index: number) => void;
@@ -309,7 +242,14 @@ export declare interface LightboxSlots {
   menubar?: () => VNode[];
 }
 
-export declare type BsLightbox = DefineComponent<
+export declare interface BsLightboxInstance extends ComponentPublicInstance {
+  openAt(index: number): void;
+  setActive(index: number): void;
+  nextSlide(): void;
+  prevSlide(): void;
+}
+
+export declare type BsLightboxConstructor = DefineComponent<
   TBsLightbox,
   TRecord,
   TRecord,
@@ -327,17 +267,28 @@ export declare type BsLightbox = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare interface BsLightboxInstance extends ComponentPublicInstance {
-  openAt(index: number): void;
-  setActive(index: number): void;
-  nextSlide(): void;
-  prevSlide(): void;
-}
+export declare const BsLightbox: {
+  new (): {
+    $props: TLightboxOptionProps & LightboxEventPublic & PublicProps;
+    $slots: LightboxSlots;
+    $emit: LightboxEventProps;
+    $expose: {
+      setActive: (index: number) => void;
+      openAt: (index: number) => void;
+      nextSlide: () => void;
+      prevSlide: () => void;
+    };
+    setActive: (index: number) => void;
+    openAt: (index: number) => void;
+    nextSlide: () => void;
+    prevSlide: () => void;
+  };
+};
 
 export declare type ModalEventProps = ClosableEventProps & UpdateOpenEventProps;
 
@@ -355,7 +306,7 @@ export declare interface ModalSlots extends VoidDefaultSlots {
   footer?: () => VNode[] | VNode;
 }
 
-export declare type BsModal = DefineComponent<
+export declare type BsModalConstructor = DefineComponent<
   TBsModal,
   TRecord,
   TRecord,
@@ -373,7 +324,15 @@ export declare type BsModal = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsModal: {
+  new (): {
+    $props: TModalOptionProps & ModalEventPublic & PublicProps;
+    $slots: ModalSlots;
+    $emit: ModalEventProps;
+  };
+};

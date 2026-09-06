@@ -21,5 +21,4 @@ const BsIconPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Icon/types';
 export { BsFontawesomeIcon, BsIcon, BsIconPlugin, BsSpinnerIcon, BsSvgIcon, BsToggleIcon };

@@ -31,9 +31,7 @@ export default defineComponent<TBsToggleButton>({
   emits: ['update:model-value'],
   setup(props, { emit, slots }) {
     const thisProps = props as Readonly<TToggleButtonOptionProps>;
-    const localValue = ref<MaybeNumberish | boolean | unknown[]>(
-      props.modelValue as MaybeNumberish | boolean | unknown[]
-    );
+    const localValue = ref<MaybeNumberish | boolean | unknown[]>(thisProps.modelValue);
 
     return () => {
       return h(
@@ -74,7 +72,7 @@ export default defineComponent<TBsToggleButton>({
   string,
   PublicProps,
   Readonly<TToggleButtonOptionProps> &
-    Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
+    Readonly<UpdateModelValueEventPublic<MaybeNumberish | boolean | unknown[]>>,
   ExtractDefaultPropTypes<TBsToggleButton>,
   SlotsType<ToggleButtonSlots>,
   Record<string, Component>,

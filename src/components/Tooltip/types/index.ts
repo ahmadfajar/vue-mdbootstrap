@@ -67,31 +67,6 @@ export declare type TTooltipOptionProps = {
 
 export declare type TBsTooltip = ComponentObjectPropsOptions<TTooltipOptionProps>;
 
-// declare interface AllowedTooltipProps extends PublicComponentProps {
-//   /**
-//    * Fired when this Tooltip state is updated.
-//    */
-//   'onUpdate:show'?: (value: boolean) => void;
-//
-//   /**
-//    * Fired when this Tooltip state is updated.
-//    */
-//   '@update:show'?: (value: boolean) => void;
-// }
-
-// export declare const BsTooltip: {
-//   new (): {
-//     $props: AllowedTooltipProps & TTooltipOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       content?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'update:show', value: boolean): boolean;
-//     };
-//   };
-// };
-
 export declare type TooltipEventProps = {
   /**
    * Fired when this Tooltip state is updated.
@@ -118,7 +93,7 @@ export declare interface TooltipSlots extends VoidDefaultSlots {
   content?: () => VNode[] | VNode;
 }
 
-export declare type BsTooltip = DefineComponent<
+export declare type BsTooltipConstructor = DefineComponent<
   TBsTooltip,
   TRecord,
   TRecord,
@@ -136,7 +111,15 @@ export declare type BsTooltip = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsTooltip: {
+  new (): {
+    $props: TTooltipOptionProps & TooltipEventPublic & PublicProps;
+    $slots: TooltipSlots;
+    $emit: TooltipEventProps;
+  };
+};

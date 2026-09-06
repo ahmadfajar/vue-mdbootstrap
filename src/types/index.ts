@@ -7,23 +7,10 @@ import type { RouteLocationAsRelativeGeneric, RouteLocationRaw } from 'vue-route
 export declare type TBreakpoint = 'sm' | 'md' | 'lg' | 'xl' | 'xs';
 
 export declare type TContextColor =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info'
-  | 'default';
+  'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'default';
 
 export declare type TExtendedContextColor =
-  | 'primary'
-  | 'secondary'
-  | 'success'
-  | 'warning'
-  | 'danger'
-  | 'info'
-  | 'light'
-  | 'default';
+  'primary' | 'secondary' | 'success' | 'warning' | 'danger' | 'info' | 'light' | 'default';
 
 export declare type HtmlTagName =
   | 'div'

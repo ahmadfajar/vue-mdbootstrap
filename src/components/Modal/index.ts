@@ -9,5 +9,4 @@ const BsModalPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Modal/types';
 export { BsLightbox, BsModal, BsModalPlugin };

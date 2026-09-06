@@ -1,5 +1,19 @@
 import type { TRecord } from '@/types';
-import type { Component, ComponentObjectPropsOptions, ComponentOptionsMixin, ComponentProvideOptions, ComputedOptions, DefineComponent, Directive, EmitsOptions, ExtractDefaultPropTypes, MethodOptions, PublicProps, SlotsType, VNode } from 'vue';
+import type {
+  Component,
+  ComponentObjectPropsOptions,
+  ComponentOptionsMixin,
+  ComponentProvideOptions,
+  ComputedOptions,
+  DefineComponent,
+  Directive,
+  EmitsOptions,
+  ExtractDefaultPropTypes,
+  MethodOptions,
+  PublicProps,
+  SlotsType,
+  VNode,
+} from 'vue';
 import type { RouterLinkProps } from 'vue-router';
 
 export declare type TBreadcrumb = {
@@ -87,15 +101,6 @@ export declare type TBreadcrumbOptionProps = {
 
 export declare type TBsBreadcrumb = ComponentObjectPropsOptions<TBreadcrumbOptionProps>;
 
-// export declare const BsBreadcrumb: {
-//   new (): {
-//     $props: PublicComponentProps & TBreadcrumbOptionProps;
-//     $slots: {
-//       icon?: () => VNode;
-//     };
-//   };
-// };
-
 export declare interface BreadcrumbSlots {
   /**
    * Additional slot used to place custom icon of the Breadcrumb.
@@ -103,7 +108,7 @@ export declare interface BreadcrumbSlots {
   icon?: () => VNode[] | VNode;
 }
 
-export declare type BsBreadcrumb = DefineComponent<
+export declare type BsBreadcrumbConstructor = DefineComponent<
   TBsBreadcrumb,
   () => VNode,
   TRecord,
@@ -125,3 +130,10 @@ export declare type BsBreadcrumb = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsBreadcrumb: {
+  new (): {
+    $props: TBreadcrumbOptionProps & PublicProps;
+    $slots: BreadcrumbSlots;
+  };
+};

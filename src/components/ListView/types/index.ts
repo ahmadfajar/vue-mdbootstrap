@@ -2,10 +2,6 @@ import type { TAllowedIconProps, TAllowedImageProps } from '@/components/Avatar/
 import type { TBadgeType, TBadgeVariant } from '@/components/Badge/types';
 import type { TTagProp } from '@/components/Card/types';
 import type { IListItem } from '@/components/ListView/mixins/ListItem';
-import type {
-  ListNavItemEventProps,
-  ListNavItemEventPublic,
-} from '@/components/ListView/mixins/listNavApi';
 import type { Numberish, TRecord, TRouterOptionProps } from '@/types';
 import type {
   UpdateActiveEventProps,
@@ -29,6 +25,7 @@ import type {
   MethodOptions,
   PublicProps,
   Ref,
+  RendererNode,
   SlotsType,
   VNode,
 } from 'vue';
@@ -280,49 +277,6 @@ export declare type TBsListTileTitle = ComponentObjectPropsOptions<TListTileText
 
 export declare type TBsListTileSubtitle = ComponentObjectPropsOptions<TListTileTextOptionProps>;
 
-// declare interface AllowedListViewProps
-//   extends PublicComponentProps, UpdateModelValueEventPublic<IListItem> {
-//   /**
-//    * Fired when this component's mutate its modelValue.
-//    */
-//   onChange?: (value: IListItem, oldValue: IListItem) => void;
-//
-//   /**
-//    * Fired when this component's mutate its modelValue.
-//    */
-//   '@change'?: (value: IListItem, oldValue: IListItem) => void;
-// }
-//
-// export declare const BsListView: {
-//   new (): {
-//     $props: AllowedListViewProps & TListViewOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'change', value: IListItem, oldValue: IListItem): void;
-//       (event: 'update:model-value', value: IListItem): void;
-//     };
-//   };
-// };
-//
-// export declare const BsListNav: {
-//   new (): {
-//     $props: PublicComponentProps & TListNavOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $exposed: {
-//       collapsing: Ref<boolean>;
-//       expanded: Ref<boolean>;
-//       isActive: Ref<boolean>;
-//     };
-//     collapsing: Ref<boolean>;
-//     expanded: Ref<boolean>;
-//     isActive: Ref<boolean>;
-//   };
-// };
-
 /**
  * `<BsListNav>` component instance when exposed by `ref` attribute.
  */
@@ -332,125 +286,7 @@ export declare interface BsListNavInstance extends ComponentPublicInstance {
   isActive: Ref<boolean>;
 }
 
-// declare interface AllowedListItemProps extends PublicComponentProps {
-//   /**
-//    * Fired when this component's is clicked.
-//    */
-//   onClick?: (target: Event, node?: RendererNode | null) => void;
-//
-//   /**
-//    * Fired when this component's state is updated.
-//    */
-//   'onUpdate:active'?: (active: boolean) => void;
-//
-//   /**
-//    * Fired when this component's is clicked.
-//    */
-//   '@click'?: (target: Event, node?: RendererNode | null) => void;
-//
-//   /**
-//    * Fired when this component's state is updated.
-//    */
-//   '@update:active'?: (active: boolean) => void;
-// }
-//
-// export declare const BsListNavItem: {
-//   new (): {
-//     $props: AllowedListItemProps & TListNavItemOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'click', target: Event, node: RendererNode | null): void;
-//       (event: 'update:active', active: boolean): void;
-//     };
-//     $exposed: {
-//       expanded: Ref<boolean>;
-//       isActive: Ref<boolean>;
-//     };
-//     expanded: Ref<boolean>;
-//     isActive: Ref<boolean>;
-//   };
-// };
-
-/**
- * `<BsListNavItem>` component instance when exposed by `ref` attribute.
- */
-export declare interface BsListNavItemInstance extends ComponentPublicInstance {
-  expanded: Ref<boolean>;
-  isActive: Ref<boolean>;
-}
-
-// export declare const BsListTile: {
-//   new (): {
-//     $props: AllowedListItemProps & TListTileOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'click', target: Event, node: RendererNode | null): void;
-//       (event: 'update:active', active: boolean): void;
-//     };
-//     $exposed: {
-//       isActive: Ref<boolean>;
-//     };
-//     isActive: Ref<boolean>;
-//   };
-// };
-
-/**
- * `<BsListTile>` component instance when exposed by `ref` attribute.
- */
-export declare interface BsListTileInstance extends ComponentPublicInstance {
-  isActive: Ref<boolean>;
-}
-
-// export declare const BsListTileAction: {
-//   new (): {
-//     $props: PublicComponentProps & TListTileActionOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsListTileContent: {
-//   new (): {
-//     $props: PublicComponentProps & TListTileContentOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsListTileLeading: {
-//   new (): {
-//     $props: PublicComponentProps & TListTileLeadingOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsListTileTitle: {
-//   new (): {
-//     $props: PublicComponentProps & TListTileTextOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsListTileSubtitle: {
-//   new (): {
-//     $props: PublicComponentProps & TListTileTextOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-
-export declare type BsListNav = DefineComponent<
+export declare type BsListNavConstructor = DefineComponent<
   TBsListNav,
   TRecord,
   TRecord,
@@ -468,12 +304,70 @@ export declare type BsListNav = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsListNavItem = DefineComponent<
+export declare const BsListNav: {
+  new (): {
+    $props: TListNavOptionProps & UpdateActiveEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: UpdateActiveEventProps;
+    $expose: {
+      collapsing: Ref<boolean>;
+      expanded: Ref<boolean>;
+      isActive: Ref<boolean>;
+    };
+    collapsing: Ref<boolean>;
+    expanded: Ref<boolean>;
+    isActive: Ref<boolean>;
+  };
+};
+
+export declare type ListNavItemEventProps = {
+  /**
+   * Fired when this ListNavItem or ListTile is clicked.
+   */
+  click?: (target: Event, node: RendererNode | null) => void;
+
+  /**
+   * Fired when this ListNavItem or ListTile state is updated.
+   */
+  'update:active'?: (active: boolean) => void | Promise<void>;
+};
+
+export declare interface ListNavItemEventPublic {
+  /**
+   * Fired when this ListNavItem or ListTile is clicked.
+   */
+  onClick?: (target: Event, node: RendererNode | null) => void;
+
+  /**
+   * Fired when this ListNavItem or ListTile state is updated.
+   */
+  'onUpdate:active'?: (active: boolean) => void | Promise<void>;
+
+  /**
+   * Fired when this ListNavItem or ListTile is clicked.
+   */
+  '@click'?: (target: Event, node: RendererNode | null) => void;
+
+  /**
+   * Fired when this ListNavItem or ListTile state is updated.
+   */
+  '@update:active'?: (active: boolean) => void | Promise<void>;
+}
+
+/**
+ * `<BsListNavItem>` component instance when exposed by `ref` attribute.
+ */
+export declare interface BsListNavItemInstance extends ComponentPublicInstance {
+  expanded: Ref<boolean>;
+  isActive: Ref<boolean>;
+}
+
+export declare type BsListNavItemConstructor = DefineComponent<
   TBsListNavItem,
   () => VNode,
   TRecord,
@@ -496,7 +390,28 @@ export declare type BsListNavItem = DefineComponent<
   never
 >;
 
-export declare type BsListTile = DefineComponent<
+export declare const BsListNavItem: {
+  new (): {
+    $props: TListNavItemOptionProps & ListNavItemEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: ListNavItemEventProps;
+    $expose: {
+      expanded: Ref<boolean>;
+      isActive: Ref<boolean>;
+    };
+    expanded: Ref<boolean>;
+    isActive: Ref<boolean>;
+  };
+};
+
+/**
+ * `<BsListTile>` component instance when exposed by `ref` attribute.
+ */
+export declare interface BsListTileInstance extends ComponentPublicInstance {
+  isActive: Ref<boolean>;
+}
+
+export declare type BsListTileConstructor = DefineComponent<
   TBsListTile,
   TRecord,
   TRecord,
@@ -514,12 +429,24 @@ export declare type BsListTile = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsListTileAction = DefineComponent<
+export declare const BsListTile: {
+  new (): {
+    $props: TListTileOptionProps & ListNavItemEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: ListNavItemEventProps;
+    $expose: {
+      isActive: Ref<boolean>;
+    };
+    isActive: Ref<boolean>;
+  };
+};
+
+export declare type BsListTileActionConstructor = DefineComponent<
   TBsListTileAction,
   TRecord,
   TRecord,
@@ -537,12 +464,19 @@ export declare type BsListTileAction = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsListTileContent = DefineComponent<
+export declare const BsListTileAction: {
+  new (): {
+    $props: TListTileActionOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
+export declare type BsListTileContentConstructor = DefineComponent<
   TBsListTileContent,
   TRecord,
   TRecord,
@@ -560,12 +494,19 @@ export declare type BsListTileContent = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsListTileLeading = DefineComponent<
+export declare const BsListTileContent: {
+  new (): {
+    $props: TListTileContentOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
+export declare type BsListTileLeadingConstructor = DefineComponent<
   TBsListTileLeading,
   TRecord,
   TRecord,
@@ -583,12 +524,19 @@ export declare type BsListTileLeading = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsListTileSubtitle = DefineComponent<
+export declare const BsListTileLeading: {
+  new (): {
+    $props: TListTileLeadingOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
+export declare type BsListTileSubtitleConstructor = DefineComponent<
   TBsListTileSubtitle,
   TRecord,
   TRecord,
@@ -606,12 +554,19 @@ export declare type BsListTileSubtitle = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsListTileTitle = DefineComponent<
+export declare const BsListTileSubtitle: {
+  new (): {
+    $props: TListTileTextOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
+export declare type BsListTileTitleConstructor = DefineComponent<
   TBsListTileTitle,
   TRecord,
   TRecord,
@@ -629,10 +584,17 @@ export declare type BsListTileTitle = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsListTileTitle: {
+  new (): {
+    $props: TListTileTextOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
 
 export declare type ListViewEventProps = UpdateModelValueEventProps<IListItem> & {
   /**
@@ -653,7 +615,7 @@ export declare interface ListViewEventPublic extends UpdateModelValueEventPublic
   '@change'?: (value: IListItem, oldValue: IListItem) => void;
 }
 
-export declare type BsListView = DefineComponent<
+export declare type BsListViewConstructor = DefineComponent<
   TBsListView,
   TRecord,
   TRecord,
@@ -671,7 +633,15 @@ export declare type BsListView = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsListView: {
+  new (): {
+    $props: TListViewOptionProps & ListViewEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: ListViewEventProps;
+  };
+};

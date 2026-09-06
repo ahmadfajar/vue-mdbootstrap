@@ -7,5 +7,4 @@ const BsSwitchPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Switch/types';
 export { BsSwitch, BsSwitchPlugin };

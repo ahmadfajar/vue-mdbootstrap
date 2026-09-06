@@ -9,5 +9,4 @@ const BsChipPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Chip/types';
 export { BsChip, BsChipGroup, BsChipPlugin };

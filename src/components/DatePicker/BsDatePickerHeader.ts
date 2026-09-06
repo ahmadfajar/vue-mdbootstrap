@@ -57,7 +57,7 @@ export default defineComponent<TBsDatePickerHeader>({
         !thisProps.readonly
     );
     const transitionName = computed(() =>
-      reverse.value === true ? 'slide-top-bottom' : 'slide-bottom-top'
+      reverse.value ? 'slide-top-bottom' : 'slide-bottom-top'
     );
     const styles = computed<TRecord>(() =>
       useDatePickerHeaderStyles(thisProps, isYearActive, isTimeActive, isTitleActive)

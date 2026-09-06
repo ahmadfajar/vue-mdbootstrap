@@ -102,34 +102,7 @@ export declare type TBsSpacer = ComponentObjectPropsOptions<TSpacerOptionProps>;
 
 export declare type TBsSubheader = ComponentObjectPropsOptions<TSubheaderOptionProps>;
 
-// export declare const BsDivider: {
-//   new (): {
-//     $props: PublicComponentProps & TDividerOptionProps;
-//   };
-// };
-//
-// export declare const BsImageHolder: {
-//   new (): {
-//     $props: PublicComponentProps & TImageHolderOptionProps;
-//   };
-// };
-//
-// export declare const BsSpacer: {
-//   new (): {
-//     $props: PublicComponentProps & TSpacerOptionProps;
-//   };
-// };
-//
-// export declare const BsSubheader: {
-//   new (): {
-//     $props: PublicComponentProps & TSubheaderOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-
-export declare type BsDivider = DefineComponent<
+export declare type BsDividerConstructor = DefineComponent<
   TBsDivider,
   TRecord,
   TRecord,
@@ -147,12 +120,18 @@ export declare type BsDivider = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsImageHolder = DefineComponent<
+export declare const BsDivider: {
+  new (): {
+    $props: TDividerOptionProps & PublicProps;
+  };
+};
+
+export declare type BsImageHolderConstructor = DefineComponent<
   TBsImageHolder,
   TRecord,
   TRecord,
@@ -170,12 +149,18 @@ export declare type BsImageHolder = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsSpacer = DefineComponent<
+export declare const BsImageHolder: {
+  new (): {
+    $props: TImageHolderOptionProps & PublicProps;
+  };
+};
+
+export declare type BsSpacerConstructor = DefineComponent<
   TBsSpacer,
   TRecord,
   TRecord,
@@ -193,12 +178,18 @@ export declare type BsSpacer = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsSubheader = DefineComponent<
+export declare const BsSpacer: {
+  new (): {
+    $props: TSpacerOptionProps & PublicProps;
+  };
+};
+
+export declare type BsSubheaderConstructor = DefineComponent<
   TBsSubheader,
   TRecord,
   TRecord,
@@ -216,7 +207,14 @@ export declare type BsSubheader = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsSubheader: {
+  new (): {
+    $props: TSubheaderOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};

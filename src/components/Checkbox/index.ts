@@ -9,5 +9,4 @@ const BsCheckboxPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Checkbox/types';
 export { BsCheckbox, BsCheckboxGroup, BsCheckboxPlugin };

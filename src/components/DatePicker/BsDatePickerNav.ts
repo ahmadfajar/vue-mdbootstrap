@@ -41,7 +41,7 @@ export default defineComponent<TBsDatePickerNav>({
       thisProps.modelValue ? DateTime.fromJSDate(thisProps.modelValue) : DateTime.now()
     );
     const transitionName = computed(() =>
-      reverse.value === true ? DatePickerConst.transitionReverse : DatePickerConst.transition
+      reverse.value ? DatePickerConst.transitionReverse : DatePickerConst.transition
     );
 
     thisProps.locale && (localValue.value = localValue.value.setLocale(thisProps.locale));

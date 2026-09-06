@@ -112,7 +112,7 @@ export default defineComponent<TBsProgress>({
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;

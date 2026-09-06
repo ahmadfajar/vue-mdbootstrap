@@ -88,48 +88,6 @@ export declare type TBsRadio = ComponentObjectPropsOptions<TRadioOptionProps>;
 
 export declare type TBsRadioGroup = ComponentObjectPropsOptions<TRadioGroupOptionProps>;
 
-// declare interface AllowedRadioProps
-//   extends PublicComponentProps, UpdateModelValueEventPublic<Numberish | boolean> {
-//   /**
-//    * Fired when this component's checked state is updated.
-//    */
-//   onChecked?: (checked: boolean) => void;
-//
-//   /**
-//    * Fired when this component's checked state is updated.
-//    */
-//   '@checked'?: (checked: boolean) => void;
-// }
-//
-// export declare const BsRadio: {
-//   new (): {
-//     $props: AllowedRadioProps & TRadioOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'checked', checked: boolean): void;
-//       (event: 'update:model-value', value: Numberish | boolean): void;
-//     };
-//   };
-// };
-//
-// declare interface AllowedRadioGroupProps
-//   extends PublicComponentProps, UpdateModelValueEventPublic<Numberish | boolean> {}
-//
-// export declare const BsRadioGroup: {
-//   new (): {
-//     $props: AllowedRadioGroupProps & TRadioGroupOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       'help-text'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'update:model-value', value: Numberish | boolean): void;
-//     };
-//   };
-// };
-
 export declare type RadioEventProps = UpdateModelValueEventProps<Numberish | boolean | null> & {
   /**
    * Fired when this Radio component's "checked" state is updated.
@@ -151,7 +109,7 @@ export declare interface RadioEventPublic extends UpdateModelValueEventPublic<
   '@checked'?: (checked: boolean) => void;
 }
 
-export declare type BsRadio = DefineComponent<
+export declare type BsRadioConstructor = DefineComponent<
   TBsRadio,
   TRecord,
   TRecord,
@@ -169,9 +127,18 @@ export declare type BsRadio = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
+  TRecord,
   never
 >;
+
+export declare const BsRadio: {
+  new (): {
+    $props: TRadioOptionProps & RadioEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: RadioEventProps;
+  };
+};
 
 export declare interface RadioGroupSlots extends VoidDefaultSlots {
   /**
@@ -180,7 +147,7 @@ export declare interface RadioGroupSlots extends VoidDefaultSlots {
   'help-text'?: () => VNode[] | VNode;
 }
 
-export declare type BsRadioGroup = DefineComponent<
+export declare type BsRadioGroupConstructor = DefineComponent<
   TBsRadioGroup,
   () => VNode,
   TRecord,
@@ -202,3 +169,11 @@ export declare type BsRadioGroup = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsRadioGroup: {
+  new (): {
+    $props: TRadioGroupOptionProps & UpdateModelValueEventPublic<Numberish | boolean> & PublicProps;
+    $slots: RadioGroupSlots;
+    $emit: UpdateModelValueEventProps<Numberish | boolean>;
+  };
+};

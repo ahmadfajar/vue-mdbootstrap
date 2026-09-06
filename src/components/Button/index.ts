@@ -16,5 +16,4 @@ const BsButtonPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Button/types';
 export { BsButton, BsButtonPlugin, BsCloseButton, BsToggleButton, BsToggleField };

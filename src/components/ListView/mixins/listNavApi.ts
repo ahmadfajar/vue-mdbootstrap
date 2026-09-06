@@ -8,15 +8,7 @@ import type { TListNavItemOptionProps } from '@/components/ListView/types';
 import { cssPrefix, useHasRouter, useRenderRouter } from '@/mixins/CommonApi.ts';
 import type { TRecord } from '@/types';
 import Helper from '@/utils/Helper.ts';
-import type {
-  ComponentInternalInstance,
-  ComputedRef,
-  Ref,
-  RendererNode,
-  ShallowRef,
-  Slots,
-  VNode,
-} from 'vue';
+import type { ComponentInternalInstance, ComputedRef, Ref, ShallowRef, Slots, VNode } from 'vue';
 import { createCommentVNode, createTextVNode, h, toDisplayString } from 'vue';
 
 export function useListNavItemClasses(
@@ -267,38 +259,4 @@ export function useRenderListNavItem(
       slots.default && slots.default(),
     ]
   );
-}
-
-export declare type ListNavItemEventProps = {
-  /**
-   * Fired when this ListNavItem or ListTile is clicked.
-   */
-  click?: (target: Event, node: RendererNode | null) => void;
-
-  /**
-   * Fired when this ListNavItem or ListTile state is updated.
-   */
-  'update:active'?: (active: boolean) => void | Promise<void>;
-};
-
-export declare interface ListNavItemEventPublic {
-  /**
-   * Fired when this ListNavItem or ListTile is clicked.
-   */
-  onClick?: (target: Event, node: RendererNode | null) => void;
-
-  /**
-   * Fired when this ListNavItem or ListTile state is updated.
-   */
-  'onUpdate:active'?: (active: boolean) => void | Promise<void>;
-
-  /**
-   * Fired when this ListNavItem or ListTile is clicked.
-   */
-  '@click'?: (target: Event, node: RendererNode | null) => void;
-
-  /**
-   * Fired when this ListNavItem or ListTile state is updated.
-   */
-  '@update:active'?: (active: boolean) => void | Promise<void>;
 }

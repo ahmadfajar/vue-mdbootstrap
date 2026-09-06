@@ -68,48 +68,6 @@ export declare type TBsCheckbox = ComponentObjectPropsOptions<TCheckboxOptionPro
 
 export declare type TBsCheckboxGroup = ComponentObjectPropsOptions<TCheckboxGroupOptionProps>;
 
-// declare interface AllowedCheckboxProps
-//   extends PublicComponentProps, UpdateModelValueEventPublic<Numberish | boolean | null> {
-//   /**
-//    * Fired when this component's checked state is updated.
-//    */
-//   onChecked?: (checked: boolean) => void;
-//
-//   /**
-//    * Fired when this component's checked state is updated.
-//    */
-//   '@checked'?: (checked: boolean) => void;
-// }
-//
-// export declare const BsCheckbox: {
-//   new (): {
-//     $props: AllowedCheckboxProps & TCheckboxOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'checked', checked: boolean): void;
-//       (event: 'update:model-value', value: Numberish | boolean | null): void;
-//     };
-//   };
-// };
-//
-// declare interface AllowedCheckboxGroupProps
-//   extends PublicComponentProps, UpdateModelValueEventPublic<string[] | number[] | unknown[]> {}
-//
-// export declare const BsCheckboxGroup: {
-//   new (): {
-//     $props: AllowedCheckboxGroupProps & TCheckboxGroupOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       'help-text'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'update:model-value', value: string[] | number[] | unknown[]): void;
-//     };
-//   };
-// };
-
 export declare type CheckboxEventProps = UpdateModelValueEventProps<Numberish | boolean | null> & {
   /**
    * Fired when this checkbox component's "checked" state is updated.
@@ -131,7 +89,7 @@ export declare interface CheckboxEventPublic extends UpdateModelValueEventPublic
   '@checked'?: (checked: boolean) => void;
 }
 
-export declare type BsCheckbox = DefineComponent<
+export declare type BsCheckboxConstructor = DefineComponent<
   TBsCheckbox,
   TRecord,
   TRecord,
@@ -149,10 +107,18 @@ export declare type BsCheckbox = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsCheckbox: {
+  new (): {
+    $props: TCheckboxOptionProps & CheckboxEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: CheckboxEventProps;
+  };
+};
 
 export declare interface CheckboxGroupSlots extends VoidDefaultSlots {
   /**
@@ -161,7 +127,7 @@ export declare interface CheckboxGroupSlots extends VoidDefaultSlots {
   'help-text'?: () => VNode[] | VNode;
 }
 
-export declare type BsCheckboxGroup = DefineComponent<
+export declare type BsCheckboxGroupConstructor = DefineComponent<
   TBsCheckboxGroup,
   () => VNode,
   TRecord,
@@ -184,3 +150,13 @@ export declare type BsCheckboxGroup = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsCheckboxGroup: {
+  new (): {
+    $props: TCheckboxGroupOptionProps &
+      UpdateModelValueEventPublic<(string | number | unknown)[]> &
+      PublicProps;
+    $slots: CheckboxGroupSlots;
+    $emit: UpdateModelValueEventProps<(string | number | unknown)[]>;
+  };
+};

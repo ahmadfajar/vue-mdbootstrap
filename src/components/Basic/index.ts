@@ -13,5 +13,4 @@ const BsBasicCmpPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Basic/types';
 export { BsBasicCmpPlugin, BsDivider, BsImageHolder, BsSpacer, BsSubheader };

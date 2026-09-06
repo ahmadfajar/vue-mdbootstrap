@@ -11,5 +11,4 @@ const BsAnimationPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Animation/types';
 export { BsAnimationPlugin, BsExpandTransition, BsOverlay, BsRipple };

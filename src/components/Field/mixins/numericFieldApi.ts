@@ -462,7 +462,7 @@ export function useRenderNumericField(
             hasValidated.value,
             hasError.value,
             iconSize,
-            async () => await useOnFieldValueCleared(emit, localValue),
+            async () => await useOnFieldValueCleared<number>(emit, localValue),
             () => incrementValue(emit, props, operationOptions, localValue),
             () => decrementValue(emit, props, operationOptions, localValue)
           ),

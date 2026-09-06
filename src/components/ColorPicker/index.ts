@@ -7,5 +7,4 @@ const BsColorPickerPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/ColorPicker/types';
 export { BsColorPicker, BsColorPickerPlugin };

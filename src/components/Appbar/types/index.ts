@@ -60,48 +60,6 @@ export declare type TBsAppbar = ComponentObjectPropsOptions<TAppbarOptionProps>;
 
 export declare type TBsAppbarTitle = ComponentObjectPropsOptions<TAppbarTitleOptionProps>;
 
-// declare interface AllowedAppbarProps extends PublicComponentProps {
-//   /**
-//    * Fired when this component size is changed.
-//    */
-//   onResize?: (target: HTMLElement) => void;
-//
-//   /**
-//    * Fired when this component size is changed.
-//    */
-//   '@resize'?: (target: HTMLElement) => void;
-// }
-//
-// export declare const BsAppbar: {
-//   new (): {
-//     $props: AllowedAppbarProps & TAppbarOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'resize', target: HTMLElement): void;
-//     };
-//   };
-// };
-//
-// export declare const BsAppbarItems: {
-//   new (): {
-//     $props: PublicComponentProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsAppbarTitle: {
-//   new (): {
-//     $props: PublicComponentProps & TAppbarTitleOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-
 export declare type AppbarEventProps = {
   /**
    * Fired when the Appbar is resized.
@@ -121,7 +79,7 @@ export declare interface AppbarEventPublic {
   '@resize'?: (target: HTMLElement) => void;
 }
 
-export declare type BsAppbar = DefineComponent<
+export declare type BsAppbarConstructor = DefineComponent<
   TBsAppbar,
   TRecord,
   TRecord,
@@ -139,12 +97,20 @@ export declare type BsAppbar = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsAppbarItems = DefineComponent<
+export declare const BsAppbar: {
+  new (): {
+    $props: TAppbarOptionProps & AppbarEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: AppbarEventProps;
+  };
+};
+
+export declare type BsAppbarItemsConstructor = DefineComponent<
   TRecord,
   TRecord,
   TRecord,
@@ -167,7 +133,14 @@ export declare type BsAppbarItems = DefineComponent<
   never
 >;
 
-export declare type BsAppbarTitle = DefineComponent<
+export declare const BsAppbarItems: {
+  new (): {
+    $props: PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
+export declare type BsAppbarTitleConstructor = DefineComponent<
   TBsAppbarTitle,
   TRecord,
   TRecord,
@@ -185,7 +158,14 @@ export declare type BsAppbarTitle = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsAppbarTitle: {
+  new (): {
+    $props: TAppbarTitleOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};

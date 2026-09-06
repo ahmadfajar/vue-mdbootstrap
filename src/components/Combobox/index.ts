@@ -9,5 +9,4 @@ const BsComboboxPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Combobox/types';
 export { BsCombobox, BsComboboxPlugin, BsListbox };

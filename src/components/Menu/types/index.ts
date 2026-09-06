@@ -1,4 +1,4 @@
-import type { TPopoverPosition } from '@/components/Popover';
+import type { TPopoverPosition } from '@/components/Popover/types';
 import type { Numberish, TRecord } from '@/types';
 import type {
   ClosableVoidEventProps,
@@ -75,23 +75,6 @@ export declare type TDropdownMenuOptionProps = {
 
 export declare type TBsDropdownMenu = ComponentObjectPropsOptions<TDropdownMenuOptionProps>;
 
-// declare interface AllowedDropdownMenuProps
-//   extends PublicComponentProps, ClosableVoidEventPublic, UpdateOpenEventPublic {}
-//
-// export declare const BsDropdownMenu: {
-//   new (): {
-//     $props: AllowedDropdownMenuProps & TDropdownMenuOptionProps;
-//     $slots: {
-//       content?: () => VNode[];
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'close'): void;
-//       (event: 'update:open', state: boolean): void;
-//     };
-//   };
-// };
-
 export declare type DropdownMenuEventProps = ClosableVoidEventProps & UpdateOpenEventProps;
 
 export declare interface DropdownMenuEventPublic
@@ -104,7 +87,7 @@ export declare interface DropdownMenuSlots extends VoidDefaultSlots {
   content?: () => VNode[] | VNode;
 }
 
-export declare type BsDropdownMenu = DefineComponent<
+export declare type BsDropdownMenuConstructor = DefineComponent<
   TBsDropdownMenu,
   TRecord,
   TRecord,
@@ -122,7 +105,15 @@ export declare type BsDropdownMenu = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsDropdownMenu: {
+  new (): {
+    $props: TDropdownMenuOptionProps & DropdownMenuEventPublic & PublicProps;
+    $slots: DropdownMenuSlots;
+    $emit: DropdownMenuEventProps;
+  };
+};

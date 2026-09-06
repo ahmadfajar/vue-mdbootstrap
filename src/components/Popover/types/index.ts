@@ -104,28 +104,11 @@ export declare type TPopoverOptionProps = TPopupOptions & {
 
 export declare type TBsPopover = ComponentObjectPropsOptions<TPopoverOptionProps>;
 
-// declare interface AllowedPopoverProps
-//   extends PublicComponentProps, ClosableEventPublic, UpdateOpenEventPublic {}
-//
-// export declare const BsPopover: {
-//   new (): {
-//     $props: AllowedPopoverProps & TPopoverOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'close', message: string): void;
-//       (event: 'update:open', state: boolean): void;
-//     };
-//   };
-// };
-//
-
 export declare type PopoverEventProps = ClosableEventProps & UpdateOpenEventProps;
 
 export declare interface PopoverEventPublic extends ClosableEventPublic, UpdateOpenEventPublic {}
 
-export declare type BsPopover = DefineComponent<
+export declare type BsPopoverConstructor = DefineComponent<
   TBsPopover,
   TRecord,
   TRecord,
@@ -143,7 +126,15 @@ export declare type BsPopover = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsPopover: {
+  new (): {
+    $props: TPopoverOptionProps & PopoverEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: PopoverEventProps;
+  };
+};

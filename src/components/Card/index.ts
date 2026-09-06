@@ -17,5 +17,4 @@ const BsCardPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Card/types';
 export { BsCard, BsCardBody, BsCardContent, BsCardFooter, BsCardHeader, BsCardMedia, BsCardPlugin };

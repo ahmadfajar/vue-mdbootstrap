@@ -7,5 +7,4 @@ const BsUploaderPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Uploader/types';
 export { BsImageUploader, BsUploaderPlugin };

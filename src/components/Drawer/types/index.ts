@@ -99,31 +99,6 @@ export declare type TSideDrawerOptionProps = {
 
 export declare type TBsSideDrawer = ComponentObjectPropsOptions<TSideDrawerOptionProps>;
 
-// declare interface AllowedSideDrawerProps extends PublicComponentProps, UpdateOpenEventPublic {
-//   /**
-//    * Fired when this component size is changed.
-//    */
-//   onResize?: (target: HTMLElement) => void;
-//
-//   /**
-//    * Fired when this component size is changed.
-//    */
-//   '@resize'?: (target: HTMLElement) => void;
-// }
-//
-// export declare const BsSideDrawer: {
-//   new (): {
-//     $props: AllowedSideDrawerProps & TSideDrawerOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//     $emits: {
-//       (event: 'resize', target: HTMLElement): void;
-//       (event: 'update:open', state: boolean): void;
-//     };
-//   };
-// };
-
 export declare type SideDrawerEventProps = UpdateOpenEventProps & {
   /**
    * Fired when this SideDrawer size is resized.
@@ -143,7 +118,7 @@ export declare interface SideDrawerEventPublic extends UpdateOpenEventPublic {
   '@resize'?: (target: HTMLElement) => void;
 }
 
-export declare type BsSideDrawer = DefineComponent<
+export declare type BsSideDrawerConstructor = DefineComponent<
   TBsSideDrawer,
   TRecord,
   TRecord,
@@ -161,7 +136,15 @@ export declare type BsSideDrawer = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsSideDrawer: {
+  new (): {
+    $props: TSideDrawerOptionProps & SideDrawerEventPublic & PublicProps;
+    $slots: VoidDefaultSlots;
+    $emit: SideDrawerEventProps;
+  };
+};

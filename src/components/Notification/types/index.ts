@@ -62,13 +62,7 @@ export declare type TBsNotificationItem = ComponentObjectPropsOptions<TNotificat
 
 export declare type TBsNotificationBar = ComponentObjectPropsOptions<TNotificationBarOptionProps>;
 
-// export declare const BsNotification: {
-//   new (): {
-//     $props: AllowedComponentProps & ComponentCustomProps & VNodeProps;
-//   };
-// };
-
-export declare type BsNotification = DefineComponent<
+export declare type BsNotificationConstructor = DefineComponent<
   TRecord,
   () => VNode,
   TRecord,
@@ -90,3 +84,9 @@ export declare type BsNotification = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsNotification: {
+  new (): {
+    $props: PublicProps;
+  };
+};

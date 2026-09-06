@@ -146,7 +146,8 @@ export declare interface IBsStore<T extends TRecord = TRecord> extends AbstractS
    * Sorts the internal dataset with the given criteria and returns the reference
    * of the internal dataset. This method depends on `remoteSort` property.
    *
-   * @example
+   * Usage examples:
+   * ```js
    * // sort by a single field
    * const results = await myStore.sort('myField', 'asc');
    *
@@ -155,6 +156,7 @@ export declare interface IBsStore<T extends TRecord = TRecord> extends AbstractS
    *  {property: 'age', direction: 'desc'},
    *  {property: 'name', direction: 'asc'}
    * ]);
+   * ```
    *
    * @param options   The field name to sort or sort method criteria.
    * @param direction The sort direction.
@@ -168,7 +170,8 @@ export declare interface IBsStore<T extends TRecord = TRecord> extends AbstractS
 /**
  * Data Store class to work with collection of entity objects and remote API.
  *
- * @example
+ * Usage examples:
+ * ```js
  * const dsStore = new BsStore({
  *     idProperty: 'id',
  *     dataProperty: 'data',
@@ -187,6 +190,7 @@ export declare interface IBsStore<T extends TRecord = TRecord> extends AbstractS
  *         suffix: false,
  *     },
  * });
+ * ```
  *
  * @author Ahmad Fajar
  * @since  20/07/2018 modified: 30/04/2026 17:17
@@ -195,10 +199,8 @@ export class BsStore<T extends TRecord = TRecord> extends AbstractStore<T> imple
   /**
    * Construct new {@link BsStore} object instance.
    *
-   * @param config  The configuration properties
-   * @param adapter Axios adapter instance
-   *
-   * @example
+   * Usage examples:
+   * ```js
    * const dsStore = new BsStore({
    *     idProperty: 'id',
    *     dataProperty: 'data',
@@ -217,6 +219,10 @@ export class BsStore<T extends TRecord = TRecord> extends AbstractStore<T> imple
    *         suffix: false,
    *     },
    * });
+   * ```
+   *
+   * @param config  The configuration properties
+   * @param adapter Axios adapter instance
    */
   constructor(config: DataStoreConfig, adapter?: AxiosInstance | null) {
     const initialCfg: DataStoreConfig = {
@@ -516,8 +522,11 @@ export class BsStore<T extends TRecord = TRecord> extends AbstractStore<T> imple
 
     return this.proxy.request(
       config,
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_checkBeforeLoading'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_assignFromResponse'],
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       this['_onLoadingFailure']
     );
   }
@@ -551,8 +560,11 @@ export class BsStore<T extends TRecord = TRecord> extends AbstractStore<T> imple
 
       return this.proxy.request(
         config,
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         this['_checkBeforeLoading'],
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         this['_assignFromResponse'],
+        // eslint-disable-next-line @typescript-eslint/unbound-method
         this['_onLoadingFailure']
       );
     }

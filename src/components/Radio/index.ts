@@ -9,5 +9,4 @@ const BsRadioPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Radio/types';
 export { BsRadio, BsRadioGroup, BsRadioPlugin };

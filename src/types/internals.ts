@@ -1,18 +1,7 @@
 import type { PromiseVoidFunction, TRecord } from '@/types/index.ts';
-import type {
-  AllowedComponentProps,
-  ComponentCustomProps,
-  ComponentInternalInstance,
-  ComponentPublicInstance,
-  VNode,
-  VNodeProps,
-} from 'vue';
+import type { ComponentInternalInstance, ComponentPublicInstance, VNode, VNodeProps } from 'vue';
 
 export declare type RawProps = VNodeProps & TRecord;
-
-export declare type PublicComponentProps = AllowedComponentProps &
-  VNodeProps &
-  ComponentCustomProps;
 
 export declare type TValueText<T> = {
   value: T;
@@ -28,7 +17,7 @@ export declare type ClosableEventProps = {
   /**
    * Fired when the criteria below is matched:
    * - If the component has popover, then this event is triggered when the popover is closed,
-   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
+   * - If the component can be dismissed, then this event is triggered when the component is dismissed (hide)
    */
   close?: (msg: string) => void;
 };
@@ -37,14 +26,14 @@ export declare interface ClosableEventPublic {
   /**
    * Fired when the criteria below is matched:
    * - If the component has popover, then this event is triggered when the popover is closed,
-   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
+   * - If the component can be dismissed, then this event is triggered when the component is dismissed (hide)
    */
   onClose?: (msg: string) => void;
 
   /**
    * Fired when the criteria below is matched:
    * - If the component has popover, then this event is triggered when the popover is closed,
-   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
+   * - If the component can be dismissed, then this event is triggered when the component is dismissed (hide)
    */
   '@close'?: (msg: string) => void;
 }
@@ -53,7 +42,7 @@ export declare type ClosableVoidEventProps = {
   /**
    * Fired when the criteria below is matched:
    * - If the component has popover, then this event is triggered when the popover is closed,
-   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
+   * - If the component can be dismissed, then this event is triggered when the component is dismissed (hide)
    */
   close?: VoidFunction | PromiseVoidFunction;
 };
@@ -62,14 +51,14 @@ export declare interface ClosableVoidEventPublic {
   /**
    * Fired when the criteria below is matched:
    * - If the component has popover, then this event is triggered when the popover is closed,
-   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
+   * - If the component can be dismissed, then this event is triggered when the component is dismissed (hide)
    */
   onClose?: VoidFunction | PromiseVoidFunction;
 
   /**
    * Fired when the criteria below is matched:
    * - If the component has popover, then this event is triggered when the popover is closed,
-   * - If the component can be dismissed, the this event is triggered when the component is dismissed (hide)
+   * - If the component can be dismissed, then this event is triggered when the component is dismissed (hide)
    */
   '@close'?: VoidFunction | PromiseVoidFunction;
 }
@@ -145,40 +134,3 @@ export declare interface VNodeContext extends VNode {
 export declare interface ComponentContextInstance extends ComponentInternalInstance {
   ctx: ComponentPublicInstance;
 }
-
-// /**
-//  * Create Vue application then registers all VueMDB components and directives.
-//  *
-//  * @param rootComponent Root of component instance
-//  */
-// export declare function createVueMdb(rootComponent: Component): App;
-//
-// export {
-//   EventListener,
-//   useAddResizeListener,
-//   useRemoveResizeListener,
-// } from '../mixins/types/DomHelper';
-// export * from '../model/types';
-// export * from '../utils/types/AxiosPlugin';
-// export * from '../utils/types/CacheManager';
-// export * as Color from '../utils/types/colorUtils';
-// export { default as Helper } from '../utils/types/Helper';
-// export * as StringHelper from '../utils/types/StringHelper';
-//
-// export {
-//   useAxiosPlugin,
-//   useBreakpointMax,
-//   useBreakpointMin,
-//   useCurrentRoute,
-//   useGenerateId,
-//   useHttpService,
-//   useMergeClass,
-//   useMobileDevice,
-//   useRenderSlot,
-//   useRenderTransition,
-//   useVueMdbNotification,
-//   useVueMdbService,
-//   useWrapSlot,
-//   useWrapSlotDefault,
-//   useWrapSlotWithCondition,
-// } from '../mixins/types/CommonApi';

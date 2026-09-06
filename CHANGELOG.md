@@ -3,16 +3,26 @@
 > All notable changes to this project will be documented in this file.
 
 
+## v2.2.6
+
+Released: September 06, 2026
+
+### Improvements
+
+- Upgrade vue to version **3.5.42**, axios to version **1.20.0** and vite to version **8.2.2**.
+- Improved **TS declarations** for Vue Components and Directives.
+
+
 ## v2.2.5
 
 Released: July 15, 2026
 
 ### Improvements
 
-- Improve **TS declarations** so the Jetbrains IDE recognizes the components and 
+- Improve **TS declarations** so the JetBrains IDE recognizes the components and 
   can resolve the component's _properties_, _type-hints_ and _doc-comments_.
 - Improve component's **property** hints and autocomplete when using it inside 
-  the `*.vue` file with _Jetbrains IDE_.
+  the `*.vue` file with _JetBrains IDE_.
 - Downgrade **fast-xml-parser** to _v5.7.3_ to reduce package size.
 
 

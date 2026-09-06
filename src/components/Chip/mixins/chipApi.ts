@@ -1,6 +1,7 @@
 import { BsRipple } from '@/components/Animation';
 import { useCreateIconProps } from '@/components/Avatar/mixins/avatarApi.ts';
-import { BsButton, type TButtonOptionProps } from '@/components/Button';
+import { BsButton } from '@/components/Button';
+import type { TButtonOptionProps } from '@/components/Button/types';
 import type { TChipOptionProps, TChipSize } from '@/components/Chip/types';
 import { BsIcon } from '@/components/Icon';
 import type { TSizeProps } from '@/components/Icon/types';

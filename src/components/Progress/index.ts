@@ -13,5 +13,4 @@ const BsProgressPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Progress/types';
 export { BsMaskLoader, BsProgress, BsProgressBar, BsProgressPlugin, BsSpinLoader };

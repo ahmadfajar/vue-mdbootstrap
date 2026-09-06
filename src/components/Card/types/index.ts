@@ -98,63 +98,7 @@ export declare type TBsCardHeader = ComponentObjectPropsOptions<TTagProp>;
 
 export declare type TBsCardMedia = ComponentObjectPropsOptions<TCardMediaOptionProps>;
 
-// export declare const BsCard: {
-//   new (): {
-//     $props: PublicComponentProps & TCardOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsCardBody: {
-//   new (): {
-//     $props: PublicComponentProps & TTagProp;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsCardContent: {
-//   new (): {
-//     $props: PublicComponentProps & TCardContentOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsCardFooter: {
-//   new (): {
-//     $props: PublicComponentProps & TTagProp;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsCardHeader: {
-//   new (): {
-//     $props: PublicComponentProps & TTagProp;
-//     $slots: {
-//       default?: () => VNode[];
-//     };
-//   };
-// };
-//
-// export declare const BsCardMedia: {
-//   new (): {
-//     $props: PublicComponentProps & TCardMediaOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       title?: () => VNode[];
-//       subtitle?: () => VNode[];
-//     };
-//   };
-// };
-
-export declare type BsCard = DefineComponent<
+export declare type BsCardConstructor = DefineComponent<
   TBsCard,
   TRecord,
   TRecord,
@@ -172,12 +116,19 @@ export declare type BsCard = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsCardBody = DefineComponent<
+export declare const BsCard: {
+  new (): {
+    $props: TCardOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
+export declare type BsCardBodyConstructor = DefineComponent<
   TBsCardBody,
   TRecord,
   TRecord,
@@ -195,12 +146,19 @@ export declare type BsCardBody = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsCardContent = DefineComponent<
+export declare const BsCardBody: {
+  new (): {
+    $props: TTagProp & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
+export declare type BsCardContentConstructor = DefineComponent<
   TBsCardContent,
   TRecord,
   TRecord,
@@ -218,12 +176,19 @@ export declare type BsCardContent = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsCardFooter = DefineComponent<
+export declare const BsCardContent: {
+  new (): {
+    $props: TCardContentOptionProps & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
+export declare type BsCardFooterConstructor = DefineComponent<
   TBsCardFooter,
   TRecord,
   TRecord,
@@ -241,12 +206,19 @@ export declare type BsCardFooter = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsCardHeader = DefineComponent<
+export declare const BsCardFooter: {
+  new (): {
+    $props: TTagProp & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
+
+export declare type BsCardHeaderConstructor = DefineComponent<
   TBsCardHeader,
   TRecord,
   TRecord,
@@ -264,10 +236,17 @@ export declare type BsCardHeader = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsCardHeader: {
+  new (): {
+    $props: TTagProp & PublicProps;
+    $slots: VoidDefaultSlots;
+  };
+};
 
 export declare interface CardMediaSlots extends VoidDefaultSlots {
   /**
@@ -281,7 +260,7 @@ export declare interface CardMediaSlots extends VoidDefaultSlots {
   subtitle?: () => VNode[] | VNode;
 }
 
-export declare type BsCardMedia = DefineComponent<
+export declare type BsCardMediaConstructor = DefineComponent<
   TBsCardMedia,
   () => VNode,
   TRecord,
@@ -303,3 +282,10 @@ export declare type BsCardMedia = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsCardMedia: {
+  new (): {
+    $props: TCardMediaOptionProps & PublicProps;
+    $slots: CardMediaSlots;
+  };
+};

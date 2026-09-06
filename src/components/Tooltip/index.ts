@@ -7,5 +7,4 @@ const BsTooltipPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Tooltip/types';
 export { BsTooltip, BsTooltipPlugin };

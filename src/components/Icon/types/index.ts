@@ -228,43 +228,7 @@ export declare type TBsFontawesomeIcon = ComponentObjectPropsOptions<TFontawesom
 
 export declare type TBsToggleIcon = ComponentObjectPropsOptions<TToggleIconOptionProps>;
 
-// export declare const BsIcon: {
-//   new (): {
-//     $props: PublicComponentProps & TIconOptionProps;
-//   };
-// };
-//
-// export declare const BsFontawesomeIcon: {
-//   new (): {
-//     $props: PublicComponentProps & TFontawesomeIconOptionProps;
-//   };
-// };
-//
-// export declare const BsSvgIcon: {
-//   new (): {
-//     $props: PublicComponentProps & TSvgIconOptionProps;
-//   };
-// };
-//
-// export declare const BsSpinnerIcon: {
-//   new (): {
-//     $props: PublicComponentProps & TSpinnerIconOptionProps;
-//   };
-// };
-//
-// export declare const BsToggleIcon: {
-//   new (): {
-//     $props: PublicComponentProps & UpdateModelValueEventPublic<boolean> & TToggleIconOptionProps;
-//     $emits: {
-//       /**
-//        * Fired when this component's toggle state is updated.
-//        */
-//       (event: 'update:model-value', value: boolean): void;
-//     };
-//   };
-// };
-
-export declare type BsFontawesomeIcon = DefineComponent<
+export declare type BsFontawesomeIconConstructor = DefineComponent<
   TBsFontawesomeIcon,
   () => VNode,
   TRecord,
@@ -287,7 +251,13 @@ export declare type BsFontawesomeIcon = DefineComponent<
   never
 >;
 
-export declare type BsIcon = DefineComponent<
+export declare const BsFontawesomeIcon: {
+  new (): {
+    $props: TFontawesomeIconOptionProps & PublicProps;
+  };
+};
+
+export declare type BsIconConstructor = DefineComponent<
   TBsIcon,
   () => VNode,
   TRecord,
@@ -310,7 +280,13 @@ export declare type BsIcon = DefineComponent<
   never
 >;
 
-export declare type BsSpinnerIcon = DefineComponent<
+export declare const BsIcon: {
+  new (): {
+    $props: TIconOptionProps & PublicProps;
+  };
+};
+
+export declare type BsSpinnerIconConstructor = DefineComponent<
   TBsSpinnerIcon,
   TRecord,
   TRecord,
@@ -328,11 +304,17 @@ export declare type BsSpinnerIcon = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   never
 >;
 
-export declare type BsSvgIcon = DefineComponent<
+export declare const BsSpinnerIcon: {
+  new (): {
+    $props: TSpinnerIconOptionProps & PublicProps;
+  };
+};
+
+export declare type BsSvgIconConstructor = DefineComponent<
   TBsSvgIcon,
   () => VNode,
   TRecord,
@@ -355,7 +337,13 @@ export declare type BsSvgIcon = DefineComponent<
   never
 >;
 
-export declare type BsToggleIcon = DefineComponent<
+export declare const BsSvgIcon: {
+  new (): {
+    $props: TSvgIconOptionProps & PublicProps;
+  };
+};
+
+export declare type BsToggleIconConstructor = DefineComponent<
   TBsToggleIcon,
   () => VNode,
   TRecord,
@@ -377,3 +365,10 @@ export declare type BsToggleIcon = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsToggleIcon: {
+  new (): {
+    $props: TToggleIconOptionProps & UpdateModelValueEventPublic<boolean> & PublicProps;
+    $emit: UpdateModelValueEventProps<boolean>;
+  };
+};

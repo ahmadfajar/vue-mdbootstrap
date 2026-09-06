@@ -13,5 +13,4 @@ const BsAppbarPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Appbar/types';
 export { BsAppbar, BsAppbarItems, BsAppbarPlugin, BsAppbarTitle };

@@ -74,23 +74,6 @@ export declare type TAlertOptionProps = TAllowedIconProps & {
 
 export declare type TBsAlert = ComponentObjectPropsOptions<TAlertOptionProps>;
 
-// declare interface AllowedAlertProps
-//   extends PublicComponentProps, ClosableVoidEventPublic, UpdateModelValueEventPublic<boolean> {}
-//
-// export declare const BsAlert: {
-//   new (): {
-//     $props: AllowedAlertProps & TAlertOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       icon?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'close'): void;
-//       (event: 'update:model-value', value: boolean): void;
-//     };
-//   };
-// };
-
 export declare type AlertEventProps = ClosableVoidEventProps & UpdateModelValueEventProps<boolean>;
 
 export declare interface AlertEventPublic
@@ -103,7 +86,7 @@ export declare interface AlertSlots extends VoidDefaultSlots {
   icon?: () => VNode[] | VNode;
 }
 
-export declare type BsAlert = DefineComponent<
+export declare type BsAlertConstructor = DefineComponent<
   TBsAlert,
   TRecord,
   TRecord,
@@ -121,7 +104,15 @@ export declare type BsAlert = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsAlert: {
+  new (): {
+    $props: TAlertOptionProps & AlertEventPublic & PublicProps;
+    $slots: AlertSlots;
+    $emit: AlertEventProps;
+  };
+};

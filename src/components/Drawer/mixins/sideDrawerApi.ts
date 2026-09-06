@@ -1,5 +1,5 @@
 import { BsOverlay } from '@/components/Animation';
-import type { TAppContainerOptionProps } from '@/components/Container';
+import type { TAppContainerOptionProps } from '@/components/Container/types';
 import type { TSideDrawerOptionProps, TSideDrawerPosition } from '@/components/Drawer/types';
 import { PopupManager } from '@/components/Popover/mixins/PopupManager.ts';
 import { Resize } from '@/directives';

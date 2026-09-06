@@ -9,5 +9,4 @@ const BsDrawerPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Drawer/types';
 export { BsDrawerPlugin, BsSideDrawer };

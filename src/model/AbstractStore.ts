@@ -244,15 +244,15 @@ export abstract class AbstractStore<T extends TRecord> implements ObjectBase {
    * as needed on the inheritance class or put it on the constructor
    * of the inheritance class or when instantiate the model.
    *
-   * @example
+   * Example overriding the returns value:
+   * ```js
    * return {
    *    'save'  : '/api/user/create',
    *    'fetch' : '/api/user/{id}',
    *    'update': '/api/user/{id}/save',
    *    'delete': '/api/user/{id}/delete'
    * };
-   *
-   * // This is an example of the returns data
+   * ```
    */
   get restUrl(): RestConfig | undefined {
     return (this._config.restProxy ?? this._config.restUrl) as RestConfig;

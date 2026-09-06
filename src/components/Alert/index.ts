@@ -7,5 +7,4 @@ const BsAlertPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Alert/types';
 export { BsAlert, BsAlertPlugin };

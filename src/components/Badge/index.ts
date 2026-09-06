@@ -7,5 +7,4 @@ const BsBadgePlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Badge/types';
 export { BsBadge, BsBadgePlugin };

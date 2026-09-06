@@ -9,5 +9,4 @@ const BsDatePickerPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/DatePicker/types';
 export { BsDatePicker, BsDatePickerPlugin, BsDateTimeField };

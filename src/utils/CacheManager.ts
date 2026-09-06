@@ -307,6 +307,7 @@ export const CacheManager = {
       return;
     }
 
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     if ('getKey' in item && Helper.isFunction(item['getKey'])) {
       const it = item;
 

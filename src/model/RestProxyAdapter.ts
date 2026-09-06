@@ -61,8 +61,10 @@ export class RestProxyAdapter implements IRestAdapter {
     }
     if (
       'get' in appConfig &&
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       !Helper.isFunction(appConfig['get']) &&
       'post' in appConfig &&
+      // eslint-disable-next-line @typescript-eslint/unbound-method
       !Helper.isFunction(appConfig['post'])
     ) {
       throw Error(

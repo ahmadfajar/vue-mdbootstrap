@@ -1,4 +1,4 @@
-import type { TButtonColor } from '@/components/Button';
+import type { TButtonColor } from '@/components/Button/types';
 import type { TPopoverPosition } from '@/components/Popover/types';
 import type { Numberish, TRecord } from '@/types';
 import type {
@@ -170,47 +170,6 @@ export declare type TColorPickerOptionProps = {
 
 export declare type TBsColorPicker = ComponentObjectPropsOptions<TColorPickerOptionProps>;
 
-// declare interface AllowedColorPickerProps
-//   extends PublicComponentProps, UpdateOpenEventPublic, UpdateModelValueEventPublic<string> {
-//   /**
-//    * Fired when this ColorPicker's mode is updated or changed.
-//    */
-//   'onUpdate:mode'?: (mode: TColorPickerMode) => void;
-//
-//   /**
-//    * Fired when this ColorPicker's mode is updated or changed.
-//    */
-//   '@update:mode'?: (mode: TColorPickerMode) => void;
-// }
-//
-// export declare const BsColorPicker: {
-//   new (): {
-//     $props: AllowedColorPickerProps & TColorPickerOptionProps;
-//     $emits: {
-//       (event: 'update:mode', mode: TColorPickerMode): void;
-//       (event: 'update:model-value', value: string): void;
-//       (event: 'update:open', state: boolean): void;
-//     };
-//     $exposed: {
-//       hex: () => string;
-//       rgba: () => Color.RGBA;
-//       hsla: () => Color.HSLA;
-//       oklch: () => Color.LCHA;
-//     };
-//     hex: () => string;
-//     rgba: () => Color.RGBA;
-//     hsla: () => Color.HSLA;
-//     oklch: () => Color.LCHA;
-//   };
-// };
-
-export declare interface BsColorPickerInstance extends ComponentPublicInstance {
-  hex: () => string;
-  rgba: () => Color.RGBA;
-  hsla: () => Color.HSLA;
-  oklch: () => Color.LCHA;
-}
-
 export declare type ColorPickerEventProps = UpdateModelValueEventProps<string> &
   UpdateOpenEventProps & {
     /**
@@ -232,7 +191,14 @@ export declare interface ColorPickerEventPublic
   '@update:mode'?: (mode: TColorPickerMode) => void;
 }
 
-export declare type BsColorPicker = DefineComponent<
+export declare interface BsColorPickerInstance extends ComponentPublicInstance {
+  hex: () => string;
+  rgba: () => Color.RGBA;
+  hsla: () => Color.HSLA;
+  oklch: () => Color.LCHA;
+}
+
+export declare type BsColorPickerConstructor = DefineComponent<
   TBsColorPicker,
   TRecord,
   TRecord,
@@ -250,7 +216,24 @@ export declare type BsColorPicker = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsColorPicker: {
+  new (): {
+    $props: TColorPickerOptionProps & ColorPickerEventPublic & PublicProps;
+    $emit: ColorPickerEventProps;
+    $expose: {
+      hex: () => string;
+      rgba: () => Color.RGBA;
+      hsla: () => Color.HSLA;
+      oklch: () => Color.LCHA;
+    };
+    hex: () => string;
+    rgba: () => Color.RGBA;
+    hsla: () => Color.HSLA;
+    oklch: () => Color.LCHA;
+  };
+};

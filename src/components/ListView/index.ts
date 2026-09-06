@@ -23,8 +23,6 @@ const BsListViewPlugin: ObjectPlugin = {
   },
 };
 
-export type { IListViewProvider } from '@/components/ListView/mixins/ListViewProvider.ts';
-export type * from '@/components/ListView/types';
 export {
   BsListNav,
   BsListNavItem,

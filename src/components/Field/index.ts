@@ -15,5 +15,4 @@ const BsFieldPlugin: ObjectPlugin = {
   },
 };
 
-export type * from '@/components/Field/types';
 export { BsChipField, BsFieldPlugin, BsNumericField, BsSearchField, BsTextArea, BsTextField };

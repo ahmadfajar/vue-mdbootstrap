@@ -249,81 +249,7 @@ export declare type TBsDatePicker = ComponentObjectPropsOptions<TDatePickerOptio
 
 export declare type TBsDateTimeField = ComponentObjectPropsOptions<TDateTimeFieldOptionProps>;
 
-// export declare const BsDatePicker: {
-//   new (): {
-//     $props: PublicComponentProps & UpdateModelValueEventPublic<string> & TDatePickerOptionProps;
-//     $emits: {
-//       (event: 'update:model-value', value: string): void;
-//     };
-//   };
-// };
-
-// declare interface DateTimeFieldEvents
-//   extends ClosableVoidEventPublic, UpdateModelValueEventPublic<string> {
-//   /**
-//    * Fired when this component lost focus.
-//    */
-//   onBlur?: EventListener;
-//
-//   /**
-//    * Fired when this component got focused.
-//    */
-//   onFocus?: EventListener;
-//
-//   /**
-//    * Fired when this component's value is being cleared.
-//    */
-//   onClear?: VoidFunction;
-//
-//   /**
-//    * Fired when the DatePicker popup is open or showed.
-//    */
-//   onOpen?: VoidFunction;
-//
-//   /**
-//    * Fired when this component lost focus.
-//    */
-//   '@blur'?: EventListener;
-//
-//   /**
-//    * Fired when this component got focused.
-//    */
-//   '@focus'?: EventListener;
-//
-//   /**
-//    * Fired when this component's value is being cleared.
-//    */
-//   '@clear'?: VoidFunction;
-//
-//   /**
-//    * Fired when the DatePicker popup is open or showed.
-//    */
-//   '@open'?: VoidFunction;
-// }
-//
-// export declare const BsDateTimeField: {
-//   new (): {
-//     $props: PublicComponentProps & DateTimeFieldEvents & TDateTimeFieldOptionProps;
-//     $slots: {
-//       default?: (arg: { id: string }) => VNode[];
-//       'append-inner'?: () => VNode;
-//       'append-outer'?: () => VNode;
-//       'prepend-inner'?: () => VNode;
-//       'prepend-outer'?: () => VNode;
-//       'help-text'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'clear'): void;
-//       (event: 'close'): void;
-//       (event: 'open'): void;
-//       (event: 'blur', target: Event): void;
-//       (event: 'focus', target: Event): void;
-//       (event: 'update:model-value', value: string): void;
-//     };
-//   };
-// };
-
-export declare type BsDatePicker = DefineComponent<
+export declare type BsDatePickerConstructor = DefineComponent<
   TBsDatePicker,
   TRecord,
   TRecord,
@@ -341,10 +267,17 @@ export declare type BsDatePicker = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsDatePicker: {
+  new (): {
+    $props: TDatePickerOptionProps & UpdateModelValueEventPublic<string> & PublicProps;
+    $emit: UpdateModelValueEventProps<string>;
+  };
+};
 
 export declare type DateTimeFieldEventProps = FieldEventProps<string> &
   ClosableVoidEventProps & {
@@ -367,7 +300,7 @@ export declare interface DateTimeFieldEventPublic
   '@open'?: VoidFunction;
 }
 
-export declare type BsDateTimeField = DefineComponent<
+export declare type BsDateTimeFieldConstructor = DefineComponent<
   TBsDateTimeField,
   TRecord,
   TRecord,
@@ -385,7 +318,15 @@ export declare type BsDateTimeField = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
+
+export declare const BsDateTimeField: {
+  new (): {
+    $props: TDateTimeFieldOptionProps & DateTimeFieldEventPublic & PublicProps;
+    $slots: FieldSlots;
+    $emit: DateTimeFieldEventProps;
+  };
+};

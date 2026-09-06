@@ -226,7 +226,7 @@ export declare type TInputOptionItem = TAllowedIconProps & {
   /**
    * Input item value.
    */
-  value: string | number;
+  value: string | number | boolean;
 
   /**
    * Input item label. If not sets then it will be assigned from `value` property.
@@ -289,53 +289,6 @@ export declare type TBsToggleButton = ComponentObjectPropsOptions<TToggleButtonO
 
 export declare type TBsToggleField = ComponentObjectPropsOptions<TToggleFieldOptionProps>;
 
-// export declare const BsButton: {
-//   new (): {
-//     $props: PublicComponentProps & TButtonOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       icon?: () => VNode;
-//     };
-//   };
-// };
-//
-// export declare const BsCloseButton: {
-//   new (): {
-//     $props: PublicComponentProps & TCloseButtonOptionProps;
-//   };
-// };
-//
-// declare type AllowedToggleButtonProps = PublicComponentProps &
-//   UpdateModelValueEventPublic<MaybeNumberish | boolean | unknown[]>;
-//
-// export declare const BsToggleButton: {
-//   new (): {
-//     $props: AllowedToggleButtonProps & TToggleButtonOptionProps;
-//     $slots: {
-//       label?: (item: TInputOptionItem) => VNode[];
-//       icon?: (item: TInputOptionItem) => VNode;
-//     };
-//     $emits: {
-//       (event: 'update:model-value', value: MaybeNumberish | boolean | unknown[]): void;
-//     };
-//   };
-// };
-//
-// export declare const BsToggleField: {
-//   new (): {
-//     $props: AllowedToggleButtonProps & TToggleFieldOptionProps;
-//     $slots: {
-//       default?: () => VNode[];
-//       label?: (props: TInputOptionItem) => VNode;
-//       icon?: (props: TInputOptionItem) => VNode;
-//       'help-text'?: () => VNode;
-//     };
-//     $emits: {
-//       (event: 'update:model-value', value: Numberish | boolean): void;
-//     };
-//   };
-// };
-
 export declare interface ButtonSlots extends VoidDefaultSlots {
   /**
    * Additional slot used to place the custom button icon.
@@ -343,7 +296,7 @@ export declare interface ButtonSlots extends VoidDefaultSlots {
   icon?: () => VNode[] | VNode;
 }
 
-export declare type BsButton = DefineComponent<
+export declare type BsButtonConstructor = DefineComponent<
   TBsButton,
   TRecord,
   TRecord,
@@ -361,12 +314,19 @@ export declare type BsButton = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type BsCloseButton = DefineComponent<
+export declare const BsButton: {
+  new (): {
+    $props: TButtonOptionProps & PublicProps;
+    $slots: ButtonSlots;
+  };
+};
+
+export declare type BsCloseButtonConstructor = DefineComponent<
   TBsCloseButton,
   TRecord,
   TRecord,
@@ -384,12 +344,20 @@ export declare type BsCloseButton = DefineComponent<
   Record<string, Directive>,
   string,
   ComponentProvideOptions,
-  false,
+  true,
   TRecord,
   never
 >;
 
-export declare type ToggleButtonEventProps = UpdateModelValueEventProps<MaybeNumberish | unknown[]>;
+export declare const BsCloseButton: {
+  new (): {
+    $props: TCloseButtonOptionProps & PublicProps;
+  };
+};
+
+export declare type ToggleButtonEventProps = UpdateModelValueEventProps<
+  MaybeNumberish | boolean | unknown[]
+>;
 
 export declare interface ToggleButtonSlots {
   /**
@@ -403,7 +371,7 @@ export declare interface ToggleButtonSlots {
   icon?: (item: TInputOptionItem) => VNode[] | VNode;
 }
 
-export declare type BsToggleButton = DefineComponent<
+export declare type BsToggleButtonConstructor = DefineComponent<
   TBsToggleButton,
   () => VNode,
   TRecord,
@@ -415,7 +383,7 @@ export declare type BsToggleButton = DefineComponent<
   string,
   PublicProps,
   Readonly<TToggleButtonOptionProps> &
-    Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
+    Readonly<UpdateModelValueEventPublic<MaybeNumberish | boolean | unknown[]>>,
   ExtractDefaultPropTypes<TBsToggleButton>,
   SlotsType<ToggleButtonSlots>,
   Record<string, Component>,
@@ -427,7 +395,19 @@ export declare type BsToggleButton = DefineComponent<
   never
 >;
 
-export declare type ToggleFieldEventProps = UpdateModelValueEventProps<MaybeNumberish | unknown[]>;
+export declare const BsToggleButton: {
+  new (): {
+    $props: TToggleButtonOptionProps &
+      UpdateModelValueEventPublic<MaybeNumberish | boolean | unknown[]> &
+      PublicProps;
+    $slots: ToggleButtonSlots;
+    $emit: ToggleButtonEventProps;
+  };
+};
+
+export declare type ToggleFieldEventProps = UpdateModelValueEventProps<
+  MaybeNumberish | boolean | unknown[]
+>;
 
 export declare interface ToggleFieldSlots extends VoidDefaultSlots {
   /**
@@ -446,7 +426,7 @@ export declare interface ToggleFieldSlots extends VoidDefaultSlots {
   'help-text'?: () => VNode[] | VNode;
 }
 
-export declare type BsToggleField = DefineComponent<
+export declare type BsToggleFieldConstructor = DefineComponent<
   TBsToggleField,
   () => VNode,
   TRecord,
@@ -458,7 +438,7 @@ export declare type BsToggleField = DefineComponent<
   string,
   PublicProps,
   Readonly<TToggleFieldOptionProps> &
-    Readonly<UpdateModelValueEventPublic<MaybeNumberish | unknown[]>>,
+    Readonly<UpdateModelValueEventPublic<MaybeNumberish | boolean | unknown[]>>,
   ExtractDefaultPropTypes<TBsToggleField>,
   SlotsType<ToggleFieldSlots>,
   Record<string, Component>,
@@ -469,3 +449,13 @@ export declare type BsToggleField = DefineComponent<
   TRecord,
   never
 >;
+
+export declare const BsToggleField: {
+  new (): {
+    $props: TToggleFieldOptionProps &
+      UpdateModelValueEventPublic<MaybeNumberish | boolean | unknown[]> &
+      PublicProps;
+    $slots: ToggleFieldSlots;
+    $emit: ToggleFieldEventProps;
+  };
+};
